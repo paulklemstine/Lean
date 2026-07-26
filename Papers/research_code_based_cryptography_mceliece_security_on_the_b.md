@@ -1,269 +1,463 @@
-# Formal Verification of McEliece Cryptosystem Security on Binary Goppa Codes
+# McEliece Security Through Hamming Geometry, Game Hopping, and Quadratic Search
+
+**Aristotle**  
+**July 25, 2026**
 
 ## Abstract
 
-We present a formal treatment of the McEliece cryptosystem built on binary Goppa codes, with machine-verified proofs of its core security properties. Our formalization covers: (1) decryption correctness via bounded-distance decoding, (2) IND-CPA security under the Goppa Code Distinguishing (GCD) assumption via a game-hopping reduction, (3) quantum security analysis based on Grover's lower bound for unstructured search, and (4) the combinatorial foundations of Information Set Decoding hardness. We prove a general multi-hybrid telescope lemma applicable to cryptographic game sequences, establish that permutation scrambling preserves Hamming weight (a key structural property for McEliece), and verify that the NIST submission parameters satisfy the required algebraic constraints. All proofs are formalized in Lean 4 with Mathlib and compile without axioms beyond the standard foundations.
-
-**Keywords**: McEliece cryptosystem, binary Goppa codes, post-quantum cryptography, IND-CPA security, game-hopping proof, Grover's algorithm, Information Set Decoding
-
----
+This paper isolates a rigorous, assumption-transparent chain of results for code-based public-key encryption. First, additive encryption is interpreted as translation in a Hamming space. Translation invariance identifies ciphertext-to-codeword distance with error weight, and minimum separation of $2t+1$ yields uniqueness of every encoded word within decoding radius $t$; injectivity of the encoder then gives message recovery. Second, an indistinguishability-under-chosen-plaintext-attack analysis is expressed as a two-hop argument. If replacement of a disguised Goppa-derived public key by a random linear-code key changes an adversary's success probability by at most $\varepsilon_{\mathrm{key}}$, and the random-code experiment differs from an ideal fair-bit experiment by at most $\varepsilon_{\mathrm{decode}}$, then real advantage is at most $\varepsilon_{\mathrm{key}}+\varepsilon_{\mathrm{decode}}$. Third, a general estimate $b^t\le\binom nt$ under $(b+1)t\le n+1$ proves that the weight-$119$ error layer in length $6960$ contains at least $2^{256}$ vectors. Hence, in the explicitly delimited quadratic-search model $q^2<N$, fewer than $2^{128}$ queries cannot cover this certified search space. These statements do not establish NP-hardness of distinguishing binary Goppa codes from random linear codes. Instead, they distinguish unconditional metric and combinatorial results from the computational assumptions required by the security reduction.
 
 ## 1. Introduction
 
-The McEliece cryptosystem [McE78] is a public-key encryption scheme whose security rests on the computational hardness of decoding random linear codes. Unlike RSA and elliptic curve cryptography, which are vulnerable to Shor's algorithm [Sho94], the McEliece system resists known quantum attacks: the best quantum speedup against it is Grover's quadratic improvement [Gro96], which can be compensated by doubling the security parameter.
+The McEliece cryptosystem turns the theory of error-correcting codes into public-key encryption. A message is encoded as a codeword and then perturbed by a low-weight error. The secret key exposes enough algebraic structure to decode efficiently, while the public key is transformed to conceal that structure. Security is consequently governed by two broad computational problems: recognizing the hidden structured code and decoding noisy words without the secret description.
 
-### 1.1 Contributions
+This architecture has long attracted attention as a candidate for security in the presence of quantum computation. Unlike integer factorization and discrete logarithms, general decoding problems are not known to admit polynomial-time quantum algorithms. Nevertheless, a mathematically careful account must avoid two common leaps. Worst-case NP-hardness of generic syndrome decoding is not automatically an average-case security proof for cryptographic instances. Likewise, it does not imply that a public key derived from a binary Goppa code is NP-hard to distinguish from a random linear code.
 
-Our formalization contributes the following:
+The purpose of this paper is therefore not to assert an unconditional complexity classification that the argument does not supply. It is to establish three exact layers that can be combined without conflation:
 
-1. **Structural definitions**: We define linear codes, Hamming weight/distance, bounded-distance decoders, Goppa code parameters, and the complete McEliece key generation/encryption/decryption pipeline as Lean 4 structures.
+1. a metric correctness theorem for additive noisy encoding;
+2. a quantitative two-hop security theorem with its assumptions displayed; and
+3. a conservative combinatorial and quantum-search estimate for the parameter pair $(n,t)=(6960,119)$.
 
-2. **Decryption correctness** (Theorem 1): We prove that McEliece decryption recovers the plaintext when the error weight is within the correction capability, assuming the unscrambling operation correctly decomposes the ciphertext.
+The first layer is independent of efficient decoding: it says that a bounded-radius answer, if found, is unique. The second is an elementary but essential game-hopping calculation: the distance from the real game to the ideal game is no larger than the sum of the two intermediate distances. The third gives a reusable binomial lower bound and translates a certified $2^{256}$ error space into a $2^{128}$ floor under a quadratic-search premise.
 
-3. **IND-CPA security reduction** (Theorem 2): We prove that the IND-CPA advantage of any adversary against McEliece is bounded by the GCD advantage, via a two-game hop.
+The contribution is thus an explicit bridge among coding geometry, real-valued security advantages, and combinatorial search spaces. Its main methodological feature is scope control. Unconditional statements are proved unconditionally; computational conclusions are stated conditionally and quantitatively.
 
-4. **Multi-hybrid telescope lemma** (Theorem 6): We prove a general inductive bound for multi-step game-hopping arguments, showing that the total advantage across k+1 game hops is at most (k+1) times the per-step bound.
+## 2. Algebraic and metric setting
 
-5. **Quantum security analysis** (Theorems 3, 11): We formalize Grover's quadratic bound and prove that quantum ISD work factor is at least the square root of the classical work factor.
+### 2.1 Words, weight, and distance
 
-6. **Combinatorial hardness** (Theorem 4): Using Pascal's identity, we prove that the ISD search space C(n,t) ≥ 2 for appropriate parameters.
+Let $K$ be a finite field and let $K^n$ denote the set of length-$n$ words. For $x,y\in K^n$, the **Hamming distance** is
 
-7. **Permutation invariance** (Theorem 12): We prove that Hamming weight is invariant under permutations, which is essential for the correctness of McEliece's scrambling mechanism.
+$$
+d_H(x,y)=\bigl|\{i\in\{1,\ldots,n\}:x_i\ne y_i\}\bigr|.
+$$
 
----
+The **Hamming weight** of $e\in K^n$ is
 
-## 2. Definitions
+$$
+\operatorname{wt}(e)=\bigl|\{i\in\{1,\ldots,n\}:e_i\ne0\}\bigr|.
+$$
 
-### 2.1 Linear Codes over GF(2)
+Thus $\operatorname{wt}(e)=d_H(e,0)$. Hamming distance is a metric, so it is symmetric, vanishes exactly on equal words, and satisfies the triangle inequality
 
-**Definition 1** (Hamming Weight). For v ∈ GF(2)^n, the Hamming weight is:
-```
-wt(v) = |{i : v_i ≠ 0}|
-```
+$$
+d_H(x,z)\le d_H(x,y)+d_H(y,z).
+$$
 
-**Definition 2** (Linear Code). A linear code C(n, k) consists of an encoding function `encode : GF(2)^k → GF(2)^n` that is GF(2)-linear and injective.
+It is also translation invariant.
 
-**Definition 3** (Minimum Distance). The minimum distance of C is:
-```
-d(C) = inf { wt(encode(m)) : m ≠ 0 }
-```
+**Lemma 2.1 (Translation invariance).** For all $x,y,a\in K^n$,
 
-**Definition 4** (Bounded-Distance Decoder). A t-bounded distance decoder for C maps received words to messages, correctly decoding when the error weight is at most t.
+$$
+d_H(x+a,y+a)=d_H(x,y).
+$$
 
-### 2.2 Binary Goppa Codes
+**Proof sketch.** At coordinate $i$, the equality $x_i+a_i=y_i+a_i$ holds if and only if $x_i=y_i$, because addition by $a_i$ is a bijection of the field. The sets of differing coordinates are therefore identical. $\square$
 
-**Definition 5** (Goppa Parameters). A Goppa parameter set (n, k, t) satisfies:
-- k ≤ n (dimension bounded by length)
-- t ≤ n (correction capability bounded)
-- n > 0, k > 0
+Taking $x=e$, $y=0$, and $a=E(m)$ gives the identity central to encryption correctness.
 
-**Definition 6** (Goppa Code). A binary Goppa code instance consists of a linear code with the given parameters, a bounded-distance decoder, and the minimum distance bound d ≥ 2t + 1.
+### 2.2 Encoders and separated images
 
-### 2.3 McEliece Cryptosystem
+Let $\mathcal M$ be a message set and let
 
-**Definition 7** (Secret Key). SK = (Goppa code Γ, scramble function σ, unscramble function σ⁻¹), where σ is a bijection preserving Hamming weight (representing the composition S·G·P of scrambling matrix, generator, and permutation).
+$$
+E:\mathcal M\longrightarrow K^n
+$$
 
-**Definition 8** (Public Key). PK = (pubEncode : GF(2)^k → GF(2)^n), the composition of scramble with the Goppa code encoder.
+be an encoder. No linearity assumption is required for the metric theorems below. We say that the encoded image has minimum separation at least $2t+1$ if, whenever $E(m_1)\ne E(m_2)$,
 
-**Definition 9** (Encryption). Enc(PK, m, e) = pubEncode(m) + e, where wt(e) ≤ t.
+$$
+d_H(E(m_1),E(m_2))\ge2t+1.
+$$
 
-**Definition 10** (Decryption). Dec(SK, c) = decode(unscramble(c)).
+For a center $x\in K^n$, define the closed Hamming ball of radius $t$ by
 
----
+$$
+B_t(x)=\{y\in K^n:d_H(x,y)\le t\}.
+$$
 
-## 3. Main Results
+**Lemma 2.2 (Disjoint decoding balls).** If $d_H(x,y)\ge2t+1$, then $B_t(x)\cap B_t(y)=\varnothing$.
 
-### 3.1 Decryption Correctness
+**Proof sketch.** If $z$ belonged to both balls, then the triangle inequality would give
 
-**Theorem 1** (Decryption Correctness). For any message m and error e with wt(e) ≤ t:
-```
-Dec(SK, Enc(PK, m, e)) = Some(m)
-```
-provided the unscrambling step correctly decomposes the ciphertext into a codeword plus bounded-weight error.
+$$
+d_H(x,y)\le d_H(x,z)+d_H(z,y)\le2t,
+$$
 
-*Proof.* Encryption produces c = σ(encode(m)) + e. Applying σ⁻¹ yields encode(m') + e' where wt(e') ≤ t (since σ preserves weight). The bounded-distance decoder then recovers m' = m. □
+contradicting $d_H(x,y)\ge2t+1$. $\square$
 
-### 3.2 IND-CPA Security
+The integer offset $+1$ is essential: since distances are integral, it is exactly the condition that excludes distance at most $2t$.
 
-**Theorem 2** (IND-CPA from GCD). For any IND-CPA adversary A:
-```
-Adv^{IND-CPA}_A(McEliece) ≤ Adv^{GCD}_B
-```
-where B is the GCD distinguisher constructed from A.
+### 2.3 Additive noisy encryption
 
-*Proof.* Define two games:
-- Game 0: Real McEliece with Goppa code public key.
-- Game 1: McEliece with uniformly random public key.
+Define additive encryption by
 
-In Game 1, the ciphertext Gm + e is indistinguishable from uniform (since G is random), so the adversary's advantage is 0. The transition from Game 0 to Game 1 can be simulated by a GCD distinguisher, so |Adv(G0) - Adv(G1)| ≤ Adv^{GCD}. Therefore Adv^{IND-CPA} ≤ Adv^{GCD}. □
+$$
+\operatorname{Enc}_E(m;e)=E(m)+e,
+$$
 
-### 3.3 Multi-Hybrid Telescope
+where $e\in K^n$ is an error vector. In a cryptosystem, $e$ is sampled from a prescribed low-weight distribution; for correctness, only its weight bound matters.
 
-**Theorem 6** (Multi-Hybrid Bound). For a sequence of k+2 game probabilities with per-step bound ε:
-```
-|p_0 - p_{k+1}| ≤ (k+1) · ε
-```
+**Proposition 2.3 (Encryption distance identity).** For every message $m$ and error vector $e$,
 
-*Proof.* By induction on k.
-- Base (k=0): Immediate from the single-step bound.
-- Step (k → k+1): Apply triangle inequality to split |p_0 - p_{k+2}| ≤ |p_0 - p_{k+1}| + |p_{k+1} - p_{k+2}|. The first term is ≤ (k+1)ε by the inductive hypothesis applied to the restriction. The second term is ≤ ε by the per-step bound. Total: (k+2)ε. □
+$$
+d_H(\operatorname{Enc}_E(m;e),E(m))=\operatorname{wt}(e).
+$$
 
-### 3.4 Quantum Security
+**Proof sketch.** Translation invariance yields
 
-**Theorem 11** (Quantum ISD Bound). If the quantum work factor Q satisfies Q² ≥ W (classical work factor), then Q ≥ √W.
+$$
+d_H(E(m)+e,E(m))=d_H(e,0)=\operatorname{wt}(e).
+$$
 
-*Proof.* From Q² ≥ W and Q > 0, we have Q = √(Q²) ≥ √W by monotonicity of √. □
+$\square$
 
-**Corollary.** McEliece with λ-bit classical security provides at least λ/2-bit quantum security.
+## 3. Correctness from Hamming-ball packing
 
-### 3.5 Combinatorial Hardness
+The preceding identity places the ciphertext inside a known geometric neighborhood of the transmitted codeword. Minimum separation then rules out every other encoded word.
 
-**Theorem 4** (ISD Work Factor). For n ≥ 2, 1 ≤ t ≤ n/2: C(n,t) ≥ 2.
+**Theorem 3.1 (Unique encoded word under bounded noise).** Let $E:\mathcal M\to K^n$ have minimum separation at least $2t+1$. Let
 
-*Proof.* By Pascal's identity: C(n,t) = C(n-1, t-1) + C(n-1, t). Since t-1 ≤ n-2 (from t ≤ n/2, n ≥ 2) and t ≤ n-1, both terms are ≥ 1. □
+$$
+c=\operatorname{Enc}_E(m;e)=E(m)+e
+$$
 
-### 3.6 Scrambling Invariance
+with $\operatorname{wt}(e)\le t$. If a message $m'$ satisfies
 
-**Theorem 12** (Permutation Preserves Weight). For any permutation σ on Fin(n):
-```
-wt(v ∘ σ) = wt(v)
-```
+$$
+d_H(c,E(m'))\le t,
+$$
 
-*Proof.* Construct a bijection between the support sets {i : v(σ(i)) ≠ 0} and {i : v(i) ≠ 0} using σ and σ⁻¹. □
+then
 
-### 3.7 Nearest Codeword Uniqueness
+$$
+E(m')=E(m).
+$$
 
-**Theorem 5** (Unique Decoding). If d ≥ 2t + 1, then any received word has at most one codeword within distance t.
+**Proof sketch.** Proposition 2.3 gives $d_H(c,E(m))\le t$, so $c\in B_t(E(m))$. The hypothesis on $m'$ gives $c\in B_t(E(m'))$. If the two encoded words were distinct, their distance would be at least $2t+1$, and Lemma 2.2 would say their radius-$t$ balls are disjoint. This contradicts the membership of $c$ in both balls. Hence the encoded words coincide. $\square$
 
-*Proof.* If two codewords c₁, c₂ are both within distance t of received word r, then by triangle inequality: d(c₁,c₂) ≤ d(c₁,r) + d(r,c₂) ≤ 2t < 2t+1 ≤ d. This contradicts the minimum distance unless c₁ = c₂. □
+This theorem proves uniqueness at the level of codewords. To infer equality of messages, collisions of the encoder must be excluded.
 
----
+**Corollary 3.2 (Message recovery).** Under the hypotheses of Theorem 3.1, suppose additionally that $E$ is injective. Then every $m'$ satisfying $d_H(c,E(m'))\le t$ obeys
 
-## 4. Algorithms
+$$
+m'=m.
+$$
 
-### 4.1 McEliece Key Generation
-```
-Input: Security parameter λ
-1. Choose Goppa polynomial g(x) of degree t over GF(2^m)
-2. Choose support L = {α₁, ..., αₙ} ⊆ GF(2^m)
-3. Compute generator matrix G for Γ(L, g)
-4. Choose random invertible k×k matrix S
-5. Choose random n×n permutation matrix P
-6. Compute public key: G' = S · G · P
-Output: SK = (g, L, S, P), PK = G'
-```
+**Proof sketch.** Theorem 3.1 gives $E(m')=E(m)$, and injectivity gives $m'=m$. $\square$
 
-### 4.2 McEliece Encryption
-```
-Input: Public key G', message m ∈ GF(2)^k
-1. Choose random error e ∈ GF(2)^n with wt(e) = t
-2. Compute c = m · G' + e
-Output: Ciphertext c
-```
+### 3.1 Interpretation and limitation
 
-### 4.3 McEliece Decryption
-```
-Input: Secret key (g, L, S, P), ciphertext c
-1. Compute c' = c · P⁻¹
-2. Apply Patterson's algorithm to decode c' using Γ(L, g)
-3. Recover m' and compute m = m' · S⁻¹
-Output: Message m
-```
+The theorem is a uniqueness result, not an algorithmic construction. It guarantees that a bounded-distance decoder cannot return a wrong nearby codeword. It does not, by itself, produce an efficient function that finds the nearby word. In McEliece encryption, the secret Goppa structure is what enables efficient decoding. The theorem separates that algorithmic role from the metric fact that the answer is unique.
 
-### 4.4 Information Set Decoding (Attack)
-```
-Input: Public key G' (k×n), ciphertext c, target weight t
-1. Repeat:
-   a. Choose random information set I ⊂ {1,...,n}, |I| = k
-   b. Compute G'_I (restriction to columns I)
-   c. If G'_I is invertible, compute m_candidate = c_I · G'_I⁻¹
-   d. Check if wt(c - m_candidate · G') ≤ t
-2. Until success
-Expected iterations: C(n,t) / C(n-k,t) ≈ (n/k)^t
-```
+The proof also applies beyond binary codes. It uses only coordinatewise addition over a field and Hamming geometry. Binary Goppa codes are a principal cryptographic instance, but the correctness mechanism belongs to a broader family of noisy-codeword encryption schemes.
 
----
+## 4. Security experiments and advantage
 
-## 5. Parameter Analysis
+### 4.1 The chosen-plaintext challenge
 
-### 5.1 NIST Submission Parameters
+In an indistinguishability-under-chosen-plaintext-attack experiment, an adversary supplies two messages and receives an encryption of one selected by a hidden uniform bit. It outputs a guess for that bit. If its success probability in an experiment is $p$, define its distinguishing advantage by
 
-| Parameter Set | n | k | t | Classical Security | Quantum Security | Key Size |
-|---|---|---|---|---|---|---|
-| McEliece-348864 | 3488 | 2720 | 64 | 256 bits | 128 bits | 261 KB |
-| McEliece-460896 | 4608 | 3360 | 96 | 300 bits | 150 bits | 524 KB |
-| McEliece-6688128 | 6688 | 5024 | 128 | 350 bits | 175 bits | 1 MB |
-| McEliece-6960119 | 6960 | 5413 | 119 | 340 bits | 170 bits | 1 MB |
-| McEliece-8192128 | 8192 | 6528 | 128 | 390 bits | 195 bits | 1.3 MB |
+$$
+\operatorname{Adv}(p)=\left|p-\frac12\right|.
+$$
 
-Our formal verification confirms that all parameter sets satisfy:
-- 2t ≤ n (error correction within bounds)
-- k ≤ n (dimension constraint)
-- C(n,t) ≥ 2 (non-trivial search space)
+This normalization assigns zero advantage to fair guessing. The results below concern the success probabilities of a fixed adversarial procedure across related experiments. A full asymptotic treatment would additionally quantify over adversary families, running times, key generation, encryption randomness, and security parameters.
 
-### 5.2 Quantum Security Margin
+### 4.2 Three games
 
-For McEliece-348864, the classical ISD work factor is approximately 2^262. By Grover's bound (Theorem 11), the quantum work factor is at least 2^131, providing 131-bit quantum security — well above the 128-bit target.
+Consider three conceptual experiments:
 
----
+- **Real game.** The public key is derived from a disguised structured code, such as a binary Goppa code. Let success probability be $p_{\mathrm{real}}$.
+- **Random-code game.** The structured public key is replaced by a key sampled from a suitable random linear-code distribution. Let success probability be $p_{\mathrm{rand}}$.
+- **Ideal game.** The challenge bit is information-theoretically hidden, so success probability is $1/2$.
 
-## 6. Discussion
+The first transition asks whether the public key distribution reveals its structured origin. Assume the quantitative bound
 
-### 6.1 Strengths of Code-Based Cryptography
+$$
+|p_{\mathrm{real}}-p_{\mathrm{rand}}|\le\varepsilon_{\mathrm{key}}.
+$$
 
-1. **Mature hardness assumption**: The hardness of random code decoding has been studied for over 60 years.
-2. **Quantum resistance**: Only quadratic quantum speedup (Grover), unlike exponential speedup for factoring (Shor).
-3. **Fast encryption/decryption**: Linear-time operations over GF(2).
+The second asks whether ciphertexts in the random-code setting hide the selected message. Assume
 
-### 6.2 Challenges
+$$
+\left|p_{\mathrm{rand}}-\frac12\right|\le\varepsilon_{\mathrm{decode}}.
+$$
 
-1. **Large key sizes**: Public keys are 100-1000× larger than RSA/ECC keys.
-2. **GCD assumption**: While widely believed, the indistinguishability of Goppa codes from random codes is not proven to be NP-hard in general.
-3. **Side-channel attacks**: Implementation-specific vulnerabilities require careful engineering.
+The symbols $\varepsilon_{\mathrm{key}}$ and $\varepsilon_{\mathrm{decode}}$ may depend on a security parameter and adversarial resources. The following theorem is pointwise and remains valid for each such choice.
 
-### 6.3 Formalization Insights
+**Theorem 4.1 (Two-hop IND-CPA reduction).** If
 
-The formalization revealed several subtleties:
-- The unscrambling step in decryption requires careful tracking of the permutation's effect on Hamming weight.
-- The game-hopping proof requires precise handling of the absolute value and casting between ℕ and ℝ.
-- Pascal's identity provides the most elegant proof of the ISD work factor lower bound.
+$$
+|p_{\mathrm{real}}-p_{\mathrm{rand}}|\le\varepsilon_{\mathrm{key}}
+$$
 
----
+and
 
-## 7. Conjectures and Future Work
+$$
+\left|p_{\mathrm{rand}}-\frac12\right|\le\varepsilon_{\mathrm{decode}},
+$$
 
-### Conjecture 1 (Goppa Code Distinguishing Hardness)
-*For any polynomial-time algorithm A and any Goppa code parameters (n, k, t) with t = O(√n), the GCD advantage Adv^{GCD}_A is negligible in n.*
+then
 
-**Testable prediction**: For n = 256, k = 128, t = 16, no polynomial-time algorithm should achieve GCD advantage > 1/2^40.
+$$
+\operatorname{Adv}(p_{\mathrm{real}})
+\le\varepsilon_{\mathrm{key}}+\varepsilon_{\mathrm{decode}}.
+$$
 
-### Conjecture 2 (ISD Optimality)
-*The Information Set Decoding work factor C(n,t)/C(n-k,t) is optimal among all algorithms for decoding random linear codes, up to polynomial factors.*
+**Proof sketch.** Insert and subtract $p_{\mathrm{rand}}$:
 
-### Conjecture 3 (Quantum ISD Tight Bound)
-*The quantum ISD work factor is Θ(√(C(n,t)/C(n-k,t))), matching the Grover lower bound.*
+$$
+p_{\mathrm{real}}-\frac12
+=(p_{\mathrm{real}}-p_{\mathrm{rand}})
++\left(p_{\mathrm{rand}}-\frac12\right).
+$$
 
----
+Taking absolute values and applying the triangle inequality gives
 
-## 8. References
+$$
+\left|p_{\mathrm{real}}-\frac12\right|
+\le |p_{\mathrm{real}}-p_{\mathrm{rand}}|
++\left|p_{\mathrm{rand}}-\frac12\right|.
+$$
 
-- [McE78] R.J. McEliece, "A public-key cryptosystem based on algebraic coding theory," DSN Progress Report 42-44, 1978.
-- [Sho94] P.W. Shor, "Algorithms for quantum computation: discrete logarithms and factoring," FOCS 1994.
-- [Gro96] L.K. Grover, "A fast quantum mechanical algorithm for database search," STOC 1996.
-- [BBBV97] C.H. Bennett, E. Bernstein, U. Vazirani, "Strengths and Weaknesses of Quantum Computing," SICOMP 1997.
-- [BLP11] D.J. Bernstein, T. Lange, C. Peters, "Attacking and defending the McEliece cryptosystem," PQCrypto 2008.
-- [Gop70] V.D. Goppa, "A new class of linear correcting codes," Probl. Peredachi Inf. 1970.
-- [Pat75] N.J. Patterson, "The algebraic decoding of Goppa codes," IEEE Trans. Inf. Theory, 1975.
-- [NIST22] NIST Post-Quantum Cryptography Standardization, Round 4 candidates, 2022.
+Substitution of the two hypotheses completes the bound. $\square$
 
----
+**Corollary 4.2 (Perfect random-code hiding).** If
 
-## Appendix: Formalization Statistics
+$$
+|p_{\mathrm{real}}-p_{\mathrm{rand}}|\le\varepsilon_{\mathrm{key}}
+$$
 
-| Metric | Value |
-|---|---|
-| Total definitions | 14 |
-| Total theorems (sorry-free) | 15 |
-| Lines of Lean code | ~450 |
-| Axioms used | propext, Classical.choice, Quot.sound |
-| Build time | ~10s per file |
+and $p_{\mathrm{rand}}=1/2$, then
+
+$$
+\operatorname{Adv}(p_{\mathrm{real}})\le\varepsilon_{\mathrm{key}}.
+$$
+
+**Proof sketch.** Set $\varepsilon_{\mathrm{decode}}=0$ in Theorem 4.1, or directly substitute $p_{\mathrm{rand}}=1/2$ into the key-replacement inequality. $\square$
+
+### 4.3 Why the two terms must remain separate
+
+The theorem does not identify $\varepsilon_{\mathrm{key}}$ with decoding hardness. The key term concerns distinguishability of distributions over public descriptions. The decoding term concerns message hiding after the structured distribution has already been replaced. An algorithm might exploit visible key structure without decoding, or decode better than expected without first classifying the key. Treating the two transitions separately prevents one assumption from silently standing in for the other.
+
+The theorem also makes no unconditional claim that either error term is negligible. Such a claim requires explicit computational assumptions or reductions. What is unconditional is the composition law: once the two transition bounds are established, their sum bounds real advantage.
+
+## 5. A reusable lower bound for constant-weight error spaces
+
+For binary errors of exact weight $t$ in length $n$, the search-space cardinality is
+
+$$
+N(n,t)=\binom nt.
+$$
+
+We next establish a convenient exponential lower bound. It is weaker than entropy estimates but requires only integer arithmetic and is well suited to conservative certification.
+
+**Theorem 5.1 (Exponential binomial lower bound).** Let $b,t,n$ be nonnegative integers. If
+
+$$
+(b+1)t\le n+1,
+$$
+
+then
+
+$$
+b^t\le\binom nt.
+$$
+
+**Proof sketch.** The argument proceeds by induction on $t$. For $t=0$, both sides equal $1$. For the inductive step, use the ratio identity
+
+$$
+\binom n{t+1}=\binom nt\frac{n-t}{t+1},
+$$
+
+or its denominator-free equivalent
+
+$$
+(t+1)\binom n{t+1}=(n-t)\binom nt.
+$$
+
+The condition $(b+1)(t+1)\le n+1$ implies
+
+$$
+b(t+1)\le n-t.
+$$
+
+It also implies the corresponding condition needed to invoke the inductive hypothesis for $t$. Thus $\binom nt\ge b^t$, and multiplication by the displayed factor gives
+
+$$
+\binom n{t+1}
+=\binom nt\frac{n-t}{t+1}
+\ge b^t\,b=b^{t+1}.
+$$
+
+All quantities are nonnegative integers, so the denominator-free identity gives the same conclusion without division concerns. $\square$
+
+### 5.1 Application to length $6960$ and weight $119$
+
+Set $b=5$, $t=119$, and $n=6960$. The theorem's premise holds because
+
+$$
+(5+1)\cdot119=714\le6961.
+$$
+
+Therefore,
+
+$$
+5^{119}\le\binom{6960}{119}.
+$$
+
+A direct comparison of integer powers gives
+
+$$
+2^{256}\le5^{119}.
+$$
+
+For intuition, taking base-$2$ logarithms yields $119\log_2 5\approx276.31$, already comfortably above $256$.
+
+**Corollary 5.2 (Certified error-space size).** The number of binary length-$6960$ errors of weight exactly $119$ satisfies
+
+$$
+2^{256}\le\binom{6960}{119}.
+$$
+
+**Proof sketch.** Chain the inequalities $2^{256}\le5^{119}$ and $5^{119}\le\binom{6960}{119}$. $\square$
+
+The exact value is much larger than the certified threshold. Direct arbitrary-precision evaluation shows
+
+$$
+\left\lfloor\log_2\binom{6960}{119}\right\rfloor=863.
+$$
+
+This numerical observation is useful for scale, while Corollary 5.2 is the conservative result needed below.
+
+## 6. A qualified quantum-search floor
+
+### 6.1 Abstract quadratic-search model
+
+Suppose a search process using $q$ queries can cover no more than a quantity quadratic in $q$. The exact lower-bound condition is expressed as
+
+$$
+q^2<N,
+$$
+
+where $N$ is the candidate-space size. This abstraction reflects the square-root relationship associated with unstructured quantum search, but it is intentionally not a model of every possible quantum code attack.
+
+**Theorem 6.1 (Quadratic-search exponent halving).** Let $N$ and $q$ be nonnegative integers. If
+
+$$
+2^{256}\le N
+$$
+
+and
+
+$$
+q<2^{128},
+$$
+
+then
+
+$$
+q^2<N.
+$$
+
+**Proof sketch.** Since multiplication is strictly monotone on positive natural numbers,
+
+$$
+q^2<(2^{128})^2=2^{256}.
+$$
+
+Combining this strict inequality with $2^{256}\le N$ gives $q^2<N$. $\square$
+
+**Corollary 6.2 (Weight-$119$ quadratic-search floor).** If $q<2^{128}$, then
+
+$$
+q^2<\binom{6960}{119}.
+$$
+
+**Proof sketch.** Apply Theorem 6.1 with $N=\binom{6960}{119}$ and use Corollary 5.2. $\square$
+
+### 6.2 Scope of the conclusion
+
+Corollary 6.2 is a conditional statement about a specified cost model. It does not prove that every quantum cryptanalytic algorithm is an unstructured search. Attacks on code-based systems may exploit parity-check structure, information sets, collision techniques, amplitude amplification around nontrivial subroutines, time-memory tradeoffs, or weaknesses in parameter and implementation choices. A complete concrete-security estimate must analyze the best relevant attack algorithms and their resource costs.
+
+The corollary nevertheless provides a rigorous baseline. Any attack genuinely constrained by $q^2<N$ cannot span the certified error layer below $2^{128}$ queries. The qualification protects the result from overinterpretation while retaining its exact mathematical content.
+
+## 7. Algorithms and reproducible calculations
+
+### 7.1 Bounded-distance candidate verification
+
+Given an encoder, a ciphertext $c$, a radius $t$, and a candidate message $m'$, compute $E(m')$, count differing coordinates, and accept exactly when the distance is at most $t$. If the hypotheses of Theorem 3.1 hold, no two distinct encoded words can pass this test for the same ciphertext. The procedure costs $O(n)$ field comparisons after encoding. It verifies a candidate but does not solve the potentially hard task of finding one.
+
+### 7.2 Security-hop accounting
+
+Given empirical or analytic bounds $\varepsilon_{\mathrm{key}}$ and $\varepsilon_{\mathrm{decode}}$, report their sum as an upper bound on real distinguishing advantage. The calculation is constant time. Its substantive inputs are the proofs or measurements establishing the hop bounds, not the addition itself.
+
+### 7.3 Error-space certification
+
+For parameters $n,t$, one may compute $\binom nt$ exactly using the multiplicative recurrence
+
+$$
+C_0=1,
+\qquad
+C_k=C_{k-1}\frac{n-k+1}{k}
+$$
+
+for $1\le k\le t$. Each division is exact. With arbitrary-precision arithmetic this uses $O(t)$ large-integer operations and avoids factorials. Separately, one can search for a small base $b$ satisfying $(b+1)t\le n+1$ and compare $b^t$ against a desired power-of-two threshold. The latter gives a concise certificate even when the exact coefficient is enormous.
+
+## 8. Cryptographic interpretation
+
+The mathematical chain can be read as three interfaces.
+
+The **correctness interface** accepts a separation parameter and a noise bound. It outputs uniqueness of the decoded codeword, and with injectivity, uniqueness of the message. This interface is unconditional and geometric.
+
+The **security interface** accepts two quantitative game-transition bounds. It outputs an IND-CPA advantage bound equal to their sum. This interface is unconditional as a composition theorem, but its cryptographic strength is conditional on the supplied bounds.
+
+The **post-quantum baseline interface** accepts a certified candidate-space lower bound and the quadratic-search premise. It outputs a query floor. The binomial estimate is unconditional; the interpretation as an attack lower bound is limited to the declared model.
+
+Together these interfaces describe a defensible way to reason about McEliece encryption without turning related complexity results into unsupported security claims.
+
+## 9. The NP-hardness boundary
+
+The assertion that distinguishing binary Goppa codes from random linear codes is NP-hard is not established by the results in this paper. It should not be inferred from worst-case NP-completeness of generic syndrome decoding.
+
+Several logical gaps separate those claims. First, a distinguishing problem and a decoding problem have different outputs. Second, worst-case hardness does not imply hardness on the key and ciphertext distributions generated by a cryptosystem. Third, an NP-hardness reduction must preserve the relevant parameters and run in polynomial time. Fourth, even a hardness result for one task would need an explicit reduction to IND-CPA advantage, including runtime and advantage loss.
+
+For these reasons, Theorem 4.1 exposes rather than conceals its premises. A future complete reduction should define probabilistic key generation and encryption, define classes of classical or quantum adversaries, state code-indistinguishability and random-decoding assumptions with security parameters, and transform any successful IND-CPA adversary into a distinguisher or decoder with explicit costs.
+
+## 10. Applications
+
+The correctness theorem applies to any cryptographic or communication system that adds bounded Hamming noise to separated codewords. It can serve as a modular specification for decoder correctness: an implementation need only establish that its output lies within radius $t$, after which uniqueness follows from code separation.
+
+The game-hop theorem applies well beyond McEliece. Hybrid arguments throughout cryptography replace one distribution or primitive at a time. Whenever success probabilities are real numbers, a chain of transitions yields a sum of absolute differences. For multiple games $p_0,p_1,\ldots,p_k$, repeated use of the triangle inequality gives
+
+$$
+|p_0-p_k|\le\sum_{i=0}^{k-1}|p_i-p_{i+1}|.
+$$
+
+The binomial estimate applies to constant-weight sampling, combinatorial designs, sparse recovery, and brute-force baselines. It offers a simple certificate when a full entropy calculation is unnecessary.
+
+## 11. Discussion
+
+The strongest feature of the development is not a single large inequality but the alignment of assumptions with conclusions. Correctness needs no hardness assumption. Security composition needs no coding theorem beyond the numerical hop bounds. The search-space estimate needs no cryptographic assumption. Only when the pieces are interpreted as resistance to particular attacks do computational premises enter.
+
+The estimate $\binom{6960}{119}\ge2^{256}$ is intentionally loose. Exact counting gives substantially more than $256$ bits of raw combinatorial entropy, but raw entropy is not equivalent to cryptographic security. Conservative thresholds are useful when they are paired with explicit attack models; exact counts are useful for comparison and parameter exploration.
+
+Likewise, the two-hop theorem does not claim that random-code hiding is perfect. Corollary 4.2 merely records what follows if it is perfect. In realistic analyses, both terms are nonzero functions of parameters and resources.
+
+## 12. Future work
+
+A complete probabilistic treatment should define key generation, encryption randomness, and adversarial coins as finite distributions, then state IND-CPA as an experiment over probabilistic algorithms. The game transitions could be justified through couplings, statistical distance, or explicit computational reductions.
+
+On the coding side, one should define binary Goppa codes from supports in finite extension fields and square-free Goppa polynomials, prove the relevant minimum-distance bounds, and construct an actual bounded-distance decoder whose output satisfies the geometric hypotheses of Theorem 3.1.
+
+On the complexity side, Goppa-code indistinguishability and random syndrome-decoding assumptions should be parameterized by adversarial runtime. A reduction should transform an IND-CPA adversary into a key distinguisher or decoder and track both runtime overhead and advantage loss.
+
+For quantum analysis, the abstract condition $q^2<N$ should be replaced by a precise quantum query model with a proved lower bound for unstructured search. Structured quantum algorithms should be analyzed separately. Finally, complexity claims concerning syndrome decoding should clearly distinguish worst-case NP-completeness, parameter-preserving reductions, average-case assumptions, and the public-key distributions actually used by McEliece encryption.
+
+## 13. Conclusion
+
+Additive noisy encoding, game hopping, and constant-weight counting provide three clean mathematical foundations for McEliece analysis. Translation invariance and disjoint Hamming balls prove unique recovery under errors of weight at most $t$ when encoded words are separated by $2t+1$. The real triangle inequality proves that key-distribution replacement and random-code message hiding contribute additively to IND-CPA advantage. A general binomial estimate certifies at least $2^{256}$ weight-$119$ errors in length $6960$, which yields a $2^{128}$ floor in the stated quadratic-search model.
+
+The results are useful precisely because their scope is explicit. They support a rigorous conditional security narrative while declining to claim an unproved NP-hardness theorem for Goppa-code distinguishing. This separation of geometry, assumptions, and attack models is the appropriate basis for further analysis of code-based cryptography.

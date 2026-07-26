@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8280a2b4",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Complete-Graph Divisors and Chip-Firing\n\n## 1. Parking-function proof of complete-graph Riemann–Roch\n\n**Conjecture.** Every divisor class on the complete graph `K_n` has a unique",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T06:30:57",
-      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-    },
-    {
       "cycle_id": "d67581f7",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A ⊗ v = λ + v`, t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-25T23:20:34",
       "title": "Random Matrices: Edge Universality"
+    },
+    {
+      "cycle_id": "7b86dab6",
+      "domain": "Physics",
+      "key_insight": "# Future Directions: Holographic Proof Duality\n\n## What the formal results support\n\nThe verified core should be interpreted as an order-theoretic holographic principle, not as a literal dimension-redu",
+      "quality_score": 0.64,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-26T00:21:20",
+      "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-07-25T23:20:34",
+  "last_updated": "2026-07-26T00:21:20",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "28042806",
-        "quality": 0.56,
-        "theorems": 13,
-        "title": "Speculative: Mathematics as a Phase Transition"
-      },
-      {
         "cycle_id": "f65064a1",
         "quality": 0.69,
         "theorems": 8,
@@ -3761,6 +3755,12 @@
         "quality": 0.77,
         "theorems": 12,
         "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
+      },
+      {
+        "cycle_id": "7b86dab6",
+        "quality": 0.64,
+        "theorems": 14,
+        "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
       }
     ],
     "Probability": [
