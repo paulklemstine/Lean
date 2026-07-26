@@ -127,7 +127,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const filterDomain = domainFilter ? domainFilter.value : '';
         const filterText = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
-        let html = '<style>#lean-catalog-content summary::marker { content: ""; } #lean-catalog-content summary::-webkit-details-marker { display: none; }</style>';
+        let html = `
+            <style>
+                #lean-catalog-content summary::marker { content: ""; }
+                #lean-catalog-content summary::-webkit-details-marker { display: none; }
+                #lean-catalog-content details summary .dir-chevron { transition: transform 0.15s ease-out; }
+                #lean-catalog-content details[open] > summary .dir-chevron { transform: rotate(90deg); }
+                #lean-catalog-content summary:hover { background: rgba(255, 255, 255, 0.05); }
+            </style>
+        `;
         html += '<div style="display: flex; gap: 20px; height: calc(100vh - 170px);">';
 
         // Sidebar tree list
@@ -160,6 +168,16 @@ document.addEventListener('DOMContentLoaded', () => {
             current.children[fileName] = { type: 'file', name: fileName, fileObj: f, idx: idx };
         });
 
+        function countChildFiles(node) {
+            let count = 0;
+            for (const k in node.children) {
+                const c = node.children[k];
+                if (c.type === 'file') count++;
+                else if (c.type === 'dir') count += countChildFiles(c);
+            }
+            return count;
+        }
+
         function renderTree(node, depth, isRoot = false) {
             let res = '';
             const keys = Object.keys(node.children).sort((a, b) => {
@@ -174,11 +192,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const child = node.children[key];
                 if (child.type === 'dir') {
                     const openAttr = (filterText || filterDomain || depth === 0) ? 'open' : '';
+                    const childCount = countChildFiles(child);
                     res += `
                         <details ${openAttr} style="margin-left: ${isRoot ? 0 : 10}px; margin-bottom: 2px;">
                             <summary style="cursor: pointer; font-weight: 500; padding: 4px 6px; color: var(--text-color); font-size: 13px; user-select: none; display: flex; align-items: center; border-radius: 4px; transition: background 0.15s;">
+                                <svg class="dir-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; flex-shrink: 0; opacity: 0.7;"><polyline points="9 18 15 12 9 6"></polyline></svg>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; flex-shrink: 0; color: var(--accent-color);"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                 <span>${escapeHTML(child.name)}</span>
+                                <span style="margin-left: auto; font-size: 11px; color: var(--text-muted); opacity: 0.7; padding-left: 8px;">${childCount}</span>
                             </summary>
                             <div style="border-left: 1px solid var(--border-color); padding-left: 4px; margin-top: 2px; margin-left: 6px;">
                                 ${renderTree(child, depth + 1)}
@@ -206,7 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (filteredCount === 0) {
             html += '<div style="color: var(--text-muted); font-size: 13px; text-align: center; margin-top: 20px;">No files found matching search criteria.</div>';
         } else {
-            html += `<div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px; font-weight: 500;">Catalog Directory (${filteredCount} files)</div>`;
+            html += `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border-color);">
+                    <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Catalog Directory (${filteredCount} files)</span>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <button id="toggle-expand-all" style="background: none; border: none; color: var(--accent-color); font-size: 11px; cursor: pointer; padding: 2px 4px; font-weight: 500;" title="Expand all directories">📂 Expand All</button>
+                        <span style="color: var(--text-muted); font-size: 10px; opacity: 0.5;">|</span>
+                        <button id="toggle-collapse-all" style="background: none; border: none; color: var(--text-muted); font-size: 11px; cursor: pointer; padding: 2px 4px; font-weight: 500;" title="Collapse all directories">📁 Collapse All</button>
+                    </div>
+                </div>
+            `;
             html += renderTree(root, 0, true);
         }
 
@@ -223,6 +253,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         html += '</div>';
         catalogContent.innerHTML = html;
+
+        // Attach Expand All / Collapse All event listeners
+        const expandBtn = document.getElementById('toggle-expand-all');
+        if (expandBtn) {
+            expandBtn.addEventListener('click', () => {
+                document.querySelectorAll('#lean-catalog-content details').forEach(d => d.open = true);
+            });
+        }
+        const collapseBtn = document.getElementById('toggle-collapse-all');
+        if (collapseBtn) {
+            collapseBtn.addEventListener('click', () => {
+                document.querySelectorAll('#lean-catalog-content details').forEach(d => d.open = false);
+            });
+        }
 
         // Attach sidebar event listeners
         document.querySelectorAll('.lean-file-card').forEach(card => {
