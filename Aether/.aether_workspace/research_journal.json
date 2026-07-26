@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0268a2b5",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds — open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold e",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-21T18:48:03",
-      "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
-    },
-    {
       "cycle_id": "9d505535",
       "domain": "Algebra",
       "key_insight": "# Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-prese",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-26T05:37:01",
       "title": "Neural Tangent Kernel: Convergence"
+    },
+    {
+      "cycle_id": "078d5371",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction f",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-26T05:37:07",
+      "title": "Graph Coloring: Chromatic Polynomial Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "735120d5",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n## 1. Localization under heterogeneous valley positions\n\n**Conjecture.** Let each respondent's confidence profile be strictly convex on a common ordered grid, with minimum positio",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-07-19T08:57:30",
-      "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-    },
     {
       "cycle_id": "5961ca02",
       "domain": "Geometry",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-26T05:37:01",
       "title": "Neural Tangent Kernel: Convergence"
+    },
+    {
+      "cycle_id": "078d5371",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction f",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-26T05:37:07",
+      "title": "Graph Coloring: Chromatic Polynomial Theory"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T05:37:01",
+  "last_updated": "2026-07-26T05:37:07",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "192fa110",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
-      },
-      {
         "cycle_id": "77a52651",
         "quality": 0.8,
         "theorems": 6,
@@ -3265,6 +3259,12 @@
         "quality": 0.66,
         "theorems": 24,
         "title": "1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere "
+      },
+      {
+        "cycle_id": "078d5371",
+        "quality": 0.77,
+        "theorems": 0,
+        "title": "Graph Coloring: Chromatic Polynomial Theory"
       }
     ],
     "Computation": [

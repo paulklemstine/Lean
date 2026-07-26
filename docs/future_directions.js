@@ -2493,7 +2493,7 @@ window.FUTURE_DIRECTIONS = [
       "Topology"
     ],
     "id": "fd_0667",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -3395,6 +3395,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T09:05:18.164692+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 735a1ab0 (Q=0.750), which proved 10 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that neural networks in the lazy regime converge to the NTK solution. Formalize the Jacot-Gabriel-Hongler theorem and prove universality across architectures.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_735a1ab0_9dcea259",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "735a1ab0",
+    "status": "available",
+    "timestamp": "2026-07-26T05:37:01.124353+00:00",
+    "title": "Deepening: Neural Tangent Kernel: Convergence"
   },
   {
     "consumed_by_exp_id": "",
@@ -4404,22 +4418,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "",
     "title": "Self-Avoiding Walk: Connective Constant"
-  },
-  {
-    "consumed_by_exp_id": "735a1ab0",
-    "description": "Prove that neural networks in the lazy regime converge to the NTK solution. Formalize the Jacot-Gabriel-Hongler theorem and prove universality across architectures.",
-    "domains": [
-      "MachineLearning",
-      "Analysis"
-    ],
-    "id": "seed_244",
-    "phase": "B",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Neural Tangent Kernel: Convergence"
   },
   {
     "consumed_by_exp_id": "",
@@ -8734,6 +8732,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T05:36:50.826801+00:00",
     "title": "**Conjecture.** For every integer `n \u2265 1`, the `n`th derivative of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Neural Tangent Kernel Convergence\n\n## 1. Quantitative universality under approximately equal kernels\n\n**Conjecture.** Consider two lazy-training residual recursions with the same initialization and learning rate. If both update maps are contractions with factor at most `q < 1` and their kernel actions differ by at most `\u03b5` times the current residual norm, then their predictions remain within a geometric perturbation envelope of order `\u03b7 \u03b5 (1-q^n)/(1-q)` through step `n`.\n\nThe key insight is that exact architecture universality should be stable under the small kernel discrepancies produced by finite width, rather than requiring literal equality of limiting kernels.\n\n**Why now?** Exact pathwise universality identifies the induction invariant; adding one controlled error term at each step should expose the sharp finite-width stability law.\n\n## 2. Spectral characterization of the maximal stable learning rate\n\n**Conjecture.** For a self-adjoint positive-definite empirical NTK on a finite training set, the frozen residual update is a strict contraction exactly when the learning rate lies between zero and twice the reciprocal of the largest eigenvalue. Its optimal contraction factor is the maximum absolute value of `1 - \u03b7\u03bb` over the kernel spectrum.\n\nThe key insight is that the exact eigendirection recursion converts convergence into a minimax problem over spectral endpoints.\n\n**Why now?** The verified eigendirection formula already gives the scalar dynamics; a finite-dimensional spectral decomposition would turn those scalar identities into a necessary-and-sufficient operator theorem.\n\n## 3. Robust tropical chambers imply finite-time NTK stability\n\n**Conjecture.** If a tropical training path begins at positive margin from every chamber wall and each update has norm below a fixed fraction of that margin, then the active-cell assignment and NTK remain constant for an explicitly bounded number of steps, during which the loss follows the frozen-kernel convergence law.\n\nThe key insight is that chamber margin acts as a geometric certificate for the duration of the lazy regime.\n\n**Why now?** Cell confinement is known to freeze the tropical NTK, while contraction controls update size; combining them should yield a computable stopping time before feature learning can begin.\n\n## 4. Architecture classes as kernel-equivalence classes\n\n**Conjecture.** Any two differentiable architectures whose parameter Jacobians have the same Gram operator on the training set, and whose Jacobians remain constant along their training paths, induce identical prediction trajectories despite potentially different parameter dimensions and symmetries.\n\nThe key insight is that lazy training factors through the empirical Jacobian Gram operator, making architecture an implementation detail once the kernel and initialization are fixed.\n\n**Why now?** Exact universality for equal frozen operators establishes the dynamical half; the remaining task is to derive the residual recurrence directly from architecture-specific gradient descent.\n\n## 5. Continuous-time convergence with a slowly drifting NTK\n\n**Conjecture.** Suppose the empirical NTK along gradient flow remains uniformly coercive and its operator drift is integrable in time. Then predictions converge to the training target, with a rate controlled by the accumulated coercivity minus the integrated drift.\n\nThe key insight is that strict kernel freezing can be weakened to an adiabatic condition: contraction should survive when feature evolution has finite total variation.\n\n**Why now?** The frozen theory identifies the baseline Lyapunov estimate, and approximate universality suggests how operator perturbations should enter through a variation-of-constants bound.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0739",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "735a1ab0",
+    "status": "available",
+    "timestamp": "2026-07-26T05:37:00.496290+00:00",
+    "title": "**Conjecture.** Consider two lazy-training residual recursions with the same ini"
   },
   {
     "consumed_by_exp_id": "",

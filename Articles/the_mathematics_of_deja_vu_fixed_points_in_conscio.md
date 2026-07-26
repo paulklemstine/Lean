@@ -1,153 +1,163 @@
-# The Mathematics of Déjà Vu: Return, Recurrence, and Tropical Memory
+# The Mathematics of Déjà Vu: Recurrence, Observation, and the Limits of a Metaphor
 
-A familiar room suddenly feels remembered. A sentence seems to arrive with its own echo. Déjà vu is brief, subjective, and difficult to reproduce, but its central shape is mathematically crisp: a state appears to return.
+There is a peculiar instant when the present seems to fold onto the past. A room, a sentence, the angle of afternoon light: suddenly it all feels as though it has happened before. Déjà vu invites a mathematical metaphor. If a mind moves through a space of possible states, could the feeling of return be understood as recurrence in a dynamical system?
 
-That observation does not turn consciousness into a single equation. It does, however, suggest a disciplined question. If a cognitive state changes according to a rule, what can mathematics truly conclude when the system revisits an earlier state? The answer is both richer and more cautious than the slogan “period three implies chaos.” Return times obey an exact arithmetic, survive changes of description, and acquire a striking spectral interpretation in tropical mathematics. Yet continuity alone does not scatter recurrent states everywhere, and a population statistic such as $70\%$ cannot be identified with the density of periodic points without a probabilistic observation model.
+The metaphor is powerful, but it needs discipline. Mathematics can tell us when a trajectory must return, when returns survive a change of description, and when an observation merely *looks* recurrent. It can also expose an alluring mistake: continuity does not make recurrent states common, and the fraction of people reporting an experience cannot be read from the topological structure of a map.
 
-The result is a useful mathematical portrait of déjà vu—not as proof of a theory of consciousness, but as a case study in how recurrence can be defined, transported, simulated, and tested.
+The result is subtler than “déjà vu is inevitable.” Under a simple interval model, at least one recurrent state is inevitable. Widespread recurrence is not. And observed repetition need not mean that the hidden state of a cognitive system has repeated at all.
 
-## A state that comes back
+This distinction matters wherever hidden processes are inferred from repeated signals. Neuroscience faces it when similar reports arise from different neural configurations; medicine faces it when a stable measurement conceals changing physiology; engineering faces it when a coarse sensor repeatedly rounds distinct states to one value. The mathematics of déjà vu is therefore also a mathematics of inference: when does sameness on the surface warrant sameness underneath?
 
-Let $S$ be a space of possible states and let $f:S\to S$ send a present state to its successor. Repeated application produces
+## A mind as a dynamical system
+
+Imagine a set $S$ whose elements represent cognitive states. A transition rule $f:S\to S$ sends the current state to the next one. Starting from $s$, the resulting trajectory is
 
 $$
 s,\quad f(s),\quad f^2(s),\quad f^3(s),\ldots,
 $$
 
-where $f^n$ means that $f$ is applied $n$ times. We call $s$ a **periodic state** if there is a positive integer $n$ for which
+where $f^n$ means applying $f$ exactly $n$ times. A state is **periodic** if it returns after a positive number of steps: there is some integer $n>0$ such that
 
 $$
 f^n(s)=s.
 $$
 
-The number $n$ is a return time. It need not be the first return. A state has **exact period** $p$ when $p>0$, $f^p(s)=s$, and no positive integer $q<p$ satisfies $f^q(s)=s$.
-
-This distinction matters. Every fixed point has return time $3$, because a state satisfying $f(s)=s$ also satisfies $f^3(s)=s$. But it does not have exact period $3$. An exact three-cycle consists of genuinely different stages.
-
-**Exact Three-Cycle Theorem.** If $s$ has exact period $3$, then the three states $s$, $f(s)$, and $f^2(s)$ are pairwise distinct.
-
-The reason is simple but decisive. If $s=f(s)$, the first return occurs after one step. If $f(s)=f^2(s)$, then applying the remaining dynamics and using the three-step return again yields a shorter return. If $f^2(s)=s$, the state returns after two steps. Every possible collision contradicts exactness.
-
-A return also repeats on an arithmetic schedule.
-
-**Return-Multiple Theorem.** If $p>0$ and $f^p(s)=s$, then for every positive integer $k$,
+The collection of all such states is the periodic set
 
 $$
-f^{pk}(s)=s.
+P(f)=\{s\in S:\text{ for some integer }n>0,\ f^n(s)=s\}.
 $$
 
-One can view this as a clock whose hand comes back every $p$ ticks. Once one complete circuit returns to the starting point, any positive number of complete circuits does the same. In an observational setting, this warns us that many recorded return times may reflect one underlying fundamental period.
+A fixed point, satisfying $f(s)=s$, is the simplest periodic state. Longer cycles are possible: three distinct states $s_0,s_1,s_2$ may obey $f(s_0)=s_1$, $f(s_1)=s_2$, and $f(s_2)=s_0$.
 
-## What survives a change of viewpoint
+Calling every periodic state “déjà vu” is already an interpretation rather than a theorem. The definition describes exact return of a modeled state; the human experience is an observation made through memory, attention, language, and finite sensory resolution. Still, recurrence provides a clean skeleton on which to test claims.
 
-Brains are not observed in their full microscopic state. An experiment may record a coarse signal: a behavioral category, an imaging feature, or a reported feeling. Mathematically, such an observation is a map $h:S\to T$ from a detailed state space to an observed one.
+## The unavoidable return
 
-Suppose the hidden dynamics is $f:S\to S$, the observed dynamics is $g:T\to T$, and observation commutes with evolution:
+Suppose cognitive states are summarized by a single quantity ranging over a closed interval $[a,b]$, with $a<b$. Suppose also that $f:[a,b]\to[a,b]$ is continuous: nearby states lead to nearby next states, with no abrupt jumps.
+
+Then at least one periodic state must exist.
+
+**Interval Recurrence Theorem.** Every continuous self-map $f:[a,b]\to[a,b]$ of a nondegenerate closed interval has a state $s\in[a,b]$ for which $f^n(s)=s$ for some $n>0$. In fact, it has a fixed point $f(s)=s$.
+
+The reason is geometric. Consider $g(x)=f(x)-x$. Since $f(a)\in[a,b]$, we have $g(a)=f(a)-a\ge 0$. Since $f(b)\in[a,b]$, we have $g(b)=f(b)-b\le 0$. Continuity forces $g$ to equal zero somewhere between $a$ and $b$. At that point, $f(s)=s$.
+
+This is a robust existence result. It does not depend on chaos, randomness, or a period-three orbit. A continuous interval model cannot avoid recurrence altogether.
+
+But “there is at least one” is very different from “returns are everywhere.”
+
+## Why continuity does not make recurrence dense
+
+A set is **dense** in an interval if every open subinterval, however small, contains one of its points. Dense periodic states would mean that any state can be approximated as closely as desired by a periodic one.
+
+Continuity alone does not imply this. Consider the constant transition
+
+$$
+f(x)=c
+$$
+
+for every real number $x$. This map is continuous. After one step every trajectory reaches $c$, and $c$ remains fixed. Which initial states ever return exactly to themselves? Only $c$. Therefore
+
+$$
+P(f)=\{c\}.
+$$
+
+A singleton is not dense in the real line, nor in any nondegenerate interval containing other points. This gives the **Nondensity Theorem**: there are continuous real dynamical systems whose periodic set is not dense.
+
+The counterexample marks a crucial boundary. The interval theorem guarantees existence of a recurrent state, not abundance. Density requires stronger hypotheses, typically some explicit form of chaotic structure such as a horseshoe on an invariant subset. Even then, periodic points may be dense only inside that subsystem, not throughout the ambient state space.
+
+## Does recurrence survive a change of language?
+
+A cognitive state may be encoded in many ways: neural activity, a compressed feature vector, a symbolic category, or a verbal report. Let $f:S\to S$ describe one system and $g:T\to T$ another. An encoding $h:S\to T$ respects the dynamics when
 
 $$
 h(f(s))=g(h(s))
 $$
 
-for every state $s$. This relationship is called a **semiconjugacy**. It says that evolving first and observing afterward gives the same result as observing first and evolving in the reduced description.
+for every $s\in S$. Such an encoding is called a **semiconjugacy**. It says that “advance, then encode” gives the same answer as “encode, then advance.” Repeating this identity gives
 
-**Transport of Recurrence Theorem.** Under a semiconjugacy, every periodic hidden state produces a periodic observed state with the same return time.
+$$
+h(f^n(s))=g^n(h(s)).
+$$
 
-Indeed, repeated commutation gives $h(f^n(s))=g^n(h(s))$. If $f^n(s)=s$, then
+This yields the **Recurrence Transport Theorem**: if $s$ is periodic for $f$, then $h(s)$ is periodic for $g$. Indeed, if $f^n(s)=s$, then
 
 $$
 g^n(h(s))=h(f^n(s))=h(s).
 $$
 
-This is a robust conclusion: recurrence survives faithful dynamical coarse-graining. The converse is not guaranteed. Two different hidden states may look identical after observation, so a many-to-one sensor can manufacture an apparent observed return even while the underlying state has not returned. That asymmetry is central to any scientific interpretation of déjà vu.
-
-## A laboratory map on the unit interval
-
-A classic testing ground for recurrence is the logistic family
+The reverse need not hold. Two different hidden states may collapse to the same observation. If the encoding is **injective**, meaning $h(s_1)=h(s_2)$ only when $s_1=s_2$, then recurrence is both preserved and reflected. In precise terms,
 
 $$
-L_r(x)=rx(1-x).
+h^{-1}(P(g))=P(f).
 $$
 
-Here $x$ lies between $0$ and $1$, and $r$ controls the dynamics. For $0\le r\le4$, the unit interval is invariant:
+This is the **Faithful Encoding Theorem**. Under an injective semiconjugacy, a state is periodic exactly when its encoded image is periodic. The theorem identifies the mathematical requirement behind a trustworthy recurrence report: the observation must retain enough information to distinguish hidden states.
 
-**Invariant-Interval Theorem.** If $0\le r\le4$ and $0\le x\le1$, then
+## The false positive machine
 
-$$
-0\le L_r(x)\le1.
-$$
+At the opposite extreme lies a constant observation. Suppose an observation rule sends every hidden state to the same report $o$. Then the observed value is fixed at every time, regardless of what the underlying trajectory does.
 
-The lower bound follows because all three factors $r$, $x$, and $1-x$ are nonnegative. For the upper bound, the parabola $x(1-x)$ reaches its maximum $1/4$ at $x=1/2$, so $rx(1-x)\le4\cdot(1/4)=1$.
+This gives the **Observational False-Positive Theorem**: for any dynamical system and any nonperiodic state, a constant observation reports an unchanging observation even though the hidden state never returns.
 
-This theorem makes numerical experiments safe: exact trajectories beginning in $[0,1]$ remain there. At $r=3.83$, iterations from many starting points numerically approach a three-stage pattern, reflecting the well-known period-three window of this family. Such computation is informative, but it does not by itself prove an exact orbit or quantify a population frequency. A rigorous parameter study would enclose the three candidate orbit points in intervals and show that the third iterate maps each interval strictly into itself with derivative magnitude below $1$.
+The lesson reaches beyond déjà vu. A stable dashboard reading does not prove a machine’s internal state is unchanged. A repeated behavioral label does not prove identical neural activity. A coarse sensor can turn distinct realities into the same symbol. Recurrence of a measurement and recurrence of the measured system are different claims.
 
-The map also clarifies a common overreach. A period-three theorem for continuous interval maps can have strong consequences when its full hypotheses and classical conclusions are invoked. But neither “continuity” nor “being an interval map” alone means that periodic points are dense.
+## A concrete laboratory: the logistic map
 
-## The contraction that punctures the myth
-
-Consider the gentlest possible evolution on the real line:
+A classic one-dimensional model is the logistic family
 
 $$
-C(x)=\frac{x}{2}.
+L_r(x)=rx(1-x),\qquad 0\le x\le 1.
 $$
 
-It is continuous. After $n$ steps,
+At the proposed parameter $r=3.83=383/100$, the map is
 
 $$
-C^n(x)=\frac{x}{2^n}.
+L(x)=\frac{383}{100}x(1-x).
 $$
 
-If a positive return occurs, then $x/2^n=x$. Since $2^n>1$, this equation forces $x=0$. Conversely, $0$ is fixed.
-
-**Contraction Counterexample.** The continuous map $C(x)=x/2$ has exactly one periodic point, namely $0$. Consequently, its periodic points are not dense in the real line.
-
-A set is **dense** if every nonempty open interval contains one of its points. The singleton $\{0\}$ plainly misses, for example, every sufficiently small interval around $1$. Thus continuity alone cannot support a density claim. Continuity prevents jumps; it does not force the stretching, folding, or mixing needed to distribute periodic behavior throughout a state space.
-
-This counterexample changes the scientific story. Déjà vu is not a mathematical inevitability of every continuous cognitive dynamics. A continuous system may simply contract toward one resting state. To derive widespread recurrence, one must add hypotheses that create orbit dispersion—topological transitivity, mixing, or another mechanism ruling out attracting regions.
-
-## Why $70\%$ is not a density
-
-Reports that roughly $70\%$ of people experience déjà vu concern subjects, memories, observation windows, and reporting thresholds. The density of periodic points is a property of subsets of a state space. These are different kinds of quantity.
-
-Even topological density does not mean “a large percentage.” The rational numbers are dense in the real line, yet they occupy zero length. Conversely, a set can have substantial probability under one distribution and tiny probability under another. Exact periodic points may also be invisible in finite-precision data, while approximate returns can be common.
-
-A meaningful calibration must specify at least four ingredients: a distribution of parameters such as $r$; a distribution of initial states; a finite observation horizon; and a tolerance $\varepsilon$ declaring that $|f^n(x)-x|<\varepsilon$ counts as an observed return. Only then does an incidence become a probability that can be compared with data. Choosing $r=3.83$ merely because an incidence is near $70\%$ would skip this entire inferential bridge.
-
-## Tropical dynamics: recurrence as zero drift
-
-There is another way to understand return. In **min-plus algebra**, ordinary addition plays the role of multiplication, while minimum plays the role of addition. Given a real matrix $A=(A_{ij})$ and a vector $v$, define the min-plus matrix-vector product by
+First, it really does map the unit interval into itself. For $0\le x\le1$, both $x$ and $1-x$ are nonnegative, so $L(x)\ge0$. Also $x(1-x)\le1/4$, hence
 
 $$
-(A\otimes v)_i=\min_j(A_{ij}+v_j).
+L(x)\le\frac{383}{400}<1.
 $$
 
-A pair $(\lambda,v)$ is a **tropical eigenpair** when
+Thus every trajectory begun in $[0,1]$ stays there.
+
+Second, its fixed points can be classified exactly. Solving $L(x)=x$ gives
 
 $$
-A\otimes v=v+\lambda\mathbf{1},
+\frac{383}{100}x(1-x)=x,
 $$
 
-where $\mathbf{1}$ is the vector whose entries are all $1$. The scalar $\lambda$ is not a multiplicative growth rate; it is an additive drift per step.
-
-**Tropical Drift Theorem.** If $(\lambda,v)$ is a tropical eigenpair, then after $k$ min-plus updates,
+which factors as
 
 $$
-(A\otimes)^k v=v+k\lambda\mathbf{1}.
+x(383x-283)=0.
 $$
 
-The proof is induction. One update adds $\lambda$ to every coordinate. Min-plus multiplication commutes with adding the same constant to every coordinate, so each further update contributes one more copy of $\lambda$.
+Therefore the **Fixed-Point Classification at $r=3.83$** states that the only fixed states are
 
-Two consequences reveal the spectral anatomy of recurrence.
+$$
+x=0\qquad\text{and}\qquad x=\frac{283}{383}.
+$$
 
-**Zero-Eigenvalue Fixed-State Theorem.** A vector $v$ is a tropical eigenvector with eigenvalue $0$ exactly when $A\otimes v=v$.
+These exact facts make the logistic map a useful numerical laboratory. Iteration can reveal apparent cycles and sensitivity, while algebra certifies interval preservation and fixed points. But numerical proximity is not exact periodicity, and neither fixed-point counts nor plots supply a population probability.
 
-**Zero-Drift Recurrence Theorem.** Every tropical eigenstate with eigenvalue $0$ returns after every positive number of steps.
+## Why $70\%$ does not come from density
 
-Thus tropical recurrence is zero spectral drift. When $\lambda\ne0$, the state does not return in ordinary coordinates; it marches linearly along the all-ones direction. In projective tropical space, where adding a common constant does not change the state, that same trajectory is stationary. This distinction between literal and projective recurrence offers a useful metaphor for cognition: a pattern may repeat relationally even while its global baseline changes.
+Several notions of “many” are easy to confuse. A set may be topologically dense while having probability zero. A set may have positive probability without being dense. Natural density, invariant-measure weight, and the lifetime incidence of a reported experience are different mathematical objects.
 
-## A better mathematical moral
+A statement such as “about $70\%$ of people report déjà vu” belongs to a probability model: one needs a population of subjects, a distribution of initial states and parameters, a time horizon, and an observation rule. The periodic set $P(f)$ alone provides none of these. Even assigning a measure to exact periodic points would not automatically model finite-resolution reports or lifetime incidence.
 
-The mathematics of déjà vu is not a proof that a subjective experience must occur. It is a toolkit for separating valid consequences from seductive analogies.
+Period three deserves similar care. In continuous interval dynamics, an exact period-three orbit triggers powerful chaos results and leads toward symbolic dynamics and scrambled trajectories. But the existence of such an orbit at a chosen parameter must be established exactly; a numerical orbit hovering near three values is evidence, not proof. And chaos does not turn a topological statement into an empirical percentage.
 
-A positive return creates infinitely many return times by multiplication. Exact period $3$ certifies three distinct stages. Recurrence passes from a detailed system to a compatible observed system. The logistic family stays inside its natural state interval for parameters in $[0,4]$. In tropical dynamics, eigenstates move by uniform linear drift, and zero drift is precisely fixed-state recurrence. Against these positive results stands an equally important negative one: continuity alone does not make periodic states dense.
+## A more honest mathematics of familiarity
 
-The next scientific step is therefore not to equate a survey percentage with a topological property. It is to build a measure-calibrated model of approximate recurrence, specify what is observed, and test whether periodic windows predict anything beyond chance. The most illuminating mathematics here does not declare déjà vu inevitable. It tells us exactly what would have to be true before such a declaration could be justified.
+The durable picture has three layers.
+
+First is **state dynamics**: what the hidden system actually does. Second is **encoding or observation**: what information survives measurement. Third is **incidence**: how frequently an event occurs under a specified probability distribution and observation protocol.
+
+On the first layer, continuous interval dynamics guarantee at least one fixed state. On the second, faithful encodings preserve and reflect recurrence, while lossy observations can manufacture it. On the third, no frequency can be inferred until a measure and an event are defined.
+
+So is déjà vu mathematically inevitable? In the narrow model of a continuous self-map of a closed interval, some recurrent state is inevitable. The stronger human claim does not follow. Mathematics replaces the slogan with a sharper insight: recurrence, perceived recurrence, and prevalent recurrence are three different phenomena. Understanding their relationship requires not only a dynamical law, but also a faithful window onto the system and a probabilistic account of who observes what, and when.
