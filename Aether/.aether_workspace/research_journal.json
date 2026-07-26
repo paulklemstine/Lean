@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "11a0fcb2",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\n## 1. Replace the deck-group proxy by an actual fundamental-group calculation\n\n`Catalog/Logic/SpacetimeDonuts.lean` proves that the kernel of the universal-cover projection is exa",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-22T00:14:35",
-      "title": "Rucker: Spacetime Donuts — Topology of the Universe"
-    },
-    {
-      "cycle_id": "b31f2cf9",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nThe completed development establishes the abstract logical core in three layers. `Core.lean` studies unrestricted semantic diagonalization and fixed-point arguments; `Independence",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-22T00:14:40",
-      "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
-    },
-    {
       "cycle_id": "4d85ad7f",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nThe formal development proves a pointwise and finite-chain core, not the full differential-geometric Alcubierre spacetime. The next steps are:\n\n1. **Smooth spacetime model.** Defi",
@@ -499,29 +479,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-26T22:24:17",
       "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+    },
+    {
+      "cycle_id": "1f5ea34f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture → Al",
+      "quality_score": 0.77698,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-26T23:29:06",
+      "title": "EML Number Theory: Transcendence and Algebraic Independence"
+    },
+    {
+      "cycle_id": "060e882c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n## Topological realization of the classification theorem\n\nThe completed result classifies **connected groupoids**, hence connected homotopy 1-types, by the automorphism group at a",
+      "quality_score": 0.79231,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-26T23:29:12",
+      "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3603d4d1",
-      "domain": "Geometry",
-      "key_insight": "",
-      "quality_score": 0.5663199999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T12:11:39",
-      "title": "Transfinite Game Theory: Games That Last Forever"
-    },
-    {
-      "cycle_id": "6d1b5339",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Infinite-Dimensional Chess\n\n## 1. Countable-Ordinal Realization by Finite Material\n\n**Conjecture.** Every countable ordinal is the game value of a winning position on an infinite",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T12:11:44",
-      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-    },
     {
       "cycle_id": "f0066f11",
       "domain": "Novelty",
@@ -2501,45 +2481,29 @@
       "theorem_count": 15,
       "timestamp": "2026-07-26T22:24:17",
       "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+    },
+    {
+      "cycle_id": "1f5ea34f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture → Al",
+      "quality_score": 0.77698,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-26T23:29:06",
+      "title": "EML Number Theory: Transcendence and Algebraic Independence"
+    },
+    {
+      "cycle_id": "060e882c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n## Topological realization of the classification theorem\n\nThe completed result classifies **connected groupoids**, hence connected homotopy 1-types, by the automorphism group at a",
+      "quality_score": 0.79231,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-26T23:29:12",
+      "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6296b01e",
-      "domain": "Algebra",
-      "name": "periodicPt_reflect_of_injective",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "6296b01e",
-      "domain": "Algebra",
-      "name": "minimalPeriod_eq_of_injective",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "872b26ee",
-      "domain": "NumberTheory",
-      "name": "regev_rounding_bit1",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "872b26ee",
-      "domain": "NumberTheory",
-      "name": "regev_rounding_bit1",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "872b26ee",
-      "domain": "NumberTheory",
-      "name": "encoding_separation",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "928798aa",
-      "domain": "Physics",
-      "name": "regev_rounding_bit1",
-      "quality": 0.7
-    },
     {
       "cycle_id": "928798aa",
       "domain": "Physics",
@@ -2803,9 +2767,45 @@
       "domain": "Geometry",
       "name": "fib_composite_has_primitive",
       "quality": 0.7311199999999999
+    },
+    {
+      "cycle_id": "1f5ea34f",
+      "domain": "Applications",
+      "name": "RationalEL",
+      "quality": 0.77698
+    },
+    {
+      "cycle_id": "1f5ea34f",
+      "domain": "Applications",
+      "name": "elNumbers_subset_emlNumbers",
+      "quality": 0.77698
+    },
+    {
+      "cycle_id": "1f5ea34f",
+      "domain": "Applications",
+      "name": "expExpOneAddLogTwoExpr_eval",
+      "quality": 0.77698
+    },
+    {
+      "cycle_id": "060e882c",
+      "domain": "Bridges",
+      "name": "vertexFunctor_faithful",
+      "quality": 0.79231
+    },
+    {
+      "cycle_id": "060e882c",
+      "domain": "Bridges",
+      "name": "vertexFunctor_full",
+      "quality": 0.79231
+    },
+    {
+      "cycle_id": "060e882c",
+      "domain": "Bridges",
+      "name": "vertexFunctor_essSurj",
+      "quality": 0.79231
     }
   ],
-  "last_updated": "2026-07-26T22:24:17",
+  "last_updated": "2026-07-26T23:29:12",
   "open_questions": [
     {
       "context": "¬ Function.Surjective enumerate := by sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "43fa6482",
-        "quality": 0.77,
-        "theorems": 7,
-        "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
-      },
-      {
         "cycle_id": "b648d8e5",
         "quality": 0.6,
         "theorems": 1636,
@@ -3141,15 +3135,15 @@
         "quality": 0.63,
         "theorems": 14,
         "title": "EML Kolmogorov-Arnold Representation"
+      },
+      {
+        "cycle_id": "1f5ea34f",
+        "quality": 0.77698,
+        "theorems": 16,
+        "title": "EML Number Theory: Transcendence and Algebraic Independence"
       }
     ],
     "Bridges": [
-      {
-        "cycle_id": "fd569acd",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "Borges' Library of Babel: Combinatorics of Everything"
-      },
       {
         "cycle_id": "f2b328a7",
         "quality": 0.64,
@@ -3203,6 +3197,12 @@
         "quality": 0.63,
         "theorems": 38205,
         "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
+      },
+      {
+        "cycle_id": "060e882c",
+        "quality": 0.79231,
+        "theorems": 13,
+        "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
       }
     ],
     "Combinatorics": [
