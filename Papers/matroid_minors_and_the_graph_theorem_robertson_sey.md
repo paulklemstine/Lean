@@ -1,5 +1,18 @@
-# Computational Evidence Justification
+# Why computational evidence was skipped
 
-Computational evidence was not produced because the formal results proved here are structural implications about arbitrary partial orders and matroid classes, not a finite numerical conjecture. Their conclusions follow deductively from an explicit well-quasi-order hypothesis and are checked directly by Lean.
+The formal theorem proved in this project is a structural implication valid for
+an arbitrary well-quasi-order: a downward-closed class has a finite forbidden
+set.  It has no numerical instances whose initial terms could usefully be
+computed, and no associated OEIS sequence.
 
-The proposed enumeration of rank-three matroids on nine elements would require a separate, verified representation and isomorphism-enumeration framework that is not present in this project. More importantly, enumerating “ternary matroids” cannot test which candidates are ternary-representable, since that description already assumes representability. No finite computation would verify the unrestricted well-quasi-order conjecture.
+The suggested experiment is also circular as stated: “ternary matroid” means
+“matroid representable over `F₃`,” so checking that enumerated ternary matroids
+are `F₃`-representable cannot find a counterexample.  Excluded minors for
+ternary representability must instead be sought among non-ternary matroids by
+checking all proper deletion/contraction minors.
+
+Finally, finite checks cannot establish the theorem’s well-quasi-ordering
+premise, which quantifies over infinite sequences.  For these reasons,
+computational evidence would neither test the formal claim nor provide a
+meaningful approximation to it.  A corrected future experiment is described in
+`FUTURE_DIRECTIONS.md`.
