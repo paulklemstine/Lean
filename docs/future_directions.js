@@ -1741,18 +1741,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
-    "consumed_by_exp_id": "1f5ea34f",
+    "consumed_by_exp_id": "",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domains": [
       "EML",
       "Algebra"
     ],
     "id": "seed_339",
-    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
@@ -4873,18 +4872,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
-    "consumed_by_exp_id": "060e882c",
+    "consumed_by_exp_id": "",
     "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
     "domains": [
       "Bridges",
       "Algebra"
     ],
     "id": "seed_298",
-    "phase": "complete",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
@@ -6696,7 +6694,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0776",
+    "id": "fd_0778",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.21589v1",
@@ -8166,6 +8164,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0777",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-07-26T23:29:28.534256+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
