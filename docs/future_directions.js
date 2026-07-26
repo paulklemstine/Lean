@@ -652,7 +652,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zeta Functions of Directed Graphs and the Graph Riemann Hypothesis"
   },
   {
-    "consumed_by_exp_id": "b42bd325",
+    "consumed_by_exp_id": "",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domains": [
       "Novelty",
@@ -661,11 +661,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_118",
-    "phase": "A",
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -1741,20 +1740,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
-    "consumed_by_exp_id": "1f5ea34f",
-    "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1f5ea34f (Q=0.777), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domains": [
-      "EML",
-      "Algebra"
+      "Applications"
     ],
-    "id": "seed_339",
-    "phase": "B",
-    "priority_score": 0.88,
+    "id": "push_1f5ea34f_b2724b2b",
+    "priority_score": 0.87698,
     "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Number Theory: Transcendence and Algebraic Independence"
+    "source_exp_id": "1f5ea34f",
+    "status": "available",
+    "timestamp": "2026-07-26T23:20:00.420147+00:00",
+    "title": "Deepening: EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
     "consumed_by_exp_id": "e4773f49",
@@ -5177,18 +5174,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "dcd15145",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
       "Probability"
     ],
     "id": "fd_0673",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T14:34:16.697801+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -7788,6 +7784,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T10:53:07.911660+00:00",
     "title": "For every nonexceptional composite index, the primitive part of the correspondin"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture \u2192 AlgebraicIndependent \u211a concreteGenerators`, or formalize a\n   model of the classical conjecture in which this algebraic-independence statement\n   fails. This determines whether `EMLSchanuel.concrete_independence` is genuinely\n   stronger than the classical clause used here.\n\n2. **A named hypothesis for multiplication elimination.** State a precise\n   exponential-algebraic closedness principle and prove that it, together with\n   `SchanuelConjecture`, implies `EMLSchanuel.multiplication_elimination` for every\n   `RationalEML` expression. A counterexample expression would falsify the proposed\n   implication.\n\n3. **Separate transcendence of the concrete generators.** Under\n   `SchanuelConjecture`, prove both\n   `Transcendental \u211a (Real.exp (Real.exp 1))` and\n   `Transcendental \u211a (Real.log 2)`. Then test whether the same assumptions suffice\n   to prove algebraic independence of this pair.\n\n4. **Finite-arity EML/EL equivalence.** Define rational EML and EL terms over\n   `Fin n` by a conservative extension of the existing catalog syntax, and prove\n   that extensional multiplication elimination at every finite arity is equivalent\n   to equality of the corresponding represented-function classes.\n\n5. **General nonzero rational linear combinations.** For every finite family\n   `x : Fin n \u2192 \u211d` algebraically independent over `\u211a`, prove that any rational\n   linear combination with a nonzero coefficient vector is transcendental over\n   `\u211a`. The theorem in this development should follow as the `n = 2`, coefficient\n   vector `(1, 1)` instance.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0776",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1f5ea34f",
+    "status": "available",
+    "timestamp": "2026-07-26T23:19:56.361114+00:00",
+    "title": "Each item below is a concrete formal target whose success or failure can be chec"
   },
   {
     "consumed_by_exp_id": "",
