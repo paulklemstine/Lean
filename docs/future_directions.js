@@ -1786,7 +1786,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92e6405b",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -1794,10 +1794,11 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "fd_0682",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697827+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -3019,17 +3020,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramsey Theory: Bounds and Constructions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e50f9bec",
     "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
     "domains": [
       "Computation",
       "Logic"
     ],
     "id": "fd_0676",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697812+00:00",
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
@@ -3633,17 +3635,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27eaed26",
     "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
       "Novelty",
       "Logic"
     ],
     "id": "seed_383",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
@@ -5843,16 +5846,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27c8e30f",
     "description": "Cycle 905765f9 (Q=0.760) proved 4 theorems in Shared but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within",
     "domains": [
       "Shared"
     ],
     "id": "sorry_fill_905765f9_b4c36e4b",
+    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "905765f9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-25T10:53:08.634370+00:00",
     "title": "Close Proofs: [Reset] Fresh approach in Shared"
   },
