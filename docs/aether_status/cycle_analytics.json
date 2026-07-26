@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-26T18:21:18.245598+00:00",
+  "last_updated": "2026-07-26T19:32:32.816296+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -37828,6 +37828,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19b",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19b",
@@ -37871,6 +37872,7 @@
       "outcome_quality": 0.6256666666666666,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -37914,6 +37916,7 @@
       "outcome_quality": 0.66484,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -37942,6 +37945,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-26T18:21:18.132301+00:00",
       "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.226,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 4290.215677499771,
+      "end_time": 1785094341.603518,
+      "files_integrated": 2,
+      "job_id": "b3e5f77d",
+      "outcome_quality": 0.6666666666666667,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.866,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8511,
+        "novelty": 0.9395,
+        "proof_depth": 0.8132,
+        "usefulness": 0.9066
+      },
+      "quality_score": 0.6666666666666667,
+      "sorry_count": 1,
+      "sorry_density": 0.05555555555555555,
+      "start_time": 1785090051.3878405,
+      "strategy_count": 0,
+      "theorem_count": 18,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 10,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-26T19:32:32.703634+00:00",
+      "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
     }
   ]
 }
