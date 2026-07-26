@@ -256,6 +256,7 @@ class KnowledgeExtractor:
         self.inflight_path = self.workspace / "inflight_jobs.json"
         self.max_retries = self.config.get("autoresearch", {}).get("max_retries", 2)
         self.phase_b_min_score = self.config.get("phase_b", {}).get("min_score", 0.25)
+        self.max_inflight = self.config.get("autoresearch", {}).get("max_inflight", 9)
 
         
         self._load_inflight()
@@ -480,13 +481,15 @@ class KnowledgeExtractor:
         # (the Lean files are already there as inputs)
         return job
 
-    async def dispatch_phase_b_async(self, job: "ResearchJob", max_inflight: int = 9) -> "ResearchJob":
+    async def dispatch_phase_b_async(self, job: "ResearchJob", max_inflight: int = None) -> "ResearchJob":
         """Dispatch Phase B to Aristotle using the Phase B prompt.
 
         Builds a new Aristotle project with the Phase B prompt and submits
         it. The new project_id replaces job.project_id so the next tick
         can poll for Phase B's results.
         """
+        if max_inflight is None:
+            max_inflight = self.max_inflight
         # Build the Phase B prompt
         self._dispatch_phase_b(job)
 
@@ -581,7 +584,7 @@ class KnowledgeExtractor:
         except RuntimeError:
             return self._count_inflight_dispatched()
 
-    async def dispatch_retry_async(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = 9) -> "ResearchJob":
+    async def dispatch_retry_async(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = None) -> "ResearchJob":
         """Queue or dispatch a proof repair retry, respecting the parallel limit.
 
         If Aristotle's queue is full or we are already at max_inflight, the job is
@@ -589,6 +592,8 @@ class KnowledgeExtractor:
         will retry it once a slot opens up, instead of immediately hammering the
         Aristotle API and failing.
         """
+        if max_inflight is None:
+            max_inflight = self.max_inflight
         old_project_id = job.project_id
 
         # Update concept and prompt with retry suggestions
@@ -656,8 +661,10 @@ class KnowledgeExtractor:
 
         return job
 
-    def dispatch_retry(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = 9) -> "ResearchJob":
+    def dispatch_retry(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = None) -> "ResearchJob":
         """Synchronous version of dispatch_retry_async."""
+        if max_inflight is None:
+            max_inflight = self.max_inflight
         return asyncio.run(self.dispatch_retry_async(job, retry_suggestion, max_inflight=max_inflight))
 
     # ==================================================================
@@ -858,7 +865,7 @@ class KnowledgeExtractor:
     # Phase 2: DISPATCH — Pi writes the prompt, Aristotle receives it
     # ==================================================================
 
-    def dispatch(self, job: ResearchJob, dry_run: bool = False, max_inflight: int = 9) -> ResearchJob:
+    def dispatch(self, job: ResearchJob, dry_run: bool = False, max_inflight: int = None) -> ResearchJob:
         """Pi writes a detailed prompt for Aristotle, then dispatches.
 
         The prompt asks Aristotle for:
@@ -870,6 +877,8 @@ class KnowledgeExtractor:
         This is the sync version — safe to call from non-async code.
         Use dispatch_async() when inside an already-running event loop.
         """
+        if max_inflight is None:
+            max_inflight = self.max_inflight
         job = self._prepare_dispatch(job, dry_run=dry_run)
         if dry_run or job.status in ("failed", "dry_run"):
             if hasattr(self, 'locked_titles') and job.concept:
@@ -937,11 +946,13 @@ class KnowledgeExtractor:
 
         return job
 
-    async def dispatch_async(self, job: ResearchJob, dry_run: bool = False, max_inflight: int = 9) -> ResearchJob:
+    async def dispatch_async(self, job: ResearchJob, dry_run: bool = False, max_inflight: int = None) -> ResearchJob:
         """Async version of dispatch() — call from inside an already-running event loop.
 
         This is the version to use in run_continuous() and other async contexts.
         """
+        if max_inflight is None:
+            max_inflight = self.max_inflight
         job = self._prepare_dispatch(job, dry_run=dry_run)
         if dry_run or job.status in ("failed", "dry_run"):
             if hasattr(self, 'locked_titles') and job.concept:
@@ -4884,7 +4895,7 @@ Research mode: {concept.research_mode}
 
                 # Discover and dispatch (async version since we're in an event loop)
                 job = self.discover(forced_domain=domain)
-                job = await self.dispatch_async(job)
+                job = await self.dispatch_async(job, max_inflight=max_inflight)
 
                 if job.project_id:
                     print(f"[Continuous] Dispatched {job.project_id[:8]}: {job.concept.title[:50]}")

@@ -519,6 +519,10 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         # Reload inflight state from disk in case another process updated it
         # while we were waiting for the lock.
         extractor._load_inflight()
+        # Push max_inflight onto the extractor so ALL dispatch methods
+        # (dispatch_async, dispatch_phase_b_async, dispatch_retry_async)
+        # share one authoritative limit instead of relying on per-method defaults.
+        extractor.max_inflight = max_inflight
         # Also reload the long-lived FutureDirectionsManager so it doesn't overwrite the disk file with stale memory
         if hasattr(extractor, "fd_manager"):
             extractor.fd_manager._load()
@@ -554,6 +558,20 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
     novelty_slots: number of dispatch slots reserved for novelty/wild directions
     """
+    # 0. Server-side capacity check: query Aristotle for real active job count.
+    # The local inflight_jobs.json can be stale (e.g. after crash, or when CI
+    # runs on a different machine).  The server count is the ground truth.
+    server_count_at_start = await _safe_get_active_jobs_count(extractor.aristotle)
+    local_count_at_start = extractor._count_inflight_dispatched()
+    effective_count = max(local_count_at_start, server_count_at_start) if server_count_at_start >= 0 else local_count_at_start
+    if effective_count > max_inflight:
+        print(f"[Guard] WARNING: {effective_count} active jobs detected (local={local_count_at_start}, "
+              f"server={server_count_at_start}) exceeds max_inflight={max_inflight}. "
+              f"Will poll/integrate but skip ALL new dispatching this tick.")
+    elif server_count_at_start >= 0 and server_count_at_start != local_count_at_start:
+        print(f"[Guard] Local tracking ({local_count_at_start}) differs from server ({server_count_at_start}); "
+              f"using max={effective_count} for capacity decisions")
+
     # 1. Poll inflight jobs
 
 
@@ -1277,6 +1295,13 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     print(f"[Tick] Inflight check: {local_inflight} local tracking, {server_running} actual on server -> using {current_inflight}")
     slots_available = max(0, max_inflight - current_inflight)
 
+    # ── HARD GUARD: refuse to dispatch if already at or over max_inflight ──
+    # This catches stale-file scenarios where the local count under-reports.
+    if server_running >= 0 and server_running >= max_inflight:
+        print(f"[Guard] Server reports {server_running} active jobs — at/over max_inflight={max_inflight}. "
+              f"Skipping ALL dispatching this tick.")
+        slots_available = 0
+
     # Domain saturation: exclude domains with ≥3 inflight jobs from new dispatches
     from collections import Counter
     inflight_domains = Counter()
@@ -1338,7 +1363,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     print(f"[Tick] Dispatching injected issue: {fd.title}")
                     try:
                         job = extractor.discover(forced_direction=fd)
-                        job = await extractor.dispatch_async(job)
+                        job = await extractor.dispatch_async(job, max_inflight=max_inflight)
                         if job.project_id:
                             extractor.inflight[job.project_id] = job
                             print(f"[Tick] Dispatched injected issue {job.project_id[:8]}: {job.concept.title[:60]}")
@@ -1379,7 +1404,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 # When novelty_slots is 0, do not exclude Novelty from candidate directions
                 excluded = saturated_domains if novelty_slots == 0 else (["Novelty"] + saturated_domains)
                 job = extractor.discover(domain_filter=None, exclude_domains=excluded)
-                job = await extractor.dispatch_async(job)
+                job = await extractor.dispatch_async(job, max_inflight=max_inflight)
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
                     print(f"[Tick] Dispatched {job.project_id[:8]}: {job.concept.title[:60]}")
@@ -1407,7 +1432,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             job = None
             try:
                 job = extractor.discover(domain_filter="Novelty")
-                job = await extractor.dispatch_async(job)
+                job = await extractor.dispatch_async(job, max_inflight=max_inflight)
                 if job.project_id:
                     extractor.inflight[job.project_id] = job
                     print(f"[Tick] Dispatched [NOVELTY] {job.project_id[:8]}: {job.concept.title[:60]}")
