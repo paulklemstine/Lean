@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-26T14:26:26.871399+00:00",
+  "last_updated": "2026-07-26T17:22:49.343335+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -37740,6 +37740,7 @@
       "outcome_quality": 0.6043828571428571,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -37768,6 +37769,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-26T14:26:26.759327+00:00",
       "title": "Deepening: Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.209,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Applications",
+      "duration_seconds": 1700.686143875122,
+      "end_time": 1785086561.2554617,
+      "files_integrated": 1,
+      "job_id": "538b51f9",
+      "outcome_quality": 0.63,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.51,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.709,
+        "cross_domain": 0.85,
+        "grade": "world_class",
+        "importance": 0.6489,
+        "novelty": 0.95,
+        "proof_depth": 0.5199,
+        "usefulness": 0.685
+      },
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785084860.5693178,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-26T17:22:49.230527+00:00",
+      "title": "EML Kolmogorov-Arnold Representation"
     }
   ]
 }

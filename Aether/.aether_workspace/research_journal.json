@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "86896469",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T11:15:50",
-      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-    },
-    {
       "cycle_id": "198023c0",
       "domain": "Applications",
       "key_insight": "# Future Directions: Structural Equivalence and Meaning\n\n## 1. Orbit-complete observational languages\n\n**Conjecture.** For every finite relational signature and finite model, there is a finite modal l",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-26T14:26:26",
       "title": "Deepening: Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "cycle_id": "538b51f9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Exact EML representation of every bivariate polynomial.** For every polynomial\n   `P ∈ ℝ[X,Y]`, there are finitely many ridge channels whose coordinate inner\n   functions are",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-26T17:22:48",
+      "title": "EML Kolmogorov-Arnold Representation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T14:26:26",
+  "last_updated": "2026-07-26T17:22:48",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3dce6722",
-        "quality": 0.77,
-        "theorems": 21,
-        "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-      },
-      {
         "cycle_id": "43fa6482",
         "quality": 0.77,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.77,
         "theorems": 14,
         "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
+      },
+      {
+        "cycle_id": "538b51f9",
+        "quality": 0.63,
+        "theorems": 14,
+        "title": "EML Kolmogorov-Arnold Representation"
       }
     ],
     "Bridges": [
