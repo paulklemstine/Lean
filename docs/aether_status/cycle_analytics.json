@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-26T05:37:23.260196+00:00",
+  "last_updated": "2026-07-26T06:19:12.267650+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -37230,6 +37230,7 @@
       "outcome_quality": 0.63,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -37430,6 +37431,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-26T05:37:22.588237+00:00",
       "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4053,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Novelty",
+      "duration_seconds": 5208.835553884506,
+      "end_time": 1785046719.8015003,
+      "files_integrated": 407,
+      "job_id": "d7591934",
+      "outcome_quality": 0.6299480519480519,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v27",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.9053,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9126,
+        "novelty": 0.95,
+        "proof_depth": 0.8965,
+        "usefulness": 0.9483
+      },
+      "quality_score": 0.6299480519480519,
+      "sorry_count": 8,
+      "sorry_density": 0.0008658008658008658,
+      "start_time": 1785041510.9659464,
+      "strategy_count": 0,
+      "theorem_count": 9240,
+      "theorem_novelty_disproof": 235,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6507,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-26T06:19:12.155423+00:00",
+      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
     }
   ]
 }

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1a99009",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Information and Derivation Search\n\n## 1. Variable-branching entropy law\n\nFor a depth-dependent derivation tree with branching sequence `b₁, b₂, …`, the minimal worst-case number o",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T09:14:58",
-      "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
-    },
-    {
       "cycle_id": "8b838f97",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Hypergraph Ramsey Theory Beyond Graphs\n\n## 1. Exact Property-B incidence threshold\n\n**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pairs `(n,k)` for",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-26T05:37:18",
       "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+    },
+    {
+      "cycle_id": "d7591934",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Result formalized here\n\n`Catalog/Novelty/MatroidMinorFiniteObstructions.lean` proves the abstract bridge\nbehind forbidden-minor theorems.  Interpret `a ≤ b` as “`a` is a minor",
+      "quality_score": 0.6299480519480519,
+      "sorry_count": 8,
+      "theorem_count": 9240,
+      "timestamp": "2026-07-26T06:19:11",
+      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T05:37:18",
+  "last_updated": "2026-07-26T06:19:11",
   "open_questions": [
-    {
-      "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
-      "cycle_id": "0daa61af",
-      "domain": "Tropical",
-      "sorry_count": 3,
-      "timestamp": "2026-07-17T18:03:33"
-    },
     {
       "context": "",
       "cycle_id": "1003d095",
@@ -3016,6 +3009,13 @@
       "domain": "Bridges",
       "sorry_count": 22,
       "timestamp": "2026-07-26T05:36:47"
+    },
+    {
+      "context": "- Every main theorem below is `sorry`-free (checked).; `RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no; `RhoDom.dominant_singleton_iff`, so it is not a self",
+      "cycle_id": "d7591934",
+      "domain": "Novelty",
+      "sorry_count": 8,
+      "timestamp": "2026-07-26T06:19:11"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5d6a1919",
-        "quality": 0.76,
-        "theorems": 13,
-        "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
-      },
-      {
         "cycle_id": "6622cac1",
         "quality": 0.69,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.75,
         "theorems": 9,
         "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+      },
+      {
+        "cycle_id": "d7591934",
+        "quality": 0.6299480519480519,
+        "theorems": 9240,
+        "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
       }
     ],
     "NumberTheory": [
