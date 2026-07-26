@@ -1,7 +1,6 @@
 # Lean build artifacts
-/.lake
-/Catalog/.lake
-/lake-packages
+.lake/
+lake-packages/
 *.olean
 *.ilean
 /build
