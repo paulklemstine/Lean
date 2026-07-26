@@ -1,0 +1,11 @@
+--- Core.lean
++++ Core.lean
+@@ -1,6 +1,6 @@
+ import Mathlib
+-import Logic.PosetTheory.ProofSystemCollapse
+-import Bridges.PigeonholeInjectionBridge.PigeonholeInjectionBridge
++import Logic.ProofSystemCollapse
++import Bridges.PigeonholeInjectionBridge
+ 
+ /-!
+ 

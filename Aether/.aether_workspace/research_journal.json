@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d5fe8eb3",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-21T06:49:45",
-      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-    },
-    {
-      "cycle_id": "1f9eb531",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## What was established\n\nThe formal development isolates a mathematically valid core of the proposal:\n\n- a monotone binary simulator on a complete lattice has a canonical least se",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T12:08:37",
-      "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
-    },
-    {
       "cycle_id": "95b84694",
       "domain": "Bridges",
       "key_insight": "# Future directions\n\nThe formalization makes the speculative claim precise for a finite formal library: gravitational weight is the number of direct users, proof length is a natural-number cost, and d",
@@ -499,29 +479,29 @@
       "theorem_count": 22,
       "timestamp": "2026-07-25T20:16:46",
       "title": "Tropical Compactification of Moduli Spaces"
+    },
+    {
+      "cycle_id": "3d6ad336",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry → correctness.** Additive encryption is translat",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-26T00:21:35",
+      "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
+    },
+    {
+      "cycle_id": "d94c6678",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n## What was established\n\n`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed protocol conflates:\n\n1. **Naive random proof-line opening is generally not zero",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-26T00:21:39",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d67581f7",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A ⊗ v = λ + v`, t",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T07:21:30",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
-      "cycle_id": "192fa110",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Structural Register Allocation\n\n## 1. Weighted elimination-optimal spilling\n\n**Conjecture.** For a chordal interference graph with nonnegative vertex spill costs and a fixed regis",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T07:22:06",
-      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
-    },
     {
       "cycle_id": "5b9ebbbb",
       "domain": "Novelty",
@@ -2501,27 +2481,29 @@
       "theorem_count": 14,
       "timestamp": "2026-07-26T00:21:20",
       "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
+    },
+    {
+      "cycle_id": "3d6ad336",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry → correctness.** Additive encryption is translat",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-26T00:21:35",
+      "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
+    },
+    {
+      "cycle_id": "d94c6678",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n## What was established\n\n`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed protocol conflates:\n\n1. **Naive random proof-line opening is generally not zero",
+      "quality_score": 0.71,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-26T00:21:39",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ddd2821f",
-      "domain": "Logic",
-      "name": "mem_priorPairSums_iff",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "ddd2821f",
-      "domain": "Logic",
-      "name": "canonical_zero",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "ddd2821f",
-      "domain": "Logic",
-      "name": "priorPairSums_congr",
-      "quality": 0.77
-    },
     {
       "cycle_id": "2f329d75",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "transport_card",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "3d6ad336",
+      "domain": "Cryptography",
+      "name": "encryption_distance_eq_error_weight",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "3d6ad336",
+      "domain": "Cryptography",
+      "name": "for",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "3d6ad336",
+      "domain": "Cryptography",
+      "name": "message_unique_from_noisy_encoding",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-07-26T00:21:20",
+  "last_updated": "2026-07-26T00:21:39",
   "open_questions": [
     {
       "context": "",
@@ -3331,18 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "99a8a1e3",
-        "quality": 0.66,
-        "theorems": 10,
-        "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
-      },
-      {
-        "cycle_id": "27f58424",
-        "quality": 0.82,
-        "theorems": 11,
-        "title": "Close Proofs: Self-Modifying Code That Cannot Be Stopped"
-      },
-      {
         "cycle_id": "b3f0d755",
         "quality": 0.75,
         "theorems": 26,
@@ -3389,6 +3377,18 @@
         "quality": 0.59,
         "theorems": 11,
         "title": "ArXiv paper: The Endpoint Cardinality of Discrete Cube Skeleta"
+      },
+      {
+        "cycle_id": "3d6ad336",
+        "quality": 0.7,
+        "theorems": 10,
+        "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
+      },
+      {
+        "cycle_id": "d94c6678",
+        "quality": 0.71,
+        "theorems": 0,
+        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
       }
     ],
     "Geometry": [

@@ -1,135 +1,110 @@
-# A Proof You Can Check but Never See
+# The Sealed Proof: What It Would Take to Verify a Theorem Without Seeing Why
 
-## How zero knowledge separates mathematical truth from mathematical disclosure
+Imagine receiving a message containing only the final line of an extraordinary theorem, followed by a short digital conversation. At the end of the conversation you are convinced that the sender possesses a valid derivation, yet you have learned none of its decisive ideas. The situation resembles a sealed-bid auction: validity becomes public while strategy remains private.
 
-Imagine that a mathematician arrives with an extraordinary claim: she has proved a famous theorem, but she cannot reveal the argument. Perhaps the proof contains a commercially valuable optimization method, perhaps its publication would expose a security vulnerability, or perhaps several teams are racing toward the same result. Ordinarily, the choices are stark. She can disclose the proof and earn trust, or conceal it and ask the world to take her word.
+This is the promise of zero-knowledge theorem proving. It is also easy to oversell. A tempting protocol says: hide every line of a proof, let a verifier choose a random line, and reveal only that line together with evidence that it is locally correct. Repeat the procedure until cheating seems implausible. The proposal has an appealing simplicity, but three different questions are entangled inside it.
 
-Zero-knowledge protocols suggest a third possibility. They let one person convince another that she possesses a secret witness without revealing the witness itself. The underlying idea is not to hide an ordinary proof behind a curtain and merely promise that it is there. It is to conduct a carefully designed conversation whose successful completion is persuasive, yet whose transcript could have been generated without the secret. The verifier gains confidence in the claim and nothing else.
+First, does opening a random line conceal the witness—the proof itself? Second, how rapidly does repetition suppress the chance that an invalid proof slips through? Third, can the hidden lines be committed in a way that actually conceals their contents? The answers are unexpectedly sharp. Random opening is generally not private. Repetition obeys an exact geometric law, but not automatically the often-quoted binary law. Uniform additive masking is perfectly hiding, although hiding alone does not make the whole protocol sound or zero knowledge.
 
-The cleanest mathematical version of this idea lives in finite groups. Although modest compared with the dream of hiding a proof of Fermat’s Last Theorem, it captures the essential geometry: random translation erases the identity of a witness, while two incompatible answers expose it.
+## A clean model of privacy
 
-## The algebraic stage
+Fix a public statement $s$. A witness $w$ is a finite sequence of $n$ symbols, written $w(0),\ldots,w(n-1)$, and a validity relation specifies which witnesses establish $s$. If the verifier challenges coordinate $i$, the simplest possible view is just the opened value $w(i)$.
 
-Let $W$ and $V$ be finite abelian groups, written additively, and let
+Call this view **perfectly witness-private** if any two valid witnesses for the same statement produce exactly the same view. This definition demands more than concealing most information: the verifier's observation must be independent of which valid witness the prover used.
 
-$$
-L:W\to V
-$$
+The first result completely characterizes privacy at one coordinate.
 
-be a group homomorphism. A public statement is an element $y\in V$. A witness is an element $w\in W$ satisfying
+**Coordinate Privacy Theorem.** Opening coordinate $i$ is perfectly witness-private if and only if every pair of valid witnesses for each public statement agrees at coordinate $i$.
 
-$$
-L(w)=y.
-$$
+The reason is immediate but consequential. The view is the coordinate itself, so two witnesses induce the same view precisely when their values there coincide. Applying this observation to every possible challenge gives a global characterization.
 
-The prover claims to know such a $w$. The protocol has three moves.
+**All-Openings Characterization.** If every coordinate may be challenged, then all coordinate openings are perfectly witness-private if and only if each public statement has at most one valid witness.
 
-1. The prover chooses a uniformly random mask $r\in W$ and sends the commitment $t=L(r)$.
-2. The verifier chooses a challenge bit $e\in\{0,1\}$.
-3. The prover returns $z=r+ew$.
+Indeed, privacy at all coordinates forces two valid witnesses to agree everywhere, hence to be identical. Conversely, uniqueness makes every view identical because there is no alternative witness to distinguish.
 
-The verifier accepts exactly when
+This theorem exposes the flaw in the slogan “the verifier sees only one random line.” A tiny disclosure can still be a disclosure. Randomness in the choice of the line does not erase the information carried by the line, because the challenge index is part of the transcript. Consider the smallest example: one public statement has two valid one-bit witnesses, one containing $0$ and the other $1$. Opening the sole coordinate reveals the witness completely. The statement remains valid in either case, yet the verifier learns which witness was used.
 
-$$
-L(z)=t+ey.
-$$
+For mathematical proofs, multiple derivations are the rule rather than the exception. Two proofs can differ in notation, intermediate lemmas, order of argument, or the central creative idea. Raw line opening therefore cannot generally support the strongest privacy claim.
 
-Completeness is immediate. If the prover really uses a witness $w$ with $L(w)=y$, then
+## The arithmetic of catching a cheat
+
+Privacy is only half the story. Suppose there are $n$ possible challenges and at most $e$ of them let an invalid certificate pass. In one round the acceptance probability is at most
 
 $$
-L(z)=L(r+ew)=L(r)+eL(w)=t+ey.
+\frac{e}{n}.
 $$
 
-So an honest exchange never fails.
+If $k$ challenges are sampled independently and every round must pass, then accepting challenge vectors form a Cartesian product. Their count is at most $e^k$ out of $n^k$ possible vectors. This yields the exact amplification theorem.
 
-A concrete picture helps. Work modulo a prime $q$, choose a public multiplier $a$, and set $L(x)=ax\pmod q$. If $y=aw\pmod q$, the prover masks $w$ with a random $r$. For challenge $0$, the answer is simply $r$; for challenge $1$, it is $r+w$. The verifier checks $az=t+ey\pmod q$. Nothing computationally exotic is needed to see the central phenomenon.
-
-## Why one answer reveals nothing
-
-Suppose the challenge $e$ is fixed. The response is
+**Independent Repetition Theorem.** If no more than $e$ of $n$ challenges accept in each round, the probability that all $k$ independent rounds accept is at most
 
 $$
-z=r+ew.
+\left(\frac{e}{n}\right)^k.
 $$
 
-Because $r$ is uniform on a finite group, adding the fixed element $ew$ merely permutes the group. Thus $z$ is uniform, regardless of the witness. Once $z$ and $e$ are known, the commitment in any accepting transcript is forced:
+This is genuine exponential decay, but its base matters. The popular bound $2^{-k}$ follows only under the additional half-soundness condition $2e\le n$, meaning that one round catches cheating with probability at least one half.
+
+Now consider a proof with exactly one defective line. Then $e=n-1$, and its escape probability is
 
 $$
-t=L(z)-ey.
+\left(\frac{n-1}{n}\right)^k.
 $$
 
-This observation gives an explicit simulator—a recipe that produces the verifier’s view without knowing $w$. Choose $z$ uniformly from $W$, set $t=L(z)-ey$, and output $(t,e,z)$. Every simulated transcript is accepting because
+With four possible checks this becomes $(3/4)^k$. For every positive $k$,
 
 $$
-L(z)=L(z)-ey+ey=t+ey.
+\left(\frac12\right)^k<\left(\frac34\right)^k.
 $$
 
-More importantly, the simulated distribution is exactly the real distribution. In a real run, the change of variables $z=r+ew$ is a bijection of $W$. For each possible $z$, the corresponding commitment is
+The difference is not cosmetic. At $k=10$, binary decay predicts about $0.00098$, whereas the actual one-bad-line escape probability is about $0.0563$—more than fifty times larger.
+
+There is an even stronger warning.
+
+**No Fixed-Repetition Half-Bound.** For every nonnegative integer $k$, a certificate with $2k+2$ possible checks and only one bad location has escape probability greater than one half after $k$ rounds:
 
 $$
-L(r)=L(z-ew)=L(z)-eL(w)=L(z)-ey.
+\frac12<\left(\frac{2k+1}{2k+2}\right)^k.
 $$
 
-The equality is exact, not approximate and not based on limited computing power.
+Thus no fixed number of raw line checks gives a statement-size-independent half-error guarantee. When a single bad location is hidden among many good ones, the verifier must make a number of queries that grows with the challenge space. To obtain error at most $2^{-\lambda}$ from one bad line among $n$, one needs roughly $n\lambda\log 2$ independent checks, not merely $\lambda$ checks.
 
-This is the **Perfect Honest-Verifier Zero-Knowledge Theorem**: for either fixed challenge bit, the transcript produced with any valid witness has precisely the same distribution as the transcript produced by the simulator that knows only the public statement. Consequently, two different witnesses for the same $y$ produce identical transcript distributions. The verifier cannot infer which witness was used, because there is literally no statistical test that distinguishes them.
+This is why locally testable proof encodings matter. A sophisticated encoding spreads a single logical defect into many detectable local inconsistencies. If a constant fraction of local tests reject every invalid encoded proof, then the base $e/n$ stays bounded away from $1$, and a number of repetitions proportional to the security parameter is enough. Raw derivations do not automatically have that property.
 
-The qualification “honest-verifier” matters. The argument assumes that the challenge is generated according to the prescribed procedure and studies the view associated with that challenge. A malicious verifier may choose challenges adaptively or embed information in a broader strategy. Protecting against such behavior requires a stronger simulator and, often, additional cryptographic machinery.
+## A commitment that really hides
 
-## The trapdoor hidden in two answers
-
-The same affine structure that hides one response makes two responses dangerous. Suppose a prover gives valid answers $z_0$ and $z_1$ to challenges $0$ and $1$ for the same commitment $t$. Acceptance says
+The privacy failure of openings should not obscure a positive result: it is possible to hide an individual value perfectly. Work modulo a positive integer $q$. Let a secret be $s\in\mathbb Z/q\mathbb Z$, choose a mask $r$ uniformly at random from the same finite group, and publish
 
 $$
-L(z_0)=t
+C=s+r\pmod q.
 $$
 
-and
+For any fixed $s$, addition by $s$ permutes the group. Consequently $C$ is uniform, regardless of the secret.
 
-$$
-L(z_1)=t+y.
-$$
+**Uniform Masking Theorem.** For every secret $s\in\mathbb Z/q\mathbb Z$, the distribution of $s+r$ with uniform $r$ is exactly uniform on $\mathbb Z/q\mathbb Z$.
 
-Subtracting the equations yields
+An immediate corollary is perfect hiding.
 
-$$
-L(z_1-z_0)=y.
-$$
+**Perfect Hiding Theorem.** For any two secrets $s$ and $t$, the commitment distributions $s+r$ and $t+r$ are identical when $r$ is uniform.
 
-Therefore $z_1-z_0$ is a witness.
+There is no approximation and no unproved computational assumption here. Every observed commitment has exactly one compatible mask for each possible secret. Before an opening, the commitment contains no statistical evidence favoring one secret over another.
 
-This is the **Special Soundness Theorem**: any pair of accepting transcripts with a common commitment and opposite challenge bits determines a valid witness by subtraction. The theorem explains the protocol’s tension. One answer is perfectly masked by a random translation; two answers cancel the mask.
+But a one-time pad is not a complete commitment scheme. Perfect hiding says the verifier cannot read the secret. Binding asks whether the prover can later open the same published value as two different secrets. With additive masking alone, the answer is yes: for any desired opening $t$, choose the corresponding mask $C-t$. Hiding and binding are distinct requirements, and a useful protocol needs both in compatible security models.
 
-In the honest case, the cancellation is transparent. The answers are $z_0=r$ and $z_1=r+w$, so $z_1-z_0=w$. But the extraction theorem is stronger: it does not assume that the prover formed its answers honestly. Acceptance alone guarantees that their difference maps to $y$.
+Likewise, opening a commitment reveals its plaintext. Perfectly hiding unopened lines does not prove that the opened local constraints reveal nothing about the global witness. A full zero-knowledge argument needs a simulator: an algorithm able to generate a transcript with the same distribution as the verifier’s real view without access to the witness. The coordinate characterization shows exactly why such simulation cannot be obtained merely by declaring the other coordinates hidden.
 
-This “one hides, two reveal” pattern is the beating heart of many identification protocols. It also explains why commitments must be fixed before challenges are known. If a dishonest prover can choose a fresh commitment after seeing each challenge, the two equations need not share the same $t$, and subtraction extracts nothing.
+## From a seductive sketch to a credible architecture
 
-## What repetition does—and does not—buy
+The corrected architecture has several layers. A proof must first be transformed into a locally testable encoding in which every false claim causes a substantial fraction of local checks to fail. The prover must then commit to one global encoding using a binding structure, so answers to different challenges cannot come from inconsistent imaginary proofs. The values and openings must be arranged so that the verifier’s transcript can be simulated without the witness. Finally, repetition must be analyzed using the actual one-round rejection probability.
 
-A single random bit is a weak test. If an impostor can prepare for only one of the two challenges, it can still guess which challenge will be asked and succeed with probability $1/2$. Repeating the experiment $k$ times with independent challenges suggests the familiar bound $2^{-k}$.
+These layers correspond to different guarantees:
 
-But that conclusion needs hypotheses. Each round must bind the prover to a commitment before the corresponding challenge, and the probability model must rule out challenge-dependent rewrites. Under those conditions, a prover that lacks a witness cannot consistently answer both challenges for a fixed commitment; guessing all $k$ independent bits succeeds with probability at most $2^{-k}$. The algebraic extraction theorem supplies the local reason, while the binding and independence assumptions supply the global probability bound.
+1. **Local testability** supplies a constant soundness gap.
+2. **Binding** ties all answers to one certificate.
+3. **Hiding and simulation** protect the witness.
+4. **Independent repetition** converts the one-round gap into geometric error reduction.
 
-This distinction is easy to miss in grand claims about hidden mathematical proofs. Merely committing to a list of proof steps and opening one randomly chosen step does not establish that the entire list is a valid proof. A malformed derivation may contain only a few bad locations, so a single local query may miss them. Repetition helps only in proportion to the density of detectable errors.
+Only after these pieces are present does the grand vision become plausible: certifying a difficult theorem while withholding its proof strategy. General results from probabilistically checkable proofs and cryptographic zero knowledge suggest routes toward that vision, but they do not justify the raw-step protocol by themselves. In particular, communication polynomial only in the theorem statement, independent of the original derivation length, requires a precise encoding theorem and careful accounting of proof length, query complexity, setup assumptions, and prover resources.
 
-To certify a long argument through a small number of queries, one needs a sound locally testable encoding: invalid global objects must create many local inconsistencies. One also needs commitments that are both hiding and binding. Hiding prevents the verifier from learning unopened material; binding prevents the prover from changing that material after learning the queries. These are separate obligations.
+The deepest lesson is methodological. Cryptographic protocols often sound convincing when described as stories: “commit, challenge, open, repeat.” Mathematics forces us to ask what each verb guarantees. Opening can leak. Repetition amplifies only the gap already present. Hiding need not bind. A protocol becomes trustworthy not when its story is intuitive, but when privacy, soundness, and commitment security are separated and quantified.
 
-## From secret witnesses to secret proofs
-
-A mathematical proof can be represented as finite data: formulas, inference rules, and references to earlier lines. Its validity can be checked mechanically by inspecting whether each line is an axiom or follows from previous lines by an allowed rule. This turns “I know a proof” into a witness relation.
-
-Yet the strongest popular slogan—“I can prove a theorem without showing you the proof, using communication only polynomial in the theorem statement”—does not follow merely from this representation. Arithmetizing proofs says that proofs can be encoded as numbers. Local-checking theorems can transform global validity into probabilistically checkable structure. Neither fact, by itself, removes dependence on the length of the hidden proof. A genuinely succinct system must explicitly control encoding size, verifier work, security parameters, and communication.
-
-The finite-group protocol establishes a rigorous foundation rather than the whole cathedral. It proves exact witness privacy for a basic three-move exchange and exact extraction from conflicting answers. It also draws the boundary of the result: no general claim about arbitrary arithmetic theorems, statement-length communication, malicious verifiers, or collision-resistant commitments follows from the algebra alone.
-
-That boundary is intellectually valuable. Cryptographic arguments often fail not in their equations but in the leap from a local mechanism to a global guarantee. Here the local mechanism is pristine. Translation gives privacy. Subtraction gives extraction. Everything beyond it must be named and justified.
-
-## Why mathematicians might care
-
-Confidential theorem certification could matter wherever a proof itself carries value or risk. A company might want to demonstrate that a circuit satisfies a safety property without exposing its design. Researchers might establish priority while withholding details during a coordinated disclosure. A solver could certify that a difficult optimization instance has a feasible solution without revealing the solution. In each case, the public statement and the hidden witness differ, but the logic is the same.
-
-There is also a philosophical shift. Traditional mathematical communication bundles two achievements: establishing truth and transmitting understanding. Zero knowledge separates them. A verifier may become convinced that a witness exists while learning none of its structure. That is useful in security, but it is not a replacement for exposition. A hidden proof can certify; it cannot teach.
-
-The finite affine protocol makes that separation visible with almost embarrassing simplicity. A secret $w$ disappears inside the uniform mask $r+ew$. The resulting conversation has exactly the distribution one could generate without $w$. Yet if the prover ever exposes both $r$ and $r+w$ under the same commitment, the secret falls out as a difference.
-
-The dream of certifying a monumental theorem without revealing its proof remains a larger engineering and complexity-theoretic project. But its smallest reliable component is already a beautiful piece of mathematics: in a finite group, privacy is a translation, and accountability is subtraction.
+A sealed mathematical proof remains a compelling ambition. The path to it is not a single clever curtain placed over an ordinary derivation. It is an engineered object in which errors are dispersed, commitments are globally consistent, transcripts are simulatable, and probabilities are counted exactly. That more careful vision is less magical than the slogan—and far more powerful.

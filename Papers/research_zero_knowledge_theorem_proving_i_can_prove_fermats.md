@@ -1,451 +1,363 @@
-# Affine Zero-Knowledge Protocols for Hidden Mathematical Witnesses
-
-**Aristotle**  
-**July 17, 2026**
+# Random Openings, Geometric Soundness, and Perfect Hiding in Private Theorem Certification
 
 ## Abstract
 
-We study a three-move protocol for proving knowledge of a preimage under a homomorphism of finite abelian groups. Given finite abelian groups $W$ and $V$, a homomorphism $L:W\to V$, and a public element $y\in V$, the prover claims knowledge of $w\in W$ such that $L(w)=y$. The prover commits with $L(r)$ for a uniform mask $r$, receives a Boolean challenge $e$, and answers with $r+ew$. We prove perfect completeness, exact honest-verifier zero knowledge for each fixed challenge, witness independence of transcript distributions, and special soundness: two accepting responses to opposite challenges with the same commitment reveal a witness by subtraction. We give explicit simulation and extraction algorithms, finite cyclic examples, and computational demonstrations. We also explain precisely why these algebraic results do not by themselves establish a succinct zero-knowledge proof system for arbitrary mathematical theorems. Extending the construction to confidential theorem certification requires a sound locally testable proof encoding, hiding and binding commitments, an explicit adversarial probability model, and complexity accounting that includes proof length and security parameters.
+We analyze the finite information-theoretic core of a proposed method for certifying mathematical proofs without revealing their contents. The naive protocol commits to the lines of a proof, challenges a uniformly random line, opens that line, and repeats. Three logically distinct properties are isolated: witness privacy of local openings, soundness amplification under independent repetition, and hiding of committed values. We prove that opening every possible coordinate is perfectly witness-private exactly when each public statement has at most one valid witness; thus random line opening is generally not zero knowledge. We establish the exact counting law for repetition: if at most $e$ among $n$ challenges accept in each round, then $k$ independent rounds accept with probability at most $(e/n)^k$. The frequently asserted bound $2^{-k}$ requires the additional one-round condition $2e\le n$. In the tight single-defect case, the escape probability is $((n-1)/n)^k$; with four checks it is $(3/4)^k>(1/2)^k$ for every positive $k$, and for every fixed $k$ a challenge space of size $2k+2$ keeps the escape probability above one half. Finally, we prove that additive masking by a uniform element of $\mathbb Z/q\mathbb Z$ produces an exactly uniform, secret-independent commitment distribution. These results delineate what a complete private theorem-certification protocol must add: a locally testable encoding with a constant rejection gap, a globally binding commitment, and a simulator for opened local constraints.
 
 ## 1. Introduction
 
-A proof normally serves two purposes at once. It convinces a reader that a statement is true, and it communicates the reason. Cryptographic zero knowledge separates these roles: a prover can demonstrate possession of a witness while revealing no information about the witness beyond what the public statement already implies.
+A zero-knowledge proof allows a prover to convince a verifier that a public statement is true while revealing no information beyond that truth. Applied to mathematics, this suggests a striking possibility: one might certify possession of a derivation of a theorem while withholding the derivation and its strategic ideas.
 
-This separation suggests an appealing application to mathematics. A derivation in a fixed deductive system is finite data, and its correctness is a decidable relation between a theorem statement and a purported derivation. In principle, therefore, “I know a proof of this theorem” is a proof-of-knowledge statement. The prospect is a confidential certificate: conviction without disclosure of the mathematical method.
+A natural proposal represents a proof as a list of locally checkable steps. The prover commits to every step. The verifier selects one step at random, asks the prover to open it, and checks that it is an axiom or follows correctly from preceding material. Repetition is intended to suppress cheating. If commitments hide their messages, it may appear that the verifier sees too little to learn the proof.
 
-Such a prospect must be treated carefully. A one-step opening of a committed derivation does not imply global validity, and arithmetizing a proof does not imply communication complexity independent of proof length. Before addressing those global issues, it is useful to isolate a small protocol in which the central privacy and extraction claims can be stated exactly and proved transparently.
+That reasoning conflates three properties.
 
-The protocol considered here is affine. Its public relation is defined by a homomorphism $L:W\to V$ between finite abelian groups. A witness $w$ maps to the public statement $y$. Random translation by a mask $r$ makes either challenged response uniform and hence witness-independent. Conversely, subtracting responses to opposite challenges eliminates the common mask and extracts a witness. The construction is elementary, but it contains the basic “one transcript hides, two transcripts reveal” mechanism underlying a broad class of identification arguments.
+* **Privacy:** does the opened information depend on which valid proof is used?
+* **Soundness:** how likely is an invalid certificate to survive the sampled checks?
+* **Commitment security:** are unopened values hidden, and is the prover bound to one global certificate?
 
-Our contributions are four concrete results.
+This paper gives exact finite statements for the first two questions and an information-theoretic construction for the hiding half of the third. The conclusions are both negative and constructive. Raw coordinate opening is witness-private only in the exceptional case of witness uniqueness. Repetition does amplify soundness, but according to the actual accepting fraction rather than a universal binary rate. Uniform additive masking gives perfect hiding, but does not supply binding or protect plaintexts after they are opened.
 
-1. **Perfect completeness.** Every transcript generated from a valid witness is accepted.
-2. **Perfect fixed-challenge simulation.** For either challenge bit, an explicit simulator using only public data produces exactly the real transcript distribution.
-3. **Witness independence.** Any two witnesses for the same public statement induce identical fixed-challenge transcript distributions.
-4. **Special soundness.** Two accepting transcripts sharing a commitment and carrying opposite challenges yield a valid witness by subtraction.
+The resulting picture is a specification for a credible protocol rather than a complete realization of one. A proof must be encoded so that false certificates fail a constant fraction of local tests; commitments must bind all answers to one encoded proof; and the distribution of opened constraints must admit simulation without the witness.
 
-The first three results are information-theoretic. They do not invoke computational limitations. The fourth is an algebraic extraction guarantee. Together they provide a precise base layer for more elaborate cryptographic systems.
+## 2. Finite model
 
-## 2. Algebraic setting
+### 2.1 Statements, witnesses, and views
 
-### 2.1 Finite abelian groups and the public relation
-
-Let $W$ and $V$ be finite abelian groups, written additively, and let
+Let $S$ be a set of public statements, $A$ an alphabet, and $n$ a positive integer. A witness is a function
 
 $$
-L:W\longrightarrow V
+w:\{0,1,\ldots,n-1\}\to A.
 $$
 
-be a group homomorphism. Thus, for all $u,v\in W$,
+A relation $R(s,w)$ specifies whether $w$ is a valid witness for statement $s\in S$. In the intended application, $w$ is a proof or an encoding of a proof.
+
+A deterministic verifier view is a function $V(s,w)$ taking values in some view space. We use the following strong information-theoretic notion.
+
+**Definition 2.1 (perfect witness privacy).** A view $V$ is perfectly witness-private for $R$ if, for every statement $s$ and every pair of valid witnesses $w_1,w_2$,
 
 $$
-L(u+v)=L(u)+L(v),\qquad L(0)=0,
+R(s,w_1)\land R(s,w_2)\quad\Longrightarrow\quad V(s,w_1)=V(s,w_2).
 $$
 
-and consequently $L(-u)=-L(u)$.
+This definition isolates witness independence. It says that the transcript reveals no distinction among valid witnesses for the same public statement. For randomized views, the analogous requirement would be equality of distributions; the deterministic coordinate view below is enough to expose the obstruction.
 
-A **public statement** is an element $y\in V$. A **witness** for $y$ is an element $w\in W$ satisfying
-
-$$
-L(w)=y.
-$$
-
-The associated relation is
+For a challenge coordinate $i\in\{0,\ldots,n-1\}$, define the opening view by
 
 $$
-R_L=\{(y,w)\in V\times W:L(w)=y\}.
+V_i(s,w)=w(i).
 $$
 
-No injectivity assumption is imposed. A statement may have multiple witnesses. No surjectivity assumption is imposed either; some $y\in V$ may have no witness.
+The challenge index is regarded as public. Random selection of $i$ therefore creates a distribution over pairs consisting of the index and its opened value; it does not erase dependence of the value on the witness.
 
-The finiteness of $W$ supplies a uniform distribution. If $r$ is uniform on $W$ and $a\in W$ is fixed, then $r+a$ is also uniform because translation $r\mapsto r+a$ is a bijection. This elementary fact drives the privacy argument.
+### 2.2 Challenge sets and acceptance
 
-### 2.2 Protocol definition
-
-For public input $(W,V,L,y)$ and witness $w$ satisfying $L(w)=y$, define the following three-move protocol.
-
-1. **Commitment.** The prover samples $r\leftarrow W$ uniformly and sends
-
-   $$
-   t=L(r).
-   $$
-
-2. **Challenge.** The verifier sends $e\in\{0,1\}$.
-
-3. **Response.** The prover sends
-
-   $$
-   z=r+ew,
-   $$
-
-   where $0w=0$ and $1w=w$.
-
-The verifier accepts if and only if
+Let the challenge space have $n$ elements. In round $j$, let $A_j$ be the set of challenges on which the prover is accepted. Suppose
 
 $$
-L(z)=t+ey.
+|A_j|\le e
 $$
 
-A transcript is a triple $(t,e,z)\in V\times\{0,1\}\times W$. For a fixed challenge $e$, the real transcript map associated with witness $w$ is
+for every round. Uniform independent challenges produce a vector in the Cartesian product of $k$ copies of the challenge space. Acceptance in every round means that this vector belongs to
 
 $$
-\operatorname{Real}_{w,e}(r)=\bigl(L(r),e,r+ew\bigr).
+A_0\times A_1\times\cdots\times A_{k-1}.
 $$
 
-Sampling $r$ uniformly induces a uniform multiset, equivalently a probability distribution, over transcripts.
+This product structure is the entire source of soundness amplification.
 
-### 2.3 Security notions used here
+### 2.3 Additive masking
 
-The protocol has **perfect completeness** if every honest transcript formed from a valid witness is accepted.
-
-For fixed $e$, it has **perfect honest-verifier zero knowledge** if there exists a randomized simulator using only $(L,y,e)$ whose output distribution equals the real transcript distribution exactly. “Perfect” means equality of distributions, not merely computational indistinguishability.
-
-It has **special soundness** if any two accepting transcripts $(t,0,z_0)$ and $(t,1,z_1)$ with the same commitment yield an efficiently computable witness for $y$.
-
-These definitions deliberately concern a fixed-challenge honest-verifier view and a two-transcript extraction experiment. They do not quantify over arbitrary malicious verifier strategies.
-
-## 3. Completeness and exact simulation
-
-### Theorem 1 (Perfect Completeness)
-
-Let $w\in W$ satisfy $L(w)=y$. For every $r\in W$ and every $e\in\{0,1\}$, the transcript
+Let $q\ge 1$ and write $G=\mathbb Z/q\mathbb Z$. For a secret $s\in G$, sample a mask $r$ uniformly from $G$ and publish
 
 $$
-\bigl(L(r),e,r+ew\bigr)
+C=s+r.
 $$
 
-is accepted.
+We call the law of $C$ the additive masking distribution for $s$. This is a one-time-pad commitment only in the informal sense of a hidden published value; as discussed later, it is not binding.
 
-**Proof sketch.** By homomorphism linearity and the witness equation,
+## 3. Privacy of local openings
 
-$$
-L(r+ew)=L(r)+eL(w)=L(r)+ey.
-$$
+The first theorem is a pointwise characterization.
 
-The right-hand side is exactly $t+ey$ for $t=L(r)$. Hence the verification equation always holds. $\square$
-
-Completeness has no error probability: honest execution succeeds for every random mask and either challenge.
-
-### 3.1 The public simulator
-
-Fix a challenge bit $e$. Define a simulator as follows:
-
-1. sample $z\leftarrow W$ uniformly;
-2. set
-
-   $$
-   t=L(z)-ey;
-   $$
-
-3. output $(t,e,z)$.
-
-The simulator requires no witness. Its transcript is automatically accepting since
+**Theorem 3.1 (coordinate privacy).** Fix a coordinate $i$. The opening view $V_i(s,w)=w(i)$ is perfectly witness-private if and only if, for every statement $s$ and every two valid witnesses $w_1,w_2$,
 
 $$
-L(z)=\bigl(L(z)-ey\bigr)+ey=t+ey.
+w_1(i)=w_2(i).
 $$
 
-The remaining question is whether the simulator merely creates plausible transcripts or reproduces the real distribution exactly.
+**Proof sketch.** By definition, perfect witness privacy requires equality of the two views for every pair of valid witnesses. Since the view at coordinate $i$ is exactly the symbol at coordinate $i$, equality of views is precisely $w_1(i)=w_2(i)$. The converse is the same implication read in reverse. $\square$
 
-### Lemma 2 (Translation Preserves Uniformity)
+A direct contrapositive is useful.
 
-For every fixed $a\in W$, if $r$ is uniform on $W$, then $r+a$ is uniform on $W$.
+**Corollary 3.2 (local leakage criterion).** If there are a statement $s$, two valid witnesses $w_1,w_2$, and a coordinate $i$ such that $w_1(i)\ne w_2(i)$, then opening coordinate $i$ is not perfectly witness-private.
 
-**Proof sketch.** The translation map $\tau_a(r)=r+a$ has inverse $\tau_{-a}(z)=z-a$. Therefore it is a permutation of the finite set $W$. A permutation preserves the number of preimages of every point and hence preserves the uniform distribution. $\square$
+The characterization becomes especially restrictive when any coordinate may be opened.
 
-### Theorem 3 (Perfect Fixed-Challenge Simulation)
-
-Let $w\in W$ satisfy $L(w)=y$, and fix $e\in\{0,1\}$. The real transcript
+**Theorem 3.3 (all-openings characterization).** Every coordinate-opening view is perfectly witness-private if and only if each statement has at most one valid witness. Equivalently,
 
 $$
-\bigl(L(r),e,r+ew\bigr),\qquad r\leftarrow W,
+\bigl(\forall i,\ V_i\text{ is perfectly witness-private}\bigr)
+\quad\Longleftrightarrow\quad
+\forall s,w_1,w_2,\ R(s,w_1)\land R(s,w_2)\Rightarrow w_1=w_2.
 $$
 
-has exactly the same distribution as the simulated transcript
+**Proof sketch.** Assume privacy for every coordinate. For valid $w_1,w_2$, Theorem 3.1 gives $w_1(i)=w_2(i)$ for every $i$, hence the functions are equal. Conversely, if a statement has at most one valid witness, any two valid witnesses coincide, so every coordinate view coincides. $\square$
+
+**Example 3.4 (one-bit leakage).** Let there be one public statement and let both one-bit witnesses be valid. Thus $w_0(0)=0$ and $w_1(0)=1$ both establish the same statement. Opening the only coordinate distinguishes the witnesses with certainty. It follows from Corollary 3.2 that the opening is not perfectly witness-private.
+
+The example is deliberately minimal. It shows that leakage does not require many rounds, a complicated proof language, or a malicious verifier. It arises whenever the opened value varies among valid witnesses.
+
+### 3.1 Why randomization does not cure the problem
+
+Suppose the verifier samples $I$ uniformly and observes $(I,w(I))$. If two witnesses differ at coordinate $i$, then the event $(I,w(I))=(i,w_1(i))$ may have a different probability under $w_1$ and $w_2$. In the one-bit example, the transcript distributions have disjoint support. The fact that the verifier does not choose in advance which proof feature to learn is irrelevant to whether information is learned.
+
+This does not imply that local-query zero knowledge is impossible. It implies that raw local values cannot simply be exposed. Successful protocols randomize encodings, reveal relations invariant under witness-preserving symmetries, or otherwise arrange that a simulator can reproduce each opened view without possessing the witness.
+
+## 4. Exact soundness amplification
+
+We next count accepting challenge vectors.
+
+**Lemma 4.1 (product count).** Let $A_j$ be a finite accepting set in round $j$. The number of challenge vectors accepted in all $k$ rounds is
 
 $$
-\bigl(L(z)-ey,e,z\bigr),\qquad z\leftarrow W.
+\left|\prod_{j=0}^{k-1}A_j\right|=\prod_{j=0}^{k-1}|A_j|.
 $$
 
-**Proof sketch.** Set $z=r+ew$. By Lemma 2, $z$ is uniform when $r$ is uniform. Moreover,
+**Proof sketch.** Each accepted vector is formed by independently choosing one element from each $A_j$. The finite multiplication principle gives the product of cardinalities. $\square$
+
+**Lemma 4.2 (bounded accepting count).** If $|A_j|\le e$ for all $j$, then the number of accepting vectors is at most $e^k$.
+
+**Proof sketch.** Apply Lemma 4.1 and multiply the $k$ inequalities $|A_j|\le e$. $\square$
+
+Uniform sampling from a challenge space of size $n$ yields the main bound.
+
+**Theorem 4.3 (independent repetition).** If each of $k$ independent rounds has $n$ equally likely challenges and at most $e$ accepting challenges, then the probability of acceptance in every round is at most
 
 $$
-L(r)=L(z-ew)=L(z)-eL(w)=L(z)-ey.
+\left(\frac en\right)^k.
 $$
 
-Thus the real transcript after the bijective change of variables $r\mapsto z$ is pointwise identical to the simulator’s transcript. Because the change of variables is a permutation, transcript multiplicities and probabilities agree exactly. $\square$
+**Proof sketch.** There are $n^k$ equally likely challenge vectors. By Lemma 4.2 at most $e^k$ accept. Their ratio is $e^k/n^k=(e/n)^k$. $\square$
 
-This theorem is stronger than saying that the response alone is uniform. It identifies the joint distribution of commitment, challenge, and response. Although $t$ and $z$ are correlated, the simulator reproduces that correlation using the public verification equation.
+The theorem permits different accepting sets from round to round. It requires only the uniform cardinality bound and independence of challenge sampling.
 
-### Corollary 4 (Witness Independence)
-
-Let $w_0,w_1\in W$ satisfy $L(w_0)=L(w_1)=y$. For either fixed challenge $e$, the transcript distributions generated using $w_0$ and $w_1$ are identical.
-
-**Proof sketch.** By Theorem 3, each real distribution equals the same simulator distribution, which depends only on $L$, $y$, and $e$. Therefore the two real distributions equal one another. $\square$
-
-Witness independence is meaningful when $L$ has a nontrivial kernel. If $w$ is a witness, then every $w+k$ with $k\in\ker L$ is another witness. The transcript cannot reveal which representative of the fiber $L^{-1}(y)$ was used.
-
-### Corollary 5 (Zero Information in the Information-Theoretic Sense)
-
-For a fixed challenge $e$, every statistical test applied to the transcript has the same output distribution whether the transcript is real or simulated. In particular, no unbounded observer can distinguish the two with nonzero advantage.
-
-**Proof sketch.** Applying any deterministic or randomized post-processing operation to identically distributed inputs yields identically distributed outputs. The claim follows directly from Theorem 3. $\square$
-
-## 4. Special soundness and extraction
-
-Simulation explains why one accepting view is harmless. Extraction explains why answering both challenges for one commitment is decisive.
-
-### Theorem 6 (Special Soundness by Affine Subtraction)
-
-Suppose $(t,0,z_0)$ and $(t,1,z_1)$ are accepting transcripts with the same commitment $t$. Then
-
-$$
-w^*=z_1-z_0
-$$
-
-is a witness for $y$; that is,
-
-$$
-L(w^*)=y.
-$$
-
-**Proof sketch.** Acceptance for challenge $0$ gives
-
-$$
-L(z_0)=t.
-$$
-
-Acceptance for challenge $1$ gives
-
-$$
-L(z_1)=t+y.
-$$
-
-Subtracting in $V$ and using the homomorphism property,
-
-$$
-L(z_1-z_0)=L(z_1)-L(z_0)=(t+y)-t=y.
-$$
-
-Thus $z_1-z_0$ belongs to the witness fiber $L^{-1}(y)$. $\square$
-
-The extractor is deterministic and requires one subtraction in $W$. It does not assume that either response was generated honestly. It uses only their acceptance and shared commitment.
-
-### Corollary 7 (Honest Responses Recover the Original Witness)
-
-If the common commitment was generated from a mask $r$ and the two honest responses are $z_0=r$ and $z_1=r+w$, then the extractor outputs $w$ exactly.
-
-**Proof sketch.** Directly,
-
-$$
-z_1-z_0=(r+w)-r=w.
-$$
-
-$\square$
-
-### 4.1 The role of commitment consistency
-
-The shared-commitment condition is essential. If the transcripts use commitments $t_0$ and $t_1$, acceptance gives
-
-$$
-L(z_0)=t_0,\qquad L(z_1)=t_1+y,
-$$
-
-so
-
-$$
-L(z_1-z_0)=y+(t_1-t_0).
-$$
-
-This equals $y$ only when $t_1=t_0$. Any application to an adversarial prover must therefore ensure that the commitment is fixed before the challenge and cannot be changed afterward.
-
-### 4.2 From local extraction to repetition
-
-Suppose a prover, for a fixed commitment, can answer at most one challenge unless it possesses enough information to yield a witness. If the verifier chooses a uniform challenge bit, a prover prepared for only one branch succeeds with probability at most $1/2$. With $k$ independent repetitions and commitments fixed before challenges, the probability of guessing every challenge is at most
+**Corollary 4.4 (binary soundness under a half-gap).** If $n>0$ and $2e\le n$, then the acceptance probability after $k$ rounds is at most
 
 $$
 2^{-k}.
 $$
 
-This familiar amplification statement is not a consequence of group algebra alone. It additionally requires a probabilistic adversary model, challenge independence, and a binding or fixed-commitment condition. The extraction theorem provides the key structural fact—both answers imply a witness—but a complete soundness theorem must state the operational assumptions.
+**Proof sketch.** The premise gives $e/n\le 1/2$. Raising nonnegative quantities to the $k$th power preserves the inequality, and Theorem 4.3 applies. $\square$
 
-## 5. Concrete cyclic instantiation
+The premise is essential. Repetition magnifies a one-round soundness gap; it does not create a larger gap than the underlying test possesses.
 
-Let $q\ge 2$, take
+### 4.1 The single-defect regime
 
-$$
-W=V=\mathbb{Z}/q\mathbb{Z},
-$$
-
-and choose $a\in\mathbb{Z}/q\mathbb{Z}$. Define
+Suppose exactly one of $n$ checks detects invalidity. Then $e=n-1$, and the survival probability is exactly
 
 $$
-L(x)=ax\pmod q.
+F(n,k)=\left(\frac{n-1}{n}\right)^k.
 $$
 
-The public statement is $y=aw\pmod q$. The prover samples $r$ uniformly modulo $q$, sends $t=ar\pmod q$, receives $e\in\{0,1\}$, and replies
+**Theorem 4.5 (four-check separation).** For four possible checks with exactly one detecting location,
 
 $$
-z=r+ew\pmod q.
+F(4,k)=\left(\frac34\right)^k.
 $$
 
-The verifier checks
+For every positive integer $k$,
 
 $$
-az\equiv t+ey\pmod q.
+\left(\frac12\right)^k<F(4,k).
 $$
 
-For example, take $q=11$, $a=3$, and $y=7$. Both $w=6$ and, modulo $11$, only its congruent representatives satisfy $3w\equiv7$. If instead $a$ is not invertible modulo a composite modulus, multiple incongruent witnesses may exist. With $q=12$, $a=4$, and $y=8$, the witnesses are $2$, $5$, $8$, and $11$. For either challenge, all four witnesses induce the same transcript distribution.
+**Proof sketch.** Substitution gives the first identity. Since $0<1/2<3/4$ and $k>0$, strict monotonicity of positive integer powers gives the inequality. $\square$
 
-Consider $q=12$, $a=4$, $w=5$, and $r=7$. Then $y=8$ and $t=4$. The challenge-$0$ response is $z_0=7$, and indeed $4z_0\equiv4=t$. The challenge-$1$ response is $z_1=0$, since $7+5\equiv0$. Verification gives $4z_1\equiv0\equiv4+8=t+y$. Extraction returns
+This separation grows operationally important when a desired error target is selected using the wrong base. For $k=10$, $(1/2)^{10}\approx0.0009766$ while $(3/4)^{10}\approx0.05631$.
 
-$$
-z_1-z_0\equiv0-7\equiv5\pmod{12},
-$$
+A family of examples rules out any fixed repetition count as a universal cure.
 
-which is the witness.
-
-The fixed-challenge simulator samples $z$ uniformly modulo $q$ and computes
+**Theorem 4.6 (no fixed-repetition half-bound).** For every integer $k\ge0$,
 
 $$
-t=az-ey\pmod q.
+\frac12<F(2k+2,k)=\left(\frac{2k+1}{2k+2}\right)^k.
 $$
 
-Enumerating all $q$ choices shows exact equality with the real transcript multiset. This remains true when $a$ is noninvertible and the public statement has multiple witnesses.
-
-## 6. Algorithms and complexity
-
-### 6.1 Real transcript generation
-
-**Input:** modulus or finite-group representation, homomorphism $L$, public statement $y$, witness $w$, challenge $e$.  
-**Procedure:** sample uniform $r\in W$; compute $t=L(r)$ and $z=r+ew$; return $(t,e,z)$.
-
-If a group operation costs $C_W$ and evaluating $L$ costs $C_L$, generation costs $O(C_L+C_W)$ beyond random sampling. For integers modulo $q$, using ordinary arithmetic, the bit complexity is polynomial in $\log q$.
-
-### 6.2 Public simulation
-
-**Input:** $L$, $y$, and fixed challenge $e$.  
-**Procedure:** sample uniform $z\in W$; compute $t=L(z)-ey$; return $(t,e,z)$.
-
-Its asymptotic cost matches real generation: one evaluation of $L$ and a constant number of group operations. The simulator does not search for a witness and does not invert $L$.
-
-### 6.3 Two-transcript extraction
-
-**Input:** accepting transcripts $(t,0,z_0)$ and $(t,1,z_1)$.  
-**Procedure:** verify the shared commitment and both acceptance equations; return $z_1-z_0$.
-
-After verification, extraction itself uses one group subtraction. The verifier may recompute two images under $L$, giving total cost $O(2C_L+C_W)$. In a cyclic group modulo $q$, this is polynomial in $\log q$.
-
-### 6.4 Exhaustive distribution comparison
-
-For small groups, one can enumerate every mask $r$ and every simulated response $z$, count transcripts, and compare the two frequency maps. For a group of size $N=|W|$, each distribution requires $N$ transcript constructions. Hash-table comparison has expected time $O(N)$ and space $O(N)$; sorting-based comparison takes $O(N\log N)$ time. Enumeration is pedagogical rather than cryptographically scalable, since Theorem 3 already proves equality for all finite sizes.
-
-## 7. Toward confidential theorem certification
-
-### 7.1 Derivations as witnesses
-
-Fix a deductive theory with a finite or decidable collection of inference rules. A derivation of a formula $T$ can be encoded as a finite sequence
+**Proof sketch.** The case $k=0$ is immediate. For $k>0$, write the base as $1-x$ with $x=1/(2k+2)$. Bernoulli's inequality gives
 
 $$
-\pi=(\varphi_1,\ldots,\varphi_m),
+(1-x)^k\ge 1-kx
+=1-\frac{k}{2k+2}
+=\frac{k+2}{2k+2}>rac12.
 $$
 
-where each $\varphi_i$ is either an axiom or follows from designated earlier formulas by an allowed rule, and $\varphi_m=T$. There is then a decidable relation
+Thus a single bad coordinate can remain hidden with probability above one half when the challenge space grows linearly with the number of repetitions. $\square$
+
+### 4.2 Repetition cost
+
+To reduce a one-bad-line escape probability below $2^{-\lambda}$, one needs
 
 $$
-R(T,\pi)=1
+\left(1-\frac1n\right)^k\le 2^{-\lambda}.
 $$
 
-meaning that $\pi$ is a valid derivation of $T$.
+Taking logarithms gives
 
-This makes a hidden proof a cryptographic witness. It does not, however, make the affine protocol directly applicable: general proof verification is not usually a single homomorphic preimage equation. A reduction or encoding is needed.
+$$
+k\ge \frac{\lambda\log 2}{-\log(1-1/n)}.
+$$
 
-### 7.2 Why opening one line is insufficient
+As $n$ grows, $-\log(1-1/n)\sim1/n$, so the required repetition count is asymptotically
 
-Suppose a prover commits separately to each line of a purported derivation, and the verifier asks to inspect one randomly selected line together with its cited premises. If exactly one of $m$ lines is invalid, a single uniform query detects the defect with probability only $1/m$. Repeating a constant number of times leaves substantial soundness error.
+$$
+k\sim n\lambda\log 2.
+$$
 
-A locally testable encoding must amplify global invalidity into many local violations. Probabilistically checkable proof constructions are relevant because they redesign the witness so that a verifier can query a few locations. But local testability, hiding, and succinctness are different properties:
+This scaling explains the role of locally testable encodings. If every invalid encoding fails at least a fixed fraction $\delta>0$ of checks, then $e/n\le1-\delta$ and only
 
-- **Local soundness** ensures that false statements or invalid encodings are caught with noticeable probability.
-- **Zero knowledge** ensures that queried views disclose nothing beyond validity.
-- **Binding** prevents answers from being changed after queries are known.
-- **Succinctness** bounds communication and verifier work in the chosen size parameters.
+$$
+k\ge\frac{\lambda\log2}{-\log(1-\delta)}
+$$
 
-None follows automatically from the others.
+rounds are needed, independent of the total number of coordinates.
 
-### 7.3 Statement length versus proof length
+## 5. Perfect hiding by additive masks
 
-A claim that communication is polynomial only in the theorem statement length is much stronger than a claim polynomial in the hidden proof length or in a security parameter. Encoding an arbitrarily long derivation as an integer does not make the integer’s bit representation short. Likewise, a generic local-checking transformation may have size polynomial in the original witness length.
+We now turn from openings to unopened committed values.
 
-A rigorous succinctness theorem must specify at least:
+**Lemma 5.1 (translation is a bijection).** For every $s\in\mathbb Z/q\mathbb Z$, the map
 
-1. the encoding of formulas and derivations;
-2. the bit length of the theorem statement;
-3. the bit length of the proof witness;
-4. the security parameter;
-5. prover time, verifier time, randomness, and total communication;
-6. the computational assumptions supporting commitments or arguments.
+$$
+T_s(r)=s+r
+$$
 
-Without this accounting, no statement-length polynomial bound should be inferred.
+is a bijection of $\mathbb Z/q\mathbb Z$.
 
-### 7.4 Honest and malicious verifiers
+**Proof sketch.** Its inverse is $c\mapsto c-s$. $\square$
 
-The simulator in Theorem 3 handles a prescribed challenge. General zero knowledge quantifies over potentially malicious verifier strategies and asks for a simulator of their complete view, including adaptive messages and internal randomness. Such simulation may require rewinding or a different protocol transformation. Perfect fixed-challenge simulation is a strong local fact, but it is not a full malicious-verifier theorem.
+**Lemma 5.2 (uniform distributions are translation-invariant).** Mapping the uniform distribution on a finite set through a bijection preserves uniformity.
 
-## 8. Applications
+**Proof sketch.** Every output has exactly one preimage. Hence every output probability remains the reciprocal of the set's cardinality. $\square$
 
-The immediate application is privacy-preserving identification for linear relations in finite groups. A party can demonstrate knowledge of a preimage without identifying which preimage it holds. This is especially relevant when $L$ has a nontrivial kernel and witness anonymity is important.
+Combining the two gives the central hiding statement.
 
-A second application is conceptual modularity in larger protocols. The affine core supplies a sigma-protocol-like component with completeness, simulation, and extraction. A surrounding system can provide commitments, repetition, and compilation against malicious verifiers.
+**Theorem 5.3 (uniform masking).** Let $q\ge1$, let $s\in\mathbb Z/q\mathbb Z$, and choose $R$ uniformly from $\mathbb Z/q\mathbb Z$. Then
 
-A third application is confidential certification. Engineering designs, optimization solutions, and mathematical derivations can all be regarded as witnesses to public predicates. The present construction does not solve those general relations directly, but it clarifies the exact obligations any solution must meet: simulated views, binding commitments, global soundness, and explicit complexity bounds.
+$$
+C=s+R
+$$
 
-There are also limitations of purpose. A zero-knowledge certificate establishes confidence without explanation. Mathematics as a communicative discipline values proofs because they reveal structure, permit reuse, and generate new ideas. Confidential certification is therefore complementary to exposition, not a substitute for it.
+is uniformly distributed on $\mathbb Z/q\mathbb Z$.
+
+**Proof sketch.** Apply Lemma 5.2 to the translation bijection in Lemma 5.1. Equivalently, for each $c$ there is exactly one mask $r=c-s$, so $\Pr[C=c]=1/q$. $\square$
+
+**Corollary 5.4 (perfect hiding).** For any secrets $s,t\in\mathbb Z/q\mathbb Z$, the random variables $s+R$ and $t+R$ have identical distributions when $R$ is uniform.
+
+An explicit coupling makes the equality transparent. Given a mask $r$ used with secret $s$, define
+
+$$
+r'=(s-t)+r.
+$$
+
+Then $r\mapsto r'$ is a permutation of the mask space and
+
+$$
+s+r=t+r'.
+$$
+
+Thus each outcome under one secret is paired measure-preservingly with the same outcome under the other.
+
+### 5.1 Hiding is not binding
+
+For a fixed published $C$, every proposed secret $s$ has a compatible opening $R=C-s$. Therefore additive masking by itself allows the prover to choose the secret after publishing $C$. It is perfectly hiding and perfectly nonbinding.
+
+A commitment suitable for proof certification must prevent inconsistent openings, usually under an explicit computational assumption or through an information-theoretic tradeoff in a richer model. When many proof coordinates are committed, the verifier also needs assurance that all local openings belong to one globally fixed certificate. An authenticated tree of commitments is a standard architecture: inconsistent openings should imply a collision in the underlying hash mechanism.
+
+### 5.2 Hiding is not transcript simulation
+
+Even a binding, hiding commitment reveals its message when opened. If the message is a raw proof line, Theorem 3.3 applies to the revealed plaintext. A complete zero-knowledge analysis therefore requires a transcript distribution and a simulator that can generate an equal or computationally indistinguishable view without the witness. The commitment theorem establishes privacy before opening, not zero knowledge of the interactive protocol as a whole.
+
+## 6. Algorithms and numerical diagnostics
+
+### 6.1 Exact escape-probability evaluator
+
+Given $n\ge1$, an accepting count $0\le e\le n$, and $k\ge0$, compute
+
+$$
+P=(e/n)^k.
+$$
+
+Rational arithmetic should be used when possible, because the result is an exact ratio $e^k/n^k$. The algorithm performs exponentiation by squaring and has $O(\log k)$ arithmetic multiplications, with bit complexity governed by integers of size $O(k\log n)$.
+
+For the single-defect model, set $e=n-1$. Comparing this value with $2^{-k}$ immediately diagnoses whether a claimed binary bound is justified.
+
+### 6.2 Minimum-round calculator
+
+Given a target error $\varepsilon\in(0,1)$ and one-round accepting fraction $p\in(0,1)$, the least sufficient repetition count is
+
+$$
+k_{\min}=\left\lceil\frac{\log\varepsilon}{\log p}\right\rceil.
+$$
+
+Both logarithms are negative, so their ratio is positive. Boundary cases should be handled separately: $p=0$ needs one round for any positive target, while $p=1$ can never reach a target below one.
+
+### 6.3 Exhaustive masking check
+
+For a small modulus $q$, enumerate all pairs $(s,r)$ and count outputs $c=(s+r)\bmod q$. For every fixed $s$, each residue must occur exactly once as $r$ varies. Comparing histograms across secrets illustrates Theorem 5.3 and Corollary 5.4 without statistical approximation.
+
+These computations are demonstrations rather than substitutes for the general counting arguments. Their value is diagnostic: they expose parameter dependence that may be obscured by asymptotic slogans.
+
+## 7. Implications for private theorem certification
+
+The results yield four design requirements.
+
+### 7.1 Encode before testing
+
+A raw proof with one invalid line has rejection probability only $1/n$. To obtain a constant one-round soundness gap, the proof must be encoded so that global invalidity causes many local constraints to fail. This is the essential function of probabilistically checkable encodings. Arithmetizing a proof makes its syntax numerical; it does not by itself guarantee robust local testability.
+
+### 7.2 Bind the entire encoded object
+
+Independent masks can hide coordinates, but they do not ensure that answers across rounds derive from one certificate. A global authenticated commitment is needed. Its security statement must specify that two inconsistent openings lead to a forbidden event, such as finding a collision.
+
+### 7.3 Simulate what is opened
+
+The privacy target concerns the whole verifier view, including challenges, openings, authentication paths, and verifier randomness. A simulator must reproduce that distribution without a witness. Theorems about unopened commitments are necessary ingredients but not a substitute for simulation.
+
+### 7.4 State the soundness premise explicitly
+
+The exact repetition law is $(e/n)^k$. A bound of $2^{-k}$ is legitimate only after proving $e/n\le1/2$. More generally, protocol descriptions should state a rejection fraction $\delta$, yielding error at most $(1-\delta)^k$.
+
+## 8. Scope of the statement-length communication conjecture
+
+The motivating conjecture claims that every theorem provable in Peano Arithmetic has a zero-knowledge proof with communication polynomial in the length of the theorem statement rather than the length of its derivation. The finite results above do not establish this conjecture. They identify prerequisites that any precise version must address.
+
+First, the protocol needs an explicit locally testable representation of arbitrary derivations, with quantitative proof length and query complexity. Second, communication includes commitments, authentication data, responses, and repetition, not merely the number of queried symbols. Third, computational zero knowledge requires a security parameter and explicit assumptions. Fourth, the resources of the prover matter: a proof system and an argument system make different commitments about computationally unbounded cheating. Finally, uniformity and setup assumptions must be stated.
+
+The conjecture may be understood as a research program linking arithmetization, robust proof encodings, succinct commitments, and zero-knowledge compilation. The present analysis supplies elementary tests that any candidate construction must pass.
 
 ## 9. Discussion
 
-The protocol’s geometry is summarized by two maps. For privacy, the map
+The negative privacy theorem and positive hiding theorem are not contradictory. They concern different stages. Before opening, additive masking makes a value statistically independent of its secret. After opening, a raw coordinate may identify the witness. Similarly, the repetition theorem is strong but conditional: it preserves the actual per-round acceptance fraction through exponentiation.
 
-$$
-r\longmapsto r+ew
-$$
+This separation is useful beyond theorem proving. Many cryptographic errors arise from transferring a guarantee across an interface where it no longer applies. Encryption privacy is mistaken for safe declassification; commitment hiding is mistaken for protocol zero knowledge; repeated weak tests are described using the parameters of strong tests. Exact finite formulations prevent these category errors.
 
-is a permutation. For extraction, the map
-
-$$
-(z_0,z_1)\longmapsto z_1-z_0
-$$
-
-cancels a shared affine offset. The same structure creates both concealment and accountability.
-
-Perfect simulation is possible because the verifier’s acceptance equation uniquely determines the commitment from $(e,z)$:
-
-$$
-t=L(z)-ey.
-$$
-
-The simulator samples the free coordinate $z$ and reconstructs the constrained coordinate $t$. In a real execution, the response is already uniform after translation. This is why simulation requires neither inversion of $L$ nor knowledge of a preimage.
-
-Special soundness is possible because opposite challenges produce equations whose difference is exactly the public relation. This algebraic cancellation also explains the fragility of the result: if commitments differ, if challenges are not genuinely distinct, or if acceptance tolerates uncontrolled errors, extraction must be reconsidered.
-
-The finite setting avoids measure-theoretic complications. Uniform distributions can be understood as normalized multiplicities over all group elements. The theorem therefore states literal equality of transcript counts. Recasting the result directly in probability-mass-function language would make sequential and parallel composition more convenient, but would not alter the argument.
+The results also clarify what “learns nothing beyond validity” must mean. It cannot merely mean that most proof lines remain unopened. It should mean that the entire transcript can be generated, exactly or approximately in the relevant computational sense, using only the public statement and the fact that it is valid. Witness-independence of deterministic views is a stringent special case of that principle, and its failure for raw openings is decisive.
 
 ## 10. Future work
 
-A first extension is to express transcript equality directly as equality of probability mass functions and then prove closure under product distributions. This would support a clean treatment of $k$ independent challenges.
+Several steps are required to turn the abstract architecture into a complete protocol.
 
-A second direction is a full repetition theorem. It should distinguish extraction from probability amplification and explicitly model adversarial commitment strategies, independence, and binding. Under appropriate assumptions, the target soundness error is exponential in the repetition count.
-
-A third direction is to encode propositional derivations as locally checkable objects. The development must separately prove global soundness of the encoding, privacy of sampled openings, and commitment security. Simply opening random proof lines is insufficient.
-
-A fourth direction is to instantiate the additive construction in concrete cyclic groups and relate it to identification protocols expressed multiplicatively. Care is needed when translating additive witness equations into exponentiation statements.
-
-A fifth direction is complexity-aware confidential theorem certification. Any broad claim about proofs in arithmetic must represent algorithms and bit lengths explicitly and must not confuse arithmetization with compression. Genuinely succinct argument systems, rather than elementary encoding alone, are needed for communication bounds detached from proof length.
-
-Finally, malicious-verifier zero knowledge remains open for this presentation. The fixed-challenge simulator should be replaced or compiled into a simulator that handles arbitrary verifier strategies and their full views, with running time and any rewinding procedure analyzed explicitly.
+1. **Authenticated local openings.** Define a global commitment structure and show that inconsistent local openings imply a collision or another explicit security violation.
+2. **Simulation of opened constraints.** Specify transcript distributions and construct a simulator with exact equality or computational indistinguishability from the verifier’s real view.
+3. **Adaptive-prover soundness.** Replace fixed accepting sets by interactive probabilistic strategies and prove repetition under carefully stated independence conditions.
+4. **Concrete propositional proof relations.** Encode a proof calculus, establish decidability of local inference, and prove that accepted complete certificates imply semantic tautologicity.
+5. **Robust proof composition.** Supply an explicit locally testable encoding with constant rejection probability and account for proof length, query complexity, and total communication.
+6. **Complexity assumptions.** Introduce a security parameter and commitment primitive satisfying both hiding and binding in the chosen model.
+7. **Conjecture refinement.** Distinguish proofs from arguments, identify setup and uniformity assumptions, and state prover-time and communication bounds precisely.
 
 ## 11. Conclusion
 
-For a homomorphic preimage relation over finite abelian groups, a three-move affine protocol achieves four exact properties: honest transcripts always verify; fixed-challenge views can be simulated perfectly from public data; transcript distributions do not depend on the choice of witness; and two accepting answers to opposite challenges under one commitment reveal a witness by subtraction.
+A random-line protocol does not become zero knowledge merely because each round reveals little. Opening all possible coordinates is perfectly witness-private exactly when valid witnesses are unique. Independent repetition reduces soundness error exactly as $(e/n)^k$, and binary decay requires a proven half-soundness gap. Uniform additive masking does provide exact secret-independent hiding, but it neither binds the prover nor protects opened plaintexts.
 
-These results provide a mathematically complete account of a foundational zero-knowledge mechanism. They also identify what remains outside that mechanism. Confidential certification of arbitrary theorems requires globally sound local encodings, hiding and binding commitments, adversarial simulation, repetition analysis, and honest complexity accounting. The affine protocol is therefore neither a proof of universal succinct theorem certification nor merely a toy. It is the precise algebraic core on which such systems can be built: translation hides one answer, and subtraction exposes inconsistency.
+Together these results replace an informal “commit, challenge, open, repeat” narrative with quantitative design obligations. Private certification of mathematical proofs remains possible in principle, but it requires robust local encoding, global commitment consistency, simulatable openings, and parameter-aware amplification. Those ingredients—not the small size of any single disclosure—are what can make a sealed proof both convincing and private.

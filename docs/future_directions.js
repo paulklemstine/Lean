@@ -3708,23 +3708,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation"
   },
   {
-    "consumed_by_exp_id": "7b86dab6",
-    "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
-    "domains": [
-      "Physics",
-      "Algebra",
-      "Speculative"
-    ],
-    "id": "seed_062",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
     "domains": [
@@ -3945,22 +3928,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
-  },
-  {
-    "consumed_by_exp_id": "3d6ad336",
-    "description": "Prove that distinguishing a binary Goppa code from a random linear code is NP-hard. Formalize the McEliece cryptosystem and prove IND-CPA security under the Goppa code distinguishing assumption. Analyze resistance to quantum attacks.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_305",
-    "phase": "B",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
   },
   {
     "consumed_by_exp_id": "",
@@ -8896,6 +8863,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T23:20:29.072128+00:00",
     "title": "Future directions from cycle 311c4349"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Holographic Proof Duality\n\n## What the formal results support\n\nThe verified core should be interpreted as an order-theoretic holographic principle, not as a literal dimension-reduction theorem. For a monotone endomorphism of a complete lattice, passage to the order dual exchanges least and greatest fixed points. Consequently, an inductive pre-fixed-point certificate in the bulk is exactly a coinductive post-fixed-point certificate on the dual boundary, and bounds on the inductive semantics translate in both directions.\n\n## What the formal results rule out\n\nTwo stronger conjectures fail without substantial extra hypotheses.\n\n1. **Automatic strict proof compression fails.** The canonical dualization of a local proof trace preserves its length exactly. Any nonempty trace therefore refutes a claim that dualization by itself always shortens proofs.\n2. **Universal lossless codimension-one encoding fails.** A set with `n+1` states cannot inject into one with `n` states. Thus topology, symmetry, redundancy, admissibility constraints, or a quotient notion of observational equivalence must do real work in any genuine dimensional reduction.\n\nThese no-go results separate three notions that the motivating slogan conflates: semantic duality, geometric dimension reduction, and syntactic proof compression. Only the first follows from order duality alone.\n\n## Concrete next problems\n\n### 1. Ranked well-founded systems\n\nDefine a category of ranked transition systems with:\n\n- a well-founded bulk relation;\n- a boundary observation map;\n- a bisimulation or logical-relation condition;\n- an explicit proof-cost model.\n\nThen characterize exactly when well-founded induction transports to coinduction on boundary observations. The finite cardinality obstruction shows that reconstruction should be required only up to observational equivalence, not equality of states.\n\n### 2. Finite Ramsey certificates\n\nFor the test case `R(3,3) = 6`, represent a two-coloring as a Boolean edge labeling of `K\u2086`. The standard vertex-neighborhood argument gives a compact local certificate: among five incident edges, three share a color; their three endpoints either contain an edge of that color or form a triangle of the other color. A useful next formalization would compare:\n\n- the ordinary finite/pigeonhole proof;\n- a boundary certificate consisting only of the star of one vertex plus the induced triangle;\n- a precisely defined certificate-size measure.\n\nThis would test genuine restriction-to-boundary compression rather than mere order reversal.\n\n### 3. Topological boundary data\n\nReplace bare finite state sets by simplicial complexes or finite CW complexes. Candidate hypotheses for lossless reconstruction include shellability, collapsibility, coskeletality, and unique extension from links. Any theorem should state the reconstruction equivalence and its cost separately.\n\n### 4. Fixed-point proof complexity\n\nEquip derivations with a syntax and cost semantics, then ask when the order-dual translation admits sharing or quotienting. The present length-preservation theorem is a baseline: strict compression can only arise from a nontrivial normalization, quotient, DAG representation, or boundary-specific admissibility theorem.\n\n### 5. Infinite systems\n\nInvestigate transfinite approximants of least and greatest fixed points. Complete-lattice duality remains available, but matching ordinal convergence stages may require continuity or cocontinuity assumptions. A meaningful \u201crank drops by one\u201d theorem would need an independently defined rank invariant and a proof that dual boundary formation changes it.\n\n## Methodological constraint\n\nFuture claims should always specify:\n\n- what \u201cdimension\u201d means;\n- what data constitute the boundary;\n- whether equivalence means equality, isomorphism, bisimulation, or observational equivalence;\n- what proof calculus and cost measure define \u201cshorter.\u201d\n\nWithout these choices, the universal conjecture is either false by cardinality or reduces to the valid but non-compressive order-duality theorem proved here.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0732",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7b86dab6",
+    "status": "available",
+    "timestamp": "2026-07-26T00:21:15.630470+00:00",
+    "title": "The verified core should be interpreted as an order-theoretic holographic princi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry \u2192 correctness.** Additive encryption is translation in a Hamming cube. Its distance from the encoded word equals the error weight, so disjoint Hamming balls imply unique recovery.\n2. **Probability/game hopping \u2192 IND-CPA bound.** Replacing a disguised Goppa key by a random-code key and then replacing the random-code game by an ideal fair-bit game gives an additive advantage bound by the real triangle inequality.\n3. **Combinatorics \u2192 a qualified quantum-search floor.** A binomial lower bound certifies at least `2^256` weight-119 errors for length 6960; under the explicitly stated quadratic-search model, this yields a `2^128` query floor.\n\n## Important limitation: NP-hardness was not proved\n\nThe requested unconditional theorem that distinguishing binary Goppa codes from random linear codes is NP-hard is not established here. It should not be presented as a known consequence of standard McEliece security assumptions. McEliece security is normally conditional on concrete decoding and code-indistinguishability assumptions; NP-hardness of worst-case generic syndrome decoding does not by itself imply hardness of distinguishing the structured key distribution, nor average-case IND-CPA security.\n\nThe Lean game-hop theorem therefore exposes two quantitative premises rather than hiding them: a Goppa-key replacement bound and a random-code decoding/message-hiding bound. This prevents an assumption from being mislabeled as an unconditional theorem.\n\n## Next formal steps\n\n1. Define finite probability distributions for key generation, encryption randomness, and adversary coins using Mathlib probability monads.\n2. Define a binary Goppa code from a support in `GF(2^m)` and a square-free Goppa polynomial, then connect its parity checks to the existing alternant/BCH minimum-distance theorem.\n3. Formalize correctness of a bounded-distance decoder as an actual partial function, not only uniqueness of the decoded word.\n4. Define IND-CPA as an experiment over probabilistic algorithms and prove the concrete game transition theorem from couplings or total-variation distance.\n5. State the Goppa indistinguishability and random syndrome-decoding assumptions with explicit security parameters and polynomial-time adversary classes.\n6. Formalize a reduction producing a distinguisher or decoder from an IND-CPA adversary, including runtime and advantage loss.\n7. For quantum analysis, replace the abstract quadratic-search condition by a quantum query model and a proved Grover lower bound. Separately analyze structured quantum algorithms; the present theorem deliberately does not claim that every quantum attack is unstructured search.\n8. Investigate accurately scoped complexity results: worst-case NP-completeness of syndrome decoding, parameter-preserving reductions, and precisely what additional average-case assumptions would be needed to reach the McEliece distribution.\n",
+    "domains": [
+      "Computation",
+      "Cryptography"
+    ],
+    "id": "fd_0733",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3d6ad336",
+    "status": "available",
+    "timestamp": "2026-07-26T00:21:29.488173+00:00",
+    "title": "`Cryptography/McElieceConnector.lean` proves a cross-domain chain:"
   },
   {
     "consumed_by_exp_id": "",
