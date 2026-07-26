@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "198023c0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Structural Equivalence and Meaning\n\n## 1. Orbit-complete observational languages\n\n**Conjecture.** For every finite relational signature and finite model, there is a finite modal l",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T11:16:18",
-      "title": "Isomorphisms of Meaning: When Structures Collide"
-    },
-    {
       "cycle_id": "e170790e",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n1. **Interval self-maps.** Add a theorem that a continuous self-map of a nonempty compact\n   real interval has a fixed point, then distinguish existence from attraction by\n   form",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-26T17:22:48",
       "title": "EML Kolmogorov-Arnold Representation"
+    },
+    {
+      "cycle_id": "cf55a60f",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n1. **Sharp finite-bath correction.** For an exactly energy-conserving erasure of a qubit coupled to a bath of heat capacity `C`, the least mean dissipated heat equals `k T log 2 +",
+      "quality_score": 0.6695599999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-26T18:21:06",
+      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T17:22:48",
+  "last_updated": "2026-07-26T18:21:06",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "07e03295",
-        "quality": 0.7,
-        "theorems": 24,
-        "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
-      },
-      {
         "cycle_id": "66a73fad",
         "quality": 0.62,
         "theorems": 7,
@@ -3761,6 +3755,12 @@
         "quality": 0.6294117647058823,
         "theorems": 102,
         "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+      },
+      {
+        "cycle_id": "cf55a60f",
+        "quality": 0.6695599999999999,
+        "theorems": 10,
+        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
       }
     ],
     "Probability": [
