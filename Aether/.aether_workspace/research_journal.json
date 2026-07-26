@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1c1d1205",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n- Instantiate `SemanticSystem` with an arithmetized recursively enumerable proof system and derive `IsGodelCode` from a diagonal lemma.\n- Separate semantic soundness from syntacti",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-07-19T10:24:14",
-      "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
-    },
-    {
       "cycle_id": "3cc7aff9",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n1. Formalize finite strict preference orders and social welfare functions for at least three alternatives.\n2. Prove the standard Arrow reduction: Pareto efficiency and independenc",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-26T14:04:03",
       "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
+    },
+    {
+      "cycle_id": "68e75c09",
+      "domain": "Logic",
+      "key_insight": "# Future Directions: Stone Duality for Neural Classifiers\n\n## Formal verdict\n\nThe proposed picture contains a useful construction, but its strongest numerical and\ntopological claims are false as state",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-26T14:04:08",
+      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T14:04:03",
+  "last_updated": "2026-07-26T14:04:08",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "11a0fcb2",
-        "quality": 0.74,
-        "theorems": 23,
-        "title": "Rucker: Spacetime Donuts — Topology of the Universe"
-      },
-      {
         "cycle_id": "b31f2cf9",
         "quality": 0.83,
         "theorems": 21,
@@ -3513,6 +3507,12 @@
         "quality": 0.74,
         "theorems": 19,
         "title": "Proof Automation: Custom Lean 4 Tactics"
+      },
+      {
+        "cycle_id": "68e75c09",
+        "quality": 0.63,
+        "theorems": 16,
+        "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
       }
     ],
     "MachineLearning": [

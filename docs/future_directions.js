@@ -715,17 +715,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3aad27b",
     "description": "Prove that the Learning With Errors (LWE) problem is as hard as worst-case lattice problems. Formalize the Regev reduction from GapSVP to LWE and prove that the resulting encryption scheme is IND-CPA secure under the LWE assumption.",
     "domains": [
       "Cryptography",
       "Computation"
     ],
     "id": "seed_302",
+    "phase": "A",
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
   },
@@ -1012,20 +1013,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697825+00:00",
     "title": "Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 4c2c71e5 (Q=0.800), which proved 46 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_4c2c71e5_cba22d99",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "4c2c71e5",
-    "status": "available",
-    "timestamp": "2026-07-19T02:44:51.313246+00:00",
-    "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
   },
   {
     "consumed_by_exp_id": "",
@@ -2394,20 +2381,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T16:07:13.673955+00:00",
     "title": "Deepening: Memory Editing: When Forgetting Is a Mathematical Operation"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ee626e30 (Q=0.760), which proved 14 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs \u2014 they are SHADOWS ",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_ee626e30_e6136064",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "ee626e30",
-    "status": "available",
-    "timestamp": "2026-07-18T03:54:54.432626+00:00",
-    "title": "Deepening: Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
   {
     "consumed_by_exp_id": "",
@@ -4573,7 +4546,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3e5f77d",
     "description": "Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, then person-equivalence is decidable. Show: if the brain uses quantum computation, person-equivalence is undecidable (by the no-cloning theorem). Conjecture: the Kolmogorov complexity of a person's identity is finite and bounded by ~10^15 bits.",
     "domains": [
       "Novelty",
@@ -4581,10 +4554,11 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "seed_399",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
@@ -4633,23 +4607,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
-  },
-  {
-    "consumed_by_exp_id": "c6b3a18e",
-    "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations \u2014 enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Logic"
-    ],
-    "id": "seed_415",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -5732,22 +5689,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
   },
   {
-    "consumed_by_exp_id": "c1a3ae41",
-    "description": "Prove Chouldechova's impossibility theorem: when base rates differ across groups, equalized odds and equal calibration cannot both hold. Formalize the tension between individual fairness (similar individuals treated similarly) and group fairness (equal outcomes across groups).",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_326",
-    "phase": "A",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
@@ -6214,21 +6155,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'On Transformer Dynamics' and formalize its key results. Abstract: We develop a geometric framework in which the token dynamics of a transformer are modeled by a system of interacting particles on a Riemannian manifold $\\mathcal M$, the attention mechanism being encoded by a time-independent two-body interaction law, that is, a section of the pullback bundle $\u03c0_2^{*}(T\\mathcal M)$ over $\\mathcal M\\times\\mathcal M$. Within this framework we isolate two features that a family of interaction laws must possess in order to model language: it must realize generic nonlocal and nonreciprocal forces, and it must parametrize vector fields on a high-dimensional manifold efficiently. We show that both features are achieved simultaneously in a transformer model. Our main theorem produces a finitely parametrized family of interaction laws, independent of the manifold and of its dimension, that is universal: it realizes an arbitrary prescribed attention digraph. Moreover, we show that the cost of realizing a given attention digraph is governed not by $\\dim\\mathcal M",
-    "domains": [
-      "Geometry",
-      "MachineLearning"
-    ],
-    "id": "fd_0054",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13295v1",
-    "status": "available",
-    "timestamp": "2026-07-16T02:44:23.384751+00:00",
-    "title": "ArXiv paper: On Transformer Dynamics"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $\u03b3(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $\u03c1(G)$ is the maximum number of pairwise vertex-disjoint radius-$1$ balls. We prove that $\\frac{\u03b3(G)}{\u03c1(G)}\\le 5$ for every planar graph and $\\frac{\u03b3(G)}{\u03c1(G)} \\le \\frac{18\\sqrt3}\u03c0\\approx 9.924$ for every unit disk graph, thus yielding Erd\u0151s-P\u00f3sa-type bounds for the hypergraph of radius-$1$ balls in the two graph classes. This improves upon results of Guti\u00e9rrez and Paul, and D\u00facz and Gujgiczer, who in turn lowered bounds of Bonamy, Csik\u00f3s, Gujgiczer and Yuditsky, and B\u00f6hme and Mohar. For both graph classes, the best known lower bound on the optimal constant remains $3$.",
     "domains": [
       "Bridges"
@@ -6282,21 +6208,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T10:53:48.349640+00:00",
     "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Bounded-Support Additive Latin Transversals via Color-Counted Matching' and formalize its key results. Abstract: We consider the following additive Latin transversal problem. Given a multiset $A=(a_1,\\dots,a_k)$ of elements of $\\mathbb Z_m$ and a set $B\\subseteq\\mathbb Z_m$ of cardinality $k$, the task is to order $B$ as $b_1,\\dots,b_k$ so that the sums $a_i+b_i$ are pairwise distinct. When $k=m$, Hall proved that a solution exists if and only if $\\sum_{i=1}^m a_i\\equiv 0 \\pmod m$; moreover, his theorem yields a polynomial-time construction. Alon proved that a solution always exists when $m$ is prime and $k<m$, but no polynomial-time construction is known in general. Our main algorithmic contribution is a direct randomized algorithm for Color-Counted Matching: given an edge-colored graph and prescribed target counts for the colors, find a matching using exactly the prescribed number of edges of each color. If $q$ is the sum of the target counts and $h$ is the number of colors, our base-$(q+1)$ reduction to Exact Red Matching, combined with the algorithm of Mulmuley-Vazirani-Vazirani, gives a rand",
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0078",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11241v1",
-    "status": "available",
-    "timestamp": "2026-07-16T11:56:23.621922+00:00",
-    "title": "ArXiv paper: Bounded-Support Additive Latin Transversals via Color-Counted Matching"
   },
   {
     "consumed_by_exp_id": "",
@@ -6429,21 +6340,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method' and formalize its key results. Abstract: Aardal and Lenstra systematically studied hard knapsack problems of the form $a_1x_1+\\cdots+a_nx_n=b$, where $a_i=p_iM+r_iN$, $(M,N)$ is a coprime pair of positive integers, and the integers $|p_i|, |r_i|$ are small relative to $M$ and $N$. We investigate the corresponding challenging denumerant problem (i.e., counting the number of nonnegative integer solutions) and present a polynomial-time algorithm. This eliminates the computational bottlenecks caused by large values of $M$, $N$ and $b$. The proposed algorithm achieves a time complexity of $O(n^4\u0394^2\\log n\\log\u0394)$, which depends solely on the parameters $n$ and $\u0394=\\max_{i,j}|r_i p_j - r_j p_i|$. Moreover, we consider the problem of expressing a general vector $(a_1,\\dots,a_n)$ in the above form using the LLL algorithm.",
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0105",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11477v1",
-    "status": "available",
-    "timestamp": "2026-07-16T10:38:19.903223+00:00",
-    "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$' and formalize its key results. Abstract: Wegner conjectured that every finite family $\\mathcal R$ of axis-parallel rectangles satisfies $\u03c4(\\mathcal R)\\le 2\u03bd(\\mathcal R)-1$, where $\u03bd$ is the packing number and $\u03c4$ is the piercing number. Ajwani, Gajjala, Raman, and Ray recently disproved this by constructing a triangle-free counterexample on $2196\\cdot 8^9$ rectangles and, using a computer-assisted package-and-port recursion, obtained a standard LP gap of $17891/8064$ for Maximum Independent Set of Rectangles. We give a simpler and hand-checkable counterexample with $64$ rectangles. It is built from an eight-rectangle gadget whose independent sets inject into four ordered slots; we then use four horizontal and four vertical copies of this gadget to form a triangle-free family with $\u03bd=16$ and $\u03c4\\ge 32$. We use the same horizontal-vertical step to define recursive families of rectangles $P_r$ with $\u03bd(P_r)=4^{2^r}$. For the standard clique, equivalently point, relaxation we obtain a finite gap $73/32$ at $P_3$, improving the prev",
     "domains": [
       "Pythagorean"
@@ -6573,21 +6469,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Beyond the Riemann Hypothesis bounds: A pair-correlation approach to the least prime in arithmetic progression and the smallest quadratic non-residue' and formalize its key results. Abstract: The Generalized Riemann Hypothesis (GRH) has long defined the expected bounds for the smallest prime in an arithmetic progression and the least quadratic non-residue. However, this hypothesis primarily addresses the horizontal location of non-trivial zeros. In this paper, we show that incorporating the vertical spacing--or pair-correlation--of these zeros allows us to surpass these classical bounds. By combining these two zero-distribution perspectives, we establish sharper estimates for both problems under GRH and specific pair-correlation hypotheses, thereby providing a new link between pair-correlation phenomena for Dirichlet L-functions and these two classical problems.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0158",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14515v1",
-    "status": "available",
-    "timestamp": "2026-07-17T02:00:26.348823+00:00",
-    "title": "ArXiv paper: Beyond the Riemann Hypothesis bounds: A pair-correlation approach to the least prime in arithmetic progression and the smallest quadratic non-residue"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond' and formalize its key results. Abstract: Vertex splitting replaces a vertex (v) by two nonadjacent vertices whose neighborhoods together equal (N(v)). A split is \\emph{exclusive} if these neighborhoods are disjoint and \\emph{shallow} if no newly created vertex is split again. For a graph property (\u03a0), \\textsc{(\u03a0)-Vertex Splitting} asks whether at most (k) splits can transform a graph (G) into one satisfying (\u03a0). We continue the systematic study of this operation and settle several open problems. First, we prove that \\textsc{Cograph Vertex Splitting} is \\textsf{NP}-complete, even on graphs of girth at least 5, resolving a question of Firbas and Sorge (ISAAC 2024). More generally, \\textsc{(P_t)-free Vertex Splitting} is \\textsf{NP}-complete for every fixed (t\\geq 4). We also prove that \\textsc{Chordal Vertex Splitting} and \\textsc{Unit-Interval Vertex Splitting} are \\textsf{NP}-complete, resolving two questions of Abu-Khzam, Chakraborty, Isenmann, and Oijid (IWOCA 2026). Our hardness results extend to the exclusive and shallow ",
     "domains": [
       "Bridges"
@@ -6599,21 +6480,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T00:50:43.952244+00:00",
     "title": "ArXiv paper: Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Towards a characterization of idempotent Schur multipliers' and formalize its key results. Abstract: It is conjectured that every idempotent Schur multiplier can be written as a finite sum of contractive idempotents. This conjecture is equivalent to the statement that any boolean matrix $A$ with factorization norm $\\lVert A\\rVert_{\u03b3_2}$ at most $\u03b3$ can be expressed as a signed sum $$A = \\sum_{i=1}^L \\pm B_i,$$ where, up to permutation of rows and columns, each $B_i$ is a blow-up of an identity matrix, and $L$ depends only on $\u03b3$. In this note we show that if $A$ is an $n\\times n$ boolean matrix with $\\lVert A\\rVert_{\u03b3_2} \\le \u03b3$, then it admits such an expression with $L = 2^{O(\u03b3^9) + \\log^*\\! n}$, where $\\log^*$ is the iterated logarithm function. As an application, any sequence of matrices with bounded factorization norm belongs to the complexity class $\\mathrm{P}^\\mathrm{EQ}$ of communication problems with polylogarithmic equality-oracle complexity.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0164",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14316v1",
-    "status": "available",
-    "timestamp": "2026-07-17T01:26:03.097278+00:00",
-    "title": "ArXiv paper: Towards a characterization of idempotent Schur multipliers"
   },
   {
     "consumed_by_exp_id": "",
@@ -6957,36 +6823,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0748",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21494v1",
-    "status": "available",
-    "timestamp": "2026-07-26T13:09:41.707810+00:00",
-    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^r\u03bc_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0748",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21589v1",
-    "status": "available",
-    "timestamp": "2026-07-26T13:09:44.805764+00:00",
-    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
   },
   {
     "consumed_by_exp_id": "",
@@ -7618,16 +7454,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52a4ad3f",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
     "domains": [
       "NumberTheory"
     ],
     "id": "seed_032",
+    "phase": "A",
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Erd\u0151s\u2013Straus Conjecture"
   },
@@ -7982,21 +7819,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe formal results establish the one-dimensional Borsuk\u2013Ulam kernel and also show why it is not, by itself, Arrow's theorem.\n\n1. **Formalize the actual Arrow domain.** Define finite alternatives, strict linear orders, voter profiles, social welfare functions, Pareto unanimity, independence of irrelevant alternatives, and dictatorship. Prove Arrow's theorem combinatorially on that domain.\n2. **Build a genuine topological bridge.** Any topological derivation must construct a non-discrete space from ranked profiles (for example, via a geometric realization of an order complex), prove that the Arrow axioms induce the required continuous/equivariant map, and identify precisely which antipodal equality contradicts which social-choice axiom.\n3. **General-dimensional Borsuk\u2013Ulam.** Mathlib does not currently expose a ready-made full Borsuk\u2013Ulam theorem. A reusable development would require sphere degree/cohomology machinery or an equivalent antipodal non-extension theorem.\n4. **Distinguish aggregation models.** Binary majority formally refutes the unrestricted \u201ccontinuous implies dictatorial\u201d claim. Future statements must retain Arrow's hypotheses (at least three alternatives, unrestricted ranked domain, Pareto, and IIA) rather than replacing them with continuity alone.\n5. **Audit the preference-sphere identification.** A finite set of strict rankings is discrete and is not a sphere. A faithful proof must explicitly define and justify any interpolation between rankings instead of assuming this identification.\n",
-    "domains": [
-      "Geometry",
-      "Logic"
-    ],
-    "id": "fd_0378",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "99a8a1e3",
-    "status": "available",
-    "timestamp": "2026-07-19T02:07:26.246917+00:00",
-    "title": "The formal results establish the one-dimensional Borsuk\u2013Ulam kernel and also sho"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Status of the proposed claim\n\nNo known theorem establishes that the ordinary Collatz conjecture is independent of Peano Arithmetic, equivalent to `Con(PA)`, or that its stopping-time function dominates every PA-provably total function. The ordinary Collatz conjecture is also not known to be true. Consequently, none of those statements should be presented as an established result.\n\nThe Lean development proves a rigorous **conditional connector**:\n\n1. If a consistent GL-style theory internally proves `C \u2192 Con(PA)`, where `C` faithfully represents Collatz, then that theory cannot prove `C`.\n2. If it internally proves both directions and satisfies the corresponding \u03a3\u2081-soundness condition, then neither `C` nor `\u00acC` is provable.\n3. If the standard Collatz conjecture is semantically equivalent to consistency of a proof system, then any positive orbit avoiding `1` implies inconsistency of that system.\n\nThe first two are reusable G\u00f6del\u2013L\u00f6b reductions. The third makes the requested counterexample consequence precise. In every case the presently unknown bridge is exposed as an explicit hypothesis rather than smuggled into the model.\n\n## What remains for an actual PA result\n\n1. **Formalize first-order PA and arithmetization.** Use a genuine recursively axiomatized first-order theory, G\u00f6del coding of syntax and proofs, and a standard-model interpretation. The abstract proof system used here correctly captures the modal reduction but is not itself a claim that the concrete system is PA.\n2. **Represent Collatz arithmetically.** Define a formula `C_PA` representing `\u2200 n > 0, \u2203 k, T^[k](n) = 1`, and prove adequacy between formula satisfaction in the standard model and `CollatzConjecture`.\n3. **Prove the missing internal reduction.** The decisive target is `PA \u22a2 C_PA \u2192 Con(PA)` (or both directions for equivalence). There is currently no accepted mathematical argument for this statement. A valid reduction must be formalizable in PA and cannot merely cite the computability of the Collatz map.\n4. **Separate truth from unprovability.** Even an internal equivalence with `Con(PA)` would not by itself establish standard truth without a metatheoretic consistency assumption. Independence requires carefully stated consistency or soundness assumptions for both non-provability directions.\n5. **Investigate generalized Collatz systems.** Conway-style generalized Collatz maps can encode universal computation. Their undecidability does not transfer automatically to the fixed `3n+1` map. Formalizing the precise boundary would be a useful cross-domain result.\n6. **Strengthen certified computation.** The included evidence kernel-checks inputs `1..20`. Larger bounds can be certified with efficient arrays and reflection, but no finite bound proves the universal conjecture.\n\n## Computational evidence notes\n\nThe exact unaccelerated stopping times for inputs `1..20` are formalized in `ComputationalEvidence.lean`:\n\n`0, 1, 7, 2, 5, 8, 16, 3, 19, 6, 14, 9, 9, 17, 17, 4, 12, 20, 20, 7`.\n\nNo counterexample occurs in this sample. The stopping-time sequence beginning at `n = 1` is commonly catalogued as OEIS A006577. This catalog identification is documentary context; the numerical table itself is checked in Lean.\n",
     "domains": [
       "Pythagorean",
@@ -8024,21 +7846,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T06:13:12.901596+00:00",
     "title": "**Conjecture.** On a geodesically complete statistical manifold with sectional c"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Semantic equivalence and simple-homotopy type\n\n**Conjecture.** If two finite argumentation frameworks are strongly equivalent under preferred semantics, then the downward-closed complexes generated by their preferred extensions are simple-homotopy equivalent after deleting vertices that occur in no preferred extension.\n\nThe key insight is that strong semantic equivalence should control not only the maximal faces but also the collapses among all their subfaces. **Why now?** The antichain theorem identifies maximal faces as the semantic data, while the generated-complex construction supplies the canonical topological object on which elementary collapses can be tested.\n\n## 2. Exact characterization of attack cycles detected by first homology\n\n**Conjecture.** For finite frameworks whose attack graph is a directed cactus and has no self-attacks, the first Betti number of the preferred-generated complex equals the number of induced directed cycles satisfying an explicit parity-and-defence condition.\n\nThe key insight is that an attack cycle alone is insufficient: admissible defence determines whether its combinatorial trace survives filling by higher-dimensional preferred faces. **Why now?** The failure of the naive cycle interpretation shows that a restricted graph class and a defence-sensitive criterion are necessary and directly testable.\n\n## 3. Grounded-core collapse criterion\n\n**Conjecture.** If every preferred extension of a finite framework contains its grounded extension and every argument outside the grounded extension has a unique defender inside it, then the preferred-generated complex collapses onto the simplex spanned by the grounded extension.\n\nThe key insight is that unique semantic defence may define dominated vertices, translating grounded semantics into a sequence of topological elementary collapses. **Why now?** The attack-free boundary case exhibits complete collapse to a simplex, and the generated construction makes the proposed domination mechanism precise.\n\n## 4. A corrected Euler\u2013semantics identity\n\n**Conjecture.** There is no universal affine formula depending only on the numbers of arguments, attacks, preferred extensions, and grounded arguments that equals the Euler characteristic of the preferred-generated complex; however, on finite acyclic frameworks the Euler characteristic is determined by the intersection poset of preferred extensions through inclusion\u2013exclusion.\n\nThe key insight is that Euler characteristic depends on overlaps among maximal faces, information erased by the four proposed scalar counts. **Why now?** The two-isolated-argument obstruction rules out the original formula, while the antichain structure points to the intersection poset as the minimal richer invariant.\n\n## 5. Realizability of simplicial complexes by argumentation semantics\n\n**Conjecture.** Every finite simplicial complex is homotopy equivalent to the downward closure generated by the preferred extensions of some finite argumentation framework, with the number of added arguments bounded linearly by the number of minimal nonfaces.\n\nThe key insight is that attacks and defenders can act as gadgets enforcing precisely a prescribed antichain of facets. **Why now?** Preferred families are necessarily antichains, exactly as facet families are, so the corrected construction turns realizability into a concrete synthesis problem rather than a mismatch of definitions.\n",
-    "domains": [
-      "Geometry",
-      "Logic"
-    ],
-    "id": "fd_0425",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6fa68166",
-    "status": "available",
-    "timestamp": "2026-07-19T08:23:18.138098+00:00",
-    "title": "**Conjecture.** If two finite argumentation frameworks are strongly equivalent u"
   },
   {
     "consumed_by_exp_id": "",
@@ -8102,21 +7909,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase \u201cHausdorff dimension exactly aleph-one.\u201d In Mathlib, Hausdorff dimension has codomain `\u211d\u22650\u221e`, not the cardinals, so it cannot literally equal `\u2135\u2081`; the unique value beyond every finite real dimension is `\u22a4`. Consequently CH is neither needed nor applicable to this metric invariant.\n\nThe file proves a dependency chain culminating in `hilbert_cube_transfinite_surface`: real `\u2113\u00b2` has Hausdorff dimension `\u22a4`, admits no antilipschitz map to a finite-dimensional real normed space, embeds topologically in the Hilbert cube, and cannot be covered by finitely many subsets of finite Hausdorff dimension. The latter is the proved metric obstruction underlying the finite-triangulation slogan.\n\n## Natural extensions\n\n1. **Abstract triangulations.** Define a finite topological simplicial complex, its realization, and a triangulation homeomorphism. Prove that each realized simplex has finite Hausdorff dimension under a Lipschitz-compatible metric, then derive the no-triangulation theorem from `no_finite_finiteDim_cover`.\n2. **Metric dependence.** The Hilbert-cube map is a topological embedding, not a bi-Lipschitz embedding. Formalize explicit compatible Hilbert-cube metrics and determine distortion bounds on finite-dimensional stages.\n3. **Compact infinite-dimensional examples.** Construct the standard weighted Hilbert cube as a compact subset of `\u2113\u00b2` and prove directly that its Hausdorff dimension is `\u22a4` by embedding finite cubes with controlled metrics.\n4. **Transfinite topological dimension.** If ordinal-valued inductive dimensions are desired, define a separate transfinite dimension invariant. Such an invariant, unlike Hausdorff dimension, can meaningfully take ordinal values; comparisons with covering dimension and Hausdorff dimension would then require new theory.\n5. **Manifold notions.** Specify a concrete infinite- or transfinite-dimensional manifold category (Hilbert manifolds, Fr\u00e9chet manifolds, or ordinal-indexed local models). The present work does not call `\u2113\u00b2` a two-dimensional surface or formalize manifold charts, because those claims would not follow from infinite Hausdorff dimension alone.\n6. **Stronger embedding obstruction.** The current theorem excludes distance-expanding, hence isometric and bi-Lipschitz, embeddings into finite-dimensional spaces. A purely topological non-embedding theorem would require covering-dimension or cohomological-dimension machinery and is strictly stronger than the metric result proved here.\n",
-    "domains": [
-      "Geometry",
-      "Logic"
-    ],
-    "id": "fd_0486",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "238d5b60",
-    "status": "available",
-    "timestamp": "2026-07-19T20:25:50.319607+00:00",
-    "title": "`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for "
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Results established\n\nThe formal development in `Speculative/CategoryDNA.lean` uses a precise minimal semantics:\na theory retains a type of models, and its genome is the discrete category on that type.\nWithin this semantics it proves:\n\n1. **Exact Morita characterization.** Type-level equivalence of model collections is\n   equivalent to categorical equivalence of their genomes.\n2. **Composition.** Morita equivalences compose.\n3. **Classification of one-axiom mutations.** If mutation adjoins a predicate `P` and\n   the evident forgetful functor has a right adjoint, then every old model already\n   satisfies `P`. Conversely, if every model satisfies `P`, the adjunction exists.\n4. **Counterexample to the unrestricted mutation slogan.** The one-model theory\n   mutated by the false axiom has no such right adjoint.\n5. **Positive restricted evolutionary-path result.** Every equivalence of genomes is\n   itself an adjunction step.\n\nThus, under discrete semantics, the proposed mutation principle is not merely\noccasionally false: the existence of the relevant right adjoint is equivalent to the\nnew axiom being semantically redundant.\n\n## Limits and next steps\n\nThe formalization intentionally does not claim that an arbitrary first-order,\nhigher-order, or geometric theory is determined by a bare type of models. Ordinary\ncategories of models have nontrivial homomorphisms, and standard notions of Morita\nequivalence vary with the chosen logic. A stronger continuation should:\n\n- define signatures, syntax, interpretations, and model homomorphisms;\n- distinguish syntactic Morita equivalence from equivalence of model categories;\n- require equivalences compatible with underlying-set or semantic functors when that\n  structure is part of the intended semantics;\n- investigate reflective and coreflective subcategories produced by axioms, where\n  genuine free completions or localizations can supply adjoints;\n- define \u201cquotient step\u201d and \u201cevolutionary path\u201d before attempting the full\n  decomposition conjecture;\n- test whether geometric morphisms, accessible localizations, or sketches give the\n  appropriate nontrivial replacement for the disproved unrestricted slogan.\n\n## Computational-evidence justification\n\nNo separate computational experiment was used. The claims concern universal\nproperties of functors and adjunctions rather than a finite numerical sequence. The\ncounterexample is structural: an adjunction counit in a discrete category would force\na proof of the newly adjoined predicate for every old model. Small-case enumeration\nwould only reproduce the formally proved classification and would not add meaningful\nevidence. Consequently there is no OEIS sequence or informative numerical plot.\n",
     "domains": [
       "Logic",
@@ -8174,21 +7966,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T04:48:40.609115+00:00",
     "title": "Future directions from cycle 09546bb0"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## What was formalized\n\n`Speculative/TimeTravelLogic.lean` develops a deterministic discrete model of causal histories.\nIts central theorem, `novikov_iff_loop_has_fixed_point`, proves that on every nonempty closed\norbit, pointwise Novikov consistency is equivalent to the presence of a fixed point on that\norbit. The proof also isolates the stronger fact that one fixed event on a deterministic closed\norbit forces the entire orbit to collapse to that event.\n\nThe file then proves an idempotent-law collapse theorem, models the grandfather intervention as\nBoolean negation, proves that odd-period loops are impossible while even-period loops are closed\nbut inconsistent, and develops a finite-history branching model. In that model travel appends an\nevent, creates a strict descendant, strict descent is transitive and irreflexive, and distinct\ninterventions produce incomparable sibling branches.\n\n## Mathematical extensions\n\n1. **Relational and nondeterministic causality.** Replace a function `\u03b1 \u2192 \u03b1` with a relation\n   `\u03b1 \u2192 \u03b1 \u2192 Prop`. In this setting one fixed event need not collapse a whole cycle, so the exact\n   hypotheses needed for a Novikov/fixed-point equivalence become mathematically substantive.\n\n2. **Constraint-based self-consistency.** Model local physical laws as relations on assignments\n   around a finite directed cycle. Existence of a globally consistent assignment then becomes a\n   finite constraint-satisfaction theorem. Compactness could extend this to infinite causal\n   networks.\n\n3. **Probabilistic causal loops.** Use stochastic matrices or Markov kernels. A fixed point is\n   then a stationary distribution rather than an unchanged event. Finite-state existence could\n   be proved algebraically; uniqueness would require irreducibility or contraction hypotheses.\n\n4. **Branch trees and merges.** Generalize lists to a rooted tree with branch identifiers.\n   Formalize common ancestry, least common ancestors, branch independence, and controlled merge\n   operations. Study precisely which merge policies preserve acyclicity.\n\n5. **Temporal logic.** Define modal operators over histories and prove preservation theorems for\n   safety properties under branch extension. This would connect the finite prefix model to\n   established linear-time and branching-time temporal logics.\n\n6. **Lorentzian geometry boundary.** The G\u00f6del-universe conjecture is not asserted here: a closed\n   timelike curve is geometric, whereas self-consistency requires an additional dynamical law.\n   A faithful future treatment should first formalize a Lorentzian spacetime, timelike curves,\n   G\u00f6del's metric, and a matter evolution relation. It should then state consistency relative to\n   that evolution law rather than infer it from geometric closure alone.\n\n## Limits of the present model\n\nThe deterministic update semantics is intentionally small and exact. It captures the logical\ndifference between periodicity and pointwise consistency, but not relativistic spacetime,\nback-reaction, quantum mechanics, or physical realizability. The branching result proves\nacyclicity for append-only finite histories; it does not claim that many-worlds quantum mechanics\nhas been formalized.\n",
-    "domains": [
-      "Geometry",
-      "Logic"
-    ],
-    "id": "fd_0595",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3e4f1b52",
-    "status": "available",
-    "timestamp": "2026-07-22T04:48:57.289523+00:00",
-    "title": "`Speculative/TimeTravelLogic.lean` develops a deterministic discrete model of ca"
   },
   {
     "consumed_by_exp_id": "",
@@ -8374,24 +8151,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-  },
-  {
-    "consumed_by_exp_id": "68e75c09",
-    "description": "Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algebra B(f) such that the clopen sets of S(B(f)) correspond to the decision regions of f. Specifically, for a binary classifier f: R^n -> {0, 1}, the decision regions {x : f(x) > 0} and {x : f(x) <= 0} are clopen sets in the Stone topology, and the Boolean algebra B(f) is generated by the hyperplanes that form the decision boundary. For a ReLU network with L layers: B(f) is generated by the w_1 + ... + w_L hyperplanes defined by each neuron. The Stone space S(B(f)) has 2^{w_1+...+w_L} points (one for each possible activation pattern), and the decision boundary of f is a subset of S(B(f)). Conjecture: the VC dimension of f equals the number of atoms in B(f), which equals the number of linear regions of f. Test: compute B(f) for small ReLU networks and verify the VC dimension equals the number of linear regions. Impact: neural networks have Stone duals. The Boolean algebra of activation patterns is the syntax, and the decision boundary is the semantics.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "seed_194",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
   },
   {
     "consumed_by_exp_id": "",
@@ -8678,20 +8437,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0749",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "oeis:212351",
-    "status": "available",
-    "timestamp": "2026-07-26T13:09:47.944604+00:00",
-    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domains": [
       "NumberTheory"
@@ -8800,6 +8545,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T05:36:47.309939+00:00",
     "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle c6b3a18e (Q=0.629) proved 102 theorems in Physics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
+    "domains": [
+      "Physics"
+    ],
+    "id": "sorry_fill_c6b3a18e_299bca55",
+    "priority_score": 0.6794117647058824,
+    "research_mode": "team",
+    "source_exp_id": "c6b3a18e",
+    "status": "available",
+    "timestamp": "2026-07-26T14:03:58.556772+00:00",
+    "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
     "consumed_by_exp_id": "",
