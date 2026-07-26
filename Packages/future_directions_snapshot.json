@@ -3398,28 +3398,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1ba7b435",
-    "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Algebra",
-      "Analysis"
-    ],
-    "id": "seed_132",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "Define the Selberg class S as the set of Dirichlet series L(s) = sum a_n/n^s satisfying: (1) Ramanujan bound |a_n| <= n^epsilon for epsilon > 0, (2) Analytic continuation to C except for a possible pole at s=1, (3) Functional equation relating L(s) to L(1-s), (4) Euler product L(s) = prod_p L_p(s). Prove S is countable: each L in S is determined by finitely many data because (a) the degree d_L is a positive integer, (b) the conductor q_L is a positive integer, (c) the Euler factors L_p(s) for p not dividing q_L are determined by the Ramanujan bound and the functional equation, and (d) there are finitely many primes dividing q_L. So L is determined by (d_L, q_L, epsilon_L, {L_p(s) : p | q_L}), a finite set of data. Since each piece of data is countable, S is countable. Test: enumerate elements of S by increasing conductor.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' — a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities — they form a continuous family, and the hat is just one point on the spectrum.",
     "domain_bridges": [],
@@ -7625,7 +7603,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c1a3ae41",
     "description": "Prove Chouldechova's impossibility theorem: when base rates differ across groups, equalized odds and equal calibration cannot both hold. Formalize the tension between individual fairness (similar individuals treated similarly) and group fairness (equal outcomes across groups).",
     "domain_bridges": [],
     "domains": [
@@ -7638,7 +7616,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
   },
@@ -9325,6 +9303,46 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0745",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.21494v1",
+    "status": "available",
+    "timestamp": "2026-07-26T09:31:54.857773+00:00",
+    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0747",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.21589v1",
+    "status": "available",
+    "timestamp": "2026-07-26T09:31:57.938112+00:00",
+    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
   },
   {
     "ambition_level": "extension",
@@ -11056,26 +11074,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a09dd613",
-    "description": "# Future directions\n\n## What is formally established\n\nThe accompanying Lean files isolate three rigorous components related to *The\nEndpoint Cardinality of Discrete Cube Skeleta*:\n\n1. **Discrete midpoint injection.** Labelled left/right endpoints determine an\n   integer center because their sum is twice the center.\n2. **The complete one-dimensional endpoint bound.** If a finite lattice set\n   contains the two endpoints of a positive-radius interval about each point of\n   a finite center set, then `|centers| ≤ |points|²`.\n3. **A labelled two-coordinate projection bound.** A finite set of labelled\n   pairs has size at most the product of the sizes of its coordinate\n   projections; the same is proved for any jointly injective pair of labels.\n\nThe exponent formula from the paper is also checked at `(n,k)=(2,1)`, yielding\n`1-(2-1)/(2·2²)=7/8`.\n\n## Contrarian conjectures tested\n\n* **Disproved:** every one-dimensional endpoint cover obeys the stronger linear\n  bound `|centers| ≤ |points|`.  The certified example uses four endpoints and\n  covers six centers.\n* **Disproved:** the product in the two-coordinate projection inequality can be\n  replaced by the maximum projection cardinality.  The full `2 × 2` relation\n  has four objects and two labels in either coordinate.\n* **Proved:** despite the failed linear strengthening, the universal quadratic\n  endpoint bound does hold in dimension one.\n\n## Next formalization milestones\n\nThe present work does **not** claim a formal proof of the paper's full endpoint\nlower bound for arbitrary `0 ≤ k < n`, nor of the square-boundary `N^(7/8)`\nlower bound.  Reaching those results faithfully requires the following layers:\n\n1. Define axis-parallel `k`-faces and filled cube skeleta in `ℤ^n`, preferably\n   with coordinates indexed by `Fin n` and face directions represented by\n   finite coordinate sets.\n2. Generalize the labelled projection theorem to a finite hypergraph cover of\n   coordinate labels (the full finite Shearer inequality).\n3. Formalize the paper's midpoint multiplicity estimate, including all labels\n   needed to recover centers without accidental quotienting.\n4. Encode the large-radius/small-radius induction with an explicit\n   well-founded measure, avoiding dyadic pigeonholing.\n5. Derive the arbitrary `(n,k)` exponent and then specialize to square\n   boundaries.\n\nA useful intermediate target is the two-dimensional vertex case (`n=2,k=0`),\nwhich exercises coordinate bookkeeping and midpoint estimates without filled\nedges.  After that, the square-boundary case (`n=2,k=1`) is the first genuinely\nendpoint-sensitive test of the strong induction.\n\n## Cryptographic connection\n\nThe labelled projection lemmas are directly reusable in analyses where a set\nof transcripts or keys is encoded by several partial views: jointly\nidentifying views bound the transcript population by the product of the view\nalphabets.  The explicit counterexample warns that replacing this product by a\nsingle largest view is unsound without additional independence or structural\nhypotheses.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Pythagorean"
-    ],
-    "id": "fd_0726",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "aa1e249d",
-    "status": "in_progress",
-    "timestamp": "2026-07-25T14:09:47.358166+00:00",
-    "title": "The accompanying Lean files isolate three rigorous components related to *The"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction from evaluations to polynomial equality.\n2. **Alternating coefficients.** Use deletion–contraction to prove the standard sign alternation and identify the leading coefficient and degree.\n3. **More graph operations.** Prove formulas for joins, vertex sums, forests, cycles, and complete multipartite graphs. The disjoint-union multiplicativity theorem is the first operation law.\n4. **Chromatic roots and bases.** Formalize expansion in falling-factorial and tree bases; investigate positivity statements in a precisely defined `T`-basis.\n5. **Claw-free positivity.** State the intended meaning of T-positivity, develop the required symmetric/quasisymmetric polynomial infrastructure, and formalize the claw-free theorem. This is substantially beyond natural-number evaluations alone.\n6. **Brooks' theorem.** Build on the existing greedy maximum-degree bound and exception calculations in `Catalog/Tropical/ChromaticPolynomial/Brooks.lean` to prove the full connected non-complete, non-odd-cycle theorem.\n7. **Planarity and four colors.** Replace an abstract planarity predicate with a graph embedding definition, then connect the already formalized colorability/chromatic-number equivalences to a formal proof of the Four Color Theorem.\n8. **Component factorization.** Iterate disjoint-union multiplicativity over connected components and derive that the chromatic polynomial factors as the product of component polynomials.\n",
     "domain_bridges": [],
@@ -11181,7 +11179,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68e75c09",
     "description": "Stone duality states that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space S(B) (the space of ultrafilters on B). This connects syntax (Boolean algebra) with semantics (topology). Conjecture: every neural network f: R^n -> R^m has a 'Stone dual' which is a Boolean algebra B(f) such that the clopen sets of S(B(f)) correspond to the decision regions of f. Specifically, for a binary classifier f: R^n -> {0, 1}, the decision regions {x : f(x) > 0} and {x : f(x) <= 0} are clopen sets in the Stone topology, and the Boolean algebra B(f) is generated by the hyperplanes that form the decision boundary. For a ReLU network with L layers: B(f) is generated by the w_1 + ... + w_L hyperplanes defined by each neuron. The Stone space S(B(f)) has 2^{w_1+...+w_L} points (one for each possible activation pattern), and the decision boundary of f is a subset of S(B(f)). Conjecture: the VC dimension of f equals the number of atoms in B(f), which equals the number of linear regions of f. Test: compute B(f) for small ReLU networks and verify the VC dimension equals the number of linear regions. Impact: neural networks have Stone duals. The Boolean algebra of activation patterns is the syntax, and the decision boundary is the semantics.",
     "domain_bridges": [],
     "domains": [
@@ -11196,7 +11194,7 @@
     "proof_strategy": "Define B(f) as the Boolean algebra generated by the halfspaces {x : w_i . x + b_i > 0} for each neuron i in the network. An atom of B(f) is a minimal non-empty intersection of these halfspaces and their complements, which is a linear region of f. The Stone space S(B(f)) is the space of ultrafilters on B(f), which has one point for each atom. For a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the number of atoms (linear regions) is at most prod_{i=1}^{L} sum_{j=0}^{min(n,w_i)} C(w_i, j). The VC dimension of f is at most the number of atoms, since each atom corresponds to a dichotomy that f can realize. More precisely: VC-dim(f) <= log_2(number of atoms), since the number of dichotomies on m points is at most 2^{number of atoms}. Wait, this is the opposite direction. The VC dimension is the largest m such that f can shatter m points, which requires 2^m dichotomies. The number of dichotomies is at most the number of atoms (since each dichotomy corresponds to a subset of atoms). So VC-dim(f) <= log_2(number of atoms). For L = 2, n = 2, w_1 = w: number of atoms <= 2 * C(w, 0) + 2 * C(w, 1) = 2 + 2w. VC-dim(f) <= log_2(2 + 2w). This is much smaller than the known bound O(w * n). So the Stone duality bound is not tight. Conjecture: the Stone duality gives a tighter bound for deep networks. Test: compute B(f) for 2-layer ReLU networks with w = 2, 4, 8, 16, count atoms, compare VC-dim with the bound.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
   },
@@ -11572,6 +11570,25 @@
     "status": "available",
     "timestamp": "",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0746",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-07-26T09:32:00.821836+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "ambition_level": "extension",
