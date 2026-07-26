@@ -1,0 +1,1 @@
+../../Bridges/LawvereDuality/Theorems.lean
