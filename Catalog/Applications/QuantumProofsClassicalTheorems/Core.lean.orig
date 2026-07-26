@@ -1,6 +1,6 @@
 import Mathlib
-import Logic.PosetTheory.ProofSystemCollapse
-import Bridges.PigeonholeInjectionBridge.PigeonholeInjectionBridge
+import Logic.ProofSystemCollapse
+import Bridges.PigeonholeInjectionBridge
 
 /-!
 # Classical witnesses embedded in quantum proof models
