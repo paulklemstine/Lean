@@ -1,33 +1,40 @@
-# Computational Evidence
+# Computational evidence: rooted and ordinary three-vertex paths
 
-## Small cases
+## Small-case calculations
 
-For the six-vertex graph with edges `02, 03, 05, 12, 14, 23`, direct finite evaluation gives:
+For the six-vertex graph with edge set
 
-| vertex | 0 | 1 | 2 | 3 | 4 | 5 |
-|---|---:|---:|---:|---:|---:|---:|
-| ordinary `P₃` count | 6 | 3 | 7 | 5 | 1 | 2 |
-| end-rooted `P₃` count | 3 | 2 | 4 | 4 | 1 | 2 |
+\[
+\{02,03,05,12,14,23\},
+\]
 
-Thus all ordinary counts differ, while the end-rooted count collides at vertices 2 and 3 (and also at 1 and 5). The finite identities establishing both rows and the associated counterexample are imported by `AffineProfiles.lean`.
+the Lean definitions compute the following per-vertex statistics:
 
-For the affine example with statistics `i ∈ {0,1}` and vertices `v ∈ {0,1,2}`, the intercept is `i+v` and slope is `2v+i`. At `t=6`, the profiles are:
+| vertex | degree | central-rooted `P₃` count | end-rooted `P₃` count | ordinary `P₃` count |
+|---:|---:|---:|---:|---:|
+| 0 | 3 | 3 | 3 | 6 |
+| 1 | 2 | 1 | 2 | 3 |
+| 2 | 3 | 3 | 4 | 7 |
+| 3 | 2 | 1 | 4 | 5 |
+| 4 | 1 | 0 | 1 | 1 |
+| 5 | 1 | 0 | 2 | 2 |
 
-| statistic | v=0 | v=1 | v=2 |
-|---|---:|---:|---:|
-| i=0 | 0 | 13 | 26 |
-| i=1 | 7 | 20 | 33 |
-
-Both rows are injective, as predicted for every `t>5`.
+Thus all ordinary counts are distinct, whereas the end-rooted counts collide at
+vertices 2 and 3 (and also at 1 and 5). The central-rooted counts exhibit the
+expected collisions forced by equal degrees.
 
 ## OEIS search
 
-No sequence search was used: the target concerns finite graph-incidence vectors and a structural separation criterion, not a naturally arising one-dimensional integer sequence.
+No sequence arises in the selected finite-graph obstruction or counterexample,
+so an OEIS search is not applicable.
 
 ## Counterexample hunt
 
-The six-vertex graph disproves the unguarded assertion that ordinary `P₃` irregularity implies end-rooted `P₃` irregularity. The surviving guarded statement requires the two compared vertices to have equal degree; under that condition, ordinary irregularity forces their end-rooted counts to differ.
+The graph above is a certified counterexample to the plausible implication
+“ordinary `P₃`-irregular implies end-rooted `P₃`-irregular.” The finite
+calculations are encoded and kernel-checked in
+`Catalog/Logic/RootedPathIrregularity/Contrarian.lean`.
 
-## Boundary case
-
-The strict affine threshold cannot generally be weakened to `t ≥ B`. At `t=B=1`, profiles with `(c₁,m₁)=(1,0)` and `(c₂,m₂)=(0,1)` coincide despite `m₁<m₂` and both intercepts being at most `B`.
+The universal negative central-root claim does not rely on finite search: it is
+proved from the theorem that every finite simple graph on at least two vertices
+has two vertices of equal degree.

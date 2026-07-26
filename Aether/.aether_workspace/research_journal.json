@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e170790e",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n1. **Interval self-maps.** Add a theorem that a continuous self-map of a nonempty compact\n   real interval has a fixed point, then distinguish existence from attraction by\n   form",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-19T11:34:25",
-      "title": "Social Credit Scores as Topological Invariants"
-    },
-    {
       "cycle_id": "a9bce66e",
       "domain": "Applications",
       "key_insight": "# Future Directions: Transreal Arithmetic\n\n## 1. Signed-zero completion and genuine wheel involution\n\n**Conjecture.** Adjoining distinct positive and negative zeros to the transreal carrier admits a c",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-26T18:21:06",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "cycle_id": "c3aad27b",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n## Formal result completed here\n\n`Catalog/Cryptography/LWE/INDCPA.lean` gives a finite-distribution formulation of the final LWE-to-IND-CPA game hop. It proves:\n\n- nonnegativity,",
+      "quality_score": 0.6256666666666666,
+      "sorry_count": 1,
+      "theorem_count": 18,
+      "timestamp": "2026-07-26T18:21:12",
+      "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T18:21:06",
+  "last_updated": "2026-07-26T18:21:12",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
-      "cycle_id": "115a4ee3",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-07-18T13:38:23"
-    },
     {
       "context": "sorry; sorry; sorry",
       "cycle_id": "b14c422f",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 1,
       "timestamp": "2026-07-26T14:26:26"
+    },
+    {
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "cycle_id": "c3aad27b",
+      "domain": "Cryptography",
+      "sorry_count": 1,
+      "timestamp": "2026-07-26T18:21:12"
     }
   ],
   "research_threads": {
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "b3f0d755",
-        "quality": 0.75,
-        "theorems": 26,
-        "title": "Causal Loops in Category Theory: When Composition Loops Back"
-      },
-      {
         "cycle_id": "fee59e0b",
         "quality": 0.69,
         "theorems": 9,
@@ -3389,6 +3383,12 @@
         "quality": 0.71,
         "theorems": 0,
         "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
+      },
+      {
+        "cycle_id": "c3aad27b",
+        "quality": 0.6256666666666666,
+        "theorems": 18,
+        "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
       }
     ],
     "Geometry": [
