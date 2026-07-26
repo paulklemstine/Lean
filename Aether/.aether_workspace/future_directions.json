@@ -31775,7 +31775,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cf55a60f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31803,7 +31803,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"

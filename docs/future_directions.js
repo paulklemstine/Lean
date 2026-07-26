@@ -4320,17 +4320,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cf55a60f",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
       "Computation"
     ],
     "id": "seed_312",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
@@ -8282,17 +8283,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "For every nonexceptional composite index, the primitive part of the correspondin"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a09dd613",
     "description": "# Future directions\n\n## What is formally established\n\nThe accompanying Lean files isolate three rigorous components related to *The\nEndpoint Cardinality of Discrete Cube Skeleta*:\n\n1. **Discrete midpoint injection.** Labelled left/right endpoints determine an\n   integer center because their sum is twice the center.\n2. **The complete one-dimensional endpoint bound.** If a finite lattice set\n   contains the two endpoints of a positive-radius interval about each point of\n   a finite center set, then `|centers| \u2264 |points|\u00b2`.\n3. **A labelled two-coordinate projection bound.** A finite set of labelled\n   pairs has size at most the product of the sizes of its coordinate\n   projections; the same is proved for any jointly injective pair of labels.\n\nThe exponent formula from the paper is also checked at `(n,k)=(2,1)`, yielding\n`1-(2-1)/(2\u00b72\u00b2)=7/8`.\n\n## Contrarian conjectures tested\n\n* **Disproved:** every one-dimensional endpoint cover obeys the stronger linear\n  bound `|centers| \u2264 |points|`.  The certified example uses four endpoints and\n  covers six centers.\n* **Disproved:** the product in the two-coordinate projection inequality can be\n  replaced by the maximum projection cardinality.  The full `2 \u00d7 2` relation\n  has four objects and two labels in either coordinate.\n* **Proved:** despite the failed linear strengthening, the universal quadratic\n  endpoint bound does hold in dimension one.\n\n## Next formalization milestones\n\nThe present work does **not** claim a formal proof of the paper's full endpoint\nlower bound for arbitrary `0 \u2264 k < n`, nor of the square-boundary `N^(7/8)`\nlower bound.  Reaching those results faithfully requires the following layers:\n\n1. Define axis-parallel `k`-faces and filled cube skeleta in `\u2124^n`, preferably\n   with coordinates indexed by `Fin n` and face directions represented by\n   finite coordinate sets.\n2. Generalize the labelled projection theorem to a finite hypergraph cover of\n   coordinate labels (the full finite Shearer inequality).\n3. Formalize the paper's midpoint multiplicity estimate, including all labels\n   needed to recover centers without accidental quotienting.\n4. Encode the large-radius/small-radius induction with an explicit\n   well-founded measure, avoiding dyadic pigeonholing.\n5. Derive the arbitrary `(n,k)` exponent and then specialize to square\n   boundaries.\n\nA useful intermediate target is the two-dimensional vertex case (`n=2,k=0`),\nwhich exercises coordinate bookkeeping and midpoint estimates without filled\nedges.  After that, the square-boundary case (`n=2,k=1`) is the first genuinely\nendpoint-sensitive test of the strong induction.\n\n## Cryptographic connection\n\nThe labelled projection lemmas are directly reusable in analyses where a set\nof transcripts or keys is encoded by several partial views: jointly\nidentifying views bound the transcript population by the product of the view\nalphabets.  The explicit counterexample warns that replacing this product by a\nsingle largest view is unsound without additional independence or structural\nhypotheses.\n",
     "domains": [
       "Cryptography",
       "Pythagorean"
     ],
     "id": "fd_0726",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "aa1e249d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-25T14:09:47.358166+00:00",
     "title": "The accompanying Lean files isolate three rigorous components related to *The"
   },
