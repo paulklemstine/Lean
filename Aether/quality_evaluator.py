@@ -17,6 +17,29 @@ try:
 except ImportError:
     ArxivTexProvider = None
 
+
+def _safe_float(val: Any, default: float = 0.5) -> float:
+    """Safely convert val to float, handling int, float, str, dict (nested score), and None."""
+    if val is None:
+        return default
+    if isinstance(val, (int, float)):
+        return float(val)
+    if isinstance(val, dict):
+        for k in ("score", "value", "rating", "val", "composite", "novelty", "proof_depth"):
+            if k in val:
+                return _safe_float(val[k], default)
+        return default
+    if isinstance(val, str):
+        try:
+            return float(val.strip())
+        except ValueError:
+            return default
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return default
+
+
 # Tactics considered "interesting" (non-trivial proof effort)
 DEEP_TACTICS = {
     "induction", "rcases", "obtain", "by_contra", "by_cases",
@@ -172,7 +195,7 @@ class QualityScore:
         Phase 3 eval cache to restore a cached quality_detail). Only the 9
         axis fields are read; composite/grade are derived."""
         d = d or {}
-        return cls(**{k: float(d.get(k, 0.0)) for k in (
+        return cls(**{k: _safe_float(d.get(k), 0.0) for k in (
             "proof_depth", "novelty", "cross_domain", "artifact_richness",
             "actionability", "importance", "usefulness", "applications",
             "catalog_anchoring")})
@@ -711,9 +734,9 @@ class QualityEvaluator:
             raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120)
             data = self.pi_agent._parse_json_response(raw)
             if data:
-                imp = float(data.get("importance", 0.5))
-                use = float(data.get("usefulness", 0.5))
-                app = float(data.get("applications", 0.5))
+                imp = _safe_float(data.get("importance"), 0.5)
+                use = _safe_float(data.get("usefulness"), 0.5)
+                app = _safe_float(data.get("applications"), 0.5)
                 # Reject degenerate responses (all identical or all near-floor)
                 if imp < 0.05 and use < 0.05 and app < 0.05:
                     raise ValueError("Degenerate LLM scores (all near-zero)")
@@ -927,15 +950,15 @@ class QualityEvaluator:
             if data:
                 # Build a QualityScore from the critic's assessment
                 qs = QualityScore(
-                    proof_depth=max(0, min(1, float(data.get("proof_depth", 0.5)))),
-                    novelty=max(0, min(1, float(data.get("novelty", 0.5)))),
-                    cross_domain=max(0, min(1, float(data.get("cross_domain", 0.5)))),
-                    artifact_richness=max(0, min(1, float(data.get("artifact_richness", 0.5)))),
-                    actionability=max(0, min(1, float(data.get("actionability", 0.5)))),
-                    importance=max(0, min(1, float(data.get("importance", 0.5)))),
-                    usefulness=max(0, min(1, float(data.get("usefulness", 0.5)))),
-                    applications=max(0, min(1, float(data.get("applications", 0.5)))),
-                    catalog_anchoring=max(0, min(1, float(data.get("catalog_anchoring", 0.5)))),
+                    proof_depth=max(0.0, min(1.0, _safe_float(data.get("proof_depth"), 0.5))),
+                    novelty=max(0.0, min(1.0, _safe_float(data.get("novelty"), 0.5))),
+                    cross_domain=max(0.0, min(1.0, _safe_float(data.get("cross_domain"), 0.5))),
+                    artifact_richness=max(0.0, min(1.0, _safe_float(data.get("artifact_richness"), 0.5))),
+                    actionability=max(0.0, min(1.0, _safe_float(data.get("actionability"), 0.5))),
+                    importance=max(0.0, min(1.0, _safe_float(data.get("importance"), 0.5))),
+                    usefulness=max(0.0, min(1.0, _safe_float(data.get("usefulness"), 0.5))),
+                    applications=max(0.0, min(1.0, _safe_float(data.get("applications"), 0.5))),
+                    catalog_anchoring=max(0.0, min(1.0, _safe_float(data.get("catalog_anchoring"), 0.5))),
                 )
                 return {"composite": qs.composite_with_domains(domains), "breakdown": qs.to_dict()}
         except Exception as e:
@@ -976,15 +999,15 @@ class QualityEvaluator:
             data = self.pi_agent._parse_json_response(raw)
             if data:
                 qs = QualityScore(
-                    proof_depth=max(0, min(1, float(data.get("proof_depth", 0.5)))),
-                    novelty=max(0, min(1, float(data.get("novelty", 0.5)))),
-                    cross_domain=max(0, min(1, float(data.get("cross_domain", 0.5)))),
-                    artifact_richness=max(0, min(1, float(data.get("artifact_richness", 0.5)))),
-                    actionability=max(0, min(1, float(data.get("actionability", 0.5)))),
-                    importance=max(0, min(1, float(data.get("importance", 0.5)))),
-                    usefulness=max(0, min(1, float(data.get("usefulness", 0.5)))),
-                    applications=max(0, min(1, float(data.get("applications", 0.5)))),
-                    catalog_anchoring=max(0, min(1, float(data.get("catalog_anchoring", 0.5)))),
+                    proof_depth=max(0.0, min(1.0, _safe_float(data.get("proof_depth"), 0.5))),
+                    novelty=max(0.0, min(1.0, _safe_float(data.get("novelty"), 0.5))),
+                    cross_domain=max(0.0, min(1.0, _safe_float(data.get("cross_domain"), 0.5))),
+                    artifact_richness=max(0.0, min(1.0, _safe_float(data.get("artifact_richness"), 0.5))),
+                    actionability=max(0.0, min(1.0, _safe_float(data.get("actionability"), 0.5))),
+                    importance=max(0.0, min(1.0, _safe_float(data.get("importance"), 0.5))),
+                    usefulness=max(0.0, min(1.0, _safe_float(data.get("usefulness"), 0.5))),
+                    applications=max(0.0, min(1.0, _safe_float(data.get("applications"), 0.5))),
+                    catalog_anchoring=max(0.0, min(1.0, _safe_float(data.get("catalog_anchoring"), 0.5))),
                 )
                 return {"composite": qs.composite_with_domains(domains), "breakdown": qs.to_dict()}
         except Exception as e:

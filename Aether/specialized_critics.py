@@ -16,6 +16,29 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, Optional
 
 
+def _safe_float(val: Any, default: float = 0.5) -> float:
+    """Safely convert val to float, handling int, float, str, dict (nested score), and None."""
+    if val is None:
+        return default
+    if isinstance(val, (int, float)):
+        return float(val)
+    if isinstance(val, dict):
+        for k in ("score", "value", "rating", "val"):
+            if k in val:
+                return _safe_float(val[k], default)
+        return default
+    if isinstance(val, str):
+        try:
+            return float(val.strip())
+        except ValueError:
+            return default
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return default
+
+
+
 @dataclass
 class CriticScores:
     correctness: float
@@ -92,7 +115,7 @@ class ThreadPromiseCritic:
                 cleaned = re.sub(r"\s*```$", "", cleaned)
             data = json.loads(cleaned)
             if isinstance(data, dict):
-                score = float(data.get("promise_score", 0.5))
+                score = _safe_float(data.get("promise_score"), 0.5)
                 score = max(0.0, min(1.0, score))
                 rec = str(data.get("recommendation", "continue")).lower()
                 if rec not in ("continue", "pivot", "terminate"):
@@ -182,16 +205,26 @@ class SpecializedCritic:
                 d_data = data.get("depth", {})
                 p_data = data.get("presentation", {})
                 
+                c_score = _safe_float(c_data, 0.5) if not isinstance(c_data, dict) else _safe_float(c_data.get("score"), 0.5)
+                n_score = _safe_float(n_data, 0.5) if not isinstance(n_data, dict) else _safe_float(n_data.get("score"), 0.5)
+                d_score = _safe_float(d_data, 0.5) if not isinstance(d_data, dict) else _safe_float(d_data.get("score"), 0.5)
+                p_score = _safe_float(p_data, 0.5) if not isinstance(p_data, dict) else _safe_float(p_data.get("score"), 0.5)
+
+                c_rat = str(c_data.get("rationale", "")) if isinstance(c_data, dict) else ""
+                n_rat = str(n_data.get("rationale", "")) if isinstance(n_data, dict) else ""
+                d_rat = str(d_data.get("rationale", "")) if isinstance(d_data, dict) else ""
+                p_rat = str(p_data.get("rationale", "")) if isinstance(p_data, dict) else ""
+
                 return CriticScores(
-                    correctness=max(0.0, min(1.0, float(c_data.get("score", 0.5)))),
-                    novelty=max(0.0, min(1.0, float(n_data.get("score", 0.5)))),
-                    depth=max(0.0, min(1.0, float(d_data.get("score", 0.5)))),
-                    presentation=max(0.0, min(1.0, float(p_data.get("score", 0.5)))),
+                    correctness=max(0.0, min(1.0, c_score)),
+                    novelty=max(0.0, min(1.0, n_score)),
+                    depth=max(0.0, min(1.0, d_score)),
+                    presentation=max(0.0, min(1.0, p_score)),
                     rationale={
-                        "correctness": str(c_data.get("rationale", "")),
-                        "novelty": str(n_data.get("rationale", "")),
-                        "depth": str(d_data.get("rationale", "")),
-                        "presentation": str(p_data.get("rationale", "")),
+                        "correctness": c_rat,
+                        "novelty": n_rat,
+                        "depth": d_rat,
+                        "presentation": p_rat,
                     }
                 )
         except Exception:

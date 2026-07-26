@@ -212,5 +212,27 @@ class TestResearchJobFilesIntegrated:
         assert job.files_integrated == 0
 
 
+class TestCriticDictHandling:
+    def test_critic_returns_dict_values(self):
+        """Critic evaluation handles LLM returning dictionary scores without throwing float() error."""
+        import json
+        class MockPiAgent:
+            def _call_ollama(self, system, user, timeout=120, category=None):
+                return json.dumps({
+                    "proof_depth": {"score": 0.8, "reasoning": "Good depth"},
+                    "novelty": {"value": 0.7},
+                    "cross_domain": "0.6",
+                    "artifact_richness": None,
+                })
+
+            def _parse_json_response(self, raw):
+                return json.loads(raw)
+
+        qe = QualityEvaluator(pi_agent=MockPiAgent())
+        res = qe._run_adversarial_critic("theorem test : True := trivial", "Test", "Desc")
+        assert "composite" in res
+        assert res["composite"] > 0.0
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
