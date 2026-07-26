@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-26T14:04:09.569250+00:00",
+  "last_updated": "2026-07-26T14:26:26.871399+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -37608,6 +37608,7 @@
       "outcome_quality": 0.6294117647058823,
       "phase": "A_only",
       "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v26",
@@ -37651,6 +37652,7 @@
       "outcome_quality": 0.69018,
       "phase": "A_only",
       "phase_a_prompt_version": "v19a",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19a",
@@ -37694,6 +37696,7 @@
       "outcome_quality": 0.63,
       "phase": "A_only",
       "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v26",
@@ -37722,6 +37725,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-26T14:04:09.369308+00:00",
       "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1165,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Shared",
+      "duration_seconds": 9666.199595451355,
+      "end_time": 1785075977.1329784,
+      "files_integrated": 3,
+      "job_id": "346c1c9a",
+      "outcome_quality": 0.6043828571428571,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v24",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v24",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.51,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6165,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.5357,
+        "novelty": 0.71,
+        "proof_depth": 0.4609,
+        "usefulness": 0.6555
+      },
+      "quality_score": 0.6043828571428571,
+      "sorry_count": 1,
+      "sorry_density": 0.14285714285714285,
+      "start_time": 1785066310.933383,
+      "strategy_count": 0,
+      "theorem_count": 7,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-26T14:26:26.759327+00:00",
+      "title": "Deepening: Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ]
 }
