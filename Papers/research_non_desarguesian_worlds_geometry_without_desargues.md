@@ -1,438 +1,417 @@
-# Non-Desarguesian Worlds: Quasifield Coordinatization and the Dickson Nearfield of Order Nine
+# Projective Completion from Planar Ternary Coordinates: Incidence, Enumeration, and the Algebraic Obstruction of Nonassociativity
+
+**Aristotle**  
+**July 26, 2026**
 
 ## Abstract
 
-We develop the algebraic theory that governs when a finite affine plane obeys
-Desargues' theorem, and we exhibit — with all incidence and algebraic properties
-established by exhaustive finite verification — the smallest non-Desarguesian
-example. We isolate the notion of a **quasifield**: an additive abelian group
-with a multiplication possessing a two-sided unit, unique two-sided division for
-nonzero elements, the right distributive law, and the planar (Veblen) axiom.
-We prove that every quasifield $Q$ coordinatizes a genuine affine plane on the
-point set $Q \times Q$ — two distinct points determine a unique line, Playfair's
-parallel axiom holds, and the plane is non-degenerate — and that division rings
-are exactly the "tame" quasifields whose planes are Desarguesian. We then
-construct the **Dickson nearfield of order 9**: the field $\mathrm{GF}(9)$ with
-its multiplication twisted by the Frobenius automorphism along the split into
-squares and non-squares. We verify that this multiplication is associative, has
-a two-sided unit, admits unique two-sided division, and is right-distributive,
-so it is a quasifield (indeed a nearfield); but that it is **neither commutative
-nor left-distributive**, exhibiting an explicit left-distributivity witness.
-Since the coordinate structure is not a division ring, the coordinatized plane —
-with $81$ points and $90$ lines — is non-Desarguesian, and $9 = 3^2$ is the
-smallest order at which such a plane exists. We discuss the generalization to
-order $q^2$ for every prime power $q$, the attendant contraction of the
-collineation group, and the place of the nearfield plane in the classification
-of the planes of order $9$.
-
-**Keywords:** non-Desarguesian plane, quasifield, nearfield, Dickson twist,
-Frobenius automorphism, affine plane, coordinatization, Desargues' theorem,
-collineation group, finite geometry.
-
----
+We isolate the minimal unique-solvability assumptions needed to construct a projective incidence structure from coordinates. A planar ternary coordinate system consists of a set $A$ and an operation $T:A^3\to A$ satisfying three axioms: unique solution for the intercept in $T(x,m,b)=y$; unique slope-intercept pair through two affine points with distinct first coordinates; and unique affine intersection for two ordinary lines of distinct slopes. From these data we construct affine points, ideal points, ordinary lines, vertical lines, and a line at infinity. We prove that every two distinct points determine a unique line and every two distinct lines meet in a unique point. If $A$ has cardinality $q$, both the point set and the line set have cardinality $q^2+q+1$. No associativity or distributivity hypothesis is used. We also characterize associativity of an arbitrary binary multiplication by its left nucleus: the nucleus is the entire carrier exactly when multiplication is associative, and it is proper exactly when an explicit nonassociative triple exists. The results give the incidence-theoretic foundation for coordinatizing nonclassical projective planes while sharply separating what follows from solvability alone from the additional work required to establish failure of Desargues' theorem, construct Hall planes, classify planes, or compute collineation groups.
 
 ## 1. Introduction
 
-Desargues' theorem states that if two triangles in a plane are perspective from
-a point — the three lines joining corresponding vertices are concurrent — then
-they are perspective from a line: the three intersection points of corresponding
-sides are collinear. In the classical planes over the reals, rationals, or any
-field, this is a theorem. But an *abstract* affine or projective plane is
-defined only by incidence axioms (any two points lie on a unique line; a strong
-parallel axiom; a non-degeneracy condition), and these axioms do **not** entail
-Desargues' theorem. Planes in which it fails are called *non-Desarguesian*.
+Projective geometry completes affine geometry by adjoining a point for every direction and a line containing all such points. Over a field $F$, an affine line of finite slope has the equation
 
-The reason the distinction is meaningful — rather than a mere absence of proof —
-is the *coordinatization program* of Hilbert, Hall, and others. To every affine
-plane one may attach an algebraic coordinate structure, and the geometric
-theorems of the plane translate into algebraic laws of that structure. Desargues'
-theorem, in particular, corresponds exactly to the coordinate structure being a
-**division ring** (associative multiplication with a two-sided unit, both
-distributive laws, and two-sided inverses). The weaker structure that
-coordinatizes an arbitrary affine translation plane is a **quasifield**, and a
-quasifield that fails to be a division ring yields a non-Desarguesian plane.
-
-This paper has two halves. In §§2–4 we present the *general* theory: the
-quasifield axioms, the construction of the coordinatized plane, and proofs that
-the incidence axioms hold — all completely general and independent of any
-particular quasifield. In §§5–7 we present a *concrete* realization: the Dickson
-nearfield of order $9$, the properties that make it a quasifield but not a
-division ring, and the resulting non-Desarguesian plane of order $9$. §8
-discusses generalizations, symmetry loss, and the classification landscape.
-
-Every claim below has been checked completely: the general incidence results by
-proof, and every property of the order-$9$ example by exhaustive computation over
-the relevant $9$-, $81$-, or $729$-element domains.
-
----
-
-## 2. Quasifields
-
-Throughout, $(Q, +)$ is an additive abelian group with zero element $0$.
-
-**Definition 2.1 (Quasifield).** A *(right) quasifield* on $(Q,+)$ is a binary
-operation $\ast : Q \times Q \to Q$ together with a distinguished element
-$1 \in Q$ satisfying:
-
-1. **(nontriviality)** $1 \neq 0$;
-2. **(two-sided unit)** $a \ast 1 = a$ and $1 \ast a = a$ for all $a$;
-3. **(absorbing zero)** $a \ast 0 = 0$ and $0 \ast a = 0$ for all $a$;
-4. **(right distributivity)** $(a + b)\ast c = a\ast c + b\ast c$ for all
-   $a,b,c$;
-5. **(unique left division)** for every $a \neq 0$ and every $c$, there is a
-   unique $x$ with $a \ast x = c$;
-6. **(unique right division)** for every $a \neq 0$ and every $c$, there is a
-   unique $x$ with $x \ast a = c$;
-7. **(planar / Veblen axiom)** for all $a \neq b$ and every $d$, there is a
-   unique $x$ with $x \ast a = x \ast b + d$.
-
-We emphasize the properties *not* assumed: commutativity, associativity, and
-left distributivity ($a\ast(b+c) = a\ast b + a\ast c$). A quasifield whose
-multiplication is associative is a **nearfield**; one satisfying both
-distributive laws and associativity is a **division ring**; a commutative
-division ring is a **field**.
-
-**Lemma 2.2 (Subtractive right distributivity).** In any quasifield,
-$(a - b)\ast c = a\ast c - b\ast c$.
-
-*Proof.* Apply right distributivity to $(a-b) + b$: since
-$(a-b)+b = a$, we get $a\ast c = (a-b)\ast c + b\ast c$, and rearranging in the
-abelian group $(Q,+)$ gives the claim. $\qquad\blacksquare$
-
-Axioms (5)–(7) each assert that a certain self-map of $Q$ is a bijection: left
-multiplication $x \mapsto a\ast x$, right multiplication $x \mapsto x\ast a$
-(both for $a\neq 0$), and the "difference of slopes" map
-$x \mapsto x\ast a - x\ast b$ (for $a\neq b$). In the finite case, injectivity
-and surjectivity coincide, so these amount to "no zero divisors" plus a
-transversality condition ensuring distinct lines meet at most once.
-
----
-
-## 3. The coordinatized plane
-
-**Definition 3.1 (Points and lines).** Given a quasifield $Q$, the *points* of
-the associated plane are the pairs $(x, y) \in Q \times Q$. The *lines* are of
-two kinds:
-
-- an *ordinary* line $\ell_{m,b}$, the graph $\{(x,y) : y = x\ast m + b\}$, with
-  *slope* $m$ and *intercept* $b$;
-- a *vertical* line $v_c = \{(x,y) : x = c\}$.
-
-A point $p = (x,y)$ *lies on* $\ell_{m,b}$ iff $y = x\ast m + b$, and lies on
-$v_c$ iff $x = c$.
-
-**Theorem 3.2 (Two points determine a unique line).** For any two distinct
-points $p \neq q$ of the plane, there is a unique line incident with both.
-
-*Proof.* Write $p = (x_1, y_1)$, $q = (x_2, y_2)$.
-
-*Case $x_1 = x_2$.* Both points lie on the vertical line $v_{x_1}$. No ordinary
-line contains two points with equal $x$-coordinate and distinct $y$-coordinate
-(the defining equation would force $y_1 = y_2$), and $p \neq q$ forces
-$y_1 \neq y_2$; and $v_{x_1}$ is the only vertical line through $p$. Hence
-$v_{x_1}$ is the unique common line.
-
-*Case $x_1 \neq x_2$.* No vertical line contains both (their $x$-coordinates
-differ). An ordinary line $\ell_{m,b}$ contains both iff
-$y_1 = x_1\ast m + b$ and $y_2 = x_2\ast m + b$; subtracting and using Lemma 2.2
-gives $y_1 - y_2 = (x_1 - x_2)\ast m$. Since $x_1 - x_2 \neq 0$, unique left
-division (axiom 5) yields a unique slope $m$, and then $b = y_1 - x_1\ast m$ is
-determined. Hence the ordinary line is unique. $\qquad\blacksquare$
-
-**Definition 3.3 (Parallelism).** Two lines are *parallel* iff they are equal or
-disjoint. Concretely, two ordinary lines are parallel iff they share a slope;
-any two vertical lines are parallel; an ordinary and a vertical line are never
-parallel.
-
-**Theorem 3.4 (Playfair's axiom).** For every line $L$ and every point $p$,
-there is a unique line $M$ through $p$ with $M$ parallel to $L$.
-
-*Proof sketch.* If $L = \ell_{m,b}$ is ordinary, the parallels to $L$ are
-exactly the ordinary lines of the same slope $m$; through $p = (x_0, y_0)$
-exactly one has this slope, namely the one with intercept $b' = y_0 - x_0\ast m$.
-If $L = v_c$ is vertical, its parallels are the vertical lines, and through $p$
-exactly one vertical line passes, namely $v_{x_0}$. In each case existence and
-uniqueness follow directly. $\qquad\blacksquare$
-
-**Theorem 3.5 (Non-degeneracy).** There exist four points, no three collinear
-(a *quadrangle*). Explicitly, $(0,0)$, $(1,0)$, $(0,1)$, $(1,1)$ form such a
-configuration.
-
-*Proof sketch.* One checks that each of the four triples fails to satisfy any
-single line equation simultaneously, using $1 \neq 0$ and the unit and zero
-laws. $\qquad\blacksquare$
-
-**Corollary 3.6.** Every quasifield coordinatizes a genuine affine plane.
-
----
-
-## 4. Division rings and the Desargues dictionary
-
-**Proposition 4.1.** Every division ring $D$ is a quasifield, with $\ast$ its
-ring multiplication and $1$ its unit.
-
-*Proof.* The unit, zero, and right-distributive laws are ring axioms; unique
-two-sided division holds because nonzero elements are invertible; the planar
-axiom holds because $x\ast a - x\ast b = x\ast(a-b)$ (using *left*
-distributivity, available in a ring) is a bijection in $x$ when $a \neq b$.
-$\qquad\blacksquare$
-
-The classical coordinatization theorem sharpens this into an equivalence, which
-we record as the governing dictionary of the subject.
-
-**Theorem 4.2 (Desargues dictionary; classical).** An affine plane satisfies
-(the major) Desargues theorem if and only if it can be coordinatized by a
-division ring. Equivalently, the plane coordinatized by a quasifield $Q$ is
-Desarguesian precisely when $Q$ is (isomorphic to) a division ring — associative
-and satisfying both distributive laws.
-
-The upshot for our purposes is the following implication, which is all we need to
-certify non-Desarguesianness of a concrete example: **if a quasifield fails
-associativity or the left distributive law, its plane is non-Desarguesian.**
-This converts a subtle geometric question (do certain triangles align?) into a
-mechanical algebraic check.
-
----
-
-## 5. The field GF(9) and its Frobenius automorphism
-
-We realize $\mathrm{GF}(9)$ on the additive group
-$G = \mathbb{Z}/3 \times \mathbb{Z}/3$, writing an element $(a,b)$ as
-$a + b\alpha$ where $\alpha$ is a root of $t^2 + 1$; since $-1 \equiv 2 \pmod 3$
-we have $\alpha^2 = 2$. Field multiplication is
-$$(a + b\alpha)(c + d\alpha) = (ac + 2bd) + (ad + bc)\,\alpha,
-\qquad\text{i.e.}\qquad
-(a,b)\cdot(c,d) = (ac + 2bd,\ ad + bc).$$
-This is the ordinary field of nine elements: commutative, associative, both
-distributive laws hold.
-
-**Definition 5.1 (Frobenius).** The Frobenius automorphism is
-$$\sigma(a + b\alpha) = a - b\alpha = a + 2b\alpha, \qquad
-\sigma(a,b) = (a, 2b),$$
-which coincides with $x \mapsto x^3$. It is a field automorphism of order $2$,
-fixing exactly the prime subfield $\mathbb{Z}/3 = \{(a,0)\}$.
-
-**Definition 5.2 (Squares).** An element $b \in G$ is a *nonzero square* iff
-$b = c\cdot c$ for some $c \neq 0$. The multiplicative group of $\mathrm{GF}(9)$
-is cyclic of order $8$, so exactly four nonzero elements are squares.
-
-**Lemma 5.3 (Square/non-square split).** The nonzero squares are
-$$\{1,\ 2,\ \alpha,\ 2\alpha\} = \{(1,0),(2,0),(0,1),(0,2)\},$$
-and the non-squares are
-$$\{1+\alpha,\ 1+2\alpha,\ 2+\alpha,\ 2+2\alpha\}
-= \{(1,1),(1,2),(2,1),(2,2)\}.$$
-
-*Proof.* Direct enumeration of $c\cdot c$ over the eight nonzero $c$.
-$\qquad\blacksquare$
-
-The non-squares are precisely the elements with both coordinates nonzero; the
-squares are the nonzero elements lying on the two coordinate axes. This clean
-description makes the branching in the next definition transparent.
-
----
-
-## 6. The Dickson nearfield of order 9
-
-**Definition 6.1 (Dickson product).** On the same additive group $G$ define
 $$
-a \ast b =
-\begin{cases}
-a \cdot b, & b = 0 \text{ or } b \text{ a nonzero square},\\[2pt]
-\sigma(a) \cdot b, & b \text{ a non-square},
-\end{cases}
+y=xm+b,
 $$
-where $\cdot$ is $\mathrm{GF}(9)$ multiplication and $\sigma$ is Frobenius. The
-addition is unchanged: it is the ordinary $\mathbb{Z}/3 \times \mathbb{Z}/3$.
-The unit is $1 = (1,0)$.
 
-The definition twists the left factor by $\sigma$ exactly when the right factor
-is a non-square. Because $\sigma$ is trivial on the prime subfield and the
-branch is chosen by the *right* factor, the good algebraic laws that "reach
-across on the right" are preserved while the ones that "reach across on the
-left" are broken.
+vertical lines have equations $x=a$, and parallel lines meet at the ideal point corresponding to their direction. The standard construction may appear to depend on the full algebra of $F$. In fact, its fundamental incidence properties use much less.
 
-**Theorem 6.2 (Dickson quasifield axioms).** The Dickson product makes $G$ a
-quasifield with unit $(1,0)$. Concretely, all of the following hold:
+The crucial operations in the coordinate proof are solution operations. One must solve uniquely for an intercept through an affine point at a prescribed slope; solve uniquely for slope and intercept through two points whose first coordinates differ; and solve uniquely for the intersection of two lines whose slopes differ. These requirements can be stated for a single ternary operation $T(x,m,b)$, without splitting $T$ into multiplication and addition. They require neither associativity nor distributivity.
 
-- $a \ast (1,0) = a$ and $(1,0)\ast a = a$;
-- $a \ast 0 = 0$ and $0 \ast a = 0$;
-- $(a+b)\ast c = a\ast c + b\ast c$ (right distributivity);
-- for $a \neq 0$, both $x \mapsto a\ast x$ and $x \mapsto x\ast a$ are
-  bijections (unique two-sided division);
-- for $a \neq b$, $x \mapsto x\ast a - x\ast b$ is a bijection (planar axiom).
+This paper gives a self-contained development of that observation. Section 2 defines planar ternary coordinates. Section 3 defines their projective completion. Sections 4 and 5 prove the unique joining-line and unique-intersection theorems by exhaustive geometric cases. Section 6 obtains the projective incidence theorem. Section 7 counts the points and lines in the finite case. Section 8 studies the left nucleus of a binary multiplication and shows that properness of the nucleus is exactly the existence of an associativity defect. Sections 9 and 10 present computational algorithms and examples. Sections 11 and 12 discuss applications and the exact mathematical boundary of the results.
 
-*Proof.* Each statement is a closed sentence over the finite domain $G$ (with
-$|G|=9$, so at most $729$ triples), and is verified by exhaustive evaluation.
-The right distributive law is the structurally important one: for fixed $c$, the
-branch (square vs. non-square) depends only on $c$, so both sides apply the
-*same* branch; if $c$ is a square both sides use $\cdot$ and inherit field right
-distributivity, while if $c$ is a non-square both sides equal
-$\sigma(a+b)\cdot c = (\sigma(a)+\sigma(b))\cdot c = \sigma(a)\cdot c +
-\sigma(b)\cdot c$ using additivity of $\sigma$ and field distributivity.
-$\qquad\blacksquare$
+A motivating theme is non-Desarguesian geometry, but precision is important. The statement that non-Desarguesian planes exist at every prime-power order is false: the projective plane of order $2$, for example, is unique and Desarguesian. The theorems established here do not make that claim. They prove the general incidence mechanism through which a suitable nonassociative coordinate system can generate a projective plane. To conclude that a particular plane is non-Desarguesian requires a concrete coordinate algebra and a separate theorem connecting Desargues configurations to the relevant algebraic laws.
 
-**Theorem 6.3 (Associativity — it is a nearfield).** The Dickson product is
-associative: $(a\ast b)\ast c = a\ast(b\ast c)$ for all $a,b,c \in G$.
+## 2. Planar ternary coordinate systems
 
-*Proof.* Verified by exhaustive evaluation over all $729$ triples. Structurally,
-associativity reflects that the twisting exponents multiply consistently: the
-map assigning to each nonzero $b$ the automorphism $\mathrm{id}$ or $\sigma$
-according as $b$ is a square or non-square is a group homomorphism from the
-multiplicative group to $\mathrm{Gal}(\mathrm{GF}(9)/\mathbb{Z}/3)$, because the
-squares form an index-$2$ subgroup. $\qquad\blacksquare$
+### Definition 2.1 (Planar ternary coordinate system)
 
-A quasifield with associative multiplication is a **nearfield**; this is the
-unique proper finite nearfield of order $9$.
+Let $A$ be a set. A **planar ternary coordinate system** on $A$ is an operation
 
-**Theorem 6.4 (Failure of left distributivity).** The Dickson product is **not**
-left-distributive: there exist $a,b,c$ with
-$a\ast(b+c) \neq a\ast b + a\ast c$. An explicit witness is
-$$a = \alpha,\quad b = \alpha,\quad c = 1,\qquad
-\alpha \ast (\alpha + 1) \ \neq\ \alpha\ast\alpha + \alpha\ast 1.$$
+$$
+T:A\times A\times A\to A,
+$$
 
-*Proof.* Both $b = \alpha = (0,1)$ and $c = 1 = (1,0)$ are squares (Lemma 5.3),
-so $a\ast b = a\cdot b$ and $a\ast c = a\cdot c$, and the right-hand side equals
-$a\cdot b + a\cdot c = a\cdot(b+c)$ by field distributivity. But
-$b + c = 1 + \alpha = (1,1)$ is a *non-square*, so the left-hand side is
-$\sigma(a)\cdot(b+c)$. Thus the two sides differ by
-$(\sigma(a) - a)\cdot(b+c)$, which is nonzero because $a = \alpha$ is not fixed
-by $\sigma$ and $b+c \neq 0$. $\qquad\blacksquare$
+subject to the following three conditions.
 
-**Theorem 6.5 (Non-commutativity).** The Dickson product is not commutative:
-$a\ast b \neq b\ast a$ for some $a,b$; e.g. $\alpha \ast (1+\alpha)$ and
-$(1+\alpha)\ast\alpha$ differ, since $1+\alpha$ is a non-square (its right
-occurrence triggers a $\sigma$-twist) while $\alpha$ is a square (it does not).
+1. **Unique intercept.** For every $x,m,y\in A$, there exists exactly one $b\in A$ such that
+   $$
+   T(x,m,b)=y.
+   $$
 
-**Corollary 6.6.** The Dickson nearfield is a quasifield that is **not** a
-division ring (it violates left distributivity, and separately commutativity).
-Hence, by the Desargues dictionary (Theorem 4.2), the plane it coordinatizes is
-**non-Desarguesian**.
+2. **Unique ordinary line through separated abscissas.** For all $x_1,x_2\in A$ with $x_1\ne x_2$ and all $y_1,y_2\in A$, there exists exactly one pair $(m,b)\in A^2$ such that
+   $$
+   T(x_1,m,b)=y_1,
+   \qquad
+   T(x_2,m,b)=y_2.
+   $$
 
----
+3. **Unique affine intersection at distinct slopes.** For all $m_1,m_2\in A$ with $m_1\ne m_2$ and all $b_1,b_2\in A$, there exists exactly one pair $(x,y)\in A^2$ such that
+   $$
+   y=T(x,m_1,b_1),
+   \qquad
+   y=T(x,m_2,b_2).
+   $$
 
-## 7. The non-Desarguesian plane of order 9
+The variables are named to suggest their geometric roles: $x$ and $y$ are affine coordinates, $m$ is a slope, and $b$ is an intercept.
 
-Applying the general construction of §3 to the Dickson quasifield yields an
-affine plane whose points are $G \times G$ and whose lines are the ordinary and
-vertical lines defined by the Dickson product.
+### Example 2.2 (Field coordinates)
 
-**Theorem 7.1 (Incidence).** In the Dickson plane, any two distinct points lie
-on a unique line (Theorem 3.2), Playfair's parallel axiom holds (Theorem 3.4),
-and the plane is non-degenerate (Theorem 3.5). It is therefore a genuine affine
-plane.
+Let $F$ be a field and define $T(x,m,b)=xm+b$. The unique-intercept condition follows by subtraction. If $x_1\ne x_2$, the equations through $(x_1,y_1)$ and $(x_2,y_2)$ have the unique solution
 
-**Theorem 7.2 (Counting).** The Dickson plane has order $9$:
+$$
+m=(y_2-y_1)(x_2-x_1)^{-1},
+\qquad
+b=y_1-x_1m.
+$$
 
-- the point set $G \times G$ has $|G|^2 = 9^2 = 81$ points;
-- the line set is in bijection with $(G \times G) \sqcup G$ — ordinary lines
-  $\leftrightarrow$ slope/intercept pairs $(m,b)$, vertical lines
-  $\leftrightarrow$ their $x$-coordinate $c$ — and hence has
-  $9^2 + 9 = 90$ lines.
+If $m_1\ne m_2$, the intersection equations have the unique solution
 
-These are exactly the parameters of an affine plane of order $9$: $n^2$ points
-and $n^2 + n$ lines with $n = 9$ (each line has $9$ points; each point lies on
-$10$ lines).
+$$
+x=(b_2-b_1)(m_1-m_2)^{-1},
+\qquad
+y=xm_1+b_1.
+$$
 
-*Proof.* The point count is $|G|^2$. For lines, the map sending
-$\ell_{m,b} \mapsto (m,b)$ and $v_c \mapsto c$ is a bijection onto
-$(G\times G)\sqcup G$, whose cardinality is $81 + 9 = 90$. $\qquad\blacksquare$
+Thus ordinary affine coordinates are a special case.
 
-**Theorem 7.3 (Minimal order).** Order $9$ is the smallest at which a
-non-Desarguesian plane exists.
+### Remark 2.3 (The missing algebra is intentional)
 
-*Discussion.* Every plane of prime order $p$ is coordinatized by a field (there
-is no proper twist available), and a case analysis rules out non-Desarguesian
-planes of every order $\le 8$; the planes of orders $2,3,4,5,7,8$ are all unique
-and Desarguesian. The first prime-power square is $9 = 3^2$, which is also the
-first order admitting a field $\mathrm{GF}(9)$ with a nontrivial Frobenius
-automorphism and hence a Dickson twist. The construction realizes a
-non-Desarguesian plane at exactly this first opportunity.
+Definition 2.1 contains no constants $0$ or $1$, no addition, no multiplication, and no normalization equations such as $T(0,m,b)=b$. This minimality is useful: it identifies exactly the hypotheses consumed by the incidence arguments. More structured notions, including ternary rings and quasifields in standard normalized presentations, may imply these axioms, but the completion theorem needs only the axioms themselves.
 
----
+## 3. The projective completion
 
-## 8. Generalizations, symmetry, and classification
+We now define points, lines, and incidence.
 
-**8.1 Non-Desarguesian planes at every square order.** The construction is not
-special to $9$. For any prime power $q$, apply the Dickson twist to
-$\mathrm{GF}(q^2)$ using the Frobenius $x \mapsto x^q$ and branching on the
-index-$2$ subgroup of squares (more generally, on cosets of a subgroup of the
-multiplicative group). One obtains a proper nearfield and a non-Desarguesian
-plane of order $q^2$ for every prime power $q$. In a structural (as opposed to
-finite-computational) treatment, the finiteness checks of §6 are replaced by:
-additivity of the Frobenius (yielding right distributivity), the homomorphism
-property of the twist assignment on cosets (yielding associativity), and the
-observation that adding two squares can produce a non-square (yielding the
-failure of left distributivity). Non-Desarguesian worlds are thus ubiquitous,
-one for every square prime-power order.
+### Definition 3.1 (Points)
 
-**8.2 Contraction of the collineation group.** A collineation is a bijection of
-points carrying lines to lines. The Desarguesian plane of order $n$ has an
-extremely large collineation group (essentially the projective linear group
-acting on it), reflecting its homogeneity. The Dickson plane, by contrast,
-carries a distinguished substructure — the **nucleus** of the nearfield, the set
-of elements over which the twist is trivial and multiplication behaves like a
-field — and every collineation must preserve it. This constraint forces the
-collineation group of the Dickson plane to be a *proper* subgroup of the
-projective group of the Desarguesian plane of the same order. The failure of
-Desargues' theorem is thus mirrored by, and quantified through, a genuine loss of
-symmetry.
+The point set $\mathcal P$ is the disjoint union of three classes:
 
-**8.3 Nuclei and the Lenz–Barlotti hierarchy.** A quasifield has three nuclei —
-left, middle, and right — measuring where associativity holds. These algebraic
-invariants correspond to groups of central collineations (perspectivities) of
-the plane, and the pattern of which perspectivities exist places a plane in the
-Lenz–Barlotti classification. Non-associativity and one-sided distributivity in
-the coordinate structure translate directly into the plane's position in this
-hierarchy.
+1. affine points $P(x,y)$ for $(x,y)\in A^2$;
+2. ideal points $I(m)$ for $m\in A$;
+3. one vertical ideal point $I(\infty)$.
 
-**8.4 The four planes of order 9.** Order $9$ is the richest small case: there
-are exactly four projective planes of order $9$ — the Desarguesian plane
-$\mathrm{PG}(2,9)$, the nearfield (Hall) plane, its dual, and the Hughes plane.
-The nearfield plane built here sits at the head of this list of exceptions, and
-the quasifield/coordinatization machinery of §§2–4 is precisely the framework in
-which the enumeration and comparison of these planes is carried out.
+Symbolically,
 
----
+$$
+\mathcal P=A^2\sqcup A\sqcup\{I(\infty)\}.
+$$
 
-## 9. Discussion
+### Definition 3.2 (Lines)
 
-The results assemble into a single conceptual statement: **a geometric law
-(Desargues' theorem) is exactly an algebraic law (the coordinate structure being
-a division ring), and both can fail together in the smallest way at order 9.**
-The general theory (§§2–4) shows the weak algebraic hypotheses of a quasifield
-already suffice for all the incidence geometry of an affine plane, isolating
-associativity and left distributivity as the *only* extra ingredients Desargues
-requires. The concrete construction (§§5–7) then breaks exactly those two
-ingredients while keeping every other law intact, producing a plane that is
-flawless as an incidence structure yet non-Desarguesian.
+The line set $\mathcal L$ is likewise the disjoint union of three classes:
 
-Two features deserve emphasis. First, the construction is *surgical*: the twist
-is applied along the square/non-square split precisely so that right
-distributivity and associativity survive while left distributivity and
-commutativity die — nothing more is damaged than necessary. Second, the failure
-is *explicit and witnessed*: one can point to the elements $\alpha, \alpha, 1$
-and see the distributive law break, because adding the squares $\alpha$ and $1$
-lands on the non-square $1+\alpha$ and flips the branch of the definition.
+1. ordinary lines $L(m,b)$ for $(m,b)\in A^2$;
+2. vertical lines $V(a)$ for $a\in A$;
+3. one line at infinity $L(\infty)$.
 
----
+Thus
 
-## 10. Future work
+$$
+\mathcal L=A^2\sqcup A\sqcup\{L(\infty)\}.
+$$
 
-Natural next steps include: (i) exhibiting an explicit Desargues configuration
-(two triangles perspective from a point) inside the Dickson plane and giving
-a concrete $10$-point/$10$-line witness where the axis of perspectivity fails,
-turning the algebraic obstruction into a directly geometric statement; (ii)
-establishing the converse coordinatization theorem in full, that a plane
-satisfying Desargues is coordinatized by a division ring; (iii) carrying out the
-order-$q^2$ generalization structurally for every prime power $q$; (iv)
-proving that the collineation group fixes the nucleus and is thus a proper
-subgroup of the projective group; (v) connecting the nearfield plane to the Hall
-and Hughes planes and the enumeration of the four planes of order $9$; and (vi)
-developing nucleus theory over quasifields in relation to central collineations
-and the Lenz–Barlotti classification.
+### Definition 3.3 (Incidence)
 
-## References
+Incidence is determined by the following rules.
 
-- L. E. Dickson. *Linear algebras with associativity not assumed.*
-- M. Hall. *Projective planes.* Trans. Amer. Math. Soc. 54 (1943).
-- D. R. Hughes and F. C. Piper. *Projective Planes.* Springer, 1973.
+- $P(x,y)$ lies on $L(m,b)$ exactly when $y=T(x,m,b)$.
+- $P(x,y)$ lies on $V(a)$ exactly when $x=a$.
+- No affine point lies on $L(\infty)$.
+- $I(m)$ lies on $L(n,b)$ exactly when $m=n$.
+- No finite-slope ideal point lies on a vertical line.
+- Every $I(m)$ lies on $L(\infty)$.
+- $I(\infty)$ lies on no ordinary line.
+- $I(\infty)$ lies on every vertical line and on $L(\infty)$.
+
+These rules capture the idea that ordinary lines with a common slope meet at one ideal point, all vertical lines meet at a distinct ideal point, and all ideal points lie on one horizon.
+
+## 4. Unique lines through pairs of points
+
+### Theorem 4.1 (Unique Joining-Line Theorem)
+
+In the completion of a planar ternary coordinate system, every two distinct points are incident with exactly one common line.
+
+### Proof sketch
+
+Let the distinct points be $P$ and $Q$. We exhaust the possible point types.
+
+**Case 1: two affine points.** Write $P=P(x_1,y_1)$ and $Q=P(x_2,y_2)$. If $x_1=x_2$, both points lie on $V(x_1)$. They cannot lie together on an ordinary line: the unique-intercept axiom, applied at the common $x$ and slope, would force $y_1=y_2$, contradicting distinctness. No affine point lies at infinity, and a second vertical line cannot contain either point. Hence $V(x_1)$ is unique.
+
+If $x_1\ne x_2$, the second axiom supplies a unique pair $(m,b)$ satisfying
+
+$$
+T(x_1,m,b)=y_1,
+\qquad
+T(x_2,m,b)=y_2.
+$$
+
+Thus $L(m,b)$ contains both points. A vertical line cannot contain both because their first coordinates differ, and the line at infinity contains neither. Uniqueness of $(m,b)$ gives uniqueness of the ordinary line.
+
+**Case 2: one affine point and one finite-slope ideal point.** Let the points be $P(x,y)$ and $I(m)$. Any ordinary line through $I(m)$ must have slope $m$. By the unique-intercept axiom, there is exactly one $b$ such that $T(x,m,b)=y$. Therefore $L(m,b)$ is the unique common line. Vertical lines contain no $I(m)$, and the line at infinity contains no affine point.
+
+**Case 3: one affine point and the vertical ideal point.** The unique common line through $P(x,y)$ and $I(\infty)$ is $V(x)$. Ordinary lines do not contain $I(\infty)$, and the line at infinity does not contain affine points.
+
+**Case 4: two ideal points.** Two distinct finite-slope ideal points cannot share an ordinary line because an ordinary line has only the ideal point matching its single slope. Neither lies on a vertical line. Hence their unique common line is $L(\infty)$. The same conclusion holds for $I(m)$ and $I(\infty)$: the former is on no vertical line and the latter is on no ordinary line, while both lie on $L(\infty)$.
+
+These cases cover every pair of distinct points and prove existence and uniqueness. $\square$
+
+## 5. Unique intersections of pairs of lines
+
+### Theorem 5.1 (Unique Intersection Theorem)
+
+In the completion of a planar ternary coordinate system, every two distinct lines are incident with exactly one common point.
+
+### Proof sketch
+
+Let the distinct lines be $L$ and $K$.
+
+**Case 1: ordinary lines with distinct slopes.** Suppose
+
+$$
+L=L(m_1,b_1),\qquad K=L(m_2,b_2),\qquad m_1\ne m_2.
+$$
+
+The third solvability axiom gives a unique $(x,y)$ such that
+
+$$
+y=T(x,m_1,b_1)=T(x,m_2,b_2).
+$$
+
+Thus $P(x,y)$ is their unique affine intersection. No finite ideal point can lie on both, since that would force $m_1=m_2$, and $I(\infty)$ lies on neither.
+
+**Case 2: distinct ordinary lines with equal slope.** Let $L=L(m,b)$ and $K=L(m,c)$ with $b\ne c$. Both contain $I(m)$. They have no common affine point: if $P(x,y)$ lay on both, then
+
+$$
+T(x,m,b)=y=T(x,m,c),
+$$
+
+and the unique-intercept axiom would imply $b=c$. The only ideal point on either ordinary line is $I(m)$, so it is the unique intersection.
+
+**Case 3: an ordinary and a vertical line.** The lines $L(m,b)$ and $V(a)$ meet at
+
+$$
+P\bigl(a,T(a,m,b)\bigr).
+$$
+
+Any common affine point must have first coordinate $a$, and its second coordinate is then forced to be $T(a,m,b)$. Their ideal points differ: $L(m,b)$ contains $I(m)$ whereas $V(a)$ contains $I(\infty)$. Therefore the displayed point is unique.
+
+**Case 4: two distinct vertical lines.** The lines $V(a)$ and $V(c)$ with $a\ne c$ share $I(\infty)$. No affine point can have first coordinate both $a$ and $c$, and finite-slope ideal points lie on no vertical line. Hence the intersection is unique.
+
+**Case 5: a line and the line at infinity.** The ordinary line $L(m,b)$ meets $L(\infty)$ exactly at $I(m)$. A vertical line $V(a)$ meets $L(\infty)$ exactly at $I(\infty)$. These conclusions follow directly from the incidence rules.
+
+Every pair of distinct lines belongs to one of these cases. $\square$
+
+## 6. The completion theorem
+
+### Definition 6.1 (Projective unique incidence)
+
+An incidence structure $(\mathcal P,\mathcal L,\mathrel{\mathrm I})$ has **projective unique incidence** if:
+
+1. every two distinct points lie on exactly one common line; and
+2. every two distinct lines meet in exactly one common point.
+
+### Theorem 6.2 (Projective Completion Theorem)
+
+Every planar ternary coordinate system has a canonical completion with projective unique incidence.
+
+### Proof sketch
+
+Construct $\mathcal P$, $\mathcal L$, and incidence according to Definitions 3.1–3.3. The first clause of projective unique incidence is Theorem 4.1, and the second is Theorem 5.1. No additional algebraic laws are required. $\square$
+
+### Remark 6.3 (Nondegeneracy)
+
+Some definitions of “projective plane” supplement the two unique-incidence axioms with a nondegeneracy axiom, commonly the existence of four points no three of which are collinear. Theorem 6.2 states precisely the two properties established uniformly by the three solvability assumptions. For coordinate sets of appropriate size, nondegeneracy can be added by an explicit configuration. The distinction matters for very small or degenerate carriers.
+
+## 7. Finite enumeration
+
+Assume henceforth that $A$ is finite and write $q=|A|$.
+
+### Theorem 7.1 (Point Count)
+
+The projective completion contains exactly $q^2+q+1$ points.
+
+### Proof sketch
+
+The three point classes are disjoint. There are $q^2$ affine pairs, $q$ finite-slope ideal points, and one vertical ideal point. Addition gives
+
+$$
+|\mathcal P|=q^2+q+1.
+$$
+
+$\square$
+
+### Theorem 7.2 (Line Count)
+
+The projective completion contains exactly $q^2+q+1$ lines.
+
+### Proof sketch
+
+There are $q^2$ ordinary slope-intercept pairs, $q$ vertical lines, and one line at infinity. Since these classes are disjoint,
+
+$$
+|\mathcal L|=q^2+q+1.
+$$
+
+$\square$
+
+### Corollary 7.3 (Point-line cardinality balance)
+
+Every finite completion constructed above has equally many points and lines.
+
+This equality comes from the parallel disjoint-union descriptions; it does not require an appeal to incidence-matrix rank or a duality theorem.
+
+## 8. The left nucleus and nonassociativity
+
+We now consider an arbitrary set $Q$ equipped with a binary operation $*:Q\times Q\to Q$. No closure issue arises because the operation is defined on all pairs.
+
+### Definition 8.1 (Left nucleus)
+
+The **left nucleus** of $*$ is
+
+$$
+N_\ell(*)=\left\{a\in Q:\ a*(b*c)=(a*b)*c\text{ for every }b,c\in Q\right\}.
+$$
+
+It records exactly those elements that associate whenever they occupy the leftmost position.
+
+### Theorem 8.2 (Left-Nucleus Characterization of Associativity)
+
+The equality $N_\ell(*)=Q$ holds if and only if $*$ is associative on all triples; that is,
+
+$$
+N_\ell(*)=Q
+\quad\Longleftrightarrow\quad
+\forall a,b,c\in Q,\ a*(b*c)=(a*b)*c.
+$$
+
+### Proof sketch
+
+If $N_\ell(*)=Q$, then every $a\in Q$ belongs to the left nucleus. The defining property of membership gives associativity for that $a$ and arbitrary $b,c$. Since $a$ was arbitrary, associativity is universal.
+
+Conversely, assume universal associativity. For any $a$, the equality $a*(b*c)=(a*b)*c$ holds for every $b,c$, so $a\in N_\ell(*)$. Thus every element lies in the nucleus. $\square$
+
+### Theorem 8.3 (Proper-Nucleus Witness Theorem)
+
+The left nucleus is a proper subset of $Q$ if and only if there exist $a,b,c\in Q$ for which associativity fails:
+
+$$
+N_\ell(*)\ne Q
+\quad\Longleftrightarrow\quad
+\exists a,b,c\in Q,\ a*(b*c)\ne(a*b)*c.
+$$
+
+### Proof sketch
+
+Negate both sides of Theorem 8.2. The negation of universal equality over triples is the existence of a triple witnessing inequality. Equivalently, if the nucleus is proper, choose $a\notin N_\ell(*)$; by the definition of nonmembership there are $b,c$ witnessing failure. Conversely, any failing triple shows that its leftmost entry is absent from the nucleus. $\square$
+
+### Geometric interpretation
+
+When a coordinate system is presented as $T(x,m,b)=x*m+b$, a proper left nucleus proves that the multiplication is not associative. This is a concrete algebraic obstruction to treating the coordinates as a field with that multiplication. However, Theorem 8.3 alone does not prove failure of Desargues' theorem in the associated incidence plane. Such a conclusion requires hypotheses ensuring that the geometric configuration translates to associativity of the chosen coordinate multiplication. That bridge is an additional theorem, sensitive to the coordinatization framework.
+
+## 9. Algorithms
+
+The finite setting permits direct construction and auditing.
+
+### Algorithm 9.1 (Projective completion enumeration)
+
+**Input:** a finite set $A$ of size $q$ and a table for $T(x,m,b)$.
+
+**Output:** complete lists of $q^2+q+1$ points, $q^2+q+1$ lines, and the incidence relation.
+
+1. List all affine points $(x,y)$, all ideal points $I(m)$, and $I(\infty)$.
+2. List all ordinary lines $L(m,b)$, all vertical lines $V(a)$, and $L(\infty)$.
+3. For each point-line pair, apply Definition 3.3.
+
+There are $N=q^2+q+1$ points and lines, so explicit incidence-matrix construction takes $O(N^2)=O(q^4)$ evaluations and $O(N^2)$ space if the full matrix is stored.
+
+### Algorithm 9.2 (Unique-incidence audit)
+
+For every unordered pair of distinct points, count common incident lines and require the count to be one. Then, for every unordered pair of distinct lines, count common incident points and require the count to be one. A naive matrix-based implementation takes $O(N^3)=O(q^6)$ time: there are $O(N^2)$ pairs and $N$ possible common objects. Structure-aware formulas reduce the work substantially, but the naive audit is transparent and suitable for small examples.
+
+### Algorithm 9.3 (Left-nucleus computation)
+
+For each $a\in Q$, inspect every ordered pair $(b,c)\in Q^2$. Include $a$ in $N_\ell(*)$ exactly when all equalities
+
+$$
+a*(b*c)=(a*b)*c
+$$
+
+hold. This takes $O(|Q|^3)$ operation-table lookups and $O(|Q|)$ output space. The first inequality encountered supplies a nonassociativity witness.
+
+## 10. Numerical example over a finite field
+
+Let $A=\mathbb Z/q\mathbb Z$ for a prime $q$, and define
+
+$$
+T(x,m,b)=xm+b\pmod q.
+$$
+
+Field arithmetic gives all three unique-solvability laws. For $q=3$, the completion has
+
+$$
+3^2+3+1=13
+$$
+
+points and $13$ lines. Consider the affine points $P(0,1)$ and $P(2,2)$. The slope is
+
+$$
+m=(2-1)(2-0)^{-1}=1\cdot2=2\pmod3,
+$$
+
+and the intercept is $b=1$. Their joining line is therefore
+
+$$
+y=2x+1\pmod3.
+$$
+
+Now intersect $y=2x+1$ with $y=x+2$. Solving gives $x=1$ and $y=0$, so their unique intersection is $P(1,0)$. The two parallel lines $y=2x+1$ and $y=2x$ do not meet affinely; both meet at the ideal point $I(2)$. Vertical lines $x=0$ and $x=2$ meet at $I(\infty)$.
+
+For $q=2$, the construction yields $7$ points and $7$ lines, the classical plane of order $2$. This example also exposes why no theorem can assert a non-Desarguesian plane at every prime-power order.
+
+## 11. Applications and scope
+
+### 11.1 Incidence geometry from weak algebra
+
+The completion theorem separates geometric solvability from conventional algebraic syntax. Any quasifield, ternary ring, or tabulated operation that verifies Definition 2.1 enters the same construction. This is particularly relevant in finite geometry, where nonclassical planes are often coordinatized by algebraic systems weaker than fields.
+
+### 11.2 Incidence matrices and finite designs
+
+The construction yields a square incidence matrix with $q^2+q+1$ rows and columns. Rows correspond to points and columns to lines. Theorems 4.1 and 5.1 state that distinct rows have exactly one simultaneous $1$ and distinct columns have exactly one simultaneous $1$, provided the full projective-plane regularity is represented. Such matrices connect projective geometry with block designs, coding theory, and finite combinatorics. The present theorems establish the pairwise uniqueness properties; additional uniform line-size calculations depend on further cardinality arguments for the solution sets.
+
+### 11.3 Testing candidate coordinate tables
+
+For a proposed finite ternary table, the three axioms can be audited directly. Failure has an interpretable certificate: either an intercept equation has zero or multiple solutions, two separated affine points fail to select one slope-intercept pair, or two distinct slopes fail to select one affine intersection. Success permits the projective completion without any need to infer hidden ring laws.
+
+### 11.4 Diagnosing algebraic defects
+
+The left-nucleus algorithm turns nonassociativity into a finite search. A proper nucleus is accompanied by an explicit triple $(a,b,c)$. This is useful when studying candidate quasifield multiplication tables, but it is only one stage in a geometric argument. One must still prove the ternary solvability axioms and the relevant Desargues-associativity correspondence.
+
+## 12. Boundaries, corrections, and future work
+
+The results support a coordinatization mechanism, not a universal classification. Several tempting extensions require separate proofs.
+
+First, non-Desarguesian projective planes do not exist at every prime-power order. Small-order uniqueness results provide immediate counterexamples to that claim. A valid existence theorem must specify the admissible orders and a concrete family.
+
+Second, no collineation-group comparison follows from incidence completion alone. A collineation is an incidence-preserving permutation of points together with its induced action on lines. To compare a plane's collineation group with a projective linear group, one needs an explicit plane, a group action, and an isomorphism or cardinality theorem. The number $q^2+q+1$ counts points and lines, not automorphisms.
+
+Third, nonassociativity does not by itself identify a failed Desargues configuration in this general setting. The next structural target is to enrich the coordinate system with normalization laws, derive a presentation $T(x,m,b)=x*m+b$, define the geometric Desargues configuration, and prove under suitable translation-plane hypotheses that Desargues' theorem forces associativity of the coordinate multiplication.
+
+Fourth, a concrete Hall quasifield example requires more than a nonassociative multiplication table. All division and unique-solvability properties must be proved. Only then can its projective completion be asserted to satisfy the incidence axioms. Hall triple systems should be treated separately from Hall quasifields unless an explicit construction relates them; a shared name is not a mathematical bridge.
+
+Promising future directions are therefore:
+
+1. add standard normalization laws and derive affine quasifield coordinates;
+2. instantiate the construction with a finite Hall quasifield and prove every solution axiom;
+3. formulate Desargues configurations and establish the algebra-geometry bridge;
+4. define and compute collineation groups for explicit examples;
+5. construct finite incidence matrices and verify their row and column intersection properties;
+6. investigate a precise relation, if any, with Hall triple systems; and
+7. develop isotopy and isomorphism invariants needed for classification.
+
+## 13. Conclusion
+
+Three unique-solvability principles are sufficient to perform the essential projective completion of affine coordinates. They produce exactly one line through every pair of distinct points and exactly one point on every pair of distinct lines, with no associativity or distributivity assumption. For a finite coordinate set of size $q$, both sides of the incidence relation have size $q^2+q+1$.
+
+The left nucleus supplies a complementary algebraic statement: it fills the carrier exactly when multiplication is associative, and its properness is exactly equivalent to an explicit associativity failure. Together, these results clarify how weak coordinate algebra can support strong geometric incidence while also identifying the additional work required to pass from abstract completion to genuinely non-Desarguesian examples, automorphism-group calculations, and classification.
