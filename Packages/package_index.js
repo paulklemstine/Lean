@@ -4,29 +4,29 @@
 
 window.PACKAGE_INDEX = [
   {
-    "date": "2026-07-26T23:29:14Z",
-    "domain": "Bridges",
-    "exp_id": "060e882c",
-    "filename": "topological_algebraic_bridge_fundamental_group_as_.json",
-    "pkg_num": 495,
-    "quality": "substantial",
-    "quality_score": 0.79231,
-    "quality_tier": "silver",
-    "title": "Fundamental Groups as Complete Invariants of Connected Homotopy One-Types"
-  },
-  {
-    "date": "2026-07-26T23:29:14Z",
+    "date": "2026-07-26T23:20:21Z",
     "domain": "Geometry",
     "exp_id": "4a8509fd",
     "filename": "conjecture_deciding_whether_a_finite_multiset_of_n.json",
-    "pkg_num": 494,
+    "pkg_num": 495,
     "quality": "substantial",
     "quality_score": 0.7793599999999999,
     "quality_tier": "silver",
     "title": "Complementation Orbits in Finite Framed Jigsaw Assemblies"
   },
   {
-    "date": "2026-07-26T23:29:04Z",
+    "date": "2026-07-26T23:20:06Z",
+    "domain": "Bridges",
+    "exp_id": "060e882c",
+    "filename": "topological_algebraic_bridge_fundamental_group_as_.json",
+    "pkg_num": 494,
+    "quality": "substantial",
+    "quality_score": 0.79231,
+    "quality_tier": "silver",
+    "title": "Fundamental Groups as Complete Invariants of Connected Homotopy One-Types"
+  },
+  {
+    "date": "2026-07-26T23:19:57Z",
     "domain": "Applications",
     "exp_id": "1f5ea34f",
     "filename": "eml_number_theory_transcendence_and_algebraic_inde.json",
