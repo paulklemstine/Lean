@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9d505535",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-prese",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T20:46:11",
-      "title": "Speculative: Tropical Mathematics of Social Choice"
-    },
-    {
       "cycle_id": "ea115bd0",
       "domain": "Computation",
       "key_insight": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Renormalized zeta harmonic convergence\n\nDefine the multiplicity-sensitive, conjugate-symmetric sum\n`H(T) = Σ_{|Im ρ|≤T} 1/ρ` and determine an expl",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-26T05:37:07",
       "title": "Graph Coloring: Chromatic Polynomial Theory"
+    },
+    {
+      "cycle_id": "6a88207a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x ↦ 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the crit",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-26T05:37:18",
+      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5961ca02",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n- Extend the two-component construction to arbitrary finite and infinite dependency graphs of proof systems, with one soundness predicate per node.\n- Add a syntax of modal μ-calcu",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-19T09:14:49",
-      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-    },
     {
       "cycle_id": "d1a99009",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-26T05:37:07",
       "title": "Graph Coloring: Chromatic Polynomial Theory"
+    },
+    {
+      "cycle_id": "6a88207a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x ↦ 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the crit",
+      "quality_score": 0.75,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-26T05:37:18",
+      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a4e412f3",
-      "domain": "Geometry",
-      "name": "for",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "a4e412f3",
-      "domain": "Geometry",
-      "name": "cupTurns_cons2",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "f853fcd6",
-      "domain": "Bridges",
-      "name": "for",
-      "quality": 0.73
-    },
     {
       "cycle_id": "f853fcd6",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "frozen_ntk_converges_to_target",
       "quality": 0.75
+    },
+    {
+      "cycle_id": "6a88207a",
+      "domain": "Novelty",
+      "name": "periodicStates_mapsTo_of_semiconj",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "6a88207a",
+      "domain": "Novelty",
+      "name": "periodicStates_preimage_of_injective_semiconj",
+      "quality": 0.75
+    },
+    {
+      "cycle_id": "6a88207a",
+      "domain": "Novelty",
+      "name": "periodicStates_constant",
+      "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T05:37:07",
+  "last_updated": "2026-07-26T05:37:18",
   "open_questions": [
     {
       "context": "+    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; +    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; +    ∀ i < k, c i = ",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "24111e1f",
-        "quality": 0.7,
-        "theorems": 24,
-        "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
-      },
-      {
         "cycle_id": "5d6a1919",
         "quality": 0.76,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.69,
         "theorems": 12,
         "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
+      },
+      {
+        "cycle_id": "6a88207a",
+        "quality": 0.75,
+        "theorems": 9,
+        "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
       }
     ],
     "NumberTheory": [

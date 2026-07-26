@@ -4504,6 +4504,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6a88207a (Q=0.750), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynam",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_6a88207a_4a7af066",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6a88207a",
+    "status": "available",
+    "timestamp": "2026-07-26T05:37:18.961896+00:00",
+    "title": "Deepening: The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
     "domain_bridges": [],
     "domains": [
@@ -4518,25 +4537,6 @@
     "status": "available",
     "timestamp": "2026-07-18T09:05:18.164692+00:00",
     "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 735a1ab0 (Q=0.750), which proved 10 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that neural networks in the lazy regime converge to the NTK solution. Formalize the Jacot-Gabriel-Hongler theorem and prove universality across architectures.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_735a1ab0_9dcea259",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "735a1ab0",
-    "status": "available",
-    "timestamp": "2026-07-26T05:37:01.124353+00:00",
-    "title": "Deepening: Neural Tangent Kernel: Convergence"
   },
   {
     "ambition_level": "extension",
@@ -9076,26 +9076,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Semitotal domination in unit disk graphs' and formalize its key results. Abstract: A set $S \\subseteq V$ is called a {\\em semitotal dominating set} of $G=(V,E)$ if every vertex in $V \\setminus S$ is adjacent to at least one vertex in $S$, and every vertex in $S$ is within distance 2 of another vertex in $S$. The corresponding decision problem is NP-complete even for unit disk graphs. In this paper, we present a 5-factor approximation algorithm for the Minimum Semitotal Domination problem on unit disk graphs in the graph-based input model. The algorithm processes the layers of a Breadth-First-Search tree and constructs a maximal independent set whose vertices satisfy the semitotal condition. For a graph with $n$ vertices and $m$ edges, the algorithm runs in $O(n + m)$ time, and hence in $O(n^2)$ time in the worst case. This improves the previously known 5.75-approximation algorithm with $O(n^3)$ running time.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "MachineLearning"
-    ],
-    "id": "fd_0159",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14467v1",
-    "status": "available",
-    "timestamp": "2026-07-17T02:17:28.732470+00:00",
-    "title": "ArXiv paper: Semitotal domination in unit disk graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond' and formalize its key results. Abstract: Vertex splitting replaces a vertex (v) by two nonadjacent vertices whose neighborhoods together equal (N(v)). A split is \\emph{exclusive} if these neighborhoods are disjoint and \\emph{shallow} if no newly created vertex is split again. For a graph property (Π), \\textsc{(Π)-Vertex Splitting} asks whether at most (k) splits can transform a graph (G) into one satisfying (Π). We continue the systematic study of this operation and settle several open problems. First, we prove that \\textsc{Cograph Vertex Splitting} is \\textsf{NP}-complete, even on graphs of girth at least 5, resolving a question of Firbas and Sorge (ISAAC 2024). More generally, \\textsc{(P_t)-free Vertex Splitting} is \\textsf{NP}-complete for every fixed (t\\geq 4). We also prove that \\textsc{Chordal Vertex Splitting} and \\textsc{Unit-Interval Vertex Splitting} are \\textsf{NP}-complete, resolving two questions of Abu-Khzam, Chakraborty, Isenmann, and Oijid (IWOCA 2026). Our hardness results extend to the exclusive and shallow ",
     "domain_bridges": [],
     "domains": [
@@ -9652,46 +9632,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0727",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.21494v1",
-    "status": "available",
-    "timestamp": "2026-07-25T20:17:38.908463+00:00",
-    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0728",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.21589v1",
-    "status": "available",
-    "timestamp": "2026-07-25T20:17:42.160869+00:00",
-    "title": "ArXiv paper: The Frankl--Tokushige product conjectures for $r$-cross-intersecting families"
   },
   {
     "ambition_level": "extension",
@@ -11463,186 +11403,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Persistent Homology Stability\n\n## 1. Diagonal-completed bottleneck stability for arbitrary finite clouds\n\nFor finite metric spaces of unequal cardinality, enrich each persistence diagram with diagonal points and prove that every correspondence of distortion at most `δ` induces a partial matching of cost at most `δ/2` under the radius convention `d ≤ 2r`.\n\nThe key insight is that unmatched homology classes should be charged to the diagonal by half their lifetime, while correspondence fibers control the matched classes.\n\nWhy now? The finite equal-cardinality matching theorem isolates the exact order-theoretic ingredient; extending the matching space is the remaining obstruction to a full finite-cloud theorem.\n\n## 2. Minimum-spanning-forest realization of zero-dimensional persistence\n\nFor every finite pseudometric space, prove that the multiset of finite death times in zeroth Vietoris--Rips persistence is exactly half the multiset of edge weights selected by Kruskal's algorithm, including repeated distances and zero-length identifications.\n\nThe key insight is that both constructions record precisely the thresholds at which connected components merge, so a rank invariant should identify them without choosing a unique spanning tree.\n\nWhy now? The certified-tree stability result already proves the metric estimate once this combinatorial realization is available.\n\n## 3. Gromov--Hausdorff stability through optimal finite correspondences\n\nFor nonempty finite metric spaces, prove that the bottleneck distance between their zero-dimensional persistence diagrams is bounded by their Gromov--Hausdorff distance when Rips scale is measured as radius, and characterize all equality cases with two or three points.\n\nThe key insight is that Gromov--Hausdorff distance is half the least correspondence distortion, exactly matching the half-distortion shift in the Rips interleaving.\n\nWhy now? The sharp two-point calculation demonstrates that the normalization is correct and that equality already occurs in the smallest nontrivial example.\n\n## 4. Functorial higher-dimensional stability from contiguity\n\nFor each homological degree and coefficient field, construct maps between finite Rips complexes from a correspondence, prove that different selections from a correspondence are contiguous, and derive interleaved persistence modules whose diagrams satisfy the same stability bound.\n\nThe key insight is that contiguity removes the noncanonical choice of representatives in a correspondence and turns a metric estimate into equality of induced homology maps.\n\nWhy now? The edge-level interleaving supplies the simplexwise inequalities; what remains is a coherent algebraic-topological transport theorem.\n\n## 5. Robust stability under interval-valued distance measurements\n\nGiven lower and upper confidence bounds for every pairwise distance, prove computable upper and lower envelopes for zero-dimensional persistence diagrams and a bottleneck error bound controlled by the maximum interval width.\n\nThe key insight is that monotonicity of connected components can sandwich every admissible Rips filtration between two extremal filtrations.\n\nWhy now? This converts the abstract stability mechanism into a directly testable uncertainty certificate for noisy point-cloud data.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0729",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "8110b227",
-    "status": "available",
-    "timestamp": "2026-07-25T21:17:22.305986+00:00",
-    "title": "For finite metric spaces of unequal cardinality, enrich each persistence diagram"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThe completed formalization establishes an exact finite-support implementation of Conway's B3/S23 transition and an explicit `9^t` population bound. It is not yet a proof of Turing completeness.\n\nNatural next steps, in dependency order:\n\n1. **Sharper geometric bounds.** Define Chebyshev bounding boxes and prove that the occupied region expands by at most one cell in each direction per generation. This should yield a polynomial area bound for bounded initial configurations, sharper than the generic population estimate.\n2. **Translations and spacetime diagrams.** Prove that the Life transition commutes with integer-grid translations, then define periodic motion up to translation.\n3. **Constructive components.** Verify a glider, glider gun, eater, and collision-based signal routing directly under the same global rule.\n4. **Boolean signal semantics.** Assign time windows and spatial ports to patterns, and prove compositional specifications for wires, fanout, delay, crossing, NOT, AND, and OR components.\n5. **Circuit simulation.** Embed finite Boolean circuits with explicit layout, latency, area, and population bounds.\n6. **Unbounded memory.** Construct a clocked tape or register-machine encoding, including initialization, step simulation, noninterference between components, and halting detection.\n7. **Universality theorem.** Compose the verified components into a direct simulation of a fixed universal machine and state precise time/space overhead bounds.\n\nThe principal missing work is therefore the constructive logic-component library and its compositional noninterference proofs, not the underlying cellular-automaton semantics.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0730",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a31e0b39",
-    "status": "available",
-    "timestamp": "2026-07-25T22:18:10.774110+00:00",
-    "title": "The completed formalization establishes an exact finite-support implementation o"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Holographic Proof Duality\n\n## What the formal results support\n\nThe verified core should be interpreted as an order-theoretic holographic principle, not as a literal dimension-reduction theorem. For a monotone endomorphism of a complete lattice, passage to the order dual exchanges least and greatest fixed points. Consequently, an inductive pre-fixed-point certificate in the bulk is exactly a coinductive post-fixed-point certificate on the dual boundary, and bounds on the inductive semantics translate in both directions.\n\n## What the formal results rule out\n\nTwo stronger conjectures fail without substantial extra hypotheses.\n\n1. **Automatic strict proof compression fails.** The canonical dualization of a local proof trace preserves its length exactly. Any nonempty trace therefore refutes a claim that dualization by itself always shortens proofs.\n2. **Universal lossless codimension-one encoding fails.** A set with `n+1` states cannot inject into one with `n` states. Thus topology, symmetry, redundancy, admissibility constraints, or a quotient notion of observational equivalence must do real work in any genuine dimensional reduction.\n\nThese no-go results separate three notions that the motivating slogan conflates: semantic duality, geometric dimension reduction, and syntactic proof compression. Only the first follows from order duality alone.\n\n## Concrete next problems\n\n### 1. Ranked well-founded systems\n\nDefine a category of ranked transition systems with:\n\n- a well-founded bulk relation;\n- a boundary observation map;\n- a bisimulation or logical-relation condition;\n- an explicit proof-cost model.\n\nThen characterize exactly when well-founded induction transports to coinduction on boundary observations. The finite cardinality obstruction shows that reconstruction should be required only up to observational equivalence, not equality of states.\n\n### 2. Finite Ramsey certificates\n\nFor the test case `R(3,3) = 6`, represent a two-coloring as a Boolean edge labeling of `K₆`. The standard vertex-neighborhood argument gives a compact local certificate: among five incident edges, three share a color; their three endpoints either contain an edge of that color or form a triangle of the other color. A useful next formalization would compare:\n\n- the ordinary finite/pigeonhole proof;\n- a boundary certificate consisting only of the star of one vertex plus the induced triangle;\n- a precisely defined certificate-size measure.\n\nThis would test genuine restriction-to-boundary compression rather than mere order reversal.\n\n### 3. Topological boundary data\n\nReplace bare finite state sets by simplicial complexes or finite CW complexes. Candidate hypotheses for lossless reconstruction include shellability, collapsibility, coskeletality, and unique extension from links. Any theorem should state the reconstruction equivalence and its cost separately.\n\n### 4. Fixed-point proof complexity\n\nEquip derivations with a syntax and cost semantics, then ask when the order-dual translation admits sharing or quotienting. The present length-preservation theorem is a baseline: strict compression can only arise from a nontrivial normalization, quotient, DAG representation, or boundary-specific admissibility theorem.\n\n### 5. Infinite systems\n\nInvestigate transfinite approximants of least and greatest fixed points. Complete-lattice duality remains available, but matching ordinal convergence stages may require continuity or cocontinuity assumptions. A meaningful “rank drops by one” theorem would need an independently defined rank invariant and a proof that dual boundary formation changes it.\n\n## Methodological constraint\n\nFuture claims should always specify:\n\n- what “dimension” means;\n- what data constitute the boundary;\n- whether equivalence means equality, isomorphism, bisimulation, or observational equivalence;\n- what proof calculus and cost measure define “shorter.”\n\nWithout these choices, the universal conjecture is either false by cardinality or reduces to the valid but non-compressive order-duality theorem proved here.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0732",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7b86dab6",
-    "status": "available",
-    "timestamp": "2026-07-26T00:21:15.630470+00:00",
-    "title": "The verified core should be interpreted as an order-theoretic holographic princi"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry → correctness.** Additive encryption is translation in a Hamming cube. Its distance from the encoded word equals the error weight, so disjoint Hamming balls imply unique recovery.\n2. **Probability/game hopping → IND-CPA bound.** Replacing a disguised Goppa key by a random-code key and then replacing the random-code game by an ideal fair-bit game gives an additive advantage bound by the real triangle inequality.\n3. **Combinatorics → a qualified quantum-search floor.** A binomial lower bound certifies at least `2^256` weight-119 errors for length 6960; under the explicitly stated quadratic-search model, this yields a `2^128` query floor.\n\n## Important limitation: NP-hardness was not proved\n\nThe requested unconditional theorem that distinguishing binary Goppa codes from random linear codes is NP-hard is not established here. It should not be presented as a known consequence of standard McEliece security assumptions. McEliece security is normally conditional on concrete decoding and code-indistinguishability assumptions; NP-hardness of worst-case generic syndrome decoding does not by itself imply hardness of distinguishing the structured key distribution, nor average-case IND-CPA security.\n\nThe Lean game-hop theorem therefore exposes two quantitative premises rather than hiding them: a Goppa-key replacement bound and a random-code decoding/message-hiding bound. This prevents an assumption from being mislabeled as an unconditional theorem.\n\n## Next formal steps\n\n1. Define finite probability distributions for key generation, encryption randomness, and adversary coins using Mathlib probability monads.\n2. Define a binary Goppa code from a support in `GF(2^m)` and a square-free Goppa polynomial, then connect its parity checks to the existing alternant/BCH minimum-distance theorem.\n3. Formalize correctness of a bounded-distance decoder as an actual partial function, not only uniqueness of the decoded word.\n4. Define IND-CPA as an experiment over probabilistic algorithms and prove the concrete game transition theorem from couplings or total-variation distance.\n5. State the Goppa indistinguishability and random syndrome-decoding assumptions with explicit security parameters and polynomial-time adversary classes.\n6. Formalize a reduction producing a distinguisher or decoder from an IND-CPA adversary, including runtime and advantage loss.\n7. For quantum analysis, replace the abstract quadratic-search condition by a quantum query model and a proved Grover lower bound. Separately analyze structured quantum algorithms; the present theorem deliberately does not claim that every quantum attack is unstructured search.\n8. Investigate accurately scoped complexity results: worst-case NP-completeness of syndrome decoding, parameter-preserving reductions, and precisely what additional average-case assumptions would be needed to reach the McEliece distribution.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Cryptography"
-    ],
-    "id": "fd_0733",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3d6ad336",
-    "status": "available",
-    "timestamp": "2026-07-26T00:21:29.488173+00:00",
-    "title": "`Cryptography/McElieceConnector.lean` proves a cross-domain chain:"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## What was established\n\n`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed protocol conflates:\n\n1. **Naive random proof-line opening is generally not zero knowledge.** Opening every possible coordinate is perfectly witness-private exactly when valid witnesses are unique. A concrete one-bit relation exhibits leakage.\n2. **Independent repetition has an exact geometric soundness law.** If at most `e` of `n` challenges accept, `k` rounds accept with probability at most `(e/n)^k`. The special bound `2^{-k}` needs the additional premise `2e ≤ n`.\n3. **Uniform additive masking is perfectly hiding.** Commitments `secret + mask` over `ZMod q`, with a uniform mask, have exactly the uniform distribution for every secret.\n\nThe formal counterpoint to the mission's raw-step protocol is particularly important: with one bad line among four, the escape probability is `(3/4)^k`, strictly larger than `(1/2)^k` for positive `k`. More generally, for every fixed `k`, a proof with `2k+2` possible checks and one bad line still escapes with probability greater than one half.\n\n## Next formal targets\n\n1. **Authenticated local openings.** Define a Merkle-tree commitment and prove that two inconsistent openings imply a hash collision. This replaces independent per-line masks, which do not by themselves bind the prover to one global proof.\n2. **Simulator for opened local constraints.** A hiding commitment alone is not a zero-knowledge protocol: openings reveal their plaintexts. Formalize transcript distributions and construct a simulator whose output distribution equals, or is computationally indistinguishable from, the verifier's view.\n3. **Knowledge/soundness definitions with adaptive provers.** Replace fixed accepting sets by interactive probabilistic strategies and prove sequential or parallel repetition under explicit independence assumptions.\n4. **Propositional proof relation.** Encode a concrete proof calculus, prove decidability of local inference checks, and connect accepted complete certificates to semantic tautologicity.\n5. **PCP composition.** The statement-length communication conjecture requires a locally testable encoding with constant rejection probability, not a raw PA derivation. A faithful formal development would need an explicit PCP theorem, query complexity, proof length, and communication accounting.\n6. **Complexity-theoretic assumptions.** Computational zero knowledge requires an explicit security parameter and commitment assumptions. Perfect one-time-pad hiding is information-theoretic but does not provide binding; a usable commitment must state and prove both properties in the appropriate model.\n7. **Clarify the conjecture's scope.** Polynomial communication in statement length, independent of proof length, is substantially stronger than the finite results proved here. It should be formulated with uniformity, prover running time, setup assumptions, and whether the claim concerns proofs, arguments, or interactive proofs.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0734",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d94c6678",
-    "status": "available",
-    "timestamp": "2026-07-26T00:21:38.956122+00:00",
-    "title": "`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed proto"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Neural Tangent Dynamics\n\n## 1. Uniform infinite-width kernel concentration\n\nFor fully connected networks with sub-Gaussian initialization and Lipschitz activation derivative, the empirical neural tangent kernel should remain uniformly within operator-norm error `O(m⁻¹ᐟ² polylog(m))` of its deterministic infinite-width limit throughout any fixed training horizon, with probability tending to one as width `m` grows.\n\nThe key insight is that deterministic Jacobian-drift bounds can be combined with initialization concentration and a covering argument over the training path.\n\nWhy now? The deterministic stability estimate identifies exactly which Jacobian concentration statement is needed and separates it from the optimization argument.\n\n## 2. Width-dependent convergence to kernel regression\n\nFor squared-loss gradient descent on a finite dataset whose limiting NTK has a positive spectral gap, a width-`m` network should track the corresponding kernel-regression trajectory with prediction error `O(m⁻¹ᐟ²)` up to logarithmic factors, uniformly until interpolation.\n\nThe key insight is that contraction of the limiting residual operator prevents local kernel perturbations from accumulating linearly over training time.\n\nWhy now? The geometric residual theorem supplies a stable recurrence into which a quantitative kernel perturbation estimate can be inserted.\n\n## 3. Feature-learning threshold beyond the lazy regime\n\nThere should be a sharp scaling threshold in learning rate and initialization variance at which NTK drift changes from vanishing to order one, separating kernel-like training from genuine feature learning.\n\nThe key insight is that the product of Jacobian Lipschitz scale, path length, and effective width normalization is the natural dimensionless drift parameter.\n\nWhy now? The entrywise stability theorem makes this controlling product explicit and therefore suggests a falsifiable phase boundary.\n\n## 4. Low-rank data geometry and accelerated NTK convergence\n\nWhen the sample Jacobian lies near a low-dimensional subspace, a preconditioned kernel update should converge at a rate governed by the nonzero restricted spectrum rather than the ambient sample dimension, while preserving the same interpolating solution.\n\nThe key insight is that Gram positivity and null directions should be analyzed on the Jacobian image, where strict contraction may hold even when the full kernel is singular.\n\nWhy now? The present separation between positive semidefiniteness and contraction exposes null-space geometry as the precise obstruction to a global rate.\n\n## 5. Adaptive learning rates under controlled kernel drift\n\nA learning-rate schedule chosen from online estimates of the extremal NTK eigenvalues should preserve contraction and improve finite-time convergence without requiring the kernel to be exactly constant.\n\nThe key insight is that each time-varying residual step can be controlled by its own contraction factor, and the resulting error rate should be a product rather than a single geometric power.\n\nWhy now? Fixed-kernel convergence and quantitative drift control provide the two ingredients needed to formulate a robust nonautonomous extension.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0735",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "25e8f86d",
-    "status": "available",
-    "timestamp": "2026-07-26T02:25:21.290383+00:00",
-    "title": "For fully connected networks with sub-Gaussian initialization and Lipschitz acti"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThe finite categorical model now has a proved Fisher bilinear form, positive\ndefiniteness, score representation, and a global KL/Fisher sandwich. Natural next\nsteps are:\n\n1. Package `fisherForm p` as a Mathlib `InnerProductSpace` on the tangent\n   hyperplane `{v | ∑ i, v i = 0}` and use it to define lengths and distances.\n2. Prove the differential statement directly: the Hessian at `q = p` of\n   `q ↦ KL(p ‖ q)` restricted to tangent vectors is the Fisher form.\n3. Formalize smoothness of the open simplex and package the pointwise forms as a\n   smooth Riemannian metric tensor.\n4. Develop the square-root embedding `p ↦ (2 * sqrt (p i))ᵢ`, under which the\n   Fisher metric is induced by the Euclidean metric, and derive the associated\n   spherical geodesic distance.\n5. Extend from finite categorical distributions to dominated parametric families,\n   stating precise hypotheses that justify differentiating under the integral.\n6. Add monotonicity under stochastic maps (the data-processing principle for\n   Fisher information) and connect it to monotonicity of KL divergence.\n7. Study the dual exponential and mixture affine connections and prove their\n   duality with respect to the Fisher metric.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0737",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "55a94506",
-    "status": "available",
-    "timestamp": "2026-07-26T05:36:05.529162+00:00",
-    "title": "The finite categorical model now has a proved Fisher bilinear form, positive"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Differential Structure of Exponential–Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n ≥ 1`, the `n`th derivative of\n\\(e^{x^2}\\log(x+1)\\) has a unique representation\n\\[\ne^{x^2}\\left(P_n(x)\\log(x+1)+\\sum_{k=1}^{n}\\frac{Q_{n,k}(x)}{(x+1)^k}\\right),\n\\]\nwhere \\(P_n,Q_{n,k}\\) are integer polynomials satisfying an explicit triangular recurrence,\nand the term of pole order `n` is nonzero.\n\nThe key insight is that differentiation preserves the exponential shell while acting\ntriangularly on the logarithmic and pole-order components. **Why now?** The first three\nderivatives exhibit exactly this pattern, including strict one-step growth of the maximal\npole order.\n\n## 2. A depth-filtered differential algebra with reciprocals\n\n**Conjecture.** After adjoining a guarded reciprocal constructor to the EML expression\ngrammar, there is a depth measure for which symbolic differentiation is depth-preserving,\nwhile pole order supplies a second filtration that increases by at most one.\n\nThe key insight is that transcendental nesting and meromorphic singularity order measure\ndifferent kinds of complexity and should be tracked by a bifiltration. **Why now?** The\nexp-log factorization shows that reciprocals of both `g` and `log g` arise naturally, while\nthe explicit third derivative separates depth stability from increasing pole order.\n\n## 3. Divisor-sensitive logarithmic differentiation\n\n**Conjecture.** Every nonzero EML expression on an interval admits a finite stratification\nby its zero set such that, on each zero-free stratum, its logarithmic derivative has a\ncanonical recursively generated EML-rational normal form; crossing a zero adds a residue\nterm determined by the zero multiplicity.\n\nThe key insight is that the failure of global multiplicative factorization is controlled\nprecisely by zeros, rather than by differentiation itself. **Why now?** The corrected\nexp-log chain rule is valid exactly away from the divisors `g=0` and `log g=0`, and the\ncounterexample isolates the latter obstruction.\n\n## 4. Differential equations for coefficient arrays\n\n**Conjecture.** The polynomial arrays \\(P_n,Q_{n,k}\\) from the iterated-derivative normal\nform have bivariate exponential generating functions satisfying a first-order linear\npartial differential equation, from which degree, sign, and asymptotic coefficient laws\ncan be derived.\n\nThe key insight is that repeated differentiation defines a linear operator on a graded\nmodule of logarithmic-polar normal forms. **Why now?** The triangular recurrence implicit\nin the three-step computation is already structured enough to admit a generating-function\nencoding.\n\n## 5. Quantitative automatic differentiation without depth growth\n\n**Conjecture.** For fixed EML nesting depth and derivative order `n`, normalized symbolic\ndifferentiation can be performed with expression-DAG size polynomial in the input size and\n`n`, despite the exponential growth possible for unshared expression trees.\n\nThe key insight is that the exponential shell is reused under differentiation and the new\ncomplexity is concentrated in coefficient recurrences that can share subexpressions.\n**Why now?** Depth stability and the explicit factored derivatives identify the precise\ncommon subexpressions that a normalized DAG representation should preserve.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0738",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ce71f394",
-    "status": "available",
-    "timestamp": "2026-07-26T05:36:50.826801+00:00",
-    "title": "**Conjecture.** For every integer `n ≥ 1`, the `n`th derivative of"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Neural Tangent Kernel Convergence\n\n## 1. Quantitative universality under approximately equal kernels\n\n**Conjecture.** Consider two lazy-training residual recursions with the same initialization and learning rate. If both update maps are contractions with factor at most `q < 1` and their kernel actions differ by at most `ε` times the current residual norm, then their predictions remain within a geometric perturbation envelope of order `η ε (1-q^n)/(1-q)` through step `n`.\n\nThe key insight is that exact architecture universality should be stable under the small kernel discrepancies produced by finite width, rather than requiring literal equality of limiting kernels.\n\n**Why now?** Exact pathwise universality identifies the induction invariant; adding one controlled error term at each step should expose the sharp finite-width stability law.\n\n## 2. Spectral characterization of the maximal stable learning rate\n\n**Conjecture.** For a self-adjoint positive-definite empirical NTK on a finite training set, the frozen residual update is a strict contraction exactly when the learning rate lies between zero and twice the reciprocal of the largest eigenvalue. Its optimal contraction factor is the maximum absolute value of `1 - ηλ` over the kernel spectrum.\n\nThe key insight is that the exact eigendirection recursion converts convergence into a minimax problem over spectral endpoints.\n\n**Why now?** The verified eigendirection formula already gives the scalar dynamics; a finite-dimensional spectral decomposition would turn those scalar identities into a necessary-and-sufficient operator theorem.\n\n## 3. Robust tropical chambers imply finite-time NTK stability\n\n**Conjecture.** If a tropical training path begins at positive margin from every chamber wall and each update has norm below a fixed fraction of that margin, then the active-cell assignment and NTK remain constant for an explicitly bounded number of steps, during which the loss follows the frozen-kernel convergence law.\n\nThe key insight is that chamber margin acts as a geometric certificate for the duration of the lazy regime.\n\n**Why now?** Cell confinement is known to freeze the tropical NTK, while contraction controls update size; combining them should yield a computable stopping time before feature learning can begin.\n\n## 4. Architecture classes as kernel-equivalence classes\n\n**Conjecture.** Any two differentiable architectures whose parameter Jacobians have the same Gram operator on the training set, and whose Jacobians remain constant along their training paths, induce identical prediction trajectories despite potentially different parameter dimensions and symmetries.\n\nThe key insight is that lazy training factors through the empirical Jacobian Gram operator, making architecture an implementation detail once the kernel and initialization are fixed.\n\n**Why now?** Exact universality for equal frozen operators establishes the dynamical half; the remaining task is to derive the residual recurrence directly from architecture-specific gradient descent.\n\n## 5. Continuous-time convergence with a slowly drifting NTK\n\n**Conjecture.** Suppose the empirical NTK along gradient flow remains uniformly coercive and its operator drift is integrable in time. Then predictions converge to the training target, with a rate controlled by the accumulated coercivity minus the integrated drift.\n\nThe key insight is that strict kernel freezing can be weakened to an adiabatic condition: contraction should survive when feature evolution has finite total variation.\n\n**Why now?** The frozen theory identifies the baseline Lyapunov estimate, and approximate universality suggests how operator perturbations should enter through a variation-of-constants bound.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_0739",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "735a1ab0",
-    "status": "available",
-    "timestamp": "2026-07-26T05:37:00.496290+00:00",
-    "title": "**Conjecture.** Consider two lazy-training residual recursions with the same ini"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction from evaluations to polynomial equality.\n2. **Alternating coefficients.** Use deletion–contraction to prove the standard sign alternation and identify the leading coefficient and degree.\n3. **More graph operations.** Prove formulas for joins, vertex sums, forests, cycles, and complete multipartite graphs. The disjoint-union multiplicativity theorem is the first operation law.\n4. **Chromatic roots and bases.** Formalize expansion in falling-factorial and tree bases; investigate positivity statements in a precisely defined `T`-basis.\n5. **Claw-free positivity.** State the intended meaning of T-positivity, develop the required symmetric/quasisymmetric polynomial infrastructure, and formalize the claw-free theorem. This is substantially beyond natural-number evaluations alone.\n6. **Brooks' theorem.** Build on the existing greedy maximum-degree bound and exception calculations in `Catalog/Tropical/ChromaticPolynomial/Brooks.lean` to prove the full connected non-complete, non-odd-cycle theorem.\n7. **Planarity and four colors.** Replace an abstract planarity predicate with a graph embedding definition, then connect the already formalized colorability/chromatic-number equivalences to a formal proof of the Four Color Theorem.\n8. **Component factorization.** Iterate disjoint-union multiplicativity over connected components and derive that the chromatic polynomial factors as the product of component polynomials.\n",
     "domain_bridges": [],
     "domains": [
@@ -11658,26 +11418,6 @@
     "status": "available",
     "timestamp": "2026-07-26T05:37:06.060991+00:00",
     "title": "1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prov"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x ↦ 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the critical point `1/2`.\n\nThe key insight is that exact cycle existence can be separated from attraction: isolate three roots of the third-iterate equation in disjoint rational intervals, exclude the fixed-point factors, and bound the product of derivatives on those intervals.\n\nWhy now? Exact interval invariance and the complete fixed-point classification are available, while numerical iteration sharply identifies three candidate isolating intervals and an attracting multiplier.\n\n## 2. Faithful-observation invariance for minimal period\n\nConjecture: a topological conjugacy preserves the complete minimal-period spectrum and induces a homeomorphism between each pair of exact-period strata.\n\nThe key insight is that semiconjugacy transports returns, injectivity reflects them, and continuity of the conjugacy should upgrade the resulting bijections to topological equivalences of strata.\n\nWhy now? Positive recurrence has been shown to be invariant under injective semiconjugacy; the next testable step is to retain minimality and topology simultaneously.\n\n## 3. A measure-theoretic incidence model\n\nConjecture: for a parameterized family of logistic maps equipped with a specified distribution of initial states and an explicit finite-resolution observation rule, lifetime observed-recurrence incidence is a measurable function of the parameter and resolution.\n\nThe key insight is that empirical incidence belongs to a probability space of subjects and observations, not to topological density of exact periodic points.\n\nWhy now? The constant-observation counterexample isolates faithfulness as indispensable, and the density counterexample shows that topology alone cannot produce a percentage.\n\n## 4. Period three and a scrambled invariant subsystem\n\nConjecture: every continuous interval self-map with an exact period-three orbit contains a compact invariant subsystem admitting a symbolic two-shift factor, yielding an uncountable Li–Yorke scrambled set.\n\nThe key insight is to derive two covering intervals from the ordered three-cycle and encode their itineraries symbolically; the shift factor then supplies nonperiodic, nonconvergent trajectory pairs.\n\nWhy now? The fixed-point and period-two intermediate-value arguments establish the first pieces of the interval-covering mechanism, making the symbolic construction the natural next structural target.\n\n## 5. Density under the correct chaotic hypothesis\n\nConjecture: for a continuous interval map possessing a full two-branch horseshoe, periodic points are dense in the horseshoe's invariant set, though they need not be dense in the entire ambient interval.\n\nThe key insight is that periodic symbolic words are dense in the shift space, and the itinerary map should transfer this local density to the invariant subsystem without asserting a false global density theorem.\n\nWhy now? The continuous constant-map counterexample pinpoints the missing hypothesis, while the symbolic subsystem proposed above supplies a precise replacement.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0741",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6a88207a",
-    "status": "available",
-    "timestamp": "2026-07-26T05:37:17.332888+00:00",
-    "title": "Conjecture: the logistic map `x ↦ 3.83x(1-x)` has an attracting orbit of exact p"
   },
   {
     "ambition_level": "extension",
