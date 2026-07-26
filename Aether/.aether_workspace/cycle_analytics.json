@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-26T20:52:00.691181+00:00",
+  "last_updated": "2026-07-26T22:24:17.590321+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -38004,6 +38004,7 @@
       "outcome_quality": 0.6900799999999998,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -38032,6 +38033,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-26T20:52:00.559310+00:00",
       "title": "Tropical-Rank: Kapranov Rank vs Tropical Rank Equivalence Bounds"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0932,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Geometry",
+      "duration_seconds": 3790.925424337387,
+      "end_time": 1785104562.5422146,
+      "files_integrated": 4,
+      "job_id": "9fe269b0",
+      "outcome_quality": 0.7311199999999999,
+      "phase": "complete",
+      "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.7216,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7332,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6097,
+        "novelty": 0.95,
+        "proof_depth": 0.4638,
+        "usefulness": 0.7069
+      },
+      "quality_score": 0.7311199999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785100771.6167903,
+      "strategy_count": 0,
+      "theorem_count": 15,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-26T22:24:17.476511+00:00",
+      "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
     }
   ]
 }
