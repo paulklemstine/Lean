@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a9bce66e",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Transreal Arithmetic\n\n## 1. Signed-zero completion and genuine wheel involution\n\n**Conjecture.** Adjoining distinct positive and negative zeros to the transreal carrier admits a c",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-19T11:52:17",
-      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-    },
-    {
       "cycle_id": "b14c422f",
       "domain": "Applications",
       "key_insight": "",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-26T18:21:12",
       "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
+    },
+    {
+      "cycle_id": "1782ce5d",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nThe formalization establishes the paper's sharp obstruction for a three-vertex\npath rooted at its central vertex. Natural next steps are:\n\n1. Define path embeddings and rooted pat",
+      "quality_score": 0.66484,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-26T18:21:17",
+      "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75
     }
   ],
-  "last_updated": "2026-07-26T18:21:12",
+  "last_updated": "2026-07-26T18:21:17",
   "open_questions": [
     {
       "context": "sorry; sorry; sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "4b7e775f",
-        "quality": 0.73,
-        "theorems": 0,
-        "title": "Information Geometry of Optimization: Natural Gradient Follows Geodesics"
-      },
-      {
         "cycle_id": "d67581f7",
         "quality": 0.78,
         "theorems": 0,
@@ -3885,6 +3879,12 @@
         "quality": 0.78,
         "theorems": 17,
         "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
+      },
+      {
+        "cycle_id": "1782ce5d",
+        "quality": 0.66484,
+        "theorems": 5,
+        "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
       }
     ],
     "Shared": [
