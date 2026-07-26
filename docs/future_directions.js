@@ -1108,16 +1108,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical-Eigenvalue: Min-Plus Matrix Spectral Radius Equivalence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3ca6b38",
     "description": "Derives upper and lower bounds comparing Kapranov rank, tropical rank, and factor rank for tropical matrices.",
     "domains": [
       "Tropical"
     ],
     "id": "dir_50_39_026fb7de",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.251503+00:00",
     "title": "Tropical-Rank: Kapranov Rank vs Tropical Rank Equivalence Bounds"
   },
@@ -4530,17 +4531,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cf55a60f",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
       "Computation"
     ],
     "id": "seed_312",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
@@ -4862,7 +4864,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c6b3a18e",
     "description": "In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in principle they can all be discovered in finite time. Show: the heat death of the universe limits computation to ~10^120 operations \u2014 enough to discover only finitely many theorems. Conjecture: the fraction of ZFC theorems discoverable before heat death is zero (the set is countable but infinite; we discover only finitely many). Explore: if we could store theorems on black holes (holographic principle), could we extend the computation limit? Prove: a black hole of mass M can store ~M^2 bits (Bekenstein bound).",
     "domains": [
       "Novelty",
@@ -4870,10 +4872,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_415",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
