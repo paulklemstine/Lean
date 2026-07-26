@@ -1786,7 +1786,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92e6405b",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -1794,10 +1794,11 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "fd_0682",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697827+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -3019,17 +3020,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramsey Theory: Bounds and Constructions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e50f9bec",
     "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
     "domains": [
       "Computation",
       "Logic"
     ],
     "id": "fd_0676",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697812+00:00",
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
@@ -5175,18 +5177,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "dcd15145",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
       "Probability"
     ],
     "id": "fd_0673",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T14:34:16.697801+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },

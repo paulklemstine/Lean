@@ -2381,7 +2381,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92e6405b",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domain_bridges": [],
     "domains": [
@@ -2395,7 +2395,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697827+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -6869,7 +6869,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dcd15145",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -6882,7 +6882,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T14:34:16.697801+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -7751,7 +7751,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "27c8e30f",
     "description": "Cycle 905765f9 (Q=0.760) proved 4 theorems in Shared but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within",
     "domain_bridges": [],
     "domains": [
@@ -7763,7 +7763,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "905765f9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-25T10:53:08.634370+00:00",
     "title": "Close Proofs: [Reset] Fresh approach in Shared"
   },
