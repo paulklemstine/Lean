@@ -1779,7 +1779,7 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "fd_0682",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -3014,7 +3014,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "fd_0676",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -6684,7 +6684,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "seed_019",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -7844,7 +7844,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_138",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
