@@ -1,4 +1,4 @@
-import Catalog.Shared.TheoremNetworkTopology
+import Shared.TheoremNetworkTopology
 
 /-!
 # Topological limits for theorem co-citation networks

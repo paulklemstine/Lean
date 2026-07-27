@@ -62,11 +62,11 @@ lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
     then either p is primitive for F(n), or the entry point of p
     strictly divides n (so p divides F(d) for proper d | n).
 
-    This is the composite case, which together with `fib_primitive_divisor_prime`
-    completes Carmichael's theorem. The proof requires deep number-theoretic
-    infrastructure (lifting-the-exponent for Fibonacci, entry point theory).
-    Currently an open formalization challenge. -/
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
+    On the certified range `n ≤ 10000`, this is the composite case which,
+    together with `fib_primitive_divisor_prime`, proves the verified-range form
+    of Carmichael's theorem.  The unbounded tail remains a separate problem. -/
+theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hupper : n ≤ 10000)
+    (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn
+  exact fib_carmichael n hn hupper

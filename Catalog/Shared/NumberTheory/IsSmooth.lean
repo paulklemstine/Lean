@@ -1,4 +1,3 @@
-import Algebra.Algebra.OpenDirections
 import Mathlib
 
 /-! # CatalogBuild.Shared.IsSmooth
