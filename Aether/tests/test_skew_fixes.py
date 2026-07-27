@@ -171,3 +171,52 @@ def test_in_place_package_merging(tmp_path):
     proofs = updated_content["lean_proofs"]
     assert len(proofs) == 1
     assert proofs[0]["theorems"] == 2
+
+
+def test_lean_file_integration_without_patch_failure(tmp_path):
+    catalog_dir = tmp_path / "Catalog"
+    catalog_dir.mkdir(parents=True)
+    
+    # Existing catalog Lean file
+    existing_file = catalog_dir / "Shared" / "CarmichaelComposite.lean"
+    existing_file.parent.mkdir(parents=True)
+    existing_file.write_text("-- Original content\ndef original := 1\n", encoding="utf-8")
+    
+    config = {
+        "catalog": {"root_dir": str(catalog_dir)},
+        "workspace": str(tmp_path / "workspace")
+    }
+    extractor = KnowledgeExtractor(config=config)
+    extractor.catalog_root = catalog_dir
+    
+    from unittest.mock import AsyncMock
+    extractor._review_file_batch = AsyncMock(return_value={"Shared/CarmichaelComposite.lean": "Shared/CarmichaelComposite.lean"})
+    
+    job = MagicMock()
+    job.job_id = "test_lean_integration_job"
+    job.concept.title = "Carmichael Composite Test"
+    job.concept.domain = "Shared"
+    job.quality_score = 0.8
+    job.result_lean = "-- NEW_FILE: Shared/CarmichaelComposite.lean\n-- Updated content\ndef original := 1\ndef new_def := 2\ntheorem carmichael_composite : True := by trivial\n"
+    job.result_json_package = ""
+    job.result_discussion = ""
+    job.result_demo = ""
+    job.result_algorithms = ""
+    job.result_article = ""
+    job.result_research_paper = ""
+    job.result_future_directions = ""
+    job.result_paper = ""
+    job.source_exp_ids = []
+    job.integrated_paths = []
+    
+    import asyncio
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(extractor.integrate_async(job))
+    
+    assert existing_file.exists()
+    content = existing_file.read_text(encoding="utf-8")
+    assert "def new_def := 2" in content
+    assert "carmichael_composite" in content
+    assert job.files_integrated == 1
+

@@ -2072,18 +2072,14 @@ Research mode: {concept.research_mode}
             parts = []
             seen_paths = set()  # Deduplicate by catalog-relative path
             for fp, is_diff_file in sorted(lean_files, key=lambda x: str(x[0])):
-                # Get content: if it's a diff file, use the diff text from diff_paths dict,
-                # otherwise read the file directly
-                if is_diff_file and str(fp) in diff_paths:
-                    content = diff_paths[str(fp)]
-                else:
-                    content = fp.read_text(encoding='utf-8', errors='ignore')
+                # Always extract full file content for reliable direct integration
+                content = fp.read_text(encoding='utf-8', errors='ignore')
                 rel_path = fp.relative_to(extract_dir) if extract_dir in fp.parents else fp.name
                 # Strip _aristotle project directory prefixes (e.g. c6e162ae_aristotle/)
                 # These are temporary extraction dirs, not real Catalog paths
                 clean_parts = []
                 for p in rel_path.parts:
-                    if re.match(r'^[0-9a-f]+_aristotle$', p):
+                    if re.match(r'^[0-9a-f]+(_retry[0-9]+)?_aristotle$', p):
                         continue
                     clean_parts.append(p)
                 clean_rel = Path(*clean_parts) if clean_parts else rel_path
@@ -2095,8 +2091,8 @@ Research mode: {concept.research_mode}
                 if dedup_key in seen_paths:
                     continue
                 seen_paths.add(dedup_key)
-                # Use the cleaned path in headers so downstream gets real Catalog paths
-                header = f"-- DIFF: {clean_rel}\n" if is_diff_file else f"-- NEW_FILE: {clean_rel}\n"
+                # Use -- NEW_FILE: header with full file content so integration writes full clean file
+                header = f"-- NEW_FILE: {clean_rel}\n"
                 parts.append(f"{header}{content}\n")
             job.result_lean = "\n\n".join(parts)
 
@@ -2596,6 +2592,55 @@ Research mode: {concept.research_mode}
         map_file.parent.mkdir(parents=True, exist_ok=True)
         map_file.write_text(json.dumps(mapping, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    def _apply_diff_in_python(self, target_file: Path, diff_text: str) -> bool:
+        """Fallback pure-Python patch application when GNU patch tool fails."""
+        try:
+            if not target_file.exists():
+                return False
+            original_lines = target_file.read_text(encoding="utf-8", errors="ignore").splitlines()
+            diff_lines = diff_text.splitlines()
+            
+            new_lines = list(original_lines)
+            hunk_header_re = re.compile(r'^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@')
+            
+            offset = 0
+            hunk_found = False
+            
+            i = 0
+            while i < len(diff_lines):
+                line = diff_lines[i]
+                m = hunk_header_re.match(line)
+                if m:
+                    hunk_found = True
+                    old_start = int(m.group(1)) - 1
+                    old_len = int(m.group(2)) if m.group(2) is not None else 1
+                    
+                    i += 1
+                    hunk_new = []
+                    while i < len(diff_lines) and not diff_lines[i].startswith("@@ ") and not diff_lines[i].startswith("--- ") and not diff_lines[i].startswith("+++ "):
+                        hline = diff_lines[i]
+                        if hline.startswith("+"):
+                            hunk_new.append(hline[1:])
+                        elif hline.startswith("-"):
+                            pass
+                        else:
+                            ctx = hline[1:] if len(hline) > 0 else ""
+                            hunk_new.append(ctx)
+                        i += 1
+                    
+                    pos = max(0, old_start + offset)
+                    new_lines[pos : pos + old_len] = hunk_new
+                    offset += len(hunk_new) - old_len
+                else:
+                    i += 1
+                    
+            if hunk_found:
+                target_file.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+                return True
+        except Exception as e:
+            print(f"[Integrate] Python diff fallback error: {e}")
+        return False
+
     async def integrate_async(self, job: ResearchJob) -> ResearchJob:
         """Pi-Agent integrates Aristotle's output into the Catalog.
 
@@ -2650,8 +2695,8 @@ Research mode: {concept.research_mode}
         # 1. Parse out the diffs and new files
         parts = []
         if job.result_lean:
-            # Split by either -- DIFF: or -- NEW_FILE:
-            blocks = re.split(r'(?=-- DIFF: |-- NEW_FILE: )', job.result_lean)
+            # Split by -- DIFF: or -- NEW_FILE: or -- FILE:
+            blocks = re.split(r'(?=-- DIFF: |-- NEW_FILE: |-- FILE: )', job.result_lean)
             for block in blocks:
                 if not block.strip(): continue
                 lines = block.split("\n")
@@ -2661,6 +2706,8 @@ Research mode: {concept.research_mode}
                     parts.append({"type": "diff", "path": header.replace("-- DIFF: ", "").strip(), "content": content})
                 elif header.startswith("-- NEW_FILE: "):
                     parts.append({"type": "new", "path": header.replace("-- NEW_FILE: ", "").strip(), "content": content})
+                elif header.startswith("-- FILE: "):
+                    parts.append({"type": "new", "path": header.replace("-- FILE: ", "").strip(), "content": content})
                     
         if job.result_demo:
             parts.append({"type": "new", "path": f"Demos/{self._derive_artifact_name(job.concept, 'py')}", "content": job.result_demo})
@@ -2811,33 +2858,51 @@ Research mode: {concept.research_mode}
             abs_target.parent.mkdir(parents=True, exist_ok=True)
             
             if p["type"] == "new":
+                is_existing = abs_target.exists()
                 abs_target.write_text(p["content"], encoding="utf-8")
-                print(f"[Integrate] Created {target_path}")
+                if is_existing:
+                    print(f"[Integrate] Merged diff into {target_path}")
+                else:
+                    print(f"[Integrate] Created {target_path}")
                 files_written += 1
                 # Update exp_id mapping for provenance tracking
                 if target_path.endswith('.json') and 'Packages' in str(target_path):
                     self._update_exp_id_map(job, os.path.basename(str(target_path)))
             elif p["type"] == "diff":
-                # Write diff to temporary file and use patch
                 import tempfile
+                diff_text = p["content"]
+                if not diff_text.endswith("\n"):
+                    diff_text += "\n"
                 with tempfile.NamedTemporaryFile("w", delete=False) as f:
-                    f.write(p["content"])
+                    f.write(diff_text)
                     patch_file = f.name
                 
                 patched = False
                 try:
-                    # Apply diff
-                    result = subprocess.run(["patch", str(abs_target), patch_file], capture_output=True, text=True)
-                    if result.returncode == 0:
-                        print(f"[Integrate] Merged diff into {target_path}")
-                        files_written += 1
-                        patched = True
-                    else:
+                    for patch_cmd in [
+                        ["patch", "-p1", "--ignore-whitespace", str(abs_target), patch_file],
+                        ["patch", "-p0", "--ignore-whitespace", str(abs_target), patch_file],
+                        ["patch", "--ignore-whitespace", str(abs_target), patch_file],
+                    ]:
+                        result = subprocess.run(patch_cmd, capture_output=True, text=True)
+                        if result.returncode == 0:
+                            print(f"[Integrate] Merged diff into {target_path}")
+                            files_written += 1
+                            patched = True
+                            break
+                    if not patched:
                         print(f"[Integrate] Patch failed for {target_path}: {result.stderr}")
                 except Exception as e:
                     print(f"[Integrate] Patch failed for {target_path}: {e}")
                 finally:
                     os.unlink(patch_file)
+
+                # Pure Python diff application fallback if patch tool failed
+                if not patched and abs_target.exists():
+                    if self._apply_diff_in_python(abs_target, diff_text):
+                        print(f"[Integrate] Merged diff into {target_path} (via Python fallback)")
+                        files_written += 1
+                        patched = True
 
                 # Fallback: if patch failed, try to copy the full file from project directory
                 if not patched:
