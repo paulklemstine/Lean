@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-27T00:20:07.827376+00:00",
+  "last_updated": "2026-07-27T02:02:58.268919+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -38093,6 +38093,7 @@
       "outcome_quality": 0.0,
       "phase": "A",
       "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.0,
       "phase_b_skipped": false,
       "prompt_version": "v19d",
       "quality_score": 0.0,
@@ -38121,6 +38122,7 @@
       "outcome_quality": 0.61,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -38164,6 +38166,7 @@
       "outcome_quality": 0.6398028571428571,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -38207,6 +38210,7 @@
       "outcome_quality": 0.68,
       "phase": "A_only",
       "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19",
@@ -38235,6 +38239,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-27T00:20:07.750524+00:00",
       "title": "Alien Number Systems: Beyond Base-N"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0727,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Logic",
+      "duration_seconds": 6177.484657764435,
+      "end_time": 1785117764.509654,
+      "files_integrated": 3,
+      "job_id": "27eaed26",
+      "outcome_quality": 0.6962981818181817,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v28",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.57,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7127,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6381,
+        "novelty": 0.83,
+        "proof_depth": 0.5559,
+        "usefulness": 0.7529
+      },
+      "quality_score": 0.6962981818181817,
+      "sorry_count": 1,
+      "sorry_density": 0.09090909090909091,
+      "start_time": 1785111587.0249963,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 8,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-27T02:02:58.162449+00:00",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ]
 }
