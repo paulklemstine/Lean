@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ea214ad9",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## 1. Extract an explicit partition-refinement algorithm\n\n`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to a search over finite Boolean relations. A",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 34,
-      "timestamp": "2026-07-22T04:48:46",
-      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
-    },
-    {
       "cycle_id": "939843de",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n## 1. Value-dependent gluing of lattice slices\n\nFor every positive profile and every admissible integer coordinate value, determine an\nexplicit transformed profile whose parking-f",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-27T07:58:55",
       "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
+    },
+    {
+      "cycle_id": "1443bb24",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ances",
+      "quality_score": 0.7907,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-27T13:44:25",
+      "title": "Causal Inference: Do-Calculus as Formal Logic"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d0217292",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Derived pro-spectra with nonconstant bonding homology\n\n**Conjecture.** Let an inverse tower of finite spectra have eventually perfect bonding maps on integral homology and f",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-19T18:41:13",
-      "title": "Negative-Dimensional Topology: What Lives in Dimension -1?"
-    },
     {
       "cycle_id": "961be33a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 31,
       "timestamp": "2026-07-27T10:29:23",
       "title": "ArXiv paper: Further thoughts on dimensions of posets"
+    },
+    {
+      "cycle_id": "1443bb24",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ances",
+      "quality_score": 0.7907,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-27T13:44:25",
+      "title": "Causal Inference: Do-Calculus as Formal Logic"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bb3a8583",
-      "domain": "Computation",
-      "name": "card_supersets_eq_pow",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "bb3a8583",
-      "domain": "Computation",
-      "name": "card_badSubsets_le_sum",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "901b537c",
-      "domain": "Physics",
-      "name": "geometric_singleton_bound",
-      "quality": 0.77
-    },
     {
       "cycle_id": "901b537c",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "anisotropic_iff_of_isometryEquiv",
       "quality": 0.75276
+    },
+    {
+      "cycle_id": "1443bb24",
+      "domain": "Computation",
+      "name": "derivation_sound",
+      "quality": 0.7907
+    },
+    {
+      "cycle_id": "1443bb24",
+      "domain": "Computation",
+      "name": "derivation_complete",
+      "quality": 0.7907
+    },
+    {
+      "cycle_id": "1443bb24",
+      "domain": "Computation",
+      "name": "doCalculus_complete",
+      "quality": 0.7907
     }
   ],
-  "last_updated": "2026-07-27T10:29:23",
+  "last_updated": "2026-07-27T13:44:25",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "3511fbf3",
-        "quality": 0.73,
-        "theorems": 20,
-        "title": "Hofstadter: Tangled Hierarchies in Type Theory"
-      },
-      {
         "cycle_id": "699db10f",
         "quality": 0.7,
         "theorems": 6,
@@ -3327,6 +3321,12 @@
         "quality": 0.69018,
         "theorems": 14,
         "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
+      },
+      {
+        "cycle_id": "1443bb24",
+        "quality": 0.7907,
+        "theorems": 19,
+        "title": "Causal Inference: Do-Calculus as Formal Logic"
       }
     ],
     "Cryptography": [

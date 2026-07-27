@@ -1545,6 +1545,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 1443bb24 (Q=0.791), which proved 19 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_1443bb24_5e98c56e",
+    "lineage_refs": [],
+    "priority_score": 0.8906999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1443bb24",
+    "status": "available",
+    "timestamp": "2026-07-27T13:44:25.584304+00:00",
+    "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domain_bridges": [],
     "domains": [
@@ -3506,26 +3525,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1443bb24",
-    "description": "Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_325",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Causal Inference: Do-Calculus as Formal Logic"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
     "domain_bridges": [],
@@ -4015,7 +4014,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8179313d",
     "description": "Building on cycle 6a88207a (Q=0.750), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynam",
     "domain_bridges": [],
     "domains": [
@@ -4027,7 +4026,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "6a88207a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-26T05:37:18.961896+00:00",
     "title": "Deepening: The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
@@ -10375,6 +10374,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ancestral graphs returns `true` if and only if the corresponding mutilated graph satisfies Pearl's d-separation condition. This is falsifiable by exhaustive comparison on all DAGs with at most five vertices.\n\n2. **Polynomial-space reachability.** The equivalence class accepted by `DoCalculus.identify` can be decided by a work-list algorithm using space polynomial in the number of well-formed queries, while returning the same Boolean result. This is falsifiable by implementing both procedures and proving pointwise equality.\n\n3. **Structural-equation soundness bridge.** For finite-valued acyclic non-parametric structural equation models with mutually independent exogenous variables, each of the three primitive graphical steps preserves the induced interventional kernel. A counterexample would be a finite acyclic model and a side-condition-certified step whose two kernels differ.\n\n4. **Concrete ID-algorithm completeness.** A recursive implementation of the Shpitser–Pearl ID algorithm succeeds on a finite semi-Markovian graph exactly when the source and target queries are related by `DoCalculus.Derivable` after adding the probability-calculus normalization rules. This is falsifiable by exhaustive testing over small acyclic directed mixed graphs before formal proof.\n\n5. **Certificate extraction.** Every positive result of an optimized identifiability work-list can be accompanied by a `DoCalculus.Derivable` proof whose number of primitive steps is no greater than the number of discovered query states. This is falsifiable by constructing the predecessor map and checking the bound on every finite oracle.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Bridges"
+    ],
+    "id": "fd_0787",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1443bb24",
+    "status": "available",
+    "timestamp": "2026-07-27T13:44:21.602529+00:00",
+    "title": "1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disj"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -10639,7 +10658,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "975da4b4",
     "description": "Cycle 186c9eac (Q=0.680) proved 0 theorems in Shared but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such",
     "domain_bridges": [],
     "domains": [
@@ -10651,7 +10670,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "186c9eac",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
