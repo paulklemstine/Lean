@@ -444,6 +444,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Also handle lean_files (file paths) from package JSON
+        if (data.lean_files && Array.isArray(data.lean_files)) {
+            for (const fpath of data.lean_files) {
+                if (!seenLeanCode.has(fpath)) {
+                    seenLeanCode.add(fpath);
+                    // Try to fetch the actual file content from Catalog
+                    const catalogPath = fpath.startsWith('Catalog/') ? fpath : 'Catalog/' + fpath;
+                    leanFiles.push({ name: fpath, code: null, path: catalogPath });
+                }
+            }
+        }
+
         if (leanFiles.length === 0) {
             leanContainer.innerHTML = '<div style="color: var(--text-muted); padding: 16px;">-- No Lean proofs provided.</div>';
         } else {
@@ -452,14 +464,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             function renderLeanCards() {
                 leanContainer.innerHTML = '';
-                // Filter to files that have code
+                // Separate files with code from files that need fetching
                 const filesWithCode = leanFiles.filter(f => f.code && f.code.trim());
+                const filesToFetch = leanFiles.filter(f => !f.code && f.path);
 
-                if (filesWithCode.length === 0) {
+                if (filesWithCode.length === 0 && filesToFetch.length === 0) {
                     leanContainer.innerHTML = '<div style="color: var(--text-muted); padding: 16px;">-- No Lean proofs provided.</div>';
                     leanHeader.style.display = 'none';
                     return;
                 }
+
+                // Fetch content for files that have paths but no code
+                filesToFetch.forEach(file => {
+                    fetch(file.path)
+                        .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
+                        .then(text => { file.code = text; renderLeanCards(); })
+                        .catch(() => { file.code = `-- Could not load ${file.path}`; renderLeanCards(); });
+                });
 
                 filesWithCode.forEach((file, idx) => {
                     const card = document.createElement('div');
