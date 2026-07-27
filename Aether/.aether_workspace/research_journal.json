@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "622eb97b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n1. **Prefix-free Kolmogorov complexity.** Replace natural-number code size by a formal model of prefix-free programs for a fixed universal machine. Prove the standard counting the",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T15:15:59",
-      "title": "Digital Immortality: Can a Mind Be Encoded?"
-    },
-    {
       "cycle_id": "2d8c7907",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## 1. Quantitative collision bounds\nThe current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count the",
@@ -2501,6 +2491,16 @@
       "theorem_count": 794,
       "timestamp": "2026-07-27T00:19:54",
       "title": "Self-Avoiding Walk: Connective Constant"
+    },
+    {
+      "cycle_id": "e4773f49",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## Completed foundation\n\nThe present development supplies two self-contained Lean modules for the requested\nperfect-number program:\n\n- `Catalog/Applications/PerfectNumbers/Abundan",
+      "quality_score": 0.6398028571428571,
+      "sorry_count": 1,
+      "theorem_count": 7,
+      "timestamp": "2026-07-27T00:20:01",
+      "title": "Perfect Numbers: Structure of Even Perfects"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.79231
     }
   ],
-  "last_updated": "2026-07-27T00:19:54",
+  "last_updated": "2026-07-27T00:20:01",
   "open_questions": [
-    {
-      "context": "+  sorry; +  sorry; +  sorry",
-      "cycle_id": "93551ae8",
-      "domain": "Applications",
-      "sorry_count": 13,
-      "timestamp": "2026-07-19T22:02:46"
-    },
     {
       "context": "-  sorry; -  sorry; -  sorry",
       "cycle_id": "cb3d5d14",
@@ -3016,6 +3009,13 @@
       "domain": "Probability",
       "sorry_count": 5,
       "timestamp": "2026-07-27T00:19:54"
+    },
+    {
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "cycle_id": "e4773f49",
+      "domain": "NumberTheory",
+      "sorry_count": 1,
+      "timestamp": "2026-07-27T00:20:01"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "bb72d587",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "Speculative: Computational Complexity as Physical Law"
-      },
-      {
         "cycle_id": "82c8c57a",
         "quality": 0.71,
         "theorems": 0,
@@ -3699,6 +3693,12 @@
         "quality": 0.6243783783783784,
         "theorems": 37,
         "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
+      },
+      {
+        "cycle_id": "e4773f49",
+        "quality": 0.6398028571428571,
+        "theorems": 7,
+        "title": "Perfect Numbers: Structure of Even Perfects"
       }
     ],
     "Physics": [
