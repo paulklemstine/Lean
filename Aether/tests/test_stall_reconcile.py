@@ -37,6 +37,7 @@ def _make_extractor(temp_workspace, inflight_jobs):
     ext.config = {}
     ext.inflight = {j.job_id: j for j in inflight_jobs}
     ext.failed_count = 0
+    ext.max_retries = 2
     ext.aristotle = MagicMock()
     ext.aristotle.poll_project = AsyncMock(return_value={
         "status": "RUNNING", "complete": False, "has_files": False, "percent_complete": 0,
@@ -69,34 +70,68 @@ def _job(job_id="j1", status="dispatched", dispatch_time=0.0, preparing_started=
 
 # ─── Stall cap (wall-clock) ──────────────────────────────────────────────
 
-def test_stall_cap_wall_clock_force_fail(temp_workspace):
-    """A dispatched job older than the 24h wall-clock cap is force-failed and
-    returned in completed — independent of reasoning checkpoints."""
+def test_stall_cap_wall_clock_queues_retry(temp_workspace):
+    """A dispatched job older than the 24h wall-clock cap is dropped and queued
+    for retry (not quarantined) while retry budget remains. The job is re-keyed
+    by job_id and NOT returned in completed — the dispatch loop drains it."""
     import time
     now = time.time()
     job = _job(job_id="stalled1", status="dispatched",
                dispatch_time=now - 1450 * 60)  # 24h10m, over the 24h cap
     ext = _make_extractor(temp_workspace, [job])
     completed = asyncio.run(ext.poll_all())
-    assert job.status == "failed", f"Expected failed, got {job.status}"
+    assert job.status == "retry_queued", f"Expected retry_queued, got {job.status}"
     assert "wall-clock cap" in (job.error_message or ""), job.error_message
-    assert job in completed
-    ext._quarantine_direction_for_job.assert_called_once()
+    assert "retry" in (job.error_message or ""), job.error_message
+    assert job.retry_count == 1
+    assert job not in completed  # stays in inflight for the dispatch loop
+    ext._quarantine_direction_for_job.assert_not_called()
+    # Re-keyed by job_id: old project key gone, job_id key present.
+    assert job.job_id in ext.inflight
 
 
 def test_stall_cap_no_checkpoint_covered(temp_workspace):
-    """Regression: a job with NO reasoning checkpoints is still force-failed by
-    the wall-clock cap. (Old code only checked checkpoints, so these slipped.)"""
+    """Regression: a job with NO reasoning checkpoints is still queued for retry
+    by the wall-clock cap. (Old code only checked checkpoints, so these slipped.)"""
     import time
     now = time.time()
     job = _job(job_id="nockpt", status="dispatched",
                dispatch_time=now - 1450 * 60)  # 24h10m, over the 24h cap
     ext = _make_extractor(temp_workspace, [job])
     # poll_project would return RUNNING, but the wall-clock cap fires first
-    completed = asyncio.run(ext.poll_all())
-    assert job.status == "failed"
-    assert job in completed
+    asyncio.run(ext.poll_all())
+    assert job.status == "retry_queued"
     ext.aristotle.poll_project.assert_not_called()  # cap fired before polling
+
+
+def test_stall_cap_retries_exhausted_quarantines(temp_workspace):
+    """Once retry budget is exhausted, the hard cap falls back to failing and
+    quarantining the direction (presumes a bad concept)."""
+    import time
+    now = time.time()
+    job = _job(job_id="exhausted1", status="dispatched",
+               dispatch_time=now - 1450 * 60)  # over the 24h cap
+    job.retry_count = 2  # already at max_retries
+    ext = _make_extractor(temp_workspace, [job])
+    completed = asyncio.run(ext.poll_all())
+    assert job.status == "failed", f"Expected failed, got {job.status}"
+    assert "no retries left" in (job.error_message or ""), job.error_message
+    assert job in completed
+    ext._quarantine_direction_for_job.assert_called_once()
+
+
+def test_stall_cap_retry_queued_not_recapped(temp_workspace):
+    """A job already marked retry_queued (with a stale old dispatch_time) must
+    NOT be re-capped on the next poll — it's owned by the dispatch loop."""
+    import time
+    now = time.time()
+    job = _job(job_id="already_queued", status="retry_queued",
+               dispatch_time=now - 1450 * 60)  # old time, but status != dispatched
+    ext = _make_extractor(temp_workspace, [job])
+    completed = asyncio.run(ext.poll_all())
+    assert job.status == "retry_queued", f"Expected retry_queued, got {job.status}"
+    assert job not in completed
+    ext._quarantine_direction_for_job.assert_not_called()
 
 
 def test_stall_warn_under_cap(temp_workspace):

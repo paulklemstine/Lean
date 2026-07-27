@@ -1623,21 +1623,63 @@ Research mode: {concept.research_mode}
         for pid, job in list(self.inflight.items()):
             # Skip jobs already in terminal status — they were returned in a
             # previous poll and either processed or about to be pruned.
-            # Including them again causes duplicate integration.
-            if job.status in ("completed", "failed", "integrated", "rejected", "idle_pending"):
+            # Including them again causes duplicate integration. Also skip
+            # retry_queued/dispatch_queued: they have no active Aristotle
+            # project to poll (their old project was dropped) and are owned by
+            # the dispatch loop's drain step — polling them would hit a stale
+            # project_id. They are keyed by job_id, not project_id.
+            if job.status in ("completed", "failed", "integrated", "rejected",
+                              "idle_pending", "retry_queued", "dispatch_queued"):
                 continue
 
-            # 1. Hard Cap (Wall-clock) - check before polling
-            if job.dispatch_time and (now - job.dispatch_time) > max_cycle_seconds:
-                print(f"[Poll] {pid[:8]} HARD CAP EXCEEDED: Running > {max_cycle_seconds/3600:.1f}h")
+            # 1. Hard Cap (Wall-clock) - check before polling.
+            # Guard on status == "dispatched" so a job already marked
+            # retry_queued (old dispatch_time) isn't immediately re-capped;
+            # retry_queued jobs are handled by the dispatch loop's drain step.
+            if job.status == "dispatched" and job.dispatch_time \
+                    and (now - job.dispatch_time) > max_cycle_seconds:
+                age_h = (now - job.dispatch_time) / 3600
+                print(f"[Poll] {pid[:8]} HARD CAP EXCEEDED: Running > {age_h:.1f}h")
                 # Try to log it in reasoning log if possible
                 try:
                     rlog = ReasoningLog(self.workspace, pid, job.job_id)
                     rlog.add_checkpoint(status="FINAL:STALL_HARD_CAP", percent=0)
                 except Exception:
                     pass
+
+                # If the job still has retry budget, drop it and queue it for
+                # retry instead of quarantining the direction (the concept may
+                # be fine; the job just hit the wall-clock ceiling). The main
+                # dispatch loop drains retry_queued jobs first, re-dispatching
+                # them to a fresh Aristotle project.
+                if job.retry_count < self.max_retries:
+                    job.retry_count += 1
+                    job.status = "retry_queued"
+                    job.retry_queued_time = time.time()
+                    job.error_message = (
+                        f"wall-clock cap exceeded ({age_h:.1f}h) — queued for retry "
+                        f"({job.retry_count}/{self.max_retries})"
+                    )
+                    # Re-key by job_id: the old Aristotle project is dropped
+                    # (no cancel API) and the dispatch loop drains queued jobs
+                    # by job_id. Remove the stale project_id key so the next
+                    # poll doesn't hit the dead project.
+                    if pid in self.inflight:
+                        del self.inflight[pid]
+                    self.inflight[job.job_id] = job
+                    self._save_inflight()
+                    print(f"[Poll] {pid[:8]} HARD CAP: queued for retry "
+                          f"({job.retry_count}/{self.max_retries})")
+                    # Keep the direction in_progress (do NOT release/quarantine);
+                    # the retry re-dispatch re-uses the same job_id/concept.
+                    # Do NOT append to completed — the job stays in inflight for
+                    # the dispatch loop to drain.
+                    continue
+
+                # Retries exhausted: fail and quarantine the direction
+                # (presumes a bad concept, not just a slow job).
                 job.status = "failed"
-                job.error_message = f"wall-clock cap exceeded ({max_cycle_seconds/3600:.1f}h)"
+                job.error_message = f"wall-clock cap exceeded ({age_h:.1f}h); no retries left"
                 self.failed_count += 1
                 self._quarantine_direction_for_job(job)
                 completed.append(job)

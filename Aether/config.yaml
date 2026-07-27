@@ -423,4 +423,6 @@ stall:
                                 #   hang). > the ~44min healthy checkpoint gap.
   preparing_timeout_seconds: 1800  # fail a job stuck in 'preparing' (never submitted)
   warn_seconds: 5400           # 90min wall-clock stall warning (no action)
-  hard_cap_seconds: 86400      # 24h wall-clock cap (quarantines the direction)
+  hard_cap_seconds: 86400      # 24h wall-clock cap. Drops the job and queues it
+                                #   for retry (up to max_retries); quarantines the
+                                #   direction only once retries are exhausted.
