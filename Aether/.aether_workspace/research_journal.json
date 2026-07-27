@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cf6c2cd9",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Results established\n\n`OpenSetsAtInfinity.lean` equips `Surreal.{0}` with its order topology and proves:\n\n- every countable positive family has a common positive strict lower bo",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T17:32:50",
-      "title": "Surreal Topology: Open Sets at Infinity"
-    },
-    {
       "cycle_id": "25709a4b",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe formal development deliberately separates three claims that are often conflated:\n\n1. **Intuitionistic semantics.** `ThreeWorld.lean` proves residuation for an explicit three-e",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-27T07:58:55",
       "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
+    },
+    {
+      "cycle_id": "87772396",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThe following are concrete conjectures extending the formal model in `Catalog/Novelty/ImmortalityGame.lean`. Each has a definite Lean statement and can be proved or refuted indepe",
+      "quality_score": 0.6857029702970298,
+      "sorry_count": 1,
+      "theorem_count": 202,
+      "timestamp": "2026-07-27T10:29:18",
+      "title": "Infinite Games Against Death: Immortality Strategies"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.75276
     }
   ],
-  "last_updated": "2026-07-27T07:58:55",
+  "last_updated": "2026-07-27T10:29:18",
   "open_questions": [
-    {
-      "context": "-  sorry; -  sorry; -  sorry",
-      "cycle_id": "671e7568",
-      "domain": "Applications",
-      "sorry_count": 13,
-      "timestamp": "2026-07-19T23:13:43"
-    },
     {
       "context": "+  sorry; +  sorry; +  sorry",
       "cycle_id": "65e81f6c",
@@ -3016,6 +3009,13 @@
       "domain": "Logic",
       "sorry_count": 1,
       "timestamp": "2026-07-27T01:25:35"
+    },
+    {
+      "context": "sorry",
+      "cycle_id": "87772396",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-27T10:29:18"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6622cac1",
-        "quality": 0.69,
-        "theorems": 0,
-        "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-      },
-      {
         "cycle_id": "f14d2570",
         "quality": 0.55,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.6299480519480519,
         "theorems": 9240,
         "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
+      },
+      {
+        "cycle_id": "87772396",
+        "quality": 0.6857029702970298,
+        "theorems": 202,
+        "title": "Infinite Games Against Death: Immortality Strategies"
       }
     ],
     "NumberTheory": [
