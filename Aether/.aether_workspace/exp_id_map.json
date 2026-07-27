@@ -1556,5 +1556,6 @@
   "4a8509fd": "conjecture_deciding_whether_a_finite_multiset_of_n.json",
   "e50f9bec": "proof_complexity_resolution_and_cutting_planes.json",
   "92e6405b": "statistical_mechanics_ising_model_phase_transition.json",
-  "f8a71afd": "hilbert_11_quadratic_forms_over_algebraic_fields.json"
+  "f8a71afd": "hilbert_11_quadratic_forms_over_algebraic_fields.json",
+  "1443bb24": "causal_inference_do_calculus_as_formal_logic.json"
 }
