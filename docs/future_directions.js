@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a68d3b50",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domains": [
       "Cryptography",
@@ -1174,10 +1174,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "fd_0688",
+    "phase": "A",
     "priority_score": 0.89,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697837+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
