@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "25709a4b",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe formal development deliberately separates three claims that are often conflated:\n\n1. **Intuitionistic semantics.** `ThreeWorld.lean` proves residuation for an explicit three-e",
-      "quality_score": 0.58,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-19T17:50:00",
-      "title": "Retrocausal Mathematics: Where Effects Precede Causes"
-    },
-    {
       "cycle_id": "d0217292",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Derived pro-spectra with nonconstant bonding homology\n\n**Conjecture.** Let an inverse tower of finite spectra have eventually perfect bonding maps on integral homology and f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 202,
       "timestamp": "2026-07-27T10:29:18",
       "title": "Infinite Games Against Death: Immortality Strategies"
+    },
+    {
+      "cycle_id": "7fa0ef0b",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: dimensions of products of posets\n\nThe following are concrete, falsifiable conjectures extracted from Bergman's *Further thoughts on dimensions of posets*. Here `dim` is Dushnik–Mi",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-07-27T10:29:23",
+      "title": "ArXiv paper: Further thoughts on dimensions of posets"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75276
     }
   ],
-  "last_updated": "2026-07-27T10:29:18",
+  "last_updated": "2026-07-27T10:29:23",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "d67581f7",
-        "quality": 0.78,
-        "theorems": 0,
-        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-      },
-      {
         "cycle_id": "c1b3f8da",
         "quality": 0.74,
         "theorems": 11,
@@ -3885,6 +3879,12 @@
         "quality": 0.66484,
         "theorems": 5,
         "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
+      },
+      {
+        "cycle_id": "7fa0ef0b",
+        "quality": 0.686,
+        "theorems": 31,
+        "title": "ArXiv paper: Further thoughts on dimensions of posets"
       }
     ],
     "Shared": [

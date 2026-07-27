@@ -79,17 +79,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb12d62e",
     "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
     "domains": [
       "Computation",
       "Logic"
     ],
     "id": "seed_005",
+    "phase": "A",
     "priority_score": 0.96,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "P vs NP Problem"
   },
@@ -997,7 +998,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a944d553",
     "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
     "domains": [
       "Logic",
@@ -1005,10 +1006,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_079",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
@@ -5458,23 +5460,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
-    "consumed_by_exp_id": "87772396",
-    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_291",
-    "phase": "A",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Infinite Games Against Death: Immortality Strategies"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
     "domains": [
@@ -6039,21 +6024,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T15:16:07.360291+00:00",
     "title": "ArXiv paper: Kloosterman sign changes with moduli having at most five prime factors"
-  },
-  {
-    "consumed_by_exp_id": "7fa0ef0b",
-    "description": "Investigate the ArXiv paper 'Further thoughts on dimensions of posets' and formalize its key results. Abstract: We recall the concept of the dimension of a finite poset $P$, and the longstanding conjecture that for all finite nonempty posets $P$ and $Q$, $\\dim(P\\times Q)\\geq\\dim(P)+\\dim(Q)-2.$ We then note two other plausible inequalities, either of which would imply that one. In the final section, writing $P\\preccurlyeq P'$ if, for all $Q,$ $\\dim(P\\times Q)\\leq\\dim(P'\\times Q),$ and writing $P\\approx P'$ if $P\\preccurlyeq P'$ and $P'\\preccurlyeq P,$ we note some results and questions concerning these relations.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0092",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13385v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T03:01:50.863415+00:00",
-    "title": "ArXiv paper: Further thoughts on dimensions of posets"
   },
   {
     "consumed_by_exp_id": "",
@@ -7774,6 +7744,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following are concrete conjectures extending the formal model in `Catalog/Novelty/ImmortalityGame.lean`. Each has a definite Lean statement and can be proved or refuted independently.\n\n1. **Finite iteration of bounded nondeterministic refinement.** Define `nondetExtIter : \u2115 \u2192 SurvivalGame \u2192 SurvivalGame` by iteration of `nondetExt`. For every `k : \u2115`,\n   ```lean\n   (nondetExtIter k finiteGame).value = \u03c9 ^ (k + 1)\n   ```\n   where the natural exponent is coerced to an ordinal as required by the API.\n\n2. **Exact finite-level hierarchy.** For all natural numbers `j < k`, the `j`-fold refined finite game cannot force the survival value of the `k`-fold refined game:\n   ```lean\n   \u00ac (nondetExtIter j finiteGame).MortalForces\n       ((nondetExtIter k finiteGame).value)\n   ```\n\n3. **Embedding characterization of bounded-depth clocks.** For every survival game `G` and natural number `k`, if the moments of `G` order-embed into the `k`-fold lexicographic natural-number clock, then\n   ```lean\n   G.value \u2264 \u03c9 ^ k\n   ```\n   (with the base clock chosen so that `k = 1` recovers `value_le_omega_of_embeds_nat`). Conversely, every game whose value is at most `\u03c9 ^ k` admits such an order embedding.\n\n4. **The finite-refinement limit is `\u03c9^\u03c9`.** If the clocks at all finite refinement depths are combined by an ordinal sum or an equivalent dependent lexicographic construction, the resulting survival value is exactly\n   ```lean\n   \u03c9 ^ \u03c9\n   ```\n   and it strictly exceeds every finite refinement value.\n\n5. **Faithful monotone ITTM-clock realization.** There is a monotone transfinite transition system with an explicit limit rule whose reachable-time well-order is isomorphic to `nondetGame.Moment`; consequently its closure ordinal is exactly `\u03c9\u00b2`, no stage below `\u03c9\u00b2` is terminal, and stage `\u03c9\u00b2` is terminal.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0785",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "87772396",
+    "status": "available",
+    "timestamp": "2026-07-27T10:29:10.836905+00:00",
+    "title": "The following are concrete conjectures extending the formal model in `Catalog/No"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: dimensions of products of posets\n\nThe following are concrete, falsifiable conjectures extracted from Bergman's *Further thoughts on dimensions of posets*. Here `dim` is Dushnik\u2013Miller dimension, `P\u207a` means adjoining a new greatest element, and `P\u208a` means adjoining a new least element. All posets are finite and nonempty.\n\n1. **Defect-two product conjecture.** For all posets `P,Q`,\n   \\[\n   \\dim(P\\times Q)\\ge \\dim(P)+\\dim(Q)-2.\n   \\]\n   A counterexample is any explicit finite pair violating this inequality.\n\n2. **Opposite-endpoint augmentation bound.** For all `P,Q` with more than one element,\n   \\[\n   \\dim(P^+\\times Q_+)\\le \\dim(P\\times Q)+1.\n   \\]\n   The formal theorem `proposition_2_2_uniform` shows that this bound, together with its order-dual application and bounded-poset additivity, implies Conjecture 1.\n\n3. **Same-endpoint augmentation bound.** For all `P,Q` with more than one element,\n   \\[\n   \\dim(P_+\\times Q_+)\\le \\dim(P\\times Q)+1.\n   \\]\n   By reversing orders and exchanging factors, the same two-step implication gives Conjecture 1.\n\n4. **One-sided universal augmentation constant.** There exists a natural number `m>0` such that for all `P,Q` with more than one element,\n   \\[\n   \\dim(P\\times Q_+)\\le \\dim(P\\times Q)+m.\n   \\]\n   This can be refuted for a proposed `m` by one finite pair; the unrestricted conjecture is refuted by a family whose augmentation gaps are unbounded.\n\n5. **Rigidity of connected behaviour classes.** If connected finite posets `P,P'` satisfy\n   \\[\n   \\dim(P\\times Q)=\\dim(P'\\times Q)\n   \\]\n   for every finite nonempty poset `Q`, then `P` and `P'` are isomorphic. A counterexample is an explicit nonisomorphic connected pair with identical product-dimension profiles.\n",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0786",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7fa0ef0b",
+    "status": "available",
+    "timestamp": "2026-07-27T10:29:20.110540+00:00",
+    "title": "The following are concrete, falsifiable conjectures extracted from Bergman's *Fu"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -7789,7 +7788,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "5713f079",
+    "consumed_by_exp_id": "",
     "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 \u2014 proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal \u2014 the dimension of the proof search space determines how hard the theorem is.",
     "domains": [
       "Novelty",
@@ -7797,11 +7796,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_138",
-    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
@@ -7958,6 +7956,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 87772396 (Q=0.686) proved 202 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_87772396_7cb1bc03",
+    "priority_score": 0.7357029702970298,
+    "research_mode": "team",
+    "source_exp_id": "87772396",
+    "status": "available",
+    "timestamp": "2026-07-27T10:29:18.797503+00:00",
+    "title": "Close Proofs: Infinite Games Against Death: Immortality Strategies"
   },
   {
     "consumed_by_exp_id": "",
