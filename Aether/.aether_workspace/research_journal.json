@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2d8c7907",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## 1. Quantitative collision bounds\nThe current finite-memory theorem proves that a collision exists. A sharper development could restrict streams to length at most `n`, count the",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-19T16:07:13",
-      "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
-    },
-    {
       "cycle_id": "8d3b0867",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe completed development separates three notions that are often conflated in informal thermodynamic accounts of sorting:\n\n1. **Decision-tree complexity.** A binary comparison tre",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-07-27T00:20:01",
       "title": "Perfect Numbers: Structure of Even Perfects"
+    },
+    {
+      "cycle_id": "e3956c60",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\nLet `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n < Wₖ`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-l",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-07-27T00:20:07",
+      "title": "Alien Number Systems: Beyond Base-N"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79231
     }
   ],
-  "last_updated": "2026-07-27T00:20:01",
+  "last_updated": "2026-07-27T00:20:07",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "82c8c57a",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
-      },
-      {
         "cycle_id": "e24b36f0",
         "quality": 0.84,
         "theorems": 45,
@@ -3699,6 +3693,12 @@
         "quality": 0.6398028571428571,
         "theorems": 7,
         "title": "Perfect Numbers: Structure of Even Perfects"
+      },
+      {
+        "cycle_id": "e3956c60",
+        "quality": 0.68,
+        "theorems": 25,
+        "title": "Alien Number Systems: Beyond Base-N"
       }
     ],
     "Physics": [

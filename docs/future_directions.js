@@ -1756,21 +1756,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
-    "consumed_by_exp_id": "e4773f49",
-    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "fd_0649",
-    "phase": "A",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697738+00:00",
-    "title": "Perfect Numbers: Structure of Even Perfects"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
@@ -2464,7 +2449,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Neural Field Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2219fd1",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty",
@@ -2473,10 +2458,11 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "id": "seed_107",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -4090,22 +4076,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Rota's Basis Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "95478b50",
-    "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
-    "domains": [
-      "Probability",
-      "Combinatorics"
-    ],
-    "id": "seed_225",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
     "consumed_by_exp_id": "",
@@ -5798,7 +5768,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "da431c18",
+    "consumed_by_exp_id": "",
     "description": "Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in the category of memory algebras.",
     "domains": [
       "Novelty",
@@ -5806,11 +5776,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_264",
-    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
@@ -6722,17 +6691,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Perfect Cuboid (Euler Brick)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8a71afd",
     "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
     "domains": [
       "Algebra",
       "NumberTheory"
     ],
     "id": "seed_019",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
@@ -7511,23 +7481,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
-    "consumed_by_exp_id": "e3956c60",
-    "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
-    "domains": [
-      "NumberTheory",
-      "Computation",
-      "Speculative"
-    ],
-    "id": "seed_066",
-    "phase": "A",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Alien Number Systems: Beyond Base-N"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form \u00b1p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime \u2014 a number-theoretic analog of spin in physics.",
     "domains": [
@@ -7822,6 +7775,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What has and has not been established\n\nThe exact connective constant of nearest-neighbour self-avoiding walk on the square lattice is an open problem. The requested value `(2 + \u221a2) / 2` is ruled out here because it is less than `2`, while the formal square-lattice model has connective constant at least `2`. The Nienhuis constant `\u221a(2 + \u221a2)` belongs to the hexagonal lattice.\n\nThe present formal chain establishes:\n\n1. strict elementary bounds on `\u221a2`;\n2. strict bounds `1 < (2 + \u221a2)/2 < 2`;\n3. `(2 + \u221a2)/2 < \u03bc_square`, hence inequality of the two values;\n4. positivity, square, fourth-power, and quartic identities for `\u221a(2 + \u221a2)`;\n5. a verified square-lattice interval separating the proposed value from `\u03bc_square`;\n6. exhaustive square-lattice SAW counts through length six.\n\nIt does **not** claim an exact value for `\u03bc_square`, identify an abstract constant with hexagonal-lattice SAW counts, or formalize the full lace expansion.\n\n## Next formalization steps\n\n1. **Unify walk representations.** The catalog currently contains both direction-word and vertex-sequence encodings. Prove an equivalence preserving length, self-avoidance, concatenation, and finite counts.\n2. **Sharpen the elementary upper bound.** Formalize the no-immediate-backtracking injection to obtain `c_n \u2264 4\u00b73^(n-1)` and then `\u03bc_square \u2264 3`. This requires connecting the infimum definition to uniform exponential bounds without assuming the desired limit theorem.\n3. **Formalize Fekete convergence completely.** Starting from count submultiplicativity and positivity, prove convergence of `c_n^(1/n)` to the infimum definition of the connective constant. This would turn the present infimum framework into the usual limiting statement.\n4. **Hexagonal lattice model.** Define the honeycomb graph explicitly, define its SAW counts, and state the Duminil-Copin\u2013Smirnov theorem as an honest theorem target equating its connective constant with `\u221a(2 + \u221a2)`. The algebraic facts proved here can then serve as downstream lemmas; they are not a substitute for the parafermionic-observable proof.\n5. **Hara\u2013Slade program.** Hara\u2013Slade lace-expansion results concern sufficiently high-dimensional lattices and mean-field asymptotics, not an exact square-lattice constant. A faithful development should first formalize convolution, the two-point function, susceptibility, the lace coefficients, and the bootstrap estimates, then derive the applicable high-dimensional asymptotics.\n6. **Certified larger enumeration.** Replace brute-force word enumeration with endpoint-indexed dynamic programming and prove it equivalent to the direct definition. This should allow substantially longer checked prefixes while keeping kernel replay manageable.\n",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_0779",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "95478b50",
+    "status": "available",
+    "timestamp": "2026-07-27T00:19:48.430177+00:00",
+    "title": "The exact connective constant of nearest-neighbour self-avoiding walk on the squ"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Completed foundation\n\nThe present development supplies two self-contained Lean modules for the requested\nperfect-number program:\n\n- `Catalog/Applications/PerfectNumbers/AbundancyIndex.lean` defines the rational\n  abundancy index `\u03c3(n)/n`, characterizes perfection by abundancy `2`, proves\n  multiplicativity for coprime arguments, computes the index of primes, proves\n  every positive prime power deficient, deduces that a perfect number has at\n  least two distinct prime factors, and proves the reciprocal-divisor identity.\n- `Catalog/Applications/PerfectNumbers/EvenPerfectStructure.lean` proves the full\n  Euclid--Euler classification in the traditional\n  `2^(p-1) * (2^p-1)` form, proves that the exponent is prime, shows an even\n  perfect number has exactly two distinct prime factors, connects the\n  classification to abundancy `2`, and derives the first four classical examples.\n\nThe latter examples are the concise computational-evidence stage: the instances\n`p = 2, 3, 5, 7` are checked in Lean through the general theorem and yield\n`6, 28, 496, 8128`. No `native_decide` or external computation is used.\nThe corresponding sequence is OEIS A000396. No counterexample to Euclid--Euler\nis possible after the proved classification.\n\nAll declarations in the two perfect-number modules have complete proof bodies.\nBoth modules compile as explicit build targets, and the project default target is\nconfigured to build the `Applications` library containing them.\n\n## Nielsen-type odd-perfect bound\n\nThe requested lower bound of 101 prime factors for a hypothetical odd perfect\nnumber is not asserted in the current files. A faithful formalization must first\nfix whether factors are counted with multiplicity (the arithmetic function\nusually denoted `\u03a9`) or as distinct primes (`\u03c9`, represented here by\n`n.primeFactors.card`). These are very different claims; the existing theorem\n`perfect_two_le_card_primeFactors` concerns distinct factors only.\n\nA continuation should therefore:\n\n1. Define `bigOmega (n : \u2115) := \u2211 p \u2208 n.primeFactors, n.factorization p` and prove\n   its equivalence to the length of the prime-factor multiset.\n2. Develop the prime-power product formula\n   `abundancy n = \u220f p \u2208 n.primeFactors, abundancy (p ^ n.factorization p)`.\n3. Formalize Euler's necessary form for an odd perfect number: exactly one prime\n   occurs to an exponent congruent to `1 mod 4`, while every other exponent is\n   even.\n4. Add the cyclotomic-divisor and factor-chain machinery needed to force new\n   prime divisors from each prime-power component.\n5. Encode the finite inequality/case analysis underlying the target `101` bound,\n   with each pruning rule proved in Lean and the final finite search certified by\n   a proof-producing decision procedure.\n\nThis is substantially more infrastructure than the abundancy and even-perfect\nclassification, but the present multiplicativity and prime-power deficiency\nlemmas are the natural base of that development.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0780",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e4773f49",
+    "status": "available",
+    "timestamp": "2026-07-27T00:19:57.413063+00:00",
+    "title": "The present development supplies two self-contained Lean modules for the request"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nLet `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n < W\u2096`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-log position bound.** If `L\u2082(n)` is the least number of repeated applications of `x \u21a6 \u2308log\u2082(x + 1)\u2309` needed to reach a value at most `2`, then for every `n \u2265 2`, `|K(n) - L\u2082(n)| \u2264 2`.\n\n2. **No worst-case binary compression.** For every `k`, any injective, prefix-free binary encoding of all valid length-`k` tower representations has a codeword of length at least `\u2308log\u2082 W\u2096\u2309`.  Moreover, concatenating each digit in exactly `W\u1d62` bits attains total length `\u2211_{i<k} W\u1d62 = log\u2082 W\u2096`.\n\n3. **A radix-growth threshold.** For generalized weights `V\u2080 = 1` and `V\u2096\u208a\u2081 = r(V\u2096)V\u2096`, assume `r` is monotone and `r(x) \u2265 2`.  The least `k` with `n < V\u2096` is `O(log* n)` if `r(x) \u2265 2^x` for all sufficiently large `x`; it is not `O(log* n)` when `r(x) \u2264 x^C` for some fixed `C` and all sufficiently large `x`.\n\n4. **Balanced recursive digits.** With odd radix `r\u2096 = 2^(W\u2096+1) + 1` and weights `U\u2080 = 1`, `U\u2096\u208a\u2081 = r\u2096U\u2096`, every integer in `[-(U\u2096-1)/2, (U\u2096-1)/2]` has a unique length-`k` expansion whose `i`th digit lies in `[-(r\u1d62-1)/2, (r\u1d62-1)/2]`.\n\n5. **Zeckendorf comparison.** Let `Z(n)` be the largest Fibonacci index occurring in the canonical Zeckendorf expansion of `n`.  There are explicit constants `a,b > 0` such that `a log\u2082(n+1) \u2264 Z(n) \u2264 b log\u2082(n+1)` for every `n \u2265 1`, whereas `K(n) = o(Z(n))`; nevertheless, every injective binary encoding of either representation family has worst-case length at least `\u2308log\u2082(n+1)\u2309` on the interval `[0,n]`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0781",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e3956c60",
+    "status": "available",
+    "timestamp": "2026-07-27T00:20:03.090672+00:00",
+    "title": "Let `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n <"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -7837,7 +7835,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5713f079",
     "description": "When a theorem prover searches for a proof, it explores a tree of possible derivation steps. The branching factor is the number of applicable inference rules at each step. Define the proof-search fractal dimension D(T) of a theorem T as the Hausdorff dimension of the set of all successful proof paths for T. If D(T) < 1, the proof is 'easy' (few paths work, so search is focused). If D(T) > 1, the proof is 'hard' (many paths must be explored). Conjecture: For theorems in ZFC, D(T) = 1 + O(1/length(T)). In other words, most theorems have fractal dimension close to 1 \u2014 proof search is neither trivially easy nor impossibly hard, but balanced at the edge. Theorems with D(T) << 1 are 'obvious' (direct proofs), and theorems with D(T) >> 1 require exponentially long proofs. The fractal dimension correlates with proof length: if D(T) = 1 + epsilon, then the shortest proof of T has length roughly 1/epsilon. Test: for 1000 theorems in Lean 4's Mathlib, estimate D(T) by Monte Carlo sampling of proof search trees, and correlate with actual proof length. Impact: proof difficulty is a fractal \u2014 the dimension of the proof search space determines how hard the theorem is.",
     "domains": [
       "Novelty",
@@ -7845,10 +7843,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_138",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Fractal Dimension of Proof Search: How Hard Is It to Find a Proof?"
   },
@@ -8247,6 +8246,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle e4773f49 (Q=0.640) proved 7 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Ni",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_e4773f49_7d25b0c8",
+    "priority_score": 0.6898028571428572,
+    "research_mode": "team",
+    "source_exp_id": "e4773f49",
+    "status": "available",
+    "timestamp": "2026-07-27T00:20:02.013198+00:00",
+    "title": "Close Proofs: Perfect Numbers: Structure of Even Perfects"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
     "domains": [
       "Novelty",
@@ -8339,6 +8352,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 95478b50 (Q=0.610) proved 794 theorems in Probability but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "sorry_fill_95478b50_dd4f3c48",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "95478b50",
+    "status": "available",
+    "timestamp": "2026-07-27T00:19:54.838542+00:00",
+    "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
   },
   {
     "consumed_by_exp_id": "",
