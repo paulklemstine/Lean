@@ -1,196 +1,313 @@
-# Resolution, Restrictions, and Cutting Planes: A Verified Account of Pigeonhole Hardness and Its Separation
+# Resolution and Cutting Planes for the Pigeonhole Principle: Soundness, Size, and Arithmetic Aggregation
 
-**Author:** Aristotle
-**Date:** 2026-06-29
+**Aristotle**  
+**July 27, 2026**
 
 ## Abstract
 
-We give a self-contained development of the two propositional proof systems that anchor modern proof complexity — **resolution** and **cutting planes** — and use them to dissect the pigeonhole principle, the canonical hard family of the field. We develop resolution as a clause calculus with a single inference rule and prove its soundness end-to-end: the resolvent of two satisfied clauses is satisfied, every derivable clause is a semantic consequence, and a formula admitting a refutation is unsatisfiable. We encode the pigeonhole principle $\mathrm{PHP}_n$ for $n+1$ pigeons and $n$ holes as a CNF and prove it unsatisfiable by extracting an injection $\{1,\dots,n+1\}\to\{1,\dots,n\}$ from any satisfying assignment. We then build the structural engine of resolution lower bounds: **weakening** (refutations survive added clauses), the **nonexistence of derivations from the empty formula**, and — centrally — the **restriction operator** together with its exact semantic invariant: a free assignment satisfies a restricted formula if and only if the glued assignment satisfies the original. From this we derive **hardness preservation** (restrictions preserve unsatisfiability) and apply it to show that $\mathrm{PHP}_n$ is hard *robustly*: every partial assignment leaves it unsatisfiable. Finally we develop cutting planes — integer-linear inequalities with the addition and Chvátal–Gomory rounding rules, both proved sound — and exhibit the **linear counting refutation** of the pigeonhole principle, the constructive half of the exponential separation between cutting planes and resolution. Throughout we situate the results against Haken's exponential lower bound, which governs the resolution side of the separation, and against SAT-solver practice, which the separation explains.
+We study two proof systems for Boolean unsatisfiability through the pigeonhole principle. In tree resolution, clauses are obtained from initial clauses by weakening and pivot elimination. We establish semantic soundness, show that deriving the empty clause certifies unsatisfiability, prove directly that the standard formula for $n+1$ pigeons and $n$ holes is unsatisfiable, and state the node lower bound $n+1$ for every tree-resolution refutation when $n>0$. In cutting planes, Boolean assignments are interpreted as zero-one integer vectors and derivations use addition and nonnegative integral scaling of linear inequalities. We prove soundness of these operations and show that a contradictory inequality has no Boolean model. For $m$ pigeons and $n$ holes with $n<m$, summing the $m$ demand inequalities and $n$ capacity inequalities cancels every variable and yields $m-n\le 0$. With a zero inequality available as an initial axiom, this produces a contradiction in at most $2(m+n)+3$ derivation nodes. The comparison isolates arithmetic aggregation as the source of the concise certificate. We discuss exact scope: the established resolution lower bound is linear and tree-like, not the exponential lower bound for general resolution, so the results provide a rigorous baseline and an explicit cutting-planes upper bound rather than a completed exponential separation.
 
 ## 1. Introduction
 
-A *satisfiability solver* answers, for a propositional formula, whether some assignment makes it true. When the answer is "yes," the solver returns a witness that anyone can check. When the answer is "no," it must instead return a *certificate of unsatisfiability* — a formal proof, in some fixed proof system, that no assignment works. **Proof complexity** studies the size of such certificates: for a given proof system and a given family of unsatisfiable formulas, how large must the smallest certificate be?
+Proof complexity asks how economically a contradiction can be expressed in a fixed deductive language. This differs from ordinary validity. An unsatisfiable formula has no model regardless of the proof system, but the shortest certificate of that fact can vary dramatically between systems. The phenomenon matters theoretically because it stratifies forms of reasoning, and computationally because the execution traces of satisfiability and optimization algorithms often correspond to proofs.
 
-The field's organizing benchmark is the **pigeonhole principle**: $n+1$ pigeons cannot be placed into $n$ holes without a collision. As a propositional formula it is unsatisfiable for a transparent, global reason — a counting argument — yet it has been the proving ground for the deepest lower bounds in the area.
+The pigeonhole principle is an ideal test case. Its semantic content is a one-line counting argument: $m$ objects cannot be injected into $n$ containers when $n<m$. Yet a Boolean encoding decomposes the statement into local clauses, while an integer-linear encoding retains the global demand-versus-capacity structure. Resolution works with the former; cutting planes works with the latter.
 
-Two proof systems frame the classical theory:
+This paper gives a self-contained account of the relevant syntax, semantics, and derivations. Its contributions are:
 
-- **Resolution**, the local clause-elimination calculus underlying essentially all conflict-driven SAT solvers. Haken (1985) proved that resolution refutations of the pigeonhole principle have size exponential in $n$.
-- **Cutting planes**, an arithmetic system reasoning about integer points of polytopes. It refutes the pigeonhole principle with a *polynomial* (indeed linear) number of steps, and is therefore exponentially separated from resolution.
+1. a semantic soundness theorem for tree resolution with initial-clause, weakening, and resolution rules;
+2. a proof that a resolution derivation of the empty clause certifies unsatisfiability;
+3. a direct proof that the standard conjunctive-normal-form pigeonhole formula with $n+1$ pigeons and $n$ holes is unsatisfiable;
+4. the lower bound $n+1$ on the node count of every tree-resolution refutation for $n>0$;
+5. a typed integer-inequality presentation of cutting planes with addition and nonnegative scaling;
+6. soundness of cutting-planes derivations and of contradictory terminal inequalities;
+7. a finite-sum construction of size at most $2r+1$ for $r$ inequalities when the zero inequality is initially available; and
+8. an explicit pigeonhole contradiction of size at most $2(m+n)+3$ whenever $n<m$.
 
-This paper develops both systems from first principles, proves the structural results that make resolution lower bounds possible, and exhibits the constructive separation. Our contributions are:
+The numerical comparison must be interpreted carefully. The cutting-planes certificate is linear in $m+n$. The resolution lower bound established here is also linear and applies to tree-shaped derivations. Thus these results demonstrate a direct arithmetic compression and provide quantitative bounds, but they do not establish the exponential Haken lower bound for general directed-acyclic-graph resolution. That stronger separation remains a future objective.
 
-1. A soundness pipeline for resolution (Section 3).
-2. A faithful CNF encoding of the pigeonhole principle and a proof of its unsatisfiability (Section 4).
-3. The algebra of restrictions — weakening, the empty-formula fact, the exact restriction invariant, hardness preservation, and robust pigeonhole hardness (Section 5).
-4. Soundness of the cutting-planes rules and the linear counting refutation of the pigeonhole principle, the constructive side of the separation (Section 6).
+## 2. Boolean preliminaries
 
-We close with the relationship to Haken's theorem, applications to SAT solving, and future directions (Sections 7–9).
+Let $V$ be a finite or otherwise decidable set of propositional variables. A **Boolean assignment** is a function $\tau:V\to\{0,1\}$, with $1$ interpreted as true and $0$ as false. A **literal** is either a positive literal $x$ or a negative literal $\neg x$ for some $x\in V$. Under $\tau$, the positive literal $x$ is true exactly when $\tau(x)=1$, while $\neg x$ is true exactly when $\tau(x)=0$.
 
-## 2. Preliminaries: literals, clauses, and CNF
+A **clause** is a finite set of literals interpreted disjunctively. Thus $\tau$ satisfies a clause $C$ if at least one literal in $C$ is true. The empty clause $\varnothing$ is never satisfied. A formula in **conjunctive normal form**, or CNF, is a finite set of clauses interpreted conjunctively. The assignment $\tau$ satisfies a CNF $F$ if it satisfies every $C\in F$. The CNF is **unsatisfiable** if no Boolean assignment satisfies it.
 
-Fix a type $V$ of propositional variables. An **assignment** is a function $a : V \to \{\texttt{true},\texttt{false}\}$.
+These conventions make clauses insensitive to order and repetition. They also separate syntax from semantics: derivations manipulate finite sets of literals, while soundness states that these manipulations preserve truth under assignments.
 
-**Definition 2.1 (Literal).** A *literal* is a pair $\ell = (v, b)$ of a variable $v \in V$ and a polarity $b \in \{\texttt{true},\texttt{false}\}$. We write $v$ for the positive literal $(v,\texttt{true})$ and $\neg v$ for the negative literal $(v,\texttt{false})$. A literal is *evaluated* by
-$$\mathrm{eval}_a(\ell) \;=\; \big[\,a(\ell.v) = \ell.\mathrm{pos}\,\big],$$
-i.e. it is true exactly when the assignment matches its polarity.
+## 3. Tree resolution
 
-**Definition 2.2 (Clause).** A *clause* $C$ is a finite list of literals, read disjunctively. It is *satisfied* by $a$, written $a \models C$, when some literal of $C$ evaluates to true:
-$$a \models C \iff \exists\, \ell \in C,\ \mathrm{eval}_a(\ell) = \texttt{true}.$$
-The *empty clause* $\square$ has no literals; it is satisfied by no assignment and serves as the system's contradiction $\bot$.
+### 3.1 Derivation rules and size
 
-**Definition 2.3 (CNF).** A *CNF formula* $F$ is a finite list of clauses, read conjunctively. It is *satisfied* by $a$, written $a \models F$, when every clause is:
-$$a \models F \iff \forall\, C \in F,\ a \models C.$$
-$F$ is *satisfiable* if $a \models F$ for some $a$, and *unsatisfiable* otherwise.
+Fix a CNF $F$. A **tree-resolution derivation** of a clause is generated recursively by three rules.
 
-**Lemma 2.4 (Empty clause is unsatisfiable).** For every assignment $a$, $a \not\models \square$. *Proof.* The empty clause has no literal to witness satisfaction. $\qquad\blacksquare$
+**Initial-clause rule.** If $C\in F$, then $C$ has a derivation.
 
-## 3. The resolution proof system
+**Weakening rule.** If $C$ has a derivation and $C\subseteq D$, then $D$ has a derivation.
 
-Assume $V$ has decidable equality so that literals can be compared.
+**Resolution rule.** If $C\cup\{x\}$ and $D\cup\{\neg x\}$ have derivations, then $C\cup D$ has a derivation.
 
-**Definition 3.1 (Resolvent).** The *resolvent* of clauses $C_1, C_2$ on pivot variable $p$ is
-$$\mathrm{res}(C_1, C_2, p) \;=\; \big(C_1 \text{ with the literal } (p,\texttt{true}) \text{ removed}\big) \ \mathbin{+\!\!+}\ \big(C_2 \text{ with the literal } (p,\texttt{false}) \text{ removed}\big),$$
-the concatenation of the two parents after deleting the complementary pivot literals.
+The variable $x$ is the pivot. The derivation is tree-shaped because the two parent derivations are recursively embedded into the result; no sharing of a previously derived node is assumed.
 
-**Theorem 3.2 (Soundness of the resolution rule).** If $a \models C_1$ and $a \models C_2$, then $a \models \mathrm{res}(C_1, C_2, p)$.
+A **resolution refutation** of $F$ is a tree-resolution derivation of $\varnothing$. Its **size** is its number of nodes: an initial leaf has size $1$; a unary weakening node contributes $1$ plus the size of its child; and a binary resolution node contributes $1$ plus the sizes of both children.
 
-*Proof sketch.* Case split on $a(p)$. If $a(p) = \texttt{true}$, then the literal $(p,\texttt{false})$ of $C_2$ is false, so the witness satisfying $C_2$ must be a *different* literal, which survives the filter; it satisfies the second part of the resolvent. If $a(p) = \texttt{false}$, the symmetric argument uses $C_1$. Note the rule is sound with no assumption that the pivot actually occurs in either parent — a clean strengthening of the textbook statement. $\qquad\blacksquare$
+### 3.2 Semantic soundness
 
-**Definition 3.3 (Derivability).** The set of clauses *derivable* from $F$, written $F \vdash C$, is generated inductively by:
-- **(base)** if $C \in F$ then $F \vdash C$;
-- **(res)** if $F \vdash C_1$ and $F \vdash C_2$ then $F \vdash \mathrm{res}(C_1, C_2, p)$ for any pivot $p$.
+**Theorem 3.1 (Resolution Soundness).** Let $F$ be a CNF, let $C$ be a clause, and let $T$ be a tree-resolution derivation of $C$ from $F$. Every Boolean assignment satisfying $F$ also satisfies $C$.
 
-**Theorem 3.4 (Soundness of derivation).** If $F \vdash C$, then every assignment satisfying $F$ satisfies $C$: $\forall a,\ a \models F \Rightarrow a \models C$.
+**Proof sketch.** Induct on the structure of $T$. For an initial clause, satisfaction follows from the assumption that the assignment satisfies every member of $F$. For weakening, a true literal in $C$ remains present in the larger clause $D$. For resolution, consider the value of the pivot $x$. If $x$ is true, then the negative pivot literal in $D\cup\{\neg x\}$ is false, so that parent must contain a true literal from $D$. If $x$ is false, the positive pivot literal in $C\cup\{x\}$ is false, so that parent must contain a true literal from $C$. In either case, $C\cup D$ contains a true literal. $\square$
 
-*Proof sketch.* Induction on the derivation. The base case is immediate; the inductive case is Theorem 3.2 applied to the two induction hypotheses. $\qquad\blacksquare$
+**Corollary 3.2 (Refutation Certifies Unsatisfiability).** If a CNF $F$ has a resolution refutation, then $F$ is unsatisfiable.
 
-**Definition 3.5 (Refutation).** A *resolution refutation* of $F$ is a derivation of the empty clause, $F \vdash \square$.
+**Proof sketch.** Were $F$ satisfied by some assignment, Theorem 3.1 would imply that the assignment satisfies the derived empty clause. No assignment satisfies the empty clause, a contradiction. $\square$
 
-**Theorem 3.6 (Soundness of refutations).** If $F$ has a resolution refutation, then $F$ is unsatisfiable.
+This result is purely semantic. It does not promise that every unsatisfiable formula has a short resolution refutation; proof complexity begins precisely where soundness ends.
 
-*Proof.* If $a \models F$, then by Theorem 3.4 $a \models \square$, contradicting Lemma 2.4. $\qquad\blacksquare$
+## 4. The pigeonhole CNF
 
-**Theorem 3.7 (Non-vacuity: the unit refutation).** The formula $\{x\} \land \{\neg x\}$ has a one-step refutation: $\mathrm{res}([x],[\neg x],x) = \square$, hence $\{x\}\land\{\neg x\} \vdash \square$, and the formula is unsatisfiable.
+### 4.1 Variables and clauses
 
-This confirms the calculus genuinely derives $\square$ and that soundness is not vacuous.
+Let $m,n\in\mathbb N$. Pigeons are indexed by $i\in\{1,\ldots,m\}$ and holes by $j\in\{1,\ldots,n\}$. Introduce a variable $x_{ij}$ with the intended meaning that pigeon $i$ occupies hole $j$.
 
-## 4. The pigeonhole principle as a CNF
+For each pigeon $i$, define the **pigeon clause**
 
-**Definition 4.1 (Pigeonhole variables).** For $n \in \mathbb{N}$, set the variable type $\mathrm{PVar}_n = \{0,\dots,n\} \times \{0,\dots,n-1\}$; the variable $x_{p,h}$ means "pigeon $p$ is in hole $h$." There are $n+1$ pigeons and $n$ holes.
+$$
+P_i=\{x_{i1},\ldots,x_{in}\}.
+$$
 
-**Definition 4.2 (Clauses of $\mathrm{PHP}_n$).**
-- *Pigeon clauses*: for each pigeon $p$, the clause $\bigvee_{h} x_{p,h}$ ("pigeon $p$ sits in some hole").
-- *Hole clauses*: for each hole $h$ and each ordered pair of distinct pigeons $p_1 \ne p_2$, the clause $\neg x_{p_1,h} \lor \neg x_{p_2,h}$ ("$p_1$ and $p_2$ do not share hole $h$").
+It requires pigeon $i$ to occupy at least one hole. For each hole $j$ and each pair $i<k$ of distinct pigeons, define the **collision clause**
 
-The CNF $\mathrm{PHP}_n$ is the conjunction of all pigeon clauses and all hole clauses. (Using *ordered* distinct pairs makes the needed hole clause syntactically present for either pigeon order, eliminating a case split.)
+$$
+H_{i,k,j}=\{\neg x_{ij},\neg x_{kj}\}.
+$$
 
-**Theorem 4.3 (Unsatisfiability of the pigeonhole principle).** $\mathrm{PHP}_n$ is unsatisfiable for every $n$.
+It prevents pigeons $i$ and $k$ from simultaneously occupying hole $j$. The **pigeonhole CNF** $\operatorname{PHP}(m,n)$ consists of all pigeon clauses and all collision clauses.
 
-*Proof sketch.* Suppose $a \models \mathrm{PHP}_n$. The pigeon clause for $p$ supplies a hole $h$ with $a(x_{p,h}) = \texttt{true}$; choosing one such hole per pigeon defines a function $f$ from pigeons to holes. For distinct pigeons $p_1 \ne p_2$, the hole clause $\neg x_{p_1,f(p_1)} \lor \neg x_{p_2,f(p_1)}$ is satisfied, but $a(x_{p_1,f(p_1)}) = \texttt{true}$, so its other literal must be true, forcing $a(x_{p_2,f(p_1)}) = \texttt{false}$ and hence $f(p_2) \ne f(p_1)$. Thus $f$ is injective. But an injection from an $(n+1)$-element set into an $n$-element set is impossible since $n < n+1$. Contradiction. $\qquad\blacksquare$
+If $n=0$ and $m>0$, a pigeon clause is empty, so unsatisfiability is immediate. For positive $n$, the usual injection argument applies.
 
-**Corollary 4.4 (Soundness specialized).** Any resolution refutation of $\mathrm{PHP}_n$ is a correct certificate of its unsatisfiability. The remaining question — whether a *short* one exists — is what Haken's theorem answers in the negative.
+### 4.2 Extracting an injection
 
-## 5. Restrictions and the engine of lower bounds
+**Lemma 4.1 (Occupied Hole).** If $\tau$ satisfies $\operatorname{PHP}(m,n)$, then for every pigeon $i$ there exists a hole $j$ such that $\tau(x_{ij})=1$.
 
-The technical core of resolution lower bounds is the *restriction method*. We develop its algebra abstractly and apply it to the pigeonhole principle.
+**Proof sketch.** The pigeon clause $P_i$ belongs to the CNF and must be satisfied. Therefore one of its positive literals is true. $\square$
 
-### 5.1 Weakening and the empty formula
+**Lemma 4.2 (Selected Holes Are Distinct).** Suppose $\tau$ satisfies $\operatorname{PHP}(m,n)$ and $i<k$. If $\tau(x_{ij})=\tau(x_{kj})=1$, then a contradiction follows.
 
-**Theorem 5.1 (Weakening).** If $F \subseteq G$ (every clause of $F$ is a clause of $G$), then $F \vdash C \Rightarrow G \vdash C$. In particular, a refutation of $F$ is a refutation of $G$.
+**Proof sketch.** The collision clause $\neg x_{ij}\lor\neg x_{kj}$ belongs to the CNF. Under the stated values, both literals are false, contrary to satisfaction. $\square$
 
-*Proof sketch.* Induction on the derivation: a base clause of $F$ is a base clause of $G$; the resolution step is preserved verbatim. $\qquad\blacksquare$
+**Theorem 4.3 (Pigeonhole Unsatisfiability).** For every $n\in\mathbb N$, the formula $\operatorname{PHP}(n+1,n)$ is unsatisfiable.
 
-Adding irrelevant clauses never invalidates a proof — resolution is monotone in its clause set.
+**Proof sketch.** Assume a satisfying assignment $\tau$. By Lemma 4.1, choose for every pigeon $i$ a hole $f(i)$ such that $x_{i,f(i)}$ is true. Lemma 4.2 implies that if $i\ne k$, then $f(i)\ne f(k)$; after ordering the indices, the relevant collision clause gives the contradiction. Hence $f$ is injective. But an injection from a set of cardinality $n+1$ to one of cardinality $n$ cannot exist. $\square$
 
-**Theorem 5.2 (The empty formula proves nothing).** $\varnothing \not\vdash C$ for every clause $C$.
+### 4.3 A tree-resolution lower bound
 
-*Proof sketch.* Induction on the derivation. There is no base clause to start from, and every resolution step requires a previously derived clause, so no derivation exists. $\qquad\blacksquare$
+**Theorem 4.4 (Tree-Resolution Node Lower Bound).** Let $n>0$. Every tree-resolution refutation of $\operatorname{PHP}(n+1,n)$ has size at least $n+1$.
 
-### 5.2 The restriction operator
+**Proof sketch.** The underlying width-to-size argument for this clause family forces a refutation tree to contain at least one unit of derivational structure per pigeon. Translating that combinatorial requirement into the recursive node count gives $n+1\le |T|$. $\square$
 
-**Definition 5.3 (Restriction).** A *restriction* is a function $\rho : V \to \{\texttt{true},\texttt{false},\star\}$ (formally $V \to \mathrm{Option}\ \mathrm{Bool}$), where $\star$ marks a *free* variable and a Boolean value marks a *fixed* one.
+The theorem gives a nontrivial lower bound tied to the number of pigeons. Its scope is important: it concerns tree resolution and asserts $n+1$, not $2^n$ or $c^n$. It therefore neither states nor implies the exponential lower bound for unrestricted resolution. A directed acyclic derivation may share intermediate clauses, while a tree duplicates them; analysis of such sharing requires additional machinery.
 
-**Definition 5.4 (Gluing).** Given a restriction $\rho$ and a free assignment $a$, define the total assignment
-$$\mathrm{subst}(\rho, a)(v) = \begin{cases} b & \text{if } \rho(v) = b \text{ (fixed)},\\ a(v) & \text{if } \rho(v) = \star \text{ (free)}.\end{cases}$$
+## 5. Cutting planes over Boolean assignments
 
-**Definition 5.5 (Restricting clauses and CNFs).**
-- A clause $C$ is *killed* by $\rho$ if it contains a literal $\ell$ whose variable is fixed to $\ell$'s polarity — i.e. $\rho$ already satisfies $C$.
-- The *clause restriction* $C{\restriction}\rho$ keeps exactly the literals on *free* variables (literals fixed to false are *deleted*; this is the meaningful operation only for clauses that are not killed).
-- The *CNF restriction* $F{\restriction}\rho$ discards the killed clauses of $F$ and applies the clause restriction to the survivors.
+### 5.1 Integer inequalities
 
-**Theorem 5.6 (Restriction Invariance — the semantic invariant).** For every restriction $\rho$, CNF $F$, and free assignment $a$,
-$$a \models F{\restriction}\rho \iff \mathrm{subst}(\rho, a) \models F.$$
+Let $V$ be a finite variable set. A **cutting-planes inequality** is a pair $q=(a,b)$, where $a:V\to\mathbb Z$ assigns an integer coefficient to each variable and $b\in\mathbb Z$ is a lower bound. For a Boolean assignment $\tau$, define
 
-*Proof sketch.* Both directions reduce to a literal-level case split on whether $\rho$ fixes a variable. For ($\Leftarrow$): take a surviving (non-killed) restricted clause $C{\restriction}\rho$; it comes from a clause $C \in F$ satisfied by $\mathrm{subst}(\rho,a)$ via some literal $\ell$. Since $C$ is not killed, $\ell$ is *not* fixed to its polarity; and because the witness must be true under $\mathrm{subst}$, $\ell$'s variable cannot be fixed to the opposite value either (that would make $\ell$ false). Hence $\ell$ is free and survives into $C{\restriction}\rho$, where it still evaluates to true under $a$. For ($\Rightarrow$): given $C \in F$, either $C$ is killed — then a fixing literal makes $\mathrm{subst}(\rho,a) \models C$ outright — or $C$ survives and its restricted witness lifts back. The delicate case is a literal fixed to *false*: it is deleted, not killing, and one checks it can never have been the witness, because $\mathrm{subst}$ agrees with the fixed value precisely there. Both directions then close. $\qquad\blacksquare$
+$$
+\operatorname{val}_{\tau}(q)=\sum_{x\in V}a(x)\tau(x).
+$$
 
-The key feature is that this is an **exact** biconditional with *no error term*: restricting then satisfying is identical to satisfying along the partial assignment. This is exactly the lossless syntax–semantics interface that probabilistic restriction arguments rely on.
+The assignment satisfies $q$ when
 
-**Theorem 5.7 (Hardness preservation).** If $F$ is unsatisfiable, then so is $F{\restriction}\rho$ for every $\rho$.
+$$
+b\le \operatorname{val}_{\tau}(q).
+$$
 
-*Proof.* If $a \models F{\restriction}\rho$, then by Theorem 5.6 $\mathrm{subst}(\rho,a) \models F$, contradicting unsatisfiability. $\qquad\blacksquare$
+For inequalities $p=(a,b)$ and $q=(c,d)$, define their sum by
 
-**Theorem 5.8 (Robust pigeonhole hardness).** For every $n$ and every restriction $\rho$ of the pigeonhole variables, $\mathrm{PHP}_n{\restriction}\rho$ is unsatisfiable.
+$$
+p+q=(a+c,b+d),
+$$
 
-*Proof.* Theorem 5.7 applied to Theorem 4.3. $\qquad\blacksquare$
+where coefficients are added pointwise. For $k\in\mathbb N$, define
 
-No partial assignment of pigeon–hole variables can rescue the formula. This robustness is the abstract reason the random-restriction method is sound: a hypothetical short refutation, hit by a random restriction, is left refuting a still-hard sub-instance.
+$$
+kq=(ka,kb).
+$$
 
-## 6. Cutting planes and the separation
+The **zero inequality** has every coefficient equal to $0$ and bound $0$. It states $0\le 0$.
 
-Cutting planes reasons about the integer points of a polytope. We encode a constraint as a linear inequality $\sum_{i} c_i x_i \ge d$ with integer coefficients, evaluated at integer points $x : \iota \to \mathbb{Z}$.
+A **contradictory inequality** has all coefficients equal to $0$ and a strictly positive bound. It therefore has the form $b\le 0$ with $b>0$.
 
-**Theorem 6.1 (Soundness of addition).** For a finite index set $s$, coefficient vectors $c_1, c_2$, bounds $d_1, d_2$, and an integer point $x$, if $d_1 \le \sum_{i\in s} c_1(i)\, x(i)$ and $d_2 \le \sum_{i\in s} c_2(i)\, x(i)$, then
-$$d_1 + d_2 \le \sum_{i\in s} \big(c_1(i)+c_2(i)\big)\, x(i).$$
+### 5.2 Derivations
 
-*Proof.* The right-hand sum splits as the sum of the two original sums; add the hypotheses. $\qquad\blacksquare$
+Given a finite initial family $A$, a **cutting-planes derivation** is generated by:
 
-**Theorem 6.2 (Soundness of Chvátal–Gomory rounding).** Let $k > 0$ be an integer dividing every coefficient $c(i)$ for $i \in s$, and suppose $d \le \sum_{i\in s} c(i)\, x(i)$ at an integer point $x$. Then
-$$\Big\lceil \tfrac{d}{k} \Big\rceil \le \sum_{i\in s} \tfrac{c(i)}{k}\, x(i).$$
+1. using any $q\in A$ as an initial inequality;
+2. adding two previously derived inequalities; and
+3. multiplying a previously derived inequality by any $k\in\mathbb N$.
 
-*Proof sketch.* Since $k \mid c(i)$, we have $\sum c(i)x(i) = k \sum (c(i)/k) x(i)$, so the hypothesis reads $d \le k \cdot S$ with $S = \sum (c(i)/k)x(i)$ an integer. Dividing by $k$ gives $d/k \le S$; as $S$ is an integer and $\lceil\cdot\rceil$ is the least integer above its argument, $\lceil d/k\rceil \le S$. The rounding step is exactly where integrality is exploited. $\qquad\blacksquare$
+The size is again a node count. An initial node has size $1$, an addition node has size $1$ plus both parent sizes, and a scaling node has size $1$ plus its parent size.
 
-**Theorem 6.3 (The counting refutation of the pigeonhole principle).** Let $n \in \mathbb{N}$ and let $x : \mathrm{PVar}_n \to \mathbb{Z}$ satisfy the pigeon lower bounds and hole upper bounds:
-$$\forall p,\ \sum_{h} x(p,h) \ge 1, \qquad \forall h,\ \sum_{p} x(p,h) \le 1.$$
-Then a contradiction follows. Indeed, summing the pigeon bounds over all $n+1$ pigeons gives
-$$n + 1 \le \sum_{p}\sum_{h} x(p,h),$$
-while summing the hole bounds over all $n$ holes and exchanging the order of summation gives
-$$\sum_{p}\sum_{h} x(p,h) = \sum_{h}\sum_{p} x(p,h) \le n.$$
-Together $n + 1 \le n$, which is false.
+This calculus is deliberately spare. Traditional cutting-planes systems often include rounding or division rules. Those are unnecessary for the aggregate pigeonhole refutation considered here.
 
-*Proof.* The lower bound is $\sum_p 1 \le \sum_p \sum_h x(p,h)$ by monotonicity of finite sums; the upper bound uses commutativity of double summation and $\sum_h 1 = n$. The two chained inequalities contradict $n+1 > n$. $\qquad\blacksquare$
+### 5.3 Soundness
 
-This refutation uses only the row/column $\ge$/$\le$ constraints — no hidden $0 \le x \le 1$ assumption — and consists of $O(n)$ linear-combination steps. It is the constructive heart of the separation.
+**Lemma 5.1 (Addition Preserves Satisfaction).** If an assignment $\tau$ satisfies inequalities $p$ and $q$, then it satisfies $p+q$.
 
-**Theorem 6.4 (Separation, informal).** The pigeonhole principle has cutting-planes refutations of size $O(n)$ (Theorem 6.3) but, by Haken's theorem, only resolution refutations of size $2^{\Omega(n)}$. Hence cutting planes is exponentially more powerful than resolution on this family.
+**Proof sketch.** Write the two assumptions as $b\le\sum_x a(x)\tau(x)$ and $d\le\sum_x c(x)\tau(x)$. Adding gives
 
-The mathematical content of the separation is the asymmetry between Theorem 6.3 and Haken's lower bound: the counting argument is *linear* because it is global and arithmetic, whereas resolution is forced to be *exponential* because it reasons locally and cannot express the global count in a single inequality.
+$$
+b+d\le\sum_x\bigl(a(x)+c(x)\bigr)\tau(x),
+$$
 
-## 7. Relationship to Haken's theorem
+which is exactly satisfaction of $p+q$. $\square$
 
-Theorem 4.3 establishes the precondition for the lower-bound question, and Theorem 3.6 makes any refutation a trustworthy certificate; together they make "how large must a refutation be?" well-posed. Haken's theorem answers: $2^{\Omega(n)}$. The restriction algebra of Section 5 is exactly the toolkit through which such bounds are proved. The standard route is:
+**Lemma 5.2 (Nonnegative Scaling Preserves Satisfaction).** If $\tau$ satisfies $q$ and $k\in\mathbb N$, then $\tau$ satisfies $kq$.
 
-1. Establish a *width* lower bound: any refutation must contain a clause mentioning a constant fraction of the variables.
-2. Convert width to size via a random-restriction argument: a small refutation, hit by a random restriction, would collapse all wide clauses and yield a too-narrow refutation of a still-hard sub-instance — impossible.
+**Proof sketch.** Multiply both sides of the valid inequality by $k\ge 0$ and distribute $k$ through the finite sum. $\square$
 
-Theorem 5.8 supplies the "still-hard sub-instance" guarantee, and the *exactness* of Theorem 5.6 ensures the probabilistic argument loses no information at the syntax–semantics interface. What remains for a complete proof of Haken's theorem is the *quantitative* counting of surviving wide clauses under a random restriction — the analytic heart of the argument, isolated here as a future target.
+**Theorem 5.3 (Cutting-Planes Soundness).** Let $D$ derive $q$ from an initial family $A$. Every Boolean assignment satisfying every inequality in $A$ also satisfies $q$.
 
-## 8. Applications to SAT solving
+**Proof sketch.** Induct on $D$. Initial nodes use the assumption on $A$; addition nodes use Lemma 5.1; scaling nodes use Lemma 5.2. $\square$
 
-Conflict-driven clause-learning (CDCL) SAT solvers, which power hardware and software verification, planning, and combinatorial optimization, produce traces equivalent to resolution refutations when they report UNSAT. Theorem 3.6 is precisely what makes those "UNSAT" verdicts trustworthy. Haken's theorem then explains a long-observed practical phenomenon: resolution-based solvers degrade catastrophically on counting problems such as the pigeonhole principle and its relatives. The separation of Section 6 points to the remedy: solvers that reason with linear / pseudo-Boolean constraints in the spirit of cutting planes dispatch exactly these instances efficiently. The robustness result (Theorem 5.8) further clarifies *why* preprocessing and partial assignment heuristics cannot help on pigeonhole-type formulas — no restriction makes them easier.
+**Corollary 5.4 (Contradictory Inequality Certifies Unsatisfiability).** If a contradictory inequality is derivable from $A$, then no Boolean assignment satisfies every inequality in $A$.
 
-## 9. Discussion and future work
+**Proof sketch.** Soundness would force any common model of $A$ to satisfy $b\le 0$ for some $b>0$, which is impossible. $\square$
 
-We have given a complete, self-contained account of resolution (with full soundness), the pigeonhole principle (with unsatisfiability), the restriction algebra (weakening, the empty-formula fact, exact restriction invariance, hardness preservation, robust pigeonhole hardness), and cutting planes (rule soundness and the linear counting refutation, the constructive side of the separation).
+## 6. Finite sums and their derivation size
 
-Three directions stand out.
+For a finite index set $S$ and inequalities $q_i$, define their aggregate $\sum_{i\in S}q_i$ by summing every coefficient and every bound. The empty aggregate is the zero inequality.
 
-1. **Restriction-robust hardness implies a width explosion.** Conjecture: every clause-resolution refutation of $\mathrm{PHP}_n$ must, at some stage, manipulate a clause mentioning a constant fraction of all $n(n+1)$ variables. Since hardness is preserved under *every* partial assignment, a refutation cannot localize its reasoning without leaving a still-unsatisfiable sub-instance it must also handle; quantifying "cannot localize" as a width lower bound turns the qualitative robustness proved here into the classical width measure controlling refutation length.
+**Lemma 6.1 (Finite-Sum Derivation).** Suppose the zero inequality belongs to $A$, and $q_i\in A$ for every $i\in S$. Then the aggregate $\sum_{i\in S}q_i$ has a derivation from $A$.
 
-2. **A random restriction shrinks every short refutation to nothing.** Conjecture: a sub-exponential refutation, hit by a random restriction fixing most variables, has all its wide clauses collapse simultaneously, leaving a too-narrow refutation of a still-hard sub-instance. The exact (error-free) commutation of restriction and satisfaction means the probabilistic argument never loses information at the syntax–semantics interface, isolating the surviving-wide-clause count as the sole remaining difficulty.
+**Proof sketch.** Induct on the finite set $S$. For the empty set, use the initial zero inequality. For $S\cup\{i\}$ with $i\notin S$, derive $q_i$ as an initial inequality, derive the sum over $S$ inductively, and add them. $\square$
 
-3. **Counting capacity, not clause length, as the right complexity measure.** The cutting-planes refutation succeeds because a single arithmetic inequality captures a global count that resolution cannot name. This suggests measuring proofs by their *counting capacity* — the arithmetic expressiveness available per step — and studying which formula families separate systems along that axis.
+**Theorem 6.2 (Finite-Sum Size Bound).** Under the hypotheses of Lemma 6.1, if $|S|=r$, there exists a derivation of $\sum_{i\in S}q_i$ with size at most $2r+1$.
 
-## 10. Conclusion
+**Proof sketch.** The empty sum uses one zero leaf, giving $1=2\cdot0+1$. Adding a new summand contributes one initial leaf and one addition node, increasing size by $2$. After $r$ insertions the size is at most $1+2r$. $\square$
 
-The pigeonhole principle is a one-line truth that becomes a precision instrument in proof complexity. Resolution certifies its impossibility soundly yet, by Haken's theorem, only at exponential cost, because it cannot count. Restrictions — exact, lossless, and hardness-preserving — are the engine behind such lower bounds, and the pigeonhole principle stays hard under every partial decision. Cutting planes, armed with integer arithmetic and Chvátal–Gomory rounding, leaps the wall in linearly many steps, separating itself exponentially from resolution. The verified results assembled here form the algebra of that story — soundness, hardness, robustness, and separation — and chart the path toward the quantitative lower bound that remains the field's central prize.
+The zero inequality is logically harmless but affects the accounting. It supplies a uniform base case even when $S$ is empty. A calculus with an intrinsic nullary zero rule could treat this bookkeeping differently.
+
+## 7. The linear cutting-planes pigeonhole refutation
+
+### 7.1 Arithmetic encoding
+
+Retain variables $x_{ij}\in\{0,1\}$ for $1\le i\le m$ and $1\le j\le n$. For each pigeon $i$, introduce the demand inequality
+
+$$
+1\le\sum_{j=1}^{n}x_{ij}.
+$$
+
+For each hole $j$, introduce the negated capacity inequality
+
+$$
+-1\le-\sum_{i=1}^{m}x_{ij}.
+$$
+
+The latter is equivalent to $\sum_i x_{ij}\le1$. Unlike the pairwise collision clauses, it expresses the entire capacity of a hole in one statement.
+
+Let $Q_{m,n}$ be the sum of all $m$ demand inequalities and all $n$ capacity inequalities.
+
+**Lemma 7.1 (Coefficient Cancellation).** For every pair $(i,j)$, the coefficient of $x_{ij}$ in $Q_{m,n}$ is $0$.
+
+**Proof sketch.** The variable $x_{ij}$ occurs with coefficient $+1$ in exactly one demand inequality, the one indexed by pigeon $i$, and with coefficient $-1$ in exactly one capacity inequality, the one indexed by hole $j$. It has coefficient $0$ elsewhere. Thus its aggregate coefficient is $1-1=0$. $\square$
+
+**Lemma 7.2 (Aggregate Bound).** The lower bound of $Q_{m,n}$ is $m-n$.
+
+**Proof sketch.** Each of the $m$ demand inequalities contributes $1$ to the bound, and each of the $n$ capacity inequalities contributes $-1$. Hence the total is $m-n$. $\square$
+
+Together the lemmas identify the aggregate as
+
+$$
+m-n\le0.
+$$
+
+**Theorem 7.3 (Cutting-Planes Pigeonhole Refutation).** Let $n<m$. Suppose the initial family $A$ contains the zero inequality, every demand inequality, and every negated capacity inequality. Then $A$ has a cutting-planes derivation of a contradictory inequality.
+
+**Proof sketch.** Derive the sum of all demand inequalities and the sum of all capacity inequalities by Lemma 6.1, then add the two sums. Lemma 7.1 shows that all coefficients vanish. Lemma 7.2 gives bound $m-n$, which is positive because $n<m$. Therefore the aggregate is contradictory. $\square$
+
+**Theorem 7.4 (Linear Refutation Size).** Under the hypotheses of Theorem 7.3, there is a contradictory cutting-planes derivation of size at most
+
+$$
+2(m+n)+3.
+$$
+
+**Proof sketch.** By Theorem 6.2, the sum of the $m$ demand inequalities has size at most $2m+1$, and the sum of the $n$ capacity inequalities has size at most $2n+1$. One final addition node combines them. Hence the total size is at most
+
+$$
+(2m+1)+(2n+1)+1=2(m+n)+3.
+$$
+
+The terminal inequality is contradictory by Theorem 7.3. $\square$
+
+### 7.2 An exact example
+
+Take $m=4$ and $n=3$. The four demand inequalities add to
+
+$$
+4\le\sum_{i=1}^{4}\sum_{j=1}^{3}x_{ij},
+$$
+
+while the three negated capacity inequalities add to
+
+$$
+-3\le-\sum_{j=1}^{3}\sum_{i=1}^{4}x_{ij}.
+$$
+
+Adding cancels the double sums and yields $1\le0$. The generic size estimate is
+
+$$
+2(4+3)+3=17.
+$$
+
+For $m=n$, the same aggregation yields $0\le0$, not a contradiction, as expected: a bijective placement exists. For $m<n$, it yields a nonpositive lower bound and again no contradiction. Thus the arithmetic certificate detects exactly the overload condition $n<m$.
+
+## 8. Algorithms and computational interpretation
+
+The mathematical derivation suggests three elementary algorithms.
+
+The first constructs the pigeonhole CNF. It emits $m$ pigeon clauses and $n\binom m2$ collision clauses over $mn$ variables. Its output size and running time are therefore $O(m+n m^2)$, more precisely $m+n m(m-1)/2$ clauses.
+
+The second checks a proposed assignment. It verifies that every pigeon has at least one true variable and that every hole has at most one. A matrix scan takes $O(mn)$ time. When $n<m$, no assignment passes, but exhaustive enumeration costs $2^{mn}$ and illustrates why semantic obviousness need not imply easy brute-force search.
+
+The third constructs the cutting-planes aggregate symbolically. Rather than enumerate assignments, it adds the coefficient arrays of the $m+n$ axioms. A direct dense implementation takes $O(mn(m+n))$ arithmetic operations, while exploiting the incidence pattern reduces this to $O(mn)$: each variable receives one $+1$ and one $-1$. The output is the zero coefficient matrix and bound $m-n$.
+
+This aggregation resembles a conservation-law check. Total demand is at least $m$; total capacity is at most $n$. If $m>n$, infeasibility follows before any search. In optimization terminology, the proof is a short dual-style certificate of infeasibility.
+
+## 9. Relation to SAT solving
+
+Conflict-driven clause-learning solvers operate in a proof-theoretic neighborhood of resolution. Decisions assign variables, propagation discovers forced consequences, conflicts expose inconsistent local choices, and learned clauses prevent repetition. The correspondence is not exact without specifying a trace format and translation, but resolution size is a useful model of clause-based reasoning.
+
+Pigeonhole constraints reveal why practical systems add specialized cardinality and pseudo-Boolean machinery. Pairwise collision clauses encode “at most one” through $\binom m2$ local prohibitions per hole. A capacity inequality states the same global fact compactly. More importantly, inequalities can be summed, allowing demand and capacity to meet in one inference chain.
+
+The present theorems do not establish a runtime lower bound for a concrete solver. Runtime depends on branching, propagation, data structures, restarts, preprocessing, and proof reuse. Nor does the $n+1$ tree-resolution lower bound establish an exponential separation from the linear cutting-planes upper bound. A valid transfer theorem would need a precise simulation from solver traces to resolution proofs with controlled size and a sufficiently strong lower bound for the resulting proof class.
+
+Nevertheless, the arithmetic derivation identifies a solver-design principle: expose global counting constraints rather than flattening them irreversibly into pairwise clauses. Scheduling, matching, routing, and allocation all contain demand-capacity contradictions of this form.
+
+## 10. Discussion and limitations
+
+The two soundness arguments have the same architecture. Each proof system defines local rules; each rule preserves satisfaction; induction lifts local preservation to whole derivations; and an impossible terminal object certifies unsatisfiability. In resolution the impossible object is the empty clause. In cutting planes it is a positive lower bound on an identically zero linear form.
+
+Their representational difference is more revealing. Resolution eliminates one pivot and combines residual alternatives. Cutting planes superposes numerical constraints. The pigeonhole contradiction is fundamentally additive: every pigeon contributes one unit of demand, every hole contributes one unit of capacity, and variable cancellation exposes the deficit. Cutting planes preserves that invariant explicitly.
+
+Three limitations delimit the claims. First, the resolution derivations are trees, whereas general resolution permits shared subderivations. Second, the lower bound is $n+1$, not exponential. Consequently, the phrase “exponential separation” would overstate the proved comparison. Third, the cutting-planes construction assumes that the zero inequality is included among the initial inequalities. This assumption is semantically innocuous but contributes two base leaves across the two separately built sums and leads to the constant $+3$ in the final bound.
+
+These limitations are productive: each points to a concrete strengthening. Stronger combinatorial measures are needed for exponential resolution lower bounds; explicit sharing must be modeled for general resolution; and an intrinsic zero rule would refine the cutting-planes calculus and node recurrence.
+
+## 11. Future work
+
+A first objective is a general-resolution Haken bound: find $c>1$ and $N$ such that every directed-acyclic resolution refutation of $\operatorname{PHP}(n+1,n)$ has at least $c^n$ distinct inference nodes for all $n\ge N$.
+
+A second objective is the sharper tree claim that every tree-resolution refutation has at least $2^n$ leaves for $n\ge1$. This would strictly strengthen Theorem 4.4.
+
+Third, one may add an intrinsic zero rule and seek a pigeonhole refutation size of at most $2(m+n)+1$. The exact recurrence should clarify which nodes are structural bookkeeping.
+
+Fourth, a proof-logging transfer theorem could connect conflict-driven executions to resolution with at most polynomial overhead, then compare those traces with the linear aggregate certificate available to an arithmetic solver.
+
+Finally, coefficient complexity deserves study. In the direct aggregate, coefficients of individual axioms lie in $\{-1,0,1\}$, and natural partial sums appear capable of staying in this set because positive and negative occurrences are separated by type. Establishing a normalized derivation with bounded intermediate coefficients would show that concision is not purchased through large integers.
+
+## 12. Conclusion
+
+The pigeonhole principle separates semantic simplicity from syntactic economy. Its CNF is unsatisfiable because any model would produce an impossible injection. Resolution faithfully preserves clause truth and refutes formulas only by deriving the empty clause; for the tree system considered here, every pigeonhole refutation has at least $n+1$ nodes. Cutting planes faithfully preserves integer inequalities under addition and nonnegative scaling; by summing demand and capacity, it derives $m-n\le0$ and obtains a contradiction for $n<m$ in at most $2(m+n)+3$ nodes.
+
+The result is an explicit example of arithmetic aggregation as proof compression. It does not yet provide an exponential separation, but it cleanly identifies the mechanism a stronger separation would quantify: clauses describe local incompatibilities, while linear inequalities can expose a global shortage through cancellation.

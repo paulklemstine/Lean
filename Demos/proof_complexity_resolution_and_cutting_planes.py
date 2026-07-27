@@ -1,241 +1,141 @@
-"""
-Resolution, Restrictions, and Cutting Planes: Numerical Demonstrations
-======================================================================
-
-This self-contained script illustrates the central results of the accompanying
-paper:
-
-  * the resolution proof system (resolvent, derivability, soundness, the unit
-    refutation);
-  * the pigeonhole CNF and a brute-force confirmation of its unsatisfiability;
-  * the restriction operator and the exact restriction-invariance equivalence,
-    together with hardness preservation for the pigeonhole principle;
-  * the cutting-planes counting refutation, which dispatches the pigeonhole
-    principle in O(n) linear steps where resolution provably requires
-    exponentially many.
-
-Every routine is inlined; only the Python standard library is used.
-
-Conventions
------------
-A literal is a pair (variable, polarity) with polarity True for the positive
-literal and False for the negation.  A clause is a list of literals; a CNF is a
-list of clauses.  An assignment maps variables to booleans.  A restriction maps
-variables to Optional[bool]: None means "free", a bool means "fixed".
-"""
+#!/usr/bin/env python3
+"""Numerical demonstrations for resolution and cutting planes on pigeonhole formulas."""
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from itertools import product
-from typing import Dict, Hashable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Mapping, Sequence, Tuple
 
-# Type aliases -------------------------------------------------------------
-Var = Hashable
-Lit = Tuple[Var, bool]
-Clause = List[Lit]
-CNF = List[Clause]
-Assignment = Dict[Var, bool]
-Restriction = Dict[Var, Optional[bool]]
+Variable = Tuple[int, int]
+Literal = Tuple[Variable, bool]  # True means positive.
+Clause = Tuple[Literal, ...]
+Assignment = Dict[Variable, bool]
 
 
-# =========================================================================
-# 1. Resolution
-# =========================================================================
-def lit_eval(a: Assignment, lit: Lit) -> bool:
-    """A literal is satisfied when the assignment matches its polarity."""
-    v, pos = lit
-    return a[v] == pos
+@dataclass(frozen=True)
+class Inequality:
+    """The inequality bound <= sum(coeff[var] * x_var)."""
+
+    coeff: Dict[Variable, int]
+    bound: int
+
+    def value(self, assignment: Mapping[Variable, bool]) -> int:
+        return sum(c * int(assignment.get(v, False)) for v, c in self.coeff.items())
+
+    def satisfied_by(self, assignment: Mapping[Variable, bool]) -> bool:
+        return self.bound <= self.value(assignment)
 
 
-def clause_sat(a: Assignment, c: Clause) -> bool:
-    """A clause is satisfied when at least one literal is satisfied."""
-    return any(lit_eval(a, l) for l in c)
+def variables(m: int, n: int) -> List[Variable]:
+    """Return all pigeon-hole incidence variables."""
+    return [(i, j) for i in range(m) for j in range(n)]
 
 
-def cnf_sat(a: Assignment, f: CNF) -> bool:
-    """A CNF is satisfied when every clause is satisfied."""
-    return all(clause_sat(a, c) for c in f)
-
-
-def resolvent(c1: Clause, c2: Clause, p: Var) -> Clause:
-    """Resolvent on pivot p: drop (p, True) from c1 and (p, False) from c2."""
-    left = [l for l in c1 if l != (p, True)]
-    right = [l for l in c2 if l != (p, False)]
-    return left + right
-
-
-def all_assignments(variables: List[Var]):
-    """Enumerate every boolean assignment over the given variables."""
-    for bits in product([False, True], repeat=len(variables)):
-        yield dict(zip(variables, bits))
-
-
-def cnf_variables(f: CNF) -> List[Var]:
-    """The (deduplicated, order-preserving) list of variables in a CNF."""
-    seen: List[Var] = []
-    for c in f:
-        for v, _ in c:
-            if v not in seen:
-                seen.append(v)
-    return seen
-
-
-def is_satisfiable(f: CNF) -> bool:
-    """Brute-force satisfiability check by enumerating all assignments."""
-    variables = cnf_variables(f)
-    return any(cnf_sat(a, f) for a in all_assignments(variables))
-
-
-def resolvent_sound_check(c1: Clause, c2: Clause, p: Var) -> bool:
-    """Verify Theorem: a |= c1 and a |= c2  =>  a |= resolvent(c1,c2,p)."""
-    r = resolvent(c1, c2, p)
-    variables = cnf_variables([c1, c2, r])
-    for a in all_assignments(variables):
-        if clause_sat(a, c1) and clause_sat(a, c2) and not clause_sat(a, r):
-            return False
-    return True
-
-
-# =========================================================================
-# 2. The pigeonhole CNF
-# =========================================================================
-def php_cnf(n: int) -> CNF:
-    """PHP_n: n+1 pigeons into n holes.  Variable (p, h) = 'pigeon p in hole h'."""
-    pigeons = range(n + 1)
-    holes = range(n)
-    clauses: CNF = []
-    # Each pigeon sits in some hole.
-    for p in pigeons:
-        clauses.append([((p, h), True) for h in holes])
-    # No two distinct pigeons share a hole.
-    for h in holes:
-        for p1 in pigeons:
-            for p2 in pigeons:
-                if p1 != p2:
-                    clauses.append([((p1, h), False), ((p2, h), False)])
+def pigeonhole_cnf(m: int, n: int) -> List[Clause]:
+    """Construct demand clauses and pairwise collision clauses."""
+    if m < 0 or n < 0:
+        raise ValueError("m and n must be nonnegative")
+    clauses: List[Clause] = []
+    for i in range(m):
+        clauses.append(tuple((((i, j), True) for j in range(n))))
+    for j in range(n):
+        for i in range(m):
+            for k in range(i + 1, m):
+                clauses.append((((i, j), False), ((k, j), False)))
     return clauses
 
 
-# =========================================================================
-# 3. Restrictions
-# =========================================================================
-def subst(rho: Restriction, a: Assignment) -> Assignment:
-    """Glue a restriction onto a free assignment: fixed values win."""
-    out: Assignment = {}
-    for v in set(rho) | set(a):
-        fixed = rho.get(v)
-        out[v] = a[v] if fixed is None else fixed
-    return out
+def clause_satisfied(clause: Clause, assignment: Mapping[Variable, bool]) -> bool:
+    """Evaluate one disjunctive clause."""
+    return any(assignment.get(var, False) == positive for var, positive in clause)
 
 
-def clause_killed(rho: Restriction, c: Clause) -> bool:
-    """A clause is killed when a literal is fixed to its own polarity."""
-    return any(rho.get(v) == pos for (v, pos) in c)
+def cnf_satisfied(cnf: Sequence[Clause], assignment: Mapping[Variable, bool]) -> bool:
+    """Evaluate a conjunction of clauses."""
+    return all(clause_satisfied(clause, assignment) for clause in cnf)
 
 
-def clause_restrict(rho: Restriction, c: Clause) -> Clause:
-    """Keep exactly the literals on free variables (fixed-false literals deleted)."""
-    return [(v, pos) for (v, pos) in c if rho.get(v) is None]
+def satisfying_assignments(m: int, n: int) -> Iterable[Assignment]:
+    """Enumerate all models of the pigeonhole CNF; intended for small inputs."""
+    vs = variables(m, n)
+    cnf = pigeonhole_cnf(m, n)
+    for bits in product((False, True), repeat=len(vs)):
+        assignment = dict(zip(vs, bits))
+        if cnf_satisfied(cnf, assignment):
+            yield assignment
 
 
-def cnf_restrict(rho: Restriction, f: CNF) -> CNF:
-    """Drop killed clauses, trim the survivors."""
-    return [clause_restrict(rho, c) for c in f if not clause_killed(rho, c)]
+def add_inequalities(p: Inequality, q: Inequality) -> Inequality:
+    """Add coefficients and bounds pointwise."""
+    keys = set(p.coeff) | set(q.coeff)
+    coeff = {v: p.coeff.get(v, 0) + q.coeff.get(v, 0) for v in keys}
+    return Inequality(coeff, p.bound + q.bound)
 
 
-def restrict_invariance_check(rho: Restriction, f: CNF) -> bool:
-    """Verify Theorem: a |= f|rho  <=>  subst(rho,a) |= f, for all free a."""
-    restricted = cnf_restrict(rho, f)
-    free_vars = [v for v in cnf_variables(f) if rho.get(v) is None]
-    for a in all_assignments(free_vars):
-        lhs = cnf_sat(a, restricted)
-        rhs = cnf_sat(subst(rho, a), f)
-        if lhs != rhs:
-            return False
-    return True
+def scale_inequality(k: int, q: Inequality) -> Inequality:
+    """Multiply an inequality by a nonnegative integer."""
+    if k < 0:
+        raise ValueError("cutting-planes scaling must be nonnegative")
+    return Inequality({v: k * c for v, c in q.coeff.items()}, k * q.bound)
 
 
-# =========================================================================
-# 4. Cutting planes: the counting refutation
-# =========================================================================
-def php_counting_refutation(n: int, x: Dict[Tuple[int, int], int]) -> Tuple[int, int]:
-    """
-    Given an integer matrix x[(p,h)] obeying the row/column constraints
-        for every pigeon p:  sum_h x[p,h] >= 1
-        for every hole   h:  sum_p x[p,h] <= 1
-    return the pair (lower, upper) = (n+1 bound, n bound) on the global sum.
-    The counting refutation observes lower <= total <= upper, i.e. n+1 <= n.
-    """
-    pigeons = range(n + 1)
-    holes = range(n)
-    total = sum(x[(p, h)] for p in pigeons for h in holes)
-    # Row sums witness the lower bound n+1.
-    for p in pigeons:
-        assert sum(x[(p, h)] for h in holes) >= 1
-    # Column sums witness the upper bound n.
-    for h in holes:
-        assert sum(x[(p, h)] for p in pigeons) <= 1
-    lower = n + 1   # sum of n+1 row lower bounds of 1
-    upper = n       # sum of n column upper bounds of 1
-    return lower, upper, total
+def pigeon_inequality(m: int, n: int, i: int) -> Inequality:
+    """Return 1 <= sum_j x_ij."""
+    return Inequality({(r, j): int(r == i) for r in range(m) for j in range(n)}, 1)
 
 
-# =========================================================================
-# Demonstrations
-# =========================================================================
+def hole_inequality(m: int, n: int, j: int) -> Inequality:
+    """Return -1 <= -sum_i x_ij, equivalent to capacity at most one."""
+    return Inequality({(i, s): -int(s == j) for i in range(m) for s in range(n)}, -1)
+
+
+def aggregate_certificate(m: int, n: int) -> Inequality:
+    """Add all demand and capacity inequalities."""
+    zero = Inequality({v: 0 for v in variables(m, n)}, 0)
+    result = zero
+    for i in range(m):
+        result = add_inequalities(result, pigeon_inequality(m, n, i))
+    for j in range(n):
+        result = add_inequalities(result, hole_inequality(m, n, j))
+    return result
+
+
+def derivation_size_bound(m: int, n: int) -> int:
+    """Return the proved cutting-planes node upper bound 2(m+n)+3."""
+    return 2 * (m + n) + 3
+
+
+def demonstrate(m: int, n: int, enumerate_limit: int = 20) -> None:
+    """Print the CNF counts, aggregate certificate, and small exhaustive check."""
+    if m < 0 or n < 0:
+        raise ValueError("m and n must be nonnegative")
+    cnf = pigeonhole_cnf(m, n)
+    aggregate = aggregate_certificate(m, n)
+    nonzero = {v: c for v, c in aggregate.coeff.items() if c != 0}
+    print(f"Instance: {m} pigeons, {n} holes")
+    print(f"Variables: {m * n}")
+    print(f"CNF clauses: {len(cnf)} = {m} demand + {n * m * (m - 1) // 2} collision")
+    print(f"Aggregate nonzero coefficients: {nonzero}")
+    print(f"Aggregate inequality: {aggregate.bound} <= 0")
+    print(f"Contradictory exactly when m > n: {aggregate.bound > 0}")
+    print(f"Cutting-planes size upper bound: {derivation_size_bound(m, n)}")
+    if m * n <= enumerate_limit:
+        count = sum(1 for _ in satisfying_assignments(m, n))
+        print(f"Exhaustive model count: {count}")
+    else:
+        print(f"Exhaustive check skipped: 2^{m*n} assignments exceed the demo limit")
+
+
 def main() -> None:
-    print("=" * 68)
-    print("1. Resolution: the unit refutation of {x} & {not x}")
-    print("=" * 68)
-    cx, cnx = [("x", True)], [("x", False)]
-    r = resolvent(cx, cnx, "x")
-    print(f"  resolvent([x], [~x], x) = {r}   (the empty clause: {r == []})")
-    f_unit: CNF = [cx, cnx]
-    print(f"  {{x}} & {{~x}} satisfiable? {is_satisfiable(f_unit)}  (expected False)")
-    print(f"  resolution rule sound on these parents? "
-          f"{resolvent_sound_check(cx, cnx, 'x')}")
-
-    print()
-    print("=" * 68)
-    print("2. Pigeonhole principle is unsatisfiable")
-    print("=" * 68)
-    for n in range(1, 4):
-        f = php_cnf(n)
-        print(f"  PHP_{n}: {n + 1} pigeons, {n} holes, {len(f)} clauses, "
-              f"satisfiable? {is_satisfiable(f)}  (expected False)")
-
-    print()
-    print("=" * 68)
-    print("3. Restriction invariance and hardness preservation")
-    print("=" * 68)
-    n = 2
-    f = php_cnf(n)
-    # Fix pigeon 0 into hole 0; leave everything else free.
-    rho: Restriction = {(0, 0): True, (0, 1): False}
-    print(f"  restriction rho fixes (0,0)=True, (0,1)=False on PHP_{n}")
-    print(f"  exact invariance  a |= f|rho  <=>  subst(rho,a) |= f : "
-          f"{restrict_invariance_check(rho, f)}")
-    restricted = cnf_restrict(rho, f)
-    print(f"  restricted formula still unsatisfiable? "
-          f"{not is_satisfiable(restricted)}  (hardness preserved)")
-
-    print()
-    print("=" * 68)
-    print("4. Cutting-planes counting refutation (linear in n)")
-    print("=" * 68)
-    for n in range(1, 6):
-        # Try to fill the board honestly: put pigeon p into hole p (no room for
-        # the last pigeon).  Any such 0/1 matrix obeying the row bounds is forced
-        # to violate a column bound; here we instead demonstrate the bound chain
-        # on a matrix that *does* obey both, which cannot exist -- so we build the
-        # bounds symbolically from the constraints themselves.
-        lower, upper = n + 1, n
-        print(f"  n={n}: counting yields {lower} <= total <= {upper}  =>  "
-              f"{lower} <= {upper} is {lower <= upper}  (contradiction)")
-
-    print()
-    print("  The pigeonhole principle therefore falls to cutting planes in O(n)")
-    print("  linear steps, while resolution provably needs 2^Omega(n) clauses.")
+    print("=== Overloaded instance ===")
+    demonstrate(4, 3)
+    print("\n=== Exactly balanced instance ===")
+    demonstrate(3, 3)
+    print("\n=== Small exhaustive comparison ===")
+    for m, n in ((2, 1), (2, 2), (3, 2)):
+        demonstrate(m, n)
+        print()
 
 
 if __name__ == "__main__":

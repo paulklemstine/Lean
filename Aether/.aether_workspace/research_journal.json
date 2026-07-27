@@ -8,7 +8,7 @@
       "sorry_count": 0,
       "theorem_count": 31,
       "timestamp": "2026-07-22T03:26:50",
-      "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
+      "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
     },
     {
       "cycle_id": "4bc3344b",
@@ -18,7 +18,7 @@
       "sorry_count": 0,
       "theorem_count": 22,
       "timestamp": "2026-07-22T03:54:07",
-      "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
+      "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
     },
     {
       "cycle_id": "09546bb0",
@@ -28,7 +28,7 @@
       "sorry_count": 0,
       "theorem_count": 31,
       "timestamp": "2026-07-22T04:48:42",
-      "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
+      "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
     },
     {
       "cycle_id": "ea214ad9",
@@ -38,7 +38,7 @@
       "sorry_count": 0,
       "theorem_count": 34,
       "timestamp": "2026-07-22T04:48:46",
-      "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
     },
     {
       "cycle_id": "939843de",
@@ -53,12 +53,12 @@
     {
       "cycle_id": "e24b36f0",
       "domain": "NumberTheory",
-      "key_insight": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `\u03b2` of norm two for whic",
+      "key_insight": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for whic",
       "quality_score": 0.84,
       "sorry_count": 0,
       "theorem_count": 45,
       "timestamp": "2026-07-22T09:46:29",
-      "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
+      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     },
     {
       "cycle_id": "3511fbf3",
@@ -78,7 +78,7 @@
       "sorry_count": 0,
       "theorem_count": 21,
       "timestamp": "2026-07-22T12:13:55",
-      "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
+      "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
     },
     {
       "cycle_id": "227d6015",
@@ -98,7 +98,7 @@
       "sorry_count": 0,
       "theorem_count": 24,
       "timestamp": "2026-07-22T16:54:33",
-      "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
+      "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
     },
     {
       "cycle_id": "43fa6482",
@@ -113,7 +113,7 @@
     {
       "cycle_id": "c612ec41",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) \u2264 n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
+      "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 15,
@@ -123,7 +123,7 @@
     {
       "cycle_id": "699db10f",
       "domain": "Computation",
-      "key_insight": "# Future directions: the B\u00e1ez\u2013Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
+      "key_insight": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 6,
@@ -203,7 +203,7 @@
     {
       "cycle_id": "a4e412f3",
       "domain": "Geometry",
-      "key_insight": "# Future Directions \u2014 Happy-End / Erd\u0151s\u2013Szekeres\n\n`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of the\nErd\u0151s\u2013Szekeres **cup\u2013cap theorem** with the sharp bound `C(k+l-4,k-2",
+      "key_insight": "# Future Directions — Happy-End / Erdős–Szekeres\n\n`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of the\nErdős–Szekeres **cup–cap theorem** with the sharp bound `C(k+l-4,k-2",
       "quality_score": 0.75,
       "sorry_count": 1,
       "theorem_count": 43,
@@ -253,7 +253,7 @@
     {
       "cycle_id": "928798aa",
       "domain": "Physics",
-      "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -\u0394 - 2/r` on `L\u00b2(\u211d\u00b3)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
+      "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -Δ - 2/r` on `L²(ℝ³)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 23,
@@ -293,7 +293,7 @@
     {
       "cycle_id": "2ae125a9",
       "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,\u2026`, determine an exact union-of-intervals description of the sums formed from the first `n",
+      "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,…`, determine an exact union-of-intervals description of the sums formed from the first `n",
       "quality_score": 0.78,
       "sorry_count": 0,
       "theorem_count": 17,
@@ -303,7 +303,7 @@
     {
       "cycle_id": "5fcde7e0",
       "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential\u2013logarithmic expressions and proves its main algebraic closure chain. The next useful",
+      "key_insight": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential–logarithmic expressions and proves its main algebraic closure chain. The next useful",
       "quality_score": 0.76,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -313,7 +313,7 @@
     {
       "cycle_id": "bb3a8583",
       "domain": "Computation",
-      "key_insight": "# Future Directions\n\n## 1. Fingerprint compression at the logarithmic threshold\n\nFor every fixed `0 < \u03b4 < 1` and every `\u03b5 > 0`, the family of pairs of finite\ninteger sets `A,B \u2286 [n]` with `|A|=|B| \u2265 (",
+      "key_insight": "# Future Directions\n\n## 1. Fingerprint compression at the logarithmic threshold\n\nFor every fixed `0 < δ < 1` and every `ε > 0`, the family of pairs of finite\ninteger sets `A,B ⊆ [n]` with `|A|=|B| ≥ (",
       "quality_score": 0.77,
       "sorry_count": 0,
       "theorem_count": 6,
@@ -323,7 +323,7 @@
     {
       "cycle_id": "b59af725",
       "domain": "Physics",
-      "key_insight": "# Future directions\n\n- Extend the extremal Rayleigh results to the full Courant\u2013Fischer hierarchy, indexed by subspace dimension.\n- Develop compact self-adjoint operator theory in infinite-dimensional",
+      "key_insight": "# Future directions\n\n- Extend the extremal Rayleigh results to the full Courant–Fischer hierarchy, indexed by subspace dimension.\n- Develop compact self-adjoint operator theory in infinite-dimensional",
       "quality_score": 0.73,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -383,7 +383,7 @@
     {
       "cycle_id": "3d6ad336",
       "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry \u2192 correctness.** Additive encryption is translat",
+      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry → correctness.** Additive encryption is translat",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 10,
@@ -423,7 +423,7 @@
     {
       "cycle_id": "ce71f394",
       "domain": "Applications",
-      "key_insight": "# Future Directions: Differential Structure of Exponential\u2013Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n \u2265 1`, the `n`th der",
+      "key_insight": "# Future Directions: Differential Structure of Exponential–Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n ≥ 1`, the `n`th der",
       "quality_score": 0.77,
       "sorry_count": 0,
       "theorem_count": 14,
@@ -443,7 +443,7 @@
     {
       "cycle_id": "078d5371",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : \u2124[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion\u2013contraction f",
+      "key_insight": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction f",
       "quality_score": 0.77,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -453,7 +453,7 @@
     {
       "cycle_id": "6a88207a",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x \u21a6 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the crit",
+      "key_insight": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x ↦ 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the crit",
       "quality_score": 0.75,
       "sorry_count": 0,
       "theorem_count": 9,
@@ -483,7 +483,7 @@
     {
       "cycle_id": "1f5ea34f",
       "domain": "Applications",
-      "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture \u2192 Al",
+      "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture → Al",
       "quality_score": 0.77698,
       "sorry_count": 0,
       "theorem_count": 16,
@@ -502,16 +502,6 @@
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d23a186f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What was proved\n\nThe formal model treats theories as points in a real inner-product space and phenomena as measurement directions. Prediction error is the absolute inner produc",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-19T16:24:23",
-      "title": "The Unreasonable Effectiveness of Wrong Theories"
-    },
     {
       "cycle_id": "d5e79e07",
       "domain": "Applications",
@@ -575,7 +565,7 @@
     {
       "cycle_id": "961be33a",
       "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Scope and main conclusion\n\nThe literal research slogan cannot presently be proved as stated: \u201ctheory of everything,\u201d \u201cphysics,\u201d and \u201cmust\u201d do not specify mathematical predicate",
+      "key_insight": "# Future directions\n\n## Scope and main conclusion\n\nThe literal research slogan cannot presently be proved as stated: “theory of everything,” “physics,” and “must” do not specify mathematical predicate",
       "quality_score": 0.61,
       "sorry_count": 0,
       "theorem_count": 14,
@@ -585,7 +575,7 @@
     {
       "cycle_id": "4c40ce69",
       "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe formal development establishes three robust conclusions for precise counterfactual models:\n\n1. the Cram\u00e9r density series diverges even on every fixed nonconstant arithmetic pr",
+      "key_insight": "# Future directions\n\nThe formal development establishes three robust conclusions for precise counterfactual models:\n\n1. the Cramér density series diverges even on every fixed nonconstant arithmetic pr",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -595,7 +585,7 @@
     {
       "cycle_id": "af530f4e",
       "domain": "Novelty",
-      "key_insight": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy\u2013precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an",
+      "key_insight": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy–precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an",
       "quality_score": 0.77,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -605,7 +595,7 @@
     {
       "cycle_id": "238d5b60",
       "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase \u201cHausdorff dimension exactly aleph-one.\u201d In Mat",
+      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase “Hausdorff dimension exactly aleph-one.” In Mat",
       "quality_score": 0.76,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -685,7 +675,7 @@
     {
       "cycle_id": "606f7bdd",
       "domain": "Applications",
-      "key_insight": "# Future Directions: Functional Fibers, Experience, and Semantic Gaps\n\n## 1. Naturality of the zombie\u2013semantic gap correspondence\n\n**Conjecture.** There is a category of functional profiles and profil",
+      "key_insight": "# Future Directions: Functional Fibers, Experience, and Semantic Gaps\n\n## 1. Naturality of the zombie–semantic gap correspondence\n\n**Conjecture.** There is a category of functional profiles and profil",
       "quality_score": 0.73,
       "sorry_count": 0,
       "theorem_count": 11,
@@ -735,7 +725,7 @@
     {
       "cycle_id": "65e81f6c",
       "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n1. **Infinite-page limit.** Replace fixed-length books by streams `\u2115 \u2192 Fin A` with the product topology. The resulting Cantor-like space remains totally disconnected but is no lon",
+      "key_insight": "# Future Directions\n\n1. **Infinite-page limit.** Replace fixed-length books by streams `ℕ → Fin A` with the product topology. The resulting Cantor-like space remains totally disconnected but is no lon",
       "quality_score": 0.8,
       "sorry_count": 13,
       "theorem_count": 0,
@@ -845,7 +835,7 @@
     {
       "cycle_id": "e3542946",
       "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity\u2013Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
+      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
       "quality_score": 0.78,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -855,7 +845,7 @@
     {
       "cycle_id": "e3542946",
       "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity\u2013Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
+      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
       "quality_score": 0.78,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -905,7 +895,7 @@
     {
       "cycle_id": "79f58a3a",
       "domain": "Logic",
-      "key_insight": "# Future Directions: Theory Genomes and Semantic Evolution\n\n## 1. Localization\u2013Monad\u2013Morita Factorization\n\n**Conjecture.** Every interpretation between essentially algebraic theories whose model funct",
+      "key_insight": "# Future Directions: Theory Genomes and Semantic Evolution\n\n## 1. Localization–Monad–Morita Factorization\n\n**Conjecture.** Every interpretation between essentially algebraic theories whose model funct",
       "quality_score": 0.72,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -975,7 +965,7 @@
     {
       "cycle_id": "1a27f9f3",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe formal development studies a precise surrogate for \u201cthe space of mathematical truth\u201d: binary streams encode successive answers, prefix agreement supplies Cantor scales, and th",
+      "key_insight": "# Future directions\n\nThe formal development studies a precise surrogate for “the space of mathematical truth”: binary streams encode successive answers, prefix agreement supplies Cantor scales, and th",
       "quality_score": 0.7,
       "sorry_count": 1,
       "theorem_count": 15,
@@ -995,7 +985,7 @@
     {
       "cycle_id": "f2b328a7",
       "domain": "Bridges",
-      "key_insight": "# Future directions\n\n- Replace the illustrative rational census by an audited dataset and use `fitness_lt_iff_cross_product` as the exact validation criterion. In particular, the labels \u201cZFC\u201d and \u201cZFC",
+      "key_insight": "# Future directions\n\n- Replace the illustrative rational census by an audited dataset and use `fitness_lt_iff_cross_product` as the exact validation criterion. In particular, the labels “ZFC” and “ZFC",
       "quality_score": 0.64,
       "sorry_count": 0,
       "theorem_count": 20,
@@ -1005,7 +995,7 @@
     {
       "cycle_id": "fc320765",
       "domain": "Probability",
-      "key_insight": "# Future Directions\n\n## Results established\n\nThe accompanying Lean development proves the finite algebraic core of homological quantum error correction over `\ud835\udd3d\u2082`.\n\n1. **Cellular CSS codes are chain co",
+      "key_insight": "# Future Directions\n\n## Results established\n\nThe accompanying Lean development proves the finite algebraic core of homological quantum error correction over `𝔽₂`.\n\n1. **Cellular CSS codes are chain co",
       "quality_score": 0.69,
       "sorry_count": 0,
       "theorem_count": 24,
@@ -1140,7 +1130,7 @@
       "sorry_count": 0,
       "theorem_count": 0,
       "timestamp": "2026-07-21T14:31:40",
-      "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
     },
     {
       "cycle_id": "977e8d8d",
@@ -1170,12 +1160,12 @@
       "sorry_count": 0,
       "theorem_count": 0,
       "timestamp": "2026-07-21T18:47:58",
-      "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
+      "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
     },
     {
       "cycle_id": "0268a2b5",
       "domain": "Shared",
-      "key_insight": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds \u2014 open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold e",
+      "key_insight": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds — open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold e",
       "quality_score": 0.79,
       "sorry_count": 0,
       "theorem_count": 14,
@@ -1195,12 +1185,12 @@
     {
       "cycle_id": "f3a76d9a",
       "domain": "Geometry",
-      "key_insight": "# Future directions\n\n## Scope and limitations\n\nThe phrase \u201cdirectly apprehended by a human brain\u201d is not presently a mathematical predicate with an agreed formal semantics. The development therefore t",
+      "key_insight": "# Future directions\n\n## Scope and limitations\n\nThe phrase “directly apprehended by a human brain” is not presently a mathematical predicate with an agreed formal semantics. The development therefore t",
       "quality_score": 0.67,
       "sorry_count": 0,
       "theorem_count": 16,
       "timestamp": "2026-07-21T20:46:00",
-      "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
+      "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
     },
     {
       "cycle_id": "9d505535",
@@ -1215,7 +1205,7 @@
     {
       "cycle_id": "ea115bd0",
       "domain": "Computation",
-      "key_insight": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Renormalized zeta harmonic convergence\n\nDefine the multiplicity-sensitive, conjugate-symmetric sum\n`H(T) = \u03a3_{|Im \u03c1|\u2264T} 1/\u03c1` and determine an expl",
+      "key_insight": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Renormalized zeta harmonic convergence\n\nDefine the multiplicity-sensitive, conjugate-symmetric sum\n`H(T) = Σ_{|Im ρ|≤T} 1/ρ` and determine an expl",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -1230,7 +1220,7 @@
       "sorry_count": 0,
       "theorem_count": 0,
       "timestamp": "2026-07-21T22:19:19",
-      "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
+      "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
     },
     {
       "cycle_id": "decbe545",
@@ -1245,12 +1235,12 @@
     {
       "cycle_id": "759f53fa",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Replace discrete carriers by actual categories.** Define an analogy from functors `F : A \u2964 B` and `G : B \u2964 A`, and measure agreement of `G \u22d9 F` with the identity using natura",
+      "key_insight": "# Future directions\n\n1. **Replace discrete carriers by actual categories.** Define an analogy from functors `F : A ⥤ B` and `G : B ⥤ A`, and measure agreement of `G ⋙ F` with the identity using natura",
       "quality_score": 0.66,
       "sorry_count": 0,
       "theorem_count": 21,
       "timestamp": "2026-07-22T00:14:30",
-      "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Operation"
+      "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
     },
     {
       "cycle_id": "11a0fcb2",
@@ -1260,7 +1250,7 @@
       "sorry_count": 0,
       "theorem_count": 23,
       "timestamp": "2026-07-22T00:14:35",
-      "title": "Rucker: Spacetime Donuts \u2014 Topology of the Universe"
+      "title": "Rucker: Spacetime Donuts — Topology of the Universe"
     },
     {
       "cycle_id": "b31f2cf9",
@@ -1270,7 +1260,7 @@
       "sorry_count": 0,
       "theorem_count": 21,
       "timestamp": "2026-07-22T00:14:40",
-      "title": "Hofstadter: Strange Loops in Formal Systems \u2014 Self-Reference as a Theorem"
+      "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
     },
     {
       "cycle_id": "4d85ad7f",
@@ -1280,7 +1270,7 @@
       "sorry_count": 0,
       "theorem_count": 31,
       "timestamp": "2026-07-22T03:26:50",
-      "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
+      "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
     },
     {
       "cycle_id": "4bc3344b",
@@ -1290,7 +1280,7 @@
       "sorry_count": 0,
       "theorem_count": 22,
       "timestamp": "2026-07-22T03:54:07",
-      "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
+      "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
     },
     {
       "cycle_id": "09546bb0",
@@ -1300,7 +1290,7 @@
       "sorry_count": 0,
       "theorem_count": 31,
       "timestamp": "2026-07-22T04:48:42",
-      "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
+      "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
     },
     {
       "cycle_id": "ea214ad9",
@@ -1310,7 +1300,7 @@
       "sorry_count": 0,
       "theorem_count": 34,
       "timestamp": "2026-07-22T04:48:46",
-      "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
     },
     {
       "cycle_id": "939843de",
@@ -1330,12 +1320,12 @@
       "sorry_count": 0,
       "theorem_count": 27,
       "timestamp": "2026-07-22T06:54:41",
-      "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
+      "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
     },
     {
       "cycle_id": "2a77d2cb",
       "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## 1. Locally finite orbit-triangular decomposition on the Tits cone\n\n**Conjecture.** For every symmetrizable Kac\u2013Moody root datum and twisting weight, the shifted Chinta\u2013Gunnells",
+      "key_insight": "# Future Directions\n\n## 1. Locally finite orbit-triangular decomposition on the Tits cone\n\n**Conjecture.** For every symmetrizable Kac–Moody root datum and twisting weight, the shifted Chinta–Gunnells",
       "quality_score": 0.66,
       "sorry_count": 0,
       "theorem_count": 9,
@@ -1350,17 +1340,17 @@
       "sorry_count": 0,
       "theorem_count": 129,
       "timestamp": "2026-07-22T09:46:20",
-      "title": "Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
+      "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
     },
     {
       "cycle_id": "e24b36f0",
       "domain": "NumberTheory",
-      "key_insight": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `\u03b2` of norm two for whic",
+      "key_insight": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for whic",
       "quality_score": 0.84,
       "sorry_count": 0,
       "theorem_count": 45,
       "timestamp": "2026-07-22T09:46:29",
-      "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
+      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     },
     {
       "cycle_id": "3511fbf3",
@@ -1380,7 +1370,7 @@
       "sorry_count": 0,
       "theorem_count": 21,
       "timestamp": "2026-07-22T12:13:55",
-      "title": "Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
+      "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
     },
     {
       "cycle_id": "227d6015",
@@ -1410,7 +1400,7 @@
       "sorry_count": 0,
       "theorem_count": 24,
       "timestamp": "2026-07-22T16:54:33",
-      "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
+      "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
     },
     {
       "cycle_id": "43fa6482",
@@ -1425,7 +1415,7 @@
     {
       "cycle_id": "c612ec41",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) \u2264 n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
+      "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 15,
@@ -1435,7 +1425,7 @@
     {
       "cycle_id": "699db10f",
       "domain": "Computation",
-      "key_insight": "# Future directions: the B\u00e1ez\u2013Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
+      "key_insight": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 6,
@@ -1455,7 +1445,7 @@
     {
       "cycle_id": "f65064a1",
       "domain": "Physics",
-      "key_insight": "# Future Directions: Odd Cycles with Bounded Circumference\n\n## 1. Exact odd-cycle enumeration in the core\u2013periphery extremizer\n\nFor fixed integers `s \u2265 3` and `L \u2265 2s+2`, derive a closed polynomial fo",
+      "key_insight": "# Future Directions: Odd Cycles with Bounded Circumference\n\n## 1. Exact odd-cycle enumeration in the core–periphery extremizer\n\nFor fixed integers `s ≥ 3` and `L ≥ 2s+2`, derive a closed polynomial fo",
       "quality_score": 0.69,
       "sorry_count": 0,
       "theorem_count": 8,
@@ -1465,7 +1455,7 @@
     {
       "cycle_id": "1efa5ae1",
       "domain": "Bridges",
-      "key_insight": "# Future Directions: Spectral Extremal Problems with Intersecting Forbidden Cycles\n\n## 1. Stability of the universal-vertex outerplanar construction\n\n**Conjecture.** For every fixed pair `l \u2265 k \u2265 3`,",
+      "key_insight": "# Future Directions: Spectral Extremal Problems with Intersecting Forbidden Cycles\n\n## 1. Stability of the universal-vertex outerplanar construction\n\n**Conjecture.** For every fixed pair `l ≥ k ≥ 3`,",
       "quality_score": 0.61,
       "sorry_count": 0,
       "theorem_count": 6,
@@ -1475,12 +1465,12 @@
     {
       "cycle_id": "6622cac1",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n- Replace the stipulated variance-of-the-mean formula with a probability-space model of independent, identically distributed neural responses, and derive the `1 / \u221aN` error law fr",
+      "key_insight": "# Future Directions\n\n- Replace the stipulated variance-of-the-mean formula with a probability-space model of independent, identically distributed neural responses, and derive the `1 / √N` error law fr",
       "quality_score": 0.69,
       "sorry_count": 0,
       "theorem_count": 0,
       "timestamp": "2026-07-23T02:29:55",
-      "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
+      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     },
     {
       "cycle_id": "642478f0",
@@ -1495,7 +1485,7 @@
     {
       "cycle_id": "f14d2570",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalizes the one-dimensional online primitive underlying the paper\n*\"Online Beck\u2013Fiala Down to Logarithmic Sparsity\"* \u2014 the compactly supported,\nonline self-balanci",
+      "key_insight": "# Future Directions\n\nThis project formalizes the one-dimensional online primitive underlying the paper\n*\"Online Beck–Fiala Down to Logarithmic Sparsity\"* — the compactly supported,\nonline self-balanci",
       "quality_score": 0.55,
       "sorry_count": 0,
       "theorem_count": 10,
@@ -1535,7 +1525,7 @@
     {
       "cycle_id": "ec11492d",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions \u2014 Orthogonal families over the coordinate framework\n\nThis cycle specialized the coordinate/incidence framework for generalized nets\nto the classical square case and established the",
+      "key_insight": "# Future Directions — Orthogonal families over the coordinate framework\n\nThis cycle specialized the coordinate/incidence framework for generalized nets\nto the classical square case and established the",
       "quality_score": 0.68,
       "sorry_count": 0,
       "theorem_count": 8,
@@ -1555,17 +1545,17 @@
     {
       "cycle_id": "abab9083",
       "domain": "Logic",
-      "key_insight": "# Future Directions \u2014 Quantum Consciousness / Orch OR formalization\n\nThis project formalizes, in Lean 4 (Mathlib), the quantitative and logical core\nof the Penrose\u2013Hameroff *Orchestrated Objective Red",
+      "key_insight": "# Future Directions — Quantum Consciousness / Orch OR formalization\n\nThis project formalizes, in Lean 4 (Mathlib), the quantitative and logical core\nof the Penrose–Hameroff *Orchestrated Objective Red",
       "quality_score": 0.53,
       "sorry_count": 0,
       "theorem_count": 15,
       "timestamp": "2026-07-23T23:21:41",
-      "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
+      "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
     },
     {
       "cycle_id": "2c3f15cd",
       "domain": "Pythagorean",
-      "key_insight": "# Future Directions \u2014 Analogy as a Mathematical Operation\n\nThe discrete model developed in this cycle scores an analogy `(fwd, bwd)` between\nfinite carriers by the number of concepts its round trip re",
+      "key_insight": "# Future Directions — Analogy as a Mathematical Operation\n\nThe discrete model developed in this cycle scores an analogy `(fwd, bwd)` between\nfinite carriers by the number of concepts its round trip re",
       "quality_score": 0.55,
       "sorry_count": 0,
       "theorem_count": 22,
@@ -1625,7 +1615,7 @@
     {
       "cycle_id": "5a4bc860",
       "domain": "Novelty",
-      "key_insight": "# Future Directions \u2014 Novikov-Fixed-Point\n\n`Catalog/Novelty/NovikovFixedPoint.lean` formalises the **Novikov Self-Consistency\nPrinciple** for causally loop-closed spacetimes as a Banach fixed-point th",
+      "key_insight": "# Future Directions — Novikov-Fixed-Point\n\n`Catalog/Novelty/NovikovFixedPoint.lean` formalises the **Novikov Self-Consistency\nPrinciple** for causally loop-closed spacetimes as a Banach fixed-point th",
       "quality_score": 0.58,
       "sorry_count": 0,
       "theorem_count": 9,
@@ -1635,7 +1625,7 @@
     {
       "cycle_id": "08b12f3b",
       "domain": "Novelty",
-      "key_insight": "# Future Directions \u2014 The Spine of the Supersingular 2-Isogeny Graph\n\nThe results in `SupersingularSpinePath.lean` pin down the distance, eccentricity, diameter\nand mean-diameter functions of the path",
+      "key_insight": "# Future Directions — The Spine of the Supersingular 2-Isogeny Graph\n\nThe results in `SupersingularSpinePath.lean` pin down the distance, eccentricity, diameter\nand mean-diameter functions of the path",
       "quality_score": 0.63,
       "sorry_count": 0,
       "theorem_count": 16,
@@ -1665,7 +1655,7 @@
     {
       "cycle_id": "66a73fad",
       "domain": "Physics",
-      "key_insight": "# Future Directions \u2014 Optimal Hamilton Covers\n\nThe deterministic incidence-capacity obstruction \u2014 that any cover of a graph by\ntwo-regular spanning layers uses at least `\u2308\u0394/2\u2309` layers, with a per-vert",
+      "key_insight": "# Future Directions — Optimal Hamilton Covers\n\nThe deterministic incidence-capacity obstruction — that any cover of a graph by\ntwo-regular spanning layers uses at least `⌈Δ/2⌉` layers, with a per-vert",
       "quality_score": 0.62,
       "sorry_count": 0,
       "theorem_count": 7,
@@ -1675,7 +1665,7 @@
     {
       "cycle_id": "29ba074c",
       "domain": "NumberTheory",
-      "key_insight": "# Future Directions \u2014 Pythagorean Energy Spectrum\n\nThe file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no\n`sorry` and only the standard axioms (`propext`, `Classical.choice`, `Q",
+      "key_insight": "# Future Directions — Pythagorean Energy Spectrum\n\nThe file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no\n`sorry` and only the standard axioms (`propext`, `Classical.choice`, `Q",
       "quality_score": 0.6,
       "sorry_count": 1,
       "theorem_count": 24,
@@ -1685,12 +1675,12 @@
     {
       "cycle_id": "c760f6fc",
       "domain": "Shared",
-      "key_insight": "# Future directions \u2014 the fractal geometry of the truth space\n\nThe formal development studies a precise surrogate for \"the space of mathematical truth\": binary\nstreams `\u2115 \u2192 Bool` encode successive ans",
+      "key_insight": "# Future directions — the fractal geometry of the truth space\n\nThe formal development studies a precise surrogate for \"the space of mathematical truth\": binary\nstreams `ℕ → Bool` encode successive ans",
       "quality_score": 0.63,
       "sorry_count": 0,
       "theorem_count": 18,
       "timestamp": "2026-07-24T06:47:55",
-      "title": "The formal development studies a precise surrogate for \u201cthe space of mathematica"
+      "title": "The formal development studies a precise surrogate for “the space of mathematica"
     },
     {
       "cycle_id": "b853373a",
@@ -1705,7 +1695,7 @@
     {
       "cycle_id": "3984694e",
       "domain": "NumberTheory",
-      "key_insight": "# Future Directions \u2014 Gaussian binomial coefficients\n\nCompanion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration for\n*Adriano Garsia (1928\u20132024)*, whose lifelong subject was the com",
+      "key_insight": "# Future Directions — Gaussian binomial coefficients\n\nCompanion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration for\n*Adriano Garsia (1928–2024)*, whose lifelong subject was the com",
       "quality_score": 0.618,
       "sorry_count": 0,
       "theorem_count": 14,
@@ -1715,7 +1705,7 @@
     {
       "cycle_id": "73ec6b88",
       "domain": "Probability",
-      "key_insight": "# Future Directions \u2014 G\u00f6del's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nth",
+      "key_insight": "# Future Directions — Gödel's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nth",
       "quality_score": 0.58,
       "sorry_count": 0,
       "theorem_count": 24,
@@ -1735,7 +1725,7 @@
     {
       "cycle_id": "b4f06498",
       "domain": "Applications",
-      "key_insight": "# Future Directions \u2014 Ranks of elliptic curves twisted by quadratic forms\n\nThe results developed in this cycle isolate the elementary backbone of the twisted\nfamily `E^d : d y\u00b2 = x\u00b3 + a x + b`: the fi",
+      "key_insight": "# Future Directions — Ranks of elliptic curves twisted by quadratic forms\n\nThe results developed in this cycle isolate the elementary backbone of the twisted\nfamily `E^d : d y² = x³ + a x + b`: the fi",
       "quality_score": 0.57,
       "sorry_count": 0,
       "theorem_count": 16,
@@ -1745,7 +1735,7 @@
     {
       "cycle_id": "ec157a87",
       "domain": "Logic",
-      "key_insight": "# Future Directions \u2014 Avoidance of t-fold sumsets in dense sets\n\nThe results established here pin down the *sharp linear* growth of iterated\nsumsets and the deterministic avoidance regime it induces.",
+      "key_insight": "# Future Directions — Avoidance of t-fold sumsets in dense sets\n\nThe results established here pin down the *sharp linear* growth of iterated\nsumsets and the deterministic avoidance regime it induces.",
       "quality_score": 0.57,
       "sorry_count": 0,
       "theorem_count": 9,
@@ -1755,7 +1745,7 @@
     {
       "cycle_id": "b519e277",
       "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `608`, split as\n`303` positive and `305` negative \u2014 turns a heuristic bounded test into a proven fini",
+      "key_insight": "# Future directions\n\nThe certified census of fundamental discriminants with `|D| ≤ 1000` — exactly `608`, split as\n`303` positive and `305` negative — turns a heuristic bounded test into a proven fini",
       "quality_score": 0.63,
       "sorry_count": 0,
       "theorem_count": 20,
@@ -1785,7 +1775,7 @@
     {
       "cycle_id": "86d1611f",
       "domain": "Applications",
-      "key_insight": "# Future directions \u2014 Escher staircases, cycle 1\n\n## What this cycle adds\n\nThe previous cycle established, over a **field** `k`:\n\n* `k[x\u2080, x\u2081, \u2026]` (countably many variables) has an Escher staircase",
+      "key_insight": "# Future directions — Escher staircases, cycle 1\n\n## What this cycle adds\n\nThe previous cycle established, over a **field** `k`:\n\n* `k[x₀, x₁, …]` (countably many variables) has an Escher staircase",
       "quality_score": 0.63,
       "sorry_count": 0,
       "theorem_count": 15,
@@ -1795,7 +1785,7 @@
     {
       "cycle_id": "cc3b4f99",
       "domain": "Applications",
-      "key_insight": "# Future Directions \u2014 Holographic Primes / Tropical Dequantization\n\n## What this cycle added\n\nThe finite prime hologram in `Catalog/Tropical/HolographicPrimes.lean` already\nproved the exact boundary/b",
+      "key_insight": "# Future Directions — Holographic Primes / Tropical Dequantization\n\n## What this cycle added\n\nThe finite prime hologram in `Catalog/Tropical/HolographicPrimes.lean` already\nproved the exact boundary/b",
       "quality_score": 0.52,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -1805,7 +1795,7 @@
     {
       "cycle_id": "2a754509",
       "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nThe file `Catalog/NumberTheory/LowLyingZeros.lean` isolates two analytic mechanisms\nthat control the low-lying zeros of automorphic `L`-functions: the de la Vall\u00e9e Poussin\npositiv",
+      "key_insight": "# Future directions\n\nThe file `Catalog/NumberTheory/LowLyingZeros.lean` isolates two analytic mechanisms\nthat control the low-lying zeros of automorphic `L`-functions: the de la Vallée Poussin\npositiv",
       "quality_score": 0.46,
       "sorry_count": 0,
       "theorem_count": 12,
@@ -1815,7 +1805,7 @@
     {
       "cycle_id": "4ffa8161",
       "domain": "Logic",
-      "key_insight": "# Future Directions \u2014 Transfinite Computation with Cellular Automata on \u03c9\u00b2\n\n## Current state\n\n`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`\ndevelops a two-layer semantics",
+      "key_insight": "# Future Directions — Transfinite Computation with Cellular Automata on ω²\n\n## Current state\n\n`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`\ndevelops a two-layer semantics",
       "quality_score": 0.6,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -1825,7 +1815,7 @@
     {
       "cycle_id": "06d71b6e",
       "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n`Geometry/HilbertChessLines.lean` develops a self-contained theory of long-range\n(rook / bishop / queen / arbitrary-ray) attackers on the infinite Hilbert board\n`\u2124 \u00d7 \u2124`, modelled",
+      "key_insight": "# Future Directions\n\n`Geometry/HilbertChessLines.lean` develops a self-contained theory of long-range\n(rook / bishop / queen / arbitrary-ray) attackers on the infinite Hilbert board\n`ℤ × ℤ`, modelled",
       "quality_score": 0.57,
       "sorry_count": 0,
       "theorem_count": 30,
@@ -1835,7 +1825,7 @@
     {
       "cycle_id": "68dd266b",
       "domain": "Physics",
-      "key_insight": "# Future Directions \u2014 Cybernetic-Symbiosis co-adaptation bounds\n\nThe file `Catalog/Physics/CyberneticSymbiosis.lean` proves a complete, sharp convergence theory\nfor a scalar two-party mutual-adaptatio",
+      "key_insight": "# Future Directions — Cybernetic-Symbiosis co-adaptation bounds\n\nThe file `Catalog/Physics/CyberneticSymbiosis.lean` proves a complete, sharp convergence theory\nfor a scalar two-party mutual-adaptatio",
       "quality_score": 0.55,
       "sorry_count": 0,
       "theorem_count": 20,
@@ -1865,7 +1855,7 @@
     {
       "cycle_id": "edb35a0b",
       "domain": "Tropical",
-      "key_insight": "# Future Directions: Tropical Phase-Transition Models\n\nThe file `TropicalPhaseTransition.lean` proves a self-contained chain of results\nabout the tropical order parameter `order \u03ba c x = max(\u03ba\u00b7(x \u2212 c),",
+      "key_insight": "# Future Directions: Tropical Phase-Transition Models\n\nThe file `TropicalPhaseTransition.lean` proves a self-contained chain of results\nabout the tropical order parameter `order κ c x = max(κ·(x − c),",
       "quality_score": 0.5,
       "sorry_count": 0,
       "theorem_count": 14,
@@ -1875,17 +1865,17 @@
     {
       "cycle_id": "1f866dac",
       "domain": "Bridges",
-      "key_insight": "# Future directions: p-adic Langlands for GL\u2082(\u211a_p)\n\nThe Lean file `PadicLanglandsGL2.lean` establishes a self-contained chain of\nresults around the two sides of the p-adic Langlands correspondence for",
+      "key_insight": "# Future directions: p-adic Langlands for GL₂(ℚ_p)\n\nThe Lean file `PadicLanglandsGL2.lean` establishes a self-contained chain of\nresults around the two sides of the p-adic Langlands correspondence for",
       "quality_score": 0.63,
       "sorry_count": 0,
       "theorem_count": 12,
       "timestamp": "2026-07-24T21:32:13",
-      "title": "p-adic Langlands for GL\u2082(Q_p)"
+      "title": "p-adic Langlands for GL₂(Q_p)"
     },
     {
       "cycle_id": "78cd863a",
       "domain": "Computation",
-      "key_insight": "# Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for a",
+      "key_insight": "# Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy–Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for a",
       "quality_score": 0.63498,
       "sorry_count": 1,
       "theorem_count": 9,
@@ -1895,7 +1885,7 @@
     {
       "cycle_id": "e8a20d63",
       "domain": "Pythagorean",
-      "key_insight": "# Future Directions \u2014 the structural core of Euler's prime-rich polynomial\n\nThis cycle recast the isolated \"prime run\" facts behind discriminants 43, 67, 163\nas uniform consequences of a single hypoth",
+      "key_insight": "# Future Directions — the structural core of Euler's prime-rich polynomial\n\nThis cycle recast the isolated \"prime run\" facts behind discriminants 43, 67, 163\nas uniform consequences of a single hypoth",
       "quality_score": 0.63,
       "sorry_count": 0,
       "theorem_count": 35,
@@ -1905,7 +1895,7 @@
     {
       "cycle_id": "5a7b49b0",
       "domain": "Logic",
-      "key_insight": "# Future Directions \u2014 Spectral Bridge for Quantum Walks on Cayley Graphs\n\n## What was proved\n\n`QuantumWalkSpectralBridge.lean` establishes a concrete, machine-checked bridge between\n**harmonic analysi",
+      "key_insight": "# Future Directions — Spectral Bridge for Quantum Walks on Cayley Graphs\n\n## What was proved\n\n`QuantumWalkSpectralBridge.lean` establishes a concrete, machine-checked bridge between\n**harmonic analysi",
       "quality_score": 0.58,
       "sorry_count": 0,
       "theorem_count": 13,
@@ -1915,7 +1905,7 @@
     {
       "cycle_id": "a4e412f3",
       "domain": "Geometry",
-      "key_insight": "# Future Directions \u2014 Happy-End / Erd\u0151s\u2013Szekeres\n\n`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of the\nErd\u0151s\u2013Szekeres **cup\u2013cap theorem** with the sharp bound `C(k+l-4,k-2",
+      "key_insight": "# Future Directions — Happy-End / Erdős–Szekeres\n\n`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of the\nErdős–Szekeres **cup–cap theorem** with the sharp bound `C(k+l-4,k-2",
       "quality_score": 0.75,
       "sorry_count": 1,
       "theorem_count": 43,
@@ -1935,7 +1925,7 @@
     {
       "cycle_id": "41e2ee03",
       "domain": "Bridges",
-      "key_insight": "# Future Directions \u2014 Commensurability Invariants and Volume Growth\n\nThese conjectures arise from the separation-and-counting principle developed here:\na commensurability invariant turns distinct geom",
+      "key_insight": "# Future Directions — Commensurability Invariants and Volume Growth\n\nThese conjectures arise from the separation-and-counting principle developed here:\na commensurability invariant turns distinct geom",
       "quality_score": 0.63,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -1945,7 +1935,7 @@
     {
       "cycle_id": "d05d57b6",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions: Arbitrary-Modulus Lattice Learning\n\nThis cycle established that affine rerandomisation over an arbitrary modulus is\ncontrolled by the unit structure of `\u2124_q`: the map `x \u21a6 a\u00b7x + b",
+      "key_insight": "# Future Directions: Arbitrary-Modulus Lattice Learning\n\nThis cycle established that affine rerandomisation over an arbitrary modulus is\ncontrolled by the unit structure of `ℤ_q`: the map `x ↦ a·x + b",
       "quality_score": 0.68,
       "sorry_count": 0,
       "theorem_count": 21,
@@ -1980,7 +1970,7 @@
       "sorry_count": 0,
       "theorem_count": 12,
       "timestamp": "2026-07-25T09:20:43",
-      "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
+      "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
     },
     {
       "cycle_id": "f853fcd6",
@@ -2015,7 +2005,7 @@
     {
       "cycle_id": "928798aa",
       "domain": "Physics",
-      "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -\u0394 - 2/r` on `L\u00b2(\u211d\u00b3)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
+      "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -Δ - 2/r` on `L²(ℝ³)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 23,
@@ -2085,7 +2075,7 @@
     {
       "cycle_id": "2ae125a9",
       "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,\u2026`, determine an exact union-of-intervals description of the sums formed from the first `n",
+      "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,…`, determine an exact union-of-intervals description of the sums formed from the first `n",
       "quality_score": 0.78,
       "sorry_count": 0,
       "theorem_count": 17,
@@ -2095,7 +2085,7 @@
     {
       "cycle_id": "5fcde7e0",
       "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential\u2013logarithmic expressions and proves its main algebraic closure chain. The next useful",
+      "key_insight": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential–logarithmic expressions and proves its main algebraic closure chain. The next useful",
       "quality_score": 0.76,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -2105,7 +2095,7 @@
     {
       "cycle_id": "bb3a8583",
       "domain": "Computation",
-      "key_insight": "# Future Directions\n\n## 1. Fingerprint compression at the logarithmic threshold\n\nFor every fixed `0 < \u03b4 < 1` and every `\u03b5 > 0`, the family of pairs of finite\ninteger sets `A,B \u2286 [n]` with `|A|=|B| \u2265 (",
+      "key_insight": "# Future Directions\n\n## 1. Fingerprint compression at the logarithmic threshold\n\nFor every fixed `0 < δ < 1` and every `ε > 0`, the family of pairs of finite\ninteger sets `A,B ⊆ [n]` with `|A|=|B| ≥ (",
       "quality_score": 0.77,
       "sorry_count": 0,
       "theorem_count": 6,
@@ -2115,7 +2105,7 @@
     {
       "cycle_id": "b59af725",
       "domain": "Physics",
-      "key_insight": "# Future directions\n\n- Extend the extremal Rayleigh results to the full Courant\u2013Fischer hierarchy, indexed by subspace dimension.\n- Develop compact self-adjoint operator theory in infinite-dimensional",
+      "key_insight": "# Future directions\n\n- Extend the extremal Rayleigh results to the full Courant–Fischer hierarchy, indexed by subspace dimension.\n- Develop compact self-adjoint operator theory in infinite-dimensional",
       "quality_score": 0.73,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -2195,7 +2185,7 @@
     {
       "cycle_id": "311c4349",
       "domain": "Probability",
-      "key_insight": "# Future Directions\n\n- Construct the classical Airy function in Lean as the distinguished decaying solution of `y'' = x y`, and prove the integral and Christoffel\u2013Darboux representations of the Airy k",
+      "key_insight": "# Future Directions\n\n- Construct the classical Airy function in Lean as the distinguished decaying solution of `y'' = x y`, and prove the integral and Christoffel–Darboux representations of the Airy k",
       "quality_score": 0.54,
       "sorry_count": 0,
       "theorem_count": 13,
@@ -2215,7 +2205,7 @@
     {
       "cycle_id": "3d6ad336",
       "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry \u2192 correctness.** Additive encryption is translat",
+      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry → correctness.** Additive encryption is translat",
       "quality_score": 0.7,
       "sorry_count": 0,
       "theorem_count": 10,
@@ -2265,7 +2255,7 @@
     {
       "cycle_id": "ce71f394",
       "domain": "Applications",
-      "key_insight": "# Future Directions: Differential Structure of Exponential\u2013Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n \u2265 1`, the `n`th der",
+      "key_insight": "# Future Directions: Differential Structure of Exponential–Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n ≥ 1`, the `n`th der",
       "quality_score": 0.77,
       "sorry_count": 0,
       "theorem_count": 14,
@@ -2285,7 +2275,7 @@
     {
       "cycle_id": "078d5371",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : \u2124[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion\u2013contraction f",
+      "key_insight": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction f",
       "quality_score": 0.77,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -2295,7 +2285,7 @@
     {
       "cycle_id": "6a88207a",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x \u21a6 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the crit",
+      "key_insight": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x ↦ 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the crit",
       "quality_score": 0.75,
       "sorry_count": 0,
       "theorem_count": 9,
@@ -2305,7 +2295,7 @@
     {
       "cycle_id": "d7591934",
       "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Result formalized here\n\n`Catalog/Novelty/MatroidMinorFiniteObstructions.lean` proves the abstract bridge\nbehind forbidden-minor theorems.  Interpret `a \u2264 b` as \u201c`a` is a minor",
+      "key_insight": "# Future directions\n\n## Result formalized here\n\n`Catalog/Novelty/MatroidMinorFiniteObstructions.lean` proves the abstract bridge\nbehind forbidden-minor theorems.  Interpret `a ≤ b` as “`a` is a minor",
       "quality_score": 0.6299480519480519,
       "sorry_count": 8,
       "theorem_count": 9240,
@@ -2325,7 +2315,7 @@
     {
       "cycle_id": "1ba7b435",
       "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## What the formal development establishes\n\nThe Lean files prove four complementary results:\n\n1. Arbitrary complex coefficient sequences `\u2115 \u2192 \u2102` are uncountable.\n2. Periodic seque",
+      "key_insight": "# Future directions\n\n## What the formal development establishes\n\nThe Lean files prove four complementary results:\n\n1. Arbitrary complex coefficient sequences `ℕ → ℂ` are uncountable.\n2. Periodic seque",
       "quality_score": 0.6243783783783784,
       "sorry_count": 1,
       "theorem_count": 37,
@@ -2340,7 +2330,7 @@
       "sorry_count": 1,
       "theorem_count": 102,
       "timestamp": "2026-07-26T14:03:58",
-      "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
+      "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
     },
     {
       "cycle_id": "c1a3ae41",
@@ -2375,7 +2365,7 @@
     {
       "cycle_id": "538b51f9",
       "domain": "Applications",
-      "key_insight": "# Future Directions\n\n1. **Exact EML representation of every bivariate polynomial.** For every polynomial\n   `P \u2208 \u211d[X,Y]`, there are finitely many ridge channels whose coordinate inner\n   functions are",
+      "key_insight": "# Future Directions\n\n1. **Exact EML representation of every bivariate polynomial.** For every polynomial\n   `P ∈ ℝ[X,Y]`, there are finitely many ridge channels whose coordinate inner\n   functions are",
       "quality_score": 0.63,
       "sorry_count": 0,
       "theorem_count": 14,
@@ -2420,7 +2410,7 @@
       "sorry_count": 1,
       "theorem_count": 18,
       "timestamp": "2026-07-26T19:32:32",
-      "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
     },
     {
       "cycle_id": "b3ca6b38",
@@ -2445,7 +2435,7 @@
     {
       "cycle_id": "1f5ea34f",
       "domain": "Applications",
-      "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture \u2192 Al",
+      "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture → Al",
       "quality_score": 0.77698,
       "sorry_count": 0,
       "theorem_count": 16,
@@ -2485,7 +2475,7 @@
     {
       "cycle_id": "e3956c60",
       "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nLet `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n < W\u2096`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-l",
+      "key_insight": "# Future directions\n\nLet `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n < Wₖ`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-l",
       "quality_score": 0.68,
       "sorry_count": 0,
       "theorem_count": 25,
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-27T01:25:35",
       "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "cycle_id": "27c8e30f",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n- Extend the certified Fibonacci primitive-divisor interval beyond `10000` by improving the executable primitive-part computation.\n- Develop cyclotomic factorization and growth es",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 224,
+      "timestamp": "2026-07-27T07:58:26",
+      "title": "Close Proofs: [Reset] Fresh approach in Shared"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79231
     }
   ],
-  "last_updated": "2026-07-27T01:25:35",
+  "last_updated": "2026-07-27T07:58:26",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -2836,7 +2836,7 @@
       "timestamp": "2026-07-20T01:50:29"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "8797684d",
       "domain": "MachineLearning",
       "sorry_count": 1,
@@ -2878,28 +2878,28 @@
       "timestamp": "2026-07-20T09:41:55"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "2f321176",
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-07-20T20:48:31"
     },
     {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "1a27f9f3",
       "domain": "Combinatorics",
       "sorry_count": 1,
       "timestamp": "2026-07-20T20:48:35"
     },
     {
-      "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
+      "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "0a1b5635",
       "domain": "Shared",
       "sorry_count": 2,
       "timestamp": "2026-07-22T16:54:21"
     },
     {
-      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard\u2013Tao framework.; +    `fib_carmichael_large` \u2014 which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
+      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
       "cycle_id": "b648d8e5",
       "domain": "Applications",
       "sorry_count": 3,
@@ -2934,14 +2934,14 @@
       "timestamp": "2026-07-24T23:24:45"
     },
     {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "905765f9",
       "domain": "Shared",
       "sorry_count": 1,
       "timestamp": "2026-07-25T10:53:08"
     },
     {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "9f0b015d",
       "domain": "Logic",
       "sorry_count": 1,
@@ -2962,35 +2962,35 @@
       "timestamp": "2026-07-26T06:19:11"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hupper\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
       "cycle_id": "1ba7b435",
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-07-26T09:31:46"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hupper\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
       "cycle_id": "c6b3a18e",
       "domain": "Physics",
       "sorry_count": 1,
       "timestamp": "2026-07-26T14:03:58"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "346c1c9a",
       "domain": "Shared",
       "sorry_count": 1,
       "timestamp": "2026-07-26T14:26:26"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "c3aad27b",
       "domain": "Cryptography",
       "sorry_count": 1,
       "timestamp": "2026-07-26T18:21:12"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "b3e5f77d",
       "domain": "MachineLearning",
       "sorry_count": 1,
@@ -3004,14 +3004,14 @@
       "timestamp": "2026-07-27T00:19:54"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "e4773f49",
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-07-27T00:20:01"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "27eaed26",
       "domain": "Logic",
       "sorry_count": 1,
@@ -3154,13 +3154,13 @@
         "cycle_id": "95b84694",
         "quality": 0.7,
         "theorems": 0,
-        "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
       },
       {
         "cycle_id": "47ca7342",
         "quality": 0.65,
         "theorems": 27,
-        "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
+        "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
       },
       {
         "cycle_id": "1efa5ae1",
@@ -3178,7 +3178,7 @@
         "cycle_id": "1f866dac",
         "quality": 0.63,
         "theorems": 12,
-        "title": "p-adic Langlands for GL\u2082(Q_p)"
+        "title": "p-adic Langlands for GL₂(Q_p)"
       },
       {
         "cycle_id": "41e2ee03",
@@ -3252,7 +3252,7 @@
         "cycle_id": "759f53fa",
         "quality": 0.66,
         "theorems": 21,
-        "title": "Hofstadter: Fluid Concepts and Creative Analogies \u2014 Analogy as a Mathematical Op"
+        "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
       },
       {
         "cycle_id": "6c3aaf50",
@@ -3402,13 +3402,13 @@
         "cycle_id": "f3a76d9a",
         "quality": 0.67,
         "theorems": 16,
-        "title": "Rucker: Mind Tools \u2014 Mathematics as Cognitive Extension"
+        "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
       },
       {
         "cycle_id": "a4c98532",
         "quality": 0.76,
         "theorems": 0,
-        "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
+        "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
       },
       {
         "cycle_id": "2a77d2cb",
@@ -3464,7 +3464,7 @@
         "cycle_id": "abab9083",
         "quality": 0.53,
         "theorems": 15,
-        "title": "Moonshot: Quantum Consciousness \u2014 Penrose-Hameroff Orchestrated Reduction"
+        "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
       },
       {
         "cycle_id": "2f76a8a3",
@@ -3538,19 +3538,19 @@
         "cycle_id": "279ae676",
         "quality": 0.76,
         "theorems": 0,
-        "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
+        "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
       },
       {
         "cycle_id": "4d85ad7f",
         "quality": 0.74,
         "theorems": 31,
-        "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
+        "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
       },
       {
         "cycle_id": "4bc3344b",
         "quality": 0.72,
         "theorems": 22,
-        "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
+        "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
       },
       {
         "cycle_id": "6c18f01c",
@@ -3574,7 +3574,7 @@
         "cycle_id": "b3e5f77d",
         "quality": 0.6666666666666667,
         "theorems": 18,
-        "title": "Rucker: The Lifebox \u2014 Information-Theoretic Identity"
+        "title": "Rucker: The Lifebox — Information-Theoretic Identity"
       }
     ],
     "Novelty": [
@@ -3582,7 +3582,7 @@
         "cycle_id": "6622cac1",
         "quality": 0.69,
         "theorems": 0,
-        "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
+        "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
       },
       {
         "cycle_id": "f14d2570",
@@ -3624,7 +3624,7 @@
         "cycle_id": "f90ec3a1",
         "quality": 0.69,
         "theorems": 12,
-        "title": "Strange Loops: Self-Reference and G\u00f6del's Incompleteness"
+        "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
       },
       {
         "cycle_id": "6a88207a",
@@ -3644,7 +3644,7 @@
         "cycle_id": "e24b36f0",
         "quality": 0.84,
         "theorems": 45,
-        "title": "Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
+        "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
       },
       {
         "cycle_id": "227d6015",
@@ -3754,7 +3754,7 @@
         "cycle_id": "c6b3a18e",
         "quality": 0.6294117647058823,
         "theorems": 102,
-        "title": "Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
+        "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
       },
       {
         "cycle_id": "cf55a60f",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "cf73743c",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-      },
-      {
         "cycle_id": "7bc47166",
         "quality": 0.78,
         "theorems": 13,
@@ -3934,7 +3928,7 @@
         "cycle_id": "c760f6fc",
         "quality": 0.63,
         "theorems": 18,
-        "title": "The formal development studies a precise surrogate for \u201cthe space of mathematica"
+        "title": "The formal development studies a precise surrogate for “the space of mathematica"
       },
       {
         "cycle_id": "905765f9",
@@ -3947,6 +3941,12 @@
         "quality": 0.6043828571428571,
         "theorems": 7,
         "title": "Deepening: Speculative: Theorems as Phase Transitions in Proof Space"
+      },
+      {
+        "cycle_id": "27c8e30f",
+        "quality": 0.686,
+        "theorems": 224,
+        "title": "Close Proofs: [Reset] Fresh approach in Shared"
       }
     ],
     "Tropical": [
@@ -3978,7 +3978,7 @@
         "cycle_id": "09546bb0",
         "quality": 0.74,
         "theorems": 31,
-        "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
+        "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
       },
       {
         "cycle_id": "edb35a0b",
