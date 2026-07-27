@@ -652,7 +652,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zeta Functions of Directed Graphs and the Graph Riemann Hypothesis"
   },
   {
-    "consumed_by_exp_id": "b42bd325",
+    "consumed_by_exp_id": "",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domains": [
       "Novelty",
@@ -661,11 +661,10 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_118",
-    "phase": "A",
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -1339,6 +1338,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e50f9bec (Q=0.785), which proved 30 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_e50f9bec_97d0d6ae",
+    "priority_score": 0.88468,
+    "research_mode": "team",
+    "source_exp_id": "e50f9bec",
+    "status": "available",
+    "timestamp": "2026-07-27T07:58:34.842785+00:00",
+    "title": "Deepening: Proof Complexity: Resolution and Cutting Planes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
     "domains": [
       "NumberTheory",
@@ -1779,7 +1792,7 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "fd_0682",
-    "phase": "B",
+    "phase": "complete",
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
@@ -3005,22 +3018,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697794+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
-  },
-  {
-    "consumed_by_exp_id": "e50f9bec",
-    "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0676",
-    "phase": "B",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697812+00:00",
-    "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
     "consumed_by_exp_id": "",
@@ -5801,21 +5798,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "27c8e30f",
-    "description": "Cycle 905765f9 (Q=0.760) proved 4 theorems in Shared but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within",
-    "domains": [
-      "Shared"
-    ],
-    "id": "sorry_fill_905765f9_b4c36e4b",
-    "phase": "A",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "905765f9",
-    "status": "in_progress",
-    "timestamp": "2026-07-25T10:53:08.634370+00:00",
-    "title": "Close Proofs: [Reset] Fresh approach in Shared"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
@@ -7818,6 +7800,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T02:02:54.037390+00:00",
     "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Extend the certified Fibonacci primitive-divisor interval beyond `10000` by improving the executable primitive-part computation.\n- Develop cyclotomic factorization and growth estimates for an unbounded proof of Carmichael's primitive-divisor theorem.\n- Relate the rank-of-apparition construction in `Shared/PosetTheory/FibonacciApparitionSheaf.lean` directly to the executable primitive part used by the bounded certificate.\n- Generalize the tropical eigenvalue strong-divisibility bridge from scalar-linear eigenvalue sequences to other tropical spectral invariants.\n- Extend the finite consistency-reflection tower to limit stages formed by joins, with explicit hypotheses ensuring successor strictness.\n- Lift the algebraic max/min closure lemmas in `Shared/Stoneweierstrasslattice/StoneWeierstrassLattice.lean` from arbitrary real-valued functions to subalgebras of continuous maps, connecting them directly to Mathlib's Stone\u2013Weierstrass density theorem.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0783",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "27c8e30f",
+    "status": "available",
+    "timestamp": "2026-07-27T07:58:21.901745+00:00",
+    "title": "Future directions from cycle 27c8e30f"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **General-resolution Haken bound.** For the standard DAG-resolution calculus over `phpCNF (n+1) n`, there is a constant `c > 1` and threshold `N` such that every refutation has at least `c^n` distinct inference nodes for all `n \u2265 N`. This is falsifiable by constructing a smaller checked refutation for any claimed pair `(c,N)`.\n\n2. **Tree-resolution exponential strengthening.** Every tree-resolution refutation of `phpCNF (n+1) n` has at least `2^n` leaves for `n \u2265 1`. The present catalog theorem establishes only the weaker bound `n+1 \u2264 size`; an explicit family below `2^n` would refute this conjecture.\n\n3. **Cutting-planes bound without a zero axiom.** There is a cutting-planes calculus with an intrinsic zero rule in which the pigeonhole inequalities have a refutation of size at most `2*(m+n)+1` whenever `n < m`. This can be tested by formalizing that rule and checking the exact node recurrence.\n\n4. **Certified proof-logging performance transfer.** For any conflict-driven SAT solver whose execution trace translates to a resolution refutation with at most a fixed polynomial increase in size, the pigeonhole instances require exponentially long traces, while a cutting-planes solver admitting the aggregate-sum derivation has linear-size certificates. A counterexample is a checked translation violating either size bound.\n\n5. **Coefficient-complexity separation.** The direct cutting-planes pigeonhole refutation can be normalized so every intermediate coefficient lies in `{-1,0,1}` while retaining linear size. This is falsifiable by showing that some required partial sum necessarily has coefficient magnitude at least two.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0784",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e50f9bec",
+    "status": "available",
+    "timestamp": "2026-07-27T07:58:30.233685+00:00",
+    "title": "1. **General-resolution Haken bound.** For the standard DAG-resolution calculus "
   },
   {
     "consumed_by_exp_id": "",

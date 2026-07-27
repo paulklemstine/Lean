@@ -1,26 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4d85ad7f",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nThe formal development proves a pointwise and finite-chain core, not the full differential-geometric Alcubierre spacetime. The next steps are:\n\n1. **Smooth spacetime model.** Defi",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-07-22T03:26:50",
-      "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
-    },
-    {
-      "cycle_id": "4bc3344b",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Reflective Systems and First-Return Structure\n\n## 1. Partial quotation for universal machines\n\n**Conjecture.** Every acceptable programming system admits a computable quotation ma",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-22T03:54:07",
-      "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
-    },
-    {
       "cycle_id": "09546bb0",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n- Replace the abstract consequence operator with a concrete encoding of first-order Peano arithmetic, and connect semantic consequence to a syntactic proof calculus through soundn",
@@ -499,29 +479,29 @@
       "theorem_count": 13,
       "timestamp": "2026-07-26T23:20:05",
       "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "e50f9bec",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n1. **General-resolution Haken bound.** For the standard DAG-resolution calculus over `phpCNF (n+1) n`, there is a constant `c > 1` and threshold `N` such that every refutation has",
+      "quality_score": 0.78468,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-07-27T07:58:34",
+      "title": "Proof Complexity: Resolution and Cutting Planes"
+    },
+    {
+      "cycle_id": "92e6405b",
+      "domain": "Probability",
+      "key_insight": "# FUTURE DIRECTIONS — 2D Ising phase transition\n\n## Verified results in this delivery\n\nThe Lean files under `Catalog/Applications/IsingModel/` establish the following\nparts of the requested developmen",
+      "quality_score": 0.75773,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-27T07:58:40",
+      "title": "Statistical Mechanics: Ising Model Phase Transition"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d5e79e07",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Impossible Figures as Geometric Obstructions\n\n## 1. Cellular classification beyond the torus\n\n**Conjecture.** For every finite connected two-dimensional cell complex and every add",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-19T16:58:31",
-      "title": "The Topology of Impossible Objects: Escher Stairs and Klein Bottles"
-    },
-    {
-      "cycle_id": "7881a56b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions for Practical `k`-Copwin Recognition\n\n## 1. Symmetry-reduced backward search\n\n**Conjecture.** For every finite graph and every positive `k`, quotienting cop configurations by permu",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-19T17:15:41",
-      "title": "ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
-    },
     {
       "cycle_id": "32ad85ae",
       "domain": "Applications",
@@ -2501,45 +2481,29 @@
       "theorem_count": 224,
       "timestamp": "2026-07-27T07:58:26",
       "title": "Close Proofs: [Reset] Fresh approach in Shared"
+    },
+    {
+      "cycle_id": "e50f9bec",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\n1. **General-resolution Haken bound.** For the standard DAG-resolution calculus over `phpCNF (n+1) n`, there is a constant `c > 1` and threshold `N` such that every refutation has",
+      "quality_score": 0.78468,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-07-27T07:58:34",
+      "title": "Proof Complexity: Resolution and Cutting Planes"
+    },
+    {
+      "cycle_id": "92e6405b",
+      "domain": "Probability",
+      "key_insight": "# FUTURE DIRECTIONS — 2D Ising phase transition\n\n## Verified results in this delivery\n\nThe Lean files under `Catalog/Applications/IsingModel/` establish the following\nparts of the requested developmen",
+      "quality_score": 0.75773,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-27T07:58:40",
+      "title": "Statistical Mechanics: Ising Model Phase Transition"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "928798aa",
-      "domain": "Physics",
-      "name": "regev_rounding_bit1",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "928798aa",
-      "domain": "Physics",
-      "name": "encoding_separation",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "9f0b015d",
-      "domain": "Logic",
-      "name": "regev_rounding_bit1",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "9f0b015d",
-      "domain": "Logic",
-      "name": "regev_rounding_bit1",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "9f0b015d",
-      "domain": "Logic",
-      "name": "encoding_separation",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "2ae125a9",
-      "domain": "Pythagorean",
-      "name": "is",
-      "quality": 0.78
-    },
     {
       "cycle_id": "2ae125a9",
       "domain": "Pythagorean",
@@ -2803,9 +2767,45 @@
       "domain": "Bridges",
       "name": "vertexFunctor_essSurj",
       "quality": 0.79231
+    },
+    {
+      "cycle_id": "e50f9bec",
+      "domain": "Logic",
+      "name": "resolution_sound",
+      "quality": 0.78468
+    },
+    {
+      "cycle_id": "e50f9bec",
+      "domain": "Logic",
+      "name": "refutation_implies_unsatisfiable",
+      "quality": 0.78468
+    },
+    {
+      "cycle_id": "e50f9bec",
+      "domain": "Logic",
+      "name": "pigeonClause_mem",
+      "quality": 0.78468
+    },
+    {
+      "cycle_id": "92e6405b",
+      "domain": "Probability",
+      "name": "below",
+      "quality": 0.75773
+    },
+    {
+      "cycle_id": "92e6405b",
+      "domain": "Probability",
+      "name": "partition_pos",
+      "quality": 0.75773
+    },
+    {
+      "cycle_id": "92e6405b",
+      "domain": "Probability",
+      "name": "numerator_eq_zero_of_flip",
+      "quality": 0.75773
     }
   ],
-  "last_updated": "2026-07-27T07:58:26",
+  "last_updated": "2026-07-27T07:58:40",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "ddd2821f",
-        "quality": 0.77,
-        "theorems": 20,
-        "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal"
-      },
-      {
         "cycle_id": "abab9083",
         "quality": 0.53,
         "theorems": 15,
@@ -3513,6 +3507,12 @@
         "quality": 0.6962981818181817,
         "theorems": 11,
         "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+      },
+      {
+        "cycle_id": "e50f9bec",
+        "quality": 0.78468,
+        "theorems": 30,
+        "title": "Proof Complexity: Resolution and Cutting Planes"
       }
     ],
     "MachineLearning": [
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "c58345ac",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-      },
-      {
         "cycle_id": "00cf3210",
         "quality": 0.6,
         "theorems": 14,
@@ -3823,6 +3817,12 @@
         "quality": 0.61,
         "theorems": 794,
         "title": "Self-Avoiding Walk: Connective Constant"
+      },
+      {
+        "cycle_id": "92e6405b",
+        "quality": 0.75773,
+        "theorems": 8,
+        "title": "Statistical Mechanics: Ising Model Phase Transition"
       }
     ],
     "Pythagorean": [

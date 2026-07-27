@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.PosetTheory.JigsawNPComplete
+import Novelty.JigsawNPComplete
 
 /-!
 # Jigsaw Solution Spaces: Parsimony and Complement Symmetry

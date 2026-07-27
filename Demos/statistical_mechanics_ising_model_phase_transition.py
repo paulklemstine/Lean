@@ -1,165 +1,161 @@
-"""
-Numerical demonstrations for the exact two-point correlation function of the
-open one-dimensional Ising chain.
+#!/usr/bin/env python3
+"""Numerical demonstrations for finite Ising symmetry and related exact formulas.
 
-This script validates, with plain Python and the standard library only, the
-main theorems of the accompanying paper:
-
-  * corrNum_closed     :  corrNum(beta,J,n) = 2 * (2 sinh(beta J))^n
-  * Zfree_closed       :  Z(beta,J,n)       = 2 * (2 cosh(beta J))^n
-  * corr_eq_tanh_pow   :  <s0 sn>           = (tanh(beta J))^n
-  * corr_eq_exp_neg_gap:  <s0 sn>           = exp(-g n),  g = log(coth(beta J))
-  * spectralGap_pos    :  g > 0 for beta, J > 0
-  * corr_tendsto_zero  :  <s0 sn> -> 0 as n -> infinity
-
-Every quantity is computed two ways: (1) by brute-force enumeration of all
-2^(n+1) spin configurations, exactly mirroring the Lean definitions, and
-(2) by the proven closed forms.  Agreement is the numerical witness of the
-theorems.
+The script uses only the Python standard library.  It demonstrates:
+1. exact cancellation of signed magnetization on a finite periodic Ising ring;
+2. agreement between direct enumeration and the transfer-matrix formula;
+3. the square-lattice self-dual identities; and
+4. decay of the geometric Peierls contour majorant.
 """
 
 from __future__ import annotations
 
-import itertools
-import math
-from typing import Iterator, List, Tuple
+from dataclasses import dataclass
+from itertools import product
+from math import cosh, exp, log, sinh, sqrt, tanh
+from typing import Iterable, Sequence
+
+SpinConfiguration = tuple[int, ...]
 
 
-# --------------------------------------------------------------------------- #
-#  Brute-force layer: a direct transcription of the Lean definitions.         #
-# --------------------------------------------------------------------------- #
+@dataclass(frozen=True)
+class EnsembleStatistics:
+    """Thermodynamic statistics returned by direct finite enumeration."""
 
-def sp(b: bool) -> float:
-    """Spin value of a Boolean: True -> +1, False -> -1  (Lean `sp`)."""
-    return 1.0 if b else -1.0
-
-
-def all_configs(n: int) -> Iterator[Tuple[bool, ...]]:
-    """All 2^(n+1) configurations of a chain with n bonds (n+1 sites)."""
-    return itertools.product([False, True], repeat=n + 1)
+    partition: float
+    mean_magnetization: float
+    mean_absolute_magnetization: float
+    mean_square_magnetization: float
 
 
-def weight(beta: float, J: float, n: int, s: Tuple[bool, ...]) -> float:
-    """Boltzmann weight of configuration s: product of edge factors (Lean `weight`)."""
-    w = 1.0
-    for i in range(n):
-        w *= math.exp(beta * J * sp(s[i]) * sp(s[i + 1]))
-    return w
+def configurations(n: int) -> Iterable[SpinConfiguration]:
+    """Generate all length-n configurations with spins in {-1,+1}."""
+    if n <= 0:
+        raise ValueError("n must be positive")
+    return product((-1, 1), repeat=n)
 
 
-def Zfree_brute(beta: float, J: float, n: int) -> float:
-    """Partition function by enumeration (Lean `Zfree`)."""
-    return sum(weight(beta, J, n, s) for s in all_configs(n))
+def periodic_chain_energy(spins: Sequence[int]) -> int:
+    """Return H=-sum_i s_i s_(i+1) for a periodic one-dimensional chain."""
+    if not spins:
+        raise ValueError("a spin configuration must be nonempty")
+    if any(spin not in (-1, 1) for spin in spins):
+        raise ValueError("every spin must be -1 or +1")
+    return -sum(spins[i] * spins[(i + 1) % len(spins)] for i in range(len(spins)))
 
 
-def corrNum_brute(beta: float, J: float, n: int) -> float:
-    """Unnormalized signed correlation by enumeration (Lean `corrNum`)."""
-    return sum(
-        sp(s[0]) * sp(s[n]) * weight(beta, J, n, s) for s in all_configs(n)
-    )
+def magnetization(spins: Sequence[int]) -> int:
+    """Return the total signed magnetization."""
+    return sum(spins)
 
 
-def corr_brute(beta: float, J: float, n: int) -> float:
-    """Normalized two-point correlation by enumeration (Lean `corr`)."""
-    return corrNum_brute(beta, J, n) / Zfree_brute(beta, J, n)
+def enumerate_chain(n: int, beta: float, field: float = 0.0) -> EnsembleStatistics:
+    """Enumerate a periodic chain using stable rescaled Boltzmann weights.
+
+    The Hamiltonian with field is H=-sum s_i s_(i+1)-field*sum s_i.
+    Runtime is O(n*2**n); auxiliary storage is O(2**n) in this transparent demo.
+    """
+    rows: list[tuple[float, int]] = []
+    for spins in configurations(n):
+        mag = magnetization(spins)
+        energy = periodic_chain_energy(spins) - field * mag
+        rows.append((-beta * energy, mag))
+
+    shift = max(log_weight for log_weight, _ in rows)
+    weighted = [(exp(log_weight - shift), mag) for log_weight, mag in rows]
+    scaled_z = sum(weight for weight, _ in weighted)
+    scale = exp(shift)
+    mean_m = sum(weight * mag for weight, mag in weighted) / scaled_z
+    mean_abs = sum(weight * abs(mag) for weight, mag in weighted) / scaled_z
+    mean_sq = sum(weight * mag * mag for weight, mag in weighted) / scaled_z
+    return EnsembleStatistics(scale * scaled_z, mean_m, mean_abs, mean_sq)
 
 
-# --------------------------------------------------------------------------- #
-#  Closed-form layer: the proven theorems.                                    #
-# --------------------------------------------------------------------------- #
-
-def Zfree_closed(beta: float, J: float, n: int) -> float:
-    """Zfree_closed:  Z = 2 (2 cosh(beta J))^n."""
-    return 2.0 * (2.0 * math.cosh(beta * J)) ** n
+def transfer_partition(n: int, beta: float) -> float:
+    """Evaluate Z_n=(2 cosh beta)^n+(2 sinh beta)^n for a periodic chain."""
+    if n <= 0:
+        raise ValueError("n must be positive")
+    return (2.0 * cosh(beta)) ** n + (2.0 * sinh(beta)) ** n
 
 
-def corrNum_closed(beta: float, J: float, n: int) -> float:
-    """corrNum_closed:  corrNum = 2 (2 sinh(beta J))^n."""
-    return 2.0 * (2.0 * math.sinh(beta * J)) ** n
+def critical_parameters() -> tuple[float, float]:
+    """Return the positive self-dual inverse temperature and its reciprocal."""
+    beta_c = log(1.0 + sqrt(2.0)) / 2.0
+    return beta_c, 1.0 / beta_c
 
 
-def corr_closed(beta: float, J: float, n: int) -> float:
-    """corr_eq_tanh_pow:  <s0 sn> = (tanh(beta J))^n."""
-    return math.tanh(beta * J) ** n
+def peierls_majorant(beta: float, minimum_length: int = 4) -> float:
+    """Return sum_{L>=minimum_length} (3 exp(-2 beta))^L.
+
+    Raises ValueError when the geometric series does not converge.
+    """
+    if minimum_length <= 0:
+        raise ValueError("minimum_length must be positive")
+    q = 3.0 * exp(-2.0 * beta)
+    if q >= 1.0:
+        raise ValueError("the contour majorant diverges because 3*exp(-2*beta) >= 1")
+    return q**minimum_length / (1.0 - q)
 
 
-def spectral_gap(beta: float, J: float) -> float:
-    """spectralGap:  g = log cosh(beta J) - log sinh(beta J) = log coth(beta J)."""
-    bj = beta * J
-    return math.log(math.cosh(bj)) - math.log(math.sinh(bj))
+def first_peierls_threshold(
+    minimum_length: int = 4, target: float = 0.5, tolerance: float = 1e-12
+) -> float:
+    """Find the boundary beta where the geometric majorant equals target.
 
-
-def correlation_length(beta: float, J: float) -> float:
-    """Correlation length xi = 1 / g."""
-    return 1.0 / spectral_gap(beta, J)
-
-
-def corr_via_gap(beta: float, J: float, n: int) -> float:
-    """corr_eq_exp_neg_gap:  <s0 sn> = exp(-g n)."""
-    return math.exp(-spectral_gap(beta, J) * n)
-
-
-# --------------------------------------------------------------------------- #
-#  Demonstrations.                                                            #
-# --------------------------------------------------------------------------- #
-
-def demo_closed_forms(beta: float, J: float, n_max: int) -> None:
-    print(f"\n=== Closed forms vs brute force  (beta={beta}, J={J}) ===")
-    print(f"{'n':>3} | {'Z brute':>14} {'Z closed':>14} | "
-          f"{'corrNum brute':>14} {'corrNum closed':>14} | {'<s0 sn>':>10}")
-    for n in range(n_max + 1):
-        zb, zc = Zfree_brute(beta, J, n), Zfree_closed(beta, J, n)
-        cb, cc = corrNum_brute(beta, J, n), corrNum_closed(beta, J, n)
-        corr = corr_brute(beta, J, n)
-        assert math.isclose(zb, zc, rel_tol=1e-9)
-        assert math.isclose(cb, cc, rel_tol=1e-9)
-        print(f"{n:>3} | {zb:>14.6f} {zc:>14.6f} | "
-              f"{cb:>14.6f} {cc:>14.6f} | {corr:>10.6f}")
-
-
-def demo_tanh_law(beta: float, J: float, n_max: int) -> None:
-    print(f"\n=== Headline law  <s0 sn> = (tanh(beta J))^n  (beta={beta}, J={J}) ===")
-    t = math.tanh(beta * J)
-    print(f"tanh(beta J) = {t:.6f}")
-    print(f"{'n':>3} | {'brute':>12} {'(tanh)^n':>12} {'exp(-g n)':>12}")
-    for n in range(n_max + 1):
-        cb = corr_brute(beta, J, n)
-        cc = corr_closed(beta, J, n)
-        cg = corr_via_gap(beta, J, n)
-        assert math.isclose(cb, cc, rel_tol=1e-9)
-        assert math.isclose(cb, cg, rel_tol=1e-9)
-        print(f"{n:>3} | {cb:>12.6f} {cc:>12.6f} {cg:>12.6f}")
-
-
-def demo_gap_and_length(J: float, betas: List[float]) -> None:
-    print(f"\n=== Spectral gap and correlation length  (J={J}) ===")
-    print(f"{'beta':>6} {'T=1/beta':>10} {'gap g':>12} "
-          f"{'xi=1/g':>12} {'low-T ~ 0.5 e^(2bJ)':>22}")
-    for beta in betas:
-        g = spectral_gap(beta, J)
-        xi = correlation_length(beta, J)
-        approx = 0.5 * math.exp(2 * beta * J)  # xi ~ 0.5 e^(2 beta J) as beta -> inf
-        assert g > 0.0  # spectralGap_pos
-        print(f"{beta:>6.2f} {1.0 / beta:>10.4f} {g:>12.6f} "
-              f"{xi:>12.6f} {approx:>22.6f}")
-
-
-def demo_no_long_range_order(beta: float, J: float, ns: List[int]) -> None:
-    print(f"\n=== No long-range order:  <s0 sn> -> 0  (beta={beta}, J={J}) ===")
-    print(f"{'n':>5} {'<s0 sn> = (tanh)^n':>22}")
-    for n in ns:
-        print(f"{n:>5} {corr_closed(beta, J, n):>22.3e}")
-    print("Correlations decay exponentially to zero: 1D has no order at T > 0.")
+    Bisection is used on the monotone majorant.  The returned value is an
+    approximate threshold; every larger beta makes the majorant smaller.
+    """
+    if target <= 0.0:
+        raise ValueError("target must be positive")
+    low = log(3.0) / 2.0
+    high = max(1.0, low + 1.0)
+    while peierls_majorant(high, minimum_length) >= target:
+        high *= 2.0
+    while high - low > tolerance:
+        mid = (low + high) / 2.0
+        if peierls_majorant(mid, minimum_length) < target:
+            high = mid
+        else:
+            low = mid
+    return high
 
 
 def main() -> None:
-    print("Exact two-point correlation of the 1D open Ising chain")
-    print("=" * 60)
-    demo_closed_forms(beta=0.7, J=1.0, n_max=8)
-    demo_tanh_law(beta=0.7, J=1.0, n_max=8)
-    demo_gap_and_length(J=1.0, betas=[0.25, 0.5, 1.0, 2.0, 4.0])
-    demo_no_long_range_order(beta=0.7, J=1.0, ns=[1, 5, 10, 25, 50, 100])
-    print("\nAll brute-force values match the closed forms. QED (numerically).")
+    """Print a reproducible collection of numerical examples."""
+    print("FINITE ZERO-FIELD SYMMETRY AND TRANSFER MATRIX")
+    print("n  beta   <M>                  <|M|>       Z enum / Z transfer")
+    for n in (4, 6, 8, 10):
+        for beta in (0.2, 0.7, 1.4):
+            stats = enumerate_chain(n, beta)
+            closed = transfer_partition(n, beta)
+            print(
+                f"{n:2d} {beta:4.1f}  {stats.mean_magnetization:+.3e}  "
+                f"{stats.mean_absolute_magnetization:10.6f}  "
+                f"{stats.partition / closed:.12f}"
+            )
+    print("\nThe signed mean cancels, while the absolute mean grows at low temperature.")
+
+    beta_c, temperature_c = critical_parameters()
+    print("\nSELF-DUAL IDENTITIES")
+    print(f"beta_c = {beta_c:.12f}")
+    print(f"T_c    = {temperature_c:.12f} (between 2 and 3)")
+    print(f"sinh(2 beta_c)       = {sinh(2.0 * beta_c):.12f}")
+    print(f"tanh(beta_c)         = {tanh(beta_c):.12f}")
+    print(f"exp(-2 beta_c)       = {exp(-2.0 * beta_c):.12f}")
+    print(f"sqrt(2)-1            = {sqrt(2.0) - 1.0:.12f}")
+
+    print("\nPEIERLS GEOMETRIC MAJORANT (minimum contour length 4)")
+    threshold = first_peierls_threshold()
+    print(f"Approximate beta where the majorant falls below 1/2: {threshold:.12f}")
+    for beta in (0.8, 1.0, 1.2, 1.5, 2.0):
+        bound = peierls_majorant(beta)
+        implication = "positive if it bounds p" if bound < 0.5 else "criterion not met"
+        print(f"beta={beta:3.1f}: bound={bound:.8f} — {implication}")
+
+    print("\nSMALL SYMMETRY-BREAKING FIELD")
+    for field in (0.0, 0.01, 0.05):
+        stats = enumerate_chain(10, beta=1.2, field=field)
+        print(f"field={field:4.2f}: <M>={stats.mean_magnetization: .8f}")
 
 
 if __name__ == "__main__":

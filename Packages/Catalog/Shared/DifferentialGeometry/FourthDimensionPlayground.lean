@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.AbstractAlgebra.HopfInnerProductWitness
+import Novelty.HopfInnerProductWitness
 
 /-!
 # The fourth dimension as a geometric playground

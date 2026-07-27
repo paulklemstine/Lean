@@ -874,7 +874,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b42bd325",
+    "consumed_by_exp_id": "",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition — zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domain_bridges": [],
     "domains": [
@@ -889,7 +889,7 @@
     "proof_strategy": "Define the prime partition function Z(beta) = prod_p (1 - e^{-beta log p})^{-1}. Prove Z(beta) = zeta(s) where beta = Re(s)/log(p) in the saddle-point approximation. Define the holographic dictionary: bulk field phi_s(x) in AdS_3 <-> boundary CFT operator O_{1-s}(y) on S^1. Prove the correspondence: phi_s <-> (1 - p^{-s})^{-1} for each prime p. The functional equation Xi(s) = Xi(1-s) is the holographic duality. Prove: if all zeros of Xi(s) are on Re(s) = 1/2, then the bulk AdS geometry is stable (no tachyonic modes). Conversely, an off-critical-line zero at s = 1/2 + epsilon corresponds to a tachyonic instability in the bulk. Test: compute Z(beta) numerically and verify convergence to zeta(s).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -1790,6 +1790,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e50f9bec (Q=0.785), which proved 30 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_e50f9bec_97d0d6ae",
+    "lineage_refs": [],
+    "priority_score": 0.88468,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e50f9bec",
+    "status": "available",
+    "timestamp": "2026-07-27T07:58:34.842785+00:00",
+    "title": "Deepening: Proof Complexity: Resolution and Cutting Planes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES ∈ P. Construct efficient modular arithmetic tactics for Lean.",
     "domain_bridges": [],
     "domains": [
@@ -2358,27 +2377,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697806+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "92e6405b",
-    "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Probability",
-      "Analysis"
-    ],
-    "id": "fd_0682",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697827+00:00",
-    "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
   {
     "ambition_level": "extension",
@@ -3894,6 +3892,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 92e6405b (Q=0.758), which proved 8 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_92e6405b_b1f3b959",
+    "lineage_refs": [],
+    "priority_score": 0.85773,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "92e6405b",
+    "status": "available",
+    "timestamp": "2026-07-27T07:58:40.189054+00:00",
+    "title": "Deepening: Statistical Mechanics: Ising Model Phase Transition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Determinant values on lattices' and formalize its key results. Abstract: We study the distribution of determinant values on lattices in $\\operatorname{M}_d(\\mathbb R)$ for $d\\ge 2$. Let $Λ<\\operatorname{M}_d(\\mathbb R)$ be a lattice whose elements all have algebraic entries. We prove that if $\\det (Λ)$ is not contained in a scalar multiple of $\\mathbb Z$, then for every $a<b$, $$ \\#\\{v\\inΛ:\\|v\\| <T,\\ a<\\operatorname{det} v<b,\\ \\operatorname{det} v\\ne0\\} \\sim \\frac{C_d}{\\operatorname{covol}(Λ)} (b-a)T^{d(d-1)} $$ as $T\\to \\infty$, where $\\|\\cdot\\|$ is the Frobenius norm and $C_d>0$ depends only on $d$. For such a lattice, under an isotropic noncoincidence hypothesis, automatic for $d=2,3$ and satisfied for all diagonal lattices when $d\\ge 4$, we also obtain an asymptotic formula for the determinant-zero lattice points. The same conclusions hold for the broader class of Diophantine lattices, under the corresponding hypotheses. For $d=2$, our result recovers the Eskin-Margulis-Mozes theorem on the quantitative Oppenheim problem for quadratic forms of signature",
     "domain_bridges": [],
     "domains": [
@@ -3991,26 +4008,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697794+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e50f9bec",
-    "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0676",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697812+00:00",
-    "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
     "ambition_level": "extension",
@@ -7692,25 +7689,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "27c8e30f",
-    "description": "Cycle 905765f9 (Q=0.760) proved 4 theorems in Shared but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Domain Shared has declined by 0.164 over recent cycles (recent avg=0.696 vs prior=0.860). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within",
-    "domain_bridges": [],
-    "domains": [
-      "Shared"
-    ],
-    "id": "sorry_fill_905765f9_b4c36e4b",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "905765f9",
-    "status": "in_progress",
-    "timestamp": "2026-07-25T10:53:08.634370+00:00",
-    "title": "Close Proofs: [Reset] Fresh approach in Shared"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $ι:P\\rightarrow \\mathcal{G}$ with $ι(p)\\subset ι(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $ι(p)\\subset ι(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domain_bridges": [],
@@ -10433,6 +10411,66 @@
     "status": "available",
     "timestamp": "2026-07-27T02:02:54.037390+00:00",
     "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Extend the certified Fibonacci primitive-divisor interval beyond `10000` by improving the executable primitive-part computation.\n- Develop cyclotomic factorization and growth estimates for an unbounded proof of Carmichael's primitive-divisor theorem.\n- Relate the rank-of-apparition construction in `Shared/PosetTheory/FibonacciApparitionSheaf.lean` directly to the executable primitive part used by the bounded certificate.\n- Generalize the tropical eigenvalue strong-divisibility bridge from scalar-linear eigenvalue sequences to other tropical spectral invariants.\n- Extend the finite consistency-reflection tower to limit stages formed by joins, with explicit hypotheses ensuring successor strictness.\n- Lift the algebraic max/min closure lemmas in `Shared/Stoneweierstrasslattice/StoneWeierstrassLattice.lean` from arbitrary real-valued functions to subalgebras of continuous maps, connecting them directly to Mathlib's Stone–Weierstrass density theorem.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0783",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "27c8e30f",
+    "status": "available",
+    "timestamp": "2026-07-27T07:58:21.901745+00:00",
+    "title": "Future directions from cycle 27c8e30f"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **General-resolution Haken bound.** For the standard DAG-resolution calculus over `phpCNF (n+1) n`, there is a constant `c > 1` and threshold `N` such that every refutation has at least `c^n` distinct inference nodes for all `n ≥ N`. This is falsifiable by constructing a smaller checked refutation for any claimed pair `(c,N)`.\n\n2. **Tree-resolution exponential strengthening.** Every tree-resolution refutation of `phpCNF (n+1) n` has at least `2^n` leaves for `n ≥ 1`. The present catalog theorem establishes only the weaker bound `n+1 ≤ size`; an explicit family below `2^n` would refute this conjecture.\n\n3. **Cutting-planes bound without a zero axiom.** There is a cutting-planes calculus with an intrinsic zero rule in which the pigeonhole inequalities have a refutation of size at most `2*(m+n)+1` whenever `n < m`. This can be tested by formalizing that rule and checking the exact node recurrence.\n\n4. **Certified proof-logging performance transfer.** For any conflict-driven SAT solver whose execution trace translates to a resolution refutation with at most a fixed polynomial increase in size, the pigeonhole instances require exponentially long traces, while a cutting-planes solver admitting the aggregate-sum derivation has linear-size certificates. A counterexample is a checked translation violating either size bound.\n\n5. **Coefficient-complexity separation.** The direct cutting-planes pigeonhole refutation can be normalized so every intermediate coefficient lies in `{-1,0,1}` while retaining linear size. This is falsifiable by showing that some required partial sum necessarily has coefficient magnitude at least two.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0784",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e50f9bec",
+    "status": "available",
+    "timestamp": "2026-07-27T07:58:30.233685+00:00",
+    "title": "1. **General-resolution Haken bound.** For the standard DAG-resolution calculus "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — 2D Ising phase transition\n\n## Verified results in this delivery\n\nThe Lean files under `Catalog/Applications/IsingModel/` establish the following\nparts of the requested development.\n\n1. **Finite periodic square-lattice model (`Model.lean`).** Sites, cyclic nearest\n   neighbours, ±1 configurations, the zero-field Hamiltonian, and total\n   magnetization are defined.  The all-up energy is computed, the universal\n   ground-energy lower bound is proved, magnetization is bounded by volume, and\n   global spin flip is proved to preserve energy and negate magnetization.\n2. **Transfer matrix (`TransferMatrix.lean`).** The zero-field 2×2 row transfer\n   matrix is diagonalized.  Its eigenvalues are proved to be `2 cosh β` and\n   `2 sinh β`; a closed formula for every matrix power and the periodic-chain\n   partition function is proved.\n3. **Critical point (`CriticalTemperature.lean`).** In units `J = k_B = 1`,\n   `β_c = log (1 + √2)/2` and `T_c = 2/log (1 + √2)` are defined.  The\n   Kramers–Wannier fixed-point identity `sinh (2β_c) = 1`, positivity,\n   reciprocity, the bond identity `tanh β_c = exp (-2β_c) = √2 - 1`, and the\n   bound `2 < T_c < 3` are proved.\n4. **Peierls analytic estimate (`Peierls.lean`).** The contour majorant\n   `Σ L (3 exp(-2β))^L` is proved summable above an explicit threshold and is\n   evaluated in closed form.  An explicit finite threshold is proved beyond\n   which this majorant is less than `1/2`.\n5. **Contrarian result (`Contrarian.lean`).** A bold finite-volume conjecture is\n   disproved: a finite zero-field Gibbs ensemble with spin-flip invariant energy\n   cannot have nonzero expectation of an odd magnetization at any temperature.\n   The expectation is exactly zero.  This identifies why spontaneous\n   magnetization must use symmetry-breaking boundary conditions or a field\n   before taking the thermodynamic limit.  The algebraic final implication from\n   a Peierls probability estimate to positive local magnetization is also\n   proved.\n\n## Important scope distinction\n\nThe exact critical value is currently characterized and proved as the unique\npositive Kramers–Wannier self-dual point.  This is not yet a complete\nformalization of Onsager’s infinite-volume free-energy calculation, nor a proof\nthat this self-dual point is the unique thermodynamic singularity.  Likewise,\nthe analytic Peierls majorant is complete, but the geometric contour injection\nand its connection to an actual finite-volume Gibbs probability remain to be\nformalized.  No theorem in this delivery assumes those missing conclusions.\n\n## Computational-evidence decision\n\nA separate numerical evidence report was intentionally omitted: the claims\nselected here are exact symbolic identities and inequalities, and the relevant\nsmall-dimensional computation is itself kernel-checked in Lean (the 2×2 matrix\npower formula, partition function, square-root bracket, and explicit Peierls\nbound).  A sampled numerical search would be weaker than these universal formal\nresults and would not address the remaining infinite-volume geometric steps.\n\n## Next formalization milestones\n\n1. Replace real-valued spins plus an `IsSpin` predicate by a finite spin type\n   equivalent to `{−1,+1}` and construct the normalized finite-volume Gibbs\n   probability measure explicitly.\n2. Formalize plus boundary conditions on finite boxes in `ℤ²`, dual-lattice\n   edges, contours, interiors, and the contour-flipping injection.\n3. Prove the contour-counting estimate and connect it to the Gibbs event that\n   the origin has negative spin.  Combine this with `Peierls.lean` to obtain a\n   genuine positive-magnetization theorem for plus boundary conditions.\n4. Build compatible finite-volume measures and an infinite-volume limit, then\n   prove distinct plus and minus Gibbs states at sufficiently low temperature.\n5. Extend the transfer construction from the 2×2 chain matrix to width-`N` row\n   states (a `2^N × 2^N` matrix), including horizontal interactions.\n6. Formalize Kramers–Wannier duality for finite planar graphs with boundary\n   corrections, then pass to free-energy density.\n7. Formalize the Onsager/Kaufman determinant or Pfaffian evaluation and prove\n   analyticity away from `β_c`; only then identify the self-dual value proved in\n   `CriticalTemperature.lean` with the unique thermodynamic critical point.\n8. Strengthen the elementary `2 < T_c < 3` estimate to certified decimal\n   intervals if a numerical presentation is desired.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0785",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "92e6405b",
+    "status": "available",
+    "timestamp": "2026-07-27T07:58:39.139830+00:00",
+    "title": "The Lean files under `Catalog/Applications/IsingModel/` establish the following"
   },
   {
     "ambition_level": "extension",
