@@ -653,23 +653,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Physics",
-      "Algebra"
-    ],
-    "id": "seed_118",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domains": [
       "Geometry",
@@ -1338,20 +1321,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle e50f9bec (Q=0.785), which proved 30 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_e50f9bec_97d0d6ae",
-    "priority_score": 0.88468,
-    "research_mode": "team",
-    "source_exp_id": "e50f9bec",
-    "status": "available",
-    "timestamp": "2026-07-27T07:58:34.842785+00:00",
-    "title": "Deepening: Proof Complexity: Resolution and Cutting Planes"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
     "domains": [
       "NumberTheory",
@@ -1784,23 +1753,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "92e6405b",
-    "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
-    "domains": [
-      "Physics",
-      "Probability",
-      "Analysis"
-    ],
-    "id": "fd_0682",
-    "phase": "complete",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697827+00:00",
-    "title": "Statistical Mechanics: Ising Model Phase Transition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
     "domains": [
@@ -2047,7 +1999,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transfinite Game Theory: Games That Last Forever"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7eb76360",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
       "Novelty",
@@ -2055,10 +2007,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_270",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
@@ -5331,7 +5284,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Improving Proofs: Proofs That Get Simpler Over Time"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59fb82e9",
     "description": "Mendeleev's periodic table arranges elements by atomic number Z, but Z is just the charge of the nucleus. Conjecture: the periodic table is the spectrum of an operator on a Hilbert space of dimension equal to the number of stable isotopes. Define the 'nuclear Hamiltonian' H on L^2(R^3) by H = -hbar^2/(2m) * nabla^2 + V(r) where V(r) encodes the strong and electromagnetic forces. The eigenvalues E_n of H give the binding energies of nuclei, and Z_n = round(E_n / E_0) gives the atomic numbers. The 'periodicity' of the table arises because the eigenvalues of H have shell structure (like the hydrogen atom): the n-th shell has degeneracy 2n^2 (from the angular momentum quantum number), giving shell sizes 2, 8, 18, 32, 50, 72 \u2014 the noble gas atomic numbers 2, 10, 28, 60, 110 are the cumulative sums. The 'stability islands' (magic numbers 2, 8, 20, 28, 50, 82, 126) correspond to extra degeneracies in the nuclear potential. Test: solve the Schrodinger equation for a Woods-Saxon potential (model nuclear potential) and show that the eigenvalue degeneracies match the periodic table structure. Compute the 'predicted' periodic table from the eigenvalues and compare with reality. Impact: chemistry IS applied spectral theory. The periodic table is the spectrum of a Hamiltonian, and every chemical property is an eigenvalue.",
     "domains": [
       "Novelty",
@@ -5340,10 +5293,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_142",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
@@ -5471,7 +5425,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8d1d7c4",
     "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
     "domains": [
       "Novelty",
@@ -5479,10 +5433,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_273",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Unreasonable Effectiveness of Wrong Theories"
   },
@@ -6086,16 +6041,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Kloosterman sign changes with moduli having at most five prime factors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7fa0ef0b",
     "description": "Investigate the ArXiv paper 'Further thoughts on dimensions of posets' and formalize its key results. Abstract: We recall the concept of the dimension of a finite poset $P$, and the longstanding conjecture that for all finite nonempty posets $P$ and $Q$, $\\dim(P\\times Q)\\geq\\dim(P)+\\dim(Q)-2.$ We then note two other plausible inequalities, either of which would imply that one. In the final section, writing $P\\preccurlyeq P'$ if, for all $Q,$ $\\dim(P\\times Q)\\leq\\dim(P'\\times Q),$ and writing $P\\approx P'$ if $P\\preccurlyeq P'$ and $P'\\preccurlyeq P,$ we note some results and questions concerning these relations.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_0092",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13385v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:01:50.863415+00:00",
     "title": "ArXiv paper: Further thoughts on dimensions of posets"
   },
@@ -6156,17 +6112,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A dual linear programming bound for sphere packing in dimension 36"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "516cbde7",
     "description": "Investigate the ArXiv paper 'Unexpected primes of good reduction in quotients of modular and Shimura curves' and formalize its key results. Abstract: We find all zero-dimensional spaces of newforms of weight $2$ and squarefree level $N$ with a fixed Atkin--Lehner sign pattern. As an application, we classify unexpected primes of good reduction of Atkin--Lehner quotients of modular and Shimura curves of squarefree levels.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
     "id": "fd_0111",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11248v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T12:11:59.753298+00:00",
     "title": "ArXiv paper: Unexpected primes of good reduction in quotients of modular and Shimura curves"
   },
@@ -6645,6 +6602,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A counterexample for the polar conjecture of Spencer-Brown' and formalize its key results. Abstract: In 1976, George Spencer-Brown announced a proof of the four color theorem, using operations on Tait colorings for trivalent plane graphs. In subsequent work he formulated these operations in terms of an algorithm that he called a parity-pass and claimed that when the parity pass algorithm is performed on a non-polar pentagon region, it necessarily terminates in an edge coloring that is extendable to the entire graph. We provide here a counterexample to show that this claim is false. We then raise questions related to the existence of this sort of counterexample.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0783",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.22398v1",
+    "status": "available",
+    "timestamp": "2026-07-27T07:59:47.301544+00:00",
+    "title": "ArXiv paper: A counterexample for the polar conjecture of Spencer-Brown"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Constrained Multi-Relational Graphons with Maximum Entropy' and formalize its key results. Abstract: The principle of maximum entropy provides a fundamental framework for characterizing typical structures of large random networks subject to observable constraints. In their pioneering numerical experiments \\cite{radin2014asymptotics}, Radin, Ren, and Sadun conjectured that entropy-maximizing graphons satisfying subgraph density constraints are stochastic block models a conjecture we term the RRS conjecture. While several special cases have been proven for single-relation graphs with specific constraint families, the general problem has remained open, particularly for multi-relational networks. We resolve the RRS conjecture for constrained multi-relational graphons in the non-extremal regime, proving that entropy-maximizing solutions are step functions with finitely many blocks under the condition the subgraph density constraints are analytically independent and for almost all feasible combinations of sufficient statistics. Our proof employs a differential geometric technique to study s",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0784",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.22383v1",
+    "status": "available",
+    "timestamp": "2026-07-27T07:59:50.502620+00:00",
+    "title": "ArXiv paper: Constrained Multi-Relational Graphons with Maximum Entropy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -6657,22 +6644,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Perfect Cuboid (Euler Brick)"
-  },
-  {
-    "consumed_by_exp_id": "f8a71afd",
-    "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
-    "domains": [
-      "Algebra",
-      "NumberTheory"
-    ],
-    "id": "seed_019",
-    "phase": "B",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -7800,36 +7771,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T02:02:54.037390+00:00",
     "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n- Extend the certified Fibonacci primitive-divisor interval beyond `10000` by improving the executable primitive-part computation.\n- Develop cyclotomic factorization and growth estimates for an unbounded proof of Carmichael's primitive-divisor theorem.\n- Relate the rank-of-apparition construction in `Shared/PosetTheory/FibonacciApparitionSheaf.lean` directly to the executable primitive part used by the bounded certificate.\n- Generalize the tropical eigenvalue strong-divisibility bridge from scalar-linear eigenvalue sequences to other tropical spectral invariants.\n- Extend the finite consistency-reflection tower to limit stages formed by joins, with explicit hypotheses ensuring successor strictness.\n- Lift the algebraic max/min closure lemmas in `Shared/Stoneweierstrasslattice/StoneWeierstrassLattice.lean` from arbitrary real-valued functions to subalgebras of continuous maps, connecting them directly to Mathlib's Stone\u2013Weierstrass density theorem.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0783",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "27c8e30f",
-    "status": "available",
-    "timestamp": "2026-07-27T07:58:21.901745+00:00",
-    "title": "Future directions from cycle 27c8e30f"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **General-resolution Haken bound.** For the standard DAG-resolution calculus over `phpCNF (n+1) n`, there is a constant `c > 1` and threshold `N` such that every refutation has at least `c^n` distinct inference nodes for all `n \u2265 N`. This is falsifiable by constructing a smaller checked refutation for any claimed pair `(c,N)`.\n\n2. **Tree-resolution exponential strengthening.** Every tree-resolution refutation of `phpCNF (n+1) n` has at least `2^n` leaves for `n \u2265 1`. The present catalog theorem establishes only the weaker bound `n+1 \u2264 size`; an explicit family below `2^n` would refute this conjecture.\n\n3. **Cutting-planes bound without a zero axiom.** There is a cutting-planes calculus with an intrinsic zero rule in which the pigeonhole inequalities have a refutation of size at most `2*(m+n)+1` whenever `n < m`. This can be tested by formalizing that rule and checking the exact node recurrence.\n\n4. **Certified proof-logging performance transfer.** For any conflict-driven SAT solver whose execution trace translates to a resolution refutation with at most a fixed polynomial increase in size, the pigeonhole instances require exponentially long traces, while a cutting-planes solver admitting the aggregate-sum derivation has linear-size certificates. A counterexample is a checked translation violating either size bound.\n\n5. **Coefficient-complexity separation.** The direct cutting-planes pigeonhole refutation can be normalized so every intermediate coefficient lies in `{-1,0,1}` while retaining linear size. This is falsifiable by showing that some required partial sum necessarily has coefficient magnitude at least two.\n",
-    "domains": [
-      "Logic",
-      "Pythagorean"
-    ],
-    "id": "fd_0784",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e50f9bec",
-    "status": "available",
-    "timestamp": "2026-07-27T07:58:30.233685+00:00",
-    "title": "1. **General-resolution Haken bound.** For the standard DAG-resolution calculus "
   },
   {
     "consumed_by_exp_id": "",

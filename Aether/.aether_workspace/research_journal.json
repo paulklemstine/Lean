@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "09546bb0",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n- Replace the abstract consequence operator with a concrete encoding of first-order Peano arithmetic, and connect semantic consequence to a syntactic proof calculus through soundn",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-07-22T04:48:42",
-      "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
-    },
-    {
       "cycle_id": "ea214ad9",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## 1. Extract an explicit partition-refinement algorithm\n\n`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to a search over finite Boolean relations. A",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-27T07:58:40",
       "title": "Statistical Mechanics: Ising Model Phase Transition"
+    },
+    {
+      "cycle_id": "f8a71afd",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThe following are concrete, falsifiable conjectures extending the proved scalar-extension and isometry results in `Catalog/Algebra/QuadraticFormsNumberFields.lean`.\n\n1. **Concrete",
+      "quality_score": 0.75276,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-27T07:58:55",
+      "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "32ad85ae",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Anti-Axioms as Structural Data\n\n## 1. The extensional shadow as a universal quotient\n\n**Conjecture.** For every relational set universe, quotienting set-codes by equality of membe",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-19T17:32:42",
-      "title": "Anti-Mathematics: What If All Axioms Were Negated?"
-    },
     {
       "cycle_id": "cf6c2cd9",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-27T07:58:40",
       "title": "Statistical Mechanics: Ising Model Phase Transition"
+    },
+    {
+      "cycle_id": "f8a71afd",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThe following are concrete, falsifiable conjectures extending the proved scalar-extension and isometry results in `Catalog/Algebra/QuadraticFormsNumberFields.lean`.\n\n1. **Concrete",
+      "quality_score": 0.75276,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-27T07:58:55",
+      "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2ae125a9",
-      "domain": "Pythagorean",
-      "name": "mem_distinctPriorPairSums_iff",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "2ae125a9",
-      "domain": "Pythagorean",
-      "name": "distinctCanonical_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "bb3a8583",
-      "domain": "Computation",
-      "name": "from",
-      "quality": 0.77
-    },
     {
       "cycle_id": "bb3a8583",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "numerator_eq_zero_of_flip",
       "quality": 0.75773
+    },
+    {
+      "cycle_id": "f8a71afd",
+      "domain": "Algebra",
+      "name": "are",
+      "quality": 0.75276
+    },
+    {
+      "cycle_id": "f8a71afd",
+      "domain": "Algebra",
+      "name": "can",
+      "quality": 0.75276
+    },
+    {
+      "cycle_id": "f8a71afd",
+      "domain": "Algebra",
+      "name": "anisotropic_iff_of_isometryEquiv",
+      "quality": 0.75276
     }
   ],
-  "last_updated": "2026-07-27T07:58:40",
+  "last_updated": "2026-07-27T07:58:55",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "ac79ade1",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "1. **Intrinsic curvature identification.** The proved curvature formula"
-      },
-      {
         "cycle_id": "fa73eeee",
         "quality": 0.76,
         "theorems": 11,
@@ -3079,6 +3073,12 @@
         "quality": 0.75,
         "theorems": 6,
         "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
+      },
+      {
+        "cycle_id": "f8a71afd",
+        "quality": 0.75276,
+        "theorems": 10,
+        "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
       }
     ],
     "Applications": [
