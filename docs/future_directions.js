@@ -2593,7 +2593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3aa64ac",
     "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
     "domains": [
       "Novelty",
@@ -2601,10 +2601,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_279",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Computational Complexity of Alien Civilizations"
   },
@@ -3619,22 +3620,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "consumed_by_exp_id": "27eaed26",
-    "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "seed_383",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
     "consumed_by_exp_id": "",
@@ -7820,6 +7805,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Completed formal result\n\n`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a\nprecise order parameter.  For natural-valued counts `provable n` and\n`unprovable n`, it defines\n\n- the rational provable fraction\n  `provable n / (provable n + unprovable n)`, and\n- the integer imbalance `provable n - unprovable n`.\n\nIf every sampled cutoff has positive total count, the imbalance is strictly\ndecreasing through a finite horizon `N`, and the final imbalance is\nnonpositive, then there is a unique first cutoff at which the order parameter\nis at most one half.  Every earlier cutoff is above one half and every later\ncutoff through `N` is strictly below one half.  The development also proves:\n\n1. existence and uniqueness of a first sign-change cutoff;\n2. permanence of the transition under strict decrease;\n3. exact equivalences between count inequalities and crossing one half;\n4. a linear decay bound for integer-valued strict descent; and\n5. an upper bound on the first threshold in terms of initial imbalance.\n\nThe proofs are complete and contain no unproved placeholders.\n\n## Scope of the result\n\nThis is a conditional finite-order theorem, not an encoding-independent theorem\nabout PA, ZFC, or another concrete formal system.  G\u00f6del incompleteness supplies\nunprovable sentences, but by itself does not imply strict decrease of a density,\na sharp threshold, or a power-law distribution of theorem lengths.  Those\nclaims depend on a syntax, a length function, a provability predicate, and a\nsampling measure.  Computable recodings can substantially alter raw length\nstatistics.\n\nThe repository also contained an unfinished, unrelated Fibonacci primitive\n divisor declaration whose proof stopped beyond a finite computation.  Its\nformal statement is now accurately restricted to the certified range\n`13 \u2264 n \u2264 10000`; dependent declarations were updated to carry that bound.\nThe unbounded Fibonacci theorem is not claimed by this development.\n\n## Computational evidence\n\nNo independent numerical evidence is appropriate for the abstract transition\ntheorem.  Its conclusion follows symbolically from its hypotheses, while the\nmission does not specify a concrete formula grammar, coding, proof calculus, or\nbounded proof-search algorithm from which numerical counts could be generated.\nWithout those choices, a table, plot, or OEIS comparison would describe an\narbitrary encoding rather than evidence for the proposed logical phenomenon.\nThe finite Fibonacci range used elsewhere in the repository is certified inside\nLean by its existing decidable computation.\n\n## Next formal targets\n\n1. **Concrete syntax and proof checking.** Define a finite alphabet, grammar,\n   formula-length function, deductive system, and bounded proof checker.  Use\n   finite sets to define cumulative provable and unresolved counts.\n2. **Shell-versus-cumulative analysis.** Relate strict decrease of cumulative\n   imbalance to the excess of unresolved formulas in each exact-length shell.\n3. **Transition windows.** Replace pointwise strict descent by negative drift on\n   blocks, and prove bounds on the width and location of a crossing window.\n4. **Robustness under recoding.** Prove controlled distortion of lengths under\n   prefix-free computable translations before treating a threshold as an\n   intrinsic invariant.\n5. **Probabilistic formulation.** Put an explicit measure on formulas and state\n   concentration inequalities.  This would distinguish a deterministic first\n   crossing from a statistical sharp threshold.\n6. **Arithmetized syntax.** Connect finite bounded proof search to a\n   machine-checked incompleteness theorem.  Additional quantitative hypotheses\n   will still be required to infer density behavior.\n7. **Length distributions.** State any power-law claim with finite-range error\n   bounds and coding assumptions.  A relation to Hausdorff dimension requires a\n   separately defined metric space of proofs or proof trees and an invariance\n   theorem connecting that metric to the chosen encoding.\n",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0782",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "27eaed26",
+    "status": "available",
+    "timestamp": "2026-07-27T01:25:32.308919+00:00",
+    "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -7911,6 +7911,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:29:16.297936+00:00",
     "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 27eaed26 (Q=0.696) proved 11 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unpro",
+    "domains": [
+      "Logic"
+    ],
+    "id": "sorry_fill_27eaed26_9b21f3d6",
+    "priority_score": 0.7462981818181817,
+    "research_mode": "team",
+    "source_exp_id": "27eaed26",
+    "status": "available",
+    "timestamp": "2026-07-27T01:25:36.053657+00:00",
+    "title": "Close Proofs: Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
     "consumed_by_exp_id": "",

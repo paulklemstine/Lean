@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8d3b0867",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe completed development separates three notions that are often conflated in informal thermodynamic accounts of sorting:\n\n1. **Decision-tree complexity.** A binary comparison tre",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T16:07:17",
-      "title": "Deepening: The Thermodynamics of Sorting: Entropy and Computational Work"
-    },
-    {
       "cycle_id": "d23a186f",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## What was proved\n\nThe formal model treats theories as points in a real inner-product space and phenomena as measurement directions. Prediction error is the absolute inner produc",
@@ -2501,6 +2491,16 @@
       "theorem_count": 25,
       "timestamp": "2026-07-27T00:20:07",
       "title": "Alien Number Systems: Beyond Base-N"
+    },
+    {
+      "cycle_id": "27eaed26",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n## Completed formal result\n\n`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a\nprecise order parameter.  For natural-valued counts `provable n` and\n`unp",
+      "quality_score": 0.6962981818181817,
+      "sorry_count": 1,
+      "theorem_count": 11,
+      "timestamp": "2026-07-27T01:25:35",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.79231
     }
   ],
-  "last_updated": "2026-07-27T00:20:07",
+  "last_updated": "2026-07-27T01:25:35",
   "open_questions": [
-    {
-      "context": "-  sorry; -  sorry; -  sorry",
-      "cycle_id": "cb3d5d14",
-      "domain": "Novelty",
-      "sorry_count": 13,
-      "timestamp": "2026-07-19T22:03:14"
-    },
     {
       "context": "-  sorry; -  sorry; -  sorry",
       "cycle_id": "671e7568",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-07-27T00:20:01"
+    },
+    {
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "cycle_id": "27eaed26",
+      "domain": "Logic",
+      "sorry_count": 1,
+      "timestamp": "2026-07-27T01:25:35"
     }
   ],
   "research_threads": {
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "b31f2cf9",
-        "quality": 0.83,
-        "theorems": 21,
-        "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
-      },
-      {
         "cycle_id": "ddd2821f",
         "quality": 0.77,
         "theorems": 20,
@@ -3513,6 +3507,12 @@
         "quality": 0.63,
         "theorems": 16,
         "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
+      },
+      {
+        "cycle_id": "27eaed26",
+        "quality": 0.6962981818181817,
+        "theorems": 11,
+        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
       }
     ],
     "MachineLearning": [
