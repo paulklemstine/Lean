@@ -1,49 +1,12 @@
-# Computational Evidence
+# Why a separate computational-evidence stage was skipped
 
-## Small-case calculations
+The claims proved in `Catalog/Novelty/ImmortalityGame.lean` are exact statements about infinite ordinal order types, not extrapolations from a finite numerical sequence. Finite simulation can display only finite prefixes of the clocks `ω` and `ω²`; it cannot test the decisive limit-stage assertions or the sharp impossibility bounds at `ω + 1` and `ω² + 1`.
 
-The deterministic clock begins
+The appropriate evidence is therefore deductive rather than empirical. The Lean development computes the relevant order types symbolically:
 
-| finite request n | clock value |
-|---:|:---|
-| 0 | 0 |
-| 1 | 1 |
-| 2 | 2 |
-| 7 | 7 |
-| 19 | 19 |
+- the natural-number clock has order type `ω`;
+- the lexicographic pair clock has order type `ω · ω = ω²`;
+- an order embedding exists exactly when the requested play length is at most the clock's order type;
+- the successor bounds fail by strict ordinal inequalities.
 
-The two-level clock `ω·k + n` begins by blocks:
-
-| block budget k | finite tail n | clock value |
-|---:|---:|:---|
-| 0 | 0 | 0 |
-| 0 | 5 | 5 |
-| 1 | 0 | ω |
-| 1 | 3 | ω + 3 |
-| 2 | 0 | ω·2 |
-| 2 | 4 | ω·2 + 4 |
-
-For each fixed k, increasing n is cofinal in the next limit `ω·k + ω`. Increasing k through all finite values is therefore cofinal in `ω·ω`.
-
-The canonical dyadic surreal units provide a second table through their birthdays:
-
-| unit | birthday |
-|:---|:---|
-| 1 | 1 |
-| 1/2 | 2 |
-| 1/4 | 3 |
-| 1/8 | 4 |
-
-## OEIS search results
-
-No integer sequence central to the ordinal claims arises: the target data are ordinal block values rather than natural-number terms. Consequently no OEIS identifier is asserted.
-
-## Counterexample hunt
-
-The strongest naive reading—one finite computation itself lasts ω rounds—fails for every tested n and, structurally, for every natural n: its ordinal value is below ω. Likewise, testing fixed outer budgets k = 0, 1, 2 shows that arbitrary finite tails approach only `ω·k + ω`, never ω². These are boundary cases rather than counterexamples to the cofinal-supremum statements.
-
-A terminology hazard was also tested: a single global bound on k cannot yield ω². The ω² result requires every individual outer choice to be finite while the family of allowed finite bounds is unbounded.
-
-## Table interpretation
-
-The tables are illustrative. The accompanying exact supremum and strict-bound theorems establish the universal claims; no claim depends on extrapolating from the displayed cases.
+A small-case table or counterexample search would neither strengthen nor falsify these transfinite conclusions, while the kernel-checked proofs settle them for all stages.

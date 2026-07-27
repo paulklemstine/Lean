@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelHelper
 
 /-! # Complete proof of Carmichael's theorem (composite case)
 

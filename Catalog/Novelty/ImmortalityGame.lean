@@ -196,6 +196,27 @@ theorem value_le_omega_of_embeds_nat (G : SurvivalGame)
   have h := e.ordinal_type_le
   rwa [type_nat_lt] at h
 
+/-- A natural-number-clocked computation cannot force survival through the first
+post-limit round.  This is the formal obstruction faced by an ordinary machine
+when it is compared with an ITTM clock that has a genuine `ω`-limit stage. -/
+theorem nat_clock_cannot_force_omega_succ (G : SurvivalGame)
+    (e : ((· < ·) : G.Moment → G.Moment → Prop) ↪r ((· < ·) : ℕ → ℕ → Prop)) :
+    ¬ G.MortalForces (ω + 1) := by
+  rw [mortalForces_iff_le]
+  exact fun h => (not_le_of_gt (lt_add_one ω))
+    (h.trans (value_le_omega_of_embeds_nat G e))
+
+/-- The two-level clock of the bounded-nondeterministic game cannot itself be
+encoded, in order, by a natural-number clock.  Thus the `ω²` result is not an
+artifact of a redundant presentation of an `ω`-long computation. -/
+theorem nondetGame_not_embeds_nat :
+    ¬ Nonempty
+      (((· < ·) : nondetGame.Moment → nondetGame.Moment → Prop) ↪r
+        ((· < ·) : ℕ → ℕ → Prop)) := by
+  rintro ⟨e⟩
+  have hle := value_le_omega_of_embeds_nat nondetGame e
+  exact (not_le_of_gt finite_lt_nondet) (by simpa using hle)
+
 /-! ## The refinement mechanism: multiplying survival by `ω`
 
 The general reason bounded nondeterminism upgrades `ω` to `ω²` is a *refinement*:
