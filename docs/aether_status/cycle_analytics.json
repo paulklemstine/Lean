@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-27T02:02:58.268919+00:00",
+  "last_updated": "2026-07-27T01:25:36.453221+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -38247,8 +38247,8 @@
       "bridge_count": 0,
       "cycle_n": 4,
       "domain": "Logic",
-      "duration_seconds": 6177.484657764435,
-      "end_time": 1785117764.509654,
+      "duration_seconds": 3933.6914377212524,
+      "end_time": 1785115520.716434,
       "files_integrated": 3,
       "job_id": "27eaed26",
       "outcome_quality": 0.6962981818181817,
@@ -38280,7 +38280,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 8,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-07-27T02:02:58.162449+00:00",
+      "timestamp": "2026-07-27T01:25:36.346784+00:00",
       "title": "Speculative: Theorems as Phase Transitions in Proof Space"
     }
   ]

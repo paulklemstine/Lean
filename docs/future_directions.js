@@ -2593,7 +2593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: Open Sets at Infinity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3aa64ac",
     "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
     "domains": [
       "Novelty",
@@ -2601,10 +2601,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_279",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Computational Complexity of Alien Civilizations"
   },
@@ -7924,6 +7925,20 @@ window.FUTURE_DIRECTIONS = [
     "source_exp_id": "27eaed26",
     "status": "available",
     "timestamp": "2026-07-27T02:02:57.882041+00:00",
+    "title": "Close Proofs: Speculative: Theorems as Phase Transitions in Proof Space"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 27eaed26 (Q=0.696) proved 11 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unpro",
+    "domains": [
+      "Logic"
+    ],
+    "id": "sorry_fill_27eaed26_9b21f3d6",
+    "priority_score": 0.7462981818181817,
+    "research_mode": "team",
+    "source_exp_id": "27eaed26",
+    "status": "available",
+    "timestamp": "2026-07-27T01:25:36.053657+00:00",
     "title": "Close Proofs: Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
