@@ -1,4 +1,4 @@
-import Catalog.Algebra.Analysis.TruthFractalDimensionDeepening
+import Algebra.Analysis.TruthFractalDimensionDeepening
 
 /-!
 # Fractal Dimension of Proof Search
@@ -52,7 +52,7 @@ pruning supplies a controlled benchmark family for such an extension.
 open Filter Topology
 open TruthFractalDimensionDeepening
 
-namespace PeriodicProofSearchFractalDimension
+namespace ProofSearchFractalDimension
 
 /-- A binary proof-search profile records successful derivation prefixes at each depth. -/
 abbrev SearchProfile := Theory
@@ -163,4 +163,4 @@ binary model: any claim using `D > 1` must change either the metric, normalizati
 or ambient search space.
 -/
 
-end PeriodicProofSearchFractalDimension
+end ProofSearchFractalDimension
