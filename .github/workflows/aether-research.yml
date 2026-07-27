@@ -91,24 +91,3 @@ jobs:
           df -h
           echo "Finding largest directories in workspace:"
           (du -ah --max-depth=2 | sort -rh 2>/dev/null | head -n 15) || true
-
-      - name: Update website index
-        run: |
-          cd Packages && python3 update_index.py
-          cd ../docs && python3 update_index.py
-
-      - name: Commit and push all changes
-        run: |
-          git config user.name "paul klemstine"
-          git config user.email "paulklemstine@gmail.com"
-          bash Aether/.aether_workspace/git-hooks/install-hooks.sh
-
-          # SAFETY MEASURE: Ensure we aren't staging hidden cache folders or massive models
-          # If your script downloaded a 10GB file, git add -A will crash the runner here.
-          echo ".hf_cache/" >> .gitignore
-          echo "Aether/.aether_workspace/logs/" >> .gitignore # Reconsider if you want 4x daily logs in git history
-
-          git add -A
-          git diff --cached --quiet || git commit -m "Aether CI: tick $(date -u +%Y-%m-%dT%H:%MZ)"
-          git pull --rebase -X ours origin master || git rebase --abort
-          git push

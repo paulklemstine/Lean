@@ -1030,11 +1030,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             except Exception as e:
                 print(f"[🌟] Breakthrough tagging failed: {e}")
 
-        # If this was a Phase B integration completion, rebuild website index, sync docs/ and push to git
         if is_phase_b_completion and job.status == "integrated":
-            print(f"[Tick] Phase B integration complete for {job.job_id[:8]}. Pushing git changes immediately...")
-            # Fire-and-forget so git push never blocks the poll/dispatch loop
-            publish_task = asyncio.create_task(asyncio.to_thread(rebuild_commit_push))
+            print(f"[Tick] Phase B integration complete for {job.job_id[:8]}. Changes queued for end-of-tick commit.")
     for pid, job in list(extractor.inflight.items()):
         if job.status == "dispatch_queued":
             job.status = "retry_queued"
@@ -1848,20 +1845,30 @@ def _clean_stale_git_locks() -> bool:
     """Remove .git/index.lock if no git process is running.
     Returns True if safe to proceed (no lock or lock cleared), False if locked by active git."""
     lock_file = REPO_ROOT / ".git" / "index.lock"
-    if lock_file.exists():
+    if not lock_file.exists():
+        return True
+    try:
+        git_running = False
         try:
             r = subprocess.run(["pgrep", "-x", "git"], capture_output=True)
-            if r.returncode != 0:
-                print(f"[Tick] Found stale {lock_file} with no active git process. Removing...")
-                lock_file.unlink(missing_ok=True)
-                return True
-            else:
-                print(f"[Tick] Found {lock_file} but git is running. Leaving it alone.")
-                return False
-        except Exception as e:
-            print(f"[Tick] Failed to clean stale git lock: {e}")
+            if r.returncode == 0:
+                git_running = True
+        except Exception:
+            pass
+        if not git_running:
+            print(f"[Tick] Found stale {lock_file} with no active git process. Removing...")
+            lock_file.unlink(missing_ok=True)
+            return True
+        else:
+            print(f"[Tick] Found {lock_file} but git is running. Leaving it alone.")
             return False
-    return True
+    except Exception as e:
+        print(f"[Tick] Failed to clean stale git lock: {e}")
+        try:
+            lock_file.unlink(missing_ok=True)
+            return True
+        except Exception:
+            return False
 
 
 def _clean_catalog_retry_dirs() -> int:

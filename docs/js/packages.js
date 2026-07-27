@@ -430,13 +430,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     } else if (typeof entry === 'object' && entry !== null) {
                         const fname = entry.file || entry.name || 'Proof.lean';
-                        const basename = fname.split('/').pop();
                         const code = (entry.code && entry.code.trim()) ? entry.code.split('\\n').join('\n')
                                    : (entry.content && entry.content.trim()) ? entry.content.split('\\n').join('\n')
                                    : null;
                         if (code && !seenLeanCode.has(code)) {
                             seenLeanCode.add(code);
-                            leanFiles.push({ name: basename, code });
+                            leanFiles.push({ name: fname, code });
                         } else if (!code) {
                             console.warn('Lean file has no embedded code:', fname);
                         }

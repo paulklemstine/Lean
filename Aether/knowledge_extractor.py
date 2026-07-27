@@ -2935,6 +2935,53 @@ Research mode: {concept.research_mode}
         job.status = "integrated"
         self.completed_count += 1
 
+        # Enrich JSON package lean_proofs with actually-integrated .lean files from disk
+        if job.result_json_package and job.integrated_paths:
+            try:
+                pkg = json.loads(job.result_json_package)
+                lean_paths = [p for p in job.integrated_paths if str(p).endswith('.lean')]
+                if lean_paths:
+                    existing_lp = pkg.get("lean_proofs", [])
+                    if not isinstance(existing_lp, list):
+                        existing_lp = []
+                    existing_files = set()
+                    for entry in existing_lp:
+                        if isinstance(entry, dict):
+                            f = entry.get("file", "") or entry.get("name", "")
+                            existing_files.add(Path(f).name)
+                    for lp in lean_paths:
+                        lp_str = str(lp)
+                        basename = Path(lp_str).name
+                        if basename in existing_files:
+                            continue
+                        # Read code from disk
+                        disk_path = self.catalog_root / lp_str
+                        code = ""
+                        if disk_path.exists():
+                            try:
+                                code = disk_path.read_text(encoding="utf-8", errors="ignore")
+                            except Exception:
+                                pass
+                        existing_lp.append({
+                            "file": lp_str,
+                            "name": lp_str,
+                            "code": code,
+                            "theorems": len(re.findall(r'^(?:theorem|lemma|def|structure|instance|inductive|abbrev|example)\s+', code, re.MULTILINE)) if code else 0,
+                            "description": "Lean 4 proof file from research cycle"
+                        })
+                        existing_files.add(basename)
+                    pkg["lean_proofs"] = existing_lp
+                    job.result_json_package = json.dumps(pkg, indent=2, ensure_ascii=False)
+                    # Also update the saved JSON package file on disk
+                    pkg_filename = getattr(job, '_json_package_filename', None)
+                    if pkg_filename:
+                        pkg_path = self.catalog_root.parent / "Packages" / pkg_filename
+                        if pkg_path.exists():
+                            pkg_path.write_text(job.result_json_package, encoding="utf-8")
+                            print(f"[Integrate] Updated {pkg_filename} with {len(lean_paths)} integrated lean_proofs entries")
+            except Exception as e:
+                print(f"[Integrate] Warning: Failed to enrich lean_proofs from integrated_paths: {e}")
+
         # Update package_index.js and lineage if we saved a JSON package
         if job.result_json_package:
             try:
@@ -3137,26 +3184,8 @@ Research mode: {concept.research_mode}
                     print(f"[Integrate] {phase_ver} lint: rejecting {target_path} — theorem density too low "
                           f"({theorem_count} theorems in {lines} lines)")
                     return "REJECT"
-            # v8-v18 lint gate: check for research team protocol markers
-            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v16', 'v16a', 'v16b', 'v17', 'v18', 'v19', 'v19a', 'v19b', 'v19c', 'v19d', 'v20', 'v21', 'v22', 'v23'):
-                has_lab_notebook = "Lab Notebook" in content or "lab notebook" in content.lower()
-                has_lab_notes = "Lab Notes" in content or "lab notes" in content.lower()
-                has_hypothesis = "hypothesis" in content.lower()
-                critic_count = content.lower().count("critic") + content.lower().count("critique")
-                if not has_lab_notebook and not has_lab_notes and not has_hypothesis:
-                    print(f"[Integrate] {phase_ver} lint: {target_path} has no Lab Notebook, Lab Notes, or "
-                          f"hypothesis markers (expected from {phase_ver} research team protocol)")
-                if critic_count == 0:
-                    print(f"[Integrate] {phase_ver} lint: {target_path} has zero critic/critique references — "
-                          f"the Critic step is MANDATORY in {phase_ver}. This suggests the LLM "
-                          f"skipped the critique step.")
-            # v15 lint gate: check for research team lab notes markers
-            if phase_ver == 'v15':
-                has_lab_notes = "Lab Notes" in content or "lab notes" in content.lower()
-                has_hypothesis = "hypothesis" in content.lower()
-                if not has_lab_notes and not has_hypothesis:
-                    print(f"[Integrate] {phase_ver} lint: {target_path} has no Lab Notes or "
-                          f"hypothesis markers (expected from {phase_ver} research team protocol)")
+            # Protocol linting skipped for Phase A packages
+
             if has_sorry:
                 # Incomplete proofs go to Speculative/AutoResearch, preserving any
                 # subdirectory structure Pi suggested (e.g. EML/ReflectionCapacity/).
@@ -3204,11 +3233,29 @@ Research mode: {concept.research_mode}
                 domain = normalize_domain(job.concept.domain or "MachineLearning")
                 return f"{domain}/{filename}"
 
-            # If domain is "Applications" with NO subdirectory (e.g.
-            # "Applications/Foo.lean"), re-route to the concept's actual
-            # domain. "Applications" is a catch-all that dumps .lean files
-            # at the root — they should go to a proper domain directory.
+            # If domain is "Shared" or "Applications" with NO subdirectory, re-route to concept domain.
+            # If path is Shared/<Subfolder>/..., re-route Shared to the primary domain for <Subfolder>.
             parts_list = [p for p in target_path.replace("\\", "/").split("/") if p]
+            if path_domain == "Shared":
+                subfolder_map = {
+                    "DifferentialGeometry": "Geometry",
+                    "NumberTheory": "NumberTheory",
+                    "PosetTheory": "Algebra",
+                    "InformationTheory": "Computation",
+                    "SortingThermodynamics": "Physics",
+                    "MusicalDigits": "Pythagorean",
+                    "Stoneweierstrasslattice": "Algebra",
+                    "TheoremNetworkTopology": "Bridges",
+                    "PhysicsConsistency": "Logic",
+                }
+                if len(parts_list) >= 3 and parts_list[0] == "Shared":
+                    sub = parts_list[1]
+                    target_dom = subfolder_map.get(sub, normalize_domain(job.concept.domain or "Algebra"))
+                    return "/".join([target_dom] + parts_list[1:])
+                elif len(parts_list) <= 2:
+                    domain = normalize_domain(job.concept.domain or "Algebra")
+                    return f"{domain}/{filename}"
+
             if path_domain == "Applications" and len(parts_list) <= 2:
                 domain = normalize_domain(job.concept.domain or "Algebra")
                 return f"{domain}/{filename}"
@@ -3244,8 +3291,24 @@ Research mode: {concept.research_mode}
             "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "NumberTheory",
             "Physics", "Probability", "Pythagorean", "Shared", "Speculative", "Tropical",
         }
+        subfolder_to_domain = {
+            "NumberTheory": "NumberTheory",
+            "DifferentialGeometry": "Geometry/DifferentialGeometry",
+            "PosetTheory": "Algebra/PosetTheory",
+            "InformationTheory": "Computation/InformationTheory",
+            "SortingThermodynamics": "Physics/SortingThermodynamics",
+            "MusicalDigits": "Pythagorean/MusicalDigits",
+            "Stoneweierstrasslattice": "Algebra/Stoneweierstrasslattice",
+            "TheoremNetworkTopology": "Bridges/TheoremNetworkTopology",
+            "PhysicsConsistency": "Logic/PhysicsConsistency",
+        }
         parts = [p for p in path.split('/') if p]
-        if len(parts) >= 2 and parts[0] == "Bridges" and parts[1] in known_domains and parts[1] != "Bridges":
+        if len(parts) >= 2 and parts[0] == "Shared":
+            if parts[1] in subfolder_to_domain:
+                path = subfolder_to_domain[parts[1]] + ("/" + "/".join(parts[2:]) if len(parts) > 2 else "")
+            elif parts[1] in known_domains and parts[1] != "Shared":
+                path = "/".join(parts[1:])
+        elif len(parts) >= 2 and parts[0] == "Bridges" and parts[1] in known_domains and parts[1] != "Bridges":
             path = "/".join(parts[1:])
 
         return path

@@ -79,6 +79,40 @@ class ResearchMemory:
                     self._descriptions.add(record.concept_description.lower()[:100])
                 except Exception:
                     pass
+        # Auto-prune if file is too large (> 5 MB or > 500 records)
+        if self.memory_file.exists() and (self.memory_file.stat().st_size > 5_000_000 or len(self._cache) > 500):
+            self.prune_memory_file(max_records=500)
+
+    def prune_memory_file(self, max_records: int = 500) -> int:
+        """Prune research_memory.jsonl to keep only the most recent max_records."""
+        if not self.memory_file.exists():
+            return 0
+        original_count = len(self._cache)
+        if original_count > max_records:
+            self._cache = self._cache[-max_records:]
+        tmp_file = self.memory_file.with_suffix(".tmp")
+        with open(tmp_file, "w", encoding="utf-8") as f:
+            for record in self._cache:
+                f.write(json.dumps({
+                    "exp_id": record.exp_id,
+                    "domain": record.domain,
+                    "concept_title": record.concept_title,
+                    "concept_description": record.concept_description,
+                    "status": record.status,
+                    "files_produced": record.files_produced,
+                    "timestamp": record.timestamp,
+                    "key_theorems": record.key_theorems,
+                    "prompt_text": (record.prompt_text[:1000] if record.prompt_text else ""),
+                    "proof_quality": record.proof_quality,
+                    "retry_of": record.retry_of,
+                    "retry_count": record.retry_count,
+                    "quality_score": record.quality_score,
+                    "quality_detail": record.quality_detail,
+                }) + "\n")
+        tmp_file.replace(self.memory_file)
+        pruned_count = max(0, original_count - len(self._cache))
+        print(f"[ResearchMemory] Pruned memory file. New size: {self.memory_file.stat().st_size / 1e6:.2f} MB ({len(self._cache)} records retained)")
+        return pruned_count
 
     def record(self, record: ExperimentRecord) -> None:
         """Record an experiment."""

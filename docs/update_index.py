@@ -294,42 +294,57 @@ def update_index():
                         af.write(alg_code)
                     alg["code_file"] = f"visualizations/{alg_filename}"
 
-        # Embed actual Lean 4 code into lean_proofs entries that only have file paths
+        # Embed actual Lean 4 code into lean_proofs entries that only have file paths or strings
         if data.get("lean_proofs"):
             lp = data["lean_proofs"]
+            normalized_lp = []
             if isinstance(lp, list):
-                for entry in lp:
-                    if not isinstance(entry, dict):
-                        continue
-                    if entry.get("code"):
-                        continue
-                    fpath = entry.get("file", "") or entry.get("name", "")
-                    if not fpath or not fpath.endswith('.lean'):
-                        continue
-                    # Try to find the .lean file with various path prefixes
-                    # fpath may be "Catalog/Algebra/Foo.lean" or "Algebra/Foo.lean"
-                    candidates = [fpath]
-                    if fpath.startswith("Catalog/"):
-                        candidates.append(fpath[len("Catalog/"):])
-                    # Also try finding by basename in all subdirectories
-                    basename = os.path.basename(fpath)
-                    for candidate in candidates:
-                        for prefix in [catalog_root, os.path.join(catalog_root, "Catalog"), os.path.join(catalog_root, "Catalog", "Applications")]:
-                            full_path = os.path.join(prefix, candidate)
-                            if os.path.isfile(full_path):
-                                with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
-                                    entry["code"] = lf.read()
-                                break
-                        if entry.get("code"):
+                for idx, entry in enumerate(lp):
+                    if isinstance(entry, str):
+                        if entry.endswith('.lean') or '/' in entry:
+                            fpath = entry
+                            code = ""
+                        else:
+                            fpath = f"Proof_{idx+1}.lean"
+                            code = entry
+                        entry = {"file": fpath, "name": fpath, "code": code}
+                    if isinstance(entry, dict):
+                        if not entry.get("code"):
+                            fpath = entry.get("file", "") or entry.get("name", "")
+                            if fpath and (fpath.endswith('.lean') or '/' in fpath):
+                                candidates = [fpath]
+                                if fpath.startswith("Catalog/"):
+                                    candidates.append(fpath[len("Catalog/"):])
+                                basename = os.path.basename(fpath)
+                                for candidate in candidates:
+                                    for prefix in [catalog_root, os.path.join(catalog_root, "Catalog"), os.path.join(catalog_root, "Catalog", "Applications")]:
+                                        full_path = os.path.join(prefix, candidate)
+                                        if os.path.isfile(full_path):
+                                            with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
+                                                entry["code"] = lf.read()
+                                            break
+                                    if entry.get("code"):
+                                        break
+                                if not entry.get("code"):
+                                    for root, dirs, files in os.walk(catalog_root):
+                                        if basename in files:
+                                            full_path = os.path.join(root, basename)
+                                            with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
+                                                entry["code"] = lf.read()
+                                            break
+                        normalized_lp.append(entry)
+                data["lean_proofs"] = normalized_lp
+            elif isinstance(lp, str):
+                if lp.endswith('.lean') or '/' in lp:
+                    entry = {"file": lp, "name": lp, "code": ""}
+                    basename = os.path.basename(lp)
+                    for root, dirs, files in os.walk(catalog_root):
+                        if basename in files:
+                            full_path = os.path.join(root, basename)
+                            with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
+                                entry["code"] = lf.read()
                             break
-                    # Fallback: search by basename
-                    if not entry.get("code"):
-                        for root, dirs, files in os.walk(catalog_root):
-                            if basename in files:
-                                full_path = os.path.join(root, basename)
-                                with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
-                                    entry["code"] = lf.read()
-                                break
+                    data["lean_proofs"] = [entry]
 
         # Rewrite the individual JSON file with extracted viz paths
         with open(f, 'w', encoding='utf-8') as out_f:
