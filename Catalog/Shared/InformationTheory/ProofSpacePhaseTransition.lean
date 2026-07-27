@@ -1,8 +1,8 @@
 import Mathlib
-import Novelty.Counting
-import Novelty.OrderParameter
-import Novelty.Dimension
-import Novelty.Incompleteness
+import Novelty.PosetTheory.Counting
+import Novelty.PosetTheory.OrderParameter
+import Novelty.NeuralCoding.Dimension
+import Novelty.SpaceVGDel.Incompleteness
 
 /-!
 # Counted Proof Spaces: Entropy, Sparsity, and Critical Indices

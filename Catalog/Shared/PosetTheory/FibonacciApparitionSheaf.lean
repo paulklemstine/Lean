@@ -260,3 +260,4 @@ theorem fibRank_eq_factorization_lcm {n : ℕ} (hn : 0 < n) :
   · exact fun p hp q hq hpq => Nat.coprime_pow_primes _ _ ( Nat.prime_of_mem_primeFactors hp ) ( Nat.prime_of_mem_primeFactors hq ) hpq
 
 end FibonacciApparitionSheaf
+end over a product is the lcm of the sections over the factors. -- !--

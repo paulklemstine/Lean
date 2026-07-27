@@ -61,15 +61,13 @@ namespace Bridges.TropicalSDLog
 tropical power exponent `t`, the leaked eigenvalue `λ(A^{⊗t}) = c·t`.  This is a
 `StrongDivSeq` (from `Bridges/StrongDivisibilitySequences.lean`): it vanishes at `0` and
 satisfies the strong divisibility identity, inherited from `Nat.gcd_mul_left`. -/
-def tropEigSeq (c : ℕ) (t : ℕ) : ℕ := c * t
+def tropEigSeq (c : ℕ) : StrongDivSeq where
+  a t := c * t
+  map_zero := by simp
+  gcd_eq m n := by
+    rw [Nat.gcd_mul_left]
 
-/-- The tropical eigenvalue sequence satisfies the strong divisibility identity. -/
-theorem tropEigSeq_strong (c : ℕ) : StrongDivSeq.IsStrongDivSeq (tropEigSeq c) := by
-  intro m n
-  simp only [tropEigSeq]
-  exact (Nat.gcd_mul_left c m n).symm
-
-@[simp] theorem tropEigSeq_apply (c t : ℕ) : tropEigSeq c t = c * t := rfl
+@[simp] theorem tropEigSeq_apply (c t : ℕ) : (tropEigSeq c).a t = c * t := rfl
 
 /-! ## Section 2: The bridge link — measurable residual equals the sequence value -/
 
@@ -84,7 +82,7 @@ cryptanalysis.
 -/
 theorem residual_eq_tropEigSeq (A : Matrix (Fin n) (Fin n) ℝ) (c : ℕ) (v : Fin n → ℝ)
     (hev : IsTropicalEigenpair A (c : ℝ) v) (k : ℕ) (i : Fin n) :
-    tropResidual (tropMatPow A k) v i = (tropEigSeq c (k + 1) : ℝ) := by
+    tropResidual (tropMatPow A k) v i = ((tropEigSeq c).a (k + 1) : ℝ) := by
   -- Apply the lemma that states the residual of the k-th power of A is (k+1)*c.
   have := TropicalDLog.tropResidual_tropMatPow A c v hev k i; simp_all +decide [ tropEigSeq_apply ];
   ring
@@ -99,11 +97,11 @@ direction uses positivity of `c` to cancel.  Thus the public eigenvalue sequence
 the entire divisibility lattice of the secret exponents.
 -/
 theorem tdlp_divisibility_leak (c : ℕ) (hc : 0 < c) (m k : ℕ) :
-    (m + 1) ∣ (k + 1) ↔ tropEigSeq c (m + 1) ∣ tropEigSeq c (k + 1) := by
+    (m + 1) ∣ (k + 1) ↔ (tropEigSeq c).a (m + 1) ∣ (tropEigSeq c).a (k + 1) := by
   constructor
   · -- forward: the Bridges strong-divisibility calculus
     intro h
-    exact (tropEigSeq_strong c).dvd_of_dvd h
+    exact (tropEigSeq c).dvd_of_dvd h
   · -- reverse: cancel the positive scale `c`
     intro h
     simp only [tropEigSeq_apply] at h
@@ -112,8 +110,8 @@ theorem tdlp_divisibility_leak (c : ℕ) (hc : 0 < c) (m k : ℕ) :
 /-- The strong divisibility identity, specialized to tropical eigenvalues:
 `gcd (λ(A^{⊗m})) (λ(A^{⊗n})) = λ(A^{⊗gcd(m,n)})`. -/
 theorem tropical_eigenvalue_gcd (c m n : ℕ) :
-    Nat.gcd (tropEigSeq c m) (tropEigSeq c n) = tropEigSeq c (Nat.gcd m n) :=
-  (tropEigSeq_strong c m n).symm
+    Nat.gcd ((tropEigSeq c).a m) ((tropEigSeq c).a n) = (tropEigSeq c).a (Nat.gcd m n) :=
+  (tropEigSeq c).gcd_eq m n
 
 /-! ## Section 4: Diffie–Hellman shared-key eigenvalue -/
 
@@ -124,8 +122,8 @@ the shared key has genuine exponent `(a+1)*(b+1)`, and its eigenvalue satisfies
 the additive eigenvalue law and a number-theoretic identity over `ℕ`.
 -/
 theorem tdlp_dh_eigenvalue_product (c a b : ℕ) :
-    c * tropEigSeq c ((a + 1) * (b + 1)) =
-      tropEigSeq c (a + 1) * tropEigSeq c (b + 1) := by
+    c * (tropEigSeq c).a ((a + 1) * (b + 1)) =
+      (tropEigSeq c).a (a + 1) * (tropEigSeq c).a (b + 1) := by
   simp +decide [ tropEigSeq_apply, mul_assoc, mul_comm, mul_left_comm ]
 
 /-
@@ -137,15 +135,14 @@ is itself exposed through its eigenvalue.
 theorem dh_shared_residual (A : Matrix (Fin n) (Fin n) ℝ) (c : ℕ) (v : Fin n → ℝ)
     (hev : IsTropicalEigenpair A (c : ℝ) v) (a b : ℕ) (i : Fin n) :
     tropResidual (tropMatPow (tropMatPow A a) b) v i
-      = (tropEigSeq c ((a + 1) * (b + 1)) : ℝ) := by
-  rw [TropicalPower.tropMatPow_tropMatPow]
-  calc
-    tropResidual (tropMatPow A (a * b + a + b)) v i =
-        (tropEigSeq c (a * b + a + b + 1) : ℝ) :=
-      residual_eq_tropEigSeq A c v hev (a * b + a + b) i
-    _ = (tropEigSeq c ((a + 1) * (b + 1)) : ℝ) := by
-      congr 2
-      ring
+      = ((tropEigSeq c).a ((a + 1) * (b + 1)) : ℝ) := by
+  -- We use the matrix power law to rewrite the lefthand side: tropMatPow (tropMatPow A a) b = tropMatPow A ((a+1)*(b+1)-1).
+  have hMatPow : tropMatPow (tropMatPow A a) b = tropMatPow A ((a + 1) * (b + 1) - 1) := by
+    convert TropicalPower.tropMatPow_tropMatPow A a b using 1;
+    exact congr_arg _ ( Nat.sub_eq_of_eq_add <| by ring );
+  rw [ hMatPow, residual_eq_tropEigSeq ];
+  rw [ Nat.sub_add_cancel ( Nat.one_le_iff_ne_zero.mpr ( by positivity ) ) ];
+  assumption
 
 end Bridges.TropicalSDLog
 

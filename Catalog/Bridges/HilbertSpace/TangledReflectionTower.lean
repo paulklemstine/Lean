@@ -1,5 +1,5 @@
 import Logic.PhysicsConsistency.Incompleteness
-import Logic.ProofSystemCollapse
+import Logic.PosetTheory.ProofSystemCollapse
 
 /-!
 # Consistency Reflection Strictly Raises Proof-Theoretic Strength

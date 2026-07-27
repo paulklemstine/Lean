@@ -32,7 +32,7 @@ Synthesis (PI): Complete-host induced containment is now classified by a
   as a strict special case.
 -/
 
-import Novelty.MinimallyToughP4Free
+import Novelty.QuantumSystems.MinimallyToughP4Free
 
 open SimpleGraph
 

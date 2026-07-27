@@ -25,15 +25,14 @@ theorem fib_dvd_chain (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
 
 
 
-/-- Certified-range Carmichael theorem: for `13 ≤ n ≤ 10000`, `F(n)` has a
-primitive prime divisor. -/
+/-- Carmichael's theorem (weak): For n ≥ 13, F(n) has a primitive prime divisor. -/
 theorem fib_primitive_divisor_existence :
-    ∀ n : ℕ, 13 ≤ n → n ≤ 10000 → ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
+    ∀ n : ℕ, 13 ≤ n → ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  intro n hn hn2
+  intro n hn
   by_cases hnp : Nat.Prime n
   · exact fib_primitive_divisor_prime n hn hnp
-  · exact fib_carmichael_composite n hn hn2 hnp
+  · exact fib_carmichael_composite n hn hnp
 
 
 

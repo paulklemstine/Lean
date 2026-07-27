@@ -1,3 +1,4 @@
+import Algebra.Algebra.OpenDirections
 import Mathlib
 
 /-! # CatalogBuild.Shared.Rsa_totient
