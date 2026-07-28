@@ -497,7 +497,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Hypothesis: Zero-Free Regions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1a03af4c",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra",
@@ -505,10 +505,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_038",
+    "phase": "A",
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Langlands Program: Functoriality"
   },
@@ -821,21 +822,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:05:23.912412+00:00",
     "title": "FHE-Noise-Growth: Exact Noise Accumulation Bounds in Bootstrapped FHE"
-  },
-  {
-    "consumed_by_exp_id": "3e30c45d",
-    "description": "Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "dir_50_33_8710ae46",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:23.960671+00:00",
-    "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
   },
   {
     "consumed_by_exp_id": "",
@@ -2196,6 +2182,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 3e30c45d (Q=0.769), which proved 23 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_3e30c45d_337ca3fb",
+    "priority_score": 0.8689999999999999,
+    "research_mode": "team",
+    "source_exp_id": "3e30c45d",
+    "status": "available",
+    "timestamp": "2026-07-28T18:55:07.368117+00:00",
+    "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle a68d3b50 (Q=0.767), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domains": [
       "Cryptography"
@@ -2627,23 +2627,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Computational Complexity of Alien Civilizations"
-  },
-  {
-    "consumed_by_exp_id": "627f5167",
-    "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_285",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Reflective Type Theory: Proving Things About Proving Things"
   },
   {
     "consumed_by_exp_id": "",
@@ -7033,17 +7016,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "229af38b",
     "description": "Prove that every tree admits a graceful labeling. Formalize known results for paths, caterpillars, and olive trees. Explore connections to decompositions of complete graphs.",
     "domains": [
       "Combinatorics",
       "Algebra"
     ],
     "id": "seed_214",
+    "phase": "A",
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Graceful Tree Conjecture"
   },
@@ -7235,17 +7219,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s\u2013Straus Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f1303b99",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
       "Speculative"
     ],
     "id": "seed_059",
+    "phase": "A",
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Game of Life Universality"
   },
@@ -7718,22 +7703,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Let `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n <"
   },
   {
-    "consumed_by_exp_id": "e68f39b0",
-    "description": "# Future directions\n\n## Completed formal result\n\n`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a\nprecise order parameter.  For natural-valued counts `provable n` and\n`unprovable n`, it defines\n\n- the rational provable fraction\n  `provable n / (provable n + unprovable n)`, and\n- the integer imbalance `provable n - unprovable n`.\n\nIf every sampled cutoff has positive total count, the imbalance is strictly\ndecreasing through a finite horizon `N`, and the final imbalance is\nnonpositive, then there is a unique first cutoff at which the order parameter\nis at most one half.  Every earlier cutoff is above one half and every later\ncutoff through `N` is strictly below one half.  The development also proves:\n\n1. existence and uniqueness of a first sign-change cutoff;\n2. permanence of the transition under strict decrease;\n3. exact equivalences between count inequalities and crossing one half;\n4. a linear decay bound for integer-valued strict descent; and\n5. an upper bound on the first threshold in terms of initial imbalance.\n\nThe proofs are complete and contain no unproved placeholders.\n\n## Scope of the result\n\nThis is a conditional finite-order theorem, not an encoding-independent theorem\nabout PA, ZFC, or another concrete formal system.  G\u00f6del incompleteness supplies\nunprovable sentences, but by itself does not imply strict decrease of a density,\na sharp threshold, or a power-law distribution of theorem lengths.  Those\nclaims depend on a syntax, a length function, a provability predicate, and a\nsampling measure.  Computable recodings can substantially alter raw length\nstatistics.\n\nThe repository also contained an unfinished, unrelated Fibonacci primitive\n divisor declaration whose proof stopped beyond a finite computation.  Its\nformal statement is now accurately restricted to the certified range\n`13 \u2264 n \u2264 10000`; dependent declarations were updated to carry that bound.\nThe unbounded Fibonacci theorem is not claimed by this development.\n\n## Computational evidence\n\nNo independent numerical evidence is appropriate for the abstract transition\ntheorem.  Its conclusion follows symbolically from its hypotheses, while the\nmission does not specify a concrete formula grammar, coding, proof calculus, or\nbounded proof-search algorithm from which numerical counts could be generated.\nWithout those choices, a table, plot, or OEIS comparison would describe an\narbitrary encoding rather than evidence for the proposed logical phenomenon.\nThe finite Fibonacci range used elsewhere in the repository is certified inside\nLean by its existing decidable computation.\n\n## Next formal targets\n\n1. **Concrete syntax and proof checking.** Define a finite alphabet, grammar,\n   formula-length function, deductive system, and bounded proof checker.  Use\n   finite sets to define cumulative provable and unresolved counts.\n2. **Shell-versus-cumulative analysis.** Relate strict decrease of cumulative\n   imbalance to the excess of unresolved formulas in each exact-length shell.\n3. **Transition windows.** Replace pointwise strict descent by negative drift on\n   blocks, and prove bounds on the width and location of a crossing window.\n4. **Robustness under recoding.** Prove controlled distortion of lengths under\n   prefix-free computable translations before treating a threshold as an\n   intrinsic invariant.\n5. **Probabilistic formulation.** Put an explicit measure on formulas and state\n   concentration inequalities.  This would distinguish a deterministic first\n   crossing from a statistical sharp threshold.\n6. **Arithmetized syntax.** Connect finite bounded proof search to a\n   machine-checked incompleteness theorem.  Additional quantitative hypotheses\n   will still be required to infer density behavior.\n7. **Length distributions.** State any power-law claim with finite-range error\n   bounds and coding assumptions.  A relation to Hausdorff dimension requires a\n   separately defined metric space of proofs or proof trees and an invariance\n   theorem connecting that metric to the chosen encoding.\n",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "fd_0782",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "27eaed26",
-    "status": "in_progress",
-    "timestamp": "2026-07-27T02:02:54.037390+00:00",
-    "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThe following are concrete conjectures extending the formal model in `Catalog/Novelty/ImmortalityGame.lean`. Each has a definite Lean statement and can be proved or refuted independently.\n\n1. **Finite iteration of bounded nondeterministic refinement.** Define `nondetExtIter : \u2115 \u2192 SurvivalGame \u2192 SurvivalGame` by iteration of `nondetExt`. For every `k : \u2115`,\n   ```lean\n   (nondetExtIter k finiteGame).value = \u03c9 ^ (k + 1)\n   ```\n   where the natural exponent is coerced to an ordinal as required by the API.\n\n2. **Exact finite-level hierarchy.** For all natural numbers `j < k`, the `j`-fold refined finite game cannot force the survival value of the `k`-fold refined game:\n   ```lean\n   \u00ac (nondetExtIter j finiteGame).MortalForces\n       ((nondetExtIter k finiteGame).value)\n   ```\n\n3. **Embedding characterization of bounded-depth clocks.** For every survival game `G` and natural number `k`, if the moments of `G` order-embed into the `k`-fold lexicographic natural-number clock, then\n   ```lean\n   G.value \u2264 \u03c9 ^ k\n   ```\n   (with the base clock chosen so that `k = 1` recovers `value_le_omega_of_embeds_nat`). Conversely, every game whose value is at most `\u03c9 ^ k` admits such an order embedding.\n\n4. **The finite-refinement limit is `\u03c9^\u03c9`.** If the clocks at all finite refinement depths are combined by an ordinal sum or an equivalent dependent lexicographic construction, the resulting survival value is exactly\n   ```lean\n   \u03c9 ^ \u03c9\n   ```\n   and it strictly exceeds every finite refinement value.\n\n5. **Faithful monotone ITTM-clock realization.** There is a monotone transfinite transition system with an explicit limit rule whose reachable-time well-order is isomorphic to `nondetGame.Moment`; consequently its closure ordinal is exactly `\u03c9\u00b2`, no stage below `\u03c9\u00b2` is terminal, and stage `\u03c9\u00b2` is terminal.",
     "domains": [
@@ -7761,21 +7730,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T10:29:20.110540+00:00",
     "title": "The following are concrete, falsifiable conjectures extracted from Bergman's *Fu"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ancestral graphs returns `true` if and only if the corresponding mutilated graph satisfies Pearl's d-separation condition. This is falsifiable by exhaustive comparison on all DAGs with at most five vertices.\n\n2. **Polynomial-space reachability.** The equivalence class accepted by `DoCalculus.identify` can be decided by a work-list algorithm using space polynomial in the number of well-formed queries, while returning the same Boolean result. This is falsifiable by implementing both procedures and proving pointwise equality.\n\n3. **Structural-equation soundness bridge.** For finite-valued acyclic non-parametric structural equation models with mutually independent exogenous variables, each of the three primitive graphical steps preserves the induced interventional kernel. A counterexample would be a finite acyclic model and a side-condition-certified step whose two kernels differ.\n\n4. **Concrete ID-algorithm completeness.** A recursive implementation of the Shpitser\u2013Pearl ID algorithm succeeds on a finite semi-Markovian graph exactly when the source and target queries are related by `DoCalculus.Derivable` after adding the probability-calculus normalization rules. This is falsifiable by exhaustive testing over small acyclic directed mixed graphs before formal proof.\n\n5. **Certificate extraction.** Every positive result of an optimized identifiability work-list can be accompanied by a `DoCalculus.Derivable` proof whose number of primitive steps is no greater than the number of discovered query states. This is falsifiable by constructing the predecessor map and checking the bound on every finite oracle.\n",
-    "domains": [
-      "Computation",
-      "Bridges"
-    ],
-    "id": "fd_0787",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "1443bb24",
-    "status": "available",
-    "timestamp": "2026-07-27T13:44:21.602529+00:00",
-    "title": "1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disj"
   },
   {
     "consumed_by_exp_id": "",
@@ -7835,6 +7789,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T17:00:39.819743+00:00",
     "title": "1. Generalize the scalar output theorem to vector-valued output layers."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: radical isogenies on Montgomery curves\n\nThe following conjectures are concrete extensions of the verified degree-two affine formulas. Each can be falsified by an explicit finite field, curve parameter, and point (or chain) violating the stated property.\n\n1. **Projective extension and exact kernel.** For every field of characteristic different from two and every nonsingular curve\n   \\(E_A : y^2=x^3+Ax^2+x\\), the rational map\n   \\((x,y)\\mapsto(x+x^{-1},\\,y(1-x^{-2}))\\) extends uniquely to a degree-two separable isogeny of smooth projective curves whose kernel is exactly \\(\\{\\mathcal O,(0,0)\\}\\).\n\n2. **Dual composition formula.** Under the same hypotheses, after converting the quotient\n   \\(Y^2=X^3+AX^2-4X-4A\\) back to Montgomery normal form, the analogous quotient by the image two-torsion point is the dual isogeny, and the two maps compose to the multiplication-by-two morphism on \\(E_A\\).\n\n3. **Supersingularity preservation over quadratic finite fields.** Let \\(p>2\\) be prime and \\(A\\in\\mathbb F_{p^2}\\) define a nonsingular supersingular Montgomery curve. The smooth projective model of the verified quotient equation is supersingular and has the same number of \\(\\mathbb F_{p^2}\\)-rational points as \\(E_A\\).\n\n4. **Radical-choice independence up to twist isomorphism.** If \\(r,s\\in\\mathbb F_{p^2}^{\\times}\\) satisfy \\(r^2=s^2=B\\), then the normalize-then-quotient evaluations obtained from `radicalNormalize r` and `radicalNormalize s` are conjugate by the explicit sign isomorphism \\((X,Y)\\mapsto(X,-Y)\\); consequently their induced maps on projective isomorphism classes coincide.\n\n5. **Verified-chain uniqueness.** In any free transitive commutative class-group action modeling supersingular isogeny classes, two finite radical-isogeny chains with the same source and target have equal products of advertised class-group elements, even when their lengths and intermediate curves differ.\n",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0798",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3e30c45d",
+    "status": "available",
+    "timestamp": "2026-07-28T18:55:02.861386+00:00",
+    "title": "The following conjectures are concrete extensions of the verified degree-two aff"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Guarded fixed points are semantically monotone.** Define a polarity judgment on `RType` and prove that every code positive in its distinguished bound variable induces a monotone operator on `Set F.World` for every finite Kripke frame `F`. A counterexample is any positive code whose induced operator reverses an inclusion.\n\n2. **Finite least-fixed-point convergence has a sharp bound.** For every frame with `n` worlds and every positive one-variable reflective code, iteration from `\u2205` reaches the semantic least fixed point in at most `n` strict-growth steps. This is falsified by a finite frame and positive code requiring more than `n` steps.\n\n3. **Scoping is preserved by capture-avoiding substitution.** After defining lifting and substitution for de Bruijn variables, prove that substituting a closed well-scoped code into a code scoped under one binder produces a closed well-scoped code. A single well-scoped input pair yielding an ill-scoped result refutes the conjecture.\n\n4. **The transitivity obstruction is frame-characterizing.** Prove the converse of the catalog theorem: if `F.box P \u2286 F.box (F.box P)` for every valuation `P`, then `F.step` is transitive. A non-transitive frame validating this inclusion for every predicate would be a counterexample.\n\n5. **The syntax equivalence restricts to guarded closed formulas.** Define matching guardedness and closedness judgments for `RType` and `MuFormula`; prove that `toMu` and `fromMu` restrict to an equivalence between the two guarded closed subtypes. This is falsified if either translation fails to preserve one of the judgments.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0800",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "627f5167",
+    "status": "available",
+    "timestamp": "2026-07-28T18:57:05.970027+00:00",
+    "title": "1. **Guarded fixed points are semantically monotone.** Define a polarity judgmen"
   },
   {
     "consumed_by_exp_id": "",
@@ -7928,34 +7912,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T13:29:16.297936+00:00",
     "title": "Close Proofs: ArXiv paper: A minimal modularity lifting theorem for Siegel modular f"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 27eaed26 (Q=0.696) proved 11 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unpro",
-    "domains": [
-      "Logic"
-    ],
-    "id": "sorry_fill_27eaed26_05858fb5",
-    "priority_score": 0.7462981818181817,
-    "research_mode": "team",
-    "source_exp_id": "27eaed26",
-    "status": "available",
-    "timestamp": "2026-07-27T02:02:57.882041+00:00",
-    "title": "Close Proofs: Speculative: Theorems as Phase Transitions in Proof Space"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 27eaed26 (Q=0.696) proved 11 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unpro",
-    "domains": [
-      "Logic"
-    ],
-    "id": "sorry_fill_27eaed26_9b21f3d6",
-    "priority_score": 0.7462981818181817,
-    "research_mode": "team",
-    "source_exp_id": "27eaed26",
-    "status": "available",
-    "timestamp": "2026-07-27T01:25:36.053657+00:00",
-    "title": "Close Proofs: Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
     "consumed_by_exp_id": "",
