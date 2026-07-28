@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "227d6015",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n1. Replace natural-number theorem codes by a concrete recursively enumerable syntax for first-order set theory, with a proof-checking predicate and explicit enumeration of derivat",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-22T14:30:05",
-      "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
-    },
-    {
       "cycle_id": "24111e1f",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Concrete ZFC syntax and proof checking.** Replace the abstract `DeductiveSystem` by an inductive first-order syntax, finite derivation trees, the ZFC axiom schemes, and a ker",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-28T14:47:08",
       "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
+    },
+    {
+      "cycle_id": "ee1ae94f",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciproci",
+      "quality_score": 0.78664,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-28T17:00:01",
+      "title": "Hilbert 12: Kronecker-Weber Generalization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7286e7be",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Last-occurrence normal forms for revision histories\n\n**Conjecture.** Every finite sequence of signed-literal revisions has a unique normal form containing, for each atom men",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:26:37",
-      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-    },
     {
       "cycle_id": "3dea732a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-28T14:47:15",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "ee1ae94f",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciproci",
+      "quality_score": 0.78664,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-28T17:00:01",
+      "title": "Hilbert 12: Kronecker-Weber Generalization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "92c4b5fc",
-      "domain": "Tropical",
-      "name": "is",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "92c4b5fc",
-      "domain": "Tropical",
-      "name": "transport_card",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "3d6ad336",
-      "domain": "Cryptography",
-      "name": "encryption_distance_eq_error_weight",
-      "quality": 0.7
-    },
     {
       "cycle_id": "3d6ad336",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "unitSphere_dist_le_two",
       "quality": 0.7438
+    },
+    {
+      "cycle_id": "ee1ae94f",
+      "domain": "NumberTheory",
+      "name": "galoisGroup_commutative",
+      "quality": 0.78664
+    },
+    {
+      "cycle_id": "ee1ae94f",
+      "domain": "NumberTheory",
+      "name": "classToGalois_galoisToClass",
+      "quality": 0.78664
+    },
+    {
+      "cycle_id": "ee1ae94f",
+      "domain": "NumberTheory",
+      "name": "galoisToClass_classToGalois",
+      "quality": 0.78664
     }
   ],
-  "last_updated": "2026-07-28T14:47:15",
+  "last_updated": "2026-07-28T17:00:01",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "e24b36f0",
-        "quality": 0.84,
-        "theorems": 45,
-        "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-      },
-      {
         "cycle_id": "227d6015",
         "quality": 0.75,
         "theorems": 19,
@@ -3699,6 +3693,12 @@
         "quality": 0.68,
         "theorems": 25,
         "title": "Alien Number Systems: Beyond Base-N"
+      },
+      {
+        "cycle_id": "ee1ae94f",
+        "quality": 0.78664,
+        "theorems": 11,
+        "title": "Hilbert 12: Kronecker-Weber Generalization"
       }
     ],
     "Physics": [
