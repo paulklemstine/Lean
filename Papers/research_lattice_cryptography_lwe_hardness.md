@@ -1,523 +1,543 @@
-# A Gaussian-Integer Bridge for Ring-LWE: The Sum of Two Squares as the Geometry of Lattice Encryption
+# Operational Statistical Security and Affine Uniformity for Finite LWE Hybrids
 
-**Author:** Aristotle
-**Date:** 2026-06-24
-**Domain:** Pythagorean / Lattice Cryptography
-
----
+**Aristotle**  
+**July 28, 2026**
 
 ## Abstract
 
-We develop the algebraic and number-theoretic foundations needed to state the
-ring variant of the Learning With Errors (ring-LWE) problem over the Gaussian
-integers $\mathbb{Z}[i]$ and to establish a clean decryption-correctness
-guarantee for a public-key encryption scheme built upon it. The central object
-is the Gaussian norm $N(a + bi) = a^2 + b^2$ — the Pythagorean sum of two
-squares — whose **multiplicativity** $N(zw) = N(z)N(w)$ is precisely the
-Brahmagupta–Fibonacci composition identity. We layer the development so that
-each result depends only on previously established components: (1) the Gaussian
-norm and its non-negativity; (2) multiplicativity via Brahmagupta–Fibonacci;
-(3) the splitting/inertness dichotomy of rational primes in $\mathbb{Z}[i]$
-governed by residues modulo $4$ (Fermat's two-squares theorem); (4) the
-ring-LWE problem and an associated public-key scheme; and (5) a decryption
-correctness theorem stating that decryption succeeds whenever the error vector
-$(e_x, e_y)$ lies in the Euclidean ball $e_x^2 + e_y^2 < (q/4)^2$. Separately,
-we present the algebraic core of the LWE search-to-decision reduction: affine
-maps $x \mapsto ax + b$ ($a \neq 0$) are bijections modulo a prime, yielding a
-pigeonhole-based per-coordinate advantage bound with a tight factor-$n$ loss,
-and a certificate interface composing an assumed Regev quantum worst-case
-reduction with the search-to-decision step. All results have been formalized and
-machine-checked. We stop short of reproving Regev's analytic/quantum reduction,
-which is isolated as an explicit hypothesis.
-
----
+This paper develops two elementary but reusable foundations for finite game-based analyses of Learning With Errors and ring-based variants. First, for probability mass functions on a finite transcript space, we prove that the difference in expectation of every test valued in $[0,1]$ is bounded by the unnormalized $\ell^1$ distance between the distributions. Deterministic Boolean distinguishers follow as a special case. We then prove a common-ideal hybrid theorem: if each of two challenge ensembles is within respective errors $\varepsilon_0$ and $\varepsilon_1$ of one ideal ensemble, then every deterministic Boolean adversary has acceptance-probability advantage at most $\varepsilon_0+\varepsilon_1$. Second, we establish an algebraic uniformity principle for finite commutative rings. If the public multiplier $a$ is a unit, then the affine map $s\mapsto as+e$ is a permutation for every fixed error $e$; consequently, affine sampling preserves the uniform distribution and preserves sums of arbitrary real-valued statistics. We give proofs, executable finite algorithms, examples over residue rings, applications to hybrid arguments, and a precise account of scope. These results supply the operational and ring-theoretic links needed in broader LWE security developments, without asserting a full worst-case lattice reduction or a complete encryption theorem.
 
 ## 1. Introduction
 
-Lattice-based cryptography is the leading approach to public-key cryptography
-secure against quantum adversaries. Its security rests on the conjectured
-hardness of the **Learning With Errors (LWE)** problem (Regev, 2005) and its
-algebraically efficient variant **ring-LWE** (Lyubashevsky–Peikert–Regev,
-2010). Regev's foundational theorem reduces worst-case lattice problems such as
-the (gap) shortest vector problem $\mathrm{GapSVP}$ to average-case decision-LWE
-via a quantum algorithm, providing the strongest possible form of security
-guarantee: an average-case instance is as hard as the worst case.
+Learning With Errors (LWE) and its structured variants use noisy linear relations as the basis for cryptographic constructions. Their security analyses repeatedly move between three levels of description. At the distributional level, one compares transcript ensembles. At the operational level, one asks how much an observer’s behavior can differ between two experiments. At the algebraic level, one exploits transformations that preserve uniform randomness.
 
-This paper formalizes the **Pythagorean heart** of one concrete and historically
-resonant instantiation: ring-LWE over the Gaussian integers $\mathbb{Z}[i]$. The
-arithmetic of $\mathbb{Z}[i]$ is governed by the norm $N(a + bi) = a^2 + b^2$,
-the quintessential sum of two squares. Three classical facts drive the entire
-development:
+A rigorous game argument must connect these levels. A bound such as “the real experiment is close to the ideal experiment” becomes cryptographically meaningful only after it bounds the success of distinguishers. Likewise, an assertion that an algebraic expression is uniform must rest on a precise reason, such as the expression being a permutation of a uniformly sampled domain.
 
-1. **Brahmagupta–Fibonacci identity** (7th/13th century):
-   $(a^2 + b^2)(c^2 + d^2) = (ac - bd)^2 + (ad + bc)^2$, which makes $N$
-   multiplicative.
-2. **Fermat's two-squares theorem**: an odd prime $p$ is a sum of two squares
-   iff $p \equiv 1 \pmod 4$, controlling whether $p$ splits or stays inert in
-   $\mathbb{Z}[i]$.
-3. **Nearest-codeword rounding** in $\mathbb{Z}/q\mathbb{Z}$, whose correctness
-   radius is exactly $q/4$, giving a *Euclidean ball* error-tolerance region
-   $x^2 + y^2 < (q/4)^2$ in two dimensions.
+We treat these connections in a finite model. Let $\Omega$ be a finite transcript space. Probability distributions are represented explicitly by mass functions. Their discrepancy is measured by the unnormalized $\ell^1$ gap
 
-Our contribution is a layered, fully verified formalization establishing the
-norm theory, the prime dichotomy, the encryption scheme, and a decryption
-correctness theorem, together with the algebraic core of the search-to-decision
-reduction and a quantitative certificate interface for the Regev worst-case
-reduction.
+$$
+\Delta_1(P,Q)=\sum_{x\in\Omega}|P(x)-Q(x)|.
+$$
 
-### Notation and conventions
+The first main result is an operational inequality. For every $t:\Omega\to[0,1]$,
 
-Throughout, $q = 2t$ denotes an even modulus with half-modulus $t = q/2$. A
-Gaussian integer is $z = a + bi$ with $a = \mathrm{Re}(z)$, $b = \mathrm{Im}(z)$.
-The Gaussian norm is $N(z) = a^2 + b^2 \in \mathbb{Z}$. Errors are written
-$(e_x, e_y)$ for the real and imaginary parts, respectively. Plaintext bits are
-$m \in \{0, 1\}$.
+$$
+|\mathbb{E}_P[t]-\mathbb{E}_Q[t]|\le\Delta_1(P,Q).
+$$
 
----
+Indicator tests yield deterministic Boolean distinguishers. Combining the inequality with the triangle inequality through a common ideal distribution gives an immediate hybrid-security theorem.
 
-## 2. The Gaussian norm
+The second main result concerns a finite commutative ring $R$. For $a,e\in R$, consider
 
-**Definition 2.1 (Gaussian norm).** For $z = a + bi \in \mathbb{Z}[i]$, define
+$$
+T_{a,e}(s)=as+e.
+$$
 
-$$N(z) := (\mathrm{Re}\,z)^2 + (\mathrm{Im}\,z)^2 = a^2 + b^2.$$
+If $a$ is a unit, multiplication by $a$ and translation by $e$ are both bijective; hence their composition is bijective. Uniform input therefore produces uniform output, and every finite sum may be reindexed through $T_{a,e}$.
 
-This is realized in the formalization as `gaussNorm (z : GaussianInt) : ℤ`.
+The paper’s contribution is deliberately focused. It does not prove the decisional hardness of LWE, Regev’s quantum worst-case reduction, the correctness or chosen-plaintext security of a complete Dual-Regev scheme, or a cyclotomic ring-LWE reduction. Instead, it establishes the exact finite statistical and algebraic statements that can serve as components in those larger programs. This distinction prevents an operational lemma from being mistaken for a computational hardness theorem.
 
-**Proposition 2.2 (Agreement with the field norm; `gaussNorm_eq_zsqrtdNorm`).**
-The explicit norm agrees with the standard ring norm on $\mathbb{Z}[i]$
-(Mathlib's `Zsqrtd.norm`): $N(z) = z.\mathrm{norm}$.
+The remainder is organized as follows. Section 2 defines finite experiments and their distance. Section 3 proves the bounded-test and Boolean-distinguisher inequalities. Section 4 develops the common-ideal game hop. Section 5 proves affine uniformity over finite commutative rings. Section 6 gives algorithms and examples. Section 7 discusses cryptographic applications and limitations, and Section 8 presents future research directions.
 
-*Proof sketch.* The ring $\mathbb{Z}[i]$ is the quadratic ring $\mathbb{Z}[\sqrt{-1}]$,
-whose generic norm is $a^2 - (-1)b^2 = a^2 + b^2$. Expanding both definitions and
-applying ring normalization gives the identity. $\square$
+## 2. Finite experiments and statistical distance
 
-**Proposition 2.3 (Non-negativity; `gaussNorm_nonneg`).** For every
-$z \in \mathbb{Z}[i]$, $N(z) \geq 0$.
+### 2.1 Probability mass functions
 
-*Proof sketch.* $N(z) = a^2 + b^2$ is a sum of squares of integers, hence
-non-negative by positivity. $\square$
+Let $\Omega$ be a nonempty finite set. A **finite probability mass function** on $\Omega$ is a function $P:\Omega\to\mathbb{R}$ satisfying
 
----
+$$
+P(x)\ge0\quad\text{for all }x\in\Omega,
+\qquad
+\sum_{x\in\Omega}P(x)=1.
+$$
 
-## 3. Multiplicativity via Brahmagupta–Fibonacci
+The nonnegativity and normalization conditions make $P(x)$ the probability assigned to transcript $x$. All arguments below are finite sums; no measure-theoretic limiting operations are required.
 
-The single most important structural property of the norm is multiplicativity.
-We obtain it directly from the classical composition identity for sums of two
-squares.
+### 2.2 The unnormalized $\ell^1$ gap
 
-**Lemma 3.1 (Brahmagupta–Fibonacci identity).** For integers $a, b, c, d$,
+For two finite probability mass functions $P$ and $Q$ on $\Omega$, define their **$\ell^1$ gap** by
 
-$$(a^2 + b^2)(c^2 + d^2) = (ac - bd)^2 + (ad + bc)^2.$$
+$$
+\Delta_1(P,Q)=\sum_{x\in\Omega}|P(x)-Q(x)|.
+$$
 
-(In the formalization this is `FINAL.Pythagorean.brahmagupta_fibonacci`,
-imported and applied to the coordinates of the factors.)
+This quantity is symmetric and nonnegative. It vanishes exactly when the two mass functions agree pointwise. Since $|u-v|\le u+v$ for nonnegative $u$ and $v$,
 
-**Theorem 3.2 (Multiplicativity of the Gaussian norm; `gaussNorm_mul`).** For
-all $z, w \in \mathbb{Z}[i]$,
+$$
+0\le\Delta_1(P,Q)\le2.
+$$
 
-$$N(z \cdot w) = N(z) \cdot N(w).$$
+The conventional total variation distance on a finite space is
 
-*Proof sketch.* Write $z = a + bi$, $w = c + di$. The product in $\mathbb{Z}[i]$
-has real part $ac - bd$ and imaginary part $ad + bc$:
+$$
+\operatorname{TV}(P,Q)=\frac12\Delta_1(P,Q).
+$$
 
-$$\mathrm{Re}(zw) = ac - bd, \qquad \mathrm{Im}(zw) = ad + bc.$$
+We retain $\Delta_1$ because it arises directly from summing pointwise absolute differences. This normalization yields a valid but sometimes non-tight operational bound. In particular, the sharp Boolean bound is naturally expressed using total variation; sharpening the normalization is discussed later.
 
-Therefore
-$N(zw) = (ac - bd)^2 + (ad + bc)^2$, which by Lemma 3.1 equals
-$(a^2 + b^2)(c^2 + d^2) = N(z)N(w)$. Formally, after substituting the explicit
-real and imaginary parts of the product, the goal is closed by a linear
-combination of the Brahmagupta–Fibonacci identity. $\square$
+### 2.3 Encryption experiments
 
-This theorem is the algebraic backbone of arithmetic in $\mathbb{Z}[i]$: the
-norm is a multiplicative monoid homomorphism $(\mathbb{Z}[i], \cdot) \to
-(\mathbb{Z}_{\geq 0}, \cdot)$, and the set of norm values — the sums of two
-squares — is consequently closed under multiplication.
+A **binary encryption experiment** on $\Omega$ consists of two probability mass functions $E_0$ and $E_1$, corresponding to challenge bits $0$ and $1$. The transcript includes all information exposed to an adversary: public parameters, public keys, challenge ciphertexts, oracle replies if already folded into a finite transcript, and any other observable outputs.
 
----
+A **common ideal experiment** is another probability mass function $I$ on $\Omega$ against which both challenge distributions are compared. The ideal need not arise from the original encryption algorithm. Its purpose is to provide a tractable intermediate distribution.
 
-## 4. The splitting / inertness dichotomy
+### 2.4 Tests and expectations
 
-The behavior of a rational prime $p$ inside $\mathbb{Z}[i]$ is governed entirely
-by $p \bmod 4$. This is Fermat's two-squares theorem in Gaussian-prime language,
-and it dictates the choice of secure ring-LWE moduli.
+A **bounded test** is a function $t:\Omega\to\mathbb{R}$ satisfying
 
-**Theorem 4.1 (Split primes; `prime_split`).** If $p$ is prime with
-$p \equiv 1 \pmod 4$, then there exist integers $a, b$ with $a^2 + b^2 = p$.
+$$
+0\le t(x)\le1
+$$
 
-**Corollary 4.2 (Non-primality in $\mathbb{Z}[i]$; `prime_not_prime_in_gaussian`).**
-If $p$ is prime with $p \equiv 1 \pmod 4$, then $p$ is *not* prime in
-$\mathbb{Z}[i]$; it splits as $p = (a + bi)(a - bi)$ where $a^2 + b^2 = p$.
+for every $x\in\Omega$. Its expectation under $P$ is
 
-*Proof sketch.* By Theorem 4.1, $p = a^2 + b^2 = N(a + bi)$, so
-$p = (a+bi)(a-bi)$ is a nontrivial factorization (neither factor is a unit since
-each has norm $p > 1$), witnessing that $p$ is reducible, hence not prime. $\square$
+$$
+\mathbb{E}_P[t]=\sum_{x\in\Omega}P(x)t(x).
+$$
 
-**Theorem 4.3 (Inert primes; `prime_inert`).** If $p$ is prime with
-$p \equiv 3 \pmod 4$, then $p$ remains prime in $\mathbb{Z}[i]$.
+A deterministic Boolean distinguisher is a map $A:\Omega\to\{0,1\}$. It determines an acceptance event
 
-**Theorem 4.4 (Not a sum of two squares; `prime_inert_not_sum_two_squares`).** If
-$p \equiv 3 \pmod 4$, then there are no integers $a, b$ with $a^2 + b^2 = p$.
+$$
+S_A=\{x\in\Omega:A(x)=1\},
+$$
 
-*Proof sketch.* Squares modulo $4$ are $0$ or $1$, so $a^2 + b^2 \in \{0, 1, 2\}
-\pmod 4$ and can never be $\equiv 3$. Hence $p \equiv 3 \pmod 4$ is not a sum of
-two squares; equivalently, $p$ has no nontrivial factorization in $\mathbb{Z}[i]$
-(any factor would contribute a norm strictly between $1$ and $p^2$ equal to $p$,
-which is impossible), so $p$ is inert. $\square$
+and its acceptance probability is
 
-These results partition the rational primes into two cryptographically distinct
-families: **split moduli** ($p \equiv 1 \pmod 4$, each a sum of two squares) and
-**inert moduli** ($p \equiv 3 \pmod 4$). The choice affects the ring structure
-$\mathbb{Z}[i]/(p)$ and therefore the geometry of the underlying lattice.
+$$
+\Pr_{x\sim P}[A(x)=1]=\sum_{x\in S_A}P(x).
+$$
 
----
+The indicator $\mathbf{1}_{S_A}$ is a bounded test, so Boolean distinguishers are a special case of the test formalism.
 
-## 5. Ring-LWE over $\mathbb{Z}[i]$
+## 3. Operational interpretation of the $\ell^1$ gap
 
-We instantiate a generic LWE scaffolding at the coefficient ring
-$\mathbb{Z}[i]$.
+### 3.1 Bounded tests
 
-**Definition 5.1 (Ring-LWE sample; `RLWESample`, `rlweSample`).** A ring-LWE
-sample over $\mathbb{Z}[i]$ is a pair $(a, b) \in \mathbb{Z}[i] \times
-\mathbb{Z}[i]$. The *honest* sample with secret $s$, error $e$, and public
-element $a$ is
+**Theorem 3.1 (Bounded-Test Inequality).** Let $P$ and $Q$ be probability mass functions on a finite set $\Omega$. If $t:\Omega\to[0,1]$, then
 
-$$\mathrm{rlweSample}(s, e, a) = (a,\; a \cdot s + e).$$
+$$
+\left|\mathbb{E}_P[t]-\mathbb{E}_Q[t]\right|
+\le
+\Delta_1(P,Q).
+$$
 
-**Definition 5.2 (Euclidean error bound; `errorBounded`).** A Gaussian error
-$e$ is *bounded by $r$* if its error vector lies in the open Euclidean ball of
-radius $r$:
+**Proof.** Expand the expectations and combine the sums:
 
-$$\mathrm{errorBounded}(r, e) :\Longleftrightarrow (\mathrm{Re}\,e)^2 +
-(\mathrm{Im}\,e)^2 < r^2.$$
+$$
+\mathbb{E}_P[t]-\mathbb{E}_Q[t]
+=
+\sum_{x\in\Omega}\bigl(P(x)-Q(x)\bigr)t(x).
+$$
 
-**Definition 5.3 (Search ring-LWE; `SearchRLWE`).** Given a radius $r$ and a list
-of samples, $\mathrm{SearchRLWE}(r, \text{samples})$ is the problem of recovering
-a secret consistent with all samples, where "small residual" means the residual
-error lies in the radius-$r$ Euclidean ball. Formally this instantiates the
-generic `SearchLWE` predicate with the noise predicate $\mathrm{errorBounded}(r,
-\cdot)$.
+Apply the triangle inequality for a finite sum:
 
-The use of the Euclidean (sum-of-two-squares) ball as the noise region is the
-natural geometric notion in $\mathbb{Z}[i]$ and is what links the algebra of the
-norm to the correctness analysis below.
+$$
+\left|\sum_{x\in\Omega}\bigl(P(x)-Q(x)\bigr)t(x)\right|
+\le
+\sum_{x\in\Omega}|P(x)-Q(x)|\,|t(x)|.
+$$
 
----
+Because $t(x)\in[0,1]$, one has $|t(x)|=t(x)\le1$. Therefore
 
-## 6. A public-key scheme and decryption correctness
+$$
+\sum_{x\in\Omega}|P(x)-Q(x)|\,|t(x)|
+\le
+\sum_{x\in\Omega}|P(x)-Q(x)|
+=
+\Delta_1(P,Q).
+$$
 
-We now describe a bit-encryption scheme over $\mathbb{Z}[i]$ and prove its
-correctness. Fix $q = 2t$, so $t = q/2$ is the half-modulus; a plaintext bit
-$m \in \{0, 1\}$ is encoded in a coordinate as $m \cdot t \in \{0, q/2\}$.
+This proves the claim. $\square$
 
-### 6.1 The decoder and one-dimensional correctness
+The theorem gives $\Delta_1$ an operational interpretation. A bound on the aggregate pointwise discrepancy simultaneously controls every score function with range $[0,1]$. No optimization over tests is required in order to apply the result.
 
-**Definition 6.1 (Nearest-codeword decoder; `decodeCoord`).** For half-modulus
-$t$ and a coordinate value $v$,
+The nonnegativity of the test is relevant to the stated constant. If one instead allowed $t(x)\in[-1,1]$, the same proof would still give the identical $\ell^1$ upper bound because $|t(x)|\le1$. The present range is natural for acceptance probabilities and normalized payoffs.
 
-$$\mathrm{decodeCoord}(t, v) = \begin{cases} 0 & \text{if } 2v < t, \\ 1 &
-\text{otherwise.} \end{cases}$$
+### 3.2 Deterministic Boolean distinguishers
 
-**Theorem 6.2 (One-dimensional decoding correctness; `decodeCoord_correct`).**
-Let $m \in \{0, 1\}$ and let $e$ be an integer error with $2|e| < t$. Then
+**Theorem 3.2 (Boolean Distinguisher Inequality).** Let $P$ and $Q$ be probability mass functions on a finite transcript space $\Omega$. For every deterministic map $A:\Omega\to\{0,1\}$,
 
-$$\mathrm{decodeCoord}(t,\; e + m \cdot t) = m.$$
+$$
+\left|
+\Pr_{x\sim P}[A(x)=1]
+-
+\Pr_{x\sim Q}[A(x)=1]
+\right|
+\le
+\Delta_1(P,Q).
+$$
 
-*Proof sketch.* Two cases. If $m = 0$, the coordinate is $e$ with $2|e| < t$, so
-$2e < t$ and the decoder outputs $0 = m$. If $m = 1$, the coordinate is $e + t$;
-from $2|e| < t$ we get $2(e + t) = 2e + 2t \geq -t + 2t = t$ (in fact $> t$), so
-$2(e+t) \not< t$ and the decoder outputs $1 = m$. Formally one splits on the two
-values of $m$ and the sign of $e$ (via the case analysis of $|e|$) and discharges
-each branch by linear integer arithmetic. $\square$
+Equivalently,
 
-### 6.2 Encoding, encryption, decryption
+$$
+\left|
+\sum_{\substack{x\in\Omega\\A(x)=1}}P(x)
+-
+\sum_{\substack{x\in\Omega\\A(x)=1}}Q(x)
+\right|
+\le
+\Delta_1(P,Q).
+$$
 
-**Definition 6.3 (Message encoding; `encodeMsg`).** A two-bit message
-$(m_x, m_y)$ is encoded as the Gaussian integer
+**Proof.** Define $t(x)=1$ if $A(x)=1$ and $t(x)=0$ otherwise. Then $t:\Omega\to[0,1]$, and its expectation under either distribution is exactly the corresponding acceptance probability. Theorem 3.1 applies. $\square$
 
-$$\mathrm{encodeMsg}(t, m_x, m_y) = (m_x \cdot t) + (m_y \cdot t)\, i.$$
+A randomized distinguisher can also be accommodated when its private randomness is finite and independent of the challenge: either enlarge $\Omega$ to include the random coins, or define $t(x)$ as the conditional acceptance probability given transcript $x$. The latter lies in $[0,1]$, so Theorem 3.1 applies directly. The formal statement above remains focused on deterministic Boolean adversaries because that is the exact finite corollary needed here.
 
-**Definition 6.4 (Ciphertext; `Ciphertext`).** A ciphertext is a pair
-$(u, v) \in \mathbb{Z}[i]^2$, where $u$ is the public part and $v$ is the masked,
-message-carrying part.
+### 3.3 Normalization and sharpness
 
-**Definition 6.5 (Encryption; `encrypt`).** With secret $s$, public coordinate
-$a$, error coordinates $(e_x, e_y)$, message bits $(m_x, m_y)$, and half-modulus
-$t$,
+Theorem 3.2 is intentionally simple rather than sharp. For an event $S\subseteq\Omega$, normalization implies
 
-$$\mathrm{encrypt} = \big(a,\; a \cdot s + (e_x + e_y i) +
-\mathrm{encodeMsg}(t, m_x, m_y)\big).$$
+$$
+\sum_{x\in S}(P(x)-Q(x))
+=-\sum_{x\notin S}(P(x)-Q(x)).
+$$
 
-**Definition 6.6 (Decryption; `decrypt`).** Given the secret $s$ and ciphertext
-$(u, v)$, compute the *phase* $\phi = v - u \cdot s$ and round each coordinate:
+Using positive and negative parts, one can prove the sharper characterization
 
-$$\mathrm{decrypt}(t, s, (u, v)) = \big(\mathrm{decodeCoord}(t, \mathrm{Re}\,\phi),\;
-\mathrm{decodeCoord}(t, \mathrm{Im}\,\phi)\big).$$
+$$
+\sup_{S\subseteq\Omega}|P(S)-Q(S)|
+=rac12\Delta_1(P,Q).
+$$
 
-Substituting the ciphertext from Definition 6.5, the phase is
-$\phi = (e_x + e_y i) + \mathrm{encodeMsg}(t, m_x, m_y)$, so
-$\mathrm{Re}\,\phi = e_x + m_x t$ and $\mathrm{Im}\,\phi = e_y + m_y t$. The mask
-$u \cdot s = a \cdot s$ cancels exactly.
+That factor-$1/2$ theorem is not needed for the results proved here. All ensuing claims use the conservative $\Delta_1$ bound. This explicit choice avoids presenting the current inequality as optimal.
 
-### 6.3 From the Euclidean ball to per-coordinate bounds
+## 4. The common-ideal method
 
-The decoder needs the per-coordinate condition $2|e| < t$; the scheme's stated
-noise model is the *Euclidean ball* $e_x^2 + e_y^2 < (q/4)^2$. The bridge is:
+### 4.1 Distributional game hop
 
-**Theorem 6.7 (Coordinate bound, real part; `coord_bound_re`).** Let $t > 0$ and
-$q = 2t$. If
+**Theorem 4.1 (Common-Ideal Gap Bound).** Let $E_0$, $E_1$, and $I$ be probability mass functions on the same finite transcript space $\Omega$. If
 
-$$e_x^2 + e_y^2 < \left(\frac{q}{4}\right)^2,$$
+$$
+\Delta_1(E_0,I)\le\varepsilon_0
+\quad\text{and}\quad
+\Delta_1(E_1,I)\le\varepsilon_1,
+$$
 
-then $2|e_x| < t$.
+then
 
-*Proof sketch.* Since $q = 2t$, the radius satisfies $(q/4)^2 = (t/2)^2$. Because
-$e_y^2 \geq 0$, we have $e_x^2 < (t/2)^2$. As $t/2 \geq 0$, taking square roots
-gives $|e_x| < t/2$, i.e. $2|e_x| < t$. The formalization performs this over
-$\mathbb{R}$ (casting the integer errors) using $|x| < c$ from $x^2 < c^2$ with
-$c \geq 0$, then transfers back to the integers. $\square$
+$$
+\Delta_1(E_0,E_1)\le\varepsilon_0+\varepsilon_1.
+$$
 
-**Theorem 6.8 (Coordinate bound, imaginary part; `coord_bound_im`).** Under the
-same hypotheses, $2|e_y| < t$.
+**Proof.** For every $x\in\Omega$,
 
-*Proof sketch.* Identical to Theorem 6.7 after swapping the roles of $e_x$ and
-$e_y$ (the ball condition is symmetric). $\square$
+$$
+E_0(x)-E_1(x)
+=
+\bigl(E_0(x)-I(x)\bigr)+\bigl(I(x)-E_1(x)\bigr).
+$$
 
-### 6.4 Decryption correctness
+The scalar triangle inequality gives
 
-Combining the above yields the main correctness statement.
+$$
+|E_0(x)-E_1(x)|
+\le
+|E_0(x)-I(x)|+|I(x)-E_1(x)|.
+$$
 
-**Theorem 6.9 (Decryption correctness for ring-LWE over $\mathbb{Z}[i]$).** Let
-$q = 2t$ with $t > 0$, let $(m_x, m_y) \in \{0,1\}^2$, and let the error vector
-satisfy the Euclidean ball condition
+Summing over $\Omega$ yields
 
-$$e_x^2 + e_y^2 < \left(\frac{q}{4}\right)^2.$$
+$$
+\Delta_1(E_0,E_1)
+\le
+\Delta_1(E_0,I)+\Delta_1(I,E_1).
+$$
 
-Then decryption recovers the message exactly:
+Symmetry gives $\Delta_1(I,E_1)=\Delta_1(E_1,I)$, and the two assumed bounds complete the proof. $\square$
 
-$$\mathrm{decrypt}\big(t, s,\; \mathrm{encrypt}(t, s, a, e_x, e_y, m_x, m_y)\big)
-= (m_x, m_y).$$
+The result is a two-hop hybrid argument. It generalizes immediately to a chain $H_0,H_1,\ldots,H_m$:
 
-*Proof sketch.* By Definition 6.6 the phase is $\phi = (e_x + e_y i) +
-\mathrm{encodeMsg}(t, m_x, m_y)$ because the mask $u \cdot s = a \cdot s$ cancels.
-Hence $\mathrm{Re}\,\phi = e_x + m_x t$ and $\mathrm{Im}\,\phi = e_y + m_y t$. By
-Theorems 6.7 and 6.8, the ball condition gives $2|e_x| < t$ and $2|e_y| < t$.
-Applying Theorem 6.2 (`decodeCoord_correct`) to each coordinate yields
-$\mathrm{decodeCoord}(t, e_x + m_x t) = m_x$ and likewise for $m_y$. Therefore the
-pair returned by `decrypt` is exactly $(m_x, m_y)$. $\square$
+$$
+\Delta_1(H_0,H_m)
+\le
+\sum_{i=0}^{m-1}\Delta_1(H_i,H_{i+1}).
+$$
 
-The disk $x^2 + y^2 = (q/4)^2$ — a Pythagorean circle — is precisely the boundary
-of the region in which correctness is guaranteed.
+The present work isolates the common-ideal case because it directly models two challenge ensembles independently replaced by one ideal ensemble.
 
----
+### 4.2 Operational security corollary
 
-## 7. The algebraic core of the search-to-decision reduction
+**Theorem 4.2 (Operational Common-Ideal Security).** Under the assumptions of Theorem 4.1, every deterministic Boolean adversary $A:\Omega\to\{0,1\}$ satisfies
 
-Correctness is necessary but not sufficient; security rests on reductions. We
-formalize the deterministic algebraic core of the LWE search-to-decision
-reduction (Regev 2005; Peikert 2009) over a prime field $\mathbb{Z}/p\mathbb{Z}$.
+$$
+\left|
+\Pr_{x\sim E_0}[A(x)=1]
+-
+\Pr_{x\sim E_1}[A(x)=1]
+\right|
+\le
+\varepsilon_0+
+\varepsilon_1.
+$$
 
-**Theorem 7.1 (Affine bijectivity; `ZMod.affine_bijective`).** Let $p$ be prime
-and $a, b \in \mathbb{Z}/p\mathbb{Z}$ with $a \neq 0$. Then the affine map
-$x \mapsto a x + b$ is a bijection of $\mathbb{Z}/p\mathbb{Z}$.
+**Proof.** Theorem 3.2 bounds the acceptance-probability difference by $\Delta_1(E_0,E_1)$. Theorem 4.1 bounds that gap by $\varepsilon_0+\varepsilon_1$. Transitivity of the order relation proves the result. $\square$
 
-*Proof sketch.* For prime $p$, $\mathbb{Z}/p\mathbb{Z}$ is a field, so
-multiplication by $a \neq 0$ is injective, hence (on a finite type) bijective.
-Composing with the translation $x \mapsto x + b$, itself a bijection, preserves
-bijectivity. $\square$
+This theorem is the complete operational pipeline:
 
-This is the mechanism by which "wrong guesses" in the coordinate-by-coordinate
-hybrid produce *uniform* re-randomized samples: an affine re-randomization of the
-public component preserves uniformity exactly when $a \neq 0$. Two immediate
-consequences used in the hybrid analysis:
+1. identify a common ideal transcript distribution $I$;
+2. prove a left replacement bound $\Delta_1(E_0,I)\le\varepsilon_0$;
+3. prove a right replacement bound $\Delta_1(E_1,I)\le\varepsilon_1$;
+4. add the errors;
+5. conclude a bound for every deterministic Boolean adversary.
 
-- **Summation invariance (`ZMod.sum_affine_eq`).** For any
-  $f : \mathbb{Z}/p\mathbb{Z} \to \mathbb{R}$ and $a \neq 0$,
-  $\sum_x f(a x + b) = \sum_x f(x)$ (reindexing along the affine bijection).
-- **Full-image preservation (`ZMod.affine_image_univ`).** The affine image of
-  the whole space is the whole space.
+The theorem is information-theoretic. It does not restrict the adversary’s runtime. If the two replacement bounds are themselves derived from computational assumptions, then a computational reduction must state how those assumptions and runtime losses enter. Such a reduction is outside the theorem’s hypotheses and cannot be inferred from it alone.
 
-**Theorem 7.2 (Per-coordinate advantage bound; `search_to_decision_advantage_bound`).**
-Let $n \geq 1$, $\delta \in \mathbb{R}$, and let $\mathrm{coordAdvantage} :
-\{0, \dots, n-1\} \to \mathbb{R}$ satisfy $\delta \leq \sum_i
-\mathrm{coordAdvantage}(i)$. Then there exists an index $i$ with
+### 4.3 Example
 
-$$\mathrm{coordAdvantage}(i) \geq \frac{\delta}{n}.$$
+Take $\Omega=\{0,1,2,3\}$ and
 
-*Proof sketch.* Pigeonhole. If every coordinate had advantage strictly below
-$\delta / n$, then the sum would be strictly below $n \cdot (\delta/n) = \delta$,
-contradicting the hypothesis $\delta \leq \sum_i \mathrm{coordAdvantage}(i)$. $\square$
+$$
+E_0=(0.27,0.23,0.25,0.25),
+\quad
+I=(0.25,0.25,0.25,0.25),
+\quad
+E_1=(0.24,0.26,0.23,0.27).
+$$
 
-This is the source of the standard factor-$n$ advantage loss in the
-search-to-decision reduction, and it is tight for the coordinate-by-coordinate
-strategy.
+Then
 
-### 7.1 Noise accumulation and rounding correctness
+$$
+\Delta_1(E_0,I)=0.04,
+\qquad
+\Delta_1(E_1,I)=0.06.
+$$
 
-The catalog core also supplies the analytic bounds underlying Regev-style
-encryption:
+Thus $\Delta_1(E_0,E_1)\le0.10$. Direct calculation gives
 
-**Theorem 7.3 (Noise accumulation; `noise_accumulation_bound`).** If $|e_i| \leq
-B$ for $i = 1, \dots, m$, then $\left|\sum_i e_i\right| \leq m B$.
+$$
+\Delta_1(E_0,E_1)
+=0.03+0.03+0.02+0.02=0.10,
+$$
 
-*Proof sketch.* Triangle inequality followed by termwise bounding:
-$\left|\sum_i e_i\right| \leq \sum_i |e_i| \leq \sum_i B = m B$. $\square$
+so the common-ideal bound is attained in this example. Every deterministic acceptance set consequently has advantage at most $0.10$ under the chosen normalization.
 
-**Theorem 7.4 (Rounding correctness; `regev_rounding_bit1`).** For $q > 0$ and
-$|e| < q/4$, the noisy encoding $q/2 + e$ of the bit $1$ lies strictly in the
-interval $(q/4,\ 3q/4)$.
+## 5. Affine uniformity in finite commutative rings
 
-*Proof sketch.* From $|e| < q/4$ we get $-q/4 < e < q/4$; adding $q/2$ gives
-$q/4 < q/2 + e < 3q/4$ by linear arithmetic. $\square$
+### 5.1 Units and affine maps
 
-These (with their companions `regev_rounding_bit0`,
-`regev_encryption_rounding_correctness`, and `encoding_separation`) confirm that
-the $q/4$ rounding radius separates the two codewords $0$ and $q/2$.
+Let $R$ be a commutative ring. An element $a\in R$ is a **unit** if there exists $b\in R$ such that
 
----
+$$
+ab=ba=1.
+$$
 
-## 8. The Regev certificate interface
+The element $b$, uniquely determined, is denoted $a^{-1}$. For fixed $a,e\in R$, define the affine map
 
-Regev's worst-case→decision reduction is quantum and analytic; we do **not**
-reprove it. Instead we isolate it as an explicit assumption and prove all
-deterministic algebra downstream.
+$$
+T_{a,e}:R\to R,
+\qquad
+T_{a,e}(s)=as+e.
+$$
 
-**Definition 8.1 (Crypto reduction).** A `CryptoReduction` is a multiplicative
-advantage-loss factor $\ell > 0$ together with the bookkeeping that composes
-reductions: if reduction $R_1$ loses a factor $\ell_1$ and $R_2$ loses $\ell_2$,
-then $R_1 \circ R_2$ loses $\ell_1 \ell_2$ (`reduction_compose_loss`).
+The multiplier $a$ represents a public ring coefficient, $s$ a uniformly sampled ring element, and $e$ a fixed error or offset.
 
-**Definition 8.2 (Regev reduction certificate; `RegevReductionCertificate`).** For
-real parameters $(n, q, \alpha, \gamma)$, a certificate bundles: $n \geq 0$,
-$\alpha > 0$, $q > 0$; the noise-feasibility condition $\alpha q \geq 2\sqrt{n}$;
-the approximation-factor relation $\gamma = n/\alpha$ (Regev's $\tilde{O}(n/\alpha)$
-relation); and an *assumed* worst-case→decision reduction
-(`quantumReduction : CryptoReduction`).
+### 5.2 Multiplication by a unit
 
-**Theorem 8.3 (Approximation-factor bound; `RegevReductionCertificate.approx_factor_le`).**
-Any certificate satisfies
+**Lemma 5.1 (Unit Multiplication Is Bijective).** If $a$ is a unit in a commutative ring $R$, then the map $M_a(s)=as$ is a bijection from $R$ to $R$.
 
-$$\gamma \leq \frac{q\sqrt{n}}{2}.$$
+**Proof.** Let $a^{-1}$ be the inverse of $a$. The map $M_{a^{-1}}(y)=a^{-1}y$ is an inverse for $M_a$ because
 
-*Proof sketch.* Substitute $\gamma = n/\alpha$ and apply
-`approx_factor_upper_bound`: from $\alpha q \geq 2\sqrt{n}$, $\alpha > 0$, and
-$(\sqrt n)^2 = n$, the inequality $n/\alpha \leq q\sqrt n / 2$ follows by
-clearing the positive denominator $\alpha$ and a nonlinear arithmetic step. $\square$
+$$
+M_{a^{-1}}(M_a(s))=a^{-1}(as)=(a^{-1}a)s=s
+$$
 
-**Theorem 8.4 (Worst-case → search-LWE; `regev_certificate_gives_worst_case_to_search_lwe`).**
-Given a certificate, a search-to-decision reduction, and the matching advantage
-hypotheses $\mathrm{adv}_{\text{dec}} \leq \ell_{\text{quantum}} \cdot
-\mathrm{adv}_{\text{wc}}$ and $\mathrm{adv}_{\text{search}} \leq
-\ell_{\text{s2d}} \cdot \mathrm{adv}_{\text{dec}}$, one obtains both the
-approximation bound $\gamma \leq q\sqrt n / 2$ and the composed worst-case →
-search-LWE advantage bound
+and
 
-$$\mathrm{adv}_{\text{search}} \leq (\ell_{\text{quantum}} \cdot
-\ell_{\text{s2d}}) \cdot \mathrm{adv}_{\text{wc}}.$$
+$$
+M_a(M_{a^{-1}}(y))=a(a^{-1}y)=(aa^{-1})y=y.
+$$
 
-*Proof sketch.* The first conjunct is Theorem 8.3. The second is
-`reduction_compose_loss` applied to the two advantage hypotheses, multiplying the
-loss factors. No part of Regev's quantum reduction is reproved; it enters only
-through the certificate field and the supplied hypothesis. $\square$
+Hence $M_a$ is bijective. $\square$
 
-Supporting parameter-algebra lemmas include `approx_factor_boundary_identity`
-(at the boundary $\alpha q = 2\sqrt n$, $n/\alpha = q\sqrt n / 2$),
-`noise_feasible_of_dimension_ge_one` ($n \geq 1$ and feasibility give
-$\alpha q \geq 2$), and the monotonicity results `feasibility_mono_modulus` and
-`feasibility_mono_noise`.
+### 5.3 Affine permutation theorem
 
----
+**Theorem 5.2 (Affine Permutation by a Unit).** Let $R$ be a commutative ring, let $a\in R$ be a unit, and let $e\in R$ be arbitrary. Then
 
-## 9. Algorithms
+$$
+T_{a,e}(s)=as+e
+$$
 
-The development induces several concrete, executable procedures:
+is a bijection of $R$. Its inverse is
 
-1. **Norm-based product encoding (Brahmagupta–Fibonacci composition).** Given two
-   sums of two squares, compute the squares representing their product:
-   $(a, b), (c, d) \mapsto (ac - bd, ad + bc)$. Complexity $O(1)$ ring
-   operations.
-2. **Prime classification for modulus selection.** Given a prime $p$, classify it
-   as split ($p \equiv 1 \pmod 4$, returning $(a, b)$ with $a^2 + b^2 = p$ via a
-   two-squares search) or inert ($p \equiv 3 \pmod 4$). The two-squares search
-   runs in $O(\sqrt p)$ trial steps.
-3. **Encrypt/decrypt over $\mathbb{Z}[i]$.** Encryption is one ring
-   multiplication and two additions; decryption is one ring multiplication, one
-   subtraction, and two rounding comparisons. All $O(1)$ ring operations.
-4. **Euclidean-ball noise check.** Verify $e_x^2 + e_y^2 < (q/4)^2$ to certify
-   that a given error will decrypt correctly. $O(1)$.
+$$
+T_{a,e}^{-1}(y)=a^{-1}(y-e).
+$$
 
----
+**Proof.** By Lemma 5.1, multiplication by $a$ is bijective. Translation $z\mapsto z+e$ is bijective, with inverse $y\mapsto y-e$. The affine map is the composition of these two bijections and is therefore bijective. Substituting directly verifies the displayed inverse. $\square$
 
-## 10. Applications
+No finiteness assumption is needed for bijectivity itself. Finiteness enters when interpreting the map as preserving a uniform probability distribution and when forming sums over all ring elements.
 
-- **Compact post-quantum encryption.** Ring-LWE over $\mathbb{Z}[i]$ packs two
-  message bits per ciphertext coordinate, with a clean Euclidean error budget
-  that is straightforward to reason about and to parameterize.
-- **Parameter selection.** The split/inert dichotomy (Theorems 4.1–4.4) is a
-  design rule for choosing moduli with the desired ring structure; the
-  certificate interface (Section 8) ties chosen parameters to a worst-case
-  hardness guarantee with an explicit approximation factor $\gamma \leq q\sqrt n
-  / 2$.
-- **Reusable number theory.** Multiplicativity of the norm and the two-squares
-  theorem are foundational across algebraic number theory; the formal artifacts
-  are directly reusable beyond cryptography.
+### 5.4 Uniformity and reindexing
 
----
+Assume now that $R$ is finite. The uniform mass function is
 
-## 11. Discussion
+$$
+U_R(y)=\frac1{|R|}
+$$
 
-The development is deliberately *layered*: no result is used in its own proof,
-and each section builds only on earlier ones. This makes the dependency graph
-auditable and the trust story transparent — in particular, the one analytic/
-quantum ingredient we do not reprove (Regev's worst-case→decision reduction) is
-isolated behind a single explicit hypothesis (`quantumReduction`), so a reader
-can see exactly what is assumed and what is proved.
+for every $y\in R$.
 
-A notable conceptual thread is that the *same* sum-of-two-squares expression
-plays three roles: as the ring norm whose multiplicativity (Brahmagupta–
-Fibonacci) drives the algebra; as the obstruction governing which primes split
-(Fermat); and as the Euclidean ball $x^2 + y^2 < (q/4)^2$ defining the decryption
-correctness region. Pythagoras' identity is thus simultaneously the algebra, the
-number theory, and the geometry of the scheme.
+**Corollary 5.3 (Affine Uniformity).** If $S$ is uniformly distributed on a finite commutative ring $R$, $a$ is a unit, and $e\in R$ is fixed, then $aS+e$ is uniformly distributed on $R$.
 
----
+**Proof.** By Theorem 5.2, every $y\in R$ has exactly one preimage $a^{-1}(y-e)$. Therefore
 
-## 12. Future work
+$$
+\Pr[aS+e=y]
+=
+\Pr[S=a^{-1}(y-e)]
+=
+\frac1{|R|}.
+$$
 
-Several falsifiable, formalizable conjectures extend this development:
+This is the uniform mass at $y$. $\square$
 
-- **Field-ness of inert quotients ⇒ full Gaussian search-to-decision.** For
-  $p \equiv 3 \pmod 4$, $\mathbb{Z}[i]/(p) \cong \mathbb{F}_{p^2}$ is a field, so
-  affine rerandomization $z \mapsto az + b$ ($a \neq 0$) is a bijection, giving a
-  Gaussian search-to-decision reduction with the same per-coordinate $1/n$
-  advantage loss.
-- **Norm-form noise composition under modulus switching.** Combining two
-  Gaussian-LWE samples yields noise with $N(e_1 + u e_2) \leq (\sqrt{N(e_1)} +
-  \sqrt{N(e_2)})^2$ for any unit $u$, with equality iff the error vectors are
-  collinear.
-- **Density of secure parameters.** The split moduli ($p \equiv 1 \pmod 4$) and
-  inert moduli ($p \equiv 3 \pmod 4$) are each asymptotically $\tfrac12 \pi(N)$
-  (Dirichlet), with a `decide`-checkable finite version.
-- **Structure of sums of two squares.** $\{n : \text{sum of two squares}\}$ is
-  exactly the image of the norm map, closed under multiplication, with the
-  classical even-valuation criterion at primes $\equiv 3 \pmod 4$.
-- **Unit group and rerandomization period.** The unit group of $\mathbb{Z}[i]$ is
-  $\{1, i, -1, -i\}$ of order $4$, giving a rotation hybrid of period $4$;
-  generalizes to $\mathbb{Z}[\zeta]$ for roots of unity $\zeta$.
+**Theorem 5.4 (Affine Reindexing of Statistics).** Let $R$ be a finite commutative ring, let $a$ be a unit, let $e\in R$, and let $f:R\to\mathbb{R}$ be arbitrary. Then
 
----
+$$
+\sum_{s\in R}f(as+e)=\sum_{y\in R}f(y).
+$$
 
-## 13. Conclusion
+**Proof.** Theorem 5.2 makes $T_{a,e}$ a permutation of the finite set $R$. Reindex the left-hand sum by $y=T_{a,e}(s)$. Since each $y$ occurs exactly once, the reindexed sum is the right-hand side. $\square$
 
-We have formalized, with machine-checked proofs, the Pythagorean foundations of
-ring-LWE over the Gaussian integers: multiplicativity of the norm via the
-Brahmagupta–Fibonacci identity (`gaussNorm_mul`), the split/inert prime dichotomy
-(`prime_split`, `prime_inert` and companions), a public-key encryption scheme
-with a clean decryption-correctness guarantee inside the Euclidean ball of radius
-$q/4$ (`decodeCoord_correct`, `coord_bound_re`, `coord_bound_im`), and the
-algebraic core of the search-to-decision reduction
-(`ZMod.affine_bijective`, `search_to_decision_advantage_bound`) together with a
-certificate interface composing the assumed Regev quantum reduction
-(`regev_certificate_gives_worst_case_to_search_lwe`). The result is a transparent,
-auditable account in which a single classical identity — the sum of two squares —
-underlies the algebra, the number theory, and the geometry of a post-quantum
-encryption scheme.
+Dividing by $|R|$ yields equality of expectations:
+
+$$
+\mathbb{E}[f(aS+e)]=\mathbb{E}[f(U)],
+$$
+
+where $S$ and $U$ are uniform on $R$. Since this holds for every real-valued statistic $f$, it expresses exact equality of distributions.
+
+### 5.5 Why the unit hypothesis matters
+
+Consider $R=\mathbb{Z}/8\mathbb{Z}$. The units are the odd residue classes $1,3,5,7$. For $a=3$ and $e=2$, the sequence
+
+$$
+3s+2\pmod8,
+\qquad s=0,1,\ldots,7,
+$$
+
+is
+
+$$
+2,5,0,3,6,1,4,7,
+$$
+
+which lists every residue exactly once.
+
+For the nonunit $a=2$ and the same $e=2$, the outputs are
+
+$$
+2,4,6,0,2,4,6,0.
+$$
+
+Only four residues occur, each twice. The output is not uniform on the whole ring. Translation changes the coset reached but cannot restore injectivity lost under multiplication.
+
+Over $\mathbb{Z}/q\mathbb{Z}$, multiplication by $a$ is invertible exactly when $\gcd(a,q)=1$. Thus the unit test can be implemented using the Euclidean algorithm.
+
+## 6. Algorithms and numerical demonstrations
+
+### 6.1 Computing the $\ell^1$ gap
+
+Given arrays $p=(p_1,\ldots,p_n)$ and $q=(q_1,\ldots,q_n)$ representing mass functions, compute
+
+$$
+\Delta_1(p,q)=\sum_{i=1}^n|p_i-q_i|.
+$$
+
+The algorithm uses $O(n)$ arithmetic operations and $O(1)$ auxiliary space beyond the input. Before interpreting the result probabilistically, implementations should check nonnegativity and that each array sums to $1$ within an appropriate numerical tolerance.
+
+### 6.2 Evaluating a bounded test
+
+For a test vector $t=(t_1,\ldots,t_n)$ with $0\le t_i\le1$, compute
+
+$$
+\mathbb{E}_p[t]=\sum_i p_it_i,
+\qquad
+\mathbb{E}_q[t]=\sum_i q_it_i.
+$$
+
+Then compare $|\mathbb{E}_p[t]-\mathbb{E}_q[t]|$ with $\Delta_1(p,q)$. This also costs $O(n)$ time. For a Boolean adversary, each $t_i$ is $0$ or $1$.
+
+### 6.3 Verifying affine permutations modulo $q$
+
+For integers $a,e,q$ with $q>1$, enumerate
+
+$$
+y_s=(as+e)\bmod q
+$$
+
+for $s=0,\ldots,q-1$. The map is a permutation exactly when all $q$ outputs are distinct. Enumeration takes $O(q)$ modular operations and $O(q)$ storage with a Boolean seen-table. A mathematically faster criterion for this residue ring is $\gcd(a,q)=1$, computable in $O(\log q)$ division steps, but enumeration exposes the output histogram and therefore provides a more illustrative demonstration.
+
+### 6.4 Mixtures over random errors
+
+Although Theorem 5.2 fixes $e$, it implies a useful probabilistic extension. Suppose $S$ is uniform on finite $R$, $E$ is any independent $R$-valued random variable, and $a$ is a unit. Conditioning on $E=e$, Corollary 5.3 says $aS+e$ is uniform. Averaging these identical conditional distributions gives
+
+$$
+\Pr[aS+E=y]=\sum_e\Pr[E=e]\frac1{|R|}=\frac1{|R|}.
+$$
+
+Thus independent random error also preserves uniformity in this setting. Independence is essential to this conditioning argument; if $E$ depends on $S$, cancellation such as $E=-aS$ can make the output constant.
+
+## 7. Cryptographic applications, interpretation, and scope
+
+### 7.1 Hybrid arguments for encryption
+
+In an indistinguishability experiment, $E_0$ and $E_1$ encode the adversary’s view for two challenge messages or bits. Direct comparison may be difficult because both distributions contain correlated algebraic structure. A proof can instead define an ideal distribution $I$ in which selected components have been replaced by uniform values. If decisional assumptions or statistical estimates supply
+
+$$
+\Delta_1(E_b,I)\le\varepsilon_b
+$$
+
+for $b\in\{0,1\}$, Theorem 4.2 immediately gives adversarial advantage at most $\varepsilon_0+\varepsilon_1$.
+
+The theorem cleanly separates two obligations. Scheme-specific work proves the replacement bounds. Generic probability theory converts them to an operational conclusion. This separation helps prevent an informal leap from “these distributions are close” to “the adversary cannot distinguish.”
+
+### 7.2 Ring-LWE-style affine samples
+
+Ring-based constructions manipulate expressions resembling $as+e$. Theorem 5.2 identifies a regime of perfect uniformity: if $s$ is uniform over the entire finite ring and $a$ is a unit, then for each fixed $e$ the result is uniform. In a hybrid proof, such a term may be replaced by a fresh uniform ring element at zero statistical cost.
+
+However, this statement must not be overextended. Standard ring-LWE formulations often sample secrets and errors from narrow distributions rather than uniformly from the full ring. Public multipliers may also be sampled without conditioning on being units. In those settings the theorem does not automatically apply. One must analyze the actual sampling distributions, the probability of nonunits, module structure, or computational assumptions.
+
+### 7.3 Exact versus approximate replacements
+
+The two principal results distinguish exact and approximate reasoning. Affine reindexing under a unit is exact: the transformed uniform distribution equals the original uniform distribution, so the corresponding $\ell^1$ gap is $0$. A computational or noisy replacement elsewhere may have positive error $\varepsilon$. Hybrid accounting adds only the nonzero errors.
+
+This distinction is useful in proof design. Algebraic permutations should be recognized early, because charging a statistical error for an exact relabeling weakens the final bound unnecessarily. Conversely, a merely plausible resemblance to uniformity should not be labeled exact without a bijection or another complete argument.
+
+### 7.4 Relationship to LWE hardness
+
+The present theorems are compatible with the broader program of lattice cryptography but are not themselves an LWE hardness proof. A reduction from worst-case lattice problems such as GapSVP or SIVP to LWE requires Euclidean lattice geometry, discrete Gaussians, smoothing parameters, dual lattices, and—in Regev’s original route—quantum sampling and measurement arguments. None of those structures follows from finite $\ell^1$ inequalities or affine ring permutations.
+
+Likewise, a complete Dual-Regev chosen-plaintext security theorem requires concrete key generation, encryption, decryption, a correctness analysis for noise and rounding, and an explicit reduction connecting each game transition to decisional LWE. The common-ideal theorem is one generic endpoint for the game analysis, not a substitute for those scheme-specific components.
+
+### 7.5 Limitations of the finite model
+
+The finite model is appropriate for concrete transcript spaces and finite rings, but it omits several issues:
+
+- continuous or countably infinite distributions require measure-theoretic integration;
+- adaptive interaction may be more naturally modeled by probability kernels or probabilistic programs;
+- floating-point numerical demonstrations approximate real-valued masses and require tolerance checks;
+- deterministic distinguishers cover randomized ones only after incorporating or averaging their independent coins;
+- the unnormalized $\ell^1$ bound loses the sharp factor $1/2$ available for Boolean events.
+
+These limitations are explicit boundaries, not defects in the statements. Within their hypotheses, the theorems give complete conclusions.
+
+## 8. Future directions
+
+The completed results establish two reusable foundations: an operational bound translating finite $\ell^1$ game distance into advantage for every bounded or Boolean distinguisher, and affine uniformity over arbitrary commutative rings when the multiplier is a unit. Natural next steps are the following.
+
+1. **Concrete Dual-Regev syntax and correctness.** Define key generation, encryption, and decryption over $\mathbb{Z}/q\mathbb{Z}$; connect noise and rounding estimates to a full correctness theorem.
+2. **Probabilistic programs.** Replace explicit finite mass functions by probability kernels, proving that pushforward and product constructions agree with the finite model.
+3. **Full IND-CPA reduction.** Instantiate the common-ideal hypotheses with a decisional-LWE oracle reduction and account explicitly for every hybrid hop.
+4. **Cyclotomic ring-LWE.** Specialize the generic finite commutative-ring theorem to quotients $(\mathbb{Z}/q\mathbb{Z})[X]/(\Phi_m)$, characterize units, and define coefficient and canonical embeddings with discrete Gaussian error.
+5. **Lattice geometry.** Develop actual Euclidean lattices, dual lattices, smoothing parameters, Gaussian mass bounds, and transference inequalities.
+6. **Quantum reduction.** Develop quantum Fourier sampling and connect bounded-distance decoding to worst-case GapSVP and SIVP. This requires quantum-circuit and measurement semantics beyond the finite game arguments considered here.
+7. **Sharper normalization.** Prove the standard factor-$1/2$ total-variation characterization as a supremum over events, yielding tight Boolean distinguishing bounds rather than the deliberately simple $\ell^1$ upper bound.
+
+## 9. Conclusion
+
+Finite game-based security requires a disciplined passage from distributions to adversaries. The Bounded-Test Inequality proves that every $[0,1]$-valued statistic changes by at most the $\ell^1$ gap. The Boolean Distinguisher Inequality specializes this fact to acceptance probabilities. The Common-Ideal Gap Bound and its operational corollary show that two challenge worlds independently close to one ideal world are indistinguishable up to the sum of their errors.
+
+Finite ring algebra supplies an exact companion principle. Multiplication by a unit is reversible, translation is reversible, and therefore $s\mapsto as+e$ is a permutation. Uniformity and all finite statistic sums are preserved under this affine transformation.
+
+Together, these results provide a compact interface for larger LWE and ring-LWE arguments: exact algebraic symmetries can justify zero-cost replacements, while approximate distributional replacements translate into explicit universal bounds on distinguishing advantage. Their hypotheses and limitations also identify precisely what remains to be supplied by a full cryptographic construction or hardness reduction.
