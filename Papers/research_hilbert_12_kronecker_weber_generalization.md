@@ -1,153 +1,490 @@
-# Explicit Reciprocity from Roots of Unity to Class Numbers: Steps Toward Hilbert's Twelfth Problem
+# Hilbert Class Field Reciprocity and the Unramified $\mathrm{GL}_1$ Correspondence
+
+**Author:** Aristotle  
+**Date:** July 28, 2026
 
 ## Abstract
 
-Hilbert's twelfth problem asks for an explicit construction of the abelian extensions of an arbitrary number field, generalizing the Kronecker–Weber theorem, which realizes every abelian extension of the rationals inside a cyclotomic field. We develop the arithmetic consequences of the abelian ($\mathrm{GL}_1$) reciprocity law in two settings. Over the rationals, we harvest the group-theoretic invariants of cyclotomic Galois groups from the Artin reciprocity isomorphism $(\mathbb{Z}/n\mathbb{Z})^\times \cong \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$: the order of the group equals Euler's totient $\varphi(n)$, and for prime modulus $p$ the group is cyclic of order $p-1$. We show by explicit example ($n=8$) that cyclicity genuinely requires the prime hypothesis. We then take the first structural step beyond $\mathbb{Q}$ by studying the Hilbert class field $H$ of a number field $K$, characterized by the higher reciprocity isomorphism $\mathrm{Gal}(H/K)\cong \mathrm{Cl}(\mathcal{O}_K)$. From this isomorphism we derive the fundamental degree law $[H:K] = h_K$, where $h_K$ is the class number, and the corollary that class number one forces $H = K$. We verify non-vacuity by instantiating the reciprocity datum for $K = H = \mathbb{Q}$. Throughout, the emphasis is on turning abstract reciprocity isomorphisms into exact, computable numerical invariants — the numerical fingerprints of explicit class field theory.
+Let $K$ be a number field with ring of integers $\mathcal O_K$, and let $H/K$ be a finite Galois extension equipped with an Artin reciprocity isomorphism
 
-**Keywords:** Kronecker–Weber theorem, cyclotomic fields, Artin reciprocity, Euler totient, cyclic Galois groups, Hilbert class field, ideal class group, class number, Hilbert's twelfth problem, Langlands program.
+$$
+A:\operatorname{Gal}(H/K)\xrightarrow{\sim}\mathrm{Cl}(\mathcal O_K).
+$$
+
+This paper develops the structural consequences of this datum. First, the Galois group is abelian. Second, pullback along $A$ gives a canonical group isomorphism between complex characters of the ideal class group and one-dimensional complex representations of $\operatorname{Gal}(H/K)$; this is the finite-order unramified $\mathrm{GL}_1$ correspondence attached to the Hilbert class field. Third, using the Hilbert class field degree formula $[H:K]=h_K$, degree one is equivalent to class number one, to the principal ideal ring property of $\mathcal O_K$, and to principality of every nonzero ideal. We give complete proof sketches, finite cyclic algorithms illustrating character transport, and examples showing how ideal-theoretic obstruction, unramified Galois symmetry, and one-dimensional representation theory encode the same arithmetic information. We conclude by locating these results between Kronecker–Weber theory, explicit class field theory, and the one-dimensional Langlands correspondence.
 
 ## 1. Introduction
 
-Class field theory describes the abelian extensions of a number field $K$ — its finite Galois extensions with commutative Galois group — in terms of the arithmetic of $K$ itself. Its foundational special case is the **Kronecker–Weber theorem**: every abelian extension of $\mathbb{Q}$ is contained in a cyclotomic field $\mathbb{Q}(\zeta_n)$, the field obtained by adjoining a primitive $n$-th root of unity. Hilbert's twelfth problem asks for the analogous *explicit* generators for an arbitrary base field $K$ — the "roots of unity of $K$."
+The Kronecker–Weber theorem describes finite abelian extensions of $\mathbb Q$ through cyclotomic fields. Hilbert's twelfth problem asks for comparably explicit descriptions of abelian extensions of more general number fields. Even before explicit generators are found, class field theory gives a canonical structural answer at the unramified level: the Hilbert class field converts the ideal class group into a Galois group.
 
-This paper is organized around a single organizing principle: an abelian reciprocity isomorphism does more than match two objects set-theoretically; it forces their numerical and structural invariants to coincide. We exploit this principle twice.
+This conversion unifies two phenomena. The first is ideal-theoretic. Although elements in $\mathcal O_K$ need not factor uniquely, nonzero ideals do, and the class group measures the failure of ideals to be principal. The second is field-theoretic. A finite Galois extension has a group of automorphisms, and in an abelian unramified extension Frobenius automorphisms organize the splitting of primes. Artin reciprocity identifies these groups.
 
-1. Over $\mathbb{Q}$, the Artin reciprocity isomorphism
-   $$\rho_n : (\mathbb{Z}/n\mathbb{Z})^\times \xrightarrow{\ \sim\ } \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$$
-   determines the order and cyclic type of the cyclotomic Galois group (Section 3).
+Our starting hypothesis is deliberately precise. We assume a number field $K$, a finite Galois extension $H/K$, and a group isomorphism
 
-2. Over an arbitrary number field $K$, the higher reciprocity isomorphism
-   $$\mathrm{Gal}(H/K)\xrightarrow{\ \sim\ }\mathrm{Cl}(\mathcal{O}_K)$$
-   characterizing the Hilbert class field $H$ determines the degree $[H:K]$ (Section 4).
+$$
+A:\operatorname{Gal}(H/K)\xrightarrow{\sim}\mathrm{Cl}(\mathcal O_K)
+$$
 
-The results are elementary given the reciprocity isomorphisms, but their point is methodological: they are the reusable numerical lemmas — degree $=\varphi(n)$, prime-case cyclicity, degree $=$ class number — on which downstream conductor, ramification, and tower computations rest.
+having the role of Hilbert class field reciprocity. The results established here are consequences of that reciprocity datum; they do not by themselves construct $H$, prove its unramifiedness, or supply explicit generators. This distinction is essential when situating the work within Hilbert's twelfth problem.
 
-## 2. Definitions and background
+The main conclusions are as follows.
 
-Throughout, $n$ denotes a positive integer and $\zeta_n$ a primitive $n$-th root of unity.
+1. The Galois group $\operatorname{Gal}(H/K)$ is abelian.
+2. Ideal-class characters and one-dimensional complex Galois representations are canonically isomorphic as groups.
+3. Assuming the degree formula $[H:K]=h_K$, the extension has degree one exactly when $\mathcal O_K$ is a principal ideal ring.
+4. Equivalently, the extension has degree one exactly when every nonzero ideal of $\mathcal O_K$ is principal.
 
-**Definition 2.1 (Cyclotomic field).** The $n$-th *cyclotomic field* is $\mathbb{Q}(\zeta_n)$, the smallest subfield of $\mathbb{C}$ containing $\mathbb{Q}$ and $\zeta_n$. It is a Galois extension of $\mathbb{Q}$.
+The second statement is an unramified finite-order instance of the $\mathrm{GL}_1$ Langlands correspondence. It is elementary once reciprocity is given, but it sharply displays the mechanism common to broader reciprocity laws: arithmetic characters and Galois characters are transported through a canonical group isomorphism.
 
-**Definition 2.2 (Galois group).** For a finite Galois extension $L/K$, the *Galois group* $\mathrm{Gal}(L/K)$ is the group of field automorphisms of $L$ fixing $K$ pointwise, under composition. Its cardinality equals the degree $[L:K] = \dim_K L$.
+## 2. Algebraic background
 
-**Definition 2.3 (Euler totient).** For $n\ge 1$, $\varphi(n) = \#\{\,k : 1\le k\le n,\ \gcd(k,n)=1\,\} = \#(\mathbb{Z}/n\mathbb{Z})^\times$.
+### 2.1. Number fields and rings of integers
 
-**Definition 2.4 (Cyclic group).** A finite group $G$ is *cyclic* if there exists $g\in G$ with $G = \{g^0,g^1,\dots\}$; equivalently $G\cong \mathbb{Z}/|G|\mathbb{Z}$.
+A **number field** is a finite extension $K/\mathbb Q$. Its **ring of integers** $\mathcal O_K$ consists of the elements of $K$ satisfying a monic polynomial with coefficients in $\mathbb Z$. This ring is a Dedekind domain. Consequently every nonzero ideal factors uniquely as a finite product of nonzero prime ideals.
 
-**Definition 2.5 (Ring of integers, ideal class group, class number).** For a number field $K$, let $\mathcal{O}_K$ be its ring of integers (the integral closure of $\mathbb{Z}$ in $K$). The *ideal class group* $\mathrm{Cl}(\mathcal{O}_K)$ is the quotient of the group of nonzero fractional ideals by the subgroup of principal fractional ideals; it is a finite abelian group. The *class number* is $h_K = \#\,\mathrm{Cl}(\mathcal{O}_K)$. One has $h_K = 1$ if and only if $\mathcal{O}_K$ is a principal ideal domain, i.e. factorization into primes is unique.
+Element factorization can nevertheless fail to be unique. The class group packages this failure in a group that remains finite and computable.
 
-**Definition 2.6 (Hilbert class field).** The *Hilbert class field* $H$ of $K$ is the maximal unramified abelian extension of $K$. It is the canonical first target of explicit class field theory; its defining property is the Artin reciprocity isomorphism
-$$\mathrm{Gal}(H/K)\cong \mathrm{Cl}(\mathcal{O}_K).$$
+### 2.2. Fractional ideals and the class group
 
-## 3. The cyclotomic case over $\mathbb{Q}$
+A **nonzero fractional ideal** of $\mathcal O_K$ is a nonzero $\mathcal O_K$-submodule $I\subset K$ for which there exists $d\in\mathcal O_K\setminus\{0\}$ such that $dI\subseteq\mathcal O_K$. Nonzero fractional ideals form an abelian group under ideal multiplication. A fractional ideal is **principal** if it has the form
 
-The foundation for this section is the abelian reciprocity isomorphism over the rationals.
+$$
+(\alpha)=\alpha\mathcal O_K
+$$
 
-**Reciprocity datum 3.1 (Artin reciprocity over $\mathbb{Q}$).** For every modulus $n$ there is a canonical group isomorphism
-$$\rho_n : (\mathbb{Z}/n\mathbb{Z})^\times \xrightarrow{\ \sim\ } \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}),$$
-sending the class of $k$ to the automorphism $\sigma_k : \zeta_n \mapsto \zeta_n^{\,k}$.
+for some $\alpha\in K^\times$. Principal fractional ideals form a subgroup.
 
-This isomorphism is the concrete $\mathrm{GL}_1$ instance of Artin reciprocity, and it is constructed unconditionally for every $n$. Everything in this section is a transported consequence of $\rho_n$.
+**Definition 2.1 (Ideal class group).** The ideal class group of $K$ is
 
-### 3.1 The degree equals Euler's totient
+$$
+\mathrm{Cl}(\mathcal O_K)
+=
+\{\text{nonzero fractional ideals of }\mathcal O_K\}
+/
+\{\text{principal fractional ideals}\}.
+$$
 
-**Theorem 3.2 (Degree of the cyclotomic extension).** For every $n\ge 1$,
-$$\#\,\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) = \varphi(n),$$
-and hence $[\mathbb{Q}(\zeta_n):\mathbb{Q}] = \varphi(n)$.
+The class of $I$ is denoted $[I]$. Multiplication is $[I][J]=[IJ]$. Since fractional ideal multiplication is commutative, $\mathrm{Cl}(\mathcal O_K)$ is abelian.
 
-*Proof sketch.* The isomorphism $\rho_n$ is in particular a bijection of underlying sets, so
-$$\#\,\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) = \#(\mathbb{Z}/n\mathbb{Z})^\times.$$
-By Definition 2.3, $\#(\mathbb{Z}/n\mathbb{Z})^\times = \varphi(n)$. Since the cardinality of the Galois group of a finite Galois extension equals its degree, $[\mathbb{Q}(\zeta_n):\mathbb{Q}] = \varphi(n)$. $\qquad\blacksquare$
+**Definition 2.2 (Class number).** The class number is
 
-The proof requires only $n\neq 0$ (so that $\mathbb{Q}(\zeta_n)$ is well-defined); no primality is assumed. This recovers the classical statement that the minimal polynomial of $\zeta_n$ — the $n$-th cyclotomic polynomial — has degree $\varphi(n)$, now read off directly from the order of the reciprocity partner rather than from irreducibility arguments.
+$$
+h_K=\lvert\mathrm{Cl}(\mathcal O_K)\rvert.
+$$
 
-**Examples.** $[\mathbb{Q}(\zeta_5):\mathbb{Q}] = \varphi(5) = 4$; $[\mathbb{Q}(\zeta_{12}):\mathbb{Q}] = \varphi(12) = 4$; $[\mathbb{Q}(\zeta_{1}):\mathbb{Q}] = \varphi(1)=1$; $[\mathbb{Q}(\zeta_{2}):\mathbb{Q}] = \varphi(2)=1$ (since $\zeta_2 = -1$ already lies in $\mathbb{Q}$).
+For number fields, this number is finite.
 
-### 3.2 Prime moduli give cyclic Galois groups
+**Lemma 2.3 (Class-number-one criterion).** The following conditions are equivalent:
 
-**Theorem 3.3 (Cyclicity for prime modulus).** For a prime $p$, the group $\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q})$ is cyclic.
+1. $h_K=1$;
+2. $\mathrm{Cl}(\mathcal O_K)$ is trivial;
+3. every nonzero fractional ideal of $\mathcal O_K$ is principal;
+4. every nonzero integral ideal of $\mathcal O_K$ is principal;
+5. $\mathcal O_K$ is a principal ideal ring.
 
-*Proof sketch.* The multiplicative group of a finite field is cyclic; in particular $(\mathbb{Z}/p\mathbb{Z})^\times = \mathbb{F}_p^\times$ is cyclic. Cyclicity is preserved under group isomorphism, so transporting along $\rho_p$ shows $\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q})$ is cyclic. $\qquad\blacksquare$
+**Proof sketch.** A finite group has cardinality one exactly when it is trivial. By construction, an ideal has trivial class exactly when it is principal, proving the equivalence of the first three conditions. Integral ideals are fractional ideals, so the third condition implies the fourth. Conversely, multiplying a fractional ideal by a suitable nonzero denominator produces an integral ideal; if that integral ideal is principal, then dividing its generator by the denominator shows that the original fractional ideal is principal. The fourth and fifth conditions are the defining principal-ideal property for the nonzero ideals of the domain $\mathcal O_K$; the zero ideal is itself principal.
 
-**Theorem 3.4 (Order for prime modulus).** For a prime $p$,
-$$\#\,\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q}) = p - 1.$$
+### 2.3. Galois extensions and Artin reciprocity
 
-*Proof sketch.* By Theorem 3.2 the order is $\varphi(p)$, and for a prime $\varphi(p) = p-1$. $\qquad\blacksquare$
+For a finite Galois extension $H/K$, let
 
-Combining Theorems 3.3 and 3.4: $\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q})\cong \mathbb{Z}/(p-1)\mathbb{Z}$. A generator corresponds under $\rho_p$ to a *primitive root* modulo $p$.
+$$
+G=\operatorname{Gal}(H/K)
+$$
 
-### 3.3 The prime hypothesis is necessary
+be the group of field automorphisms of $H$ fixing $K$. A Hilbert class field is characterized as the maximal abelian extension of $K$ unramified at all finite primes. The Artin map associates Frobenius elements to unramified prime ideals and extends multiplicatively.
 
-**Proposition 3.5 (Cyclicity fails for $n=8$).** $\mathrm{Gal}(\mathbb{Q}(\zeta_8)/\mathbb{Q})$ is not cyclic; it is isomorphic to $\mathbb{Z}/2\mathbb{Z}\times\mathbb{Z}/2\mathbb{Z}$.
+For the present development, the central datum is the following.
 
-*Proof sketch.* Under $\rho_8$ the Galois group is isomorphic to $(\mathbb{Z}/8\mathbb{Z})^\times = \{1,3,5,7\}$. Each element squares to $1$ modulo $8$ ($3^2=9\equiv 1$, $5^2=25\equiv 1$, $7^2=49\equiv 1$), so every non-identity element has order $2$. A cyclic group of order $4$ has an element of order $4$; hence the group is not cyclic and must be the Klein four-group $\mathbb{Z}/2\mathbb{Z}\times\mathbb{Z}/2\mathbb{Z}$. $\qquad\blacksquare$
+**Definition 2.4 (Hilbert reciprocity datum).** A Hilbert reciprocity datum for $H/K$ is a group isomorphism
 
-Thus the prime hypothesis in Theorems 3.3–3.4 is load-bearing, not decorative: the structural conclusion "cyclic" is a genuine feature of prime moduli.
+$$
+A:G\xrightarrow{\sim}\mathrm{Cl}(\mathcal O_K).
+$$
 
-## 4. The Hilbert class field of a general number field
+When $H$ is the Hilbert class field, class field theory supplies this isomorphism and the degree identity
 
-We now take the first structural step beyond the cyclotomic ($\mathrm{GL}_1/\mathbb{Q}$) case. Let $K$ be a number field with ring of integers $\mathcal{O}_K$ and Hilbert class field $H$ (Definition 2.6).
+$$
+[H:K]=\lvert G\rvert=h_K.
+$$
 
-Because the full existence theory of the Hilbert class field — its maximality and unramifiedness — lies deeper than the numerical consequences we seek, we isolate the single property that makes $H$ useful and treat it as an explicit hypothesis: the reciprocity isomorphism.
+The proofs below clearly separate consequences of the group isomorphism from consequences that additionally use the degree identity.
 
-**Reciprocity datum 4.1 (Artin reciprocity for the Hilbert class field).** There is a group isomorphism
-$$e : \mathrm{Gal}(H/K)\xrightarrow{\ \sim\ }\mathrm{Cl}(\mathcal{O}_K).$$
+### 2.4. Characters
 
-**Theorem 4.2 (Degree equals class number).** Let $K$ be a number field and $H/K$ a finite Galois extension equipped with a reciprocity isomorphism $e:\mathrm{Gal}(H/K)\cong \mathrm{Cl}(\mathcal{O}_K)$. Then
-$$[H:K] = h_K.$$
+Write $\mathbb C^\times$ for the multiplicative group of nonzero complex numbers.
 
-*Proof sketch.* For a finite Galois extension the number of automorphisms equals the degree:
-$$\#\,\mathrm{Gal}(H/K) = [H:K].$$
-The isomorphism $e$ is a bijection, so
-$$\#\,\mathrm{Gal}(H/K) = \#\,\mathrm{Cl}(\mathcal{O}_K) = h_K$$
-by Definition 2.5. Chaining the two equalities gives $[H:K] = h_K$. $\qquad\blacksquare$
+**Definition 2.5 (Ideal-class character).** An ideal-class character is a group homomorphism
 
-**Corollary 4.3 (Class number one).** Under the hypotheses of Theorem 4.2, if $h_K = 1$ then $[H:K] = 1$; equivalently, $H = K$.
+$$
+\chi:\mathrm{Cl}(\mathcal O_K)\to\mathbb C^\times.
+$$
 
-*Proof sketch.* Immediate from $[H:K] = h_K = 1$. $\qquad\blacksquare$
+**Definition 2.6 (One-dimensional Galois representation).** A one-dimensional complex representation of $G$ is a group homomorphism
 
-Corollary 4.3 formalizes the maxim that a number field with unique factorization is its own Hilbert class field: it admits no nontrivial unramified abelian extension.
+$$
+\rho:G\to\mathbb C^\times.
+$$
 
-### 4.1 Non-vacuity: the rational witness
+Since both source groups are finite, the images of these characters are finite subgroups of $\mathbb C^\times$ and hence consist of roots of unity. Thus the correspondence below concerns finite-order characters.
 
-A conditional theorem is only as valuable as the certainty that its hypotheses can be met. We exhibit the reciprocity datum concretely in the simplest case.
+The character sets are themselves abelian groups under pointwise multiplication:
 
-**Proposition 4.4 (Rational witness).** For $K = H = \mathbb{Q}$, the reciprocity isomorphism $e$ exists: both $\mathrm{Gal}(\mathbb{Q}/\mathbb{Q})$ and $\mathrm{Cl}(\mathbb{Z})$ are trivial groups, so the unique map between them is an isomorphism. Consequently Theorem 4.2 instantiates to $[\mathbb{Q}:\mathbb{Q}] = h_{\mathbb{Q}} = 1$.
+$$
+(\chi_1\chi_2)(c)=\chi_1(c)\chi_2(c),
+\qquad
+(\rho_1\rho_2)(\sigma)=\rho_1(\sigma)\rho_2(\sigma).
+$$
 
-*Proof sketch.* The ring of integers of $\mathbb{Q}$ is $\mathbb{Z}$, a principal ideal domain, so $\mathrm{Cl}(\mathbb{Z})$ is trivial and $h_{\mathbb{Q}} = 1$; the class group of $\mathbb{Z}$ has at most one element, hence is a singleton. The Galois group $\mathrm{Gal}(\mathbb{Q}/\mathbb{Q})$ is trivial. Any map between two trivial groups is an isomorphism, providing $e$. Theorem 4.2 then yields $[\mathbb{Q}:\mathbb{Q}] = 1$, consistent with the trivial extension. $\qquad\blacksquare$
+## 3. Structural results
 
-This witness rules out the failure mode in which the hypotheses of Theorem 4.2 can never be satisfied, and it exhibits Kronecker–Weber's base field $\mathbb{Q}$ as the degenerate corner of the general theory.
+### 3.1. Reciprocity forces commutativity
 
-## 5. Algorithms
+**Theorem 3.1 (Abelian Galois Group Theorem).** Let $K$ be a number field, let $H/K$ be a finite Galois extension, and suppose that
 
-The reciprocity laws above are constructive and yield direct computational recipes.
+$$
+A:\operatorname{Gal}(H/K)\xrightarrow{\sim}\mathrm{Cl}(\mathcal O_K)
+$$
 
-**Algorithm A (Cyclotomic degree and cyclic type).** Given $n$, compute $\varphi(n)$ by factoring $n = \prod p_i^{a_i}$ and using $\varphi(n) = \prod p_i^{a_i - 1}(p_i - 1)$; this is $[\mathbb{Q}(\zeta_n):\mathbb{Q}]$. The Galois group is cyclic if and only if $n\in\{1,2,4,p^k,2p^k\}$ for an odd prime $p$ (equivalently, $(\mathbb{Z}/n\mathbb{Z})^\times$ is cyclic); in the prime case a generator is found by locating a primitive root modulo $p$.
+is a group isomorphism. Then $\operatorname{Gal}(H/K)$ is abelian.
 
-**Algorithm B (Hilbert class field degree).** Given a number field $K$, compute $\mathrm{Cl}(\mathcal{O}_K)$ (for example, via Minkowski's bound: every ideal class contains an integral ideal of norm at most the Minkowski bound $M_K$, so enumerate prime ideals of norm $\le M_K$ and their relations). The degree of the Hilbert class field is $[H:K] = h_K$, the size of the resulting group; $H = K$ exactly when $h_K = 1$.
+**Proof.** Let $\sigma,\tau\in G$. Since $A$ is a homomorphism and the class group is abelian,
 
-## 6. Applications
+$$
+A(\sigma\tau)
+=A(\sigma)A(\tau)
+=A(\tau)A(\sigma)
+=A(\tau\sigma).
+$$
 
-- **Degree computations.** Theorem 3.2 provides degrees of cyclotomic extensions purely arithmetically, and Theorem 4.2 provides degrees of Hilbert class fields from class-number data — no explicit generators of the extensions are needed.
-- **Detecting unique factorization.** Corollary 4.3 links a field-theoretic invariant ($[H:K]$) to a purely arithmetic one ($h_K$); a nontrivial Hilbert class field is a certificate that unique factorization fails in $K$.
-- **Primitive roots and generators.** Theorem 3.3 identifies generators of prime cyclotomic Galois groups with primitive roots modulo $p$, tying field automorphisms to elementary number theory.
+The map $A$ is injective, so $\sigma\tau=\tau\sigma$. This holds for every pair $\sigma,\tau$, proving that $G$ is abelian. $\square$
 
-## 7. Discussion
+This theorem is formally a transport-of-structure statement. Its arithmetic force comes from the fact that $A$ is the Artin map, not an arbitrary labeling.
 
-The results here are individually elementary once the reciprocity isomorphisms are granted, but collectively they illustrate the core mechanism of explicit class field theory: reciprocity transports arithmetic invariants ($\varphi(n)$, cyclicity, the class number) onto structural invariants of field extensions (degree, Galois type). This is the abelian, $\mathrm{GL}_1$ layer of the Langlands program, where the correspondence is fully understood and unconditional over $\mathbb{Q}$.
+### 3.2. Character transport
 
-The Hilbert class field marks the genuine departure from Kronecker–Weber. Over $\mathbb{Q}$ the reciprocity partner is the concrete group $(\mathbb{Z}/n\mathbb{Z})^\times$; over a general $K$ it is the ideal class group, an invariant sensitive to the failure of unique factorization. The degree law $[H:K] = h_K$ is the precise analogue of $[\mathbb{Q}(\zeta_n):\mathbb{Q}] = \varphi(n)$ one level up in generality.
+Define pullback along reciprocity by
+
+$$
+A^*(\chi)=\chi\circ A.
+$$
+
+Thus $A^*(\chi)$ is a Galois character and
+
+$$
+A^*(\chi)(\sigma)=\chi(A(\sigma)).
+$$
+
+Define transport in the opposite direction by
+
+$$
+(A^{-1})^*(\rho)=\rho\circ A^{-1},
+$$
+
+so that
+
+$$
+(A^{-1})^*(\rho)(c)=\rho(A^{-1}(c)).
+$$
+
+**Lemma 3.2 (Round trip from the Galois side).** For every one-dimensional Galois representation $\rho:G\to\mathbb C^\times$,
+
+$$
+A^*((A^{-1})^*(\rho))=\rho.
+$$
+
+**Proof.** For every $\sigma\in G$,
+
+$$
+A^*((A^{-1})^*(\rho))(\sigma)
+=\rho(A^{-1}(A(\sigma)))
+=\rho(\sigma).
+$$
+
+Equality at every group element gives equality of homomorphisms. $\square$
+
+**Lemma 3.3 (Round trip from the ideal-class side).** For every ideal-class character $\chi:\mathrm{Cl}(\mathcal O_K)\to\mathbb C^\times$,
+
+$$
+(A^{-1})^*(A^*(\chi))=\chi.
+$$
+
+**Proof.** For every $c\in\mathrm{Cl}(\mathcal O_K)$,
+
+$$
+(A^{-1})^*(A^*(\chi))(c)
+=\chi(A(A^{-1}(c)))
+=\chi(c).
+$$
+
+Hence the two characters are equal. $\square$
+
+**Lemma 3.4 (Compatibility with character multiplication).** For ideal-class characters $\chi$ and $\psi$,
+
+$$
+A^*(\chi\psi)=A^*(\chi)A^*(\psi).
+$$
+
+**Proof.** For $\sigma\in G$,
+
+$$
+A^*(\chi\psi)(\sigma)
+=(\chi\psi)(A(\sigma))
+=\chi(A(\sigma))\psi(A(\sigma))
+=A^*(\chi)(\sigma)A^*(\psi)(\sigma).
+$$
+
+Thus equality holds pointwise. $\square$
+
+The preceding lemmas assemble into the main representation-theoretic result.
+
+**Theorem 3.5 (Unramified $\mathrm{GL}_1$ Correspondence).** Under the hypotheses of Theorem 3.1, pullback along Artin reciprocity is an isomorphism of abelian groups
+
+$$
+A^*:
+\operatorname{Hom}(\mathrm{Cl}(\mathcal O_K),\mathbb C^\times)
+\xrightarrow{\sim}
+\operatorname{Hom}(G,\mathbb C^\times).
+$$
+
+Its inverse is pullback along $A^{-1}$.
+
+**Proof.** Lemmas 3.2 and 3.3 show that the two pullback maps are mutually inverse bijections. Lemma 3.4 shows that $A^*$ preserves multiplication; the corresponding statement for its inverse follows similarly. Therefore $A^*$ is a group isomorphism. $\square$
+
+The term $\mathrm{GL}_1$ is justified by the canonical identification $\mathrm{GL}_1(\mathbb C)=\mathbb C^\times$. The ideal-class characters are unramified finite-order automorphic parameters in this algebraic model, while the right-hand side consists of one-dimensional Galois representations.
+
+### 3.3. Degree one and principality
+
+We now use the Hilbert class field degree identity.
+
+**Theorem 3.6 (Degree-One Principal-Ideal Criterion).** Suppose $H/K$ carries Hilbert class field reciprocity and satisfies
+
+$$
+[H:K]=h_K.
+$$
+
+Then
+
+$$
+[H:K]=1
+\quad\Longleftrightarrow\quad
+\mathcal O_K\text{ is a principal ideal ring}.
+$$
+
+**Proof.** By the degree formula,
+
+$$
+[H:K]=1\quad\Longleftrightarrow\quad h_K=1.
+$$
+
+By Lemma 2.3, $h_K=1$ is equivalent to the principal ideal ring property of $\mathcal O_K$. Chaining the equivalences proves the theorem. $\square$
+
+**Corollary 3.7 (Principality implies degree one).** If every nonzero ideal of $\mathcal O_K$ is principal, then $[H:K]=1$.
+
+**Proof.** The hypothesis makes $\mathcal O_K$ a principal ideal ring. The forward implication in Theorem 3.6 then yields $[H:K]=1$. $\square$
+
+**Corollary 3.8 (Degree one implies principality).** If $[H:K]=1$, then every nonzero ideal of $\mathcal O_K$ is principal.
+
+**Proof.** The reverse implication in Theorem 3.6 makes $\mathcal O_K$ a principal ideal ring, and therefore every ideal is principal. $\square$
+
+Together, these results identify three equivalent forms of triviality:
+
+$$
+H=K,
+\qquad
+\mathrm{Cl}(\mathcal O_K)=\{1\},
+\qquad
+\text{every nonzero ideal of }\mathcal O_K\text{ is principal}.
+$$
+
+The equality $H=K$ is understood up to the canonical identification associated with a degree-one field extension.
+
+## 4. Finite cyclic model and algorithms
+
+The abstract correspondence becomes completely explicit when the class group is cyclic. Suppose
+
+$$
+\mathrm{Cl}(\mathcal O_K)\cong C_n=\mathbb Z/n\mathbb Z.
+$$
+
+Let $g$ be the class corresponding to $1$. Every complex character is indexed by $k\in\{0,\ldots,n-1\}$ and has the form
+
+$$
+\chi_k(g^j)=\exp\!\left(\frac{2\pi i k j}{n}\right).
+$$
+
+These $n$ characters exhaust the character group. Pointwise multiplication satisfies
+
+$$
+\chi_k\chi_\ell=\chi_{k+\ell\bmod n}.
+$$
+
+If the Artin isomorphism labels a Galois automorphism $\sigma_j$ by $g^j$, then
+
+$$
+\rho_k(\sigma_j)
+=\chi_k(A(\sigma_j))
+=\exp\!\left(\frac{2\pi i k j}{n}\right).
+$$
+
+Thus the same discrete Fourier matrix is simultaneously the ideal-class character table and the one-dimensional Galois character table.
+
+### Algorithm 4.1: cyclic character-table construction
+
+**Input:** a positive integer $n$.  
+**Output:** the matrix $T$ with entries $T_{k,j}=\exp(2\pi i k j/n)$.
+
+1. For each $k$ from $0$ to $n-1$, create one row.
+2. For each class exponent $j$ from $0$ to $n-1$, compute $\exp(2\pi i k j/n)$.
+3. Store this value in row $k$, column $j$.
+4. Return the $n\times n$ matrix.
+
+The algorithm uses $n^2$ complex exponential evaluations, so its arithmetic time complexity is $O(n^2)$ and its output storage is $O(n^2)$. The orthogonality relation
+
+$$
+\sum_{j=0}^{n-1}\chi_k(g^j)\overline{\chi_\ell(g^j)}
+=
+\begin{cases}
+n,&k=\ell,\\
+0,&k\ne\ell
+\end{cases}
+$$
+
+provides a numerical consistency check.
+
+### Algorithm 4.2: transport through a finite Artin labeling
+
+Represent the Artin isomorphism on finite enumerations by a permutation $p$, where the Galois element in position $j$ maps to the ideal class in position $p(j)$. Given a character vector $v$, transport is composition:
+
+$$
+w_j=v_{p(j)}.
+$$
+
+The inverse uses $p^{-1}$. Constructing the inverse permutation costs $O(n)$ time and storage; each transport costs $O(n)$. The round-trip identities are checked by verifying that inverse permutation followed by permutation restores every entry.
+
+### Algorithm 4.3: degree/principality diagnostic
+
+Given a class number $h_K$ known to equal $[H:K]$, report:
+
+- degree $[H:K]=h_K$;
+- principal ideal ring status exactly when $h_K=1$;
+- number of one-dimensional characters equal to $h_K$ when the class group is finite abelian.
+
+The decision itself is constant time after $h_K$ is supplied. Computing $h_K$ from a defining polynomial is a separate and substantially deeper computational problem.
+
+## 5. Examples
+
+### 5.1. The Gaussian field
+
+Let $K=\mathbb Q(i)$, whose ring of integers is $\mathbb Z[i]$. This ring is Euclidean and hence a principal ideal domain. Therefore $h_K=1$. The degree-one criterion gives
+
+$$
+[H:K]=1.
+$$
+
+There is one ideal-class character, the trivial character, and one corresponding one-dimensional character of the trivial Galois group.
+
+### 5.2. The field $\mathbb Q(\sqrt{-5})$
+
+The ring of integers of $K=\mathbb Q(\sqrt{-5})$ is $\mathbb Z[\sqrt{-5}]$, and its class number is $2$. Therefore its Hilbert class field has degree $2$ over $K$, and the class group is cyclic of order $2$. Its character table is
+
+$$
+\begin{pmatrix}
+1&1\\
+1&-1
+\end{pmatrix}.
+$$
+
+Artin reciprocity identifies the nontrivial ideal class with the nonidentity Galois automorphism. The nontrivial ideal-class character sends that class to $-1$; the corresponding Galois representation sends the nonidentity automorphism to $-1$.
+
+### 5.3. A cyclic class group of order three
+
+For a cyclic class group $C_3$, put $\omega=\exp(2\pi i/3)$. The character table is
+
+$$
+\begin{pmatrix}
+1&1&1\\
+1&\omega&\omega^2\\
+1&\omega^2&\omega
+\end{pmatrix}.
+$$
+
+The Hilbert class field degree is $3$. There are three one-dimensional Galois representations. Once Artin reciprocity labels the three Galois elements by the three ideal classes, the displayed table serves both sides without alteration.
+
+## 6. Relation to Kronecker–Weber and Langlands
+
+Kronecker–Weber gives explicit generators for abelian extensions of $\mathbb Q$ through roots of unity. For a general number field, the Hilbert class field is the canonical maximal unramified abelian extension of finite degree. The reciprocity isomorphism determines its Galois group abstractly from ideals. This is a generalization in structural scope, but not yet a universal explicit-generation theorem: Hilbert's twelfth problem asks for analytic generators analogous to roots of unity.
+
+The character isomorphism is the unramified finite-order $\mathrm{GL}_1$ correspondence. More complete formulations use the idèle class group $C_K$ and identify its continuous characters with one-dimensional characters of the abelianized absolute Galois group. Ideal-class characters arise as those idèle-class characters trivial on the archimedean factors and local unit subgroups relevant to the unramified quotient.
+
+In higher rank, the Langlands program compares $n$-dimensional Galois representations with automorphic representations of $\mathrm{GL}_n$. The present setting avoids the analytic and nonabelian difficulties of higher rank. Nevertheless, it exhibits the defining pattern: a reciprocity mechanism transports arithmetic spectral data to Galois spectral data.
+
+## 7. Applications and limitations
+
+The results have several immediate uses.
+
+First, class-group computations determine the degree of the Hilbert class field. A class number larger than one certifies that a nontrivial unramified abelian extension must occur; class number one certifies its collapse.
+
+Second, a presentation of the class group determines all one-dimensional representations of the Hilbert Galois group. If
+
+$$
+\mathrm{Cl}(\mathcal O_K)\cong C_{n_1}\times\cdots\times C_{n_r},
+$$
+
+then a character is determined independently on each cyclic generator by choosing an $n_j$-th root of unity. Consequently the character group has $h_K=n_1\cdots n_r$ elements and is noncanonically isomorphic to the class group itself.
+
+Third, the degree-one criterion provides a conceptual equivalence between ideal arithmetic and extension theory. Proving every ideal principal is enough to show that the Hilbert class field is trivial; proving the Hilbert extension has degree one is enough to recover principality.
+
+The limitations are equally important. The reciprocity isomorphism is assumed as input to the structural arguments. The existence of the Hilbert class field, its maximality and unramifiedness, the principal ideal theorem in the extension, and explicit defining equations require additional work. Moreover, finite ideal-class characters cover only the unramified finite-order sector of global $\mathrm{GL}_1$ reciprocity.
 
 ## 8. Future directions
 
-*Conductor duality for cyclotomic subfields.* Every abelian extension of $\mathbb{Q}$ has a smallest cyclotomic field containing it, and the modulus of that field — the conductor — is a computable arithmetic invariant equal to the least common multiple of the ramified primes' contributions. The subfield lattice of a cyclotomic field is in order-reversing bijection with the subgroup lattice of a finite abelian group, so the conductor is forced by group-theoretic index rather than by any transcendental input.
+Five developments would extend this structural core.
 
-*Class-number rigidity of the Hilbert tower.* For a number field of class number greater than one, the Hilbert class field again has its own class number; iterating produces a tower whose successive degrees are class numbers. The degree-equals-class-number law converts a qualitative tower into a sequence of exactly computable integers.
+1. **Existence of Hilbert class fields.** For every number field $K$, construct a finite Galois extension $H/K$, unramified at every finite prime, together with an Artin reciprocity isomorphism $\operatorname{Gal}(H/K)\cong\mathrm{Cl}(\mathcal O_K)$.
 
-*Prime-cyclicity transfer to real subfields.* For each prime $p$, the maximal real subfield of $\mathbb{Q}(\zeta_p)$ is a cyclic extension of $\mathbb{Q}$ of degree $(p-1)/2$, being the unique index-two quotient of the full cyclotomic Galois group. Cyclicity descends to quotients, so the real subfield inherits an explicit cyclic generator.
+2. **Principal ideal theorem.** Prove that extension to $H$ sends every nonzero fractional ideal of $\mathcal O_K$ to a principal fractional ideal of $\mathcal O_H$, or equivalently that the induced map $\mathrm{Cl}(\mathcal O_K)\to\mathrm{Cl}(\mathcal O_H)$ is zero.
 
-*Complex-multiplication analogue of Kronecker–Weber.* For an imaginary quadratic field, the abelian extensions are generated not by roots of unity but by special values of modular and elliptic functions (the theory of complex multiplication) — the archetypal solved case of Hilbert's twelfth problem beyond $\mathbb{Q}$.
+3. **Idèlic realization.** Construct the quotient from the idèle class group onto $\mathrm{Cl}(\mathcal O_K)$, identify its kernel, and characterize ideal-class characters as precisely the idèle-class characters trivial on that kernel.
+
+4. **Cyclotomic compatibility over $\mathbb Q$.** Show that general Artin reciprocity specializes in cyclotomic extensions to the rule taking a prime $p$ coprime to the conductor to the automorphism $\zeta\mapsto\zeta^p$.
+
+5. **Explicit imaginary-quadratic generators.** For imaginary quadratic fields of small class number, construct singular moduli generating the Hilbert class field and prove the expected degree and unramifiedness properties.
+
+### 8.1. From cyclic groups to finite abelian groups
+
+The cyclic algorithm extends componentwise. If the class group has invariant-factor decomposition
+
+$$
+C_{n_1}\times\cdots\times C_{n_r},
+$$
+
+then index a group element by $j=(j_1,\ldots,j_r)$ and a character by $k=(k_1,\ldots,k_r)$. The complete family is
+
+$$
+\chi_k(j)=\exp\!\left(2\pi i\sum_{a=1}^r\frac{k_a j_a}{n_a}\right).
+$$
+
+There are $\prod_a n_a=h_K$ group elements and equally many characters. A direct character-table construction takes $O(h_K^2 r)$ elementary arithmetic operations if each entry is computed from all $r$ coordinates. Tensoring the cyclic Fourier matrices gives the same table and exposes product structure that can be exploited by multidimensional fast Fourier methods. Artin transport remains a column relabeling, so it adds only linear work once the reciprocity table is known.
+
+### 8.2. Splitting information encoded by characters
+
+For a finite prime $\mathfrak p$ unramified in $H$, its Frobenius element $\operatorname{Frob}_{\mathfrak p}$ is sent by reciprocity to the ideal class of $\mathfrak p$ (up to the chosen arithmetic or geometric Frobenius convention). Consequently a transported character satisfies
+
+$$
+\rho_\chi(\operatorname{Frob}_{\mathfrak p})=\chi([\mathfrak p]).
+$$
+
+Thus values of ideal-class characters on prime classes are exactly values of the corresponding Galois representations on Frobenius symmetries. In particular, a prime splitting completely has trivial Frobenius and every transported character takes value $1$ there. Conversely, because characters of a finite abelian group separate points, if every character takes value $1$ on a Frobenius element, that element is the identity. This connects the character correspondence directly to observable splitting behavior.
 
 ## 9. Conclusion
 
-Starting from the abelian reciprocity isomorphisms, we extracted the exact numerical invariants of the objects they govern: the degree of a cyclotomic field is Euler's totient, prime moduli yield cyclic Galois groups of order $p-1$ (and the prime hypothesis is necessary, as $n=8$ shows), and the degree of a Hilbert class field equals the class number, collapsing to a trivial extension exactly when factorization is unique. Together these are the numerical fingerprints of explicit class field theory and concrete steps toward Hilbert's twelfth problem.
+An Artin reciprocity isomorphism
+
+$$
+\operatorname{Gal}(H/K)\cong\mathrm{Cl}(\mathcal O_K)
+$$
+
+has three immediate but far-reaching consequences. It transfers commutativity from ideals to automorphisms, transports every ideal-class character to a unique one-dimensional Galois representation, and—together with the degree formula—equates the triviality of the Hilbert class field with principality of all ideals.
+
+These consequences form a coherent unramified $\mathrm{GL}_1$ picture. The class group measures the obstruction to principality, the Hilbert class field realizes that obstruction as Galois symmetry, and character duality records the same symmetry as complex phases. This is the first canonical layer beyond the cyclotomic world and a precise point of entry into explicit class field theory and the Langlands program.

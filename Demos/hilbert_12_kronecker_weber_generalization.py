@@ -1,208 +1,161 @@
-"""
-Numerical demonstrations of explicit reciprocity, from roots of unity to class numbers.
+#!/usr/bin/env python3
+"""Numerical illustrations of Hilbert class field character transport.
 
-This self-contained script illustrates the main results:
-
-  1. Degree of the cyclotomic field Q(zeta_n) equals Euler's totient phi(n):
-         [Q(zeta_n) : Q] = #Gal(Q(zeta_n)/Q) = #(Z/nZ)^x = phi(n).
-  2. For a prime p, Gal(Q(zeta_p)/Q) is cyclic of order p-1, with a generator
-     corresponding to a primitive root modulo p.
-  3. The prime hypothesis is necessary: (Z/8Z)^x is the Klein four-group C2 x C2,
-     hence Gal(Q(zeta_8)/Q) is NOT cyclic.
-  4. Degree of the Hilbert class field equals the class number: [H:K] = h_K,
-     and h_K = 1 forces H = K (illustrated for several imaginary quadratic fields).
-
-Everything is computed directly from the arithmetic that reciprocity transports.
+The script models finite cyclic ideal class groups.  It builds their complex
+character tables, transports characters through a finite Artin labeling, checks
+round trips and character orthogonality, and illustrates the degree-one
+principal-ideal criterion using supplied class numbers.
 """
 
 from __future__ import annotations
 
-from math import gcd, isqrt
-from typing import Dict, List, Tuple
+import cmath
+from dataclasses import dataclass
+from typing import Iterable, Sequence
+
+ComplexMatrix = list[list[complex]]
 
 
-# --------------------------------------------------------------------------
-# 1. Euler totient and the cyclotomic degree  [Q(zeta_n):Q] = phi(n)
-# --------------------------------------------------------------------------
+@dataclass(frozen=True)
+class ClassFieldDiagnostic:
+    """Consequences of a supplied Hilbert class field class number."""
 
-def units_mod(n: int) -> List[int]:
-    """The multiplicative group (Z/nZ)^x, as the coprime residues in [1, n]."""
-    return [k for k in range(1, n + 1) if gcd(k, n) == 1]
-
-
-def euler_totient(n: int) -> int:
-    """phi(n) = #(Z/nZ)^x, computed via the prime-factorization product formula."""
-    result = n
-    m = n
-    p = 2
-    while p * p <= m:
-        if m % p == 0:
-            while m % p == 0:
-                m //= p
-            result -= result // p
-        p += 1
-    if m > 1:
-        result -= result // m
-    return result
+    field_label: str
+    class_number: int
+    extension_degree: int
+    is_principal_ideal_ring: bool
+    number_of_characters: int
 
 
-def cyclotomic_degree(n: int) -> int:
-    """[Q(zeta_n):Q] = #Gal(Q(zeta_n)/Q) = phi(n)."""
-    return euler_totient(n)
+def cyclic_character_value(order: int, character: int, element: int) -> complex:
+    """Return chi_character(element) for the cyclic group of the given order."""
+    if order <= 0:
+        raise ValueError("The group order must be positive.")
+    angle = 2.0 * cmath.pi * (character % order) * (element % order) / order
+    return cmath.exp(1j * angle)
 
 
-# --------------------------------------------------------------------------
-# 2 & 3. Cyclic structure of (Z/nZ)^x  (== Gal(Q(zeta_n)/Q) by reciprocity)
-# --------------------------------------------------------------------------
-
-def multiplicative_order(a: int, n: int) -> int:
-    """Order of a in (Z/nZ)^x."""
-    assert gcd(a, n) == 1
-    order, current = 1, a % n
-    while current != 1:
-        current = (current * a) % n
-        order += 1
-    return order
+def cyclic_character_table(order: int) -> ComplexMatrix:
+    """Construct the complete character table of the cyclic group C_order."""
+    return [
+        [cyclic_character_value(order, k, j) for j in range(order)]
+        for k in range(order)
+    ]
 
 
-def is_cyclic_units(n: int) -> bool:
-    """True iff (Z/nZ)^x is cyclic, i.e. a primitive root mod n exists."""
-    order = euler_totient(n)
-    return any(multiplicative_order(a, n) == order for a in units_mod(n))
+def inverse_permutation(permutation: Sequence[int]) -> list[int]:
+    """Invert a zero-based permutation."""
+    n = len(permutation)
+    if sorted(permutation) != list(range(n)):
+        raise ValueError("Artin labeling must be a permutation of 0,...,n-1.")
+    inverse = [0] * n
+    for source, target in enumerate(permutation):
+        inverse[target] = source
+    return inverse
 
 
-def primitive_root(n: int) -> int | None:
-    """A generator of (Z/nZ)^x if one exists, else None."""
-    order = euler_totient(n)
-    for a in units_mod(n):
-        if multiplicative_order(a, n) == order:
-            return a
-    return None
+def transport_class_to_galois(
+    class_character: Sequence[complex], artin_labeling: Sequence[int]
+) -> list[complex]:
+    """Pull back a class character along a finite Artin labeling.
 
-
-def element_orders(n: int) -> Dict[int, int]:
-    """Map each unit to its multiplicative order (reveals the group's type)."""
-    return {a: multiplicative_order(a, n) for a in units_mod(n)}
-
-
-# --------------------------------------------------------------------------
-# 4. Class number of an imaginary quadratic field Q(sqrt(-d)) and [H:K]=h_K
-# --------------------------------------------------------------------------
-
-def is_squarefree(m: int) -> bool:
-    for p in range(2, isqrt(m) + 1):
-        if m % (p * p) == 0:
-            return False
-    return True
-
-
-def class_number_imaginary_quadratic(d: int) -> int:
+    artin_labeling[g] is the ideal-class index assigned to Galois element g.
     """
-    Class number of K = Q(sqrt(-d)) for squarefree d > 0, computed by counting
-    reduced primitive positive-definite binary quadratic forms of the field's
-    discriminant D:
-        D = -d    if -d = 1 mod 4,   else   D = -4d.
-    A form (a, b, c) with b^2 - 4ac = D is reduced iff
-        |b| <= a <= c,  and  b >= 0 whenever |b| = a or a = c.
-    The number of reduced forms is h_K (the class number).
-    """
-    assert d > 0 and is_squarefree(d)
-    disc = -d if (-d) % 4 == 1 else -4 * d
-    count = 0
-    a = 1
-    while a * a <= -disc // 3 + 1:
-        for b in range(-a, a + 1):
-            # need c integral: b^2 - 4ac = disc  =>  4ac = b^2 - disc
-            num = b * b - disc
-            if num % (4 * a) != 0:
-                continue
-            c = num // (4 * a)
-            if c < a:
-                continue
-            # reduced conditions
-            if abs(b) <= a <= c:
-                if abs(b) == a or a == c:
-                    if b < 0:
-                        continue
-                count += 1
-        a += 1
-    return count
+    if len(class_character) != len(artin_labeling):
+        raise ValueError("The character and Artin table must have equal size.")
+    inverse_permutation(artin_labeling)  # validates the labeling
+    return [class_character[c] for c in artin_labeling]
 
 
-def hilbert_class_field_degree(d: int) -> int:
-    """[H:K] = h_K for K = Q(sqrt(-d)); H = K exactly when this is 1."""
-    return class_number_imaginary_quadratic(d)
+def transport_galois_to_class(
+    galois_character: Sequence[complex], artin_labeling: Sequence[int]
+) -> list[complex]:
+    """Transport a Galois character back along the inverse Artin labeling."""
+    if len(galois_character) != len(artin_labeling):
+        raise ValueError("The character and Artin table must have equal size.")
+    inverse = inverse_permutation(artin_labeling)
+    return [galois_character[inverse[c]] for c in range(len(inverse))]
 
 
-# --------------------------------------------------------------------------
-# Demonstrations
-# --------------------------------------------------------------------------
-
-def demo_cyclotomic_degrees() -> None:
-    print("=" * 70)
-    print("1. Cyclotomic degree  [Q(zeta_n):Q] = phi(n)")
-    print("=" * 70)
-    for n in [1, 2, 3, 4, 5, 6, 8, 12, 15, 20, 100]:
-        deg = cyclotomic_degree(n)
-        check = len(units_mod(n))
-        assert deg == check
-        print(f"  n = {n:4d}:  [Q(zeta_n):Q] = phi(n) = {deg:3d}   "
-              f"(#(Z/nZ)^x = {check})")
-    print()
+def max_orthogonality_error(table: Sequence[Sequence[complex]]) -> float:
+    """Return the largest numerical error in row-character orthogonality."""
+    n = len(table)
+    if n == 0 or any(len(row) != n for row in table):
+        raise ValueError("A character table must be a nonempty square matrix.")
+    error = 0.0
+    for k, row_k in enumerate(table):
+        for ell, row_ell in enumerate(table):
+            inner = sum(a * b.conjugate() for a, b in zip(row_k, row_ell))
+            expected = complex(n if k == ell else 0)
+            error = max(error, abs(inner - expected))
+    return error
 
 
-def demo_prime_cyclicity() -> None:
-    print("=" * 70)
-    print("2. Prime modulus: Gal(Q(zeta_p)/Q) is cyclic of order p-1")
-    print("=" * 70)
-    for p in [3, 5, 7, 11, 13, 17]:
-        g = primitive_root(p)
-        assert is_cyclic_units(p)
-        assert cyclotomic_degree(p) == p - 1
-        print(f"  p = {p:3d}:  cyclic, order p-1 = {p-1:3d},  "
-              f"primitive root (generator) = {g}")
-    print()
+def diagnose(field_label: str, class_number: int) -> ClassFieldDiagnostic:
+    """Apply [H:K]=h_K and the class-number-one criterion."""
+    if class_number <= 0:
+        raise ValueError("A class number must be positive.")
+    return ClassFieldDiagnostic(
+        field_label=field_label,
+        class_number=class_number,
+        extension_degree=class_number,
+        is_principal_ideal_ring=(class_number == 1),
+        number_of_characters=class_number,
+    )
 
 
-def demo_prime_hypothesis_necessary() -> None:
-    print("=" * 70)
-    print("3. Necessity of the prime hypothesis: n = 8 gives C2 x C2")
-    print("=" * 70)
-    orders = element_orders(8)
-    print(f"  (Z/8Z)^x = {units_mod(8)}")
-    print(f"  element orders: {orders}")
-    print(f"  cyclic? {is_cyclic_units(8)}  ->  NOT cyclic (Klein four-group)")
-    print(f"  Every non-identity element has order 2, so no generator exists.")
-    print()
+def format_complex(z: complex, tolerance: float = 1e-10) -> str:
+    """Format a complex root of unity readably."""
+    real = 0.0 if abs(z.real) < tolerance else z.real
+    imag = 0.0 if abs(z.imag) < tolerance else z.imag
+    if imag == 0.0:
+        return f"{real:.3f}"
+    if real == 0.0:
+        return f"{imag:.3f}i"
+    return f"{real:.3f}{imag:+.3f}i"
 
 
-def demo_hilbert_class_field() -> None:
-    print("=" * 70)
-    print("4. Hilbert class field degree  [H:K] = h_K,  K = Q(sqrt(-d))")
-    print("=" * 70)
-    # d : expected class number (classical values)
-    expected: Dict[int, int] = {
-        1: 1, 2: 1, 3: 1, 7: 1, 11: 1, 19: 1, 43: 1, 67: 1, 163: 1,  # h=1
-        5: 2, 6: 2, 10: 2, 13: 2, 15: 2,                              # h=2
-        23: 3, 31: 3,                                                 # h=3
-    }
-    for d in sorted(expected):
-        h = hilbert_class_field_degree(d)
-        assert h == expected[d], (d, h, expected[d])
-        note = "H = K (unique factorization)" if h == 1 else "nontrivial H"
-        print(f"  K = Q(sqrt(-{d:3d})):  h_K = [H:K] = {h}   {note}")
-    print()
-    print("  Rational witness: K = H = Q, h_Q = 1, [Q:Q] = 1.")
-    print()
+def print_table(table: Iterable[Iterable[complex]]) -> None:
+    """Print a complex matrix."""
+    for row in table:
+        print("  " + "  ".join(f"{format_complex(z):>14}" for z in row))
 
 
-def main() -> None:
-    demo_cyclotomic_degrees()
-    demo_prime_cyclicity()
-    demo_prime_hypothesis_necessary()
-    demo_hilbert_class_field()
-    print("All demonstrations completed and internal checks passed.")
+def run_demo() -> None:
+    """Run three numerical demonstrations."""
+    print("DEMO 1 — Cyclic character tables and orthogonality")
+    for order in (1, 2, 3, 4):
+        table = cyclic_character_table(order)
+        print(f"\nCharacter table for C_{order}:")
+        print_table(table)
+        print(f"maximum orthogonality error: {max_orthogonality_error(table):.3e}")
+
+    print("\nDEMO 2 — Artin transport and inverse transport")
+    order = 4
+    class_character = cyclic_character_table(order)[1]
+    # A nontrivial enumeration: Galois positions map to class positions 0, 2, 1, 3.
+    artin_labeling = [0, 2, 1, 3]
+    galois_character = transport_class_to_galois(class_character, artin_labeling)
+    recovered = transport_galois_to_class(galois_character, artin_labeling)
+    print("ideal-class character:", [format_complex(z) for z in class_character])
+    print("Artin labeling:       ", artin_labeling)
+    print("Galois character:     ", [format_complex(z) for z in galois_character])
+    print("recovered character:  ", [format_complex(z) for z in recovered])
+    print("round trip error:     ", max(abs(a - b) for a, b in zip(class_character, recovered)))
+
+    print("\nDEMO 3 — Degree one versus principality")
+    examples = [
+        diagnose("Q(i)", 1),
+        diagnose("Q(sqrt(-5))", 2),
+        diagnose("a model field with cyclic class group C_3", 3),
+    ]
+    for item in examples:
+        print(
+            f"{item.field_label}: h={item.class_number}, [H:K]={item.extension_degree}, "
+            f"principal ideal ring={item.is_principal_ideal_ring}, "
+            f"characters={item.number_of_characters}"
+        )
 
 
 if __name__ == "__main__":
-    main()
+    run_demo()
