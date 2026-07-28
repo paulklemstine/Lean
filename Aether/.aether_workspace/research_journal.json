@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "24111e1f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Concrete ZFC syntax and proof checking.** Replace the abstract `DeductiveSystem` by an inductive first-order syntax, finite derivation trees, the ZFC axiom schemes, and a ker",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-22T16:54:33",
-      "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
-    },
-    {
       "cycle_id": "43fa6482",
       "domain": "Applications",
       "key_insight": "# Future Directions: Size-Indexed Information Loss and Fluctuation Bounds\n\nThe formal result in `Catalog/Applications/SizeIndexedLandauerBridge.lean` connects two resources that share an input-size in",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-28T17:00:01",
       "title": "Hilbert 12: Kronecker-Weber Generalization"
+    },
+    {
+      "cycle_id": "a07085b6",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n1. Generalize the scalar output theorem to vector-valued output layers.\n2. Package each selected formula as an affine map and prove continuity across adjacent cell boundaries.\n3.",
+      "quality_score": 0.76088,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-28T17:00:44",
+      "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3dea732a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Causal Consistency Beyond Global Contraction\n\n## 1. Local basin Novikov principle for polynomial feedback\n\n**Conjecture.** Let a real polynomial causal return map preserve a close",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:44:12",
-      "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
-    },
     {
       "cycle_id": "93551ae8",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-28T17:00:01",
       "title": "Hilbert 12: Kronecker-Weber Generalization"
+    },
+    {
+      "cycle_id": "a07085b6",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n1. Generalize the scalar output theorem to vector-valued output layers.\n2. Package each selected formula as an affine map and prove continuity across adjacent cell boundaries.\n3.",
+      "quality_score": 0.76088,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-28T17:00:44",
+      "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3d6ad336",
-      "domain": "Cryptography",
-      "name": "for",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "3d6ad336",
-      "domain": "Cryptography",
-      "name": "message_unique_from_noisy_encoding",
-      "quality": 0.7
-    },
-    {
-      "cycle_id": "830d234a",
-      "domain": "Computation",
-      "name": "for",
-      "quality": 0.72
-    },
     {
       "cycle_id": "830d234a",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "galoisToClass_classToGalois",
       "quality": 0.78664
+    },
+    {
+      "cycle_id": "a07085b6",
+      "domain": "Pythagorean",
+      "name": "cell_nonempty_iff_inequalities",
+      "quality": 0.76088
+    },
+    {
+      "cycle_id": "a07085b6",
+      "domain": "Pythagorean",
+      "name": "networkOutput_eq_selectedAffine_of_mem_cell",
+      "quality": 0.76088
+    },
+    {
+      "cycle_id": "a07085b6",
+      "domain": "Pythagorean",
+      "name": "selectedAffine_affineCombination",
+      "quality": 0.76088
     }
   ],
-  "last_updated": "2026-07-28T17:00:01",
+  "last_updated": "2026-07-28T17:00:44",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "c1b3f8da",
-        "quality": 0.74,
-        "theorems": 11,
-        "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Grou"
-      },
-      {
         "cycle_id": "dd6a308e",
         "quality": 0.79,
         "theorems": 11,
@@ -3885,6 +3879,12 @@
         "quality": 0.686,
         "theorems": 31,
         "title": "ArXiv paper: Further thoughts on dimensions of posets"
+      },
+      {
+        "cycle_id": "a07085b6",
+        "quality": 0.76088,
+        "theorems": 11,
+        "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
       }
     ],
     "Shared": [

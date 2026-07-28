@@ -1,71 +1,190 @@
-# The Hidden Geometry of Attention: What Mathematics Reveals About How AI Understands Language
+# Attention as a Perfect Index: What a Finite Transformer Can Remember
 
-## A transformer is not a black box — it is a precisely structured mathematical instrument
+## The geometry behind the familiar word
 
-When you ask ChatGPT a question, the answer flows through a transformer — the architecture behind virtually every modern AI system. Since its introduction in 2017 under the title "Attention is All You Need," the transformer has become the most important computational structure in artificial intelligence. Yet most descriptions treat it as an engineering artifact: a stack of matrix multiplications and nonlinear functions tuned by gradient descent.
+“Attention” sounds psychological, but its mathematical core begins with a simple act: compare two vectors and assign the comparison a number. A query asks what matters; a key advertises what it represents; a score measures their match. This small mechanism sits at the center of systems that translate languages, summarize documents, analyze proteins, and process time series.
 
-What if we looked at it differently? What if the transformer were not merely an engineered system, but a *mathematical object* with deep structural properties — properties that explain *why* it works, not merely *that* it works?
+The cleanest version is bilinear attention. Let $q,k\in\mathbb{R}^d$ be a query and a key, and let $W\in\mathbb{R}^{d\times d}$ be a learned matrix. Their score is
 
-A team of researchers has done exactly this, revealing that the transformer's core mechanisms — attention, normalization, and depth — are governed by elegant mathematical principles. Their findings illuminate the inner geometry of modern AI.
+$$
+B_W(q,k)=q^{\mathsf T}Wk.
+$$
 
-## The Gauge Symmetry of Attention
+The matrix $W$ changes the geometry of comparison. With $W=I$, the score is the ordinary dot product. A general $W$ can amplify some directions, suppress others, or couple one coordinate of the query to another coordinate of the key.
 
-The most surprising discovery concerns the softmax function, the mathematical heart of the attention mechanism. Softmax takes a list of numbers and converts them into probabilities: positive values that sum to one. It appears in every transformer, millions of times per inference.
+This article develops three exact facts about a finite, linear-attention model. First, the score really is bilinear: it obeys superposition independently in its query and key. Second, additive positional information and learned coordinatewise affine transformations have transparent composition laws. Third, and most strikingly, a bank of attention heads can reproduce *every* function on a finite collection of fixed-length sequences exactly.
 
-The researchers proved that softmax possesses a **gauge symmetry** — a term borrowed from physics, where it describes the deepest symmetries of nature. Specifically, softmax is *shift invariant*: if you add the same constant to every input, the output remains unchanged.
+That final claim needs careful boundaries. It is an exact lookup-table theorem for linear attention on a finite domain. It is not the usual theorem that standard softmax transformers approximate continuous functions on compact Euclidean sets. The distinction matters—and also reveals the argument’s central idea with unusual clarity.
 
-Why does this matter? Because it means attention operates on *relative differences*, not absolute magnitudes. When a transformer decides that the word "bank" should attend to "river" rather than "money," it is comparing relative scores, not absolute ones. The constant background level — however large — washes away entirely. This is not an approximation or a useful heuristic; it is an exact mathematical identity.
+## Attention obeys superposition
 
-This gauge symmetry has practical consequences. It explains why transformers are robust to certain kinds of noise in their internal representations. It is also the mathematical reason why numerical tricks like "subtracting the max" in softmax implementations do not change the output — they are exploiting an exact symmetry, not making an approximation.
+A map is linear when mixtures at its input become the same mixtures at its output. Bilinearity means linearity in either argument while the other remains fixed. For any vectors $q_1,q_2,k,k_1,k_2\in\mathbb{R}^d$ and scalar $c\in\mathbb{R}$,
 
-## Attention as Inner Product Geometry
+$$
+B_W(q_1+q_2,k)=B_W(q_1,k)+B_W(q_2,k),
+$$
 
-The next revelation concerns the structure of attention scores themselves. Before softmax converts scores to probabilities, the raw scores are computed as inner products between "query" and "key" vectors — transformed versions of the input. The researchers proved that these scores form a **bilinear map**, linear in both the query and key arguments independently.
+$$
+B_W(cq,k)=cB_W(q,k),
+$$
 
-This is not a trivial observation. It means the pre-softmax attention scores define a genuine inner product geometry — a mathematical space where "similarity" has a precise meaning. The weight matrices Wq and Wk that the transformer learns during training define a **Gram matrix** WqᵀWk, and the attention score between any two positions equals the bilinear form determined by this matrix.
+$$
+B_W(q,k_1+k_2)=B_W(q,k_1)+B_W(q,k_2),
+$$
 
-This Gram factorization theorem connects transformers to classical mathematics. The eigenvalues of WqᵀWk determine which directions in representation space receive high attention and which are suppressed. A transformer with a low-rank Gram matrix concentrates attention along a few meaningful directions; a full-rank matrix spreads attention broadly. The spectral theory of this matrix — a subject studied since the 19th century — governs the geometry of modern AI.
+and
 
-## The Centering Hyperplane
+$$
+B_W(q,ck)=cB_W(q,k).
+$$
 
-Layer normalization, a component present in every transformer block, has long been understood as "making the numbers well-behaved." The mathematical story is richer.
+These laws are more than algebraic housekeeping. They say that attention scores can be understood by decomposing queries and keys into simpler parts. For example,
 
-The researchers proved that layer normalization projects vectors onto a **centered hyperplane** — the subspace of vectors whose coordinates sum to zero. This centering property is exact: the mean of a layer-normalized vector is precisely zero.
+$$
+B_W(aq_1+bq_2,k_1+k_2)
+=a\bigl(B_W(q_1,k_1)+B_W(q_1,k_2)\bigr)
++b\bigl(B_W(q_2,k_1)+B_W(q_2,k_2)\bigr).
+$$
 
-Geometrically, this means each layer of the transformer forces representations to live on a specific submanifold of the ambient space. The centered hyperplane is (n-1)-dimensional within an n-dimensional space, meaning layer normalization removes exactly one degree of freedom — the "overall level" of the representation, which carries no useful information about token relationships.
+Every interaction in the mixture is visible. This resembles superposition in wave physics: complicated signals can be split into components, analyzed separately, and recombined. It also resembles feature interaction in statistics, where $W$ specifies which query features pair with which key features.
 
-This projection is closely related to the gauge symmetry of softmax. Both mechanisms eliminate redundant "global offset" information, ensuring that the transformer's computation depends only on the structure of relationships between tokens, not on irrelevant absolute scales.
+## Giving order to a sequence
 
-## The Residual Stream
+Attention by itself compares content. Yet a sentence is not merely a bag of words: “dog bites person” differs from “person bites dog.” A simple way to represent order is to add a position vector $p$ to a content vector $x$. Define
 
-Modern transformers use **residual connections** — each layer adds its output to its input rather than replacing it. The researchers formalized this as a decomposition theorem: after two residual layers with functions f and g, the output decomposes as:
+$$
+P_p(x)=x+p.
+$$
 
-> output = g(f(x) + x) + f(x) + x
+Two successive positional encodings do not create a mysterious new operation. They simply add:
 
-Each layer contributes an additive correction to the "residual stream." When a layer has nothing useful to contribute, it can learn f ≈ 0, reducing to the identity. The researchers proved this formally: a zero-function residual connection is exactly the identity map.
+$$
+P_{p_2}(P_{p_1}(x))=P_{p_1+p_2}(x).
+$$
 
-This explains why deep transformers can be trained at all. Without residual connections, gradient signals must travel through every layer to reach the input, degrading exponentially. With residual connections, gradients have a direct highway. The mathematics shows this is not merely helpful — it is structurally necessary.
+Thus additive position vectors form a compositional bookkeeping system. If one encoding marks location within a sentence and another marks location within a paragraph, their combined effect is one encoding with the summed position vector.
 
-## Order Preservation and the Logic of Attention
+Now consider the learned affine stage commonly placed after the data-dependent centering and variance normalization in a normalization layer. For coordinatewise scale $s$, bias $b$, and vector $x$, define
 
-A final theorem reveals the logical structure of attention. The researchers proved that softmax is **order-preserving**: if score i ≤ score j, then the attention weight for position i is at most the weight for position j. Larger scores always produce larger attention weights.
+$$
+A_{s,b}(x)_i=s_i x_i+b_i.
+$$
 
-This monotonicity is the mathematical guarantee that attention does what we intuitively expect: it pays more attention to more relevant tokens. Without this property, attention would be chaotic — small changes in scores could produce wild swings in attention weights. The proof shows this cannot happen.
+This is deliberately only the learned affine post-transformation, not the full nonlinear normalization operation. Two such stages collapse into one:
 
-## Depth as Composition
+$$
+A_{s_2,b_2}(A_{s_1,b_1}(x))
+=A_{s_2\odot s_1,\,s_2\odot b_1+b_2}(x),
+$$
 
-The transformer's depth — the number of repeated blocks — is formalized as iterated composition. The researchers proved a composition theorem: applying L₁ + L₂ layers is equivalent to applying L₁ layers followed by L₂ layers. This may seem obvious, but the formal proof establishes that transformer depth is genuinely compositional: there are no hidden interactions between layers beyond the sequential flow of information.
+where $\odot$ denotes coordinatewise multiplication. Likewise, applying an affine stage after positional encoding gives
 
-This compositionality is the mathematical foundation for techniques like layer pruning (removing unnecessary layers) and progressive training (training shallow networks first, then adding layers). These practical methods work because the mathematics guarantees that depth composes cleanly.
+$$
+A_{s,b}(P_p(x))_i=s_i x_i+(s_i p_i+b_i).
+$$
 
-## What It All Means
+Position therefore enters the final affine expression as part of an effective bias, scaled coordinate by coordinate. These identities can simplify networks algebraically: adjacent affine stages may be fused, and the effect of additive position can be tracked exactly.
 
-These results paint a picture of the transformer as a mathematically coherent instrument, not a hodgepodge of engineering tricks. The gauge symmetry of softmax, the inner product geometry of attention scores, the centering projection of layer normalization, and the compositional structure of depth all fit together into a unified mathematical framework.
+## Turning attention into equality
 
-This framework suggests that the transformer's success is not accidental. Its components implement natural mathematical operations — projecting onto hyperplanes, computing bilinear forms, mapping to probability simplices — that happen to be precisely the right tools for processing sequential information.
+The universality argument begins with a finite set $X$ of possible inputs. An “input” may be one token, but it may equally well be an entire fixed-length sequence. Associate each $x\in X$ with its one-hot vector $e_x\in\mathbb{R}^{X}$, defined by
 
-The deeper question — *why* these particular mathematical structures are so effective for language — remains open. But the formal analysis brings us closer to an answer. Language, like the transformer, is fundamentally relational: the meaning of a word depends on its context, not on any absolute property. The transformer's gauge symmetries and bilinear structures are mathematical expressions of this relational nature.
+$$
+(e_x)_y=
+\begin{cases}
+1,&y=x,\\
+0,&y\ne x.
+\end{cases}
+$$
 
-Understanding these structures is not merely an academic exercise. As AI systems grow more powerful and are deployed in higher-stakes applications, mathematical understanding of their behavior becomes a safety requirement. We need to know not just that transformers work, but *why* they work — and under what conditions they might fail. The mathematical framework established here is a step toward that deeper understanding.
+One-hot vectors are perfect name tags. Their dot products test equality:
 
-The transformer, it turns out, is not just attention. It is geometry.
+$$
+e_x\cdot e_a=
+\begin{cases}
+1,&x=a,\\
+0,&x\ne a.
+\end{cases}
+$$
+
+This is attention reduced to a switch. A head keyed by $a$ is silent for every input except $a$.
+
+Suppose a desired function assigns to each input $x\in X$ an output vector $f(x)\in\mathbb{R}^{Y}$, where $Y$ is a finite set of output coordinates. Build one head for each possible input $a\in X$. Give that head key $e_a$ and value $f(a)$. On input $x$, let it emit
+
+$$
+H_a(x)=(e_x\cdot e_a)f(a).
+$$
+
+Because the score is either zero or one,
+
+$$
+H_a(x)=
+\begin{cases}
+f(a),&x=a,\\
+0,&x\ne a.
+\end{cases}
+$$
+
+Now sum all heads:
+
+$$
+M_f(x)=\sum_{a\in X}H_a(x).
+$$
+
+Exactly one summand survives—the one indexed by $a=x$. Therefore
+
+$$
+M_f(x)=f(x)
+$$
+
+for every $x\in X$.
+
+This is the **Finite Bilinear-Attention Universality Theorem**: for every function from a finite input set to a finite-dimensional real output space, a finite family of bilinear-attention lookup heads represents that function exactly.
+
+The proof is almost visual. Imagine a wall of locked drawers, one for every possible input. A one-hot query is a key that opens exactly one drawer. Each drawer contains the prescribed output for its input. Opening all drawers “in parallel” is harmless because only one lock responds.
+
+## From tokens to whole sequences
+
+Let $\Sigma$ be a finite alphabet and fix an input length $n$. The set of sequences $\Sigma^n$ is finite, with $|\Sigma|^n$ elements. Treat each complete sequence as one member of the finite input set $X=\Sigma^n$.
+
+Suppose the desired output has length $m$ and width $r$, so that a target map has the form
+
+$$
+f:\Sigma^n\longrightarrow\mathbb{R}^{m\times r}.
+$$
+
+The **Finite Sequence-to-Sequence Universality Theorem** states that a multi-head lookup model with one head per possible input sequence reproduces every output coordinate exactly. For every sequence $x\in\Sigma^n$, output position $i$, and feature coordinate $j$,
+
+$$
+M_f(x)_{i,j}=f(x)_{i,j}.
+$$
+
+No approximation error remains. The theorem covers arbitrary finite tasks: translation between bounded vocabularies and fixed lengths, finite-state labeling, table-defined control rules, or classification augmented with real-valued output features.
+
+## Power, price, and perspective
+
+Exactness comes at a steep price. The construction uses one head for every possible sequence. If the alphabet has $v$ symbols and the sequence length is $n$, the head count is
+
+$$
+v^n.
+$$
+
+This exponential growth makes the construction a foundational existence proof, not an efficient recipe for large language models. A vocabulary of only $100$ symbols and length $10$ already yields $100^{10}=10^{20}$ possible sequences.
+
+Yet existence proofs have value even when their direct construction is expensive. They isolate the source of expressive power. Here it is not a subtle optimization phenomenon: finite universality follows from exact discrimination plus stored values. The result gives a baseline against which efficient architectures can be judged. Layers, shared projections, feed-forward networks, and distributed representations can be viewed as ways of compressing or factorizing an otherwise enormous lookup table.
+
+The construction also clarifies why “universality” has several meanings. On a finite domain, exact representation is possible because every point can receive its own coordinate. On a continuous domain, there are infinitely many inputs, and one asks instead for approximation within an error tolerance, usually under continuity and compactness assumptions. Standard transformer attention additionally uses softmax normalization, whereas the selector here uses an unnormalized bilinear score. Moving from one setting to the other requires quantitative analysis: how sharply can softmax approximate an equality test, and with how many heads or layers?
+
+## A small example with a large moral
+
+Take binary strings of length $3$. There are only eight: $000$, $001$, $010$, $011$, $100$, $101$, $110$, and $111$. Suppose the desired output records two facts—the parity of the number of ones and the count itself. Thus $011$ should produce $(0,2)$, while $111$ should produce $(1,3)$.
+
+The exhaustive model builds eight heads. The head for $011$ carries the key $e_{011}$ and the value $(0,2)$. When the query is $e_{011}$, its score is one; all seven competing scores are zero. The output is therefore $(0,2)$. The same mechanism works for every row of the table.
+
+Of course, counting ones has a compact algorithm, and an intelligent model should discover or encode that structure rather than memorize eight cases. That contrast is precisely the point. Universality answers, “Can the architecture represent the rule at all?” Efficiency asks, “Can it exploit the rule’s structure?” The lookup theorem settles the first question in the finite setting and turns attention toward the second. It supplies a worst-case construction that works even when the target table has no visible pattern to compress.
+
+## A map for what comes next
+
+The elementary identities suggest a research path. One can replace exact zero-one selection with scaled softmax and bound the leakage from incorrect keys. One can add the full normalization operation—mean subtraction and variance scaling—and prove its invariances. One can build dimension-safe query, key, and value projections, concatenate heads, insert residual connections, and study positional symmetry. Most importantly, one can ask how much of the exponential lookup table can be compressed when the target function has structure.
+
+The lasting lesson is simple. Bilinear attention supplies a geometry of comparison. One-hot representations turn that geometry into exact equality. Multiple heads turn equality into memory. On a finite universe of sequences, that chain is enough to realize any desired sequence-to-sequence rule—perfectly, transparently, and at a computational cost that points directly toward the harder problem of efficient representation.

@@ -95,7 +95,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Berggren-Pell tree of primitive Pythagorean triples as an isometric automorphism group over hyperbolic space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean"
       ],
@@ -1462,7 +1462,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Large sets of mutually orthogonal quantum Latin squares' and formalize its key results. Abstract: How large can a set of mutually orthogonal quantum Latin squares (MOQLS) get? We show that a set of n - 2 MOQLS of order n is necessarily classical and construct large non-classical sets of MOQLS of orders that are prime powers, improving both the previously known lower and upper bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -1544,7 +1544,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Note on Iterated Beatty Sequences' and formalize its key results. Abstract: For any irrational number $ α>\\frac{3+\\sqrt{5}}{2}\\approx2.618$ and given a positive $ n\\in\\mathbb{N} $, we use elementary number theory to introduce a necessary and sufficient condition for a natural number $ x $ to be in the $n$th iterate of the Beatty sequence of modulus $α$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -1584,7 +1584,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Alternating Extremes in Graceful Labelings of Full Binary Trees and Spider Trees' and formalize its key results. Abstract: We study a pinned form of graceful labeling. For full binary trees, we ask whether some deepest root-to-leaf path can carry the alternating extreme pattern $0,n-1,1,n-2,\\dots$. Such a spine uses the extreme labels and largest differences, forcing all off-spine vertices and edges to use the middle labels and smaller differences, respectively. We prove this pinned-spine conjecture for comb full binary trees, verify it computationally for all rooted non-isomorphic full binary trees through order $23$, and give an example showing that a pinned-spine labeling cannot always be chosen as an $α$-labeling. For spider trees, we prove a packing theorem for self-matched legs: pairwise disjoint legs based at hub label $1$, at least one of which contains label $0$, can be combined into a graceful spider, with unused labels attached as hub leaves. This yields graceful labelings for mixed-length spiders with sufficiently many leaves. We also report computations using a depth-first search ordered by la",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -2349,7 +2349,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Two local zero-sum problems' and formalize its key results. Abstract: In the present paper, we investigate two local zero-sum problems. Let $n,k\\ge 2$. We denote by $\\mathsf{D}^*(n,nk)$ (resp. $η^{*}(n,nk)$) the smallest positive integer $\\ell$ (if exists) such that, from any given $\\ell$ integers not divisible by $n$, one can select some (resp. at most $n$) of them whose sum is divisible by $n$ but not by $nk$. We prove that both $\\mathsf{D}^*(n,nk)$ and $η^{*}(n,nk)$ are equal to $2n-1$ if $\\mathrm{rad}(n) \\mid \\mathrm{rad}(k)$ and infinite otherwise. The corresponding inverse problem is also determined. We denote by $\\mathsf{D}_n^{\\times}$ (resp. $η_n^{\\times}$) the smallest positive integer $\\ell$ such that, from any given $\\ell$ integers coprime to $n$, one can select some (resp. at most $n$) of them whose sum $σ$ satisfies $\\gcd(σ, n^2)=n$. We prove that $\\mathsf{D}_n^{\\times}=η_n^{\\times}=2n-1$ if $n$ is a prime power, and determine its inverse problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -2593,7 +2593,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Sums of Kloosterman sums formed with modular symbols' and formalize its key results. Abstract: We study sums of Kloosterman sums formed with a modular symbol. Employing Tauberian methods, we first give an estimate for a (Riesz) sum of Ramanujan sums formed with a modular symbol. We further define a zeta function that is analogous to the Selberg zeta function, establish its continuation to $\\Re(s)>1/2$, give estimates for its growth and use this to prove a cancellation statement for sums of these twisted Kloosterman sums. We explain the connection of this construction to the eigenvalue 1/4 problem and formulate an analogue of Linnik's conjecture. Finally, we present numerical evidence that there is cancellation and also that the Kloosterman sums with a modular symbol are not correlated with classical Kloosterman sums.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -2795,7 +2795,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On some structural properties of graphs with non-negative resistance curvature' and formalize its key results. Abstract: A graph is called resistance nonnegative (RN), respectively resistance positive (RP), if it admits positive edge weights such that all vertex resistance curvatures are nonnegative, respectively positive. In this paper, we study the structure of RN and RP graphs in relation to toughness, traceability, and Cartesian products. First, we disprove a conjecture of Fiedler and answer a question of Devriendt in the negative by constructing, for every $n\\ge 11$, an $n$-vertex $1$-tough graph that is not RN. Second, we show that RP graphs need not be traceable by proving that the Thomassen $34$-graph is RP but not traceable. Finally, we resolve a conjecture of Devriendt on grid graphs by proving that all Cartesian products of paths are RN.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -2875,7 +2875,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Fractal uncertainty principle over $\\mathbb{Q}_p$' and formalize its key results. Abstract: We prove a fractal uncertainty principle over $\\mathbb{Q}_p$ for porous sets, resolving a conjecture of Cohen.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -2915,7 +2915,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A 64-Rectangle Counterexample to Wegner's Conjecture and LP Gaps up to $5/2$' and formalize its key results. Abstract: Wegner conjectured that every finite family $\\mathcal R$ of axis-parallel rectangles satisfies $τ(\\mathcal R)\\le 2ν(\\mathcal R)-1$, where $ν$ is the packing number and $τ$ is the piercing number. Ajwani, Gajjala, Raman, and Ray recently disproved this by constructing a triangle-free counterexample on $2196\\cdot 8^9$ rectangles and, using a computer-assisted package-and-port recursion, obtained a standard LP gap of $17891/8064$ for Maximum Independent Set of Rectangles. We give a simpler and hand-checkable counterexample with $64$ rectangles. It is built from an eight-rectangle gadget whose independent sets inject into four ordered slots; we then use four horizontal and four vertical copies of this gadget to form a triangle-free family with $ν=16$ and $τ\\ge 32$. We use the same horizontal-vertical step to define recursive families of rectangles $P_r$ with $ν(P_r)=4^{2^r}$. For the standard clique, equivalently point, relaxation we obtain a finite gap $73/32$ at $P_3$, improving the prev",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -2955,7 +2955,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A dual linear programming bound for sphere packing in dimension 36' and formalize its key results. Abstract: We construct an explicit dual-feasible point for the Cohn-Elkies linear program in dimension 36, built from the space of weight-18 modular forms for $Γ_0(24)$ following the method of Cohn and Triantafillou. The certificate shows that the two-point linear programming bound on the sphere packing density in dimension 36 exceeds the density of the best packing currently known -- the Kschischang-Pasupathy packing, of center density $2^{18}/3^{10}$ -- by a factor of at least 32.91. In particular, no Cohn-Elkies auxiliary function can certify the best known packing in dimension 36 as optimal. To our knowledge this is the first such dual bound in any dimension above 32, extending the table of Cohn-Triantafillou ($d=12,16,20,28,32$), Li ($3 \\le d \\le 13$), and de Courcy-Ireland-Dostert-Viazovska ($d=6$). The certificate is exact: the dual point is a rational vector, coefficient nonnegativity is verified by exact arithmetic up to $n=800$, and eventual positivity of the two relevant $q$-expansion",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -3077,7 +3077,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Higher-Order Congruence for Reciprocal Power Sums and Generalized Lehmer-Type Products' and formalize its key results. Abstract: This paper investigates high-order congruences of reciprocal power sums and Lehmer-type products. Let $n\\geq 1$ with $(n,6)=1$ and $e\\in\\{2,3,4,6\\}$. For the reciprocal square sums \\begin{equation*} S(n)=\\sum_{\\substack{r=1 \\\\ (r,n)=1}}^{\\lfloor n/e \\rfloor}\\frac{1}{r^2} \\end{equation*} we already know the form of the congruence modulo $n$. In this paper, motivated by the known congruences, we first extend these results to certain reciprocal sums of odd order and establish a uniform congruence modulo $n$ for \\begin{equation*} S_m(n)=\\sum_{\\substack{r=1 \\\\ (r,n)=1}}^{\\lfloor n/e \\rfloor}\\frac{1}{r^m} \\end{equation*} We then study the generalized Lehmer-type product \\begin{equation*} \\prod_{d \\mid n}\\binom{kd-1}{\\lfloor d/e \\rfloor}^{μ(n/d)} \\end{equation*} Although congruences modulo $n^3$ for this product have previously been obtained, higher-order congruences do not admit a comparably simple closed form. To address this difficulty, we derive an explicit truncated expansion in terms of",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -3566,7 +3566,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The exact minimum total degree threshold for the square of a Hamilton cycle in digraphs' and formalize its key results. Abstract: The Pósa-Seymour conjecture establishes the minimum degree threshold required to guarantee the presence of the $k$th power of a Hamilton cycle in a graph. Following numerous partial results, Komlós, Sárközy, and Szemerédi confirmed the conjecture holds for all sufficiently large graphs. Treglown later conjectured the analogous minimum semi-degree threshold for forcing the $k$th power of a Hamilton cycle in a digraph. Subsequently, DeBiasio et al. proposed a conjecture on the minimum total degree threshold for the same problem. In this paper we settle the conjecture of DeBiasio et al. for $k=2$. Specifically, we prove that every sufficiently large $n$-vertex digraph with minimum total degree at least $8n/5-c$ contains the square of a Hamilton cycle, where $c=2$ if $n\\equiv2,4\\pmod 5$, and $c=1$ otherwise.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -3687,7 +3687,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The inversion number of a path-reversed tournament: Resolving a conjecture of Belkhechine, Bouaziz, Boudabbous, and Pouzet' and formalize its key results. Abstract: Let $D$ be a tournament and let $X\\subseteq V(D)$. The inversion of $X$ reverses all arcs whose both endpoints lie in $X$ and leaves every other arc unchanged. A family of inversions is a decycling family if applying all of them produces an acyclic, equivalently transitive, tournament. The inversion number $\\inv(D)$ is the minimum size of such a family. Let $Q_n$ be the tournament on $[n]$ obtained from the natural transitive tournament by reversing precisely the consecutive pairs $12,23,\\ldots,(n-1)n$. Belkhechine, Bouaziz, Boudabbous, and Pouzet conjectured in their unpublished manuscript that a natural path-reversed family has inversion number exactly $\\left\\lfloor(n-1)/2\\right\\rfloor$. The same problem was later recorded by Bang-Jensen, da Silva, and Havet and by Alon, Powierski, Savery, Scott, and Wilmer. In this paper we resolve this conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -4216,7 +4216,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Bombieri-Vinogradov theorem for exponential sums over products of k primes' and formalize its key results. Abstract: We prove a Bombieri-Vinogradov type theorem for exponential sums over products of $k$ primes. As an application, we show the lower bound $$\\sup_{n\\le x} \\left|\\sum_{m\\le n} 1_{Ω(m) = k} e(αm)\\right| \\gg x^{1/6 - \\varepsilon}$$ for $2\\le k\\le (2-\\varepsilon)\\log\\log x$ and $α\\in\\mathbb{R},$ where we noted $e(β) := e^{2iπβ}.$",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -4256,7 +4256,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Two problems on booksize and triangular edges in Nosal graphs' and formalize its key results. Abstract: A graph $G$ with $m$ edges is said to be a Nosal graph if $ρ(G)>\\sqrt{m}$. For a graph $G$, we write $bk(G)$ for its maximum book size and $τ(G)$ for the number of edges contained in triangles. Li, Liu and Zhang [J. Combin. Theory Ser. B 179 (2026) 219--249] proved that every $m$-edge Nosal graph satisfies $bk(G)> \\frac{1}{24}\\sqrt{m}$ and $τ(G) > \\frac{1}{12}\\sqrt{m}$. Recently, Zhai, Li and Lou [arXiv:2601.10163v2] proved that every $m$-edge Nosal graph satisfies $bk(G)> \\frac{1}{9}\\sqrt{m}$. In this paper, we establish the following result: Every $m$-edge graph $G$ with no isolated vertices and $ρ(G)\\geq \\sqrt{m}$ that is not isomorphic to any complete bipartite graph satisfies $bk(G)\\geq\\frac{ρ(G)}{3}$ and $τ(G)\\geq ρ(G)$. As direct consequences, we answer a question of Li, Liu and Zhang [J. Combin. Theory Ser. B 179 (2026) 219--249] and confirm a conjecture of Li, Feng and Peng [J. Graph Theory 110 (4) (2025) 408--425].",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -4296,7 +4296,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On a character-twisted analogue of Schäffer's equation' and formalize its key results. Abstract: Let $f$ be a positive integer, and let $χ$ be a primitive quadratic character of conductor $f$. Let $k$ be a positive integer, and write $B_k(χ,X)$ for the $k$-th Bernoulli polynomial corresponding to $χ$. Suppose $B_k(χ,X)$ is irreducible and of degree at least $2$. Then for 100% of positive integers $m$ divisible by $f$, the Diophantine equation \\[ χ(1) \\cdot (x+1)^k+χ(2) \\cdot (x+2)^k+\\cdots+χ(m) \\cdot (x+m)^k \\, =\\, y^n, \\] has no solutions with $x$, $y$, $n$ integers, and $n \\ge 2$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -5192,7 +5192,7 @@
         "Hypergraph Ramsey theory",
         "Probabilistic method in extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -5970,7 +5970,7 @@
         "math.MG",
         "math.NT"
       ],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -6016,7 +6016,7 @@
         "probabilistic method",
         "Ramsey theory"
       ],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean"
       ],
@@ -8393,7 +8393,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonempty digest fiber has a polyhedral cell whose recession cone has dimension exactly `k-r`, and this lower bound is sharp on a dense open set of keys and messages.\n\nThe key insight is that each output component can constrain one independently active coordinate, while all remaining coordinate directions can escape without changing any minimum. **Why now?** The universal collision-ray theorem establishes the first nonzero recession direction for every fiber; the next test is whether the entire expected `k-r`-dimensional cone can be constructed and whether genericity makes the bound exact.\n\n## 2. Hall-type criterion for multidirectional collision cones\n\n**Conjecture.** Let each tropical hash component have a set of active minimizing coordinates at a message. The fiber contains a coordinate cone of dimension at least `d` if and only if the union of these active sets admits a transversal whose complement has cardinality at least `d`.\n\nThe key insight is that collision directions are governed not merely by the number of outputs, but by the combinatorics of which coordinates can certify their minima. **Why now?** Selecting one minimizer per component proved one escaping direction; replacing this selection by a system-of-distinct-representatives analysis should expose the full local fiber geometry.\n\n## 3. Sharp bounded-alphabet collision threshold\n\n**Conjecture.** For messages in `{0,1,…,B}^k` and integer keys, every `r`-component min-plus digest with `r < k` has a collision whenever `B` exceeds an explicit key-spread parameter, and this dependence on the spread is asymptotically optimal.\n\nThe key insight is that the real collision ray survives in a bounded alphabet exactly until it reaches the boundary, so security is controlled by slack at unused coordinates rather than by tropical nonlinearity. **Why now?** The unrestricted theorem identifies the unique obstruction introduced by bounded messages: an unused coordinate may have no legal positive increment.\n\n## 4. Complexity transition for nonce-restricted tropical mining\n\n**Conjecture.** Tropical preimage search is polynomial-time for nonce families described by difference constraints, but becomes NP-complete when the nonce language permits arbitrary binary linear constraints, even for a fixed number of digest components.\n\nThe key insight is that each tropical output condition is a union of linear regions indexed by active coordinates; tractability depends on whether the nonce language preserves shortest-path structure or can encode disjunctive choices. **Why now?** Unrestricted inversion and collision construction are explicit, so any computational hardness must arise from the geometry of the admissible nonce family rather than from the min-plus hash itself.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "Pythagorean"
@@ -10853,7 +10853,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Infinite-Dimensional Chess\n\n## 1. Countable-Ordinal Realization by Finite Material\n\n**Conjecture.** Every countable ordinal is the game value of a winning position on an infinite board using only finitely many pieces.\n\nThe key insight is that delaying gadgets can encode countable suprema, while forced corridors encode successor and ordinal addition. The central difficulty is realizing arbitrary countable limit constructions without introducing infinitely many pieces.\n\n**Why now?** Explicit game trees already realize the hierarchy through `ω^ω`, isolating the exact operations that a geometric construction must simulate.\n\n## 2. Strategy-Tree Rank Correspondence\n\n**Conjecture.** For every position from which the attacker forces mate, the accessibility rank of its legal-play relation equals its minimax ordinal game value after the standard winner/loser normalization.\n\nThe key insight is that accessibility recursion and ordinal minimax recursion are two presentations of the same well-founded strategy tree, but alternating choices require a carefully polarized rank transformation.\n\n**Why now?** The present escape theorem identifies the complementary non-well-founded case by an explicit infinite chain, while the abstract hierarchy supplies nontrivial well-founded test cases.\n\n## 3. Finite-Rook Local Escape Threshold\n\n**Conjecture.** In every dimension at least two, any finite rook army that does not already checkmate the king permits an infinite sequence of legal king moves avoiding capture.\n\nThe key insight is that global safe squares are plentiful, yet converting global sparsity of attacked lines into a locally reachable infinite path is a compactness problem rather than a counting problem.\n\n**Why now?** Finite rook armies are known to leave infinitely many unattacked squares, and a single rook admits an explicit local escape map; the missing step is the local-to-global bridge for several rooks.\n\n## 4. Dimension–Material Mate Classification\n\n**Conjecture.** For each fixed dimension, there is an explicit finite classification of minimal axis-moving piece configurations that force mate, and the minimum required material is monotone nondecreasing with dimension.\n\nThe key insight is that each additional axis creates new escape directions that must be blocked independently, turning mate into a finite covering problem for the Chebyshev neighborhood.\n\n**Why now?** The sharp contrast between two-rook mate in dimension one and lone-rook escape in every higher dimension provides the first exact boundary case and a testable base for the classification.\n\n## 5. Cofinality Bound from Finite Branching\n\n**Conjecture.** A winning position whose defender has uniformly finite legal branching cannot have a game value of countable cofinality greater than `ω`, and stronger uniform branching constraints impose corresponding restrictions on its Cantor normal form.\n\nThe key insight is that limit values arise from suprema of defender choices, so geometric bounds on legal branching should translate into ordinal cofinality bounds.\n\n**Why now?** The explicit `ω^n` and `ω^ω` constructions use countable branching at precisely the limit-forming nodes, making branching the natural structural invariant to test.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges",
         "Pythagorean"
@@ -11755,7 +11755,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Cycle lengths and chords under chromatic and degree constraints' and formalize its key results. Abstract: We mainly consider three problems on cycle lengths and cycles with chords in graphs: (a) Gao, Huo, and Ma \\cite[Question~1.5]{GaoHuoMa2021} asked whether, for every fixed $k\\ge3$, there is a function $f_k(n)\\to\\infty$ such that every $n$-vertex $(k+1)$-critical graph contains $f_k(n)$ consecutive cycle lengths. (b) Let $g_k(n)$ be the maximum integer $t$ such that every $n$-vertex $k$-critical graph with $k\\ge4$ contains an odd cycle with at least $t$ chords. Voss conjectured (see \\cite[pp.~168]{VossBook}) that $g_k(n)\\to\\infty$ as $n\\to\\infty$ for each $k\\ge4$, which extends a 1976 conjecture of Erdős (see also Erdős Problem~1091 \\cite{Bloom1091}). (c) Kára and Král \\cite{KaraKral2003} conjectured that every graph on $31$ vertices with minimum degree at least $8$ contains a cycle with at least $31$ chords. We answer question (a) in the negative for $k=3$, and disprove conjecture (b) for all $k\\ge5$. We point out the work of Alexeev-Putterman-Sawhney-Sellke-Valiant (2026) on Erdős Prob",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean"
       ],
@@ -11795,7 +11795,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Nonnegative Bakry--Émery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincaré Inequalities' and formalize its key results. Abstract: We prove that every connected simple graph of bounded degree satisfying the classical dimension-free Bakry--Émery condition $\\mathrm{CD}(0,\\infty)$ for the unnormalised Laplacian is volume doubling and supports, at all integer graph scales, a scale-invariant $L^2$-Poincaré inequality with dilation two, with constants depending only on the maximum degree. This settles the polynomial-growth conjecture of Cushing, Liu, and Peyerimhoff in a stronger form. The main novelty is a dimension-free adaptation of the graph-theoretic modified nonlinear heat-flow method introduced by Münch and extended to infinite weighted graphs by Pajot and Russ: point-mass consequences of $Γ_2\\geq0$ and positive-resolvent smoothing replace any global $\\mathrm{CD}(0,n)$ reduction, while diffusive exit-time control and finite-volume localisation yield the Poincaré inequality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -13769,7 +13769,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Pythagorean",
@@ -13894,7 +13894,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2d`.\n\nThe Lean development proves `0 ≤ k ≤ D`. Consequently, every nonnegative\noperational entropy bounded by `k` is bounded by `D`. It also separates this\nexact finite-length quantity from the proposed geometric defect\n`G = n - 2d`, proving `D = G + 2`.\n\nFor a family whose block lengths tend to infinity, the normalized exact and\ngeometric defects differ by `2/n`, which tends to zero. If `G` is uniformly\nbounded above, both the logical rate `k/n` and every nonnegative protected\nentropy density `S/n` (when `S ≤ k`) tend to zero. Conversely, a rate at least\n`ε` forces normalized exact defect at least `ε`.\n\n## What this does and does not settle\n\nThis proves the parameter-level obstruction behind “no extensive entropy at\nexact length balance,” including the `O(1)` defect case. It also identifies a\nnecessary positive defect density for positive asymptotic rate. It does not\nprove the conjectured lower bound of rate by defect density: Singleton provides\nonly the upper direction, and geometry/locality would need to supply additional\nstructure.\n\n## Next formal targets\n\n1. **Geometric lower bounds.** Define a concrete class of local CSS codes on\n   bounded-degree cell complexes, then formulate extra expansion or local-testability\n   hypotheses under which defect density yields a logical-rate lower bound.\n2. **Cut-indexed defects.** Introduce finite tensor-network cut data and prove a\n   finite cut-wise Singleton inequality before investigating equality with entropy.\n3. **Syndrome-graph counterexamples.** Formalize syndrome adjacency graphs and\n   exhibit parameter-matched stabilizer presentations with nonisomorphic graphs,\n   demonstrating that `[[n,k,d]]` data does not determine incidence geometry.\n4. **Subsystem-code locality.** Define a local defect field only after fixing a\n   canonical allocation of checks and logical degrees of freedom; test whether\n   different allocations invalidate any proposed curvature identity.\n5. **Sharper asymptotics.** Generalize bounded geometric defect to\n   `G(n) = o(n)` and prove zero logical and protected-entropy rates directly via\n   the same normalized Singleton estimate.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -13976,7 +13976,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Homotopy types of intervals in corank-three higher Bruhat orders' and formalize its key results. Abstract: We prove Reiner's conjecture for higher Bruhat orders in corank 3: the facial intervals of B(n,n-3) are precisely the spherical intervals, and all other intervals are contractible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -14059,7 +14059,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Convex Radiator Laws and Swarm Thermodynamics\n\nThis cycle established that the equal-area optimum of a finite radiating swarm is\nnot special to a quadratic cost, but follows from convexity alone: for any\nstrictly convex radiator-cost law, the uniform allocation is the *unique*\ncost minimizer at fixed total area, and subdividing a collector into independent\nradiators lowers the cost whenever an idle collector is not penalized. The\nfollowing conjectures push this structural picture further.\n\n## 1. Temperature-weighted radiator optimality\n\n**Conjecture.** For a strictly convex radiator-cost law and collectors carrying\nprescribed positive weights (view factors, emissivities, or reservoir\ntemperatures), the unique cost-minimizing allocation at fixed total area assigns\narea to each collector in proportion to a weight-dependent share, and the optimum\ndegenerates to the equal-area rule exactly when the weights coincide.\n\nThe key insight is that unequal collectors correspond to a *weighted* Jensen\ninequality, whose equality case forces every collector to sit at a common\nweighted center of mass rather than at a common area — so the equal-area law is\nthe isotropic shadow of a more general proportional-allocation law.\n\n**Why now?** The unweighted optimum and its uniqueness are settled, isolating the\nequality case as the single ingredient that must be re-derived with weights; this\nmakes the weighted generalization a direct and falsifiable next step.\n\n## 2. Quantitative splitting gain\n\n**Conjecture.** For a strictly convex, twice-differentiable radiator law with\n`f(0) ≤ 0`, the cost reduction from splitting a collector of area `a` into `k`\nequal independent radiators is bounded below by an explicit expression in the\nmodulus of strict convexity of `f` on `[0, a]`, and this bound is asymptotically\nsharp as `k → ∞`.\n\nThe key insight is that the splitting law is currently qualitative (strict\ndecrease), but the size of the decrease is governed by how strongly `f` curves;\na modulus-of-convexity estimate converts the sign statement into a rate.\n\n**Why now?** The qualitative splitting law is proved and its exact hypothesis\n(`f(0) ≤ 0`) identified, so the remaining question is purely quantitative and can\nbe tested against closed-form curvature bounds for standard cost laws.\n\n## 3. Majorization dominance of allocations\n\n**Conjecture.** Given two swarms of equal total area whose area vectors are\ncomparable in the majorization order, the more spread-out (more majorizing) swarm\nhas the larger total cost for *every* convex radiator law, and strictly larger for\nevery strictly convex law unless the two allocations are permutations of each\nother.\n\nThe key insight is that the equal-area optimum is the bottom element of the\nmajorization order, so the scalar optimality theorem should lift to a full order\nisomorphism between allocation spread and cost, unifying every convex law at once.\n\n**Why now?** The equal-area minimum is the extreme case of exactly this order;\nproving the general monotone comparison would subsume the current result and\nconnect swarm design to the classical theory of Schur-convex functions.\n\n## 4. Joint area–temperature power optimization\n\n**Conjecture.** In an isotropic stellar model where each collector radiates by a\nStefan–Boltzmann law at its own temperature under a fixed material budget, the\nnet-power-maximizing swarm splits its material into equal-temperature collectors,\nand the optimal common temperature is the unique root of an explicit balance\nbetween intercepted flux and re-radiated power.\n\nThe key insight is that intercepted power is linear in area while thermal\nrejection is convex in temperature, so the joint optimum couples the equal-area\nprinciple of this cycle with a one-dimensional convex temperature trade-off.\n\n**Why now?** The area side of the optimization (equal allocation) is now on firm\nground; supplying an explicit radiation law closes the loop without disturbing the\nresource-accounting layer, yielding a fully constrained extremum.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -16327,7 +16327,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy–Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for all n)\n\n**Conjecture.** For every `n` there exists a positive integer expressible as a\nsum of two positive cubes in at least `n` distinct ways.\n\nThe key insight is that the affine Fermat cubic `x³ + y³ = N` is an elliptic\ncurve, and a single rational point of infinite order generates infinitely many\nrational representations; clearing denominators by a common cube collapses `n`\nof them onto a single integer that inherits `n` integer representations.\n\nWhy now? The cycle established the exact provable boundary: the elementary\nscaling map multiplies a fixed representation set by a cube but never *creates*\nnew representations, so genuine growth in the count must come from the group law\non the cubic. Isolating this obstruction pinpoints precisely the arithmetic\ninput — a non-torsion rational point — that any full proof must supply.\n\n## 2. Sharp growth rate of Taxicab(n)\n\n**Conjecture.** The cubic floor is far from optimal: `Taxicab(n)` grows faster\nthan any fixed polynomial in `n`, and in fact `log Taxicab(n) / n → ∞`.\n\nThe key insight is that representations correspond to lattice-like points on the\ncubic curve whose heights grow at least geometrically under repeated application\nof the chord-and-tangent construction, forcing the smallest number carrying `n`\nrepresentations to grow super-polynomially rather than at the elementary cubic\nrate proved here.\n\nWhy now? Having proved a clean lower bound `Taxicab(n) > n³` by pigeonhole on\ndistinct smaller summands, the natural next question is how loose it is; the\nobserved values (`1729`, `8.7·10⁷`, `7.0·10¹²`) already grow far faster than\n`n³`, quantitatively motivating a super-polynomial lower bound.\n\n## 3. Multiplicative obstruction and a cube-free core\n\n**Conjecture.** Every taxicab number `N` factors as `N = m³ · N₀` with `N₀`\ncube-free, and the representation count of `N` equals that of its cube-free core\n`N₀`; consequently the *primitive* taxicab numbers (cube-free `N₀`) already carry\nall the representation-count information.\n\nThe key insight is that the scaling map proved in this cycle is a bijection\nbetween representations of `N₀` and representations of `m³ N₀` that preserves the\nordering `a ≤ b`, so cube factors contribute nothing new and can be stripped.\n\nWhy now? The scaling theorem `scaled_reps_card` supplies exactly the injection\nneeded for the easy direction; the open content is the reverse inclusion — that\nscaling by a cube produces *no additional* representations — which would reduce\nthe whole theory to cube-free numbers.\n\n## 4. Cabtaxi numbers (cubes with signs)\n\n**Conjecture.** Allowing one summand to be negative (differences of cubes)\nstrictly lowers the least number with `n` representations for every `n ≥ 2`, and\nthe signed and unsigned growth exponents nevertheless coincide.\n\nThe key insight is that the signed cubic `x³ + y³ = N` with `x, y ∈ ℤ` has\nstrictly more rational points available to the chord-and-tangent process than its\npositive-orthant restriction, so signed representations are strictly cheaper to\naccumulate while remaining governed by the same elliptic-curve height growth.\n\nWhy now? The pigeonhole lower bound in this cycle used only positivity and the\nordering `a ≤ b`; relaxing positivity isolates how much of the growth is forced\nby arithmetic geometry versus by the sign restriction, a clean comparative test.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -16368,7 +16368,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## 1. Composite-index synchronization through cyclotomic primitive parts\n\nFor every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should contain a prime whose divisibility locus is exactly the multiples of that index. This would extend finite-family synchronization from prime indices to the full range of Carmichael’s theorem.\n\nThe key insight is that finite gcd transport already converts an exact apparition law for one prime into synchronization over every finite family, so only primitive-prime existence remains quantitative.\n\nWhy now? The finite-meet mechanism has been isolated from the growth argument, allowing cyclotomic estimates to be developed independently and attached at a single interface.\n\n## 2. Lucas-sequence finite-meet transport\n\nEvery nondegenerate Lucas sequence that is a strong divisibility sequence should satisfy a finite gcd transport theorem, with primitive prime divisors inducing exact synchronization laws outside an explicitly classifiable exceptional set.\n\nThe key insight is that induction over finite insertion uses only the binary strong-divisibility identity, while the apparition argument uses only primality and minimality.\n\nWhy now? The Fibonacci proof identifies precisely which components are sequence-independent and which require Lucas-specific arithmetic.\n\n## 3. Finite lcm law for ranks of apparition\n\nFor pairwise coprime moduli whose ranks of apparition exist, the rank of their product should equal the least common multiple of their individual ranks, subject to explicit local conditions at primes dividing the discriminant.\n\nThe key insight is that the proved gcd synchronization is the meet-side shadow of a dual join law on divisibility loci.\n\nWhy now? Exact prime-index apparition gives a clean family of test cases in which the proposed lcm law predicts simultaneous Fibonacci divisibility without additional recurrence calculations.\n\n## 4. Elliptic divisibility synchronization\n\nFor a nontorsion rational point on an elliptic curve, primitive prime divisors of denominator sequences should produce finite-family synchronization under gcd of indices, apart from a finite exceptional set determined by bad reduction.\n\nThe key insight is that the argument requires a strong divisibility law and a primitive divisor, two structures that elliptic divisibility sequences are expected to share with Fibonacci numbers.\n\nWhy now? Separating finite-meet transport from primitive-divisor existence provides a concrete route for testing exactly where bad reduction obstructs the analogy.\n\n## 5. Effective exceptional-set bounds from finite synchronization\n\nThere should be an explicit bound, polynomial in the logarithmic height of the defining recurrence data, beyond which every index admits a synchronizing primitive prime for all finite index families.\n\nThe key insight is that synchronization itself has no quantitative cost once a primitive divisor exists; every effective bound can therefore focus entirely on the growth of the primitive part.\n\nWhy now? The structural theorem turns a potentially many-family assertion into one primitive-divisor estimate, making uniform quantitative bounds testable.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -16531,7 +16531,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The Frankl--Tokushige product conjectures for $r$-cross-intersecting families' and formalize its key results. Abstract: We settle the uniform and biased product conjectures of Frankl and Tokushige for $r$-cross-intersecting families. Let $r\\geq2$, let $0\\leq k_i\\leq(r-1)n/r$, and let $\\mathcal{F}_i\\subseteq\\binom{[n]}{k_i}$ be $r$-cross-intersecting. We prove the sharp inequality $$\\prod_{i=1}^r\\frac{|\\mathcal{F}_i|}{\\binom{n}{k_i}}\\leq \\prod_{i=1}^r\\frac{k_i}{n},$$ with equality attained by the corresponding levels of a common $1$-star. As a consequence, we obtain the analogous $p_i$-biased measure theorem for $0\\leq p_i\\leq(r-1)/r$, $$ \\prod_{i=1}^rμ_{p_i}(\\mathcal{F}_i)\\leq \\prod_{i=1}^r p_i.$$The main difficulty is that unequal parameters do not determine a single common target level; instead, the target levels $\\ell_1,\\ldots,\\ell_r$ must satisfy $\\sum_{i=1}^r \\ell_i=(r-1)n$. We overcome this asymmetry in three steps. An ordered-partition coupling gives a sharp additive inequality for every such choice of target levels. A star-calibrated upper-shadow inequality relates the density of a family on its",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -16613,7 +16613,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## Completed foundation\n\nThe present development supplies two self-contained Lean modules for the requested\nperfect-number program:\n\n- `Catalog/Applications/PerfectNumbers/AbundancyIndex.lean` defines the rational\n  abundancy index `σ(n)/n`, characterizes perfection by abundancy `2`, proves\n  multiplicativity for coprime arguments, computes the index of primes, proves\n  every positive prime power deficient, deduces that a perfect number has at\n  least two distinct prime factors, and proves the reciprocal-divisor identity.\n- `Catalog/Applications/PerfectNumbers/EvenPerfectStructure.lean` proves the full\n  Euclid--Euler classification in the traditional\n  `2^(p-1) * (2^p-1)` form, proves that the exponent is prime, shows an even\n  perfect number has exactly two distinct prime factors, connects the\n  classification to abundancy `2`, and derives the first four classical examples.\n\nThe latter examples are the concise computational-evidence stage: the instances\n`p = 2, 3, 5, 7` are checked in Lean through the general theorem and yield\n`6, 28, 496, 8128`. No `native_decide` or external computation is used.\nThe corresponding sequence is OEIS A000396. No counterexample to Euclid--Euler\nis possible after the proved classification.\n\nAll declarations in the two perfect-number modules have complete proof bodies.\nBoth modules compile as explicit build targets, and the project default target is\nconfigured to build the `Applications` library containing them.\n\n## Nielsen-type odd-perfect bound\n\nThe requested lower bound of 101 prime factors for a hypothetical odd perfect\nnumber is not asserted in the current files. A faithful formalization must first\nfix whether factors are counted with multiplicity (the arithmetic function\nusually denoted `Ω`) or as distinct primes (`ω`, represented here by\n`n.primeFactors.card`). These are very different claims; the existing theorem\n`perfect_two_le_card_primeFactors` concerns distinct factors only.\n\nA continuation should therefore:\n\n1. Define `bigOmega (n : ℕ) := ∑ p ∈ n.primeFactors, n.factorization p` and prove\n   its equivalence to the length of the prime-factor multiset.\n2. Develop the prime-power product formula\n   `abundancy n = ∏ p ∈ n.primeFactors, abundancy (p ^ n.factorization p)`.\n3. Formalize Euler's necessary form for an odd perfect number: exactly one prime\n   occurs to an exponent congruent to `1 mod 4`, while every other exponent is\n   even.\n4. Add the cyclotomic-divisor and factor-chain machinery needed to force new\n   prime divisors from each prime-power component.\n5. Encode the finite inequality/case analysis underlying the target `101` bound,\n   with each pruning rule proved in Lean and the final finite search certified by\n   a proof-producing decision procedure.\n\nThis is substantially more infrastructure than the abundancy and even-perfect\nclassification, but the present multiplicativity and prime-power deficiency\nlemmas are the natural base of that development.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -16654,7 +16654,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nLet `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n < Wₖ`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-log position bound.** If `L₂(n)` is the least number of repeated applications of `x ↦ ⌈log₂(x + 1)⌉` needed to reach a value at most `2`, then for every `n ≥ 2`, `|K(n) - L₂(n)| ≤ 2`.\n\n2. **No worst-case binary compression.** For every `k`, any injective, prefix-free binary encoding of all valid length-`k` tower representations has a codeword of length at least `⌈log₂ Wₖ⌉`.  Moreover, concatenating each digit in exactly `Wᵢ` bits attains total length `∑_{i<k} Wᵢ = log₂ Wₖ`.\n\n3. **A radix-growth threshold.** For generalized weights `V₀ = 1` and `Vₖ₊₁ = r(Vₖ)Vₖ`, assume `r` is monotone and `r(x) ≥ 2`.  The least `k` with `n < Vₖ` is `O(log* n)` if `r(x) ≥ 2^x` for all sufficiently large `x`; it is not `O(log* n)` when `r(x) ≤ x^C` for some fixed `C` and all sufficiently large `x`.\n\n4. **Balanced recursive digits.** With odd radix `rₖ = 2^(Wₖ+1) + 1` and weights `U₀ = 1`, `Uₖ₊₁ = rₖUₖ`, every integer in `[-(Uₖ-1)/2, (Uₖ-1)/2]` has a unique length-`k` expansion whose `i`th digit lies in `[-(rᵢ-1)/2, (rᵢ-1)/2]`.\n\n5. **Zeckendorf comparison.** Let `Z(n)` be the largest Fibonacci index occurring in the canonical Zeckendorf expansion of `n`.  There are explicit constants `a,b > 0` such that `a log₂(n+1) ≤ Z(n) ≤ b log₂(n+1)` for every `n ≥ 1`, whereas `K(n) = o(Z(n))`; nevertheless, every injective binary encoding of either representation family has worst-case length at least `⌈log₂(n+1)⌉` on the interval `[0,n]`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -16736,7 +16736,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A counterexample for the polar conjecture of Spencer-Brown' and formalize its key results. Abstract: In 1976, George Spencer-Brown announced a proof of the four color theorem, using operations on Tait colorings for trivalent plane graphs. In subsequent work he formulated these operations in terms of an algorithm that he called a parity-pass and claimed that when the parity pass algorithm is performed on a non-polar pentagon region, it necessarily terminates in an edge coloring that is extendable to the entire graph. We provide here a counterexample to show that this claim is false. We then raise questions related to the existence of this sort of counterexample.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -16818,7 +16818,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following are concrete conjectures extending the formal model in `Catalog/Novelty/ImmortalityGame.lean`. Each has a definite Lean statement and can be proved or refuted independently.\n\n1. **Finite iteration of bounded nondeterministic refinement.** Define `nondetExtIter : ℕ → SurvivalGame → SurvivalGame` by iteration of `nondetExt`. For every `k : ℕ`,\n   ```lean\n   (nondetExtIter k finiteGame).value = ω ^ (k + 1)\n   ```\n   where the natural exponent is coerced to an ordinal as required by the API.\n\n2. **Exact finite-level hierarchy.** For all natural numbers `j < k`, the `j`-fold refined finite game cannot force the survival value of the `k`-fold refined game:\n   ```lean\n   ¬ (nondetExtIter j finiteGame).MortalForces\n       ((nondetExtIter k finiteGame).value)\n   ```\n\n3. **Embedding characterization of bounded-depth clocks.** For every survival game `G` and natural number `k`, if the moments of `G` order-embed into the `k`-fold lexicographic natural-number clock, then\n   ```lean\n   G.value ≤ ω ^ k\n   ```\n   (with the base clock chosen so that `k = 1` recovers `value_le_omega_of_embeds_nat`). Conversely, every game whose value is at most `ω ^ k` admits such an order embedding.\n\n4. **The finite-refinement limit is `ω^ω`.** If the clocks at all finite refinement depths are combined by an ordinal sum or an equivalent dependent lexicographic construction, the resulting survival value is exactly\n   ```lean\n   ω ^ ω\n   ```\n   and it strictly exceeds every finite refinement value.\n\n5. **Faithful monotone ITTM-clock realization.** There is a monotone transfinite transition system with an explicit limit rule whose reachable-time well-order is isomorphic to `nondetGame.Moment`; consequently its closure ordinal is exactly `ω²`, no stage below `ω²` is terminal, and stage `ω²` is terminal.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -16859,7 +16859,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: dimensions of products of posets\n\nThe following are concrete, falsifiable conjectures extracted from Bergman's *Further thoughts on dimensions of posets*. Here `dim` is Dushnik–Miller dimension, `P⁺` means adjoining a new greatest element, and `P₊` means adjoining a new least element. All posets are finite and nonempty.\n\n1. **Defect-two product conjecture.** For all posets `P,Q`,\n   \\[\n   \\dim(P\\times Q)\\ge \\dim(P)+\\dim(Q)-2.\n   \\]\n   A counterexample is any explicit finite pair violating this inequality.\n\n2. **Opposite-endpoint augmentation bound.** For all `P,Q` with more than one element,\n   \\[\n   \\dim(P^+\\times Q_+)\\le \\dim(P\\times Q)+1.\n   \\]\n   The formal theorem `proposition_2_2_uniform` shows that this bound, together with its order-dual application and bounded-poset additivity, implies Conjecture 1.\n\n3. **Same-endpoint augmentation bound.** For all `P,Q` with more than one element,\n   \\[\n   \\dim(P_+\\times Q_+)\\le \\dim(P\\times Q)+1.\n   \\]\n   By reversing orders and exchanging factors, the same two-step implication gives Conjecture 1.\n\n4. **One-sided universal augmentation constant.** There exists a natural number `m>0` such that for all `P,Q` with more than one element,\n   \\[\n   \\dim(P\\times Q_+)\\le \\dim(P\\times Q)+m.\n   \\]\n   This can be refuted for a proposed `m` by one finite pair; the unrestricted conjecture is refuted by a family whose augmentation gaps are unbounded.\n\n5. **Rigidity of connected behaviour classes.** If connected finite posets `P,P'` satisfy\n   \\[\n   \\dim(P\\times Q)=\\dim(P'\\times Q)\n   \\]\n   for every finite nonempty poset `Q`, then `P` and `P'` are isomorphic. A counterexample is an explicit nonisomorphic connected pair with identical product-dimension profiles.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -16940,7 +16940,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The $K(π, 1)$ conjecture for Artin groups of spherical type' and formalize its key results. Abstract: In these notes, we introduce the 50-year-old $K(π, 1)$ conjecture alongside Coxeter and Artin groups. Roughly speaking, the conjecture states that the complement in $\\mathbb{C}^n$ of a \"symmetric\" configuration of hyperplanes is a $K(π, 1)$ space. Our end goal is to present a proof of the conjecture in the so-called spherical case, where only a finite number of hyperplanes are removed, through methods from combinatorial topology. This proof draws inspiration from the original proof of the spherical case, which is a special case of a celebrated 1972 theorem by Pierre Deligne.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -16981,7 +16981,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Exponentially Many Circuit Double Covers' and formalize its key results. Abstract: The cycle double cover conjecture of Szekeres and Seymour, the proof of which was recently announced by OpenAI, states that every bridgeless graph has a collection of cycles covering every edge exactly twice. We study the counting version of this statement for cubic graphs, where we count circuit double covers --- collections of circuits (connected 2-regular subgraphs) covering every edge twice. We show that every 2-edge-connected 3-edge-colorable cubic graph on $n$ vertices has at least $2^{n/2-1}$ circuit double covers, matching our previously conjectured general lower bound. For every 3-edge-connected cubic graph with girth at least 16 we show a weaker exponential lower bound on circuit double covers. For both of these results we use the same system of linear equations used by OpenAI in their proof, however, we provide additional combinatorial interpretation. We characterize planarity of a cubic graph by solvability of this system of equations for arbitrary nowhere-zero $\\mathbb Z_2",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -17104,7 +17104,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory and formal generating functions.\n\nFor a finite group `G` acting on each finite grade `X n`, define the coefficient of the series\nattached to `g` to be the number of points in `X n` fixed by `g`. The file proves:\n\n\\[\n  \\sum_{g\\in G} |(X_n)^g| = |G|\\,|X_n/G|\n\\]\n\nfor every `n`, and consequently the coefficientwise q-series identity\n\n\\[\n  \\sum_{g\\in G} T_g(q) = |G|\\,O(q),\n  \\qquad O(q)=\\sum_{n\\ge0}|X_n/G|q^n.\n\\]\n\nIt also proves that every coefficient, and hence every whole series `T_g`, is invariant under\nconjugacy. Thus these element-indexed series genuinely descend to conjugacy-class data. The\naverage coefficient is exactly the number of orbits. This is Burnside's orbit-counting theorem\nlifted grade-by-grade to a formal q-expansion, connecting character values with enumerative\ngenerating functions without imposing unjustified analytic hypotheses.\n\n## Why the proposed product claim was not asserted\n\nThe mission's much stronger product claim should not be treated as an established consequence\nof monstrous moonshine. Several issues must first be resolved:\n\n1. Standard McKay–Thompson series are normalized with leading term `q⁻¹`. A product of 194\n   class representatives therefore begins with `q⁻¹⁹⁴`, so it is generally meromorphic at the\n   cusp rather than a holomorphic modular form as stated.\n2. If “product over all `g in M`” literally means all Monster elements, its leading term is\n   `q^{-|M|}`. If it means one representative of each conjugacy class, it is a different\n   product. These formulations cannot be interchanged.\n3. The series have different invariance groups (often genus-zero groups involving\n   Atkin–Lehner extensions). A product is modular only after specifying a common subgroup,\n   compatible multipliers, cusp behavior, and a coherent notion of weight.\n4. McKay–Thompson series are modular **functions**, normally of weight zero. Multiplying them\n   does not produce weight `|M|/24`; moreover `|M|/24` is not the weight naturally supplied by\n   the moonshine theorem.\n5. Character values are recovered grade by grade from the family of traces and the Monster\n   character table. A single product loses information in general, so the claim that it\n   determines the complete character table, element order, and maximal-subgroup structure\n   requires a separately specified injective reconstruction map.\n\nAccordingly, claiming the requested product theorem would encode an unsupported—and in its\nliteral normalization, incompatible—statement. The formal result supplied here captures the\nvalid additive relationship between all trace/fixed-point series and orbit enumeration.\n\n## Computational evidence decision\n\nA separate computational-evidence file was intentionally omitted because the requested output\npermits only `.lean` files and `FUTURE_DIRECTIONS.md`. More importantly, the connector is proved\nfor every finite group, every graded finite action, and every coefficient; checking selected\nsmall cases would be logically weaker than the completed theorem. The proof is not a\n`native_decide` calculation. The concrete Monster request for 194 × 100 coefficients would\nalso require an external certified dataset containing the Monster character table and the\nnormalized McKay–Thompson coefficients, neither of which is present in this project.\n\n## Concrete next steps\n\n1. Formalize complex-valued graded characters `tr(g | V_n)` and prove conjugacy invariance by\n   trace invariance under similarity.\n2. Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formalize the pole\n   order of finite products. This will make the normalization obstruction precise.\n3. Import a provenance-checked table of Monster irreducible characters and the 194 normalized\n   McKay–Thompson series; verify coefficient decompositions by exact integer arithmetic.\n4. State modularity separately for each class, with its actual moonshine group and multiplier.\n5. Investigate information-preserving aggregates—such as the full vector-valued family or a\n   labeled generating function—rather than an unlabeled scalar product that discards data.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -17227,7 +17227,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciprocity isomorphism `Gal(H/K) ≃ Cl(𝒪_K)`. This is falsifiable in the formal development by whether such data can be constructed without adding hypotheses to `K`.\n\n2. **Principal ideal theorem.** For the constructed Hilbert class field `H/K`, prove that extension of ideals sends every nonzero fractional ideal of `𝒪_K` to a principal fractional ideal of `𝒪_H`. Equivalently, prove that the induced homomorphism `Cl(𝒪_K) → Cl(𝒪_H)` is zero.\n\n3. **Idèlic realization of the unramified correspondence.** Construct the canonical quotient homomorphism from the idèle class group of `K` onto `Cl(𝒪_K)`, identify its kernel with the subgroup generated by archimedean components and local unit groups, and prove that pullback identifies ideal-class characters exactly with idèle-class characters trivial on that kernel.\n\n4. **Compatibility with cyclotomic reciprocity over `ℚ`.** Prove that the general Artin reciprocity map, specialized to `K = ℚ` and a cyclotomic extension, agrees on every rational prime coprime to the conductor with the catalog map sending a residue-class unit to the automorphism `ζ ↦ ζ^p`.\n\n5. **Explicit imaginary-quadratic generators.** For every imaginary quadratic field of class number at most `4`, construct a singular modulus generating its Hilbert class field and prove that its minimal polynomial has degree equal to the class number and splitting field unramified over the quadratic base field.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -17293,6 +17293,47 @@
       "thread_id": "th_45457447",
       "timestamp": "2026-07-28T17:00:39.819743+00:00",
       "title": "1. Generalize the scalar output theorem to vector-valued output layers."
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\nThe current development proves an exact finite-domain universality result for a clearly delimited linear-attention lookup architecture. Natural extensions are:\n\n1. **Softmax attention.** Relate the bilinear score to scaled dot-product softmax attention and prove quantitative convergence of high-temperature lookup heads to the exact finite selector.\n2. **Approximation bounds.** Turn exact finite lookup into an epsilon-approximation theorem and derive explicit bounds on score scale, head count, and output error.\n3. **Continuous universality.** Formalize compact sequence domains, continuous sequence-to-sequence maps, and a genuine uniform universal-approximation theorem using an available neural-network or Stone–Weierstrass development.\n4. **Full layer normalization.** Add mean subtraction and variance normalization, prove invariance under shifts and positive rescaling, and then compose this nonlinear normalization with the learned affine stage already formalized.\n5. **Standard multi-head plumbing.** Add query/key/value projections, concatenation, output projection, residual connections, and feed-forward blocks, with dimension-safe matrix types.\n6. **Permutation and positional structure.** Prove equivariance without positional encodings and characterize how additive positional encodings break that symmetry.\n7. **Efficiency.** Replace one head per possible sequence by constructive architectures with fewer heads/layers and prove upper and lower resource bounds.\n\nThe most important qualification to preserve is that exact finite lookup is not by itself the usual continuous universal-approximation theorem for standard softmax transformers.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "MachineLearning",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0797",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "b7ae8967",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/b7ae8967",
+      "status": "available",
+      "thread_id": "th_23bb9b03",
+      "timestamp": "2026-07-28T17:01:22.500842+00:00",
+      "title": "The current development proves an exact finite-domain universality result for a "
     },
     {
       "ambition_level": "extension",
@@ -17468,7 +17509,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 2ae125a9 (Q=0.780), which proved 17 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its range with all odd natural numbers, and gives the exact cardinality of every finite prefix. The follow",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -17986,6 +18027,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle a07085b6 (Q=0.761), which proved 11 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:\n\n1. `Feasible a` has at most `2^k` points.\n2. It has exactly `2^k` points iff every formal activation",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "push_a07085b6_71d1d8b5",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.86088,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "a07085b6",
+      "source_path": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-28T17:00:44.280132+00:00",
+      "title": "Deepening: For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle a68d3b50 (Q=0.767), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
@@ -18028,7 +18109,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b596d3d1 (Q=0.750), which proved 21 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean"
       ],
@@ -18268,7 +18349,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean"
       ],
@@ -18310,7 +18391,7 @@
       "domain_bridges": [
         "Pythagorean <-> EML"
       ],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Applications"
@@ -18396,7 +18477,7 @@
       "domain_bridges": [
         "Pythagorean <-> Geometry"
       ],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -18439,7 +18520,7 @@
       "domain_bridges": [
         "Pythagorean <-> Cryptography"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Cryptography"
@@ -18482,7 +18563,7 @@
       "domain_bridges": [
         "Pythagorean <-> Physics"
       ],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -20809,7 +20890,7 @@
       "depth_estimate": 3,
       "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Algebra",
@@ -32528,7 +32609,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.8002199999999999,
       "parent_direction": "",
       "priority_score": 0.86,
       "proof_strategy": "",
@@ -32539,7 +32620,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Attention is All You Need: Formalizing Transformer Architecture"
@@ -32972,7 +33053,7 @@
       "depth_estimate": 3,
       "description": "Classify all Pythagorean triples in the Gaussian integers Z[i]. Prove that every primitive triple can be parametrized as (a+bi, c+di, e+fi) where the norm of each entry satisfies the Pythagorean relation. Connect to the arithmetic of quaternionic integers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -33013,7 +33094,7 @@
       "depth_estimate": 3,
       "description": "Prove special cases of Beal's conjecture (A^x + B^y = C^z with x,y,z > 2 implies gcd(A,B,C) > 1). Verify computationally for all values up to 1000. Prove the conjecture when one of x,y,z equals 3 and the other two are at most 5.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -33054,7 +33135,7 @@
       "depth_estimate": 3,
       "description": "Prove that there are no non-constant polynomials f,g,h over C such that f^n + g^n = h^n for n >= 3. Show this follows from the Mason-Stothers theorem. Formalize the polynomial ABC conjecture and derive Fermat as a corollary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -33095,7 +33176,7 @@
       "depth_estimate": 3,
       "description": "Characterize all fields over which every element is a sum of two squares (Pythagorean fields). Prove that a field is Pythagorean iff it is formally real with a unique ordering. Show that Q(i) is not Pythagorean but R is.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34774,7 +34855,7 @@
       "depth_estimate": 3,
       "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/ρ for each zero ρ with |Im(ρ)| ≤ n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty",
         "Pythagorean"
@@ -34979,7 +35060,7 @@
       "depth_estimate": 3,
       "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy ≥ 95% on number-theoretic statements of length ≤ 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty",
         "Pythagorean"
@@ -36928,39 +37009,25 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 3,
+    "Algebra": 4,
     "Computation": 4,
     "Cryptography": 1,
     "Geometry": 2,
     "Logic": 2,
-    "MachineLearning": 2,
+    "MachineLearning": 3,
     "Novelty": 2,
     "NumberTheory": 1,
     "Physics": 1,
     "Pythagorean": 2
   },
   "recent_theme_keywords": {
-    "`2^(number": 1,
-    "`2^k`": 1,
-    "`k`-neuron": 1,
-    "activation": 1,
-    "activation-invariant": 1,
-    "activations": 1,
-    "affine": 1,
-    "algebra": 1,
+    "affine": 2,
+    "approximator": 1,
     "arbitrary": 2,
-    "arrangements": 1,
-    "assigned": 1,
-    "assumptions": 1,
-    "atoms": 1,
-    "bool)`": 1,
-    "boolean-algebra": 1,
-    "bounds": 1,
-    "claims": 1,
-    "classifier": 1,
-    "clopen": 1,
-    "complement": 1,
-    "complex": 1,
+    "architecture": 1,
+    "attention": 1,
+    "bilinear": 1,
+    "compositions": 1,
     "conditions": 1,
     "conjecture": 4,
     "consists": 1,
@@ -36976,6 +37043,7 @@
     "directly": 1,
     "discrete": 1,
     "embeds": 1,
+    "encodings": 1,
     "equality": 1,
     "equivalent": 2,
     "exactly": 1,
@@ -36984,7 +37052,10 @@
     "feasibility": 1,
     "finite": 3,
     "fixed": 1,
-    "formalize": 6,
+    "formalize": 7,
+    "formalizing": 1,
+    "function": 1,
+    "functions": 1,
     "genericity": 1,
     "geometrically": 1,
     "globally": 1,
@@ -37000,12 +37071,17 @@
     "investigate": 1,
     "labelings": 1,
     "linear": 1,
+    "mathematical": 1,
     "mathlib's": 1,
+    "multi-head": 1,
+    "need": 1,
     "networks": 1,
     "neuron": 1,
     "nondegeneracy": 1,
     "nonemptiness": 1,
+    "normalization": 1,
     "number": 2,
+    "object": 1,
     "otherwise": 1,
     "output": 1,
     "package": 1,
@@ -37013,6 +37089,7 @@
     "patterns": 1,
     "patterns)`": 1,
     "piecewise": 1,
+    "positional": 1,
     "powerset": 1,
     "precise": 1,
     "problem": 2,
@@ -37027,6 +37104,7 @@
     "replace": 2,
     "requires": 1,
     "section": 2,
+    "sequence-to-sequence": 1,
     "shatter": 1,
     "single": 1,
     "singleton": 1,
@@ -37039,7 +37117,10 @@
     "system": 2,
     "theorem": 2,
     "topology": 1,
-    "ultrafilters": 1
+    "transformations": 1,
+    "transformer": 1,
+    "ultrafilters": 1,
+    "universal": 1
   },
   "selection_log": [
     "famous_subtask",
