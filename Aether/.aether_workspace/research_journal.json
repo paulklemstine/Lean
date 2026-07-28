@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "43fa6482",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Size-Indexed Information Loss and Fluctuation Bounds\n\nThe formal result in `Catalog/Applications/SizeIndexedLandauerBridge.lean` connects two resources that share an input-size in",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-22T18:42:11",
-      "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
-    },
-    {
       "cycle_id": "c612ec41",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-28T17:00:44",
       "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
+    },
+    {
+      "cycle_id": "b7ae8967",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe current development proves an exact finite-domain universality result for a clearly delimited linear-attention lookup architecture. Natural extensions are:\n\n1. **Softmax atten",
+      "quality_score": 0.8002199999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-28T17:01:26",
+      "title": "Attention is All You Need: Formalizing Transformer Architecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "93551ae8",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n- Define finite simple signed graphs directly over `SimpleGraph`, including signed walks, signed two-path counts, regularity, girth, and strong regularity.\n- Lift the matrix resul",
-      "quality_score": 0.65,
-      "sorry_count": 13,
-      "theorem_count": 10,
-      "timestamp": "2026-07-19T22:02:46",
-      "title": "ArXiv paper: On strongly regular signed graphs of higher girth"
-    },
     {
       "cycle_id": "c231497c",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-28T17:00:44",
       "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
+    },
+    {
+      "cycle_id": "b7ae8967",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe current development proves an exact finite-domain universality result for a clearly delimited linear-attention lookup architecture. Natural extensions are:\n\n1. **Softmax atten",
+      "quality_score": 0.8002199999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-28T17:01:26",
+      "title": "Attention is All You Need: Formalizing Transformer Architecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "830d234a",
-      "domain": "Computation",
-      "name": "finite_policyGradient",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "830d234a",
-      "domain": "Computation",
-      "name": "score_mean_zero",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ce71f394",
-      "domain": "Applications",
-      "name": "hasDerivAt_expLogProduct",
-      "quality": 0.77
-    },
     {
       "cycle_id": "ce71f394",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "selectedAffine_affineCombination",
       "quality": 0.76088
+    },
+    {
+      "cycle_id": "b7ae8967",
+      "domain": "MachineLearning",
+      "name": "bilinearScore_add_query",
+      "quality": 0.8002199999999999
+    },
+    {
+      "cycle_id": "b7ae8967",
+      "domain": "MachineLearning",
+      "name": "bilinearScore_smul_query",
+      "quality": 0.8002199999999999
+    },
+    {
+      "cycle_id": "b7ae8967",
+      "domain": "MachineLearning",
+      "name": "bilinearScore_add_key",
+      "quality": 0.8002199999999999
     }
   ],
-  "last_updated": "2026-07-28T17:00:44",
+  "last_updated": "2026-07-28T17:01:26",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "e3542946",
-        "quality": 0.78,
-        "theorems": 0,
-        "title": "Speculative: Computational Complexity as Physical Law"
-      },
-      {
         "cycle_id": "d14aad94",
         "quality": 0.71,
         "theorems": 0,
@@ -3575,6 +3569,12 @@
         "quality": 0.7438,
         "theorems": 9,
         "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
+      },
+      {
+        "cycle_id": "b7ae8967",
+        "quality": 0.8002199999999999,
+        "theorems": 21,
+        "title": "Attention is All You Need: Formalizing Transformer Architecture"
       }
     ],
     "Novelty": [

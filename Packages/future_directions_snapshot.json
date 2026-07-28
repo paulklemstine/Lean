@@ -935,6 +935,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b7ae8967 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_b7ae8967_8a97b54d",
+    "lineage_refs": [],
+    "priority_score": 0.9002199999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b7ae8967",
+    "status": "available",
+    "timestamp": "2026-07-28T17:01:26.465710+00:00",
+    "title": "Deepening: Attention is All You Need: Formalizing Transformer Architecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalizes the Berggren-Pell tree of primitive Pythagorean triples as an isometric automorphism group over hyperbolic space.",
     "domain_bridges": [],
     "domains": [
@@ -1742,6 +1761,25 @@
     "status": "available",
     "timestamp": "",
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_ee1ae94f_39fc795b",
+    "lineage_refs": [],
+    "priority_score": 0.88664,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ee1ae94f",
+    "status": "available",
+    "timestamp": "2026-07-28T17:00:01.809184+00:00",
+    "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
   },
   {
     "ambition_level": "extension",
@@ -2907,6 +2945,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a07085b6 (Q=0.761), which proved 11 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:\n\n1. `Feasible a` has at most `2^k` points.\n2. It has exactly `2^k` points iff every formal activation",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_a07085b6_71d1d8b5",
+    "lineage_refs": [],
+    "priority_score": 0.86088,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a07085b6",
+    "status": "available",
+    "timestamp": "2026-07-28T17:00:44.280132+00:00",
+    "title": "Deepening: For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -3523,26 +3580,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b7ae8967",
-    "description": "Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Algebra"
-    ],
-    "id": "seed_329",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Attention is All You Need: Formalizing Transformer Architecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domain_bridges": [],
@@ -3847,7 +3884,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d54ed94e",
     "description": "Investigate the ArXiv paper 'Determinant values on lattices' and formalize its key results. Abstract: We study the distribution of determinant values on lattices in $\\operatorname{M}_d(\\mathbb R)$ for $d\\ge 2$. Let $Λ<\\operatorname{M}_d(\\mathbb R)$ be a lattice whose elements all have algebraic entries. We prove that if $\\det (Λ)$ is not contained in a scalar multiple of $\\mathbb Z$, then for every $a<b$, $$ \\#\\{v\\inΛ:\\|v\\| <T,\\ a<\\operatorname{det} v<b,\\ \\operatorname{det} v\\ne0\\} \\sim \\frac{C_d}{\\operatorname{covol}(Λ)} (b-a)T^{d(d-1)} $$ as $T\\to \\infty$, where $\\|\\cdot\\|$ is the Frobenius norm and $C_d>0$ depends only on $d$. For such a lattice, under an isotropic noncoincidence hypothesis, automatic for $d=2,3$ and satisfied for all diagonal lattices when $d\\ge 4$, we also obtain an asymptotic formula for the determinant-zero lattice points. The same conclusions hold for the broader class of Diophantine lattices, under the corresponding hypotheses. For $d=2$, our result recovers the Eskin-Margulis-Mozes theorem on the quantitative Oppenheim problem for quadratic forms of signature",
     "domain_bridges": [],
     "domains": [
@@ -3864,7 +3901,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.18038v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T03:53:11.223878+00:00",
     "title": "ArXiv paper: A positive square-energy strengthening of Turán's theorem"
   },
@@ -4104,26 +4141,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Collatz Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ee1ae94f",
-    "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "NumberTheory"
-    ],
-    "id": "seed_020",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
   {
     "ambition_level": "extension",
@@ -8786,26 +8803,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Constrained Multi-Relational Graphons with Maximum Entropy' and formalize its key results. Abstract: The principle of maximum entropy provides a fundamental framework for characterizing typical structures of large random networks subject to observable constraints. In their pioneering numerical experiments \\cite{radin2014asymptotics}, Radin, Ren, and Sadun conjectured that entropy-maximizing graphons satisfying subgraph density constraints are stochastic block models a conjecture we term the RRS conjecture. While several special cases have been proven for single-relation graphs with specific constraint families, the general problem has remained open, particularly for multi-relational networks. We resolve the RRS conjecture for constrained multi-relational graphons in the non-extremal regime, proving that entropy-maximizing solutions are step functions with finitely many blocks under the condition the subgraph density constraints are analytically independent and for almost all feasible combinations of sufficient statistics. Our proof employs a differential geometric technique to study s",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0784",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.22383v1",
-    "status": "available",
-    "timestamp": "2026-07-27T07:59:50.502620+00:00",
-    "title": "ArXiv paper: Constrained Multi-Relational Graphons with Maximum Entropy"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The $K(π, 1)$ conjecture for Artin groups of spherical type' and formalize its key results. Abstract: In these notes, we introduce the 50-year-old $K(π, 1)$ conjecture alongside Coxeter and Artin groups. Roughly speaking, the conjecture states that the complement in $\\mathbb{C}^n$ of a \"symmetric\" configuration of hyperplanes is a $K(π, 1)$ space. Our end goal is to present a proof of the conjecture in the so-called spherical case, where only a finite number of hyperplanes are removed, through methods from combinatorial topology. This proof draws inspiration from the original proof of the spherical case, which is a special case of a celebrated 1972 theorem by Pierre Deligne.",
     "domain_bridges": [],
     "domains": [
@@ -10151,26 +10148,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a07085b6",
-    "description": "# Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:\n\n1. `Feasible a` has at most `2^k` points.\n2. It has exactly `2^k` points iff every formal activation pattern is feasible.\n3. Every classifier constant on activation fibres factors uniquely through `Feasible a`.\n4. Pullback embeds the Boolean algebra of subsets of `Feasible a` into input-space regions, preserving complement and intersection.\n5. Its image consists exactly of activation-invariant regions.\n6. Atoms of this region algebra are singleton feasible patterns, so their count is the number of feasible patterns and is at most `2^k`.\n7. The full powerset concept family has VC dimension equal to the number of feasible patterns.\n8. A single fixed decision region cannot shatter a nonempty set.\n\nThis gives a precise finite Stone-style syntax/semantics theorem while separating it from claims that do not hold without added assumptions.\n\n## Corrections to the motivating conjecture\n\n* A `k`-neuron network need not realize all `2^k` activation patterns. Correlated, redundant, or geometrically infeasible signs reduce the range.\n* Deep-network neuron preactivations are generally piecewise affine in the original input, not globally defined by only `w₁ + ⋯ + w_L` input hyperplanes.\n* A fixed classifier is not a hypothesis class with VC dimension. VC dimension must be assigned to a parameterized family. The equality proved here is for the full Boolean algebra of all subsets of the finite feasible space.\n* The number of atoms equals the number of feasible patterns. The number of elements of the powerset Boolean algebra is instead `2^(number of feasible patterns)`.\n* Linear regions may refine, coarsen, or otherwise differ from activation patterns in degenerate networks. Their equality requires explicit nondegeneracy assumptions.\n\n## Next formal targets\n\n1. Equip `Feasible a` with its finite discrete topology and prove directly that every subset is clopen, then package `realize` as a Boolean-algebra embedding into `Set X`.\n2. Define sign activations of affine hyperplane arrangements over `ℝ^n`; prove feasibility is equivalent to nonemptiness of the corresponding system of strict/weak linear inequalities.\n3. Formalize a one-hidden-layer ReLU network and show its output is affine on each feasible activation cell.\n4. State sufficient genericity conditions under which feasible activation patterns correspond to nonempty linear regions.\n5. Define parameterized families of output labelings on a fixed activation complex. Prove VC upper bounds from the number of feasible atoms, and identify hypotheses under which the full bound is attained.\n6. Replace the finite powerset presentation by Mathlib's Stone spectrum of a finite Boolean algebra and construct the explicit homeomorphism between ultrafilters and atoms.\n7. Investigate the hyperplane-arrangement bound `∑_{i=0}^n choose(k,i)` for one-layer networks, which is typically much sharper than `2^k` when input dimension is fixed.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Pythagorean"
-    ],
-    "id": "fd_0446",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "86896469",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T11:15:45.660193+00:00",
-    "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Infinite-Dimensional Chess\n\n## 1. Countable-Ordinal Realization by Finite Material\n\n**Conjecture.** Every countable ordinal is the game value of a winning position on an infinite board using only finitely many pieces.\n\nThe key insight is that delaying gadgets can encode countable suprema, while forced corridors encode successor and ordinal addition. The central difficulty is realizing arbitrary countable limit constructions without introducing infinitely many pieces.\n\n**Why now?** Explicit game trees already realize the hierarchy through `ω^ω`, isolating the exact operations that a geometric construction must simulate.\n\n## 2. Strategy-Tree Rank Correspondence\n\n**Conjecture.** For every position from which the attacker forces mate, the accessibility rank of its legal-play relation equals its minimax ordinal game value after the standard winner/loser normalization.\n\nThe key insight is that accessibility recursion and ordinal minimax recursion are two presentations of the same well-founded strategy tree, but alternating choices require a carefully polarized rank transformation.\n\n**Why now?** The present escape theorem identifies the complementary non-well-founded case by an explicit infinite chain, while the abstract hierarchy supplies nontrivial well-founded test cases.\n\n## 3. Finite-Rook Local Escape Threshold\n\n**Conjecture.** In every dimension at least two, any finite rook army that does not already checkmate the king permits an infinite sequence of legal king moves avoiding capture.\n\nThe key insight is that global safe squares are plentiful, yet converting global sparsity of attacked lines into a locally reachable infinite path is a compactness problem rather than a counting problem.\n\n**Why now?** Finite rook armies are known to leave infinitely many unattacked squares, and a single rook admits an explicit local escape map; the missing step is the local-to-global bridge for several rooks.\n\n## 4. Dimension–Material Mate Classification\n\n**Conjecture.** For each fixed dimension, there is an explicit finite classification of minimal axis-moving piece configurations that force mate, and the minimum required material is monotone nondecreasing with dimension.\n\nThe key insight is that each additional axis creates new escape directions that must be blocked independently, turning mate into a finite covering problem for the Chebyshev neighborhood.\n\n**Why now?** The sharp contrast between two-rook mate in dimension one and lone-rook escape in every higher dimension provides the first exact boundary case and a testable base for the classification.\n\n## 5. Cofinality Bound from Finite Branching\n\n**Conjecture.** A winning position whose defender has uniformly finite legal branching cannot have a game value of countable cofinality greater than `ω`, and stronger uniform branching constraints impose corresponding restrictions on its Cantor normal form.\n\nThe key insight is that limit values arise from suprema of defender choices, so geometric bounds on legal branching should translate into ordinal cofinality bounds.\n\n**Why now?** The explicit `ω^n` and `ω^ω` constructions use countable branching at precisely the limit-forming nodes, making branching the natural structural invariant to test.\n",
     "domain_bridges": [],
@@ -10431,26 +10408,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n- Formalize periodic configurations `Fin n → Bool` and count fixed points for\n  every rule and small period `n` with kernel-checked finite enumeration.\n- Represent local Boolean functions as multilinear polynomials over `ZMod 2`\n  and prove uniqueness of algebraic normal form for all 256 rules.\n- Replace the ambiguous dimension of a finite set of Boolean-valued points by\n  clearly separated invariants: Krull dimension of a scheme, dimension of a\n  coordinate-ring quotient, fixed-point count, and asymptotic entropy of\n  periodic fixed configurations.\n- Compare those invariants against an explicitly sourced and formalized\n  Wolfram-class data set.  The proved Rule 110 counterexample shows that the\n  original maximal-fixed-locus prediction must be revised before such a\n  correlation theorem can hold.\n- Study spacetime diagrams rather than only fixed points.  Turing completeness\n  concerns unbounded evolution, while a fixed-point locus discards transient\n  and propagating behavior.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0791",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "38d3a014",
-    "status": "available",
-    "timestamp": "2026-07-28T12:20:29.648504+00:00",
-    "title": "every rule and small period `n` with kernel-checked finite enumeration."
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory and formal generating functions.\n\nFor a finite group `G` acting on each finite grade `X n`, define the coefficient of the series\nattached to `g` to be the number of points in `X n` fixed by `g`. The file proves:\n\n\\[\n  \\sum_{g\\in G} |(X_n)^g| = |G|\\,|X_n/G|\n\\]\n\nfor every `n`, and consequently the coefficientwise q-series identity\n\n\\[\n  \\sum_{g\\in G} T_g(q) = |G|\\,O(q),\n  \\qquad O(q)=\\sum_{n\\ge0}|X_n/G|q^n.\n\\]\n\nIt also proves that every coefficient, and hence every whole series `T_g`, is invariant under\nconjugacy. Thus these element-indexed series genuinely descend to conjugacy-class data. The\naverage coefficient is exactly the number of orbits. This is Burnside's orbit-counting theorem\nlifted grade-by-grade to a formal q-expansion, connecting character values with enumerative\ngenerating functions without imposing unjustified analytic hypotheses.\n\n## Why the proposed product claim was not asserted\n\nThe mission's much stronger product claim should not be treated as an established consequence\nof monstrous moonshine. Several issues must first be resolved:\n\n1. Standard McKay–Thompson series are normalized with leading term `q⁻¹`. A product of 194\n   class representatives therefore begins with `q⁻¹⁹⁴`, so it is generally meromorphic at the\n   cusp rather than a holomorphic modular form as stated.\n2. If “product over all `g in M`” literally means all Monster elements, its leading term is\n   `q^{-|M|}`. If it means one representative of each conjugacy class, it is a different\n   product. These formulations cannot be interchanged.\n3. The series have different invariance groups (often genus-zero groups involving\n   Atkin–Lehner extensions). A product is modular only after specifying a common subgroup,\n   compatible multipliers, cusp behavior, and a coherent notion of weight.\n4. McKay–Thompson series are modular **functions**, normally of weight zero. Multiplying them\n   does not produce weight `|M|/24`; moreover `|M|/24` is not the weight naturally supplied by\n   the moonshine theorem.\n5. Character values are recovered grade by grade from the family of traces and the Monster\n   character table. A single product loses information in general, so the claim that it\n   determines the complete character table, element order, and maximal-subgroup structure\n   requires a separately specified injective reconstruction map.\n\nAccordingly, claiming the requested product theorem would encode an unsupported—and in its\nliteral normalization, incompatible—statement. The formal result supplied here captures the\nvalid additive relationship between all trace/fixed-point series and orbit enumeration.\n\n## Computational evidence decision\n\nA separate computational-evidence file was intentionally omitted because the requested output\npermits only `.lean` files and `FUTURE_DIRECTIONS.md`. More importantly, the connector is proved\nfor every finite group, every graded finite action, and every coefficient; checking selected\nsmall cases would be logically weaker than the completed theorem. The proof is not a\n`native_decide` calculation. The concrete Monster request for 194 × 100 coefficients would\nalso require an external certified dataset containing the Monster character table and the\nnormalized McKay–Thompson coefficients, neither of which is present in this project.\n\n## Concrete next steps\n\n1. Formalize complex-valued graded characters `tr(g | V_n)` and prove conjugacy invariance by\n   trace invariance under similarity.\n2. Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formalize the pole\n   order of finite products. This will make the normalization obstruction precise.\n3. Import a provenance-checked table of Monster irreducible characters and the 194 normalized\n   McKay–Thompson series; verify coefficient decompositions by exact integer arithmetic.\n4. State modularity separately for each class, with its actual moonshine group and multiplier.\n5. Investigate information-preserving aggregates—such as the full vector-valued family or a\n   labeled generating function—rather than an unlabeled scalar product that discards data.\n",
     "domain_bridges": [],
     "domains": [
@@ -10471,41 +10428,40 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe formal result shows that the unmodified Cauchy kernel on a unit sphere has a deterministic floor of `1/5`; hence randomness alone cannot produce near-zero weights below that threshold. The following conjectures describe concrete modifications or sharper distributional questions.\n\n1. **Dimension-dependent powered-kernel sparsity.** Let `q,k₁,…,k_N` be independent and uniform on `S^{d-1}`, and set `K_p(q,k) = (1 + ‖q-k‖²)^{-p}`. For every fixed threshold `τ ∈ (0,1)` and exponent `p ≥ c d log N`, the expected number of indices with `K_p(q,kᵢ) ≥ τ` is at most `C√N`, for explicit universal constants `c,C`. This can be falsified by evaluating the exact spherical-cap probability.\n\n2. **Bandwidth-scaled kernel sparsity.** For `K_β(q,k) = (1 + β‖q-k‖²)^{-1}` with uniform points on `S^{d-1}`, there is an explicit scale `β = β(d,N,τ)` for which the expected number of weights at least `τ` lies between `c√N` and `C√N`. The proposed scale should be tested against the spherical-cap measure determined by `‖q-k‖² ≤ (τ⁻¹-1)/β`.\n\n3. **High-probability active-count concentration.** Under the scale from Conjecture 2, the number of weights at least `τ` is within a constant factor of its expectation with probability at least `1-N^{-2}`. Since the conditional active indicators are independent given the query, this reduces to a concrete binomial concentration bound once the cap probability is fixed.\n\n4. **Top-k approximation error.** For the bandwidth-scaled kernel in Conjecture 2, retaining the largest `⌈C√N⌉` normalized weights yields total discarded mass at most `ε` with probability at least `1-N^{-2}`, for a bandwidth `β(d,N,ε)` specified in advance. A counterexample consists of a sampled configuration whose normalized tail mass exceeds `ε`.\n\n5. **Universality after positive bandwidth scaling.** On every compact subset of Euclidean query/key space, attention networks using finite positive mixtures of kernels `(1 + β‖q-k‖²)^{-1}` are dense in the same continuous permutation-equivariant function class as standard attention networks. This is falsifiable by exhibiting a continuous permutation-equivariant target separated by a positive uniform distance from all such networks.\n",
+    "description": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciprocity isomorphism `Gal(H/K) ≃ Cl(𝒪_K)`. This is falsifiable in the formal development by whether such data can be constructed without adding hypotheses to `K`.\n\n2. **Principal ideal theorem.** For the constructed Hilbert class field `H/K`, prove that extension of ideals sends every nonzero fractional ideal of `𝒪_K` to a principal fractional ideal of `𝒪_H`. Equivalently, prove that the induced homomorphism `Cl(𝒪_K) → Cl(𝒪_H)` is zero.\n\n3. **Idèlic realization of the unramified correspondence.** Construct the canonical quotient homomorphism from the idèle class group of `K` onto `Cl(𝒪_K)`, identify its kernel with the subgroup generated by archimedean components and local unit groups, and prove that pullback identifies ideal-class characters exactly with idèle-class characters trivial on that kernel.\n\n4. **Compatibility with cyclotomic reciprocity over `ℚ`.** Prove that the general Artin reciprocity map, specialized to `K = ℚ` and a cyclotomic extension, agrees on every rational prime coprime to the conductor with the catalog map sending a residue-class unit to the automorphism `ζ ↦ ζ^p`.\n\n5. **Explicit imaginary-quadratic generators.** For every imaginary quadratic field of class number at most `4`, construct a singular modulus generating its Hilbert class field and prove that its minimal polynomial has degree equal to the class number and splitting field unramified over the quadratic base field.\n",
     "domain_bridges": [],
     "domains": [
-      "Computation",
-      "Algebra"
+      "Algebra",
+      "Pythagorean"
     ],
-    "id": "fd_0793",
+    "id": "fd_0795",
     "lineage_refs": [],
     "priority_score": 0.75,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "afbe2d9b",
+    "source_exp_id": "ee1ae94f",
     "status": "available",
-    "timestamp": "2026-07-28T14:47:04.857986+00:00",
-    "title": "The formal result shows that the unmodified Cauchy kernel on a unit sphere has a"
+    "timestamp": "2026-07-28T16:59:57.083975+00:00",
+    "title": "1. **Existence of Hilbert class fields.** For every number field `K`, construct "
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n1. **Finite-cover gluing.** Extend the two-set theorem in\n   `Catalog/Algebra/SheafDatabaseGluing.lean` to finite families of column sets,\n   proving that pairwise-compatible local records have a unique section on the\n   union.\n\n2. **Restriction maps and a bundled sheaf.** Package `LocalSection` as a\n   presheaf on the poset of column subsets, prove the identity and composition\n   laws for restrictions, and derive the sheaf condition from the concrete\n   gluing theorem.\n\n3. **Separate missingness from conflict.** Define a generative probability\n   model with (a) a distribution on ground-truth records, (b) a missingness\n   mechanism, and (c) optional noisy/conflicting observations. The expression\n   `(1-r)^C` should only be asserted after proving independence and identifying\n   the per-constraint failure probability; a cell-missing rate alone does not\n   imply that law.\n\n4. **Constraint dependence.** Pairwise overlap events commonly share columns\n   and therefore need not be independent. Formalize the dependency graph and\n   derive exact probabilities or rigorous upper/lower bounds instead of an\n   unconditional product formula.\n\n5. **Optimization formulation.** For finite columns and normed value spaces,\n   define a loss between partial observations and global sections. Prove that\n   minimizing over global sections is equivalent to minimizing subject to all\n   restriction/overlap equations. Existence of a nearest section will require\n   suitable finiteness, compactness, or coercivity assumptions.\n\n6. **Statistical comparisons.** Claims that one imputation method outperforms\n   mean, KNN, or MICE require a data-generating distribution, loss function,\n   hyperparameter policy, and evaluation protocol. Formalizable first steps\n   include defining expected reconstruction loss and proving comparisons in a\n   small, explicit latent-variable model. Conditions `r < 0.5` and `n > 10`\n   alone are insufficient for a universal dominance theorem.\n\n7. **Cohomological obstructions.** For richer data sheaves where compatible\n   local data may fail to extend globally, define Čech cochains for a finite\n   cover and connect nonzero obstruction classes to failed integration. The\n   dependent-record sheaf proved here has unconditional gluing after overlap\n   agreement, so its higher obstruction theory is correspondingly simple.\n",
+    "description": "# Future directions\n\n1. Generalize the scalar output theorem to vector-valued output layers.\n2. Package each selected formula as an affine map and prove continuity across adjacent cell boundaries.\n3. Add explicit genericity assumptions and relate feasible activation cells to maximal linear regions.\n4. Formalize the sharper hyperplane-arrangement region bound in fixed input dimension.\n5. Extend the argument inductively to deep ReLU networks, whose preactivations are piecewise affine relative to earlier-layer cells.\n",
     "domain_bridges": [],
     "domains": [
-      "Computation",
-      "Algebra"
+      "Geometry"
     ],
-    "id": "fd_0794",
+    "id": "fd_0796",
     "lineage_refs": [],
     "priority_score": 0.75,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "eae986b3",
+    "source_exp_id": "a07085b6",
     "status": "available",
-    "timestamp": "2026-07-28T14:47:12.312702+00:00",
-    "title": "1. **Finite-cover gluing.** Extend the two-set theorem in"
+    "timestamp": "2026-07-28T17:00:39.819743+00:00",
+    "title": "1. Generalize the scalar output theorem to vector-valued output layers."
   },
   {
     "ambition_level": "extension",
@@ -10775,7 +10731,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04ef04e2",
     "description": "Cycle 186c9eac (Q=0.680) proved 0 theorems in Shared but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such",
     "domain_bridges": [],
     "domains": [
@@ -10787,7 +10743,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "186c9eac",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
@@ -10982,7 +10938,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8a9b8560",
     "description": "Ramsey's theorem states that any 2-coloring of the edges of K_6 contains a monochromatic K_3 (a triangle of one color). Applied to DNA: any sequence of 4^6 + 1 = 4097 nucleotides must contain a repeated 6-mer (by pigeonhole). But Ramsey theory for subsequences is more subtle: what is the minimum length L(k) of a DNA sequence over {A, C, G, T} such that every subsequence of length k contains a repeated 4-mer? Conjecture: L(k) = Theta(k * 4^4 * log(4^4)) = Theta(k * 256 * 8) = Theta(k * 2048). More precisely, by the Lovasz local lemma, L(k) >= 4^{4k/5} for sequences that avoid repeated k-mers in all subsequences. Conjecture: for real genomes, the actual L(k) is much smaller because real DNA has low complexity regions (microsatellites, Alu repeats) that create forced repeats. Specifically, the human genome has L(4) ~ 1000 (any 1000 consecutive bases contain a repeated 4-mer in some subsequence), while the random genome has L(4) ~ 4^4 * log(4^4) ~ 5000. Test: compute L(k) for real genomes vs random genomes and verify the factor-of-5 compression. Impact: DNA avoids subsequential repeats in a way that Ramsey theory predicts, but real genomes are 5x more 'forced' than random sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10996,7 +10952,7 @@
     "proof_strategy": "Define the subsequence Ramsey number L(k, s, alphabet) as the minimum length of a sequence over the given alphabet such that every subsequence of length k contains a repeated s-mer. For DNA: alphabet = {A, C, G, T}, s = 4 (4-mers). L(k, 4, 4) = minimum length of a DNA sequence such that every length-k subsequence has a repeated 4-mer. By the pigeonhole principle: any sequence of length 4^4 + 1 = 257 has a repeated 4-mer (not subsequence, but substring). For subsequences: we need every length-k subsequence to contain a repeated 4-mer. The longest sequence with NO subsequence of length k containing a repeated 4-mer is called the 'subsequence-Ramsey avoidance sequence'. Conjecture: this sequence has length O(k * 4^4 * log(4^4)). Proof sketch: by the Lovasz local lemma, the probability that a random sequence of length n avoids repeated 4-mers in all subsequences is positive when n < k * 4^4 * log(4^4). Test: generate random DNA sequences of varying lengths, extract all subsequences of length k, check for repeated 4-mers. Compare with real genomes (human chromosome 1, E. coli genome). Verify that real genomes hit the threshold at L ~ 1000 (much shorter than the random L ~ 5000).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
   },
