@@ -1,356 +1,512 @@
-# Cellular Automata as Algebraic Geometry: Boolean Polynomial Models and the Limits of Fixed-Point Complexity
+# Cellular Automata as Algebraic Geometry: Polynomial Models, Fixed-Point Loci, and the Limits of Stationary Complexity
+
+**Aristotle**  
+**July 28, 2026**
 
 ## Abstract
 
-Elementary cellular automata are synchronous dynamical systems on binary arrays whose local update depends on three adjacent cells. This paper develops a self-contained algebraic description of these systems and evaluates the proposal that the size or dimension of a fixed-point variety measures dynamical complexity. There are exactly $256$ elementary local rules, and every such rule has a unique algebraic normal form over $\mathbb F_2$ of degree at most $3$. For arbitrary finite neighbor maps, the global update is consequently a polynomial self-map of the Boolean state space. Its stable configurations are the $\mathbb F_2$-rational solutions of the update equations together with the Boolean relations. Three exact results show that fixed-point abundance does not track computational richness: Rule $0$ has exactly one fixed state; Rule $204$ fixes all $2^n$ states; and Rule $110$ has a nonempty but nonmaximal fixed-point set on every nonempty finite array. More strongly, if the right-neighbor map has a single forward orbit, Rule $110$ has exactly one fixed configuration, the all-zero state. The proof rests on a zero-propagation lemma. These facts separate fixed-point count, Krull dimension, and dynamical complexity. We give algorithms for rule decoding, algebraic-normal-form conversion, fixed-point enumeration, and numerical comparison, and identify periodic-orbit equations and explicitly constructed local-to-global structures as more appropriate future invariants.
+Elementary cellular automata are the $256$ synchronous binary dynamical systems whose local update depends on a cell and its two nearest neighbors. This paper develops a self-contained algebraic description of these systems over the field $\mathbb F_2$. Every local rule is represented by a unique multilinear polynomial in three variables, and the global dynamics become a translation-invariant polynomial map on binary configurations. Fixed configurations are consequently solutions of polynomial equations.
+
+Three representative rules clarify both the power and the limitation of this viewpoint. Rule 110 has algebraic normal form
+
+$$
+f_{110}(\ell,c,r)=r+c+cr+\ell cr.
+$$
+
+Rule 0 has exactly one fixed bi-infinite configuration, the constant-zero state. Rule 204 is the center projection and fixes every configuration. Rule 110 fixes the constant-zero state but does not fix the constant-one state, so its fixed-point locus is nonempty and nonmaximal. This last result disproves the strongest proposed identification of computational universality with a maximal fixed-point locus: Rule 204 has maximal stationary freedom but trivial dynamics, whereas Rule 110 supports universal computation without fixing all states.
+
+We present algorithms for truth-table evaluation, algebraic-normal-form extraction, and exhaustive fixed-point enumeration on periodic rings. We then distinguish fixed-point count, Krull dimension, coordinate-algebra dimension, and asymptotic entropy, explaining why “dimension” cannot be used ambiguously for finite Boolean state spaces. The results motivate a broader algebraic geometry of spacetime histories rather than a theory based only on stationary configurations.
 
 ## 1. Introduction
 
-An elementary cellular automaton (ECA) evolves a one-dimensional binary array in discrete time. At each step, every site simultaneously consults its left neighbor, its current value, and its right neighbor. A fixed truth table determines the next value. Despite this small local input, the resulting global dynamics include extinction, periodic textures, apparent randomness, coherent moving structures, and universal computation.
-
-The finite truth table invites an algebraic translation. If $0$ and $1$ are regarded as elements of the field $\mathbb F_2$, exclusive-or becomes addition and conjunction becomes multiplication. Every ternary Boolean function is then represented by a multilinear polynomial of degree at most $3$. A finite ECA is therefore a polynomial dynamical system on $\mathbb F_2^n$.
-
-This observation motivates a geometric question. Fixed configurations solve $F(s)=s$, so they can be regarded as rational points of an algebraically defined locus. Could the dimension of this locus measure the complexity of a rule? A particularly strong version would predict a small fixed-point locus for simple rules and a maximal one for a computationally universal rule such as Rule $110$.
-
-The exact results below refute that prediction while preserving the valuable algebraic framework. Rule $204$, the center-copying rule, has no evolution at all and nevertheless fixes the entire state space. Rule $110$ can have a unique fixed state under standard cyclic connectivity. The central conceptual conclusion is that fixed points describe equilibrium, whereas computational universality concerns unbounded spacetime evolution. Point count, geometric dimension, and dynamical complexity must therefore be kept distinct.
-
-## 2. Finite elementary cellular automata
-
-### 2.1. States, local rules, and boundary data
-
-Fix an integer $n\ge 0$. Let
+An elementary cellular automaton acts on a one-dimensional array of binary cells. Time is discrete. At each time step every cell is updated simultaneously by the same function of its left neighbor, itself, and its right neighbor. Since there are $2^3=8$ possible neighborhoods and two possible outputs for each neighborhood, there are
 
 $$
-I_n=\{0,1,\ldots,n-1\}
+2^8=256
 $$
 
-be the set of sites, and let
+distinct elementary rules.
+
+Despite this tiny rule space, the resulting dynamics range from immediate collapse to uniform states, through periodic and chaotic-looking patterns, to persistent localized structures and universal computation. Rule 110 is the standard emblem of the last phenomenon: a fixed local table can sustain dynamics rich enough to simulate arbitrary computation.
+
+A natural research program seeks static algebraic invariants that predict this dynamical complexity. The binary alphabet suggests the field $\mathbb F_2=\{0,1\}$, whose addition and multiplication are performed modulo $2$. A Boolean state then becomes a vector over $\mathbb F_2$, and every Boolean local function becomes a polynomial. For a finite periodic ring, the global update is a polynomial self-map of $\mathbb F_2^n$. Fixed configurations satisfy polynomial equations, so they can be treated as an algebraic set.
+
+This program immediately raises a conjectural analogy: perhaps dynamically simple rules have small fixed-point loci, while computationally rich rules have large or high-dimensional ones. The analogy is attractive, but it needs precise definitions and decisive tests. The central conclusions of this paper are:
+
+1. the polynomial representation is exact and particularly concise for Rule 110;
+2. Rule 0 and Rule 204 realize the minimum and maximum possible fixed-point sets;
+3. Rule 110 has at least one fixed configuration but not all configurations are fixed;
+4. maximal stationary freedom is not a measure of computational power;
+5. several inequivalent invariants have been conflated under the word “dimension,” and they must be separated before any complexity correlation can be meaningfully tested.
+
+The treatment uses bi-infinite configurations for structural theorems and finite periodic rings for algorithms. All definitions and arguments are given below.
+
+## 2. Elementary rules and global dynamics
+
+### 2.1 Configurations
+
+Let $B=\{0,1\}=\mathbb F_2$. A **bi-infinite binary configuration** is a function
 
 $$
-X_n=\{0,1\}^{I_n}
+s:\mathbb Z\longrightarrow B.
 $$
 
-be the set of binary configurations. A state $s\in X_n$ assigns a bit $s_i$ to each site $i$. Since each of the $n$ coordinates has two choices,
+The value at site $i$ is denoted $s_i$. A **periodic configuration of period $n$** is a vector
 
 $$
-|X_n|=2^n.
+s=(s_0,\ldots,s_{n-1})\in B^n,
 $$
 
-A local elementary rule is a function
+with indices interpreted modulo $n$. Thus the left neighbor of site $0$ is site $n-1$ and the right neighbor of site $n-1$ is site $0$.
+
+### 2.2 Wolfram encoding
+
+For a neighborhood $(\ell,c,r)\in B^3$, define its index by
 
 $$
-f:\{0,1\}^3\to\{0,1\}.
+\iota(\ell,c,r)=4\ell+2c+r.
 $$
 
-To allow a general finite boundary convention, choose maps
-
-$$
-L,R:I_n\to I_n,
-$$
-
-where $L(i)$ and $R(i)$ designate the left and right inputs used at site $i$. The synchronous global update $F_f:X_n\to X_n$ is
-
-$$
-(F_f(s))_i=f(s_{L(i)},s_i,s_{R(i)}).
-$$
-
-For a cyclic array with $n>0$, the standard choice is $L(i)=i-1\pmod n$ and $R(i)=i+1\pmod n$. The abstract formulation also covers self-loops, reflecting boundaries encoded inside a finite site set, and directed network couplings.
-
-A state $s$ is **fixed** if $F_f(s)=s$. Denote the fixed-point set by
-
-$$
-\operatorname{Fix}(F_f)=\{s\in X_n:F_f(s)=s\}.
-$$
-
-### 2.2. Counting elementary rules
-
-**Theorem 2.1 (Enumeration of elementary rules).** There are exactly $256$ elementary local rules.
-
-**Proof sketch.** The domain $\{0,1\}^3$ contains $2^3=8$ neighborhoods. A rule independently assigns either $0$ or $1$ to each neighborhood. Hence the number of functions is $2^8=256$. $\square$
-
-The Wolfram rule number records these eight outputs as bits. We use increasing neighborhood order
+The indices $0,1,\ldots,7$ correspond respectively to
 
 $$
 000,001,010,011,100,101,110,111.
 $$
 
-If the corresponding outputs are $b_0,\ldots,b_7$, then the rule number is $\sum_{j=0}^7 b_j2^j$.
-
-## 3. Algebraic normal form over $\mathbb F_2$
-
-### 3.1. Boolean arithmetic
-
-Identify $\{0,1\}$ with $\mathbb F_2$. In this field,
+For a rule number $R\in\{0,\ldots,255\}$, write
 
 $$
-1+1=0,
+R=\sum_{j=0}^7 b_j2^j,
 $$
 
-so addition is exclusive-or. Multiplication agrees with conjunction on Boolean values. Every Boolean input satisfies $x^2=x$.
-
-For coefficients $a_0,\ldots,a_7\in\mathbb F_2$, define the ternary multilinear polynomial
+where each $b_j\in B$. The **local rule** $f_R:B^3\to B$ is
 
 $$
-P(l,c,r)=a_0+a_1l+a_2c+a_3lc+a_4r+a_5lr+a_6cr+a_7lcr.
+f_R(\ell,c,r)=b_{\iota(\ell,c,r)}.
 $$
 
-### 3.2. Representation theorem
+This convention says that neighborhood $000$ reads the least significant bit and neighborhood $111$ reads the most significant bit.
 
-**Theorem 3.1 (Algebraic Normal Form).** For every local rule $f:\mathbb F_2^3\to\mathbb F_2$, there exists a unique coefficient vector $(a_0,\ldots,a_7)\in\mathbb F_2^8$ such that
+### 2.3 Synchronous global update
 
-$$
-f(l,c,r)=a_0+a_1l+a_2c+a_3lc+a_4r+a_5lr+a_6cr+a_7lcr
-$$
-
-for every $(l,c,r)\in\mathbb F_2^3$. In particular, every elementary rule is represented by a polynomial of degree at most $3$.
-
-**Proof sketch.** Evaluate successively on the Boolean cube. At $(0,0,0)$ one obtains $a_0=f(0,0,0)$. At $(1,0,0)$ one obtains $a_1=f(1,0,0)+a_0$; similarly one recovers $a_2$ and $a_4$. Evaluations at points with two nonzero coordinates recover $a_3,a_5,a_6$, and evaluation at $(1,1,1)$ recovers $a_7$. This triangular procedure proves existence. If two such polynomials represented the same function, applying the same recovery procedure to their difference would force every coefficient to vanish, proving uniqueness. Equivalently, the coefficients are the Möbius transform of the truth table on the Boolean lattice. $\square$
-
-Explicitly,
+The **global update** on bi-infinite configurations is the map $F_R:B^{\mathbb Z}\to B^{\mathbb Z}$ defined by
 
 $$
-\begin{aligned}
-a_0&=f(0,0,0),\\
-a_1&=f(1,0,0)+f(0,0,0),\\
-a_2&=f(0,1,0)+f(0,0,0),\\
-a_3&=f(1,1,0)+f(1,0,0)+f(0,1,0)+f(0,0,0),
-\end{aligned}
+(F_R(s))_i=f_R(s_{i-1},s_i,s_{i+1}).
 $$
 
-with analogous formulas for $a_4,a_5,a_6$, while $a_7$ is the sum of all eight truth-table values.
+All sites use the old state $s$ and change simultaneously. For a periodic ring of length $n$, define $F_{R,n}:B^n\to B^n$ by the same formula with subscripts reduced modulo $n$.
 
-### 3.3. Global polynomial dynamics
-
-Replacing $f$ by its algebraic normal form yields, for every site $i$,
+A configuration $s$ is a **fixed point** if
 
 $$
-(F_f(s))_i=P(s_{L(i)},s_i,s_{R(i)}).
+F_R(s)=s
 $$
 
-Thus $F_f$ is a polynomial map $\mathbb F_2^n\to\mathbb F_2^n$, with coordinate degree at most $3$. This statement concerns the update itself; iterating the map may increase unreduced symbolic degree, although reduction by the Boolean relations restores multilinearity in each state variable.
-
-## 4. Fixed-point equations and their geometry
-
-The fixed-state condition is the polynomial system
+in the bi-infinite setting, or $F_{R,n}(s)=s$ on a ring. Equivalently, it satisfies the local equations
 
 $$
-P(s_{L(i)},s_i,s_{R(i)})-s_i=0
-\qquad (i\in I_n).
+f_R(s_{i-1},s_i,s_{i+1})=s_i
 $$
 
-To ensure that algebraic solutions represent binary states, adjoin the Boolean equations
+at every site.
+
+## 3. Boolean polynomial representation
+
+### 3.1 Algebraic normal form
+
+A function $g:B^3\to B$ can be represented by a polynomial over $\mathbb F_2$. Because $x^2=x$ for $x\in B$, all powers can be reduced, giving a multilinear expression
 
 $$
-s_i^2-s_i=0
-\qquad (i\in I_n).
+g(\ell,c,r)=a_\varnothing+a_\ell\ell+a_cc+a_rr+a_{\ell c}\ell c+a_{\ell r}\ell r+a_{cr}cr+a_{\ell cr}\ell cr,
 $$
 
-Over $\mathbb F_2$, define the ideal
+where every coefficient lies in $\mathbb F_2$.
+
+**Algebraic Normal Form Theorem.** Every Boolean function $g:B^3\to B$ has a unique representation in the multilinear form above.
+
+**Proof sketch.** The eight square-free monomials are functions on the eight-element set $B^3$. Order subsets of $\{\ell,c,r\}$ by inclusion. Evaluating a monomial indexed by $A$ at the indicator vector of a subset $S$ gives $1$ exactly when $A\subseteq S$. The resulting $8\times8$ evaluation matrix is triangular with diagonal entries $1$ under any order refining inclusion. It is therefore invertible over $\mathbb F_2$. Existence and uniqueness follow. Equivalently, the coefficients are recovered from truth-table values by the Boolean Möbius transform
 
 $$
-J_f=\left\langle P(s_{L(i)},s_i,s_{R(i)})-s_i,\ s_i^2-s_i:i\in I_n\right\rangle
+a_A=\sum_{T\subseteq A}g(\mathbf 1_T),
 $$
 
-inside $\mathbb F_2[s_0,\ldots,s_{n-1}]$. Its $\mathbb F_2$-rational zero set is exactly $\operatorname{Fix}(F_f)$.
+where the sum is in $\mathbb F_2$ and $\mathbf 1_T$ is the input whose coordinates in $T$ are $1$.
 
-The coordinate ring is
+The maximal degree is $3$, not because every rule is genuinely cubic, but because three input variables suffice and square-free reduction removes higher powers.
 
-$$
-A_f=\mathbb F_2[s_0,\ldots,s_{n-1}]/J_f.
-$$
+### 3.2 Algebraic normal form of Rule 110
 
-A crucial distinction follows. Because every variable is idempotent modulo the Boolean relations, $A_f$ is finite-dimensional as an $\mathbb F_2$-vector space, spanned by squarefree monomials. Therefore it is an Artinian ring and has Krull dimension $0$ whenever it is nonzero. Consequently, for fixed finite $n$, both a singleton fixed set and the full set of $2^n$ Boolean points have Krull dimension $0$ in this Boolean coordinate-ring model. Cardinality can distinguish them; Krull dimension cannot.
-
-One could study other schemes by omitting or changing the Boolean relations, but then their points need not coincide with binary configurations. Any proposed dimension invariant must specify the coordinate ring precisely.
-
-## 5. Three exact fixed-point theorems
-
-### 5.1. Rule $0$
-
-Rule $0$ is the constant local function
+The binary expansion of $110$ is
 
 $$
-f_0(l,c,r)=0.
+110=0\cdot2^7+1\cdot2^6+1\cdot2^5+0\cdot2^4+1\cdot2^3+1\cdot2^2+1\cdot2^1+0\cdot2^0.
 $$
 
-**Theorem 5.1 (Unique fixed state for Rule $0$).** For every finite size $n$ and every choice of neighbor maps $L,R$, Rule $0$ has exactly one fixed configuration, namely the all-zero state.
-
-**Proof sketch.** The global update sends every configuration to the all-zero configuration. If $s$ is fixed, then $s=F_{f_0}(s)$ is all zero. Conversely, the all-zero configuration is unchanged. $\square$
-
-### 5.2. Rule $204$
-
-Rule $204$ copies the center input:
+Under the ascending index convention, its outputs on $000,001,010,011,100,101,110,111$ are
 
 $$
-f_{204}(l,c,r)=c.
+0,1,1,1,0,1,1,0.
 $$
 
-**Theorem 5.2 (Maximal fixed set for Rule $204$).** For every finite size $n$ and every choice of neighbor maps $L,R$, every binary configuration is fixed by Rule $204$. Hence
+**Theorem 1 (Rule 110 Polynomial Theorem).** For every $(\ell,c,r)\in B^3$, the local function of Rule 110 is
 
 $$
-|\operatorname{Fix}(F_{f_{204}})|=2^n.
+f_{110}(\ell,c,r)=r+c+cr+\ell cr
 $$
 
-**Proof sketch.** At each site, $(F_{f_{204}}(s))_i=f_{204}(s_{L(i)},s_i,s_{R(i)})=s_i$. Thus $F_{f_{204}}$ is the identity map on $X_n$. $\square$
+over $\mathbb F_2$.
 
-This theorem supplies a decisive counterexample to interpreting a maximal fixed-point count as high dynamical complexity: Rule $204$ performs no state change.
+**Proof sketch.** There are eight inputs. Evaluating the polynomial gives:
 
-### 5.3. Rule $110$
+| $(\ell,c,r)$ | $r+c+cr+\ell cr$ | Rule 110 output |
+|---|---:|---:|
+| $(0,0,0)$ | $0$ | $0$ |
+| $(0,0,1)$ | $1$ | $1$ |
+| $(0,1,0)$ | $1$ | $1$ |
+| $(0,1,1)$ | $1+1+1=1$ | $1$ |
+| $(1,0,0)$ | $0$ | $0$ |
+| $(1,0,1)$ | $1$ | $1$ |
+| $(1,1,0)$ | $1$ | $1$ |
+| $(1,1,1)$ | $1+1+1+1=0$ | $0$ |
 
-In increasing neighborhood order, Rule $110$ is defined by
+All sums are modulo $2$. Equality on all elements of $B^3$ proves equality of the functions.
 
-$$
-\begin{array}{c|cccccccc}
-(l,c,r)&000&001&010&011&100&101&110&111\\
-\hline
-f_{110}(l,c,r)&0&1&1&1&0&1&1&0.
-\end{array}
-$$
-
-**Proposition 5.3 (Nonmaximality for Rule $110$).** On every nonempty finite array and for arbitrary neighbor maps, the all-zero state is fixed, the all-one state is not fixed, and therefore
-
-$$
-0<|\operatorname{Fix}(F_{f_{110}})|<2^n.
-$$
-
-**Proof sketch.** Every site of the all-zero state sees $000$, whose output is $0$. Every site of the all-one state sees $111$, whose output is $0$, so on a nonempty array the update differs from the original all-one state. The fixed-point set therefore contains at least the zero state and omits at least the one state. $\square$
-
-A local implication gives a much sharper statement.
-
-**Lemma 5.4 (Zero propagation).** Let $s$ be a fixed state of Rule $110$. If $s_i=0$, then $s_{R(i)}=0$.
-
-**Proof sketch.** Since $s$ is fixed, the output at $i$ must equal the center value $s_i=0$. Inspect the four Rule $110$ neighborhoods with center bit $0$: $000$ and $100$ output $0$, whereas $001$ and $101$ output $1$. Thus output $0$ with center $0$ is possible only when the right input is $0$. Hence $s_{R(i)}=0$. $\square$
-
-Call $R$ **forward transitive** if
+Consequently, the Rule 110 fixed-point equations are
 
 $$
-\forall i,j\in I_n\ \exists k\ge 0\quad R^k(i)=j.
+s_i=s_{i+1}+s_i+s_is_{i+1}+s_{i-1}s_is_{i+1}
 $$
 
-For a finite set, this means that $R$ consists of a single directed cycle. The standard right shift on a cyclic array satisfies this condition.
-
-**Theorem 5.5 (Rule $110$ Singleton Fixed-Point Theorem).** Let $n>0$ and suppose the right-neighbor map $R$ is forward transitive. Then Rule $110$ has exactly one fixed configuration, the all-zero state.
-
-**Proof sketch.** The all-zero state is fixed. Now let $s$ be any fixed state. It cannot be all one, because the all-one state is not fixed; hence some site $i$ has $s_i=0$. Repeated application of the zero-propagation lemma gives $s_{R^k(i)}=0$ for every $k\ge 0$. Forward transitivity says that every site $j$ equals $R^k(i)$ for some $k$, so $s_j=0$ for every $j$. Thus $s$ is all zero. $\square$
-
-**Corollary 5.6 (Periodic boundary).** On every nonempty cyclic array with the standard nearest-neighbor shifts, Rule $110$ has exactly one fixed state.
-
-**Proof sketch.** Repeated right shifts visit all sites of a finite cycle, so Theorem 5.5 applies. $\square$
-
-## 6. Consequences for complexity claims
-
-The preceding theorems invalidate a monotone relation between fixed-point abundance and Wolfram-style dynamical complexity. Rule $204$ has the maximum possible number of fixed states but trivial evolution. Rule $110$, despite its capacity for universal computation in unbounded spacetime, can have the minimum nonzero number of fixed states.
-
-This is not paradoxical. A fixed point records only an equilibrium. Universal computation in a cellular automaton is carried by encoded initial conditions, long-lived patterns, signal propagation, collisions, and an unbounded number of time steps. An automaton may have a sparse equilibrium set and a rich transient or periodic orbit structure. Conversely, an identity map has an enormous equilibrium set because nothing evolves.
-
-Nor can the word “dimension” repair the claim without further definitions. Three quantities are easily conflated:
-
-1. **Fixed-point count:** the finite number $|\operatorname{Fix}(F_f)|$.
-2. **Krull dimension:** the maximal length of chains of prime ideals in a specified coordinate ring.
-3. **Asymptotic growth:** the behavior of fixed-point or periodic-point counts as $n\to\infty$.
-
-These are genuinely different. With Boolean relations imposed at finite $n$, Krull dimension is $0$. Fixed-point counts vary between $0$ and $2^n$. An asymptotic rate such as
+for all $i$. Moving $s_i$ to the right and using $s_i+s_i=0$ yields the equivalent equations
 
 $$
-h_{\mathrm{fix}}(f)=\limsup_{n\to\infty}\frac{1}{n}\log_2 |\operatorname{Fix}(F_{f,n})|
+s_{i+1}+s_is_{i+1}+s_{i-1}s_is_{i+1}=0.
 $$
 
-may carry more information, but it still measures equilibria and must not be identified with universality without evidence.
+This simplification is specific to characteristic $2$.
+
+## 4. Fixed-point loci as algebraic sets
+
+For a periodic ring of length $n$, introduce the polynomial ring
+
+$$
+A_n=\mathbb F_2[x_0,\ldots,x_{n-1}].
+$$
+
+To encode Boolean values algebraically, include the field equations
+
+$$
+x_i^2-x_i=0
+$$
+
+for every $i$. Let $p_R(\ell,c,r)$ be the algebraic normal form of the local rule. The fixed-point ideal is
+
+$$
+I_{R,n}=\left\langle x_i^2-x_i,\;p_R(x_{i-1},x_i,x_{i+1})-x_i:0\le i<n\right\rangle,
+$$
+
+where indices are modulo $n$. The fixed-point set is
+
+$$
+\operatorname{Fix}(R,n)=\{x\in\mathbb F_2^n:F_{R,n}(x)=x\}=V(I_{R,n})(\mathbb F_2).
+$$
+
+This construction is exact: a binary vector belongs to the algebraic set precisely when it is a fixed configuration. It also exposes a subtlety. Because the Boolean equations make the coordinate algebra finite-dimensional over $\mathbb F_2$, the associated scheme is zero-dimensional whenever it is nonempty. Thus ordinary Krull dimension does not rank finite fixed-point sets by cardinality.
+
+For bi-infinite configurations, one may analogously use infinitely many variables $x_i$ indexed by $\mathbb Z$ and a translation-invariant family of equations. The object is then better interpreted through symbolic dynamics, inverse limits of periodic models, or suitably chosen infinite-dimensional algebraic structures. The elementary theorems below avoid dependence on any one such framework by reasoning directly from the local update.
+
+## 5. Extremal fixed-point theorems
+
+### 5.1 Rule 0
+
+Rule 0 has all eight output bits equal to zero, so
+
+$$
+f_0(\ell,c,r)=0
+$$
+
+for every neighborhood.
+
+**Theorem 2 (Characterization of Rule 0 Fixed Points).** A bi-infinite configuration $s$ is fixed by Rule 0 if and only if $s_i=0$ for every $i\in\mathbb Z$.
+
+**Proof.** If $F_0(s)=s$, then for every site $i$,
+
+$$
+s_i=(F_0(s))_i=f_0(s_{i-1},s_i,s_{i+1})=0.
+$$
+
+Thus $s$ is identically zero. Conversely, applying Rule 0 to the identically zero configuration produces zero at every site, so that configuration is fixed. $\square$
+
+**Corollary 2.1 (Uniqueness for Rule 0).** Rule 0 has exactly one fixed bi-infinite configuration.
+
+The same proof applies on every periodic ring. Hence
+
+$$
+|\operatorname{Fix}(0,n)|=1
+$$
+
+for every $n\ge1$.
+
+### 5.2 Rule 204
+
+The binary pattern of Rule 204 is chosen so that the output equals the center bit. Its local polynomial is simply
+
+$$
+f_{204}(\ell,c,r)=c.
+$$
+
+**Theorem 3 (Rule 204 Identity Theorem).** Every bi-infinite binary configuration is fixed by Rule 204.
+
+**Proof.** For every configuration $s$ and every site $i$,
+
+$$
+(F_{204}(s))_i=f_{204}(s_{i-1},s_i,s_{i+1})=s_i.
+$$
+
+Equality at all sites gives $F_{204}(s)=s$. $\square$
+
+**Corollary 3.1 (Maximal Periodic Fixed Set).** On a periodic ring of length $n$, Rule 204 has exactly $2^n$ fixed configurations:
+
+$$
+|\operatorname{Fix}(204,n)|=2^n.
+$$
+
+This is the largest possible fixed-point count for any map on $B^n$.
+
+Rules 0 and 204 therefore realize opposite extremes: total erasure gives one fixed state, while the identity update fixes the whole state space.
+
+## 6. Rule 110: nonempty but nonmaximal
+
+The polynomial formula gives two immediate tests on uniform configurations.
+
+**Theorem 4 (The Zero Configuration Is Fixed by Rule 110).** If $\mathbf 0$ denotes the configuration with $(\mathbf 0)_i=0$ for all $i$, then
+
+$$
+F_{110}(\mathbf 0)=\mathbf 0.
+$$
+
+**Proof.** Every neighborhood in $\mathbf 0$ is $(0,0,0)$, and
+
+$$
+f_{110}(0,0,0)=0+0+0+0=0.
+$$
+
+Thus every updated cell remains zero. $\square$
+
+**Theorem 5 (The One Configuration Is Not Fixed by Rule 110).** If $\mathbf 1$ denotes the configuration with $(\mathbf 1)_i=1$ for all $i$, then
+
+$$
+F_{110}(\mathbf 1)\ne\mathbf 1.
+$$
+
+**Proof.** Every neighborhood in $\mathbf 1$ is $(1,1,1)$. In $\mathbb F_2$,
+
+$$
+f_{110}(1,1,1)=1+1+1+1=0.
+$$
+
+Therefore every cell becomes zero after one update. In particular the updated configuration differs from $\mathbf 1$. $\square$
+
+**Corollary 5.1 (Rule 110 Has a Proper Fixed-Point Locus).** The fixed-point locus of Rule 110 is nonempty but is not the whole configuration space.
+
+The conclusion holds both for bi-infinite configurations and for every nonempty periodic ring: the all-zero vector is fixed and the all-one vector is not.
+
+This corollary is a direct counterexample to the strongest form of a proposed complexity principle asserting that a computationally universal elementary rule should have a maximal fixed-point locus. Rule 110 is computationally universal but does not fix every state. Conversely, Rule 204 fixes every state yet performs no change at all. Hence maximality of the fixed set is neither necessary for universal dynamics nor sufficient for nontrivial dynamics.
 
 ## 7. Algorithms
 
-### 7.1. Decoding a rule number
+### 7.1 Local rule evaluation
 
-Given $w\in\{0,\ldots,255\}$, define
+Given $R$, $\ell$, $c$, and $r$, compute $j=4\ell+2c+r$, shift $R$ right by $j$, and retain the least significant bit. This takes constant time and constant auxiliary space under fixed-width arithmetic.
+
+**Pseudocode.**
+
+```text
+LOCAL-OUTPUT(R, left, center, right)
+    index ← 4·left + 2·center + right
+    return (R shifted right by index) AND 1
+```
+
+### 7.2 Extraction of algebraic normal form
+
+Let $v[0],\ldots,v[7]$ be the truth table in subset-mask order. The in-place Boolean Möbius transform returns the coefficients of the square-free monomials. For each variable bit $b$, and each mask containing $b$, replace the entry at that mask by its exclusive-or with the entry obtained by removing $b$.
+
+```text
+ALGEBRAIC-NORMAL-FORM(R)
+    for mask from 0 to 7
+        coeff[mask] ← bit mask of R
+    for variableBit in {1, 2, 4}
+        for mask from 0 to 7
+            if mask AND variableBit is nonzero
+                coeff[mask] ← coeff[mask] XOR coeff[mask XOR variableBit]
+    return coeff
+```
+
+For three variables this is constant work. For a Boolean function of $k$ variables, it uses $O(k2^k)$ time and $O(2^k)$ storage.
+
+### 7.3 Exhaustive fixed-point enumeration
+
+For a ring of length $n$, enumerate all $2^n$ states, update each of the $n$ cells, and compare the result with the original state.
+
+```text
+FIXED-POINTS(R, n)
+    fixed ← empty list
+    for encodedState from 0 to 2^n − 1
+        state ← n binary digits of encodedState
+        next ← empty n-cell vector
+        for i from 0 to n − 1
+            left ← state[(i − 1) mod n]
+            center ← state[i]
+            right ← state[(i + 1) mod n]
+            next[i] ← LOCAL-OUTPUT(R, left, center, right)
+        if next = state
+            append state to fixed
+    return fixed
+```
+
+The running time is $O(n2^n)$ and the output storage is $O(nN_{R,n})$, where $N_{R,n}=|\operatorname{Fix}(R,n)|$; a counting-only variant uses $O(n)$ working space. Transfer-matrix methods can improve fixed-point counting because the constraint has finite range, but exhaustive enumeration is transparent and adequate for small $n$.
+
+## 8. Numerical examples
+
+The local table of Rule 110 in descending neighborhood order is
+
+| Neighborhood | $111$ | $110$ | $101$ | $100$ | $011$ | $010$ | $001$ | $000$ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Output | $0$ | $1$ | $1$ | $0$ | $1$ | $1$ | $1$ | $0$ |
+
+The polynomial $r+c+cr+\ell cr$ produces the same row. Three immediate ring experiments follow for every $n\ge1$:
 
 $$
-b_j=\left\lfloor\frac{w}{2^j}\right\rfloor\bmod 2.
+|\operatorname{Fix}(0,n)|=1,
 $$
 
-The output on the neighborhood whose binary value is $j$ is $b_j$. This requires constant work for ECAs; viewed as a function of the truth-table length, it is linear.
-
-### 7.2. Fast Möbius transform for algebraic normal form
-
-Initialize an array $a$ with the eight truth-table values. For each variable bit $q\in\{0,1,2\}$, and each mask $m$ containing that bit, replace
-
 $$
-a_m\leftarrow a_m+a_{m\setminus\{q\}}
+|\operatorname{Fix}(204,n)|=2^n,
 $$
 
-in $\mathbb F_2$. After the transform, $a_m$ is the coefficient of the monomial indexed by $m$. For $k$ inputs, the method takes $O(k2^k)$ time and $O(2^k)$ memory; here $k=3$.
-
-### 7.3. Exhaustive fixed-point enumeration
-
-For each integer $x$ from $0$ to $2^n-1$, decode its bits as a configuration $s$. Compute all $n$ updated cells simultaneously from the original state. Retain $s$ exactly when every updated cell equals the corresponding original cell. The running time is $O(n2^n)$ and storage is $O(n)$ if fixed states are counted rather than retained.
-
-For special rules, structural theorems replace enumeration. Rule $0$ and Rule $204$ have closed formulas. Under a forward-transitive right map, Rule $110$ also has the closed answer $1$.
-
-### 7.4. Fixed-point polynomial construction
-
-For symbolic analysis, create variables $s_0,\ldots,s_{n-1}$ over $\mathbb F_2$, insert the local algebraic normal form into every coordinate, and append both the fixed equations $F_f(s)_i+s_i=0$ and Boolean equations $s_i^2+s_i=0$. Gröbner-basis methods or Boolean satisfiability solvers may then compute solution structure. Complexity is exponential in the worst case, as expected for general finite Boolean systems.
-
-## 8. Numerical illustrations
-
-Consider cyclic arrays. The exact fixed-point counts for the three rules are
+and
 
 $$
-\begin{array}{c|ccc}
-n&\text{Rule }0&\text{Rule }110&\text{Rule }204\\
-\hline
-1&1&1&2\\
-2&1&1&4\\
-3&1&1&8\\
-4&1&1&16\\
-8&1&1&256\\
-12&1&1&4096.
-\end{array}
+1\le |\operatorname{Fix}(110,n)|<2^n.
 $$
 
-No empirical extrapolation is needed for these entries: the formulas follow from Theorems 5.1, 5.2, and Corollary 5.6. Enumeration is nevertheless useful as a transparent demonstration and as a testing method for arbitrary rules and boundary maps.
+The lower bound for Rule 110 comes from $\mathbf 0$; the strict upper bound comes from excluding $\mathbf 1$. These inequalities do not claim a complete formula for the number of Rule 110 fixed points. Rather, they are uniform, exact consequences that hold at every period.
 
-The algebraic-normal-form transform supplies a second numerical experiment. Starting from any of the $256$ truth tables, transforming to coefficients and evaluating the resulting polynomial on all eight inputs reproduces the original table. This gives an exact computational realization of Theorem 3.1.
+A second numerical diagnostic is one-step evolution. Starting from an arbitrary state, Rule 0 reaches $\mathbf 0$ in one step. Rule 204 leaves the state unchanged. Rule 110 sends $\mathbf 1$ to $\mathbf 0$, while more varied initial states may generate structured, propagating behavior. This contrast shows why a fixed-point census alone loses the transient and transport phenomena central to computation.
 
-## 9. Applications and broader interpretation
+## 9. Which dimension?
 
-Polynomial encodings make cellular automata accessible to several mature toolkits. Boolean equation solving can classify stable motifs. Elimination can remove hidden cells and derive constraints on observed regions. Transfer matrices can count configurations satisfying local equations on long chains. Algebraic normal forms expose additive and nonlinear components of a rule, and periodic-point equations
+A claim that the “dimension” of a fixed-point variety measures complexity is incomplete until the invariant is specified. At least four candidates must be distinguished.
+
+### 9.1 Fixed-point cardinality
+
+The simplest invariant is
 
 $$
-F_f^p(s)=s
+N_{R,n}=|\operatorname{Fix}(R,n)|.
 $$
 
-extend the analysis beyond equilibrium.
+It distinguishes Rule 0 from Rule 204 maximally. It is not a geometric dimension, and it grows with the chosen period.
 
-The framework also applies beyond nearest-neighbor lines. Arbitrary maps $L$ and $R$ define updates on directed finite networks. The zero-propagation argument for Rule $110$ then becomes a graph-theoretic statement: zeros spread along directed right edges, and a single forward orbit forces global extinction in equilibrium. More generally, implications extracted from a truth table can constrain fixed states through reachability.
+### 9.2 Krull dimension
 
-A sheaf-theoretic treatment could organize compatible local patterns, but it requires explicit data: a site or topology, objects assigned to regions, restriction maps, and a theorem identifying global sections with the intended configurations. Merely calling local data a sheaf does not determine an invariant, and richness of global sections must be defined before it can be compared with computation.
+The quotient
 
-## 10. Discussion
+$$
+A_n/I_{R,n}
+$$
 
-The algebraic description succeeds exactly where it is precise. There are $256$ ternary Boolean rules. Each has a unique cubic-or-lower multilinear polynomial. Every finite global update is a polynomial map. Fixed points are solutions to explicit equations. Local truth-table implications can yield global classification theorems.
+contains the Boolean equations $x_i^2-x_i$. It is a finite-dimensional algebra over $\mathbb F_2$, and its spectrum is zero-dimensional when nonempty. Consequently, Krull dimension does not record whether the fixed set has one point or $2^n$ points. Calling the latter “dimension $n$” confuses the dimension of the ambient vector space $\mathbb F_2^n$ with the Krull dimension of the finite algebraic set.
 
-The proposed complexity interpretation fails for equally precise reasons. Rule $204$ shows that a maximal fixed set may signal total dynamical inactivity. Rule $110$ shows that computational richness need not produce many equilibria. Boolean coordinate rings show that finite point count is not Krull dimension.
+### 9.3 Coordinate-algebra vector-space dimension
 
-The correction suggests a broader principle: invariants should match the phenomenon being studied. Equilibrium invariants are appropriate for memory states and attractor analysis. Universality is temporal and may require orbit growth, simulation embeddings, spacetime languages, or families indexed by both size and time. Algebraic geometry can still contribute, but the relevant geometric object may need to encode trajectories rather than merely stationary points.
+The finite number
 
-## 11. Future work
+$$
+\dim_{\mathbb F_2}(A_n/I_{R,n})
+$$
 
-Several concrete developments follow naturally.
+can encode multiplicity and, for reduced Boolean solution sets, agrees with the number of points after suitable decomposition. It is algebraically meaningful but is not Krull dimension.
 
-First, periodic left and right shifts should be treated explicitly, making the cyclic Rule $110$ singleton result a direct concrete instance of the forward-orbit theorem. Second, the global update should be represented in a multivariate polynomial ring over $\mathbb F_2$, with an exact comparison between polynomial evaluation and synchronous evolution. Third, the coordinate ring formed from update equations and Boolean relations should be studied separately from its rational-point count.
+### 9.4 Asymptotic fixed-point entropy
 
-Fourth, all $256$ rules can be generated from their numeric codes, and the decoding map can be shown to be a bijection. Fifth, fixed-point counts can be computed over declared size ranges and boundary conventions, then compared with a precisely specified complexity classification. Any statistical correlation must state its data and statistic.
+One can study the exponential growth rate
 
-Sixth, periodic orbits of length greater than one deserve priority. For $p\ge 2$, equations $F_f^p(s)=s$ capture both shorter divisors of $p$ and exact-$p$ cycles after exclusion; their growth may better reflect dynamical richness. Finally, any local-to-global or sheaf construction should state its topology, restriction maps, and intended classification theorem explicitly.
+$$
+h_{\mathrm{fix}}(R)=\limsup_{n\to\infty}\frac{1}{n}\log_2 N_{R,n}.
+$$
 
-## 12. Conclusion
+For Rule 0 this value is $0$, while for Rule 204 it is $1$. This invariant is closer to an effective dimension per cell, but it measures stationary combinatorial freedom, not temporal computational power.
 
-Elementary cellular automata admit a clean algebraic geometry of Boolean polynomial equations. Every local rule is a degree-at-most-three polynomial over $\mathbb F_2$, and stable finite configurations are rational solutions of a canonical fixed-point system once boundary data are specified. Exact examples, however, overturn the claim that fixed-point abundance measures computational complexity. Rule $0$ has one fixed state, Rule $204$ has all $2^n$, and Rule $110$ has exactly one under a single-forward-orbit right shift. The resulting lesson is constructive: retain the polynomial bridge, distinguish point count from dimension, and design temporal invariants for temporal complexity.
-## Appendix A. A direct coefficient-recovery argument
+Any empirical comparison with dynamical classes should report these quantities separately. A correlation involving one should not be presented as a theorem about another.
 
-For completeness, the algebraic-normal-form construction can be read without invoking Möbius inversion. Order the monomials as $1,l,c,lc,r,lr,cr,lcr$. Evaluation at $000$ isolates the constant coefficient. Evaluation at $100$, after subtracting the known constant, isolates the coefficient of $l$; evaluations at $010$ and $001$ similarly isolate the coefficients of $c$ and $r$. At $110$, all terms involving $r$ vanish, so subtracting the already known constant, $l$, and $c$ contributions isolates the coefficient of $lc$. The points $101$ and $011$ recover the coefficients of $lr$ and $cr$. Finally, evaluation at $111$ contains every monomial, and subtracting the seven known contributions isolates the coefficient of $lcr$. Because subtraction equals addition over $\mathbb F_2$, each step is an exclusive-or of selected truth-table entries. This proves both existence and uniqueness and gives an executable algorithm.
+## 10. Applications and broader connections
 
-## Appendix B. Boundary conventions and the orbit hypothesis
+### 10.1 Constraint solving
 
-The fixed-point statements for Rules $0$ and $204$ are independent of boundary data because their outputs ignore, respectively, all inputs or both neighboring inputs. Rule $110$ is more sensitive. Proposition 5.3 remains independent of the boundary convention: constant states present the same neighborhood at every site. The singleton theorem requires only forward transitivity of the right map and makes no assumption about the left map. This asymmetry comes directly from the Rule $110$ truth table and the direction of zero propagation.
+Fixed points of a periodic cellular automaton form a Boolean constraint-satisfaction problem. The polynomial equations can be handled by exhaustive search, binary decision diagrams, satisfiability solvers, Gröbner-basis techniques, or transfer matrices. Locality makes the constraint graph sparse and cyclic.
 
-On a standard cyclic array, $R(i)=i+1\pmod n$, and for any $i,j$ one may take $k$ congruent to $j-i$ modulo $n$. If $R$ instead has several directed cycles, a zero propagates around its own cycle but need not reach the others. If a finite functional graph has trees feeding cycles, forward transitivity from every starting site fails. The theorem therefore identifies exactly the graph property used by the proof rather than hiding it inside the phrase “periodic boundary.” This formulation allows the same argument to apply to any relabeling of a single cycle.
+### 10.2 Symbolic dynamics
+
+A fixed configuration is a bi-infinite word whose every length-three window obeys a local compatibility condition. The allowed windows define a shift of finite type. Fixed-point counting on rings can therefore be related to closed walks in a finite directed graph, enabling traces of transfer-matrix powers to replace exhaustive enumeration.
+
+### 10.3 Digital circuits
+
+The algebraic normal form expresses a rule as an exclusive-or of conjunctions. For Rule 110,
+
+$$
+r+c+cr+\ell cr
+$$
+
+translates directly into an XOR-AND circuit. Polynomial degree records the maximum interaction order in this representation, while monomial count gives a simple implementation cost proxy.
+
+### 10.4 Spacetime algebra
+
+Introduce variables $x_{i,t}$ for site $i$ and time $t$. The evolution equations become
+
+$$
+x_{i,t+1}=p_R(x_{i-1,t},x_{i,t},x_{i+1,t}).
+$$
+
+Together with Boolean equations, these define finite spacetime windows as algebraic sets. Unlike a fixed-point equation, this construction retains propagation, collisions, temporal periods, and transient computation. It is therefore a more promising foundation for connecting algebraic invariants to computational behavior.
+
+## 11. Discussion
+
+The algebraic translation succeeds completely at the local level. There is no approximation: every elementary rule is exactly a degree-at-most-three multilinear polynomial over $\mathbb F_2$. Rule 110’s four-term expression gives a compact symbolic account of its truth table. On finite rings, fixed configurations are exactly the rational points satisfying a natural polynomial ideal.
+
+The extremal examples also behave as intuition suggests. Rule 0 destroys all information and has one fixed point. Rule 204 preserves all information by doing nothing and fixes every point. If the goal were merely to measure stationary freedom, fixed-point count or entropy would be sensible invariants.
+
+The difficulty appears when stationary freedom is identified with dynamical complexity. Computation requires state changes. Signals must move and interact. Memory may be stored in persistent but nonstationary structures. A fixed-point locus deletes all of that information by imposing $x_{i,t+1}=x_{i,t}$. Rule 204 then appears maximally rich precisely because the imposed equation is automatic, even though its trajectories contain no events. Rule 110 appears less than maximal because some configurations evolve, which is part of the source of its dynamical interest.
+
+Thus the counterexample is constructive rather than destructive. It does not reject algebraic geometry; it redirects the object of study. A useful geometry of cellular computation should encode trajectories, periodic orbits, preimage trees, or spacetime diagrams. It may then ask how families of solutions grow with spatial and temporal size, how components compose under concatenation, and which algebraic signatures correspond to mobile information carriers.
+
+The proposed language of sheaves also requires precision. One may assign local admissible patterns to intervals and use restriction maps between overlapping intervals; compatible local data then glue into global configurations or histories. Such a construction can organize local-to-global constraints. However, richness of global sections must be defined by a concrete invariant before it can be compared with computational universality. The present fixed-point theorems provide boundary conditions that any such theory must respect: the identity rule has all stationary sections, while a universal rule need not.
+
+## 12. Future work
+
+Several directions follow naturally.
+
+1. **Periodic enumeration for all rules.** Count fixed points for all $256$ rules and small periods $n$, then use transfer matrices to extend the range. Exact counts should be reported alongside period and boundary convention.
+
+2. **Uniform algebraic-normal-form theory.** Compute and classify the unique multilinear polynomial of every elementary rule. Degree, monomial support, affine equivalence, and left-right or color symmetries may provide useful structural coordinates.
+
+3. **Separation of invariants.** Maintain a strict distinction among Krull dimension, coordinate-ring dimension, fixed-point cardinality, and asymptotic entropy. This is necessary before testing correlations against any dynamical classification.
+
+4. **Explicit complexity data.** Compare algebraic invariants with a clearly defined and sourced classification of rule behavior. The Rule 110 nonmaximality result shows that the original maximal-fixed-locus prediction must first be revised.
+
+5. **Spacetime rather than stillness.** Analyze algebraic sets of finite spacetime diagrams, temporal cycles, and admissible histories. Turing completeness concerns unbounded evolution, whereas a fixed-point locus discards transient and propagating behavior.
+
+6. **Local-to-global structures.** Develop presheaves or sheaves of admissible patterns on spatial and spacetime regions, specify their restriction maps, and investigate extension and gluing obstructions. Quantitative invariants of these structures may capture organization absent from raw point counts.
+
+## 13. Conclusion
+
+Elementary cellular automata admit a direct algebraic-geometric formulation. Their local functions are multilinear polynomials over $\mathbb F_2$, their global updates are polynomial maps, and their periodic fixed states are zeros of explicit Boolean polynomial ideals. Rule 110 is represented by
+
+$$
+r+c+cr+\ell cr.
+$$
+
+Rule 0 has exactly one fixed configuration. Rule 204 fixes every configuration. Rule 110 fixes the all-zero configuration but not the all-one configuration, and therefore has a proper, nonempty fixed-point locus.
+
+These facts settle the strongest proposed connection between universality and maximal fixed-point geometry: it is false. The identity rule is maximal in stationary states but dynamically inert; Rule 110 is computationally universal but not stationary on every input. Fixed-point geometry remains an exact and useful description of stability, yet stability is only one slice of dynamics. The appropriate next object is a geometry of spacetime histories, where algebra can study not merely which patterns stand still, but how information moves.
