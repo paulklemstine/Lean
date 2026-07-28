@@ -1,133 +1,135 @@
-# The Ramsey Theory of DNA
+# When DNA Must Repeat
 
-## Why repetition is unavoidable—and what it does not tell us
+## A combinatorial law hidden in every long genetic word
 
-A DNA molecule looks, at first glance, like an immense text written in a tiny alphabet. Its letters are adenine, cytosine, guanine, and thymine: $A$, $C$, $G$, and $T$. The human genome contains billions of these letters, but there are only four choices at each position. That mismatch—vast length, tiny alphabet—makes repetition inevitable.
+DNA is often described as a book written with four letters: A, C, G, and T. The metaphor is useful, but it can also be misleading. A book has words separated by spaces; DNA does not. To find a short motif, one slides a window along the sequence. A window of width four exposes a **four-mer**, a block such as ACGT or TTAA. Move the window one position and a new four-mer appears.
 
-The surprise is not merely that repeats occur. It is that one can give an absolute deadline by which a repeat must occur, regardless of how cleverly the letters are arranged. For four-letter motifs, that deadline is especially concrete: **within any stretch of $1028$ DNA bases, two disjoint, regularly aligned four-base blocks must be identical.** No assumptions about evolution, randomness, mutation, or genomic composition are needed.
+This simple motion raises a question with the flavor of Ramsey theory: how long can a DNA word be before repetition becomes unavoidable? No assumptions about evolution, randomness, mutation, or biological function are allowed. We seek a guarantee that applies to every possible arrangement of the four letters.
 
-This is a Ramsey-style phenomenon. Ramsey theory studies the principle that sufficiently large structures cannot remain completely disordered: a pattern is eventually forced. Here the engine is the pigeonhole principle, but the biological interpretation—and the distinction between different kinds of repeated patterns—deserves care.
+The answer for four-mers is strikingly small: **every DNA word of length at least $260$ contains two equal contiguous four-mers beginning at different positions.** The two occurrences may overlap. For example, AAAAA contains the four-mer AAAA at its first and second positions. The theorem says not that typical DNA repeats by length $260$, but that avoiding such a repeat beyond that point is mathematically impossible.
 
-## Turning DNA into boxes and pigeons
-
-Fix an alphabet containing $q$ symbols and choose a motif length $m$. A word of length $m$ is an ordered list of $m$ alphabet symbols. There are exactly
+The same argument reveals a broader principle. If an alphabet has $q$ symbols and we inspect blocks of length $k$, then every word of length at least
 
 $$
-q^m
+q^k+k
 $$
 
-possible words, because each of the $m$ positions independently admits $q$ choices.
+contains a repeated contiguous $k$-mer. Conversely, any word whose starting positions all produce distinct $k$-mers must have length strictly less than $q^k+k$.
 
-Now divide a sequence into consecutive, nonoverlapping blocks of length $m$. Call these **aligned blocks**. Block $0$ uses positions $0$ through $m-1$, block $1$ uses positions $m$ through $2m-1$, and, in general, block $i$ begins at position $im$.
+These statements come from one of combinatorics' most powerful habits: count the available patterns, then count how many places demand a pattern.
 
-Each sampled block is a pigeon, and each possible length-$m$ word is a pigeonhole. If we inspect more than $q^m$ aligned blocks, some two must land in the same hole. This gives the **Aligned-Block Collision Theorem**:
+## The sliding-window pigeonhole
 
-> For every sequence over an alphabet of size $q$, if $n>q^m$ aligned blocks of length $m$ are sampled, then two of those blocks are equal.
-
-The proof is one sentence: a map from more than $q^m$ sampled blocks into a set of only $q^m$ possible words cannot be one-to-one.
-
-This principle belongs to the same broad family as classical Ramsey results, though its mechanism is simpler. Classical Ramsey theory colors relationships among objects and forces a homogeneous configuration. The present argument assigns each sampled location a finite label and forces two labels to coincide. In both cases, scale defeats avoidance: beyond a calculable size, arrangement can delay a pattern but cannot eliminate it.
-
-Although elementary, the statement is strong. It is deterministic and adversarial: it remains true even if the sequence is designed specifically to postpone repetition.
-
-## Why the repeated copies are genuinely separate
-
-Repeated patterns can overlap. In the string $AAAAA$, for example, the four-letter word $AAAA$ begins at two adjacent positions, but those copies share three letters. Depending on the application, counting such overlaps as two occurrences may be misleading.
-
-Aligned sampling removes this ambiguity. If $i<j$, then the length-$m$ block beginning at $im$ ends before the block beginning at $jm$. For $m>0$,
+Suppose a word has length $m$. A block of length $k$ can begin at positions $1,2,\ldots,m-k+1$, so there are
 
 $$
-im+m\le jm.
+m-k+1
 $$
 
-Thus an aligned collision produces two disjoint copies. It also produces two equal order-preserving subsequences: for every offset $t$ with $0\le t<m$,
+windows. Over an alphabet of $q$ symbols, exactly $q^k$ possible $k$-mers exist: each of the $k$ slots has $q$ choices.
+
+If every window were different, the number of windows could not exceed the number of possible patterns. Thus repeat-freeness would require
 
 $$
-x_{im+t}=x_{jm+t}.
+m-k+1\le q^k.
 $$
 
-This is the **Disjoint-Subsequence Consequence**:
-
-> If two distinct aligned length-$m$ blocks agree, then their corresponding letters form equal, order-preserving subsequences; when $m>0$, the two occurrences are disjoint.
-
-Every aligned block is a contiguous subsequence, and every contiguous subsequence is also a scattered subsequence. The reverse implications fail. This hierarchy matters. A theorem about aligned blocks automatically supplies a theorem about a particular class of subsequences, but it does not determine the best possible threshold when arbitrary scattered positions are allowed.
-
-## The four-letter, four-base deadline
-
-For DNA, $q=4$. For four-base motifs, $m=4$. The number of possible four-mers is
+Whenever $m\ge q^k+k$, however,
 
 $$
-4^4=256.
+m-k+1\ge q^k+1,
 $$
 
-Therefore $257$ aligned blocks force a collision. Those blocks occupy
+so more windows exist than possible $k$-mers. Two windows must receive the same pattern. This is the pigeonhole principle in motion: the windows are pigeons and the possible words are holes.
+
+The boundary is exact for this counting argument. At $m=q^k+k-1$, there are exactly $q^k$ windows, so counting alone does not force two patterns to coincide; all patterns might occur once. At $m=q^k+k$, there are $q^k+1$ windows, and collision is unavoidable. Additional restrictions on the word can force repetition much earlier.
+
+For DNA four-mers, $q=4$ and $k=4$. There are
 
 $$
-257\cdot 4=1028
+4^4=256
 $$
 
-bases. We obtain the **DNA Four-Mer Collision Theorem**:
-
-> In every DNA sequence of at least $1028$ bases, among the $257$ aligned four-base blocks beginning at positions $0,4,8,\ldots,1024$, two are identical. The two copies are disjoint, and every position used lies among the first $1028$ bases.
-
-Imagine reading a kilobase of DNA with a ruler marked every four bases. However the bases were chosen, one of the $256$ possible four-letter labels must appear on two of the ruler’s intervals.
-
-The threshold concerns a fixed alignment. It does not say that every shorter stretch is repeat-free, nor that $1028$ is the sharp threshold for arbitrary contiguous windows or arbitrary scattered subsequences. Those richer pattern classes can only make repeats easier to find, and may yield substantially smaller thresholds.
-
-## From one repeat to many
-
-Long sequences do not merely force a single collision. They force multiplicity. Suppose we want some motif to occur at least $r+1$ times among aligned blocks. If every possible word appeared at most $r$ times, then the total number of sampled blocks would be at most
+possible four-letter patterns. A word of length $260$ has
 
 $$
-rq^m.
+260-4+1=257
 $$
 
-Consequently we have the **Aligned-Block Multiplicity Theorem**:
+four-mer windows. Two of those $257$ windows must match. That is the entire engine of the theorem.
 
-> If $n>rq^m$ aligned length-$m$ blocks are sampled from a sequence over a $q$-letter alphabet, then at least one length-$m$ word occurs in at least $r+1$ of those blocks.
+## Selection does not defeat the law
 
-Because aligned blocks are pairwise disjoint, this is also a disjoint-multiplicity result. In DNA with $m=4$, more than $256r$ aligned four-mers force one four-mer to appear at least $r+1$ times.
+A genome need not be read at every position. Imagine choosing $m$ positions from a larger genome and writing down the chosen letters in the order selected—or even in any prescribed order. The result is a new word of length $m$. Its adjacent blocks are contiguous in the **selected word**, though their letters need not have been adjacent in the original genome.
 
-This theorem describes a staircase of inevitability. Crossing $256$ samples forces a duplicate; crossing $512$ forces a triple occurrence; crossing $768$ forces a fourfold occurrence; and so on. The phenomenon is not probabilistic clustering. It is forced crowding in a finite word space.
+This distinction matters. A selected four-mer is formed from four consecutive entries of the selected list. It is therefore a scattered pattern in the surrounding genome only when the selection itself follows genomic order. The theorem does not claim that arbitrary scattered occurrences have been fully classified. It says something precise and useful: **any selection of at least $260$ DNA letters, viewed as a word, contains two equal adjacent four-blocks within that selected word.**
 
-## The avoidance limit—and why it is sharp
+No monotonicity condition is needed for the counting argument. If the selection does preserve genomic order, the conclusion immediately becomes a statement about a subsequence: among the chosen letters are two equal four-letter blocks occupying consecutive places of the subsequence.
 
-The collision theorem can be turned around. If all $n$ aligned blocks are distinct, then necessarily
+This is a robust form of inevitability. Sampling, thinning, or rearranging the input cannot create more than $256$ possible four-mers. Once the selected word offers $257$ windows, repetition returns.
 
-$$
-n\le q^m.
-$$
+## Complexity compression
 
-This is the **Aligned-Avoidance Bound**:
+Real genomes are not uniform four-letter soups. They contain runs, tandem repeats, biased regions, and stretches in which only a small part of the alphabet is effectively active. The counting principle quantifies why such regions repeat sooner.
 
-> A sequence whose first $n$ aligned length-$m$ blocks are pairwise different can contain at most $q^m$ such blocks.
+Suppose a length-$m$ DNA word is produced in two stages. First, each position receives one of $b$ effective symbols. Second, a decoding map sends those effective symbols to A, C, G, or T. Although the visible output is DNA, its combinatorial freedom is controlled by $b$, not by four.
 
-For aligned sampling, the bound is sharp. List all $q^m$ possible words in any order and concatenate them. The resulting sequence has exactly $q^m$ distinct aligned blocks before repetition becomes unavoidable. Thus the counting argument identifies the exact worst-case capacity of the aligned codebook.
-
-The language of coding is useful. Each block is a codeword, and the alphabet and motif length determine a finite code space. Repeat avoidance asks how long one can transmit blocks without reusing a codeword. The answer is exactly the code-space size.
-
-## Worst-case guarantees versus typical genomes
-
-Real genomes are not adversarial lists of all possible motifs. They contain homopolymers, microsatellites, transposable elements, segmental duplications, coding constraints, and regional changes in base composition. These features can make repetition arrive much sooner than the universal deadline.
-
-But alphabet size alone cannot establish a claimed “genomic compression factor.” To say that a real chromosome is five times more repetition-prone than a random surrogate requires three ingredients absent from pure counting: an explicit genome, a precise statistic, and a specified random model.
-
-A natural statistic is $U_g(m,r)$: the least window length such that every window of that length in a finite genome $g$ contains some length-$m$ word with at least $r$ disjoint occurrences. This definition turns the vague phrase “every sufficiently long region repeats” into a reproducible quantity. One can compare $U_g(m,r)$ with values from shuffled sequences or Markov-chain surrogates that preserve nucleotide composition and local transition frequencies.
-
-Likewise, a random sequence obeys birthday-paradox behavior rather than the worst-case deadline. If there are $q^m$ nearly equally likely words, collisions typically emerge after roughly the square root of that number of independent samples, not after exhausting the entire code space. In an entropy-$h$ source, the effective number of typical words is closer to $e^{hm}$, suggesting a typical collision scale near
+The **effective-alphabet theorem** says: if
 
 $$
-e^{hm/2}.
+m\ge b^4+4,
 $$
 
-That is a probabilistic heuristic, not part of the deterministic theorem. It highlights an important lesson: worst-case Ramsey bounds and typical waiting times answer different questions.
+then two distinct windows in the decoded DNA word are equal four-mers.
 
-## Beyond the ruler marks
+Why? Before decoding, only $b^4$ effective four-blocks are possible. At length $b^4+4$, there are $b^4+1$ windows, so two encoded windows agree. Applying the same decoder letter by letter preserves their equality.
 
-The most intriguing frontier is the move from aligned blocks to arbitrary scattered words. A scattered occurrence chooses positions in increasing order but need not choose adjacent positions. Two scattered occurrences are disjoint if they use no common positions.
+The binary case is especially vivid. If a region is generated from just two effective symbols, then
 
-There are vastly more ways to embed a scattered word than to place an aligned block, but those embeddings overlap and depend on one another. Ordinary pigeonhole counting no longer captures the full geometry. The central extremal question becomes: how long can a sequence remain free of two disjoint occurrences of the same scattered length-$m$ word?
+$$
+2^4+4=20.
+$$
 
-The aligned theorems provide a rigorous benchmark. They identify what follows from finite word count alone and expose exactly where new combinatorics must enter: in controlling overlaps among embeddings. Empirical genomics adds a second layer, asking how biological sequence structure moves observed thresholds below worst-case limits.
+Thus **every binary-generated DNA region of length at least $20$ has a repeated four-mer after any fixed decoding into the four DNA letters.** Compare $20$ with the general four-letter threshold $260$. Restricting four possible symbols to two shrinks the guaranteed threshold by a factor of thirteen.
 
-The resulting picture is both simple and rich. Four letters generate only $256$ four-mers. More than $256$ aligned samples force repetition; more than $256r$ force multiplicity; and equal aligned samples give disjoint subsequences automatically. Around those certainties lies a wider landscape of entropy, random collisions, low-complexity regions, and scattered patterns. DNA may be life’s text, but finite alphabets impose a grammar of inevitability: keep writing long enough, and some phrase must return.
+This is a deterministic meaning of “low complexity.” It does not depend on a statistical model. A region with fewer effective symbols simply has fewer possible local blocks, so collisions arrive earlier.
+
+## An algorithm that finds the collision
+
+The proof is also an algorithm. Slide a window of width $k$ from left to right. Store the first position at which each $k$-mer appears. When a window already in the table appears again, return its old position and the current one.
+
+For a word of length $m$, the scan examines $m-k+1$ windows. With direct string slicing, forming each window costs $O(k)$ time, giving $O((m-k+1)k)$ time and at most $O(\min\{m-k+1,q^k\}k)$ stored symbols. For short fixed motifs such as four-mers, this is effectively linear in sequence length. Encoding each DNA letter by two bits can reduce each four-mer to an eight-bit integer, making lookup particularly simple.
+
+A second algorithm tests complexity compression. Given an encoded word over $b$ symbols and a decoder into DNA, it first decodes the sequence and then runs the same collision finder. More efficiently, it can find a repeated encoded block directly; equal encoded blocks are guaranteed to remain equal after decoding.
+
+These procedures do more than illustrate a theorem. They return witnesses: two distinct starting positions and the repeated motif itself. That makes the mathematical guarantee inspectable on concrete data.
+
+## What the theorem does—and does not—say about genomes
+
+It is tempting to jump from a universal theorem to a claim about the human genome. One might expect low-complexity biological regions to force repeats much earlier than a random model would. That is a reasonable empirical hypothesis, but it is not established by counting alone.
+
+A meaningful comparison requires choices: Which genome assembly? Are windows consecutive in the genome or selected subsequences? How are ambiguous symbols such as N handled? Are overlapping occurrences allowed? What random model preserves base frequencies or local correlations? Which statistic is called $L(k)$? Without those decisions, numerical claims such as a factor-of-five compression are not mathematical consequences of the theorem.
+
+The proven results supply a baseline. They say that $260$ selected DNA letters always suffice for a repeated four-mer, and that a binary-generated region needs only $20$. Actual genomic data may collide far earlier. Measuring how much earlier—and attributing the gap to biological structure—belongs to reproducible computational biology.
+
+## Ramsey flavor without overstatement
+
+Ramsey theory studies the emergence of order in sufficiently large structures. Its famous triangle theorem says that every red-blue coloring of the edges of a complete graph on six vertices contains a monochromatic triangle. The DNA result has the same philosophical flavor: a large enough object cannot avoid a prescribed regularity.
+
+Technically, however, the mechanism here is the pigeonhole principle rather than the full machinery of Ramsey's theorem. There is no graph coloring hidden in the proof. There are simply more windows than possible labels. Calling this “Ramsey-like” captures the inevitability, but the exact theorem is a finite word-counting statement.
+
+That precision is a strength. It cleanly separates three layers:
+
+1. **Universal combinatorics:** over $q$ symbols, length $q^k+k$ forces a repeated contiguous $k$-mer.
+2. **Selection:** the same guarantee applies to any chosen word, including an order-preserving subsequence of a larger sequence.
+3. **Structural compression:** if only $b$ effective symbols generate the visible letters, the four-mer threshold falls to $b^4+4$.
+
+Each layer has a short proof, and each supports concrete computation.
+
+## The next frontier: truly scattered repeats
+
+Contiguous blocks in a selected word are only one notion of subsequential repetition. A more ambitious question asks for two equal scattered words chosen through two order-preserving embeddings, perhaps with disjoint positions. Then overlap, interleaving, and positional constraints matter. The simple sliding-window count no longer captures the whole problem.
+
+Several directions follow naturally. One can seek the sharp maximum length of a four-letter word avoiding two disjoint equal scattered four-mers. One can compare deterministic thresholds with probabilities for random words. One can replace effective alphabet size by richer local descriptors: the number of distinct subwords, run structure, or entropy-like measures. Finally, carefully specified genome datasets can test how these parameters behave in nature.
+
+The central lesson will survive those refinements. Repetition is not merely a nuisance of long sequences. It is a mathematical consequence of finite expressive capacity. DNA has four letters; a four-letter window has only $256$ possible faces. Once a sequence presents more windows than that, two faces must be the same. In low-complexity regions, the repertoire contracts, and inevitability arrives even sooner.

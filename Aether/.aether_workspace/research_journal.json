@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ddd2821f",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its ra",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-23T18:46:04",
-      "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
-    },
-    {
       "cycle_id": "2f329d75",
       "domain": "Bridges",
       "key_insight": "# Future directions\n\n## 1. Arithmetic truth as an unbounded limit of bounded truth tables\n\n**Conjecture.** For a concrete syntax of first-order arithmetic with a standard-model satisfaction relation,",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-28T22:26:29",
       "title": "Strange Attractors as Algebraic Objects"
+    },
+    {
+      "cycle_id": "d54ed94e",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the formally verified algebraic results in `Catalog/Computation/DeterminantValuesOnLattices.lean`. Each is falsifiable by an e",
+      "quality_score": 0.76634,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-28T22:27:31",
+      "title": "ArXiv paper: A positive square-energy strengthening of Turán's theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "671e7568",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe formal development establishes the order-theoretic and relative-computability skeleton of an oracle hierarchy, but it deliberately does **not** claim a full arithmetization of",
-      "quality_score": 0.67,
-      "sorry_count": 13,
-      "theorem_count": 25,
-      "timestamp": "2026-07-19T23:13:43",
-      "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-    },
     {
       "cycle_id": "00cf3210",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-28T22:26:29",
       "title": "Strange Attractors as Algebraic Objects"
+    },
+    {
+      "cycle_id": "d54ed94e",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the formally verified algebraic results in `Catalog/Computation/DeterminantValuesOnLattices.lean`. Each is falsifiable by an e",
+      "quality_score": 0.76634,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-28T22:27:31",
+      "title": "ArXiv paper: A positive square-energy strengthening of Turán's theorem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1f5ea34f",
-      "domain": "Applications",
-      "name": "elNumbers_subset_emlNumbers",
-      "quality": 0.77698
-    },
-    {
-      "cycle_id": "1f5ea34f",
-      "domain": "Applications",
-      "name": "expExpOneAddLogTwoExpr_eval",
-      "quality": 0.77698
-    },
-    {
-      "cycle_id": "060e882c",
-      "domain": "Bridges",
-      "name": "vertexFunctor_faithful",
-      "quality": 0.79231
-    },
     {
       "cycle_id": "060e882c",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "streamToLimit_injective",
       "quality": 0.75101
+    },
+    {
+      "cycle_id": "d54ed94e",
+      "domain": "Computation",
+      "name": "squareEnergy_nonneg",
+      "quality": 0.76634
+    },
+    {
+      "cycle_id": "d54ed94e",
+      "domain": "Computation",
+      "name": "squareEnergy_smul",
+      "quality": 0.76634
+    },
+    {
+      "cycle_id": "d54ed94e",
+      "domain": "Computation",
+      "name": "det_smul_degree",
+      "quality": 0.76634
     }
   ],
-  "last_updated": "2026-07-28T22:26:29",
+  "last_updated": "2026-07-28T22:27:31",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "6bb52b3a",
-        "quality": 0.6,
-        "theorems": 12,
-        "title": "ArXiv paper: Generalizations of nets and Latin squares"
-      },
-      {
         "cycle_id": "cb7978a9",
         "quality": 0.55,
         "theorems": 18,
@@ -3327,6 +3321,12 @@
         "quality": 0.7662,
         "theorems": 8,
         "title": "Reflective Type Theory: Proving Things About Proving Things"
+      },
+      {
+        "cycle_id": "d54ed94e",
+        "quality": 0.76634,
+        "theorems": 11,
+        "title": "ArXiv paper: A positive square-energy strengthening of Turán's theorem"
       }
     ],
     "Cryptography": [
