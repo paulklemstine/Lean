@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3511fbf3",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Tangled Hierarchies in Type Theory\n\n## 1. Rankability Characterizes Predicative Dependency\n\n**Conjecture.** Every countable dependency relation that is well-founded and has finite",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-22T09:46:34",
-      "title": "Hofstadter: Tangled Hierarchies in Type Theory"
-    },
-    {
       "cycle_id": "3dce6722",
       "domain": "Applications",
       "key_insight": "# Future Directions: Dyson-Swarm Thermodynamic Optimization\n\n## 1. Strictly convex radiator laws\n\n**Conjecture.** For every strictly convex radiator-cost function, every finite swarm with fixed total",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-28T12:20:33",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    },
+    {
+      "cycle_id": "09a3e4f4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory a",
+      "quality_score": 0.77355,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-28T12:21:06",
+      "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "af530f4e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Hypercomputation and Physical Information\n\n## 1. Quantitative energy–precision tradeoff\n\n**Conjecture.** For every family of devices that exactly resolves the first `n` bits of an",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:08:39",
-      "title": "Hypercomputation: Computing the Uncomputable"
-    },
     {
       "cycle_id": "238d5b60",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-28T12:20:33",
       "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    },
+    {
+      "cycle_id": "09a3e4f4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory a",
+      "quality_score": 0.77355,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-28T12:21:06",
+      "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0d06265a",
-      "domain": "Applications",
-      "name": "subst_var",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "0d06265a",
-      "domain": "Applications",
-      "name": "subst_subst",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "7277c96e",
-      "domain": "NumberTheory",
-      "name": "unifies",
-      "quality": 0.75
-    },
     {
       "cycle_id": "7277c96e",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "rule0_unique_fixed",
       "quality": 0.7097100000000001
+    },
+    {
+      "cycle_id": "09a3e4f4",
+      "domain": "Novelty",
+      "name": "lifted",
+      "quality": 0.77355
+    },
+    {
+      "cycle_id": "09a3e4f4",
+      "domain": "Novelty",
+      "name": "sum_fixedPointCoefficient_eq_card_mul_orbits",
+      "quality": 0.77355
+    },
+    {
+      "cycle_id": "09a3e4f4",
+      "domain": "Novelty",
+      "name": "sum_fixedPointSeries_eq_card_smul_orbitSeries",
+      "quality": 0.77355
     }
   ],
-  "last_updated": "2026-07-28T12:20:33",
+  "last_updated": "2026-07-28T12:21:06",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a9c9c0c1",
-        "quality": 0.67,
-        "theorems": 11,
-        "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
-      },
-      {
         "cycle_id": "5a4bc860",
         "quality": 0.58,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.7097100000000001,
         "theorems": 10,
         "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+      },
+      {
+        "cycle_id": "09a3e4f4",
+        "quality": 0.77355,
+        "theorems": 10,
+        "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
       }
     ],
     "NumberTheory": [

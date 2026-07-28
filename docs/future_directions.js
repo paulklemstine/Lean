@@ -1167,7 +1167,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
   {
-    "consumed_by_exp_id": "09a3e4f4",
+    "consumed_by_exp_id": "",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
       "Novelty",
@@ -1175,11 +1175,10 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "seed_127",
-    "phase": "B",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
   },
@@ -1722,6 +1721,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 09a3e4f4 (Q=0.774), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_09a3e4f4_d507676f",
+    "priority_score": 0.8735499999999999,
+    "research_mode": "team",
+    "source_exp_id": "09a3e4f4",
+    "status": "available",
+    "timestamp": "2026-07-28T12:21:06.834733+00:00",
+    "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
   },
   {
     "consumed_by_exp_id": "",
@@ -2634,17 +2647,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b7ae8967",
     "description": "Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
     "domains": [
       "MachineLearning",
       "Algebra"
     ],
     "id": "seed_329",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Attention is All You Need: Formalizing Transformer Architecture"
   },
@@ -6673,7 +6687,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "83a0d4e2",
     "description": "Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects \u2014 not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare its Cech cohomology to the known Lorenz template. Impact: if true, chaotic dynamics become amenable to algebraic topology and category-theoretic methods.",
     "domains": [
       "Analysis",
@@ -6681,10 +6695,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_064",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Strange Attractors as Algebraic Objects"
   },
@@ -7162,7 +7177,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
-    "consumed_by_exp_id": "38d3a014",
+    "consumed_by_exp_id": "",
     "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
     "domains": [
       "Novelty",
@@ -7170,11 +7185,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_139",
-    "phase": "B",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
@@ -7604,17 +7618,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Let a compact smooth submanifold have reach at least `\u03c4`, and let a finite sampl"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a07085b6",
     "description": "# Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X \u2192 (Fin k \u2192 Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:\n\n1. `Feasible a` has at most `2^k` points.\n2. It has exactly `2^k` points iff every formal activation pattern is feasible.\n3. Every classifier constant on activation fibres factors uniquely through `Feasible a`.\n4. Pullback embeds the Boolean algebra of subsets of `Feasible a` into input-space regions, preserving complement and intersection.\n5. Its image consists exactly of activation-invariant regions.\n6. Atoms of this region algebra are singleton feasible patterns, so their count is the number of feasible patterns and is at most `2^k`.\n7. The full powerset concept family has VC dimension equal to the number of feasible patterns.\n8. A single fixed decision region cannot shatter a nonempty set.\n\nThis gives a precise finite Stone-style syntax/semantics theorem while separating it from claims that do not hold without added assumptions.\n\n## Corrections to the motivating conjecture\n\n* A `k`-neuron network need not realize all `2^k` activation patterns. Correlated, redundant, or geometrically infeasible signs reduce the range.\n* Deep-network neuron preactivations are generally piecewise affine in the original input, not globally defined by only `w\u2081 + \u22ef + w_L` input hyperplanes.\n* A fixed classifier is not a hypothesis class with VC dimension. VC dimension must be assigned to a parameterized family. The equality proved here is for the full Boolean algebra of all subsets of the finite feasible space.\n* The number of atoms equals the number of feasible patterns. The number of elements of the powerset Boolean algebra is instead `2^(number of feasible patterns)`.\n* Linear regions may refine, coarsen, or otherwise differ from activation patterns in degenerate networks. Their equality requires explicit nondegeneracy assumptions.\n\n## Next formal targets\n\n1. Equip `Feasible a` with its finite discrete topology and prove directly that every subset is clopen, then package `realize` as a Boolean-algebra embedding into `Set X`.\n2. Define sign activations of affine hyperplane arrangements over `\u211d^n`; prove feasibility is equivalent to nonemptiness of the corresponding system of strict/weak linear inequalities.\n3. Formalize a one-hidden-layer ReLU network and show its output is affine on each feasible activation cell.\n4. State sufficient genericity conditions under which feasible activation patterns correspond to nonempty linear regions.\n5. Define parameterized families of output labelings on a fixed activation complex. Prove VC upper bounds from the number of feasible atoms, and identify hypotheses under which the full bound is attained.\n6. Replace the finite powerset presentation by Mathlib's Stone spectrum of a finite Boolean algebra and construct the explicit homeomorphism between ultrafilters and atoms.\n7. Investigate the hyperplane-arrangement bound `\u2211_{i=0}^n choose(k,i)` for one-layer networks, which is typically much sharper than `2^k` when input dimension is fixed.\n",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
     "id": "fd_0446",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "86896469",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T11:15:45.660193+00:00",
     "title": "For an arbitrary activation map `a : X \u2192 (Fin k \u2192 Bool)`, the correct finite sem"
   },
@@ -7811,6 +7826,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T06:49:35.404711+00:00",
     "title": "The completed development establishes two reusable foundations: an operational"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Formalize periodic configurations `Fin n \u2192 Bool` and count fixed points for\n  every rule and small period `n` with kernel-checked finite enumeration.\n- Represent local Boolean functions as multilinear polynomials over `ZMod 2`\n  and prove uniqueness of algebraic normal form for all 256 rules.\n- Replace the ambiguous dimension of a finite set of Boolean-valued points by\n  clearly separated invariants: Krull dimension of a scheme, dimension of a\n  coordinate-ring quotient, fixed-point count, and asymptotic entropy of\n  periodic fixed configurations.\n- Compare those invariants against an explicitly sourced and formalized\n  Wolfram-class data set.  The proved Rule 110 counterexample shows that the\n  original maximal-fixed-locus prediction must be revised before such a\n  correlation theorem can hold.\n- Study spacetime diagrams rather than only fixed points.  Turing completeness\n  concerns unbounded evolution, while a fixed-point locus discards transient\n  and propagating behavior.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0791",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "38d3a014",
+    "status": "available",
+    "timestamp": "2026-07-28T12:20:29.648504+00:00",
+    "title": "every rule and small period `n` with kernel-checked finite enumeration."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory and formal generating functions.\n\nFor a finite group `G` acting on each finite grade `X n`, define the coefficient of the series\nattached to `g` to be the number of points in `X n` fixed by `g`. The file proves:\n\n\\[\n  \\sum_{g\\in G} |(X_n)^g| = |G|\\,|X_n/G|\n\\]\n\nfor every `n`, and consequently the coefficientwise q-series identity\n\n\\[\n  \\sum_{g\\in G} T_g(q) = |G|\\,O(q),\n  \\qquad O(q)=\\sum_{n\\ge0}|X_n/G|q^n.\n\\]\n\nIt also proves that every coefficient, and hence every whole series `T_g`, is invariant under\nconjugacy. Thus these element-indexed series genuinely descend to conjugacy-class data. The\naverage coefficient is exactly the number of orbits. This is Burnside's orbit-counting theorem\nlifted grade-by-grade to a formal q-expansion, connecting character values with enumerative\ngenerating functions without imposing unjustified analytic hypotheses.\n\n## Why the proposed product claim was not asserted\n\nThe mission's much stronger product claim should not be treated as an established consequence\nof monstrous moonshine. Several issues must first be resolved:\n\n1. Standard McKay\u2013Thompson series are normalized with leading term `q\u207b\u00b9`. A product of 194\n   class representatives therefore begins with `q\u207b\u00b9\u2079\u2074`, so it is generally meromorphic at the\n   cusp rather than a holomorphic modular form as stated.\n2. If \u201cproduct over all `g in M`\u201d literally means all Monster elements, its leading term is\n   `q^{-|M|}`. If it means one representative of each conjugacy class, it is a different\n   product. These formulations cannot be interchanged.\n3. The series have different invariance groups (often genus-zero groups involving\n   Atkin\u2013Lehner extensions). A product is modular only after specifying a common subgroup,\n   compatible multipliers, cusp behavior, and a coherent notion of weight.\n4. McKay\u2013Thompson series are modular **functions**, normally of weight zero. Multiplying them\n   does not produce weight `|M|/24`; moreover `|M|/24` is not the weight naturally supplied by\n   the moonshine theorem.\n5. Character values are recovered grade by grade from the family of traces and the Monster\n   character table. A single product loses information in general, so the claim that it\n   determines the complete character table, element order, and maximal-subgroup structure\n   requires a separately specified injective reconstruction map.\n\nAccordingly, claiming the requested product theorem would encode an unsupported\u2014and in its\nliteral normalization, incompatible\u2014statement. The formal result supplied here captures the\nvalid additive relationship between all trace/fixed-point series and orbit enumeration.\n\n## Computational evidence decision\n\nA separate computational-evidence file was intentionally omitted because the requested output\npermits only `.lean` files and `FUTURE_DIRECTIONS.md`. More importantly, the connector is proved\nfor every finite group, every graded finite action, and every coefficient; checking selected\nsmall cases would be logically weaker than the completed theorem. The proof is not a\n`native_decide` calculation. The concrete Monster request for 194 \u00d7 100 coefficients would\nalso require an external certified dataset containing the Monster character table and the\nnormalized McKay\u2013Thompson coefficients, neither of which is present in this project.\n\n## Concrete next steps\n\n1. Formalize complex-valued graded characters `tr(g | V_n)` and prove conjugacy invariance by\n   trace invariance under similarity.\n2. Define Laurent q-series with the standard `q\u207b\u00b9 + O(q)` normalization and formalize the pole\n   order of finite products. This will make the normalization obstruction precise.\n3. Import a provenance-checked table of Monster irreducible characters and the 194 normalized\n   McKay\u2013Thompson series; verify coefficient decompositions by exact integer arithmetic.\n4. State modularity separately for each class, with its actual moonshine group and multiplier.\n5. Investigate information-preserving aggregates\u2014such as the full vector-valued family or a\n   labeled generating function\u2014rather than an unlabeled scalar product that discards data.\n",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_0792",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "09a3e4f4",
+    "status": "available",
+    "timestamp": "2026-07-28T12:21:03.386066+00:00",
+    "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
   },
   {
     "consumed_by_exp_id": "",
@@ -8013,17 +8058,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Infinite Games Against Death: Immortality Strategies"
   },
   {
-    "consumed_by_exp_id": "975da4b4",
+    "consumed_by_exp_id": "",
     "description": "Cycle 186c9eac (Q=0.680) proved 0 theorems in Shared but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such",
     "domains": [
       "Shared"
     ],
     "id": "sorry_fill_186c9eac_94eac87b",
-    "phase": "A",
     "priority_score": 0.7300000000000001,
     "research_mode": "team",
     "source_exp_id": "186c9eac",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T14:03:03.735341+00:00",
     "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
@@ -8077,7 +8121,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorification of Entropy: The Information Loss of Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eae986b3",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -8086,10 +8130,11 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "seed_197",
+    "phase": "A",
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
