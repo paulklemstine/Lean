@@ -1,196 +1,147 @@
-"""
-Strange Attractors as Algebraic Objects -- numerical demonstrations.
-
-This self-contained script demonstrates the main results about the dyadic
-solenoid Sigma_2 (the inverse limit of the doubling map of the circle) and its
-first Cech cohomology, the group of dyadic rationals Z[1/2]:
-
-  * Dyadic membership and the 2-adic valuation certificate.
-  * Dyadic.inv_two_pow_mem : every 1/2^n is dyadic.
-  * Dyadic.two_divisible   : multiplication by 2 is surjective on Z[1/2].
-  * Dyadic.not_fg          : Z[1/2] is not finitely generated, via the
-                             "escapee" witness 1/2^(N+1) for any finite set.
-  * nerveCohomology_fg / solenoid_not_finite_nerve_cohomology : finite graphs
-    have H^1 = Z^{beta_1} (finitely generated), so no finite graph reproduces
-    the solenoid's H^1.
-
-Everything is exact rational arithmetic; no external dependencies.
-"""
+#!/usr/bin/env python3
+"""Numerical demonstrations for binary de Bruijn inverse-limit approximants."""
 
 from __future__ import annotations
 
-from fractions import Fraction
-from typing import List, Optional, Tuple
+from itertools import product
+from typing import Iterable, Optional, Sequence, TypeAlias
+
+Bit: TypeAlias = int
+Word: TypeAlias = tuple[Bit, ...]
+Edge: TypeAlias = tuple[Word, Word]
 
 
-# --------------------------------------------------------------------------- #
-# 1. Dyadic rationals Z[1/2] as a concrete subgroup of Q
-# --------------------------------------------------------------------------- #
-
-def two_adic_valuation_of_denominator(q: Fraction) -> int:
-    """Return v_2(den(q)): the exponent of 2 in the reduced denominator of q.
-
-    q lies in Z[1/2] iff den(q) is a power of two, in which case this is the
-    minimal k with 2^k * q in Z.
-    """
-    b = q.denominator
-    k = 0
-    while b % 2 == 0:
-        b //= 2
-        k += 1
-    return k
+def validate_word(word: Sequence[Bit]) -> None:
+    """Raise ValueError unless every entry is a binary digit."""
+    if any(bit not in (0, 1) for bit in word):
+        raise ValueError(f"not a binary word: {word!r}")
 
 
-def is_dyadic(q: Fraction) -> bool:
-    """Decide membership q in Z[1/2]: true iff the denominator is a power of 2."""
-    b = q.denominator
-    while b % 2 == 0:
-        b //= 2
-    return b == 1
+def binary_words(length: int) -> list[Word]:
+    """Enumerate all binary words of the requested nonnegative length."""
+    if length < 0:
+        raise ValueError("length must be nonnegative")
+    return [tuple(bits) for bits in product((0, 1), repeat=length)]
 
 
-def dyadic_certificate(q: Fraction) -> Optional[Tuple[int, int]]:
-    """Return (k, m) with (m : Q) = 2^k * q and m in Z, or None if q not dyadic.
-
-    This mirrors the existential witness in `mem_Dyadic`.
-    """
-    if not is_dyadic(q):
-        return None
-    k = two_adic_valuation_of_denominator(q)
-    m = q * (2 ** k)
-    assert m.denominator == 1
-    return k, int(m)
+def truncate(word: Word) -> Word:
+    """Delete the final symbol of a nonempty binary word."""
+    validate_word(word)
+    if not word:
+        raise ValueError("the empty word cannot be truncated")
+    return word[:-1]
 
 
-# --------------------------------------------------------------------------- #
-# 2. The structural theorems
-# --------------------------------------------------------------------------- #
-
-def inv_two_pow_mem(n: int) -> Fraction:
-    """Dyadic.inv_two_pow_mem : exhibit 1/2^n and confirm it is dyadic."""
-    q = Fraction(1, 2 ** n)
-    assert is_dyadic(q)
-    return q
+def de_bruijn_edge(source: Word, target: Word) -> bool:
+    """Test whether equal-length words overlap after a one-symbol shift."""
+    validate_word(source)
+    validate_word(target)
+    if len(source) != len(target):
+        raise ValueError("source and target must have equal length")
+    return source[1:] == target[:-1]
 
 
-def two_divisible_witness(y: Fraction) -> Fraction:
-    """Dyadic.two_divisible : given dyadic y, return dyadic x with 2x = y."""
-    assert is_dyadic(y)
-    x = y / 2
-    assert is_dyadic(x) and 2 * x == y
-    return x
+def de_bruijn_edges(word_length: int) -> list[Edge]:
+    """Generate the binary de Bruijn graph using its two-successor rule."""
+    if word_length <= 0:
+        raise ValueError("word_length must be positive")
+    edges: list[Edge] = []
+    for source in binary_words(word_length):
+        for appended in (0, 1):
+            target = source[1:] + (appended,)
+            edges.append((source, target))
+    return edges
 
 
-def escapee_for_generators(S: List[Fraction]) -> Fraction:
-    """Dyadic.not_fg : given a finite candidate generating set S of dyadics,
-    return a dyadic number provably outside the subgroup it generates.
-
-    Every integer combination of S has denominator dividing 2^N where
-    N = max_s v_2(den(s)); the witness 1/2^(N+1) has a strictly larger
-    denominator and therefore escapes the span.
-    """
-    assert all(is_dyadic(s) for s in S)
-    N = max((two_adic_valuation_of_denominator(s) for s in S), default=0)
-    return Fraction(1, 2 ** (N + 1))
+def prefixes(stream: Sequence[Bit], depth: Optional[int] = None) -> list[Word]:
+    """Return prefixes from length zero through the requested depth."""
+    validate_word(stream)
+    actual_depth = len(stream) if depth is None else depth
+    if actual_depth < 0 or actual_depth > len(stream):
+        raise ValueError("depth must lie between zero and the sample length")
+    return [tuple(stream[:n]) for n in range(actual_depth + 1)]
 
 
-def integer_span_denominator_bound(S: List[Fraction]) -> int:
-    """Largest power of two that can appear as a denominator in <S>: 2^N."""
-    N = max((two_adic_valuation_of_denominator(s) for s in S), default=0)
-    return 2 ** N
+def is_compatible_thread(thread: Sequence[Word]) -> bool:
+    """Check lengths and all adjacent truncation equations."""
+    for level, word in enumerate(thread):
+        validate_word(word)
+        if len(word) != level:
+            return False
+    return all(truncate(thread[level + 1]) == thread[level]
+               for level in range(len(thread) - 1))
 
 
-# --------------------------------------------------------------------------- #
-# 3. The telescope colimit Z --x2--> Z --x2--> ... == Z[1/2]
-# --------------------------------------------------------------------------- #
-
-def colimit_eval(level: int, value: int) -> Fraction:
-    """Element '(level, value)' of colim(Z --x2--> ...) as the dyadic value/2^level."""
-    return Fraction(value, 2 ** level)
-
-
-def colimit_equal(a: Tuple[int, int], b: Tuple[int, int]) -> bool:
-    """Two telescope representatives are equal iff they evaluate to equal dyadics."""
-    (n1, m1), (n2, m2) = a, b
-    return m1 * (2 ** n2) == m2 * (2 ** n1)
+def first_difference(left: Sequence[Bit], right: Sequence[Bit]) -> Optional[int]:
+    """Find the first differing sampled coordinate, or None if samples agree."""
+    validate_word(left)
+    validate_word(right)
+    for index, (a, b) in enumerate(zip(left, right)):
+        if a != b:
+            return index
+    if len(left) != len(right):
+        return min(len(left), len(right))
+    return None
 
 
-# --------------------------------------------------------------------------- #
-# 4. Finite nerve graphs: H^1 = Z^{beta_1}, always finitely generated
-# --------------------------------------------------------------------------- #
-
-def betti_one(num_vertices: int, num_edges: int, num_components: int) -> int:
-    """NerveGraph.cohomRank : beta_1 = max(0, E + components - V)."""
-    raw = num_edges + num_components - num_vertices
-    return raw if raw >= 0 else 0
-
-
-def nerve_cohomology_rank(num_vertices: int, num_edges: int,
-                          num_components: int) -> int:
-    """Rank of H^1(G) = Z^{beta_1}; this finite rank makes it finitely generated."""
-    return betti_one(num_vertices, num_edges, num_components)
+def edge_preservation_checks(max_word_length: int) -> tuple[int, int]:
+    """Exhaustively count tested and successful nontrivial truncation checks."""
+    if max_word_length < 2:
+        raise ValueError("max_word_length must be at least two")
+    tested = 0
+    passed = 0
+    for length in range(2, max_word_length + 1):
+        for source, target in de_bruijn_edges(length):
+            tested += 1
+            if de_bruijn_edge(truncate(source), truncate(target)):
+                passed += 1
+    return tested, passed
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration driver
-# --------------------------------------------------------------------------- #
+def format_word(word: Iterable[Bit]) -> str:
+    """Format a word, displaying the empty word with a conventional symbol."""
+    text = "".join(str(bit) for bit in word)
+    return text if text else "ε"
+
 
 def main() -> None:
-    print("=" * 70)
-    print("Strange Attractors as Algebraic Objects -- the dyadic solenoid")
-    print("=" * 70)
+    """Run reproducible examples of all key finite statements."""
+    print("BINARY LEVEL CARDINALITIES")
+    for n in range(11):
+        observed = len(binary_words(n))
+        expected = 2 ** n
+        print(f"n={n:2d}: observed={observed:4d}, 2^n={expected:4d}")
+        assert observed == expected
 
-    print("\n[1] Dyadic membership certificates (m : Q) = 2^k * q")
-    for q in [Fraction(3, 8), Fraction(5, 1), Fraction(1, 3), Fraction(17, 16)]:
-        cert = dyadic_certificate(q)
-        if cert is None:
-            print(f"    {str(q):>6} : NOT dyadic (denominator not a power of 2)")
-        else:
-            k, m = cert
-            print(f"    {str(q):>6} : dyadic, k={k}, m={m}  (check 2^{k}*{q} = {m})")
+    print("\nEDGE PRESERVATION UNDER TRUNCATION")
+    tested, passed = edge_preservation_checks(max_word_length=8)
+    print(f"exhaustive finite checks passed: {passed}/{tested}")
+    assert tested == passed
 
-    print("\n[2] inv_two_pow_mem : 1/2^n is always dyadic")
-    for n in range(6):
-        print(f"    1/2^{n} = {inv_two_pow_mem(n)} in Z[1/2]")
+    print("\nA COMPATIBLE PREFIX THREAD")
+    sample: Word = (1, 0, 1, 1, 0, 0, 1, 0)
+    thread = prefixes(sample)
+    print(" -> ".join(format_word(word) for word in thread))
+    print(f"compatible: {is_compatible_thread(thread)}")
+    assert is_compatible_thread(thread)
 
-    print("\n[3] two_divisible : doubling is invertible on Z[1/2]")
-    for y in [Fraction(3, 8), Fraction(1, 1), Fraction(7, 16)]:
-        x = two_divisible_witness(y)
-        print(f"    y={y}: x={x} is dyadic and 2x={2 * x} = y")
+    print("\nFINITE DETECTION OF DISTINCT TRAJECTORIES")
+    left: Word = (0, 0, 1, 0, 1, 1)
+    right: Word = (0, 0, 1, 1, 1, 1)
+    difference = first_difference(left, right)
+    assert difference is not None
+    separation_level = difference + 1
+    print(f"first differing coordinate: {difference}")
+    print(f"first separating prefix level: {separation_level}")
+    print(f"left prefix:  {format_word(prefixes(left)[separation_level])}")
+    print(f"right prefix: {format_word(prefixes(right)[separation_level])}")
+    assert prefixes(left)[separation_level] != prefixes(right)[separation_level]
 
-    print("\n[4] not_fg : every finite generating set has an escapee")
-    for S in [[Fraction(1, 2), Fraction(3, 4)],
-              [Fraction(1, 8), Fraction(5, 16), Fraction(1, 1)],
-              [Fraction(1, 2 ** 10)]]:
-        bound = integer_span_denominator_bound(S)
-        esc = escapee_for_generators(S)
-        print(f"    S={[str(s) for s in S]}")
-        print(f"        span denominators divide {bound}; escapee {esc} "
-              f"(den {esc.denominator}) is NOT generated")
-
-    print("\n[5] telescope colimit == Z[1/2]")
-    reps = [(0, 1), (1, 2), (2, 4), (3, 5)]
-    for (n, m) in reps:
-        print(f"    ({n},{m}) -> {colimit_eval(n, m)}")
-    print(f"    (1,2) == (0,1)? {colimit_equal((1, 2), (0, 1))}  "
-          f"(both equal {colimit_eval(0, 1)})")
-    print(f"    (2,4) == (0,1)? {colimit_equal((2, 4), (0, 1))}")
-    print(f"    (3,5) == (0,1)? {colimit_equal((3, 5), (0, 1))}")
-
-    print("\n[6] finite nerve graphs: H^1 = Z^{beta_1}, finite rank => f.g.")
-    graphs = [("K_{3,3} (PM nerve)", 6, 9, 1),
-              ("K_4    (GHZ nerve)", 4, 6, 1),
-              ("CHSH square      ", 4, 4, 1),
-              ("tree (5 vertices) ", 5, 4, 1)]
-    for name, v, e, c in graphs:
-        r = nerve_cohomology_rank(v, e, c)
-        print(f"    {name}: V={v} E={e} comp={c} -> beta_1 = {r}, "
-              f"H^1 = Z^{r} (finitely generated)")
-
-    print("\n[7] the obstruction: solenoid H^1 = Z[1/2] is NOT finitely")
-    print("    generated, but every finite graph's H^1 = Z^{beta_1} IS.")
-    print("    Finite generation is preserved by isomorphism, so no finite")
-    print("    graph can have H^1 isomorphic to the solenoid's. QED.")
+    print("\nA PERIODIC CYCLE IN THE ORDER-3 GRAPH")
+    cycle: list[Word] = [(0, 1, 0), (1, 0, 1), (0, 1, 0)]
+    for source, target in zip(cycle, cycle[1:]):
+        print(f"{format_word(source)} -> {format_word(target)}")
+        assert de_bruijn_edge(source, target)
 
 
 if __name__ == "__main__":

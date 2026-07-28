@@ -1,425 +1,462 @@
-# Strange Attractors as Algebraic Objects: A Finite-Nerve Obstruction for the Dyadic Solenoid
+# Strange Attractors as Algebraic Objects: Finite de Bruijn Approximants and a Binary Prefix Inverse Limit
 
-**Author:** Aristotle
-
-**Date:** 2026-06-27
-
-**Domain:** Applications (dynamical systems ↔ algebraic topology ↔ abelian-group algebra)
-
----
+**Author:** Aristotle  
+**Date:** 2026-07-28
 
 ## Abstract
 
-We develop the point of view that a chaotic attractor may be treated not as a
-numerical phenomenon but as an *algebraic object*, carrying invariants that are as
-rigid and diagnostic as those of a group or a number. We carry this program out
-completely for a canonical model attractor, the **dyadic solenoid** — the inverse
-limit of the circle under the doubling map, which arises as Smale's solenoid
-attractor and as a cross-sectional model of Lorenz-type flows. We identify its
-first Čech cohomology with the group of **dyadic rationals**
-$\mathbb{Z}[1/2] \le \mathbb{Q}$, realized concretely as
-$\{q \in \mathbb{Q} : 2^k q \in \mathbb{Z} \text{ for some } k\}$, and we prove
-two structural facts that turn this group into an honest algebraic invariant of
-chaos: multiplication by $2$ is *surjective* on $\mathbb{Z}[1/2]$ (the doubling
-map becomes invertible in the limit), and $\mathbb{Z}[1/2]$ is **not finitely
-generated**. We then prove a no-go theorem bridging dynamics with the combinatorics
-of finite graphs: the first cohomology of any finite directed graph is the
-finitely generated free abelian group $\mathbb{Z}^{\beta_1}$, where $\beta_1$ is
-the graph's first Betti number; consequently **no finite directed graph has first
-cohomology isomorphic to that of the solenoid**. The obstruction is the
-non-preservation of finite generation under group isomorphism — a single algebraic
-invariant separating the finite-graph world from the inverse-limit world. The
-finite graphs in question are exactly the *nerve graphs* of quantum contextuality,
-making the result a genuine cross-domain bridge (Physics ↔ Applications). All
-statements are formalized and machine-checked.
-
----
+We develop a finite directed-graph model for symbolic trajectories and prove that its inverse limit retains every infinite binary itinerary without identification. At level $n$, the vertices are binary words of length $n$, so the level has exactly $2^n$ vertices. Dynamics is represented by the binary de Bruijn edge relation: a word points to another when its suffix agrees with the other's prefix. Deleting the final symbol defines a bonding map between consecutive levels, and we prove that this map preserves directed edges. The inverse limit consists of families of words compatible under all truncations. Sending an infinite binary stream to its family of finite prefixes is injective; consequently, the inverse limit contains a full binary Cantor family and is infinite. We give proofs, algorithms, examples, and applications to symbolic dynamics, while carefully distinguishing this general prototype from any Lorenz-specific identification. The construction provides the finite combinatorial substrate needed for later topological, cohomological, and dynamical comparisons with strange attractors.
 
 ## 1. Introduction
 
-### 1.1 Chaos as phenomenon versus chaos as object
+Strange attractors unite deterministic evolution with apparent unpredictability. A smooth map or differential equation may be specified by a short formula, while its long-term orbits create folded, recurrent structures that resist direct classification. Numerical plots reveal geometry, but a structural theory asks different questions: which finite observations are compatible, how do observations at different resolutions relate, and can an infinite trajectory be recovered from all of its finite records?
 
-The strange attractors of dissipative dynamics — Lorenz, Hénon, Rössler — are
-usually studied through numerics: one integrates the flow, plots the orbit, and
-estimates invariants such as Lyapunov exponents and fractal (Hausdorff or
-correlation) dimensions. These invariants are real-valued, approximate, and
-estimated rather than computed exactly. They describe chaos as a *phenomenon*.
+Symbolic dynamics addresses these questions by replacing points in phase space with itineraries through a finite partition. In the simplest case there are two regions, labeled $0$ and $1$, and an orbit is encoded by a stream in $\{0,1\}^{\mathbb N}$. A finite observer sees only a word of bounded length. The natural combinatorial object for these observations is a de Bruijn graph, whose vertices are finite words and whose directed edges represent one-step shifts of the observation window.
 
-A complementary tradition in the topological theory of dynamical systems regards
-hyperbolic attractors as **inverse limits** of simpler spaces under expanding
-bonding maps. Williams' theory of one-dimensional attractors and the modeling of
-the Lorenz flow by a branched-manifold *template* both fit this pattern. From this
-vantage an attractor is not a cloud of points to be measured but a *limit object*
-assembled from finite or low-dimensional pieces — that is, potentially an
-*algebraic object*, accessible to the exact invariants of algebraic topology and
-the rigidity theorems of abelian-group theory.
+This paper constructs a tower of binary de Bruijn graphs linked by truncation. The tower is an inverse system at the level of vertices and edge-preserving maps. Its inverse limit is the set of coherent finite observations at all depths. Our main result states that each infinite binary stream determines a different point of this limit. Thus the infinite symbolic space is faithfully retained by a system assembled entirely from finite levels.
 
-This paper executes that vantage to its logical conclusion for the simplest
-genuinely strange inverse limit, and extracts from it a sharp impossibility
-statement.
+The result is foundational rather than Lorenz-specific. It does not claim that the Lorenz attractor, Hénon attractor, or Rössler attractor is the inverse limit considered here. Such a theorem would require a precise map or flow, a justified symbolic partition, and a comparison of topology and dynamics. What is established is the abstract mechanism on which that program can be built.
 
-### 1.2 The model: the dyadic solenoid
+The contributions are:
 
-The **dyadic solenoid** is the inverse limit of the doubling map of the circle:
+1. a count of exactly $2^n$ states at binary resolution $n$;
+2. a finite directed-graph encoding of sliding-window dynamics;
+3. an edge-preserving truncation map between consecutive graph levels;
+4. an inverse limit of compatible prefixes;
+5. an injective encoding of all infinite binary streams into that limit; and
+6. explicit finite algorithms for graph generation, compatibility checking, and trajectory separation.
 
-$$ \Sigma_2 \;=\; \varprojlim \big( S^1 \xleftarrow{\;\times 2\;} S^1 \xleftarrow{\;\times 2\;} S^1 \xleftarrow{\;\times 2\;} \cdots \big). $$
+## 2. Binary words and finite graph levels
 
-A point of $\Sigma_2$ is a coherent sequence $(x_0, x_1, x_2, \dots)$ with
-$x_n \in S^1$ and $2 x_{n+1} = x_n$ for all $n$. The space $\Sigma_2$ is a compact
-connected one-dimensional space, locally homeomorphic to (interval) $\times$
-(Cantor set), and it is the attractor of Smale's solenoid embedding of a solid
-torus into itself. It is the canonical mathematically honest stand-in for "a
-chaotic attractor that is intrinsically an infinite limit."
+### 2.1 Binary words
 
-### 1.3 Results and contributions
+Let
 
-We prove the following, all machine-checked in Lean 4 with Mathlib.
+$$
+\mathbb B=\{0,1\}.
+$$
 
-1. **Identification of the invariant.** The first Čech cohomology of $\Sigma_2$ is
-   the direct limit
-   $\operatorname{colim}(\mathbb{Z} \xrightarrow{\times 2} \mathbb{Z} \xrightarrow{\times 2} \cdots) \cong \mathbb{Z}[1/2]$,
-   realized concretely as the additive subgroup `Dyadic` of $\mathbb{Q}$.
+For $n\in\mathbb N$, define the set of binary words of length $n$ by
 
-2. **Doubling becomes invertible (`Dyadic.two_divisible`).** Multiplication by $2$
-   is surjective on $\mathbb{Z}[1/2]$.
+$$
+W_n=\mathbb B^{\{0,1,\ldots,n-1\}}.
+$$
 
-3. **Infinite complexity (`Dyadic.not_fg`).** $\mathbb{Z}[1/2]$ is not finitely
-   generated as an additive group.
+An element $w\in W_n$ is written
 
-4. **Finite graphs are finitely generated (`nerveCohomology_fg`).** The first
-   cohomology of any finite directed (nerve) graph $G$ is the free abelian group
-   $\mathbb{Z}^{\beta_1(G)}$ of finite rank, which is finitely generated.
+$$
+w=(w_0,w_1,\ldots,w_{n-1}), \qquad w_i\in\mathbb B.
+$$
 
-5. **The finite-nerve obstruction (`solenoid_not_finite_nerve_cohomology`).** No
-   finite nerve graph $G$ admits an additive group isomorphism
-   $\mathbb{Z}[1/2] \cong \mathbb{Z}^{\beta_1(G)}$. Hence the solenoid is not
-   captured by any single finite directed graph; the inverse limit is essential.
+The unique word of length $0$ is the empty word $()$.
 
-The conceptual content of (5) is the *non-preservation of finite generation*: a
-single Boolean algebraic invariant (finite generation, `AddGroup.FG`) cleanly
-separates the world of finite diagrams from the world of inverse limits. The
-finite graphs are the nerve graphs of quantum contextuality, so the theorem is a
-literal bridge between two catalogue domains.
+**Theorem 2.1 (Finite-level cardinality).** For every $n\in\mathbb N$,
 
----
+$$
+|W_n|=2^n.
+$$
 
-## 2. Preliminaries
+**Proof sketch.** Each of the $n$ coordinates can be chosen independently from the two-element set $\mathbb B$. By the multiplication principle, there are $2\cdot 2\cdots 2=2^n$ choices. Equivalently, the set of functions from an $n$-element index set to a two-element alphabet has cardinality $2^n$. For $n=0$, both sides equal $1$. $\square$
 
-### 2.1 Finitely generated abelian groups
+This count makes every approximation finite while allowing exponential growth of distinguishable histories with observation depth.
 
-An additive group $A$ is **finitely generated** (`AddGroup.FG`) if there is a
-finite subset $S \subseteq A$ with $\langle S \rangle = A$, i.e. every element is
-an integer combination of elements of $S$. The free abelian groups
-$\mathbb{Z}^n$ are finitely generated; arbitrary subgroups of $\mathbb{Q}$ need
-not be. The two facts about finite generation that we use are standard:
+### 2.2 Binary de Bruijn graphs
 
-- **(FG-transport).** If $f : A \to B$ is a surjective group homomorphism and $A$
-  is finitely generated, then $B$ is finitely generated
-  (`AddGroup.fg_of_surjective`). In particular finite generation is preserved by
-  isomorphism.
-- **(FG of subgroup).** For a subgroup $H \le A$, $H$ is finitely generated as a
-  group iff it is finitely generated as a subgroup
-  (`AddGroup.fg_iff_addSubgroup_fg`).
+For $n\in\mathbb N$, define the directed graph $G_n$ to have vertex set $W_{n+1}$. For $u,v\in W_{n+1}$, place a directed edge $u\to v$ when
 
-### 2.2 First cohomology of a graph
+$$
+u_{i+1}=v_i \qquad \text{for every } 0\le i<n.
+$$
 
-For a finite directed graph (here abstracted as a combinatorial datum) the first
-Betti number is
+Thus the suffix of $u$ of length $n$ equals the prefix of $v$ of length $n$. This is the binary de Bruijn graph of order $n+1$.
 
-$$ \beta_1(G) \;=\; |E(G)| - |V(G)| + c(G), $$
-
-where $c(G)$ is the number of connected components. When $G$ is connected,
-$\beta_1$ is the number of independent cycles. The first cohomology with integer
-coefficients is the free abelian group of rank $\beta_1$:
+The indexing separates two roles. The graph $G_n$ records windows of length $n+1$, while $W_n$ will serve as level $n$ of the prefix inverse system. One could shift all indices by one without changing the mathematics.
 
-$$ H^1(G;\mathbb{Z}) \;\cong\; \mathbb{Z}^{\beta_1(G)}. $$
+**Example 2.2.** In $G_2$, vertices are words of length $3$. There is an edge
 
-We model this directly: the cohomology of a nerve graph is the function space
-$\mathrm{Fin}\,(\beta_1) \to \mathbb{Z}$.
+$$
+010\longrightarrow 101
+$$
 
----
-
-## 3. The dyadic invariant
-
-### 3.1 Definition
-
-> **Definition 3.1 (`Dyadic`).** The **dyadic rationals** $\mathbb{Z}[1/2]$ are
-> the additive subgroup of $\mathbb{Q}$
-> $$ \mathbb{Z}[1/2] \;=\; \{\, q \in \mathbb{Q} \;:\; \exists\, k \in \mathbb{N},\ \exists\, m \in \mathbb{Z},\ (m : \mathbb{Q}) = 2^k \cdot q \,\}. $$
-
-Membership says: some power of two clears the denominator of $q$ to an integer.
-The subgroup axioms are checked directly. For closure under addition, if
-$2^{k_1} a = m_1$ and $2^{k_2} b = m_2$ with $m_1, m_2 \in \mathbb{Z}$, then
-$$ 2^{k_1 + k_2}(a + b) \;=\; 2^{k_2} m_1 + 2^{k_1} m_2 \in \mathbb{Z}, $$
-so $a + b \in \mathbb{Z}[1/2]$ with witness $k_1 + k_2$ and integer
-$2^{k_2} m_1 + 2^{k_1} m_2$. Closure under negation uses $-m$ with the same $k$;
-$0$ is dyadic with $k = m = 0$. This is the content of the structure `Dyadic`.
-
-> **Lemma 3.2 (`mem_Dyadic`).** $q \in \mathbb{Z}[1/2] \iff \exists k\, m,\ (m:\mathbb{Q}) = 2^k q.$
-
-This is the definitional unfolding of membership and is used throughout.
-
-> **Lemma 3.3 (`Dyadic.inv_two_pow_mem`).** For every $n \in \mathbb{N}$,
-> $1/2^n \in \mathbb{Z}[1/2]$.
->
-> *Proof.* Take $k = n$ and $m = 1$: then $2^n \cdot (1/2^n) = 1 = (m:\mathbb{Q})$
-> since $2^n \neq 0$. ∎
+because the suffix $10$ of $010$ equals the prefix $10$ of $101$. There is no edge $010\to 111$, since $10\ne 11$.
 
-Lemma 3.3 is the algebraic incarnation of "you may keep dividing by two forever,"
-and it supplies the explicit witnesses used in the non-finite-generation proof.
+**Lemma 2.3 (Successor description).** Every vertex
 
-### 3.2 Cohomological identification
+$$
+u=(u_0,u_1,\ldots,u_n)
+$$
 
-The first Čech cohomology functor sends the inverse system of circles to a direct
-system of integer groups, with the doubling map inducing multiplication by $2$:
-
-$$ H^1(\Sigma_2) \;\cong\; \operatorname{colim}\big( \mathbb{Z} \xrightarrow{\times 2} \mathbb{Z} \xrightarrow{\times 2} \mathbb{Z} \xrightarrow{\times 2} \cdots \big). $$
-
-The colimit of this telescope is computed by sending the generator of the $n$-th
-copy of $\mathbb{Z}$ to $1/2^n \in \mathbb{Q}$; the transition $\times 2$ is then
-compatible because $2 \cdot (1/2^{n+1}) = 1/2^n$. The image is precisely the set
-of integer multiples of powers of $1/2$, i.e. $\mathbb{Z}[1/2]$. Hence
-$H^1(\Sigma_2) \cong \mathbb{Z}[1/2]$, identifying the topological invariant with
-the algebraic object `Dyadic`. The two structural theorems below give this
-identification teeth.
-
-### 3.3 Doubling is invertible in the limit
-
-> **Theorem 3.4 (`Dyadic.two_divisible`).** Multiplication by $2$ is surjective on
-> $\mathbb{Z}[1/2]$: for every $y \in \mathbb{Z}[1/2]$ there is $x \in \mathbb{Z}[1/2]$
-> with $2x = y$.
->
-> *Proof sketch.* Given $y \in \mathbb{Z}[1/2]$ with witness $2^k y = m \in \mathbb{Z}$,
-> put $x = y/2$. Then $2^{k+1} x = 2^k y = m \in \mathbb{Z}$, so $x \in \mathbb{Z}[1/2]$,
-> and $2x = y$. ∎
-
-Interpretation: the doubling endomorphism of the single circle is two-to-one and
-destroys information, but on the cohomology of the *limit* it is an
-**automorphism**. The chaos has been linearized into an invertible symmetry of the
-invariant. This is the localization/colimit signature that no finite graph's
-$H^1$ possesses, foreshadowing the obstruction.
-
-### 3.4 Infinite complexity
+of $G_n$ has exactly two outgoing neighbors,
 
-> **Theorem 3.5 (`Dyadic.not_fg`).** $\mathbb{Z}[1/2]$ is **not** finitely
-> generated.
->
-> *Proof sketch.* Suppose $S \subseteq \mathbb{Z}[1/2]$ is finite and generates.
-> For each $s \in S$, fix a witness exponent $k_s$ with $2^{k_s} s \in \mathbb{Z}$,
-> and set $N = \max_{s \in S} k_s$. Every $s \in S$ then lies in the subgroup
-> $$ B_N \;=\; \{\, q \in \mathbb{Z}[1/2] : 2^N q \in \mathbb{Z} \,\} $$
-> of dyadics whose denominator divides $2^N$ (the `boundedDen N` subgroup). Since
-> $B_N$ is a subgroup containing every generator, it contains the whole subgroup
-> $\langle S \rangle = \mathbb{Z}[1/2]$. But $1/2^{N+1} \in \mathbb{Z}[1/2]$ by
-> Lemma 3.3, while $2^N \cdot (1/2^{N+1}) = 1/2 \notin \mathbb{Z}$, so
-> $1/2^{N+1} \notin B_N$. This contradicts $\mathbb{Z}[1/2] \subseteq B_N$. ∎
+$$
+(u_1,u_2,\ldots,u_n,0)
+\quad\text{and}\quad
+(u_1,u_2,\ldots,u_n,1),
+$$
 
-The mechanism is **unbounded denominators**: finite generation forces a uniform
-denominator ceiling $2^N$ (the directed union of a finite set is bounded), which
-the dyadic tower violates with the explicit escapee $1/2^{N+1}$. The negation is
-strict and witnessed, not vacuous.
+and exactly two incoming neighbors,
 
-A convenient subtype reformulation packages this for transport across
-isomorphisms:
+$$
+(0,u_0,u_1,\ldots,u_{n-1})
+\quad\text{and}\quad
+(1,u_0,u_1,\ldots,u_{n-1}).
+$$
 
-> **Theorem 3.6 (`dyadic_not_addGroup_fg`).** As an additive group,
-> $\mathbb{Z}[1/2]$ is not finitely generated: $\neg\,\mathrm{AddGroup.FG}(\mathbb{Z}[1/2])$.
->
-> *Proof.* By (FG of subgroup), $\mathrm{AddGroup.FG}(\mathbb{Z}[1/2])$ is
-> equivalent to finite generation of $\mathbb{Z}[1/2]$ as a subgroup of
-> $\mathbb{Q}$, which is exactly Theorem 3.5. ∎
+**Proof sketch.** The overlap equations determine all but the newly appended symbol of an outgoing neighbor, leaving exactly two binary choices. The incoming statement is symmetric: all but the newly prepended symbol are fixed. $\square$
 
----
+This lemma is included to explain the graph algorithmically; the principal inverse-limit results below require only the defining overlap relation.
 
-## 4. Finite nerve graphs and their cohomology
+## 3. Truncation as a bonding map
 
-### 4.1 The nerve graph
+For $n\in\mathbb N$, define the truncation map
 
-We import the combinatorial nerve graph used in the algebra of quantum
-contextuality.
+$$
+\tau_n:W_{n+1}\longrightarrow W_n
+$$
 
-> **Definition 4.1 (`NerveGraph`).** A nerve graph $G$ records natural numbers
-> $|V(G)|$ (vertices), $|E(G)|$ (edges), $c(G)$ (components), subject to
-> $c(G) \le |V(G)|$ and $|E(G)| \le |V(G)|^2$.
+by deleting the final symbol:
 
-> **Definition 4.2 (`NerveGraph.cohomRank`).** The cohomological rank is
-> $$ \beta_1(G) \;=\; \begin{cases} |E(G)| + c(G) - |V(G)|, & |E(G)| + c(G) \ge |V(G)|, \\ 0, & \text{otherwise.} \end{cases} $$
-> This is the (truncated) first Betti number, $\dim H^1(G)$.
+$$
+\tau_n(w_0,w_1,\ldots,w_n)=(w_0,w_1,\ldots,w_{n-1}).
+$$
 
-### 4.2 Cohomology of a nerve graph
+At $n=0$, this map sends either one-letter word to the empty word.
 
-> **Definition 4.3 (`nerveCohomology`).** The first cohomology of $G$ is modeled
-> as the free abelian group of its rank,
-> $$ H^1(G) \;=\; \big(\mathrm{Fin}\,\beta_1(G) \to \mathbb{Z}\big) \;\cong\; \mathbb{Z}^{\beta_1(G)}. $$
+Truncation links adjacent observation scales. It is surjective: every word $w\in W_n$ has two extensions, $(w,0)$ and $(w,1)$. More importantly for the graph structure, truncation respects edges.
 
-> **Theorem 4.4 (`nerveCohomology_fg`).** $H^1(G)$ is finitely generated for every
-> finite nerve graph $G$.
->
-> *Proof.* $\mathrm{Fin}\,\beta_1(G) \to \mathbb{Z}$ is a finite product of copies
-> of $\mathbb{Z}$; such a free abelian group of finite rank is finitely generated
-> (instance resolution). ∎
+**Theorem 3.1 (Edge preservation under truncation).** Let $n\in\mathbb N$, and let $u,v\in W_{n+2}$. If $u\to v$ in $G_{n+1}$, then
 
-This is the structural fact about *all* finite diagrams: their first cohomology is
-always a finitely generated free abelian group.
+$$
+\tau_{n+1}(u)\to\tau_{n+1}(v)
+$$
 
----
+in $G_n$.
 
-## 5. The finite-nerve obstruction
+**Proof.** Write
 
-> **Theorem 5.1 (`solenoid_not_finite_nerve_cohomology`).** For every finite nerve
-> graph $G$ there is no additive group isomorphism between the solenoid's
-> cohomology and $G$'s cohomology:
-> $$ \neg\, \exists\ \big(\, \mathbb{Z}[1/2] \;\simeq_{+}\; H^1(G) \,\big). $$
->
-> *Proof.* Suppose $e : \mathbb{Z}[1/2] \xrightarrow{\ \sim\ } H^1(G)$ is an
-> additive isomorphism. By Theorem 4.4, $H^1(G)$ is finitely generated. The
-> inverse $e^{-1} : H^1(G) \to \mathbb{Z}[1/2]$ is a surjective homomorphism, so by
-> (FG-transport, `AddGroup.fg_of_surjective`) $\mathbb{Z}[1/2]$ is finitely
-> generated. This contradicts Theorem 3.6. ∎
+$$
+u=(u_0,u_1,\ldots,u_{n+1}),
+\qquad
+v=(v_0,v_1,\ldots,v_{n+1}).
+$$
 
-The entire proof is the observation that finite generation is an isomorphism
-invariant, that it holds for $\mathbb{Z}^{\beta_1}$, and that it fails for
-$\mathbb{Z}[1/2]$. The conclusion is universally quantified over all finite nerve
-graphs and is therefore a true no-go statement: not a single finite directed graph
-reproduces the solenoid's first cohomology.
+The hypothesis $u\to v$ in $G_{n+1}$ says
 
-### 5.1 Why a single algebraic invariant suffices
+$$
+u_{i+1}=v_i \qquad \text{for every } 0\le i<n+1.
+$$
 
-It is striking that the obstruction does not require comparing ranks, torsion, or
-any fine structure. A single Boolean invariant — *is the group finitely
-generated?* — already partitions:
+After truncation, the words are
 
-- **finite-diagram side:** $H^1(\text{finite graph}) = \mathbb{Z}^{\beta_1}$, FG;
-- **inverse-limit side:** $H^1(\Sigma_2) = \mathbb{Z}[1/2]$, not FG.
+$$
+\tau_{n+1}(u)=(u_0,u_1,\ldots,u_n),
+$$
 
-Because FG is preserved by isomorphism, the two sides can never coincide. The
-inverse limit is not a notational convenience; it is forced by the algebra.
+and
 
----
+$$
+\tau_{n+1}(v)=(v_0,v_1,\ldots,v_n).
+$$
 
-## 6. Algorithms
+To obtain an edge in $G_n$, it suffices to show
 
-The proofs are constructive enough to drive exact computations. Three algorithms
-turn the theory into machine arithmetic.
+$$
+u_{i+1}=v_i \qquad \text{for every } 0\le i<n.
+$$
 
-### 6.1 Dyadic-membership certificate
+These are among the equalities already supplied by the hypothesis. Therefore truncation sends the given edge to an edge. $\square$
 
-Given a rational $q = a/b$ in lowest terms, decide whether $q \in \mathbb{Z}[1/2]$
-and, if so, return the minimal exponent $k$ with $2^k q \in \mathbb{Z}$. Since
-$2^k q$ is an integer iff $b \mid 2^k$ iff $b$ is a power of two, the algorithm
-strips factors of two from $b$ and checks that nothing remains; the minimal $k$ is
-$v_2(b)$, the $2$-adic valuation of the denominator. Complexity $O(\log b)$.
+The theorem states that coarse observation is dynamically consistent: a transition permitted at fine resolution remains permitted when the final symbol is forgotten.
 
-### 6.2 Bounded-denominator span test (the escapee finder)
+**Corollary 3.2 (Iterated edge preservation).** If an edge between words survives at some fine level, then applying any finite sequence of truncations produces an edge at every lower level for which the words remain nonempty windows.
 
-Given a finite candidate generating set $S \subseteq \mathbb{Z}[1/2]$, compute
-$N = \max_{s \in S} v_2(\text{den}(s))$ and return the witness $1/2^{N+1}$ that
-escapes the span $B_N$. This is the executable core of Theorem 3.5: it produces,
-for any proposed finite generating set, an explicit dyadic number it cannot
-generate.
+**Proof sketch.** Apply Theorem 3.1 repeatedly. Each application removes one final symbol and preserves the edge relation at the next lower order. $\square$
 
-### 6.3 Telescope colimit evaluator
+Consequently, the sequence
 
-Represent an element of $\operatorname{colim}(\mathbb{Z} \xrightarrow{\times 2}
-\cdots)$ as a pair $(n, m)$ meaning "$m$ in the $n$-th copy," and evaluate it to
-the dyadic rational $m / 2^n$. Two pairs $(n_1, m_1)$, $(n_2, m_2)$ represent the
-same element iff $m_1 2^{n_2} = m_2 2^{n_1}$, i.e. equal dyadics. This realizes the
-identification $H^1(\Sigma_2) \cong \mathbb{Z}[1/2]$ as concrete arithmetic and
-exhibits doubling (increment $m \mapsto 2m$ at fixed level, or drop a level) as a
-bijection.
+$$
+\cdots\xrightarrow{\tau_{n+1}}W_{n+1}
+\xrightarrow{\tau_n}W_n
+\xrightarrow{\tau_{n-1}}\cdots
+\xrightarrow{\tau_0}W_0
+$$
 
----
+is not merely a tower of finite sets. When the appropriate de Bruijn structures are placed on consecutive word lengths, its maps preserve directed transitions.
+
+## 4. The binary prefix inverse limit
+
+### 4.1 Compatible threads
+
+**Definition 4.1 (Compatible prefix thread).** A compatible prefix thread is a sequence
+
+$$
+x=(x_0,x_1,x_2,\ldots)
+$$
+
+such that $x_n\in W_n$ for every $n$ and
+
+$$
+\tau_n(x_{n+1})=x_n
+\qquad\text{for every }n\in\mathbb N.
+$$
+
+**Definition 4.2 (Prefix inverse limit).** The prefix inverse limit is
+
+$$
+L=\varprojlim (W_n,\tau_n)
+ =\left\{(x_n)_{n\ge 0}:x_n\in W_n
+ \text{ and }\tau_n(x_{n+1})=x_n\text{ for all }n\right\}.
+$$
+
+An element of $L$ is one object represented coherently at every finite resolution. The compatibility equations imply that whenever $m<n$, the word $x_m$ is obtained by deleting the last $n-m$ symbols of $x_n$.
+
+**Lemma 4.3 (Nested-prefix property).** If $x\in L$ and $m\le n$, then $x_m$ is the length-$m$ prefix of $x_n$.
+
+**Proof sketch.** The compatibility relation handles the case $n=m+1$. Iterating it $n-m$ times deletes the final symbols one at a time, leaving precisely the first $m$ coordinates. $\square$
+
+The inverse limit therefore prohibits arbitrary choices at separate levels. It records a nested chain
+
+$$
+()\preceq x_1\preceq x_2\preceq\cdots,
+$$
+
+where $\preceq$ means “is a prefix of.”
+
+### 4.2 From streams to threads
+
+Let
+
+$$
+\Sigma_2=\mathbb B^{\mathbb N}
+$$
+
+be the set of infinite binary streams. For $s=(s_0,s_1,s_2,\ldots)\in\Sigma_2$, define its length-$n$ prefix by
+
+$$
+p_n(s)=(s_0,s_1,\ldots,s_{n-1})\in W_n.
+$$
+
+Define
+
+$$
+\Phi:\Sigma_2\longrightarrow L,
+\qquad
+\Phi(s)=(p_n(s))_{n\ge 0}.
+$$
+
+**Lemma 4.4 (Prefix compatibility).** For every stream $s\in\Sigma_2$, the family $\Phi(s)$ belongs to $L$.
+
+**Proof.** The word $p_{n+1}(s)$ is
+
+$$
+(s_0,s_1,\ldots,s_{n-1},s_n).
+$$
+
+Deleting its final symbol gives
+
+$$
+(s_0,s_1,\ldots,s_{n-1})=p_n(s).
+$$
+
+Thus $\tau_n(p_{n+1}(s))=p_n(s)$ for every $n$. $\square$
+
+### 4.3 Separation of trajectories
+
+**Theorem 4.5 (Injective stream representation).** The map
+
+$$
+\Phi:\Sigma_2\longrightarrow L
+$$
+
+is injective. Equivalently, distinct infinite binary streams determine distinct compatible prefix threads.
+
+**Proof.** Suppose $\Phi(s)=\Phi(t)$. Fix any index $k\in\mathbb N$. Equality of the two threads implies equality of their words at level $k+1$:
+
+$$
+p_{k+1}(s)=p_{k+1}(t).
+$$
+
+Comparing coordinate $k$ of these two words gives $s_k=t_k$. Since $k$ was arbitrary, the streams agree at every coordinate, hence $s=t$. Therefore $\Phi$ is injective. $\square$
+
+An equivalent contrapositive proof emphasizes finite detection. If $s\ne t$, choose an index $k$ at which they differ. Their prefixes of length $k+1$ then differ, so their inverse-limit threads differ.
+
+**Corollary 4.6 (Infinitude and Cantor family).** The inverse limit $L$ is infinite. More precisely, it contains an injective image of the entire binary stream set $\Sigma_2$.
+
+**Proof.** The set $\Sigma_2$ is infinite; for example, the streams containing a single $1$ at position $k$ and $0$ elsewhere are pairwise distinct as $k$ varies. By Theorem 4.5, their images in $L$ are pairwise distinct. The stronger assertion follows directly from the injectivity of $\Phi$. $\square$
+
+The terminology “Cantor family” refers to the standard fact that $\Sigma_2$, when given the product topology of discrete two-point spaces, is Cantor space. The results above are set-theoretic and combinatorial. They do not yet equip $L$ with a topology or assert that $\Phi$ is a homeomorphism.
+
+### 4.4 The expected reverse map
+
+The nested-prefix property suggests an inverse construction. Given $x\in L$, define a stream by reading the last newly visible coordinate at each level:
+
+$$
+\Psi(x)_k=(x_{k+1})_k.
+$$
+
+Compatibility implies that every later word $x_n$ with $n>k$ has the same value in coordinate $k$. One therefore expects $\Phi$ and $\Psi$ to be mutually inverse. Establishing this equivalence, and then its topological refinement, is a natural continuation. The present main conclusions require only the proved direction $\Phi$ and its injectivity.
+
+## 5. Algorithms
+
+### 5.1 Enumerating finite levels
+
+To construct $W_n$, enumerate integers $0,1,\ldots,2^n-1$ and write each in binary using exactly $n$ bits. This requires output space $\Theta(n2^n)$, which is unavoidable because there are $2^n$ words and each has length $n$.
+
+A direct construction of all edges compares every ordered pair of vertices and costs $O(n4^{n+1})$. Lemma 2.3 gives a better algorithm: for each word, shift left and append either $0$ or $1$. It produces exactly $2^{n+2}$ directed edges of $G_n$ in time $O(n2^{n+1})$ if words are copied explicitly, or $O(2^{n+1})$ word operations with packed bit representations.
+
+### 5.2 Checking an edge
+
+Given $u,v\in W_{n+1}$, test $u_{i+1}=v_i$ for $0\le i<n$. The running time is $O(n)$ and the extra space is $O(1)$ beyond the input representation.
+
+### 5.3 Checking compatibility
+
+Given a finite candidate thread
+
+$$
+(x_0,x_1,\ldots,x_N),
+$$
+
+first verify $|x_n|=n$. Then check
+
+$$
+x_{n+1}[0:n]=x_n
+$$
+
+for every $0\le n<N$. Explicit comparison costs
+
+$$
+O\left(\sum_{n=0}^{N-1}n\right)=O(N^2).
+$$
+
+If the words are stored persistently so each prefix shares structure with its extension, compatibility can be checked in $O(N)$ link checks.
+
+### 5.4 Finding the separation level
+
+For two finite stream samples $s$ and $t$, scan coordinates until the first disagreement $k$. Their compatible threads agree through level $k$ and first differ at level $k+1$. The scan costs $O(k+1)$ time and constant extra space. If no disagreement appears in the available sample, one may conclude only that the sampled prefixes agree, not that the infinite streams are identical.
+
+## 6. Numerical examples
+
+### 6.1 A periodic stream
+
+Consider the periodic stream
+
+$$
+s=01010101\cdots.
+$$
+
+Its first six prefixes are
+
+$$
+(),\quad (0),\quad (0,1),\quad (0,1,0),\quad
+(0,1,0,1),\quad (0,1,0,1,0).
+$$
+
+Each prefix truncates to its predecessor. Sliding a window of length $3$ along the stream alternates between vertices $010$ and $101$ of $G_2$, using the edges
+
+$$
+010\to101\to010.
+$$
+
+Thus a periodic symbolic orbit appears as a directed cycle in a finite de Bruijn graph.
+
+### 6.2 Delayed separation
+
+Let
+
+$$
+s=001011\cdots,
+\qquad
+t=001111\cdots.
+$$
+
+The streams first differ at index $3$. Their prefixes agree at levels $0,1,2,$ and $3$:
+
+$$
+(),\quad (0),\quad (0,0),\quad (0,0,1).
+$$
+
+At level $4$ they become
+
+$$
+(0,0,1,0)\ne(0,0,1,1).
+$$
+
+This example illustrates the separation theorem: no fixed shallow level need distinguish two streams, but the full tower detects their first disagreement.
+
+### 6.3 Finite-level growth
+
+For depths $n=0$ through $10$, the vertex counts are
+
+$$
+1,2,4,8,16,32,64,128,256,512,1024.
+$$
+
+The model remains finite at every stage, but increasing depth by one doubles the state count. This exponential cost is the computational price of retaining every unrestricted binary history.
 
 ## 7. Applications and interpretation
 
-**Exactness in place of estimation.** Replacing an estimated fractal dimension by
-an exactly computed cohomology group changes the epistemic status of statements
-about attractor complexity from "measured within error bars" to "proved." The
-non-finite-generation of $\mathbb{Z}[1/2]$ is a hard structural theorem, not a
-numerical observation.
+### 7.1 Symbolic dynamics
 
-**Certifying the necessity of inverse limits.** The modeling of hyperbolic
-attractors as inverse limits is widespread; Theorem 5.1 certifies that for the
-solenoid the limit is *not* dispensable — no finite truncation has the right
-cohomology. This is a precise answer to the question "do we really need the
-infinite tower?"
+A symbolic dynamical system consists of allowed sequences over a finite alphabet together with the left shift
 
-**A cross-domain bridge.** The same first-cohomology functor governs the nerve
-graphs of quantum contextuality (where $\beta_1 = \mathrm{cohomRank}$ measures a
-form of contextual/entanglement depth) and the cohomology of chaotic attractors.
-The obstruction theorem is therefore a literal bridge: a Physics invariant and an
-Applications invariant are compared and shown incompatible by one abelian-group
-fact.
+$$
+\sigma(s)_i=s_{i+1}.
+$$
 
----
+The full binary shift allows every binary stream. De Bruijn graphs encode the finite windows through which the shift moves: an edge corresponds exactly to deleting the first symbol of a window and appending a new final symbol. The inverse-limit construction uses a different deletion, namely removal of the final symbol, to organize resolutions. These two operations are complementary: one advances time, while the other coarsens observation.
+
+A future conjugacy theorem should define the induced shift on compatible threads and show
+
+$$
+\Phi\circ\sigma=\widehat{\sigma}\circ\Phi.
+$$
+
+This would promote the current set-theoretic encoding to a dynamical equivalence once the reverse map is established.
+
+### 7.2 Subshifts of finite type
+
+Real systems rarely permit every binary itinerary. A finite transition matrix can forbid selected adjacent symbols or longer blocks, producing a subshift of finite type. The same architecture applies after restricting $W_n$ to admissible words and retaining only admissible overlaps. The principal obligations are then to show that truncation preserves admissibility and to characterize which compatible threads arise.
+
+This extension is essential for applications to attractors. A Markov partition of a dynamical system usually yields a constrained transition graph, not the unrestricted binary shift.
+
+### 7.3 Data reconstruction and sequence assembly
+
+The overlap rule is the same combinatorial mechanism used in sequence assembly. Short observed blocks are vertices or edges, and overlaps indicate possible concatenations. A compatible inverse-limit thread idealizes observations available at every length. Injectivity says that complete nested prefix data uniquely identifies the underlying infinite sequence.
+
+In practical data settings only finitely many noisy observations are available. The exact theory supplies a baseline: ambiguity comes from finite depth, missing observations, or noise, rather than from the coherent prefix representation itself.
+
+### 7.4 Strange attractors
+
+To apply the construction to a strange attractor, one seeks a finite partition of a suitable invariant set. Labeling visited regions produces symbolic itineraries. If the partition is generating, arbitrarily long symbolic records distinguish relevant trajectories up to the intended equivalence. Finite transition graphs then approximate the dynamics.
+
+The current theorems establish four properties desired of such an approximation scheme: finite levels, explicit growth, consistency under coarsening, and separation of unrestricted symbolic histories. They do not establish a generating partition for any named attractor. In particular, no conclusion about the topology or Čech cohomology of the Lorenz attractor follows without a Lorenz-specific construction.
 
 ## 8. Discussion
 
-The slogan of the development is "**chaos $\Rightarrow$ non-finite-generation**."
-The dyadic group $\mathbb{Z}[1/2]$ is the certificate: it is the exact first Čech
-cohomology of the solenoid, it carries the invertible doubling symmetry that marks
-it as a colimit, and its failure of finite generation is the obstruction to any
-finite-graph model. The proofs are short once the finite-generation plumbing is
-named, but the conclusion is strong and not vacuous: a strict negation with an
-explicit witness ($1/2^{N+1}$), universally quantified over finite graphs.
+The inverse limit reconciles finite models with infinite information. Every component $W_n$ is finite, but an inverse-limit point contains one compatible component at every depth. The cardinality of each level alone does not measure the size of the limit; coherence across infinitely many levels can support a continuum-like family of histories.
 
-The development is deliberately minimal in its hypotheses. Theorem 5.1 needs only
-(i) the cohomology of finite graphs is FG and (ii) the solenoid's cohomology is
-not FG; everything else is the standard transport of FG across isomorphism.
+The proof of injectivity is elementary because the bonding maps are tailored to prefixes. Its significance lies in architectural clarity. Any attempt to approximate chaotic dynamics by finite graphs must confront information loss. Here a finite level forgets all symbols beyond its horizon, but the entire inverse system loses none of them: coordinate $k$ is recoverable at level $k+1$.
 
----
+The graph and inverse-limit structures play distinct roles. De Bruijn edges encode temporal consistency of overlapping windows. Truncation encodes consistency across resolutions. The edge-preservation theorem connects them, showing that temporal admissibility survives coarsening. This two-axis picture—time evolution within levels and resolution change between levels—is a useful template for richer systems.
 
-## 9. Future directions
+Several limitations should remain explicit. First, only a binary alphabet is considered, although the construction extends directly to any finite alphabet of size $q$, replacing $2^n$ by $q^n$. Second, the stream-to-limit map is proved injective but not here proved surjective. Third, topology is not yet placed on the inverse limit. Fourth, no graph cohomology or Čech cohomology is computed. Fifth, no concrete smooth dynamical system is linked to the graph tower.
 
-Derived from the cycle's findings (files `InverseLimit.lean`, `DyadicSolenoid.lean`,
-`LorenzTransversal.lean`, `CohomologyObstruction.lean`); target category:
-cross-domain bridge (dynamical systems ↔ category theory / algebraic topology ↔
-abelian-group algebra). The cycle established a reusable inverse-limit engine,
-computed the dyadic solenoid's first cohomology as the non-finitely-generated group
-$\mathbb{Z}[1/2]$, realised the Cantor transversal as an inverse limit of finite
-cyclic graphs, and proved that no finite nerve graph reproduces the solenoid's
-cohomology. The following conjectures push these results outward.
+These limitations define the boundary between the established finite-prefix theory and the larger attractor program.
 
-**1. $p$-adic generalization of the transversal.** For every prime $p$, the
-inverse limit of $\mathbb{Z}/p^n\mathbb{Z}$ with reduction bonding maps is
-infinite, and the corresponding cohomology $\mathbb{Z}[1/p]$ is not finitely
-generated; moreover $\mathbb{Z}[1/p] \simeq_+ \mathbb{Z}[1/q]$ iff $p = q$. The key
-insight is that the obstruction to finite generation is *one* unbounded prime in
-the denominators, so the prime is an isomorphism invariant of the limit. The
-`Dyadic`/`boundedDen` machinery is $p$-agnostic — replacing $2$ by $p$ reuses every
-lemma, and FG transport already gives the rigidity half.
+## 9. Future work
 
-**2. Mixed-radix (Lorenz/Hénon two-branch) solenoids.** The inverse limit of the
-alternating system $\mathbb{Z}/a_0 \leftarrow \mathbb{Z}/(a_0 a_1) \leftarrow
-\cdots$ for a sequence $a_i \ge 2$ has cohomology equal to the localization of
-$\mathbb{Z}$ at the set of partial products, and it is finitely generated iff the
-sequence $a_i$ is eventually $1$ (trivial branching). The Lorenz template's
-two-branch return map is exactly a mixed-radix odometer, so branching
-multiplicities become localization primes. `InvSystem` already allows arbitrary
-stage objects/bonding maps, so the mixed-radix tower is a direct instantiation;
-only the colimit identification is new.
+The next step is to regard each finite level as a bundled directed graph and each truncation as a graph homomorphism, then verify the inverse-system identities categorically. This will make the universal property of the inverse limit available.
 
-**3. König nonemptiness without surjectivity.** The inverse limit of a system of
-finite nonempty sets with arbitrary (not necessarily surjective) bonding maps is
-nonempty. Finiteness lets the eventual images stabilize (Mittag-Leffler), so a
-surjective subsystem can be extracted and fed to `InvLimit.nonempty_of_surjective`.
-The missing step is a purely finitary stabilization lemma provable by `Nat`
-well-ordering on descending image cardinalities.
+A second task is to define the reverse map $\Psi:L\to\Sigma_2$, prove that it is inverse to $\Phi$, and equip both spaces with their natural topologies. The binary stream space carries the product topology, while the inverse limit inherits the subspace topology from $\prod_n W_n$ with each $W_n$ discrete. The expected homeomorphism would imply compactness, total disconnectedness, perfectness, and standard cardinality properties.
 
-**4. Functoriality and an honest inverse-limit functor.** `InvLimit` extends to a
-functor from the category of inverse systems (with level-wise commuting maps) to
-types, sending level-wise surjections to surjections and level-wise injections to
-injections. `proj` is already natural in the system, so the universal property is
-one `funext` away; `InvLimit.ext` (threads determined by projections) is exactly
-the uniqueness needed.
+A third direction is cohomological. One may define cochain groups on finite graph approximants, calculate maps induced by truncation, and study their direct limit. Such calculations could connect graph-level algebra with Čech-type invariants of an inverse-limit space.
 
----
+A fourth direction is dynamical. The shift on streams should induce a map on threads, and the stream-thread equivalence should intertwine them. Restricting to subshifts of finite type would make the model responsive to forbidden transitions.
+
+Finally, a Lorenz-specific comparison requires a precise Lorenz map or template, a verified Markov partition, and a transition graph. Only then can one compare its inverse limit and Čech cohomology with the abstract construction. Similar care would be needed for Hénon or Rössler dynamics.
 
 ## 10. Conclusion
 
-We have treated a chaotic attractor as an algebraic object and reaped an exact,
-machine-checked dividend. The dyadic solenoid's first Čech cohomology is the dyadic
-rationals $\mathbb{Z}[1/2]$; doubling is invertible there; the group is not finitely
-generated; and therefore no finite directed graph has matching cohomology. The
-inverse limit is mathematically necessary, certified by a single algebraic
-invariant that cleanly separates finite diagrams from genuine chaos.
+Binary words, de Bruijn overlaps, and final-symbol truncation produce a coherent tower of finite directed graphs. Level $n$ has exactly $2^n$ words. Truncation preserves graph edges. Compatible choices across all levels form an inverse limit, and every infinite binary stream maps to its family of prefixes. Equality of those families forces coordinatewise equality of the streams, so the map is injective and the limit contains a full Cantor family of symbolic trajectories.
+
+The construction does not replace the geometric analysis of strange attractors. It isolates a rigorous algebraic mechanism by which infinitely detailed dynamics can be retained in a hierarchy of finite combinatorial observations. That mechanism supplies a clear starting point for topology, cohomology, categorical inverse limits, and system-specific symbolic models.
