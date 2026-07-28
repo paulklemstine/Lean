@@ -1545,46 +1545,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 1443bb24 (Q=0.791), which proved 19 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_1443bb24_5e98c56e",
-    "lineage_refs": [],
-    "priority_score": 0.8906999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "1443bb24",
-    "status": "available",
-    "timestamp": "2026-07-27T13:44:25.584304+00:00",
-    "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "a68d3b50",
-    "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0688",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697837+00:00",
-    "title": "Lattice Cryptography: LWE Hardness"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 0268a2b5 (Q=0.790), which proved 14 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domain_bridges": [],
     "domains": [
@@ -2909,6 +2869,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a68d3b50 (Q=0.767), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_a68d3b50_45b09485",
+    "lineage_refs": [],
+    "priority_score": 0.8667599999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a68d3b50",
+    "status": "available",
+    "timestamp": "2026-07-28T06:49:40.513188+00:00",
+    "title": "Deepening: Lattice Cryptography: LWE Hardness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -4192,7 +4171,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "afbe2d9b",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
     "domain_bridges": [],
     "domains": [
@@ -4206,7 +4185,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
   },
@@ -10429,6 +10408,26 @@
     "status": "available",
     "timestamp": "2026-07-27T13:44:21.602529+00:00",
     "title": "1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disj"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe completed development establishes two reusable foundations: an operational\nbound translating finite `ℓ¹` game distance into advantage for every bounded or\nBoolean distinguisher, and affine-uniformity over arbitrary commutative rings\nwhen the multiplier is a unit.\n\nNatural next steps are:\n\n1. **Concrete Dual-Regev syntax and correctness.** Define key generation,\n   encryption, and decryption over `ZMod q`; connect the existing noise and\n   rounding lemmas to a full correctness theorem.\n2. **Probabilistic programs.** Replace explicit finite mass functions by\n   Mathlib probability kernels, proving that pushforward and product\n   constructions agree with the finite model.\n3. **Full IND-CPA reduction.** Instantiate the common-ideal hypotheses with a\n   decisional-LWE oracle reduction and account explicitly for every hybrid hop.\n4. **Cyclotomic ring-LWE.** Specialize the generic finite commutative-ring lemma\n   to quotients `(ZMod q)[X]/(Φ_m)`, characterize units, and define coefficient\n   and canonical embeddings with discrete Gaussian error.\n5. **Lattice geometry.** Replace the abstract successive-minima spectrum by\n   actual Euclidean lattices; formalize dual lattices, smoothing parameters,\n   Gaussian mass bounds, and transference inequalities.\n6. **Quantum reduction.** Formalize the quantum Fourier sampling component and\n   connect bounded-distance decoding to worst-case GapSVP/SIVP. This requires a\n   substantial quantum-circuit and measurement semantics layer beyond the\n   finite game arguments developed here.\n7. **Sharper normalization.** Prove the standard factor-`1/2` total-variation\n   characterization as a supremum over events, yielding tight Boolean\n   distinguishing bounds rather than the deliberately simple `ℓ¹` upper bound.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0790",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a68d3b50",
+    "status": "available",
+    "timestamp": "2026-07-28T06:49:35.404711+00:00",
+    "title": "The completed development establishes two reusable foundations: an operational"
   },
   {
     "ambition_level": "extension",

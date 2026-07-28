@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-27T13:44:25.935976+00:00",
+  "last_updated": "2026-07-28T06:49:40.897398+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -38622,6 +38622,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-27T13:44:25.829821+00:00",
       "title": "Causal Inference: Do-Calculus as Formal Logic"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0535,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 11152.775720834732,
+      "end_time": 1785221309.2321732,
+      "files_integrated": 4,
+      "job_id": "a68d3b50",
+      "outcome_quality": 0.7667599999999999,
+      "phase": "complete",
+      "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.75374,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6935,
+        "cross_domain": 1.0,
+        "grade": "substantial",
+        "importance": 0.5218,
+        "novelty": 0.89,
+        "proof_depth": 0.3639,
+        "usefulness": 0.682
+      },
+      "quality_score": 0.7667599999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785210156.4564524,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-28T06:49:40.785249+00:00",
+      "title": "Lattice Cryptography: LWE Hardness"
     }
   ]
 }

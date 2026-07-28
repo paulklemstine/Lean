@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "939843de",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n## 1. Value-dependent gluing of lattice slices\n\nFor every positive profile and every admissible integer coordinate value, determine an\nexplicit transformed profile whose parking-f",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-22T04:48:51",
-      "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-functi"
-    },
-    {
       "cycle_id": "e24b36f0",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for whic",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-27T13:44:25",
       "title": "Causal Inference: Do-Calculus as Formal Logic"
+    },
+    {
+      "cycle_id": "a68d3b50",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThe completed development establishes two reusable foundations: an operational\nbound translating finite `ℓ¹` game distance into advantage for every bounded or\nBoolean distinguishe",
+      "quality_score": 0.7667599999999999,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-28T06:49:40",
+      "title": "Lattice Cryptography: LWE Hardness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "961be33a",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Scope and main conclusion\n\nThe literal research slogan cannot presently be proved as stated: “theory of everything,” “physics,” and “must” do not specify mathematical predicate",
-      "quality_score": 0.61,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-19T19:32:49",
-      "title": "Categorical Physics: The Shape of a Theory of Everything"
-    },
     {
       "cycle_id": "4c40ce69",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-27T13:44:25",
       "title": "Causal Inference: Do-Calculus as Formal Logic"
+    },
+    {
+      "cycle_id": "a68d3b50",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThe completed development establishes two reusable foundations: an operational\nbound translating finite `ℓ¹` game distance into advantage for every bounded or\nBoolean distinguishe",
+      "quality_score": 0.7667599999999999,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-28T06:49:40",
+      "title": "Lattice Cryptography: LWE Hardness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "901b537c",
-      "domain": "Physics",
-      "name": "saturated_geodesic_capacity",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "901b537c",
-      "domain": "Physics",
-      "name": "geodesic_identity_iff_s",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "7b875dce",
-      "domain": "Tropical",
-      "name": "says",
-      "quality": 0.71
-    },
     {
       "cycle_id": "7b875dce",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "doCalculus_complete",
       "quality": 0.7907
+    },
+    {
+      "cycle_id": "a68d3b50",
+      "domain": "Cryptography",
+      "name": "gap_of_common_ideal",
+      "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "a68d3b50",
+      "domain": "Cryptography",
+      "name": "expectation_sub_le_l1Gap",
+      "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "a68d3b50",
+      "domain": "Cryptography",
+      "name": "boolean_distinguisher_advantage",
+      "quality": 0.7667599999999999
     }
   ],
-  "last_updated": "2026-07-27T13:44:25",
+  "last_updated": "2026-07-28T06:49:40",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "fee59e0b",
-        "quality": 0.69,
-        "theorems": 9,
-        "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-      },
-      {
         "cycle_id": "977e8d8d",
         "quality": 0.74,
         "theorems": 9,
@@ -3389,6 +3383,12 @@
         "quality": 0.6256666666666666,
         "theorems": 18,
         "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
+      },
+      {
+        "cycle_id": "a68d3b50",
+        "quality": 0.7667599999999999,
+        "theorems": 11,
+        "title": "Lattice Cryptography: LWE Hardness"
       }
     ],
     "Geometry": [
