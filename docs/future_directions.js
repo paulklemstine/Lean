@@ -809,16 +809,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FHE-Noise-Growth: Exact Noise Accumulation Bounds in Bootstrapped FHE"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e30c45d",
     "description": "Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
     "domains": [
       "Cryptography"
     ],
     "id": "dir_50_33_8710ae46",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:23.960671+00:00",
     "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
   },
@@ -1174,7 +1175,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "seed_127",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -1708,18 +1709,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
-    "consumed_by_exp_id": "c78fa5e6",
+    "consumed_by_exp_id": "",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domains": [
       "EML",
       "Algebra"
     ],
     "id": "seed_339",
-    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
@@ -7170,7 +7170,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_139",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",

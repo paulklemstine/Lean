@@ -445,11 +445,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3e30c45d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -461,7 +461,7 @@
       ],
       "github_issue": 0,
       "id": "dir_50_33_8710ae46",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-28T09:56:06.826506+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem radical_isogeny_montgomery_eval (E : EllipticCurve (FiniteField (p^2))) (P : Point E) : IsIsogeny (RadicalIsogeny E P)",
       "lineage_refs": [],
@@ -476,7 +476,7 @@
       "source": "",
       "source_exp_id": "batch_50_injection",
       "source_path": "50_new_research_directions.md",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-23T20:05:23.960671+00:00",
       "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
@@ -32600,7 +32600,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c78fa5e6",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -32628,7 +32628,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "",
       "title": "EML Number Theory: Transcendence and Algebraic Independence"
@@ -36716,6 +36716,7 @@
     "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
