@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c612ec41",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-22T18:42:15",
-      "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
-    },
-    {
       "cycle_id": "699db10f",
       "domain": "Computation",
       "key_insight": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-28T17:01:26",
       "title": "Attention is All You Need: Formalizing Transformer Architecture"
+    },
+    {
+      "cycle_id": "3e30c45d",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: radical isogenies on Montgomery curves\n\nThe following conjectures are concrete extensions of the verified degree-two affine formulas. Each can be falsified by an explicit finite f",
+      "quality_score": 0.7689999999999999,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-28T18:55:07",
+      "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c231497c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## 1. Polynomial extraction for restricted stabilizer witnesses\n\n**Conjecture.** For every verifier whose gates and witnesses are restricted to the stabilizer fragment, every acce",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-19T22:02:51",
-      "title": "Quantum Proofs of Classical Theorems"
-    },
     {
       "cycle_id": "cb3d5d14",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-07-28T17:01:26",
       "title": "Attention is All You Need: Formalizing Transformer Architecture"
+    },
+    {
+      "cycle_id": "3e30c45d",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: radical isogenies on Montgomery curves\n\nThe following conjectures are concrete extensions of the verified degree-two affine formulas. Each can be falsified by an explicit finite f",
+      "quality_score": 0.7689999999999999,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-07-28T18:55:07",
+      "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ce71f394",
-      "domain": "Applications",
-      "name": "hasDerivAt_expLogProduct_factored",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "ce71f394",
-      "domain": "Applications",
-      "name": "proposed_factorization_counterexample",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "735a1ab0",
-      "domain": "MachineLearning",
-      "name": "residualIterate_norm_bound",
-      "quality": 0.75
-    },
     {
       "cycle_id": "735a1ab0",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "bilinearScore_add_key",
       "quality": 0.8002199999999999
+    },
+    {
+      "cycle_id": "3e30c45d",
+      "domain": "Cryptography",
+      "name": "twoQuotient_factor",
+      "quality": 0.7689999999999999
+    },
+    {
+      "cycle_id": "3e30c45d",
+      "domain": "Cryptography",
+      "name": "radicalTwoEval_on_curve",
+      "quality": 0.7689999999999999
+    },
+    {
+      "cycle_id": "3e30c45d",
+      "domain": "Cryptography",
+      "name": "radicalTwoEval_x_inversion",
+      "quality": 0.7689999999999999
     }
   ],
-  "last_updated": "2026-07-28T17:01:26",
+  "last_updated": "2026-07-28T18:55:07",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "977e8d8d",
-        "quality": 0.74,
-        "theorems": 9,
-        "title": "Speculative: Topological Data Analysis of Theorem Networks"
-      },
-      {
         "cycle_id": "939843de",
         "quality": 0.71,
         "theorems": 10,
@@ -3389,6 +3383,12 @@
         "quality": 0.7667599999999999,
         "theorems": 11,
         "title": "Lattice Cryptography: LWE Hardness"
+      },
+      {
+        "cycle_id": "3e30c45d",
+        "quality": 0.7689999999999999,
+        "theorems": 23,
+        "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
       }
     ],
     "Geometry": [
