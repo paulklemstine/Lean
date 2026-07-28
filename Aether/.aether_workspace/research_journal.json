@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e24b36f0",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions for Exotic Positional Arithmetic\n\n## 1. Canonical binary expansions in imaginary quadratic rings\n\n**Conjecture.** Classify all quadratic algebraic integers `β` of norm two for whic",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 45,
-      "timestamp": "2026-07-22T09:46:29",
-      "title": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-    },
-    {
       "cycle_id": "3511fbf3",
       "domain": "Computation",
       "key_insight": "# Future Directions: Tangled Hierarchies in Type Theory\n\n## 1. Rankability Characterizes Predicative Dependency\n\n**Conjecture.** Every countable dependency relation that is well-founded and has finite",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-28T06:49:40",
       "title": "Lattice Cryptography: LWE Hardness"
+    },
+    {
+      "cycle_id": "38d3a014",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n- Formalize periodic configurations `Fin n → Bool` and count fixed points for\n  every rule and small period `n` with kernel-checked finite enumeration.\n- Represent local Boolean f",
+      "quality_score": 0.7097100000000001,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-28T12:20:33",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4c40ce69",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe formal development establishes three robust conclusions for precise counterfactual models:\n\n1. the Cramér density series diverges even on every fixed nonconstant arithmetic pr",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:08:35",
-      "title": "Counterfactual Number Theory: What If Primes Were Random?"
-    },
     {
       "cycle_id": "af530f4e",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-28T06:49:40",
       "title": "Lattice Cryptography: LWE Hardness"
+    },
+    {
+      "cycle_id": "38d3a014",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n- Formalize periodic configurations `Fin n → Bool` and count fixed points for\n  every rule and small period `n` with kernel-checked finite enumeration.\n- Represent local Boolean f",
+      "quality_score": 0.7097100000000001,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-28T12:20:33",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7b875dce",
-      "domain": "Tropical",
-      "name": "translate_tropical_sum",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "7b875dce",
-      "domain": "Tropical",
-      "name": "principal_coefficients_concave",
-      "quality": 0.71
-    },
-    {
-      "cycle_id": "0d06265a",
-      "domain": "Applications",
-      "name": "eval_subst",
-      "quality": 0.75
-    },
     {
       "cycle_id": "0d06265a",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "boolean_distinguisher_advantage",
       "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "38d3a014",
+      "domain": "Novelty",
+      "name": "rule110_algebraic_normal_form",
+      "quality": 0.7097100000000001
+    },
+    {
+      "cycle_id": "38d3a014",
+      "domain": "Novelty",
+      "name": "rule0_fixed_iff",
+      "quality": 0.7097100000000001
+    },
+    {
+      "cycle_id": "38d3a014",
+      "domain": "Novelty",
+      "name": "rule0_unique_fixed",
+      "quality": 0.7097100000000001
     }
   ],
-  "last_updated": "2026-07-28T06:49:40",
+  "last_updated": "2026-07-28T12:20:33",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f14d2570",
-        "quality": 0.55,
-        "theorems": 10,
-        "title": "ArXiv paper: Online Beck--Fiala Down to Logarithmic Sparsity"
-      },
-      {
         "cycle_id": "a9c9c0c1",
         "quality": 0.67,
         "theorems": 11,
@@ -3637,6 +3631,12 @@
         "quality": 0.6857029702970298,
         "theorems": 202,
         "title": "Infinite Games Against Death: Immortality Strategies"
+      },
+      {
+        "cycle_id": "38d3a014",
+        "quality": 0.7097100000000001,
+        "theorems": 10,
+        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
       }
     ],
     "NumberTheory": [

@@ -1,143 +1,140 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations of finite moonshine-product principles.
-
-The examples use exact rational arithmetic and require only Python's standard
-library. They demonstrate truncated normalized products, character recovery,
-and collisions caused by a noninjective observation map.
-"""
+"""Numerical demonstrations of graded fixed-point averaging and conjugacy invariance."""
 
 from __future__ import annotations
 
-from fractions import Fraction
-from typing import Iterable, Sequence
+from dataclasses import dataclass
+from itertools import combinations, product
+from typing import Callable, Hashable, Iterable, Sequence, TypeVar
 
-Vector = list[Fraction]
-Matrix = list[list[Fraction]]
-
-
-def truncated_convolution(a: Sequence[Fraction], b: Sequence[Fraction], degree: int) -> Vector:
-    """Multiply coefficient lists modulo q**(degree + 1)."""
-    out = [Fraction(0) for _ in range(degree + 1)]
-    for i, ai in enumerate(a[: degree + 1]):
-        for j, bj in enumerate(b[: degree + 1 - i]):
-            out[i + j] += ai * bj
-    return out
+T = TypeVar("T", bound=Hashable)
+Permutation = tuple[int, ...]
 
 
-def normalized_product(factors: Iterable[Sequence[int]], degree: int) -> tuple[int, Vector]:
-    """Return the q-shift and regular coefficients of a normalized product.
+@dataclass(frozen=True)
+class GradeResult:
+    """Fixed-point and orbit data for one finite group action."""
 
-    Every input is the regular factor R_c(q), whose constant coefficient must
-    equal one. The represented moonshine-type factor is q**(-1) R_c(q).
-    """
-    product: Vector = [Fraction(1)] + [Fraction(0)] * degree
-    count = 0
-    for raw_factor in factors:
-        factor = [Fraction(value) for value in raw_factor]
-        if not factor or factor[0] != 1:
-            raise ValueError("each regular factor must have constant coefficient 1")
-        product = truncated_convolution(product, factor, degree)
-        count += 1
-    return -count, product
+    name: str
+    object_count: int
+    fixed_counts: tuple[int, ...]
+    orbit_count: int
 
 
-def matrix_rank(matrix: Sequence[Sequence[Fraction]]) -> int:
-    """Compute exact row rank by rational Gaussian elimination."""
-    work = [list(map(Fraction, row)) for row in matrix]
-    if not work:
-        return 0
-    rows, cols = len(work), len(work[0])
-    rank = pivot_col = 0
-    while rank < rows and pivot_col < cols:
-        pivot = next((r for r in range(rank, rows) if work[r][pivot_col] != 0), None)
-        if pivot is None:
-            pivot_col += 1
-            continue
-        work[rank], work[pivot] = work[pivot], work[rank]
-        scale = work[rank][pivot_col]
-        work[rank] = [x / scale for x in work[rank]]
-        for r in range(rows):
-            if r != rank and work[r][pivot_col] != 0:
-                scale = work[r][pivot_col]
-                work[r] = [x - scale * y for x, y in zip(work[r], work[rank])]
-        rank += 1
-        pivot_col += 1
-    return rank
+def apply_permutation(permutation: Permutation, item: tuple[int, ...]) -> tuple[int, ...]:
+    """Act on a tuple of vertex labels and return a canonically sorted tuple."""
+    return tuple(sorted(permutation[index] for index in item))
 
 
-def solve_square(matrix: Sequence[Sequence[Fraction]], vector: Sequence[Fraction]) -> Vector:
-    """Solve a nonsingular square rational system exactly."""
-    n = len(matrix)
-    if n == 0 or any(len(row) != n for row in matrix) or len(vector) != n:
-        raise ValueError("a square matrix and matching vector are required")
-    augmented = [list(map(Fraction, row)) + [Fraction(vector[i])] for i, row in enumerate(matrix)]
-    for col in range(n):
-        pivot = next((r for r in range(col, n) if augmented[r][col] != 0), None)
-        if pivot is None:
-            raise ValueError("character matrix is not injective")
-        augmented[col], augmented[pivot] = augmented[pivot], augmented[col]
-        scale = augmented[col][col]
-        augmented[col] = [x / scale for x in augmented[col]]
-        for r in range(n):
-            if r != col:
-                scale = augmented[r][col]
-                augmented[r] = [x - scale * y for x, y in zip(augmented[r], augmented[col])]
-    return [augmented[i][-1] for i in range(n)]
+def fixed_point_count(
+    objects: Iterable[T], action: Callable[[T], T]
+) -> int:
+    """Count objects fixed by one action map."""
+    return sum(1 for item in objects if action(item) == item)
 
 
-def matvec(matrix: Sequence[Sequence[Fraction]], vector: Sequence[Fraction]) -> Vector:
-    """Multiply a matrix by a vector exactly."""
-    return [sum((Fraction(x) * Fraction(y) for x, y in zip(row, vector)), Fraction(0)) for row in matrix]
+def orbit_partition(
+    objects: Iterable[T], actions: Sequence[Callable[[T], T]]
+) -> list[set[T]]:
+    """Partition a finite set into orbits under the supplied group actions."""
+    unseen = set(objects)
+    orbits: list[set[T]] = []
+    while unseen:
+        seed = next(iter(unseen))
+        orbit = {action(seed) for action in actions}
+        orbits.append(orbit)
+        unseen.difference_update(orbit)
+    return orbits
 
 
-def format_laurent(shift: int, coefficients: Sequence[Fraction]) -> str:
-    """Format a shifted coefficient list as a Laurent polynomial."""
-    terms: list[str] = []
-    for k, coefficient in enumerate(coefficients):
-        if coefficient == 0:
-            continue
-        exponent = shift + k
-        terms.append(f"({coefficient})q^{exponent}")
-    return " + ".join(terms) if terms else "0"
+def analyze_grade(
+    name: str, objects: Sequence[T], actions: Sequence[Callable[[T], T]]
+) -> GradeResult:
+    """Compute both sides of Burnside's coefficient identity for one grade."""
+    fixed = tuple(fixed_point_count(objects, action) for action in actions)
+    orbits = orbit_partition(objects, actions)
+    assert sum(fixed) == len(actions) * len(orbits)
+    return GradeResult(name, len(objects), fixed, len(orbits))
 
 
-def demo_product() -> None:
-    """Show that three normalized factors produce a leading q^(-3)."""
-    shift, coefficients = normalized_product([[1, 1], [1, 2], [1, -1, 1]], degree=4)
-    print("Normalized product demo")
-    print(" shift:", shift)
-    print(" regular coefficients:", coefficients)
-    print(" Laurent expansion:", format_laurent(shift, coefficients))
-    assert shift == -3 and coefficients[0] == 1
+def square_rotation_demo() -> list[GradeResult]:
+    """Analyze vertices and vertex pairs under the four rotations of a square."""
+    rotations: tuple[Permutation, ...] = tuple(
+        tuple((vertex + shift) % 4 for vertex in range(4)) for shift in range(4)
+    )
+    vertex_actions = [lambda x, p=p: p[x] for p in rotations]
+    pair_actions = [lambda x, p=p: apply_permutation(p, x) for p in rotations]
+    vertices = list(range(4))
+    pairs = list(combinations(range(4), 2))
+    return [
+        analyze_grade("single vertices", vertices, vertex_actions),
+        analyze_grade("unordered vertex pairs", pairs, pair_actions),
+    ]
 
 
-def demo_reconstruction() -> None:
-    """Recover multiplicities from an invertible two-character table."""
-    table: Matrix = [[Fraction(1), Fraction(1)], [Fraction(1), Fraction(-1)]]
-    multiplicities: Vector = [Fraction(3), Fraction(2)]
-    traces = matvec(table, multiplicities)
-    recovered = solve_square(table, traces)
-    print("\nCharacter reconstruction demo")
-    print(" rank:", matrix_rank(table), "traces:", traces, "recovered:", recovered)
-    assert recovered == multiplicities
+def rotate_coloring(coloring: tuple[int, ...], shift: int) -> tuple[int, ...]:
+    """Rotate a cyclic coloring by ``shift`` positions."""
+    size = len(coloring)
+    result = [0] * size
+    for index, color in enumerate(coloring):
+        result[(index + shift) % size] = color
+    return tuple(result)
 
 
-def demo_collision() -> None:
-    """Exhibit two multiplicity vectors hidden by a rank-one encoding."""
-    partial_table: Matrix = [[Fraction(1), Fraction(1)]]
-    first: Vector = [Fraction(3), Fraction(2)]
-    second: Vector = [Fraction(4), Fraction(1)]
-    first_trace = matvec(partial_table, first)
-    second_trace = matvec(partial_table, second)
-    print("\nNoninjective collision demo")
-    print(" rank:", matrix_rank(partial_table), "images:", first_trace, second_trace)
-    assert first != second and first_trace == second_trace
+def necklace_orbit_count(length: int, colors: int) -> tuple[tuple[int, ...], int]:
+    """Count cyclic colorings by fixed-point averaging and direct orbits."""
+    colorings = list(product(range(colors), repeat=length))
+    actions = [lambda x, s=s: rotate_coloring(x, s) for s in range(length)]
+    result = analyze_grade(
+        f"{colors}-color necklaces of length {length}", colorings, actions
+    )
+    return result.fixed_counts, result.orbit_count
+
+
+def permutation_inverse(permutation: Permutation) -> Permutation:
+    """Return the inverse of a finite permutation."""
+    inverse = [0] * len(permutation)
+    for source, target in enumerate(permutation):
+        inverse[target] = source
+    return tuple(inverse)
+
+
+def compose(left: Permutation, right: Permutation) -> Permutation:
+    """Compose permutations as left after right."""
+    return tuple(left[right[index]] for index in range(len(left)))
+
+
+def conjugacy_demo() -> tuple[int, int]:
+    """Verify equal fixed counts for conjugate transpositions in S3."""
+    g: Permutation = (1, 0, 2)  # (0 1)
+    h: Permutation = (1, 2, 0)  # (0 1 2)
+    conjugate = compose(compose(h, g), permutation_inverse(h))
+    points = list(range(3))
+    fixed_g = fixed_point_count(points, lambda x: g[x])
+    fixed_conjugate = fixed_point_count(points, lambda x: conjugate[x])
+    assert fixed_g == fixed_conjugate
+    return fixed_g, fixed_conjugate
 
 
 def main() -> None:
-    demo_product()
-    demo_reconstruction()
-    demo_collision()
+    """Run all demonstrations and print readable certificates."""
+    print("Square rotations, grade by grade")
+    for result in square_rotation_demo():
+        total = sum(result.fixed_counts)
+        print(
+            f"  {result.name}: |X|={result.object_count}, "
+            f"fixed={result.fixed_counts}, sum={total}, "
+            f"sum/|G|={total // 4}, orbits={result.orbit_count}"
+        )
+
+    print("\nBinary necklaces")
+    for length in range(1, 9):
+        fixed, orbits = necklace_orbit_count(length, 2)
+        print(f"  length={length}: fixed={fixed}, orbit count={orbits}")
+
+    left, right = conjugacy_demo()
+    print("\nConjugacy invariance in S3")
+    print(f"  conjugate transpositions have fixed counts {left} and {right}")
 
 
 if __name__ == "__main__":
