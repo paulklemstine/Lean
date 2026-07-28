@@ -1409,17 +1409,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Odd Perfect Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9da9b807",
     "description": "Prove that every polynomial map F: C\u207f \u2192 C\u207f with Jacobian determinant 1 has a polynomial inverse. Formalize known reductions (degree 3 suffices) and connections to Dixmier and Kellers problems.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "seed_034",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Jacobian Conjecture"
   },
@@ -2586,7 +2587,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Computational Complexity of Alien Civilizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "627f5167",
     "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
     "domains": [
       "Novelty",
@@ -2594,10 +2595,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_285",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Reflective Type Theory: Proving Things About Proving Things"
   },
@@ -3018,17 +3020,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
   {
-    "consumed_by_exp_id": "8179313d",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 6a88207a (Q=0.750), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynam",
     "domains": [
       "Novelty"
     ],
     "id": "push_6a88207a_4a7af066",
-    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "6a88207a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-26T05:37:18.961896+00:00",
     "title": "Deepening: The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
@@ -3151,23 +3152,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "EML Universal Approximation"
-  },
-  {
-    "consumed_by_exp_id": "afbe2d9b",
-    "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
-    "domains": [
-      "Geometry",
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "seed_075",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
   },
   {
     "consumed_by_exp_id": "",
@@ -7754,17 +7738,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Let `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n <"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e68f39b0",
     "description": "# Future directions\n\n## Completed formal result\n\n`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a\nprecise order parameter.  For natural-valued counts `provable n` and\n`unprovable n`, it defines\n\n- the rational provable fraction\n  `provable n / (provable n + unprovable n)`, and\n- the integer imbalance `provable n - unprovable n`.\n\nIf every sampled cutoff has positive total count, the imbalance is strictly\ndecreasing through a finite horizon `N`, and the final imbalance is\nnonpositive, then there is a unique first cutoff at which the order parameter\nis at most one half.  Every earlier cutoff is above one half and every later\ncutoff through `N` is strictly below one half.  The development also proves:\n\n1. existence and uniqueness of a first sign-change cutoff;\n2. permanence of the transition under strict decrease;\n3. exact equivalences between count inequalities and crossing one half;\n4. a linear decay bound for integer-valued strict descent; and\n5. an upper bound on the first threshold in terms of initial imbalance.\n\nThe proofs are complete and contain no unproved placeholders.\n\n## Scope of the result\n\nThis is a conditional finite-order theorem, not an encoding-independent theorem\nabout PA, ZFC, or another concrete formal system.  G\u00f6del incompleteness supplies\nunprovable sentences, but by itself does not imply strict decrease of a density,\na sharp threshold, or a power-law distribution of theorem lengths.  Those\nclaims depend on a syntax, a length function, a provability predicate, and a\nsampling measure.  Computable recodings can substantially alter raw length\nstatistics.\n\nThe repository also contained an unfinished, unrelated Fibonacci primitive\n divisor declaration whose proof stopped beyond a finite computation.  Its\nformal statement is now accurately restricted to the certified range\n`13 \u2264 n \u2264 10000`; dependent declarations were updated to carry that bound.\nThe unbounded Fibonacci theorem is not claimed by this development.\n\n## Computational evidence\n\nNo independent numerical evidence is appropriate for the abstract transition\ntheorem.  Its conclusion follows symbolically from its hypotheses, while the\nmission does not specify a concrete formula grammar, coding, proof calculus, or\nbounded proof-search algorithm from which numerical counts could be generated.\nWithout those choices, a table, plot, or OEIS comparison would describe an\narbitrary encoding rather than evidence for the proposed logical phenomenon.\nThe finite Fibonacci range used elsewhere in the repository is certified inside\nLean by its existing decidable computation.\n\n## Next formal targets\n\n1. **Concrete syntax and proof checking.** Define a finite alphabet, grammar,\n   formula-length function, deductive system, and bounded proof checker.  Use\n   finite sets to define cumulative provable and unresolved counts.\n2. **Shell-versus-cumulative analysis.** Relate strict decrease of cumulative\n   imbalance to the excess of unresolved formulas in each exact-length shell.\n3. **Transition windows.** Replace pointwise strict descent by negative drift on\n   blocks, and prove bounds on the width and location of a crossing window.\n4. **Robustness under recoding.** Prove controlled distortion of lengths under\n   prefix-free computable translations before treating a threshold as an\n   intrinsic invariant.\n5. **Probabilistic formulation.** Put an explicit measure on formulas and state\n   concentration inequalities.  This would distinguish a deterministic first\n   crossing from a statistical sharp threshold.\n6. **Arithmetized syntax.** Connect finite bounded proof search to a\n   machine-checked incompleteness theorem.  Additional quantitative hypotheses\n   will still be required to infer density behavior.\n7. **Length distributions.** State any power-law claim with finite-range error\n   bounds and coding assumptions.  A relation to Hausdorff dimension requires a\n   separately defined metric space of proofs or proof trees and an invariance\n   theorem connecting that metric to the chosen encoding.\n",
     "domains": [
       "Logic",
       "Computation"
     ],
     "id": "fd_0782",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "27eaed26",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-27T02:02:54.037390+00:00",
     "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
   },
@@ -7856,6 +7841,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T12:21:03.386066+00:00",
     "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal result shows that the unmodified Cauchy kernel on a unit sphere has a deterministic floor of `1/5`; hence randomness alone cannot produce near-zero weights below that threshold. The following conjectures describe concrete modifications or sharper distributional questions.\n\n1. **Dimension-dependent powered-kernel sparsity.** Let `q,k\u2081,\u2026,k_N` be independent and uniform on `S^{d-1}`, and set `K_p(q,k) = (1 + \u2016q-k\u2016\u00b2)^{-p}`. For every fixed threshold `\u03c4 \u2208 (0,1)` and exponent `p \u2265 c d log N`, the expected number of indices with `K_p(q,k\u1d62) \u2265 \u03c4` is at most `C\u221aN`, for explicit universal constants `c,C`. This can be falsified by evaluating the exact spherical-cap probability.\n\n2. **Bandwidth-scaled kernel sparsity.** For `K_\u03b2(q,k) = (1 + \u03b2\u2016q-k\u2016\u00b2)^{-1}` with uniform points on `S^{d-1}`, there is an explicit scale `\u03b2 = \u03b2(d,N,\u03c4)` for which the expected number of weights at least `\u03c4` lies between `c\u221aN` and `C\u221aN`. The proposed scale should be tested against the spherical-cap measure determined by `\u2016q-k\u2016\u00b2 \u2264 (\u03c4\u207b\u00b9-1)/\u03b2`.\n\n3. **High-probability active-count concentration.** Under the scale from Conjecture 2, the number of weights at least `\u03c4` is within a constant factor of its expectation with probability at least `1-N^{-2}`. Since the conditional active indicators are independent given the query, this reduces to a concrete binomial concentration bound once the cap probability is fixed.\n\n4. **Top-k approximation error.** For the bandwidth-scaled kernel in Conjecture 2, retaining the largest `\u2308C\u221aN\u2309` normalized weights yields total discarded mass at most `\u03b5` with probability at least `1-N^{-2}`, for a bandwidth `\u03b2(d,N,\u03b5)` specified in advance. A counterexample consists of a sampled configuration whose normalized tail mass exceeds `\u03b5`.\n\n5. **Universality after positive bandwidth scaling.** On every compact subset of Euclidean query/key space, attention networks using finite positive mixtures of kernels `(1 + \u03b2\u2016q-k\u2016\u00b2)^{-1}` are dense in the same continuous permutation-equivariant function class as standard attention networks. This is falsifiable by exhibiting a continuous permutation-equivariant target separated by a positive uniform distance from all such networks.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0793",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "afbe2d9b",
+    "status": "available",
+    "timestamp": "2026-07-28T14:47:04.857986+00:00",
+    "title": "The formal result shows that the unmodified Cauchy kernel on a unit sphere has a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Finite-cover gluing.** Extend the two-set theorem in\n   `Catalog/Algebra/SheafDatabaseGluing.lean` to finite families of column sets,\n   proving that pairwise-compatible local records have a unique section on the\n   union.\n\n2. **Restriction maps and a bundled sheaf.** Package `LocalSection` as a\n   presheaf on the poset of column subsets, prove the identity and composition\n   laws for restrictions, and derive the sheaf condition from the concrete\n   gluing theorem.\n\n3. **Separate missingness from conflict.** Define a generative probability\n   model with (a) a distribution on ground-truth records, (b) a missingness\n   mechanism, and (c) optional noisy/conflicting observations. The expression\n   `(1-r)^C` should only be asserted after proving independence and identifying\n   the per-constraint failure probability; a cell-missing rate alone does not\n   imply that law.\n\n4. **Constraint dependence.** Pairwise overlap events commonly share columns\n   and therefore need not be independent. Formalize the dependency graph and\n   derive exact probabilities or rigorous upper/lower bounds instead of an\n   unconditional product formula.\n\n5. **Optimization formulation.** For finite columns and normed value spaces,\n   define a loss between partial observations and global sections. Prove that\n   minimizing over global sections is equivalent to minimizing subject to all\n   restriction/overlap equations. Existence of a nearest section will require\n   suitable finiteness, compactness, or coercivity assumptions.\n\n6. **Statistical comparisons.** Claims that one imputation method outperforms\n   mean, KNN, or MICE require a data-generating distribution, loss function,\n   hyperparameter policy, and evaluation protocol. Formalizable first steps\n   include defining expected reconstruction loss and proving comparisons in a\n   small, explicit latent-variable model. Conditions `r < 0.5` and `n > 10`\n   alone are insufficient for a universal dominance theorem.\n\n7. **Cohomological obstructions.** For richer data sheaves where compatible\n   local data may fail to extend globally, define \u010cech cochains for a finite\n   cover and connect nonzero obstruction classes to failed integration. The\n   dependent-record sheaf proved here has unconditional gluing after overlap\n   agreement, so its higher obstruction theory is correspondingly simple.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0794",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "eae986b3",
+    "status": "available",
+    "timestamp": "2026-07-28T14:47:12.312702+00:00",
+    "title": "1. **Finite-cover gluing.** Extend the two-set theorem in"
   },
   {
     "consumed_by_exp_id": "",
@@ -8119,24 +8134,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Categorification of Entropy: The Information Loss of Functors"
-  },
-  {
-    "consumed_by_exp_id": "eae986b3",
-    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Computation",
-      "MachineLearning"
-    ],
-    "id": "seed_197",
-    "phase": "A",
-    "priority_score": 0.73,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "",

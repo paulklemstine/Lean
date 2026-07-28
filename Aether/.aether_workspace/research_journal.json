@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9fc00121",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Substrate-Invariant Complexity\n\n## 1. Polynomial-overhead invariance of asymptotic classes\n\n**Conjecture.** If two machine substrates simulate one another with polynomially bounde",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:26:22",
-      "title": "Computational Complexity of Alien Civilizations"
-    },
-    {
       "cycle_id": "7286e7be",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Last-occurrence normal forms for revision histories\n\n**Conjecture.** Every finite sequence of signed-literal revisions has a unique normal form containing, for each atom men",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-28T14:47:08",
       "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
+    },
+    {
+      "cycle_id": "eae986b3",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\n1. **Finite-cover gluing.** Extend the two-set theorem in\n   `Catalog/Algebra/SheafDatabaseGluing.lean` to finite families of column sets,\n   proving that pairwise-compatible loca",
+      "quality_score": 0.6380299999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-28T14:47:15",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7438
     }
   ],
-  "last_updated": "2026-07-28T14:47:08",
+  "last_updated": "2026-07-28T14:47:15",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "fa73eeee",
-        "quality": 0.76,
-        "theorems": 11,
-        "title": "**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
-      },
-      {
         "cycle_id": "8280a2b4",
         "quality": 0.76,
         "theorems": 14,
@@ -3079,6 +3073,12 @@
         "quality": 0.75276,
         "theorems": 10,
         "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
+      },
+      {
+        "cycle_id": "eae986b3",
+        "quality": 0.6380299999999999,
+        "theorems": 6,
+        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
       }
     ],
     "Applications": [

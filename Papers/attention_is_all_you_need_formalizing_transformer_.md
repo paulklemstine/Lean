@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+Computational evidence was skipped because the proved universality statement is an exact symbolic identity on arbitrary finite types, rather than a numerical conjecture inferred from a sequence of examples. Its decisive calculation—the dot product of two one-hot vectors is `1` exactly when their indices agree and `0` otherwise—is proved in Lean for all finite types. Small tables would merely instantiate that theorem, no OEIS sequence arises, and numerical plotting is not relevant. Counterexample risk is handled by the machine-checked general proof and by explicitly restricting the theorem to finite input alphabets and fixed sequence lengths.
