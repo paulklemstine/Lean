@@ -2711,17 +2711,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Noncommutative Geometry as a Generalization of Topology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "132832ee",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
       "Logic"
     ],
     "id": "seed_357",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -3092,17 +3093,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee1ae94f",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra",
       "NumberTheory"
     ],
     "id": "seed_020",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -6594,6 +6596,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T07:59:50.502620+00:00",
     "title": "ArXiv paper: Constrained Multi-Relational Graphons with Maximum Entropy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The $K(\u03c0, 1)$ conjecture for Artin groups of spherical type' and formalize its key results. Abstract: In these notes, we introduce the 50-year-old $K(\u03c0, 1)$ conjecture alongside Coxeter and Artin groups. Roughly speaking, the conjecture states that the complement in $\\mathbb{C}^n$ of a \"symmetric\" configuration of hyperplanes is a $K(\u03c0, 1)$ space. Our end goal is to present a proof of the conjecture in the so-called spherical case, where only a finite number of hyperplanes are removed, through methods from combinatorial topology. This proof draws inspiration from the original proof of the spherical case, which is a special case of a celebrated 1972 theorem by Pierre Deligne.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0788",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.24659v1",
+    "status": "available",
+    "timestamp": "2026-07-28T03:42:40.492654+00:00",
+    "title": "ArXiv paper: The $K(\u03c0, 1)$ conjecture for Artin groups of spherical type"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Exponentially Many Circuit Double Covers' and formalize its key results. Abstract: The cycle double cover conjecture of Szekeres and Seymour, the proof of which was recently announced by OpenAI, states that every bridgeless graph has a collection of cycles covering every edge exactly twice. We study the counting version of this statement for cubic graphs, where we count circuit double covers --- collections of circuits (connected 2-regular subgraphs) covering every edge twice. We show that every 2-edge-connected 3-edge-colorable cubic graph on $n$ vertices has at least $2^{n/2-1}$ circuit double covers, matching our previously conjectured general lower bound. For every 3-edge-connected cubic graph with girth at least 16 we show a weaker exponential lower bound on circuit double covers. For both of these results we use the same system of linear equations used by OpenAI in their proof, however, we provide additional combinatorial interpretation. We characterize planarity of a cubic graph by solvability of this system of equations for arbitrary nowhere-zero $\\mathbb Z_2",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0789",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.24724v1",
+    "status": "available",
+    "timestamp": "2026-07-28T03:42:43.914275+00:00",
+    "title": "ArXiv paper: Exponentially Many Circuit Double Covers"
   },
   {
     "consumed_by_exp_id": "",
