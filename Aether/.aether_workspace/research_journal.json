@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3dce6722",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Dyson-Swarm Thermodynamic Optimization\n\n## 1. Strictly convex radiator laws\n\n**Conjecture.** For every strictly convex radiator-cost function, every finite swarm with fixed total",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-22T12:13:55",
-      "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-    },
-    {
       "cycle_id": "227d6015",
       "domain": "NumberTheory",
       "key_insight": "# Future directions\n\n1. Replace natural-number theorem codes by a concrete recursively enumerable syntax for first-order set theory, with a proof-checking predicate and explicit enumeration of derivat",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-28T12:21:06",
       "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+    },
+    {
+      "cycle_id": "afbe2d9b",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe formal result shows that the unmodified Cauchy kernel on a unit sphere has a deterministic floor of `1/5`; hence randomness alone cannot produce near-zero weights below that t",
+      "quality_score": 0.7438,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-28T14:47:08",
+      "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "238d5b60",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`AlephOneSurface.lean` formalizes the mathematically well-typed replacement for the phrase “Hausdorff dimension exactly aleph-one.” In Mat",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T20:25:54",
-      "title": "Aleph-1 Surface: Geometry Between Dimensions"
-    },
     {
       "cycle_id": "9fc00121",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-28T12:21:06",
       "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+    },
+    {
+      "cycle_id": "afbe2d9b",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe formal result shows that the unmodified Cauchy kernel on a unit sphere has a deterministic floor of `1/5`; hence randomness alone cannot produce near-zero weights below that t",
+      "quality_score": 0.7438,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-28T14:47:08",
+      "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7277c96e",
-      "domain": "NumberTheory",
-      "name": "below",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "7277c96e",
-      "domain": "NumberTheory",
-      "name": "prime_dvd_AB_implies_dvd_C",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "92c4b5fc",
-      "domain": "Tropical",
-      "name": "proves",
-      "quality": 0.72
-    },
     {
       "cycle_id": "92c4b5fc",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "sum_fixedPointSeries_eq_card_smul_orbitSeries",
       "quality": 0.77355
+    },
+    {
+      "cycle_id": "afbe2d9b",
+      "domain": "MachineLearning",
+      "name": "cauchyWeight_eq",
+      "quality": 0.7438
+    },
+    {
+      "cycle_id": "afbe2d9b",
+      "domain": "MachineLearning",
+      "name": "cauchyWeight_pos",
+      "quality": 0.7438
+    },
+    {
+      "cycle_id": "afbe2d9b",
+      "domain": "MachineLearning",
+      "name": "unitSphere_dist_le_two",
+      "quality": 0.7438
     }
   ],
-  "last_updated": "2026-07-28T12:21:06",
+  "last_updated": "2026-07-28T14:47:08",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3523,12 +3523,6 @@
         "title": "Speculative: Computational Complexity as Physical Law"
       },
       {
-        "cycle_id": "e3542946",
-        "quality": 0.78,
-        "theorems": 0,
-        "title": "Speculative: Computational Complexity as Physical Law"
-      },
-      {
         "cycle_id": "d14aad94",
         "quality": 0.71,
         "theorems": 0,
@@ -3575,6 +3569,12 @@
         "quality": 0.6666666666666667,
         "theorems": 18,
         "title": "Rucker: The Lifebox — Information-Theoretic Identity"
+      },
+      {
+        "cycle_id": "afbe2d9b",
+        "quality": 0.7438,
+        "theorems": 9,
+        "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
       }
     ],
     "Novelty": [
