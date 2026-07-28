@@ -1,352 +1,397 @@
-# Stereographic Neural Attention: Attention via the Riemann Sphere
+# Stereographic Neural Attention on the Unit Sphere: A Deterministic Obstruction to Fixed-Threshold Sparsity
+
+**Aristotle**  
+**July 28, 2026**
 
 ## Abstract
 
-We introduce **stereographic attention**, a geometric alternative to softmax
-attention in which the compatibility between a query and a key is scored by the
-**Cauchy kernel** `K(q, k) = 1 / (1 + ‖q − k‖²)` rather than by the exponentiated
-dot product `exp⟨q, k⟩`. We show that this kernel is not an arbitrary similarity
-function but the conformal factor of **stereographic projection** onto the unit
-("Riemann") sphere: lifting a vector `x` to the sphere by the standard
-stereographic map `σ(x) = (P(x), H(x))` with `P(x) = (2/(1 + ‖x‖²)) · x` and
-`H(x) = (‖x‖² − 1)/(‖x‖² + 1)`, the squared chordal distance from `σ(x)` to the
-north pole equals `4 · K(x, 0)`. Consequently a Cauchy attention score *is* a
-distance on the sphere. We establish the kernel's basic regularity (positivity,
-unit upper bound, diagonal saturation), prove that the stereographic lift lands
-exactly on the unit sphere, and derive the geometry/analysis decomposition of
-sparsity: the set of keys scoring at least a threshold `τ` is *exactly* a
-Euclidean ball of radius `√(1/τ − 1)` around the query (an exact active-region
-characterization), the score is strictly decreasing in distance (monotonicity),
-and a Markov argument yields `τ · #active ≤ Σ scores ≤ N`. We discuss the
-remaining gap to the program's conjectured `O(√N)` sparsity, which we localize
-entirely in a total-mass bound `Σ scores = O(√N)` for geometrically spread keys —
-a packing/shell-counting problem on the sphere. All results stated here have been
-formally verified.
+We study a geometric attention mechanism in which normalized queries and keys are compared by the Cauchy kernel
 
-**Keywords:** attention, transformers, stereographic projection, Riemann sphere,
-Cauchy kernel, conformal geometry, sparsity, Markov inequality.
+$$
+K(q,k)=\frac{1}{1+\lVert q-k\rVert^2}.
+$$
 
----
+This kernel arises naturally from stereographic geometry and appears at first to offer distance-driven sparsity. We show that spherical normalization creates a decisive obstruction to that expectation. In any seminormed vector space, two unit vectors have distance at most $2$; consequently every Cauchy weight between unit-sphere points is at least $1/5$. This deterministic lower bound is distribution-free and dimension-free. For any finite collection of unit keys and any threshold $\tau\leq 1/5$, the set of below-threshold keys is empty, while the number of active keys is exactly the total number $N$ of keys. If $N>1$, this active count is strictly greater than the integer square root of $N$, refuting a literal fixed-threshold $O(\sqrt N)$ claim with unit constant. We give proof sketches, thresholding algorithms, numerical diagnostics, and design implications. The obstruction points toward viable modifications based on bandwidth scaling, powered kernels, spherical-cap probabilities, and controlled top-$k$ approximation.
 
 ## 1. Introduction
 
-The attention mechanism underlying transformer architectures scores a query
-vector `q ∈ E` against each of `N` key vectors `kᵢ ∈ E` and forms a convex
-combination of associated value vectors. The canonical scoring rule is **softmax
-attention**, in which the unnormalized weight of key `kᵢ` is `exp⟨q, kᵢ⟩` and the
-normalized weights `softmax(⟨q, k₁⟩, …, ⟨q, k_N⟩)` form a probability vector. Two
-structural features of softmax are simultaneously its strength and its weakness:
+Attention mechanisms compare a query with a family of keys and use the resulting scores to aggregate values. Dense pairwise comparison is expressive but expensive: for a sequence of length $N$, a full self-attention layer generally evaluates on the order of $N^2$ query-key interactions. This has motivated kernels whose values decay with geometric separation, with the hope that most interactions can be removed.
 
-1. **Strict positivity everywhere.** Because the exponential is strictly
-   positive, every key receives a strictly positive weight. The attention map is
-   therefore globally smooth, but it is also globally *dense*: no key is ever
-   exactly ignored, so exact sparsity must be imposed externally (top-k masking,
-   sparsemax, locality windows).
-2. **Only relative meaning.** Softmax is invariant under adding a constant to all
-   logits; an individual weight has no absolute scale. There is no canonical
-   notion of a "perfect match" with a fixed numerical value.
+Spherical representations are attractive in this context. Normalizing vectors to unit norm suppresses radial scale, isolates directional information, and makes similarity invariant under positive rescaling of the original embeddings. Stereographic projection further links the sphere to rational kernels on Euclidean coordinates. One particularly simple score is the Cauchy kernel
 
-We propose replacing the exponentiated dot product with the **Cauchy kernel**
+$$
+K(q,k)=\frac{1}{1+\lVert q-k\rVert^2}.
+$$
 
-> `K(q, k) = 1 / (1 + ‖q − k‖²)`,
+It is strictly positive, smooth in ordinary Euclidean settings, maximal at coincidence, and decreasing with squared chordal distance. In an unbounded domain, $K(q,k)$ tends to zero as the distance tends to infinity. That decay suggests sparse attention: perhaps only a small neighborhood of each query has appreciable weight.
 
-and we show that this single substitution recasts attention as a measurement in
-**spherical geometry**. The kernel is the conformal factor of stereographic
-projection; a score is literally a chordal distance on the Riemann sphere. From
-this geometric grounding two payoffs follow. First, the kernel acquires an
-*absolute* maximum value `1`, attained exactly on the diagonal `q = k` — a
-canonical "perfect match." Second, the active region at any threshold is an exact
-Euclidean ball, and a budget argument bounds the number of active keys. This
-paper develops the geometric core and the rigorous backbone of the sparsity
-claim.
+The central issue is that a unit sphere is bounded. Its chordal diameter is $2$, so the denominator of the unscaled Cauchy kernel never exceeds $5$. Hence the kernel never falls below $1/5$. This elementary observation has strong consequences for any sparsity notion based on an absolute threshold.
 
-### 1.1 A cross-domain bridge
+The contribution of this paper is a complete deterministic analysis of that obstruction. We establish four linked results:
 
-This work is the geometric counterpart of an algebraic study of attention in
-which an attention operator is treated as a matrix required to commute with the
-morphisms of the data (a naturality / equivariance condition), where Schur's
-lemma forces maximally symmetric attention to be a scalar multiple of the
-identity. The two viewpoints meet on the diagonal: the algebraic "scalar
-identity" fixed point corresponds to the geometric self-attention maximum
-`K(q, q) = 1`. Throughout, `E` denotes a real normed vector space (formally, a
-`NormedAddCommGroup` with a compatible `NormedSpace ℝ` structure); `‖·‖` is its
-norm.
-
----
-
-## 2. The Cauchy attention kernel
-
-### 2.1 Definition
+1. the Cauchy weight is strictly positive for all queries and keys;
+2. every pair of unit-sphere points has weight at least $1/5$;
+3. at any threshold $\tau\leq 1/5$, no unit key is below threshold and every key remains active;
+4. for more than one key, the active count exceeds the integer square root of the key count.
 
-**Definition 2.1 (Cauchy attention kernel).** For `q, k ∈ E`,
-`K(q, k) := 1 / (1 + ‖q − k‖²)`.
+These statements require no randomness, no finite-dimensional assumption, and no asymptotic regime. They therefore apply to every sample from every distribution supported on the unit sphere. The result does not rule out geometric attention or the Cauchy family. Instead, it identifies a missing scale parameter and motivates several corrected research directions.
 
-This replaces `exp⟨q, k⟩` of softmax attention. Note `K` depends on `q` and `k`
-only through the displacement `q − k`, so it is a *translation-invariant,
-radial* kernel — a property the dot-product score conspicuously lacks.
+## 2. Mathematical setting
 
-### 2.2 Regularity
+### 2.1 Ambient space and spherical data
 
-**Theorem 2.2 (Positivity).** For all `q, k ∈ E`, `0 < K(q, k)`.
+Let $E$ be a real or complex seminormed vector space, with seminorm $\lVert\cdot\rVert$ and induced pseudometric
 
-*Proof sketch.* The denominator `1 + ‖q − k‖²` is at least `1` because
-`‖q − k‖² ≥ 0`; a positive numerator over a positive denominator is positive.
-(Formally discharged by `positivity`.) ∎
+$$
+d(x,y)=\lVert x-y\rVert.
+$$
 
-**Theorem 2.3 (Unit upper bound).** For all `q, k ∈ E`, `K(q, k) ≤ 1`.
+The argument also applies to normed vector spaces as the standard special case. Define the unit sphere by
 
-*Proof sketch.* `K(q, k) ≤ 1` is equivalent, after clearing the positive
-denominator, to `1 ≤ 1 + ‖q − k‖²`, which holds since `‖q − k‖² ≥ 0`. ∎
+$$
+S(E)=\{x\in E:\lVert x\rVert=1\}.
+$$
 
-**Theorem 2.4 (Diagonal saturation).** For all `q, k ∈ E`,
-`K(q, k) = 1 ⇔ q = k`.
+A query $q$ and key $k$ are **spherically normalized** when $q,k\in S(E)$.
 
-*Proof sketch.* Clearing the positive denominator, `K(q, k) = 1` is equivalent to
-`1 + ‖q − k‖² = 1`, i.e. `‖q − k‖² = 0`, i.e. `‖q − k‖ = 0` (a square is zero iff
-its base is, given non-negativity), i.e. `q = k` (a norm vanishes iff its
-argument is zero). The converse substitutes `q = k` and simplifies. ∎
+The use of a seminormed space emphasizes that the result depends only on the triangle inequality and unit-norm constraints. It does not require coordinates, inner products, compactness, or finite dimension.
 
-Theorems 2.2–2.4 give the kernel an interpretation absent from softmax: `K` is a
-bounded similarity in `(0, 1]` with a *canonical maximum* `1` attained exactly at
-coincidence. The bound `K ≤ 1` also supplies a global mass budget exploited in
-§4: across `N` keys, `Σᵢ K(q, kᵢ) ≤ N`.
+### 2.2 Stereographic Cauchy weight
 
----
+**Definition 2.1 (Cauchy attention weight).** For $q,k\in E$, define
 
-## 3. Stereographic projection and the chordal identity
+$$
+K(q,k)=\frac{1}{1+d(q,k)^2}.
+$$
 
-We now exhibit `K` as the conformal factor of stereographic projection.
+This expression can also be obtained by taking one half of the standard stereographic conformal factor $2/(1+r^2)$ evaluated at $r^2=d(q,k)^2$. The direct formula above is all that is needed for the analysis.
 
-### 3.1 The lift
+Because $d(q,k)^2\geq 0$, the denominator is at least $1$. Thus $0<K(q,k)\leq 1$. Coincident points attain the upper endpoint.
 
-We encode the stereographic image of `x ∈ E` by its two real-algebraic
-components — a horizontal part in `E` and a scalar height — rather than as a
-single point of a normed product space. (This sidesteps a subtle pitfall: the
-Mathlib product `E × ℝ` carries the *sup* norm, not the Euclidean `L²` norm, so
-"`‖σ(x)‖² = …`" would be the wrong quantity; we therefore track the two
-components and combine their squares explicitly.)
+### 2.3 Thresholded activity
 
-**Definition 3.1 (Stereographic components).** For `x ∈ E`,
-- horizontal part `P(x) := (2 / (1 + ‖x‖²)) · x ∈ E`;
-- height `H(x) := (‖x‖² − 1) / (‖x‖² + 1) ∈ ℝ`.
+Let $Q=\{k_1,\ldots,k_N\}$ be a finite collection of distinct keys and fix a query $q$. For a real threshold $\tau$, define the below-threshold set
 
-Together `σ(x) := (P(x), H(x))` is the stereographic lift of `x` from the
-hyperplane through the equator to the unit sphere in `E × ℝ`, with the north pole
-`N = (0, 1)` as the projection center.
+$$
+B_\tau(q,Q)=\{k\in Q:K(q,k)<\tau\},
+$$
 
-### 3.2 The lift lands on the sphere
+and the active set
 
-**Theorem 3.2 (On the sphere).** For all `x ∈ E`,
-`‖P(x)‖² + H(x)² = 1`.
+$$
+A_\tau(q,Q)=\{k\in Q:\tau\leq K(q,k)\}.
+$$
 
-*Proof sketch.* Write `t := ‖x‖²`. By the homogeneity of the norm,
-`‖P(x)‖ = |2/(1 + t)| · ‖x‖ = (2/(1 + t)) · ‖x‖` (the scalar is positive), so
-`‖P(x)‖² = 4t / (1 + t)²`. Also `H(x)² = (t − 1)² / (t + 1)²`. Summing over the
-common denominator `(1 + t)²` and using the algebraic identity
-`(t + 1)² = 4t + (t − 1)²` gives `(4t + (t − 1)²)/(t + 1)² = (t + 1)²/(t + 1)² = 1`.
-(Formally: `norm_smul`, then `field_simp; ring`.) ∎
+Their cardinalities satisfy
 
-Theorem 3.2 certifies that "project to the Riemann sphere" is well-typed: every
-`x ∈ E`, regardless of magnitude, has a genuine image on the unit sphere. The
-collapse of all sphere identities to the single fact `(t + 1)² = 4t + (t − 1)²`
-in the variable `t = ‖x‖²` is the organizing observation of the geometric core.
+$$
+|B_\tau(q,Q)|+|A_\tau(q,Q)|=N,
+$$
 
-### 3.3 The score is a chordal distance
+because each key either has weight below $\tau$ or at least $\tau$.
 
-**Theorem 3.3 (Chordal–kernel identity).** For all `x ∈ E`,
-`‖P(x)‖² + (H(x) − 1)² = 4 · K(x, 0)`.
+This is an absolute-threshold notion of sparsity. It differs from top-$k$ selection, which retains a prescribed rank, and from approximate sparsity, which controls the total normalized mass of discarded weights.
 
-*Proof sketch.* The left side is the squared Euclidean distance from
-`σ(x) = (P(x), H(x))` to the north pole `N = (0, 1)`. With `t := ‖x‖²`,
-`‖P(x)‖² = 4t/(1 + t)²` (as above) and
-`(H(x) − 1)² = ((t − 1) − (t + 1))²/(t + 1)² = 4/(t + 1)²`. Summing,
-`(4t + 4)/(1 + t)² = 4(1 + t)/(1 + t)² = 4/(1 + t)`. Finally
-`K(x, 0) = 1/(1 + ‖x − 0‖²) = 1/(1 + t)`, so the sum equals `4 · K(x, 0)`.
-(Formally: `norm_smul`, `sub_zero`, positivity of the scalar, then
-`field_simp; ring`.) ∎
+### 2.4 Integer square root
 
-**Corollary 3.4 (Geometric semantics).** Stereographic attention scores a key by
-the chordal distance, on the Riemann sphere, between the lifted key and the lifted
-query: by translation invariance of `K`, scoring `q` against `k` is the `x = q − k`
-instance of Theorem 3.3, equating the score (up to the factor `4`) with a squared
-sphere chord. The Cauchy kernel is therefore an intrinsically geometric score,
-the conformal sibling of softmax.
+For a natural number $N$, let $\operatorname{isqrt}(N)=\lfloor\sqrt N\rfloor$ denote the largest natural number whose square is at most $N$. The proposed square-root benchmark is an active count no greater than a constant multiple of $\sqrt N$. Our exact result implies, in particular, that the unit-constant inequality $|A_\tau|\leq\operatorname{isqrt}(N)$ fails whenever $N>1$ and $\tau\leq 1/5$.
 
----
+## 3. Geometric preliminaries
 
-## 4. Sparsity of stereographic attention
+The analysis begins with two elementary lemmas.
 
-We fix a query `q`, keys `k₁, …, k_N ∈ E`, and a threshold `τ ∈ (0, 1]`. Define
-the **active set** `A(τ) := { i : K(q, kᵢ) ≥ τ }` and `#active := |A(τ)|`.
+**Lemma 3.1 (Strict positivity).** For every $q,k\in E$,
 
-### 4.1 Exact active-region characterization
+$$
+K(q,k)>0.
+$$
 
-**Theorem 4.1 (Active keys form a ball).** For `0 < τ ≤ 1` and any key `k`,
-`K(q, k) ≥ τ ⇔ ‖q − k‖ ≤ √(1/τ − 1)`.
-
-*Proof sketch.* Since the denominator is positive, `1/(1 + ‖q − k‖²) ≥ τ` is
-equivalent to `1 + ‖q − k‖² ≤ 1/τ`, i.e. `‖q − k‖² ≤ 1/τ − 1` (non-negative
-because `τ ≤ 1`), i.e. `‖q − k‖ ≤ √(1/τ − 1)`. ∎
-
-Thus the τ-active region is *exactly* the closed Euclidean ball
-`B(q, √(1/τ − 1))`. Raising `τ` shrinks the radius monotonically; as `τ → 1` the
-ball collapses to the singleton `{q}`, consistent with Theorem 2.4. The active
-region is determined purely by geometry — a feature softmax cannot offer, since
-its weights have no absolute threshold.
+**Proof sketch.** The squared distance $d(q,k)^2$ is nonnegative, so $1+d(q,k)^2$ is strictly positive. Its reciprocal is therefore strictly positive. $\square$
 
-### 4.2 Monotonicity
-
-**Proposition 4.2 (Closer keys score higher).** For keys `k, k'` with
-`‖q − k‖ < ‖q − k'‖`, one has `K(q, k) > K(q, k')`; more generally `K(q, ·)` is a
-strictly decreasing function of the distance `‖q − ·‖`.
-
-*Proof sketch.* `K(q, k) = g(‖q − k‖)` where `g(r) = 1/(1 + r²)` is strictly
-decreasing on `[0, ∞)` because `r ↦ 1 + r²` is strictly increasing there and
-reciprocation reverses order on positives. ∎
-
-### 4.3 Markov sparsity bound
-
-**Theorem 4.3 (Markov sparsity).** With scores `sᵢ := K(q, kᵢ)`,
-`τ · #active ≤ Σᵢ sᵢ`.
-
-*Proof sketch.* Each active index `i ∈ A(τ)` contributes `sᵢ ≥ τ`, so
-`τ · #active = Σ_{i ∈ A(τ)} τ ≤ Σ_{i ∈ A(τ)} sᵢ ≤ Σᵢ sᵢ`, the last step using
-`sᵢ > 0` for the inactive indices (Theorem 2.2). This is precisely the
-counting form of Markov's inequality on the non-negative scores. ∎
-
-**Corollary 4.4 (Unconditional sparsity).** `τ · #active ≤ N`, hence
-`#active ≤ N/τ`.
-
-*Proof sketch.* By Theorem 2.3 each `sᵢ ≤ 1`, so `Σᵢ sᵢ ≤ N`; combine with
-Theorem 4.3. ∎
-
-Corollary 4.4 is the rigorous, *unconditional* sparsity backbone of stereographic
-attention: at any fixed relevance threshold `τ`, the number of keys that clear it
-is `O(N/τ)`. The honest decomposition is
-
-> **sparsity = (geometry: activity ⇔ ball membership, Thm 4.1) ∘
-> (analysis: Markov on non-negative scores, Thm 4.3).**
-
-### 4.4 The `√N` frontier
-
-The program's marquee conjecture is `O(√N)` sparsity. Corollary 4.4 gives only
-`O(N)` total mass, and that is *tight* in the worst case: if every key coincides
-with the query, every score is `1`, `Σᵢ sᵢ = N`, and no improvement is possible.
-The `√N` claim is therefore **not** a statement about arbitrary key sets; it must
-be a statement about *geometrically spread* keys. The entire gap is localized in a
-single missing inequality:
-
-> **Conjecture 4.5 (`√N` total mass).** If the keys `k₁, …, k_N` are
-> geometrically spread (e.g. roughly uniform on a sphere or separated by a
-> minimum pairwise distance), then `Σᵢ K(q, kᵢ) = O(√N)`, whence
-> `τ · #active = O(√N)`.
-
-This is a packing / shell-counting problem: bound `Σᵢ 1/(1 + ‖q − kᵢ‖²)` by
-grouping keys into concentric shells around `q` and counting how many can occupy
-each shell under a separation constraint. The geometry of §3 is precisely the
-language in which such a count is natural.
-
----
-
-## 5. Algorithms
-
-The results above translate directly into a forward-pass procedure and an exact
-active-set pruning rule.
-
-**Algorithm A (Stereographic attention forward pass).** Given a query `q`, keys
-`{kᵢ}`, and values `{vᵢ}`: compute `sᵢ = 1/(1 + ‖q − kᵢ‖²)`, normalize
-`wᵢ = sᵢ / Σⱼ sⱼ`, and output `Σᵢ wᵢ vᵢ`. Complexity `O(N·d)` for `d = dim E`,
-identical in order to softmax but without any exponential.
-
-**Algorithm B (Exact threshold pruning).** Given threshold `τ ∈ (0, 1]`, compute
-the radius `ρ = √(1/τ − 1)` (Theorem 4.1) and retain only keys with
-`‖q − kᵢ‖ ≤ ρ`. The retained set equals the τ-active set *exactly* (no
-approximation), and by Corollary 4.4 has size `≤ N/τ`. Combined with a spatial
-index (k-d tree / ball tree) over the keys, the active set is found in
-`O(#active + log N)` rather than `O(N)`, realizing the sparsity as a genuine
-runtime saving.
-
-**Algorithm C (Stereographic lift).** Map `x ↦ (P(x), H(x))` with
-`P(x) = (2/(1 + ‖x‖²))·x`, `H(x) = (‖x‖² − 1)/(‖x‖² + 1)`; by Theorem 3.2 the
-output lies on the unit sphere and supports chordal-distance scoring (Theorem
-3.3) directly in the lifted coordinates.
-
----
-
-## 6. Applications
-
-- **Built-in sparsity.** Unlike softmax, which requires post-hoc top-k masking,
-  stereographic attention prunes exactly via Theorem 4.1: choose `τ`, keep the
-  ball `B(q, √(1/τ − 1))`. The pruning is exact, differentiable away from the
-  threshold, and geometrically interpretable.
-- **Spatial-index acceleration.** Because the active set is a metric ball,
-  decades of nearest-neighbor data structures apply verbatim, giving sub-linear
-  retrieval of the keys that matter.
-- **Absolute relevance scale.** The canonical maximum `K = 1` at coincidence
-  (Theorem 2.4) provides an interpretable, scale-free notion of a "perfect match,"
-  useful for calibration, thresholding, and analysis.
-- **Long-context models.** A mechanism whose attention rows are provably sparse
-  at fixed `τ` is a natural candidate for very long contexts, where dense softmax
-  is the dominant cost.
-
----
-
-## 7. Discussion
-
-Stereographic attention reframes the attention score as a measurement in
-conformal spherical geometry. The reframing is not cosmetic: it converts opaque
-similarity logits into chordal distances on a fixed sphere (Theorem 3.3),
-replaces relative softmax weights with an absolutely-scaled kernel (Theorem 2.4),
-and turns sparsity from an engineering add-on into an exact geometric statement
-(Theorem 4.1) backed by a counting bound (Corollary 4.4). The translation
-invariance and radial monotonicity of `K` are arguably more faithful to the
-intuition of "relevance as closeness" than the dot product, whose value conflates
-direction and magnitude.
-
-The principal limitation is honest and sharp: the unconditional total-mass bound
-is `Σ ≤ N`, tight when keys collapse onto the query. The coveted `√N` regime is
-real only for spread keys and remains a conjecture (Conjecture 4.5). We regard
-the clean localization of the gap — into a single packing inequality on the
-sphere — as a contribution in itself, because it converts a vague aspiration into
-a concrete extremal-geometry problem.
-
----
-
-## 8. Future work
-
-1. **Prove Conjecture 4.5.** Bound `Σᵢ 1/(1 + ‖q − kᵢ‖²) = O(√N)` for keys with a
-   minimum separation or near-uniform distribution on a sphere, via shell
-   decomposition: count keys in annulus `r ≤ ‖q − kᵢ‖ < r + dr`, weight by
-   `1/(1 + r²)`, and integrate against the packing density.
-2. **Sub-linear stereographic attention.** Implement Algorithm B atop a ball-tree
-   index and benchmark wall-clock against FlashAttention-style dense softmax on
-   long contexts.
-3. **Universal approximation.** Establish that stereographic attention layers are
-   universal approximators on sequence-to-sequence maps, matching the known
-   expressivity of softmax transformers despite built-in sparsity.
-4. **Curvature as a hyperparameter.** Generalize `K` to `1/(1 + λ‖q − k‖²)`, the
-   conformal factor of a sphere of radius depending on `λ`, and study `λ`
-   (equivalently the sphere's curvature) as a learnable temperature controlling
-   the active radius `√(1/τ − 1)/√λ`.
-5. **Algebra–geometry unification.** Make precise the correspondence between the
-   geometric self-attention maximum (`K = 1` on the diagonal) and the algebraic
-   scalar-identity fixed point forced by naturality (Schur's lemma), ideally as a
-   single statement spanning both pictures.
-
----
-
-## Appendix: Summary of formally verified results
-
-| Result | Statement |
-|---|---|
-| Positivity | `0 < K(q, k)` |
-| Upper bound | `K(q, k) ≤ 1` |
-| Diagonal saturation | `K(q, k) = 1 ⇔ q = k` |
-| On the sphere | `‖P(x)‖² + H(x)² = 1` |
-| Chordal identity | `‖P(x)‖² + (H(x) − 1)² = 4·K(x, 0)` |
-| Active region | `K(q, k) ≥ τ ⇔ ‖q − k‖ ≤ √(1/τ − 1)` |
-| Markov sparsity | `τ · #active ≤ Σ scores` |
-| Unconditional sparsity | `τ · #active ≤ N` |
-
-where `K(q, k) = 1/(1 + ‖q − k‖²)`, `P(x) = (2/(1 + ‖x‖²))·x`, and
-`H(x) = (‖x‖² − 1)/(‖x‖² + 1)`.
+Strict positivity alone does not prevent numerical sparsity: positive numbers may be arbitrarily close to zero. The decisive point is the uniform diameter bound.
+
+**Lemma 3.2 (Unit-sphere chordal diameter).** If $q,k\in S(E)$, then
+
+$$
+d(q,k)\leq 2.
+$$
+
+**Proof sketch.** By the triangle inequality,
+
+$$
+d(q,k)=\lVert q-k\rVert\leq\lVert q\rVert+\lVert-k\rVert
+=\lVert q\rVert+\lVert k\rVert=2.
+$$
+
+Only symmetry and the triangle inequality of the seminorm are used. $\square$
+
+In an ordinary normed vector space, the constant $2$ is sharp: choosing $k=-q$ gives $d(q,k)=\lVert 2q\rVert=2$. Thus no smaller universal diameter bound is possible.
+
+## 4. Main results
+
+### 4.1 Uniform lower bound
+
+**Theorem 4.1 (Uniform Weight-Floor Theorem).** Let $q,k\in E$ satisfy $\lVert q\rVert=\lVert k\rVert=1$. Then
+
+$$
+\frac15\leq K(q,k)=\frac{1}{1+d(q,k)^2}.
+$$
+
+**Proof sketch.** Lemma 3.2 gives $0\leq d(q,k)\leq 2$. Squaring preserves the inequality because distance is nonnegative, so $d(q,k)^2\leq 4$. Therefore
+
+$$
+1+d(q,k)^2\leq 5.
+$$
+
+Both sides are positive. Reciprocation reverses the denominator comparison, yielding
+
+$$
+\frac15\leq\frac{1}{1+d(q,k)^2}=K(q,k).
+$$
+
+$\square$
+
+The bound is dimension-free and sharp in normed vector spaces containing an antipodal pair. At $k=-q$, the distance equals $2$ and the weight equals $1/5$. At $k=q$, the distance is $0$ and the weight is $1$. Hence the raw scores on the unit sphere occupy the compact interval $[1/5,1]$.
+
+**Corollary 4.2 (Distribution-free almost-sure floor).** Let $(q,k)$ be random vectors whose joint distribution is supported on $S(E)\times S(E)$. Then
+
+$$
+\mathbb{P}\!\left(K(q,k)\geq\frac15\right)=1.
+$$
+
+**Proof sketch.** Every point in the support satisfies the deterministic hypotheses of Theorem 4.1. The event therefore contains the entire support and has probability one. No independence or uniformity assumption is needed. $\square$
+
+The corollary explains why concentration of random points cannot overcome the obstruction. Randomness may describe where within $[1/5,1]$ a weight lies, but it cannot create a weight below $1/5$.
+
+### 4.2 Empty pruned set
+
+**Theorem 4.3 (No Pruning Below the Geometric Floor).** Let $q\in S(E)$ and let $Q$ be a finite set contained in $S(E)$. If $\tau\leq 1/5$, then
+
+$$
+B_\tau(q,Q)=\varnothing.
+$$
+
+**Proof sketch.** For each $k\in Q$, Theorem 4.1 gives $K(q,k)\geq 1/5$. Combining this with $\tau\leq 1/5$ yields $K(q,k)\geq\tau$. Thus the strict inequality $K(q,k)<\tau$ is false for every key, so the below-threshold set is empty. $\square$
+
+The strict inequality in the definition of $B_\tau$ is important at the endpoint. Antipodal keys can have weight exactly $1/5$, but they remain active when $\tau=1/5$.
+
+### 4.3 Exact active count
+
+**Theorem 4.4 (Exact Active-Count Theorem).** Under the assumptions of Theorem 4.3, if $N=|Q|$, then
+
+$$
+|A_\tau(q,Q)|=N.
+$$
+
+**Proof sketch.** Every key satisfies $\tau\leq K(q,k)$ by Theorem 4.1 and the threshold assumption. Hence $A_\tau(q,Q)=Q$. Taking cardinalities gives the result. Equivalently, Theorem 4.3 and the partition of $Q$ into below-threshold and active keys imply the same equality. $\square$
+
+This equality is stronger than an asymptotic lower bound. The number of retained interactions is not merely $\Omega(N)$; it is exactly $N$ for every finite key set.
+
+### 4.4 Square-root obstruction
+
+**Theorem 4.5 (Failure of the Unit-Constant Square-Root Bound).** Under the assumptions of Theorem 4.4, suppose $N>1$. Then
+
+$$
+\operatorname{isqrt}(N)<|A_\tau(q,Q)|.
+$$
+
+**Proof sketch.** Theorem 4.4 gives $|A_\tau(q,Q)|=N$. For every natural number $N>1$, its integer square root is strictly less than $N$. Substitution yields
+
+$$
+\operatorname{isqrt}(N)<N=|A_\tau(q,Q)|.
+$$
+
+$\square$
+
+More broadly, because $|A_\tau|=N$, no bound $|A_\tau|\leq C\sqrt N$ with a fixed constant $C$ can hold for all $N$: choosing $N>C^2$ gives $N>C\sqrt N$. Thus the deterministic result contradicts any uniform $O(\sqrt N)$ active-count claim at a fixed threshold $\tau\leq 1/5$.
+
+## 5. Algorithms and diagnostics
+
+The theorems are analytic, but they suggest useful computational checks for proposed attention mechanisms.
+
+### 5.1 Direct Cauchy-weight evaluation
+
+Given vectors $q$ and $k$, compute their squared Euclidean distance and return its shifted reciprocal:
+
+1. compute $s=\sum_j(q_j-k_j)^2$;
+2. return $1/(1+s)$.
+
+For vectors in $\mathbb{R}^d$, this costs $O(d)$ time and $O(1)$ additional working memory when evaluated in a streaming loop.
+
+### 5.2 Active-count audit
+
+Given one query, $N$ keys in $\mathbb{R}^d$, and a threshold $\tau$, evaluate all weights and count those satisfying $K(q,k_i)\geq\tau$. The direct procedure costs $O(Nd)$ time. Storing only the running count uses $O(1)$ auxiliary memory; retaining all weights uses $O(N)$.
+
+For normalized inputs and $\tau\leq 0.2$, Theorem 4.4 predicts the output $N$ exactly. The calculation is therefore best understood as an implementation audit: any lower count indicates a normalization error, a different distance, a scaled kernel, or floating-point behavior inconsistent with the stated model.
+
+### 5.3 Random spherical experiment
+
+To illustrate the geometry in $\mathbb{R}^d$, sample a standard Gaussian vector $x$ and normalize it as $x/\lVert x\rVert_2$. Rotational invariance produces a uniform point on the sphere. Repeating this for one query and many keys gives an empirical weight distribution.
+
+The expected histogram depends on dimension. In high dimension, independent random unit vectors are nearly orthogonal, so $\lVert q-k\rVert^2$ is often close to $2$ and $K(q,k)$ is often close to $1/3$. Nevertheless, every sample remains above $1/5$. The histogram may become concentrated, but it does not develop a near-zero tail.
+
+### 5.4 Deterministic antipodal test
+
+A minimal boundary test chooses any unit vector $q$ and sets $k=-q$. Then
+
+$$
+K(q,-q)=\frac{1}{1+\lVert2q\rVert^2}=\frac15.
+$$
+
+This confirms sharpness and tests the endpoint convention in thresholding. At $\tau=1/5$, the antipodal key must be active because activity uses the non-strict comparison $\tau\leq K$.
+
+## 6. Consequences for normalized attention
+
+Raw kernel floors also constrain normalized attention. Given positive raw weights $w_i=K(q,k_i)$, define
+
+$$
+a_i=\frac{w_i}{\sum_{j=1}^N w_j}.
+$$
+
+Since $1/5\leq w_i\leq 1$, the normalization denominator lies between $N/5$ and $N$. Consequently,
+
+$$
+\frac{1}{5N}\leq a_i\leq\frac{5}{N}.
+$$
+
+These bounds are coarse but informative. Every normalized key receives positive mass of order at least $1/N$, and no raw interaction is negligible relative to the largest by more than a factor of five. Therefore raw thresholding below $1/5$ cannot create sparse normalized attention.
+
+A top-$m$ rule can enforce exactly $m$ retained keys, but the kernel floor warns that its discarded mass may be substantial. If $m=O(\sqrt N)$ while the weights remain comparable, then the omitted $N-m$ terms can carry most of the normalized mass. Any top-$k$ sparsification claim therefore requires a separate approximation-error theorem, not merely a count of retained entries.
+
+## 7. Design modifications
+
+### 7.1 Bandwidth-scaled Cauchy kernels
+
+Introduce a bandwidth parameter $\beta>0$:
+
+$$
+K_\beta(q,k)=\frac{1}{1+\beta d(q,k)^2}.
+$$
+
+On the unit sphere, its deterministic floor is
+
+$$
+K_\beta(q,k)\geq\frac{1}{1+4\beta}.
+$$
+
+Unlike the unscaled case $\beta=1$, this floor can be made arbitrarily small. At a threshold $\tau\in(0,1)$, activity is equivalent to
+
+$$
+d(q,k)^2\leq\frac{\tau^{-1}-1}{\beta}.
+$$
+
+For Euclidean unit spheres, this condition defines a spherical cap centered at $q$. If keys are independent and uniform, the active count conditional on $q$ is binomial with success probability equal to the cap's normalized surface area. Choosing $\beta$ to make that probability of order $N^{-1/2}$ would produce an expected active count of order $\sqrt N$.
+
+This reformulation exposes the correct mathematical object: not unconstrained Cauchy decay, but spherical-cap measure as a function of dimension and bandwidth.
+
+### 7.2 Powered kernels
+
+For $p>0$, define
+
+$$
+K_p(q,k)=\bigl(1+d(q,k)^2\bigr)^{-p}.
+$$
+
+The unit-sphere floor becomes $5^{-p}$. Increasing $p$ sharpens contrast while preserving radial monotonicity. The active condition is
+
+$$
+d(q,k)^2\leq\tau^{-1/p}-1.
+$$
+
+Again, the expected active count under uniform sampling reduces to a spherical-cap probability. A useful theory should identify explicit dependence of $p$ on dimension $d$, key count $N$, and threshold $\tau$.
+
+### 7.3 Compactly supported kernels
+
+A more direct route uses a kernel that vanishes beyond a chosen radius, such as
+
+$$
+K_R(q,k)=\max\left\{0,1-\frac{d(q,k)^2}{R^2}\right\}.
+$$
+
+This creates exact zeros but changes the analytic and approximation properties of the mechanism. Smooth compactly supported alternatives can soften the boundary. Their suitability depends on whether continuity, differentiability, positive definiteness, or universality is required.
+
+### 7.4 Adaptive and rank-based thresholds
+
+A data-dependent threshold can retain a desired quantile of weights, and top-$k$ selection fixes the active count by construction. Such methods evade the fixed-threshold theorem because their cutoff depends on the sample or on $N$. They should be evaluated by approximation error and stability: small changes in weights near the cutoff may alter the selected set.
+
+## 8. Applications and interpretation
+
+### 8.1 Long-sequence models
+
+For long sequences, a dense active count means that simple thresholding does not reduce the number of query-key interactions. If the threshold is at most $0.2$, every key survives and the direct computational complexity remains quadratic across all queries. Any speedup must come from a modified kernel, approximate summation, low-rank structure, locality imposed before scoring, or rank-based pruning.
+
+### 8.2 Spherical embedding systems
+
+Unit normalization is common in metric learning and retrieval. The theorem applies whenever the score uses chordal distance and the unscaled Cauchy formula, independent of how embeddings were learned. It gives a quick calibration rule: an absolute threshold below $0.2$ is ineffective for pruning normalized embeddings.
+
+### 8.3 Geometric model design
+
+The analysis illustrates a general principle. Let a metric space have finite diameter $D$, and let $f:[0,\infty)\to(0,\infty)$ be decreasing. For the radial kernel $K(x,y)=f(d(x,y))$, every pair satisfies
+
+$$
+K(x,y)\geq f(D).
+$$
+
+Thus bounded geometry induces a kernel floor. Sparsity based on absolute magnitude requires either a sufficiently low floor, a threshold above it, or a kernel with compact support. This diameter-first calculation should precede probabilistic analysis.
+
+## 9. Statistical geometry beyond the obstruction
+
+The deterministic floor settles the low-threshold question, but the distribution of weights above $1/5$ remains informative. In Euclidean space, unit vectors satisfy
+
+$$
+\lVert q-k\rVert^2=2-2\langle q,k\rangle.
+$$
+
+Hence the unscaled kernel can be written as
+
+$$
+K(q,k)=\frac{1}{3-2\langle q,k\rangle}.
+$$
+
+For independent uniform points on $S^{d-1}$, the inner product is centered at zero and concentrates near zero as $d$ increases. Typical weights therefore concentrate near $1/3$, not near zero. This reinforces the deterministic conclusion with a statistical picture: high dimension makes most raw weights more alike around an interior value.
+
+For a threshold $\tau>1/5$, activity can be expressed through an inner-product cutoff. The inequality $K(q,k)\geq\tau$ is equivalent to
+
+$$
+\langle q,k\rangle\geq\frac{3-\tau^{-1}}{2}.
+$$
+
+The active region is a spherical cap. Its measure gives the exact activation probability for a uniform random key. With independent keys, conditional on the query, the active count is binomial. Thus expectation, variance, and tail probabilities follow once the cap measure is known. The threshold $\tau=1/5$ corresponds to the cutoff $-1$, so the cap is the entire sphere, consistent with the exact active-count theorem.
+
+Bandwidth scaling changes the cutoff to
+
+$$
+\langle q,k\rangle\geq 1-\frac{\tau^{-1}-1}{2\beta}.
+$$
+
+This formula provides a direct calibration method. One first chooses a target activation probability, such as $N^{-1/2}$, then selects the corresponding cap angle or inner-product quantile, and finally solves for $\beta$. In practice, the cap quantile may be evaluated from the beta distribution associated with a coordinate of a uniform spherical point or approximated by Gaussian concentration in high dimension.
+
+The distinction between raw and normalized weights must remain explicit. A raw threshold defines activity before division by the row sum. A threshold on normalized weights varies implicitly with every other key because the denominator is data-dependent. The present theorems concern raw Cauchy scores, while approximation guarantees for the final attention output require control of normalized tail mass and of the value vectors being aggregated.
+
+## 10. Limitations
+
+The results address the unscaled Cauchy kernel on unit-sphere inputs and absolute thresholding at $\tau\leq 1/5$. They do not claim that every threshold is ineffective. For $\tau>1/5$, sufficiently distant keys can fall below threshold, and the number of active keys depends on their geometry.
+
+The results also do not settle universal approximation. Strictly positive dense kernels may still support expressive neural architectures, and modified Cauchy mixtures may approximate broad classes of functions. Expressivity and computational sparsity are distinct properties.
+
+Finally, the exact count concerns distinct finite key sets. In implementations, repeated keys are normally represented by indexed lists or multisets; the same pointwise argument applies to every occurrence, so the indexed active count is still the total number of entries.
+
+## 11. Future research
+
+Five directions emerge naturally.
+
+First, for independent uniform points on $S^{d-1}$, analyze powered kernels with an exponent scaling like $d\log N$ and determine whether explicit constants produce expected active count at most a constant multiple of $\sqrt N$.
+
+Second, derive an explicit bandwidth $\beta(d,N,\tau)$ for which the spherical-cap probability makes the expected active count comparable to $\sqrt N$ from above and below.
+
+Third, once the cap probability is fixed, prove high-probability concentration of the active count. Conditional on the query, independent keys produce independent Bernoulli indicators, making binomial tail bounds the natural tool.
+
+Fourth, study normalized top-$k$ approximation. The goal is to choose a bandwidth so that retaining the largest $\lceil C\sqrt N\rceil$ weights leaves discarded normalized mass at most $\varepsilon$ with high probability.
+
+Fifth, determine whether finite positive mixtures of bandwidth-scaled Cauchy kernels retain the desired universal approximation properties for continuous permutation-equivariant functions on compact domains.
+
+## 12. Conclusion
+
+The unscaled Cauchy kernel does not become sparse merely because queries and keys are random points on a unit sphere. Spherical normalization bounds every chordal distance by $2$, which bounds every weight below by $1/5$. At thresholds no greater than this floor, the below-threshold set is empty, the active count is exactly $N$, and for $N>1$ that count exceeds $\lfloor\sqrt N\rfloor$.
+
+The obstruction is deterministic, dimension-free, distribution-free, and sharp. Its practical lesson is equally direct: kernel decay must be calibrated against the diameter of the representation space. Bandwidth scaling and powered kernels restore a tunable floor and convert the sparsity question into one about spherical-cap probabilities. That revised formulation offers a viable path toward geometric attention with provable computational sparsity.

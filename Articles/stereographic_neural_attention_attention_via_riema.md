@@ -1,235 +1,170 @@
-# Attention on a Sphere: A New Way for Machines to Decide What Matters
+# The Sphere That Refused to Be Sparse
 
-## The quiet engine behind modern AI
+## A geometric stress test for a new kind of neural attention
 
-Every time a language model finishes your sentence, translates a paragraph, or
-summarizes a document, a single mechanism is doing most of the heavy lifting:
-**attention**. Attention is the part of a neural network that decides, for each
-word it is about to produce, which of the thousands of earlier words deserve a
-glance and which can be safely ignored. It is the network's spotlight operator,
-sweeping over a sea of context and brightening the few places that matter.
+Modern artificial intelligence spends an extraordinary amount of effort deciding what to notice. A language model reading a sentence compares each word with many other words. A vision model compares patches of an image. A scientific model may compare particles, atoms, or points in a cloud. The mechanism responsible for these comparisons is called **attention**, and its central object is a table of weights: large weights mark strong relationships, while small weights mark relationships that might safely be ignored.
 
-For nearly a decade this spotlight has been built the same way. Each candidate
-word — call it a *key* — is compared to the word currently being processed —
-the *query* — by taking a dot product, exponentiating it, and normalizing.
-This recipe is called **softmax attention**, and it works astonishingly well.
-But it has a stubborn flaw: the softmax spotlight is never truly dark anywhere.
-Exponentials are always positive, so *every* key gets at least a sliver of
-attention. With a million words of context, a model must in principle keep a
-flicker of focus on all million of them at once. That is expensive, and it is
-also unlike how we think — when you read this sentence, the previous chapter is
-not glowing faintly in your mind; it is simply gone from your immediate focus.
+This creates a tempting computational dream. If almost all weights were tiny, a model could discard them and calculate only the few important interactions. For a sequence of $N$ items, replacing $N$ meaningful interactions per query by roughly $\sqrt{N}$ would be a dramatic reduction. Geometry seems like a natural way to obtain such sparsity. Put queries and keys on a sphere, measure their separation, and let nearby points interact more strongly than distant ones.
 
-This article is about a different way to build the spotlight, one borrowed not
-from statistics but from geometry: from the centuries-old art of drawing a sphere
-on a flat map. We call it **stereographic attention**, and its central promise is
-that *darkness comes for free*. Most keys naturally receive a score so close to
-zero that they can be discarded, and they do so not because we forced them to but
-because the geometry of a sphere insists on it.
+One elegant proposal uses the Cauchy kernel. If $q$ is a query and $k$ is a key, define their attention weight by
 
-## A score that is secretly a distance
+$$
+K(q,k)=\frac{1}{1+\lVert q-k\rVert^2}.
+$$
 
-Let us start with the new rule for scoring a key against a query. Instead of the
-exponential dot product, stereographic attention uses what mathematicians call
-the **Cauchy kernel**:
+The formula is smooth, positive, and geometrically meaningful. It is closely related to stereographic projection, the classical map that connects a sphere with a plane. The resulting mechanism may therefore be called **stereographic attention**. At first glance, it seems well suited to creating a long tail of negligible interactions.
 
-> **The Cauchy attention score.** Given a query vector `q` and a key vector `k`,
-> their score is
->
-> &nbsp;&nbsp;&nbsp;&nbsp; `K(q, k) = 1 / (1 + ‖q − k‖²)`,
->
-> where `‖q − k‖` is the ordinary Euclidean distance between them.
+But the sphere hides a decisive obstruction. On a unit sphere, no two points can be farther apart than $2$. That elementary fact forces every Cauchy weight to be at least $1/5$. The hoped-for cloud of near-zero weights never appears.
 
-Read it slowly. When `q` and `k` are identical, the distance is zero and the
-score is `1 / (1 + 0) = 1` — the maximum. As the key drifts away from the query,
-the squared distance in the denominator grows, and the score slides smoothly
-toward zero. There is no exponential anywhere; the whole thing is a simple
-fraction. And yet, as we will see, this innocent fraction carries inside it the
-entire geometry of a sphere.
+This is not a probabilistic caveat, an asymptotic technicality, or a rare bad configuration. It is a deterministic geometric barrier.
 
-The first thing to notice is how well-behaved this score is. We can prove three
-clean facts about it, and they are worth stating exactly because they pin down
-the character of the whole mechanism.
+## From a sphere to an attention rule
 
-> **Fact 1 (Always positive).** For every query `q` and key `k`,
-> `K(q, k) > 0`.
+Let the query and key vectors lie in any normed vector space, and require both to have norm one:
 
-The denominator `1 + ‖q − k‖²` is at least `1`, because a squared distance is
-never negative. A positive number divided by something at least `1` is positive.
-So no key is ever assigned a *hard* zero — every key keeps a toehold of relevance,
-which matters because it means the mechanism is smooth and differentiable, the
-property neural networks need in order to learn.
+$$
+\lVert q\rVert=\lVert k\rVert=1.
+$$
 
-> **Fact 2 (Never more than one).** For every query `q` and key `k`,
-> `K(q, k) ≤ 1`.
+Their Euclidean or norm-induced distance is $\lVert q-k\rVert$. The Cauchy attention rule assigns weight
 
-Again the reason is elementary: since `‖q − k‖² ≥ 0`, the denominator is at least
-`1`, so the fraction is at most `1`. This gives us a *budget*. If every one of `N`
-keys scores at most `1`, then the total attention across all keys can never exceed
-`N`. That single bound, trivial as it looks, turns out to be the lever that pries
-open the sparsity guarantee later.
+$$
+K(q,k)=\frac{1}{1+\lVert q-k\rVert^2}.
+$$
 
-> **Fact 3 (Maximal only on the diagonal).** `K(q, k) = 1` if and only if
-> `q = k`.
+When $q=k$, the distance is zero and the weight is $1$, its maximum possible value. As the points separate, the denominator grows and the weight falls. In an unbounded space, the distance can become arbitrarily large, so the weight can approach zero. That familiar intuition makes the kernel seem sparse-friendly.
 
-The score hits its ceiling of `1` *exactly* when the key equals the query, and
-never otherwise. This is the geometric meaning of "self-attention": a query
-attends most strongly to itself, and to anything else strictly less. Notice this
-is a stronger statement than softmax can make. Softmax scores are only meaningful
-*relative* to each other — scale everything and the picture is unchanged. The
-Cauchy score, by contrast, has an *absolute* meaning: `1` is `1`, the perfect
-match, full stop.
+The unit sphere changes the story because it is bounded. By the triangle inequality,
 
-## Unrolling the map of the world
+$$
+\lVert q-k\rVert\leq \lVert q\rVert+\lVert k\rVert=2.
+$$
 
-Where does the sphere come in? Here is the beautiful part. There is a classical
-construction, known to every cartographer, called **stereographic projection**.
-Picture a globe sitting on a flat sheet of paper, touching it at the South Pole.
-Now stand at the North Pole and shine a light through each point of the globe down
-onto the paper. Every point of the sphere casts a shadow somewhere on the infinite
-plane, and every point of the plane is the shadow of exactly one point of the
-sphere. The sphere and the plane become two views of the same world. This is how
-you flatten a globe into a map — and, run in reverse, how you wrap a flat map back
-onto a globe.
+Squaring gives $\lVert q-k\rVert^2\leq 4$. Therefore
 
-Stereographic attention runs the map *backwards*. It takes each flat query or key
-vector `x` and lifts it up onto the surface of a sphere. Written out, the lift
-sends `x` to a point with two pieces — a "horizontal" part that still lives in the
-original space, and a single new "height" coordinate:
+$$
+1+\lVert q-k\rVert^2\leq 5,
+$$
 
-> **The stereographic lift.** A vector `x` is sent to the sphere point with
-> horizontal part
->
-> &nbsp;&nbsp;&nbsp;&nbsp; `P(x) = (2 / (1 + ‖x‖²)) · x`
->
-> and height
->
-> &nbsp;&nbsp;&nbsp;&nbsp; `H(x) = (‖x‖² − 1) / (‖x‖² + 1)`.
+and taking reciprocals yields the central result:
 
-This formula looks arbitrary until you check what it does, and what it does is
-land precisely on the unit sphere — the set of points exactly one unit from the
-origin. That is not an accident or an approximation; it is an exact identity.
+$$
+K(q,k)\geq \frac15.
+$$
 
-> **Fact 4 (The lift lands on the sphere).** For every vector `x`,
->
-> &nbsp;&nbsp;&nbsp;&nbsp; `‖P(x)‖² + H(x)² = 1`.
+Call this the **Uniform Weight-Floor Theorem**: for every pair of unit-sphere points, the unscaled Cauchy attention weight lies in the interval $[1/5,1]$.
 
-In words: the squared length of the horizontal part plus the square of the height
-always equals exactly `1`, which is the defining equation of a unit sphere. So
-when we say stereographic attention "projects to the sphere," this is a literal,
-verified statement, not a metaphor. Every vector in your data, however large or
-small, gets a unique home on the surface of one fixed sphere. Vectors near the
-origin land near the South Pole; vectors that race off to infinity crowd toward
-the North Pole; everything in between drapes smoothly over the curve.
+The lower endpoint is sharp whenever antipodal points are available. If $k=-q$, then $\lVert q-k\rVert=\lVert 2q\rVert=2$, so $K(q,k)=1/5$. At the other endpoint, $k=q$ gives $K(q,k)=1$. Thus the entire dynamic range of the raw kernel on the sphere is only a factor of five.
 
-## The punchline: the score *is* the sphere distance
+## Why randomness cannot rescue the idea
 
-Now we can connect the two ideas — the fraction and the sphere — and this is the
-conceptual heart of the whole story. Take a vector `x`, lift it to its point
-`(P(x), H(x))` on the sphere, and measure the straight-line distance from that
-point to the North Pole `(0, 1)` (the top of the sphere). Square that distance.
-What do you get? Not something vaguely related to the Cauchy score — you get the
-Cauchy score itself, multiplied by four:
+A common response to an unfavorable worst-case bound is to appeal to random data. Perhaps most random points are much farther apart in high dimensions; perhaps typical weights behave better than the extreme cases suggest. Random geometry can indeed create powerful concentration effects. Yet it cannot produce values outside a deterministic range.
 
-> **Fact 5 (The score is a chordal distance).** For every vector `x`,
->
-> &nbsp;&nbsp;&nbsp;&nbsp; `‖P(x)‖² + (H(x) − 1)² = 4 · K(x, 0)`.
+Suppose $q,k_1,\ldots,k_N$ are sampled by any procedure whatsoever, provided every sampled vector lies on the unit sphere. For every outcome and every index $i$,
 
-The left side is the squared "chord" — the straight-line distance through space
-— from `x`'s home on the sphere to the North Pole. The right side is four times
-the Cauchy score of `x` against the origin. They are equal, exactly, for every
-`x`.
+$$
+K(q,k_i)\geq \frac15.
+$$
 
-This is the sentence to carry away from the article: **a Cauchy attention score
-is a distance on a sphere.** When the network asks "how relevant is this key to
-this query?", stereographic attention answers by lifting both onto the Riemann
-sphere and measuring how far apart they sit on its curved surface. Softmax
-attention is a clever statistical heuristic; stereographic attention is a
-genuine geometric measurement. The two are siblings — both decide what matters —
-but one speaks the language of probabilities and the other the language of space.
+Consequently, the same statement holds with probability one under every probability distribution supported on the sphere. Uniform sampling, clustered sampling, adversarial sampling, and dimension-dependent sampling all face exactly the same floor.
 
-## Why a sphere makes the spotlight go dark
+This distinction matters. A probabilistic sparsity theorem normally estimates how many weights exceed a threshold $\tau$. Define a key to be active when
 
-Here is where the geometry pays a practical dividend. On a sphere, there is only
-so much room. Picture the curved surface around the North Pole. Points very near
-the pole are crowded together, but as you slide down toward the equator the
-surface fans out, and the chordal distance to the pole grows quickly. Translated
-back through Fact 5, this means: as a key moves away from a query, its score does
-not trail off lazily — it plummets, because squared distance sits in the
-denominator. Faraway keys are not faintly lit; they are *dark*.
+$$
+K(q,k_i)\geq \tau.
+$$
 
-We can make this precise. Fix a threshold `τ` — say, "I only care about keys that
-score at least `τ`." Which keys clear the bar?
+If $\tau\leq 1/5$, then every key is active. Equivalently, no key has weight below $\tau$. For a finite set of $N$ keys, the active count is therefore exactly
 
-> **Fact 6 (Active keys form a ball).** A key `k` scores `K(q, k) ≥ τ` if and
-> only if `k` lies within Euclidean distance `√(1/τ − 1)` of the query `q`.
+$$
+A_\tau=N.
+$$
 
-This is an exact characterization, not an estimate. The "active" keys — the ones
-the spotlight actually illuminates — are precisely those inside a ball of a known
-radius centered on the query. Want a stricter spotlight? Raise `τ`; the radius
-`√(1/τ − 1)` shrinks, and the ball of survivors contracts around the query. The
-geometry literally draws the boundary of attention for you.
+This is the **Exact Active-Count Theorem**: at every threshold at most $1/5$, unscaled Cauchy attention on unit-sphere data retains all keys.
 
-And the score behaves the way intuition demands: closer is always better. If one
-key is nearer to the query than another, it scores strictly higher — the score is
-a strictly decreasing function of distance. No ties, no inversions, no surprises.
+The theorem immediately rules out a literal square-root active-count bound. If $N>1$, then the integer square root satisfies $\lfloor\sqrt{N}\rfloor<N$. Since $A_\tau=N$, one has
 
-## Counting the survivors
+$$
+\lfloor\sqrt{N}\rfloor<A_\tau.
+$$
 
-The final ingredient turns this geometry into a hard guarantee about cost. We
-have a budget (Fact 2: every score is at most `1`, so the total over `N` keys is
-at most `N`) and we have a threshold (`τ`). A classical and beautifully simple
-argument — the same logic behind *Markov's inequality* in probability — now
-bounds how many keys can possibly be active at once.
+So the active set is not merely larger than a constant multiple suggested by an optimistic experiment. It remains fully dense.
 
-> **Fact 7 (Sparsity bound).** The number of keys scoring at least `τ`, call it
-> `#active`, satisfies
->
-> &nbsp;&nbsp;&nbsp;&nbsp; `τ · #active ≤ (sum of all scores) ≤ N`.
+## A useful negative result
 
-The reasoning is almost too simple to need words: each of the `#active` keys
-contributes at least `τ` to the total score, so the active keys alone account for
-at least `τ · #active` of the sum. But the whole sum is at most `N`. Therefore
-`τ · #active ≤ N`, i.e. `#active ≤ N / τ`. The higher you set your relevance bar,
-the fewer keys can clear it — and the bound is exact arithmetic, true for *any*
-arrangement of keys whatsoever.
+Negative results are sometimes described as failures, but this one functions more like a design diagnostic. It identifies exactly which ingredients are incompatible:
 
-This is the rigorous backbone of the program's headline conjecture, which dreams
-of something even stronger: that for keys that are genuinely *spread out* — as
-they tend to be in real data — the total score grows only like `√N` rather than
-`N`, so that the number of active keys collapses to roughly `√N`. That sharper
-claim is not yet a theorem; it is the honest frontier. The unconditional truth we
-can stand behind today is `τ · #active ≤ N`, and it is tight: if you cruelly
-place every key exactly on top of the query, every score is `1`, the total really
-is `N`, and no spotlight can save you. Sparsity is a gift of *spread*, and the
-geometry tells us exactly where the remaining work lies — in counting how points
-can pack onto shells of a sphere.
+1. queries and keys constrained to a unit sphere;
+2. the unscaled kernel $K(q,k)=(1+\lVert q-k\rVert^2)^{-1}$;
+3. pruning at a fixed threshold $\tau\leq 1/5$; and
+4. a claim that only about $\sqrt{N}$ keys survive.
 
-## Two portraits of the same idea
+All four cannot hold simultaneously. No choice of dimension, random distribution, or sample size changes that conclusion.
 
-There is a pleasing symmetry hiding in all this. Attention can be studied
-*algebraically*, as an abstract operation that must respect the symmetries of the
-data — a viewpoint that, through a classical result called Schur's lemma, forces
-the most symmetric attention maps to be simple scalar multiples of the identity.
-And attention can be studied *geometrically*, as we have done here, as a
-conformal kernel on a sphere. The two portraits meet on the diagonal: the
-algebraic story's "scalar identity" fixed point is exactly the geometric story's
-self-attention maximum, the place where Fact 3 tells us the score saturates at
-`1` precisely when query equals key. The same truth, seen from two sides.
+The diagnosis also clarifies why the original intuition was misleading. Cauchy decay is useful when distances can grow. Spherical normalization deliberately removes radial scale and compresses every pairwise distance into $[0,2]$. The very operation that supplies geometric regularity also prevents the denominator from becoming large. The mechanism inherits smoothness and symmetry from the sphere, but not sparsity.
 
-## What we have, and what we want
+This lesson extends beyond one kernel. Whenever a decreasing radial kernel is placed on a bounded metric space, its minimum is controlled by the diameter. If a space has diameter $D$ and the kernel is $f(d)$ with $f$ decreasing, then every interaction is at least $f(D)$. Before searching for sophisticated concentration estimates, one should calculate this elementary floor.
 
-Stereographic attention is, at its core, a wager that geometry can do the work we
-currently ask statistics to do — and do it with sparsity built in rather than
-bolted on. We have shown that the Cauchy score is positive, bounded, and maximal
-exactly on the diagonal; that the stereographic lift genuinely lands on the unit
-sphere; that the score *is* a chordal distance on that sphere; that the active
-keys form an exact ball whose radius you dial with a threshold; and that the
-number of active keys obeys a clean Markov bound `τ · #active ≤ N`.
+## What can be changed?
 
-What remains is the most tantalizing part: proving that "spread-out" keys push
-that bound all the way down to `√N`, turning a comfortable guarantee into a
-spectacular one. That is a packing problem on the sphere, and it is exactly the
-kind of question the geometry was built to ask. The map of the world has been
-unrolled and wrapped back onto its globe; now we get to count how many cities can
-share a horizon.
+The obstruction is specific enough to suggest repairs.
+
+### Add a bandwidth
+
+Introduce a scale $\beta>0$:
+
+$$
+K_\beta(q,k)=\frac{1}{1+\beta\lVert q-k\rVert^2}.
+$$
+
+The smallest possible weight becomes $1/(1+4\beta)$. Increasing $\beta$ lowers the floor and makes a fixed pruning threshold meaningful. Moreover, the active condition has a direct geometric interpretation:
+
+$$
+K_\beta(q,k)\geq\tau
+\quad\Longleftrightarrow\quad
+\lVert q-k\rVert^2\leq\frac{\tau^{-1}-1}{\beta}.
+$$
+
+Thus active keys occupy a spherical cap around the query. Sparsity becomes a question about cap area, dimension, and sample size.
+
+### Raise the kernel to a power
+
+Another option is
+
+$$
+K_p(q,k)=\bigl(1+\lVert q-k\rVert^2\bigr)^{-p}.
+$$
+
+Its floor is $5^{-p}$, which can be very small when $p$ is large. The exponent creates sharper contrast without abandoning the basic Cauchy geometry. The important research question is then quantitative: how should $p$ depend on dimension $d$, number of keys $N$, and threshold $\tau$ to leave about $\sqrt{N}$ active keys?
+
+### Select by rank rather than absolute size
+
+A top-$k$ rule always retains a prescribed number of keys, regardless of the kernel floor. Yet computational sparsity alone is not enough. One must also bound the mass discarded after weights are normalized. If many raw weights are comparable—as the factor-of-five range permits—then retaining only $O(\sqrt{N})$ entries may throw away most of the total attention mass.
+
+## A practical test before implementation
+
+The main result suggests a simple workflow for geometric attention design.
+
+First, identify the diameter of the representation space. Second, evaluate the kernel at that diameter. Third, compare this minimum with the intended pruning threshold. Only then should one simulate random samples or derive concentration inequalities.
+
+For the unit sphere and the unscaled Cauchy kernel, the calculation is immediate:
+
+$$
+D=2,
+\qquad
+K_{\min}=\frac{1}{1+D^2}=\frac15.
+$$
+
+A threshold below $0.2$ cannot prune anything. A numerical demonstration can sample thousands of random unit vectors, compute all query-key weights, and confirm that the smallest observed value stays above $0.2$. Such experiments illustrate the geometry, but the theorem is stronger: it covers every possible sample, including those never generated.
+
+## The broader message
+
+Stereographic attention remains an appealing geometric idea. Mapping representations to a sphere can remove irrelevant scale, preserve directional information, and connect neural computation with a rich body of conformal geometry. The Cauchy kernel is positive, smooth, and interpretable. None of those virtues, however, automatically supplies sparse computation.
+
+The key mathematical fact is compact enough to fit on a blackboard: unit vectors are at distance at most $2$, so their unscaled Cauchy weight is at least $1/5$. From that one inequality follow the empty below-threshold set, the exact active count $N$, and the failure of a $\sqrt{N}$ active-count claim at low fixed thresholds.
+
+That is the value of a sharp obstruction. It does not merely say that one experiment may disappoint. It tells us why, for an entire class of experiments, the desired effect cannot occur. Better still, it points toward mechanisms that might work: bandwidth scaling, powered kernels, spherical-cap calibration, concentration bounds, and carefully analyzed top-$k$ approximations.
+
+Geometry did not deliver sparsity for free. It delivered something more useful first: a clear boundary between hope and possibility.
+
+There is also a methodological moral. In fast-moving fields, plausible asymptotic stories can outrun the elementary constraints of a model. A diameter calculation costs almost nothing, yet here it decides the first and most important sparsity question. The right next step is not to abandon spherical attention, but to redesign it with the bound in view. Once a bandwidth or exponent is introduced, experiments and probability theory can address a genuinely open quantitative problem rather than searching for an effect that the original geometry forbids.
