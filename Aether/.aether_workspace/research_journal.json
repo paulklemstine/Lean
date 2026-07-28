@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "699db10f",
-      "domain": "Computation",
-      "key_insight": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-22T18:42:21",
-      "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-    },
-    {
       "cycle_id": "5d6a1919",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n## 1. Exact classification of the repaired trajectory\n\n**Conjecture.** The globally additive-avoiding greedy trajectory beginning at one is exactly the odd sequence: its term at i",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-28T18:55:07",
       "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+    },
+    {
+      "cycle_id": "e68f39b0",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n`Catalog/Logic/ProofSpaceTransitionWindows.lean` advances the finite transition model from pointwise descent to blockwise drift. It proves that strict decrease only at sampled blo",
+      "quality_score": 0.72847,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-28T18:56:08",
+      "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cb3d5d14",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Self-Modifying Computation\n\n## 1. Resource-Bounded Rewrite Hierarchy\n\nFor every positive integer `k`, there exists a natural machine model in which permitting at most `k + 1` code",
-      "quality_score": 0.8,
-      "sorry_count": 13,
-      "theorem_count": 0,
-      "timestamp": "2026-07-19T22:03:14",
-      "title": "Self-Modifying Code That Cannot Be Stopped"
-    },
     {
       "cycle_id": "14bbfbeb",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-28T18:55:07",
       "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+    },
+    {
+      "cycle_id": "e68f39b0",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n`Catalog/Logic/ProofSpaceTransitionWindows.lean` advances the finite transition model from pointwise descent to blockwise drift. It proves that strict decrease only at sampled blo",
+      "quality_score": 0.72847,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-28T18:56:08",
+      "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "735a1ab0",
-      "domain": "MachineLearning",
-      "name": "residualIterate_tendsto_zero",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "735a1ab0",
-      "domain": "MachineLearning",
-      "name": "frozen_ntk_converges_to_target",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "6a88207a",
-      "domain": "Novelty",
-      "name": "periodicStates_mapsTo_of_semiconj",
-      "quality": 0.75
-    },
     {
       "cycle_id": "6a88207a",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "radicalTwoEval_x_inversion",
       "quality": 0.7689999999999999
+    },
+    {
+      "cycle_id": "e68f39b0",
+      "domain": "Logic",
+      "name": "produces",
+      "quality": 0.72847
+    },
+    {
+      "cycle_id": "e68f39b0",
+      "domain": "Logic",
+      "name": "cumulativeImbalance_succ",
+      "quality": 0.72847
+    },
+    {
+      "cycle_id": "e68f39b0",
+      "domain": "Logic",
+      "name": "cumulative_strictDecrease_iff_shell_negative",
+      "quality": 0.72847
     }
   ],
-  "last_updated": "2026-07-28T18:55:07",
+  "last_updated": "2026-07-28T18:56:08",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "abab9083",
-        "quality": 0.53,
-        "theorems": 15,
-        "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
-      },
-      {
         "cycle_id": "2f76a8a3",
         "quality": 0.7,
         "theorems": 6,
@@ -3513,6 +3507,12 @@
         "quality": 0.78468,
         "theorems": 30,
         "title": "Proof Complexity: Resolution and Cutting Planes"
+      },
+      {
+        "cycle_id": "e68f39b0",
+        "quality": 0.72847,
+        "theorems": 9,
+        "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
       }
     ],
     "MachineLearning": [

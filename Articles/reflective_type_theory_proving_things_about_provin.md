@@ -1,104 +1,113 @@
-# Mirrors That Can Speak: Reflective Type Theory and the Logic of Self-Reference
+# Reflective Type Theory: Proving Things About Proving Things
 
-## When a language looks at its own evidence
+*By Aristotle — July 28, 2026*
 
-Ordinary mathematics speaks about numbers, spaces, functions, and structures. Reflective mathematics takes one further step: it lets a proposition speak about the existence of evidence for another proposition. If $A$ is a proposition, write $\Box A$ for the new proposition “$A$ is provable,” or, more geometrically, “$A$ holds at every proof state accessible from the present one.” Once this operation belongs to the language, it may be repeated. The formulas $\Box A$ and $\Box\Box A$ say different things: the first asserts accessible evidence for $A$; the second asserts accessible evidence for accessible evidence.
+## When a proposition looks in the mirror
 
-That distinction opens a narrow but illuminating gap. Can $\Box A$ hold while $\Box\Box A$ fails? In words: can a proposition be provable without its provability itself being provable?
+Ordinary mathematical statements talk about numbers, shapes, programs, or other objects. Reflective statements do something stranger: they talk about the status of statements themselves. “There is a proof of $A$” is not merely another way to say $A$. It describes how $A$ appears from a particular state of information. Once that distinction is admitted, a language can ask whether a proof is visible now, whether its visibility will remain visible one step later, and even whether a recursively defined proposition can refer to its own provability.
 
-The answer is yes—but only when the geometry of evidence permits it. A three-state example displays the phenomenon exactly, while a broad theorem explains why it disappears whenever accessibility is transitive. At the same time, the syntax needed to discuss such questions turns out to coincide, constructor by constructor, with the modal $\mu$-calculus, the fixed-point language used to describe recursive behavior in transition systems. Self-referential types and modal fixed points are not merely analogous; at the level of their proposition-forming grammar, they are two notations for the same structure.
+This article develops a small mathematical universe in which those questions are precise. The universe extends the familiar type-forming language of constructive mathematics by two ingredients. The first is a proof modality, written $\Box A$, meaning that $A$ holds at every state accessible from the present state. The second is a fixed-point binder, written $\mu X.A$, which permits controlled recursive reference to the type being defined.
 
-## Building a reflective language
-
-Begin with a small non-reflective language of types. It contains atomic propositions, an empty type $0$, a unit type $1$, products $A\times B$, and function types $A\to B$. Under the propositions-as-types reading, these constructors represent falsity, truth, conjunction, and implication.
-
-The reflective language retains all five ingredients and adds three more. A bound variable $X_n$ permits recursion; a constructor $\Box A$ says that evidence for $A$ is accessible; and a fixed-point expression $\mu X.A$ binds a recursive variable in $A$. Thus a reflective proposition may contain formulas such as
+Three conclusions emerge. First, self-reference can be expressed without sacrificing syntactic discipline: the closed recursive type $\mu X.\Box X$ is well scoped. Second, the statement
 
 $$
-\mu X.\Box X,
+\Box A\wedge\neg\Box\Box A
 $$
 
-which describes a self-sustaining condition: the condition is characterized as the least solution of “it is provable again.” For semantic least fixed points, the variable must occur positively—roughly, never on the input side of an implication—so that the associated operation is monotone. Without that restriction, the syntax still makes sense, but the usual least-fixed-point interpretation may not.
+is itself a legitimate closed type whenever $A$ is. It can even be true in a simple three-state information model. Third, the resulting language is not an ad hoc extension. It strictly contains an ordinary Martin-Löf-style fragment, and its expressions correspond exactly, constructor for constructor and back again, to formulas of the modal $\mu$-calculus.
 
-The old language embeds into the new one simply by preserving every old constructor. This embedding is faithful. To see why, define a partial eraser that sends atoms, $0$, $1$, products, and arrows back to their old counterparts, but fails when it encounters a bound variable, a box, or a fixed point. Erasing immediately after embedding returns the original expression. Consequently, two old expressions cannot become equal merely because they were placed in the reflective language.
+## Types as a language of construction
 
-The extension is also proper, not just faithful. No old expression can become $\Box p$ for an atomic proposition $p$: the partial eraser succeeds on every embedded old expression and fails on $\Box p$. Reflection therefore contributes genuinely new syntax. This is a precise syntactic claim. It does not, by itself, claim that every possible dependent type theory remains conservative after arbitrary computational rules for reflection are added; that deeper metatheoretic question requires separate normalization and canonicity arguments.
-
-## A second face: the modal fixed-point calculus
-
-Now describe a seemingly different language. Its formulas are built from atoms, variables $X_n$, falsity $\bot$, truth $\top$, conjunction $A\wedge B$, implication $A\Rightarrow B$, necessity $\Box A$, and least fixed points $\mu X.A$. This is the implicational-conjunctive fragment of the modal $\mu$-calculus.
-
-The dictionary is immediate but exact:
+Begin with atomic propositions $p,q,\ldots$. Build ordinary types using the empty type $0$, the unit type $1$, products $A\times B$, and function types $A\to B$. Under the propositions-as-types reading, a term of $A\times B$ contains evidence for both $A$ and $B$, while a term of $A\to B$ transforms any evidence for $A$ into evidence for $B$. Negation is therefore represented by
 
 $$
-0\leftrightarrow\bot,\qquad
-1\leftrightarrow\top,\qquad
-A\times B\leftrightarrow A\wedge B,\qquad
-A\to B\leftrightarrow A\Rightarrow B,
+\neg A := A\to 0.
 $$
 
-while atoms and bound variables remain unchanged, reflective proof $\Box A$ becomes modal necessity $\Box A$, and the type-level fixed point becomes $\mu X.A$.
+This is a compact version of the type language associated with constructive dependent type theory, restricted here to the connectives needed for the main argument. Call it the ordinary fragment.
 
-The Translation Isomorphism Theorem says that translating a reflective proposition into a modal fixed-point formula and translating back returns the original proposition; translating in the opposite order likewise returns the original formula. The proof is structural induction. Each atomic or nullary case is immediate. For products, arrows, boxes, and fixed points, the induction hypothesis applies to the immediate subexpressions, after which the corresponding constructor is rebuilt.
+The reflective language adds three constructors. A bound variable $X$ may refer to a surrounding recursive binder. The expression $\Box A$ is the proof or necessity type of $A$. Finally, $\mu X.A$ binds $X$ inside $A$ and describes a recursive type. Products, arrows, empty and unit types, and atoms remain available.
 
-This theorem is stronger than a loose comparison. It gives a bijection between complete syntax trees. It also preserves repeated reflection: translating $n$ nested proof operators produces exactly $n$ nested modal boxes,
+The word “recursive” can suggest uncontrolled circularity, but binding prevents that. A variable is legal only when it points to a binder that actually surrounds it. One precise bookkeeping method replaces variable names by natural-number indices. Index $0$ points to the nearest enclosing fixed-point binder, index $1$ to the next nearest, and so on. Under $n$ surrounding binders, an index $i$ is accepted exactly when $i<n$.
 
-$$
-T(\Box^n A)=\Box^nT(A).
-$$
+All other constructors preserve scoping compositionally. Atoms, $0$, and $1$ are well scoped at every depth. Products and arrows are well scoped when both components are. If $A$ is well scoped, then $\Box A$ is. Finally, $\mu X.A$ is well scoped at depth $n$ when its body is well scoped at depth $n+1$.
 
-The result does not assert that every unrestricted recursive formula has a least-fixed-point semantics, nor that a particular deductive system is sound and complete. It says exactly what it should say: the two grammars are isomorphic. Positivity becomes relevant only when syntax is interpreted as a monotone operation on sets of states.
+This gives the **Self-Provability Scoping Theorem**: the recursive expression $\mu X.\Box X$ is closed and well scoped. The proof is short but revealing. Entering $\mu$ raises the binder depth from $0$ to $1$. The occurrence of $X$ is represented by index $0$, and $0<1$. Applying $\Box$ does not alter scope, and leaving the binder returns a closed expression. The self-reference is genuine, yet every reference has an identifiable binder.
 
-## The three rooms
+## Provable, but not provably provable
 
-To understand the statement “provable but not provably provable,” imagine three rooms labeled $2$, $1$, and $0$. There is a one-way door from room $2$ to room $1$, and another from room $1$ to room $0$. There is no direct door from room $2$ to room $0$.
-
-A proposition is simply a choice of rooms where it is true. Let $P$ be true only in room $1$. Define $\Box P$ to hold in a room when $P$ is true in every room reachable by one door.
-
-At room $2$, the proposition $\Box P$ is true: the only one-step successor is room $1$, and $P$ is true there. But $\Box\Box P$ is false at room $2$. For it to hold, $\Box P$ would have to hold at room $1$. Yet room $1$ leads to room $0$, where $P$ is false. Therefore
+For any reflective type $A$, define its “provable but not provably provable” type by
 
 $$
-2\models \Box P\wedge\neg\Box\Box P.
+P(A):=\Box A\times(\Box\Box A\to 0).
 $$
 
-This is the Three-State Witness Theorem: a concrete inhabited model realizes a proposition that is provable but not provably provable. The example avoids a common trap. At a room with no outgoing doors, every boxed statement is vacuously true. The distinguished room here is not terminal, and the failure of the second box is witnessed by an explicit two-door path.
+Equivalently, $P(A)=\Box A\wedge\neg\Box\Box A$. The first component says that $A$ is provable from the current viewpoint. The second says that iterated provability leads to contradiction.
 
-The missing shortcut from $2$ to $0$ is decisive. Accessibility in this frame is not transitive: $2$ reaches $1$, and $1$ reaches $0$, but $2$ does not reach $0$ in one step.
+The **Scoping Preservation Theorem** states that if $A$ is closed and well scoped, then $P(A)$ is also closed and well scoped. Each step follows the grammar. Scoping of $A$ passes through one application of $\Box$, and then through two. The empty type is always scoped. Thus $\Box\Box A\to 0$ is scoped, and so is its product with $\Box A$.
 
-## Why transitivity closes the gap
+Well formedness does not by itself imply truth. To understand when $P(A)$ has an inhabitant, we need a semantics of changing information.
 
-Suppose instead that accessibility is transitive. Whenever $w$ reaches $v$ and $v$ reaches $u$, the state $w$ also reaches $u$. Assume $\Box P$ holds at $w$. To prove $\Box\Box P$ at $w$, choose any successor $v$ of $w$; then choose any successor $u$ of $v$. Transitivity makes $u$ a successor of $w$, so the original assumption $\Box P$ yields $P$ at $u$. Since every successor $u$ of $v$ satisfies $P$, the statement $\Box P$ holds at $v$. Since this works for every $v$, the statement $\Box\Box P$ holds at $w$.
+## Three rooms and a missing corridor
 
-Thus the Transitivity Theorem states
-
-$$
-\Box P\subseteq\Box\Box P
-$$
-
-on every transitive frame. Its immediate corollary is the Transitive Obstruction Theorem: no world in a transitive frame can satisfy $\Box P\wedge\neg\Box\Box P$.
-
-The three-room witness and the obstruction theorem fit together perfectly. One supplies the phenomenon; the other identifies the structural condition that forbids it. Iterated provability is therefore not controlled by the proposition $P$ alone. It depends on the geometry of how proof states see one another.
-
-This has practical echoes. In distributed systems, one process may know a fact without knowing that another process knows it. In security, one authorization step may validate a credential without validating the validation chain. In program verification, a property may hold after every immediate transition yet fail to be invariant after two transitions. Transitivity is the bridge that turns one-step assurance into assurance about assurance.
-
-## The diagonal mirror
-
-Reflection also meets the older paradoxical tradition of sentences that speak about themselves. Consider a theory with a collection of sentences, a predicate saying which sentences are provable, a predicate saying which are true, and a soundness condition: every provable sentence is true. Suppose the theory contains a diagonal sentence $D$ satisfying
+A Kripke frame consists of a set of worlds and an accessibility relation $wRv$. Think of $v$ as a state that the current state $w$ regards as possible, or as a next stage reachable from $w$. A proposition $A$ is interpreted by the set $\llbracket A\rrbracket$ of worlds where it holds. The box modality is interpreted by
 
 $$
-D\text{ is true}\quad\Longleftrightarrow\quad D\text{ is not provable}.
+\llbracket\Box A\rrbracket
+=
+\{w:\text{ for every }v,\ wRv\text{ implies }v\in\llbracket A\rrbracket\}.
 $$
 
-Then $D$ is true and unprovable. Indeed, if $D$ were provable, soundness would make it true; the displayed equivalence would then make it unprovable, a contradiction. Hence $D$ is not provable, and the equivalence now implies that $D$ is true.
+Now consider three worlds $w_2,w_1,w_0$. Let $w_2Rw_1$ and $w_1Rw_0$, but omit $w_2Rw_0$. This is a two-step chain that is deliberately non-transitive. Let the atomic proposition $A$ hold at $w_1$ and fail at $w_0$.
 
-This Diagonal Incompleteness Theorem isolates the logical heart of the argument. Its assumptions are intentionally spare: a notion of truth, a notion of provability, soundness, and a diagonal sentence with the stated specification. The conclusion is not that every reflective language automatically contains such a sentence. Rather, once a language can construct the required diagonal fixed point and its proof system is sound, incompleteness follows.
+At $w_2$, every immediate accessible world satisfies $A$: the only one is $w_1$. Hence $w_2\in\llbracket\Box A\rrbracket$. But $w_1\notin\llbracket\Box A\rrbracket$, because its successor $w_0$ does not satisfy $A$. Therefore $w_2\notin\llbracket\Box\Box A\rrbracket$. We have obtained
 
-The modal fixed-point viewpoint suggests how internal self-reference might eventually replace an externally supplied diagonal sentence. A fixed point is, after all, a controlled equation between a formula and an expression containing that formula. The challenge is to represent substitution and negation while preserving the positivity conditions required by least-fixed-point semantics.
+$$
+w_2\in\llbracket\Box A\wedge\neg\Box\Box A\rrbracket.
+$$
 
-## Two kinds of iteration, one discipline
+This is the **Three-World Witness Theorem**: there is a concrete finite model in which a closed instance of “provable but not provably provable” is inhabited.
 
-A common theme now emerges. Repeating a proof modality requires a geometric discipline: transitivity determines whether one box entails two. Interpreting recursive syntax requires an order-theoretic discipline: positivity determines whether a formula defines a monotone operator with a least fixed point. Both are forms of variance—rules governing how information behaves when passed through a constructor.
+The result is not a paradox. The first box surveys one step; the second surveys two nested steps. Because the direct corridor from $w_2$ to $w_0$ is absent, one-step and two-step visibility differ. The model distinguishes current certification from certification that persists through another layer of accessible reasoning.
 
-The completed picture has four pieces. First, reflection properly extends the ordinary product-and-function fragment. Second, reflective proposition codes and modal fixed-point formulas are exactly isomorphic as grammars. Third, a three-state non-transitive frame realizes $\Box P\wedge\neg\Box\Box P$, while every transitive frame forbids it. Fourth, sound diagonal reflection produces a true but unprovable sentence.
+This distinction has practical echoes. A software component may verify a certificate issued by its immediate supplier without possessing evidence that downstream suppliers can verify the same certificate. A distributed agent may know a fact about every neighbor without knowing that every neighbor knows it. A security policy may hold at all directly authorized transitions yet fail after two transitions. Nested boxes measure these layers.
 
-Together these results make self-reference less mysterious. A reflective language is not an invitation to unrestricted paradox. It is a carefully shaped mirror. Its syntax tells us what may be said; frame geometry tells us how evidence propagates; positivity tells us when recursion denotes a least solution; and soundness tells us what happens when a sentence succeeds in describing its own unprovability. The mirror is powerful precisely because its boundaries can be drawn.
+Transitivity marks the boundary. If accessibility is transitive, then $wRv$ and $vRu$ imply $wRu$. In that case, $\Box A$ always entails $\Box\Box A$: from $w\in\llbracket\Box A\rrbracket$, take any $v$ with $wRv$ and any $u$ with $vRu$; transitivity gives $wRu$, so $u$ satisfies $A$. Thus no transitive frame can inhabit $\Box A\wedge\neg\Box\Box A$. The three-world example works precisely because transitivity fails.
+
+## A strict extension, not a renaming
+
+The ordinary fragment embeds into the reflective language by translating atoms, $0$, $1$, products, and arrows to their identically shaped reflective counterparts. The **Proper Extension Theorem** has two parts.
+
+First, this inclusion is injective: two ordinary types that become equal after translation were already equal. The proof proceeds by structural uniqueness of the constructors. Translation retains every node of the original syntax tree, so it cannot identify distinct trees.
+
+Second, the extension is strict. For any atom $a$, the reflective type $\Box a$ has no ordinary preimage. Every translated ordinary type begins with one of the old constructors—an atom, $0$, $1$, a product, or an arrow—whereas $\Box a$ begins with the new box constructor. Distinct outer constructors cannot coincide. Reflection therefore adds genuine expressive power while preserving the old language faithfully.
+
+## Exactly the modal $\mu$-calculus
+
+There is a well-known language for combining modality and recursion: the modal $\mu$-calculus. Its formulas have atoms, falsity, truth, conjunction, implication, modal necessity, bound variables, and least fixed points. These constructors line up with the reflective types:
+
+$$
+\begin{aligned}
+a&\leftrightarrow a, & 0&\leftrightarrow\bot, & 1&\leftrightarrow\top,\\
+A\times B&\leftrightarrow A\wedge B, & A\to B&\leftrightarrow A\Rightarrow B,\\
+\Box A&\leftrightarrow\Box A, & \mu X.A&\leftrightarrow\mu X.A.
+\end{aligned}
+$$
+
+Constructor similarity alone would be suggestive but insufficient. The decisive result is the **Exact Language Correspondence Theorem**. Define a translation $T$ from reflective types to modal fixed-point formulas by the displayed clauses, and a reverse translation $S$ by reading each clause backward. Then for every reflective type $A$ and every modal $\mu$-formula $F$,
+
+$$
+S(T(A))=A
+\qquad\text{and}\qquad
+T(S(F))=F.
+$$
+
+Both identities follow by structural induction. Atoms and constants return immediately. For each binary constructor, apply the inductive hypotheses to its two children. For $\Box$ and $\mu$, apply the hypothesis to the body. Bound-variable indices are preserved exactly. The translations are mutual inverses, so this is an isomorphism of syntax, not a loose analogy.
+
+## What the mirror reveals
+
+Taken together, the results form a compact theory of reflective propositions. The old constructive language sits inside it without distortion. A box adds the ability to speak about truth across accessible proof states. A fixed point adds disciplined self-reference. Their combined syntax is exactly the modal $\mu$-calculus. Scoping prevents recursive references from escaping their binders, while Kripke semantics explains why one and two layers of provability may diverge.
+
+The phrase “provable but not provably provable” therefore describes a precise boundary rather than an impossibility. It is impossible in transitive information systems, where immediate reachability already includes every two-step destination. It is possible in non-transitive systems, where local certification need not propagate. And it is expressible as a closed type in a language whose recursion and modality are mathematically controlled.
+
+A proposition looking in the mirror does not have to create a logical hall of mirrors. With explicit binders, exact translations, and a semantics of accessible worlds, reflection becomes a tool: one that can describe layered trust, staged computation, recursive specifications, and the changing visibility of evidence.
