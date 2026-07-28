@@ -1139,16 +1139,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1098480",
     "description": "Building on cycle 0268a2b5 (Q=0.790), which proved 14 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
     "domains": [
       "Shared"
     ],
     "id": "push_0268a2b5_674fce5f",
+    "phase": "A",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "0268a2b5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T18:48:03.438961+00:00",
     "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
   },
@@ -1393,22 +1394,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Odd Perfect Numbers"
-  },
-  {
-    "consumed_by_exp_id": "9da9b807",
-    "description": "Prove that every polynomial map F: C\u207f \u2192 C\u207f with Jacobian determinant 1 has a polynomial inverse. Formalize known reductions (degree 3 suffices) and connections to Dixmier and Kellers problems.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_034",
-    "phase": "A",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Jacobian Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -6455,6 +6440,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The $K(\u03c0, 1)$ conjecture for Artin groups of spherical type' and formalize its key results. Abstract: In these notes, we introduce the 50-year-old $K(\u03c0, 1)$ conjecture alongside Coxeter and Artin groups. Roughly speaking, the conjecture states that the complement in $\\mathbb{C}^n$ of a \"symmetric\" configuration of hyperplanes is a $K(\u03c0, 1)$ space. Our end goal is to present a proof of the conjecture in the so-called spherical case, where only a finite number of hyperplanes are removed, through methods from combinatorial topology. This proof draws inspiration from the original proof of the spherical case, which is a special case of a celebrated 1972 theorem by Pierre Deligne.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0804",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.24659v1",
+    "status": "available",
+    "timestamp": "2026-07-28T23:26:40.558104+00:00",
+    "title": "ArXiv paper: The $K(\u03c0, 1)$ conjecture for Artin groups of spherical type"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Exponentially Many Circuit Double Covers' and formalize its key results. Abstract: The cycle double cover conjecture of Szekeres and Seymour, the proof of which was recently announced by OpenAI, states that every bridgeless graph has a collection of cycles covering every edge exactly twice. We study the counting version of this statement for cubic graphs, where we count circuit double covers --- collections of circuits (connected 2-regular subgraphs) covering every edge twice. We show that every 2-edge-connected 3-edge-colorable cubic graph on $n$ vertices has at least $2^{n/2-1}$ circuit double covers, matching our previously conjectured general lower bound. For every 3-edge-connected cubic graph with girth at least 16 we show a weaker exponential lower bound on circuit double covers. For both of these results we use the same system of linear equations used by OpenAI in their proof, however, we provide additional combinatorial interpretation. We characterize planarity of a cubic graph by solvability of this system of equations for arbitrary nowhere-zero $\\mathbb Z_2",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0805",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.24724v1",
+    "status": "available",
+    "timestamp": "2026-07-28T23:26:43.626173+00:00",
+    "title": "ArXiv paper: Exponentially Many Circuit Double Covers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -7722,21 +7737,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Infinite Games Against Death: Immortality Strategies"
   },
   {
-    "consumed_by_exp_id": "04ef04e2",
-    "description": "Cycle 186c9eac (Q=0.680) proved 0 theorems in Shared but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such",
-    "domains": [
-      "Shared"
-    ],
-    "id": "sorry_fill_186c9eac_94eac87b",
-    "phase": "A",
-    "priority_score": 0.7300000000000001,
-    "research_mode": "team",
-    "source_exp_id": "186c9eac",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T14:03:03.735341+00:00",
-    "title": "Close Proofs: Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
@@ -7848,7 +7848,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "687f4282",
     "description": "Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form programs with n variables and maximum interference degree delta, the chromatic number chi(G) satisfies chi(G) = max(delta + 1, omega(G)) where omega(G) is the clique number. This is stronger than Brooks' theorem (which gives chi(G) <= delta + 1) because it predicts that chi(G) = delta + 1 ONLY when G contains a (delta+1)-clique. For typical programs: delta <= 5 and omega(G) <= 4, so chi(G) = delta + 1 <= 6. Conjecture: the optimal number of registers for SSA programs is at most delta + 1, and spill code (storing variables in memory instead of registers) is needed only when k < delta + 1. Moreover, the spill cost is minimized by spilling the vertex with maximum degree in the interference graph (a heuristic known as 'degree-based spilling'). Test: extract interference graphs from 100 real programs, compute chi(G) and delta, and verify chi(G) = max(delta + 1, omega(G)). Impact: register allocation is graph coloring with a precise formula for the chromatic number.",
     "domains": [
       "Novelty",
@@ -7856,10 +7856,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_192",
+    "phase": "A",
     "priority_score": 0.72,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
   },

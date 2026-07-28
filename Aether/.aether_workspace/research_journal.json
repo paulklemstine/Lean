@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "07e03295",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n1. **Universal pentagon theorem.** The concrete 5-cycle instance is now formalized in\n   `Core.lean` (`Pentagon.pentagon_mpf`, `Pentagon.pentagon_valency_restriction`), giving",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-23T20:28:42",
-      "title": "ArXiv paper: On Matrix Product Factorization in Association Schemes"
-    },
-    {
       "cycle_id": "6c18f01c",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: Arithmetic Coherence after Deformation Stability\n\n## 1. Higher-rank compatibility percolation with a deformation-invariant boundary\n\nFor a fixed global field and bounded ramificat",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-28T22:28:32",
       "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+    },
+    {
+      "cycle_id": "9da9b807",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n## Result formalized\n\n`Catalog/Geometry/JacobianConjecture/AffineWeylBridge.lean` proves an explicit\nconnection between the Jacobian and Dixmier settings in degree one.\n\nFor the a",
+      "quality_score": 0.7645199999999999,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-28T23:26:36",
+      "title": "Jacobian Conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ca6fc5a2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Paradox-Tolerant Reflection\n\n## 1. A compositional truth language with three genuine diagonal sentences\n\nConstruct a recursively generated language with quotation, substitution, a",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-07-19T23:31:17",
-      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
     {
       "cycle_id": "28042806",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-28T22:28:32",
       "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+    },
+    {
+      "cycle_id": "9da9b807",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n## Result formalized\n\n`Catalog/Geometry/JacobianConjecture/AffineWeylBridge.lean` proves an explicit\nconnection between the Jacobian and Dixmier settings in degree one.\n\nFor the a",
+      "quality_score": 0.7645199999999999,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-28T23:26:36",
+      "title": "Jacobian Conjecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e50f9bec",
-      "domain": "Logic",
-      "name": "refutation_implies_unsatisfiable",
-      "quality": 0.78468
-    },
-    {
-      "cycle_id": "e50f9bec",
-      "domain": "Logic",
-      "name": "pigeonClause_mem",
-      "quality": 0.78468
-    },
-    {
-      "cycle_id": "92e6405b",
-      "domain": "Probability",
-      "name": "below",
-      "quality": 0.75773
-    },
     {
       "cycle_id": "92e6405b",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "length_lt_threshold_of_repeat_free",
       "quality": 0.7322500000000001
+    },
+    {
+      "cycle_id": "9da9b807",
+      "domain": "Geometry",
+      "name": "affine_jacobianDeterminant",
+      "quality": 0.7645199999999999
+    },
+    {
+      "cycle_id": "9da9b807",
+      "domain": "Geometry",
+      "name": "affine_commutator",
+      "quality": 0.7645199999999999
+    },
+    {
+      "cycle_id": "9da9b807",
+      "domain": "Geometry",
+      "name": "jacobian_one_preserves_weyl_relation",
+      "quality": 0.7645199999999999
     }
   ],
-  "last_updated": "2026-07-28T22:28:32",
+  "last_updated": "2026-07-28T23:26:36",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "1f9eb531",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
-      },
-      {
         "cycle_id": "f3a76d9a",
         "quality": 0.67,
         "theorems": 16,
@@ -3451,6 +3445,12 @@
         "quality": 0.7311199999999999,
         "theorems": 15,
         "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
+      },
+      {
+        "cycle_id": "9da9b807",
+        "quality": 0.7645199999999999,
+        "theorems": 7,
+        "title": "Jacobian Conjecture"
       }
     ],
     "Logic": [
