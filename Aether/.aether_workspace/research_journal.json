@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6296b01e",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Recurrence under Observation\n\n## Established bridge\n\n`Bridges/ObservationPeriodDivisibility.lean` connects discrete dynamical\nrecurrence with elementary number theory.  A semiconj",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-25T09:20:56",
-      "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
-    },
-    {
       "cycle_id": "872b26ee",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\n## 1. Length-preserving Collatz inversion under a truncated domain\n\nConjecture: Fix a bit length `b`, sample `n` uniformly from `[2^{b-1},2^b)`, and reveal an encoded value of `T^",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-29T12:30:24",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "5843d50f",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT₀` and an interpretation in arithmetic such that PA proves `Con(QFT₀) → Con",
+      "quality_score": 0.7539499999999999,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-29T12:31:28",
+      "title": "Logic-Physics Bridge: Consistency of Physical Theories"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0cd9c194",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions: Threshold Geometry of Deductive Languages\n\n## 1. Natural monotonicity after renormalization\n\n**Conjecture.** For every finitely presented, sound deductive system with a prefix-fre",
-      "quality_score": 0.69,
-      "sorry_count": 13,
-      "theorem_count": 5,
-      "timestamp": "2026-07-20T01:50:29",
-      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-    },
     {
       "cycle_id": "8797684d",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-29T12:30:24",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "5843d50f",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT₀` and an interpretation in arithmetic such that PA proves `Con(QFT₀) → Con",
+      "quality_score": 0.7539499999999999,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-29T12:31:28",
+      "title": "Logic-Physics Bridge: Consistency of Physical Theories"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "09a3e4f4",
-      "domain": "Novelty",
-      "name": "sum_fixedPointCoefficient_eq_card_mul_orbits",
-      "quality": 0.77355
-    },
-    {
-      "cycle_id": "09a3e4f4",
-      "domain": "Novelty",
-      "name": "sum_fixedPointSeries_eq_card_smul_orbitSeries",
-      "quality": 0.77355
-    },
-    {
-      "cycle_id": "afbe2d9b",
-      "domain": "MachineLearning",
-      "name": "cauchyWeight_eq",
-      "quality": 0.7438
-    },
     {
       "cycle_id": "afbe2d9b",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "sechSq_zero",
       "quality": 0.78321
+    },
+    {
+      "cycle_id": "5843d50f",
+      "domain": "Bridges",
+      "name": "goedel_second_incompleteness",
+      "quality": 0.7539499999999999
+    },
+    {
+      "cycle_id": "5843d50f",
+      "domain": "Bridges",
+      "name": "consistency_sentence_independent_of_PA",
+      "quality": 0.7539499999999999
+    },
+    {
+      "cycle_id": "5843d50f",
+      "domain": "Bridges",
+      "name": "physical_consistency_implies_Con_independent_of_PA",
+      "quality": 0.7539499999999999
     }
   ],
-  "last_updated": "2026-07-29T12:30:24",
+  "last_updated": "2026-07-29T12:31:28",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "95b84694",
-        "quality": 0.7,
-        "theorems": 0,
-        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-      },
-      {
         "cycle_id": "47ca7342",
         "quality": 0.65,
         "theorems": 27,
@@ -3203,6 +3197,12 @@
         "quality": 0.78657,
         "theorems": 14,
         "title": "Langlands Program: Functoriality"
+      },
+      {
+        "cycle_id": "5843d50f",
+        "quality": 0.7539499999999999,
+        "theorems": 7,
+        "title": "Logic-Physics Bridge: Consistency of Physical Theories"
       }
     ],
     "Combinatorics": [
