@@ -1,115 +1,254 @@
-# The Tiny Engine That Could Crack a Million-Dollar Mystery
+# From Two Numbers to Three: A Local Portrait of Langlands Functoriality
 
-## How a small algebraic machine is helping mathematicians decode the deepest symmetry in number theory
+A pair of numbers can carry an astonishing amount of arithmetic information. In one corner of modern number theory, two quantities $a$ and $b$ encode how a two-dimensional object behaves at a chosen prime. They are called **Satake parameters**. Their individual values matter, but so do their sum, their product, and the polynomials built from them. The Langlands program predicts that when one changes the lens through which these parameters are viewed, the resulting arithmetic data should reorganize itself with perfect consistency.
 
-There is a conjecture so vast, so interconnected, that mathematicians have called it a "grand unified theory" of number theory. It goes by the name of the **Langlands program**, and for half a century it has shaped the direction of modern mathematics. Fields Medals have been won for proving fragments of it. When Andrew Wiles proved Fermat's Last Theorem in 1995, the key insight was a special case of a Langlands-type correspondence. When Peter Scholze revolutionized algebraic geometry with his theory of perfectoid spaces, part of the motivation was to extend Langlands ideas to new territory.
+The simplest nontrivial example has the flavor of passing from a vector to a quadratic form. Begin with the pair
 
-But here's the trouble: the Langlands program is not one conjecture. It is a *web* of conjectures connecting number theory, geometry, and physics through an idea called **functoriality** — the principle that hidden symmetries in one mathematical world should transfer, predictably and exactly, to hidden symmetries in another.
+$$
+(a,b).
+$$
 
-Nobody has proved functoriality in full generality. Most mathematicians alive today do not expect to see a complete proof in their lifetimes.
+Its symmetric square is the triple
 
-So what if, instead of waiting for the whole cathedral, we built its first load-bearing arch?
+$$
+(a^2,ab,b^2).
+$$
 
----
+This is the local parameter transformation underlying the symmetric-square transfer from rank two to rank three. At first glance, it is merely a familiar algebraic recipe. Yet this small transformation already displays several themes of functoriality: compatibility with changes of coefficients, predictable behavior of determinant-like data, preservation of local $L$-factor structure, and a decomposition law for tensor products.
 
-## The Satake Parameters: A Fingerprint for Symmetry
+This article develops that complete local story from the ground up.
 
-To understand what we've done, you need to know about a beautiful trick that mathematicians use to study symmetry.
+## Arithmetic fingerprints at a prime
 
-Imagine you have a complicated symmetrical object — say, a crystal with an intricate repeating pattern. You could try to describe the whole crystal at once, which is impossibly hard. Or you could look at one small repeating unit, take its measurements, and use those measurements to reconstruct everything you need.
+An unramified local object of rank $n$ will mean, for our purposes, an ordered family of parameters
 
-In number theory, the "crystal" is something called an **automorphic representation** — a function with deep internal symmetries related to prime numbers. And the "measurements" are pairs of numbers called **Satake parameters**, usually written (α, β). At each prime number p, an automorphic representation has its own local Satake parameters, like a fingerprint at that prime.
+$$
+(eta_1,eta_2,\ldots,\beta_n)
+$$
 
-These parameters encode what's called a **local Euler factor**: a polynomial that captures the representation's behavior at one prime. For a basic object (in the group GL₂, which you can think of as 2×2 matrices), the Euler factor looks like:
+in a commutative ring $R$. “Unramified” signals that no extra singular behavior is being recorded at the chosen place; all the information relevant here is concentrated in this finite list.
 
-> (1 − αX)(1 − βX)
+Two fingerprints of the list are especially important. The first is its **central character value**, defined as the product
 
-Simple enough. But now comes the magic.
+$$
+\omega=\prod_{i=1}^{n}\beta_i.
+$$
 
----
+The second is the **Euler denominator**
 
-## The Symmetric Power Transfer: Functoriality in Action
+$$
+D(X)=\prod_{i=1}^{n}(1-\beta_iX).
+$$
 
-The Langlands program predicts that if you have a 2-dimensional symmetry (described by your pair α, β), you should be able to "lift" it to a symmetry of any higher dimension. The n-th **symmetric power** of your 2-dimensional symmetry should produce an (n+1)-dimensional symmetry, and its Euler factor should be:
+When the coefficients lie in a field and inversion is meaningful, the associated local $L$-factor is formally $L(X)=D(X)^{-1}$. It is often better to work with $D(X)$ itself: it is an honest polynomial, it makes sense over any commutative ring, and identities between local $L$-factors become polynomial factorizations.
 
-> ∏ᵢ₌₀ⁿ (1 − αⁿ⁻ⁱ βⁱ X)
+For a rank-two pair $(a,b)$, these invariants are
 
-This is a product of n+1 linear factors, each built from a specific monomial combination of α and β. It's an explicit, computable formula — and it's exactly what "functoriality" means at the local level. The symmetry doesn't just exist abstractly; it *transfers* with a precise algebraic recipe.
+$$
+\omega=ab,
+\qquad
+D_2(X)=(1-aX)(1-bX).
+$$
 
-What we've done is take this recipe and turned it into a working machine: a mathematical engine that computes, verifies, and proves theorems about symmetric power transfer with absolute certainty.
+The coefficient of $X$ in this polynomial, up to sign, is $a+b$, the familiar local trace. The coefficient of $X^2$ is $ab$, the central character value. Thus one compact polynomial packages the elementary symmetric information in the parameters.
 
----
+## The quadratic lift
 
-## What the Machine Proves
+The **symmetric-square transfer** sends
 
-Our engine establishes several fundamental results about this transfer process.
+$$
+(a,b)\longmapsto(a^2,ab,b^2).
+$$
 
-**The Transfer Formula itself.** We prove that the Euler polynomial of the n-th symmetric power transfer is exactly the product shown above. This sounds like it should be trivial — after all, we *defined* the roots — but the proof requires showing that the abstract polynomial construction (a product indexed by a finite set) correctly unfolds into the explicit formula. Getting this right is the foundation for everything else.
+Why these three entries? Imagine a two-dimensional space with basis vectors $u$ and $v$. Its symmetric quadratic tensors have basis
 
-**The Determinant Law.** Every symmetry has a "total size" — its determinant. We prove that the determinant of the symmetric power transfer satisfies:
+$$
+u^2,\quad uv,\quad v^2.
+$$
 
-> Product of all roots = (αβ)^{n(n+1)/2}
+If an operator scales $u$ by $a$ and $v$ by $b$, it scales these three quadratic directions by $a^2$, $ab$, and $b^2$. The triple is therefore not an arbitrary invention: it is forced by the symmetric-square representation of two-dimensional linear algebra.
 
-This is the central character compatibility law: it says that the "total size" of the transferred symmetry grows in exactly the right way. The exponent n(n+1)/2 is the famous triangular number, and it appears because we're summing the exponents of all the roots.
+The Euler denominator of the lifted rank-three object is consequently
 
-**The Hecke Recurrence.** There's an elegant sequence called the Hecke trace: tₘ = αᵐ + βᵐ. We prove it satisfies a second-order recurrence:
+$$
+D_{\mathrm{Sym}^2}(X)
+=(1-a^2X)(1-abX)(1-b^2X).
+$$
 
-> t_{m+2} = (α + β) · t_{m+1} − αβ · t_m
+This explicit identity is the local standard-factor compatibility theorem for the lift. It says that the rank-three local factor is obtained by applying the quadratic representation directly to the rank-two parameters.
 
-This recurrence is the algebraic engine behind computing Fourier coefficients of modular forms. It means you can compute any Hecke eigenvalue using just two initial values and two operations per step — addition and multiplication by the trace and determinant of the Satake matrix.
+The lifted trace is equally transparent:
 
-**Self-Duality.** When β = α⁻¹ (the "unitary" case), we prove that the roots are closed under inversion: each root r has a partner root 1/r. This creates a palindromic structure in the Euler polynomial — its coefficients read the same forwards and backwards (up to sign). This is the local manifestation of self-duality, a property that connects to deep questions in physics about particles and antiparticles, and to random matrix theory's predictions about the statistics of prime numbers.
+$$
+T_{\mathrm{Sym}^2}=a^2+ab+b^2.
+$$
 
----
+This quadratic expression obeys the classical telescoping identity
 
-## Why "Complexity Amplification" Matters
+$$
+(a-b)(a^2+ab+b^2)=a^3-b^3.
+$$
 
-Here's something unexpected. The symmetric power transfer doesn't just create a new symmetry — it creates a more *complex* one. The Euler polynomial of Sym^n has degree n+1. By a theorem in algebraic complexity theory, any algebraic circuit computing a degree-d polynomial must have depth at least log₂(d).
+Accordingly,
 
-This means **functorial transfer is, provably, a complexity amplifier**. Start with a simple degree-2 Euler factor. Apply Sym^10. Now you have a degree-11 polynomial, and any circuit computing it needs at least 4 layers of operations. Apply Sym^100, and you need at least 7 layers.
+$$
+(a-b)T_{\mathrm{Sym}^2}=a^3-b^3.
+$$
 
-This is a bridge between two seemingly unrelated fields: the Langlands program (number theory) and algebraic complexity theory (computer science). The bridge says: the deeper you go into functoriality, the harder the resulting objects are to compute. This is more than a curiosity — it hints at structural reasons why functoriality is hard, and it connects to the "GCT" (Geometric Complexity Theory) program, which attempts to resolve the P vs NP problem using representation theory.
+The identity gives a useful computational check and a conceptual bridge: the trace of the three-dimensional lift is the divided difference of the cubic function. When $a\ne b$ in a field, it can be written as
 
----
+$$
+T_{\mathrm{Sym}^2}=\frac{a^3-b^3}{a-b}.
+$$
 
-## The Unimodality Conjecture
+Unlike that quotient, however, $a^2+ab+b^2$ remains valid without division and over arbitrary commutative rings.
 
-Working with this engine, we discovered a pattern that we believe is new.
+## A cube hidden in the determinant
 
-When β = 1/α (the self-dual case) and α ≥ 1, the absolute values of the coefficients of the Euler polynomial seem to always form a **unimodal** sequence: they rise to a peak and then fall. In many cases, the sequence appears to be **log-concave**, meaning each coefficient squared is at least as large as the product of its neighbors.
+The central character of the lifted triple is the product of its three entries:
 
-We've tested this for thousands of parameter values and symmetric powers up to n = 100 without finding a counterexample. The conjecture remains open. If true, it would connect functorial transfer to the rich theory of log-concave sequences, which has deep ties to combinatorics (the theory of matroids), algebraic geometry (Hodge theory), and statistical physics.
+$$
+(a^2)(ab)(b^2)=a^3b^3=(ab)^3.
+$$
 
-If false, the counterexample would reveal a surprising asymmetry in how functorial transfer distributes algebraic information — which would be equally interesting.
+This proves the **central-character law**:
 
----
+> The central character value of the symmetric-square transfer is the cube of the original central character value.
 
-## A Laboratory, Not a Museum
+The exponent three has a representation-theoretic explanation. A scalar matrix with eigenvalue $t$ acts on the original two-dimensional space by $t$, but on every quadratic tensor by $t^2$. Since the lifted space has dimension three, its determinant is $(t^2)^3=t^6$. Meanwhile the original determinant is $t^2$, whose cube is also $t^6$. The elementary parameter calculation captures exactly this weight bookkeeping.
 
-The most important thing about this work is not any single theorem. It is the *infrastructure*.
+This law is valuable in practice. A proposed rank-three lift with the wrong product of parameters cannot be the symmetric-square transfer. The central character acts as a fast consistency test before any deeper analytic comparison is attempted.
 
-Mathematics has thousands of beautiful theorems about automorphic forms and functoriality, but almost none of them have been verified by computer. The gap between what mathematicians *believe* is true and what has been *checked* is enormous — and functoriality lives right in the middle of that gap.
+## Tensor square: four directions, split into three plus one
 
-What we've built is a formal laboratory: a computational environment where symmetric power transfer is not a conjecture but a verified operation. You can define a GL₂ datum, apply a symmetric power, and the system will tell you the exact roots, the exact polynomial, and the exact determinant. You can ask: "Is this polynomial self-reciprocal?" and get a certified yes-or-no answer.
+The most revealing identity comes from the full tensor square. Starting from $(a,b)$, the tensor-square parameters are
 
-This matters because mathematics is getting harder. The proofs at the frontier of the Langlands program are hundreds of pages long. Errors creep in. Experts disagree about whether certain steps are correct. Having a verified engine for even the simplest cases creates a foundation of absolute certainty on which harder results can be built.
+$$
+(a^2,ab,ab,b^2).
+$$
 
----
+The middle parameter occurs twice because the ordered tensors $u\otimes v$ and $v\otimes u$ are distinct. Linear algebra separates this four-dimensional tensor space into a three-dimensional symmetric part and a one-dimensional alternating part. On parameters, that means
 
-## The Road Ahead
+$$
+(a^2,ab,ab,b^2)
+=
+(a^2,ab,b^2)\ \sqcup\ (ab),
+$$
 
-Our engine handles the unramified, local, split case — the simplest setting in the Langlands universe. The natural next steps are:
+where the symbol $\sqcup$ emphasizes that multiplicities are retained.
 
-1. **Rankin–Selberg convolutions**: Define the tensor product of two local Euler data and prove its transfer laws. This would give a verified model of the most important analytic tool in automorphic forms.
+The one-dimensional parameter $(ab)$ is the determinant character. Taking Euler denominators turns the multiset decomposition into the polynomial factorization
 
-2. **Plethysm and Schur functors**: The composition of symmetric powers (Sym^m of Sym^n) produces root sets described by combinatorial plethysm. Formalizing this would connect to representation theory's deepest combinatorial problems.
+$$
+\begin{aligned}
+D_{\otimes^2}(X)
+&=(1-a^2X)(1-abX)^2(1-b^2X)\\
+&=D_{\mathrm{Sym}^2}(X)D_{\det}(X),
+\end{aligned}
+$$
 
-3. **Ramified primes**: At primes where the representation is not unramified, the Euler factor is more complicated. Extending the engine to handle conductors and ramification would bring it much closer to real automorphic computations.
+with
 
-4. **Global L-functions**: Combine local factors across all primes to build global L-functions, and verify functional equations and special values.
+$$
+D_{\det}(X)=1-abX.
+$$
 
-Each step is hard. But each step is now *possible*, because we have a verified starting point.
+Equivalently, whenever the formal reciprocals are considered,
 
-Robert Langlands first wrote his ideas in a letter to André Weil in 1967. Nearly sixty years later, mathematicians are still working to prove them. Perhaps the breakthrough will come not from one brilliant mind seeing the whole picture at once, but from a careful accumulation of verified fragments — each one small, each one certain, each one bearing the weight of the next.
+$$
+L(X,\pi\otimes\pi)
+=L(X,\mathrm{Sym}^2\pi)L(X,\det\pi).
+$$
 
-The first arch is in place. The cathedral is taking shape.
+This is the local Rankin–Selberg decomposition. Its meaning is more substantial than a lucky factorization: the tensor-square construction itself splits into symmetric and alternating components, and the local arithmetic factors remember that decomposition exactly.
+
+A physical analogy is useful. Two identical particles can combine into symmetric and antisymmetric states. Here the “state space” is algebraic, and the symmetric sector has three modes while the alternating sector has one. The repeated mixed parameter $ab$ supplies one mode to each sector. The Euler polynomial records the entire spectral splitting.
+
+## Changing the number system changes nothing essential
+
+Arithmetic data are routinely transported between coefficient rings: integers may be reduced modulo a prime, rational numbers may be embedded into the reals or complex numbers, and algebraic numbers may be viewed in larger fields. Let $f:R\to S$ preserve addition, multiplication, and the unit. Applying $f$ to every Satake parameter gives a transported local object.
+
+The symmetric-square construction commutes with this transport. Indeed,
+
+$$
+(f(a^2),f(ab),f(b^2))
+=(f(a)^2,f(a)f(b),f(b)^2).
+$$
+
+Thus it makes no difference whether one first forms the lift and then changes coefficients, or first changes coefficients and then forms the lift.
+
+Euler denominators enjoy the same naturality. For a family $(\beta_i)$,
+
+$$
+f\!\left(\prod_i(1-\beta_iX)\right)
+=
+\prod_i(1-f(\beta_i)X),
+$$
+
+where $f$ is applied coefficient by coefficient to the polynomial. This is the **scalar-extension compatibility theorem** for local Euler denominators.
+
+These facts are indispensable rather than decorative. Functoriality is supposed to be intrinsic; it should not depend on an accidental choice of coefficient system. The two compatibility laws show that every identity developed above survives any ring homomorphism.
+
+## A concrete numerical portrait
+
+Take $a=2$ and $b=3$. The original rank-two parameters are $(2,3)$, and the symmetric-square lift is
+
+$$
+(4,6,9).
+$$
+
+Its trace is
+
+$$
+4+6+9=19,
+$$
+
+and the telescope reads
+
+$$
+(2-3)\cdot19=2^3-3^3=-19.
+$$
+
+The original central character is $6$, while the lifted product is
+
+$$
+4\cdot6\cdot9=216=6^3.
+$$
+
+The tensor-square list is $(4,6,6,9)$. Therefore
+
+$$
+D_{\otimes^2}(X)=(1-4X)(1-6X)^2(1-9X),
+$$
+
+while
+
+$$
+D_{\mathrm{Sym}^2}(X)=(1-4X)(1-6X)(1-9X)
+$$
+
+and
+
+$$
+D_{\det}(X)=1-6X.
+$$
+
+Their product reproduces the tensor-square denominator exactly.
+
+## An algorithm hiding inside the theorem
+
+The theory is also directly computable. Given any finite parameter list, one builds its Euler denominator by starting with the constant polynomial $1$ and multiplying successively by the linear factors $1-\beta_iX$. Given a pair $(a,b)$, the symmetric-square algorithm first produces $(a^2,ab,b^2)$ and then applies that same polynomial routine. The tensor-square test computes two polynomials independently: one from $(a^2,ab,ab,b^2)$, and another by multiplying the denominator from $(a^2,ab,b^2)$ by $1-abX$. Equality of their coefficients confirms the decomposition.
+
+This is not merely a way to illustrate the equations. It reveals why Euler denominators are such efficient information containers. Lists of parameters combine by concatenation, while their denominators combine by multiplication. A decomposition of spectral data therefore becomes a factorization of polynomials. The passage turns a structural statement in representation theory into exact coefficient arithmetic.
+
+The calculation is stable even in unusual coefficient systems. One can use integers, rational numbers, finite rings, or symbolic expressions. No ordering, notion of size, convergence, or division is required. Zero divisors cause no difficulty because every argument uses only addition and multiplication. This broad algebraic validity separates the structural core of the local transfer from the analytic machinery needed in global applications.
+
+There is a practical lesson here for experimentation. Rather than numerically approximating reciprocal $L$-factors near their poles, compare Euler denominators coefficient by coefficient. The result is exact, finite, and resistant to floating-point error. The same method scales naturally to larger parameter families and higher symmetric powers, where direct expansion may be longer but the underlying product rule remains unchanged.
+
+## What this local model does—and does not—say
+
+The global Langlands program concerns automorphic representations, Galois representations, analytic continuation, functional equations, and matching data across almost all primes. None of those global analytic questions can be replaced by a single calculation with two parameters. The local unramified calculation instead isolates the algebraic compatibility that any global symmetric-square lifting must satisfy place by place.
+
+That is precisely why the model matters. It provides the local blueprint: how the parameters transform, how standard factors change, how central characters behave, and how tensor products decompose. Any global theory claiming to realize the symmetric-square transfer must agree with these identities at every unramified place.
+
+From the tiny seed $(a,b)$ grows a coherent network: the triple $(a^2,ab,b^2)$, the cubic central-character law, the rank-three Euler polynomial, the tensor decomposition, the trace identity, and invariance under coefficient change. Functoriality, in this local portrait, is the principle that all these views tell the same story.

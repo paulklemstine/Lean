@@ -1,304 +1,595 @@
-# Formal Local Euler Data and Symmetric Power Transfer: A Verified Foundation for Langlands Functoriality
+# Unramified Symmetric-Square Functoriality: Parameters, Euler Factors, and Tensor Decomposition
 
 ## Abstract
 
-We present a formally verified theory of **local Euler data** and **symmetric power transfer** in the framework of the Langlands program. Working in Lean 4 with the Mathlib library, we define a new algebraic structure `LocalEulerDatum` capturing unramified local parameters, construct the symmetric power functor `Sym^n : GL₂ → GL_{n+1}` at the level of Satake parameters, and prove seven theorems: (1) an explicit formula for the transferred Euler polynomial, (2) the Hecke trace recurrence, (3) the determinant/central-character compatibility law, (4) a degree bound connecting to algebraic circuit complexity, (5) self-duality of the root set under parameter inversion, (6) weight homogeneity of transferred roots, and (7) recovery of the standard GL₂ factor from Sym^1. We provide certified computational algorithms for Euler polynomial coefficients and Hecke traces, connect transfer degree growth to circuit complexity lower bounds, and state a falsifiable conjecture on unimodality of self-dual Euler coefficients supported by extensive numerical evidence. All proofs compile without axioms beyond the standard foundational ones (propext, Classical.choice, Quot.sound).
-
-**Keywords:** Langlands functoriality, symmetric power lifting, local Euler factors, Satake parameters, Hecke recurrences, reciprocal polynomials, self-duality, algebraic complexity, formal verification.
-
----
+We give a self-contained algebraic account of the unramified local symmetric-square transfer from rank two to rank three. Over an arbitrary commutative ring $R$, unramified data of rank $n$ are represented by a finite family of Satake parameters. To such a family we attach its central character value, the product of its parameters, and its standard Euler denominator, the polynomial obtained by multiplying the factors $1-\alpha X$. For a rank-two datum with parameters $(a,b)$, the symmetric-square transfer has parameters $(a^2,ab,b^2)$. We prove that this construction is natural under scalar extension, that its central character is the cube of the original central character, and that its standard Euler denominator is $(1-a^2X)(1-abX)(1-b^2X)$. We also prove the local Rankin–Selberg factorization: the Euler denominator of the tensor square, whose parameters are $(a^2,ab,ab,b^2)$, is the product of the symmetric-square denominator and the determinant denominator $1-abX$. Finally, we identify the lifted trace as $a^2+ab+b^2$ and establish its cubic telescoping identity. The arguments use only finite products and polynomial algebra, so all statements remain valid over commutative rings, without division or analytic hypotheses.
 
 ## 1. Introduction
 
-### 1.1 Context
+Langlands functoriality predicts that a homomorphism between suitable dual groups should transport automorphic information while preserving local and global $L$-functions in a prescribed manner. One of its basic examples is the symmetric-square transfer from rank two to rank three. At an unramified place, the essential algebra is finite and explicit: if the rank-two Satake parameters are $a$ and $b$, then applying the symmetric-square representation produces the three parameters $a^2$, $ab$, and $b^2$.
 
-The Langlands program, initiated by Robert Langlands in his 1967 letter to André Weil, predicts deep connections between automorphic representations and Galois representations [1]. A central pillar is the **principle of functoriality**: for a homomorphism of L-groups ρ: ᴸG → ᴸH, there should be a transfer of automorphic representations from G to H preserving local L-factors.
+This local transformation carries more structure than the parameter list alone suggests. Its product controls the central character. Its elementary symmetric functions determine the standard local Euler polynomial. Its relationship with the full tensor square expresses the decomposition of a two-dimensional tensor square into symmetric and alternating parts. Moreover, all of these constructions are natural under a change of coefficient ring.
 
-The simplest nontrivial case is the **symmetric power transfer** for GL₂. Given an automorphic representation π of GL₂ with unramified local component determined by Satake parameters (α, β) at a prime p, the n-th symmetric power Sym^n(π) should be an automorphic representation of GL_{n+1} whose local Euler factor at p is
+Our purpose is to isolate and prove this complete algebraic package. We deliberately work over an arbitrary commutative ring $R$. This level of generality makes clear that the identities are polynomial identities rather than consequences of analytic convergence, semisimplicity, or division. It also permits specialization to fields, residue rings, and extensions of coefficient systems through one uniform statement.
 
-$$L_p(s, \mathrm{Sym}^n \pi)^{-1} = \prod_{i=0}^{n} (1 - \alpha^{n-i}\beta^i p^{-s}).$$
+The main results are as follows. For a rank-two datum $\pi=(a,b)$, define
 
-While the existence of Sym^n transfer as an automorphic representation remains open for n ≥ 5, the **local algebraic structure** of the transfer is completely explicit and amenable to formalization.
+$$
+\operatorname{Sym}^2(\pi)=(a^2,ab,b^2),
+\qquad
+\det(\pi)=(ab),
+$$
 
-### 1.2 Contributions
+and
 
-This paper presents:
+$$
+\pi\otimes\pi=(a^2,ab,ab,b^2).
+$$
 
-1. **New algebraic structures** (`LocalEulerDatum`, `GL2Datum`, `symmPowDatum`) formalizing the combinatorial shadow of unramified local Langlands.
+Then the central characters satisfy
 
-2. **Seven formally verified theorems** capturing the fundamental properties of symmetric power transfer:
-   - Explicit Euler polynomial formula (Theorem 1)
-   - Hecke trace recurrence (Theorem 2)
-   - Determinant compatibility (Theorem 3)
-   - Degree bound / complexity connection (Theorem 4)
-   - Self-duality under parameter inversion (Theorem 5)
-   - Weight homogeneity (Theorem 6)
-   - Sym^1 recovery (Theorem 7)
+$$
+\omega_{\operatorname{Sym}^2(\pi)}=\omega_\pi^3.
+$$
 
-3. **Certified algorithms** for computing transferred Euler factors via iterative root multiplication and Hecke recurrence.
+The standard Euler denominators satisfy
 
-4. **Cross-domain connections** to algebraic circuit complexity (degree-depth tradeoffs) and spectral theory (reciprocal polynomial symmetry).
+$$
+D_{\operatorname{Sym}^2(\pi)}(X)
+=(1-a^2X)(1-abX)(1-b^2X)
+$$
 
-5. **A falsifiable conjecture** on unimodality/log-concavity of normalized self-dual Euler coefficients, with numerical evidence for n ≤ 100.
+and
 
-### 1.3 Related Work
+$$
+D_{\pi\otimes\pi}(X)
+=D_{\operatorname{Sym}^2(\pi)}(X)D_{\det(\pi)}(X).
+$$
 
-Formal verification of number-theoretic results in proof assistants has grown significantly. Buzzard et al. formalized the definition of perfectoid spaces in Lean [2]. The Liquid Tensor Experiment verified a key theorem of Clausen–Scholze [3]. However, no prior work has formalized algebraic structures directly modeling Langlands functoriality at the local level.
+The lifted Hecke trace is
 
-On the mathematical side, symmetric power L-functions have been studied extensively by Shahidi [4], Kim–Shahidi [5], and Newton–Thorne [6], who established the automorphy of Sym^n for all n over totally real fields. Our work captures the *local algebraic* content of these results in a verified framework.
+$$
+\operatorname{tr}(\operatorname{Sym}^2(\pi))=a^2+ab+b^2,
+$$
 
----
+with
 
-## 2. Definitions and Notation
+$$
+(a-b)\operatorname{tr}(\operatorname{Sym}^2(\pi))=a^3-b^3.
+$$
 
-### 2.1 Local Euler Datum
+Finally, every construction commutes with a homomorphism of commutative rings.
 
-**Definition 2.1.** A *local Euler datum* over a commutative semiring R is a pair (d, r) where d ∈ ℕ is the *degree* and r : Fin(d) → R gives the *roots* (inverse Satake parameters).
+The scope is local and unramified. These results specify the algebraic identities that a global symmetric-square transfer must satisfy at each unramified place; they do not assert the global existence of automorphic lifts or analytic properties of global $L$-functions.
 
-```
-structure LocalEulerDatum (R : Type*) [CommSemiring R] where
-  degree : ℕ
-  roots : Fin degree → R
-```
+## 2. Unramified parameter data
 
-**Definition 2.2.** The *Euler polynomial* of a local datum D over a commutative ring R is
+### 2.1. Parameter families
 
-$$P_D(X) = \prod_{i=0}^{d-1} (X - r_i) \in R[X].$$
+Let $R$ be a commutative ring with identity, and let $n$ be a nonnegative integer.
 
-### 2.2 GL₂ Datum and Symmetric Power Transfer
+**Definition 2.1 (Unramified datum).** An unramified datum of rank $n$ over $R$ is an ordered family
 
-**Definition 2.3.** A *GL₂ datum* over R is a pair (α, β) ∈ R × R of Satake parameters.
+$$
+\pi=(\alpha_1,\ldots,\alpha_n),
+\qquad \alpha_i\in R.
+$$
 
-**Definition 2.4.** The *n-th symmetric power transfer* of (α, β) is the local Euler datum
+The ordering is convenient for specifying constructions, although the principal invariants considered below are symmetric and therefore depend only on the associated multiset.
 
-$$\mathrm{Sym}^n(\alpha, \beta) = \left(n+1,\; i \mapsto \alpha^{n-i}\beta^i\right)$$
+**Definition 2.2 (Scalar extension).** If $f:R\to S$ is a homomorphism of commutative rings and $\pi=(\alpha_1,\ldots,\alpha_n)$, define
 
-with degree n+1 and roots indexed by Fin(n+1).
+$$
+f_*(\pi)=(f(\alpha_1),\ldots,f(\alpha_n)).
+$$
 
-### 2.3 Hecke Trace
+This operation includes embeddings into larger fields, reduction modulo an ideal when expressed by the quotient map, and any other coefficient change preserving sums, products, and the identity.
 
-**Definition 2.5.** The *m-th Hecke trace* of (α, β) is $t_m(\alpha, \beta) = \alpha^m + \beta^m$.
+### 2.2. Central characters and Euler denominators
 
----
+**Definition 2.3 (Central character value).** The central character value of $\pi=(\alpha_1,\ldots,\alpha_n)$ is
 
-## 3. Main Results
+$$
+\omega_\pi=\prod_{i=1}^{n}\alpha_i.
+$$
 
-### 3.1 Theorem 1: Explicit Euler Polynomial
+For the empty family, the product is $1$. For a rank-two datum $(a,b)$, it is $ab$.
 
-**Theorem (eulerPoly_symmPowDatum).** For any commutative ring R and α, β ∈ R,
+**Definition 2.4 (Standard Euler denominator).** The standard Euler denominator attached to $\pi$ is
 
-$$P_{\mathrm{Sym}^n(\alpha,\beta)}(X) = \prod_{i=0}^{n} \left(X - \alpha^{n-i}\beta^i\right).$$
+$$
+D_\pi(X)=\prod_{i=1}^{n}(1-\alpha_iX)\in R[X].
+$$
 
-*Proof.* By unfolding the definitions of `eulerPoly` and `symmPowDatum`. The Lean proof is `simp only [LocalEulerDatum.eulerPoly, symmPowDatum]`. □
+When working over a field or in a ring of formal power series where the reciprocal is considered, the standard unramified local $L$-factor is
 
-This is foundational: it certifies that our abstract polynomial construction agrees with the explicit transfer formula from representation theory.
+$$
+L(X,\pi)=D_\pi(X)^{-1}.
+$$
 
-### 3.2 Theorem 2: Hecke Trace Recurrence
+The denominator is the primary object here because it is polynomial and is defined over every commutative ring. No claim about analytic convergence is involved.
 
-**Theorem (heckeTrace_recurrence).** For any commutative ring R, any α, β ∈ R, and any m ∈ ℕ,
+For rank two, direct evaluation gives the first explicit formula.
 
-$$t_{m+2}(\alpha,\beta) = (\alpha + \beta) \cdot t_{m+1}(\alpha,\beta) - \alpha\beta \cdot t_m(\alpha,\beta).$$
+**Proposition 2.5 (Rank-two Euler denominator).** If $\pi=(a,b)$, then
 
-*Proof sketch.* Expand the left side as α^{m+2} + β^{m+2} and the right side as (α+β)(α^{m+1}+β^{m+1}) − αβ(α^m+β^m). After distribution: α^{m+2} + α·β^{m+1} + α^{m+1}·β + β^{m+2} − α^{m+1}·β − α·β^{m+1} = α^{m+2} + β^{m+2}. The Lean proof uses `unfold heckeTrace; ring`. □
+$$
+D_\pi(X)=(1-aX)(1-bX).
+$$
 
-This recurrence is the computational engine behind GL₂ automorphic forms: it allows recursive computation of any Hecke eigenvalue from the trace (α+β) and determinant (αβ) of the Satake matrix.
+**Proof sketch.** Apply Definition 2.4 to the two-element family. The finite product has exactly the displayed two factors. $\square$
 
-### 3.3 Theorem 3: Determinant Compatibility
+Expanding gives
 
-**Theorem (symmPow_root_product).** For any commutative monoid R,
+$$
+D_\pi(X)=1-(a+b)X+abX^2.
+$$
 
-$$\prod_{i=0}^{n} \alpha^{n-i}\beta^i = \alpha^{n(n+1)/2} \cdot \beta^{n(n+1)/2}.$$
+Thus the trace $a+b$ and central character $ab$ occur as its nonconstant coefficients, with the usual alternating signs.
 
-*Proof sketch.* Split the product using `Finset.prod_mul_distrib`:
+### 2.3. Naturality of Euler denominators
 
-$$\prod_i \alpha^{n-i}\beta^i = \left(\prod_i \alpha^{n-i}\right)\left(\prod_i \beta^i\right).$$
+A ring homomorphism $f:R\to S$ induces a coefficientwise homomorphism $R[X]\to S[X]$, also denoted by $f$ when no confusion can arise.
 
-Apply `Finset.prod_pow_eq_pow_sum` to get α^{Σ(n-i)} · β^{Σ i}. Both sums equal n(n+1)/2 by the Gauss formula for triangular numbers. □
+**Theorem 2.6 (Scalar-extension compatibility of Euler denominators).** For every unramified datum $\pi$ over $R$ and every ring homomorphism $f:R\to S$,
 
-This is the *central character compatibility law*: det(Sym^n ρ) = (det ρ)^{n(n+1)/2}. It upgrades the transfer from a bare polynomial construction to a representation-theoretic object with the correct determinant.
+$$
+f(D_\pi(X))=D_{f_*(\pi)}(X).
+$$
 
-### 3.4 Theorem 4: Degree Bound
+**Proof sketch.** Since $f$ preserves $0$, $1$, subtraction, and multiplication, it sends each factor $1-\alpha_iX$ to $1-f(\alpha_i)X$. It also preserves finite products. Therefore
 
-**Theorem (symmPow_euler_natDegree_le).** For R nontrivial,
+$$
+f\!\left(\prod_i(1-\alpha_iX)\right)
+=\prod_i(1-f(\alpha_i)X),
+$$
 
-$$\deg P_{\mathrm{Sym}^n(\alpha,\beta)} \leq n + 1.$$
+which is the required denominator. $\square$
 
-*Proof sketch.* The Euler polynomial is a product of n+1 factors of the form (X − c), each of degree ≤ 1. By `Polynomial.natDegree_prod_le`, the degree of the product is at most the sum of individual degrees, which is n+1. □
+This theorem is the basic mechanism allowing identities proved universally over $R$ to be specialized through any coefficient map.
 
-**Cross-domain connection.** By the degree-depth tradeoff in algebraic circuit complexity (see [7, Theorem 3.1]), any algebraic circuit computing a polynomial of degree d requires depth ≥ ⌈log₂ d⌉. Therefore, any circuit computing the Sym^n Euler polynomial needs depth ≥ ⌈log₂(n+1)⌉. This makes precise the sense in which *functorial transfer is complexity amplification*.
+## 3. The symmetric-square construction
 
-### 3.5 Theorem 5: Self-Duality
+### 3.1. Representation-theoretic origin
 
-**Theorem (symmPow_roots_inv_closed).** Let K be a field and α ∈ K×. Then for each root r_i of Sym^n(α, α⁻¹), its inverse r_i⁻¹ also appears as a root. Specifically, the root at index i is the inverse of the root at index n−i.
+Let a diagonal operator on a two-dimensional module have eigenparameters $a$ and $b$. On the symmetric square, the quadratic monomials $u^2$, $uv$, and $v^2$ are scaled by $a^2$, $ab$, and $b^2$, respectively. This motivates the following purely algebraic definition.
 
-*Proof sketch.* The root at index i is α^{n-i} · (α⁻¹)^i = α^{n-2i}. Its inverse is α^{2i-n}. The root at index n−i is α^{n-(n-i)} · (α⁻¹)^{n-i} = α^{i} · α^{-(n-i)} = α^{2i-n}. These are equal. □
+**Definition 3.1 (Symmetric-square transfer).** For a rank-two datum $\pi=(a,b)$ over $R$, define the rank-three datum
 
-This is the formal shadow of *self-dual transfer phenomena*: when the Satake matrix has determinant 1 (i.e., αβ = 1), the transferred representation is self-contragredient. The Euler polynomial becomes self-reciprocal (palindromic up to sign), connecting to random matrix theory and spectral symmetry.
+$$
+\operatorname{Sym}^2(\pi)=(a^2,ab,b^2).
+$$
 
-### 3.6 Theorem 6: Weight Homogeneity
+**Definition 3.2 (Determinant character).** For the same datum, define the rank-one determinant datum
 
-**Theorem (symmPow_roots_homogeneous).** Every root of Sym^n(α, β) is a monomial α^a β^b with a + b = n.
+$$
+\det(\pi)=(ab).
+$$
 
-*Proof.* For root index i, take a = n − i, b = i. Then a + b = n and the root is α^a β^b by definition. □
+**Definition 3.3 (Tensor square).** Define the rank-four tensor-square datum by
 
-This is the *weight homogeneity* property: all roots have the same total weight n. It is the first step toward formalizing plethysm and higher representation-ring operations.
+$$
+\pi\otimes\pi=(a^2,ab,ab,b^2).
+$$
 
-### 3.7 Theorem 7: Sym^1 Recovery
+The repeated mixed term records multiplicity. The ordered tensor basis $u\otimes u$, $u\otimes v$, $v\otimes u$, $v\otimes v$ receives the displayed eigenparameters.
 
-**Theorem (symmPow_one_eq).** Sym^1(α, β) recovers the standard GL₂ Euler factor:
+### 3.2. Naturality of the transfer
 
-$$P_{\mathrm{Sym}^1(\alpha,\beta)}(X) = (X - \alpha)(X - \beta).$$
+**Theorem 3.4 (Scalar-extension compatibility of the symmetric square).** Let $f:R\to S$ be a homomorphism of commutative rings. For every rank-two datum $\pi$ over $R$,
 
-*Proof.* Convert the product over Fin(2) to an explicit two-element product using `Fin.prod_univ_two`, then simplify the roots at indices 0 and 1. □
+$$
+f_*(\operatorname{Sym}^2(\pi))
+=\operatorname{Sym}^2(f_*(\pi)).
+$$
 
----
+**Proof sketch.** Write $\pi=(a,b)$. The left side is
 
-## 4. Algorithms
+$$
+(f(a^2),f(ab),f(b^2)),
+$$
 
-### 4.1 Euler Polynomial Computation
+while the right side is
 
-**Algorithm 1: Iterative Root Multiplication**
+$$
+(f(a)^2,f(a)f(b),f(b)^2).
+$$
 
-```
-Input: n ∈ ℕ, α, β ∈ R
-Output: Coefficient list [a₀, a₁, ..., a_{n+1}] of P_{Sym^n(α,β)}
+These triples agree because a ring homomorphism preserves squares and products. $\square$
 
-1. poly ← [1]
-2. for i = 0, 1, ..., n:
-3.   r ← α^{n-i} · β^i
-4.   poly ← convolve(poly, [-r, 1])
-5. return poly
-```
+Combining Theorems 2.6 and 3.4 immediately shows that the Euler denominator of the symmetric-square datum also commutes with coefficient change. Naturality here is strict: no auxiliary choice or comparison is required.
 
-**Complexity:** O(n²) ring operations, O(n) space.
+## 4. Central character and standard Euler factor
 
-### 4.2 Hecke Trace Computation
+### 4.1. Central-character law
 
-**Algorithm 2: Recurrence-Based Hecke Traces**
+**Theorem 4.1 (Central character of the symmetric square).** For every rank-two datum $\pi$ over a commutative ring,
 
-```
-Input: α, β ∈ R, length M ∈ ℕ
-Output: [t₀, t₁, ..., t_{M-1}]
+$$
+\omega_{\operatorname{Sym}^2(\pi)}=\omega_\pi^3.
+$$
 
-1. s ← α + β,  p ← α · β
-2. t₀ ← 2,  t₁ ← s
-3. for m = 2, ..., M-1:
-4.   t_m ← s · t_{m-1} − p · t_{m-2}
-5. return [t₀, ..., t_{M-1}]
-```
+**Proof sketch.** If $\pi=(a,b)$, then $\omega_\pi=ab$. Multiplying the three transferred parameters gives
 
-**Complexity:** O(M) ring operations, O(1) additional space.
+$$
+\omega_{\operatorname{Sym}^2(\pi)}
+=(a^2)(ab)(b^2)
+=a^3b^3
+=(ab)^3
+=\omega_\pi^3.
+$$
 
-Both algorithms are implemented in Python (`algorithms.py`) and correspond to the verified Lean definitions.
+Only associativity and commutativity are used. $\square$
 
----
+The theorem supplies a necessary compatibility condition for any proposed symmetric-square transfer. It is also consistent with scalar weights: if $a=b=t$, then the original central character is $t^2$, while each of the three lifted parameters equals $t^2$, so the lifted product is $t^6=(t^2)^3$.
 
-## 5. Conjecture and Numerical Evidence
+### 4.2. Explicit rank-three Euler denominator
 
-### 5.1 Unimodality Conjecture
+**Theorem 4.2 (Standard Euler denominator of the symmetric-square transfer).** For $\pi=(a,b)$,
 
-**Conjecture.** For α ∈ ℝ with α ≥ 1, the sequence of absolute values of coefficients of P_{Sym^n(α, α⁻¹)} is unimodal for all n ≥ 1.
+$$
+D_{\operatorname{Sym}^2(\pi)}(X)
+=(1-a^2X)(1-abX)(1-b^2X).
+$$
 
-**Stronger form.** The sequence is log-concave: |a_k|² ≥ |a_{k-1}| · |a_{k+1}| for all internal indices k.
+**Proof sketch.** Insert the parameter family $(a^2,ab,b^2)$ into Definition 2.4. $\square$
 
-### 5.2 Numerical Evidence
+An expanded form can also be useful. Multiplication yields
 
-We tested the conjecture on a grid of parameters:
-- α ∈ {1.01, 1.05, 1.1, 1.2, 1.5, 2, 3, 5, 10, 50, 100}
-- n ∈ {1, 2, ..., 100}
+$$
+\begin{aligned}
+D_{\operatorname{Sym}^2(\pi)}(X)
+={}&1-(a^2+ab+b^2)X\\
+&+ab(a^2+ab+b^2)X^2-a^3b^3X^3.
+\end{aligned}
+$$
 
-**Results:** All 1100 test cases satisfy both unimodality and log-concavity. No counterexample was found.
+The coefficient pattern reflects the three elementary symmetric functions of $a^2$, $ab$, and $b^2$. In particular, the coefficient of $X^3$ recovers Theorem 4.1, while the coefficient of $X$ gives the lifted trace considered in Section 6.
 
-| α     | Max n tested | Unimodal | Log-concave |
-|-------|-------------|----------|-------------|
-| 1.01  | 100         | ✓ all    | ✓ all       |
-| 1.5   | 100         | ✓ all    | ✓ all       |
-| 2.0   | 100         | ✓ all    | ✓ all       |
-| 5.0   | 100         | ✓ all    | ✓ all       |
-| 100.0 | 100         | ✓ all    | ✓ all       |
+If local $L$-factors are denoted by reciprocals, Theorem 4.2 reads
 
-### 5.3 Disproof Criterion
+$$
+L(X,\operatorname{Sym}^2\pi)
+=\frac{1}{(1-a^2X)(1-abX)(1-b^2X)}.
+$$
 
-For any specific (n, α), compute P = Sym^n(α, α⁻¹) and its coefficient magnitudes |a₀|, |a₁|, ..., |a_{n+1}|. If there exist consecutive triples with |a_k|² < |a_{k-1}| · |a_{k+1}|, the log-concavity conjecture is false. If there exist indices i < j < k with |a_j| < |a_i| and |a_j| < |a_k|, the unimodality conjecture is false.
+This equality is formal; analytic interpretations require a context in which $X$ is specialized appropriately.
 
----
+## 5. Tensor-square factorization
 
-## 6. Cross-Domain Connections
+The tensor square of a two-dimensional representation decomposes as the direct sum of its symmetric square and exterior square. In dimension two, the exterior square is one-dimensional and is the determinant representation. The parameter calculation realizes this decomposition exactly.
 
-### 6.1 Algebraic Complexity
+**Theorem 5.1 (Local Rankin–Selberg Euler-factor decomposition).** For every rank-two datum $\pi$ over a commutative ring,
 
-The degree bound (Theorem 4) connects directly to algebraic circuit complexity. The Euler polynomial of Sym^n has degree n+1. By the standard depth-degree tradeoff:
+$$
+D_{\pi\otimes\pi}(X)
+=D_{\operatorname{Sym}^2(\pi)}(X)D_{\det(\pi)}(X).
+$$
 
-> **Any algebraic circuit computing P_{Sym^n} has depth ≥ ⌈log₂(n+1)⌉.**
+More explicitly, if $\pi=(a,b)$, then
 
-This means functorial transfer creates polynomial families with certified complexity growth. As n increases, the transferred Euler factors become provably harder to compute. This provides a formal, verified instance of the observation that the Langlands program produces algebraically complex objects — a connection to the Geometric Complexity Theory program of Mulmuley and Sohoni.
+$$
+(1-a^2X)(1-abX)^2(1-b^2X)
+=
+\bigl((1-a^2X)(1-abX)(1-b^2X)\bigr)(1-abX).
+$$
 
-### 6.2 Spectral Theory and Random Matrices
+**Proof sketch.** The tensor-square parameter multiset is
 
-Self-dual Euler polynomials (Theorem 5) are reciprocal polynomials. Their roots come in pairs (r, 1/r), giving the Euler factor a palindromic coefficient structure. This is precisely the structure predicted by random matrix theory for L-functions in families with symplectic or orthogonal symmetry type.
+$$
+\{a^2,ab,ab,b^2\}.
+$$
 
-The connection is: **self-dual functorial transfer produces exactly the polynomial structures that random matrix theory predicts should govern the statistics of zeros of L-functions.** Our formalization verifies the algebraic foundation of this prediction.
+It is the multiset union of the symmetric-square family
 
-### 6.3 Mathematical Physics
+$$
+\{a^2,ab,b^2\}
+$$
 
-Reciprocal polynomials appear in statistical mechanics as partition functions with particle-antiparticle symmetry. The root inversion symmetry α^{n-2i} ↔ α^{2i-n} under β = α⁻¹ is formally identical to the energy-level inversion symmetry E ↔ −E in systems with charge conjugation symmetry. The Euler factor becomes a Z-function:
+and the determinant family $\{ab\}$. Euler denominators multiply under multiset union because their defining linear factors concatenate. Equivalently, both sides of the displayed polynomial identity are the same four factors, merely grouped differently. $\square$
 
-$$Z(X) = \prod_{i=0}^{n} (1 - e^{E_i} X)$$
+Whenever reciprocal factors are meaningful, taking inverses gives the familiar local identity
 
-where Eᵢ = (n − 2i)·ln α are the "energy levels." The palindromic structure ensures Z(X) and Z(1/X) are related by a simple monomial factor — the partition function identity.
+$$
+L(X,\pi\otimes\pi)
+=L(X,\operatorname{Sym}^2\pi)L(X,\det\pi).
+$$
 
----
+The theorem is valid even when polynomial factors are not cancellable. This is one reason to formulate the result directly as equality of denominators over a commutative ring.
 
-## 7. Discussion
+### 5.1. Structural interpretation
 
-### 7.1 Significance
+Let $V$ be a free rank-two module with basis $u,v$. Under appropriate hypotheses permitting the usual splitting, one has
 
-This work creates the first formally verified algebraic framework for Langlands functoriality. While the full program concerns analytic objects (automorphic representations, L-functions, trace formulas), the algebraic skeleton — the combinatorics of Satake parameters and their transformation under functorial maps — is exactly what we have captured.
+$$
+V\otimes V\cong\operatorname{Sym}^2V\oplus\bigwedge^2V.
+$$
 
-The key insight is that **the local, unramified case is already rich enough to support nontrivial theorems, certified algorithms, and falsifiable conjectures.** One does not need the full analytic theory to begin verifying the algebraic structure of functoriality.
+The three symmetric directions correspond to $u\otimes u$, a symmetric mixed direction, and $v\otimes v$. The alternating direction corresponds to the antisymmetric mixed tensor. Both mixed directions carry the same eigenparameter $ab$, explaining its multiplicity two in the tensor square and its appearance once in each factor on the right side.
 
-### 7.2 Limitations
+The parameter and polynomial identity itself requires no division by $2$, so it remains valid in characteristic $2$, where an internal direct-sum description of symmetric and alternating tensors may require additional care. The multiset calculation is therefore algebraically more robust than a proof depending on projection operators with coefficients $1/2$.
 
-Our formalization covers only the unramified, split, GL₂ case. It does not handle:
-- Ramified primes (where the Euler factor is not a product of linear factors)
-- Non-split groups (where the Satake isomorphism involves the Weyl group)
-- Global L-functions (products over all primes)
-- Automorphy (the assertion that the transferred representation is actually automorphic)
+## 6. Trace identities
 
-These are natural targets for future work.
+**Definition 6.1 (Hecke trace).** The trace of a finite parameter family $(\alpha_1,\ldots,\alpha_n)$ is
 
-### 7.3 On the Use of Formal Verification
+$$
+\operatorname{tr}(\pi)=\sum_{i=1}^{n}\alpha_i.
+$$
 
-All proofs in this paper have been verified by the Lean 4 proof assistant and depend only on the standard axioms: propext, Classical.choice, and Quot.sound. The proofs use a variety of tactics including ring normalization, combinatorial simplification, and finitary induction. No `sorry` (unproven assertion) remains in the codebase.
+It is the negative of the coefficient of $X$ in $D_\pi(X)$.
 
----
+**Theorem 6.2 (Trace of the symmetric-square transfer).** For $\pi=(a,b)$,
 
-## 8. Future Work
+$$
+\operatorname{tr}(\operatorname{Sym}^2(\pi))=a^2+ab+b^2.
+$$
 
-1. **Rankin–Selberg convolution:** Define the tensor product of two local Euler data and prove its factorization properties. This would give a verified model of the most important analytic tool in automorphic forms.
+**Proof sketch.** Sum the three parameters $a^2$, $ab$, and $b^2$. $\square$
 
-2. **Plethysm and iterated transfer:** Formalize the composition Sym^m ∘ Sym^n and prove that all roots of the composed transfer are monomials in α, β of total degree mn. This connects to Schur functor theory and deep problems in algebraic combinatorics.
+**Theorem 6.3 (Cubic telescoping identity).** For every $a,b$ in a commutative ring,
 
-3. **Ramification theory:** Extend the framework to handle conductors and local epsilon factors at ramified primes. This would require formalizing local class field theory.
+$$
+(a-b)\operatorname{tr}(\operatorname{Sym}^2(a,b))=a^3-b^3.
+$$
 
-4. **Spectral statistics:** Prove the unimodality conjecture, or find a counterexample. Connect the palindromic coefficient structure to known results on zeros of reciprocal polynomials.
+**Proof sketch.** Substitute Theorem 6.2 and distribute:
 
-5. **Global L-functions:** Combine local factors into Euler products and verify functional equations.
+$$
+\begin{aligned}
+(a-b)(a^2+ab+b^2)
+&=a^3+a^2b+ab^2-a^2b-ab^2-b^3\\
+&=a^3-b^3.
+\end{aligned}
+$$
 
----
+The mixed terms cancel. $\square$
 
-## References
+Over a field with $a\ne b$, this gives the divided-difference expression
 
-[1] R. P. Langlands, *Problems in the theory of automorphic forms*, Lecture Notes in Math., vol. 170, Springer, 1970.
+$$
+\operatorname{tr}(\operatorname{Sym}^2(a,b))
+=\frac{a^3-b^3}{a-b}.
+$$
 
-[2] K. Buzzard, J. Commelin, P. Massot, *Formalising perfectoid spaces*, Proc. of CPP 2020.
+The polynomial form in Theorem 6.3 is stronger algebraically because it makes no invertibility assumption on $a-b$.
 
-[3] J. Commelin, A. Topaz, et al., *Liquid Tensor Experiment*, 2022.
+## 7. Algorithms and computational realization
 
-[4] F. Shahidi, *On certain L-functions*, Amer. J. Math. 103 (1981), 297–355.
+### 7.1. Euler-denominator construction
 
-[5] H. Kim, F. Shahidi, *Functorial products for GL₂ × GL₃ and the symmetric cube for GL₂*, Ann. of Math. 155 (2002), 837–893.
+Given parameters $\alpha_1,\ldots,\alpha_n$, the denominator may be computed iteratively. Represent a polynomial by a coefficient array in increasing degree. Initialize $c=[1]$. For each $\alpha_i$, replace $c$ by its convolution with $[1,-\alpha_i]$. After $n$ steps, $c$ contains the coefficients of $D_\pi(X)$.
 
-[6] J. Newton, J. Thorne, *Symmetric power functoriality for holomorphic modular forms*, Publ. Math. IHÉS 134 (2021), 1–116.
+At the $k$th step the current polynomial has degree $k-1$, and multiplying by a linear factor costs $O(k)$ ring operations. Hence the complete procedure uses $O(n^2)$ ring operations and $O(n)$ storage. For the ranks considered here, the computation is constant-size, but the generic algorithm is useful for higher symmetric powers.
 
-[7] V. Strassen, *Vermeidung von Divisionen*, J. Reine Angew. Math. 264 (1973), 184–202.
+### 7.2. Symmetric-square verification pipeline
+
+For input $(a,b)$, compute:
+
+1. the lifted parameters $(a^2,ab,b^2)$;
+2. the determinant parameter $(ab)$;
+3. the tensor parameters $(a^2,ab,ab,b^2)$;
+4. the three Euler denominators using the iterative algorithm;
+5. the product of the lifted and determinant denominators;
+6. a coefficientwise comparison with the tensor denominator;
+7. the products of the original and lifted parameters;
+8. the two sides of the trace telescoping identity.
+
+All quantities can be computed exactly over the integers or rational numbers. The factorization check compares polynomial coefficients rather than floating-point evaluations, avoiding numerical ambiguity.
+
+### 7.3. Worked example
+
+Let $a=2$ and $b=3$. Then
+
+$$
+\operatorname{Sym}^2(2,3)=(4,6,9),
+\qquad
+\det(2,3)=(6),
+$$
+
+and
+
+$$
+(2,3)\otimes(2,3)=(4,6,6,9).
+$$
+
+The central-character identity is
+
+$$
+4\cdot6\cdot9=216=(2\cdot3)^3.
+$$
+
+The trace and telescope are
+
+$$
+4+6+9=19,
+$$
+
+and
+
+$$
+(2-3)19=-19=2^3-3^3.
+$$
+
+The denominators are
+
+$$
+D_{\operatorname{Sym}^2}(X)
+=(1-4X)(1-6X)(1-9X),
+$$
+
+$$
+D_{\det}(X)=1-6X,
+$$
+
+and
+
+$$
+D_{\otimes^2}(X)
+=(1-4X)(1-6X)^2(1-9X).
+$$
+
+The last polynomial is visibly the product of the preceding two.
+
+## 8. Applications and consequences
+
+### 8.1. Local consistency tests
+
+The formulas provide quick necessary tests for a proposed rank-three symmetric-square lift. Given rank-two parameters $(a,b)$ and a candidate triple $(c_1,c_2,c_3)$, the expected multiset is $\{a^2,ab,b^2\}$. Even before full comparison, one may test
+
+$$
+c_1c_2c_3=(ab)^3
+$$
+
+and
+
+$$
+c_1+c_2+c_3=a^2+ab+b^2.
+$$
+
+One may then compare the complete Euler denominator with the cubic polynomial in Theorem 4.2. Equality of the denominator captures all elementary symmetric functions of the triple.
+
+### 8.2. Reduction and specialization
+
+Because the constructions commute with scalar extension, an identity over integers may be reduced modulo any integer $m$, and an identity over a base field may be transported into an extension field. For example, reducing $(a,b)$ modulo a prime and then lifting gives the same triple as lifting first and reducing each entry. The same statement holds coefficientwise for every Euler denominator and factorization.
+
+This compatibility is useful in experimental arithmetic. Computations can be performed in finite coefficient rings while retaining a transparent relationship with universal polynomial formulas.
+
+### 8.3. Finite collections of places
+
+Suppose a finite set of places is equipped with pairs $(a_v,b_v)$. Applying Theorem 5.1 independently at each place and multiplying the resulting equalities suggests the finite product identity
+
+$$
+\prod_v D_{\pi_v\otimes\pi_v}(X)
+=
+\left(\prod_vD_{\operatorname{Sym}^2(\pi_v)}(X)\right)
+\left(\prod_vD_{\det(\pi_v)}(X)\right).
+$$
+
+This follows directly from the local theorem and associativity and commutativity of polynomial multiplication. It is the finite algebraic precursor of an Euler-product decomposition.
+
+## 9. Further algebraic consequences and boundary cases
+
+### 9.1. Multiplicativity under concatenation
+
+The factorization theorem is an instance of a general property of Euler denominators.
+
+**Lemma 9.1 (Concatenation principle).** Let $A=(\alpha_1,\ldots,\alpha_r)$ and $B=(\beta_1,\ldots,\beta_s)$ be parameter families over the same commutative ring, and let $A\sqcup B$ denote their concatenation, with multiplicities retained. Then
+
+$$
+D_{A\sqcup B}(X)=D_A(X)D_B(X).
+$$
+
+**Proof sketch.** By definition, the denominator on the left is the product of the $r+s$ linear factors contributed first by $A$ and then by $B$. Associativity of polynomial multiplication allows the first $r$ and final $s$ factors to be grouped separately, giving the product on the right. $\square$
+
+Theorem 5.1 follows immediately by observing that the tensor-square family is the concatenation of the symmetric-square family and the one-entry determinant family. The lemma also explains why the same reasoning extends to finite products over places and to any representation-theoretic direct-sum rule that can be expressed as a multiset identity among parameters.
+
+### 9.2. Degenerate parameters
+
+No nonvanishing hypothesis is needed. If $a=0$, the original datum is $(0,b)$ and the lift is
+
+$$
+(0,0,b^2).
+$$
+
+The lifted denominator becomes $1-b^2X$, because factors associated with zero parameters equal $1$. The original and lifted central characters are both $0$, in agreement with the cubic law. The tensor-square factorization remains valid, with all zero-parameter factors harmless.
+
+If $a=b$, the lift is $(a^2,a^2,a^2)$, so
+
+$$
+D_{\operatorname{Sym}^2}(X)=(1-a^2X)^3.
+$$
+
+The telescoping identity reduces to $0=0$. Although the divided-difference quotient is then unavailable, the polynomial trace formula remains meaningful and gives $3a^2$. This illustrates why the division-free formulation is fundamental.
+
+If $a=-b$, the lifted family is $(a^2,-a^2,a^2)$. Its trace is $a^2$, and its denominator is
+
+$$
+(1-a^2X)^2(1+a^2X).
+$$
+
+The cubic identity becomes $(2a)a^2=2a^3$ whenever this notation is interpreted in the ring. It remains correct in every characteristic, including characteristic $2$, where both sides vanish and $a=-a$.
+
+### 9.3. Symmetry under interchange
+
+**Lemma 9.2 (Exchange invariance).** Interchanging $a$ and $b$ leaves the central character, trace, and Euler denominator of the symmetric-square transfer unchanged.
+
+**Proof sketch.** The interchange sends $(a^2,ab,b^2)$ to $(b^2,ba,a^2)$. Commutativity gives $ba=ab$, so the new family is a permutation of the old one. Products, sums, and Euler denominators are invariant under permutation. $\square$
+
+This invariance confirms that the construction depends on the unordered Satake multiset rather than on a chosen labeling of its two members. The ordered-family notation is thus bookkeeping, not additional arithmetic structure.
+
+### 9.4. Recovering invariants from coefficients
+
+Write
+
+$$
+D_{\operatorname{Sym}^2}(X)=1-c_1X+c_2X^2-c_3X^3.
+$$
+
+The explicit expansion in Section 4 gives
+
+$$
+c_1=a^2+ab+b^2,
+\qquad
+c_2=ab(a^2+ab+b^2),
+\qquad
+c_3=(ab)^3.
+$$
+
+Consequently,
+
+$$
+c_2=(ab)c_1.
+$$
+
+This coefficient relation is another necessary condition for a cubic polynomial to arise from the symmetric square of a specified pair $(a,b)$. Together, the three coefficients display a rigid pattern: the trace gives $c_1$, multiplication by the original central character gives $c_2$, and cubing that character gives $c_3$.
+
+**Corollary 9.3 (Coefficient consistency).** For the symmetric-square denominator of $(a,b)$, the quadratic coefficient equals the original central character times the lifted trace, and the cubic coefficient in alternating-sign notation equals the cube of the original central character.
+
+**Proof sketch.** These are the second and third elementary symmetric functions of $(a^2,ab,b^2)$, computed by direct multiplication and collection of terms. $\square$
+
+These formulas offer an efficient audit of numerical data. Computing three roots is unnecessary: one can compare coefficients directly, using exact ring arithmetic.
+
+## 10. Scope and limitations
+
+The term “functoriality” has both local algebraic and global automorphic content. The present theory establishes the complete unramified parameter-side compatibility for the symmetric-square representation. It does not construct a global automorphic representation on rank three from one on rank two. It also does not prove convergence, analytic continuation, functional equations, or equality at ramified and archimedean places.
+
+These limitations clarify rather than diminish the result. A global lifting theorem must, at every unramified place, induce exactly the parameter transformation studied here. Consequently, the central-character law, Euler-factor formula, and tensor-square decomposition are unavoidable local constraints. The ring-general formulation further identifies which parts of the story are purely algebraic and independent of analytic theory.
+
+## 11. Future work
+
+Several extensions are natural. First, for the $n$th symmetric power, one expects the $n+1$ parameters
+
+$$
+a^i b^{n-i},\qquad 0\le i\le n.
+$$
+
+Their product should be
+
+$$
+(ab)^{n(n+1)/2}.
+$$
+
+Second, the Clebsch–Gordan rule predicts a parameter-multiset decomposition
+
+$$
+\pi\otimes\operatorname{Sym}^n\pi
+\cong
+\operatorname{Sym}^{n+1}\pi
+\oplus
+\bigl(\det\pi\otimes\operatorname{Sym}^{n-1}\pi\bigr),
+$$
+
+and hence an Euler-denominator factorization generalizing Theorem 5.1. Third, over a field with nonzero parameters, the symmetric-square construction should commute with taking contragredients, since inversion sends $(a^2,ab,b^2)$ to $(a^{-2},a^{-1}b^{-1},b^{-2})$. Fourth, local identities can be multiplied over arbitrary finite sets of places. Finally, a global extension would require the theory of automorphic representations and analytic $L$-functions beyond the finite polynomial framework developed here.
+
+## 12. Conclusion
+
+The unramified symmetric-square transfer is governed by the elementary transformation
+
+$$
+(a,b)\longmapsto(a^2,ab,b^2),
+$$
+
+but this transformation already realizes a coherent instance of functoriality. It commutes with coefficient change, cubes the original central character, determines the expected rank-three Euler denominator, and separates the tensor-square Euler denominator into symmetric-square and determinant factors. Its trace is $a^2+ab+b^2$, linked to the cubic difference $a^3-b^3$ by a division-free telescoping identity.
+
+Every result holds over an arbitrary commutative ring. The local theory is therefore a finite, universal algebraic blueprint for the unramified behavior of the symmetric-square lifting from rank two to rank three.
