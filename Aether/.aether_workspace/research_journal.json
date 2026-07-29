@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d14aad94",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Proof Complexity and Thermodynamic Cost\n\n## 1. Computable-bound escape for shortest proofs\n\nFix a sound, computably axiomatized theory capable of elementary arithmetic and a prefi",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T09:42:00",
-      "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-    },
-    {
       "cycle_id": "79f58a3a",
       "domain": "Logic",
       "key_insight": "# Future Directions: Theory Genomes and Semantic Evolution\n\n## 1. Localization–Monad–Morita Factorization\n\n**Conjecture.** Every interpretation between essentially algebraic theories whose model funct",
@@ -2501,6 +2491,16 @@
       "theorem_count": 32,
       "timestamp": "2026-07-29T19:53:54",
       "title": "Infinite Chess: Checkmate in Omega Moves"
+    },
+    {
+      "cycle_id": "560cda23",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Sharp existence threshold for the `b = 1` family.** For every real `a` and every `c > 0`, the equation\n   `x = exp(a) log(x+c)` on `x+c>0` has a solution if and only if\n   `c",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-07-29T19:53:58",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7628999999999999
     }
   ],
-  "last_updated": "2026-07-29T19:53:54",
+  "last_updated": "2026-07-29T19:53:58",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b648d8e5",
-        "quality": 0.6,
-        "theorems": 1636,
-        "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal"
-      },
-      {
         "cycle_id": "b4f06498",
         "quality": 0.57,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.77698,
         "theorems": 16,
         "title": "EML Number Theory: Transcendence and Algebraic Independence"
+      },
+      {
+        "cycle_id": "560cda23",
+        "quality": 0.686,
+        "theorems": 38,
+        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
       }
     ],
     "Bridges": [

@@ -4,21 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "pyth_factor_quantum_26037bbe",
-    "priority_score": 0.99,
-    "research_mode": "team",
-    "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "available",
-    "timestamp": "2026-07-23T20:10:45.864682+00:00",
-    "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Derives exact spectral eigenvalue distributions of Berggren tree generator matrices M1, M2, M3 mod N proving that resonant energy frequencies align with prime factors of N = p * q.",
     "domains": [
       "Pythagorean",
@@ -862,21 +847,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical-Eigenvalue: Min-Plus Matrix Spectral Radius Equivalence"
   },
   {
-    "consumed_by_exp_id": "8c9ac99e",
-    "description": "Proves functional identity showing every feedforward ReLU neural network is representable as a tropical rational function.",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "dir_50_40_faa42829",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:24.302658+00:00",
-    "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalizes Campos-Griffiths-Morris-Sahasrabudhe exponential improvement on diagonal Ramsey bounds R(k,k) \u2264 (4-\u03b5)^k.",
     "domains": [
@@ -967,7 +937,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "560cda23",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -975,10 +945,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_084",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -1104,20 +1075,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_e3e9c821_a543f97d",
-    "priority_score": 0.89196,
-    "research_mode": "team",
-    "source_exp_id": "e3e9c821",
-    "status": "available",
-    "timestamp": "2026-07-29T17:48:52.827384+00:00",
-    "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
   },
   {
     "consumed_by_exp_id": "",
@@ -2012,17 +1969,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Fractal Dimension of Mathematical Truth"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97183f28",
     "description": "Prove the quantum de Finetti theorem: symmetric quantum states on infinite tensor products are mixtures of i.i.d. states. Formalize the connection between exchangeability and independence in the quantum setting. Bridge quantum foundations to classical probability.",
     "domains": [
       "Bridges",
       "Physics"
     ],
     "id": "seed_300",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
   },
@@ -2375,7 +2333,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8aec96a6",
     "description": "Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability distribution. Conjecture: The EML manifold M_EML is a dually flat statistical manifold whose dual potentials are the cumulant generating functions of the EML activation. The Fisher information on M_EML induces a Hessian metric with constant negative curvature, making it a hyperbolic geometry of model parameters. This means natural gradient descent on M_EML has well-defined geodesics, and the dual flatness enables efficient Fisher vector products. The negative curvature reflects the exponential sensitivity of EML networks to parameter changes: small perturbations in theta cause exponentially large changes in the output. Test: compute the Fisher metric for a single EML neuron f(x; a,b) = exp(a)*log(b*x+1) and verify it induces a Hessian manifold with constant negative curvature. Prove that the alpha-connections on M_EML are projectively flat for alpha=1. Impact: gives EML networks a differential-geometric foundation for natural gradient descent, with provable convergence properties.",
     "domains": [
       "EML",
@@ -2383,10 +2341,11 @@ window.FUTURE_DIRECTIONS = [
       "Probability"
     ],
     "id": "seed_087",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Information Geometry: Fisher Information of exp-log Models"
   },
@@ -3711,23 +3670,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Category-Theoretic Neural Architectures"
   },
   {
-    "consumed_by_exp_id": "434986f0",
-    "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
-    "domains": [
-      "Tropical",
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_049",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Brill-Noether Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
     "domains": [
@@ -3890,17 +3832,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Sun-Sun Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4d2267f",
     "description": "Prove that for n bases of an n-dimensional vector space, there is a way to arrange all n\u00b2 elements into an n\u00d7n grid so that each row and column is a basis.",
     "domains": [
       "Algebra",
       "Combinatorics"
     ],
     "id": "seed_216",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Rota's Basis Conjecture"
   },
@@ -5593,21 +5536,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $\u03b7>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+\u03b7)n/2}$ containing all the $n$-element posets as induced subposets. This improves a recent result of Bastide, Groenland and Nenadov. Our proof provides a labeling scheme preserving transitivity, inspired by the Boolean lattice. Among other tools, we use the Szemer\u00e9di Regularity Lemma.",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "fd_0020",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12980v1",
-    "status": "available",
-    "timestamp": "2026-07-15T12:33:21.946611+00:00",
-    "title": "ArXiv paper: Even smaller universal posets"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Large sets of mutually orthogonal quantum Latin squares' and formalize its key results. Abstract: How large can a set of mutually orthogonal quantum Latin squares (MOQLS) get? We show that a set of n - 2 MOQLS of order n is necessarily classical and construct large non-classical sets of MOQLS of orders that are prime powers, improving both the previously known lower and upper bounds.",
     "domains": [
       "Pythagorean",
@@ -6019,21 +5947,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Two problems on booksize and triangular edges in Nosal graphs"
   },
   {
-    "consumed_by_exp_id": "e771e647",
-    "description": "Investigate the ArXiv paper 'On a character-twisted analogue of Sch\u00e4ffer's equation' and formalize its key results. Abstract: Let $f$ be a positive integer, and let $\u03c7$ be a primitive quadratic character of conductor $f$. Let $k$ be a positive integer, and write $B_k(\u03c7,X)$ for the $k$-th Bernoulli polynomial corresponding to $\u03c7$. Suppose $B_k(\u03c7,X)$ is irreducible and of degree at least $2$. Then for 100% of positive integers $m$ divisible by $f$, the Diophantine equation \\[ \u03c7(1) \\cdot (x+1)^k+\u03c7(2) \\cdot (x+2)^k+\\cdots+\u03c7(m) \\cdot (x+m)^k \\, =\\, y^n, \\] has no solutions with $x$, $y$, $n$ integers, and $n \\ge 2$.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0177",
-    "phase": "B",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15090v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T04:28:01.584621+00:00",
-    "title": "ArXiv paper: On a character-twisted analogue of Sch\u00e4ffer's equation"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a M\u00f6bius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
     "domains": [
@@ -6298,43 +6211,13 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "fd_0671",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
     "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'A Spectral Proof of the Hypergraph Moore Bound' and formalize its key results. Abstract: A nonempty subfamily of a $k$-uniform hypergraph is an \\emph{even cover} if every vertex lies in an even number of its hyperedges; for $k=2$ these are edge-disjoint unions of cycles, so the minimum size of an even cover is the natural hypergraph analogue of girth. We prove Feige's 2008 conjecture on the hypergraph Moore bound: there are absolute constants $A$ and $C$ (independent of $k$) such that for every $k\\ge3$ and every $1\\le\\ell\\le n$, any $k$-uniform hypergraph on $n$ vertices with more than $C\\,n^{k/2}/\\ell^{k/2-1}$ hyperedges contains an even cover of size at most $A\\,\\ell\\log(en/\\ell)$. Our proof is based on sharp spectral bounds for Kikuchi matrices, which we expect to be of independent interest; we apply them to the refutation of random constraint satisfaction problems in a companion paper.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0816",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.26028v1",
-    "status": "available",
-    "timestamp": "2026-07-29T15:29:02.213839+00:00",
-    "title": "ArXiv paper: A Spectral Proof of the Hypergraph Moore Bound"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the ArXiv paper 'Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$' and formalize its key results. Abstract: Given a subset $A \\subseteq \\mathbb F_2^n$, we can consider the distribution of the intersection size of $A$ with a uniformly random $d$-flat $F$. Motivated by the edge statistics problem and the hypercube statistics problem, the affine subspace statistics problem concerns the maximum of $\\mathbb{P}[|F\\cap A|=s]$ among $A \\subseteq \\mathbb F_2^n$ for any fixed $s\\in\\{1,\\dots,2^d\\}$ over a uniformly random $d$-flat $F$. We use $\u03bb^*(d,s)$ to denote the limit of the maximum when $n$ goes to infinity. In this note, we prove tight bounds for $\u03bb^*(d,s)$ in two different regimes. For $s=j2^k$ where $j$ is a positive odd integer, the best known lower bound construction achieving $\u03bb^*(d,s)\\ge 1-2^{-k}$ is due to taking $A$ as the union of $j$ parallel $(n-d+k)$-flats in $\\mathbb F_2^n$. Our main result is a matching upper bound with an additive error term of $O(2^{-3k/2})$. We also study the case $s=1$, where we determine $\u03bb^*(d,1)$ exactly. We show that the random construction where each point",
-    "domains": [
-      "Computation",
-      "Geometry"
-    ],
-    "id": "fd_0818",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.25920v1",
-    "status": "available",
-    "timestamp": "2026-07-29T15:29:05.320357+00:00",
-    "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$"
   },
   {
     "consumed_by_exp_id": "",
@@ -7096,7 +6979,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "35f601c4",
     "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
     "domains": [
       "Novelty",
@@ -7104,10 +6987,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_143",
+    "phase": "A",
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Infinite Chess: Checkmate in Omega Moves"
   },
@@ -7193,21 +7077,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Information Geometry of Optimization\n\n## 1. Curvature-controlled exponential-map descent\n\n**Conjecture.** On a geodesically complete statistical manifold with sectional curvature in a fixed interval, positive injectivity radius, and a geodesically strongly convex, geodesically smooth loss, exponential-map natural-gradient descent with a constant admissible step has a linear rate whose constants depend on intrinsic curvature and convexity but not on the coordinate condition number of the Fisher matrix.\n\nThe key insight is that coordinate conditioning should disappear only after both the update and the regularity assumptions are expressed intrinsically; curvature distortion then replaces matrix conditioning as the relevant obstruction.\n\n**Why now?** The exact constant-metric cancellation identifies the flat base case, while the Euler-midpoint counterexample isolates the missing geometric ingredient: the exponential map.\n\n## 2. Retraction error as the boundary between local and geodesic descent\n\n**Conjecture.** For a Fisher metric with Lipschitz covariant derivative, one Euler natural-gradient step differs from the corresponding exponential-map step by a cubic local-model error, and this error accumulates to a sharp global convergence penalty proportional to the integrated metric variation along the orbit.\n\nThe key insight is that natural gradient selects the correct tangent vector, but a retraction determines whether that vector is transported along the manifold with controlled geometric error.\n\n**Why now?** A concrete variable-metric example already separates the Euler endpoint from the geodesic midpoint, making the size and accumulation of that discrepancy the next measurable quantity.\n\n## 3. Fisher\u2013Dirichlet preconditioning for repulsive models\n\n**Conjecture.** For determinantal exponential families whose Fisher tensor is a connected weighted graph Laplacian on the zero-sum tangent space, natural-gradient convergence is governed by effective-resistance diameter rather than the ambient Euclidean spectral condition number.\n\nThe key insight is that Laplacian Fisher energy converts statistical curvature into electrical Dirichlet energy, so resistance geometry may provide intrinsic diameter and coercivity estimates simultaneously.\n\n**Why now?** The existing Fisher\u2013Laplacian bridge and the matched-metric energy law together suggest a testable route from repulsive probability models to condition-number-free optimization bounds.\n\n## 4. Sharp classification of harmonic schedules\n\n**Conjecture.** For a geodesically strongly convex loss and update size `a/(t+b)`, the objective gap has a polynomial exponent determined sharply by the product of intrinsic strong convexity and `a`; exponential decay is impossible unless the effective step sizes have a divergent linear-scale average.\n\nThe key insight is that strong convexity alone does not create an exponential iteration rate when the step sizes vanish harmonically; the cumulative step length, not dimension, determines the exponent.\n\n**Why now?** The matched quadratic admits an exact inverse-square objective law, providing a calibration case against which the general intrinsic theorem can be tested.\n\n## 5. Logistic regression under metric mismatch\n\n**Conjecture.** For regularized logistic regression, empirical natural gradient is insensitive to feature covariance conditioning only while the empirical Fisher remains uniformly comparable to the loss Hessian; outside that regime, the rate degrades according to the generalized eigenvalue spread of the Hessian\u2013Fisher pair.\n\nThe key insight is that cancellation is controlled by metric\u2013curvature matching, not by the Fisher condition number in isolation.\n\n**Why now?** The diagonal matched model proves exact cancellation and exposes generalized mismatch as the minimal falsifiable parameter for numerical and theoretical comparison.\n",
-    "domains": [
-      "Geometry",
-      "Physics"
-    ],
-    "id": "fd_0408",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "4b7e775f",
-    "status": "available",
-    "timestamp": "2026-07-19T06:13:12.901596+00:00",
-    "title": "**Conjecture.** On a geodesically complete statistical manifold with sectional c"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Quantitative Sphere Detection from Finite Data\n\n## 1. Quantitative homotopy recovery under reach and density\n\nLet a compact smooth submanifold have reach at least `\u03c4`, and let a finite sample have Hausdorff distance at most `\u03b4` from it. Conjecture that there is an explicit nonempty interval of Rips scales, with endpoints depending only on `\u03b4` and `\u03c4`, on which the Rips complex is homotopy equivalent to the manifold. For a simply connected closed three-manifold whose recovered homology is that of the three-sphere, determine additional computable local conditions sufficient for sphere recognition. **The key insight is...** perturbation stability must be combined with geometric regularity; homology alone cannot supply the missing local manifold structure. **Why now?** The exact `2\u03b4` scale translation isolates the noise contribution, making a sharp reach-dependent interval a concrete target.\n\n## 2. Probabilistic `n^{-1/d}` coverage law with explicit tails\n\nFor `n` independent uniform samples on the unit `d`-sphere, conjecture matching upper and lower tail bounds for the covering radius of order `(log n / n)^(1/d)`, with constants uniform over a controlled range of dimensions. Determine precisely which alternative sampling or averaged criterion removes the logarithmic factor and yields `n^{-1/d}`. **The key insight is...** the proposed bare power law likely describes typical spacing, whereas full coverage and reliable topology are governed by extreme gaps. **Why now?** Separating diameter, spacing, and coverage thresholds prevents distinct phase transitions from being conflated and gives a falsifiable correction to the original scaling claim.\n\n## 3. Correspondence-based Rips interleaving\n\nGiven finite metric spaces related by a correspondence of distortion at most `2\u03b4`, conjecture that their Rips filtrations admit a natural `2\u03b4` simplicial interleaving that descends functorially to persistent homology in every degree. Establish sharpness by constructing finite spaces for which no smaller uniform translation works. **The key insight is...** indexwise matching is only a special case; correspondences are the correct bridge from perturbation geometry to Gromov\u2013Hausdorff stability. **Why now?** The matched-sample theorem already identifies the sharp triangle-inequality mechanism, so the remaining issue is compatibility with nonfunctional correspondences.\n\n## 4. Local-link certification of spherical manifold structure\n\nConjecture that a finite flag complex with sphere homology, quantitatively controlled vertex links, and a suitable discrete curvature or expansion condition admits a certified manifold core whose geometric realization is a homology sphere; in dimension three, add a verifiable simple-connectivity certificate to obtain a topological three-sphere. **The key insight is...** global Betti numbers must be supplemented by local link data to distinguish manifolds from singular homology mimics. **Why now?** The full-simplex boundary demonstrates that global simplex counts rapidly lose topology, while links remain sensitive to local dimension and singularities.\n\n## 5. Stability of a guarded Poincare interval\n\nDefine the guarded Poincare interval as the set of scales at which the Rips complex simultaneously has sphere homology, manifold-like links, and a prescribed connectivity certificate. Conjecture that its endpoints are Lipschitz-stable, away from critical-value collisions, under matched perturbations of the sample. **The key insight is...** a robust detector should be an interval-valued invariant rather than the smallest scale satisfying a nonmonotone homological predicate. **Why now?** Rips inclusion is monotone, but sphere homology need not be; endpoint stability must therefore exploit persistence gaps rather than monotonicity of the predicate itself.\n",
     "domains": [
       "Geometry",
@@ -7253,62 +7122,33 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **Hopf-map surjectivity with an explicit section on two charts.** For every `q : Fin 3 \u2192 \u211d` satisfying `\u2211 i, q i ^ 2 = 1`, prove that there exist `z w : \u2102` with `\u2016z\u2016 ^ 2 + \u2016w\u2016 ^ 2 = 1` and `FourthDimensionPlayground.hopf z w = q`. Construct formulas separately on the regions `q 2 \u2260 -1` and `q 2 \u2260 1`.\n\n2. **Freeness of the full circle action on every nonzero sphere.** Package unit complex phases as `Metric.sphere (0 : \u2102) 1`, package each radius-`r` three-sphere as a subtype of `\u2102 \u00d7 \u2102`, and prove that the induced group action is free for every `r > 0`: if a phase fixes one sphere point, then that phase equals `1`.\n\n3. **Smoothness and rank of the Hopf map.** Prove that `(fun p : \u2102 \u00d7 \u2102 => FourthDimensionPlayground.hopf p.1 p.2)` is `C\u221e`, then prove its derivative restricted to the tangent space of the unit three-sphere has real rank `2` at every point.\n\n4. **Clifford torus as exactly the Hopf equator preimage.** On the unit three-sphere, prove the set equality between `{p | \u2016p.1\u2016 = \u2016p.2\u2016}` and the preimage under `hopf` of `{q | q 2 = 0}`, and prove that the phase action on this set is free.\n\n5. **One-parameter fourth-dimensional rotations.** Define `R(t)(z,w) = (exp(t I) z, exp(t I) w)` and prove jointly smooth dependence on `(t,z,w)`, the flow law `R(s+t)=R(s)\u2218R(t)`, period `2\u03c0`, norm preservation, and pointwise Hopf invariance.\n",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0819",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d1098480",
-    "status": "available",
-    "timestamp": "2026-07-29T17:46:35.268251+00:00",
-    "title": "1. **Hopf-map surjectivity with an explicit section on two charts.** For every `"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThe present development establishes the Reed\u2013Solomon root-count, designed-distance, encoder-injectivity, and unique-decoding-radius theorems. It also restores the shared finite-affine-space notions of polynomial zero count and evaluation-word Hamming weight used by the Reed\u2013Muller bridge files.\n\n1. **BCH bound.** Define cyclic codes as ideals in `F[X] / (X^n - 1)`, define consecutive roots in a splitting field, and lift the root-count infrastructure to the Vandermonde argument proving the BCH designed-distance bound.\n2. **Reed\u2013Solomon dimension and MDS equality.** Package degree-`< k` polynomials as a finite-dimensional vector space, prove that the encoder is linear with dimension `k`, and combine the lower bound with the Singleton bound to obtain minimum distance exactly `n-k+1`.\n3. **Reduced generalized Reed\u2013Muller codes.** Represent messages by reduced multivariate polynomials (each variable degree strictly below the field cardinality), then prove the exact generalized Reed\u2013Muller minimum-distance formula. This restriction is essential: unrestricted nonzero polynomials such as `X^q - X` can induce the zero evaluation word over `GF(q)`.\n4. **Syndromes and key equations.** Define syndrome sequences, error-locator and error-evaluator polynomials, then prove the key equation for errors of weight at most half the designed distance.\n5. **Berlekamp\u2013Massey.** Formalize the discrepancy update loop, its minimal-linear-recurrence invariant, termination, and recovery of the error-locator polynomial.\n6. **Concrete decoders.** Instantiate small finite fields and certify complete encode/corrupt/decode scenarios, including explicit behavior beyond the unique-decoding radius.\n",
+    "description": "# Future Directions\n\n1. **Instantiate the abstract connector for metric graphs.** Define divisors on\n   compact metric graphs, principal divisors of piecewise-linear functions, and\n   Baker--Norine rank, then construct the `BNWorld` specialization map from a\n   semistable algebraic curve.\n\n2. **Formalize the specialization lemma geometrically.** Prove preservation of\n   degree and the rank inequality from a regular semistable model rather than\n   taking them as fields of the connector structure.\n\n3. **Construct rank-preserving lifts for generic chains of loops.** Encode the\n   generic edge-length condition and lingering lattice paths/tableaux, and use\n   them to build the `LiftData` required by the reverse implication.\n\n4. **Connect \u201cgeneral\u201d to a precise moduli statement.** Introduce parameter\n   spaces for algebraic curves and tropical curves, together with dense-open or\n   full-dimensional loci on which the Brill--Noether criterion holds.\n\n5. **Dimension and enumeration.** Refine mere existence to the expected\n   dimension `\u03c1` of the Brill--Noether locus and, when `\u03c1 = 0`, formalize the\n   corresponding finite enumerative count.\n\n6. **Serre duality and graph Riemann--Roch.** Upgrade the proved numerical\n   involution of `\u03c1` to a divisor-level correspondence `D \u21a6 K-D`, using both\n   classical and Baker--Norine Riemann--Roch theorems.\n",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0820",
+    "id": "fd_0824",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "2bb5622c",
+    "source_exp_id": "434986f0",
     "status": "available",
-    "timestamp": "2026-07-29T17:46:40.681679+00:00",
-    "title": "The present development establishes the Reed\u2013Solomon root-count, designed-distan"
+    "timestamp": "2026-07-29T19:51:37.550297+00:00",
+    "title": "1. **Instantiate the abstract connector for metric graphs.** Define divisors on"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding simulator for the graph 3-colouring protocol and prove that, for every finite verifier strategy whose edge challenge has nonzero probability, its simulated and real transcript distributions are identical (or have an explicit negligible statistical-distance bound).\n\n2. **Fiat\u2013Shamir soundness in a random-oracle model.** Extend the simplified QAP protocol with a formally modelled random oracle and prove that replacing the verifier's random evaluation point by a hash-derived challenge preserves the existing degree-over-field-size soundness bound up to an explicit oracle-query loss.\n\n3. **QAP zero knowledge by polynomial blinding.** Add a blinding polynomial that is a random multiple of the target polynomial and prove both that QAP validity is preserved and that the verifier's opened value distribution is independent of the witness whenever the blinding coefficient is uniform over the field.\n\n4. **Constant-gap PCP for graph 3-colouring.** Construct a polynomial-size gap-amplified proof oracle for finite graph 3-colourability whose verifier makes a fixed constant number of queries and rejects every false instance with probability at least `1/100`, independent of the number of vertices and edges.\n\n5. **Composition of PCP locality with commitment hiding.** Define a committed local-oracle protocol and prove that perfect hiding of unopened coordinates plus perfect simulation of opened coordinates yields perfect honest-verifier zero knowledge for the full constant-query verifier transcript.\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0821",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "132832ee",
-    "status": "available",
-    "timestamp": "2026-07-29T17:47:46.089780+00:00",
-    "title": "1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n## Scope of the formalization\n\n`Catalog/Physics/Noether/ContinuousSymmetries.lean` proves the differential core of Noether's first theorem for finite-dimensional real inner-product spaces. It derives conservation of the Noether charge from the Euler\u2013Lagrange momentum equation and the on-shell first-variation identity, then specializes the framework to time translations and spatial translations. Three-dimensional rotation, central-force angular momentum, Kepler energy, the Runge\u2013Lenz invariant, and its conic-orbit identity are also formalized.\n\n## Computational-evidence justification\n\nA separate numerical evidence stage was not used. The central claim is a symbolic implication between differentiability identities, valid over arbitrary real inner-product spaces, rather than a finite or discrete conjecture for which small cases or an OEIS search would provide meaningful support. The Kepler cancellations are exact algebraic identities and are checked by the Lean kernel in the proof file. This keeps the delivered artifacts within the requested `.lean` plus `FUTURE_DIRECTIONS.md` output format.\n\n## Extensions\n\n1. Derive `VariationalSymmetry.action_variation` directly from invariance of an integral action under a differentiable one-parameter group, including compactly supported variations and endpoint terms.\n2. Develop the tangent- and cotangent-bundle formulation, replacing the first-order trajectory interface with a Lagrangian `L : TQ \u2192 \u211d`, its fiber derivative, and the Euler\u2013Lagrange equations on manifolds.\n3. Construct the derivative rules for the cross product and inverse norm internally, so the Kepler hypotheses `hcross`, `henergy`, and `hrunge` follow directly from `q' = v` and `v' = -\u03bc q / \u2016q\u2016\u00b3`.\n4. Prove that the conic bridge yields the polar equation `r = \u2113/(1 + e cos \u03b8)`, then classify trajectories as ellipses, parabolas, or hyperbolas according to the conserved energy.\n5. Formalize the Poisson-bracket formulation: a Hamiltonian symmetry generator `J` satisfies `{J,H}=0`, and the Runge\u2013Lenz/angular-momentum brackets realize the hidden symmetry algebra of the bound Kepler problem.\n6. Generalize from one-dimensional symmetry generators to Lie-group actions and prove equivariance of the momentum map.\n",
+    "description": "# Future Directions\n\n1. **Integer-slope criterion.** For every compiled network whose affine weights and linear-combination weights are integers, both polynomials produced by `compile` can be represented using only integer-slope affine monomials. Conversely, every scalar tropical rational function with integer slopes is computed by a finite ReLU network with integer weights.\n\n2. **Depth-sensitive term bound.** If a scalar ReLU network has layer widths `w\u2081, \u2026, w_L`, then the numerator and denominator produced after normalization to maxima of affine forms each require at most `\u220f\u2097 (w\u2097 + 1)` affine terms. There are networks for which every equivalent tropical-rational representation requires exponentially many terms in `L`.\n\n3. **Canonical cancellation.** There is a terminating normalization procedure on compiled pairs `(p, q)` that removes every affine term dominated on all of `\u211d\u207f`, preserves evaluation, and yields a unique pair up to permutation whenever the represented function has full-dimensional linearity regions.\n\n4. **Region-complexity correspondence.** For a generic compiled network, the full-dimensional linearity regions of its output are exactly the common refinement of the normal complexes of the compiled numerator and denominator; nongeneric parameter choices can only merge, never create, regions relative to that refinement.\n\n5. **Rational parameter extraction.** If all network weights and biases are rational, `compile` admits a computable rational implementation whose output evaluates exactly over `\u211a` and whose real coercion is extensionally equal to the original real-valued network.\n",
     "domains": [
       "Algebra",
-      "Physics"
+      "Geometry"
     ],
-    "id": "fd_0822",
+    "id": "fd_0825",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "e3e9c821",
+    "source_exp_id": "8c9ac99e",
     "status": "available",
-    "timestamp": "2026-07-29T17:48:48.924720+00:00",
-    "title": "`Catalog/Physics/Noether/ContinuousSymmetries.lean` proves the differential core"
+    "timestamp": "2026-07-29T19:52:42.661679+00:00",
+    "title": "1. **Integer-slope criterion.** For every compiled network whose affine weights "
   },
   {
     "consumed_by_exp_id": "",
@@ -7611,20 +7451,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_0817",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "oeis:212351",
-    "status": "available",
-    "timestamp": "2026-07-29T15:29:08.189110+00:00",
-    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domains": [
       "NumberTheory"
@@ -7747,20 +7573,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T05:36:47.309939+00:00",
     "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle c6b3a18e (Q=0.629) proved 102 theorems in Physics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
-    "domains": [
-      "Physics"
-    ],
-    "id": "sorry_fill_c6b3a18e_299bca55",
-    "priority_score": 0.6794117647058824,
-    "research_mode": "team",
-    "source_exp_id": "c6b3a18e",
-    "status": "available",
-    "timestamp": "2026-07-26T14:03:58.556772+00:00",
-    "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
     "consumed_by_exp_id": "",
