@@ -1602,6 +1602,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 89e28e84 (Q=0.789), which proved 12 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_89e28e84_6cc708ea",
+    "lineage_refs": [],
+    "priority_score": 0.88874,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "89e28e84",
+    "status": "available",
+    "timestamp": "2026-07-29T21:21:22.115983+00:00",
+    "title": "Deepening: Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domain_bridges": [],
     "domains": [
@@ -3250,7 +3269,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ef427dd",
     "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
     "domain_bridges": [],
     "domains": [
@@ -3264,7 +3283,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Consciousness as Emergent Fixed Point"
   },
@@ -3370,26 +3389,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "89e28e84",
-    "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Algebra"
-    ],
-    "id": "seed_315",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
     "ambition_level": "extension",
@@ -9478,6 +9477,26 @@
     "status": "available",
     "timestamp": "2026-07-28T12:21:03.386066+00:00",
     "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Completed formal results\n\n`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic formalization of the one-component perturbative model in the chosen normalization:\n\n- the one-loop beta function is `β(ε,g) = -εg + 3g²`;\n- its zeros are classified exactly as the Gaussian point `g = 0` and the Wilson–Fisher point `g = ε/3`;\n- when `d < 4`, the Wilson–Fisher point for `ε = 4-d` is positive, nonzero, and a beta-function zero;\n- the linearization at that point has slope `ε`, hence is positive for `ε > 0`;\n- the two equal rational sunset weights sum to `1/54`;\n- substituting `g = ε/3` into `η(g) = g²/6` gives `η = ε²/54` exactly;\n- adding any remainder bounded by a constant times `|ε|³` preserves the expansion `η(ε) = ε²/54 + O(ε³)` under the file's explicit local big-O definition.\n\nTwo overstrong conjectures are formally disproved:\n\n1. the beta function does not have a unique zero for every `ε` (at `ε = 3`, both `0` and `1` are zeros);\n2. the Wilson–Fisher point is not positive for negative `ε` (for example, at `ε = -3` it equals `-1`).\n\n## Scope of the present model\n\nThe formal development verifies the algebra that follows from the stated perturbative coefficients. The two-loop coefficient is represented as explicit rational diagram data. It does not yet derive those coefficients from regularized momentum-space integrals, construct a quantum field theory, or prove convergence of the perturbation series. Thus the result is a rigorous theorem about the specified truncated renormalization-group model rather than a nonperturbative construction of `φ⁴` theory.\n\n## Suggested extensions\n\n1. **Diagram-level derivation.** Define combinatorial Feynman graphs, symmetry factors, and a certified enumeration showing that the relevant two-loop contributions produce the encoded rational weights.\n2. **Regularized integrals.** Introduce dimensional or another mathematically controlled regularization and derive pole coefficients from explicit integrals instead of taking them as input data.\n3. **Two-loop beta function.** Add the cubic term in the beta function, solve for the fixed point through order `ε²`, and propagate it through the anomalous-dimension expansion.\n4. **General `O(N)` model.** Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.\n5. **Standard asymptotic API.** Relate `IsOrderThreeAtZero` to Mathlib's filter-based `IsBigO` notation, making composition and arithmetic of remainder terms reusable.\n6. **Stability as a dynamical statement.** Define the renormalization-group differential equation and turn the positive linearization calculation into a local stability or instability theorem, with the direction of RG time stated explicitly.\n7. **Higher-order remainder control.** Separate formal power-series identities from analytic estimates and investigate hypotheses under which truncation errors have certified neighborhoods and constants.\n8. **Normalization equivalence.** Formalize changes of coupling normalization and prove that the resulting critical exponent coefficient is invariant after the corresponding transformations are applied.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0827",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "89e28e84",
+    "status": "available",
+    "timestamp": "2026-07-29T21:21:18.253826+00:00",
+    "title": "`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic f"
   },
   {
     "ambition_level": "extension",

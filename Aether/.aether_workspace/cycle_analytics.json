@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-29T19:53:59.268718+00:00",
+  "last_updated": "2026-07-29T21:21:25.621698+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -39962,6 +39962,7 @@
       "outcome_quality": 0.686,
       "phase": "A_only",
       "phase_a_prompt_version": "v27",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v27",
@@ -40093,6 +40094,7 @@
       "outcome_quality": 0.686,
       "phase": "A_only",
       "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v26",
@@ -40136,6 +40138,7 @@
       "outcome_quality": 0.686,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -40164,6 +40167,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-29T19:53:59.163676+00:00",
       "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1164,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Algebra",
+      "duration_seconds": 5310.558710813522,
+      "end_time": 1785360013.7008512,
+      "files_integrated": 4,
+      "job_id": "89e28e84",
+      "outcome_quality": 0.78874,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.78671,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.68,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7564,
+        "cross_domain": 0.85,
+        "grade": "world_class",
+        "importance": 0.719,
+        "novelty": 0.9278,
+        "proof_depth": 0.6295,
+        "usefulness": 0.7397
+      },
+      "quality_score": 0.78874,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785354703.1421404,
+      "strategy_count": 0,
+      "theorem_count": 12,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-29T21:21:25.537076+00:00",
+      "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
     }
   ]
 }

@@ -573,17 +573,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "576be6d2",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
       "Algebra"
     ],
     "id": "seed_056",
+    "phase": "A",
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -937,23 +938,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
   {
-    "consumed_by_exp_id": "560cda23",
-    "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
-    "domains": [
-      "EML",
-      "Analysis",
-      "Computation"
-    ],
-    "id": "seed_084",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
@@ -1213,6 +1197,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 89e28e84 (Q=0.789), which proved 12 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_89e28e84_6cc708ea",
+    "priority_score": 0.88874,
+    "research_mode": "team",
+    "source_exp_id": "89e28e84",
+    "status": "available",
+    "timestamp": "2026-07-29T21:21:22.115983+00:00",
+    "title": "Deepening: Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
     "consumed_by_exp_id": "",
@@ -2461,7 +2459,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Yamabe Problem: Non-Compact Case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ef427dd",
     "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
     "domains": [
       "Novelty",
@@ -2469,10 +2467,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_256",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Consciousness as Emergent Fixed Point"
   },
@@ -2555,22 +2554,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
   },
   {
-    "consumed_by_exp_id": "89e28e84",
-    "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
-    "domains": [
-      "Physics",
-      "Algebra"
-    ],
-    "id": "seed_315",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
@@ -2631,17 +2614,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "42b8568d",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
       "Physics"
     ],
     "id": "seed_362",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
@@ -3702,7 +3686,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Training Dynamics as Tropical Gradient Flow"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e722c646",
     "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
     "domains": [
       "Geometry",
@@ -3710,10 +3694,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_076",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Inverse Stereographic Renormalization Group"
   },
@@ -5578,16 +5563,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Alternating Extremes in Graceful Labelings of Full Binary Trees and Spider Trees"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7799fc2c",
     "description": "Investigate the ArXiv paper 'On lower bounds for canonical heights of the map $\u03c6(X,Y)=(Y,X+Y^D+b)$' and formalize its key results. Abstract: We give a lower bound for the canonical height associated to H\u00e9non maps $\u03c6(X,Y)=(Y,X+Y^D+B)$ of non-periodic points when $D>2,$ extending previous work for $D=2$ in \\cite{Ingram1}.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0029",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12668v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T19:19:58.832974+00:00",
     "title": "ArXiv paper: On lower bounds for canonical heights of the map $\u03c6(X,Y)=(Y,X+Y^D+b)$"
   },
@@ -6204,20 +6190,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
-    "consumed_by_exp_id": "42454fab",
-    "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Spectral Proof of the Hypergraph Moore Bound' and formalize its key results. Abstract: A nonempty subfamily of a $k$-uniform hypergraph is an \\emph{even cover} if every vertex lies in an even number of its hyperedges; for $k=2$ these are edge-disjoint unions of cycles, so the minimum size of an even cover is the natural hypergraph analogue of girth. We prove Feige's 2008 conjecture on the hypergraph Moore bound: there are absolute constants $A$ and $C$ (independent of $k$) such that for every $k\\ge3$ and every $1\\le\\ell\\le n$, any $k$-uniform hypergraph on $n$ vertices with more than $C\\,n^{k/2}/\\ell^{k/2-1}$ hyperedges contains an even cover of size at most $A\\,\\ell\\log(en/\\ell)$. Our proof is based on sharp spectral bounds for Kikuchi matrices, which we expect to be of independent interest; we apply them to the refutation of random constraint satisfaction problems in a companion paper.",
     "domains": [
-      "Combinatorics",
-      "Algebra"
+      "Pythagorean",
+      "Computation"
     ],
-    "id": "fd_0671",
-    "phase": "B",
+    "id": "fd_0824",
     "priority_score": 0.8,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697796+00:00",
-    "title": "Frankl's Union-Closed Conjecture: Partial Results"
+    "research_mode": "team",
+    "source_exp_id": "2607.26028v1",
+    "status": "available",
+    "timestamp": "2026-07-29T19:54:02.958189+00:00",
+    "title": "ArXiv paper: A Spectral Proof of the Hypergraph Moore Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$' and formalize its key results. Abstract: Given a subset $A \\subseteq \\mathbb F_2^n$, we can consider the distribution of the intersection size of $A$ with a uniformly random $d$-flat $F$. Motivated by the edge statistics problem and the hypercube statistics problem, the affine subspace statistics problem concerns the maximum of $\\mathbb{P}[|F\\cap A|=s]$ among $A \\subseteq \\mathbb F_2^n$ for any fixed $s\\in\\{1,\\dots,2^d\\}$ over a uniformly random $d$-flat $F$. We use $\u03bb^*(d,s)$ to denote the limit of the maximum when $n$ goes to infinity. In this note, we prove tight bounds for $\u03bb^*(d,s)$ in two different regimes. For $s=j2^k$ where $j$ is a positive odd integer, the best known lower bound construction achieving $\u03bb^*(d,s)\\ge 1-2^{-k}$ is due to taking $A$ as the union of $j$ parallel $(n-d+k)$-flats in $\\mathbb F_2^n$. Our main result is a matching upper bound with an additive error term of $O(2^{-3k/2})$. We also study the case $s=1$, where we determine $\u03bb^*(d,1)$ exactly. We show that the random construction where each point",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0826",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.25920v1",
+    "status": "available",
+    "timestamp": "2026-07-29T19:54:06.014841+00:00",
+    "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$"
   },
   {
     "consumed_by_exp_id": "",
@@ -6660,7 +6660,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "883686fe",
     "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
     "domains": [
       "Algebra",
@@ -6668,10 +6668,11 @@ window.FUTURE_DIRECTIONS = [
       "Probability"
     ],
     "id": "seed_009",
+    "phase": "A",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Symmetric Group Generation Probability"
   },
@@ -6979,23 +6980,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
   },
   {
-    "consumed_by_exp_id": "35f601c4",
-    "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_143",
-    "phase": "A",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Infinite Chess: Checkmate in Omega Moves"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Bach's chorales are the gold standard of Western harmony. But what if we could MEASURE the harmonic complexity using topology? Encode each chord as a point in a 12-dimensional space (one dimension per pitch class). A sequence of chords traces a path in this space. Compute the persistent homology of the point cloud of all chords in a Bach chorale. Conjecture: Bach's chorales have persistent H_1 (1-dimensional cycles) that survive across a wide range of scales, indicating circular harmonic motion (the circle of fifths). In contrast, random chord sequences have H_1 bars that die quickly. The longest H_1 bar in a Bach chorale corresponds to the circle of fifths \u2014 the fundamental harmonic cycle. Pop music has shorter H_1 bars (less complex harmonic cycles). Atonal music has no persistent H_1 (no harmonic cycles). Test: compute persistent homology barcodes for 100 Bach chorales, 100 pop songs, and 100 atonal pieces. Verify: Bach has H_1 bars of length > 0.5 (in normalized pitch-class space), pop has bars of length 0.2-0.5, atonal has no persistent H_1. Impact: the topology of music IS its harmonic structure. Bach's genius is literally topological \u2014 his music has longer harmonic cycles.",
     "domains": [
@@ -7122,33 +7106,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **Instantiate the abstract connector for metric graphs.** Define divisors on\n   compact metric graphs, principal divisors of piecewise-linear functions, and\n   Baker--Norine rank, then construct the `BNWorld` specialization map from a\n   semistable algebraic curve.\n\n2. **Formalize the specialization lemma geometrically.** Prove preservation of\n   degree and the rank inequality from a regular semistable model rather than\n   taking them as fields of the connector structure.\n\n3. **Construct rank-preserving lifts for generic chains of loops.** Encode the\n   generic edge-length condition and lingering lattice paths/tableaux, and use\n   them to build the `LiftData` required by the reverse implication.\n\n4. **Connect \u201cgeneral\u201d to a precise moduli statement.** Introduce parameter\n   spaces for algebraic curves and tropical curves, together with dense-open or\n   full-dimensional loci on which the Brill--Noether criterion holds.\n\n5. **Dimension and enumeration.** Refine mere existence to the expected\n   dimension `\u03c1` of the Brill--Noether locus and, when `\u03c1 = 0`, formalize the\n   corresponding finite enumerative count.\n\n6. **Serre duality and graph Riemann--Roch.** Upgrade the proved numerical\n   involution of `\u03c1` to a divisor-level correspondence `D \u21a6 K-D`, using both\n   classical and Baker--Norine Riemann--Roch theorems.\n",
+    "description": "# Future Directions\n\n## Completed formal results\n\n`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic formalization of the one-component perturbative model in the chosen normalization:\n\n- the one-loop beta function is `\u03b2(\u03b5,g) = -\u03b5g + 3g\u00b2`;\n- its zeros are classified exactly as the Gaussian point `g = 0` and the Wilson\u2013Fisher point `g = \u03b5/3`;\n- when `d < 4`, the Wilson\u2013Fisher point for `\u03b5 = 4-d` is positive, nonzero, and a beta-function zero;\n- the linearization at that point has slope `\u03b5`, hence is positive for `\u03b5 > 0`;\n- the two equal rational sunset weights sum to `1/54`;\n- substituting `g = \u03b5/3` into `\u03b7(g) = g\u00b2/6` gives `\u03b7 = \u03b5\u00b2/54` exactly;\n- adding any remainder bounded by a constant times `|\u03b5|\u00b3` preserves the expansion `\u03b7(\u03b5) = \u03b5\u00b2/54 + O(\u03b5\u00b3)` under the file's explicit local big-O definition.\n\nTwo overstrong conjectures are formally disproved:\n\n1. the beta function does not have a unique zero for every `\u03b5` (at `\u03b5 = 3`, both `0` and `1` are zeros);\n2. the Wilson\u2013Fisher point is not positive for negative `\u03b5` (for example, at `\u03b5 = -3` it equals `-1`).\n\n## Scope of the present model\n\nThe formal development verifies the algebra that follows from the stated perturbative coefficients. The two-loop coefficient is represented as explicit rational diagram data. It does not yet derive those coefficients from regularized momentum-space integrals, construct a quantum field theory, or prove convergence of the perturbation series. Thus the result is a rigorous theorem about the specified truncated renormalization-group model rather than a nonperturbative construction of `\u03c6\u2074` theory.\n\n## Suggested extensions\n\n1. **Diagram-level derivation.** Define combinatorial Feynman graphs, symmetry factors, and a certified enumeration showing that the relevant two-loop contributions produce the encoded rational weights.\n2. **Regularized integrals.** Introduce dimensional or another mathematically controlled regularization and derive pole coefficients from explicit integrals instead of taking them as input data.\n3. **Two-loop beta function.** Add the cubic term in the beta function, solve for the fixed point through order `\u03b5\u00b2`, and propagate it through the anomalous-dimension expansion.\n4. **General `O(N)` model.** Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.\n5. **Standard asymptotic API.** Relate `IsOrderThreeAtZero` to Mathlib's filter-based `IsBigO` notation, making composition and arithmetic of remainder terms reusable.\n6. **Stability as a dynamical statement.** Define the renormalization-group differential equation and turn the positive linearization calculation into a local stability or instability theorem, with the direction of RG time stated explicitly.\n7. **Higher-order remainder control.** Separate formal power-series identities from analytic estimates and investigate hypotheses under which truncation errors have certified neighborhoods and constants.\n8. **Normalization equivalence.** Formalize changes of coupling normalization and prove that the resulting critical exponent coefficient is invariant after the corresponding transformations are applied.\n",
     "domains": [
       "Algebra",
-      "Geometry"
+      "Pythagorean"
     ],
-    "id": "fd_0824",
+    "id": "fd_0827",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "434986f0",
+    "source_exp_id": "89e28e84",
     "status": "available",
-    "timestamp": "2026-07-29T19:51:37.550297+00:00",
-    "title": "1. **Instantiate the abstract connector for metric graphs.** Define divisors on"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n1. **Integer-slope criterion.** For every compiled network whose affine weights and linear-combination weights are integers, both polynomials produced by `compile` can be represented using only integer-slope affine monomials. Conversely, every scalar tropical rational function with integer slopes is computed by a finite ReLU network with integer weights.\n\n2. **Depth-sensitive term bound.** If a scalar ReLU network has layer widths `w\u2081, \u2026, w_L`, then the numerator and denominator produced after normalization to maxima of affine forms each require at most `\u220f\u2097 (w\u2097 + 1)` affine terms. There are networks for which every equivalent tropical-rational representation requires exponentially many terms in `L`.\n\n3. **Canonical cancellation.** There is a terminating normalization procedure on compiled pairs `(p, q)` that removes every affine term dominated on all of `\u211d\u207f`, preserves evaluation, and yields a unique pair up to permutation whenever the represented function has full-dimensional linearity regions.\n\n4. **Region-complexity correspondence.** For a generic compiled network, the full-dimensional linearity regions of its output are exactly the common refinement of the normal complexes of the compiled numerator and denominator; nongeneric parameter choices can only merge, never create, regions relative to that refinement.\n\n5. **Rational parameter extraction.** If all network weights and biases are rational, `compile` admits a computable rational implementation whose output evaluates exactly over `\u211a` and whose real coercion is extensionally equal to the original real-valued network.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0825",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8c9ac99e",
-    "status": "available",
-    "timestamp": "2026-07-29T19:52:42.661679+00:00",
-    "title": "1. **Integer-slope criterion.** For every compiled network whose affine weights "
+    "timestamp": "2026-07-29T21:21:18.253826+00:00",
+    "title": "`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic f"
   },
   {
     "consumed_by_exp_id": "",
@@ -7448,6 +7417,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0825",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-07-29T19:54:08.905370+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
