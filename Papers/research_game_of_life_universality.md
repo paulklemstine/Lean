@@ -1,312 +1,456 @@
-# Union-Closed Families as Positive-Correlation Systems
+# Finite Causal Cones and Exact Local Simulation in Conway’s Game of Life
 
-**Author:** Aristotle
-**Date:** 2026-06-21
-**Domain:** Novelty (combinatorics / discrete statistical mechanics)
+**Aristotle**  
+**July 29, 2026**
 
 ## Abstract
 
-We develop a self-contained theory linking *union-closed set families* to the
-positive-correlation phenomena of discrete statistical mechanics. Working over
-a finite ground set $\alpha$, we treat a finite family $F$ of subsets as a
-uniform probability space of configurations and study three observables: the
-per-site *member count* $\mathrm{mc}(a)$, the *joint count* $\mathrm{jc}(a,b)$,
-and the *union count* $\mathrm{uc}(a,b)$. We establish: (1) a double-counting
-identity equating total occupancy with total configuration size; (2) a
-majority-from-average principle producing a frequently-occurring element under
-an averaged size hypothesis — a verified instance of the Frankl direction; (3) a
-bridge theorem showing every upper-set family is union-closed; (4) the
-two-point inclusion–exclusion identity; (5) the construction of the union
-closure as a closure operator (extensive and union-closed) together with
-monotonicity of total occupancy under closure; and (6) the FKG base case:
-nonnegative correlation of coordinate indicators on the full powerset. Each
-result is interpreted in the language of lattice gases — marginal occupancies,
-two-point correlation functions, order parameters, coarse-graining, and
-entropy. All statements correspond to fully formal, machine-checked theorems.
-
----
+Conway’s Game of Life is a synchronous cellular automaton on the infinite integer lattice. Although a global configuration contains infinitely many cells, every update is local. This paper develops that locality into an explicit finite simulation principle. We define the Moore neighborhood, the B3/S23 transition rule, finite-time evolution, and a recursively generated dependency cone for a selected spacetime point. We prove that each cell has exactly eight neighbors, that the empty configuration is invariant, and that agreement of two configurations on one closed neighborhood forces agreement at the center after one step. The principal theorem states that agreement on the depth-$t$ dependency cone of a cell $p$ guarantees agreement at $p$ after $t$ generations. The cone is finite and has cardinality at most $9^t$, yielding a combined correctness-and-overhead certificate for direct local simulation. We describe recursive and memoized algorithms realizing this theorem, explain how the result supports finite-window experiments and compositional noninterference arguments, and distinguish this causal foundation from a complete constructive proof of computational universality. A roadmap identifies the additional pattern, circuit, memory, and compiler results needed for such a theorem.
 
 ## 1. Introduction
 
-Union-closed families sit at a crossroads. Combinatorially, they are families
-$F$ of finite sets closed under pairwise union; the celebrated **Frankl
-conjecture** (1979) asserts that any such family containing a nonempty set has
-an element belonging to at least half its members. Order-theoretically, they
-generalize *filters* (upper sets) in a Boolean lattice. Probabilistically — the
-viewpoint we press here — a finite family is a uniform measure on
-configurations of a discrete spin/particle system, and union-closure is a
-monotone constraint encouraging aggregation.
-
-Our aim is to make this last reading rigorous and to isolate the elementary
-facts on which any correlation theory of such systems must rest. The results
-are individually simple; their value is the **dictionary** they assemble
-between combinatorics and statistical mechanics:
-
-| Combinatorics | Statistical mechanics |
-|---|---|
-| $\mathrm{mc}(a)/|F|$ | marginal occupancy of site $a$ |
-| $\mathrm{jc}(a,b)/|F|$ | two-point correlation function |
-| $\sum_{s\in F}|s|$ | total particle number over all configurations |
-| union closure $\overline{F}$ | coarse-graining / closure dynamics |
-| frequent element | nonzero order parameter |
-| powerset correlation | finite FKG base case |
-
-### 1.1 Notation
-
-Throughout, $\alpha$ is a type with decidable equality; where stated it is also
-finite, with $|\alpha| = \mathrm{card}\,\alpha$. Subsets of $\alpha$ are finite
-sets, and a *family* is a finite set $F$ of such subsets. We write $|s|$ for the
-cardinality of $s$, $|F|$ for the number of members of $F$, and $2^\alpha$ for
-the family of all subsets of $\alpha$, with $|2^\alpha| = 2^{|\alpha|}$.
-
----
-
-## 2. Definitions
-
-**Definition 1 (Union-closed family).** A family $F$ is *union-closed* if
-$$\forall\, s,t \in F,\quad s \cup t \in F.$$
-This models a configuration space closed under binary joins — a monotone
-lattice gas.
-
-**Definition 2 (Upper-set family).** A family $F$ is an *upper-set family*
-(upset) if
-$$\forall\, s,t,\quad s \in F \wedge s \subseteq t \;\Rightarrow\; t \in F.$$
-For finite $\alpha$ this is an order filter in the Boolean lattice $2^\alpha$.
-
-**Definition 3 (Member count).** For $a \in \alpha$,
-$$\mathrm{mc}(a) := \#\{\, s \in F : a \in s \,\}.$$
-It equals $|F|$ times the marginal occupancy probability of site $a$ under the
-uniform measure on $F$.
-
-**Definition 4 (Joint count).** For $a,b \in \alpha$,
-$$\mathrm{jc}(a,b) := \#\{\, s \in F : a \in s \wedge b \in s \,\},$$
-equal to $|F|$ times the two-point correlation function.
-
-**Definition 5 (Union count).** For $a,b \in \alpha$,
-$$\mathrm{uc}(a,b) := \#\{\, s \in F : a \in s \vee b \in s \,\}.$$
-
-**Definition 6 (Union closure).** For finite $\alpha$, the *union closure* of
-$F$ is
-$$\overline{F} := \Big\{\, s : \exists\, G \subseteq F,\ G \ne \varnothing,\
-\textstyle\bigvee_{g \in G} g = s \,\Big\},$$
-the family of all sets obtainable as the supremum (union) of a nonempty
-sub-collection of $F$. This is the coarse-graining operator.
-
----
-
-## 3. Main results
-
-### 3.1 The conservation law
-
-**Theorem 1 (Double-counting identity).** For any finite ground set $\alpha$
-and family $F$,
-$$\sum_{a \in \alpha} \mathrm{mc}(a) \;=\; \sum_{s \in F} |s|.$$
-
-*Proof sketch.* Expand each $\mathrm{mc}(a)$ as a sum of indicators
-$\mathrm{mc}(a) = \sum_{s \in F} \mathbf{1}[a \in s]$ (this is the
-`card_filter` rewriting). The double sum
-$\sum_{a}\sum_{s\in F}\mathbf{1}[a\in s]$ is symmetric in its two indices; swap
-the order of summation (Fubini for finite sums). The inner sum
-$\sum_{a}\mathbf{1}[a\in s]$ counts the elements of $s$, i.e. equals $|s|$. ∎
-
-*Interpretation.* Dividing by $|F|$: the sum over sites of marginal occupancies
-equals the mean configuration size. This is the conservation law of the system,
-relating local densities to a global extensive quantity.
-
-### 3.2 Order parameter from averaged density
-
-**Theorem 2 (Majority from average).** Let $\alpha$ be finite and nonempty and
-$F$ nonempty. If
-$$2\sum_{s \in F} |s| \;\ge\; |F|\cdot|\alpha|,$$
-then there exists $a \in \alpha$ with $2\,\mathrm{mc}(a) \ge |F|$.
-
-*Proof sketch.* Contrapositive. Assume $2\,\mathrm{mc}(a) < |F|$ for every
-$a \in \alpha$. Since $\alpha$ is nonempty, summing this strict inequality over
-all $a$ (using that a sum of strictly smaller nonneg terms over a nonempty index
-set is strictly smaller) gives
-$$2\sum_{a}\mathrm{mc}(a) < |\alpha|\cdot|F|.$$
-By Theorem 1 the left side is $2\sum_{s\in F}|s|$, yielding
-$2\sum_{s\in F}|s| < |F|\cdot|\alpha|$, the negation of the hypothesis. ∎
-
-*Interpretation.* A global averaged-density condition forces a *local*
-concentration — a frequent element, the combinatorial analogue of a nonzero
-order parameter. This is exactly the conclusion of **Frankl's conjecture**,
-here proved under the extra hypothesis that configurations are large on
-average. Note Theorem 2 requires no union-closure; it is a clean pigeonhole
-consequence of Theorem 1.
+Conway’s Game of Life is defined by one of the shortest rule sets in discrete dynamics. A square lattice extends through the plane; each cell is alive or dead; all cells update simultaneously from the states of their eight nearest horizontal, vertical, and diagonal neighbors. Despite this local definition, the global system supports stable objects, periodic oscillation, moving patterns, and elaborate interactions.
 
-### 3.3 Bridge: filters are merge-closed
+The infinite lattice creates an immediate foundational question for exact simulation. To determine the state of one cell after a finite number of generations, must one know the entire initial configuration? The intuitive answer is no: information travels through local updates and therefore has finite speed. Turning that intuition into a useful theorem requires three ingredients. First, the local rule must be stated without ambiguity. Second, the relevant initial region must be constructed explicitly rather than described vaguely as “nearby.” Third, the construction must come with both a correctness theorem and a quantitative size bound.
 
-**Theorem 3 (Every upset is union-closed).** If $F$ is an upper-set family,
-then $F$ is union-closed.
+We provide those ingredients. For a target cell $p$ and time $t$, we recursively define a finite set $D_t(p)$. At depth zero it contains only $p$. At each later depth it is enlarged by taking the union of the closed Moore neighborhoods of all cells already present. This set traces every possible backward chain of local dependence from the spacetime point $(p,t)$ to time zero.
 
-*Proof sketch.* Take $s,t \in F$. Then $s \subseteq s \cup t$. Apply Definition
-2 to $s \in F$ and the inclusion $s \subseteq s \cup t$ to conclude
-$s \cup t \in F$. ∎
+Our central conclusion is:
 
-*Interpretation.* Monotone (increasing) events, the natural observables of a
-lattice gas, all live inside the union-closed world; results about union-closed
-families therefore apply to them. This is the hinge between order theory and the
-algebra of $\cup$.
+> If two initial configurations agree on $D_t(p)$, then their evolutions agree at $p$ after $t$ generations; moreover, $|D_t(p)|\le 9^t$.
 
-### 3.4 Two-point inclusion–exclusion
+The first clause is semantic: it says the set contains all information relevant to the requested output. The second is computational: it bounds the amount of initial data required by a direct recursive simulator. The estimate $9^t$ is intentionally coarse. On the square lattice the distinct cells in the cone actually form a Chebyshev ball of radius $t$, containing $(2t+1)^2$ cells. Establishing that equality is a natural geometric strengthening, but it is not needed for the locality theorem or its elementary branching bound.
 
-**Theorem 4 (Inclusion–exclusion).** For any $a,b \in \alpha$, as integers,
-$$\mathrm{uc}(a,b) \;=\; \mathrm{mc}(a) + \mathrm{mc}(b) - \mathrm{jc}(a,b).$$
-
-*Proof sketch.* The event $\{a \in s \vee b \in s\}$ is the union of
-$\{a\in s\}$ and $\{b \in s\}$ as predicates; the event $\{a\in s \wedge b \in
-s\}$ is their intersection. By the cardinality identity
-$|X \cup Y| + |X \cap Y| = |X| + |Y|$ applied to the corresponding filtered
-subfamilies, $\mathrm{uc}(a,b) + \mathrm{jc}(a,b) = \mathrm{mc}(a) +
-\mathrm{mc}(b)$; rearranging over $\mathbb{Z}$ gives the claim. ∎
+These results are foundational for rigorous constructions of computation in Life, but they do not constitute a universality proof. A complete constructive result would have to define signal encodings, verify moving patterns and gates, establish timing and separation conditions, compile a universal machine, and quantify the total simulation overhead. The present work supplies the finite-causality and noninterference principles such a development needs.
 
-*Interpretation.* Dividing by $|F|$ recovers $P(a\cup b) = P(a)+P(b)-P(a\cap
-b)$ for the random-configuration distribution; it certifies that
-$\mathrm{jc}$ is the genuine two-point overlap.
+## 2. State space and transition semantics
 
-### 3.5 Union closure as a closure operator
-
-**Lemma 5 (Extensiveness).** $F \subseteq \overline{F}$.
-
-*Proof sketch.* Each $s \in F$ equals the supremum of the singleton
-sub-collection $\{s\} \subseteq F$, which is nonempty; hence $s \in \overline{F}$
-by Definition 6. ∎
-
-**Lemma 6 (Closure is union-closed).** $\overline{F}$ is a union-closed family.
-
-*Proof sketch.* Let $s = \bigvee_{g\in G_1} g$ and $t = \bigvee_{g\in G_2} g$
-with nonempty $G_1, G_2 \subseteq F$. Then
-$s \cup t = \bigvee_{g \in G_1 \cup G_2} g$ (sup distributes over union of index
-sets), and $G_1 \cup G_2 \subseteq F$ is nonempty, so $s \cup t \in
-\overline{F}$. ∎
-
-Together, Lemmas 5 and 6 show $\overline{F}$ is the least union-closed family
-containing $F$: extensive, union-closed, and (being generated by sups of
-subfamilies) idempotent.
-
-**Theorem 7 (Monotonicity of total occupancy under closure).**
-$$\sum_{s \in F} |s| \;\le\; \sum_{s \in \overline{F}} |s|.$$
+### 2.1 Cells and configurations
 
-*Proof sketch.* By Lemma 5, $F \subseteq \overline{F}$. Cardinalities are
-nonnegative, so summing the nonnegative quantity $|s|$ over the larger index set
-$\overline{F}$ dominates the sum over $F$ (monotonicity of sums of nonnegative
-terms under set inclusion). ∎
-
-*Interpretation.* Total particle number, summed over all configurations, cannot
-decrease under coarse-graining — a discrete analogue of entropy monotonicity
-under closure dynamics, an arrow of time for the merging process.
-
-### 3.6 The FKG base case
-
-**Theorem 8 (Nonnegative correlation on the full powerset).** Let $\alpha$ be
-finite. For any $a,b \in \alpha$, on $F = 2^\alpha$,
-$$|2^\alpha|\cdot \mathrm{jc}(a,b) \;\ge\; \mathrm{mc}(a)\cdot \mathrm{mc}(b).$$
-
-*Proof sketch.* The key counting lemma is: for any fixed set $s$,
-$$\#\{\, t \subseteq \alpha : s \subseteq t \,\} = 2^{|\alpha| - |s|},$$
-proved by the bijection $t \mapsto t \setminus s$ between supersets of $s$ and
-subsets of $\alpha \setminus s$. Two cases:
-
-- **$a = b$.** Then $\mathrm{jc}(a,a) = \mathrm{mc}(a)$ and the claim reduces to
-  $|2^\alpha|\cdot\mathrm{mc}(a) \ge \mathrm{mc}(a)^2$, i.e. $\mathrm{mc}(a) \le
-  |2^\alpha|$, which holds since the filtered subfamily is a subfamily of
-  $2^\alpha$. (Self-correlation is strict whenever $0 < \mathrm{mc}(a) <
-  |2^\alpha|$.)
-- **$a \ne b$.** The counting lemma with $s = \{a\}$, $s=\{b\}$, $s=\{a,b\}$
-  gives $\mathrm{mc}(a) = \mathrm{mc}(b) = 2^{|\alpha|-1}$ and
-  $\mathrm{jc}(a,b) = 2^{|\alpha|-2}$. Then $|2^\alpha|\cdot\mathrm{jc}(a,b) =
-  2^{|\alpha|}\cdot 2^{|\alpha|-2} = 2^{2|\alpha|-2} =
-  \mathrm{mc}(a)\cdot\mathrm{mc}(b)$ — equality. ∎
-
-*Interpretation.* Rescaling, $P(a\cap b) \ge P(a)P(b)$: coordinate indicators
-are positively correlated, with equality (independence) for distinct sites and
-strict positivity for coincident sites. This is the base case of the
-**Fortuin–Kasteleyn–Ginibre (FKG) inequality**, the cornerstone of correlation
-inequalities in statistical mechanics and percolation.
-
----
-
-## 4. Algorithms
-
-The theory is constructive; the following procedures compute every observable
-and verify each theorem on concrete inputs.
-
-### 4.1 Observable evaluation
-
-Given $F$ (a list of subsets of a ground set) and elements $a,b$, compute
-$\mathrm{mc}, \mathrm{jc}, \mathrm{uc}$ by a single linear scan over the
-members of $F$ (cost $O(|F|\cdot|\alpha|)$). Theorems 1 and 4 are then checked by
-direct arithmetic.
-
-### 4.2 Union-closure construction
-
-To build $\overline{F}$: maintain a worklist of discovered sets initialized to
-$F$; repeatedly form pairwise unions of discovered sets and add any new ones;
-stop at a fixed point. Because the universe of subsets is finite
-($2^{|\alpha|}$), this terminates, and the result is the least union-closed
-superfamily (Lemmas 5–6). Total occupancy before and after demonstrates
-Theorem 7.
-
-### 4.3 Frankl-direction certificate
-
-Given $F$, test the averaged hypothesis $2\sum_{s}|s| \ge |F|\cdot|\alpha|$. If
-it holds, Theorem 2 guarantees, and a single pass returns, a witness $a$ with
-$2\,\mathrm{mc}(a) \ge |F|$.
-
----
-
-## 5. Applications
-
-1. **Discrete FKG / correlation inequalities.** Theorem 8 is the seed for
-   proving positive association of monotone events on product spaces; Theorem 3
-   identifies the monotone events as a subclass of union-closed families.
-2. **Frankl's conjecture.** Theorem 2 settles the conjecture's conclusion in the
-   "dense" regime and clarifies that the obstruction lies entirely in
-   low-average-density families.
-3. **Lattice-gas modeling.** The dictionary of §1 lets one import combinatorial
-   identities (Theorems 1, 4) as exact sum rules for occupancy and correlation
-   functions of monotone constrained systems.
-4. **Coarse-graining dynamics.** Theorem 7 quantifies an irreversible,
-   mass-non-decreasing closure step, useful in renormalization-style arguments
-   on finite configuration spaces.
-
----
-
-## 6. Discussion
-
-The collection of results is deliberately elementary, but their organization
-exposes a coherent statistical-mechanical reading of union-closed families. The
-two genuinely structural inputs are the closure operator (Lemmas 5–6, Theorem 7)
-and the powerset correlation (Theorem 8); the remaining identities (Theorems 1,
-4) are exact sum rules, and Theorems 2–3 are the order-parameter and
-order-theoretic bridges. A notable feature is how little is needed for the
-"emergent popular element": Theorem 2 is pure pigeonhole over Theorem 1.
-
----
-
-## 7. Future work
-
-- **Beyond the base case.** Extend Theorem 8 from the full powerset to general
-  union-closed families with a product-like measure, targeting a finite FKG
-  inequality for monotone events identified by Theorem 3.
-- **Closing the Frankl gap.** Replace the averaged hypothesis of Theorem 2 by a
-  structural one, aiming at the full conjecture; the entropy method's recent
-  $\approx 0.38$ bound suggests an information-theoretic refinement of the
-  double-counting identity.
-- **Quantitative closure.** Sharpen Theorem 7 to a *strict* gain $\sum_{\overline
-  F}|s| - \sum_F |s|$ bounded below in terms of how far $F$ is from
-  union-closed, an entropy-production estimate for the coarse-graining step.
-
----
-
-## 8. Conclusion
-
-We have assembled, with full formal backing, a compact theory presenting
-union-closed families as positive-correlation systems: a conservation law
-(Theorem 1), an order-parameter principle (Theorem 2), an order-theoretic
-bridge (Theorem 3), the two-point inclusion–exclusion law (Theorem 4), a closure
-operator with occupancy monotonicity (Lemmas 5–6, Theorem 7), and the FKG base
-case (Theorem 8). The dictionary between combinatorics and discrete statistical
-mechanics that emerges is, we believe, a fruitful lens on one of the most
-stubborn open problems in extremal set theory.
+Let
+
+$$
+L=\mathbb{Z}\times\mathbb{Z}
+$$
+
+be the integer square lattice. An element $p=(x,y)\in L$ is called a **cell**. Let $\mathbb{B}=\{0,1\}$, with $1$ denoting alive and $0$ denoting dead.
+
+**Definition 2.1 (Configuration).** A configuration is a function
+
+$$
+c:L\to\mathbb{B}.
+$$
+
+No finiteness assumption is imposed: a configuration may contain infinitely many live cells. This generality is important because the locality theorem should not depend on an empty or periodic background.
+
+### 2.2 Moore neighborhoods
+
+For $p=(x,y)$, define its **Moore neighborhood** by
+
+$$
+N(p)=\{(x+i,y+j): i,j\in\{-1,0,1\},\ (i,j)\ne(0,0)\}.
+$$
+
+Define the **closed Moore neighborhood** by
+
+$$
+\overline{N}(p)=N(p)\cup\{p\}.
+$$
+
+**Lemma 2.2 (Neighborhood cardinalities).** For every $p\in L$,
+
+$$
+|N(p)|=8
+\qquad\text{and}\qquad
+|\overline{N}(p)|=9.
+$$
+
+**Proof sketch.** The nine offset pairs in $\{-1,0,1\}^2$ are distinct. Removing $(0,0)$ leaves eight offsets, and translation by $p$ preserves distinctness. Restoring the center gives nine cells. $\square$
+
+For a configuration $c$, define the live-neighbor count at $p$ as
+
+$$
+\nu_c(p)=\sum_{q\in N(p)}c(q).
+$$
+
+Here the values $0$ and $1$ are regarded as integers in the sum.
+
+**Corollary 2.3 (Neighbor-count bound).** For every configuration $c$ and cell $p$,
+
+$$
+0\le \nu_c(p)\le 8.
+$$
+
+**Proof sketch.** The sum has exactly eight terms, each at most $1$ and at least $0$. $\square$
+
+### 2.3 The B3/S23 rule
+
+Define the local transition function $R:\mathbb{B}\times\mathbb{N}\to\mathbb{B}$ by
+
+$$
+R(a,n)=1
+\quad\Longleftrightarrow\quad
+n=3\ \text{or}\ (a=1\ \text{and}\ n=2).
+$$
+
+This is the usual B3/S23 rule: birth occurs at neighbor count $3$, while survival occurs at counts $2$ and $3$. Define the global one-step operator $S$ by
+
+$$
+S(c)(p)=R(c(p),\nu_c(p)).
+$$
+
+The updates are synchronous: every value on the right-hand side is read from the same old configuration $c$. For $t\in\mathbb{N}$, define finite-time evolution recursively by
+
+$$
+S^0(c)=c,
+\qquad
+S^{t+1}(c)=S(S^t(c)).
+$$
+
+**Lemma 2.4 (Dead zero-neighborhood case).** A dead cell with no live neighbors remains dead:
+
+$$
+R(0,0)=0.
+$$
+
+**Proof sketch.** Neither disjunct in the condition defining $R$ is satisfied: $0\ne3$, and the cell is not alive. $\square$
+
+## 3. Baseline dynamics and one-step locality
+
+Let $\mathbf{0}$ denote the all-dead configuration, defined by $\mathbf{0}(p)=0$ for every $p\in L$.
+
+**Theorem 3.1 (One-step stability of the empty configuration).**
+
+$$
+S(\mathbf{0})=\mathbf{0}.
+$$
+
+**Proof sketch.** Every cell has eight dead neighbors, so its live-neighbor count is $0$. Each cell is itself dead. Lemma 2.4 therefore applies at every lattice point. Equality follows pointwise. $\square$
+
+**Theorem 3.2 (Finite-time stability of the empty configuration).** For every $t\in\mathbb{N}$,
+
+$$
+S^t(\mathbf{0})=\mathbf{0}.
+$$
+
+**Proof sketch.** Induct on $t$. The case $t=0$ is the definition of iteration. If the claim holds at $t$, then
+
+$$
+S^{t+1}(\mathbf{0})=S(S^t(\mathbf{0}))=S(\mathbf{0})=\mathbf{0}
+$$
+
+by the induction hypothesis and Theorem 3.1. $\square$
+
+The next theorem isolates the exact information used by one update.
+
+**Theorem 3.3 (One-Step Locality).** Let $c$ and $d$ be configurations and let $p\in L$. If
+
+$$
+c(q)=d(q)\qquad\text{for every }q\in\overline{N}(p),
+$$
+
+then
+
+$$
+S(c)(p)=S(d)(p).
+$$
+
+**Proof sketch.** Agreement at $p$ gives $c(p)=d(p)$. Agreement at each point of $N(p)$ makes the eight summands in $\nu_c(p)$ and $\nu_d(p)$ equal, hence the live-neighbor counts are equal. The same pair consisting of current state and neighbor count is supplied to $R$, so the outputs coincide. $\square$
+
+This result is a precise one-generation speed limit. Changes outside $\overline{N}(p)$ cannot affect $p$ in the next generation, regardless of the size or complexity of those changes.
+
+## 4. Recursive dependency cones
+
+### 4.1 Definition
+
+**Definition 4.1 (Dependency cone).** For $p\in L$ and $t\in\mathbb{N}$, define $D_t(p)$ recursively by
+
+$$
+D_0(p)=\{p\},
+$$
+
+and
+
+$$
+D_{t+1}(p)=\bigcup_{q\in D_t(p)}\overline{N}(q).
+$$
+
+Every $D_t(p)$ is finite: the base set is finite, and each successor is a finite union of finite nine-cell sets. The word “cone” refers to the corresponding spacetime picture. Starting from a point at time $t$ and moving backward one generation permits displacement by at most one unit in each coordinate. Repetition produces a widening family of finite slices.
+
+Two immediate consequences restate the recursive construction.
+
+**Lemma 4.2 (Time-zero membership).** For every $p\in L$,
+
+$$
+p\in D_0(p).
+$$
+
+**Proof sketch.** By definition, $D_0(p)$ is the singleton $\{p\}$. $\square$
+
+**Lemma 4.3 (Successor expansion).** For every $t\in\mathbb{N}$ and $p\in L$,
+
+$$
+D_{t+1}(p)=\bigcup_{q\in D_t(p)}\overline{N}(q).
+$$
+
+**Proof sketch.** This is the successor clause of Definition 4.1. $\square$
+
+The following nesting relation connects cones based at neighboring cells.
+
+**Lemma 4.4 (Cone transport through one local step).** If $q\in\overline{N}(p)$, then for every $t\in\mathbb{N}$,
+
+$$
+D_t(q)\subseteq D_{t+1}(p).
+$$
+
+**Proof sketch.** For $t=0$, $D_0(q)=\{q\}$ and $q$ belongs to the closed neighborhood of $p$, which is $D_1(p)$. For the inductive step, take $r\in D_{t+1}(q)$. Then $r$ lies in $\overline{N}(s)$ for some $s\in D_t(q)$. By induction, $s\in D_{t+1}(p)$. The successor definition places the entire set $\overline{N}(s)$ inside $D_{t+2}(p)$, so $r\in D_{t+2}(p)$. $\square$
+
+Equivalently, a causal chain of length $t$ ending at a neighbor $q$ can be extended by one step to a causal chain of length $t+1$ ending at $p$.
+
+### 4.2 Exact local determinacy
+
+We now prove that the recursively constructed cone is sufficient for prediction.
+
+**Theorem 4.5 (Finite Dependency Theorem).** Let $c,d:L\to\mathbb{B}$ be configurations, let $p\in L$, and let $t\in\mathbb{N}$. Suppose
+
+$$
+c(q)=d(q)\qquad\text{for every }q\in D_t(p).
+$$
+
+Then
+
+$$
+S^t(c)(p)=S^t(d)(p).
+$$
+
+**Proof sketch.** We prove the stronger statement simultaneously for every target cell $r$ by induction on $t$.
+
+At $t=0$, the hypothesis says that $c$ and $d$ agree on $D_0(r)=\{r\}$. Hence $c(r)=d(r)$, which is the desired equality because $S^0$ is the identity.
+
+Assume the result at time $t$, and suppose $c$ and $d$ agree on $D_{t+1}(r)$. To compare $S^{t+1}(c)(r)$ and $S^{t+1}(d)(r)$, use Theorem 3.3. It is enough to prove that $S^t(c)$ and $S^t(d)$ agree at every $q\in\overline{N}(r)$. Fix such a $q$. By Lemma 4.4,
+
+$$
+D_t(q)\subseteq D_{t+1}(r).
+$$
+
+Thus the original configurations agree on $D_t(q)$. The induction hypothesis gives
+
+$$
+S^t(c)(q)=S^t(d)(q).
+$$
+
+This holds throughout the closed neighborhood of $r$. Applying one-step locality completes the induction. $\square$
+
+The theorem is insensitive to all initial data outside $D_t(p)$. The configurations may differ at one outside cell, at infinitely many outside cells, or everywhere outside the cone; the selected output remains equal.
+
+**Corollary 4.6 (Finite-background replacement).** Given $c$, $p$, and $t$, define a configuration $c'$ that agrees with $c$ on $D_t(p)$ and is dead outside $D_t(p)$. Then
+
+$$
+S^t(c')(p)=S^t(c)(p).
+$$
+
+**Proof sketch.** The configurations agree on the dependency cone, so Theorem 4.5 applies. $\square$
+
+This corollary justifies replacing an arbitrary infinite background by a finite supported representative when computing one selected output.
+
+## 5. Cardinality and complexity
+
+### 5.1 A branching bound
+
+**Theorem 5.1 (Dependency-Cone Cardinality Bound).** For every $t\in\mathbb{N}$ and $p\in L$,
+
+$$
+|D_t(p)|\le 9^t.
+$$
+
+**Proof sketch.** Proceed by induction. At time zero,
+
+$$
+|D_0(p)|=1=9^0.
+$$
+
+Assume $|D_t(p)|\le9^t$. By the successor definition and the elementary union bound,
+
+$$
+\begin{aligned}
+|D_{t+1}(p)|
+&=\left|\bigcup_{q\in D_t(p)}\overline{N}(q)\right|\\
+&\le\sum_{q\in D_t(p)}|\overline{N}(q)|\\
+&=\sum_{q\in D_t(p)}9\\
+&=9|D_t(p)|\\
+&\le9\cdot9^t=9^{t+1}.
+\end{aligned}
+$$
+
+Overlap among closed neighborhoods can only reduce the cardinality of their union, so no disjointness assumption is needed. $\square$
+
+The theorem gives a direct recursive simulation bound. Each requested spacetime value at depth $t+1$ asks for at most nine values at depth $t$: the center state and its eight neighbors. A full recursion tree therefore has branching factor at most $9$ and at most $9^t$ leaves.
+
+### 5.2 Combined certificate
+
+**Theorem 5.2 (Finite Simulation Certificate).** Fix a configuration $c$, a target cell $p$, and a time $t$. The finite set $D_t(p)$ satisfies both
+
+$$
+|D_t(p)|\le9^t
+$$
+
+and the following universal correctness property: for every configuration $d$, if
+
+$$
+d(q)=c(q)\qquad\text{for every }q\in D_t(p),
+$$
+
+then
+
+$$
+S^t(d)(p)=S^t(c)(p).
+$$
+
+**Proof sketch.** The cardinality clause is Theorem 5.1, and the semantic clause is Theorem 4.5. Combining them yields one witness set with both properties. $\square$
+
+This theorem has the form of a certificate: it identifies a bounded finite input set and proves that agreement on that set is sufficient for the requested output.
+
+### 5.3 Coarse and geometric complexity
+
+The estimate $9^t$ counts possible recursive branches rather than distinct lattice cells. Closed neighborhoods overlap heavily. Indeed, elementary coordinate reasoning suggests the exact identity
+
+$$
+D_t(p)=\{q\in L:\|q-p\|_\infty\le t\},
+$$
+
+where, for $p=(x,y)$ and $q=(u,v)$,
+
+$$
+\|q-p\|_\infty=\max(|u-x|,|v-y|).
+$$
+
+That square has exactly
+
+$$
+(2t+1)^2
+$$
+
+cells. The exact identity and count are not required by the preceding theorems and are left as a geometric refinement. Accordingly, only the $9^t$ upper bound is claimed here.
+
+The distinction leads to three cost models:
+
+1. **Unmemoized recursive evaluation.** The recursion tree has at most $9^t$ leaves and total size of the same exponential order.
+2. **Memoized local evaluation.** Identical spacetime subproblems are stored once. The number of distinct subproblems is bounded by the sum of the spatial cone slices. Under the exact-square refinement this sum is of order $t^3$.
+3. **Window evolution.** One may evolve a finite square large enough to contain all relevant slices. If the entire initial radius-$t$ square is updated for $t$ generations, a straightforward implementation also uses polynomial work, although it may compute cells not needed by the target.
+
+The proved $9^t$ estimate is therefore a correctness-oriented upper bound, not a claim of optimal computational complexity.
+
+## 6. Algorithms
+
+### 6.1 Constructing the dependency cone
+
+The finite set can be generated iteratively.
+
+**Algorithm 1 (Iterative Dependency-Cone Expansion).**
+
+**Input:** target $p\in L$ and depth $t\in\mathbb{N}$.  
+**Output:** $D_t(p)$.
+
+1. Initialize $D\leftarrow\{p\}$.
+2. Repeat $t$ times:
+   1. initialize $E\leftarrow\varnothing$;
+   2. for each $q\in D$, insert every point of $\overline{N}(q)$ into $E$;
+   3. set $D\leftarrow E$.
+3. Return $D$.
+
+Using a hash set, duplicate points from overlapping neighborhoods are automatically merged. If $m_s=|D_s(p)|$, step $s$ performs at most $9m_s$ insertions. The proved estimate gives the coarse total bound
+
+$$
+9\sum_{s=0}^{t-1}9^s=O(9^t).
+$$
+
+The actual lattice geometry produces much smaller sets.
+
+### 6.2 Recursive single-cell evaluation
+
+**Algorithm 2 (Memoized Backward-Cone Evaluation).**
+
+**Input:** an initial state oracle $c$, target $p$, and time $t$.  
+**Output:** $S^t(c)(p)$.
+
+1. Define a function $V(q,s)$.
+2. If $(q,s)$ is cached, return the cached value.
+3. If $s=0$, return $c(q)$.
+4. Recursively evaluate $V(r,s-1)$ for all $r\in\overline{N}(q)$.
+5. Count the live values on $N(q)$ and apply the B3/S23 rule using the center value $V(q,s-1)$.
+6. Cache and return the result.
+7. Return $V(p,t)$.
+
+Correctness follows by induction from the definition of $S^t$; finiteness and the relevant initial-data bound follow from Theorems 4.5 and 5.1. Memoization is not required for correctness but prevents repeated evaluation of overlapping subproblems.
+
+### 6.3 Finite-window evolution
+
+**Algorithm 3 (Padded Finite-Window Simulation).**
+
+For a finite set of requested cells $T$ at time $t$, start from the union
+
+$$
+W=\bigcup_{p\in T}D_t(p).
+$$
+
+Read the initial configuration only on $W$. To evolve forward, retain nested slices: at generation $s$, compute values only where enough padding remains to reach a target at generation $t$. The One-Step Locality Theorem ensures that discarding cells outside the next required slice cannot alter requested outputs. Applying Theorem 4.5 target by target proves correctness.
+
+This method is suited to batch outputs and visual demonstrations. It also makes boundary handling explicit: a boundary condition is harmless only when the boundary lies outside every relevant dependency cone.
+
+## 7. Applications
+
+### 7.1 Exact finite experiments on an infinite lattice
+
+Many Life experiments begin with finitely many live cells, but the mathematical board is infinite. The finite dependency theorem reconciles these views. For a fixed observation region and time horizon, only a finite initial window matters. An implementation may therefore store sparse finite sets while retaining an exact interpretation on the infinite lattice.
+
+The theorem also prevents a common simulation error. If a finite display window is treated as the whole world, artificial boundary rules can send effects inward. Correctness is guaranteed only when the target’s dependency cone remains inside the represented region, or when omitted initial values are supplied exactly.
+
+### 7.2 Noninterference and modular pattern design
+
+Suppose two pattern components occupy separated regions. To prove that one component cannot affect an output of the other before time $t$, it is enough to show that the first component lies outside the output’s depth-$t$ dependency cone. More generally, if all possible differences between two environments are outside that cone, Theorem 4.5 identifies their outputs.
+
+This converts geometric separation into semantic independence. Such a principle is central when composing moving signals and logic components: a claimed gate must work not only in one screenshot but under a precisely specified class of surrounding configurations.
+
+### 7.3 Local certificates for output cells
+
+Theorem 5.2 can be read as a certificate format. A certificate for the value at $(p,t)$ consists of the finite initial restriction $c|_{D_t(p)}$. Any completion of that restriction to an infinite configuration yields the same target value. Independent evaluators can therefore compare finite data rather than exchange entire configurations.
+
+### 7.4 Foundations for constructive universality
+
+A direct proof of universality requires a simulation relation between machine states and Life configurations. Each simulated transition must be shown to produce the correct encoded successor, and independently placed components must not interfere outside intended channels. Finite causal cones can bound what must be checked for each transition and provide clearance conditions between gadgets.
+
+Nevertheless, locality alone does not supply any computational gadget. It proves neither a glider theorem nor a gate truth table, memory behavior, clocking, fanout, crossing, or compilation. Calling the present result a universality theorem would therefore overstate its scope.
+
+## 8. Discussion
+
+The argument relies on only two structural features: finite neighborhoods and synchronous local evolution. Its form generalizes to other cellular automata. If every cell’s next state depends on a closed neighborhood of cardinality at most $k$, the analogous recursively expanded cone has cardinality at most $k^t$, and agreement on that cone forces agreement after $t$ steps. For Life, $k=9$ because the update reads the center and eight neighbors.
+
+The bound is robust because it avoids geometric assumptions. It would remain valid on an irregular graph of maximum closed-neighborhood size $9$, even if no square-coordinate description existed. Conversely, exploiting the special geometry of $\mathbb{Z}^2$ yields better counting. This separation between a general branching argument and a model-specific geometric refinement is methodologically useful.
+
+The empty-configuration theorem also interacts with finite causality. If the initial live pattern is finite, cells sufficiently far away have an all-dead dependency cone for a specified time horizon and hence remain dead during that horizon. This gives a finite propagation statement for activity, although a sharp support-growth theorem would again benefit from Chebyshev distance.
+
+The recursive cone is an overapproximation of semantic relevance. Some cells inside it may not affect a particular initial configuration or output because the Boolean rule can mask changes. For example, changing one neighbor may leave the neighbor count within a range producing the same result. The cone records possible structural dependence uniformly over all configurations, not minimal influence for one instance. Determining instance-specific minimal certificates is a different computational problem.
+
+## 9. Future work
+
+The next step is a sharper geometric light-cone theorem: define Chebyshev distance and prove that $D_t(p)$ is exactly the radius-$t$ square around $p$. This replaces the coarse bound $9^t$ by the exact count $(2t+1)^2$ for distinct initial cells.
+
+Pattern-level work should then proceed constructively:
+
+1. Define translations, quarter-turn rotations, and reflections of finite patterns, and prove that evolution commutes with these symmetries.
+2. Establish the stability of the block and the period-two behavior of the blinker directly from the local rule.
+3. Define all four phases of a glider and prove that four generations translate it by $(1,1)$, with background control supplied by finite causality.
+4. Specify finite spacetime signal ports, including phase, rails, and clearance regions.
+5. Verify a concrete functionally complete gate such as NAND for every Boolean input assignment, including restoration of a reusable output signal.
+6. Develop wires, delays, fanout, and crossings with explicit latency and area bounds.
+7. Compile Boolean circuits by recursive placement and routing, proving semantic correctness and polynomial overhead.
+8. Add clocked memory and compile a universal register machine or Turing machine transition system.
+9. State a final simulation theorem with concrete encoder, decoder, per-transition correctness, noninterference, initialization, and explicit temporal and spatial overhead.
+
+Truth tables for isolated output cells would not suffice. A credible universality theorem must control complete signal formats and the interactions of composed components.
+
+## 10. Conclusion
+
+Conway’s Game of Life evolves on an infinite lattice, but a finite-time local observation has a finite causal past. The dependency cone $D_t(p)$ is generated by repeatedly adjoining closed Moore neighborhoods. Agreement on this explicit set guarantees agreement at the target after $t$ generations, and the set contains at most $9^t$ cells. Together these facts provide an exact finite simulation certificate for one output cell.
+
+The result clarifies both what has been achieved and what remains. Local simulation, finite-speed dependence, and a direct overhead bound are established. The stronger construction of universal computation requires verified moving patterns, interfaces, gates, routing, memory, and a compiler. Finite causal cones provide the boundary discipline needed to pursue that program one component at a time.

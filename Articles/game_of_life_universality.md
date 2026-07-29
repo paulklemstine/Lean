@@ -1,268 +1,171 @@
-# When Sets Pull Together: The Hidden Physics of Union-Closed Families
+# How Far Can a Cell See? Finite Causality in Conway’s Game of Life
 
-Imagine a library where every shelf holds a *collection of topics*. One shelf
-might carry $\{\text{history}, \text{geography}\}$; another $\{\text{geography},
-\text{cooking}\}$. Now impose a single house rule: **whenever two shelves
-exist, the shelf combining all their topics must also exist.** Put the two
-shelves above together and you are forced to also stock the shelf
-$\{\text{history}, \text{geography}, \text{cooking}\}$.
+Conway’s Game of Life looks infinite. Its board extends without boundary in every direction, and at each tick every square changes at once. A distant constellation may be unimaginably complicated; the future may contain gliders, oscillators, collisions, and structures capable of carrying information. Yet if we ask one sharply focused question—will this particular cell be alive after a fixed number of generations?—the apparent infinity collapses to a finite calculation.
 
-That one rule — *closure under merging* — turns an arbitrary catalogue into
-something with surprising internal tension. The collections start to **pull
-toward one another**. Popular topics get more popular. Combining two
-collections never shrinks the total amount of "stuff" on the shelves. And a
-single topic emerges that sits on a huge fraction of all shelves. These are
-not vague impressions; they are precise mathematical theorems, and in this
-article we will state every one of them and explain why they are true.
+That collapse is the central idea of this article. We will define Life precisely, isolate its local causal structure, and prove a finite simulation theorem: the state of one cell after $t$ generations depends on only finitely many initial cells. An explicit recursively defined dependency cone contains all the information that can matter, and its size is at most $9^t$. This bound is deliberately simple rather than geometrically sharp, but it gives a rigorous certificate that exact local prediction requires inspecting only finite data.
 
-The objects in question are called **union-closed families**, and they are one
-of the most deceptively simple structures in combinatorics. They are also a
-secret doorway into statistical physics: a union-closed family behaves like a
-gas of particles whose configurations are biased to clump. We will travel from
-counting topics on shelves to *positive correlation*, the same phenomenon that
-makes magnets magnetize.
+This is an important foundation for studying computation in Life. It is not, by itself, a proof that Life can simulate every computer. Such a universality result requires concrete signal carriers, gates, memory, routing, and a compiler from a machine model. What finite causality supplies is the stage on which those constructions can be assembled without interference from an uncontrolled infinite background.
 
----
+## The world and its local law
 
-## The cast of characters
+The board is the integer lattice
 
-Fix a finite "universe" of topics, which mathematicians call the **ground
-set** $\alpha$. A *configuration* is any subset $s \subseteq \alpha$ — a shelf.
-A **family** $F$ is a finite collection of such subsets — our whole catalogue.
-
-The single rule that animates everything is:
-
-> **Union-closed.** A family $F$ is *union-closed* if for every two members
-> $s, t \in F$, their union $s \cup t$ is also a member of $F$.
-
-In symbols, $\forall s, t \in F,\; s \cup t \in F$. Merge any two shelves and
-you stay inside the catalogue.
-
-We will measure these catalogues with three counters. The first is
-**popularity**: for a topic $a$, the *member count* $\mathrm{mc}(a)$ is the
-number of shelves that contain $a$,
 $$
-\mathrm{mc}(a) \;=\; \#\{\, s \in F : a \in s \,\}.
-$$
-The second is **co-popularity**: for two topics $a, b$, the *joint count*
-$\mathrm{jc}(a,b)$ counts shelves carrying *both*,
-$$
-\mathrm{jc}(a,b) \;=\; \#\{\, s \in F : a \in s \text{ and } b \in s \,\}.
-$$
-The third is **reach**: the *union count* $\mathrm{uc}(a,b)$ counts shelves
-carrying *at least one*,
-$$
-\mathrm{uc}(a,b) \;=\; \#\{\, s \in F : a \in s \text{ or } b \in s \,\}.
+\mathbb{Z}^2=\{(x,y):x,y\in\mathbb{Z}\}.
 $$
 
-Here is the mental switch that makes the whole subject sing. Pick a shelf
-uniformly at random from $F$. Then $\mathrm{mc}(a)/|F|$ is exactly the
-**probability** that the chosen shelf contains topic $a$ — its *occupancy*. And
-$\mathrm{jc}(a,b)/|F|$ is the probability it contains both — a *two-point
-correlation function*, the bread and butter of statistical mechanics. A
-union-closed family is a probability distribution on configurations, and the
-counts above are its observables.
+Each lattice point is a cell. At any moment a cell is either alive or dead, so a configuration is a function
 
----
-
-## A bookkeeping miracle
-
-Before any deep structure, there is an identity so clean it feels like
-cheating. Add up the popularity of every topic. Separately, add up the size of
-every shelf. **You get the same number.**
-
-> **Theorem A (Double counting).**
-> $$\sum_{a \in \alpha} \mathrm{mc}(a) \;=\; \sum_{s \in F} |s|.$$
-
-Why? Both sides count the same thing — the number of *(topic, shelf)* incidence
-pairs where the topic sits on the shelf — just organized differently. The left
-side sweeps topic by topic; the right side sweeps shelf by shelf. It is the
-discrete Fubini theorem: you can integrate a table by rows or by columns.
-
-Trivial as it looks, this identity is the engine room. Dividing by $|F|$ turns
-it into a statement about averages: *the average occupancy summed over sites
-equals the average shelf size.* That is the bridge from "how big are the
-shelves" to "how popular are the topics," and it powers the next result.
-
----
-
-## The emergence of a popular topic
-
-Statistical physics is obsessed with **order parameters**: a single number
-whose becoming nonzero signals that a system has spontaneously organized
-itself. For union-closed families there is a clean combinatorial avatar.
-
-Suppose the shelves are *big on average* — specifically, suppose the average
-shelf occupies at least half of the universe. Then some topic must be **truly
-popular**: it sits on at least half of all the shelves.
-
-> **Theorem B (Majority from average).** If $F$ is nonempty and the shelves are
-> large on average in the sense that
-> $$2 \sum_{s \in F} |s| \;\ge\; |F| \cdot |\alpha|,$$
-> then there exists a topic $a \in \alpha$ with
-> $$2\,\mathrm{mc}(a) \;\ge\; |F|.$$
-
-The proof is a pigeonhole argument dressed up by Theorem A. Suppose, for
-contradiction, that *every* topic were unpopular, $2\,\mathrm{mc}(a) < |F|$ for
-all $a$. Sum that strict inequality over all $|\alpha|$ topics: the left side
-is $2\sum_a \mathrm{mc}(a)$, which by Theorem A equals $2\sum_{s} |s|$; the
-right side is $|\alpha|\cdot|F|$. We would get $2\sum_s |s| < |F|\cdot|\alpha|$,
-flatly contradicting the hypothesis. So at least one topic must clear the bar.
-
-This is the discrete fingerprint of **symmetry breaking**: a global average
-condition forces a *local* concentration. Notice it does not even need
-union-closure — it is a property of any large-on-average family — but it sets
-the stage for the central conjecture of the field, which we will meet at the
-end.
-
----
-
-## Upward-closed worlds are automatically merge-closed
-
-Some catalogues obey an even stronger rule. Call $F$ an **upper-set family**
-(an *upset*) if it is closed under *growing* shelves: whenever a shelf $s$ is in
-$F$ and $t$ is any larger shelf $s \subseteq t$, then $t$ is in $F$ too. In the
-library metaphor: if a collection of topics qualifies, so does every
-super-collection.
-
-These upsets are the *monotone* worlds — "more is always allowed." It turns out
-they are special cases of our merging worlds:
-
-> **Theorem (Bridge: every upset is union-closed).** If $F$ is an upper-set
-> family, then $F$ is union-closed.
-
-The reason is immediate once you say it correctly: given $s, t \in F$, the
-union $s \cup t$ contains $s$, i.e. $s \subseteq s \cup t$. Since $F$ is
-upward-closed and $s \in F$, the bigger set $s \cup t$ must also be in $F$.
-
-This bridge matters because upsets are the natural language of *monotone
-events* in probability — events that stay true when you add more particles.
-The bridge says every monotone event lives inside the union-closed world, so
-theorems about union-closed families automatically apply to them. It is the
-hinge connecting order theory (upsets) to algebra (closure under $\cup$).
-
----
-
-## Two at a time: inclusion–exclusion
-
-How do the three counters relate? The same way probabilities of "or," "and,"
-and the individual events always relate — by inclusion–exclusion:
-
-> **Theorem (Inclusion–exclusion).** For any two topics $a, b$,
-> $$\mathrm{uc}(a,b) \;=\; \mathrm{mc}(a) + \mathrm{mc}(b) - \mathrm{jc}(a,b).$$
-
-Counting the shelves that contain $a$ or $b$, we count those with $a$, add
-those with $b$, and then subtract the ones we counted twice — exactly the
-shelves with both. Dividing by $|F|$ gives the familiar law
-$P(a \cup b) = P(a) + P(b) - P(a\cap b)$ for the random-shelf distribution.
-This is the algebraic skeleton beneath the correlation story: it tells us that
-the *two-point function* $\mathrm{jc}(a,b)$ is the genuine measure of how much
-the presence of $a$ and the presence of $b$ overlap.
-
----
-
-## Coarse-graining never destroys mass
-
-Now the physics gets serious. Given any family $F$ — not necessarily
-union-closed — there is a smallest union-closed family containing it. We build
-it explicitly by taking **all possible merges**: every set you can obtain as
-the union of some nonempty sub-collection of $F$.
-
-> **Definition (Union closure).** The *union closure* $\overline{F}$ is the
-> family of all sets of the form $\bigcup_{s \in G} s$ where $G$ is a nonempty
-> sub-collection $G \subseteq F$.
-
-Two facts pin down that $\overline{F}$ is what we want. First, it *contains the
-original*: every shelf $s$ is the merge of the one-element sub-collection
-$\{s\}$, so $F \subseteq \overline{F}$ (extensiveness). Second, it *is itself
-union-closed*: merging $\bigcup_{s\in G_1} s$ with $\bigcup_{s \in G_2} s$ gives
-$\bigcup_{s \in G_1 \cup G_2} s$, again a merge of a sub-collection of $F$. So
-$\overline{F}$ is genuinely a closure operator: extensive and idempotent.
-
-Think of closure as **coarse-graining**: you replace a fine description by the
-collection of all aggregates it can form. In thermodynamics, coarse-graining is
-where entropy comes from — you lose track of microscopic detail and the
-effective system gets "bigger." The discrete analog is exactly true here:
-
-> **Theorem C (Monotonicity of total occupancy).**
-> $$\sum_{s \in F} |s| \;\le\; \sum_{s \in \overline{F}} |s|.$$
-
-The total amount of "stuff" — summed shelf size, i.e. the total particle number
-over all configurations — **cannot decrease** under closure. The proof is a
-one-liner given the structure: $F$ is a *subset* of $\overline{F}$ and shelf
-sizes are nonnegative, so summing over the larger family can only add more. But
-the interpretation is the punchline: closing a system under its own merging
-dynamics is an irreversible, mass-non-decreasing process — the combinatorial
-shadow of the second law.
-
----
-
-## The clincher: sets prefer to clump
-
-We have been circling the central theme — **positive correlation** — and now we
-land on it. Take the *richest possible* catalogue: the family $2^\alpha$ of
-*all* subsets of the universe, the full powerset. Pick a shelf uniformly at
-random, which is the same as flipping an independent fair coin for each topic
-to decide whether it is on the shelf.
-
-For this maximally symmetric system, the two-point correlation never works
-*against* you:
-
-> **Theorem D (Nonnegative correlation — the FKG base case).** On the full
-> powerset $2^\alpha$, for any two topics $a, b$,
-> $$|2^\alpha| \cdot \mathrm{jc}(a,b) \;\ge\; \mathrm{mc}(a)\cdot\mathrm{mc}(b).$$
-
-Divide through by $|2^\alpha|^2$ and read it as probabilities:
 $$
-P(a \text{ and } b) \;\ge\; P(a)\cdot P(b).
+c:\mathbb{Z}^2\to\{0,1\},
 $$
-The presence of one topic *never makes another less likely*. When $a$ and $b$
-are different topics this is an equality — independent fair coins, exactly
-$P(a)P(b) = \tfrac12\cdot\tfrac12 = \tfrac14$ — and the inequality is saturated.
-When $a = b$ it is strict: $P(a \text{ and } a) = P(a) = \tfrac12$ is much
-bigger than $P(a)^2 = \tfrac14$, because a topic is perfectly correlated with
-itself.
 
-The hidden engine is a beautiful counting fact: the number of subsets of an
-$n$-element universe that contain a fixed set of $k$ chosen topics is exactly
-$2^{n-k}$ — you fix $k$ coins to "heads" and let the other $n-k$ flip freely.
-So $\mathrm{mc}(a) = 2^{n-1}$, and $\mathrm{jc}(a,b) = 2^{n-2}$ for distinct
-$a,b$. Then $|2^\alpha|\cdot\mathrm{jc}(a,b) = 2^n \cdot 2^{n-2} = 2^{2n-2}$,
-while $\mathrm{mc}(a)\cdot\mathrm{mc}(b) = 2^{n-1}\cdot 2^{n-1} = 2^{2n-2}$ —
-equal, on the nose.
+where $1$ means alive and $0$ means dead.
 
-This is the **base case of the FKG inequality**, one of the load-bearing pillars
-of statistical mechanics. FKG (Fortuin–Kasteleyn–Ginibre) says that in a wide
-class of systems, *increasing events are positively correlated*: if turning on
-more particles makes two events more likely, then those events conspire to
-happen together. It is the mathematics behind why magnetic domains align and why
-percolation clusters cohere. Theorem D is the seed crystal — the simplest
-nontrivial instance — from which that whole tree grows.
+A cell at $p=(x,y)$ has eight neighbors: the cells obtained by changing each coordinate by $-1$, $0$, or $1$, while excluding $p$ itself. This is the Moore neighborhood. The nine-cell set formed by adding the center cell is the closed Moore neighborhood.
 
----
+The first elementary fact is worth stating because every later count rests on it.
 
-## Why these toy theorems are not a toy
+**Eight-Neighbor Theorem.** Every cell has exactly eight distinct Moore neighbors and exactly nine cells in its closed Moore neighborhood.
 
-String the results together and a worldview appears. A union-closed family is a
-*lattice gas*: configurations on a discrete site-set, biased by a closure rule
-that favors aggregation. Theorem A is its conservation law. Theorem B is its
-order-parameter phenomenon. Theorem C is its arrow of time. Theorem D is its
-correlation inequality. The "bridge" theorem says the monotone events — the
-physically natural observables — are all inside this world.
+The proof is direct: list the three cells in the row above, the two lateral cells in the same row, and the three cells in the row below. Their coordinate pairs are distinct. Consequently, the number of live neighbors of any cell lies between $0$ and $8$.
 
-And there is a famous open problem lurking. **Frankl's union-closed sets
-conjecture** asserts that in *any* finite union-closed family with at least one
-nonempty set, some element belongs to at least half the members — exactly the
-conclusion of Theorem B, but conjectured to hold *without* the average-size
-hypothesis. Theorem B proves it whenever the shelves are large on average;
-closing the gap for *all* union-closed families has resisted mathematicians for
-four decades. The recent breakthrough showing *some* element is on at least
-about $38\%$ of the sets — using, fittingly, an *entropy* argument — only
-underscores how deeply this combinatorial puzzle is entangled with information
-and physics.
+Life updates all cells synchronously according to the B3/S23 rule. If a cell has $n$ live neighbors, then its next state is alive exactly when either
 
-So the next time you tidy a bookshelf and notice that combining two piles never
-makes a smaller pile, that your favorite topic seems to be everywhere, and that
-once you start merging you can never quite un-merge — you are not imagining
-things. You are feeling the same pull that aligns magnets, the gentle but
-unbreakable tendency of structured collections to draw together.
+$$
+n=3,
+$$
+
+or it is currently alive and
+
+$$
+n=2.
+$$
+
+Thus a dead cell is born with exactly three live neighbors; a live cell survives with two or three; all other cells are dead in the next generation. Let $S(c)$ denote the configuration obtained from $c$ after one update, and let $S^t(c)$ denote the result after $t$ updates.
+
+## Silence is stable
+
+Before following complicated patterns, consider the empty universe. Every cell is dead, every live-neighbor count is $0$, and a dead cell with no live neighbors remains dead.
+
+**Empty-Universe Stability Theorem.** If $c(p)=0$ for every cell $p$, then $S^t(c)(p)=0$ for every $p$ and every nonnegative integer $t$.
+
+For one generation the claim follows immediately from the local rule. Repeating the same argument gives the result for all finite times. This simple theorem is a useful baseline: activity cannot arise from nowhere. A finite pattern placed in an otherwise empty universe can influence only cells reached through successive local neighborhoods.
+
+## One step of causality
+
+Suppose two enormous universes differ in countless places, but around one selected cell $p$ they agree on all nine cells of the closed neighborhood. Will they give the same next state at $p$? Yes.
+
+**One-Step Locality Theorem.** If two configurations agree on the closed Moore neighborhood of $p$, then after one generation they agree at $p$.
+
+The reason is exact, not approximate. Agreement at the center tells us whether $p$ is presently alive. Agreement at the eight neighbors gives the same live-neighbor count. The update rule sees nothing else, so it must return the same result.
+
+This theorem expresses a finite speed limit. In one tick, no information can jump across two lattice spacings. But after many ticks the relevant region grows, because each neighbor has its own neighborhood, and each of those cells has another.
+
+## Building the dependency cone
+
+Fix a target cell $p$. Define its time-$0$ dependency cone by
+
+$$
+D_0(p)=\{p\}.
+$$
+
+Then define the cone recursively. Once $D_t(p)$ is known, take the closed neighborhood of every cell in it and unite those sets:
+
+$$
+D_{t+1}(p)=\bigcup_{q\in D_t(p)} \overline{N}(q),
+$$
+
+where $\overline{N}(q)$ denotes the nine-cell closed Moore neighborhood of $q$.
+
+This construction runs backward through causality. To know $p$ at time $t+1$, we need the closed neighborhood of $p$ at time $t$. To know those cells at time $t$, we need their closed neighborhoods at time $t-1$, and so on until we reach the initial configuration.
+
+For small times the geometry is easy to picture. The set $D_0(p)$ is one cell. The set $D_1(p)$ is a $3\times3$ square. The set $D_2(p)$ is a $5\times5$ square. These examples suggest the sharper geometric description of the cone as a Chebyshev ball of radius $t$, a square with $(2t+1)^2$ cells. Establishing that exact identity is a natural next theorem; the results proved here use only the recursive union and a uniform ninefold bound.
+
+## The finite simulation theorem
+
+We can now state the central result.
+
+**Finite Dependency Theorem.** Let $c$ and $d$ be two initial configurations, let $p$ be a cell, and let $t$ be a nonnegative integer. If
+
+$$
+c(q)=d(q)\qquad\text{for every }q\in D_t(p),
+$$
+
+then
+
+$$
+S^t(c)(p)=S^t(d)(p).
+$$
+
+In words: anything outside $D_t(p)$ is irrelevant to the state of $p$ after $t$ generations.
+
+The proof is an induction on time. At time $0$, agreement on $D_0(p)=\{p\}$ is exactly agreement at $p$. For the inductive step, the next state at $p$ is determined by its closed neighborhood. For each cell $q$ in that neighborhood, the cells needed to determine $q$ after $t$ generations lie inside $D_{t+1}(p)$. Agreement on the larger cone therefore gives agreement at time $t$ throughout the closed neighborhood of $p$. The One-Step Locality Theorem then forces agreement at $p$ one generation later.
+
+The key inclusion behind the induction is itself intuitive. If $q$ lies in the closed neighborhood of $p$, then
+
+$$
+D_t(q)\subseteq D_{t+1}(p).
+$$
+
+Every backward causal path of length $t$ ending at $q$ becomes a path of length $t+1$ ending at $p$ by adding the final neighboring step.
+
+## How large is the finite calculation?
+
+A theorem saying “finite” is qualitative. For algorithms, we also want a numerical bound.
+
+**Dependency-Cone Size Theorem.** For every cell $p$ and every nonnegative integer $t$,
+
+$$
+|D_t(p)|\le 9^t.
+$$
+
+At time $0$, the cone has one cell, and $1=9^0$. At the next stage, each cell already in the cone contributes at most nine cells through its closed neighborhood. Different neighborhoods overlap, which only makes the union smaller. Therefore
+
+$$
+|D_{t+1}(p)|
+\le \sum_{q\in D_t(p)}|\overline{N}(q)|
+=9|D_t(p)|
+\le 9\cdot9^t
+=9^{t+1}.
+$$
+
+The estimate is coarse. The observed cones have square geometry and suggest the sharper quadratic count $(2t+1)^2$, while $9^t$ grows exponentially. Why retain the weaker established bound? Because it follows from locality alone, without yet developing the required distance geometry. It is also the natural cost bound for a naive recursive evaluator that branches into all nine possible predecessors at every time step before removing duplicates.
+
+Combining correctness and size gives a compact simulation certificate.
+
+**Finite Simulation Certificate.** To determine the state of a chosen cell $p$ after $t$ generations, it is sufficient to inspect the initial configuration on $D_t(p)$; this set contains at most $9^t$ cells. Any two full configurations that match on those inspected cells produce the same answer at $p$ after $t$ generations.
+
+This statement separates the infinite mathematical universe from the finite computational task. One may fill the rest of the plane arbitrarily, and the target answer does not change.
+
+## A practical local simulator
+
+The theorem suggests two related algorithms. The first constructs $D_t(p)$ by repeatedly expanding a finite set through closed neighborhoods. It then reads the initial states on that set and evolves only a sufficiently padded finite window. The second uses recursive evaluation: to compute a cell at time $t+1$, recursively compute the nine cells in its closed neighborhood at time $t$, count the eight neighbors, and apply the Life rule. Memoization merges repeated subproblems.
+
+Without memoization, the recursion tree has at most $9^t$ leaves, matching the theorem’s coarse bound. With memoization, the distinct subproblems are indexed by spacetime points in the cone and are far fewer. The sharper square geometry suggests roughly cubic work for computing all required layers up to time $t$, because layer $s$ contains on the order of $s^2$ spatial cells and
+
+$$
+\sum_{s=0}^{t}s^2
+$$
+
+grows on the order of $t^3$.
+
+The distinction is useful. The exponential estimate is a simple, unconditional certificate for direct recursion. The geometry points toward better implementations and a stronger future theorem.
+
+## Why finite cones matter for computation
+
+Life is famous because small patterns can carry and transform information. But a genuine construction of computation needs more than appealing animations. One must specify where signals enter and leave, how long a component takes, what area it occupies, and why unrelated activity cannot corrupt it.
+
+Finite dependency cones provide a language for such guarantees. If two components are separated far enough that their cones do not meet during a specified time interval, then neither can influence the other in that interval. A proposed gate can be tested against every allowed input while treating the outside world abstractly: only the finite cone reaching its output matters. A wire or delay element can be assigned a finite bounding box and latency. Larger systems can then be built by proving that the boxes and timing windows compose.
+
+The path toward universality is therefore constructive. First establish symmetries and familiar patterns such as blocks, blinkers, and gliders. Then define signal ports and prove transport. Next verify logic gates, fanout, crossings, and delays. Compile finite Boolean circuits with explicit area and time bounds. Finally add memory and a clocked transition mechanism capable of simulating a universal machine.
+
+The results here complete only the causal foundation of that program. They do not establish the existence of the required gadgets or a universal-machine simulation. Their value is more basic: they turn an infinite dynamical system into a controlled family of finite questions.
+
+## The finite heart of an infinite world
+
+Conway’s Life derives its fascination from the tension between microscopic simplicity and macroscopic surprise. Eight neighbors, two states, one synchronous rule—and from them emerge motion, persistence, collision, and computation-like behavior.
+
+The finite simulation theorem reveals another side of that tension. Global evolution may be intricate, but local prediction has a sharply bounded past. After $t$ generations, a cell cannot know anything about the initial universe beyond its dependency cone. The infinite plane is real, but for this question and this time horizon, almost all of it is silent.
+
+That is the mathematical beginning of modular engineering in Life: draw a causal boundary, count what lies inside it, and prove that everything outside can be ignored.

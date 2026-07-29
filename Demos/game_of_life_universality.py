@@ -1,211 +1,201 @@
-"""Numerical demonstrations for *Union-Closed Families as Positive-Correlation
-Systems*.
+#!/usr/bin/env python3
+"""Numerical demonstrations of finite causal cones in Conway's Game of Life.
 
-Each function exercises one of the formally proved theorems on concrete
-families of finite sets. Sets are modeled as Python ``frozenset`` objects over
-a ground set ``alpha`` (a tuple of hashable elements). A *family* ``F`` is a
-list of such frozensets (treated as a set of members).
+The program uses sparse sets of integer-coordinate live cells.  It demonstrates:
+1. stability of the all-dead configuration;
+2. exact local determinacy under changes outside a dependency cone;
+3. the cardinality comparison |D_t(p)| <= 9**t;
+4. agreement between full sparse evolution and memoized single-cell evaluation.
 
-Run ``python demo.py`` to print a full verification report.
+No third-party packages are required.
 """
 
 from __future__ import annotations
 
-from itertools import combinations
-from typing import Sequence, Hashable, FrozenSet, List, Tuple
+from functools import lru_cache
+from typing import Callable, Dict, FrozenSet, Iterable, List, Set, Tuple
+
+Cell = Tuple[int, int]
+LiveSet = Set[Cell]
+
+NEIGHBOR_OFFSETS: Tuple[Cell, ...] = tuple(
+    (dx, dy)
+    for dx in (-1, 0, 1)
+    for dy in (-1, 0, 1)
+    if (dx, dy) != (0, 0)
+)
+CLOSED_OFFSETS: Tuple[Cell, ...] = ((0, 0),) + NEIGHBOR_OFFSETS
 
 
-Element = Hashable
-Subset = FrozenSet[Element]
-Family = List[Subset]
+def translate(p: Cell, offset: Cell) -> Cell:
+    """Add an integer offset to a cell."""
+    return (p[0] + offset[0], p[1] + offset[1])
 
 
-# --------------------------------------------------------------------------- #
-# Observables (Definitions 3-5)
-# --------------------------------------------------------------------------- #
-def member_count(a: Element, F: Family) -> int:
-    """mc(a) = number of members of F containing a."""
-    return sum(1 for s in F if a in s)
+def neighbors(p: Cell) -> Tuple[Cell, ...]:
+    """Return the eight Moore neighbors of p."""
+    return tuple(translate(p, offset) for offset in NEIGHBOR_OFFSETS)
 
 
-def joint_count(a: Element, b: Element, F: Family) -> int:
-    """jc(a, b) = number of members of F containing both a and b."""
-    return sum(1 for s in F if a in s and b in s)
+def closed_neighbors(p: Cell) -> Tuple[Cell, ...]:
+    """Return p together with its eight Moore neighbors."""
+    return tuple(translate(p, offset) for offset in CLOSED_OFFSETS)
 
 
-def union_count(a: Element, b: Element, F: Family) -> int:
-    """uc(a, b) = number of members of F containing a or b."""
-    return sum(1 for s in F if a in s or b in s)
-
-
-def total_occupancy(F: Family) -> int:
-    """sum over members s of |s|."""
-    return sum(len(s) for s in F)
-
-
-# --------------------------------------------------------------------------- #
-# Structural predicates (Definitions 1-2)
-# --------------------------------------------------------------------------- #
-def is_union_closed(F: Family) -> bool:
-    """Definition 1: closed under pairwise union."""
-    members = set(F)
-    return all((s | t) in members for s in members for t in members)
-
-
-def is_upper_set(F: Family, alpha: Sequence[Element]) -> bool:
-    """Definition 2: closed upward under inclusion within 2^alpha."""
-    members = set(F)
-    for s in members:
-        for t in powerset(alpha):
-            if s <= t and t not in members:
-                return False
-    return True
-
-
-def powerset(alpha: Sequence[Element]) -> List[Subset]:
-    """Return 2^alpha as a list of frozensets."""
-    return [
-        frozenset(c)
-        for r in range(len(alpha) + 1)
-        for c in combinations(alpha, r)
-    ]
-
-
-# --------------------------------------------------------------------------- #
-# Union closure (Definition 6) via the fixed-point algorithm
-# --------------------------------------------------------------------------- #
-def union_closure(F: Family) -> Family:
-    """Least union-closed family containing F (Lemmas 5-6)."""
-    members = set(F)
-    changed = True
-    while changed:
-        changed = False
-        for s in list(members):
-            for t in list(members):
-                u = s | t
-                if u not in members:
-                    members.add(u)
-                    changed = True
-    return list(members)
-
-
-# --------------------------------------------------------------------------- #
-# Theorem checks
-# --------------------------------------------------------------------------- #
-def check_double_counting(F: Family, alpha: Sequence[Element]) -> bool:
-    """Theorem 1: sum_a mc(a) = sum_{s in F} |s|."""
-    lhs = sum(member_count(a, F) for a in alpha)
-    rhs = total_occupancy(F)
-    return lhs == rhs
-
-
-def check_majority_from_average(
-    F: Family, alpha: Sequence[Element]
-) -> Tuple[bool, object]:
-    """Theorem 2: if 2*sum|s| >= |F|*|alpha| then some a has 2*mc(a) >= |F|.
-
-    Returns (hypothesis_holds, witness_or_None).
-    """
-    hyp = 2 * total_occupancy(F) >= len(F) * len(alpha)
-    if not hyp:
-        return False, None
-    for a in alpha:
-        if 2 * member_count(a, F) >= len(F):
-            return True, a
-    return True, None  # would contradict the theorem (should never happen)
-
-
-def check_inclusion_exclusion(
-    a: Element, b: Element, F: Family
-) -> bool:
-    """Theorem 4: uc(a,b) = mc(a) + mc(b) - jc(a,b)."""
-    return union_count(a, b, F) == (
-        member_count(a, F) + member_count(b, F) - joint_count(a, b, F)
+def life_rule(currently_alive: bool, live_neighbor_count: int) -> bool:
+    """Apply Conway's B3/S23 local transition rule."""
+    return live_neighbor_count == 3 or (
+        currently_alive and live_neighbor_count == 2
     )
 
 
-def check_closure_monotone(F: Family) -> Tuple[int, int, bool]:
-    """Theorem 7: total occupancy does not decrease under union closure."""
-    before = total_occupancy(F)
-    after = total_occupancy(union_closure(F))
-    return before, after, before <= after
+def step(live: Set[Cell]) -> Set[Cell]:
+    """Advance a finite-support Life configuration by one generation."""
+    candidates: Set[Cell] = set(live)
+    for p in live:
+        candidates.update(neighbors(p))
+
+    next_live: Set[Cell] = set()
+    for p in candidates:
+        count = sum(q in live for q in neighbors(p))
+        if life_rule(p in live, count):
+            next_live.add(p)
+    return next_live
 
 
-def check_powerset_correlation(alpha: Sequence[Element]) -> bool:
-    """Theorem 8: |2^a| * jc(a,b) >= mc(a)*mc(b) on the full powerset."""
-    P = powerset(alpha)
-    card = len(P)
-    for a in alpha:
-        for b in alpha:
-            if card * joint_count(a, b, P) < member_count(a, P) * member_count(b, P):
-                return False
-    return True
+def evolve(live: Iterable[Cell], generations: int) -> Set[Cell]:
+    """Evolve a finite-support configuration for a nonnegative number of steps."""
+    if generations < 0:
+        raise ValueError("generations must be nonnegative")
+    state = set(live)
+    for _ in range(generations):
+        state = step(state)
+    return state
 
 
-# --------------------------------------------------------------------------- #
-# Report
-# --------------------------------------------------------------------------- #
+def dependency_cone(target: Cell, depth: int) -> Set[Cell]:
+    """Construct the recursively expanded dependency cone D_depth(target)."""
+    if depth < 0:
+        raise ValueError("depth must be nonnegative")
+    cone: Set[Cell] = {target}
+    for _ in range(depth):
+        cone = {q for p in cone for q in closed_neighbors(p)}
+    return cone
+
+
+def memoized_cell_value(
+    initial: Callable[[Cell], bool], target: Cell, generations: int
+) -> Tuple[bool, int]:
+    """Evaluate one target cell recursively, returning value and cache size."""
+    if generations < 0:
+        raise ValueError("generations must be nonnegative")
+
+    @lru_cache(maxsize=None)
+    def value(p: Cell, t: int) -> bool:
+        if t == 0:
+            return initial(p)
+        previous_center = value(p, t - 1)
+        count = sum(value(q, t - 1) for q in neighbors(p))
+        return life_rule(previous_center, count)
+
+    answer = value(target, generations)
+    return answer, value.cache_info().currsize
+
+
+def render(live: Set[Cell], xmin: int, xmax: int, ymin: int, ymax: int) -> str:
+    """Render a rectangular region as Unicode text."""
+    rows: List[str] = []
+    for y in range(ymax, ymin - 1, -1):
+        rows.append("".join("█" if (x, y) in live else "·" for x in range(xmin, xmax + 1)))
+    return "\n".join(rows)
+
+
+def demonstrate_empty_stability() -> None:
+    """Show that the all-dead configuration remains all dead."""
+    print("\nDEMO 1 — Empty-universe stability")
+    state = evolve(set(), 12)
+    print(f"Live cells after 12 generations: {len(state)}")
+    assert state == set()
+
+
+def demonstrate_cone_sizes(max_depth: int = 6) -> None:
+    """Compare actual recursive cone sizes with the certified 9^t bound."""
+    print("\nDEMO 2 — Dependency-cone cardinalities")
+    print(" t | actual | (2t+1)^2 | 9^t")
+    print("---+--------+-----------+------")
+    for t in range(max_depth + 1):
+        actual = len(dependency_cone((0, 0), t))
+        square_count = (2 * t + 1) ** 2
+        bound = 9**t
+        print(f"{t:2d} | {actual:6d} | {square_count:9d} | {bound:6d}")
+        assert actual <= bound
+        # This equality is shown numerically here; the packaged theorem only needs the bound.
+        assert actual == square_count
+
+
+def demonstrate_outside_independence() -> None:
+    """Change cells outside a target cone and show the target is unchanged."""
+    print("\nDEMO 3 — Independence from changes outside the cone")
+    target = (0, 0)
+    generations = 4
+    cone = dependency_cone(target, generations)
+
+    glider: Set[Cell] = {(0, 1), (1, 0), (-1, -1), (0, -1), (1, -1)}
+    remote_changes: Set[Cell] = {
+        (20, 20), (21, 20), (22, 20),
+        (-30, 7), (-30, 8), (-30, 9),
+    }
+    assert remote_changes.isdisjoint(cone)
+
+    state_a = evolve(glider, generations)
+    state_b = evolve(glider | remote_changes, generations)
+    value_a = target in state_a
+    value_b = target in state_b
+    print(f"Cone size: {len(cone)}")
+    print(f"Target alive without remote changes: {value_a}")
+    print(f"Target alive with remote changes:    {value_b}")
+    assert value_a == value_b
+
+
+def demonstrate_recursive_evaluator() -> None:
+    """Compare sparse global evolution with memoized local evaluation."""
+    print("\nDEMO 4 — Memoized local evaluator")
+    initial_live: Set[Cell] = {
+        (-1, 0), (0, 0), (1, 0),  # blinker
+        (8, 8), (9, 8), (10, 8), # distant second blinker
+    }
+    target = (0, 1)
+    generations = 7
+
+    full_value = target in evolve(initial_live, generations)
+    local_value, cached_subproblems = memoized_cell_value(
+        lambda p: p in initial_live, target, generations
+    )
+    print(f"Full sparse evolution says target alive: {full_value}")
+    print(f"Local recursive evaluator agrees:       {local_value}")
+    print(f"Memoized spacetime subproblems:         {cached_subproblems}")
+    print(f"Coarse leaf bound 9^t:                  {9**generations}")
+    assert full_value == local_value
+
+
+def demonstrate_blinker() -> None:
+    """Display a familiar local pattern for two generations."""
+    print("\nDEMO 5 — A local two-cycle")
+    state: Set[Cell] = {(-1, 0), (0, 0), (1, 0)}
+    for t in range(3):
+        print(f"\nGeneration {t}")
+        print(render(state, -2, 2, -2, 2))
+        state = step(state)
+
+
 def main() -> None:
-    alpha = ("x", "y", "z", "w")
-
-    # A handcrafted union-closed family that is large on average.
-    F: Family = [
-        frozenset({"x", "y"}),
-        frozenset({"y", "z"}),
-        frozenset({"x", "y", "z"}),
-        frozenset({"x", "y", "z", "w"}),
-        frozenset({"y", "z", "w"}),
-    ]
-    # Close it so it genuinely satisfies Definition 1.
-    F = union_closure(F)
-
-    print("Ground set alpha =", alpha, " |alpha| =", len(alpha))
-    print("Family F has", len(F), "members; union-closed:", is_union_closed(F))
-    print()
-
-    print("--- Definition observables ---")
-    for a in alpha:
-        print(f"  mc({a}) = {member_count(a, F)}")
-    print("  total occupancy sum|s| =", total_occupancy(F))
-    print()
-
-    print("--- Theorem 1 (double counting) ---")
-    print("  sum_a mc(a) == sum_s |s| :", check_double_counting(F, alpha))
-    print()
-
-    print("--- Theorem 2 (majority from average) ---")
-    hyp, w = check_majority_from_average(F, alpha)
-    print("  averaged hypothesis holds:", hyp, " witness element:", w)
-    if w is not None:
-        print(f"  check: 2*mc({w}) = {2*member_count(w, F)} >= |F| = {len(F)}")
-    print()
-
-    print("--- Theorem 4 (inclusion-exclusion), all pairs ---")
-    ok = all(check_inclusion_exclusion(a, b, F) for a in alpha for b in alpha)
-    print("  uc = mc + mc - jc for every pair:", ok)
-    print(f"  sample x,z: uc={union_count('x','z',F)} "
-          f"mc(x)={member_count('x',F)} mc(z)={member_count('z',F)} "
-          f"jc={joint_count('x','z',F)}")
-    print()
-
-    print("--- Theorem 7 (closure monotonicity) ---")
-    G: Family = [frozenset({"x"}), frozenset({"y"}), frozenset({"z"})]
-    before, after, mono = check_closure_monotone(G)
-    print(f"  start family of singletons: occupancy {before} -> {after} "
-          f"(non-decreasing: {mono})")
-    print("  closed family size:", len(union_closure(G)))
-    print()
-
-    print("--- Theorem 8 (FKG base case on the full powerset) ---")
-    for n in range(1, 6):
-        a = tuple(range(n))
-        print(f"  |alpha|={n}: |2^a|*jc >= mc*mc holds:",
-              check_powerset_correlation(a))
-    # Show the saturating equality for distinct sites.
-    P = powerset(("a", "b", "c"))
-    print("  n=3 distinct a,b:",
-          f"|2^a|*jc = {len(P)*joint_count('a','b',P)}",
-          f"== mc*mc = {member_count('a',P)*member_count('b',P)}")
+    """Run all demonstrations and their internal consistency checks."""
+    demonstrate_empty_stability()
+    demonstrate_cone_sizes()
+    demonstrate_outside_independence()
+    demonstrate_recursive_evaluator()
+    demonstrate_blinker()
+    print("\nAll numerical demonstrations completed successfully.")
 
 
 if __name__ == "__main__":

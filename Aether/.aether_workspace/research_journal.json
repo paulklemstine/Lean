@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6c18f01c",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Arithmetic Coherence after Deformation Stability\n\n## 1. Higher-rank compatibility percolation with a deformation-invariant boundary\n\nFor a fixed global field and bounded ramificat",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-23T22:26:19",
-      "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
-    },
-    {
       "cycle_id": "2f76a8a3",
       "domain": "Logic",
       "key_insight": "# Future Directions: complex-weighted undirected random graphs\n\nThis cycle deepened the theory of the fixed-amplitude model, where every present edge\nof an undirected graph carries a single common com",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-28T23:26:36",
       "title": "Jacobian Conjecture"
+    },
+    {
+      "cycle_id": "1a03af4c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nThe completed Lean development proves the unramified local symmetric-square transfer on Satake parameters. The following are concrete next statements whose truth can be checked ag",
+      "quality_score": 0.78657,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-29T06:53:52",
+      "title": "Langlands Program: Functoriality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "28042806",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n1. **Finite theorem graphs.** Replace the scalar control variable with a finite simple graph\n   whose vertices are theorems and whose edges encode explicitly defined mathematical",
-      "quality_score": 0.56,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-20T00:23:14",
-      "title": "Speculative: Mathematics as a Phase Transition"
-    },
     {
       "cycle_id": "65e81f6c",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-28T23:26:36",
       "title": "Jacobian Conjecture"
+    },
+    {
+      "cycle_id": "1a03af4c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nThe completed Lean development proves the unramified local symmetric-square transfer on Satake parameters. The following are concrete next statements whose truth can be checked ag",
+      "quality_score": 0.78657,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-29T06:53:52",
+      "title": "Langlands Program: Functoriality"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "92e6405b",
-      "domain": "Probability",
-      "name": "partition_pos",
-      "quality": 0.75773
-    },
-    {
-      "cycle_id": "92e6405b",
-      "domain": "Probability",
-      "name": "numerator_eq_zero_of_flip",
-      "quality": 0.75773
-    },
-    {
-      "cycle_id": "f8a71afd",
-      "domain": "Algebra",
-      "name": "are",
-      "quality": 0.75276
-    },
     {
       "cycle_id": "f8a71afd",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "jacobian_one_preserves_weyl_relation",
       "quality": 0.7645199999999999
+    },
+    {
+      "cycle_id": "1a03af4c",
+      "domain": "Bridges",
+      "name": "map_symmetricSquare",
+      "quality": 0.78657
+    },
+    {
+      "cycle_id": "1a03af4c",
+      "domain": "Bridges",
+      "name": "eulerDenominator_map",
+      "quality": 0.78657
+    },
+    {
+      "cycle_id": "1a03af4c",
+      "domain": "Bridges",
+      "name": "centralCharacter_symmetricSquare",
+      "quality": 0.78657
     }
   ],
-  "last_updated": "2026-07-28T23:26:36",
+  "last_updated": "2026-07-29T06:53:52",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "f2b328a7",
-        "quality": 0.64,
-        "theorems": 20,
-        "title": "Speculative: Mathematics as an Evolving Ecosystem"
-      },
-      {
         "cycle_id": "95b84694",
         "quality": 0.7,
         "theorems": 0,
@@ -3203,6 +3197,12 @@
         "quality": 0.79231,
         "theorems": 13,
         "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+      },
+      {
+        "cycle_id": "1a03af4c",
+        "quality": 0.78657,
+        "theorems": 14,
+        "title": "Langlands Program: Functoriality"
       }
     ],
     "Combinatorics": [
