@@ -1,359 +1,446 @@
-# Density Meets Incompressibility: The EML Complexity Price of Universal Approximation
+# Quantitative Approximation by Finite Exponential–Multiplicative–Logarithmic Expressions
 
-**Author:** Aristotle
-**Date:** 2026-06-28
-**Domain:** Applications (Approximation Theory / Algorithmic Complexity)
+**Aristotle**  
+**29 July 2026**
 
 ## Abstract
 
-We study the **EML class** — the family of real functions generated from the
-identity $x \mapsto x$ by the operations of addition, multiplication,
-exponentiation $t \mapsto e^{t}$, and logarithm $t \mapsto \log t$, with *no
-constant leaves*. We connect two seemingly opposed properties of this class. On
-the qualitative side, finite real linear combinations of the exponential
-monomials $x \mapsto e^{kx}$ are uniformly dense in $C([a,b])$, so the EML class
-is a universal approximator. On the quantitative side, we introduce a
-Kolmogorov-style complexity measure $K$ on EML-computable functions — the size of
-the smallest generating term — and observe that, because the generating alphabet
-is finite, every fixed size budget $n$ yields only *finitely many* representable
-functions. We reconcile these by constructing an explicit infinite, injective,
-EML-computable family of generators $\mathrm{expBasis}(k)$ computing
-$x \mapsto e^{(k+1)x}$, with exact size $2k+2$, hence $K(x \mapsto e^{(k+1)x}) \le
-2k+2$. Because each budget is a finite island while the dense family is infinite
-and injective, the family escapes every finite complexity island; universal
-approximation is therefore realized by an EML-computable family whose complexity
-is unbounded across the family. We isolate the constant function $1 = e^{0\cdot
-x}$ as the unique density generator outside the constant-free class, pinpointing a
-single missing primitive. We close with a numerical study and a program of
-falsifiable conjectures, including a conjectured matching lower bound
-$K(e^{kx}) = \Theta(k)$ and a depth–accuracy law.
+We study uniform approximation by a constant-free expression language generated from one real variable using addition, multiplication, exponentiation, and logarithm. For a finite expression tree $T$, its size $|T|$ is its node count and its depth $d(T)$ is the longest root-to-leaf operational chain. For a function $f$ admitting an exact expression, let $K(f)$ be the least size of any exact expression for $f$. Given a set $S\subseteq\mathbb R$ and tolerance $\varepsilon$, let $D_S(f,\varepsilon)$ be the least depth of an expression whose uniform error on $S$ is at most $\varepsilon$. We prove that $d(T)<|T|$ for every expression tree and consequently
 
-**Keywords:** EML class, universal approximation, Kolmogorov complexity,
-exponential monomials, Stone–Weierstrass, density, incompressibility, term
-algebra.
+$$
+D_S(f,\varepsilon)\leq K(f)
+$$
+
+for every exactly expressible $f$, every set $S$, and every $\varepsilon\geq0$. For $0<\varepsilon\leq1$, this implies the explicit integer-valued estimate
+
+$$
+D_S(f,\varepsilon)\leq K(f)\left\lceil\frac1\varepsilon\right\rceil,
+$$
+
+hence $D_S(f,\varepsilon)=O(K(f)/\varepsilon)$. The direct bound by $K(f)$ is stronger: the inverse-error factor enters only through the elementary inequality $\lceil1/\varepsilon\rceil\geq1$. No regularity or compactness assumption on $S$ is needed, because the approximating witness computes $f$ exactly. We give constructive algorithms, numerical illustrations, scope limitations, and directions toward a genuine density theory with encoded constants and lower complexity bounds.
 
 ## 1. Introduction
 
-Two desiderata pull against each other whenever we represent functions by
-formulas. *Expressiveness* asks that a representation class be rich enough to
-approximate any target. *Parsimony* asks that individual representations be short.
-The classical theory of universal approximation (Stone–Weierstrass and its
-descendants) addresses the first; the theory of descriptive complexity
-(Kolmogorov, Solomonoff, Chaitin) addresses the second. This paper makes their
-interaction precise and exact for a concrete, finitely-generated function class.
+Approximation theory usually balances expressiveness, accuracy, and complexity. A target function belongs to some analytic class; an approximating family is selected; and one estimates the resources needed to achieve error $\varepsilon$. Typical resources include polynomial degree, number of basis functions, network width, circuit size, or compositional depth. The present setting isolates a particularly clean relation between descriptive complexity and approximation depth.
 
-The **EML class** (Exponential–Multiplicative–Logarithmic) is the closure of the
-identity function under $+$, $\times$, $\exp$, and $\log$. It is a natural
-abstraction of the "analytic primitives" that recur throughout scientific
-computing and machine learning: the exponential of the softmax and Boltzmann
-distributions, the logarithm of log-likelihoods, the products and sums of feature
-maps. Restricting to a *constant-free* algebra (no numeric leaves) makes the
-syntactic class countable and the complexity theory clean.
+Consider formulas generated from a single input variable by addition, multiplication, the exponential function, and the logarithm. These operations capture additive aggregation, multiplicative interaction, exponential growth, and logarithmic rescaling. More importantly for the present argument, each formula has a finite rooted-tree representation. It is therefore meaningful to compare total node count with nesting depth.
 
-Our contributions:
+Our target class consists of functions having an exact finite expression in this language. This qualification is essential. The result is a universality theorem **within the finite-description class**, not a density theorem for all continuous functions. For an exactly describable function, a shortest exact expression already has zero error. The only nontrivial bridge to an approximation-depth estimate is then the structural fact that tree depth is strictly smaller than node count.
 
-1. **A Kolmogorov measure for EML.** We treat the constant-free EML term algebra
-   as a finite-alphabet syntactic class and define $K(g)$ as the least size of a
-   term computing $g$. Finiteness of the alphabet yields a Finiteness Principle:
-   each size budget admits only finitely many representable functions.
+This observation yields two bounds. First, the minimum depth required at any nonnegative tolerance is at most the shortest exact-description size. Second, when $0<\varepsilon\leq1$, multiplying by $\lceil1/\varepsilon\rceil\geq1$ gives an explicit $O(K(f)/\varepsilon)$ estimate. The first statement is stronger and should govern interpretation of the second: precision does not actually force increasing depth for targets represented exactly.
 
-2. **An explicit dense, EML-computable generator family.** We build
-   $\mathrm{repAdd}(k)$ and $\mathrm{expBasis}(k)$ inside the algebra, compute
-   their semantics and size exactly, and obtain the linear upper bound
-   $K(e^{(k+1)x}) \le 2k+2$.
+The domain $S$ may be arbitrary. Standard uniform approximation results often assume compactness because limiting, interpolation, or density arguments require it. Here exact equality holds globally and survives restriction to every subset. This explains both the strength and the narrowness of the theorem.
 
-3. **The synthesis.** Combining the imported density theorem with the explicit
-   construction, we show density and EML-computability hold simultaneously while
-   complexity is unbounded across the family (the family escapes every finite
-   island).
+## 2. The expression language
 
-4. **A boundary result.** The constant $1 = e^{0\cdot x}$ is the unique density
-   generator the constant-free class cannot name, isolating the single primitive
-   needed to extend the theory to constants.
+### Definition 2.1 (EML expressions)
 
-All results in Sections 3–6 correspond to formally verified statements; the names
-in `typewriter font` are the theorem identifiers.
+An **exponential–multiplicative–logarithmic expression**, abbreviated EML expression, is generated recursively by the grammar
 
-## 2. The EML term algebra
-
-### 2.1 Syntax
-
-**Definition 2.1 (EML terms).** The set $\mathsf{ETerm}$ of *constant-free EML
-terms* is generated inductively by:
-
-- a single leaf $\mathsf{var}$ (the variable);
-- binary constructors $\mathsf{add}(s,t)$ and $\mathsf{mul}(s,t)$;
-- unary constructors $\mathsf{expOf}(t)$ and $\mathsf{logOf}(t)$.
-
-Because the constructor alphabet is finite and there are no numeric leaves,
-$\mathsf{ETerm}$ is a countable set with finitely many terms of each size.
-
-**Definition 2.2 (Semantics).** The *evaluation* map $\mathrm{eval} :
-\mathsf{ETerm} \to (\mathbb{R} \to \mathbb{R})$ is defined by
 $$
-\mathrm{eval}(\mathsf{var})(x) = x, \quad
-\mathrm{eval}(s + t)(x) = \mathrm{eval}(s)(x) + \mathrm{eval}(t)(x),
-$$
-$$
-\mathrm{eval}(s \times t)(x) = \mathrm{eval}(s)(x)\,\mathrm{eval}(t)(x), \quad
-\mathrm{eval}(\mathsf{expOf}\,t)(x) = e^{\mathrm{eval}(t)(x)}, \quad
-\mathrm{eval}(\mathsf{logOf}\,t)(x) = \log \mathrm{eval}(t)(x).
+T ::= x\mid (T+T)\mid(T\cdot T)\mid\exp(T)\mid\log(T).
 $$
 
-**Definition 2.3 (Size and depth).** The *size* $|t|$ counts leaves and operators:
-$|\mathsf{var}| = 1$, $|s \star t| = |s| + |t| + 1$ for binary $\star$, and
-$|{\circ}\, t| = |t| + 1$ for unary $\circ$. The *depth* $d(t)$ is $0$ for
-$\mathsf{var}$, $\max(d(s), d(t)) + 1$ for binary nodes, and $d(t) + 1$ for unary
-nodes.
+Thus $x$ is an expression; if $A$ and $B$ are expressions, then $A+B$ and $A\cdot B$ are expressions; and if $A$ is an expression, then $\exp(A)$ and $\log(A)$ are expressions.
 
-### 2.2 Computability and complexity
+Each expression is evaluated as a real-valued function according to the chosen total real interpretation of these operations. The argument below uses only compositional evaluation and exact equality, so it is independent of the particular convention used to totalize logarithm outside its classical positive domain. Applications concerned only with ordinary logarithms may restrict $S$ so every logarithmic subexpression receives positive input.
 
-**Definition 2.4 (EML-computable).** A function $g : \mathbb{R} \to \mathbb{R}$ is
-*EML-computable*, written $\mathrm{IsEMLComputable}(g)$, if there exists
-$t \in \mathsf{ETerm}$ with $\mathrm{eval}(t) = g$.
+The language is constant-free: its only leaf is $x$. This matters when delimiting the target class. Results for a language with rational or real constants would require an explicit encoding and an associated cost model.
 
-**Definition 2.5 (EML complexity).** For an EML-computable $g$, define
+### Definition 2.2 (Size)
+
+The **size** $|T|$ is the number of nodes in the expression tree. Recursively,
+
 $$
-K(g) \;=\; \min\{\, |t| : t \in \mathsf{ETerm},\ \mathrm{eval}(t) = g \,\}.
-$$
-The minimum exists because the candidate set is a nonempty subset of $\mathbb{N}$.
-Immediately, if $\mathrm{eval}(t) = g$ then $K(g) \le |t|$; we refer to this as
-`K_le_of_eval`.
-
-**Definition 2.6 (Budget islands).** For $n \in \mathbb{N}$ let
-$$
-\mathrm{computableLE}(n) \;=\; \{\, g : g \text{ is EML-computable and } K(g) \le n \,\}
-\subseteq (\mathbb{R}\to\mathbb{R}).
+|x|=1,
 $$
 
-**Proposition 2.7 (Finiteness Principle, `finite_computableLE`).** For every
-$n$, the set $\mathrm{computableLE}(n)$ is finite.
-
-*Proof sketch.* There are finitely many terms of size $\le n$ (a finite alphabet
-admits only finitely many syntax trees of bounded size), and $\mathrm{eval}$ maps
-this finite set onto $\mathrm{computableLE}(n)$. The image of a finite set is
-finite. $\square$
-
-This is the quantitative engine of the paper: simplicity, measured by $K$, is a
-*finite resource* at every fixed budget.
-
-## 3. The qualitative side: density
-
-We recall the catalog density theorem on which the synthesis rests. Let
-$[a,b] \subset \mathbb{R}$ be a compact interval and $C(\mathrm{Icc}\,a\,b,
-\mathbb{R})$ the Banach space of continuous real functions with the uniform norm.
-
-Write $\mathrm{iccCoord}(a,b)$ for the coordinate map $[a,b] \hookrightarrow
-\mathbb{R}$ (injective when $a < b$, `injective_iccCoord`), and let
-$\mathrm{expCM}$ denote the continuous map $x \mapsto e^{x}$. The feature
-$\mathrm{expCM} \circ \mathrm{iccCoord}(a,b)$ is the restriction of the
-exponential to $[a,b]$, and its $k$-th power is $x \mapsto e^{kx}$.
-
-**Theorem 3.1 (Exponential monomial density, `exp_monomials_span_dense`).** For
-an injective continuous feature $g : X \to \mathbb{R}$ on a compact space $X$, the
-linear span of $\{\,(\,e^{g}\,)^k : k \in \mathbb{N}\,\}$ is dense in
-$C(X, \mathbb{R})$. In particular, on $X = [a,b]$,
 $$
-\overline{\mathrm{span}_{\mathbb{R}}\{\, x \mapsto e^{kx} : k \in \mathbb{N} \,\}}
-= C([a,b], \mathbb{R}).
+|A+B|=|A|+|B|+1,
+\qquad
+|A\cdot B|=|A|+|B|+1,
 $$
 
-*Proof sketch.* The subalgebra generated by $e^{g}$ separates points (because
-$g$ is injective and $\exp$ is injective) and contains the constants, so by
-Stone–Weierstrass it is uniformly dense. Closure of the subalgebra equals closure
-of the linear span of the powers $(e^{g})^k$, because powers of a single
-generator span the generated algebra. Hence the span of the exponential monomials
-is dense. $\square$
+and
 
-Theorem 3.1 is the *optimist's* statement: any continuous target on $[a,b]$ is
-approximated, to any $\varepsilon$, by a finite linear combination of exponential
-monomials.
-
-## 4. The generators: explicit construction and exact cost
-
-We now realize the dense generating family *inside* the constant-free algebra,
-with full control of size.
-
-**Definition 4.1 (`repAdd`).** Define $\mathrm{repAdd} : \mathbb{N} \to
-\mathsf{ETerm}$ by
 $$
-\mathrm{repAdd}(0) = \mathsf{var}, \qquad
-\mathrm{repAdd}(k+1) = \mathsf{add}(\mathsf{var}, \mathrm{repAdd}(k)).
+|\exp(A)|=|A|+1,
+\qquad
+|\log(A)|=|A|+1.
 $$
-Thus $\mathrm{repAdd}(k)$ is the $(k+1)$-fold sum $\mathsf{var} + \cdots +
-\mathsf{var}$.
 
-**Lemma 4.2 (`repAdd_eval`).** For all $k$ and $x$, $\mathrm{eval}(\mathrm{repAdd}(k))(x) = (k+1)\,x$.
+### Definition 2.3 (Depth)
 
-*Proof sketch.* Induction on $k$. Base: $\mathrm{eval}(\mathsf{var})(x) = x =
-(0+1)x$. Step: $\mathrm{eval}(\mathsf{add}(\mathsf{var}, \mathrm{repAdd}(k)))(x) =
-x + (k+1)x = (k+2)x$. $\square$
+The **depth** $d(T)$ counts operational layers along the longest root-to-leaf path, with a variable leaf at depth zero:
 
-**Lemma 4.3 (`repAdd_size`).** $|\mathrm{repAdd}(k)| = 2k + 1$.
+$$
+d(x)=0,
+$$
 
-*Proof sketch.* Induction: $|\mathrm{repAdd}(0)| = 1$, and each step adds one
-$\mathsf{var}$ leaf (cost $1$) and one $\mathsf{add}$ node (cost $1$), giving
-$|\mathrm{repAdd}(k+1)| = |\mathrm{repAdd}(k)| + 2$. $\square$
+$$
+d(A+B)=1+\max\{d(A),d(B)\},
+$$
 
-**Definition 4.4 (`expBasis`).** Define $\mathrm{expBasis}(k) =
-\mathsf{expOf}(\mathrm{repAdd}(k))$.
+$$
+d(A\cdot B)=1+\max\{d(A),d(B)\},
+$$
 
-**Theorem 4.5 (`expBasis_eval`).** $\mathrm{eval}(\mathrm{expBasis}(k)) = \bigl(x
-\mapsto e^{(k+1)x}\bigr)$.
+and
 
-*Proof sketch.* Apply $\exp$ to Lemma 4.2: $\mathrm{eval}(\mathsf{expOf}\,
-\mathrm{repAdd}(k))(x) = e^{\mathrm{eval}(\mathrm{repAdd}(k))(x)} = e^{(k+1)x}$.
+$$
+d(\exp(A))=d(A)+1,
+\qquad
+d(\log(A))=d(A)+1.
+$$
+
+This convention separates total symbolic work from sequential nesting. Independent child branches can, in principle, be evaluated in parallel.
+
+### Definition 2.4 (Exact expressibility and description complexity)
+
+A function $f:\mathbb R\to\mathbb R$ is **exactly EML-expressible** if there exists a finite EML expression $T$ such that
+
+$$
+T(x)=f(x)\qquad\text{for every }x\in\mathbb R.
+$$
+
+For such a function, its **EML description complexity** is
+
+$$
+K(f)=\min\{|T|:T(x)=f(x)\text{ for every }x\in\mathbb R\}.
+$$
+
+The minimum exists because the admissible sizes form a nonempty subset of the natural numbers. This is a language-relative analogue of description complexity: changing the grammar or encoding changes $K(f)$.
+
+## 3. Uniform approximation and minimum depth
+
+### Definition 3.1 (Uniform approximation on a set)
+
+Let $f:\mathbb R\to\mathbb R$, let $S\subseteq\mathbb R$, and let $\varepsilon\in\mathbb R$. An expression $T$ **uniformly approximates $f$ on $S$ with tolerance $\varepsilon$** if
+
+$$
+|f(x)-T(x)|\leq\varepsilon
+\qquad\text{for every }x\in S.
+$$
+
+The error bound is non-strict. For $\varepsilon\geq0$, exact equality is always sufficient.
+
+### Definition 3.2 (Minimum approximation depth)
+
+The **minimum approximation depth** is
+
+$$
+D_S(f,\varepsilon)
+=
+\min\{d(T): |f(x)-T(x)|\leq\varepsilon\text{ for every }x\in S\},
+$$
+
+whenever the displayed set is nonempty. For definiteness, if no admissible expression exists, set $D_S(f,\varepsilon)=0$. All principal theorems explicitly construct an admissible expression, so this fallback convention has no mathematical effect on them.
+
+### Lemma 3.3 (Witness bound)
+
+If an expression $T$ uniformly approximates $f$ on $S$ with tolerance $\varepsilon$, then
+
+$$
+D_S(f,\varepsilon)\leq d(T).
+$$
+
+**Proof sketch.** The depth $d(T)$ belongs to the set over which the minimum is taken. A minimum of natural numbers is no greater than any member of its defining set. $\square$
+
+## 4. Tree complexity
+
+### Theorem 4.1 (Strict depth–size inequality)
+
+For every EML expression $T$,
+
+$$
+d(T)<|T|.
+$$
+
+**Proof sketch.** Proceed by structural induction.
+
+For the variable, $d(x)=0<1=|x|$.
+
+Suppose the claim holds for $A$ and $B$. For a binary node $A+B$ or $A\cdot B$, assume without loss of generality that $d(A)\geq d(B)$. Then
+
+$$
+d(A\star B)=1+d(A)<1+|A|\leq1+|A|+|B|=|A\star B|,
+$$
+
+where $\star$ is either addition or multiplication. The same reasoning works if $B$ has the larger depth.
+
+For a unary node, the induction hypothesis gives $d(A)<|A|$, hence
+
+$$
+d(\exp A)=d(A)+1<|A|+1=|\exp A|,
+$$
+
+and identically for $\log A$. These cases exhaust the grammar. $\square$
+
+### Corollary 4.2
+
+For every EML expression $T$,
+
+$$
+d(T)\leq |T|-1
+$$
+
+and therefore $d(T)\leq|T|$.
+
+The strict theorem is the natural combinatorial statement, while the weaker final inequality is convenient when comparing depth with description complexity.
+
+## 5. Main approximation results
+
+### Theorem 5.1 (Exact-description approximation)
+
+Let $f:\mathbb R\to\mathbb R$ be exactly EML-expressible. For every set $S\subseteq\mathbb R$ and every tolerance $\varepsilon\geq0$, there exists an EML expression $T$ satisfying
+
+$$
+|f(x)-T(x)|\leq\varepsilon
+\qquad(x\in S)
+$$
+
+and
+
+$$
+d(T)\leq K(f).
+$$
+
+**Proof sketch.** Choose a shortest exact expression $T_*$ for $f$. By definition, $|T_*|=K(f)$ and $T_*(x)=f(x)$ for every real $x$. Hence
+
+$$
+|f(x)-T_*(x)|=0\leq\varepsilon
+$$
+
+for every $x\in S$. The strict depth–size inequality gives $d(T_*)<|T_*|=K(f)$, which in particular implies $d(T_*)\leq K(f)$. Thus $T_*$ is the required witness. $\square$
+
+No property of $S$ was used. Nor was continuity or any other regularity of $f$ invoked beyond exact expressibility.
+
+### Theorem 5.2 (Direct minimum-depth bound)
+
+Under the hypotheses of Theorem 5.1,
+
+$$
+D_S(f,\varepsilon)\leq K(f)
+$$
+
+for every $\varepsilon\geq0$.
+
+**Proof sketch.** Theorem 5.1 supplies an admissible $T$ with $d(T)\leq K(f)$. Apply the witness bound and transitivity:
+
+$$
+D_S(f,\varepsilon)\leq d(T)\leq K(f).
+$$
+
 $\square$
 
-**Theorem 4.6 (`expBasis_size`).** $|\mathrm{expBasis}(k)| = 2k + 2$.
+### Lemma 5.3 (Reciprocal ceiling)
 
-*Proof sketch.* The $\mathsf{expOf}$ node adds $1$ to $|\mathrm{repAdd}(k)| =
-2k+1$. $\square$
+If $0<\varepsilon\leq1$, then
 
-**Corollary 4.7 (EML-computability, `expBasis_isEMLComputable`).** For each $k$,
-the function $x \mapsto e^{(k+1)x}$ is EML-computable, witnessed by
-$\mathrm{expBasis}(k)$.
-
-**Theorem 4.8 (Linear complexity bound, `K_expBasis_le`).** For every $k$,
 $$
-K\bigl(x \mapsto e^{(k+1)x}\bigr) \;\le\; 2k + 2.
+1\leq\left\lceil\frac1\varepsilon\right\rceil.
 $$
 
-*Proof sketch.* By `K_le_of_eval` applied to the witness $\mathrm{expBasis}(k)$
-(Theorem 4.5), $K(\cdot) \le |\mathrm{expBasis}(k)| = 2k+2$ by Theorem 4.6.
-$\square$
+**Proof sketch.** Positivity permits multiplication by $\varepsilon$ without reversing inequalities. From $\varepsilon\leq1$ one obtains $1\leq1/\varepsilon$. The ceiling is at least its argument and is a natural number, so the result follows. $\square$
 
-**Theorem 4.9 (Injectivity, `generators_injective`).** The map $k \mapsto (x
-\mapsto e^{(k+1)x})$ is injective.
+### Theorem 5.4 (Quantitative reciprocal-tolerance bound)
 
-*Proof sketch.* If $e^{(a+1)x} = e^{(b+1)x}$ for all $x$, evaluate at $x = 1$ to
-get $e^{a+1} = e^{b+1}$; injectivity of $\exp$ gives $a+1 = b+1$, and injectivity
-of the cast $\mathbb{N} \hookrightarrow \mathbb{R}$ gives $a = b$. $\square$
+Let $f$ be exactly EML-expressible, let $S\subseteq\mathbb R$, and suppose $0<\varepsilon\leq1$. Then
 
-## 5. The bridge: escaping finite islands
-
-We now show the dense generator family cannot be confined to any finite budget.
-
-**Theorem 5.1 (Escape from finite islands, `finitely_many_generators_per_budget`).**
-For every $n \in \mathbb{N}$,
 $$
-\{\, k \in \mathbb{N} : (x \mapsto e^{(k+1)x}) \in \mathrm{computableLE}(n) \,\}
-\quad\text{is finite.}
+D_S(f,\varepsilon)
+\leq
+K(f)\left\lceil\frac1\varepsilon\right\rceil.
 $$
 
-*Proof sketch.* The set in question is the preimage, under the injective family
-$k \mapsto (x \mapsto e^{(k+1)x})$ (Theorem 4.9), of the finite set
-$\mathrm{computableLE}(n)$ (Proposition 2.7). The preimage of a finite set under
-an injective map is finite. $\square$
+Consequently,
 
-**Interpretation.** Each island holds only finitely many generators, yet the
-family is infinite. Hence, as $n \to \infty$, an ever-growing but always
-incomplete set of generators becomes available: no finite budget holds them all.
-Equivalently, $\sup_k K(x \mapsto e^{(k+1)x}) = \infty$ — complexity across the
-family is unbounded. This is the *realist's* statement.
+$$
+D_S(f,\varepsilon)=O\left(\frac{K(f)}{\varepsilon}\right)
+$$
 
-**Theorem 5.2 (Synthesis: density meets incompressibility, `dense_and_generators_EMLcomputable`).**
-For every compact interval $[a,b]$, both of the following hold:
+with multiplicative constant one at the displayed integer-valued level.
 
-1. (*Density*) The linear span of $\{\,(\mathrm{expCM} \circ
-   \mathrm{iccCoord}(a,b))^k : k \in \mathbb{N}\,\}$ is dense in $C([a,b],
-   \mathbb{R})$.
-2. (*EML-computability*) For every $k$, the generator $x \mapsto e^{(k+1)x}$ is
-   EML-computable.
+**Proof sketch.** Theorem 5.2 gives $D_S(f,\varepsilon)\leq K(f)$. Lemma 5.3 and monotonicity of multiplication in the natural numbers give
 
-*Proof sketch.* Conjunct 1 is Theorem 3.1 specialized to the injective coordinate
-map (`injective_iccCoord`). Conjunct 2 is Corollary 4.7. The conjunction is the
-formal content of "universal approximation with a complexity bound": the dense
-approximating family is genuinely EML-computable, and (by Theorems 4.8 and 5.1)
-its complexity is bounded *member by member* (linearly) yet unbounded *across the
-family*. $\square$
+$$
+K(f)\leq K(f)\left\lceil\frac1\varepsilon\right\rceil.
+$$
 
-The result is not a vacuous conjunction. The left conjunct is the genuine,
-nontrivial Stone–Weierstrass-type density theorem (imported and applied, not
-re-derived). The right conjunct is established constructively with exact size
-accounting. Their conjunction expresses exactly the tension the programme set out
-to resolve.
+Combining the inequalities proves the result. $\square$
 
-## 6. The boundary: the missing constant
+### Theorem 5.5 (Packaged universality and complexity statement)
 
-The density family of Theorem 3.1 ranges over $k = 0, 1, 2, \dots$, beginning
-with $e^{0\cdot x} = 1$. Our generators $\mathrm{expBasis}(k)$ compute
-$e^{(k+1)x}$, i.e. they begin at $k=0$ with $e^{x}$ and *never* produce the
-constant $1$.
+Let $f$ be exactly EML-expressible, $S\subseteq\mathbb R$, and $0<\varepsilon\leq1$. Then both of the following hold:
 
-**Observation 6.1 (The unique missing generator).** The single density generator
-the constant-free EML class cannot represent is $x \mapsto e^{0\cdot x} = 1$,
-i.e. the constant function $1$.
+1. there exists an EML expression $T$ such that
+   $$
+   |f(x)-T(x)|\leq\varepsilon\quad(x\in S)
+   \qquad\text{and}\qquad
+   d(T)\leq K(f);
+   $$
+2. the minimum approximation depth satisfies
+   $$
+   D_S(f,\varepsilon)
+   \leq K(f)\left\lceil\frac1\varepsilon\right\rceil.
+   $$
 
-*Discussion.* Every $\mathsf{ETerm}$ is built from $\mathsf{var}$ and propagates
-the input through total operations; there is no leaf denoting a fixed number, so
-no constant function is EML-computable in the constant-free algebra. The density
-theorem nonetheless needs the constants (Stone–Weierstrass requires a
-unital subalgebra). Thus the boundary of the constant-free theory is precisely one
-object wide: adding a single new leaf $\mathsf{one}$ with $\mathrm{eval} = 1$ would
-exactly close the gap. This is a clean structural boundary, not a defect, and it
-motivates Conjecture 7.1.
+**Proof sketch.** The first assertion is Theorem 5.1, using $\varepsilon>0$. The second is Theorem 5.4. $\square$
 
-## 7. Future directions
+## 6. Interpretation and limitations
 
-The following falsifiable conjectures extend the theory; each is stated to be
-attacked directly by formal methods.
+Theorem 5.4 has the requested inverse-error form, but the mechanism deserves emphasis. It is not obtained by iteratively refining an approximation as $\varepsilon$ decreases. Instead, a shortest exact expression works for every tolerance simultaneously. The stronger estimate
 
-**Conjecture 7.1 (One bit of incompressible information).** Extend the algebra
-with a single leaf $\mathsf{one}$ ($\mathrm{eval} = 1$). For the rational
-constants $c_q : x \mapsto q$ ($q \in \mathbb{Q}$), $K(c_q)$ is finite for every
-$q$ but $\sup_q K(c_q) = \infty$; moreover the constant-free class computes *no*
-constant function. The insight: $\mathsf{one}$ is the unique generator whose
-absence makes the entire constant subspace incompressible — our synthesis already
-isolates $k=0$ as the single density generator outside the constant-free class.
+$$
+D_S(f,\varepsilon)\leq K(f)
+$$
 
-**Conjecture 7.2 (Matching lower bound, $K(e^{kx}) = \Theta(k)$).** The linear
-upper bound $K(e^{(k+1)x}) \le 2k+2$ (Theorem 4.8) is tight: there is $c > 0$
-with $K(e^{(k+1)x}) \ge c\,k$ for all $k$. The insight: a size-$s$ constant-free
-term has bounded "exponential frequency content" (each $\exp$ node multiplies the
-dominant exponent by at most the size of its argument), so computing $e^{kx}$
-forces size growth in $k$. The missing half is a structural induction bounding the
-top exponential rate.
+is uniform in $\varepsilon$. The reciprocal ceiling merely enlarges its right-hand side. Accordingly, the result should not be read as evidence that the true minimum depth grows like $1/\varepsilon$.
 
-**Conjecture 7.3 (Depth–accuracy law, $\Theta(\log\log(1/\varepsilon))$ for
-analytic targets).** For fixed real-analytic $f$ on $[a,b]$, the minimal EML
-*depth* for uniform $\varepsilon$-approximation grows like $\log\log(1/\varepsilon)$:
-exp/log compression makes depth exponentially cheaper than the naive
-$O(K(f)/\varepsilon)$ heuristic. The insight: $e^{n\log x} = x^n$ at constant
-depth $3$; a degree-$d$ Jackson/Chebyshev approximant needs only $O(\log d)$
-extra depth via balanced add/mul trees, with $d = O(\log(1/\varepsilon))$ for
-analytic $f$. The size–depth tower $|t| + 1 \le 2^{d(t)+1}$ converts depth
-compression into an accuracy law.
+The word “universal” is relative to the exactly EML-expressible class. No claim is made that constant-free EML expressions approximate every continuous function. Indeed, such a density statement would need substantially different ingredients: encoded constants, separation properties, closure arguments, or a constructive approximation scheme.
 
-**Conjecture 7.4 (Counting law for the function class).** The cardinality
-$|\mathrm{computableLE}(n)|$ grows like a fixed exponential in $n$, reflecting the
-finite-alphabet branching of the term algebra modulo evaluation collapses.
+The complexity $K(f)$ is also syntax-dependent. It counts tree nodes, not bits in a prefix-free encoding, and it does not identify shared subexpressions as a directed acyclic graph would. The present theorem remains valuable precisely because its cost model is explicit and its transfer from size to depth is exact.
 
-## 8. Discussion
+Finally, if a concrete expression of size $m$ is known but its minimality is not, one may safely infer $K(f)\leq m$ and therefore
 
-The architecture of the argument is deliberately minimal. **Density** is a
-statement about the *union* $\bigcup_n \mathrm{computableLE}(n)$ (the closure of
-the EML class). **Incompressibility** is a statement about each *finite stage*
-$\mathrm{computableLE}(n)$. The exponential generators are the explicit witnesses
-that the union is genuinely infinite-dimensional while every stage is finite — the
-precise mechanism by which universal approximation and Kolmogorov
-incompressibility coexist.
+$$
+D_S(f,\varepsilon)\leq m.
+$$
 
-This pattern recapitulates, in a fully controlled setting, the practitioner's
-experience of universal approximators (neural networks, kernel machines, spectral
-methods): better accuracy is always attainable, and always costs more
-description. By fixing a finite alphabet and an exact size calculus, the EML class
-turns that folklore into theorems, including an exact per-member complexity
-($2k+2$) and an exact escape phenomenon (finiteness of every budget section).
+One must not report $K(f)=m$ without proving that no smaller exact expression exists.
 
-## 9. Conclusion
+## 7. Constructive algorithms
 
-We have shown, for the constant-free EML term algebra, that universal
-approximation (density of exponential monomials) and Kolmogorov-style
-incompressibility (finiteness of every complexity budget) are simultaneously true
-and mutually illuminating. The explicit family $\mathrm{expBasis}(k)$ computing
-$e^{(k+1)x}$ with size $2k+2$ is dense, injective, EML-computable, and escapes
-every finite island, giving $K(e^{(k+1)x}) \le 2k+2$ with unbounded supremum. The
-constant $1 = e^{0\cdot x}$ is the unique density generator outside the
-constant-free class, marking a one-primitive boundary. The result is the formal
-content of "EML universal approximation with a provable complexity price."
+### Algorithm 7.1 (Expression analysis)
+
+Given an expression tree, compute its size, depth, and numerical value recursively. At a leaf return size $1$, depth $0$, and the input value. At a unary node analyze its child, increment both size and depth, and apply the operation. At a binary node analyze both children, add their sizes plus one, take the maximum depth plus one, and apply the operation.
+
+If the tree has $n$ nodes, this traversal uses $O(n)$ time. Recursive storage is $O(d(T))$; an explicit stack gives the same asymptotic dependence on tree depth.
+
+### Algorithm 7.2 (Uniform-error sampling)
+
+For a target function and an expression, sample $N+1$ equally spaced points of an interval $[a,b]$ and return the largest observed absolute error. The cost is $O(Nc)$, where $c$ is the cost of one expression evaluation; with direct tree evaluation, $c=O(n)$. This is a numerical illustration, not a proof of a continuum supremum unless supplemented by analytic error control. For an exact expression, floating-point roundoff may still produce tiny nonzero discrepancies, so comparisons should use a numerical tolerance.
+
+### Algorithm 7.3 (Complexity-bound calculator)
+
+Given a certified description-size upper bound $m$ and $0<\varepsilon\leq1$, calculate
+
+$$
+B(m,\varepsilon)=m\left\lceil\frac1\varepsilon\right\rceil.
+$$
+
+The result certifies $D_S(f,\varepsilon)\leq B(m,\varepsilon)$ whenever an exact expression of size at most $m$ is known. Computing the ceiling and product is constant-time in a unit-cost arithmetic model and polynomial in the bit lengths under a bit-complexity model. The sharper concrete-tree depth should also be reported when available.
+
+## 8. Numerical examples
+
+Consider
+
+$$
+f(x)=\exp(x)+x^2.
+$$
+
+Represent it by the tree $\exp(x)+(x\cdot x)$. The exponential branch has size $2$ and depth $1$; the product branch has size $3$ and depth $1$; the root yields total size $6$ and depth $2$. Direct evaluation agrees with $f$ at every point. At $\varepsilon=0.2$,
+
+$$
+6\left\lceil\frac1{0.2}\right\rceil=30.
+$$
+
+Thus the generic bound from this six-node description is $30$, while the exhibited tree directly certifies depth at most $2$. The example makes visible how loose the reciprocal estimate can be.
+
+For $T(x)=\exp(\log x)$, the tree has size $3$ and depth $2$. On a positive interval under the ordinary logarithm, $T(x)=x$ exactly. At tolerances $1$, $1/2$, and $1/10$, the reciprocal-ceiling bounds based on size $3$ are respectively $3$, $6$, and $30$, although the same depth-$2$ tree works throughout.
+
+A shape comparison is also instructive. The expression $(x+x)(x+x)$ has seven nodes and depth $2$. A more deeply nested expression $\exp(\log(\exp(x)))$ has four nodes and depth $3$. Size and depth are correlated by Theorem 4.1 but are not interchangeable; balancing can reduce depth while retaining many nodes.
+
+## 9. Applications
+
+In symbolic modeling, a finite exact expression serves simultaneously as a model and as an approximation certificate on every region of interest. This is relevant when formulas built from growth, products, and logarithmic transformations arise naturally, as in compound growth, multiplicative response models, log-linear analysis, and certain rate equations.
+
+In parallel computation, tree size approximates total arithmetic work while tree depth approximates idealized latency. The depth–size theorem converts a description budget into a conservative latency budget. A balanced expression can be substantially shallower than its size, so direct tree analysis often improves the general estimate.
+
+In compression-oriented learning, $K(f)$ expresses an inductive preference for short symbolic explanations. Within the exact target class, shorter descriptions guarantee shallower approximation witnesses. This does not by itself solve model discovery or establish statistical generalization, but it provides a precise deterministic link between symbolic compression and evaluation depth.
+
+## 10. Future work
+
+A natural first extension adds rational constant leaves encoded by finite binary strings. One may then ask whether the resulting language is uniformly dense in $C([0,1],\mathbb R)$. This would turn class-relative exact universality into an approximation theorem for arbitrary continuous targets.
+
+A second direction incorporates regularity. If $f$ has modulus of continuity $\omega$, one may seek estimates involving an inverse modulus, description complexity, and tolerance. Such bounds would explain the cost of resolving fine-scale variation when exact representation is unavailable.
+
+Lower bounds are equally important. Finite packings of Lipschitz or piecewise-linear functions may yield incompressible targets for which every finite-alphabet expression below a prescribed error must have large size. Counting arguments could complement constructive upper bounds.
+
+Finally, size and depth should be separated sharply. One seeks explicit function families with polynomial-size exact expressions but unavoidable linear approximation depth at exponentially small tolerance. Conversely, balanced or shared computations may expose cases where large descriptions admit small depth.
+
+## 11. Further structural consequences
+
+The preceding results have several immediate consequences that are useful when comparing domains, tolerances, and descriptions.
+
+### Proposition 11.1 (Domain monotonicity)
+
+If $S_1\subseteq S_2\subseteq\mathbb R$ and an admissible approximant exists on $S_2$, then
+
+$$
+D_{S_1}(f,\varepsilon)\leq D_{S_2}(f,\varepsilon).
+$$
+
+**Proof sketch.** Every expression satisfying the error bound at every point of $S_2$ also satisfies it at every point of the subset $S_1$. Thus the admissible family for $S_1$ contains the admissible family for $S_2$, and minimizing depth over the larger family cannot produce a larger value. $\square$
+
+For exactly EML-expressible functions, this monotonicity coexists with the same global upper bound $K(f)$ for every domain. Restricting the domain may permit a shallower expression than any globally exact one, but restriction is never required to establish the theorem.
+
+### Proposition 11.2 (Tolerance monotonicity)
+
+If $0\leq\varepsilon_1\leq\varepsilon_2$ and an admissible approximant exists at tolerance $\varepsilon_1$, then
+
+$$
+D_S(f,\varepsilon_2)\leq D_S(f,\varepsilon_1).
+$$
+
+**Proof sketch.** Any expression with error at most $\varepsilon_1$ automatically has error at most the larger tolerance $\varepsilon_2$. The admissible set therefore expands as tolerance increases. $\square$
+
+This proposition captures the usual accuracy–complexity tradeoff, while Theorem 5.2 shows that exactly expressible targets possess a common ceiling for the entire tradeoff curve. The curve may fall as error tolerance grows, but it never rises above $K(f)$ as tolerance shrinks to zero.
+
+### Corollary 11.3 (Single-witness simultaneity)
+
+If $f$ is exactly EML-expressible, there is one expression $T_*$ such that for every set $S\subseteq\mathbb R$ and every $\varepsilon\geq0$,
+
+$$
+|f(x)-T_*(x)|\leq\varepsilon\quad(x\in S)
+$$
+
+and $d(T_*)\leq K(f)$.
+
+**Proof sketch.** Choose a shortest exact expression once. Its error is identically zero, independently of both parameters. $\square$
+
+This is stronger than separately asserting existence for each pair $(S,\varepsilon)$: no domain-dependent or tolerance-dependent reconstruction is necessary.
+
+## 12. Reproducibility and numerical caution
+
+The numerical procedures associated with these results should distinguish symbolic certificates from sampled evidence. Computing tree size and depth is exact because both are integer-valued recursive quantities. Evaluating a reciprocal ceiling can also be exact when $\varepsilon$ is supplied as a rational number: for positive integers $p$ and $q$ with $\varepsilon=p/q$, one has
+
+$$
+\left\lceil\frac1\varepsilon\right\rceil
+=
+\left\lceil\frac qp\right\rceil
+=
+\left\lfloor\frac{q+p-1}{p}\right\rfloor.
+$$
+
+By contrast, a grid-based maximum error is only descriptive. A function can deviate between sampled points. If a Lipschitz bound $L$ is independently known for the error function and the grid spacing is $h$, then every point lies within $h/2$ of a sample on a uniform endpoint-inclusive grid, yielding the certified estimate
+
+$$
+\sup_{x\in[a,b]}|f(x)-T(x)|
+\leq E_{\mathrm{grid}}+\frac{Lh}{2}.
+$$
+
+No such numerical certification is needed for a symbolically exact witness: equality of the expressions gives zero error directly. Floating-point demonstrations should therefore be presented as illustrations of evaluation behavior, not as the logical basis of the theorem.
+
+The cost model also deserves explicit reporting. A tree duplicates repeated subexpressions. For example, $(x+x)(x+x)$ contains two copies of $x+x$, whereas a directed acyclic graph could evaluate that subexpression once and reuse it. The current size and depth definitions concern trees, so graph compression lies outside the theorem as stated. Any comparison with circuits or software implementations should preserve this distinction.
+
+## 13. Conclusion
+
+Finite EML expressions support a direct transfer from description complexity to approximation depth. The combinatorial core is the strict inequality $d(T)<|T|$. A shortest exact description of $f$ has zero error on every subset of the real line and depth at most $K(f)$. Therefore $D_S(f,\varepsilon)\leq K(f)$ for every nonnegative tolerance, and for $0<\varepsilon\leq1$,
+
+$$
+D_S(f,\varepsilon)
+\leq K(f)\left\lceil\frac1\varepsilon\right\rceil.
+$$
+
+The inverse-error form is a valid quantitative summary, but exact representability supplies the stronger insight: within this finite-description class, increasing precision requires no additional depth. The open frontier is to determine how much of this relationship survives when exact descriptions are replaced by encoded approximation schemes for broader function classes. That question requires new analytic and information-theoretic ideas beyond the exact-description argument developed here.
