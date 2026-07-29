@@ -295,32 +295,4 @@ theorem explicit_target_values :
   exact ⟨value_omegaGame, value_opowGame 2, value_opowGame 3,
     value_omegaOmegaGame⟩
 
-
-/-! ### Contrarian disproofs
-
-Ordinal time is not ordinary elapsed time: sequential composition need not be
-commutative.  In the convention fixed by `value_graft`, the two orders below
-produce `1 + ω = ω` and `ω + 1`, respectively. -/
-
-/-- **Disproof of commutative sequential time.**  The two orders of composing a
-one-move puzzle and the mate-in-`ω` puzzle have different values. -/
-theorem graft_not_commutative_at_omega :
-    value (graft omegaGame (finGame 1)) ≠
-      value (graft (finGame 1) omegaGame) := by
-  rw [value_graft, value_graft, value_omegaGame, value_finGame]
-  norm_num only [Nat.cast_one, Ordinal.one_add_omega0]
-  exact ne_of_lt (lt_add_one ω)
-
-/-- Prefixing a forced node directly to the `ω`-puzzle raises its exact value
-to the successor ordinal `ω + 1`. -/
-theorem value_step_omegaGame : value (.step omegaGame) = ω + 1 := by
-  rw [value_step, value_omegaGame]
-
-/-- In contrast, the opposite grafting order is absorbed by the limit:
-its exact value remains `ω`, since `1 + ω = ω`. -/
-theorem finite_prefix_absorbed_by_omega :
-    value (graft omegaGame (finGame 1)) = ω := by
-  rw [value_graft, value_finGame, value_omegaGame]
-  norm_num only [Nat.cast_one, Ordinal.one_add_omega0]
-
 end InfiniteChessOmega
