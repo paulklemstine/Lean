@@ -1,255 +1,506 @@
-# Spectral Graph Theory Meets Neural Network Robustness: Algebraic Connectivity Bounds on Certified Adversarial Radius
+# Spectral Connectivity, Gain Control, and Certified Robustness of Scalar Computation Networks
+
+**Aristotle**  
+**29 July 2026**
 
 ## Abstract
 
-We establish a rigorous mathematical framework connecting the spectral properties of a neural network's computation graph to its certified adversarial robustness. Our main result shows that the algebraic connectivity (Fiedler value) λ₂ of the computation graph provides a direct lower bound on the certified robustness radius through the contraction factor c = 1 − λ₂/d_max. Specifically, k iterations of graph-based smoothing reduce the effective Lipschitz constant by a factor of c^k, yielding exponentially improving robustness guarantees. We prove that robustness is monotonically increasing in algebraic connectivity, establish a duality principle showing that graphs with the same λ₂/d_max ratio are robustness-equivalent, and characterize complete graphs as achieving optimal (zero) contraction. All results are formalized and machine-verified in Lean 4 with the Mathlib library, providing the highest level of mathematical certainty.
-
-**Keywords**: algebraic connectivity, Fiedler value, graph Laplacian, adversarial robustness, Lipschitz constant, certified defense, graph neural networks, spectral graph theory
+We establish a precise conditional connection between algebraic connectivity and certified robustness for a scalar computation network. The analysis separates four quantities that are often conflated: the graph spectral gap $\lambda$, an input-to-state gain $G$, a readout gain $K$, and the classification margin $m$. In the weighted two-node model, the Dirichlet energy is exactly $\lambda$ times the variance in the unique disagreement mode. More generally, if an internal scalar state $h$ satisfies the spectral variation inequality $\lambda(h(x)-h(y))^2\leq G^2(x-y)^2$, then $h$ is $G/\sqrt{\lambda}$-Lipschitz. Composition with a $K$-Lipschitz readout gives an end-to-end Lipschitz bound $KG/\sqrt{\lambda}$. At a point with positive margin $m$, this yields the certified open radius $m\sqrt{\lambda}/(KG)$. We also prove two uniform impossibility results: connectivity alone guarantees neither a positive robustness radius nor any finite Lipschitz upper bound. Explicit affine counterexamples show that gain control and output margin are indispensable. Algorithms for evaluating the certificate, checking finite samples of the defining inequality, and generating counterexamples are provided, together with numerical illustrations and a discussion of extensions to finite graphs and vector-valued networks.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The computation performed by a neural or distributed system can be represented as a graph. Vertices carry intermediate states and edges record interactions or dependencies. Spectral graph theory then supplies a natural geometric descriptor: algebraic connectivity, the first positive eigenvalue of a graph Laplacian. A large spectral gap penalizes disagreement among node states and promotes coordination. It is therefore tempting to infer that high connectivity automatically makes the represented function insensitive to perturbations.
 
-The vulnerability of neural networks to adversarial perturbations — imperceptibly small input modifications that cause misclassification — has been recognized as a fundamental challenge in machine learning since the seminal work of Szegedy et al. (2014) and Goodfellow et al. (2015). While numerous empirical defenses have been proposed, many have been subsequently broken by stronger attacks (Carlini & Wagner, 2017; Athalye et al., 2018).
+That inference is incomplete. A graph describes where amplification may occur, not how large the amplification is. Parameters can be rescaled on a fixed graph, producing arbitrarily steep functions. Moreover, even a gently varying score may be arbitrarily close to its decision boundary. Robustness therefore requires a quantitative bridge from topology to state variation and another bridge from score variation to decision stability.
 
-*Certified defenses* offer a stronger guarantee: they provide mathematically proven bounds on the perturbation size that cannot change the output. The dominant approach uses Lipschitz bounds — if a function f has Lipschitz constant L and classification margin m at a point x, then no perturbation of norm less than m/L can change the classification.
+This paper isolates those bridges in the scalar setting. The first is a spectral state-gain inequality. It states that the squared change of an internal state, weighted by connectivity, is bounded by a squared input gain. The second is a Lipschitz readout bound. The third is a positive classification margin. Together they yield a transparent certificate:
 
-### 1.2 Our Contribution
+$$
+r_{\mathrm{cert}}=\frac{m\sqrt{\lambda}}{KG}.
+$$
 
-We bridge spectral graph theory and adversarial robustness by proving that the algebraic connectivity of a neural network's computation graph provides a direct, quantitative bound on its certified robustness radius. Our key contributions are:
+The square-root dependence is forced by the passage from quadratic energy to ordinary distance. The formula is monotone in each variable but should not be interpreted causally without controlling the others. Increasing $\lambda$ improves the guarantee only if $G$, $K$, and $m$ remain fixed.
 
-1. **Spectral Contraction Theorem** (§4): The spectral contraction factor c = 1 − λ₂/d_max controls the Lipschitz reduction per smoothing step.
+Our contributions are fivefold. First, we give an exact two-node spectral identity. Second, we prove the spectral-to-Lipschitz estimate. Third, we prove the multiplicative composition rule for state and readout gains. Fourth, we derive the margin-based certified radius. Fifth, we delimit the theorem by uniform counterexamples to connectivity-only claims.
 
-2. **Exponential Robustness Improvement** (§5): k iterations of graph smoothing yield a certified radius improvement of 1/c^k.
+## 2. Setting and definitions
 
-3. **Algebraic Connectivity Lower Bound** (§6): For any graph with λ₂ > 0, the certified robustness radius is bounded below by margin/(c^k · L).
+All inputs, internal states, and scores are real-valued. This restriction makes the mechanism explicit without operator-norm notation. The results are global: inequalities are required for every pair of real inputs.
 
-4. **Robustness-Connectivity Monotonicity** (§6): Increasing algebraic connectivity strictly increases the certified robustness radius.
+### Definition 2.1 (Global Lipschitz bound)
 
-5. **Robustness Duality** (§9): Graphs with the same λ₂/d_max ratio are robustness-equivalent, revealing that sparsity can compensate for low absolute connectivity.
+A function $f:\mathbb{R}\to\mathbb{R}$ has global Lipschitz bound $L$ if
 
-6. **Complete Graph Optimality** (§7): Complete graphs achieve contraction factor 0, providing maximum smoothing at the cost of signal extinction.
+$$
+|f(x)-f(y)|\leq L|x-y|
+$$
 
-7. **Poincaré-Spectral-Robustness Bridge** (§8): A three-way connection between spectral geometry, harmonic analysis on graphs, and adversarial ML.
+for every $x,y\in\mathbb{R}$.
 
-All results are formalized in Lean 4 with the Mathlib library, yielding machine-verified proofs.
+When $L\geq 0$, this limits the steepness of $f$ in a metric sense. The formulation does not require differentiability.
 
-### 1.3 Related Work
+### Definition 2.2 (Certified positive decision)
 
-**Spectral graph theory**: The algebraic connectivity was introduced by Fiedler (1973) and has been extensively studied in graph partitioning (Cheeger inequality), network analysis, and combinatorial optimization.
+For a score $f:\mathbb{R}\to\mathbb{R}$, center $x_0\in\mathbb{R}$, and radius $r\in\mathbb{R}$, the positive decision is certified on the open radius $r$ when
 
-**Lipschitz-based certification**: Hein & Andriushchenko (2017) and Weng et al. (2018) established the Lipschitz certification framework. Fazlyab et al. (2019) used semidefinite programming to compute tighter Lipschitz bounds.
+$$
+|y-x_0|<r \quad\Longrightarrow\quad f(y)>0
+$$
 
-**Graph neural network robustness**: Zügner et al. (2018) studied adversarial attacks on GNNs. Bojchevski & Günnemann (2019) analyzed certifiable robustness for GNNs. Our work provides the first direct spectral bound connecting graph topology to certified robustness.
+for every $y\in\mathbb{R}$.
 
-**Catalog references**: We build upon `certified_robustness_radius` (AlgebraicNeuralArchitecture.lean), `closure_network_certified_robust_radius` (ClosureNetworkUAP.lean), and the sheaf-theoretic robustness framework (SheafCertifiedRobustness.lean).
+The strict inequality matches binary classification by the sign of the score. It also handles the possibility that the score is exactly zero at the boundary.
 
-## 2. Preliminaries
+### Definition 2.3 (Two-node energy and variance)
 
-### 2.1 Lipschitz Functions and Certified Robustness
+For two scalar node states $u,v\in\mathbb{R}$ and a connectivity parameter $\lambda\in\mathbb{R}$, define
 
-**Definition 2.1** (Lipschitz constant). A function f : X → Y between metric spaces is L-Lipschitz if ‖f(x) − f(y)‖ ≤ L · ‖x − y‖ for all x, y.
+$$
+E_\lambda(u,v)=\frac{\lambda}{2}(u-v)^2
+$$
 
-**Definition 2.2** (Certified robustness radius). For a classifier with margin m > 0 at input x and Lipschitz constant L > 0, the *certified robustness radius* is r = m/L. Any perturbation δ with ‖δ‖ < r preserves the classification.
+and
 
-**Lemma 2.3** (Composition). If f₁ is L₁-Lipschitz and f₂ is L₂-Lipschitz, then f₂ ∘ f₁ is (L₁ · L₂)-Lipschitz. For a k-layer network: L_net = ∏ᵢ Lᵢ.
+$$
+V(u,v)=\frac{(u-v)^2}{2}.
+$$
 
-### 2.2 Algebraic Connectivity
+The common mode $(u+v)/2$ does not enter either quantity. The difference $u-v$ spans the unique disagreement mode.
 
-**Definition 2.4** (Graph Laplacian). For a graph G = (V, E), the Laplacian L = D − A where D is the degree matrix and A is the adjacency matrix.
+### Definition 2.4 (Spectral state bound)
 
-**Definition 2.5** (Algebraic connectivity). The algebraic connectivity λ₂(G) is the second smallest eigenvalue of L. It satisfies:
-- λ₂ = 0 iff G is disconnected
-- λ₂ ≤ n · κ(G) / (n − 1) where κ(G) is vertex connectivity
-- λ₂ ≤ d_max
+Let $h:\mathbb{R}\to\mathbb{R}$ be an internal state map. Given connectivity $\lambda$ and state gain $G$, we say that $h$ satisfies the spectral state bound if
 
-## 3. Framework: Graph Spectral Data
+$$
+\lambda\bigl(h(x)-h(y)\bigr)^2
+\leq
+G^2(x-y)^2
+$$
 
-We formalize the spectral properties of a computation graph as a structure:
+for all $x,y\in\mathbb{R}$.
 
-**Definition 3.1** (GraphSpectralData). A tuple (n, λ₂, d_max) where:
-- n ∈ ℕ is the number of vertices
-- λ₂ ∈ ℝ with 0 ≤ λ₂ ≤ d_max (algebraic connectivity)
-- d_max ∈ ℝ with d_max > 0 (maximum degree)
+The hypothesis combines graph geometry and parameter sensitivity. It is stronger than merely asserting that a computation graph has spectral gap $\lambda$; it explicitly requires that the gap control the state changes induced by inputs.
 
-**Definition 3.2** (Contraction factor). The spectral contraction factor is:
-$$c(G) = 1 - \frac{\lambda_2}{d_{\max}}$$
+## 3. Exact spectral geometry of two nodes
 
-This measures the spectral gap ratio, determining the contraction rate of graph smoothing.
+### Theorem 3.1 (Exact two-node spectral identity)
 
-## 4. Spectral Contraction Theorems
+For every $\lambda,u,v\in\mathbb{R}$,
 
-**Theorem 4.1** (Contraction in unit interval). For any GraphSpectralData G:
-$$0 \leq c(G) \leq 1$$
+$$
+E_\lambda(u,v)=\lambda V(u,v).
+$$
 
-*Proof sketch*: Since 0 ≤ λ₂ ≤ d_max and d_max > 0, we have 0 ≤ λ₂/d_max ≤ 1, hence 0 ≤ 1 − λ₂/d_max ≤ 1. □
+#### Proof sketch
 
-**Theorem 4.2** (Strict contraction for connected graphs). If λ₂ > 0, then c(G) < 1.
+Substitute the definitions:
 
-**Theorem 4.3** (Positive contraction for non-complete graphs). If λ₂ < d_max, then c(G) > 0.
+$$
+E_\lambda(u,v)=\frac{\lambda}{2}(u-v)^2
+=\lambda\frac{(u-v)^2}{2}
+=\lambda V(u,v).
+$$
 
-**Theorem 4.4** (Antitone in connectivity). If G₁.d_max = G₂.d_max and G₁.λ₂ ≤ G₂.λ₂, then c(G₂) ≤ c(G₁).
+Thus the Poincaré relation is an equality in the unique disagreement direction. No positivity assumption is needed for the algebraic identity, although spectral interpretation ordinarily uses $\lambda>0$.
 
-### PEGB Analysis for Theorem 4.1
+### Interpretation
 
-**P** (Proof): Machine-verified in Lean 4, using `div_le_one_of_le` and `sub_nonneg`.
+The theorem is the minimal spectral model of consensus. If $u=v$, both energy and variance vanish. If $u\neq v$ and $\lambda>0$, a larger spectral gap assigns greater energy to the same variance. In a general connected graph, a Poincaré inequality compares Dirichlet energy with variance after removing the constant mode. Here the disagreement space is one-dimensional, so there is no slack.
 
-**E** (Example): Path graph P₁₀: λ₂ ≈ 0.0979, d_max = 2, c ≈ 0.9510. Cycle C₁₀: λ₂ ≈ 0.382, d_max = 2, c ≈ 0.809.
+## 4. From spectral energy to metric regularity
 
-**G** (Generalization): The contraction factor extends to weighted graphs with c = 1 − λ₂(L_w)/w_max, where L_w is the weighted Laplacian and w_max is the maximum weighted degree.
+### Theorem 4.1 (Spectral-to-Lipschitz theorem)
 
-**B** (Boundary): When λ₂ = d_max (complete graph), c = 0 and smoothing eliminates all variation. When λ₂ = 0 (disconnected), c = 1 and smoothing has no effect.
+Let $\lambda>0$ and $G\geq 0$. If $h:\mathbb{R}\to\mathbb{R}$ satisfies
 
-## 5. Iterated Smoothing and Exponential Improvement
+$$
+\lambda\bigl(h(x)-h(y)\bigr)^2\leq G^2(x-y)^2
+$$
 
-**Definition 5.1** (Iterated smoothing Lipschitz). After k smoothing steps:
-$$L_k = c^k \cdot L$$
+for all $x,y\in\mathbb{R}$, then $h$ has global Lipschitz bound
 
-**Theorem 5.1** (Lipschitz bound). For any k ∈ ℕ and L > 0: L_k ≤ L.
+$$
+L_h=\frac{G}{\sqrt{\lambda}}.
+$$
 
-*Proof*: Since c ∈ [0,1], c^k ≤ 1, hence c^k · L ≤ L. □
+Equivalently,
 
-**Theorem 5.2** (Smoothing reduces Lipschitz). If λ₂ > 0 and L > 0, then c · L < L.
+$$
+|h(x)-h(y)|\leq\frac{G}{\sqrt{\lambda}}|x-y|
+$$
 
-**Theorem 5.3** (Radius monotonicity). If λ₂ < d_max, the certified radius is non-decreasing in k:
-$$\frac{m}{c^k \cdot L} \leq \frac{m}{c^{k+1} \cdot L}$$
+for all $x,y\in\mathbb{R}$.
 
-*Proof*: Since 0 < c ≤ 1, c^(k+1) ≤ c^k, so c^(k+1)·L ≤ c^k·L, giving the inequality. □
+#### Proof sketch
 
-### PEGB Analysis for Theorem 5.3
+Because $\lambda>0$, divide the assumed inequality by $\lambda$:
 
-**P**: Verified using `pow_le_pow_of_le_one` and `div_le_div_of_nonneg_left`.
+$$
+\bigl(h(x)-h(y)\bigr)^2
+\leq
+\frac{G^2}{\lambda}(x-y)^2.
+$$
 
-**E**: With c = 0.5, L = 100, m = 1: k=0 gives r=0.01, k=5 gives r=0.32, k=10 gives r=10.24 — a 1024× improvement.
+Since $G\geq 0$ and $\sqrt{\lambda}>0$, the right side equals
 
-**G**: Extends to non-homogeneous smoothing where each iteration uses a different graph, giving ∏ cᵢ instead of c^k.
+$$
+\left(\frac{G}{\sqrt{\lambda}}(x-y)\right)^2.
+$$
 
-**B**: When c = 0 and k ≥ 1, L_k = 0 and the certified radius is formally infinite (division by zero), reflecting that constant functions have infinite robustness but carry no information.
+Taking nonnegative square roots gives
 
-## 6. The Main Bridge Theorem
+$$
+|h(x)-h(y)|
+\leq
+\left|\frac{G}{\sqrt{\lambda}}(x-y)\right|
+=
+\frac{G}{\sqrt{\lambda}}|x-y|.
+$$
 
-**Theorem 6.1** (Algebraic connectivity robustness bound). For a graph with 0 < λ₂ < d_max, margin m > 0, and Lipschitz constant L > 0:
-$$\frac{m}{L} \leq \frac{m}{c^k \cdot L} \quad \forall k \in \mathbb{N}$$
+This proves the claim.
 
-This establishes that graph smoothing can only improve (never worsen) the certified robustness radius.
+### Remark 4.2 (Origin of the square root)
 
-**Theorem 6.2** (Monotonicity in connectivity). For two graphs G₁, G₂ with the same d_max, if G₁.λ₂ ≤ G₂.λ₂ and both have λ₂ < d_max, then for any k:
-$$\frac{m}{c_1^k \cdot L} \leq \frac{m}{c_2^k \cdot L}$$
+The spectral bound compares squared variations. The Lipschitz estimate compares first powers of distance. Consequently, the spectral coefficient enters as $\lambda^{-1/2}$ rather than $\lambda^{-1}$. A fourfold increase in $\lambda$ halves the state Lipschitz upper bound when $G$ is unchanged.
 
-*Proof*: Higher λ₂ gives lower c (Theorem 4.4), lower c gives lower c^k (since c^k is increasing in c for c ≥ 0), lower c^k·L gives higher m/(c^k·L). □
+### Remark 4.3 (Degenerate gain)
 
-### PEGB Analysis for Theorem 6.1
+The theorem allows $G=0$. Then the spectral bound forces $h(x)=h(y)$ for every $x$ and $y$, because $\lambda>0$. Thus $h$ is constant and has Lipschitz bound $0$. The positive-radius formula later assumes $G>0$ to avoid division by zero; in the constant case, robustness should instead be assessed directly from the constant output.
 
-**P**: Proven by combining `certifiedRadius_antitone_lipschitz` with `iterated_smoothing_lipschitz_bound`.
+## 5. Readout composition
 
-**E**: 5-layer network with layers [2.5, 1.8, 3.0, 1.2, 2.0], L = 32.4, m = 0.5. Base radius = 0.0154. With λ₂ = 3, d_max = 4 (c = 0.25): after k=5 steps, radius = 15.9 — a 1024× improvement.
+### Theorem 5.1 (Multiplication of Lipschitz gains)
 
-**G**: The bound extends to arbitrary sequences of different smoothing graphs, with ∏ cᵢ replacing c^k.
+Let $h,q:\mathbb{R}\to\mathbb{R}$. Suppose $h$ has Lipschitz bound $A$, $q$ has Lipschitz bound $K$, and $K\geq 0$. Then the composition $f=q\circ h$ has Lipschitz bound $KA$:
 
-**B**: The bound becomes vacuous when λ₂ = 0 (disconnected graph) or trivial when λ₂ = d_max (complete graph eliminates all signal).
+$$
+|q(h(x))-q(h(y))|\leq KA|x-y|
+$$
 
-## 7. Complete Graph Optimality
+for every $x,y\in\mathbb{R}$.
 
-**Theorem 7.1**. For the complete graph K_n (n ≥ 2), the contraction factor is exactly 0.
+#### Proof sketch
 
-**Theorem 7.2**. For any L and k ≥ 1: iterSmoothLip(K_n, L, k) = 0.
+Apply the readout inequality to $h(x)$ and $h(y)$, then use the state inequality:
 
-This shows that complete graphs achieve the theoretical optimum for smoothing — they eliminate all sensitivity in a single step. However, this comes at the cost of losing all signal, as the smoothed function is constant.
+$$
+|q(h(x))-q(h(y))|
+\leq K|h(x)-h(y)|
+\leq K A|x-y|.
+$$
 
-## 8. The Poincaré-Spectral-Robustness Bridge
+Nonnegativity of $K$ preserves the inequality when multiplying the state bound.
 
-**Theorem 8.1** (Bridge theorem). For a graph with 0 < λ₂ < d_max, margin m > 0, and L > 0:
-$$\text{smoothedRadius}(G, m, L) > 0$$
+### Corollary 5.2 (Spectral end-to-end Lipschitz bound)
 
-This bridges three mathematical domains:
-1. **Spectral geometry**: λ₂ > 0 implies the graph is connected
-2. **Analysis**: The Poincaré inequality on graphs bounds function variation in terms of the Laplacian quadratic form
-3. **Machine learning**: Positive certified radius means provable robustness
+Under the hypotheses of Theorem 4.1, if $q$ is $K$-Lipschitz with $K\geq 0$, then $f=q\circ h$ has Lipschitz bound
 
-### Cross-Domain Connection
+$$
+L_f=\frac{KG}{\sqrt{\lambda}}.
+$$
 
-The Poincaré inequality on a graph states: λ₂ · ‖f − f̄‖² ≤ ⟨f, Lf⟩. This bounds the "smoothness" of functions on the graph. When applied to the sensitivity analysis of a neural network, this smoothness bound translates directly into a Lipschitz bound, which in turn yields certified robustness. The spectral gap λ₂ is the "currency" that converts between these three domains.
+#### Proof sketch
 
-## 9. Robustness-Connectivity Duality
+Insert $A=G/\sqrt{\lambda}$ from Theorem 4.1 into Theorem 5.1.
 
-**Definition 9.1**. Two graphs G₁, G₂ are *robustness-equivalent* if c(G₁) = c(G₂).
+This factorization separates three effects. The state gain $G$ measures input excitation, the readout gain $K$ measures output amplification, and $\sqrt{\lambda}$ supplies spectral attenuation.
 
-**Theorem 9.1** (Duality). If G₁.λ₂/G₁.d_max = G₂.λ₂/G₂.d_max, then G₁ and G₂ are robustness-equivalent.
+## 6. Margin-based certification
 
-This duality has profound practical implications: a sparse graph with appropriate spectral properties can achieve the same robustness as a dense graph, at lower computational cost.
+### Theorem 6.1 (Margin-over-Lipschitz certificate)
 
-### PEGB Analysis
+Let $f:\mathbb{R}\to\mathbb{R}$ have Lipschitz bound $L>0$. Suppose that at a reference point $x_0$,
 
-**P**: Follows from the definition of contraction factor as 1 − λ₂/d_max.
+$$
+f(x_0)=m
+$$
 
-**E**: A path graph with λ₂ = 0.1, d_max = 2 (c = 0.95) is robustness-equivalent to a dense graph with λ₂ = 5, d_max = 100 (c = 0.95).
+with $m>0$. Then the positive decision is certified for every perturbation satisfying
 
-**G**: Extends to weighted graphs where the relevant ratio becomes λ₂(L_w)/w_max.
+$$
+|y-x_0|<\frac{m}{L}.
+$$
 
-**B**: The duality breaks down when considering higher-order spectral properties (λ₃, λ₄, ...) which may affect non-linear smoothing operations.
+#### Proof sketch
 
-## 10. Algorithms
+The Lipschitz inequality gives
 
-### Algorithm 1: Spectral Robustness Certification
+$$
+|f(y)-f(x_0)|\leq L|y-x_0|.
+$$
 
-```
-Input: Graph G with spectral data, network layers, margin m, smoothing steps k
-Output: Certified robustness radius
+Since $f(y)-f(x_0)\geq-|f(y)-f(x_0)|$, it follows that
 
-1. Compute contraction factor c = 1 - lambda_2 / d_max
-2. Compute base Lipschitz L = product of layer norms
-3. Compute effective Lipschitz L_eff = c^k * L
-4. Return radius = m / L_eff
-```
+$$
+f(y)\geq f(x_0)-L|y-x_0|
+=m-L|y-x_0|.
+$$
 
-### Algorithm 2: Optimal Graph Design
+If $|y-x_0|<m/L$, positivity of $L$ yields $L|y-x_0|<m$, and hence $f(y)>0$.
 
-```
-Input: Target robustness improvement factor F, base Lipschitz L
-Output: Required algebraic connectivity
+### Theorem 6.2 (Spectral certified-radius theorem)
 
-1. Required contraction: c = F^{-1/k}  (for k smoothing steps)
-2. Required spectral ratio: lambda_2/d_max = 1 - c
-3. For given d_max, lambda_2 = d_max * (1 - c)
-4. Return lambda_2
-```
+Let $\lambda,G,K,m$ be positive real numbers. Let $h:\mathbb{R}\to\mathbb{R}$ satisfy
 
-## 11. Discussion
+$$
+\lambda\bigl(h(x)-h(y)\bigr)^2\leq G^2(x-y)^2
+$$
 
-### 11.1 Practical Implications
+for all $x,y\in\mathbb{R}$. Let $q:\mathbb{R}\to\mathbb{R}$ satisfy
 
-Our results suggest a principled approach to robust neural network design:
-1. Choose computation graphs with high algebraic connectivity
-2. Use k smoothing layers to exponentially improve robustness
-3. Balance depth (expressiveness) with smoothing (robustness)
+$$
+|q(a)-q(b)|\leq K|a-b|
+$$
 
-### 11.2 Limitations
+for all $a,b\in\mathbb{R}$. If at $x_0$ the composed score has margin
 
-- Our bounds are for the smoothing operator model; real GNN operations involve non-linearities
-- The contraction factor assumes linear smoothing; non-linear message functions may have different behavior
-- Complete graph smoothing eliminates all signal — practical architectures must trade off robustness and expressiveness
+$$
+q(h(x_0))=m,
+$$
 
-### 11.3 Connection to Prior Work in the Catalog
+then the positive decision of $f=q\circ h$ is certified throughout the open radius
 
-Our work deepens several existing catalog results:
-- `certified_robustness_radius` (AlgebraicNeuralArchitecture.lean): We add the spectral dimension, showing how graph structure improves the basic margin/Lipschitz bound
-- `closure_network_certified_robust_radius` (ClosureNetworkUAP.lean): Our graph smoothing is a specific case of the closure operator framework
-- `SheafCertifiedRobustness.lean`: Our Poincaré bridge theorem connects to the sheaf-theoretic approach through the common thread of local-to-global certification
+$$
+r_{\mathrm{cert}}
+=
+\frac{m\sqrt{\lambda}}{KG}.
+$$
 
-## 12. Future Work
+That is, every $y$ satisfying
 
-1. **Non-linear smoothing**: Extend contraction analysis to non-linear message-passing functions
-2. **Attention graph spectrum**: Apply the theory to transformer attention graphs
-3. **Adaptive smoothing**: Learn the optimal number of smoothing steps per input
-4. **Higher eigenvalues**: Investigate the role of λ₃, λ₄, ... in robustness bounds
-5. **Dynamic graphs**: Extend to time-varying computation graphs
+$$
+|y-x_0|<\frac{m\sqrt{\lambda}}{KG}
+$$
 
-## References
+also satisfies $q(h(y))>0$.
 
-1. Fiedler, M. (1973). "Algebraic connectivity of graphs." *Czechoslovak Mathematical Journal*, 23(2), 298-305.
-2. Szegedy, C., et al. (2014). "Intriguing properties of neural networks." *ICLR*.
-3. Goodfellow, I., Shlens, J., & Szegedy, C. (2015). "Explaining and harnessing adversarial examples." *ICLR*.
-4. Hein, M., & Andriushchenko, M. (2017). "Formal guarantees on the robustness of a classifier against adversarial manipulation." *NeurIPS*.
-5. Catalog: `FINAL/MachineLearning/AlgebraicNeuralArchitecture.lean`
-6. Catalog: `FINAL/MachineLearning/ClosureNetworkUAP.lean`
-7. Catalog: `Catalog/MachineLearning/SheafCertifiedRobustness.lean`
+#### Proof sketch
+
+By Theorem 4.1, $h$ has Lipschitz bound $G/\sqrt{\lambda}$. By Theorem 5.1, $q\circ h$ has positive Lipschitz bound
+
+$$
+L_f=K\frac{G}{\sqrt{\lambda}}.
+$$
+
+Apply Theorem 6.1. The resulting radius simplifies as
+
+$$
+\frac{m}{L_f}
+=
+\frac{m}{KG/\sqrt{\lambda}}
+=
+\frac{m\sqrt{\lambda}}{KG}.
+$$
+
+### Corollary 6.3 (Scaling laws)
+
+Within the assumptions of Theorem 6.2, the certified radius is linear in $m$, inverse-linear in $G$ and $K$, and proportional to $\sqrt{\lambda}$. Thus multiplying $\lambda$ by $c^2$ multiplies the radius by $c$, provided all other quantities remain unchanged.
+
+## 7. Necessity of gain and margin assumptions
+
+The positive theorem does not support a connectivity-only conclusion. Two parametric counterexamples show why.
+
+### Theorem 7.1 (No positive radius from connectivity alone)
+
+For every proposed radius $R>0$, there exists a $1$-Lipschitz score $f:\mathbb{R}\to\mathbb{R}$ such that $f(0)>0$ but the positive decision is not certified on radius $R$ around $0$.
+
+#### Proof sketch
+
+Define
+
+$$
+f(x)=\frac{R}{2}-x.
+$$
+
+Then $f(0)=R/2>0$. Moreover,
+
+$$
+|f(x)-f(y)|=|y-x|=|x-y|,
+$$
+
+so $f$ is $1$-Lipschitz. Set $y=R/2$. Then $|y|=R/2<R$ while $f(y)=0$, which is not positive. Hence the radius-$R$ certificate fails. The construction makes no reference to connectivity and therefore defeats any uniform claim based on connectivity alone.
+
+### Theorem 7.2 (No Lipschitz bound from connectivity alone)
+
+For every proposed nonnegative number $B$, there exists a scalar score that does not have Lipschitz bound $B$.
+
+#### Proof sketch
+
+Take
+
+$$
+f(x)=(B+1)x.
+$$
+
+At $x=1$ and $y=0$,
+
+$$
+|f(1)-f(0)|=B+1>B=B|1-0|.
+$$
+
+Thus the Lipschitz inequality with bound $B$ fails. Since scalar gains can be made arbitrarily large without changing an abstract graph topology, connectivity alone cannot control functional steepness.
+
+### Consequence
+
+Theorem 7.1 identifies the role of margin: positivity at a point is insufficient unless its magnitude is compared with output variation. Theorem 7.2 identifies the role of gain: topology does not prevent arbitrary parameter scaling. Together they show that $G$, $K$, and $m$ are not decorative terms in Theorem 6.2; they are logically indispensable.
+
+## 8. Algorithms and numerical evaluation
+
+### Algorithm 8.1 (Spectral certificate evaluation)
+
+Given positive $\lambda$, $G$, $K$, and $m$, compute
+
+$$
+L_h=\frac{G}{\sqrt{\lambda}},
+\qquad
+L_f=K L_h,
+\qquad
+r_{\mathrm{cert}}=\frac{m}{L_f}.
+$$
+
+The algorithm uses a constant number of arithmetic operations and one square root, so its time and auxiliary-space complexities are both $O(1)$.
+
+For example, with $\lambda=4$, $G=2$, $K=3$, and $m=1.5$, one obtains $L_h=1$, $L_f=3$, and $r_{\mathrm{cert}}=0.5$.
+
+### Algorithm 8.2 (Finite diagnostic for the spectral state inequality)
+
+For a finite sample $x_1,\ldots,x_n$, evaluate every unordered pair and check
+
+$$
+\lambda\bigl(h(x_i)-h(x_j)\bigr)^2
+\leq
+G^2(x_i-x_j)^2+\varepsilon,
+$$
+
+where $\varepsilon\geq0$ is a numerical tolerance. This costs $O(n^2)$ state comparisons and $O(1)$ auxiliary space if failures are streamed. Passing the diagnostic is not a proof of the global hypothesis; failing it produces a concrete witness that the chosen $G$ is inadequate.
+
+### Algorithm 8.3 (Uniform counterexample generation)
+
+Given $R>0$, output $f_R(x)=R/2-x$ and witness $x=R/2$ to refute a radius-$R$ claim. Given $B\geq0$, output $g_B(x)=(B+1)x$ and witnesses $0,1$ to refute a Lipschitz bound $B$. Both constructions take $O(1)$ time and space.
+
+## 9. Applications
+
+### A certificate audit protocol
+
+A deployment-oriented audit should record the provenance of every factor. The connectivity value should correspond to the graph and weighting convention actually used by the state estimate. The gain $G$ should apply on the claimed input domain, and the readout gain $K$ should cover all states reachable under certified perturbations. The margin $m$ should be evaluated at the stated reference input and with the same decision threshold used in operation. Once these conditions are aligned, the radius follows arithmetically; without alignment, combining individually valid numbers may still produce an invalid conclusion.
+
+The protocol should also preserve inequalities in the conservative direction. Numerical lower bounds are appropriate for $\lambda$ and $m$, while numerical upper bounds are appropriate for $G$ and $K$. Rounding a spectral gap upward or a gain downward can overstate the certificate. Finally, the result should be reported as an open-radius guarantee: perturbations strictly smaller than the computed value preserve positivity. This reporting convention captures the exact logical content of the margin argument.
+
+
+The certificate is relevant to graph-structured computation whenever an internal disagreement estimate can be established. In distributed sensing, $\lambda$ can summarize communication connectivity, $G$ can bound measurement-to-state sensitivity, and $K$ can quantify the sensitivity of an alarm statistic. In coordinated control, the same factors separate coupling strength from controller gain and safety margin. In graph neural networks, they suggest reporting not just a graph spectral statistic but also norm-based bounds for feature propagation and readout layers.
+
+The formula is also useful for architecture comparison. Suppose two designs have tuples $(\lambda_1,G_1,K_1,m_1)$ and $(\lambda_2,G_2,K_2,m_2)$. Their certificates should be compared through
+
+$$
+\frac{m_1\sqrt{\lambda_1}}{K_1G_1}
+\quad\text{and}\quad
+\frac{m_2\sqrt{\lambda_2}}{K_2G_2},
+$$
+
+not through $\lambda_1$ and $\lambda_2$ alone. Added connectivity can coincide with increased gain, and training for a larger margin can alter readout sensitivity. The full ratio captures these tradeoffs.
+
+## 10. Sensitivity analysis and sharpness
+
+The certificate admits a direct logarithmic sensitivity analysis. For positive parameters,
+
+$$
+\log r_{\mathrm{cert}}
+=
+\log m+\frac{1}{2}\log\lambda-\log K-\log G.
+$$
+
+Hence a small relative change obeys
+
+$$
+\frac{\Delta r_{\mathrm{cert}}}{r_{\mathrm{cert}}}
+\approx
+\frac{\Delta m}{m}
++rac{1}{2}\frac{\Delta\lambda}{\lambda}
+-rac{\Delta K}{K}
+-rac{\Delta G}{G}.
+$$
+
+This expression makes the asymmetry among design interventions explicit. A one-percent increase in margin produces approximately a one-percent increase in radius. A one-percent reduction in either gain has the same first-order effect. A one-percent increase in connectivity produces only about a half-percent increase. Spectral improvement can still be valuable, especially when architectural changes raise $\lambda$ substantially, but the square-root law imposes diminishing returns.
+
+The constants in the chain of inequalities can be attained by affine maps. Fix positive $\lambda$, $G$, $K$, and $m$, and choose a reference point $x_0=0$. Define
+
+$$
+h(x)=\frac{G}{\sqrt{\lambda}}x
+$$
+
+and
+
+$$
+q(a)=m-Ka.
+$$
+
+The state inequality holds with equality for every pair $x,y$, because
+
+$$
+\lambda\bigl(h(x)-h(y)\bigr)^2
+=
+G^2(x-y)^2.
+$$
+
+The readout has Lipschitz constant exactly $K$, and the composed score is
+
+$$
+f(x)=m-\frac{KG}{\sqrt{\lambda}}x.
+$$
+
+At $x_0=0$, its margin is $m$. It reaches zero at
+
+$$
+x=\frac{m\sqrt{\lambda}}{KG}.
+$$
+
+Therefore the certified open radius cannot in general be enlarged while retaining only the stated hypotheses. This affine construction simultaneously saturates the spectral state estimate, the composition estimate, and the margin argument. The strict-open formulation is consequently natural rather than an artifact of the proof.
+
+This sharpness observation also distinguishes worst-case certification from average-case robustness. A nonlinear network may remain positive well beyond the certified radius in most directions or on most data points. The theorem does not estimate such typical behavior. It identifies the largest universal radius derivable from these four scalar quantities alone. Additional curvature, monotonicity, local slope, or distributional information may justify a larger certificate, but such information constitutes an additional hypothesis.
+
+### Parameter uncertainty
+
+In practice, the quantities may be available only through conservative bounds. Suppose one knows a lower bound $\underline{\lambda}>0$ for connectivity, upper bounds $\overline{G}>0$ and $\overline{K}>0$ for the gains, and a lower bound $\underline{m}>0$ for the margin. Monotonicity then gives the conservative certificate
+
+$$
+\underline{r}
+=
+\frac{\underline{m}\sqrt{\underline{\lambda}}}
+{\overline{K}\,\overline{G}}.
+$$
+
+Indeed, the true margin and connectivity can only increase the numerator relative to these bounds, while the true gains can only decrease the denominator. This interval-aware form is useful when spectral values are estimated numerically or gains are bounded by relaxations.
+
+Care is required when lower bounds reach zero. If $\underline{m}=0$ or $\underline{\lambda}=0$, this formula yields no positive radius. If an upper gain bound is unavailable, replacing it by a sampled empirical slope does not establish a global certificate. The impossibility results explain why these failures cannot be repaired by topology alone.
+
+### Diagnostic interpretation
+
+The state inequality can be rearranged for $x\neq y$ as
+
+$$
+\frac{|h(x)-h(y)|}{|x-y|}
+\leq
+\frac{G}{\sqrt{\lambda}}.
+$$
+
+Thus a sampled pair with a larger quotient immediately refutes the proposed state gain. Conversely, finitely many passing pairs only provide evidence on those pairs. A global conclusion requires analytical structure, exhaustive coverage of a finite domain, or another rigorous bounding method. This distinction should be retained when the algorithms below are used in exploratory workflows.
+
+## 11. Limitations and discussion
+
+The model is scalar and global. Real networks have vector-valued inputs, intermediate tensors, nonlinear layers, and multiclass outputs. The scalar absolute value should then be replaced by a chosen norm, and gains by induced operator bounds. A multiclass certificate uses the margin between the winning score and every competing score, often introducing a Lipschitz bound for score differences.
+
+The spectral state inequality is assumed rather than derived from a general graph Laplacian. This is deliberate: it makes clear exactly where graph structure enters and avoids claiming that algebraic connectivity alone controls a parameterized function. In larger graphs, a derivation must project away the constant mode and use a Rayleigh-quotient or Poincaré inequality. It must also connect layer dynamics to Dirichlet energy.
+
+The bound can be conservative. Global Lipschitz constants may substantially exceed local slopes, and multiplication of layerwise bounds may accumulate slack. Nevertheless, the result has value as a compositional baseline. It states a sufficient condition with explicit dependencies and no hidden topological inference.
+
+The open radius is also essential. At distance exactly $m/L$, a worst-case affine score may reach zero. Stronger conclusions at a closed boundary require additional information, such as a strict improvement in the Lipschitz estimate or a larger margin.
+
+## 12. Future work
+
+A first extension should derive the spectral state bound from a finite graph Laplacian. Let $L_G$ be the Laplacian of a connected weighted graph and let $z$ be orthogonal to the constant vector. The Poincaré inequality $\lambda_2\|z\|^2\leq z^\top L_Gz$ can supply the spectral step, provided the network dynamics furnish an upper bound on the energy difference induced by input changes.
+
+A second extension should replace scalar spaces with finite-dimensional Euclidean spaces and use operator norms. This would permit layerwise estimates for matrices, nonlinear activations, and graph filters. A third direction is compositional derivation of $G$ from individual layer weights rather than treating it as an external assumption. Further work should investigate local spectral and Lipschitz bounds, data-dependent margins, multiclass score differences, and the optimization problem of improving $\sqrt{\lambda}/(KG)$ under architectural constraints.
+
+## 13. Conclusion
+
+Algebraic connectivity contributes to certified robustness through a precise but conditional mechanism. A spectral state-gain inequality yields a $G/\sqrt{\lambda}$ state Lipschitz bound; a $K$-Lipschitz readout yields an end-to-end bound $KG/\sqrt{\lambda}$; and a positive margin $m$ yields the certified radius $m\sqrt{\lambda}/(KG)$. Exact two-node geometry explains the spectral factor, while affine counterexamples show why connectivity cannot replace gain control or margin. The resulting framework is both constructive and restrictive: it provides a usable certificate and states exactly what topology alone cannot guarantee.

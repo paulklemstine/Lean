@@ -1,233 +1,189 @@
 #!/usr/bin/env python3
-"""
-Demo: Spectral Graph Theory Meets Neural Network Robustness
+"""Numerical illustrations of spectral connectivity and robustness bounds.
 
-Numerical examples demonstrating the core theorems:
-1. Contraction factor computation for various graph topologies
-2. Iterated smoothing and exponential Lipschitz decay
-3. Certified robustness radius improvement via spectral gap
-4. Connectivity-robustness monotonicity
+The program uses only Python's standard library.  Numerical sampling illustrates
+exact formulas but is not a substitute for a global analytical hypothesis.
 """
 
-import math
+from __future__ import annotations
+
+from dataclasses import dataclass
+from math import isclose, sqrt
+from typing import Callable, Iterable, Sequence
 
 
-def contraction_factor(alg_conn: float, max_deg: float) -> float:
-    """Compute the spectral contraction factor c = 1 - lambda_2 / d_max."""
-    assert max_deg > 0
-    assert 0 <= alg_conn <= max_deg
-    return 1.0 - alg_conn / max_deg
+@dataclass(frozen=True)
+class Certificate:
+    """Computed state, end-to-end, and radius bounds."""
+
+    state_lipschitz: float
+    output_lipschitz: float
+    certified_radius: float
 
 
-def certified_radius(margin: float, lipschitz: float) -> float:
-    """Compute certified robustness radius = margin / L."""
-    if lipschitz <= 0:
-        return float('inf') if margin > 0 else 0.0
-    return margin / lipschitz
+def two_node_energy(connectivity: float, u: float, v: float) -> float:
+    """Return (connectivity / 2) times squared node disagreement."""
+    return connectivity * (u - v) ** 2 / 2.0
 
 
-def iterated_smooth_lip(c: float, L: float, k: int) -> float:
-    """Lipschitz constant after k smoothing iterations: c^k * L."""
-    return (c ** k) * L
+def two_node_variance(u: float, v: float) -> float:
+    """Return variance in the unique two-node disagreement mode."""
+    return (u - v) ** 2 / 2.0
 
 
-def network_lipschitz(layer_constants: list[float]) -> float:
-    """Product of layer Lipschitz constants."""
-    result = 1.0
-    for lc in layer_constants:
-        result *= lc
-    return result
+def spectral_certificate(
+    connectivity: float, state_gain: float, readout_gain: float, margin: float
+) -> Certificate:
+    """Compute G/sqrt(lambda), KG/sqrt(lambda), and m sqrt(lambda)/(KG)."""
+    if connectivity <= 0.0:
+        raise ValueError("connectivity must be positive")
+    if state_gain <= 0.0 or readout_gain <= 0.0 or margin <= 0.0:
+        raise ValueError("state gain, readout gain, and margin must be positive")
+    state_lipschitz = state_gain / sqrt(connectivity)
+    output_lipschitz = readout_gain * state_lipschitz
+    return Certificate(
+        state_lipschitz=state_lipschitz,
+        output_lipschitz=output_lipschitz,
+        certified_radius=margin / output_lipschitz,
+    )
 
 
-# ==============================================================
-# Example 1: Contraction factors for common graph topologies
-# ==============================================================
-print("=" * 60)
-print("Example 1: Contraction Factors for Graph Topologies")
-print("=" * 60)
+def check_spectral_state_samples(
+    state: Callable[[float], float],
+    samples: Sequence[float],
+    connectivity: float,
+    state_gain: float,
+    tolerance: float = 1e-12,
+) -> tuple[bool, float]:
+    """Test the squared state inequality on all sampled pairs.
 
-# Path graph P_n: lambda_2 = 2(1 - cos(pi/n)), d_max = 2
-for n in [5, 10, 20, 50, 100]:
-    lam2 = 2 * (1 - math.cos(math.pi / n))
-    d_max = 2.0
-    c = contraction_factor(min(lam2, d_max), d_max)
-    print(f"  Path P_{n:3d}: lambda_2 = {lam2:.6f}, d_max = {d_max}, c = {c:.6f}")
-
-print()
-
-# Cycle graph C_n: lambda_2 = 2(1 - cos(2*pi/n)), d_max = 2
-for n in [5, 10, 20, 50, 100]:
-    lam2 = 2 * (1 - math.cos(2 * math.pi / n))
-    d_max = 2.0
-    c = contraction_factor(min(lam2, d_max), d_max)
-    print(f"  Cycle C_{n:3d}: lambda_2 = {lam2:.6f}, d_max = {d_max}, c = {c:.6f}")
-
-print()
-
-# Complete graph K_n: lambda_2 = n, d_max = n-1
-# Using our normalization: algConn = maxDeg = n for complete averaging
-for n in [3, 5, 10, 20, 50]:
-    c = contraction_factor(n, n)  # c = 0 for complete graph
-    print(f"  Complete K_{n:2d}: lambda_2 = maxDeg = {n}, c = {c:.6f}")
-
-# ==============================================================
-# Example 2: Iterated Smoothing — Exponential Decay
-# ==============================================================
-print("\n" + "=" * 60)
-print("Example 2: Iterated Smoothing — Exponential Lipschitz Decay")
-print("=" * 60)
-
-L_base = 100.0  # Base Lipschitz constant
-margin = 1.0    # Classification margin
-
-for c_label, c_val in [("Path (c=0.95)", 0.95), ("Cycle (c=0.80)", 0.80),
-                         ("Dense (c=0.50)", 0.50), ("Very dense (c=0.10)", 0.10)]:
-    print(f"\n  {c_label}:")
-    for k in [0, 1, 2, 5, 10, 20]:
-        lip_k = iterated_smooth_lip(c_val, L_base, k)
-        rad_k = certified_radius(margin, lip_k)
-        print(f"    k={k:2d}: L_eff = {lip_k:10.4f}, radius = {rad_k:10.6f}")
-
-# ==============================================================
-# Example 3: Robustness Improvement Factor
-# ==============================================================
-print("\n" + "=" * 60)
-print("Example 3: Robustness Improvement Factor (1/c^k)")
-print("=" * 60)
-
-for c_val in [0.95, 0.80, 0.50, 0.10]:
-    print(f"\n  c = {c_val}:")
-    for k in [1, 5, 10, 20, 50]:
-        improvement = 1.0 / (c_val ** k)
-        print(f"    k={k:2d}: improvement = {improvement:12.2f}x")
-
-# ==============================================================
-# Example 4: Neural Network with Graph Smoothing
-# ==============================================================
-print("\n" + "=" * 60)
-print("Example 4: 5-Layer Neural Network with Graph Smoothing")
-print("=" * 60)
-
-layers = [2.5, 1.8, 3.0, 1.2, 2.0]
-L_net = network_lipschitz(layers)
-margin = 0.5
-
-print(f"  Layer Lipschitz constants: {layers}")
-print(f"  Network Lipschitz constant L = {L_net:.2f}")
-print(f"  Classification margin m = {margin}")
-print(f"  Base certified radius = {certified_radius(margin, L_net):.6f}")
-
-for graph_name, alg_conn, max_deg in [
-    ("Sparse (path-like)", 0.2, 4.0),
-    ("Moderate", 1.0, 4.0),
-    ("Dense", 3.0, 4.0),
-    ("Near-complete", 3.9, 4.0),
-]:
-    c = contraction_factor(alg_conn, max_deg)
-    print(f"\n  Graph: {graph_name} (lambda_2={alg_conn}, d_max={max_deg}, c={c:.4f})")
-    for k in [1, 3, 5, 10]:
-        lip_smooth = iterated_smooth_lip(c, L_net, k)
-        rad_smooth = certified_radius(margin, lip_smooth)
-        print(f"    k={k:2d}: L_eff={lip_smooth:8.2f}, radius={rad_smooth:.6f}")
-
-# ==============================================================
-# Example 5: Robustness-Connectivity Duality
-# ==============================================================
-print("\n" + "=" * 60)
-print("Example 5: Robustness-Connectivity Duality")
-print("=" * 60)
-print("  Graphs with same lambda_2/d_max ratio have same contraction factor:")
-
-dualities = [
-    (1.0, 2.0, "Sparse: lambda_2=1, d_max=2"),
-    (2.0, 4.0, "Medium: lambda_2=2, d_max=4"),
-    (5.0, 10.0, "Dense: lambda_2=5, d_max=10"),
-    (50.0, 100.0, "Very dense: lambda_2=50, d_max=100"),
-]
-for alg_conn, max_deg, label in dualities:
-    c = contraction_factor(alg_conn, max_deg)
-    print(f"  {label}: ratio={alg_conn/max_deg:.2f}, c={c:.4f}")
-
-print("\n" + "=" * 60)
-print("All examples completed successfully.")
-print("=" * 60)
+    Returns whether all pairs pass and the greatest value of left minus right.
+    A nonpositive maximum means every sampled pair passes (up to tolerance).
+    """
+    if connectivity <= 0.0 or state_gain < 0.0 or tolerance < 0.0:
+        raise ValueError("invalid connectivity, gain, or tolerance")
+    worst = float("-inf")
+    for i, x in enumerate(samples):
+        for y in samples[i:]:
+            lhs = connectivity * (state(x) - state(y)) ** 2
+            rhs = state_gain**2 * (x - y) ** 2
+            worst = max(worst, lhs - rhs)
+    if worst == float("-inf"):
+        worst = 0.0
+    return worst <= tolerance, worst
 
 
-#!/usr/bin/env python3
-"""
-Visualization: Spectral Robustness — Contraction Factor vs Iterations
-
-Shows how the certified robustness radius grows exponentially with
-smoothing iterations for different graph connectivity levels.
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-import json
+def radius_counterexample(radius: float) -> tuple[Callable[[float], float], float]:
+    """Return f(x)=radius/2-x and a point inside radius where f is zero."""
+    if radius <= 0.0:
+        raise ValueError("radius must be positive")
+    return lambda x: radius / 2.0 - x, radius / 2.0
 
 
-def contraction_factor(alg_conn: float, max_deg: float) -> float:
-    return 1.0 - alg_conn / max_deg
+def lipschitz_counterexample(bound: float) -> Callable[[float], float]:
+    """Return f(x)=(bound+1)x, which violates proposed nonnegative bound."""
+    if bound < 0.0:
+        raise ValueError("bound must be nonnegative")
+    return lambda x: (bound + 1.0) * x
 
 
-def certified_radius(margin: float, lipschitz: float) -> float:
-    if lipschitz <= 0:
-        return float('inf') if margin > 0 else 0.0
-    return margin / lipschitz
+def grid(start: float, stop: float, count: int) -> list[float]:
+    """Return count equally spaced points, including both endpoints."""
+    if count < 2:
+        raise ValueError("count must be at least two")
+    step = (stop - start) / (count - 1)
+    return [start + i * step for i in range(count)]
 
 
-def iterated_smooth_lip(c: float, L: float, k: int) -> float:
-    return (c ** k) * L
+def format_rows(rows: Iterable[tuple[str, float]]) -> str:
+    """Format named floating-point values as an aligned table."""
+    return "\n".join(f"  {name:<28} {value:>10.6f}" for name, value in rows)
 
 
-# Parameters
-L_base = 50.0
-margin = 1.0
-k_values = np.arange(0, 31)
+def demonstrate_two_node_identity() -> None:
+    """Evaluate the exact energy-variance identity at several states."""
+    connectivity = 3.5
+    pairs = [(-2.0, 1.0), (0.0, 0.0), (1.25, -0.75)]
+    print("1. TWO-NODE SPECTRAL IDENTITY")
+    for u, v in pairs:
+        energy = two_node_energy(connectivity, u, v)
+        spectral_variance = connectivity * two_node_variance(u, v)
+        assert isclose(energy, spectral_variance, rel_tol=1e-12, abs_tol=1e-12)
+        print(
+            f"  (u,v)=({u:5.2f},{v:5.2f}): "
+            f"energy={energy:8.4f}, lambda*variance={spectral_variance:8.4f}"
+        )
 
-# Different graph topologies
-graphs = [
-    ("Path-like (c=0.95)", 0.95, '#e74c3c'),
-    ("Sparse (c=0.80)", 0.80, '#e67e22'),
-    ("Moderate (c=0.60)", 0.60, '#2ecc71'),
-    ("Dense (c=0.30)", 0.30, '#3498db'),
-    ("Very dense (c=0.10)", 0.10, '#9b59b6'),
-]
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+def demonstrate_certificate() -> None:
+    """Compute a certificate and sample a sharp affine score around its center."""
+    connectivity, state_gain, readout_gain, margin = 4.0, 2.0, 3.0, 1.5
+    cert = spectral_certificate(connectivity, state_gain, readout_gain, margin)
+    print("\n2. SPECTRAL ROBUSTNESS CERTIFICATE")
+    print(
+        format_rows(
+            [
+                ("state Lipschitz bound", cert.state_lipschitz),
+                ("output Lipschitz bound", cert.output_lipschitz),
+                ("certified open radius", cert.certified_radius),
+            ]
+        )
+    )
 
-# Plot 1: Lipschitz constant decay
-ax1 = axes[0]
-for label, c, color in graphs:
-    lip_values = [iterated_smooth_lip(c, L_base, k) for k in k_values]
-    ax1.semilogy(k_values, lip_values, '-o', color=color, label=label,
-                 markersize=3, linewidth=2)
+    state = lambda x: state_gain / sqrt(connectivity) * x
+    score = lambda x: margin - readout_gain * state(x)
+    sample_points = grid(-0.99 * cert.certified_radius, 0.99 * cert.certified_radius, 9)
+    passed, worst = check_spectral_state_samples(
+        state, sample_points, connectivity, state_gain
+    )
+    assert passed
+    assert all(score(x) > 0.0 for x in sample_points)
+    boundary = cert.certified_radius
+    assert isclose(score(boundary), 0.0, abs_tol=1e-12)
+    print(f"  sampled spectral inequality passes: {passed} (worst residual {worst:.2e})")
+    print("  every sampled point strictly inside the radius has positive score")
+    print(f"  sharp affine score at boundary x={boundary:.6f}: {score(boundary):.6f}")
 
-ax1.set_xlabel('Smoothing Iterations (k)', fontsize=12)
-ax1.set_ylabel('Effective Lipschitz Constant', fontsize=12)
-ax1.set_title('Exponential Lipschitz Decay via Graph Smoothing', fontsize=14)
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3)
-ax1.set_ylim(bottom=1e-6)
 
-# Plot 2: Certified radius growth
-ax2 = axes[1]
-for label, c, color in graphs:
-    radii = [certified_radius(margin, iterated_smooth_lip(c, L_base, k))
-             for k in k_values]
-    ax2.semilogy(k_values, radii, '-s', color=color, label=label,
-                 markersize=3, linewidth=2)
+def demonstrate_square_root_scaling() -> None:
+    """Show that quadrupling connectivity doubles the certified radius."""
+    print("\n3. SQUARE-ROOT CONNECTIVITY SCALING")
+    state_gain, readout_gain, margin = 2.0, 3.0, 1.5
+    for connectivity in (1.0, 4.0, 9.0, 16.0):
+        radius = spectral_certificate(
+            connectivity, state_gain, readout_gain, margin
+        ).certified_radius
+        print(f"  lambda={connectivity:5.1f}, sqrt(lambda)={sqrt(connectivity):4.1f}, radius={radius:.4f}")
 
-ax2.set_xlabel('Smoothing Iterations (k)', fontsize=12)
-ax2.set_ylabel('Certified Robustness Radius', fontsize=12)
-ax2.set_title('Robustness Radius Growth with Spectral Smoothing', fontsize=14)
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3)
 
-plt.tight_layout()
-plt.savefig('spectral_robustness_plot.png', dpi=150, bbox_inches='tight')
-plt.close()
+def demonstrate_counterexamples() -> None:
+    """Construct uniform witnesses against connectivity-only conclusions."""
+    print("\n4. CONNECTIVITY-ONLY COUNTEREXAMPLES")
+    proposed_radius = 2.4
+    score, witness = radius_counterexample(proposed_radius)
+    assert abs(witness) < proposed_radius and score(0.0) > 0.0 and score(witness) == 0.0
+    print(
+        f"  radius R={proposed_radius:.2f}: f(0)={score(0.0):.2f}, "
+        f"but f(R/2)={score(witness):.2f} at distance {abs(witness):.2f}<R"
+    )
 
-print("Saved: spectral_robustness_plot.png")
+    proposed_bound = 7.0
+    steep_score = lipschitz_counterexample(proposed_bound)
+    observed_slope = abs(steep_score(1.0) - steep_score(0.0))
+    assert observed_slope > proposed_bound
+    print(
+        f"  proposed Lipschitz bound B={proposed_bound:.2f}: "
+        f"change from 0 to 1 is {observed_slope:.2f}>B"
+    )
+
+
+def main() -> None:
+    """Run every numerical illustration."""
+    demonstrate_two_node_identity()
+    demonstrate_certificate()
+    demonstrate_square_root_scaling()
+    demonstrate_counterexamples()
+
+
+if __name__ == "__main__":
+    main()

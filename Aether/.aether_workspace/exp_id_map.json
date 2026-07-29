@@ -1574,5 +1574,6 @@
   "9da9b807": "jacobian_conjecture.json",
   "1a03af4c": "langlands_program_functoriality.json",
   "f1303b99": "game_of_life_universality.json",
-  "229af38b": "graceful_tree_conjecture.json"
+  "229af38b": "graceful_tree_conjecture.json",
+  "545fa377": "spectral_graph_theory_meets_network_robustness.json"
 }
