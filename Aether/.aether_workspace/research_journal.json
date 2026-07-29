@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4505be0f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n## 1. Sharp remainder bounds for arbitrary observation windows\n\n**Conjecture.** Let a periodic Born-probability sequence have period `k`. For every observation length `N`, its Ces",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-20T20:48:25",
-      "title": "Deepening: Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-    },
-    {
       "cycle_id": "2f321176",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a ph",
@@ -2501,6 +2491,16 @@
       "theorem_count": 36,
       "timestamp": "2026-07-29T23:21:22",
       "title": "Quantum Key Distribution: BB84 Security Proof"
+    },
+    {
+      "cycle_id": "7799fc2c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n1. **Sharp real escape region.** For every integer `D ≥ 2`, replace the strengthened condition `3|y| < |y|^D` in `InForwardRegion` by the paper's original condition `|y|^D > 3 max",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-07-29T23:21:28",
+      "title": "ArXiv paper: On lower bounds for canonical heights of the map $φ(X,Y)=(Y,X+Y^D+b)$"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7708899999999999
     }
   ],
-  "last_updated": "2026-07-29T23:21:22",
+  "last_updated": "2026-07-29T23:21:28",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "1efa5ae1",
-        "quality": 0.61,
-        "theorems": 6,
-        "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without"
-      },
-      {
         "cycle_id": "2f329d75",
         "quality": 0.73,
         "theorems": 20,
@@ -3203,6 +3197,12 @@
         "quality": 0.686,
         "theorems": 68,
         "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
+      },
+      {
+        "cycle_id": "7799fc2c",
+        "quality": 0.686,
+        "theorems": 66,
+        "title": "ArXiv paper: On lower bounds for canonical heights of the map $φ(X,Y)=(Y,X+Y^D+b"
       }
     ],
     "Combinatorics": [
