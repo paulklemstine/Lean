@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dd6a308e",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions for Finite Cop-Win Elimination\n\n## 1. Order-independent asynchronous elimination\n\n**Conjecture.** Let a finite candidate system be governed by a monotone contracting parallel updat",
-      "quality_score": 0.79,
-      "sorry_count": 13,
-      "theorem_count": 11,
-      "timestamp": "2026-07-20T09:41:55",
-      "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementation"
-    },
-    {
       "cycle_id": "d14aad94",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: Proof Complexity and Thermodynamic Cost\n\n## 1. Computable-bound escape for shortest proofs\n\nFix a sound, computably axiomatized theory capable of elementary arithmetic and a prefi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-29T19:53:49",
       "title": "Frankl's Union-Closed Conjecture: Partial Results"
+    },
+    {
+      "cycle_id": "35f601c4",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n## What is formally established\n\n`Catalog/Applications/InfiniteChessOmega/Core.lean` develops an abstract winning-game-tree model with White forced-step nodes and countably branch",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-07-29T19:53:54",
+      "title": "Infinite Chess: Checkmate in Omega Moves"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7628999999999999
     }
   ],
-  "last_updated": "2026-07-29T19:53:49",
+  "last_updated": "2026-07-29T19:53:54",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "cb7978a9",
-        "quality": 0.55,
-        "theorems": 18,
-        "title": "This cycle deepened the theory of the fixed-amplitude model, where every present"
-      },
-      {
         "cycle_id": "78cd863a",
         "quality": 0.63498,
         "theorems": 9,
@@ -3327,6 +3321,12 @@
         "quality": 0.76634,
         "theorems": 11,
         "title": "ArXiv paper: A positive square-energy strengthening of Turán's theorem"
+      },
+      {
+        "cycle_id": "35f601c4",
+        "quality": 0.686,
+        "theorems": 32,
+        "title": "Infinite Chess: Checkmate in Omega Moves"
       }
     ],
     "Cryptography": [
