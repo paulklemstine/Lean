@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c1b3f8da",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Small Doubling in Ordered and Metabelian Groups\n\n## 1. Stability from near-minimal collision surplus\n\n**Conjecture.** Let `S` be a finite nonempty subset of a right-ordered group.",
-      "quality_score": 0.74,
-      "sorry_count": 13,
-      "theorem_count": 11,
-      "timestamp": "2026-07-20T02:08:19",
-      "title": "ArXiv paper: On Small Doubling in Right-Ordered Groups and Baumslag-Solitar Groups-II"
-    },
-    {
       "cycle_id": "d4bc25af",
       "domain": "Logic",
       "key_insight": "# Future directions\n\n## Scope achieved\n\n`HamiltonCoverLinearArboricityBridge.lean` formalizes a deterministic connector underlying the paper's probabilistic results. A cover by two-regular layers is i",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-29T15:28:54",
       "title": "EML Universal Approximation"
+    },
+    {
+      "cycle_id": "d1098480",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n1. **Hopf-map surjectivity with an explicit section on two charts.** For every `q : Fin 3 → ℝ` satisfying `∑ i, q i ^ 2 = 1`, prove that there exist `z w : ℂ` with `‖z‖ ^ 2 + ‖w‖",
+      "quality_score": 0.685,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-29T17:46:39",
+      "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74002
     }
   ],
-  "last_updated": "2026-07-29T15:28:54",
+  "last_updated": "2026-07-29T17:46:39",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "7bc47166",
-        "quality": 0.78,
-        "theorems": 13,
-        "title": "The Thermodynamics of Sorting: Entropy and Computational Work"
-      },
-      {
         "cycle_id": "3cc7aff9",
         "quality": 0.69,
         "theorems": 8,
@@ -3947,6 +3941,12 @@
         "quality": 0.686,
         "theorems": 224,
         "title": "Close Proofs: [Reset] Fresh approach in Shared"
+      },
+      {
+        "cycle_id": "d1098480",
+        "quality": 0.685,
+        "theorems": 9,
+        "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
       }
     ],
     "Tropical": [
