@@ -1,212 +1,169 @@
-"""
-Numerical demonstrations of the conservation laws of the planar Kepler problem.
+#!/usr/bin/env python3
+"""Numerical demonstrations of Noether charges and Kepler invariants.
 
-This script verifies, on actual integrated trajectories, the three nested
-conservation laws proved formally in the accompanying paper:
-
-  1. Angular momentum   L_z = x*vy - y*vx          (any central force)
-  2. Energy             E   = 0.5*(vx^2+vy^2) - k/r (inverse-square law)
-  3. Laplace-Runge-Lenz A   = (L_z*vy - k*x/r,      (inverse-square law only)
-                               -L_z*vx - k*y/r)
-
-It also demonstrates the "fingerprint" result: the LRL vector is conserved only
-for the inverse-square force (power p = 2); for forces ~ r^{-p} with p != 2 the
-LRL vector drifts, growing with |p - 2|.
-
-All functions are self-contained and use only the Python standard library.
+Only the Python standard library is required. The script checks exact sampled
+motions, verifies the Runge--Lenz conic identity, and integrates an elliptic
+Kepler orbit with velocity Verlet while reporting invariant drift.
 """
 
 from __future__ import annotations
 
-import math
-from typing import Callable, List, Tuple
+from dataclasses import dataclass
+from math import cos, pi, sin, sqrt
+from typing import Callable, Iterable, Sequence
 
-State = Tuple[float, float, float, float]  # (x, y, vx, vy)
-
-
-def angular_momentum(s: State) -> float:
-    """L_z = x*vy - y*vx (conserved for any central force)."""
-    x, y, vx, vy = s
-    return x * vy - y * vx
+Vec3 = tuple[float, float, float]
 
 
-def energy(s: State, k: float) -> float:
-    """E = 0.5*(vx^2 + vy^2) - k/r for the inverse-square (Kepler) potential."""
-    x, y, vx, vy = s
-    r = math.hypot(x, y)
-    return 0.5 * (vx * vx + vy * vy) - k / r
+def add(a: Vec3, b: Vec3) -> Vec3:
+    return (a[0] + b[0], a[1] + b[1], a[2] + b[2])
 
 
-def lrl_vector(s: State, k: float) -> Tuple[float, float]:
-    """Laplace-Runge-Lenz vector A = (L_z*vy - k*x/r, -L_z*vx - k*y/r)."""
-    x, y, vx, vy = s
-    r = math.hypot(x, y)
-    lz = angular_momentum(s)
-    ax = lz * vy - k * x / r
-    ay = -lz * vx - k * y / r
-    return ax, ay
+def sub(a: Vec3, b: Vec3) -> Vec3:
+    return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
 
 
-def acceleration(s: State, k: float, p: float = 2.0) -> Tuple[float, float]:
-    """Central force ~ r^{-p}: (ax, ay) = -k * (x, y) / r^{p+1}.
+def scale(c: float, a: Vec3) -> Vec3:
+    return (c * a[0], c * a[1], c * a[2])
 
-    p = 2 recovers Newtonian gravity (inverse-square). The acceleration is
-    radial for every p, so angular momentum is conserved regardless of p.
-    """
-    x, y, _vx, _vy = s
-    r = math.hypot(x, y)
-    factor = -k / (r ** (p + 1.0))
-    return factor * x, factor * y
+
+def dot(a: Vec3, b: Vec3) -> float:
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+
+
+def cross(a: Vec3, b: Vec3) -> Vec3:
+    return (
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+    )
+
+
+def norm(a: Vec3) -> float:
+    return sqrt(dot(a, a))
+
+
+def max_vec_error(values: Sequence[Vec3]) -> float:
+    base = values[0]
+    return max(norm(sub(value, base)) for value in values)
+
+
+def noether_charge(p: Vec3, xi: Vec3, boundary: float) -> float:
+    """Return J = p dot xi - B."""
+    return dot(p, xi) - boundary
+
+
+def kepler_energy(mu: float, q: Vec3, v: Vec3) -> float:
+    return 0.5 * dot(v, v) - mu / norm(q)
+
+
+def angular_momentum(q: Vec3, v: Vec3) -> Vec3:
+    return cross(q, v)
+
+
+def runge_lenz(mu: float, q: Vec3, v: Vec3) -> Vec3:
+    radius = norm(q)
+    return sub(cross(v, cross(q, v)), scale(mu / radius, q))
+
+
+def conic_bridge_residual(mu: float, q: Vec3, v: Vec3) -> float:
+    """Return A dot q - (|q x v|^2 - mu |q|), theoretically zero."""
+    a = runge_lenz(mu, q, v)
+    ell = angular_momentum(q, v)
+    return dot(a, q) - (dot(ell, ell) - mu * norm(q))
+
+
+def acceleration(mu: float, q: Vec3) -> Vec3:
+    radius = norm(q)
+    if radius == 0.0:
+        raise ValueError("Kepler acceleration is undefined at collision")
+    return scale(-mu / radius**3, q)
+
+
+@dataclass(frozen=True)
+class State:
+    time: float
+    position: Vec3
+    velocity: Vec3
 
 
 def velocity_verlet(
-    s0: State, k: float, dt: float, steps: int, p: float = 2.0
-) -> List[State]:
-    """Symplectic velocity-Verlet integration of the central-force problem.
-
-    Returns the full trajectory (length steps + 1). Velocity-Verlet is a
-    symplectic integrator, so it preserves the conserved quantities with no
-    secular drift.
-    """
-    x, y, vx, vy = s0
-    traj: List[State] = [s0]
-    ax, ay = acceleration((x, y, vx, vy), k, p)
-    for _ in range(steps):
-        # half-kick, drift, recompute force, half-kick
-        vx_half = vx + 0.5 * dt * ax
-        vy_half = vy + 0.5 * dt * ay
-        x += dt * vx_half
-        y += dt * vy_half
-        ax, ay = acceleration((x, y, vx, vy), k, p)
-        vx = vx_half + 0.5 * dt * ax
-        vy = vy_half + 0.5 * dt * ay
-        traj.append((x, y, vx, vy))
-    return traj
+    mu: float, q0: Vec3, v0: Vec3, step: float, steps: int
+) -> list[State]:
+    """Integrate q'' = -mu q/|q|^3 with velocity Verlet."""
+    if step <= 0.0 or steps < 0:
+        raise ValueError("step must be positive and steps nonnegative")
+    q, v = q0, v0
+    result = [State(0.0, q, v)]
+    a = acceleration(mu, q)
+    for index in range(1, steps + 1):
+        q_next = add(add(q, scale(step, v)), scale(0.5 * step * step, a))
+        a_next = acceleration(mu, q_next)
+        v_next = add(v, scale(0.5 * step, add(a, a_next)))
+        q, v, a = q_next, v_next, a_next
+        result.append(State(index * step, q, v))
+    return result
 
 
-def max_drift(values: List[float]) -> float:
-    """Maximum absolute deviation of a list from its first entry."""
-    v0 = values[0]
-    return max(abs(v - v0) for v in values)
+def invariant_report(mu: float, states: Sequence[State]) -> dict[str, float]:
+    energies = [kepler_energy(mu, s.position, s.velocity) for s in states]
+    momenta = [angular_momentum(s.position, s.velocity) for s in states]
+    runge = [runge_lenz(mu, s.position, s.velocity) for s in states]
+    bridges = [abs(conic_bridge_residual(mu, s.position, s.velocity)) for s in states]
+    return {
+        "maximum energy drift": max(abs(e - energies[0]) for e in energies),
+        "maximum angular-momentum drift": max_vec_error(momenta),
+        "maximum Runge-Lenz drift": max_vec_error(runge),
+        "maximum conic-identity residual": max(bridges),
+    }
 
 
-def elliptical_initial_condition(k: float, a: float, e: float) -> State:
-    """Initial state at pericenter of an ellipse with semi-major axis a and
-    eccentricity e under Newtonian gravity with coupling k.
-
-    At pericenter r = a*(1 - e), the velocity is purely tangential with speed
-    given by the vis-viva equation v^2 = k*(2/r - 1/a).
-    """
-    r_peri = a * (1.0 - e)
-    v_peri = math.sqrt(k * (2.0 / r_peri - 1.0 / a))
-    return (r_peri, 0.0, 0.0, v_peri)
-
-
-def demo_kepler_conservation() -> None:
-    """Demo 1: verify L_z, E, and the LRL vector are conserved on a full
-    Newtonian (inverse-square) elliptical orbit."""
-    print("=" * 70)
-    print("DEMO 1: Conservation laws on a Newtonian elliptical orbit (p = 2)")
-    print("=" * 70)
-    k = 1.0
-    a, e = 1.0, 0.6
-    s0 = elliptical_initial_condition(k, a, e)
-    dt = 1e-4
-    steps = 200_000  # several orbital periods
-    traj = velocity_verlet(s0, k, dt, steps, p=2.0)
-
-    lz = [angular_momentum(s) for s in traj]
-    en = [energy(s, k) for s in traj]
-    ax = [lrl_vector(s, k)[0] for s in traj]
-    ay = [lrl_vector(s, k)[1] for s in traj]
-
-    print(f"  initial state (pericenter): x={s0[0]:.4f}, vy={s0[3]:.4f}")
-    print(f"  semi-major axis a={a}, eccentricity e={e}")
-    print(f"  L_z   initial = {lz[0]:+.6f}   max drift = {max_drift(lz):.2e}")
-    print(f"  E     initial = {en[0]:+.6f}   max drift = {max_drift(en):.2e}")
-    print(f"  A_x   initial = {ax[0]:+.6f}   max drift = {max_drift(ax):.2e}")
-    print(f"  A_y   initial = {ay[0]:+.6f}   max drift = {max_drift(ay):.2e}")
-    amag = math.hypot(ax[0], ay[0])
-    print(f"  |A| = {amag:.6f}  vs predicted k*e = {k * e:.6f}")
-    print(f"  A direction (toward pericenter): ({ax[0] / amag:+.4f}, "
-          f"{ay[0] / amag:+.4f})  expected (+1, 0)")
-    print()
+def demonstrate_translation_charge() -> None:
+    """A free particle has constant momentum in every translation direction."""
+    p: Vec3 = (2.0, -1.0, 0.5)
+    q0: Vec3 = (1.0, 2.0, -1.0)
+    axis: Vec3 = (0.0, 1.0, 0.0)
+    charges = []
+    for time in (0.0, 0.5, 1.0, 2.0):
+        _q = add(q0, scale(time, p))
+        charges.append(noether_charge(p, axis, 0.0))
+    print("Directional momentum charges:", charges)
 
 
-def demo_force_law_discriminator() -> None:
-    """Demo 2: the LRL fingerprint. Angular momentum is conserved for every
-    power-law central force, but the LRL vector is conserved only at p = 2."""
-    print("=" * 70)
-    print("DEMO 2: LRL fingerprint -- conserved only for inverse-square (p=2)")
-    print("=" * 70)
-    k = 1.0
-    a, e = 1.0, 0.6
-    s0 = elliptical_initial_condition(k, a, e)
-    dt = 1e-4
-    steps = 60_000
-    print(f"  {'power p':>8} | {'L_z drift':>12} | {'LRL drift':>12}")
-    print("  " + "-" * 40)
-    for p in (1.6, 1.8, 1.9, 2.0, 2.1, 2.2, 2.4):
-        traj = velocity_verlet(s0, k, dt, steps, p=p)
-        lz = [angular_momentum(s) for s in traj]
-        # Use the p=2 LRL definition as the diagnostic observable.
-        ax = [lrl_vector(s, k)[0] for s in traj]
-        ay = [lrl_vector(s, k)[1] for s in traj]
-        lrl_drift = max(max_drift(ax), max_drift(ay))
-        tag = "  <-- inverse-square" if abs(p - 2.0) < 1e-9 else ""
-        print(f"  {p:>8.2f} | {max_drift(lz):>12.2e} | "
-              f"{lrl_drift:>12.2e}{tag}")
-    print()
-    print("  Angular momentum drift stays at integrator noise for ALL p")
-    print("  (every power-law force is central). LRL drift is minimized at")
-    print("  p = 2 and grows with |p - 2|: the algebraic fingerprint of the")
-    print("  inverse-square law.")
-    print()
+def demonstrate_exact_circular_orbit() -> None:
+    """Sample the exact unit circular Kepler orbit."""
+    mu = 1.0
+    states = [
+        State(t, (cos(t), sin(t), 0.0), (-sin(t), cos(t), 0.0))
+        for t in (0.0, 0.4, 1.2, 2.5, 2.0 * pi)
+    ]
+    print("Exact circular-orbit invariant report:")
+    for name, value in invariant_report(mu, states).items():
+        print(f"  {name}: {value:.3e}")
 
 
-def demo_angular_momentum_robustness() -> None:
-    """Demo 3: angular momentum is the most robust law -- conserved even for a
-    time-varying central force a(t) with no fixed potential."""
-    print("=" * 70)
-    print("DEMO 3: Angular momentum robustness under a time-varying central force")
-    print("=" * 70)
-    # Custom integrator with an explicitly time-dependent radial strength a(t).
-    k = 1.0
-    s0 = (1.0, 0.0, 0.1, 1.0)
-    dt = 1e-4
-    steps = 100_000
-    x, y, vx, vy = s0
-    lz_vals: List[float] = [angular_momentum(s0)]
-    t = 0.0
-    for _ in range(steps):
-        # radial strength varies in time AND with radius -- still central
-        r = math.hypot(x, y)
-        a_scalar = -(1.0 + 0.5 * math.sin(3.0 * t)) * k / r ** 3
-        ax, ay = a_scalar * x, a_scalar * y
-        vx_h = vx + 0.5 * dt * ax
-        vy_h = vy + 0.5 * dt * ay
-        x += dt * vx_h
-        y += dt * vy_h
-        r = math.hypot(x, y)
-        a_scalar = -(1.0 + 0.5 * math.sin(3.0 * (t + dt))) * k / r ** 3
-        ax, ay = a_scalar * x, a_scalar * y
-        vx = vx_h + 0.5 * dt * ax
-        vy = vy_h + 0.5 * dt * ay
-        t += dt
-        lz_vals.append(angular_momentum((x, y, vx, vy)))
-    print("  Force = a(t) * (x, y) with a(t) = -(1 + 0.5 sin 3t) k / r^3")
-    print("  (time-varying strength -> energy NOT conserved, but force central)")
-    print(f"  L_z initial = {lz_vals[0]:+.6f}   max drift = "
-          f"{max_drift(lz_vals):.2e}")
-    print("  Angular momentum survives even when energy does not: the rotational")
-    print("  symmetry charge requires only centrality.")
-    print()
+def demonstrate_elliptic_integration() -> None:
+    """Integrate an eccentric bound orbit and measure invariant drift."""
+    mu = 1.0
+    eccentricity = 0.5
+    periapsis = 1.0 - eccentricity
+    speed = sqrt((1.0 + eccentricity) / (1.0 - eccentricity))
+    states = velocity_verlet(mu, (periapsis, 0.0, 0.0), (0.0, speed, 0.0), 0.001, 7000)
+    initial_a = runge_lenz(mu, states[0].position, states[0].velocity)
+    initial_l = angular_momentum(states[0].position, states[0].velocity)
+    recovered_e = norm(initial_a) / mu
+    semilatus = dot(initial_l, initial_l) / mu
+    print("Elliptic velocity-Verlet invariant report:")
+    for name, value in invariant_report(mu, states).items():
+        print(f"  {name}: {value:.3e}")
+    print(f"  recovered eccentricity: {recovered_e:.6f}")
+    print(f"  recovered semilatus rectum: {semilatus:.6f}")
 
 
 def main() -> None:
-    demo_kepler_conservation()
-    demo_force_law_discriminator()
-    demo_angular_momentum_robustness()
+    demonstrate_translation_charge()
+    demonstrate_exact_circular_orbit()
+    demonstrate_elliptic_integration()
 
 
 if __name__ == "__main__":

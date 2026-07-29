@@ -1,417 +1,445 @@
-# Symmetries and Conservation Laws of the Planar Kepler Problem: A Formal Derivation from Newton's Equations
+# Continuous Symmetries, Conserved Charges, and the Geometry of Kepler Motion
 
-**Author:** Aristotle
-**Date:** 2026-06-26
-**Domain:** Physics — Classical Mechanics / Dynamical Systems
+**Aristotle**  
+**July 29, 2026**
 
 ## Abstract
 
-We give a rigorous, self-contained derivation of the conservation laws of the
-planar central-force and Kepler problems directly from Newton's equations of
-motion, organized around Noether's principle that every continuous symmetry of the
-dynamics yields a conserved quantity. For a unit-mass particle in the plane with
-trajectory $(x(t), y(t))$, we prove three nested results. (1) **Angular momentum**
-$L_z = x v_y - y v_x$ is conserved for *every* central force
-$(a_x, a_y) = a(t)\,(x, y)$ — the charge of rotational symmetry, and the most
-robust law, requiring no assumption on the radial strength. (2) **Energy**
-$E = \tfrac12(v_x^2 + v_y^2) - k/r$ is conserved for the inverse-square
-(Kepler) force $(a_x, a_y) = -k(x,y)/r^3$, with $r = \sqrt{x^2+y^2}$ — the charge
-of time-translation symmetry. (3) The **Laplace–Runge–Lenz (LRL) vector**
-$A = (L_z v_y - kx/r,\; -L_z v_x - ky/r)$ is conserved for the inverse-square law
-specifically — the charge of a hidden $SO(4)$ dynamical symmetry. Each derivation
-reduces to elementary calculus together with one analytic lemma giving the
-derivative of the radial coordinate, $r' = (x v_x + y v_y)/r$, valid off the
-origin. We emphasize the structural lesson: the three laws form a hierarchy of
-decreasing genericity (all central forces ⊃ potential forces ⊃ inverse-square),
-and the LRL conservation is governed by a delicate algebraic cancellation that is
-the formal fingerprint of the inverse-square law. We close with the discrete
-counterpart — a forward-and-converse Noether theorem for variational
-integrators — and a program of conjectures characterizing the inverse-square law
-by LRL conservation and closing the Kepler symmetry algebra.
+We present a self-contained finite-dimensional formulation of Noether’s first theorem in classical mechanics and develop its principal mechanical consequences. A trajectory is described by position $q$, velocity $v$, generalized momentum $p$, and force $F$, satisfying $q'=v$ and $p'=F$. An infinitesimal variational symmetry consists of a differentiable generator $\xi$ and a differentiable boundary term $B$ whose on-trajectory first variation obeys $F\cdot\xi+p\cdot\xi'=B'$. The Noether charge $J=p\cdot\xi-B$ then has zero derivative and is constant. Time translation yields energy, spatial translation yields directional linear momentum, and rotation yields components of angular momentum. For central forces, angular momentum conservation follows directly from zero torque. We then specialize to the Kepler inverse-square problem, proving conservation of Kepler energy and stating the differential conservation of the Runge–Lenz vector. A scalar triple-product identity connects the Runge–Lenz invariant to the conic equation of the orbit. The treatment separates universal variational reasoning, elementary differential identities, and three-dimensional geometric algebra, thereby clarifying which assumptions are responsible for each conservation law.
 
 ## 1. Introduction
 
-Emmy Noether's 1918 theorem established that continuous symmetries of a physical
-action are in one-to-one correspondence with conserved quantities. Time-translation
-invariance gives energy conservation; spatial-translation invariance gives linear
-momentum; rotational invariance gives angular momentum. The Kepler problem — a
-single particle moving under an inverse-square central force — is the canonical
-arena in which to see this correspondence concretely, because it possesses, in
-addition to the generic Galilean conservation laws, a *hidden* dynamical symmetry
-whose conserved charge is the Laplace–Runge–Lenz vector.
+Conservation laws are among the most effective tools in classical mechanics. They reduce differential equations, constrain possible trajectories, expose qualitative behavior, and provide sensitive diagnostics for numerical calculations. Their common origin is symmetry: invariance under a continuous family of transformations produces a quantity that remains constant along physical motion.
 
-Historically, the three laws were discovered piecemeal over three centuries.
-Kepler's equal-area law (1609) is angular-momentum conservation in disguise;
-Newton (1687) established energy conservation for gravitational orbits; and the
-conserved vector now named for Laplace, Runge, and Lenz appeared in the work of
-Jakob Hermann and Johann Bernoulli around 1710, was rediscovered by Laplace, and
-entered modern physics through Lenz's 1924 analysis of the old quantum hydrogen
-atom. Noether's 1918 theorem retrospectively unified the first two as shadows of
-Galilean symmetry, while the third was understood only later as the charge of a
-*dynamical* symmetry not visible in ordinary space. Our contribution is to place
-all three on a common, fully explicit footing derived from a single set of
-Newtonian hypotheses.
+The aim of this paper is to isolate that mechanism with minimal hypotheses and then trace it through the standard examples. The central statement requires only a finite-dimensional real inner-product space, differentiable curves, an Euler–Lagrange momentum equation, and an on-trajectory infinitesimal variation identity. This formulation is broad enough to include ordinary Euclidean particles and systems of generalized coordinates, while remaining elementary enough that the proof reduces to the product rule.
 
-This paper offers a complete, elementary, and fully rigorous derivation of these
-conservation laws straight from Newton's second law. Rather than invoking the
-Lagrangian/Hamiltonian formalism abstractly, we work with coordinate trajectories
-$x, y : \mathbb{R} \to \mathbb{R}$ and their derivatives, and we prove
-conservation as the vanishing of a time derivative, promoted to genuine constancy
-by the mean-value principle (a function with everywhere-zero derivative is
-constant). This makes the logical dependencies transparent and exposes precisely
-which physical hypothesis powers each law.
+After establishing the general theorem, we examine three familiar symmetry types. Time translation associates the velocity generator and Lagrangian boundary term with the energy $p\cdot v-L$. Translation in a fixed spatial direction associates a constant generator with the corresponding component of momentum. Rotation about an axis associates the generator $a\times q$ with the corresponding angular-momentum component.
 
-Our three theorems are arranged as a hierarchy of decreasing generality:
+The Kepler problem supplies a particularly rich application. The inverse-square force conserves energy and angular momentum, but it also conserves the Runge–Lenz vector. This additional vector determines the orientation and eccentricity of the orbit. Its dot product with position yields an algebraic bridge from dynamics to conic geometry.
 
-1. Angular momentum: requires only that the force be **central**.
-2. Energy: requires that the force be **conservative** (here, the Kepler
-   potential).
-3. The LRL vector: requires the force to be **inverse-square** specifically.
+The conclusions are exact implications. Whenever the specified derivative identities hold on an interval, the corresponding charges are constant there. Collision points, at which the inverse radius is undefined, must be excluded from the Kepler discussion.
 
-The hierarchy is not incidental. It is the quantitative content of Noether's
-program: the larger the symmetry group, the more conserved quantities, and the
-inverse-square law is distinguished precisely by carrying the maximal symmetry.
+## 2. Kinematic and variational framework
 
-## 2. Setup and Definitions
+### 2.1 State variables
 
-Throughout, a *trajectory* is a pair of twice-differentiable coordinate functions.
-We encode differentiability pointwise via the relation `HasDerivAt f (f') t`,
-meaning $f$ has derivative $f'$ at $t$.
+Let $V$ be a finite-dimensional real inner-product space with inner product $x\cdot y$. Let
 
-**Kinematic data.** We are given functions $x, y, v_x, v_y, a_x, a_y :
-\mathbb{R} \to \mathbb{R}$ subject to
 $$
-x' = v_x,\quad y' = v_y,\quad v_x' = a_x,\quad v_y' = a_y \qquad (\forall t).
-$$
-Here $(x,y)$ is position, $(v_x, v_y)$ velocity, $(a_x, a_y)$ acceleration; the
-particle has unit mass, so acceleration equals force.
-
-**Definition (Central force).** The force is *central* if there is a scalar field
-$a : \mathbb{R} \to \mathbb{R}$ with
-$$
-a_x(t) = a(t)\,x(t), \qquad a_y(t) = a(t)\,y(t) \quad (\forall t).
-$$
-The acceleration is everywhere parallel to the position vector; no assumption is
-made on the function $a$.
-
-**Definition (Radial coordinate).**
-$$
-r(t) := \sqrt{x(t)^2 + y(t)^2}.
+q,v,p,F:\mathbb{R}\to V
 $$
 
-**Definition (Inverse-square / Kepler force).** With coupling constant
-$k \in \mathbb{R}$,
-$$
-a_x(t) = -\,\frac{k\,x(t)}{r(t)^3}, \qquad a_y(t) = -\,\frac{k\,y(t)}{r(t)^3}.
-$$
-This is a central force with $a(t) = -k/r(t)^3$, i.e. a Newtonian $1/r^2$
-attraction for $k>0$.
+be differentiable curves where required. We interpret $q(t)$ as position, $v(t)$ as velocity, $p(t)$ as generalized momentum, and $F(t)$ as generalized force.
 
-**Non-degeneracy hypothesis.** All radius-dependent results require the orbit to
-avoid the singular center:
-$$
-\mathrm{(hpos)}\qquad x(t)^2 + y(t)^2 \neq 0 \quad (\forall t).
-$$
-This is physically necessary: the inverse-square force is singular at the origin,
-and $r$ fails to be differentiable there. The hypothesis is load-bearing for every
-$r$-dependent law.
+**Definition 2.1 (Euler–Lagrange trajectory).** A quadruple $(q,v,p,F)$ is an Euler–Lagrange trajectory if, at every time $t$,
 
-**Conserved quantities.** We define
 $$
-L_z := x v_y - y v_x \quad\text{(angular momentum)}, \qquad
-E := \tfrac12(v_x^2 + v_y^2) - \frac{k}{r} \quad\text{(energy)},
-$$
-$$
-A_x := L_z v_y - \frac{k x}{r}, \qquad
-A_y := -\,L_z v_x - \frac{k y}{r} \quad\text{(Laplace–Runge–Lenz components)}.
+q'(t)=v(t),\qquad p'(t)=F(t).
 $$
 
-## 3. Main Results
+The second equation is the first-order momentum form of the Euler–Lagrange equations. For a regular Lagrangian $L(q,v,t)$, one ordinarily has $p=\partial L/\partial v$ and $F=\partial L/\partial q$ along the trajectory. The theorem below needs only the displayed derivative equations, not a particular coordinate formula for $L$.
 
-### 3.1 Angular momentum from rotational symmetry
+### 2.2 Infinitesimal symmetries and boundary terms
 
-**Theorem 1 (`central_force_angular_momentum_conserved`).**
-*Let $(x,y)$ be a trajectory with $x'=v_x$, $y'=v_y$, $v_x'=a_x$, $v_y'=a_y$, and
-suppose the force is central: $a_x = a\,x$, $a_y = a\,y$. Then for every $t$,*
-$$
-\frac{d}{dt}\bigl(x v_y - y v_x\bigr) = 0.
-$$
+A one-parameter transformation changes the trajectory infinitesimally in the direction of a generator $\xi(t)\in V$. Strict invariance of the Lagrangian is not necessary. It is enough that the action changes by an endpoint contribution, represented locally by the total derivative of a scalar function $B(t)$.
 
-*Proof sketch.* By the product rule,
-$$
-\frac{d}{dt}(x v_y - y v_x) = (v_x v_y + x a_y) - (v_y v_x + y a_x)
-= x a_y - y a_x.
-$$
-Substituting the central-force relations $a_x = a x$, $a_y = a y$,
-$$
-x a_y - y a_x = x (a y) - y (a x) = 0.
-$$
-Mechanically, the torque $x a_y - y a_x$ vanishes because a central force has no
-lever arm about the center. ∎
+**Definition 2.2 (On-trajectory variational symmetry).** Given momentum $p$ and force $F$, an infinitesimal variational symmetry is a pair of differentiable functions
 
-**Corollary 1 (`central_force_angular_momentum_const`).**
-*Under the same hypotheses, for all $t_0, t_1$,*
 $$
-x(t_1) v_y(t_1) - y(t_1) v_x(t_1) = x(t_0) v_y(t_0) - y(t_0) v_x(t_0).
+\xi:\mathbb{R}\to V,\qquad B:\mathbb{R}\to\mathbb{R},
 $$
 
-*Proof sketch.* The function $t \mapsto x v_y - y v_x$ is differentiable
-everywhere (products of differentiable functions) and, by Theorem 1, has
-identically zero derivative. A function on $\mathbb{R}$ with zero derivative is
-constant, so its values at $t_0$ and $t_1$ coincide. ∎
+such that, along the trajectory,
 
-This is the most robust conservation law in the paper: it requires no hypothesis
-on the radial profile $a$, only centrality. It is the conserved charge of the
-rotational symmetry shared by all central forces, and it is exactly twice the
-areal velocity of Kepler's second law.
-
-### 3.2 The radial derivative lemma
-
-**Lemma (`radius_hasDerivAt`).**
-*With $x'=v_x$, $y'=v_y$, and $x(t)^2 + y(t)^2 \neq 0$,*
 $$
-r'(t) = \frac{x(t) v_x(t) + y(t) v_y(t)}{\sqrt{x(t)^2 + y(t)^2}}
-= \frac{x v_x + y v_y}{r}, \qquad\text{equivalently } r\,r' = x v_x + y v_y.
+F(t)\cdot\xi(t)+p(t)\cdot\xi'(t)=B'(t)
 $$
 
-*Proof sketch.* Let $s(t) = x(t)^2 + y(t)^2$. By the chain rule for squares,
-$s'(t) = 2 x v_x + 2 y v_y$. Since $r = \sqrt{s}$ and $s(t) \neq 0$, the
-derivative of the square root gives
-$r' = s'/(2\sqrt{s}) = (x v_x + y v_y)/\sqrt{s}$. ∎
+for every $t$.
 
-Only the radial component of the velocity changes the distance to the center; the
-transverse component merely circulates. This identity is the analytic engine for
-both subsequent theorems, and the hypothesis $s \neq 0$ is exactly where the
-non-degeneracy assumption enters.
+This is the on-trajectory first-variation identity. The term $B$ permits quasi-invariance: adding a total derivative to a Lagrangian changes the action only through endpoint data and leaves the Euler–Lagrange equations unchanged.
 
-### 3.3 Energy from time-translation symmetry
+**Definition 2.3 (Noether charge).** The charge associated with $(\xi,B)$ is
 
-**Theorem 2 (`kepler_energy_conserved`).**
-*Let $(x,y)$ be a trajectory with the inverse-square law
-$a_x = -kx/r^3$, $a_y = -ky/r^3$ and $x^2+y^2 \neq 0$ everywhere. Then for all
-$t$,*
 $$
-\frac{d}{dt}\!\left[\tfrac12(v_x^2 + v_y^2) - \frac{k}{r}\right] = 0.
+J(t)=p(t)\cdot\xi(t)-B(t).
 $$
 
-*Proof sketch.* Differentiate the kinetic term: $\frac{d}{dt}\tfrac12(v_x^2+v_y^2)
-= v_x a_x + v_y a_y$. Differentiate the potential term using the radial lemma:
-$\frac{d}{dt}(-k/r) = k r'/r^2 = k(x v_x + y v_y)/r^3$. Adding, and substituting
-the inverse-square law $a_x = -kx/r^3$, $a_y = -ky/r^3$ into the kinetic part:
-$$
-v_x a_x + v_y a_y + \frac{k(x v_x + y v_y)}{r^3}
-= -\frac{k(x v_x + y v_y)}{r^3} + \frac{k(x v_x + y v_y)}{r^3} = 0.
-$$
-The differentiability of $1/r$ off the origin (and positivity of $r$ there) makes
-the manipulation legitimate. ∎
+The negative sign of the boundary term is forced by the first-variation identity.
 
-**Corollary 2 (`kepler_energy_const`).**
-*Under the same hypotheses, for all $t_0, t_1$,*
+## 3. Noether’s first theorem
+
+**Theorem 3.1 (Differential Noether identity).** Let $(q,v,p,F)$ be an Euler–Lagrange trajectory and $(\xi,B)$ an on-trajectory variational symmetry. Then
+
 $$
-\tfrac12(v_x(t_1)^2 + v_y(t_1)^2) - \frac{k}{r(t_1)}
-= \tfrac12(v_x(t_0)^2 + v_y(t_0)^2) - \frac{k}{r(t_0)}.
+J'(t)=0
 $$
 
-*Proof sketch.* The energy is differentiable with identically zero derivative
-(Theorem 2), hence constant. ∎
+at every time $t$.
 
-Unlike angular momentum, energy conservation is *selective*: the exact
-cancellation between the kinetic and potential rates depends on the specific
-matching between the force law and the potential $-k/r$. A force not derived from
-this potential would leave a residue.
+**Proof sketch.** Differentiate $J=p\cdot\xi-B$ and apply the product rule for the inner product:
 
-### 3.4 The Laplace–Runge–Lenz vector: hidden symmetry
-
-**Theorem 3 (`kepler_LRL_x_conserved`, `kepler_LRL_y_conserved`).**
-*Let $(x,y)$ be a trajectory with the inverse-square law $a_x = -kx/r^3$,
-$a_y = -ky/r^3$, $x^2+y^2 \neq 0$ everywhere, and $L_z = x v_y - y v_x$. Then for
-all $t$,*
 $$
-\frac{d}{dt}\!\left(L_z v_y - \frac{k x}{r}\right) = 0, \qquad
-\frac{d}{dt}\!\left(-L_z v_x - \frac{k y}{r}\right) = 0.
+J'=p'\cdot\xi+p\cdot\xi'-B'.
 $$
 
-*Proof sketch (first component).* Since $L_z$ is constant (Theorem 1, as the
-inverse-square force is central), $\frac{d}{dt}(L_z v_y) = L_z a_y$. For the second
-term, $\frac{d}{dt}(kx/r) = k(v_x r - x r')/r^2 = k(v_x r^2 - x(x v_x + y v_y))/r^3$
-using the radial lemma $r r' = x v_x + y v_y$. Hence
+Substitute $p'=F$. The result is
+
 $$
-\frac{d}{dt}A_x = L_z a_y - \frac{k\,\bigl(v_x r^2 - x(x v_x + y v_y)\bigr)}{r^3}.
+J'=F\cdot\xi+p\cdot\xi'-B',
 $$
-Substituting $a_y = -k y/r^3$ and $L_z = x v_y - y v_x$, and using $r^2 = x^2+y^2$,
-the entire numerator collapses to
+
+which vanishes by the variational-symmetry identity. $\square$
+
+**Theorem 3.2 (Noether’s First Theorem).** Under the hypotheses of Theorem 3.1, the Noether charge is conserved. For all times $s$ and $t$ in the connected interval of definition,
+
 $$
--k\Bigl[\, y(x v_y - y v_x) + v_x r^2 - x(x v_x + y v_y)\,\Bigr] = 0,
+p(s)\cdot\xi(s)-B(s)=p(t)\cdot\xi(t)-B(t).
 $$
-because expanding gives $xy v_y - y^2 v_x + v_x(x^2+y^2) - x^2 v_x - xy v_y
-= 0$. The second component is symmetric under $(x,v_x) \leftrightarrow (y,v_y)$
-with a sign flip. The cancellation is closed by clearing denominators
-(`field_simp`) and polynomial normalization (`ring`). ∎
 
-**Corollary 3 (`kepler_LRL_x_const`, `kepler_LRL_y_const`).**
-*Under the same hypotheses, each LRL component is equal at any two times:*
-$A_x(t_1) = A_x(t_0)$ and $A_y(t_1) = A_y(t_0)$.
+**Proof sketch.** The differential identity gives $J'=0$ everywhere. The mean value theorem, or equivalently the standard constant-function criterion, implies that $J$ is constant on the interval. $\square$
 
-*Proof sketch.* Zero derivative implies constancy, as before. ∎
+The theorem separates dynamics from symmetry. The equation $p'=F$ supplies the dynamical substitution, while $F\cdot\xi+p\cdot\xi'=B'$ supplies the symmetry cancellation. Neither ingredient alone produces the conserved charge.
 
-**Geometric meaning.** The vector $(A_x, A_y)$ has fixed magnitude $|A| = k e$
-(with $e$ the orbital eccentricity) and points from the center toward
-pericenter — the orbit's closest approach. Its constancy is equivalent to the
-statement that the elliptical orbit does not precess: the major axis is fixed in
-inertial space. For a non-inverse-square central force the orbit is a precessing
-rosette and no such conserved vector exists.
+## 4. Translation symmetries
 
-**The fingerprint of the inverse-square law.** The decisive identity
+### 4.1 Time translation and energy
+
+Suppose the system is autonomous, so the action has no preferred origin of time. Under an infinitesimal shift of the time parameter, the trajectory changes in the velocity direction. The corresponding generator is $\xi=v$, and the relevant boundary term is the Lagrangian value along the trajectory, denoted $L(t)$.
+
+**Definition 4.1 (Autonomous energy).** For velocity $v$, momentum $p$, and Lagrangian value $L$, define
+
 $$
-y(x v_y - y v_x) + v_x r^2 - x(x v_x + y v_y) = 0
+E(t)=p(t)\cdot v(t)-L(t).
 $$
-collapses to zero *only* because the radial power in the force ($r^{-3}$ acting on
-$(x,y)$, i.e. $r^{-2}$ in magnitude) precisely matches the power generated by
-differentiating $x/r$. For a force $\propto r^{-p}$ with $p \neq 2$, a residue
-proportional to $(p-2)$ survives and conservation fails. This is the algebraic
-signature of the hidden $SO(4)$ (bound) / $SO(3,1)$ (scattering) dynamical
-symmetry: the inverse-square law carries strictly more symmetry than a generic
-central force, and the LRL vector is its conserved charge.
 
-## 4. The Conservation Hierarchy
+**Theorem 4.2 (Energy conservation from time translation).** Let $(q,v,p,F)$ be an Euler–Lagrange trajectory. Assume time translation supplies the on-trajectory identity
 
-The three theorems stratify by the breadth of forces they tolerate:
-
-| Conserved quantity | Symmetry | Holds for | Robustness |
-|---|---|---|---|
-| $L_z = x v_y - y v_x$ | rotational | every central force | maximal |
-| $E = \tfrac12 v^2 - k/r$ | time-translation | conservative (Kepler) forces | medium |
-| $A = (A_x, A_y)$ | hidden $SO(4)/SO(3,1)$ | inverse-square only | minimal |
-
-This nesting is the concrete face of Noether's correspondence: a richer symmetry
-group implies more conserved charges. The inverse-square law sits at the top of
-the symmetry hierarchy, which is why the Kepler problem (classically) and the
-hydrogen atom (quantum-mechanically) are *maximally* integrable and exactly
-solvable.
-
-## 5. Algorithms
-
-The conservation laws translate directly into numerical diagnostics for orbit
-integration. We summarize the two that the demonstrations implement.
-
-**Algorithm A — Conserved-Quantity Drift Monitor.** Given a numerically integrated
-trajectory $\{(x_n, y_n, v_{x,n}, v_{y,n})\}$, evaluate $L_z$, $E$, $A_x$, $A_y$ at
-each step and report the maximum deviation from their initial values. By Theorems
-1–3 the exact deviations are zero; the measured drift quantifies integrator
-quality. Complexity $O(N)$ for $N$ steps.
-
-**Algorithm B — Force-Law Discriminator via LRL Drift.** Integrate the same
-initial condition under forces $\propto r^{-p}$ for a range of exponents $p$ and
-measure LRL drift. By the fingerprint identity, drift vanishes (to integrator
-precision) precisely at $p = 2$ and grows monotonically with $|p - 2|$, providing
-a numerical detector of the inverse-square law. Complexity $O(M \cdot N)$ for $M$
-exponents and $N$ steps each.
-
-## 6. A Worked Numerical Example
-
-To make the conservation hierarchy concrete, consider a unit-mass particle with
-coupling $k = 1$ launched from pericenter of an orbit with semi-major axis
-$a = 1$ and eccentricity $e = 0.6$. Pericenter distance is $r_p = a(1-e) = 0.4$,
-and the vis-viva relation $v^2 = k(2/r - 1/a)$ gives the pericenter speed
-$v_p = \sqrt{1\cdot(2/0.4 - 1)} = \sqrt{4} = 2$. The initial state is therefore
-$(x, y, v_x, v_y) = (0.4,\, 0,\, 0,\, 2)$.
-
-The three invariants evaluate to:
 $$
-L_z = x v_y - y v_x = 0.4 \cdot 2 - 0 = 0.8,
+F(t)\cdot v(t)+p(t)\cdot v'(t)=L'(t)
 $$
+
+for every $t$. Then, for all $s$ and $t$,
+
 $$
-E = \tfrac12(v_x^2 + v_y^2) - \frac{k}{r} = \tfrac12(0 + 4) - \frac{1}{0.4}
-= 2 - 2.5 = -0.5 = -\frac{k}{2a},
+E(s)=E(t).
 $$
+
+**Proof sketch.** Apply Noether’s theorem with $\xi=v$ and $B=L$. The resulting charge $p\cdot v-L$ is precisely $E$. $\square$
+
+For a natural mechanical Lagrangian $L=T-U$ with quadratic kinetic energy, Euler’s identity gives $p\cdot v=2T$, so $E=T+U$. The abstract formula is more general and remains meaningful for nonstandard kinetic terms.
+
+### 4.2 Spatial translation and momentum
+
+Let $a\in V$ be a fixed direction. An infinitesimal spatial translation has constant generator $\xi(t)=a$ and therefore $\xi'(t)=0$. Taking $B=0$, the symmetry identity reduces to $F(t)\cdot a=0$.
+
+**Theorem 4.3 (Directional momentum conservation).** Let $(q,v,p,F)$ be an Euler–Lagrange trajectory, and let $a\in V$. If
+
 $$
-A_x = L_z v_y - \frac{k x}{r} = 0.8\cdot 2 - \frac{0.4}{0.4} = 1.6 - 1 = 0.6 = k e,
-\qquad A_y = -L_z v_x - \frac{k y}{r} = 0.
+F(t)\cdot a=0
 $$
-The energy matches the textbook bound-orbit value $E = -k/(2a)$, and the LRL
-vector has magnitude $|A| = 0.6 = k e$ pointing in the $+x$ direction, i.e. toward
-pericenter, exactly as the geometric interpretation predicts. Integrating this
-initial condition with a symplectic velocity-Verlet scheme over several periods
-holds $L_z$ constant to machine precision ($\sim 10^{-14}$) and $E$, $A_x$, $A_y$
-constant to integrator precision ($\sim 10^{-7}$), numerically confirming Theorems
-1--3. Re-running the same initial condition under a force $\propto r^{-p}$ leaves
-$L_z$ flat for every $p$ but causes the LRL observable to drift, with drift
-growing monotonically in $|p-2|$ and vanishing at $p=2$ — the inverse-square
-fingerprint in numerical form.
 
-## 7. Applications
+for every $t$, then
 
-- **Celestial mechanics and astrodynamics.** Angular momentum and energy
-  conservation underlie Kepler's laws, orbital element computation, and the
-  vis-viva equation $v^2 = k(2/r - 1/a)$, which is an algebraic rearrangement of
-  Corollary 2. The LRL vector fixes the orientation of orbits and is used in
-  perturbation theory to track precession.
-- **Quantum mechanics.** The same LRL conservation, carried over to operators,
-  explains the "accidental" degeneracy of hydrogen energy levels and yields the
-  Balmer spectrum purely from $SO(4)$ symmetry.
-- **Numerical integration.** Symplectic integrators are designed to preserve these
-  invariants to machine precision over astronomical timescales, which is why they
-  are the standard tool for long-term solar-system simulation.
+$$
+p(s)\cdot a=p(t)\cdot a
+$$
 
-## 8. The Discrete Counterpart: Conservation ⟺ Symmetry
+for all $s$ and $t$.
 
-The continuous story has a fully discrete mirror that strengthens Noether's
-implication to an equivalence. In discrete mechanics a *discrete Lagrangian*
-$L_d : Q \times Q \to \mathbb{R}$ generates dynamics through the discrete
-Euler–Lagrange (DEL) relation on triples $(q_0, q_1, q_2)$, and a *momentum
-observable* $p : Q \times Q \to \mathbb{R}$ is conserved when $p(q_1, q_2) =
-p(q_0, q_1)$ along DEL triples. Writing $V$ for the first-order variation of $L_d$
-under an infinitesimal symmetry generator, one has the *first-variation identity*
-$V(q_1, q_2) = p(q_1, q_2) - p(q_0, q_1)$ on shell.
+**Proof sketch.** Use the constant generator $\xi=a$ and zero boundary term. The Noether charge is $p\cdot a$, and the symmetry condition is exactly the assumed vanishing of the force component. $\square$
 
-- **Forward (discrete Noether).** If $V \equiv 0$ (the discrete Lagrangian is
-  invariant), then momentum is conserved on every DEL trajectory.
-- **Converse.** If momentum is conserved on all DEL trajectories and the flow is
-  *rich* (every pair $(q_0, q_1)$ appears in some DEL triple), then $V \equiv 0$:
-  conservation forces symmetry.
-- **Bidirectional.** Under the first-variation identity and richness, invariance
-  $\iff$ conservation.
+If the hypothesis holds for every $a$, then $F=0$ and all components of $p$ are conserved. More generally, each unbroken translation direction contributes one conserved momentum component.
 
-There is also a quantitative perturbation bound: for a perturbed momentum
-$p_\varepsilon = p_0 + \varepsilon\,\Delta p$ with $p_0$ exactly symmetric and the
-perturbation defect bounded by $C$, the momentum drift is at most
-$|\varepsilon|\,C$ (and at most $|\varepsilon|\,C\,h$ when the defect scales with
-the timestep $h$). This is the rigorous basis for the empirical fact that
-symplectic integrators exhibit no secular drift in conserved quantities.
+## 5. Rotations and angular momentum
 
-## 9. Discussion and Future Directions
+We now specialize to $V=\mathbb{R}^3$. Let $x\times y$ denote the cross product and define the angular momentum
 
-The work confirms the Phase A hypothesis that the Kepler problem carries more
-conservation laws than the generic Galilean symmetries predict, and isolates the
-LRL cancellation as the formal signature of the inverse-square law. Several
-directions follow naturally.
+$$
+\mathbf{L}(t)=q(t)\times p(t).
+$$
 
-1. **LRL conservation characterizes the inverse-square law.** Conjecture: for a
-   planar central force $(a_x, a_y) = f(r)(x,y)$, an LRL-type vector is conserved
-   on all trajectories iff $f(r) = -k/r^3$. The forward direction is Theorem 3;
-   the converse needs only to show the residue is nonzero for power $p \neq 2$, a
-   nonvanishing argument on the same algebra.
-2. **The full $SO(4)/SO(3,1)$ algebra closes formally.** Conjecture: under the
-   Poisson bracket, $\{L_z, A_x, A_y\}$ close into a Lie algebra with
-   $\{A_x, A_y\} = -2E\,L_z$, isomorphic to $so(3)$ for $E<0$ and $so(2,1)$ for
-   $E>0$. Since $E$ is itself conserved, the structure "constant" is a conserved
-   scalar and closure is pure polynomial algebra.
-3. **Symplectic integrators inherit every continuous symmetry exactly.**
-   Conjecture: any variational integrator whose discrete momentum samples a
-   continuous Noether charge conserves that charge with zero drift for all step
-   sizes, including adaptive sampling.
-4. **Energy conservation forces autonomy.** Conjecture: if energy is conserved
-   along a sufficiently rich family of trajectories, the underlying Lagrangian
-   must be time-independent — a continuous converse mirroring the discrete one.
+For a fixed axis vector $a$, the infinitesimal generator of rotation about that axis is
 
-## 10. Conclusion
+$$
+\xi(t)=a\times q(t).
+$$
 
-We have derived, with full rigor and from first principles, the three nested
-conservation laws of the planar Kepler problem: angular momentum (rotational
-symmetry, all central forces), energy (time-translation symmetry, conservative
-forces), and the Laplace–Runge–Lenz vector (hidden $SO(4)$ symmetry,
-inverse-square law only). The derivations rest on elementary calculus and a single
-radial-derivative lemma, and they expose the precise hypothesis powering each law.
-Together with the discrete forward-and-converse Noether theorem, they realize
-Noether's vision in the cleanest possible setting: symmetry and conservation are
-two views of one truth.
+The associated scalar charge is
+
+$$
+J_a(t)=p(t)\cdot(a\times q(t)).
+$$
+
+By cyclic invariance of the scalar triple product,
+
+$$
+p\cdot(a\times q)=a\cdot(q\times p)=a\cdot\mathbf{L}.
+$$
+
+Thus rotational symmetry about $a$ conserves the component of angular momentum along $a$.
+
+**Theorem 5.1 (Rotational charge conservation).** Fix $a\in\mathbb{R}^3$. If $J_a$ is differentiable and
+
+$$
+J_a'(t)=0
+$$
+
+for every $t$, then
+
+$$
+p(s)\cdot(a\times q(s))=p(t)\cdot(a\times q(t))
+$$
+
+for all $s$ and $t$.
+
+**Proof sketch.** This is the zero-derivative criterion applied to $J_a$. In a variational derivation, the hypothesis arises from rotational invariance through Theorem 3.1. $\square$
+
+A complementary torque argument gives vector conservation for central forces.
+
+**Theorem 5.2 (Angular momentum under a central force).** Assume the cross-product derivative rule
+
+$$
+\mathbf{L}'(t)=v(t)\times p(t)+q(t)\times F(t).
+$$
+
+Suppose also that $p(t)=v(t)$ and that the force is central: for every $t$ there exists a scalar $c(t)$ such that
+
+$$
+F(t)=c(t)q(t).
+$$
+
+Then angular momentum is conserved:
+
+$$
+\mathbf{L}(s)=\mathbf{L}(t)
+$$
+
+for all $s$ and $t$.
+
+**Proof sketch.** Substitute $p=v$ and $F=cq$ into the derivative rule. Since $v\times v=0$ and $q\times(cq)=c(q\times q)=0$, one has $\mathbf{L}'=0$. Constancy follows. $\square$
+
+If $\mathbf{L}\ne0$, then $q(t)\cdot\mathbf{L}=0$ for every $t$, so the trajectory remains in the fixed plane perpendicular to $\mathbf{L}$. This planar reduction is one of the immediate geometric benefits of conservation.
+
+## 6. The Kepler inverse-square problem
+
+### 6.1 Equations and energy
+
+Let $q(t)\in\mathbb{R}^3\setminus\{0\}$ and $v(t)=q'(t)$. Define
+
+$$
+r(t)=\lVert q(t)\rVert=\sqrt{q(t)\cdot q(t)}.
+$$
+
+For unit mass and gravitational parameter $\mu>0$, the Kepler equation is
+
+$$
+v'(t)=-\frac{\mu}{r(t)^3}q(t).
+$$
+
+The force is parallel to $q$, so Theorem 5.2 conserves $q\times v$. The Kepler energy is
+
+$$
+E_K(t)=\frac12 v(t)\cdot v(t)-\frac{\mu}{r(t)}.
+$$
+
+**Theorem 6.1 (Kepler energy conservation).** Suppose $E_K$ is differentiable and its derivative is expressed by the chain and product rules as
+
+$$
+E_K'(t)=v(t)\cdot\left(-\frac{\mu}{r(t)^3}q(t)\right)
++\frac{\mu}{r(t)^3}q(t)\cdot v(t).
+$$
+
+Then $E_K$ is constant: $E_K(s)=E_K(t)$ for all $s$ and $t$.
+
+**Proof sketch.** Symmetry of the dot product gives $v\cdot q=q\cdot v$. The two displayed terms are additive inverses, hence $E_K'=0$. $\square$
+
+The derivative identity itself follows from $v'= -\mu q/r^3$ and
+
+$$
+\frac{d}{dt}\left(\frac{1}{r}\right)=-\frac{q\cdot v}{r^3}.
+$$
+
+The theorem states the exact algebraic cancellation once these analytic derivative rules are available.
+
+### 6.2 The Runge–Lenz invariant
+
+Define the angular momentum per unit mass by
+
+$$
+\mathbf{L}(t)=q(t)\times v(t)
+$$
+
+and the Runge–Lenz vector by
+
+$$
+\mathbf{A}(t)=v(t)\times\mathbf{L}(t)-\frac{\mu}{r(t)}q(t).
+$$
+
+Equivalently,
+
+$$
+\mathbf{A}(t)=v(t)\times\bigl(q(t)\times v(t)\bigr)-\frac{\mu}{r(t)}q(t).
+$$
+
+**Theorem 6.2 (Runge–Lenz conservation).** Let $q$ and $v$ be differentiable away from collision. If the inverse-square equation and the derivative rules for cross products and inverse radius yield
+
+$$
+\mathbf{A}'(t)=0
+$$
+
+for every $t$, then
+
+$$
+\mathbf{A}(s)=\mathbf{A}(t)
+$$
+
+for all $s$ and $t$.
+
+**Proof sketch.** Apply the constant-function criterion componentwise to the vector-valued curve $\mathbf{A}$. For completeness, the differential cancellation can be seen as follows. Since $\mathbf{L}'=0$ under a central force,
+
+$$
+\frac{d}{dt}(v\times\mathbf{L})=v'\times\mathbf{L}.
+$$
+
+Substitute $v'=-\mu q/r^3$ and expand $q\times(q\times v)=q(q\cdot v)-v r^2$. This gives
+
+$$
+v'\times\mathbf{L}
+=\mu\left(\frac{v}{r}-\frac{q(q\cdot v)}{r^3}\right).
+$$
+
+On the other hand,
+
+$$
+\frac{d}{dt}\left(\frac{\mu q}{r}\right)
+=\mu\left(\frac{v}{r}-\frac{q(q\cdot v)}{r^3}\right).
+$$
+
+The two derivatives cancel in $\mathbf{A}'$. $\square$
+
+The vector $\mathbf{A}$ lies in the orbital plane because both $v\times\mathbf{L}$ and $q$ do. It points toward periapsis for a noncircular orbit. Its magnitude will become the eccentricity after normalization by $\mu$.
+
+## 7. The bridge from invariants to conic geometry
+
+The connection between the Runge–Lenz vector and conic sections rests on a pointwise vector identity.
+
+**Theorem 7.1 (Runge–Lenz conic bridge).** Let $q,v\in\mathbb{R}^3$, let $r\ne0$, and assume
+
+$$
+q\cdot q=r^2.
+$$
+
+Define
+
+$$
+\mathbf{A}=v\times(q\times v)-\frac{\mu}{r}q,
+\qquad
+\mathbf{L}=q\times v.
+$$
+
+Then
+
+$$
+\mathbf{A}\cdot q=\mathbf{L}\cdot\mathbf{L}-\mu r.
+$$
+
+**Proof sketch.** Expand the left-hand side:
+
+$$
+\mathbf{A}\cdot q
+=\bigl(v\times(q\times v)\bigr)\cdot q
+-\frac{\mu}{r}(q\cdot q).
+$$
+
+The cyclic scalar triple-product identity gives
+
+$$
+\bigl(v\times(q\times v)\bigr)\cdot q
+=(q\times v)\cdot(q\times v)=\mathbf{L}\cdot\mathbf{L}.
+$$
+
+The radius assumption changes the second term to $-(\mu/r)r^2=-\mu r$. $\square$
+
+For the physical radius $r=\lVert q\rVert>0$, let $\theta$ be the angle from the fixed vector $\mathbf{A}$ to $q$ in the orbital plane. Then
+
+$$
+\mathbf{A}\cdot q=\lVert\mathbf{A}\rVert r\cos\theta.
+$$
+
+Substitution into Theorem 7.1 yields
+
+$$
+\lVert\mathbf{A}\rVert r\cos\theta
+=\lVert\mathbf{L}\rVert^2-\mu r.
+$$
+
+Rearranging and introducing
+
+$$
+e=\frac{\lVert\mathbf{A}\rVert}{\mu},
+\qquad
+\ell=\frac{\lVert\mathbf{L}\rVert^2}{\mu},
+$$
+
+one obtains
+
+$$
+r=\frac{\ell}{1+e\cos\theta}.
+$$
+
+This is the focus-centered polar equation of a conic. The dimensionless constant $e$ is its eccentricity: $0\le e<1$ gives an ellipse, $e=1$ a parabola, and $e>1$ a hyperbola. The direction of $\mathbf{A}$ fixes the periapsis direction, while $\mathbf{L}$ fixes the orbital plane and semilatus rectum.
+
+## 8. Computational realization
+
+The invariants suggest a direct numerical pipeline for inspecting an orbit. Given sampled states $(q_i,v_i)$ and a gravitational parameter $\mu$, compute
+
+$$
+r_i=\lVert q_i\rVert,
+$$
+
+$$
+E_i=\frac12\lVert v_i\rVert^2-\frac{\mu}{r_i},
+$$
+
+$$
+\mathbf{L}_i=q_i\times v_i,
+$$
+
+and
+
+$$
+\mathbf{A}_i=v_i\times\mathbf{L}_i-\frac{\mu}{r_i}q_i.
+$$
+
+For exact Kepler motion, these quantities are independent of $i$. In floating-point simulation they vary slightly; the maximum deviation from the initial value measures numerical drift. This does not prove that an approximate trajectory is exact, but it is a strong structural diagnostic.
+
+A second algorithm reconstructs the predicted conic from one noncollision state. It computes $\ell=\lVert\mathbf{L}\rVert^2/\mu$ and $e=\lVert\mathbf{A}\rVert/\mu$, then evaluates $r(\theta)=\ell/(1+e\cos\theta)$ wherever the denominator is nonzero. The sign of the energy provides a compatible classification when $\mu>0$: negative, zero, and positive energy correspond to elliptic, parabolic, and hyperbolic regimes, respectively.
+
+For numerical integration, a symplectic method is often preferable to a generic explicit method because its long-term invariant behavior better reflects Hamiltonian geometry. Nevertheless, no finite-step method should be expected to preserve all Kepler invariants exactly unless it is specifically designed to do so.
+
+## 9. Applications and interpretation
+
+The abstract theorem has three distinct uses. First, it derives quantities that reduce equations of motion. Conservation of energy converts a second-order scalar problem into a first-order relation; conservation of angular momentum reduces a central-force trajectory to a plane. Second, it classifies motion. In the Kepler problem, the Runge–Lenz vector converts dynamical information into conic parameters. Third, it audits computation: invariant drift reveals integration error, unstable step sizes, or incorrect force implementation.
+
+The boundary term $B$ is conceptually important. A transformation need not leave the Lagrangian pointwise unchanged. It may alter it by a total derivative while preserving the action up to endpoint values. The conserved charge must then include $-B$. Omitting this term would incorrectly discard legitimate quasi-symmetries.
+
+The finite-dimensional inner-product formulation also clarifies the assumptions. The proof of the general theorem uses only differentiability, the momentum equation, bilinearity of the inner product, and the variation identity. Three-dimensional cross products enter only for angular momentum and Kepler geometry. Thus the general Noether mechanism is not tied to three-dimensional space.
+
+## 10. Limitations and future work
+
+The present account starts from the on-trajectory first-variation identity rather than deriving it from invariance of an integral action under a differentiable one-parameter group. A fuller treatment would specify admissible variations, endpoint conditions, and differentiation under the integral sign.
+
+The geometry is finite-dimensional and linear. Configuration manifolds require tangent and cotangent bundles, fiber derivatives of the Lagrangian, and momentum maps. Lie-group actions would unify multiple generators and encode equivariance. In Hamiltonian language, conservation becomes the vanishing Poisson bracket $\{J,H\}=0$.
+
+For the Kepler problem, the analytic product and chain rules can be developed directly from $q'=v$ and $v'=-\mu q/\lVert q\rVert^3$, with collision explicitly excluded. One may then derive the polar conic equation as a theorem about the entire trajectory and combine it with the conserved energy to classify all noncollision orbits. Finally, the Poisson brackets among angular momentum and Runge–Lenz components reveal the hidden symmetry algebra of bound Kepler motion.
+
+## 11. Conclusion
+
+Noether’s theorem follows from a precise cancellation. The momentum equation transforms the derivative of $p\cdot\xi-B$ into the infinitesimal variation of the action, and symmetry sets that variation to zero. Time translation produces energy, spatial translation produces momentum, and rotation produces angular momentum. In the inverse-square problem, energy and angular momentum are joined by the Runge–Lenz vector. The identity
+
+$$
+\mathbf{A}\cdot q=\lVert\mathbf{L}\rVert^2-\mu r
+$$
+
+then turns conserved vectors into the polar equation of a conic. The resulting chain—from symmetry, to differential cancellation, to invariant, to geometry—captures both the economy and the explanatory force of modern analytical mechanics.

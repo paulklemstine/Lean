@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "905765f9",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## 1. Composite-index synchronization through cyclotomic primitive parts\n\nFor every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should",
-      "quality_score": 0.76,
-      "sorry_count": 1,
-      "theorem_count": 4,
-      "timestamp": "2026-07-25T10:53:08",
-      "title": "[Reset] Fresh approach in Shared"
-    },
-    {
       "cycle_id": "1aa4bedd",
       "domain": "Probability",
       "key_insight": "# Future directions\n\nThe current development establishes the finite-space variational core of PAC--Bayes, including the exact Gibbs-tilt identity, posterior-uniform change of measure, an exponential-m",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-29T15:28:54",
       "title": "EML Universal Approximation"
+    },
+    {
+      "cycle_id": "132832ee",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding simulator for the graph 3-colouring protocol and prove that, for every finite verifier strategy who",
+      "quality_score": 0.74352,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-29T17:47:50",
+      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b44b7357",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Recursive Types and Diagonal Hierarchies\n\n## 1. Positive Recursive Types and Transfinite Closure\n\n**Conjecture.** For reflective codes in which the self-bound variable occurs only",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T03:35:14",
-      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-    },
     {
       "cycle_id": "ea7d1cf2",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 39,
       "timestamp": "2026-07-29T17:46:44",
       "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
+    },
+    {
+      "cycle_id": "132832ee",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding simulator for the graph 3-colouring protocol and prove that, for every finite verifier strategy who",
+      "quality_score": 0.74352,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-29T17:47:50",
+      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a07085b6",
-      "domain": "Pythagorean",
-      "name": "networkOutput_eq_selectedAffine_of_mem_cell",
-      "quality": 0.76088
-    },
-    {
-      "cycle_id": "a07085b6",
-      "domain": "Pythagorean",
-      "name": "selectedAffine_affineCombination",
-      "quality": 0.76088
-    },
-    {
-      "cycle_id": "b7ae8967",
-      "domain": "MachineLearning",
-      "name": "bilinearScore_add_query",
-      "quality": 0.8002199999999999
-    },
     {
       "cycle_id": "b7ae8967",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "minimumDepth_le_of_term",
       "quality": 0.74002
+    },
+    {
+      "cycle_id": "132832ee",
+      "domain": "Cryptography",
+      "name": "interactive_view_probability_eq",
+      "quality": 0.74352
+    },
+    {
+      "cycle_id": "132832ee",
+      "domain": "Cryptography",
+      "name": "nizk_proof_probability_eq",
+      "quality": 0.74352
+    },
+    {
+      "cycle_id": "132832ee",
+      "domain": "Cryptography",
+      "name": "nizk_honest_support_is_accepting",
+      "quality": 0.74352
     }
   ],
-  "last_updated": "2026-07-29T17:46:44",
+  "last_updated": "2026-07-29T17:47:50",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "c612ec41",
-        "quality": 0.7,
-        "theorems": 15,
-        "title": "For any family of local stabilizer codes admitting a geometric realization, conj"
-      },
-      {
         "cycle_id": "ec11492d",
         "quality": 0.68,
         "theorems": 8,
@@ -3389,6 +3383,12 @@
         "quality": 0.686,
         "theorems": 39,
         "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
+      },
+      {
+        "cycle_id": "132832ee",
+        "quality": 0.74352,
+        "theorems": 11,
+        "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
       }
     ],
     "Geometry": [
