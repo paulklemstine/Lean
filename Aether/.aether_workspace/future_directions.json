@@ -535,7 +535,7 @@
       "depth_estimate": 3,
       "description": "Proves the tropical analogue of the Hahn-Banach separation theorem for disjoint tropical convex polyhedra in ℝ^n.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical"
       ],
@@ -575,7 +575,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Nishinou-Siebert correspondence theorem relating algebraic curves in toric varieties to tropical curves in Euclidean space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical"
       ],
@@ -615,7 +615,7 @@
       "depth_estimate": 3,
       "description": "Proves that the unique tropical eigenvalue of a square min-plus matrix equals the minimum cycle mean of its associated weighted directed graph.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical"
       ],
@@ -7977,7 +7977,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonempty digest fiber has a polyhedral cell whose recession cone has dimension exactly `k-r`, and this lower bound is sharp on a dense open set of keys and messages.\n\nThe key insight is that each output component can constrain one independently active coordinate, while all remaining coordinate directions can escape without changing any minimum. **Why now?** The universal collision-ray theorem establishes the first nonzero recession direction for every fiber; the next test is whether the entire expected `k-r`-dimensional cone can be constructed and whether genericity makes the bound exact.\n\n## 2. Hall-type criterion for multidirectional collision cones\n\n**Conjecture.** Let each tropical hash component have a set of active minimizing coordinates at a message. The fiber contains a coordinate cone of dimension at least `d` if and only if the union of these active sets admits a transversal whose complement has cardinality at least `d`.\n\nThe key insight is that collision directions are governed not merely by the number of outputs, but by the combinatorics of which coordinates can certify their minima. **Why now?** Selecting one minimizer per component proved one escaping direction; replacing this selection by a system-of-distinct-representatives analysis should expose the full local fiber geometry.\n\n## 3. Sharp bounded-alphabet collision threshold\n\n**Conjecture.** For messages in `{0,1,…,B}^k` and integer keys, every `r`-component min-plus digest with `r < k` has a collision whenever `B` exceeds an explicit key-spread parameter, and this dependence on the spread is asymptotically optimal.\n\nThe key insight is that the real collision ray survives in a bounded alphabet exactly until it reaches the boundary, so security is controlled by slack at unused coordinates rather than by tropical nonlinearity. **Why now?** The unrestricted theorem identifies the unique obstruction introduced by bounded messages: an unused coordinate may have no legal positive increment.\n\n## 4. Complexity transition for nonce-restricted tropical mining\n\n**Conjecture.** Tropical preimage search is polynomial-time for nonce families described by difference constraints, but becomes NP-complete when the nonce language permits arbitrary binary linear constraints, even for a fixed number of digest components.\n\nThe key insight is that each tropical output condition is a union of linear regions indexed by active coordinates; tractability depends on whether the nonce language preserves shortest-path structure or can encode disjunctive choices. **Why now?** Unrestricted inversion and collision construction are explicit, so any computational hardness must arise from the geometry of the admissible nonce family rather than from the min-plus hash itself.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Tropical",
         "Pythagorean"
@@ -14594,7 +14594,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7628999999999999,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "",
@@ -14605,7 +14605,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-24T14:34:16.697796+00:00",
       "title": "Frankl's Union-Closed Conjecture: Partial Results"
@@ -15412,7 +15412,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical",
         "Algebra",
@@ -15454,7 +15454,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Tropical",
         "Computation",
@@ -15937,6 +15937,47 @@
       "thread_id": "th_faabc6f2",
       "timestamp": "2026-07-29T19:52:42.661679+00:00",
       "title": "1. **Integer-slope criterion.** For every compiled network whose affine weights "
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n1. **Universe size four.** Extend the singleton/residual decomposition used for\n   `Fin 3`. A direct search has 65,536 candidate families, so useful structural\n   reductions (singletons, separating families, complements, and isomorphism\n   classes under permutations) should precede any kernel computation.\n\n2. **Families with at most 50 members.** Formalizing the Bošnjak–Marković bound\n   requires substantially more combinatorial infrastructure than the finite\n   three-point theorem. A practical development should isolate each reduction:\n   separating reduction, frequency constraints, and the final finite range of\n   configurations. Each enumeration should have a small certificate checked by\n   Lean rather than rely on an external computation.\n\n3. **Abstract semilattice formulation.** Package a union-closed family as a\n   finite join-subsemilattice, transport `sup_id_isGreatest` to that structure,\n   and state Frankl's property through principal filters (the frequency of an\n   element becomes the size of an associated filter).\n\n4. **Separating families and incidence columns.** Define two ground elements to\n   be indistinguishable when they occur in exactly the same members. Quotienting\n   by this relation preserves union-closure and member frequencies and is a key\n   normalization for stronger finite bounds.\n\n5. **Entropy infrastructure.** The present Reimer result proves the exact\n   Boolean-cube equality by double counting. A full entropy route would define\n   Shannon entropy for finite distributions, prove the chain rule and an\n   appropriate form of Shearer's inequality, and connect incidence-vector\n   entropy to average set size.\n\n6. **Equality and stability.** Generalize `card_powerset_containing` and\n   `reimer_tight_cube` from `Fin n` to arbitrary finite types, then investigate\n   whether near-equality in average size forces a family to resemble a Boolean\n   subcube.\n\n7. **Additional structural cases.** The injection proof immediately handles a\n   family containing a singleton. Similar explicit injections may prove cases\n   involving a very small minimal member, provided their hypotheses are stated\n   carefully; the unrestricted “smallest member” heuristic is not valid in\n   general.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "fd_0826",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "42454fab",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/42454fab",
+      "status": "available",
+      "thread_id": "th_60ddfe25",
+      "timestamp": "2026-07-29T19:53:45.915898+00:00",
+      "title": "1. **Universe size four.** Extend the singleton/residual decomposition used for"
     },
     {
       "ambition_level": "extension",
@@ -19649,7 +19690,7 @@
       "depth_estimate": 3,
       "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Algebra",
@@ -19733,7 +19774,7 @@
       "depth_estimate": 3,
       "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical",
         "Algebra",
@@ -19775,7 +19816,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical Bézout theorem with explicit bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Geometry"
@@ -19816,7 +19857,7 @@
       "depth_estimate": 3,
       "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Tropical",
         "Geometry",
@@ -20610,7 +20651,7 @@
       "depth_estimate": 3,
       "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "EML",
         "Tropical",
@@ -20904,7 +20945,7 @@
       "depth_estimate": 3,
       "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Tropical",
@@ -27666,7 +27707,7 @@
       "depth_estimate": 3,
       "description": "Characterize solutions to x⊕y = z in the tropical semiring. Formalize tropical varieties and prove a Kapranov-type theorem for tropical Fermat curves.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Algebra"
@@ -27748,7 +27789,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Probability"
@@ -30782,7 +30823,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Geometry"
@@ -30823,7 +30864,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Geometry"
@@ -30864,7 +30905,7 @@
       "depth_estimate": 3,
       "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Algebra"
@@ -30905,7 +30946,7 @@
       "depth_estimate": 3,
       "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Tropical",
         "Computation"
@@ -30946,7 +30987,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Tropical",
         "Computation"
@@ -30987,7 +31028,7 @@
       "depth_estimate": 3,
       "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -31687,7 +31728,7 @@
       "depth_estimate": 3,
       "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "EML",
         "Tropical",
@@ -32344,7 +32385,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Tropical"
@@ -32713,7 +32754,7 @@
       "depth_estimate": 3,
       "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Algebra"
@@ -32754,7 +32795,7 @@
       "depth_estimate": 3,
       "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Geometry"
@@ -32795,7 +32836,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Tropical",
         "Computation"
@@ -32836,7 +32877,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Geometry"
@@ -32877,7 +32918,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical linear programming: maximize c^T ⊗ x subject to A ⊗ x ≤ b in the tropical semiring. Prove that the tropical simplex method finds the optimum in strongly polynomial time. Show that the tropical dual equals the classical dual under the Log transformation. Prove complementary slackness in the tropical setting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Tropical",
         "Computation"
@@ -32918,7 +32959,7 @@
       "depth_estimate": 3,
       "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Algebra"
@@ -33859,7 +33900,7 @@
       "depth_estimate": 3,
       "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n → T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Tropical"
@@ -35456,7 +35497,7 @@
       "depth_estimate": 3,
       "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical"
       ],
@@ -38635,10 +38676,10 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 12,
+    "Algebra": 13,
     "Analysis": 3,
     "Bridges": 2,
-    "Combinatorics": 1,
+    "Combinatorics": 2,
     "Computation": 11,
     "Cryptography": 3,
     "Geometry": 5,
@@ -38653,40 +38694,37 @@
     "Tropical": 3
   },
   "recent_theme_keywords": {
+    "3-element": 1,
     "affine": 2,
     "algebraic": 5,
+    "approach": 1,
     "arbitrary": 3,
     "bounds": 2,
+    "bošnjak-marković": 1,
     "complexity": 2,
-    "conjecture": 9,
+    "conjecture": 10,
     "consistent": 2,
     "construct": 4,
     "degree": 2,
     "dimension": 3,
     "directions": 2,
-    "duality": 1,
+    "entropy": 1,
     "equivalent": 3,
     "explicit": 3,
-    "feedforward": 1,
+    "families": 1,
     "finite": 7,
-    "formalize": 18,
+    "formalize": 19,
+    "frankl's": 1,
     "function": 4,
-    "functional": 1,
     "hypotheses": 3,
-    "identity": 1,
     "impact": 6,
-    "integer": 1,
-    "integers": 1,
-    "investigate": 1,
-    "irreducible": 1,
+    "lattice-theoretic": 1,
     "linear": 2,
     "mathematical": 3,
-    "network": 1,
-    "networks": 1,
-    "neural": 1,
     "number": 4,
     "numerical": 2,
     "paper": 1,
+    "partial": 1,
     "polynomial": 1,
     "polynomials": 1,
     "positive": 3,
@@ -38700,12 +38738,14 @@
     "r+1)(g-d+r": 1,
     "random": 3,
     "rational": 1,
+    "reformulation": 1,
     "regions": 2,
+    "reimer's": 1,
     "replace": 3,
     "representable": 1,
     "requires": 2,
     "result": 3,
-    "results": 1,
+    "results": 2,
     "schäffer's": 1,
     "section": 2,
     "showing": 1,
@@ -38731,9 +38771,10 @@
     "tropical": 2,
     "tropical-neural": 1,
     "typical": 1,
+    "union-closed": 1,
     "uniqueness": 1,
     "universality": 1,
-    "universe": 1,
+    "universe": 2,
     "unrelated": 1,
     "unresolved": 1,
     "v\\ne0\\}": 1,

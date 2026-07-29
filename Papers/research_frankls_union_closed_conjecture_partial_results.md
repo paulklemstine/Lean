@@ -1,400 +1,400 @@
-# Frankl's Union-Closed Sets Conjecture: Core Formalization and Partial Results
+# Structural and Enumerative Results for Frankl’s Union-Closed Sets Conjecture
+
+**Aristotle**  
+**July 29, 2026**
 
 ## Abstract
 
-The union-closed sets conjecture, formulated by Péter Frankl in 1979, asserts
-that every finite union-closed family of finite sets containing at least one
-nonempty set has an *abundant* element — an element belonging to at least half of
-the members of the family. Despite intense study and a recent breakthrough giving
-a constant-fraction lower bound, the full conjecture remains open. This paper
-presents a rigorous development of the core definitions together with four
-self-contained partial results. First, we prove the classical *singleton case*:
-if a union-closed family contains a one-element set $\{a\}$, then $a$ is abundant,
-via the injection $A \mapsto A \cup \{a\}$. Second, we establish the
-lattice-theoretic infrastructure: a nonempty union-closed family contains its own
-total union, which is the unique greatest element under inclusion, exhibiting the
-family as a finite join-semilattice with top. Third, we prove Frankl's conjecture
-in full for every union-closed family on a three-element universe, via a clean
-two-case split (singleton reduction plus a finite verification of the
-singleton-free residue), complementing the known result that the conjecture holds
-for all families of at most $50$ members. Fourth, we identify and prove exactly
-the equality case of Reimer's average-size inequality: on the full Boolean cube
-$\mathcal{P}(\{1,\dots,n\})$, twice the total member size equals $n \cdot 2^n$, so
-the average member size is exactly $n/2 = \tfrac12 \log_2|F|$; the proof is a pure
-double-counting identity over the natural numbers, with no entropy machinery. We
-discuss the relationships among the results and outline directions toward the full
-conjecture.
-
-**Keywords:** union-closed sets, Frankl's conjecture, abundant element, join-semilattice, Reimer's inequality, entropy, double counting, Boolean lattice.
-
----
+A finite family of finite sets is union-closed when it contains the union of every pair of its members. Frankl’s conjecture asserts that every such family with a nonempty member has an element occurring in at least half of its members. This paper develops a self-contained collection of partial results and complementary viewpoints. First, an explicit injection proves the conjecture whenever the family contains a singleton. Second, combining that injection with a finite residual classification proves the conjecture for every family on a three-element universe. Third, every nonempty finite union-closed family is shown to contain the union of all its members, giving a finite join-semilattice with a greatest element. Finally, exact double counting on the Boolean cube establishes that the sum of all subset sizes is $n2^{n-1}$ and hence that the average subset size is $n/2$. This identifies the full Boolean lattice as an equality example for the benchmark $\tfrac12\log_2|\mathcal F|$ in Reimer’s average-size inequality. Algorithms for testing union-closure, abundance, the three-point theorem, and the cube identities are stated explicitly, together with their complexity. The results separate structural arguments from bounded enumeration and provide a foundation for higher-dimensional, lattice-theoretic, and entropy-based investigations.
 
 ## 1. Introduction
 
-Let $F$ be a finite collection of finite subsets of some ground set. We call $F$
-**union-closed** if it is closed under pairwise unions:
-$$A, B \in F \;\Longrightarrow\; A \cup B \in F.$$
-For an element $x$, write $d_F(x) = |\{A \in F : x \in A\}|$ for its *degree* in
-$F$. We say $x$ is **abundant** if $2\, d_F(x) \ge |F|$, i.e. $x$ belongs to at
-least half of the members.
-
-> **Conjecture (Frankl, 1979).** Every union-closed family $F$ containing at
-> least one nonempty set has an abundant element.
-
-The conjecture is striking for the gap between the simplicity of its statement and
-the difficulty of its resolution. It has been verified in many special cases —
-for families with few sets (up to $|F| \le 50$, by Bošnjak and Marković), for
-small ground sets, and for families with sets of restricted sizes. A long-sought
-*constant-fraction* version was finally achieved by Gilmer in 2022, who proved
-via an entropy argument that some element lies in at least a fixed fraction
-(approximately $0.38$, later improved past $1 - 1/\varphi \approx 0.382$) of the
-sets; the sharp constant $\tfrac12$ remains open.
-
-This paper formalizes the foundational definitions and proves four genuine
-partial results that together touch the combinatorial, order-theoretic, and
-information-theoretic faces of the problem. Throughout, the emphasis is on
-*exact*, checkable statements rather than restatements.
-
-### 1.0 Historical and methodological context
-
-Frankl's conjecture has accumulated a large body of partial results since 1979,
-and the techniques cluster into three broad families, each represented among our
-theorems. The first family is *local-structural*: one identifies a small
-subconfiguration in the family that forces abundance. The cleanest instance is
-the singleton case (Theorem 3.1), where a one-element member forces its element
-to be abundant by a one-to-one matching. More elaborate local results force
-abundance from the presence of small sets, two-element sets, or maximal sets of
-controlled size; but as Remark 3.2 records, the most naive local heuristic is
-false, so these arguments require genuine care. The second family is
-*order-theoretic*: one views the family as a lattice and studies abundance as a
-property of join-irreducible elements. Our greatest-element lemmas (Theorems
-4.1–4.2) supply the entry point to this viewpoint by guaranteeing a top element.
-The third family is *information-theoretic*: one bounds aggregate quantities such
-as the average set size using entropy and correlation inequalities. Reimer's
-theorem and Gilmer's recent breakthrough live here, and Theorem 6.3 pins down the
-exact extremizer of Reimer's bound.
-
-A recurring methodological theme — visible in the verification of all families
-with $|F| \le 50$ and in our three-element-universe theorem — is the
-*structure-plus-search* paradigm: one uses a structural lemma to discharge the
-conceptually hard cases, leaving a finite, mechanically checkable residue. The
-art lies in choosing the structural lemma so that the residue is both finite and
-small. Theorem 5.2 is a clean miniature of exactly this paradigm.
-
-### 1.1 Summary of contributions
-
-1. **Singleton abundance** (`frankl_singleton`, Theorem 3.1): a union-closed
-   family containing $\{a\}$ makes $a$ abundant.
-2. **Greatest element / lattice reformulation** (`sup_mem` and
-   `sup_id_isGreatest`, Theorems 4.1–4.2): a nonempty union-closed family
-   contains its total union, the unique top of $(F, \subseteq)$.
-3. **Three-element universe** (`frankl_fin_three`, Theorem 5.2, with
-   `frankl_fin3_no_singleton`, Lemma 5.1): the conjecture holds for all
-   union-closed families on $\mathrm{Fin}\,3$.
-4. **Reimer tightness** (`reimer_tight_cube`, Theorem 6.3, with
-   `sum_card_powerset` Lemma 6.1 and `card_powerset_univ` Lemma 6.2): the Boolean
-   cube exactly saturates Reimer's average-size inequality.
-
----
-
-## 2. Definitions
-
-Throughout, $\alpha$ is a type with decidable equality, and families are finite
-sets of finite sets, $F : \mathrm{Finset}(\mathrm{Finset}\,\alpha)$.
-
-> **Definition 2.1 (Union-closed).** A family $F$ is *union-closed*,
-> $\mathrm{IsUnionClosed}(F)$, if for all $A, B \in F$ we have $A \cup B \in F$.
-
-> **Definition 2.2 (Abundant element).** An element $x$ is *abundant* in $F$ if
-> $$2 \cdot |\{A \in F : x \in A\}| \;\ge\; |F|,$$
-> i.e. $x$ lies in at least half of the members of $F$.
-
-> **Definition 2.3 (Frankl property).** The family $F$ satisfies the *Frankl
-> property*, $\mathrm{FranklProperty}(F)$, if there exists an element $x$ that
-> (i) belongs to some member of $F$ and (ii) is abundant in $F$.
-
-The Frankl property is the existential conclusion of the conjecture for a single
-family. We also record an immediate helper, used to package witnesses:
-
-> **Lemma 2.4 (`franklProperty_of_abundant`).** If $F$ has a nonempty member and
-> $x$ is abundant in $F$ with $x$ contained in some member, then
-> $\mathrm{FranklProperty}(F)$ holds. (Trivial from Definition 2.3.)
-
----
-
-## 3. The singleton case
-
-The single situation in which Frankl's conjecture admits a one-line proof is when
-the family contains a singleton. This is the structural heart of much of the
-theory.
-
-> **Theorem 3.1 (`frankl_singleton`).** Let $F$ be union-closed and suppose
-> $\{a\} \in F$. Then $a$ is abundant in $F$:
-> $$2 \cdot |\{A \in F : a \in A\}| \;\ge\; |F|.$$
-
-**Proof sketch.** Partition the members of $F$ into
-$$F_a^- = \{A \in F : a \notin A\}, \qquad F_a^+ = \{A \in F : a \in A\},$$
-so that $|F| = |F_a^-| + |F_a^+|$. Define
-$$\varphi : F_a^- \to F_a^+, \qquad \varphi(A) = A \cup \{a\}.$$
-The map is *well-defined*: since $A \in F$ and $\{a\} \in F$ and $F$ is
-union-closed, $A \cup \{a\} \in F$; and $a \in A \cup \{a\}$, so the image lies in
-$F_a^+$. The map is *injective*: if $A, B \in F_a^-$ (so $a \notin A$ and
-$a \notin B$) and $A \cup \{a\} = B \cup \{a\}$, then deleting $a$ from both sides
-recovers $A = B$. Hence $|F_a^-| \le |F_a^+|$, and therefore
-$$|F| = |F_a^-| + |F_a^+| \le 2\,|F_a^+| = 2\,d_F(a). \qquad \blacksquare$$
-
-The argument uses union-closure exactly once — to land $A \cup \{a\}$ back inside
-$F$ — and that single use is the entire mathematical content. It also explains why
-the result does not generalize naively: for a smallest set of size $\ge 2$ the
-analogous map $A \mapsto A \cup \{a,b\}$ need not be injective.
-
-**Remark 3.2 (the Sarvate–Renaud obstruction).** A natural conjecture — "an
-element of a smallest member is always abundant" — is *false*. Sarvate and Renaud
-exhibited union-closed families whose smallest set is a doubleton $\{a,b\}$ in
-which neither $a$ nor $b$ is abundant. Thus no purely local "smallest set"
-heuristic can settle the conjecture, and any proof for universes admitting
-non-singleton minimal sets must invoke a global argument (see §5).
-
----
-
-## 4. The lattice reformulation
-
-Order the members of a union-closed family by inclusion. Closure under union makes
-$(F, \subseteq)$ a finite join-semilattice with join $\cup$. We make the top
-element explicit.
-
-> **Theorem 4.1 (`sup_mem`).** If $F$ is union-closed and nonempty, then the
-> total union $\bigcup_{A \in F} A$ (written $F.\mathrm{sup}\,\mathrm{id}$) is a
-> member of $F$.
-
-**Proof sketch.** Induct on the finite family. The base case is a single member
-$A$, whose union is $A \in F$. For the inductive step, the union of the family
-equals $A \cup (\text{union of the rest})$; by the inductive hypothesis the latter
-is a member, and union-closure puts the union of the two back in $F$. $\blacksquare$
-
-> **Theorem 4.2 (`sup_id_isGreatest`).** If $F$ is union-closed and nonempty,
-> then $U := \bigcup_{A \in F} A$ satisfies $U \in F$ and $A \subseteq U$ for
-> every $A \in F$. Hence $U$ is the unique greatest element of $(F, \subseteq)$.
-
-**Proof sketch.** Membership $U \in F$ is Theorem 4.1. Dominance $A \subseteq U$
-for each $A \in F$ is the defining property of the supremum (each member is below
-the join of all members). Uniqueness of a greatest element in a poset is
-standard. $\blacksquare$
-
-**Discussion.** Theorem 4.2 upgrades an arbitrary union-closed family to a *bona
-fide* finite lattice with a guaranteed top element. This recasts Frankl's
-conjecture as a statement about finite lattices: a finite lattice arising as a
-union-closed family always has an "abundant" join-irreducible. The reformulation
-suggests precise lattice-theoretic refinements; see Future Directions FD4, which
-asks whether Frankl's property is equivalent to a condition on the
-join-irreducible lower covers of $\top$.
-
----
-
-## 5. Frankl's conjecture for a three-element universe
-
-We now prove the conjecture in full for the ground set $\mathrm{Fin}\,3 =
-\{0,1,2\}$. The space of families is $\mathrm{Finset}(\mathrm{Finset}(\mathrm{Fin}\,3))$,
-of which there are $2^{2^3} = 256$. Rather than a single monolithic brute force —
-which is both inelegant and computationally costly in a kernel-checked setting —
-we split on the existence of a singleton, reusing Theorem 3.1 for the conceptual
-half.
-
-> **Lemma 5.1 (`frankl_fin3_no_singleton`).** Let $F \subseteq
-> \mathcal{P}(\mathrm{Fin}\,3)$ satisfy:
-> (i) $A \cup B \in F$ for all $A, B \in F$ (union-closed);
-> (ii) $F$ contains a nonempty member; and
-> (iii) $F$ contains no singleton $\{x\}$ for any $x \in \mathrm{Fin}\,3$.
-> Then there exists $x \in \mathrm{Fin}\,3$ with
-> $|F| \le 2\,|\{A \in F : x \in A\}|$ (i.e. $x$ is abundant).
-
-**Proof sketch.** This is a finite verification: range over all subfamilies of
-$\mathcal{P}(\mathrm{Fin}\,3)$ satisfying (i)–(iii) and check that an abundant
-element exists in each. The restriction to singleton-free families is what makes
-the residue tractable and conceptually isolated; the search is decidable and was
-discharged by exhaustive evaluation. $\blacksquare$
-
-> **Theorem 5.2 (`frankl_fin_three`).** Every union-closed family
-> $F \subseteq \mathcal{P}(\mathrm{Fin}\,3)$ with a nonempty member satisfies
-> $\mathrm{FranklProperty}(F)$.
-
-**Proof sketch.** Case-split on whether $F$ contains a singleton.
-
-- *If $\{x\} \in F$ for some $x$:* then $x$ belongs to a member (namely $\{x\}$),
-  and by Theorem 3.1 ($\mathrm{frankl\_singleton}$) $x$ is abundant. Hence
-  $\mathrm{FranklProperty}(F)$ holds.
-- *If $F$ contains no singleton:* apply Lemma 5.1 to obtain an abundant $x$. Since
-  $F$ has a nonempty member, Lemma 2.4 packages this into
-  $\mathrm{FranklProperty}(F)$.
-
-In both cases the Frankl property holds. $\blacksquare$
-
-**Discussion.** The two-case structure is deliberate and instructive. The
-singleton branch is the *only* place union-closure is used structurally; the
-no-singleton branch is bounded bookkeeping. This separation mirrors the general
-philosophy by which the conjecture has been pushed forward — known for all
-families with $|F| \le 50$ (Bošnjak–Marković) — namely, peel off the
-structurally-forced cases and verify a controlled finite residue. Future
-Directions FD2 proposes the verbatim extension to $\mathrm{Fin}\,4$, where the
-singleton branch is unchanged and only the size of the finite residue grows.
-
----
-
-## 6. The equality case of Reimer's average-size inequality
-
-Reimer's theorem (2003) is a remarkable lower bound on the *average* member size
-of a union-closed family.
-
-> **Theorem (Reimer, 2003; stated for context, not proved here).** For every
-> union-closed family $F$ with $|F| \ge 1$,
-> $$\frac{1}{|F|}\sum_{A \in F} |A| \;\ge\; \tfrac{1}{2}\log_2 |F|.$$
-
-The proof uses entropy and Shearer's lemma, and it is exactly this entropic
-toolbox that underlies the modern constant-fraction progress on Frankl's
-conjecture. We do *not* reprove the inequality. Instead we identify and prove
-*exactly* its equality case: the full Boolean cube.
-
-For the cube $F = \mathcal{P}(\mathrm{Fin}\,n)$ we have $|F| = 2^n$, hence
-$\tfrac12 \log_2 |F| = n/2$. The equality case is therefore the integer assertion
-that the average subset of an $n$-set has size exactly $n/2$. We prove this with
-no logarithms, over the natural numbers.
-
-> **Lemma 6.1 (`sum_card_powerset`).** For every $n \in \mathbb{N}$,
-> $$\sum_{A \subseteq \mathrm{Fin}\,n} |A| \;=\; n \cdot 2^{\,n-1}.$$
-
-**Proof sketch (double counting).** Count incidences $(x, A)$ with $x \in A$ over
-all subsets $A \subseteq \mathrm{Fin}\,n$ in two ways. Summing first over $A$
-gives $\sum_A |A|$. Summing first over points $x$: each fixed point lies in
-exactly $2^{n-1}$ subsets (the remaining $n-1$ points are free), and there are $n$
-points, giving $n \cdot 2^{n-1}$. Equate. Equivalently, group subsets by
-cardinality to write the sum as $\sum_{k=0}^n k\binom{n}{k}$, and use the identity
-$k\binom{n}{k} = n\binom{n-1}{k-1}$ together with $\sum_j \binom{n-1}{j} =
-2^{n-1}$. $\blacksquare$
-
-> **Lemma 6.2 (`card_powerset_univ`).** For every $n \in \mathbb{N}$,
-> $$|\mathcal{P}(\mathrm{Fin}\,n)| \;=\; 2^{\,n}.$$
-
-**Proof sketch.** The number of subsets of a set of cardinality $n$ is $2^n$
-($|\mathrm{Fin}\,n| = n$ and $|\mathcal{P}(S)| = 2^{|S|}$). $\blacksquare$
-
-> **Theorem 6.3 (`reimer_tight_cube`).** For every $n \in \mathbb{N}$,
-> $$2 \cdot \!\!\sum_{A \subseteq \mathrm{Fin}\,n}\!\! |A| \;=\; n \cdot |\mathcal{P}(\mathrm{Fin}\,n)|,$$
-> equivalently $2 \cdot (n \cdot 2^{n-1}) = n \cdot 2^n$. Hence the average member
-> size of the Boolean cube is exactly $n/2 = \tfrac12 \log_2(2^n)$, so the cube
-> saturates Reimer's inequality with equality.
-
-**Proof sketch.** Substitute Lemma 6.1 on the left and Lemma 6.2 on the right:
-the claim becomes $2 \cdot n \cdot 2^{n-1} = n \cdot 2^n$. For $n = 0$ both sides
-are $0$; for $n = m+1$ we have $2 \cdot 2^{m} = 2^{m+1}$, and the identity follows
-by elementary arithmetic. $\blacksquare$
-
-**Discussion.** The double-counting identity in Lemma 6.1 is, in a precise sense,
-the combinatorial heart that an entropy proof of Reimer's inequality reproduces
-asymptotically. Pinning the equality case to the Boolean cube provides the
-*tightness certificate* needed to prove a full characterization of extremizers
-(Future Directions FD3). Crucially, the entire statement and proof live over
-$\mathbb{N}$ — no entropy, no logarithms — which makes it a genuine, kernel-checkable
-theorem rather than a restatement of the analytic inequality.
-
----
-
-## 7. Algorithms
-
-The results above are constructive and yield small, verifiable algorithms.
-
-### 7.1 Singleton matching witness
-
-Given a union-closed family $F$ with $\{a\} \in F$, the proof of Theorem 3.1
-yields an explicit injection $\varphi(A) = A \cup \{a\}$ from $a$-avoiding members
-to $a$-containing members. Building and validating this matching (well-defined,
-injective, landing in $F$) is an $O(|F|^2)$ certificate that $a$ is abundant.
-
-### 7.2 Singleton-reduction search for small universes
-
-Given a small ground set, enumerate all union-closed families with a nonempty
-member; for each, first test for a singleton (and invoke §7.1 if present),
-otherwise verify abundance directly. This is the algorithmic content of Theorem
-5.2 and Lemma 5.1, and the template proposed for $\mathrm{Fin}\,4$ in FD2. The
-cost is dominated by the $2^{2^n}$ family enumeration, pruned heavily by the
-union-closure and nonemptiness filters.
-
-### 7.3 Cube double-counting check
-
-The identity $2\sum_{A}|A| = n\cdot 2^n$ can be verified directly for any $n$ by
-summing subset sizes; this is the numerical face of Theorem 6.3 and a unit test
-for the symbolic proof.
-
----
-
-## 8. Applications and connections
-
-- **Lattice theory.** Theorem 4.2 places Frankl's conjecture inside the theory of
-  finite lattices, where abundance becomes a statement about join-irreducibles.
-- **Information theory.** Theorem 6.3 connects to entropy methods (Reimer,
-  Shearer, Gilmer): the cube is the extremizer of the average-size bound that
-  underpins the modern constant-fraction progress.
-- **Computational combinatorics.** The singleton-reduction template (Theorem 5.2)
-  exemplifies how structural lemmas shrink exhaustive searches, the same strategy
-  by which the conjecture has been verified up to $|F| \le 50$.
-
----
+Let $U$ be a finite set and let $\mathcal F\subseteq\mathcal P(U)$ be a finite family. The family is **union-closed** if
+
+$$
+A,B\in\mathcal F\implies A\cup B\in\mathcal F.
+$$
+
+Frankl’s union-closed sets conjecture states that if at least one member of $\mathcal F$ is nonempty, then some element of $U$ belongs to at least half the members of $\mathcal F$. In frequency notation, if
+
+$$
+d_{\mathcal F}(x)=|\{A\in\mathcal F:x\in A\}|,
+$$
+
+then the conjecture asks for an element $x$ occurring in a member of $\mathcal F$ such that
+
+$$
+d_{\mathcal F}(x)\ge \frac{|\mathcal F|}{2}.
+$$
+
+Because frequencies are integral, it is often preferable to avoid division and write the equivalent condition
+
+$$
+2d_{\mathcal F}(x)\ge |\mathcal F|.
+$$
+
+The conjecture is simple to state but structurally subtle. Union-closure controls upward combinations, not deletions or intersections. A family may omit the empty set, singletons, and many intermediate subsets. Consequently, the symmetry of a full power set cannot be assumed in general.
+
+This paper establishes four groups of results. The first is a direct injection theorem: the presence of a singleton $\{a\}$ forces $a$ to be abundant. The second settles the conjecture on a three-element universe by splitting into a singleton branch and a finite no-singleton residue. The third gives the lattice-theoretic structure common to all nonempty finite union-closed families: the union of all members is itself a member and is greatest under inclusion. The fourth studies the full Boolean lattice, proving exact cardinality and incidence identities and deriving its average member size.
+
+The scope is intentionally precise. The general Frankl conjecture is not claimed. Nor is a proof of Reimer’s average-size inequality supplied. Instead, the Boolean-cube equality underlying its sharpness is proved by elementary double counting. Likewise, the three-point theorem is complete, while larger-universe and bounded-family results remain future objectives.
+
+## 2. Definitions and elementary counting
+
+### 2.1. Union-closed families and abundance
+
+**Definition 2.1 (Union-closed family).** A finite family $\mathcal F$ of finite subsets of a universe $U$ is union-closed if, for all $A,B\in\mathcal F$, the set $A\cup B$ also belongs to $\mathcal F$.
+
+**Definition 2.2 (Containing subfamily and frequency).** For $x\in U$, define
+
+$$
+\mathcal F_x=\{A\in\mathcal F:x\in A\},
+\qquad d_{\mathcal F}(x)=|\mathcal F_x|.
+$$
+
+Also define the avoiding subfamily
+
+$$
+\mathcal F_{\bar x}=\{A\in\mathcal F:x\notin A\}.
+$$
+
+**Definition 2.3 (Abundant element).** An element $x$ is abundant in $\mathcal F$ if
+
+$$
+|\mathcal F|\le 2|\mathcal F_x|.
+$$
+
+**Definition 2.4 (Frankl property).** A family $\mathcal F$ has the Frankl property if there exists an element $x$ lying in at least one member of $\mathcal F$ and abundant in $\mathcal F$.
+
+Requiring $x$ to occur in some member prevents irrelevant points outside the effective universe $\bigcup\mathcal F$ from serving as witnesses.
+
+**Lemma 2.5 (Frequency partition).** For every finite family $\mathcal F$ and every element $x$,
+
+$$
+|\mathcal F|=|\mathcal F_x|+|\mathcal F_{\bar x}|.
+$$
+
+**Proof sketch.** Every member either contains $x$ or avoids $x$, and no member does both. Thus the two subfamilies form a disjoint partition of $\mathcal F$. $\square$
+
+**Lemma 2.6 (Abundance in a nonempty family produces a witness).** If $\mathcal F$ is nonempty and $x$ is abundant, then some member of $\mathcal F$ contains $x$.
+
+**Proof sketch.** If no member contained $x$, then $|\mathcal F_x|=0$. Abundance would imply $|\mathcal F|\le 0$, contradicting nonemptiness. $\square$
+
+This lemma is useful when abundance is obtained numerically before membership of the witness has been recorded explicitly.
+
+## 3. The singleton injection
+
+The strongest general structural result considered here is triggered by the presence of a singleton.
+
+**Theorem 3.1 (Singleton Injection Theorem).** Let $\mathcal F$ be a finite union-closed family. If $\{a\}\in\mathcal F$, then $a$ is abundant:
+
+$$
+|\mathcal F|\le 2|\mathcal F_a|.
+$$
+
+**Proof.** Partition $\mathcal F$ into
+
+$$
+\mathcal S=\mathcal F_{\bar a}
+\quad\text{and}\quad
+\mathcal T=\mathcal F_a.
+$$
+
+Define a map $\Phi:\mathcal S\to\mathcal T$ by
+
+$$
+\Phi(A)=A\cup\{a\}.
+$$
+
+For $A\in\mathcal S$, both $A$ and $\{a\}$ belong to $\mathcal F$. Union-closure therefore gives $A\cup\{a\}\in\mathcal F$, and this image contains $a$, so it lies in $\mathcal T$.
+
+The map is injective. If $A,B\in\mathcal S$ and
+
+$$
+A\cup\{a\}=B\cup\{a\},
+$$
+
+then $a\notin A$ and $a\notin B$. Removing $a$ from both sides yields $A=B$. Hence
+
+$$
+|\mathcal S|\le |\mathcal T|.
+$$
+
+By Lemma 2.5,
+
+$$
+|\mathcal F|=|\mathcal S|+|\mathcal T|
+\le 2|\mathcal T|
+=2|\mathcal F_a|.
+$$
+
+Thus $a$ is abundant. $\square$
+
+**Corollary 3.2 (Frankl property in the singleton case).** If a union-closed family contains a singleton, then it has the Frankl property.
+
+**Proof sketch.** The element of that singleton belongs to a member of the family and is abundant by Theorem 3.1. $\square$
+
+The proof gives more than a frequency inequality: it supplies an explicit matching of all members avoiding $a$ into distinct members containing $a$. The condition that $A$ avoids $a$ is exactly what makes adjoining $a$ reversible.
+
+**Example 3.3.** Let
+
+$$
+\mathcal F=\{\varnothing,\{a\},\{b,c\},\{a,b,c\}\}.
+$$
+
+This family is union-closed. The sets avoiding $a$ are $\varnothing$ and $\{b,c\}$; adjoining $a$ maps them respectively to $\{a\}$ and $\{a,b,c\}$. Hence $a$ occurs in exactly half the family.
+
+A tempting generalization would replace the singleton by an arbitrary smallest member and attempt to adjoin one of its elements. Such a map need not be injective: adding a point to two sets may erase their distinction when one already contains related elements. Thus the singleton hypothesis captures a genuinely stable mechanism and should not be weakened without additional structure.
+
+## 4. The three-element universe
+
+Let $U$ be a set with exactly three elements. Up to relabeling, take $U=\{0,1,2\}$. There are $2^3=8$ subsets of $U$ and therefore $2^8=256$ families of subsets.
+
+### 4.1. Residual finite lemma
+
+**Lemma 4.1 (No-singleton three-point lemma).** Let $\mathcal F\subseteq\mathcal P(U)$, where $|U|=3$. Suppose that:
+
+1. $\mathcal F$ is union-closed;
+2. $\mathcal F$ contains a nonempty member; and
+3. $\mathcal F$ contains no singleton.
+
+Then some $x\in U$ satisfies
+
+$$
+|\mathcal F|\le 2|\mathcal F_x|.
+$$
+
+**Proof sketch.** The claim is a finite exhaustive statement. Enumerate the eight subsets of $U$ by masks from $0$ to $7$, and enumerate a candidate family by a mask from $0$ to $255$. For each candidate, test all ordered pairs of selected subset masks $A,B$ and require the bit corresponding to $A\cup B$ to be selected. Reject candidates without a nonempty member or with any of the three singleton masks selected. For every remaining candidate, count selected masks containing each coordinate and verify that the maximum frequency $m$ satisfies $2m\ge |\mathcal F|$. This exhausts every family on the labeled three-point universe. Relabeling preserves union-closure and frequencies, so it also covers any three-element universe. $\square$
+
+The exhaustive step is modest but exact: there are only $256$ candidates, each requiring at most $8^2=64$ closure checks and $3\cdot8=24$ incidence tests.
+
+### 4.2. Complete theorem in dimension three
+
+**Theorem 4.2 (Frankl’s conjecture for a three-element universe).** Every union-closed family of subsets of a three-element universe that contains a nonempty member has the Frankl property.
+
+**Proof.** Let $\mathcal F$ satisfy the hypotheses. There are two cases.
+
+If $\mathcal F$ contains a singleton $\{x\}$, Theorem 3.1 shows that $x$ is abundant, and $x$ plainly lies in a member of the family.
+
+If $\mathcal F$ contains no singleton, Lemma 4.1 supplies an abundant element $x$. Since $\mathcal F$ contains a nonempty member, it is nonempty; Lemma 2.6 then shows that some member contains $x$. Thus $x$ witnesses the Frankl property. $\square$
+
+The proof deliberately separates a reusable infinite-pattern argument from bounded enumeration. Families containing singletons are handled uniformly for every universe size; only the no-singleton residue uses the three-point bound.
+
+### 4.3. A small residual example
+
+Consider
+
+$$
+\mathcal F=\bigl\{\{0,1\},\{0,2\},\{0,1,2\}\bigr\}.
+$$
+
+It contains no singleton and is union-closed. Frequencies are
+
+$$
+d_{\mathcal F}(0)=3,
+\qquad d_{\mathcal F}(1)=2,
+\qquad d_{\mathcal F}(2)=2.
+$$
+
+All three elements are abundant because $2d_{\mathcal F}(x)\ge3$. The finite lemma covers less transparent configurations as well, including families containing the empty set and various selections of two-element members.
+
+## 5. Join-semilattice structure and the greatest member
+
+Order the members of a family by inclusion. For any two sets $A$ and $B$, their union is their least upper bound in the ambient power set. When the family is union-closed, this join remains inside the family.
+
+**Definition 5.1 (Finite join-semilattice viewpoint).** A union-closed family $\mathcal F$, ordered by inclusion, is a finite partially ordered set in which every pair has a join given by $A\vee B=A\cup B$.
+
+Finiteness and nonemptiness force a top element.
+
+**Theorem 5.2 (Greatest-Member Theorem).** Let $\mathcal F$ be a nonempty finite union-closed family. Define
+
+$$
+T=\bigcup_{A\in\mathcal F}A.
+$$
+
+Then $T\in\mathcal F$, and for every $A\in\mathcal F$ one has $A\subseteq T$. Consequently, $T$ is the greatest member of $\mathcal F$.
+
+**Proof.** Enumerate the nonempty finite family as $A_1,\ldots,A_m$. Define successive unions
+
+$$
+T_1=A_1,
+\qquad
+T_{k+1}=T_k\cup A_{k+1}.
+$$
+
+By induction, $T_k\in\mathcal F$: the base case is immediate, and the induction step follows from union-closure. Therefore $T_m\in\mathcal F$. Associativity of union gives
+
+$$
+T_m=A_1\cup\cdots\cup A_m
+=\bigcup_{A\in\mathcal F}A=T.
+$$
+
+Each $A_i$ is included in this union, so every member lies below $T$. $\square$
+
+**Corollary 5.3.** Every nonempty finite union-closed family is a finite join-semilattice with a greatest element.
+
+This reformulation suggests translating element frequency into order-theoretic data. For each ground element $x$, the subfamily $\mathcal F_x$ is upward closed inside $\mathcal F$: if $A\in\mathcal F_x$ and $A\subseteq B\in\mathcal F$, then $x\in B$. Frankl’s property asks whether at least one such incidence filter has size at least $|\mathcal F|/2$. Different ground elements may define the same filter; identifying them is a natural separating reduction.
+
+## 6. Boolean lattices and exact average size
+
+Let $U$ be an $n$-element set and consider the full Boolean lattice $\mathcal P(U)$. It is union-closed because the union of two subsets of $U$ is again a subset of $U$.
+
+**Lemma 6.1 (Cardinality of the Boolean lattice).** If $|U|=n$, then
+
+$$
+|\mathcal P(U)|=2^n.
+$$
+
+**Proof sketch.** Each element of $U$ is independently either included or excluded, giving two choices for each of $n$ coordinates. $\square$
+
+**Lemma 6.2 (Half-cube frequency).** For every $x\in U$,
+
+$$
+|\{A\subseteq U:x\in A\}|=2^{n-1}
+$$
+
+when $n\ge1$.
+
+**Proof sketch.** Once $x$ is required to be present, the remaining $n-1$ elements can be chosen freely. Equivalently, adjoining $x$ bijects subsets avoiding $x$ with subsets containing $x$. $\square$
+
+**Theorem 6.3 (Boolean-Cube Incidence Identity).** For an $n$-element universe,
+
+$$
+\sum_{A\subseteq U}|A|=n2^{n-1},
+$$
+
+where for $n=0$ the right-hand side is interpreted as $0$.
+
+**Proof.** Count the incidence set
+
+$$
+I=\{(x,A):x\in U,\ A\subseteq U,\ x\in A\}
+$$
+
+in two ways. Fixing $A$ gives $|A|$ possible first coordinates, hence
+
+$$
+|I|=\sum_{A\subseteq U}|A|.
+$$
+
+For $n\ge1$, fixing $x$ gives $2^{n-1}$ subsets containing it by Lemma 6.2. Summing over $n$ elements gives $|I|=n2^{n-1}$. If $n=0$, the only subset is empty and both sides are zero. $\square$
+
+**Theorem 6.4 (Exact Cube Average and Reimer Equality Benchmark).** For the full Boolean lattice on an $n$-element universe,
+
+$$
+2\sum_{A\subseteq U}|A|=n|\mathcal P(U)|.
+$$
+
+Consequently its average member size is $n/2$.
+
+**Proof.** By Theorem 6.3 and Lemma 6.1, the two sides are respectively
+
+$$
+2n2^{n-1}
+\quad\text{and}\quad
+n2^n,
+$$
+
+which are equal. Dividing by $2|\mathcal P(U)|$ gives the average $n/2$. $\square$
+
+Reimer’s average-size inequality states that a finite union-closed family $\mathcal F$ has average member size at least
+
+$$
+\frac12\log_2|\mathcal F|.
+$$
+
+For $\mathcal F=\mathcal P(U)$, Lemma 6.1 gives $\log_2|\mathcal F|=n$, while Theorem 6.4 gives average size $n/2$. Thus the Boolean cube realizes equality in that benchmark. The present argument proves the equality computation for the cube; it does not supply the general entropy inequality.
+
+**Corollary 6.5 (Frankl property for nontrivial Boolean lattices).** If $U$ is nonempty, then every $x\in U$ is abundant in $\mathcal P(U)$, and hence $\mathcal P(U)$ has the Frankl property.
+
+**Proof.** Lemmas 6.1 and 6.2 give
+
+$$
+2d_{\mathcal P(U)}(x)=2\cdot2^{n-1}=2^n=|\mathcal P(U)|.
+$$
+
+Thus every point is exactly abundant. Alternatively, each singleton belongs to the power set, so Theorem 3.1 gives abundance directly. $\square$
+
+## 7. Algorithms and computational demonstrations
+
+### 7.1. Bit-mask representation
+
+For a universe $U=\{0,\ldots,n-1\}$, represent a subset $A$ by the integer
+
+$$
+\operatorname{mask}(A)=\sum_{i\in A}2^i.
+$$
+
+Then set union is bitwise OR, membership of $i$ is detected by the $i$th bit, and cardinality is the population count. A family may be stored as a list or set of subset masks.
+
+### 7.2. Testing union-closure
+
+**Algorithm 7.1 (Pairwise Union-Closure Test).** Given a family of $m$ subset masks, store them in a hash set. For every ordered pair $(A,B)$, compute $A\mathbin{\mathrm{OR}}B$ and test membership in the hash set. Return false on the first missing union and true if all tests pass.
+
+The running time is $O(m^2)$ expected time with constant-time fixed-width bit operations and hash lookup, and the storage is $O(m)$. With arbitrary-length masks, bit-operation costs introduce a factor depending on $n$.
+
+### 7.3. Finding an abundant element
+
+**Algorithm 7.2 (Incidence Frequency Scan).** Initialize $n$ counters to zero. For each member $A$ and each coordinate $x$, increment the $x$th counter if $x\in A$. Return all $x$ satisfying $2d_{\mathcal F}(x)\ge m$.
+
+The direct running time is $O(nm)$ and storage is $O(n)$. Iterating only over set bits can improve performance on sparse families.
+
+### 7.4. Exhausting the three-point universe
+
+**Algorithm 7.3 (Three-Point Residual Enumerator).** Enumerate all $256$ family masks. Decode each into selected subset masks among $0,1,2,3,4,5,6,7$; test union-closure; require a nonempty member; optionally separate candidates containing singleton masks $1$, $2$, or $4$; and apply the frequency scan. The theorem is confirmed when no qualifying family lacks an abundant point.
+
+More generally, exhaustive enumeration on an $n$-element universe examines $2^{2^n}$ families, so its worst-case complexity is doubly exponential in $n$. This explains why structural reductions become essential already at $n=4$, where there are $2^{16}=65{,}536$ candidate families.
+
+### 7.5. Verifying cube identities
+
+**Algorithm 7.4 (Boolean-Cube Incidence Counter).** Enumerate the $2^n$ masks, add each population count, and compare the result with $n2^{n-1}$, treating $n=0$ separately. Simultaneously count each coordinate frequency and compare it with $2^{n-1}$.
+
+The running time is $O(2^n)$ if population count is treated as constant time on machine words, or $O(n2^n)$ with elementary bit inspection. The algorithm is illustrative rather than necessary for the proof, which follows directly from double counting.
+
+## 8. Applications and interpretation
+
+Union-closed families arise whenever admissible states are stable under aggregation. In a capability system, a set may list permissions and union may combine two roles. In a distributed knowledge model, a set may record facts held by an agent and union may represent merged information. In feature engineering, sets may encode active features and closure may express availability of combined profiles. Frankl’s property then predicts a feature occurring in at least half the admissible states.
+
+The greatest-member theorem has an immediate interpretation: repeated aggregation reaches a state containing every feature that appears anywhere in the system, and that state is itself admissible. The singleton theorem says that if an isolated capability is admissible, then that capability must occur in at least half the admissible aggregate states. The Boolean cube represents independent binary features; exact half-frequency and average size $n/2$ are then the expected symmetry laws.
+
+These interpretations should not be mistaken for a proof of the general conjecture in applications. They instead clarify which hypotheses supply which conclusions. Closure supplies the top state. A singleton supplies an injection and abundance. Full independence supplies exact balance. Three coordinates permit complete classification.
 
 ## 9. Discussion
 
-The four results illuminate complementary faces of one problem. The singleton
-theorem is the combinatorial nucleus and explains, via its failure for doubletons
-(Remark 3.2), why the conjecture is hard. The lattice lemmas provide structural
-scaffolding. The three-element theorem demonstrates the structure-plus-search
-methodology on a complete case. The Reimer tightness identity captures the exact
-extremal behavior of the entropic approach. None of these alone resolves the
-conjecture, but together they form a coherent set of footholds, each stated and
-proved exactly.
+The results expose three proof paradigms.
 
----
+First, **injection** converts algebraic closure into a cardinal comparison. Its strength lies in being explicit and dimension-free. Searching for other reversible maps remains attractive, but the singleton case warns that adding multiple elements can destroy recoverability.
 
-## 10. Future directions
+Second, **structural decomposition followed by enumeration** isolates the part of a small theorem that is conceptually uniform. The three-point proof does not hide all reasoning inside exhaustive search: it removes every singleton-containing family by a general theorem and searches only the no-singleton residue.
 
-**FD1. Doubleton families: a guarded abundance theorem.** *Conjecture:* if a
-union-closed family $F$ contains a $2$-element set $\{a,b\}$ and no element of
-$\{a,b\}$ is "blocked" (every member meeting $\{a,b\}$ does so in a way that keeps
-the union map injective), then $a$ or $b$ is abundant. The singleton injection
-$A \mapsto A \cup \{a\}$ degrades for doubletons into a pair of partial injections
-$A \mapsto A \cup \{a,b\}$, and abundance survives exactly when the overlap defect
-is controlled — precisely the defect localized by the failure of the naive
-smallest-set heuristic.
+Third, **double counting** connects coordinate frequencies with average set size. On the Boolean cube it yields an exact identity. In a general family,
 
-**FD2. Frankl for $\mathrm{Fin}\,4$ by singleton-reduction plus bounded search.**
-*Conjecture:* Theorem 5.2 generalizes verbatim to $\mathrm{Fin}\,4$ — split on the
-existence of a singleton (use Theorem 3.1), then verify the singleton-free residue
-by exhaustive search. The singleton branch removes the only step that uses
-union-closure structurally, leaving a finite residue (families on $16$ sets) whose
-decidable predicate is unchanged; only the search budget needs profiling.
+$$
+\sum_{A\in\mathcal F}|A|=\sum_{x\in U}d_{\mathcal F}(x),
+$$
 
-**FD3. Reimer's inequality (not just its equality case).** *Conjecture:* for every
-union-closed $F$ with $|F| \ge 1$, $2\sum_{A \in F}|A| \ge |F|\log_2|F|$, with
-equality iff $F$ is (an up-set isomorphic to) a Boolean cube. Theorem 6.3 already
-proves the equality on the cube via double counting; the general inequality should
-follow from a Shearer/submodularity entropy bound whose extremizer is exactly the
-object pinned down here, with the cube identity supplying the tightness
-certificate for the "iff" half.
+so a lower bound on average size constrains the total frequency. Translating such aggregate information into one frequency of at least $|\mathcal F|/2$ is the central difficulty.
 
-**FD4. The greatest-element lattice reformulation as a fixed point.**
-*Conjecture:* a finite lattice $L$ satisfies Frankl iff its top element $\top$
-(which Theorem 4.2 shows always exists for union-closed families) has a
-join-irreducible lower cover lying below at least half of $L$. Theorem 4.2
-upgrades a union-closed family to a finite join-semilattice with top, so Frankl
-becomes a statement about join-irreducibles, where abundance means "below half the
-lattice."
+The order-theoretic formulation may organize this translation. Each coordinate determines an upward-closed subfamily, and coordinates with identical containing subfamilies are indistinguishable. Quotienting these duplicate incidence columns preserves member frequencies while reducing the effective universe. Such separating reductions are natural prerequisites for larger finite bounds.
 
----
+## 10. Future work
+
+Several concrete extensions follow from the present foundation.
+
+1. **Universe size four.** The singleton/residual decomposition remains available. There are $65{,}536$ candidate families before reductions, suggesting classification under permutations, separation of duplicate incidence columns, and complement-based pruning.
+
+2. **Families with at most fifty members.** A treatment of the Bošnjak–Marković bound would require separating reductions, frequency constraints, and certified finite classification of the remaining configurations. No such bound is asserted here.
+
+3. **Abstract semilattices.** One can package the family directly as a finite join-subsemilattice with top and formulate frequencies through principal incidence filters.
+
+4. **Entropy infrastructure.** A self-contained route to the general average-size inequality would develop finite Shannon entropy, the chain rule, an appropriate form of Shearer’s inequality, and the connection between incidence-vector entropy and average member size.
+
+5. **Equality and stability.** The cube identities hold for every finite universe, not merely a chosen labeling. A deeper question is whether families whose average size is close to the Boolean-cube benchmark must resemble a Boolean subcube.
+
+6. **Controlled minimal-member injections.** The singleton map suggests studying small minimal members under additional hypotheses strong enough to retain injectivity. Any such extension must avoid the false unrestricted smallest-member heuristic.
 
 ## 11. Conclusion
 
-We have formalized the core notions of union-closed families, abundant elements,
-and the Frankl property, and we have proved four exact partial results: the
-singleton abundance theorem, the greatest-element/lattice reformulation, Frankl's
-conjecture for a three-element universe, and the exact equality case of Reimer's
-average-size inequality on the Boolean cube. Each result is stated as a precise,
-checkable theorem, and together they assemble combinatorial, order-theoretic, and
-information-theoretic perspectives on one of the most accessible open problems in
-combinatorics.
+A finite union-closed family always has a greatest member. If it contains a singleton, an explicit injection proves that the singleton’s element occurs in at least half the family. On a three-element universe, this structural case plus a finite no-singleton classification proves Frankl’s property completely. For the full Boolean lattice, every coordinate occurs exactly half the time, the total subset size is $n2^{n-1}$, and the average size is $n/2$, realizing the equality benchmark associated with Reimer’s inequality.
+
+Together these results give exact answers in several natural regimes and distinguish the mechanisms responsible for them: closure under repeated joins, reversible singleton adjunction, bounded classification, and Boolean symmetry. The general conjecture asks for a mechanism that persists when none of the special features is present.
