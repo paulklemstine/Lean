@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1aa4bedd",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\nThe current development establishes the finite-space variational core of PAC--Bayes, including the exact Gibbs-tilt identity, posterior-uniform change of measure, an exponential-m",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-25T14:09:59",
-      "title": "PAC-Bayes Generalization Bounds"
-    },
-    {
       "cycle_id": "9f0b015d",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\n1. **Tropical normal forms.** Replace the current theorem-driven simplifier with a reflected syntax for finite min-plus polynomials, prove evaluation preservation for normalizatio",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-29T17:47:50",
       "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
+    },
+    {
+      "cycle_id": "e3e9c821",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n## Scope of the formalization\n\n`Catalog/Physics/Noether/ContinuousSymmetries.lean` proves the differential core of Noether's first theorem for finite-dimensional real inner-produc",
+      "quality_score": 0.79196,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-29T17:48:52",
+      "title": "Noether's Theorem: Symmetries and Conservation Laws"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ea7d1cf2",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n## 1. Arithmetic persistence of weighted homology\n\n**Conjecture.** Let a smooth projective surface and a normal-crossings cell model be\ndefined over a number field. Outside a fini",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T03:35:18",
-      "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-    },
     {
       "cycle_id": "e3542946",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-29T17:47:50",
       "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
+    },
+    {
+      "cycle_id": "e3e9c821",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\n## Scope of the formalization\n\n`Catalog/Physics/Noether/ContinuousSymmetries.lean` proves the differential core of Noether's first theorem for finite-dimensional real inner-produc",
+      "quality_score": 0.79196,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-29T17:48:52",
+      "title": "Noether's Theorem: Symmetries and Conservation Laws"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b7ae8967",
-      "domain": "MachineLearning",
-      "name": "bilinearScore_smul_query",
-      "quality": 0.8002199999999999
-    },
-    {
-      "cycle_id": "b7ae8967",
-      "domain": "MachineLearning",
-      "name": "bilinearScore_add_key",
-      "quality": 0.8002199999999999
-    },
-    {
-      "cycle_id": "3e30c45d",
-      "domain": "Cryptography",
-      "name": "twoQuotient_factor",
-      "quality": 0.7689999999999999
-    },
     {
       "cycle_id": "3e30c45d",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "nizk_honest_support_is_accepting",
       "quality": 0.74352
+    },
+    {
+      "cycle_id": "e3e9c821",
+      "domain": "Physics",
+      "name": "for",
+      "quality": 0.79196
+    },
+    {
+      "cycle_id": "e3e9c821",
+      "domain": "Physics",
+      "name": "noether_charge_hasDerivAt_zero",
+      "quality": 0.79196
+    },
+    {
+      "cycle_id": "e3e9c821",
+      "domain": "Physics",
+      "name": "noether_first_theorem",
+      "quality": 0.79196
     }
   ],
-  "last_updated": "2026-07-29T17:47:50",
+  "last_updated": "2026-07-29T17:48:52",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "66a73fad",
-        "quality": 0.62,
-        "theorems": 7,
-        "title": "**Conjecture.** In the random graph process, with probability tending to one, th"
-      },
-      {
         "cycle_id": "b873ab80",
         "quality": 0.62,
         "theorems": 14,
@@ -3761,6 +3755,12 @@
         "quality": 0.6695599999999999,
         "theorems": 10,
         "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+      },
+      {
+        "cycle_id": "e3e9c821",
+        "quality": 0.79196,
+        "theorems": 15,
+        "title": "Noether's Theorem: Symmetries and Conservation Laws"
       }
     ],
     "Probability": [
