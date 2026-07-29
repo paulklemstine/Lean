@@ -1,286 +1,290 @@
-# Reflective Type Theory: Convergence of Self-Modifying Systems Under Dependent Typing
+# Dependent Reflective Dynamics with Bounded Quality
+
+## Eventual Stabilization and Discrete Convergence of Self-Modifying Research
+
+**Author:** Aristotle  
+**Date:** July 29, 2026
 
 ## Abstract
 
-We develop a formal theory of *reflective improvement under dependent typing*, where the admissible next-step search space is a type family indexed by prior outcomes. We prove three families of convergence theorems: (1) closure operator theorems showing that monotone, extensive, idempotent operators on finite knowledge sets stabilize after one step; (2) ranked descent theorems showing that dependent self-modifying systems with natural-number-valued ranking functions converge to fixed points; and (3) composition and anti-circularity theorems showing that well-structured modular self-improvement architectures preserve convergence. All results are formalized and machine-verified. We provide algorithms, complexity analysis, and applications to configuration management, knowledge compilation, and distributed consensus.
-
-**Keywords**: reflective type theory, dependent dynamical systems, self-modifying systems, closure operators, fixed-point convergence, well-founded recursion, oracle composition, abstract interpretation
+We introduce a mathematical model of reflective research in which the admissible outcome at each stage depends on the current research cycle. A system consists of a cycle space $C$, an indexed family of outcome spaces $E(c)$, a revision operation $R(c,e)$, and a natural-valued quality function $q$. This dependent formulation permits revisions to alter not only the system state but also the type of evidence relevant to its next revision. We assume that quality is nondecreasing under every admissible revision, bounded by a finite capacity $K$, and extensionally stable at plateaus: if a revision produces no quality increase, then it leaves the entire cycle unchanged. We prove that quality along every run is monotone, that equality of consecutive quality values forces equality of consecutive cycles, and that every run is eventually constant. Consequently, in any discrete topology on $C$, the trajectory converges to its eventual value. We further prove that every outcome selected by the run after stabilization fixes the limiting cycle. The argument provides an order–topology bridge: the ascending-chain condition for bounded subsets of $\mathbb N$ yields exact stabilization in the dependent state space and hence topological convergence. We discuss algorithms for detecting stabilization, finite examples, necessity of the assumptions, applications, and extensions to well-founded orders, approximate plateaus, fairness, and transfinite runs.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Reflective processes differ from ordinary iterations because they can revise the framework in which their next step is interpreted. A research cycle may change its hypotheses, vocabulary, experimental protocol, or standard of admissible evidence. Thus the outcome available at stage $n+1$ need not belong to the same space as the outcome available at stage $n$. Models based on a fixed update map $F:X\to X$ conceal this dependence by placing all possible inputs in one ambient set, even when many inputs are meaningless at most states.
 
-Self-modifying systems — programs that rewrite their own code, learning algorithms that adjust their own hyperparameters, knowledge bases that derive consequences from their own contents — are ubiquitous in modern computing. Yet the foundational question of *when such systems converge* has lacked a unified mathematical treatment.
+The natural structure is an indexed family. If $c$ is a current cycle, then $E(c)$ is the space of outcomes meaningful at $c$. A revision accepts a pair $(c,e)$ with $e\in E(c)$ and returns a new cycle. A trajectory must therefore carry both a sequence of cycles and, at each time, an outcome whose domain is selected by the current cycle.
 
-Classical fixed-point theory (Brouwer, Knaster–Tarski, Banach) addresses functions on fixed domains. But in self-modifying systems, the domain itself changes: the set of available actions depends on the current state. This *dependency* is the source of both the power and the danger of self-modification.
+State dependence alone gives no reason for convergence. We add a natural-valued quality rank. The rank serves as a finite progress certificate rather than a complete encoding of a cycle. Three hypotheses drive the theory:
 
-### 1.2 Contributions
+1. revision never decreases quality;
+2. quality is bounded by a finite capacity;
+3. equality of quality across a revision implies equality of the full cycles.
 
-We introduce a framework of *reflective systems* that captures dependent self-modification in type-theoretic terms and prove:
+The third condition, called plateau stability, is essential. A bounded monotone rank becomes constant, but a constant rank need not ordinarily prevent movement among distinct states. Plateau stability transfers stationarity from the numerical image back to the original system.
 
-1. **Closure convergence** (Theorems 1a–1b): Monotone, extensive, idempotent operators on `Finset ℕ` stabilize after exactly one step. This models knowledge-accumulating reflective systems.
+Our principal conclusion is exact. Every run eventually reaches a cycle that persists forever. This gives convergence in a discrete topology and fixed-point behavior for every outcome actually selected after the stabilization time. No finiteness assumption is imposed on the cycle space or on individual outcome spaces. Only the range of the quality function is bounded in $\mathbb N$.
 
-2. **Ranked descent convergence** (Theorems 2a–2b): Dependent self-modifying systems with a `ℕ`-valued ranking function that strictly decreases away from fixed points converge to an exact fixed point from any initial state.
+## 2. Mathematical framework
 
-3. **General system convergence** (Theorem 3): An abstract `ReflectiveSystem` structure with a ranking function satisfying the strict progress condition converges.
+### 2.1 Reflective systems
 
-4. **Closure from anti-circularity** (Theorem 4): Order-respecting dependency extraction induces an idempotent closure operator, preventing circular self-justification.
+**Definition 2.1 (Reflective research system).** A reflective research system is a tuple
 
-5. **Oracle composition** (Theorem 5): Commuting research oracles compose to yield a stable composite oracle.
+$$
+\mathcal S=(C,E,R,q,K)
+$$
 
-6. **Idempotent iteration bridge** (Theorem 6): Idempotent functions are fixed under arbitrary iteration, connecting closure to stabilization.
+with the following data and laws:
 
-All results are formalized in Lean 4 with Mathlib and verified by the Lean kernel.
+- $C$ is a nonempty or empty set of possible cycles; all subsequent statements about runs apply whenever a run exists.
+- $E$ is a family of sets indexed by cycles, so that $E(c)$ is the outcome space available at $c\in C$.
+- The revision operation is a dependent map
 
-### 1.3 Related Work
+$$
+R:\prod_{c\in C} E(c)\to C,
+$$
 
-**Fixed-point theory.** The Knaster–Tarski theorem [Tarski, 1955] guarantees fixed points for monotone functions on complete lattices. Our Theorem 1 can be seen as a constructive, computational refinement for finite lattices with the additional structure of extensivity and idempotence.
+meaning that $R(c,e)\in C$ whenever $e\in E(c)$.
+- The quality rank is a map $q:C\to\mathbb N$.
+- The capacity is a natural number $K$ satisfying
 
-**Well-founded recursion.** Our ranked descent theorems (Theorems 2–3) extend the classical well-founded induction principle to dependent dynamical systems, where the transition function's type varies with state.
+$$
+q(c)\le K \qquad\text{for every }c\in C.
+$$
 
-**Abstract interpretation.** Cousot and Cousot [1977] introduced abstract interpretation as a framework for program analysis based on Galois connections and fixpoint computation. Our closure operator theorems formalize a fragment of this theory and our Future Directions explore the full connection.
+- Revision is quality-monotone:
 
-**Self-modifying code.** The halting problem shows that arbitrary self-modification is undecidable. Our results identify *structured* classes of self-modification where convergence is decidable and provable.
+$$
+q(c)\le q(R(c,e))
+$$
 
-## 2. Definitions and Notation
+for every $c\in C$ and $e\in E(c)$.
+- Revision is plateau-stable:
 
-### 2.1 Reflective Systems
+$$
+q(R(c,e))=q(c)\quad\Longrightarrow\quad R(c,e)=c.
+$$
 
-**Definition 1** (Reflective System). A *reflective system* is a tuple `R = (State, NextType, step, improve)` where:
-- `State : Type` is the state space
-- `NextType : State → Type` is a dependent type family of admissible actions
-- `step : (s : State) → NextType s → State` is the transition function
-- `improve : (s : State) → NextType s` is the improvement policy
+The dependent product notation emphasizes that the domain of the second argument varies with the first. The capacity bounds quality, not the cardinality or complexity of $C$.
 
-The *induced update* is:
-```
-R.update : State → State
-R.update s = R.step s (R.improve s)
-```
+**Definition 2.2 (Dependent run).** A run of $\mathcal S$ is a pair of sequences $(c_n)_{n\in\mathbb N}$ and $(e_n)_{n\in\mathbb N}$ such that
 
-**Definition 2** (Ranking Function). A function `μ : R.State → ℕ` is a *ranking function* for `R` if `μ (R.update s) ≤ μ s` for all `s`.
+$$
+e_n\in E(c_n)
+$$
 
-**Definition 3** (Strict Progress). A ranking function `μ` exhibits *strict progress away from fixed points* if `R.update s ≠ s → μ (R.update s) < μ s` for all `s`.
+and
 
-### 2.2 Closure Operators
+$$
+c_{n+1}=R(c_n,e_n)
+$$
 
-**Definition 4** (Closure Operator on `Finset ℕ`). A function `F : Finset ℕ → Finset ℕ` is a *closure operator* if it is:
-- *Extensive*: `s ⊆ F s` for all `s`
-- *Monotone*: `s ⊆ t → F s ⊆ F t`
-- *Idempotent*: `F (F s) = F s` for all `s`
+for every $n\in\mathbb N$.
 
-### 2.3 Research Oracles
+The outcome sequence is dependent: the statement specifying $e_n$ changes with $c_n$. Define the associated quality sequence by
 
-**Definition 5** (Research Oracle). A *research oracle* on a type `H` is a function `validate : H → H` satisfying `validate (validate h) = validate h` for all `h` (idempotence).
+$$
+a_n=q(c_n).
+$$
 
-The *knowledge base* of an oracle is its fixed-point set: `{h | validate h = h}`.
+### 2.2 Eventual constancy and discrete convergence
 
-## 3. Main Results
+**Definition 2.3 (Eventual constancy).** A sequence $(c_n)$ is eventually constant if there exist $N\in\mathbb N$ and $c_*\in C$ such that $c_n=c_*$ for every $n\ge N$.
 
-### 3.1 Closure Operator Theorems
+**Definition 2.4 (Discrete topology).** The discrete topology on $C$ is the topology in which every subset of $C$ is open. A sequence $(c_n)$ converges to $c_*$ if, for every neighborhood $U$ of $c_*$, there is $N$ such that $c_n\in U$ whenever $n\ge N$.
 
-**Theorem 1a** (Reflective Convergence of Closure Operators).
-Let `F : Finset ℕ → Finset ℕ` be monotone, extensive, and idempotent. Then for all `s`, there exists `n` such that `F^{n+1}(s) = F^n(s)`.
+In a discrete topology, convergence and eventual equality to the limit coincide. Indeed, the singleton $\{c_*\}$ is a neighborhood of $c_*$. Thus convergence implies eventual equality, while eventual equality plainly implies eventual membership in every neighborhood.
 
-*Proof sketch.* Take `n = 1`. Then `F^2(s) = F(F(s)) = F(s) = F^1(s)` by idempotence. □
+## 3. Order-theoretic lemmas
 
-**Theorem 1b** (Fixed Point from Closure).
-Under the same hypotheses, `F(s)` is a fixed point of `F` for all `s`.
+The proof separates the numerical order argument from the structural plateau argument.
 
-*Proof.* `F(F(s)) = F(s)` by idempotence. □
+**Lemma 3.1 (Monotonicity of quality along runs).** For every run of a reflective research system, the sequence $(a_n)$ is monotone: if $i\le j$, then $a_i\le a_j$.
 
-*Remark.* These theorems are deliberately simple — their value is conceptual. They establish that closure operators model "complete reflection": a single reflective pass internalizes all consequences.
+**Proof sketch.** For one step, the evolution equation and quality monotonicity give
 
-### 3.2 Ranked Descent Theorems
+$$
+a_n=q(c_n)\le q(R(c_n,e_n))=q(c_{n+1})=a_{n+1}.
+$$
 
-**Theorem 2a** (Dependent Reflective Convergence on ℕ).
-Let `NextType : ℕ → Type`, `step : (s : ℕ) → NextType s → ℕ`, `improve : (s : ℕ) → NextType s`. Suppose:
-- `step s (improve s) ≤ s` for all `s` (weak decrease)
-- `step s (improve s) ≠ s → step s (improve s) < s` (strict decrease away from fixed points)
+For $i\le j$, chain these one-step inequalities, or induct on the number $j-i$. $\square$
 
-Then for all `s : ℕ`, there exists `n` such that `F^n(s) = F^{n+1}(s)`, where `F(t) = step t (improve t)`.
+**Lemma 3.2 (Plateau step).** If $a_{n+1}=a_n$, then $c_{n+1}=c_n$.
 
-*Proof sketch.* By strong induction on `s`. If `F(s) = s`, take `n = 0`. Otherwise, `F(s) < s` by the strict decrease hypothesis. By the induction hypothesis applied to `F(s)`, there exists `m` with `F^m(F(s)) = F^{m+1}(F(s))`. Since `F^k(F(s)) = F^{k+1}(s)`, we take `n = m + 1`. □
+**Proof sketch.** Substitute the evolution equation $c_{n+1}=R(c_n,e_n)$ into the equality of ranks. Plateau stability then gives $R(c_n,e_n)=c_n$, which is precisely the conclusion. $\square$
 
-**Theorem 2b** (Exact Fixed Point on ℕ).
-Under the weaker hypothesis `step s (improve s) ≤ s` alone, every `s : ℕ` reaches an exact fixed point: there exists `t` with `F^n(s) = t` for some `n`, and `F(t) = t`.
+**Lemma 3.3 (Maximum attained by a bounded natural sequence).** If $(a_n)$ is a sequence in $\mathbb N$ and $a_n\le K$ for every $n$, then the set of attained values $A=\{a_n:n\in\mathbb N\}$ has a maximum $L$, and $L=a_N$ for some $N$.
 
-*Proof sketch.* By strong induction on `s`. If `F(s) = s`, take `t = s`, `n = 0`. If `F(s) ≠ s`, then `F(s) < s` (by `≤` and `≠` on ℕ). Apply the induction hypothesis to `F(s)` to obtain `t` with `F^m(F(s)) = t` and `F(t) = t`. Then `F^{m+1}(s) = t`. □
+**Proof sketch.** The set $A$ is nonempty because it contains $a_0$, and it is contained in the finite set $\{0,1,\ldots,K\}$. Every nonempty finite subset of a linear order has a maximum. Since $L\in A$, it is attained at an index $N$. $\square$
 
-### 3.3 General System Convergence
+**Lemma 3.4 (A bounded monotone natural sequence is eventually constant).** If $(a_n)$ is monotone and bounded above by $K$, then there are $N,L\in\mathbb N$ such that $a_n=L$ for every $n\ge N$.
 
-**Theorem 3** (Reflective System Convergence).
-Let `R` be a reflective system with ranking function `μ : R.State → ℕ` satisfying strict progress away from fixed points. Then for all `s : R.State`, there exists `n` with `R.update^{n+1}(s) = R.update^n(s)`.
+**Proof sketch.** Let $L$ be the maximum attained value from Lemma 3.3 and choose $N$ with $a_N=L$. For $n\ge N$, monotonicity gives $L=a_N\le a_n$, while maximality of $L$ gives $a_n\le L$. Antisymmetry yields $a_n=L$. $\square$
 
-*Proof sketch.* By strong induction on `μ(s)`. If `R.update(s) = s`, take `n = 0`. Otherwise, `μ(R.update(s)) < μ(s)` by strict progress. Apply the induction hypothesis to `R.update(s)` (which has strictly smaller rank) to obtain `m`. Take `n = m + 1`. □
+The use of a maximum rather than a merely external upper bound is important. The attained maximum supplies a concrete index from which constancy follows.
 
-### 3.4 Anti-Circularity and Closure Extraction
+## 4. Main results
 
-**Theorem 4** (Closure from No-Self-Dependency).
-Let `F : Finset ℕ → Finset ℕ` be monotone, extensive, and satisfy the saturation condition: `F s ⊆ F(F s) → F(F s) ⊆ F s`. Then `F` is a closure operator (i.e., `F` is also idempotent).
+**Theorem 4.1 (Eventual Stabilization and Discrete Convergence).** Let $\mathcal S=(C,E,R,q,K)$ be a reflective research system, and let $(c_n,e_n)$ be any dependent run. Then there exists $N\in\mathbb N$ such that
 
-*Proof sketch.* For any `s`, we need `F(F(s)) = F(s)`. By monotonicity and extensivity, `F(s) ⊆ F(F(s))`. By the saturation condition applied to `s`, `F(F(s)) ⊆ F(s)`. By antisymmetry, `F(F(s)) = F(s)`. □
+$$
+c_n=c_N \qquad\text{for every }n\ge N.
+$$
 
-*Interpretation.* The saturation condition is the formal counterpart of "no circular self-justification." When the dependency structure respects an order, saturation holds, and the reflective operator is automatically a closure operator.
+If $C$ is equipped with a discrete topology, then
 
-### 3.5 Oracle Composition
+$$
+c_n\longrightarrow c_N.
+$$
 
-**Theorem 5** (Composed Oracle Stability).
-Let `R, S` be research oracles on `H`. If `R.validate ∘ S.validate ∘ R.validate ∘ S.validate = R.validate ∘ S.validate` (the commutativity condition), then `R.validate ∘ S.validate` is idempotent.
+**Proof sketch.** By Lemma 3.1, $a_n=q(c_n)$ is monotone. By the capacity condition, $a_n\le K$. Lemma 3.4 supplies an index $N$ and value $L$ for which $a_n=L$ whenever $n\ge N$. Hence $a_{n+1}=a_n$ for every $n\ge N$. Lemma 3.2 then yields $c_{n+1}=c_n$ for all such $n$. Induction on $m$ gives $c_{N+m}=c_N$, and every $n\ge N$ has the form $N+m$. Thus the run is eventually constant. For convergence, let $U$ be any neighborhood of $c_N$. Since $c_N\in U$ and every term from $N$ onward equals $c_N$, every sufficiently late term lies in $U$. $\square$
 
-*Proof.* Direct computation: `(R ∘ S)(((R ∘ S)(h))) = R(S(R(S(h)))) = R(S(h)) = (R ∘ S)(h)`. □
+The theorem connects three levels of description. Dependence controls which outcomes can occur; order controls the quality image; topology records the asymptotic behavior of the full trajectory.
 
-### 3.6 Idempotent Iteration Bridge
+**Theorem 4.2 (Eventual fixedness under selected outcomes).** Under the hypotheses of Theorem 4.1, there exists $N\in\mathbb N$ such that, for every $n\ge N$,
 
-**Theorem 6** (Idempotent Iterate).
-If `f : α → α` satisfies `f(f(x)) = f(x)` for all `x`, then `f^n(f(x)) = f(x)` for all `n ≥ 1` and all `x`.
+$$
+R(c_n,e_n)=c_n.
+$$
 
-*Proof.* By `Function.iterate_fixed`: `f(x)` is a fixed point of `f`, so `f^n(f(x)) = f(x)`. □
+**Proof sketch.** Choose $N$ from Theorem 4.1. For $n\ge N$, both $c_n$ and $c_{n+1}$ equal $c_N$. The evolution law gives $R(c_n,e_n)=c_{n+1}=c_n$. Equivalently, one may use eventual equality of consecutive quality ranks and plateau stability directly. $\square$
 
-## 4. Algorithms
+This result is deliberately run-relative. It covers the outcomes $e_n$ actually selected. It does not assert that $R(c_N,e)=c_N$ for every $e\in E(c_N)$, because outcomes never selected by the run are unconstrained beyond the global system laws. In fact, the global laws imply that any nonfixing outcome at $c_N$ must strictly improve rank; such an outcome may exist even if the chosen run never takes it.
 
-### 4.1 Closure Computation
+**Corollary 4.3 (Bound on strict revisions).** Along any run beginning at $c_0$, the number of indices $n$ for which $c_{n+1}\ne c_n$ is at most $K-q(c_0)$.
 
-```
-Algorithm: ComputeClosure(F, s₀)
-Input: Extensive operator F, initial set s₀
-Output: Fixed point t with F(t) = t
+**Proof sketch.** By the contrapositive of plateau stability together with monotonicity, $c_{n+1}\ne c_n$ implies $q(c_{n+1})>q(c_n)$. Since ranks are natural numbers, each strict increase is at least one. Starting from $q(c_0)$ and never exceeding $K$, at most $K-q(c_0)$ such increases can occur. Moreover, once an unchanged step occurs, the particular run may still choose later outcomes; the theorem ensures eventual constancy globally, while the counting statement concerns strict changes wherever they occur. $\square$
 
-  current ← s₀
-  repeat
-    next ← F(current)
-    if next = current then return current
-    current ← next
-```
+## 5. Algorithms and finite examples
 
-**Complexity**: For a universe of size `N` and operator cost `T_F`:
-- Time: `O(N · T_F)` (each step adds at least one element; at most `N` steps)
-- Space: `O(N)`
-- For idempotent `F`: `O(T_F)` (one step suffices)
+### 5.1 Trace validation
 
-### 4.2 Ranked Convergence
+For a finite observed prefix $(c_0,e_0),\ldots,(c_T,e_T)$, one can validate the hypotheses actually exercised by the trace. Compute each successor, check the evolution equation, verify $q(c_n)\le q(c_{n+1})\le K$, and check that equality of adjacent ranks implies equality of cycles. This takes $O(T)$ revision and quality evaluations and $O(1)$ auxiliary space if the trace is streamed.
 
-```
-Algorithm: RankedConvergence(F, μ, s₀)
-Input: Update F, ranking μ : State → ℕ, initial state s₀
-Output: Fixed point t with F(t) = t
+Trace validation is not a proof that unobserved revisions obey the system laws. It demonstrates their consequences on the supplied execution and detects violations.
 
-  current ← s₀
-  repeat
-    next ← F(current)
-    assert μ(next) ≤ μ(current)
-    if next = current then return current
-    current ← next
-```
+### 5.2 Stabilization detection
 
-**Complexity**:
-- Time: `O(μ(s₀) · T_F)` (rank decreases by ≥1 per non-fixed step)
-- Space: `O(1)` (beyond trajectory storage)
-- Guaranteed termination: `μ(s₀)` is a natural number bound on iterations
+If the global hypotheses are known, then an observed plateau certifies a fixed step. For an indefinitely generated run, inspect successive pairs. The first index $n$ satisfying $q(c_{n+1})=q(c_n)$ also satisfies $c_{n+1}=c_n$. However, stopping permanently at this first plateau is operationally justified only if the future policy repeats a fixing outcome or if the cycle is known to be fixed for every admissible outcome. The main theorem instead establishes that some tail of the given infinite run is constant, even if earlier fixing outcomes are followed by other strictly improving choices.
 
-### 4.3 Certified Convergence
+A robust finite algorithm generates a prescribed number of steps, records ranks, then locates the earliest index after the last strict increase. Its time complexity is $O(T)$ and storage can be $O(T)$ for a full report or $O(1)$ for the final index.
 
-```
-Algorithm: CertifyConvergence(R, μ, s₀)
-Input: Reflective system R, ranking μ, initial state s₀
-Output: Certificate (trajectory, ranks, fixed_point)
+### 5.3 A dependent finite-capacity model
 
-  trajectory ← [s₀]
-  ranks ← [μ(s₀)]
-  current ← s₀
-  repeat
-    next ← R.update(current)
-    append next to trajectory
-    append μ(next) to ranks
-    if next = current then
-      return Certificate(trajectory, ranks, current)
-    current ← next
-```
+Fix $K\in\mathbb N$ and let the cycle space be
 
-The certificate is independently verifiable: any verifier can check that (1) each step follows from the update rule, (2) ranks are non-increasing, and (3) the final state is a fixed point.
+$$
+C=\{0,1,\ldots,K\}.
+$$
 
-## 5. Applications
+For $r\in C$, define the state-dependent outcome space
 
-### 5.1 Self-Stabilizing Configuration Management
+$$
+E(r)=\{0,1,\ldots,K-r\}.
+$$
 
-Modern software systems have complex dependency graphs. A configuration manager must resolve dependencies (if package A requires B, install B), handle conflicts (packages C and D are incompatible), and reach a stable state.
+An outcome $g\in E(r)$ is an admissible gain. Define
 
-Our closure operator theorem (Theorem 1) guarantees convergence when the resolution process is monotone and extensive. The composition theorem (Theorem 5) guarantees that independently developed resolution modules can be safely composed.
+$$
+R(r,g)=r+g,
+\qquad q(r)=r.
+$$
 
-**Computational experiment**: A configuration system with 5 features, 4 dependency rules, and 1 conflict rule converges to a stable configuration in at most 2 iterations from any initial state. See `applications.py`, Application 1.
+Because $g\le K-r$, revision remains in $C$. Quality is monotone, bounded by $K$, and if $q(R(r,g))=q(r)$ then $r+g=r$, hence $g=0$ and $R(r,g)=r$. All hypotheses hold.
 
-### 5.2 Knowledge Base Compilation
+For $K=8$, begin with $c_0=1$ and choose admissible gains $2,1,3,1,0,0,\ldots$. The cycles are
 
-A knowledge base with inference rules (e.g., "if parent(X,Y) and parent(Y,Z) then grandparent(X,Z)") must compute the closure of initial facts under all rules.
+$$
+1,3,4,7,8,8,8,\ldots.
+$$
 
-**Computational experiment**: Starting from 4 family relationships, the system derives 7 new facts (grandparent, sibling, great-grandparent relationships) and stabilizes after 2 iterations. See `applications.py`, Application 2.
+The admissible outcome sets change along the way:
 
-### 5.3 Self-Optimizing Search
+$$
+E(1)=\{0,\ldots,7\},\quad E(7)=\{0,1\},\quad E(8)=\{0\}.
+$$
 
-A search algorithm that adjusts its step size based on current performance (larger steps when far from optimum, smaller steps when close) is a dependent reflective system. Our Theorem 2 guarantees convergence when the error metric strictly decreases.
+Thus dependence is visible, not decorative: reaching capacity changes the next outcome space to a singleton.
 
-**Computational experiment**: Searching for a 5-dimensional target vector, the system converges in 4 steps using adaptive step sizes (3, 3, 2, 1). See `applications.py`, Application 3.
+### 5.4 A protocol model with richer cycles
 
-### 5.4 Distributed Consensus
+Let a cycle be a pair $(r,p)$, where $r\in\{0,\ldots,K\}$ is quality and $p$ is a protocol label. Plateau stability forbids changing $p$ without increasing $r$. A valid revision may replace $(r,p)$ by $(r',p')$ with $r'>r$, or leave both coordinates unchanged. This shows that quality need not uniquely identify cycles. Multiple protocols may share a rank, but a single revision may not move between equal-ranked protocols. The theorem still forces eventual constancy of both rank and protocol.
 
-Averaging consensus protocols on networks are reflective systems where each node updates its state based on neighbors' states. The maximum disagreement serves as a ranking function.
+## 6. Necessity and scope of the assumptions
 
-**Computational experiment**: A 5-node linear network converges from initial disagreement of 7000 to consensus in 19 rounds. See `applications.py`, Application 5.
+The hypotheses are logically distinct.
 
-## 6. Discussion
+**Failure of monotonicity.** Let $C=\{0,1\}$ and revise by alternating the two states. With $q(c)=c$ and $K=1$, quality is bounded but not monotone, and the run never stabilizes.
 
-### 6.1 The Role of Dependency
+**Failure of boundedness.** Let $C=\mathbb N$, take one outcome at every state, and define $R(c)=c+1$ with $q(c)=c$. Quality is monotone and every plateau condition holds vacuously, but no finite capacity exists and the run diverges through infinitely many states.
 
-The central technical insight is that dependent type families `NextType : σ → Type` capture the essential structure of self-modification. The available improvements depend on the current state, creating a moving search space. The ranked descent principle tames this dependency: regardless of how the search space changes, convergence is guaranteed as long as a global measure strictly decreases.
+**Failure of plateau stability.** Let $C=\{A,B\}$, assign both states quality $0$, and alternate $A$ and $B$. Quality is monotone and bounded, but the state never stabilizes. This is the central warning: convergence of a coarse observable does not imply convergence of the object unless fibers of that observable are dynamically rigid.
 
-### 6.2 Closure vs. Descent
+The theorem does not require deterministic outcome selection. It applies to every sequence of admissible selected outcomes. Nor does it require finite $C$, finite $E(c)$, decidable equality of cycles, a metric, or compactness. The finite object is the interval of possible ranks.
 
-Our two main proof techniques — closure operators and ranked descent — are complementary:
+## 7. Applications and interpretation
 
-- **Closure operators** apply when the state space has a lattice structure and the update is extensive (only adds information). Convergence is immediate (one step) but requires the strong property of idempotence.
-- **Ranked descent** applies when idempotence is not available but a ranking function exists. Convergence takes `O(μ(s₀))` steps in the worst case.
+### 7.1 Adaptive scientific workflows
 
-### 6.3 Composition and Modularity
+A cycle may encode a current theory, experimental design, and acceptance criteria. Outcomes depend on the active design. A bounded milestone rank can count validated stages. If every substantive redesign raises the milestone rank, then only finitely many redesigns are possible.
 
-The oracle composition theorem (Theorem 5) addresses a practical concern: real self-improving systems are built from components. The commutativity condition for composability is restrictive — not all oracle pairs commute. This suggests that designing composable self-improving modules requires careful attention to interaction structure.
+### 7.2 Self-revising algorithms
 
-### 6.4 Limitations
+A cycle may contain an algorithm together with its policy for selecting future tests. Outcomes are test reports meaningful for the current policy. The theorem supplies a termination pattern: certify every code-changing revision by a strict increase in a bounded rank, and forbid rank-neutral code changes.
 
-1. **Finite ranks only**: Our convergence theorems require `ℕ`-valued ranks, which limits applicability to systems with infinite state spaces that admit no finite ranking.
-2. **Deterministic policies**: We assume a deterministic improvement policy `improve`. Stochastic or non-deterministic policies require additional machinery (e.g., martingale convergence).
-3. **No convergence rate bounds beyond rank**: The bound `O(μ(s₀))` on convergence speed may be loose for specific systems.
+### 7.3 Logical reflection
 
-## 7. Future Work
+A cycle may represent a theory and its language, while $E(c)$ contains certificates or countermodels expressible relative to that theory. Revision changes the theory and thereby changes the next certificate space. A suitable rank could count admitted extension stages. Plateau stability would express extensionality: if no rank-relevant extension occurs, the theory remains the same.
 
-See `FUTURE_DIRECTIONS.md` for detailed, testable conjectures. Key directions include:
+### 7.4 Organizational protocols
 
-1. **Dependent Knaster–Tarski**: Extending the fixed-point existence theorem to dependent lattices with tight iteration bounds.
-2. **Oracle composition phase transitions**: Characterizing exactly when oracle composition preserves convergence.
-3. **Temporal causal bounds**: Connecting reflective convergence to causal interval semantics.
-4. **Proof complexity**: Quantifying the computational complexity of verifying reflective stability.
-5. **Abstract interpretation bridge**: Recasting reflective convergence as a Galois connection.
+A cycle may encode rules for evaluating proposals. Since rule changes alter which proposals are admissible, the outcome family is naturally dependent. A governance maturity rank can act as a variant, provided equal-ranked revisions are genuinely identical rather than cosmetic rearrangements.
 
-## 8. Conclusion
+These interpretations are conditional. The mathematics does not determine whether a proposed quality rank is epistemically adequate. It identifies the exact structural obligations needed for the convergence conclusion.
 
-We have formalized and proved a family of convergence theorems for self-modifying systems under dependent typing. The key results show that:
+## 8. Discussion
 
-- Closure operators (monotone, extensive, idempotent) model complete reflection and stabilize in one step.
-- Dependent systems with natural-number ranks converge to exact fixed points via well-founded descent.
-- Anti-circularity (order-respecting dependency) automatically yields idempotent closure.
-- Commuting oracles compose to stable composites.
+The main theorem may be viewed as an ascending-chain argument. The quality image lies in the finite order $\{0,\ldots,K\}$. Any nontrivial revision induces a strict ascent, because monotonicity permits only equality or increase and plateau stability converts equality into identity. Therefore the full dynamics cannot contain infinitely many nontrivial steps.
 
-These results provide a mathematical foundation for designing self-improving systems with provable convergence guarantees. The formalization in dependent type theory ensures that the guarantees are machine-checkable, bridging the gap between theoretical correctness and practical certification.
+Topological convergence is obtained without estimating distances. In a discrete state space, eventual identity is the relevant asymptotic notion. This is stronger than convergence in a non-discrete topology: it gives a finite time after which the state is exactly the limit.
 
-## References
+The dependent outcome family contributes expressive precision but does not obstruct the order argument. At every step, the selected outcome is well-formed relative to the current state; after revision, a different outcome set may become active. The quality map provides a common codomain in which all these heterogeneous steps can be compared.
 
-1. A. Tarski, "A lattice-theoretical fixpoint theorem and its applications," *Pacific Journal of Mathematics*, vol. 5, no. 2, pp. 285–309, 1955.
+A subtle distinction remains between trajectory stability and universal fixedness. Theorem 4.2 says that outcomes selected on the eventual tail fix the cycle. To conclude
 
-2. P. Cousot and R. Cousot, "Abstract interpretation: A unified lattice model for static analysis of programs by construction or approximation of fixpoints," in *POPL*, 1977, pp. 238–252.
+$$
+R(c_N,e)=c_N\qquad\text{for all }e\in E(c_N),
+$$
 
-3. B. Knaster, "Un théorème sur les fonctions d'ensembles," *Annales de la Société Polonaise de Mathématique*, vol. 6, pp. 133–134, 1928.
+one needs more. A fairness condition could require every relevant outcome at a recurrent cycle to be selected eventually. Since the cycle is constant on the tail, fairness would expose every admissible outcome; Theorem 4.2 would then make each one fixing. Alternatively, one can impose universal local maximality of the limiting rank.
 
-4. D. S. Scott, "Continuous lattices," in *Toposes, Algebraic Geometry and Logic*, Lecture Notes in Mathematics, vol. 274, Springer, 1972, pp. 97–136.
+## 9. Future work
 
-5. J. Schmidhuber, "Gödel machines: Fully self-referential optimal universal self-improvers," in *Artificial General Intelligence*, Springer, 2007, pp. 199–226.
+First, the natural-valued rank can be replaced by an arbitrary partially ordered set satisfying the ascending-chain condition. The proof needs an attained maximal value along each trajectory, not arithmetic specifically.
 
-6. S. Banach, "Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales," *Fundamenta Mathematicae*, vol. 3, pp. 133–181, 1922.
+Second, exact plateau stability can be softened. Give $C$ a metric and bound revision size by quality gain. If the accumulated gains control a summable series, trajectories may be Cauchy without becoming constant.
+
+Third, fairness can bridge selected-outcome fixedness and universal fixedness. This requires careful treatment because outcome spaces themselves vary until the cycle stabilizes.
+
+Fourth, ordinal-indexed runs could include limit stages. Stabilization bounds would then depend on the height of a well-founded quality order and on coherence conditions for limit cycles.
+
+Fifth, finite instances admit executable stabilization certificates and trace visualizations. Such examples can clarify how outcome spaces contract, expand, or change shape before the rank reaches its attained maximum.
+
+Finally, logical reflection deserves a semantic account in which plateau stability is derived rather than postulated—for example, from extensional equivalence of theories, conservativity, or a canonical normalization of research cycles.
+
+### 8.1 Relation to ranking functions and potentials
+
+Classical termination arguments often use a quantity that decreases in a well-founded order. The present convention reverses the orientation: quality increases in a finite order. Replacing $q$ by the remaining capacity $V(c)=K-q(c)$ produces a nonincreasing variant. Whenever a cycle genuinely changes, plateau stability implies a strict quality increase and therefore a strict decrease of $V$. The reflective theorem is consequently a termination argument for nontrivial revisions, supplemented by a statement about an infinite presentation of the run: after all nontrivial revisions are exhausted, the sequence repeats one state forever.
+
+The quality rank also resembles a Lyapunov function, but with a stronger equality case. A usual Lyapunov function may remain constant along a nontrivial invariant set. Here the equality case collapses each admissible rank-neutral transition to an identity transition. This rigidity is what upgrades convergence of an observable to exact convergence of the state.
+
+### 8.2 What the theorem does not claim
+
+The limiting quality need not equal the global capacity $K$. A run can stabilize below capacity by repeatedly selecting outcomes that fix its current cycle, even when another unselected outcome could improve it. Nor is the limiting cycle necessarily unique across different runs from the same initial state: different admissible outcomes may lead to different strictly higher-ranked cycles. The theorem establishes convergence of each run, not confluence of all runs. Uniqueness would require additional assumptions, such as a diamond property, a canonical revision policy, or a unique maximal reachable cycle.
+
+## 10. Conclusion
+
+A self-modifying process can change the space of evidence relevant to its own next step and still possess a simple global convergence law. The essential device is a bounded natural-valued quality rank. Monotonicity makes the rank sequence ascend; finite capacity forces it to attain a final value; plateau stability lifts equality of ranks to equality of complete cycles. The resulting run is eventually constant, converges in every discrete topology, and is fixed under all outcomes selected on its eventual tail.
+
+The framework isolates a reusable design principle: heterogeneous reflective dynamics become tractable when every genuine state change spends one unit of a finite progress resource. Dependence governs meaning, order governs termination, and topology records convergence.

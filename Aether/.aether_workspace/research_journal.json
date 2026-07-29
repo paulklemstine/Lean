@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d87f0198",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: The Oracle's Burden\n\n## 1. A concrete relativized jump realizes every abstract level\n\n**Conjecture.** There is a uniformly defined operator on partial functions whose value at an",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T15:09:28",
-      "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-    },
-    {
       "cycle_id": "e3b4f2fe",
       "domain": "Shared",
       "key_insight": "# Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theore",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-29T21:21:22",
       "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
+    },
+    {
+      "cycle_id": "97183f28",
+      "domain": "Bridges",
+      "key_insight": "# Future directions: quantum–classical de Finetti bridge\n\nThe formal development proves the exact constructive direction of de Finetti in the finite-support, computational-basis (diagonal) sector: a f",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-07-29T22:21:30",
+      "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78874
     }
   ],
-  "last_updated": "2026-07-29T21:21:22",
+  "last_updated": "2026-07-29T22:21:30",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "47ca7342",
-        "quality": 0.65,
-        "theorems": 27,
-        "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-      },
-      {
         "cycle_id": "1efa5ae1",
         "quality": 0.61,
         "theorems": 6,
@@ -3203,6 +3197,12 @@
         "quality": 0.7539499999999999,
         "theorems": 7,
         "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+      },
+      {
+        "cycle_id": "97183f28",
+        "quality": 0.686,
+        "theorems": 68,
+        "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
       }
     ],
     "Combinatorics": [
