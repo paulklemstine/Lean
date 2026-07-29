@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0d06265a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What this phase establishes\n\n`Catalog/Applications/EMLCategory/FiniteTemplateObstruction.lean` gives an intensional model of finite EML programs. It verifies semantic substitut",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-25T20:16:33",
-      "title": "EML Category: The Category of EML-Computable Maps"
-    },
-    {
       "cycle_id": "7277c96e",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\n## 1. Effective abc exclusion for powered additive triples\n\n**Conjecture.** There is an explicit constant `N` such that every coprime additive\ntriple `a+b=c` with `a=A^x`, `b=B^y`",
@@ -499,19 +489,19 @@
       "theorem_count": 4,
       "timestamp": "2026-07-29T23:22:26",
       "title": "Rota's Basis Conjecture"
+    },
+    {
+      "cycle_id": "8aec96a6",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nThe formal result identifies a structural obstruction in the proposed single-neuron model: after normalization, the factor `exp(a)` cancels, so `a` is unidentifiable and the two-p",
+      "quality_score": 0.76977,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-29T23:23:20",
+      "title": "EML Information Geometry: Fisher Information of exp-log Models"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1a27f9f3",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe formal development studies a precise surrogate for “the space of mathematical truth”: binary streams encode successive answers, prefix agreement supplies Cantor scales, and th",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-07-20T20:48:35",
-      "title": "The Fractal Dimension of Mathematical Truth"
-    },
     {
       "cycle_id": "bb72d587",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 4,
       "timestamp": "2026-07-29T23:22:26",
       "title": "Rota's Basis Conjecture"
+    },
+    {
+      "cycle_id": "8aec96a6",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nThe formal result identifies a structural obstruction in the proposed single-neuron model: after normalization, the factor `exp(a)` cancels, so `a` is unidentifiable and the two-p",
+      "quality_score": 0.76977,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-29T23:23:20",
+      "title": "EML Information Geometry: Fisher Information of exp-log Models"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9da9b807",
-      "domain": "Geometry",
-      "name": "affine_commutator",
-      "quality": 0.7645199999999999
-    },
-    {
-      "cycle_id": "9da9b807",
-      "domain": "Geometry",
-      "name": "jacobian_one_preserves_weyl_relation",
-      "quality": 0.7645199999999999
-    },
-    {
-      "cycle_id": "1a03af4c",
-      "domain": "Bridges",
-      "name": "map_symmetricSquare",
-      "quality": 0.78657
-    },
     {
       "cycle_id": "1a03af4c",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "isingRG_stereographic_conjugacy",
       "quality": 0.7708899999999999
+    },
+    {
+      "cycle_id": "8aec96a6",
+      "domain": "Probability",
+      "name": "partition_factor",
+      "quality": 0.76977
+    },
+    {
+      "cycle_id": "8aec96a6",
+      "domain": "Probability",
+      "name": "activation_pos",
+      "quality": 0.76977
+    },
+    {
+      "cycle_id": "8aec96a6",
+      "domain": "Probability",
+      "name": "activationMass_pos",
+      "quality": 0.76977
     }
   ],
-  "last_updated": "2026-07-29T23:22:26",
+  "last_updated": "2026-07-29T23:23:20",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "00cf3210",
-        "quality": 0.6,
-        "theorems": 14,
-        "title": "Rainbow Arithmetic Progression Threshold Conjecture"
-      },
-      {
         "cycle_id": "fc320765",
         "quality": 0.69,
         "theorems": 24,
@@ -3823,6 +3817,12 @@
         "quality": 0.75773,
         "theorems": 8,
         "title": "Statistical Mechanics: Ising Model Phase Transition"
+      },
+      {
+        "cycle_id": "8aec96a6",
+        "quality": 0.76977,
+        "theorems": 24,
+        "title": "EML Information Geometry: Fisher Information of exp-log Models"
       }
     ],
     "Pythagorean": [

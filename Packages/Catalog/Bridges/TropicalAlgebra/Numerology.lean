@@ -11,6 +11,14 @@ import Logic.GraphTheory.Defs
 
 open Finset BigOperators
 
+/-- The Brill–Noether number, with natural input parameters and an integer value. -/
+def brillNoetherNumber (g r d : ℕ) : ℤ :=
+  (g : ℤ) - ((r : ℤ) + 1) * ((g : ℤ) - (d : ℤ) + (r : ℤ))
+
+/-- The expanded dimension-count form of the Brill–Noether number. -/
+def brillNoetherNumberAlt (g r d : ℕ) : ℤ :=
+  ((r : ℤ) + 1) * (d : ℤ) - (r : ℤ) * ((g : ℤ) + (r : ℤ) + 1)
+
 /-! ## Equivalence of formulations -/
 
 /-- The two formulations of the Brill–Noether number agree. -/
@@ -75,8 +83,8 @@ theorem brillNoetherNumber_nonneg_iff (g r d : ℕ) :
 theorem brillNoetherNumber_nonneg_iff' (g r d : ℕ) :
     0 ≤ brillNoetherNumber g r d ↔
       (r : ℤ) * ((g : ℤ) + (r : ℤ) + 1) ≤ ((r : ℤ) + 1) * (d : ℤ) := by
-  rw [brillNoetherNumber_eq_alt]; simp [brillNoetherNumberAlt]
-  constructor <;> intro h <;> nlinarith
+  rw [brillNoetherNumber_eq_alt]
+  simp [brillNoetherNumberAlt]
 
 /-- When `d ≥ g + r`, `ρ` is always nonneg. -/
 theorem brillNoetherNumber_nonneg_of_large_d (g r d : ℕ) (h : g + r ≤ d) :

@@ -254,12 +254,12 @@ theorem classical_purity_le_one {d : ℕ} (p : Fin d → ℝ)
     Equality iff the distribution is uniform (maximally mixed state).
 -/
 theorem classical_purity_ge_inv {d : ℕ} [NeZero d] (p : Fin d → ℝ)
-    (hp_sum : ∑ i, p i = 1) :
+    (hp_nn : ∀ i, 0 ≤ p i) (hp_sum : ∑ i, p i = 1) :
     (1 : ℝ) / d ≤ ∑ i, p i ^ 2 := by
-  have := Finset.univ.sum_le_sum fun i _ => mul_self_nonneg (p i - (d : ℝ)⁻¹)
-  simp_all +decide [sub_mul, mul_sub]
-  simp_all +decide [← Finset.sum_mul, sq, mul_comm]
-  simp_all +decide [NeZero.ne]
+  have := Finset.univ.sum_le_sum fun i _ => mul_self_nonneg ( p i - ( d : ℝ ) ⁻¹ );
+  simp_all +decide [ sub_mul, mul_sub ];
+  simp_all +decide [ ← Finset.mul_sum _ _ _, ← Finset.sum_mul, sq, mul_comm ];
+  simp_all +decide [ NeZero.ne ]
 
 /-! ## Part VII: Trace Preservation -/
 
@@ -284,143 +284,6 @@ theorem trace_convexComb_density {d m : ℕ}
   have : ∑ i, (w i : ℂ) * Matrix.trace (ρs i) = ∑ i, (w i : ℂ) := by
     congr 1; ext i; rw [(hρ i).traceOne]; ring
   rw [this]; exact_mod_cast hw.sum_one
-
-
-/-! ## Part VIII: Exact finite-support de Finetti bridge in the diagonal sector
-
-The following results formalize the exact, non-asymptotic direction of de Finetti:
-a classical latent variable selects a one-site law, conditional independence forms
-its tensor powers, and forgetting the latent variable gives an exchangeable family.
-Embedding those laws diagonally turns the same construction into quantum states;
-computational-basis measurement recovers the classical mixture exactly.
--/
-
-/-- The product law of `n` conditionally independent copies of `p`. -/
-def iidLaw {d n : ℕ} (p : Fin d → ℝ) (x : Fin n → Fin d) : ℝ :=
-  ∏ i, p (x i)
-
-/-- A finite mixture of identically distributed product laws. -/
-def finiteMixtureIID {d m n : ℕ} (w : Fin m → ℝ)
-    (p : Fin m → Fin d → ℝ) (x : Fin n → Fin d) : ℝ :=
-  ∑ a, w a * iidLaw (p a) x
-
-/-- Invariance of a finite joint law under arbitrary permutations of sites. -/
-def SiteExchangeable {d n : ℕ} (P : (Fin n → Fin d) → ℝ) : Prop :=
-  ∀ (σ : Equiv.Perm (Fin n)) (x : Fin n → Fin d), P (x ∘ σ) = P x
-
-/-- Normalization of a law on finite strings. -/
-def IsNormalizedLaw {d n : ℕ} (P : (Fin n → Fin d) → ℝ) : Prop :=
-  ∑ x, P x = 1
-
-/-- Pointwise nonnegativity of a finite joint law. -/
-def IsNonnegativeLaw {d n : ℕ} (P : (Fin n → Fin d) → ℝ) : Prop :=
-  ∀ x, 0 ≤ P x
-
-/-- Diagonal quantum encoding of a classical law on strings. -/
-def diagonalJointState {d n : ℕ} (P : (Fin n → Fin d) → ℝ) :
-    Matrix (Fin n → Fin d) (Fin n → Fin d) ℂ :=
-  Matrix.diagonal (fun x => (P x : ℂ))
-
-/-- Computational-basis measurement of a joint density matrix. -/
-def measureJointBasis {d n : ℕ}
-    (ρ : Matrix (Fin n → Fin d) (Fin n → Fin d) ℂ) : (Fin n → Fin d) → ℝ :=
-  fun x => (ρ x x).re
-
-/-- Tensor powers of a one-site law are invariant under permutations of sites. -/
-theorem iidLaw_exchangeable {d n : ℕ} (p : Fin d → ℝ) :
-    SiteExchangeable (iidLaw (n := n) p) := by
-  intro σ x
-  simp [iidLaw]
-  exact Equiv.prod_comp σ (p ∘ x)
-
-/-- Mixtures preserve exchangeability. -/
-theorem finiteMixtureIID_exchangeable {d m n : ℕ} (w : Fin m → ℝ)
-    (p : Fin m → Fin d → ℝ) :
-    SiteExchangeable (finiteMixtureIID (n := n) w p) := by
-  intro σ x
-  unfold finiteMixtureIID
-  apply Finset.sum_congr rfl
-  intro a _
-  rw [iidLaw_exchangeable (p a) σ x]
-
-/-- A product of normalized one-site laws is normalized. -/
-theorem iidLaw_normalized {d n : ℕ} (p : Fin d → ℝ)
-    (hp : ∑ i, p i = 1) : IsNormalizedLaw (iidLaw (n := n) p) := by
-  unfold IsNormalizedLaw iidLaw
-  rw [← Fintype.sum_pow, hp, one_pow]
-
-/-- Nonnegative weights and one-site laws produce a nonnegative mixture. -/
-theorem finiteMixtureIID_nonnegative {d m n : ℕ} (w : Fin m → ℝ)
-    (p : Fin m → Fin d → ℝ) (hw : ∀ a, 0 ≤ w a)
-    (hp : ∀ a i, 0 ≤ p a i) :
-    IsNonnegativeLaw (finiteMixtureIID (n := n) w p) := by
-  intro x
-  exact Finset.sum_nonneg fun a _ =>
-    mul_nonneg (hw a) (Finset.prod_nonneg fun i _ => hp a (x i))
-
-/-- A probability-weighted mixture of product laws is normalized. -/
-theorem finiteMixtureIID_normalized {d m n : ℕ} (w : Fin m → ℝ)
-    (p : Fin m → Fin d → ℝ) (hw : ∑ a, w a = 1)
-    (hp : ∀ a, ∑ i, p a i = 1) :
-    IsNormalizedLaw (finiteMixtureIID (n := n) w p) := by
-  unfold IsNormalizedLaw finiteMixtureIID
-  calc ∑ x, ∑ a, w a * iidLaw (p a) x
-      = ∑ a, ∑ x, w a * iidLaw (p a) x := by rw [Finset.sum_comm]
-    _ = ∑ a, w a * ∑ x, iidLaw (p a) x := by
-      congr 1
-      ext a
-      rw [← Finset.mul_sum]
-    _ = ∑ a, w a * 1 := by
-      congr 1
-      ext a
-      exact congr_arg (w a * ·) (iidLaw_normalized (n := n) (p a) (hp a))
-    _ = ∑ a, w a := by simp
-    _ = 1 := hw
-
-/-- Diagonal quantum encoding followed by basis measurement is exactly the
-original classical joint law. -/
-theorem measure_diagonalJointState {d n : ℕ} (P : (Fin n → Fin d) → ℝ) :
-    measureJointBasis (diagonalJointState P) = P := by
-  funext x
-  simp [measureJointBasis, diagonalJointState]
-
-/-- Site permutation symmetry of a classical law becomes matrix-entry symmetry
-of its diagonal quantum state. -/
-theorem diagonalJointState_exchangeable {d n : ℕ}
-    (P : (Fin n → Fin d) → ℝ) (hP : SiteExchangeable P)
-    (σ : Equiv.Perm (Fin n)) (x y : Fin n → Fin d) :
-    diagonalJointState P (x ∘ σ) (y ∘ σ) = diagonalJointState P x y := by
-  simp only [diagonalJointState, Matrix.diagonal]
-  by_cases hxy : x = y
-  · simp [hxy, hP σ y]
-  · simp [hxy, show x ∘ σ ≠ y ∘ σ by
-      intro h
-      apply hxy
-      exact funext fun i => by simpa using congr_fun h (σ.symm i)]
-
-/-- **Quantum--classical de Finetti bridge (finite-support diagonal sector).**
-A latent finite probability distribution over one-site laws simultaneously gives,
-at every tensor power, (i) an exchangeable classical law, (ii) a nonnegative,
-normalized law, (iii) a permutation-symmetric diagonal quantum state, and
-(iv) exact recovery of the classical mixture by computational-basis measurement. -/
-theorem finite_quantum_deFinetti_bridge {d m : ℕ} (w : Fin m → ℝ)
-    (p : Fin m → Fin d → ℝ) (hw : IsProbDist w)
-    (hp_nonneg : ∀ a i, 0 ≤ p a i) (hp_sum : ∀ a, ∑ i, p a i = 1) :
-    ∀ n : ℕ,
-      SiteExchangeable (finiteMixtureIID (n := n) w p) ∧
-      IsNonnegativeLaw (finiteMixtureIID (n := n) w p) ∧
-      IsNormalizedLaw (finiteMixtureIID (n := n) w p) ∧
-      (∀ (σ : Equiv.Perm (Fin n)) (x y : Fin n → Fin d),
-        diagonalJointState (finiteMixtureIID (n := n) w p) (x ∘ σ) (y ∘ σ) =
-          diagonalJointState (finiteMixtureIID (n := n) w p) x y) ∧
-      measureJointBasis (diagonalJointState (finiteMixtureIID (n := n) w p)) =
-        finiteMixtureIID (n := n) w p := by
-  intro n
-  have hex := finiteMixtureIID_exchangeable (n := n) w p
-  refine ⟨hex, finiteMixtureIID_nonnegative w p hw.nonneg hp_nonneg,
-    finiteMixtureIID_normalized w p hw.sum_one hp_sum, ?_, measure_diagonalJointState _⟩
-  intro σ x y
-  exact diagonalJointState_exchangeable _ hex σ x y
 
 end QuantumDeFinetti
 

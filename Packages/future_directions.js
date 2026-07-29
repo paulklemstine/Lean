@@ -2072,6 +2072,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8aec96a6 (Q=0.770), which proved 24 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability di",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_8aec96a6_6f3d3060",
+    "priority_score": 0.8697699999999999,
+    "research_mode": "team",
+    "source_exp_id": "8aec96a6",
+    "status": "available",
+    "timestamp": "2026-07-29T23:23:20.154333+00:00",
+    "title": "Deepening: EML Information Geometry: Fisher Information of exp-log Models"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3e30c45d (Q=0.769), which proved 23 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
     "domains": [
       "Cryptography"
@@ -2314,23 +2328,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
   {
-    "consumed_by_exp_id": "8aec96a6",
-    "description": "Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability distribution. Conjecture: The EML manifold M_EML is a dually flat statistical manifold whose dual potentials are the cumulant generating functions of the EML activation. The Fisher information on M_EML induces a Hessian metric with constant negative curvature, making it a hyperbolic geometry of model parameters. This means natural gradient descent on M_EML has well-defined geodesics, and the dual flatness enables efficient Fisher vector products. The negative curvature reflects the exponential sensitivity of EML networks to parameter changes: small perturbations in theta cause exponentially large changes in the output. Test: compute the Fisher metric for a single EML neuron f(x; a,b) = exp(a)*log(b*x+1) and verify it induces a Hessian manifold with constant negative curvature. Prove that the alpha-connections on M_EML are projectively flat for alpha=1. Impact: gives EML networks a differential-geometric foundation for natural gradient descent, with provable convergence properties.",
-    "domains": [
-      "EML",
-      "MachineLearning",
-      "Probability"
-    ],
-    "id": "seed_087",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Information Geometry: Fisher Information of exp-log Models"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
     "domains": [
@@ -2397,17 +2394,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2653f80",
     "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domains": [
       "NumberTheory",
       "Computation"
     ],
     "id": "seed_208",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
@@ -2595,22 +2593,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-  },
-  {
-    "consumed_by_exp_id": "42b8568d",
-    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
-    "domains": [
-      "Cryptography",
-      "Physics"
-    ],
-    "id": "seed_362",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
     "consumed_by_exp_id": "",
@@ -2985,7 +2967,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Schanuel's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1f879fc",
     "description": "Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameterized networks provably generalize.",
     "domains": [
       "MachineLearning",
@@ -2993,15 +2975,16 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_041",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Machine Learning Generalization Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3c125e46",
     "description": "The Schanuel conjecture predicts deep algebraic independence results for exp and log. Specialize this to EML values. Conjecture: For algebraic numbers a_1,...,a_n linearly independent over Q, the numbers exp(a_1)*log(1+a_1), ..., exp(a_n)*log(1+a_n) are algebraically independent over Q. This is a specialization of Schanuel's conjecture to the EML operator. The n=1 case reduces to showing that exp(a)*log(1+a) is transcendental for algebraic a != 0, which follows from the Lindemann-Weierstrass theorem (exp(a) is transcendental for algebraic a != 0) combined with the Gelfond-Schneider theorem. The n=2 case requires showing that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients, which is open. The EML specialization has the advantage that the multiplicative structure of exp(a)*log(b) constrains the possible algebraic relations more tightly than the general Schanuel conjecture. Test: prove the n=1 case using Lindemann-Weierstrass and Gelfond-Schneider. For n=2, show that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients. Impact: connects EML to the deepest open problems in transcendental number theory, with implications for the theory of periods and special values of L-functions.",
     "domains": [
       "EML",
@@ -3009,10 +2992,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_088",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Algebraic Independence: Transcendence Results"
   },
@@ -3797,22 +3781,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Sun-Sun Primes"
   },
   {
-    "consumed_by_exp_id": "d4d2267f",
-    "description": "Prove that for n bases of an n-dimensional vector space, there is a way to arrange all n\u00b2 elements into an n\u00d7n grid so that each row and column is a basis.",
-    "domains": [
-      "Algebra",
-      "Combinatorics"
-    ],
-    "id": "seed_216",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Rota's Basis Conjecture"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that cellular automata can perform transfinite computations when run on ordinals instead of N. Formalize a Rule 110 analog on omega-squared and prove it achieves super-Turing computation. Connect to Infinite Time Turing Machines and ordinal computation.",
     "domains": [
@@ -4313,7 +4281,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Quantum Activation Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1225aa5",
     "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
     "domains": [
       "Novelty",
@@ -4322,10 +4290,11 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "seed_121",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
@@ -5541,21 +5510,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T19:02:51.335902+00:00",
     "title": "ArXiv paper: Alternating Extremes in Graceful Labelings of Full Binary Trees and Spider Trees"
-  },
-  {
-    "consumed_by_exp_id": "7799fc2c",
-    "description": "Investigate the ArXiv paper 'On lower bounds for canonical heights of the map $\u03c6(X,Y)=(Y,X+Y^D+b)$' and formalize its key results. Abstract: We give a lower bound for the canonical height associated to H\u00e9non maps $\u03c6(X,Y)=(Y,X+Y^D+B)$ of non-periodic points when $D>2,$ extending previous work for $D=2$ in \\cite{Ingram1}.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0029",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12668v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T19:19:58.832974+00:00",
-    "title": "ArXiv paper: On lower bounds for canonical heights of the map $\u03c6(X,Y)=(Y,X+Y^D+b)$"
   },
   {
     "consumed_by_exp_id": "",
@@ -7144,6 +7098,66 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T22:22:54.155124+00:00",
     "title": "1. **Continuous beta function.** Introduce a continuous scale parameter and an"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed Lean development establishes an exact finite BB84 core rather than claiming a composable-security theorem beyond the definitions currently formalized. In particular, it proves matching- and conjugate-basis behavior, the `1/4` intercept\u2013resend QBER, an integer-certified bracket `(1/16, 1/8)` containing the unique zero of the asymptotic one-way key-rate function, and classical collision/statistical-distance bounds exhibiting exponential privacy amplification.\n\nThe following extensions would be needed for a full unconditional-security treatment.\n\n1. **Hilbert-space protocol semantics.** Replace the idealized measurement table with qubit states over a two-dimensional complex Hilbert space, density operators, projective measurements, and completely positive trace-preserving maps. Derive the finite measurement probabilities from the Born rule.\n2. **Arbitrary quantum attacks.** Represent Eve's coherent interaction with all transmitted systems and an ancilla. Formalize purification, deferred measurement, symmetrization, and a justified reduction from coherent attacks to a tractable attack class.\n3. **Parameter estimation.** Formalize random sampling without replacement and finite-key concentration bounds connecting observed test-bit QBER to the unobserved phase-error rate.\n4. **Information reconciliation.** Model the public reconciliation transcript, prove correctness of the corrected keys, and account explicitly for transcript leakage.\n5. **Quantum leftover-hash lemma.** Extend the proved classical collision bound to smooth conditional min-entropy against quantum side information, with a trace-distance secrecy bound of the form `\u03b5 + 1/2 \u00b7 sqrt(2^(\u2113-Hmin))`.\n6. **Composable security.** Define correctness and secrecy in trace distance and combine them with authenticated classical communication and key recycling in a composable statement.\n7. **Sharper threshold certification.** The formalized interval proves that the unique asymptotic threshold lies between `6.25%` and `12.5%`. A certified decimal enclosure near `11%` should be obtained from proved logarithm bounds rather than unchecked floating-point evaluation.\n8. **Finite-key rates.** Add block-length-dependent confidence, smoothing, authentication, and leakage terms. These distinguish the proved asymptotic threshold from the lower tolerable QBER of practical finite blocks.\n\n## Computational-evidence note\n\nA separate experimental computation was not used: the finite claims proved here are exact symbolic identities and inequalities checked by Lean, while decimal experiments cannot substantiate security against arbitrary quantum channels. Future numerical threshold refinements should be accompanied by formally certified interval arithmetic or proved logarithm bounds.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0831",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "42b8568d",
+    "status": "available",
+    "timestamp": "2026-07-29T23:21:17.521345+00:00",
+    "title": "The completed Lean development establishes an exact finite BB84 core rather than"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Sharp real escape region.** For every integer `D \u2265 2`, replace the strengthened condition `3|y| < |y|^D` in `InForwardRegion` by the paper's original condition `|y|^D > 3 max{|x|, |b|, 1}` and prove forward invariance over `\u211d` with the same `1/3` and `5/3` growth constants.\n\n2. **Nonarchimedean exact local height.** For every prime `p`, rational parameter `b`, and rational point in the corresponding `p`-adic forward escape region, the normalized sequence `log\u207a \u2016\u03c6^[n](P)\u2016\u209a / D^n` is constant from the first iterate onward and equals `log\u207a |y|\u209a`.\n\n3. **Existence of the archimedean local canonical height.** For `D \u2265 2`, every real orbit that enters `InForwardRegion` has a convergent normalized logarithmic height sequence; its limit differs from the logarithm of the entering second coordinate by at most `log 3 / (D - 1)`.\n\n4. **Quantitative lower bound for rational nonperiodic points.** For each fixed `D \u2265 2` and rational `b`, there is an explicit positive constant `\u03b5(D,b)` such that every rational point that is not periodic satisfies `\u0125\u03c6(P) \u2265 \u03b5(D,b) \u00b7 max{h(b), 1}`; the constant should be expressed using the finite set of places dividing the numerator or denominator of `b`.\n\n5. **Uniform bounded-period alternative.** For each `D \u2265 2` and finite set of places `S`, there is an explicit integer `B(D,S)` such that every rational point either has period at most `B(D,S)` or satisfies the lower bound in item 4 with a constant depending only on `D` and `S`.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0832",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7799fc2c",
+    "status": "available",
+    "timestamp": "2026-07-29T23:21:25.670861+00:00",
+    "title": "1. **Sharp real escape region.** For every integer `D \u2265 2`, replace the strength"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe unrestricted Rota basis conjecture remains open. The following five statements\nare concrete, falsifiable extensions of the definitions and small-rank results in\n`Catalog/Combinatorics/RotaBasisSmallRanks.lean`.\n\n1. **Rank-three Rota arrangement.** For every division ring `K`, every\n   `K`-module `V`, and every `B : Fin 3 \u2192 Basis (Fin 3) K V`, there is a grid\n   `G` for which `IsRotaArrangement B G` holds.\n2. **Constant-family cyclic arrangement.** For every positive `n`, division\n   ring `K`, `K`-module `V`, and basis `b : Basis (ZMod n) K V`, the constant\n   family of `n` copies of `b` has a Rota arrangement given by the cyclic rule\n   `G i j = b (i + j)` (after expressing the definition with `ZMod n` indices).\n3. **Independent row-reindexing invariance.** Given permutations\n   `p : Fin n \u2192 Equiv.Perm (Fin n)` and bases `B`, define\n   `B' i j = B i (p i j)`. Then `B` admits a Rota arrangement if and only if\n   `B'` does.\n4. **Direct-sum closure with block-compatible input.** If families of `m` and\n   `n` bases have Rota arrangements, then the induced block-diagonal family in\n   the direct sum of their modules has a Rota arrangement of size `m + n`,\n   provided every input row respects the same block decomposition.\n5. **Finite-field exhaustive rank-three case.** For\n   `K = ZMod 2` and `V = Fin 3 \u2192 ZMod 2`, every\n   `B : Fin 3 \u2192 Basis (Fin 3) K V` admits `G` satisfying\n   `IsRotaArrangement B G`. This is a finite decidable specialization and can\n   be refuted by one explicit triple of bases or proved by exhaustive reduction.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0833",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d4d2267f",
+    "status": "available",
+    "timestamp": "2026-07-29T23:22:22.634334+00:00",
+    "title": "The unrestricted Rota basis conjecture remains open. The following five statemen"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal result identifies a structural obstruction in the proposed single-neuron model: after normalization, the factor `exp(a)` cancels, so `a` is unidentifiable and the two-parameter Fisher matrix is singular. A nondegenerate information-geometric model therefore requires one of the following changes.\n\n1. **Remove the redundant parameter.** Study the one-parameter family determined by `b`. Its Fisher information is a scalar variance of the `b`-score; positivity can be proved under explicit nonconstancy assumptions on the sample values.\n\n2. **Place the exponential inside the sample-dependent term.** A family such as `exp(a * g\u2081(x)) * log(b * g\u2082(x) + 1)` does not generally cancel `a`. On a finite sample space, derive both score coordinates and prove that the Fisher matrix is their covariance matrix.\n\n3. **Characterize nonsingularity.** For the corrected two-parameter family, show that the Fisher determinant is positive exactly when the centered score functions are linearly independent in the weighted `L\u00b2` space.\n\n4. **Test curvature only after identifiability.** Compute the Levi-Civita connection and Gaussian curvature of a concrete finite-support model. Constant negative curvature should be treated as a separate claim, not inferred from exponential sensitivity.\n\n5. **Separate dual flatness from Levi-Civita curvature.** A regular exponential family is flat for its exponential and mixture connections, while its Fisher metric may have nonzero Levi-Civita curvature. Formalize these connections and state projective-flatness claims with explicit connection coefficients.\n\n6. **Quotient by parameter equivalence.** More generally, define two parameter values to be equivalent when they induce the same normalized distribution, then construct the identifiable parameter space before introducing a metric.\n",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_0834",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8aec96a6",
+    "status": "available",
+    "timestamp": "2026-07-29T23:23:16.503361+00:00",
+    "title": "The formal result identifies a structural obstruction in the proposed single-neu"
   },
   {
     "consumed_by_exp_id": "",
