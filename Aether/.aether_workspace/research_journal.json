@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "928798aa",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -Δ - 2/r` on `L²(ℝ³)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-25T10:53:04",
-      "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
-    },
-    {
       "cycle_id": "905765f9",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n## 1. Composite-index synchronization through cyclotomic primitive parts\n\nFor every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-29T12:32:32",
       "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
+    },
+    {
+      "cycle_id": "5f676746",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n1. **Rational-constant density conjecture.** Extend the catalog EML syntax with rational constant leaves encoded by finite binary strings. For every continuous `f : C([0,1], ℝ)` a",
+      "quality_score": 0.74002,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-29T15:28:54",
+      "title": "EML Universal Approximation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b3f0d755",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Coherent Composition Loops\n\n## 1. Faithful non-thin causal-loop bicategories\n\n**Conjecture.** There is a finite one-object bicategory whose 1-cell composition is not associative a",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-20T02:08:12",
-      "title": "Causal Loops in Category Theory: When Composition Loops Back"
-    },
     {
       "cycle_id": "c1b3f8da",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-29T12:32:32",
       "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
+    },
+    {
+      "cycle_id": "5f676746",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\n1. **Rational-constant density conjecture.** Extend the catalog EML syntax with rational constant leaves encoded by finite binary strings. For every continuous `f : C([0,1], ℝ)` a",
+      "quality_score": 0.74002,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-29T15:28:54",
+      "title": "EML Universal Approximation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ee1ae94f",
-      "domain": "NumberTheory",
-      "name": "classToGalois_galoisToClass",
-      "quality": 0.78664
-    },
-    {
-      "cycle_id": "ee1ae94f",
-      "domain": "NumberTheory",
-      "name": "galoisToClass_classToGalois",
-      "quality": 0.78664
-    },
-    {
-      "cycle_id": "a07085b6",
-      "domain": "Pythagorean",
-      "name": "cell_nonempty_iff_inequalities",
-      "quality": 0.76088
-    },
     {
       "cycle_id": "a07085b6",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "spillGraph_hasPEO",
       "quality": 0.8022499999999999
+    },
+    {
+      "cycle_id": "5f676746",
+      "domain": "Algebra",
+      "name": "applies",
+      "quality": 0.74002
+    },
+    {
+      "cycle_id": "5f676746",
+      "domain": "Algebra",
+      "name": "depth_lt_size",
+      "quality": 0.74002
+    },
+    {
+      "cycle_id": "5f676746",
+      "domain": "Algebra",
+      "name": "minimumDepth_le_of_term",
+      "quality": 0.74002
     }
   ],
-  "last_updated": "2026-07-29T12:32:32",
+  "last_updated": "2026-07-29T15:28:54",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "6fa68166",
-        "quality": 0.7,
-        "theorems": 14,
-        "title": "The Topology of Argumentation: Why Debates Have Holes"
-      },
-      {
         "cycle_id": "c930e14b",
         "quality": 0.71,
         "theorems": 0,
@@ -3079,6 +3073,12 @@
         "quality": 0.80057,
         "theorems": 15,
         "title": "Graceful Tree Conjecture"
+      },
+      {
+        "cycle_id": "5f676746",
+        "quality": 0.74002,
+        "theorems": 9,
+        "title": "EML Universal Approximation"
       }
     ],
     "Applications": [

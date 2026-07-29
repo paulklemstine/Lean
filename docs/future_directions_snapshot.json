@@ -4116,27 +4116,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5f676746",
-    "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "MachineLearning",
-      "Algebra"
-    ],
-    "id": "seed_046",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Universal Approximation"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The Schanuel conjecture predicts deep algebraic independence results for exp and log. Specialize this to EML values. Conjecture: For algebraic numbers a_1,...,a_n linearly independent over Q, the numbers exp(a_1)*log(1+a_1), ..., exp(a_n)*log(1+a_n) are algebraically independent over Q. This is a specialization of Schanuel's conjecture to the EML operator. The n=1 case reduces to showing that exp(a)*log(1+a) is transcendental for algebraic a != 0, which follows from the Lindemann-Weierstrass theorem (exp(a) is transcendental for algebraic a != 0) combined with the Gelfond-Schneider theorem. The n=2 case requires showing that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients, which is open. The EML specialization has the advantage that the multiplicative structure of exp(a)*log(b) constrains the possible algebraic relations more tightly than the general Schanuel conjecture. Test: prove the n=1 case using Lindemann-Weierstrass and Gelfond-Schneider. For n=2, show that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients. Impact: connects EML to the deepest open problems in transcendental number theory, with implications for the theory of periods and special values of L-functions.",
     "domain_bridges": [],
@@ -8482,7 +8461,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "42454fab",
     "description": "Formalize Frankl's conjecture and prove it for families of size ≤ 50 (Bošnjak-Marković). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domain_bridges": [],
     "domains": [
@@ -8495,9 +8474,49 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697796+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Spectral Proof of the Hypergraph Moore Bound' and formalize its key results. Abstract: A nonempty subfamily of a $k$-uniform hypergraph is an \\emph{even cover} if every vertex lies in an even number of its hyperedges; for $k=2$ these are edge-disjoint unions of cycles, so the minimum size of an even cover is the natural hypergraph analogue of girth. We prove Feige's 2008 conjecture on the hypergraph Moore bound: there are absolute constants $A$ and $C$ (independent of $k$) such that for every $k\\ge3$ and every $1\\le\\ell\\le n$, any $k$-uniform hypergraph on $n$ vertices with more than $C\\,n^{k/2}/\\ell^{k/2-1}$ hyperedges contains an even cover of size at most $A\\,\\ell\\log(en/\\ell)$. Our proof is based on sharp spectral bounds for Kikuchi matrices, which we expect to be of independent interest; we apply them to the refutation of random constraint satisfaction problems in a companion paper.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_0816",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.26028v1",
+    "status": "available",
+    "timestamp": "2026-07-29T15:29:02.213839+00:00",
+    "title": "ArXiv paper: A Spectral Proof of the Hypergraph Moore Bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$' and formalize its key results. Abstract: Given a subset $A \\subseteq \\mathbb F_2^n$, we can consider the distribution of the intersection size of $A$ with a uniformly random $d$-flat $F$. Motivated by the edge statistics problem and the hypercube statistics problem, the affine subspace statistics problem concerns the maximum of $\\mathbb{P}[|F\\cap A|=s]$ among $A \\subseteq \\mathbb F_2^n$ for any fixed $s\\in\\{1,\\dots,2^d\\}$ over a uniformly random $d$-flat $F$. We use $λ^*(d,s)$ to denote the limit of the maximum when $n$ goes to infinity. In this note, we prove tight bounds for $λ^*(d,s)$ in two different regimes. For $s=j2^k$ where $j$ is a positive odd integer, the best known lower bound construction achieving $λ^*(d,s)\\ge 1-2^{-k}$ is due to taking $A$ as the union of $j$ parallel $(n-d+k)$-flats in $\\mathbb F_2^n$. Our main result is a matching upper bound with an additive error term of $O(2^{-3k/2})$. We also study the case $s=1$, where we determine $λ^*(d,1)$ exactly. We show that the random construction where each point",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0818",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.25920v1",
+    "status": "available",
+    "timestamp": "2026-07-29T15:29:05.320357+00:00",
+    "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$"
   },
   {
     "ambition_level": "extension",
@@ -10097,6 +10116,25 @@
     "status": "available",
     "timestamp": "",
     "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0817",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-07-29T15:29:08.189110+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "ambition_level": "extension",
