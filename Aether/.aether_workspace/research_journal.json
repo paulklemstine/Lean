@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "901b537c",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: From Code Metrics to Emergent Geometry\n\n## 1. Rigidity of Local Tensor-Network Realizations\n\n**Conjecture.** Let a family of bounded-degree stabilizer tensor networks have boundar",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-25T18:17:21",
-      "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
-    },
-    {
       "cycle_id": "7b875dce",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n## 1. Cycle-exchange theorem for symmetric tropical permanents\n\nFor every finite symmetric max-plus matrix, principal tropical permanents satisfy the two-set exchange inequality u",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-29T22:22:15",
       "title": "Self-Modifying Research via Reflective Type Theory"
+    },
+    {
+      "cycle_id": "e722c646",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n1. **Continuous beta function.** Introduce a continuous scale parameter and an\n   RG semigroup, then define its beta function as the infinitesimal generator.\n   This would cleanly",
+      "quality_score": 0.7708899999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-29T22:22:57",
+      "title": "Inverse Stereographic Renormalization Group"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fd569acd",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n## Results established\n\nThe finite Hamming Library of length `L` over `A` symbols has exactly `A^L` points and is homeomorphic to `Fin (A^L)` with its discrete topology. Singleton",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T15:09:40",
-      "title": "Borges' Library of Babel: Combinatorics of Everything"
-    },
     {
       "cycle_id": "d0cb2642",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-29T22:22:15",
       "title": "Self-Modifying Research via Reflective Type Theory"
+    },
+    {
+      "cycle_id": "e722c646",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n1. **Continuous beta function.** Introduce a continuous scale parameter and an\n   RG semigroup, then define its beta function as the infinitesimal generator.\n   This would cleanly",
+      "quality_score": 0.7708899999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-29T22:22:57",
+      "title": "Inverse Stereographic Renormalization Group"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8a9b8560",
-      "domain": "Combinatorics",
-      "name": "selectedKmer_repeat_threshold",
-      "quality": 0.7322500000000001
-    },
-    {
-      "cycle_id": "8a9b8560",
-      "domain": "Combinatorics",
-      "name": "length_lt_threshold_of_repeat_free",
-      "quality": 0.7322500000000001
-    },
-    {
-      "cycle_id": "9da9b807",
-      "domain": "Geometry",
-      "name": "affine_jacobianDeterminant",
-      "quality": 0.7645199999999999
-    },
     {
       "cycle_id": "9da9b807",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "Run",
       "quality": 0.75955
+    },
+    {
+      "cycle_id": "e722c646",
+      "domain": "Physics",
+      "name": "proves",
+      "quality": 0.7708899999999999
+    },
+    {
+      "cycle_id": "e722c646",
+      "domain": "Physics",
+      "name": "invStereo_on_circle",
+      "quality": 0.7708899999999999
+    },
+    {
+      "cycle_id": "e722c646",
+      "domain": "Physics",
+      "name": "isingRG_stereographic_conjugacy",
+      "quality": 0.7708899999999999
     }
   ],
-  "last_updated": "2026-07-29T22:22:15",
+  "last_updated": "2026-07-29T22:22:57",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "b873ab80",
-        "quality": 0.62,
-        "theorems": 14,
-        "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
-      },
-      {
         "cycle_id": "68dd266b",
         "quality": 0.55,
         "theorems": 20,
@@ -3761,6 +3755,12 @@
         "quality": 0.79196,
         "theorems": 15,
         "title": "Noether's Theorem: Symmetries and Conservation Laws"
+      },
+      {
+        "cycle_id": "e722c646",
+        "quality": 0.7708899999999999,
+        "theorems": 10,
+        "title": "Inverse Stereographic Renormalization Group"
       }
     ],
     "Probability": [

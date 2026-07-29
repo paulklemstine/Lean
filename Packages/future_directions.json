@@ -13836,11 +13836,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2996b72f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13853,7 +13853,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0653",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-29T22:23:20.452968+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13868,7 +13868,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-24T14:34:16.697747+00:00",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
@@ -14008,7 +14008,7 @@
       "depth_estimate": 3,
       "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Topology"
@@ -14132,7 +14132,7 @@
       "depth_estimate": 3,
       "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Analysis",
         "Physics"
@@ -14746,7 +14746,7 @@
       "depth_estimate": 3,
       "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Logic"
@@ -14828,7 +14828,7 @@
       "depth_estimate": 3,
       "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "Analysis"
@@ -14869,7 +14869,7 @@
       "depth_estimate": 3,
       "description": "Formalize cubical type theory primitives in Lean 4. Construct the interval type and path types. Prove function extensionality and the univalence axiom. Implement higher inductive types: circles, torus, suspension.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Logic",
         "Topology",
@@ -14911,7 +14911,7 @@
       "depth_estimate": 3,
       "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic",
         "Computation"
@@ -15077,7 +15077,7 @@
       "depth_estimate": 3,
       "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics",
         "Algebra",
@@ -15370,7 +15370,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography",
         "Logic",
@@ -15538,7 +15538,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Logic",
@@ -15706,7 +15706,7 @@
       "depth_estimate": 3,
       "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Logic"
@@ -15992,7 +15992,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Completed formal results\n\n`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic formalization of the one-component perturbative model in the chosen normalization:\n\n- the one-loop beta function is `β(ε,g) = -εg + 3g²`;\n- its zeros are classified exactly as the Gaussian point `g = 0` and the Wilson–Fisher point `g = ε/3`;\n- when `d < 4`, the Wilson–Fisher point for `ε = 4-d` is positive, nonzero, and a beta-function zero;\n- the linearization at that point has slope `ε`, hence is positive for `ε > 0`;\n- the two equal rational sunset weights sum to `1/54`;\n- substituting `g = ε/3` into `η(g) = g²/6` gives `η = ε²/54` exactly;\n- adding any remainder bounded by a constant times `|ε|³` preserves the expansion `η(ε) = ε²/54 + O(ε³)` under the file's explicit local big-O definition.\n\nTwo overstrong conjectures are formally disproved:\n\n1. the beta function does not have a unique zero for every `ε` (at `ε = 3`, both `0` and `1` are zeros);\n2. the Wilson–Fisher point is not positive for negative `ε` (for example, at `ε = -3` it equals `-1`).\n\n## Scope of the present model\n\nThe formal development verifies the algebra that follows from the stated perturbative coefficients. The two-loop coefficient is represented as explicit rational diagram data. It does not yet derive those coefficients from regularized momentum-space integrals, construct a quantum field theory, or prove convergence of the perturbation series. Thus the result is a rigorous theorem about the specified truncated renormalization-group model rather than a nonperturbative construction of `φ⁴` theory.\n\n## Suggested extensions\n\n1. **Diagram-level derivation.** Define combinatorial Feynman graphs, symmetry factors, and a certified enumeration showing that the relevant two-loop contributions produce the encoded rational weights.\n2. **Regularized integrals.** Introduce dimensional or another mathematically controlled regularization and derive pole coefficients from explicit integrals instead of taking them as input data.\n3. **Two-loop beta function.** Add the cubic term in the beta function, solve for the fixed point through order `ε²`, and propagate it through the anomalous-dimension expansion.\n4. **General `O(N)` model.** Parameterize the coefficients by `N` and prove the standard first terms of the critical exponents uniformly in the admissible range of `N`.\n5. **Standard asymptotic API.** Relate `IsOrderThreeAtZero` to Mathlib's filter-based `IsBigO` notation, making composition and arithmetic of remainder terms reusable.\n6. **Stability as a dynamical statement.** Define the renormalization-group differential equation and turn the positive linearization calculation into a local stability or instability theorem, with the direction of RG time stated explicitly.\n7. **Higher-order remainder control.** Separate formal power-series identities from analytic estimates and investigate hypotheses under which truncation errors have certified neighborhoods and constants.\n8. **Normalization equivalence.** Formalize changes of coupling normalization and prove that the resulting critical exponent coefficient is invariant after the corresponding transformations are applied.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -16018,6 +16018,129 @@
       "thread_id": "th_31082088",
       "timestamp": "2026-07-29T21:21:18.253826+00:00",
       "title": "`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic f"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions: quantum–classical de Finetti bridge\n\nThe formal development proves the exact constructive direction of de Finetti in the finite-support, computational-basis (diagonal) sector: a finite latent mixture of i.i.d. one-site laws yields normalized exchangeable laws at every tensor power, and diagonal quantum encoding is permutation symmetric and exactly inverted by basis measurement.\n\n## Natural next steps\n\n1. **General finite-dimensional density operators.** Replace diagonal probability vectors by arbitrary positive trace-one matrices and define tensor powers through Mathlib's tensor-product API. Prove that finite convex mixtures of `ρ ^⊗ n` are invariant under the unitary representation of every site permutation.\n\n2. **Projective consistency and infinite exchangeability.** Package the family over all copy numbers with marginal compatibility. Develop the needed partial-trace lemmas and formulate an infinite quantum state as a compatible family of finite marginals.\n\n3. **The converse representation theorem.** Prove that every projectively consistent exchangeable family of finite-dimensional quantum states is represented by a probability measure on one-site density matrices. This requires finite-dimensional convexity, compactness of the density-operator space, and a measure representation or moment-determinacy argument.\n\n4. **Classical de Finetti as a commutative specialization.** Show that restricting the general theorem to a fixed diagonal algebra recovers exchangeable classical distributions and their mixture-of-product representation.\n\n5. **Finite approximate de Finetti bounds.** Connect the existing rational bound `deFinettiBound d k n = 2 k d² / n` to trace distance between a `k`-site marginal of a symmetric `n`-site state and a mixture of product states.\n\n6. **Informationally complete measurements.** Extend the exact diagonal roundtrip to tomography: use an informationally complete POVM to convert exchangeable quantum families into classical exchangeable outcome families, then reconstruct density operators.\n\n7. **Uniqueness of the mixing measure.** Formalize that the representing probability measure is unique, using polynomial moments on the compact convex set of density matrices.\n\n## Computational evidence\n\nNo separate numerical-evidence document is included because the result proved here is a structural identity for arbitrary finite dimensions and copy numbers, not a conjecture inferred from numerical data. Its key equalities are finite sum/product identities checked symbolically by Lean. Concrete low-dimensional examples could be added later as regression tests, but they would not strengthen the universal proof.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0828",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "97183f28",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/97183f28",
+      "status": "available",
+      "thread_id": "th_6dd0e7a0",
+      "timestamp": "2026-07-29T22:21:25.813204+00:00",
+      "title": "The formal development proves the exact constructive direction of de Finetti in "
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n1. **Well-founded rank generalization.** Replace the natural-valued quality rank by an arbitrary partial order satisfying the ascending-chain condition. This would isolate precisely which termination principle is needed.\n\n2. **Approximate rather than exact plateaus.** Give cycles a metric and replace `plateau_fixed` by a quantitative estimate saying that small quality gains imply small revisions. Summable gains may then yield Cauchy convergence without eventual constancy.\n\n3. **Fair outcome exploration.** Strengthen the run with a fairness condition and ask when stability for selected outcomes implies that the limiting cycle is fixed under every inhabitant of its dependent outcome type.\n\n4. **Transfinite research cycles.** Index runs by ordinals, define coherent limit cycles, and connect stabilization bounds to the height of a well-founded quality order.\n\n5. **Executable finite examples.** Instantiate the framework with finite cycle and outcome types, derive a computable stabilization bound, and extract traces that exhibit how dependent outcome types change before convergence.\n\n6. **Logical reflection semantics.** Interpret cycles as formal theories and outcomes as type-indexed certificates or countermodels. The plateau condition could then be derived from proof-system extensionality rather than assumed directly.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Logic",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0829",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "576be6d2",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/576be6d2",
+      "status": "available",
+      "thread_id": "th_73d4a007",
+      "timestamp": "2026-07-29T22:22:11.789206+00:00",
+      "title": "1. **Well-founded rank generalization.** Replace the natural-valued quality rank"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n1. **Continuous beta function.** Introduce a continuous scale parameter and an\n   RG semigroup, then define its beta function as the infinitesimal generator.\n   This would cleanly distinguish a beta function from the present discrete\n   one-step observable `R(g)-g`.\n\n2. **Iteration and convergence.** Formalize `R^[n](g) = g^(2^n)` and prove that\n   every physical coupling `0 ≤ g < 1` converges to zero. Transport this result\n   through inverse stereography to obtain a convergence theorem on the unit\n   circle.\n\n3. **Varying poles.** Replace the fixed chart by Möbius transformations\n   associated with varying stereographic poles. Determine the cocycle\n   conditions under which these transformations define an RG semigroup.\n\n4. **Ising derivation from partition functions.** Formalize the transfer-matrix\n   or spin-summation derivation of `tanh K' = (tanh K)²`, rather than taking this\n   standard exact recursion as the definition of `isingRG`.\n\n5. **Scheme dependence.** State coordinate-change laws for continuous beta\n   functions. This is essential before comparing a field-theory beta function\n   to the derivative of a geometric chart.\n\n6. **Phi-four comparison.** Only after fixing dimension, regularization,\n   subtraction scheme, and coupling normalization should the proposed\n   `phi^4` identification be tested. A likely mathematically meaningful target\n   is conjugacy of local flows near a hyperbolic fixed point, rather than\n   literal equality of two coordinate-dependent formulas.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0830",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e722c646",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/e722c646",
+      "status": "available",
+      "thread_id": "th_7de1dd8f",
+      "timestamp": "2026-07-29T22:22:54.155124+00:00",
+      "title": "1. **Continuous beta function.** Introduce a continuous scale parameter and an"
     },
     {
       "ambition_level": "extension",
@@ -16471,9 +16594,49 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle 576be6d2 (Q=0.760), which proved 6 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "push_576be6d2_069e132c",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8595499999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "576be6d2",
+      "source_path": "Self-Modifying Research via Reflective Type Theory",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-29T22:22:15.442777+00:00",
+      "title": "Deepening: Self-Modifying Research via Reflective Type Theory"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 5843d50f (Q=0.754), which proved 7 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -17111,6 +17274,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_e722c646_61c75f33",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8708899999999998,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e722c646",
+      "source_path": "Inverse Stereographic Renormalization Group",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-29T22:22:57.527932+00:00",
+      "title": "Deepening: Inverse Stereographic Renormalization Group"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle ea214ad9 (Q=0.750), which proved 34 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, t",
       "domain_bridges": [],
       "domain_quality_penalty": 0.30000000000000004,
@@ -17562,7 +17765,7 @@
       "depth_estimate": 3,
       "description": "Formalizes visual pattern sequences that trigger specific optogenetic neuron activation patterns in biological retinas.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -18005,7 +18208,7 @@
       "depth_estimate": 3,
       "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Logic"
@@ -18413,7 +18616,7 @@
       "depth_estimate": 3,
       "description": "Prove that for any compact simple gauge group, quantum Yang-Mills theory on R^4 exists and has a mass gap. Formalize the mathematical framework of gauge theory and connect to lattice gauge theory computations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics",
         "Analysis"
@@ -18454,7 +18657,7 @@
       "depth_estimate": 3,
       "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Analysis",
         "Physics"
@@ -18536,7 +18739,7 @@
       "depth_estimate": 3,
       "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics",
         "Logic"
@@ -18944,7 +19147,7 @@
       "depth_estimate": 3,
       "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Probability",
         "Physics"
@@ -19393,7 +19596,7 @@
       "depth_estimate": 3,
       "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics",
         "Computation",
@@ -19435,7 +19638,7 @@
       "depth_estimate": 3,
       "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Logic",
         "Topology",
@@ -19645,7 +19848,7 @@
       "depth_estimate": 3,
       "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation",
         "Physics"
@@ -20021,7 +20224,7 @@
       "depth_estimate": 3,
       "description": "Reverse-engineer proof strategies from deep results (FLT, Poincaré, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Logic",
         "Algebra",
@@ -20063,7 +20266,7 @@
       "depth_estimate": 3,
       "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research. Construct a formalization that computes the proof-theoretic ordinal of research output.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic",
         "Computation"
@@ -20115,7 +20318,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.75955,
       "parent_direction": "",
       "priority_score": 0.91,
       "proof_strategy": "",
@@ -20126,7 +20329,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Self-Modifying Research via Reflective Type Theory"
@@ -20145,7 +20348,7 @@
       "depth_estimate": 3,
       "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Speculative",
         "Logic",
@@ -20187,7 +20390,7 @@
       "depth_estimate": 3,
       "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Speculative",
         "Logic",
@@ -20395,7 +20598,7 @@
       "depth_estimate": 3,
       "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation",
         "Topology",
@@ -20479,7 +20682,7 @@
       "depth_estimate": 3,
       "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Computation",
@@ -20605,7 +20808,7 @@
       "depth_estimate": 3,
       "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "EML",
         "Computation",
@@ -20773,7 +20976,7 @@
       "depth_estimate": 3,
       "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "EML",
         "Physics",
@@ -20953,7 +21156,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7708899999999999,
       "parent_direction": "",
       "priority_score": 0.84,
       "proof_strategy": "",
@@ -20964,7 +21167,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Inverse Stereographic Renormalization Group"
@@ -20983,7 +21186,7 @@
       "depth_estimate": 3,
       "description": "A proof is a sequence of steps. Map each step to a point on S^n via stereographic projection. The proof distance between theorems is the spherical distance between their proof endpoints. Conjecture: Two theorems whose proofs are close in spherical distance share a common subproof of length at least n minus spherical_distance. Test: compute proof distances for a set of 20 basic theorems in Lean 4 and verify the subproof bound. Impact: geometric proof mining and automated lemma discovery.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Logic",
@@ -21067,7 +21270,7 @@
       "depth_estimate": 3,
       "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic",
         "Speculative",
@@ -21151,7 +21354,7 @@
       "depth_estimate": 3,
       "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Computation",
@@ -21193,7 +21396,7 @@
       "depth_estimate": 3,
       "description": "The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimension d_f(X) of a metric space X as the infimum of d such that X embeds in R^d with Hausdorff dimension preserved. Conjecture: For compact metric spaces, the Hausdorff dimension is a topological invariant modulo homeomorphisms that are bi-Lipschitz on a dense open set. More precisely, if X and Y are homeomorphic compact subsets of R^n, and the homeomorphism is bi-Lipschitz on a set of full Hausdorff dimension in X, then dim_H(X) = dim_H(Y). This would mean that fractal dimension is not just a metric accident but a topological invariant up to rough isometries. Test: compute d_f for the Sierpinski gasket (expected: 1 since connected, Hausdorff dimension log3/log2) and the Cantor set (expected: 0 since totally disconnected). Prove that the Koch curve and any bi-Lipschitz-equivalent curve have equal Hausdorff dimensions. Impact: elevates fractal dimension from a metric curiosity to a topological invariant, with applications to shape classification and topological data analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Topology",
@@ -21235,7 +21438,7 @@
       "depth_estimate": 3,
       "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic",
         "Computation",
@@ -21529,7 +21732,7 @@
       "depth_estimate": 3,
       "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "MachineLearning",
@@ -21571,7 +21774,7 @@
       "depth_estimate": 3,
       "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Analysis",
@@ -21613,7 +21816,7 @@
       "depth_estimate": 3,
       "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Computation",
@@ -21697,7 +21900,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that proof checking is fundamentally different from proof search. Conjecture: There exists a proof system in which every true quantifier-free formula has a proof of polynomial size, and this proof can be verified in polynomial time. The barrier has been that existing proof systems (Frege, Extended Frege) have exponential lower bounds for specific formulas. But what if we construct a NEW proof system based on EML computations? Define EML-Frege where each proof step is an EML identity (exp-log composition) verified by numeric evaluation. Since EML identities can be checked in O(1) field operations, and every boolean circuit can be simulated by an EML network of depth O(log n), we get a quasi-polynomial proof system. Why now: recent breakthroughs in circuit lower bounds (Williams 2014, 2023) and the EML single-operator universality result suggest that EML-Frege could break the natural proofs barrier. Test: prove that EML-Frege polynomially simulates Extended Frege for CNF formulas, and show it has no exponential lower bounds under the EML independence assumption. Impact: if EML-Frege has short proofs for all tautologies, then NP = coNP in this proof system, which would be the most significant result in proof complexity since Cook's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic",
         "Computation",
@@ -21739,7 +21942,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that persistent homology — the backbone of topological data analysis — provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Topology",
@@ -21781,7 +21984,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning",
         "Physics",
@@ -21865,7 +22068,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that Tononi's Phi (integrated information) may be a topological invariant, not just a measure. If neural states form a sheaf over the brain's connectome, then Phi equals the dimension of the first sheaf cohomology group H^1(C, F) where C is the connectome graph and F is the neural state sheaf. Conjecture: Phi is a topological invariant of the sheaf (C, F) — it is preserved under sheaf isomorphisms and changes continuously under continuous deformation of the connectome. A system with Phi = 0 has H^1 = 0 (acyclic sheaf, no information integration), while Phi > 0 means H^1 > 0 (cycles in the sheaf, integrated information). Why now: sheaf cohomology has been successfully applied to neural coding by Curry (2019), and the connection between Phi and cohomology was conjectured by Tegmark (2019) but never formalized. Test: compute Phi for small connectome topologies (chain, ring, complete graph) and show Phi = dim(H^1) in each case. Impact: consciousness becomes a mathematical invariant with the same status as the Euler characteristic — a topological quantity that can be computed, compared, and used to classify systems.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Speculative",
         "Topology",
@@ -21907,7 +22110,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that Godel's incompleteness arises because a formal system cannot prove statements about itself — but a TYPE SYSTEM can. Construct a dependent type theory where types can refer to their own terms, creating a system where proofs can modify the specifications they are proving. Conjecture: There exists a consistent type theory T in which the type Type : Type is stratified by a self-reference level, and T can prove its own consistency within each level. The stratification prevents the paradox: Type_n : Type_{n+1} allows self-reference at level n without contradiction at level n+1. Why now: homotopy type theory has shown that types can be spaces, and the univalence axiom provides a principled way to equate equivalent types. Self-referential types are the natural next step. Test: formalize a type theory where terms can modify type specifications, prove that it is consistent by constructing a model in the category of globular sets, and show that Godel's incompleteness theorem does not apply because the stratification prevents diagonalization. Impact: a new foundation for mathematics where proofs can evolve their own specifications, enabling self-improving formal systems.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Logic",
         "Algebra",
@@ -21949,7 +22152,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode — exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics",
         "Topology",
@@ -21991,7 +22194,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that the AdS/CFT correspondence in physics says a gravitational theory in the bulk is equivalent to a conformal field theory on the boundary. Translate this to proof theory: a proof of length n in the bulk (the full proof) corresponds to a verified specification of length O(log n) on the boundary (a certificate). Conjecture: Every proof of a theorem T in Peano Arithmetic of length n has a holographic certificate of length O(log n) that can be verified in time O((log n)^2). The certificate is constructed by projecting each proof step onto the boundary of the proof space (the initial axioms and final conclusion) and keeping only the holographic data. Why now: the PCP theorem already shows that proofs have short probabilistic certificates, but holographic verification would give DETERMINISTIC short certificates — a much stronger result. Test: for a specific proof system (Frege), construct holographic certificates for proofs of the pigeonhole principle and verify that the certificate length is O(log n). Impact: proof verification becomes as fast as reading the theorem statement, enabling trustless proof checking at scale.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Logic",
         "Computation",
@@ -22033,7 +22236,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Topology",
@@ -22374,7 +22577,7 @@
       "depth_estimate": 3,
       "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Topology",
@@ -22501,7 +22704,7 @@
       "depth_estimate": 3,
       "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -22586,7 +22789,7 @@
       "depth_estimate": 3,
       "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -23388,11 +23591,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d5c8afaa",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -23407,7 +23610,7 @@
       ],
       "github_issue": 0,
       "id": "seed_134",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-29T22:23:11.188350+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -23422,7 +23625,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
@@ -23948,7 +24151,7 @@
       "depth_estimate": 3,
       "description": "Laser beams can carry orbital angular momentum (OAM), creating 'knotted light' — beams whose wavefronts are linked or knotted. A knotted light beam has a phase singularity (where the amplitude vanishes) that traces out a knot in 3D space. The simplest example is the trefoil beam, whose singularity traces a trefoil knot. Conjecture: The OAM spectrum of a knotted light beam encodes the Alexander polynomial of the knot. Specifically, if the singularity of the beam traces a knot K, then the OAM spectrum (the set of allowed angular momentum values) is {l : Delta_K(e^{2*pi*i*l/N}) = 0} where Delta_K is the Alexander polynomial of K and N is the crossing number. For the trefoil (Delta = t^2 - t + 1), the OAM spectrum includes l = 1/6, 5/6 (mod 1), giving OAM values l = 1, 5 (mod 6). For the unknot (Delta = 1), the OAM spectrum is trivial (l = 0 only). For the figure-eight knot (Delta = t^2 - 3t + 1), the OAM values include l = (3 ± sqrt(5))/2 mod 1. Test: compute the OAM spectrum of trefoil, figure-eight, and cinquefoil beams numerically and verify they match the Alexander polynomial predictions. Impact: knotted light carries knot invariants in its angular momentum — shining a laser through a knot-shaped hologram encodes the Alexander polynomial in the beam's quantum numbers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Physics",
@@ -24668,7 +24871,7 @@
       "depth_estimate": 3,
       "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal — they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -24879,7 +25082,7 @@
       "depth_estimate": 3,
       "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields — each birthday level adds exactly the algebraic closures needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -25216,7 +25419,7 @@
       "depth_estimate": 3,
       "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -25301,7 +25504,7 @@
       "depth_estimate": 3,
       "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic — a concrete example of Godel's incompleteness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -25469,7 +25672,7 @@
       "depth_estimate": 3,
       "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept — it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -25978,7 +26181,7 @@
       "depth_estimate": 3,
       "description": "The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost rigorous' (a proof that is correct in spirit but has small gaps), then drops sharply (because mathematicians are suspicious of proofs that look correct but might have subtle errors), before recovering for fully rigorous proofs. The 'mathematical uncanny valley' function U(r) where r in [0,1] is the rigor level: U(0) = high (informal intuition is accepted), U(0.8) = low (almost rigorous but with gaps — very suspicious), U(1.0) = high (fully rigorous proof, formally verified). Conjecture: U(r) has a unique minimum at r = 1 - epsilon where epsilon is the 'gap size' that triggers the most suspicion. For Lean 4 proofs: U(1) = 1 (compiles), U(0.99) = 0.1 (almost compiles but has a 'sorry'), U(0.5) = 0.5 (sketch proof, accepted as intuition). Test: survey 100 mathematicians on their confidence in proofs at varying rigor levels and fit the uncanny valley curve. Impact: almost-right proofs are less trusted than informal intuitions. Formal verification escapes the uncanny valley.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -26805,7 +27008,7 @@
       "depth_estimate": 3,
       "description": "Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -27420,7 +27623,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Logic"
@@ -27461,7 +27664,7 @@
       "depth_estimate": 3,
       "description": "Prove or disprove: for every ε > 0, there exists k such that distinguishing value ≥ 1-ε from value ≤ ε for unique 2-prover games with k labels is NP-hard. Connect to MAX-CUT and SDP gaps.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Logic"
@@ -27502,7 +27705,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Logic"
@@ -27543,7 +27746,7 @@
       "depth_estimate": 3,
       "description": "Formalize the consistency strength hierarchy: inaccessible < Mahlo < measurable < strong < supercompact < huge. Prove strictness results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "SetTheory"
@@ -27584,7 +27787,7 @@
       "depth_estimate": 3,
       "description": "Prove that for any countable first-order theory, the number of countable models is either countable or 2^ℵ₀. Formalize Morley's theorem and the topological version.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic"
       ],
@@ -27624,7 +27827,7 @@
       "depth_estimate": 3,
       "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic",
         "Computation"
@@ -27951,7 +28154,7 @@
       "depth_estimate": 3,
       "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -27992,7 +28195,7 @@
       "depth_estimate": 3,
       "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -28115,7 +28318,7 @@
       "depth_estimate": 3,
       "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Physics"
@@ -28197,7 +28400,7 @@
       "depth_estimate": 3,
       "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges",
         "Logic"
@@ -28321,7 +28524,7 @@
       "depth_estimate": 3,
       "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -28447,7 +28650,7 @@
       "depth_estimate": 3,
       "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -29203,7 +29406,7 @@
       "depth_estimate": 3,
       "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -29413,7 +29616,7 @@
       "depth_estimate": 3,
       "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -29538,7 +29741,7 @@
       "depth_estimate": 3,
       "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Combinatorics",
@@ -29664,7 +29867,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to Gödel's incompleteness gap.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Logic",
@@ -30042,7 +30245,7 @@
       "depth_estimate": 3,
       "description": "Prove that the univalence axiom enables automated proof transfer between isomorphic structures. Construct a formal pipeline: given an isomorphism f: A ≅ B and a theorem about A, mechanically produce the corresponding theorem about B. Quantify the proof compression ratio.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges",
         "Logic"
@@ -30165,7 +30368,7 @@
       "depth_estimate": 3,
       "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges",
         "Algebra"
@@ -30206,7 +30409,7 @@
       "depth_estimate": 3,
       "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges",
         "Logic"
@@ -30258,7 +30461,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.686,
       "parent_direction": "",
       "priority_score": 0.87,
       "proof_strategy": "",
@@ -30269,7 +30472,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
@@ -30370,7 +30573,7 @@
       "depth_estimate": 3,
       "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Cryptography",
         "Logic"
@@ -30616,7 +30819,7 @@
       "depth_estimate": 3,
       "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Computation"
@@ -30657,7 +30860,7 @@
       "depth_estimate": 3,
       "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics",
         "Logic"
@@ -30698,7 +30901,7 @@
       "depth_estimate": 3,
       "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics",
         "Geometry"
@@ -30780,7 +30983,7 @@
       "depth_estimate": 3,
       "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics",
         "Geometry"
@@ -30821,7 +31024,7 @@
       "depth_estimate": 3,
       "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Computation"
@@ -31231,7 +31434,7 @@
       "depth_estimate": 3,
       "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation",
         "Physics"
@@ -31395,7 +31598,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Rademacher complexity of a hypothesis class provides tight generalization bounds for supervised learning. Formalize the margin bound for linear classifiers and extend to kernel methods. Show that VC dimension bounds are looser than Rademacher bounds for structured hypothesis classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning",
         "Logic"
@@ -31477,7 +31680,7 @@
       "depth_estimate": 3,
       "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -31518,7 +31721,7 @@
       "depth_estimate": 3,
       "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning",
         "Logic"
@@ -31600,7 +31803,7 @@
       "depth_estimate": 3,
       "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics",
         "Geometry",
@@ -31642,7 +31845,7 @@
       "depth_estimate": 3,
       "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Logic",
@@ -31684,7 +31887,7 @@
       "depth_estimate": 3,
       "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Computation",
@@ -32219,7 +32422,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Bridges",
         "Physics"
@@ -32260,7 +32463,7 @@
       "depth_estimate": 3,
       "description": "Formalize Stone duality: the category of Boolean algebras is dual to the category of Stone spaces. Prove that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space. Bridge this to logic: a theory T in propositional logic corresponds to the Boolean algebra of sentences modulo T-provability, whose Stone space is the space of models.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges",
         "Logic"
@@ -32301,7 +32504,7 @@
       "depth_estimate": 3,
       "description": "Prove that the category of chain complexes is equivalent to the derived category modulo homotopy. Show that Ext and Tor are universal delta-functors. Bridge: singular homology of a space X equals Ext^*(Z, C_*(X)) in the derived category. Prove the universal coefficient theorem as a consequence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges",
         "Algebra"
@@ -32342,7 +32545,7 @@
       "depth_estimate": 3,
       "description": "Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categories.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Bridges",
         "Physics"
@@ -32424,7 +32627,7 @@
       "depth_estimate": 3,
       "description": "Formalize Lob's theorem as a fixed-point result: if PA proves □A → A then PA proves A. Bridge this to category theory: the modal logic GL (Godel-Lob) is the internal logic of the category of provability predicates. Prove that Solovay's completeness theorem for GL follows from the diagonal lemma.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges",
         "Logic"
@@ -32588,7 +32791,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Cryptography",
         "Logic"
@@ -33121,7 +33324,7 @@
       "depth_estimate": 3,
       "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "EML",
         "Logic"
@@ -33285,7 +33488,7 @@
       "depth_estimate": 3,
       "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning",
         "Logic"
@@ -33652,7 +33855,7 @@
       "depth_estimate": 3,
       "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly ℵ_1^CK (the Church-Kleene ordinal).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -33939,7 +34142,7 @@
       "depth_estimate": 3,
       "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -34062,7 +34265,7 @@
       "depth_estimate": 3,
       "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -34144,7 +34347,7 @@
       "depth_estimate": 3,
       "description": "Formalize the concept of 'mind tools' — mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by Gödel's incompleteness — there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -34353,7 +34556,7 @@
       "depth_estimate": 3,
       "description": "Formalize 'strange loops' — hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: Gödel's incompleteness theorem IS a strange loop (the Gödel sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -34394,7 +34597,7 @@
       "depth_estimate": 3,
       "description": "Formalize the GEB thesis: deep isomorphisms connect Gödel's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in Gödel's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Logic",
@@ -34520,7 +34723,7 @@
       "depth_estimate": 3,
       "description": "Formalize tangled hierarchies — levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent — formalize this in Lean.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -34561,7 +34764,7 @@
       "depth_estimate": 3,
       "description": "Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to the sphere but with better thermal management. Show: the information capacity of a Dyson sphere (Landauer limit) is ~10^50 bits at 1 AU. Conjecture: a Type II civilization (Kardashev) generates 10^26 watts — enough to run 10^40 quantum operations per second. Explore: formalize the thermodynamic limits of megastructure computation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Physics"
@@ -34770,7 +34973,7 @@
       "depth_estimate": 3,
       "description": "Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show: the multiverse is closed under forcing (every universe has forcing extensions). Conjecture: there is no 'true' CH — the question is meaningless without specifying which universe. Explore: formalize 'multiverse truth' — a statement is multiverse-true if it holds in all universes. Prove: ZFC is multiverse-true, CH is not.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -35327,11 +35530,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c961538a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35343,7 +35546,7 @@
       ],
       "github_issue": 0,
       "id": "sorry_fill_95478b50_dd4f3c48",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-29T22:23:24.416604+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35358,7 +35561,7 @@
       "source": "",
       "source_exp_id": "95478b50",
       "source_path": "Self-Avoiding Walk: Connective Constant",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-27T00:19:54.838542+00:00",
       "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
@@ -38756,98 +38959,97 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 12,
+    "Algebra": 14,
     "Analysis": 3,
-    "Bridges": 2,
+    "Bridges": 3,
     "Combinatorics": 1,
     "Computation": 11,
     "Cryptography": 3,
-    "Geometry": 4,
-    "Logic": 5,
+    "Geometry": 5,
+    "Logic": 6,
     "MachineLearning": 4,
     "Novelty": 7,
     "NumberTheory": 2,
-    "Physics": 4,
+    "Physics": 6,
     "Pythagorean": 4,
     "Shared": 1,
     "Speculative": 3,
     "Tropical": 1
   },
   "recent_theme_keywords": {
-    "4-epsilon": 1,
     "affine": 2,
     "algebraic": 4,
     "arbitrary": 3,
+    "beta(g": 1,
     "bounds": 2,
     "complexity": 2,
-    "computation": 1,
-    "conjecture": 9,
+    "compute": 1,
+    "conformal": 1,
+    "conjecture": 10,
+    "connects": 1,
     "consistent": 2,
     "construct": 4,
+    "coupling": 1,
     "critical": 1,
-    "diagram": 1,
+    "derivative": 1,
     "dimension": 3,
-    "dimensions": 1,
     "directions": 2,
-    "epsilon": 1,
-    "epsilon^2/54": 1,
+    "energy": 1,
+    "equals": 1,
     "equivalent": 3,
-    "expansion": 1,
     "explicit": 3,
-    "exponents": 1,
-    "feynman": 1,
     "finite": 7,
-    "flow": 1,
-    "formalize": 18,
-    "function": 4,
+    "formalize": 21,
+    "function": 5,
+    "geometry": 1,
     "group": 1,
+    "high-energy": 1,
     "hypotheses": 3,
-    "impact": 6,
-    "integers": 1,
-    "investigate": 1,
-    "irreducible": 1,
+    "impact": 7,
+    "integrating": 1,
+    "inverse": 1,
+    "iterated": 1,
     "linear": 2,
+    "matches": 1,
     "mathematical": 3,
-    "non-trivial": 1,
+    "modes": 1,
     "number": 3,
     "numerical": 2,
-    "o(epsilon^3": 1,
-    "paper": 1,
-    "polynomial": 1,
+    "physics": 1,
     "positive": 3,
     "precise": 3,
-    "primitive": 1,
     "problem": 4,
+    "projection": 1,
     "provability": 2,
     "proves": 2,
-    "quadratic": 1,
     "quantitative": 2,
     "random": 3,
     "regions": 2,
-    "renormalization": 1,
+    "renormalization": 2,
     "replace": 3,
     "requires": 2,
     "result": 3,
-    "results": 1,
-    "schäffer's": 1,
     "section": 2,
-    "solutions": 1,
-    "sphere": 1,
+    "sphere": 2,
     "spilling": 1,
     "spilling'": 1,
     "ssa-form": 1,
+    "states": 1,
+    "stereographic": 1,
     "storing": 1,
     "stronger": 1,
     "strongest": 1,
     "subsets": 2,
     "suppose": 1,
+    "symmetric": 1,
     "symmetries": 1,
     "symmetry": 1,
-    "system": 4,
+    "system": 5,
+    "tensor": 1,
     "tesseracts": 1,
-    "theorem": 7,
+    "theorem": 8,
     "theorems": 1,
-    "theory": 5,
+    "theory": 7,
     "time-translation": 1,
     "triangle": 2,
     "typical": 1,
@@ -38859,7 +39061,8 @@
     "v\\ne0\\}": 1,
     "values": 1,
     "variables": 1,
-    "verify": 3,
+    "varying": 1,
+    "verify": 4,
     "versa": 1,
     "vertex": 2,
     "vertices": 1,
@@ -38878,7 +39081,6 @@
   "selection_log": [
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
@@ -38895,6 +39097,7 @@
     "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }

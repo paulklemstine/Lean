@@ -573,22 +573,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "consumed_by_exp_id": "576be6d2",
-    "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "seed_056",
-    "phase": "A",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Self-Modifying Research via Reflective Type Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The key insight is that Tononi's Phi (integrated information) may be a topological invariant, not just a measure. If neural states form a sheaf over the brain's connectome, then Phi equals the dimension of the first sheaf cohomology group H^1(C, F) where C is the connectome graph and F is the neural state sheaf. Conjecture: Phi is a topological invariant of the sheaf (C, F) \u2014 it is preserved under sheaf isomorphisms and changes continuously under continuous deformation of the connectome. A system with Phi = 0 has H^1 = 0 (acyclic sheaf, no information integration), while Phi > 0 means H^1 > 0 (cycles in the sheaf, integrated information). Why now: sheaf cohomology has been successfully applied to neural coding by Curry (2019), and the connection between Phi and cohomology was conjectured by Tegmark (2019) but never formalized. Test: compute Phi for small connectome topologies (chain, ring, complete graph) and show Phi = dim(H^1) in each case. Impact: consciousness becomes a mathematical invariant with the same status as the Euler characteristic \u2014 a topological quantity that can be computed, compared, and used to classify systems.",
     "domains": [
@@ -1659,6 +1643,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_e722c646_61c75f33",
+    "priority_score": 0.8708899999999998,
+    "research_mode": "team",
+    "source_exp_id": "e722c646",
+    "status": "available",
+    "timestamp": "2026-07-29T22:22:57.527932+00:00",
+    "title": "Deepening: Inverse Stereographic Renormalization Group"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -1856,7 +1854,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5c8afaa",
     "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
     "domains": [
       "Novelty",
@@ -1865,10 +1863,11 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "seed_134",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
@@ -1965,22 +1964,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Fractal Dimension of Mathematical Truth"
-  },
-  {
-    "consumed_by_exp_id": "97183f28",
-    "description": "Prove the quantum de Finetti theorem: symmetric quantum states on infinite tensor products are mixtures of i.i.d. states. Formalize the connection between exchangeability and independence in the quantum setting. Bridge quantum foundations to classical probability.",
-    "domains": [
-      "Bridges",
-      "Physics"
-    ],
-    "id": "seed_300",
-    "phase": "A",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
   },
   {
     "consumed_by_exp_id": "",
@@ -2782,6 +2765,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 576be6d2 (Q=0.760), which proved 6 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_576be6d2_069e132c",
+    "priority_score": 0.8595499999999999,
+    "research_mode": "team",
+    "source_exp_id": "576be6d2",
+    "status": "available",
+    "timestamp": "2026-07-29T22:22:15.442777+00:00",
+    "title": "Deepening: Self-Modifying Research via Reflective Type Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -3684,23 +3681,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "EML Training Dynamics as Tropical Gradient Flow"
-  },
-  {
-    "consumed_by_exp_id": "e722c646",
-    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
-    "domains": [
-      "Geometry",
-      "Physics",
-      "Algebra"
-    ],
-    "id": "seed_076",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Inverse Stereographic Renormalization Group"
   },
   {
     "consumed_by_exp_id": "",
@@ -6175,17 +6155,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Homotopy types of intervals in corank-three higher Bruhat orders"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2996b72f",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
       "NumberTheory"
     ],
     "id": "fd_0653",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697747+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -7121,6 +7102,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions: quantum\u2013classical de Finetti bridge\n\nThe formal development proves the exact constructive direction of de Finetti in the finite-support, computational-basis (diagonal) sector: a finite latent mixture of i.i.d. one-site laws yields normalized exchangeable laws at every tensor power, and diagonal quantum encoding is permutation symmetric and exactly inverted by basis measurement.\n\n## Natural next steps\n\n1. **General finite-dimensional density operators.** Replace diagonal probability vectors by arbitrary positive trace-one matrices and define tensor powers through Mathlib's tensor-product API. Prove that finite convex mixtures of `\u03c1 ^\u2297 n` are invariant under the unitary representation of every site permutation.\n\n2. **Projective consistency and infinite exchangeability.** Package the family over all copy numbers with marginal compatibility. Develop the needed partial-trace lemmas and formulate an infinite quantum state as a compatible family of finite marginals.\n\n3. **The converse representation theorem.** Prove that every projectively consistent exchangeable family of finite-dimensional quantum states is represented by a probability measure on one-site density matrices. This requires finite-dimensional convexity, compactness of the density-operator space, and a measure representation or moment-determinacy argument.\n\n4. **Classical de Finetti as a commutative specialization.** Show that restricting the general theorem to a fixed diagonal algebra recovers exchangeable classical distributions and their mixture-of-product representation.\n\n5. **Finite approximate de Finetti bounds.** Connect the existing rational bound `deFinettiBound d k n = 2 k d\u00b2 / n` to trace distance between a `k`-site marginal of a symmetric `n`-site state and a mixture of product states.\n\n6. **Informationally complete measurements.** Extend the exact diagonal roundtrip to tomography: use an informationally complete POVM to convert exchangeable quantum families into classical exchangeable outcome families, then reconstruct density operators.\n\n7. **Uniqueness of the mixing measure.** Formalize that the representing probability measure is unique, using polynomial moments on the compact convex set of density matrices.\n\n## Computational evidence\n\nNo separate numerical-evidence document is included because the result proved here is a structural identity for arbitrary finite dimensions and copy numbers, not a conjecture inferred from numerical data. Its key equalities are finite sum/product identities checked symbolically by Lean. Concrete low-dimensional examples could be added later as regression tests, but they would not strengthen the universal proof.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0828",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "97183f28",
+    "status": "available",
+    "timestamp": "2026-07-29T22:21:25.813204+00:00",
+    "title": "The formal development proves the exact constructive direction of de Finetti in "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Well-founded rank generalization.** Replace the natural-valued quality rank by an arbitrary partial order satisfying the ascending-chain condition. This would isolate precisely which termination principle is needed.\n\n2. **Approximate rather than exact plateaus.** Give cycles a metric and replace `plateau_fixed` by a quantitative estimate saying that small quality gains imply small revisions. Summable gains may then yield Cauchy convergence without eventual constancy.\n\n3. **Fair outcome exploration.** Strengthen the run with a fairness condition and ask when stability for selected outcomes implies that the limiting cycle is fixed under every inhabitant of its dependent outcome type.\n\n4. **Transfinite research cycles.** Index runs by ordinals, define coherent limit cycles, and connect stabilization bounds to the height of a well-founded quality order.\n\n5. **Executable finite examples.** Instantiate the framework with finite cycle and outcome types, derive a computable stabilization bound, and extract traces that exhibit how dependent outcome types change before convergence.\n\n6. **Logical reflection semantics.** Interpret cycles as formal theories and outcomes as type-indexed certificates or countermodels. The plateau condition could then be derived from proof-system extensionality rather than assumed directly.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0829",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "576be6d2",
+    "status": "available",
+    "timestamp": "2026-07-29T22:22:11.789206+00:00",
+    "title": "1. **Well-founded rank generalization.** Replace the natural-valued quality rank"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Continuous beta function.** Introduce a continuous scale parameter and an\n   RG semigroup, then define its beta function as the infinitesimal generator.\n   This would cleanly distinguish a beta function from the present discrete\n   one-step observable `R(g)-g`.\n\n2. **Iteration and convergence.** Formalize `R^[n](g) = g^(2^n)` and prove that\n   every physical coupling `0 \u2264 g < 1` converges to zero. Transport this result\n   through inverse stereography to obtain a convergence theorem on the unit\n   circle.\n\n3. **Varying poles.** Replace the fixed chart by M\u00f6bius transformations\n   associated with varying stereographic poles. Determine the cocycle\n   conditions under which these transformations define an RG semigroup.\n\n4. **Ising derivation from partition functions.** Formalize the transfer-matrix\n   or spin-summation derivation of `tanh K' = (tanh K)\u00b2`, rather than taking this\n   standard exact recursion as the definition of `isingRG`.\n\n5. **Scheme dependence.** State coordinate-change laws for continuous beta\n   functions. This is essential before comparing a field-theory beta function\n   to the derivative of a geometric chart.\n\n6. **Phi-four comparison.** Only after fixing dimension, regularization,\n   subtraction scheme, and coupling normalization should the proposed\n   `phi^4` identification be tested. A likely mathematically meaningful target\n   is conjugacy of local flows near a hyperbolic fixed point, rather than\n   literal equality of two coordinate-dependent formulas.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0830",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e722c646",
+    "status": "available",
+    "timestamp": "2026-07-29T22:22:54.155124+00:00",
+    "title": "1. **Continuous beta function.** Introduce a continuous scale parameter and an"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -7591,16 +7617,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c961538a",
     "description": "Cycle 95478b50 (Q=0.610) proved 794 theorems in Probability but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Probability"
     ],
     "id": "sorry_fill_95478b50_dd4f3c48",
+    "phase": "A",
     "priority_score": 0.66,
     "research_mode": "team",
     "source_exp_id": "95478b50",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-27T00:19:54.838542+00:00",
     "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
   },
