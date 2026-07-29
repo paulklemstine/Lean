@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5fcde7e0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential–logarithmic expressions and proves its main algebraic closure chain. The next useful",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-25T16:28:20",
-      "title": "EML Differential Algebra: Closure Properties"
-    },
-    {
       "cycle_id": "bb3a8583",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\n## 1. Fingerprint compression at the logarithmic threshold\n\nFor every fixed `0 < δ < 1` and every `ε > 0`, the family of pairs of finite\ninteger sets `A,B ⊆ [n]` with `|A|=|B| ≥ (",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-29T19:52:46",
       "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
+    },
+    {
+      "cycle_id": "42454fab",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n1. **Universe size four.** Extend the singleton/residual decomposition used for\n   `Fin 3`. A direct search has 65,536 candidate families, so useful structural\n   reductions (sing",
+      "quality_score": 0.7628999999999999,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-29T19:53:49",
+      "title": "Frankl's Union-Closed Conjecture: Partial Results"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "955187b3",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## What was formalized\n\n`AllDimensions.lean` defines the algebraic sphere\n\n\\[\nS^n_{\\mathrm{alg}}=\\{x:\\operatorname{Fin}(n+1)\\to\\mathbb R\\mid \\sum_i x_i^2=1\\}\n\\]\n\nand the mega-sphe",
-      "quality_score": 0.68,
-      "sorry_count": 13,
-      "theorem_count": 20,
-      "timestamp": "2026-07-20T09:41:49",
-      "title": "The Mega-Sphere: All Dimensions at Once"
-    },
     {
       "cycle_id": "dd6a308e",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-29T19:52:46",
       "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
+    },
+    {
+      "cycle_id": "42454fab",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n1. **Universe size four.** Extend the singleton/residual decomposition used for\n   `Fin 3`. A direct search has 65,536 candidate families, so useful structural\n   reductions (sing",
+      "quality_score": 0.7628999999999999,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-29T19:53:49",
+      "title": "Frankl's Union-Closed Conjecture: Partial Results"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "627f5167",
-      "domain": "Computation",
-      "name": "wellScoped_provableNotProvablyProvable",
-      "quality": 0.7662
-    },
-    {
-      "cycle_id": "627f5167",
-      "domain": "Computation",
-      "name": "wellScoped_self_provability",
-      "quality": 0.7662
-    },
-    {
-      "cycle_id": "83a0d4e2",
-      "domain": "Novelty",
-      "name": "word_card",
-      "quality": 0.75101
-    },
     {
       "cycle_id": "83a0d4e2",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "TropicalRational",
       "quality": 0.7311099999999999
+    },
+    {
+      "cycle_id": "42454fab",
+      "domain": "Combinatorics",
+      "name": "states",
+      "quality": 0.7628999999999999
+    },
+    {
+      "cycle_id": "42454fab",
+      "domain": "Combinatorics",
+      "name": "rather",
+      "quality": 0.7628999999999999
+    },
+    {
+      "cycle_id": "42454fab",
+      "domain": "Combinatorics",
+      "name": "sup_id_isGreatest",
+      "quality": 0.7628999999999999
     }
   ],
-  "last_updated": "2026-07-29T19:52:46",
+  "last_updated": "2026-07-29T19:53:49",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "735120d5",
-        "quality": 0.72,
-        "theorems": 46,
-        "title": "The Uncanny Valley of Mathematics: When Proofs Are Almost Right"
-      },
-      {
         "cycle_id": "d1a99009",
         "quality": 0.71,
         "theorems": 0,
@@ -3265,6 +3259,12 @@
         "quality": 0.7322500000000001,
         "theorems": 7,
         "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+      },
+      {
+        "cycle_id": "42454fab",
+        "quality": 0.7628999999999999,
+        "theorems": 18,
+        "title": "Frankl's Union-Closed Conjecture: Partial Results"
       }
     ],
     "Computation": [
