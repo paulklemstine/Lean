@@ -1,212 +1,389 @@
-# Zero-Knowledge Proofs and Constant-Query Local Verification: A Formal Study of Graph 3-Colourability
+# Perfect Simulation, Random-Point Soundness, and Local Verification
+
+## A Unified Mathematical Account of Zero-Knowledge Verifiable Computation
+
+**Aristotle**  
+**29 July 2026**
 
 ## Abstract
 
-We present a self-contained formal development of the classical Goldreich–Micali–Wigderson (GMW) zero-knowledge proof system for graph 3-colourability, together with a bridge connecting it to the constant-query backbone of the PCP theorem ($\mathrm{NP} \subseteq \mathrm{PCP}(\mathrm{poly}, O(1))$). Working over a finite vertex type $V$ and an explicit edge set $E$, we model a 3-colouring as a map $c : V \to \mathbb{F}_3$ (where $\mathbb{F}_3 = \{0,1,2\}$ is the three-element colour alphabet) and the protocol's randomization as a uniformly chosen permutation $\pi \in S_3$ of the colours. We establish four pillars: **perfect completeness** (colour permutations preserve properness, so honest provers always succeed); a **soundness gap** (against a non-3-colourable instance, every claimed proof is rejected on a uniformly random edge with probability at least $1/|E|$); **perfect honest-verifier zero knowledge** (the real opened view is *identically* distributed to a uniform random ordered pair of distinct colours, via an explicit bijection $S_3 \cong \{(a,b) : a \neq b\}$); and a **constant-query local-verifier** reading at most two proof symbols per random challenge. The last result reinterprets the GMW protocol as a $2$-query probabilistically checkable proof for an NP-complete language, isolating *gap amplification* as the sole remaining ingredient of the full PCP theorem. All results have been formally verified.
-
-**Keywords:** zero-knowledge proof, graph 3-colourability, GMW protocol, honest-verifier zero knowledge, soundness gap, probabilistically checkable proofs, PCP theorem, constant-query verifier, sigma protocol, verifiable computation.
-
----
+This paper presents a self-contained mathematical framework connecting three central mechanisms of verifiable computation: perfect zero-knowledge simulation, the graph three-coloring protocol, and polynomial random-point verification, together with a constant-query bridge to probabilistically checkable proofs. Perfect interactive zero knowledge is defined by exact equality between the distribution of a verifier's real view and a simulator distribution depending only on the public statement. Its non-interactive analogue additionally requires every proof in the support of the honest distribution to be accepted. For graph three-colorability, random permutation of the three color labels preserves properness and makes the transcript on a challenged properly colored edge exactly uniform over ordered pairs of distinct colors, yielding perfect completeness and perfect honest-verifier zero knowledge. For a simplified quadratic-arithmetic-program verifier over a finite field, a false identity $p=ht$ passes the random-point test at no more than $\deg(p-ht)$ points; conversely, passing at more points forces the identity. Finally, the graph-coloring oracle verifier reads at most two symbols per edge, and every alleged coloring of a non-three-colorable graph is rejected on at least one such query. Numerical algorithms illustrate transcript equality, root-count soundness, and local rejection. The results isolate a common architecture: small local observations, structural consistency bounds, and simulation-based privacy.
 
 ## 1. Introduction
 
-A zero-knowledge proof allows a *prover* to convince a *verifier* that a statement is true while revealing nothing beyond the truth of the statement itself. Since their introduction by Goldwasser, Micali, and Rackoff, and the subsequent demonstration by Goldreich, Micali, and Wigderson (GMW) that *every* NP statement admits such a proof, zero-knowledge proofs have become a cornerstone of modern cryptography, powering anonymous credentials, privacy-preserving cryptocurrencies, and the rapidly growing field of *verifiable computation*.
+Verifiable computation asks how a resource-limited verifier can gain confidence in a claim without reproducing all of the claimant's work. Zero-knowledge proof adds a stringent privacy requirement: the verification process should reveal nothing about a secret witness beyond what follows from the public claim itself. Succinct arguments and probabilistically checkable proofs approach the same economy from different directions, compressing global correctness into a few algebraic checks or local oracle queries.
 
-The GMW result rests on a single, beautifully concrete protocol: a zero-knowledge proof for **graph 3-colourability**. Because 3-colourability is NP-complete, a zero-knowledge proof for it lifts (via NP-reductions) to a zero-knowledge proof for any NP statement. This paper develops that protocol formally and in full, and then draws a precise line from it to the **PCP theorem**, the celebrated result that every NP language has proofs checkable by reading only a constant number of symbols.
+This paper develops a compact bridge among these ideas. The treatment begins with distributional definitions of perfect interactive and non-interactive zero knowledge. It then studies the graph three-coloring protocol, where a witness is hidden by a random permutation of color names. Next comes a simplified polynomial verifier of the kind that underlies quadratic arithmetic programs: the verifier tests a claimed identity at a random field point, and polynomial root counting bounds false acceptance. Finally, graph coloring is represented as a locally testable proof oracle in which each edge check reads only two symbols.
 
-Our contributions are:
+The resulting claims are precise but deliberately scoped. The graph theorem gives perfect zero knowledge against the prescribed honest verifier. The polynomial theorem proves the soundness of the random-point identity check, not every cryptographic property of a deployed succinct argument. The local graph verifier establishes constant query complexity and existence of a rejecting query on false instances, not a graph-size-independent rejection gap. These distinctions identify exactly what is obtained from the elementary mathematical core and what remains for cryptographic composition and PCP amplification.
 
-1. A formal model of the GMW 3-colouring protocol over a finite vertex type and explicit edge set (Section 3).
-2. A proof of **perfect completeness** via invariance of properness under colour permutations (Theorem 4.1).
-3. A quantitative **soundness gap**: a clean rational lower bound of $1/|E|$ on the single-round rejection probability against non-3-colourable instances (Theorems 4.2–4.4).
-4. A proof of **perfect honest-verifier zero knowledge** through an explicit bijection between the symmetric group $S_3$ and the set of ordered pairs of distinct colours (Theorems 4.5–4.7).
-5. A **bridge to the PCP theorem**: a reinterpretation of the protocol as a $2$-query local verifier with constant query complexity, perfect completeness, and a positive soundness gap (Section 5), isolating gap amplification as the only missing ingredient of $\mathrm{NP} \subseteq \mathrm{PCP}(\mathrm{poly}, O(1))$.
+### 1.1. Main results
 
-Everything below is stated inline and is self-contained; no external references are required to follow the development.
+The paper proves the following results.
 
----
+1. Equality of real and simulated distributions implies equality of the probability assigned to every individual transcript or proof object.
+2. In a non-interactive system, every proof object appearing with nonzero honest probability is accepted.
+3. A proper graph three-coloring remains proper under every permutation of the three colors.
+4. On a properly colored challenged edge, the revealed ordered pair after a uniform random color permutation has exactly the simulator distribution, uniform over the six ordered pairs of distinct colors.
+5. If polynomials $p,h,t$ over a finite field fail to satisfy $p=ht$, then the random-point equality $p(s)=h(s)t(s)$ holds at at most $\deg(p-ht)$ field points.
+6. If that equality holds at more field points than the discrepancy degree, then $p=ht$.
+7. A local graph-coloring verifier reads at most two oracle symbols per edge, and every alleged coloring of a non-three-colorable graph is rejected on at least one edge.
 
-## 2. Background and Notation
+## 2. Probability Distributions and Proof Systems
 
-### 2.1 Graphs and colourings
+### 2.1. Finite probability distributions
 
-Throughout, $V$ is a finite type of **vertices** and $E$ is a finite set of **edges**, modelled as a finite set of ordered pairs $E \subseteq V \times V$ (an ordered model is convenient and harmless: the verifier's accept predicate is symmetric in the endpoints). We write $|E|$ for the number of edges and $|V|$ for the number of vertices.
+Let $X$ be a finite set. A probability mass function on $X$ is a function $\mu:X\to[0,1]$ satisfying
 
-A **3-colouring** is a function
-$$c : V \to \mathbb{F}_3, \qquad \mathbb{F}_3 = \{0, 1, 2\},$$
-assigning one of three colours to each vertex.
+$$
+\sum_{x\in X}\mu(x)=1.
+$$
 
-**Definition 2.1 (Proper colouring).** A colouring $c$ is *proper* for the edge set $E$, written $\mathrm{IsProperColoring}(E, c)$, when every edge has differently coloured endpoints:
-$$\mathrm{IsProperColoring}(E, c) \;\iff\; \forall\, e \in E,\; c(e_1) \neq c(e_2),$$
-where $e = (e_1, e_2)$. A graph is **3-colourable** when some proper colouring exists.
+Two distributions $\mu$ and $\nu$ are equal when $\mu(x)=\nu(x)$ for every $x\in X$. Exact equality is stronger than computational indistinguishability and stronger than merely having small statistical distance.
 
-Deciding 3-colourability is NP-complete; a proper colouring is the canonical NP-witness, and verifying a claimed witness amounts to checking the inequality $c(e_1) \neq c(e_2)$ on each edge.
+The support of $\mu$ is
 
-### 2.2 The symmetric group on colours
+$$
+\operatorname{supp}(\mu)=\{x\in X:\mu(x)>0\}.
+$$
 
-Let $S_3 = \mathrm{Sym}(\mathbb{F}_3)$ denote the group of permutations (bijections) of the three colours; $|S_3| = 3! = 6$. For $\pi \in S_3$ and a colouring $c$, the **recoloured** map $\pi \circ c$ sends $v \mapsto \pi(c(v))$.
+For finite spaces, writing $\mu(x)\ne 0$ is equivalent to membership in the support.
 
----
+### 2.2. Interactive proof systems
 
-## 3. The GMW 3-Colouring Protocol
+An interactive proof system for statements in a set $S$ consists conceptually of a prover, a verifier, a validity predicate $\operatorname{Valid}:S\to\{\text{true},\text{false}\}$, and an interaction producing a verifier view. The view includes everything observed by the verifier: its random coins, messages, challenges, responses, and any public data derived during the exchange.
 
-We model the interactive protocol between a prover $P$ (holding a proper colouring $c$) and a verifier $\mathcal V$.
+Completeness requires acceptance on valid statements when the prover follows the protocol using a valid witness. Soundness requires that false statements cannot be accepted too often by a cheating prover. The present distributional layer focuses on privacy and can be combined with separate completeness and soundness theorems.
 
-**Protocol (GMW 3-colouring, one round).**
-1. **Commit.** $P$ samples $\pi \in S_3$ uniformly at random and commits to the recoloured colouring $\pi \circ c$ — conceptually, sealing each vertex's recoloured value $\pi(c(v))$ in an individual locked box.
-2. **Challenge.** $\mathcal V$ samples an edge $e = (u, v) \in E$ uniformly at random.
-3. **Open.** $P$ opens the two committed values at the endpoints, revealing the pair
-$$\mathrm{revealedView}(\pi, c, e) = \big(\pi(c(u)),\, \pi(c(v))\big).$$
-4. **Decide.** $\mathcal V$ **accepts** iff the two revealed colours differ.
+**Definition 2.1 (Perfect interactive zero knowledge).** Let $V$ be the finite or countable space of verifier views. For each public statement $s$, let $R_s$ be the real-view distribution generated by an honest interaction, and let $M_s$ be a simulator distribution computed from $s$ alone. The system is perfectly zero knowledge on valid statements if
 
-**Definition 3.1 (Verifier accept predicate).** For a (committed) colouring $c$ and challenge edge $e$, the verifier's single-round accept predicate is
-$$\mathrm{accept}(c, e) \;\iff\; c(e_1) \neq c(e_2).$$
+$$
+R_s=M_s
+$$
 
-The three desiderata of a proof system are completeness (honest provers convince), soundness (cheating provers are caught), and zero knowledge (the verifier learns nothing). We address each formally.
+for every $s$ satisfying $\operatorname{Valid}(s)$.
 
----
+The simulator receives no witness. Therefore equality says that the complete observable experiment can be reproduced from public information.
 
-## 4. Main Results
+**Theorem 2.2 (Pointwise equality of interactive views).** If a system is perfectly interactive zero knowledge, then for every valid statement $s$ and every view $v$,
 
-### 4.1 Perfect completeness
+$$
+R_s(v)=M_s(v).
+$$
 
-**Theorem 4.1 (completeness).** *If $c$ is a proper colouring of $E$, then for every permutation $\pi \in S_3$ the recoloured colouring $\pi \circ c$ is also proper:*
-$$\mathrm{IsProperColoring}(E, c) \;\Longrightarrow\; \mathrm{IsProperColoring}(E,\, \pi \circ c).$$
-*Consequently the honest prover's revealed pair $(\pi(c(u)), \pi(c(v)))$ consists of distinct colours on every edge, and the verifier accepts with probability $1$.*
+**Proof sketch.** Equality of probability distributions is extensional equality of their probability mass functions. Evaluating both equal functions at $v$ gives the result. $\square$
 
-*Proof sketch.* Fix an edge $e = (u,v) \in E$. Properness gives $c(u) \neq c(v)$. Since $\pi$ is injective (a bijection), $\pi(c(u)) \neq \pi(c(v))$. As $e$ was arbitrary, $\pi \circ c$ is proper, and the revealed pair has distinct entries on every challenge, so the verifier always accepts. $\square$
+This elementary consequence is operationally important. Every event $A\subseteq V$ also has equal probability in the two experiments, because summing pointwise equal probabilities gives
 
-The essential content is that injectivity of $\pi$ transports the inequality $c(u) \neq c(v)$ to the recoloured values; permuting colour *names* never collapses two distinct colours.
+$$
+\Pr_{R_s}[A]=\sum_{v\in A}R_s(v)=\sum_{v\in A}M_s(v)=\Pr_{M_s}[A].
+$$
 
-### 4.2 Soundness gap
+### 2.3. Non-interactive perfect zero knowledge
 
-We now bound the probability that a cheating prover survives a single round when the instance is unsatisfiable. The key combinatorial object is the set of **catching edges** of a colouring $c$:
-$$\mathrm{Catch}(E, c) \;=\; \{\, e \in E : c(e_1) = c(e_2)\,\} \;=\; E \cap \{e : \neg\,\mathrm{accept}(c,e)\}.$$
+A non-interactive proof system replaces a conversation by one finite proof object. Let $P$ be a finite proof space and let $\operatorname{Verify}(s,\pi)$ be the verifier's acceptance predicate.
 
-**Theorem 4.2 (existence of a catching edge — soundness\_exists\_catch).** *If $c$ is not a proper colouring of $E$, then there exists an edge $e \in E$ with $c(e_1) = c(e_2)$.*
+**Definition 2.3 (Perfect non-interactive zero knowledge).** For every statement $s$, let $H_s$ be the honest proof distribution and $M_s$ a simulator distribution depending only on $s$. The system is perfectly non-interactive zero knowledge if, for every valid $s$:
 
-*Proof sketch.* Negate Definition 2.1: $\neg\,\mathrm{IsProperColoring}(E,c)$ unfolds to $\neg\,\forall e \in E,\ c(e_1) \neq c(e_2)$, i.e. $\exists e \in E,\ c(e_1) = c(e_2)$. $\square$
+1. every $\pi\in\operatorname{supp}(H_s)$ satisfies $\operatorname{Verify}(s,\pi)=\text{true}$; and
+2. $H_s=M_s$ as distributions.
 
-**Theorem 4.3 (catching set is nonempty — soundness\_catch\_card).** *If $c$ is not proper, then $|\mathrm{Catch}(E, c)| \geq 1$.*
+The first clause is support correctness. It prevents an honest prover from assigning positive probability to an invalid proof. The second is perfect simulation.
 
-*Proof sketch.* Theorem 4.2 exhibits a member of $\mathrm{Catch}(E,c)$; a finite set with a member has cardinality at least $1$. $\square$
+**Theorem 2.4 (Pointwise equality and honest-support acceptance).** For every valid statement $s$ and proof object $\pi$,
 
-**Theorem 4.4 (soundness gap — soundness\_prob).** *Let $|E| > 0$. If $c$ is not a proper colouring of $E$, then the fraction of catching edges is at least $1/|E|$:*
-$$\frac{1}{|E|} \;\le\; \frac{|\mathrm{Catch}(E, c)|}{|E|}.$$
-*Equivalently, when the verifier challenges a uniformly random edge, it rejects the proof $c$ with probability at least $1/|E|$.*
+$$
+H_s(\pi)=M_s(\pi).
+$$
 
-*Proof sketch.* By Theorem 4.3, $|\mathrm{Catch}(E,c)| \ge 1$. Dividing the inequality $1 \le |\mathrm{Catch}(E,c)|$ by the positive integer $|E|$ (cast into the rationals) gives the claim. The probability interpretation follows because the challenge is uniform over $E$, so the rejection probability is exactly $|\mathrm{Catch}(E,c)|/|E|$. $\square$
+Moreover, if $H_s(\pi)>0$, then $\operatorname{Verify}(s,\pi)=\text{true}$.
 
-**Corollary 4.4.1 (soundness for unsatisfiable instances).** If the graph is *not* 3-colourable — i.e. *no* proper colouring exists — then the hypothesis of Theorem 4.4 holds for *every* claimed colouring $c$, so the verifier rejects any prover with probability at least $1/|E|$ per round.
+**Proof sketch.** The equality follows by evaluating $H_s=M_s$ at $\pi$. The acceptance statement is exactly support correctness applied to $\pi$. $\square$
 
-**Amplification (discussion).** A single round leaves a cheater an acceptance probability of at most $1 - 1/|E|$. Running $m$ independent rounds and accepting only if all succeed reduces the cheating probability to at most $(1 - 1/|E|)^m$; choosing $m \ge |E|\,\ln(1/\varepsilon)$ drives it below any target $\varepsilon$, since $(1 - 1/|E|)^{|E|} \le e^{-1}$. This standard amplification is not formalized here but is a self-contained probability argument built directly on Theorem 4.4 (see Future Directions).
+The theorem emphasizes that privacy and acceptance are independent obligations. Simulation alone would permit a simulator and honest prover to agree on a distribution containing rejected proofs; support correctness excludes this defect.
 
-### 4.3 Perfect honest-verifier zero knowledge
+## 3. Perfect Honest-Verifier Zero Knowledge for Graph Three-Coloring
 
-The protocol's privacy is captured by analyzing the distribution of the revealed view on a fixed challenged edge. Fix an edge with *true* endpoint colours $a, b \in \mathbb{F}_3$, $a \neq b$ (which holds for the honest prover by properness). As $\pi$ ranges over $S_3$, the revealed view is $(\pi(a), \pi(b))$. Let
-$$\mathrm{DistinctPairs} = \{(x,y) \in \mathbb{F}_3 \times \mathbb{F}_3 : x \neq y\}, \qquad |\mathrm{DistinctPairs}| = 3 \cdot 2 = 6.$$
+### 3.1. Graphs and proper colorings
 
-**Theorem 4.5 (revealed view is well-formed — revealedView\_distinct).** *For an honest prover with proper colouring $c$ and any edge $e = (u,v)$ with $c(u) \neq c(v)$, and any $\pi \in S_3$, the revealed pair consists of distinct colours: $\pi(c(u)) \neq \pi(c(v))$.* In particular $\mathrm{revealedView}(\pi, c, e) \in \mathrm{DistinctPairs}$.
+Let $G=(V,E)$ be a finite graph, with $E\subseteq V\times V$. Let the color set be
 
-*Proof sketch.* Injectivity of $\pi$ applied to $c(u) \neq c(v)$. $\square$
+$$
+C=\{0,1,2\}.
+$$
 
-**Theorem 4.6 (injectivity — hvzk\_view\_injective).** *Fix $a, b \in \mathbb{F}_3$ with $a \neq b$. The view map*
-$$\Phi_{a,b} : S_3 \to \mathrm{DistinctPairs}, \qquad \Phi_{a,b}(\pi) = (\pi(a), \pi(b))$$
-*is injective.*
+A coloring is a function $c:V\to C$. It is proper when
 
-*Proof sketch.* Suppose $\Phi_{a,b}(\pi) = \Phi_{a,b}(\rho)$, i.e. $\pi(a) = \rho(a)$ and $\pi(b) = \rho(b)$. Then $\rho^{-1}\pi$ fixes both $a$ and $b$. In $S_3$, a permutation fixing two of the three points must fix the third as well (the remaining point has nowhere else to go), hence $\rho^{-1}\pi = \mathrm{id}$ and $\pi = \rho$. $\square$
+$$
+\forall (u,v)\in E,\qquad c(u)\ne c(v).
+$$
 
-**Theorem 4.7 (bijection — hvzk\_bijection).** *Fix $a, b \in \mathbb{F}_3$ with $a \neq b$. The view map $\Phi_{a,b} : S_3 \to \mathrm{DistinctPairs}$ is a bijection. Consequently, pushing the uniform distribution on $S_3$ forward along $\Phi_{a,b}$ yields the uniform distribution on $\mathrm{DistinctPairs}$.*
+The public statement is that $G$ is three-colorable. The secret witness is a proper coloring $c$.
 
-*Proof sketch.* By Theorem 4.6, $\Phi_{a,b}$ is injective. Both finite sets have cardinality $6$ ($|S_3| = 3! = 6$ and $|\mathrm{DistinctPairs}| = 3 \cdot 2 = 6$), so an injection between them is automatically a bijection. Since $\Phi_{a,b}$ is a bijection and $\pi$ is uniform on $S_3$, each of the six distinct pairs is hit by exactly one $\pi$, hence occurs with probability $1/6$ — the uniform law on $\mathrm{DistinctPairs}$, independent of $(a,b)$. $\square$
+### 3.2. One round of the protocol
 
-**Interpretation: perfect zero knowledge.** Theorem 4.7 is the crux of privacy. The real view on a challenged edge — under the honest prover's random colour shuffle — is *exactly* a uniform random ordered pair of distinct colours, with a distribution that does not depend on the actual colours $a, b$ or on the rest of the colouring $c$. Therefore a trivial **simulator** that simply outputs a uniformly random element of $\mathrm{DistinctPairs}$ reproduces the verifier's view *perfectly* (zero statistical distance), without any access to the witness $c$. This is **perfect honest-verifier zero knowledge**: the verifier provably learns nothing about $c$ beyond what it could have generated alone. The exact-bijection phenomenon is special to $k = 3$, where the fibre size $(k-2)! = 1$; for $k > 3$ the same conclusion holds via uniform fibres rather than a bijection (see Future Directions).
+One round proceeds as follows.
 
----
+1. The prover chooses a permutation $\pi:C\to C$ uniformly from the six permutations of the colors.
+2. For every vertex $v$, the prover commits to $\pi(c(v))$. The commitments are binding and hiding at the abstraction level considered here.
+3. The verifier selects an edge $(u,v)\in E$.
+4. The prover opens the two endpoint commitments.
+5. The verifier accepts if the openings are valid and the two revealed colors differ.
 
-## 5. Bridge to the PCP Theorem
+Only the color-permutation and opened-color components are needed for the distributional theorem below. Commitment security is a separate cryptographic layer.
 
-The PCP theorem states $\mathrm{NP} \subseteq \mathrm{PCP}(\mathrm{poly}, O(1))$: every NP language has membership proofs checkable by a randomized verifier that reads only a *constant* number of proof symbols, accepting valid proofs and rejecting invalid ones with constant probability. We make the *constant-query local-verifiability* content concrete on 3-colourability.
+### 3.3. Completeness under color permutations
 
-**Model.** A PCP-style proof is a colouring $c : V \to \mathbb{F}_3$ — a proof string indexed by vertices over the constant-size alphabet $\mathbb{F}_3$. The verifier's randomness is a single edge $e \in E$; it queries exactly the two endpoint symbols $c(e_1), c(e_2)$ and accepts iff they differ.
+**Lemma 3.1 (Permutation preserves inequality).** If $a,b\in C$, $a\ne b$, and $\pi$ is a permutation of $C$, then $\pi(a)\ne\pi(b)$.
 
-**Definition 5.1 (local verifier).** $\mathrm{pcpVerifier}(c, e) \iff c(e_1) \neq c(e_2)$.
+**Proof sketch.** A permutation is injective. If $\pi(a)=\pi(b)$, injectivity would imply $a=b$, a contradiction. $\square$
 
-**Definition 5.2 (query positions).** $\mathrm{queryPositions}(e) = \{e_1, e_2\}$, the (multiset-collapsed) set of proof positions read on challenge $e$.
+**Theorem 3.2 (Perfect completeness of permuted coloring).** Let $c$ be a proper three-coloring of $G$. For every permutation $\pi$ of $C$, the coloring $c_\pi(v)=\pi(c(v))$ is proper. Hence every challenged edge in the protocol reveals two different colors and is accepted.
 
-**Theorem 5.1 (constant query complexity — query\_count\_le\_two).** *For every challenge edge $e$, $|\mathrm{queryPositions}(e)| \le 2$, independent of $|V|$.*
+**Proof sketch.** For any edge $(u,v)$, properness gives $c(u)\ne c(v)$. Lemma 3.1 gives $\pi(c(u))\ne\pi(c(v))$. This holds for every edge and every permutation, so acceptance has probability $1$. $\square$
 
-*Proof sketch.* $\mathrm{queryPositions}(e) = \{e_1, e_2\}$ is built by inserting one element into a singleton, so its cardinality is at most $1 + 1 = 2$ by the inequality $|\{x\} \cup S| \le |S| + 1$. $\square$
+### 3.4. Exact transcript simulation
 
-This is precisely the $O(1)$ in $\mathrm{PCP}(\mathrm{poly}, O(1))$: the verifier inspects at most two proof symbols regardless of instance size.
+Fix distinct colors $a,b\in C$. The real opened-color transcript is
 
-**Theorem 5.2 (local checks $=$ global witness — pcp\_accepts\_all\_iff\_proper).** *For all $E$ and $c$,*
-$$\big(\forall e \in E,\ \mathrm{pcpVerifier}(c, e)\big) \;\iff\; \mathrm{IsProperColoring}(E, c).$$
+$$
+T_{a,b}=(\pi(a),\pi(b)),
+$$
 
-*Proof sketch.* Both sides unfold definitionally to $\forall e \in E,\ c(e_1) \neq c(e_2)$; the equivalence is an identity. $\square$
+where $\pi$ is uniform over the six permutations of $C$. Define the set
 
-The two-symbol local tests, quantified over all edges, are *exactly* the global NP-witness predicate. This honest definitional bridge is what makes "local checkability" equivalent to "global correctness" for this problem.
+$$
+D=\{(x,y)\in C^2:x\ne y\}.
+$$
 
-**Theorem 5.3 (perfect completeness — pcp\_perfect\_completeness).** *If $c$ is a proper colouring of $E$, then for every $\pi \in S_3$ the honest randomized proof $\pi \circ c$ is accepted on every edge: $\forall e \in E,\ \mathrm{pcpVerifier}(\pi \circ c, e)$.*
+There are $3\cdot 2=6$ elements of $D$. Define the simulator to sample a pair uniformly from $D$.
 
-*Proof sketch.* Combine Theorem 4.1 (properness preserved by $\pi$) with Theorem 5.2 (acceptance-on-all-edges equals properness). $\square$
+**Lemma 3.3 (Bijection between permutations and distinct ordered pairs).** For fixed $a\ne b$, the map
 
-**Theorem 5.4 (existence of a rejecting query — pcp\_soundness\_exists\_reject).** *If the graph is not 3-colourable (no proper colouring exists), then for every proof $c$ there is an edge $e \in E$ on which the verifier rejects: $\exists e \in E,\ \neg\,\mathrm{pcpVerifier}(c, e)$.*
+$$
+\Phi_{a,b}:\operatorname{Sym}(C)\to D,
+\qquad
+\Phi_{a,b}(\pi)=(\pi(a),\pi(b))
+$$
 
-*Proof sketch.* Non-3-colourability implies $c$ is not proper (else it would be a witness), so Theorem 4.2 yields a catching edge $e$ with $c(e_1) = c(e_2)$, i.e. $\neg\,\mathrm{pcpVerifier}(c, e)$. $\square$
+is a bijection.
 
-**Theorem 5.5 (soundness gap for proof-checking — pcp\_soundness\_gap).** *Let $|E| > 0$. If the graph is not 3-colourable, then against any proof $c$ the verifier rejects with probability at least $1/|E|$ over a uniform random edge:*
-$$\frac{1}{|E|} \;\le\; \frac{|\{e \in E : c(e_1) = c(e_2)\}|}{|E|}.$$
+**Proof sketch.** The image lies in $D$ by injectivity. Given any $(x,y)\in D$, there is exactly one permutation sending $a$ to $x$ and $b$ to $y$: the remaining source color must be sent to the remaining target color. Thus every pair has exactly one preimage. $\square$
 
-*Proof sketch.* Non-3-colourability makes every $c$ improper; apply Theorem 4.4. $\square$
+**Theorem 3.4 (Perfect honest-verifier zero knowledge for a challenged edge).** For every pair of distinct actual endpoint colors $a,b$, the real transcript distribution of $(\pi(a),\pi(b))$ is exactly the witness-independent simulator distribution uniform on $D$.
 
-**What is and isn't captured.** The bridge formally captures the *constant-query* aspect (Theorem 5.1), the equivalence of local checks with the global witness (Theorem 5.2), *perfect completeness* (Theorem 5.3), and a *positive soundness gap* (Theorems 5.4–5.5). What it does **not** capture — and what constitutes the genuine depth of the PCP theorem — is **gap amplification**: boosting the instance-dependent gap $1/|E|$ to a *universal constant* across all of NP, while keeping the query count constant. That amplification, together with the NP-hardness of the resulting constant-gap problem, is supplied by the full PCP machinery (gap-preserving reductions and proof composition) and is deliberately outside the present scope.
+Equivalently, for every $(x,y)\in C^2$,
 
----
+$$
+\Pr[(\pi(a),\pi(b))=(x,y)]
+=
+\begin{cases}
+1/6,&x\ne y,\\
+0,&x=y.
+\end{cases}
+$$
 
-## 6. Algorithms
+**Proof sketch.** Uniform measure is preserved by a bijection. Lemma 3.3 maps the six equiprobable permutations bijectively to the six distinct ordered pairs, so each pair in $D$ occurs with probability $1/6$. The resulting law does not depend on $a$ or $b$ beyond their being distinct, and is exactly the simulator law. $\square$
 
-We summarize the procedures implied by the formal development; full type-hinted implementations appear in the accompanying demonstration code.
+The theorem shows perfect, not approximate, distributional equality. It is honest-verifier zero knowledge because the challenge behavior and the view under study follow the specified protocol. Extending the statement to arbitrary verifier strategies generally requires simulation with rewinding or another extraction of the challenge distribution.
 
-**Algorithm A (Proper-colouring verification / local check).** Given $E$ and $c$, return *accept* iff $c(e_1) \neq c(e_2)$ for all $e \in E$. Complexity $O(|E|)$ for the global check; the *single-round local check* is $O(1)$, reading two symbols. This realizes Definitions 3.1/5.1 and Theorem 5.2.
+### 3.5. Local soundness and repetition
 
-**Algorithm B (Honest prover round).** Sample $\pi \in S_3$ uniformly; on verifier challenge $e = (u,v)$, output $(\pi(c(u)), \pi(c(v)))$. By Theorem 4.1 the output is always a distinct pair. Complexity $O(1)$ per round after an $O(|V|)$ commitment.
+If an alleged coloring $c$ is improper, there exists an edge $(u,v)$ for which $c(u)=c(v)$. Every permutation preserves equality as well as inequality, so the prover cannot make this edge appear properly colored merely by renaming colors. If the verifier samples uniformly from a nonempty edge set, the rejection probability in one round is at least the fraction of monochromatic edges. If at least one edge is bad, this gives the elementary bound $1/|E|$. Repeating independent rounds decreases the probability of escaping detection.
 
-**Algorithm C (Soundness search / catching edge).** Given an improper $c$, scan $E$ to find an edge with $c(e_1) = c(e_2)$; such an edge exists by Theorem 4.2 and the catching fraction is $\ge 1/|E|$ by Theorem 4.4. Complexity $O(|E|)$.
+This argument does not by itself establish a constant soundness gap. A graph with many edges may have an alleged coloring with only one bad edge. Section 5 identifies the exact local theorem available without gap amplification.
 
-**Algorithm D (Perfect simulator for HVZK).** Without access to $c$, output a uniformly random element of $\mathrm{DistinctPairs}$. By Theorem 4.7 this matches the real view distribution exactly. Complexity $O(1)$.
+## 4. Polynomial Identity Testing for a Simplified QAP Verifier
 
-**Algorithm E (Soundness amplification).** Repeat Algorithm B/local-check over $m$ independent challenges; accept iff all rounds accept. Against an unsatisfiable instance the cheating probability is $\le (1 - 1/|E|)^m$; $m = \lceil |E|\,\ln(1/\varepsilon)\rceil$ suffices for error $\le \varepsilon$.
+### 4.1. Algebraic setting
 
----
+Let $F$ be a finite field, and let $F[x]$ be its polynomial ring. Suppose $t\in F[x]$ is a target polynomial encoding a family of constraints, $p\in F[x]$ is a polynomial derived from a claimed computation, and $h\in F[x]$ is a claimed quotient. The intended identity is
+
+$$
+p=ht.
+$$
+
+A simplified verifier samples $s\in F$ and accepts if
+
+$$
+p(s)=h(s)t(s).
+$$
+
+Define the discrepancy polynomial
+
+$$
+q=p-ht.
+$$
+
+The verifier accepts precisely when $q(s)=0$.
+
+### 4.2. The root bound
+
+**Lemma 4.1 (Polynomial root bound).** If $q\in F[x]$ is nonzero, then the number of distinct roots of $q$ in $F$ is at most $\deg q$.
+
+**Proof sketch.** Proceed by induction on the degree. A degree-zero nonzero polynomial has no roots. If $q(a)=0$, the factor theorem gives $q=(x-a)r$ with $\deg r=\deg q-1$. Every other root of $q$ is a root of $r$, so induction bounds the total by $1+\deg r=\deg q$. $\square$
+
+### 4.3. Soundness
+
+**Theorem 4.2 (Random-point soundness).** Let $p,h,t\in F[x]$ and suppose $p\ne ht$. Then
+
+$$
+\left|\{s\in F:p(s)=h(s)t(s)\}\right|
+\le \deg(p-ht).
+$$
+
+**Proof sketch.** Since $p\ne ht$, the discrepancy $q=p-ht$ is nonzero. Passing points are exactly roots of $q$. Lemma 4.1 bounds their number by $\deg q$. $\square$
+
+**Corollary 4.3 (Uniform false-acceptance bound).** If $s$ is sampled uniformly from $F$ and $p\ne ht$, then
+
+$$
+\Pr[p(s)=h(s)t(s)]
+\le
+\frac{\deg(p-ht)}{|F|}.
+$$
+
+When the degree exceeds $|F|$, the bound should of course be combined with the trivial probability bound $1$, giving $\min(1,\deg(q)/|F|)$.
+
+### 4.4. Knowledge-soundness form
+
+**Theorem 4.4 (Too many passing points force the identity).** If
+
+$$
+\deg(p-ht)
+<
+\left|\{s\in F:p(s)=h(s)t(s)\}\right|,
+$$
+
+then $p=ht$.
+
+**Proof sketch.** Assume instead that $p\ne ht$. Theorem 4.2 would bound the number of passing points by $\deg(p-ht)$, contradicting the strict inequality. Therefore the discrepancy is zero and $p=ht$. $\square$
+
+The term “knowledge-soundness form” here refers to the fact that sufficiently extensive successful evaluation behavior forces the claimed algebraic relation. A complete cryptographic knowledge argument would additionally specify an adversary model and an extractor for a witness.
+
+### 4.5. Numerical example
+
+Work over the prime field $F_{101}$. Let
+
+$$
+t(x)=x^2+1,
+\qquad
+h(x)=3x+2,
+$$
+
+and define a false claim
+
+$$
+p(x)=h(x)t(x)+x(x-1)(x-2).
+$$
+
+Then
+
+$$
+q(x)=p(x)-h(x)t(x)=x(x-1)(x-2).
+$$
+
+The degree is $3$, and the passing points are exactly $0$, $1$, and $2$. Thus the false identity passes at $3$ of the $101$ field points, meeting the root bound sharply. Its false-acceptance probability under a uniform challenge is $3/101$.
+
+By contrast, if $p=ht$, then $q=0$ and every point passes, expressing perfect completeness of the identity test.
+
+## 5. The Two-Query PCP Bridge
+
+### 5.1. Proof oracle and local verifier
+
+Represent an alleged graph coloring as an oracle string indexed by vertices:
+
+$$
+\Pi:V\to C.
+$$
+
+For an edge $e=(u,v)$, define the query set
+
+$$
+Q(e)=\{u,v\}.
+$$
+
+If $u=v$, this set has one element; otherwise it has two. The local verifier reads $\Pi(u)$ and $\Pi(v)$ and accepts when they differ.
+
+**Theorem 5.1 (Two-query locality).** For every edge $e$,
+
+$$
+|Q(e)|\le 2.
+$$
+
+This bound is independent of $|V|$ and $|E|$.
+
+**Proof sketch.** The query set is formed from the two endpoints of the edge. A set generated by two elements has cardinality at most two. $\square$
+
+### 5.2. Soundness on non-three-colorable graphs
+
+**Theorem 5.2 (Existence of a rejecting local query).** Suppose $G=(V,E)$ is not three-colorable. Then for every alleged proof oracle $\Pi:V\to C$, there exists an edge $(u,v)\in E$ such that
+
+$$
+\Pi(u)=\Pi(v),
+$$
+
+and hence the two-query verifier rejects on that edge.
+
+**Proof sketch.** If every edge had differently colored endpoints under $\Pi$, then $\Pi$ would be a proper three-coloring of $G$, contradicting the assumption. Therefore some edge is monochromatic and rejects. $\square$
+
+This theorem is the deterministic soundness core of the graph-coloring PCP connection. It establishes constant query size, but it does not assert that a constant fraction of edges reject. If the verifier samples edges uniformly, the guaranteed rejection probability is only at least $1/|E|$ from this theorem alone. Gap amplification is needed to obtain a fixed lower bound independent of graph size.
+
+### 5.3. Relation to the broader PCP paradigm
+
+The PCP paradigm replaces full reading of a proof with randomized local inspection. The graph oracle above already exhibits locality: a global assignment is tested through two symbols. A full constant-gap construction further encodes the proof so that every false statement is far from every accepting oracle, allowing a constant number of random queries to reject with constant probability. Thus the two-query graph test is best viewed as a transparent base layer rather than a complete derivation of the full PCP theorem.
+
+## 6. Algorithms and Complexity
+
+### 6.1. Exact transcript enumeration
+
+For fixed distinct colors $a,b$, enumerate all six permutations of $C$. Count the ordered pairs $(\pi(a),\pi(b))$. The algorithm returns the exact probability mass function by dividing each count by $6$.
+
+The running time is $O(|C|!\,|C|)$ if permutations are generated explicitly, and storage is $O(|C|^2)$. For three colors these are constants. The output confirms that each distinct ordered pair has mass $1/6$ and each equal pair has mass $0$.
+
+### 6.2. Finite-field random-point audit
+
+Given coefficient lists for $p,h,t$ over a prime field $F_r$, evaluate the polynomials at every $s\in F_r$ using Horner's method. Record the passing points satisfying $p(s)=h(s)t(s)$. If $d$ is the maximum relevant degree, exhaustive auditing costs $O(rd)$ field operations and $O(r)$ output space in the worst case. A deployed verifier samples one point instead, using $O(d)$ field operations and constant auxiliary space.
+
+### 6.3. Local graph audit
+
+Given an edge list and an alleged coloring, scan edges until finding a monochromatic one. Each edge causes two oracle reads and one comparison. The worst-case running time is $O(|E|)$, storage beyond the input is $O(1)$, and each individual test has query complexity at most two.
 
 ## 7. Applications
 
-- **Zero-knowledge proofs for all of NP.** Because 3-colourability is NP-complete, the GMW protocol composes with NP-reductions to give zero-knowledge proofs for arbitrary NP statements — the foundational result of the area.
-- **Verifiable computation and zk-SNARKs.** Commit-challenge-open structure with a few cheap verifier queries is the template behind succinct non-interactive arguments (SNARKs) used in privacy-preserving ledgers and rollups, where a verifier checks a short certificate instead of re-executing a computation.
-- **Anonymous credentials and identification.** Sigma protocols of this shape let a party prove possession of a secret (a colouring, a discrete log, a signature) without disclosing it, enabling privacy-preserving authentication.
-- **Probabilistically checkable proofs and hardness of approximation.** The constant-query verifier viewpoint connects directly to the PCP theorem and, through it, to inapproximability results for optimization problems.
+### 7.1. Confidential constraint satisfaction
 
----
+Many scheduling, allocation, and routing problems can be represented as constraint systems. The graph protocol illustrates how a prover can expose only a randomized local relation rather than the underlying assignment. Practical systems need commitments whose hiding and binding properties match the adversarial model, but the combinatorial simulation theorem explains why random relabeling erases the semantic identity of colors.
 
-## 8. Discussion
+### 7.2. Outsourced computation
 
-The development isolates *what is easy and what is hard* with unusual clarity. Completeness, the soundness gap, and perfect HVZK for $k = 3$ are clean, finite, and fully provable from first principles — the HVZK statement reducing to a cardinality coincidence ($|S_3| = |\mathrm{DistinctPairs}| = 6$) and the simple fact that a permutation of three points fixing two fixes the third. The constant-query PCP reframing is likewise immediate. By contrast, the genuinely deep content — amplifying a $1/|E|$ gap to a universal constant across NP — is honestly flagged as outside scope, and is exactly the part the PCP theorem supplies.
+Polynomial identity tests allow a verifier to replace a large symbolic comparison with one random evaluation. When computation is arithmetized, a discrepancy between the claimed and correct relations becomes a nonzero polynomial. The root bound then transforms algebraic degree into a concrete soundness error. Large finite fields and controlled degrees make false acceptance rare.
 
-A subtlety worth emphasizing is the *perfection* of the zero-knowledge guarantee here: not statistical, not computational, but a literal equality of distributions, witnessed by an explicit bijection. This is a feature of the small alphabet; it degrades gracefully (to uniform-fibre arguments) as the number of colours grows.
+### 7.3. Private local verification
 
----
+The local oracle viewpoint separates the number of proof symbols read from the total proof length. If the queried symbols can be opened through hiding commitments while unopened symbols remain hidden, local verification can be composed with privacy. The graph simulator suggests the needed condition: the distribution of opened coordinates must itself be reproducible without the witness.
 
-## 9. Future Directions
+## 8. Discussion and Limitations
 
-1. **Perfect HVZK for $k$-colouring via a transitive symmetric-group action.** Conjecture: for every $k \ge 3$, the GMW protocol over $\mathbb{F}_k$ is perfectly HVZK. For $k > 3$ the map $\pi \mapsto (\pi(a), \pi(b))$ from $S_k$ is no longer a bijection onto distinct pairs ($k!$ vs $k(k-1)$), but the action of $S_k$ on ordered distinct pairs is transitive with uniform fibres of size $(k-2)!$, so the pushforward of the uniform measure on $S_k$ is still uniform on distinct pairs. The $k = 3$ case is the degenerate fibre-size-$1$ instance.
+Three forms of compression recur throughout the paper.
 
-2. **Soundness amplification by independent repetition.** Conjecture: running the verifier on $m$ independent edges drives the soundness error of a non-3-colourable instance from $1 - 1/|E|$ to $(1 - 1/|E|)^m < \varepsilon$ once $m \ge |E|\,\ln(1/\varepsilon)$. The single-edge rejecting set has density $\ge 1/|E|$, and independence makes per-round acceptance probabilities multiply.
+1. **Symmetry compression:** random color permutations remove witness-specific labels while preserving inequality.
+2. **Algebraic compression:** one evaluation summarizes a polynomial identity, with degree controlling ambiguity.
+3. **Locality compression:** one edge query reduces a global coloring claim to two symbols.
 
-3. **Gap-preserving reduction certifies a constant-query PCP for 3-colouring.** Conjecture: there is a polynomial-time, gap-preserving reduction from any constant-gap NP problem to graph 3-colouring such that the 2-query local verifier inherits a *universal constant* soundness gap (independent of $|E|$), formally instantiating the constant-query, constant-gap content of $\mathrm{NP} \subseteq \mathrm{PCP}(\mathrm{poly}, O(1))$. Constant query complexity is already achieved; the remaining difficulty is amplifying the gap to a constant while keeping queries constant.
+Each compression is protected by a rigidity principle. Injectivity of permutations protects properness. The root bound protects polynomial identity testing. The definition of proper coloring ensures that a globally false assignment has a local defect.
 
----
+The results should not be overextended. Perfect honest-verifier simulation does not automatically imply security against arbitrary malicious verifier strategies. The polynomial check does not itself provide witness hiding, succinct commitments, or extraction. The local graph theorem does not establish constant rejection probability. These are not defects in the stated results; they mark interfaces where additional constructions are required.
+
+The non-interactive definition also highlights a useful design rule: support correctness must accompany simulation. Privacy says the proof distribution can be generated without the witness; correctness says the honest distribution never emits a rejected proof. Neither condition entails the other.
+
+## 9. Future Work
+
+Several natural extensions follow from the established interfaces.
+
+First, malicious-verifier security for the graph protocol calls for a polynomial-time rewinding simulator and an explicit analysis of challenge probabilities. Second, the polynomial identity test can be made non-interactive through a hash-derived challenge, but its security then requires a random-oracle analysis with an explicit query loss. Third, adding random multiples of the target polynomial offers a route to QAP witness hiding through polynomial blinding. Fourth, gap amplification can strengthen existence of one rejecting edge into a graph-size-independent rejection probability. Finally, committed local oracles can combine PCP locality with hiding of unopened coordinates and simulation of opened coordinates.
 
 ## 10. Conclusion
 
-We have given a complete, self-contained formal account of the GMW zero-knowledge proof for graph 3-colourability — perfect completeness, a clean $1/|E|$ soundness gap, and *perfect* honest-verifier zero knowledge via an explicit $S_3 \cong \mathrm{DistinctPairs}$ bijection — and bridged it to the constant-query backbone of the PCP theorem through a 2-query local verifier. The result is a transparent map of the territory: the local, finite, perfectly analyzable structure of zero-knowledge proof-checking on one side, and the single deep ingredient of gap amplification on the other.
+Perfect simulation, random-point soundness, and constant-query verification are three facets of a common methodology. A verifier observes only a small projection of a large witness. Correctness follows because invalid global objects cannot make every such projection consistent: a bad coloring has a bad edge, and a false polynomial identity has only a bounded number of passing points. Privacy follows when the permitted projection has a distribution reproducible from public information alone.
+
+For graph three-coloring, uniform relabeling produces an exact witness-independent transcript distribution and preserves properness under every permutation. For simplified QAP verification, the discrepancy polynomial turns false acceptance into root counting. For local graph verification, every test reads at most two symbols, and false instances force at least one rejecting query. Together these results provide a precise mathematical foundation for verifiable computation in which local evidence can certify global structure without unnecessarily revealing the witness.

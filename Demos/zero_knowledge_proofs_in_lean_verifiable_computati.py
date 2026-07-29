@@ -1,213 +1,176 @@
-"""
-Numerical demonstrations for:
+#!/usr/bin/env python3
+"""Numerical demonstrations for zero-knowledge verifiable computation.
 
-    Zero-Knowledge Proofs in Lean: Verifiable Computation
-    GMW 3-colouring protocol + PCP-style constant-query local verifier
-
-Every result demonstrated here mirrors a formally verified theorem:
-
-  * completeness                     -> permutations preserve proper colourings
-  * soundness_prob / pcp_soundness_gap -> rejection probability >= 1/|E|
-  * hvzk_bijection                   -> pi |-> (pi(a), pi(b)) is a bijection S_3 -> distinct pairs
-                                        => real view == uniform over distinct pairs
-  * query_count_le_two               -> the local verifier reads <= 2 proof symbols
-  * pcp_accepts_all_iff_proper       -> local checks over all edges == global properness
-
-Self-contained: standard library only. Run with `python demo.py`.
+The script uses only the Python standard library.  It demonstrates:
+1. exact transcript equality for the three-color protocol;
+2. the polynomial root bound behind a random-point QAP check; and
+3. two-query local rejection of invalid graph colorings.
 """
 
 from __future__ import annotations
 
+from collections import Counter
+from fractions import Fraction
 from itertools import permutations
-from typing import Dict, List, Set, Tuple
+from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
-# A colouring assigns each vertex (an int) one of three colours {0, 1, 2}.
-Colour = int
-Vertex = int
-Edge = Tuple[Vertex, Vertex]
-Colouring = Dict[Vertex, Colour]
-Permutation = Tuple[int, int, int]  # pi where pi[i] is the image of colour i
+Color = int
+Transcript = Tuple[Color, Color]
+Edge = Tuple[int, int]
+Polynomial = Sequence[int]  # coefficients in increasing degree order
 
 
-# ---------------------------------------------------------------------------
-# Core definitions (mirrors IsProperColoring, pcpVerifier, queryPositions)
-# ---------------------------------------------------------------------------
-
-def is_proper_colouring(edges: List[Edge], c: Colouring) -> bool:
-    """True iff every edge has differently-coloured endpoints (Definition 2.1)."""
-    return all(c[u] != c[v] for (u, v) in edges)
-
-
-def pcp_verifier(c: Colouring, e: Edge) -> bool:
-    """Single-round local accept predicate: endpoints differ (Definition 5.1)."""
-    u, v = e
-    return c[u] != c[v]
+def transcript_distribution(a: Color, b: Color) -> Dict[Transcript, Fraction]:
+    """Return the exact opened-color distribution under all color permutations."""
+    if a not in range(3) or b not in range(3) or a == b:
+        raise ValueError("a and b must be distinct elements of {0, 1, 2}")
+    outcomes = [(perm[a], perm[b]) for perm in permutations(range(3))]
+    counts = Counter(outcomes)
+    return {pair: Fraction(counts.get(pair, 0), len(outcomes))
+            for pair in ((x, y) for x in range(3) for y in range(3))}
 
 
-def query_positions(e: Edge) -> Set[Vertex]:
-    """The proof positions read on challenge e (Definition 5.2)."""
-    return {e[0], e[1]}
+def simulator_distribution() -> Dict[Transcript, Fraction]:
+    """Return the uniform simulator law on ordered pairs of distinct colors."""
+    return {(x, y): Fraction(1, 6) if x != y else Fraction(0, 1)
+            for x in range(3) for y in range(3)}
 
 
-def recolour(c: Colouring, pi: Permutation) -> Colouring:
-    """Apply a colour permutation pi to a colouring: v |-> pi(c(v))."""
-    return {v: pi[col] for v, col in c.items()}
+def eval_poly(coefficients: Polynomial, x: int, prime: int) -> int:
+    """Evaluate a coefficient-list polynomial modulo a prime via Horner's rule."""
+    if prime < 2:
+        raise ValueError("prime must be at least 2")
+    value = 0
+    for coefficient in reversed(coefficients):
+        value = (value * x + coefficient) % prime
+    return value
 
 
-def all_perms_S3() -> List[Permutation]:
-    """The six elements of S_3 as image-tuples."""
-    return list(permutations((0, 1, 2)))
+def trim_poly(coefficients: Polynomial, prime: int) -> List[int]:
+    """Normalize coefficients modulo prime and remove trailing zero terms."""
+    result = [coefficient % prime for coefficient in coefficients]
+    while len(result) > 1 and result[-1] == 0:
+        result.pop()
+    return result or [0]
 
 
-def catching_edges(edges: List[Edge], c: Colouring) -> List[Edge]:
-    """Edges that 'catch' the prover: monochromatic endpoints (Catch(E, c))."""
-    return [(u, v) for (u, v) in edges if c[u] == c[v]]
+def add_poly(left: Polynomial, right: Polynomial, prime: int) -> List[int]:
+    """Add polynomials over the prime field."""
+    size = max(len(left), len(right))
+    result = [0] * size
+    for index in range(size):
+        result[index] = ((left[index] if index < len(left) else 0)
+                         + (right[index] if index < len(right) else 0)) % prime
+    return trim_poly(result, prime)
 
 
-# ---------------------------------------------------------------------------
-# Demo 1: Completeness -- permutations preserve properness
-# ---------------------------------------------------------------------------
-
-def demo_completeness() -> None:
-    print("=" * 70)
-    print("DEMO 1  Completeness: colour permutations preserve properness")
-    print("=" * 70)
-    # A 4-cycle C4: vertices 0-1-2-3-0, which IS 3-colourable (even bipartite).
-    edges: List[Edge] = [(0, 1), (1, 2), (2, 3), (3, 0)]
-    c: Colouring = {0: 0, 1: 1, 2: 0, 3: 1}
-    assert is_proper_colouring(edges, c)
-    print(f"Base proper colouring of C4: {c}")
-    all_proper = True
-    for pi in all_perms_S3():
-        cpi = recolour(c, pi)
-        proper = is_proper_colouring(edges, cpi)
-        all_proper &= proper
-        print(f"  pi = {pi}:  recoloured = {cpi}   proper? {proper}")
-    print(f"\n=> All 6 permutations preserve properness: {all_proper}")
-    print("   (Theorem 'completeness': honest prover always accepted.)\n")
+def sub_poly(left: Polynomial, right: Polynomial, prime: int) -> List[int]:
+    """Subtract polynomials over the prime field."""
+    size = max(len(left), len(right))
+    result = [0] * size
+    for index in range(size):
+        result[index] = ((left[index] if index < len(left) else 0)
+                         - (right[index] if index < len(right) else 0)) % prime
+    return trim_poly(result, prime)
 
 
-# ---------------------------------------------------------------------------
-# Demo 2: Soundness gap -- a non-3-colourable graph rejects every proof
-# ---------------------------------------------------------------------------
-
-def demo_soundness_gap() -> None:
-    print("=" * 70)
-    print("DEMO 2  Soundness gap: K4 is NOT 3-colourable; gap >= 1/|E|")
-    print("=" * 70)
-    # K4: complete graph on 4 vertices. Chromatic number 4 > 3 => not 3-colourable.
-    verts = [0, 1, 2, 3]
-    edges: List[Edge] = [(u, v) for u in verts for v in verts if u < v]
-    m = len(edges)
-    print(f"K4 has |E| = {m} edges.  Theoretical soundness gap >= 1/|E| = {1/m:.4f}")
-
-    # Brute force over ALL 3^4 = 81 colourings: each has >= 1 catching edge,
-    # and the empirical minimum catching fraction matches the 1/|E| bound.
-    min_fraction = 1.0
-    any_proper = False
-    total = 0
-    for code in range(3 ** len(verts)):
-        c = {}
-        x = code
-        for v in verts:
-            c[v] = x % 3
-            x //= 3
-        total += 1
-        if is_proper_colouring(edges, c):
-            any_proper = True
-        catches = catching_edges(edges, c)
-        frac = len(catches) / m
-        min_fraction = min(min_fraction, frac)
-    print(f"Enumerated {total} colourings.  Any proper colouring found? {any_proper}")
-    print(f"Minimum catching fraction over all proofs: {min_fraction:.4f}")
-    print(f"Lower bound 1/|E|:                          {1/m:.4f}")
-    print(f"=> Every proof is rejected with prob >= 1/|E|: {min_fraction >= 1/m}")
-    print("   (Theorems 'soundness_prob' / 'pcp_soundness_gap'.)\n")
+def mul_poly(left: Polynomial, right: Polynomial, prime: int) -> List[int]:
+    """Multiply polynomials over the prime field by coefficient convolution."""
+    result = [0] * (len(left) + len(right) - 1)
+    for i, a in enumerate(left):
+        for j, b in enumerate(right):
+            result[i + j] = (result[i + j] + a * b) % prime
+    return trim_poly(result, prime)
 
 
-# ---------------------------------------------------------------------------
-# Demo 3: Perfect HVZK -- pi |-> (pi(a), pi(b)) is a bijection S_3 -> distinct pairs
-# ---------------------------------------------------------------------------
-
-def distinct_pairs() -> List[Tuple[Colour, Colour]]:
-    return [(x, y) for x in range(3) for y in range(3) if x != y]
+def polynomial_degree(coefficients: Polynomial, prime: int) -> int:
+    """Return the normalized degree; the zero polynomial is assigned degree 0."""
+    return len(trim_poly(coefficients, prime)) - 1
 
 
-def demo_hvzk_bijection() -> None:
-    print("=" * 70)
-    print("DEMO 3  Perfect HVZK: real view == uniform over distinct pairs")
-    print("=" * 70)
-    dps = distinct_pairs()
-    print(f"|S_3| = {len(all_perms_S3())}   |DistinctPairs| = {len(dps)}   (both 6)")
-    for (a, b) in dps:  # for every possible true endpoint colour pair a != b
-        images = [(pi[a], pi[b]) for pi in all_perms_S3()]
-        is_bijection = sorted(images) == sorted(dps)
-        print(f"  true colours (a,b)=({a},{b}): view map onto distinct pairs? "
-              f"bijection={is_bijection}")
-    print("\nDistribution of the real view for a FIXED true pair (a,b)=(0,1):")
-    counts: Dict[Tuple[int, int], int] = {p: 0 for p in dps}
-    for pi in all_perms_S3():
-        counts[(pi[0], pi[1])] += 1
-    for p in dps:
-        print(f"  view {p}: probability {counts[p]}/6 = {counts[p]/6:.4f}")
-    print("=> Each distinct pair has probability exactly 1/6, independent of (a,b).")
-    print("   A simulator outputting a uniform distinct pair reproduces the view")
-    print("   PERFECTLY without the colouring. (Theorem 'hvzk_bijection'.)\n")
+def passing_points(
+    p: Polynomial, h: Polynomial, t: Polynomial, prime: int
+) -> List[int]:
+    """Enumerate field points where p(s) = h(s)t(s)."""
+    return [s for s in range(prime)
+            if eval_poly(p, s, prime)
+            == eval_poly(h, s, prime) * eval_poly(t, s, prime) % prime]
 
 
-# ---------------------------------------------------------------------------
-# Demo 4: Constant query complexity + local==global bridge
-# ---------------------------------------------------------------------------
-
-def demo_pcp_local_verifier() -> None:
-    print("=" * 70)
-    print("DEMO 4  PCP-style local verifier: <= 2 queries; local == global")
-    print("=" * 70)
-    # A larger graph: a path on 8 vertices (3-colourable).
-    edges: List[Edge] = [(i, i + 1) for i in range(7)]
-    print(f"Path graph on 8 vertices, |E| = {len(edges)}.")
-    max_q = max(len(query_positions(e)) for e in edges)
-    print(f"Maximum query positions read on any challenge: {max_q} (<= 2). "
-          f"(Theorem 'query_count_le_two')")
-
-    c: Colouring = {i: i % 2 for i in range(8)}  # 2-colouring is also a 3-colouring
-    accepts_all = all(pcp_verifier(c, e) for e in edges)
-    proper = is_proper_colouring(edges, c)
-    print(f"Verifier accepts on EVERY edge: {accepts_all}")
-    print(f"Colouring is globally proper:   {proper}")
-    print(f"=> local-checks-on-all-edges  <=>  global properness: "
-          f"{accepts_all == proper}")
-    print("   (Theorem 'pcp_accepts_all_iff_proper'.)\n")
+def qap_soundness_audit(
+    p: Polynomial, h: Polynomial, t: Polynomial, prime: int
+) -> Tuple[List[int], int, Fraction]:
+    """Return passing points, discrepancy degree, and exact acceptance rate."""
+    discrepancy = sub_poly(p, mul_poly(h, t, prime), prime)
+    points = passing_points(p, h, t, prime)
+    return points, polynomial_degree(discrepancy, prime), Fraction(len(points), prime)
 
 
-# ---------------------------------------------------------------------------
-# Demo 5: Amplification -- repetition crushes the cheating probability
-# ---------------------------------------------------------------------------
+def first_rejecting_edge(
+    edges: Iterable[Edge], coloring: Mapping[int, Color]
+) -> Optional[Edge]:
+    """Find a monochromatic edge, reading only its two endpoint symbols."""
+    for u, v in edges:
+        if coloring[u] == coloring[v]:
+            return (u, v)
+    return None
 
-def demo_amplification() -> None:
-    print("=" * 70)
-    print("DEMO 5  Soundness amplification by independent repetition")
-    print("=" * 70)
-    m = 6  # |E| for K4
-    gap = 1 / m
-    print(f"Single-round rejection >= {gap:.4f}; survival <= {1-gap:.4f} per round.")
-    target = 1e-6
-    rounds = 1
-    while (1 - gap) ** rounds > target:
-        rounds += 1
-    for r in (1, 5, 10, 25, 50, rounds):
-        print(f"  m = {r:3d} rounds: cheating probability <= {(1-gap)**r:.3e}")
-    print(f"=> {rounds} rounds suffice to push cheating probability below {target}.")
-    print("   (Future Direction 2; built on the formal 1/|E| gap.)\n")
+
+def rejecting_edges(edges: Iterable[Edge], coloring: Mapping[int, Color]) -> List[Edge]:
+    """List all local two-query tests rejected by an alleged coloring."""
+    return [(u, v) for u, v in edges if coloring[u] == coloring[v]]
+
+
+def demo_transcripts() -> None:
+    """Print exact real and simulated graph-protocol transcript laws."""
+    print("\n=== Perfect graph three-color transcript simulation ===")
+    simulated = simulator_distribution()
+    for a, b in ((0, 1), (0, 2), (1, 2)):
+        real = transcript_distribution(a, b)
+        assert real == simulated
+        nonzero = {pair: str(prob) for pair, prob in real.items() if prob}
+        print(f"actual endpoint colors ({a}, {b}): {nonzero}")
+    print("All witness choices give the same uniform law on six distinct pairs.")
+
+
+def demo_qap() -> None:
+    """Print a sharp degree-three random-point soundness example over F_101."""
+    print("\n=== Random-point polynomial soundness over F_101 ===")
+    prime = 101
+    t = [1, 0, 1]             # x^2 + 1
+    h = [2, 3]                # 3x + 2
+    discrepancy = [0, 2, -3, 1]  # x(x-1)(x-2)
+    p = add_poly(mul_poly(h, t, prime), discrepancy, prime)
+    points, degree, rate = qap_soundness_audit(p, h, t, prime)
+    assert points == [0, 1, 2]
+    assert len(points) <= degree
+    print(f"discrepancy degree: {degree}")
+    print(f"passing points: {points}")
+    print(f"false-acceptance rate: {rate} = {float(rate):.6f}")
+    print(f"rejection rate: {1 - rate} = {float(1 - rate):.6f}")
+
+
+def demo_local_verifier() -> None:
+    """Show local rejection for an alleged three-coloring of K4."""
+    print("\n=== Two-query local verifier on K4 ===")
+    vertices = range(4)
+    edges = [(u, v) for u in vertices for v in vertices if u < v]
+    alleged_coloring = {0: 0, 1: 1, 2: 2, 3: 0}
+    bad = rejecting_edges(edges, alleged_coloring)
+    first = first_rejecting_edge(edges, alleged_coloring)
+    assert first is not None and bad
+    print(f"alleged colors: {alleged_coloring}")
+    print(f"each edge test reads at most two symbols")
+    print(f"rejecting edges: {bad}")
+    print(f"first rejecting query: {first}")
+    print(f"uniform-edge rejection probability: {len(bad)}/{len(edges)}")
 
 
 def main() -> None:
-    demo_completeness()
-    demo_soundness_gap()
-    demo_hvzk_bijection()
-    demo_pcp_local_verifier()
-    demo_amplification()
-    print("All demonstrations completed successfully.")
+    """Run all demonstrations and their consistency assertions."""
+    demo_transcripts()
+    demo_qap()
+    demo_local_verifier()
 
 
 if __name__ == "__main__":

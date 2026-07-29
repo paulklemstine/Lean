@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d4bc25af",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\n## Scope achieved\n\n`HamiltonCoverLinearArboricityBridge.lean` formalizes a deterministic connector underlying the paper's probabilistic results. A cover by two-regular layers is i",
-      "quality_score": 0.65,
-      "sorry_count": 13,
-      "theorem_count": 9,
-      "timestamp": "2026-07-20T03:02:07",
-      "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
-    },
-    {
       "cycle_id": "b44b7357",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Recursive Types and Diagonal Hierarchies\n\n## 1. Positive Recursive Types and Transfinite Closure\n\n**Conjecture.** For reflective codes in which the self-bound variable occurs only",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-29T17:46:39",
       "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
+    },
+    {
+      "cycle_id": "2bb5622c",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nThe present development establishes the Reed–Solomon root-count, designed-distance, encoder-injectivity, and unique-decoding-radius theorems. It also restores the shared finite-af",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-07-29T17:46:44",
+      "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74002
     }
   ],
-  "last_updated": "2026-07-29T17:46:39",
+  "last_updated": "2026-07-29T17:46:44",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "939843de",
-        "quality": 0.71,
-        "theorems": 10,
-        "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of genera"
-      },
-      {
         "cycle_id": "c612ec41",
         "quality": 0.7,
         "theorems": 15,
@@ -3389,6 +3383,12 @@
         "quality": 0.7689999999999999,
         "theorems": 23,
         "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+      },
+      {
+        "cycle_id": "2bb5622c",
+        "quality": 0.686,
+        "theorems": 39,
+        "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
       }
     ],
     "Geometry": [
