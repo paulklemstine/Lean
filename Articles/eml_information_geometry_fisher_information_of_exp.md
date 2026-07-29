@@ -1,103 +1,203 @@
-# The Hidden Geometry of Neural Networks
+# The Invisible Parameter: What Normalization Erases in an Exp–Log Model
 
-## How Information Theory Reveals a Curved Universe Inside Machine Learning
+## A geometric promise meets an algebraic surprise
 
-Imagine training a neural network as navigating a mountain range. The standard approach — gradient descent — is like walking downhill by always stepping in the steepest direction you can see. It works, but it's far from optimal. Sometimes you zig-zag through narrow valleys. Sometimes you overshoot ridges. The problem isn't the compass; it's the map.
+Information geometry begins with an appealing idea: a statistical model is not merely a formula but a curved space. Each point in that space represents a probability distribution, and the Fisher information tells us how distinguishable nearby points are. Directions in which the distribution changes rapidly are long; directions that barely change it are short. This geometric viewpoint supports natural-gradient optimization, uncertainty quantification, and a precise language for whether model parameters really encode independent effects.
 
-What if the map itself were wrong?
+Consider a finite collection of positive sample values $x_1,\ldots,x_n$ and the two-parameter exp–log weights
 
-That's the revolutionary insight behind *information geometry*, a field that reveals neural networks don't live in the flat Euclidean world we assume. Their parameters inhabit a curved space — a Riemannian manifold — where distances aren't measured in the usual way. Getting this geometry right isn't just aesthetically satisfying; it's the key to training networks faster, more reliably, and with theoretical guarantees.
+$$
+w_i(a,b)=e^a\log(1+b x_i).
+$$
 
-## The Fisher Metric: Nature's Ruler for Probability
+At first sight the two parameters appear to do very different jobs. The parameter $a$ provides exponential scaling, while $b$ changes the logarithmic response to each sample. Because exponentials can be extremely sensitive, one might expect the $a$-direction to produce dramatic statistical motion and perhaps an interesting curved geometry.
 
-In 1922, the statistician Ronald Fisher introduced a quantity that measures how much information a random variable carries about an unknown parameter. His *Fisher information* turned out to be far more than a statistical tool — it is a *metric*, a way of measuring distances between probability distributions.
+Normalization changes the story completely.
 
-The crucial insight: two probability distributions might look close in parameter space but be vastly different in terms of the data they generate. The Fisher information metric captures this — it measures the *statistical distance* between distributions, not the geometric distance between their parameters.
+To turn the weights into probabilities, define the partition function
 
-Think of it this way. Two paint colors might have RGB values that differ by just a few units, but one is a brilliant crimson and the other a dull brown. The numbers are close; the visual impact is worlds apart. The Fisher metric measures the visual impact, not the numbers.
+$$
+Z(a,b)=\sum_{j=1}^n e^a\log(1+b x_j)
+$$
 
-## EML Networks: Where Exp Meets Log
+and probabilities
 
-A new class of neural network activation functions, called EML (Exponential-Minus-Log), combines the exponential and logarithmic functions in a single primitive operation: `eml(x, y) = exp(x) − log(y)`. This seemingly simple construction has remarkable mathematical properties.
+$$
+p_i(a,b)=\frac{e^a\log(1+b x_i)}{Z(a,b)}.
+$$
 
-When we embed EML networks into the framework of information geometry, something striking emerges. The log-partition function — the mathematical object that normalizes probability distributions in the EML family — has a beautiful structure:
+The central result is simple but decisive: the factor $e^a$ is common to every weight, so it disappears from every normalized probability. The supposedly two-dimensional family is statistically only one-dimensional.
 
-**Ψ(a, b) = a²/2 + b²/2 + eᵃ · log(|b| + 1)**
+## The cancellation theorem
 
-The first two terms are familiar from Gaussian statistics. But the third term — the product of an exponential in one parameter with a logarithm in the other — creates a rich geometric landscape that is neither flat nor uniformly curved.
+Write
 
-## A Universal Lower Bound
+$$
+A(b)=\sum_{j=1}^n \log(1+b x_j)
+$$
 
-One of the most surprising discoveries about the EML manifold is that its Fisher information in the exponential parameter is *uniformly bounded below by 1*. No matter what the parameters are, the Fisher information satisfies:
+for the total logarithmic activation. Factoring the common scale gives
 
-**I₁₁(a, b) = 1 + eᵃ · log(|b| + 1) ≥ 1**
+$$
+Z(a,b)=e^a A(b).
+$$
 
-This is mathematically remarkable. It means the EML manifold never becomes degenerate — there is always a positive "curvature floor" preventing the geometry from collapsing. In practical terms, natural gradient descent on an EML network can never encounter a region where the Fisher metric becomes singular, which is a common failure mode in other architectures.
+Whenever $A(b)\ne 0$, cancellation yields the **Scale-Cancellation Theorem**:
 
-This result was proved rigorously: the EML log-partition function is *strictly convex* in the exponential parameter, with second derivative at least 1 everywhere.
+$$
+p_i(a,b)=\frac{\log(1+b x_i)}{A(b)}.
+$$
 
-## The Pythagorean Theorem of Machine Learning
+In particular, for any two scale values $a_1$ and $a_2$,
 
-Perhaps the most elegant result connects information geometry to one of the oldest theorems in mathematics. The *generalized Pythagorean theorem* for Bregman divergence states that when three distributions θ, θ', θ'' are related by a "projection" (technically, when the dual connection angle term vanishes):
+$$
+p_i(a_1,b)=p_i(a_2,b)
+$$
 
-**D(θ, θ'') = D(θ, θ') + D(θ', θ'')**
+for every sample $i$. Changing $a$ may multiply every raw weight by a huge factor, but after normalization it moves the probability distribution by exactly zero.
 
-This is exactly the Pythagorean theorem, but on a curved space! The "right angle" condition is phrased in terms of the dual geometry — the Legendre transform of the log-partition function.
+This is a general lesson. Probability normalization is blind to common positive scale. If all scores in a race are doubled, their shares of the total remain unchanged. If every unnormalized likelihood is multiplied by the same constant, posterior proportions remain unchanged. An exponential can look powerful in an unnormalized formula while being statistically invisible.
 
-This theorem has immediate practical implications. The EM algorithm, one of the workhorses of statistical machine learning, converges precisely *because* of this Pythagorean structure. Each E-step and M-step is a projection onto a different submanifold, and the three-point identity guarantees that the objective decreases at each step.
+## When the formula really defines a probability distribution
 
-## Gibbs' Inequality: Convexity as a Deep Truth
+For the most natural regime, assume the sample space is nonempty, every $x_i>0$, and $b>0$. Then $b x_i>0$, hence $1+b x_i>1$, and therefore
 
-The non-negativity of KL divergence — Gibbs' inequality — is usually proved using Jensen's inequality applied to the logarithm. But information geometry reveals something deeper: it is a *geometric* statement about convexity.
+$$
+\log(1+b x_i)>0.
+$$
 
-The KL divergence between two distributions is the *Bregman divergence* of the log-partition function. Bregman divergence is non-negative if and only if the generating function is convex. So Gibbs' inequality is really a statement about the convexity of the log-partition function — a fact that has nothing to do with probability and everything to do with geometry.
+Every activation is positive, so their sum $A(b)$ is positive. It follows that each $p_i(a,b)>0$. Moreover,
 
-For EML models, we proved that the log-partition function is indeed strictly convex in the exponential parameter, giving an EML-specific strengthening of Gibbs' inequality: not only is the KL divergence non-negative, but it grows at least quadratically with parameter distance.
+$$
+\sum_{i=1}^n p_i(a,b)
+ =\frac{\sum_i\log(1+b x_i)}{A(b)}=1.
+$$
 
-## The Cramér-Rao Bound: The Speed Limit of Estimation
+Thus the model gives a strictly positive probability distribution under these assumptions. More generally, normalization still sums to one whenever $A(b)\ne0$, although positivity requires additional sign conditions.
 
-The Cramér-Rao bound is the information-theoretic speed limit on statistical estimation. It says: no unbiased estimator can have variance smaller than 1/I(θ), where I(θ) is the Fisher information.
+These elementary facts matter because information geometry applies to distributions, not arbitrary arrays of numbers. Positivity also makes logarithmic scores and Fisher information well behaved.
 
-For EML models, the uniform lower bound I₁₁ ≥ 1 translates into a *uniform upper bound* on estimation difficulty: the Cramér-Rao bound for the exponential parameter is always at most 1. This means EML models are inherently "easy to estimate" in the exponential direction — the geometry prevents the estimation problem from becoming ill-conditioned.
+## Identifiability: can data tell parameters apart?
 
-## Natural Gradient: Following the Curves
+A parameter is identifiable if different parameter values produce different observable distributions. Here the complete line
 
-Standard gradient descent treats all parameter directions equally. Natural gradient descent, introduced by Shun-ichi Amari, accounts for the curvature of the statistical manifold by premultiplying the gradient with the inverse Fisher information matrix:
+$$
+\{(a,b):a\in\mathbb R\}
+$$
 
-**∇̃L = I(θ)⁻¹ · ∇L**
+maps to one and the same distribution when $b$ is fixed. No sample, however large, can distinguish $a=0$ from $a=100$ using this normalized model. The failure is structural, not a shortage of data.
 
-This simple modification transforms the optimization landscape. Where Euclidean gradient descent sees a narrow, elongated valley and zig-zags down it, natural gradient descent sees a bowl and walks straight to the bottom.
+An analogy is a map printed with two coordinate labels that secretly describe the same direction. The paper may display a two-dimensional grid, but one coordinate adds no new location. Before measuring curvature on such a map, one must remove the duplicate coordinate.
 
-For EML networks, natural gradient descent has a special property: because I₁₁ ≥ 1, the natural gradient is always *smaller* than the Euclidean gradient in the exponential direction. This provides an automatic regularization effect — the Fisher metric naturally dampens the exponential sensitivity of EML parameters.
+The same point appears through the score. For a parameter $\theta$, the score at outcome $i$ is the derivative of $\log p_i$ with respect to $\theta$. Since $p_i$ is independent of $a$, its scale score is zero. Directly, the raw weight contributes logarithmic derivative $1$, while the partition function contributes the same derivative $1$. Hence
 
-## What This Means for AI
+$$
+S_a(i)=1-\frac{Z(a,b)}{Z(a,b)}=0
+$$
 
-The information geometry of EML networks is more than a mathematical curiosity. It provides:
+whenever normalization is defined.
 
-1. **Guaranteed non-degeneracy**: The uniform Fisher information lower bound means EML optimization never encounters singular points.
+The cancellation is therefore visible both globally, through equality of distributions, and infinitesimally, through the vanishing score.
 
-2. **Natural regularization**: The Fisher metric automatically scales gradients based on their statistical significance.
+## The Fisher matrix loses a dimension
 
-3. **Theoretical convergence bounds**: The Cramér-Rao bound and Pythagorean theorem give rigorous convergence guarantees.
+The Fisher information matrix is the expected outer product of score vectors. If $S_b(i)$ denotes any candidate score in the shape direction, then the two-coordinate Fisher matrix has entries
 
-4. **Dual structure**: The Legendre transform connects natural parameters to expectation parameters, enabling efficient algorithms.
+$$
+I_{jk}=\sum_{i=1}^n p_i S_j(i)S_k(i),
+\qquad (S_1,S_2)=(S_a,S_b).
+$$
 
-These results suggest that EML architectures may be fundamentally better-suited to optimization than standard ReLU or sigmoid networks, whose Fisher information can vanish or explode in certain parameter regions.
+Because $S_a(i)=0$, every entry involving the scale direction vanishes:
 
-## Looking Forward
+$$
+I_{aa}=0,\qquad I_{ab}=0,\qquad I_{ba}=0.
+$$
 
-The discovery that EML manifolds have a uniform Fisher information lower bound opens several fascinating directions:
+Thus the matrix necessarily has the form
 
-- **Higher-dimensional manifolds**: What happens when EML networks have hundreds of parameters? Does the uniform lower bound persist?
+$$
+I(a,b)=
+\begin{pmatrix}
+0&0\\
+0&I_{bb}
+\end{pmatrix}.
+$$
 
-- **Connection to hyperbolic geometry**: The exponential growth of Fisher information in the `a` parameter is reminiscent of hyperbolic geometry. Is there a formal connection?
+This conclusion does not depend on how the second score is chosen. The **Fisher Singularity Theorem** states that, whenever $A(b)\ne0$, the determinant of the two-parameter Fisher matrix is zero for every possible shape score:
 
-- **Tropical geometry bridge**: The "max-plus" structure that emerges from taking limits of EML operations has deep connections to tropical algebraic geometry. Can information geometry bridge these worlds?
+$$
+\det I(a,b)=0.
+$$
 
-- **Quantum information geometry**: Quantum statistical manifolds have a richer structure (the SLD Fisher information, the Kubo-Mori metric). What is the quantum analog of the EML manifold?
+There is an equally geometric formulation. For the nonzero parameter-space vector $v=(1,0)$,
 
-The mathematics of curved spaces, developed by Riemann in the 19th century, is finding a new home in the 21st century — inside the neural networks that are reshaping our world. The geometry that Einstein used to describe gravity may hold the key to understanding intelligence.
+$$
+v^{\mathsf T}I(a,b)v=0.
+$$
 
----
+A positive-definite metric must assign positive squared length to every nonzero vector. The Fisher form fails that test. It is positive semidefinite at best, with an entire null direction corresponding to changes in $a$.
 
-*This article describes mathematical research establishing the information-geometric foundations of EML (Exponential-Minus-Log) neural networks, including rigorous proofs of Fisher metric positivity, the generalized Pythagorean theorem, and the Cramér-Rao bound for EML statistical manifolds.*
+## Why there is no two-dimensional hyperbolic geometry here
+
+Hyperbolic geometry requires a genuine nondegenerate metric. Gaussian curvature, Levi–Civita geodesics, and metric natural gradients all presume that lengths and angles are defined in every tangent direction. A singular matrix cannot be inverted to form the usual natural-gradient update, and it does not determine a two-dimensional Riemannian geometry.
+
+Consequently, this normalized single-neuron family cannot support a nondegenerate two-dimensional Hessian metric or a two-dimensional constant-negative-curvature geometry in the coordinates $(a,b)$. This does not prove that every exp–log model lacks interesting geometry. It shows that this particular parameterization contains a gauge-like redundancy that must be addressed first.
+
+The distinction is important. Exponential sensitivity of raw outputs does not imply negative curvature of normalized probabilities. Curvature is a property of how distributions vary, and in the $a$-direction these distributions do not vary at all.
+
+## Repairing the model
+
+There are several principled ways forward.
+
+The simplest is to remove $a$ and study the one-parameter family indexed by $b$. Its Fisher information is a scalar, and it is positive precisely when the $b$-score is not almost surely constant under the model. This is an identifiable curve of distributions rather than a degenerate surface.
+
+A second option is to make the exponential sample-dependent, for example
+
+$$
+w_i(a,b)=\exp(a g_1(x_i))\log(1+b g_2(x_i)).
+$$
+
+Unless $g_1$ is constant across samples, the factor involving $a$ can no longer be pulled out of the partition function. Both parameters may then influence relative probabilities. The resulting Fisher matrix is a covariance matrix of the two scores, and its determinant is positive exactly when the centered scores are linearly independent in the weighted squared-integrable space.
+
+A third option is conceptual: declare parameter pairs equivalent whenever they induce the same normalized distribution, then pass to the quotient space. In the present model, all values of $a$ at fixed $b$ belong to one equivalence class. Geometry should live on the space of these classes, not on the redundant coordinate plane.
+
+Only after identifiability is established should one ask whether a corrected model is Hessian, dually flat, projectively flat, or negatively curved. These are separate geometric properties, not automatic consequences of an exponential appearing in a formula.
+
+## A practical diagnostic for model builders
+
+The exp–log example suggests a short audit that can save substantial effort:
+
+1. Write the unnormalized weights explicitly.
+2. Factor the partition function before differentiating.
+3. Check whether any parameter occurs only as a common multiplier.
+4. Simplify the normalized probabilities.
+5. Compute scores and search for linear dependencies.
+6. Test the Fisher matrix for null vectors before inverting it or computing curvature.
+
+This audit applies far beyond exp–log networks. Mixture models, energy-based models, softmax classifiers, attention mechanisms, and Bayesian likelihoods all contain normalization. In each setting, a common offset or scale can become an unobservable gauge degree of freedom.
+
+## A small example with a large dynamic range
+
+Take four sample values $x=(0.5,1,2,4)$ and choose $b=0.8$. Their logarithmic activations are
+
+$$
+(\log 1.4,\log 1.8,\log 2.6,\log 4.2),
+$$
+
+which normalize to probabilities of approximately
+
+$$
+(0.1015,0.1773,0.2883,0.4329).
+$$
+
+Now let $a$ range from $-20$ to $20$. The total raw mass grows from about $6.8\times10^{-9}$ to $1.6\times10^9$, a change of more than seventeen orders of magnitude. Yet the four probabilities above do not change. This contrast captures the whole phenomenon: numerical magnitude and statistical information are different things.
+
+In practical software, the cancellation is also a stability improvement. Computing $e^a$ needlessly can underflow for very negative $a$ or overflow for very positive $a$. Evaluating the reduced expression directly avoids both hazards. The structural analysis therefore improves not only interpretation but also numerical design.
+
+## Geometry begins after redundancy ends
+
+Information geometry can illuminate how learning systems respond to perturbations, but it measures changes in distributions rather than changes in arbitrary intermediate quantities. The first geometric question is consequently not “What is the curvature?” but “Which parameter directions are observable?”
+
+The broader message is constructive. A singular Fisher matrix is not merely a failed calculation; it reveals how the model should be redesigned. Here it says that the exponential scale is not a statistical feature at all. Once that invisible parameter is removed, moved inside a sample-dependent term, or quotiented away, the genuine geometry can begin.
+That order of operations matters in both theory and practice.

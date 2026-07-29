@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7b875dce",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. Cycle-exchange theorem for symmetric tropical permanents\n\nFor every finite symmetric max-plus matrix, principal tropical permanents satisfy the two-set exchange inequality u",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-25T19:42:26",
-      "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
-    },
-    {
       "cycle_id": "0d06265a",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## What this phase establishes\n\n`Catalog/Applications/EMLCategory/FiniteTemplateObstruction.lean` gives an intensional model of finite EML programs. It verifies semantic substitut",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-29T22:22:57",
       "title": "Inverse Stereographic Renormalization Group"
+    },
+    {
+      "cycle_id": "d4d2267f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThe unrestricted Rota basis conjecture remains open. The following five statements\nare concrete, falsifiable extensions of the definitions and small-rank results in\n`Catalog/Combi",
+      "quality_score": 0.73176,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-29T23:22:26",
+      "title": "Rota's Basis Conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2f321176",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Arithmetic Coherence Transitions\n\nThe conjectures below are ranked by expected scientific impact. Each proposal separates a measurable arithmetic statistic from the choice of a ph",
-      "quality_score": 0.7,
-      "sorry_count": 1,
-      "theorem_count": 7,
-      "timestamp": "2026-07-20T20:48:31",
-      "title": "Speculative: Mathematics as a Phase Transition"
-    },
     {
       "cycle_id": "1a27f9f3",
       "domain": "Combinatorics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 66,
       "timestamp": "2026-07-29T23:21:28",
       "title": "ArXiv paper: On lower bounds for canonical heights of the map $φ(X,Y)=(Y,X+Y^D+b)$"
+    },
+    {
+      "cycle_id": "d4d2267f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThe unrestricted Rota basis conjecture remains open. The following five statements\nare concrete, falsifiable extensions of the definitions and small-rank results in\n`Catalog/Combi",
+      "quality_score": 0.73176,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-29T23:22:26",
+      "title": "Rota's Basis Conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7708899999999999
     }
   ],
-  "last_updated": "2026-07-29T23:21:28",
+  "last_updated": "2026-07-29T23:22:26",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "d1a99009",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
-      },
-      {
         "cycle_id": "0cd9c194",
         "quality": 0.69,
         "theorems": 5,
@@ -3265,6 +3259,12 @@
         "quality": 0.7628999999999999,
         "theorems": 18,
         "title": "Frankl's Union-Closed Conjecture: Partial Results"
+      },
+      {
+        "cycle_id": "d4d2267f",
+        "quality": 0.73176,
+        "theorems": 4,
+        "title": "Rota's Basis Conjecture"
       }
     ],
     "Computation": [
