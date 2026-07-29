@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d0cb2642",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n1. **Joint distributions and correlated cards.**  The expected payoff of additive unit bets depends only on marginals.  Formalize a finite probability space and prove this margina",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-20T20:48:21",
-      "title": "Deepening: Godel's Casino: Incomplete but Winnable Games"
-    },
-    {
       "cycle_id": "4505be0f",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n## 1. Sharp remainder bounds for arbitrary observation windows\n\n**Conjecture.** Let a periodic Born-probability sequence have period `k`. For every observation length `N`, its Ces",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-29T22:22:57",
       "title": "Inverse Stereographic Renormalization Group"
+    },
+    {
+      "cycle_id": "42b8568d",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nThe completed Lean development establishes an exact finite BB84 core rather than claiming a composable-security theorem beyond the definitions currently formalized. In particular,",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 36,
+      "timestamp": "2026-07-29T23:21:22",
+      "title": "Quantum Key Distribution: BB84 Security Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7708899999999999
     }
   ],
-  "last_updated": "2026-07-29T22:22:57",
+  "last_updated": "2026-07-29T23:21:22",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "ec11492d",
-        "quality": 0.68,
-        "theorems": 8,
-        "title": "This development formalizes the finite coordinate core of Curtin's *Generalizati"
-      },
-      {
         "cycle_id": "d05d57b6",
         "quality": 0.68,
         "theorems": 21,
@@ -3389,6 +3383,12 @@
         "quality": 0.74352,
         "theorems": 11,
         "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
+      },
+      {
+        "cycle_id": "42b8568d",
+        "quality": 0.686,
+        "theorems": 36,
+        "title": "Quantum Key Distribution: BB84 Security Proof"
       }
     ],
     "Geometry": [
