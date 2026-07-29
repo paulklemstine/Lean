@@ -1319,6 +1319,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle dff51e05 (Q=0.783), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: l",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_dff51e05_aa92a98b",
+    "priority_score": 0.8832099999999999,
+    "research_mode": "team",
+    "source_exp_id": "dff51e05",
+    "status": "available",
+    "timestamp": "2026-07-29T12:30:24.307178+00:00",
+    "title": "Deepening: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 545fa377 (Q=0.782), which proved 10 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_545fa377_06b84e6e",
+    "priority_score": 0.8815999999999998,
+    "research_mode": "team",
+    "source_exp_id": "545fa377",
+    "status": "available",
+    "timestamp": "2026-07-29T12:29:20.468595+00:00",
+    "title": "Deepening: Spectral Graph Theory Meets Network Robustness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
     "domains": [
       "NumberTheory",
@@ -2674,18 +2702,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Noncommutative Geometry as a Generalization of Topology"
   },
   {
-    "consumed_by_exp_id": "132832ee",
+    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
       "Logic"
     ],
     "id": "seed_357",
-    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -2857,6 +2884,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 5843d50f (Q=0.754), which proved 7 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_5843d50f_b1c85aec",
+    "priority_score": 0.8539499999999999,
+    "research_mode": "team",
+    "source_exp_id": "5843d50f",
+    "status": "available",
+    "timestamp": "2026-07-29T12:31:28.096564+00:00",
+    "title": "Deepening: Logic-Physics Bridge: Consistency of Physical Theories"
   },
   {
     "consumed_by_exp_id": "",
@@ -4005,22 +4046,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
   {
-    "consumed_by_exp_id": "5843d50f",
-    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "seed_301",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
     "domains": [
@@ -4440,23 +4465,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Cram\u00e9r's Conjecture on Prime Gaps"
-  },
-  {
-    "consumed_by_exp_id": "545fa377",
-    "description": "Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_044",
-    "phase": "A",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Spectral Graph Theory Meets Network Robustness"
   },
   {
     "consumed_by_exp_id": "",
@@ -5522,24 +5530,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
-  },
-  {
-    "consumed_by_exp_id": "dff51e05",
-    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
-    "domains": [
-      "Novelty",
-      "Geometry",
-      "Analysis",
-      "Speculative"
-    ],
-    "id": "seed_130",
-    "phase": "A",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
     "consumed_by_exp_id": "",
@@ -7548,6 +7538,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Spectral Graph Theory Meets Network Robustness\n\n## Formal results\n\n`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version of the proposed spectral certificate.\n\n1. **Exact spectral identity.** For a weighted two-node computation graph, the Dirichlet energy is exactly algebraic connectivity times variance in the unique disagreement mode.\n2. **Spectral-to-Lipschitz theorem.** If a scalar internal state satisfies\n   \\[\n   \\lambda\\,|h(x)-h(y)|^2 \\le G^2 |x-y|^2,\n   \\]\n   with \\(\\lambda>0\\), then its Lipschitz constant is at most \\(G/\\sqrt{\\lambda}\\).\n3. **Readout composition.** A readout with Lipschitz constant \\(K\\) gives an end-to-end bound \\(KG/\\sqrt{\\lambda}\\).\n4. **Certified radius.** At a point with positive classification margin \\(m\\), when \\(G,K>0\\), the positive decision is certified for every perturbation of magnitude strictly below\n   \\[\n   \\frac{m\\sqrt{\\lambda}}{KG}.\n   \\]\n\nThus algebraic connectivity contributes a square-root improvement to the certified radius under an explicit spectral state-gain inequality. The theorem does not confuse graph topology with the independent gain and margin assumptions needed to control the represented function.\n\n## Contrarian conjectures disproved\n\nTwo stronger, tempting formulations are false.\n\n- **\u201cConnectivity alone gives a positive robustness radius.\u201d** Disproved uniformly: for every proposed radius \\(R>0\\), the affine score \\(f(x)=R/2-x\\) has positive score at zero and is 1-Lipschitz, but reaches zero inside that radius. This counterexample works irrespective of the computation graph's connectivity.\n- **\u201cConnectivity alone upper-bounds the network Lipschitz constant.\u201d** Disproved uniformly: for every proposed nonnegative bound \\(B\\), the linear score \\(f(x)=(B+1)x\\) violates it. Graph topology cannot prevent arbitrarily large parameter scaling.\n\nThese disproofs identify the indispensable quantities omitted by the connectivity-only conjectures: a parameter/state gain bound and a positive output margin.\n\n## Computational evidence decision\n\nA separate computational-evidence artifact was not produced because the claims proved here are exact symbolic identities and uniform parametric counterexamples, rather than a finite or asymptotic conjecture inferred from a numerical sequence. The counterexamples cover every positive candidate radius and every nonnegative candidate Lipschitz bound; sampling small cases would be strictly weaker. There is consequently no associated integer sequence or meaningful OEIS query. The two-node spectral calculation is formalized exactly in Lean, avoiding floating-point eigensolver evidence.\n\n## Future directions\n\n1. Replace the scalar `SpectralStateBound` assumption by a theorem derived from a finite graph Laplacian, its Rayleigh quotient, and orthogonality to the constant mode.\n2. Generalize scalar inputs, states, and scores to finite-dimensional Euclidean spaces and operator norms.\n3. Derive state gain bounds compositionally from layer weight matrices, 1-Lipschitz activations, residual edges, and message-passing operators.\n4. Formalize multiclass certification using the gap between the winning logit and every competing logit.\n5. Separate normalized and unnormalized Laplacians and track degree dependence in the resulting certificates.\n6. Study whether graph rewiring that increases algebraic connectivity can worsen parameter gain enough to reduce the final certified radius; the proved formula shows this tradeoff must be controlled.\n7. Extend the deterministic result to node/edge deletion certificates using interlacing bounds for perturbed Laplacians.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0812",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "545fa377",
+    "status": "available",
+    "timestamp": "2026-07-29T12:29:16.324227+00:00",
+    "title": "`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version o"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Established result\n\nFor the split metric\n\n\\[\nds^2=\\frac{dx^2}{\\cosh^2y}+\\cosh^2x\\,dy^2,\n\\]\n\nthe computed Gaussian curvature is\n\n\\[\nK_G(x,y)=-\\cosh^2y-\\operatorname{sech}^2x\n +2\\operatorname{sech}^2x\\operatorname{sech}^2y.\n\\]\n\n`Catalog/Novelty/SplitGeometryCurvature.lean` proves that `K_G \u2264 0` everywhere,\nthat `K_G = 0` exactly at the origin, and hence that `K_G < 0` at every other\npoint. In particular, the two diagonals are not flat phase boundaries. The\nsuggested field `sech\u00b2x - sech\u00b2y` is a useful antisymmetric phase field, but it\nis not the Gaussian curvature of this metric.\n\n## Next formal targets\n\n1. **Derive curvature directly from a metric tensor.** Package the diagonal\n   coefficients into Mathlib's smooth-manifold/Riemannian framework and prove\n   that the intrinsic curvature definition reduces to the closed formula used\n   here. This would connect the existing coordinate calculation to the fully\n   intrinsic curvature tensor.\n\n2. **Sectional/geodesic consequences of nonpositive curvature.** Establish\n   completeness or identify incomplete directions. If completeness holds,\n   develop consequences such as uniqueness of geodesics between points and\n   convexity of squared distance.\n\n3. **Geodesic equations.** Using the already computed Christoffel symbols,\n   formalize the coupled ODE\n   for affine geodesics. The assertion that geodesics are piecewise exponential\n   and trigonometric should first be tested: the smooth coefficients do not\n   change formula at the diagonals, so literal piecewise behavior is not\n   presently supported.\n\n4. **Diagonal-crossing conjecture.** The claim that every geodesic crosses the\n   diagonals at most twice needs a computational counterexample search before\n   formalization. Since the diagonals are not curvature phase boundaries, there\n   is no curvature-sign mechanism forcing such a bound.\n\n5. **Area measure and triangle area.** The volume density is\n   `sqrt(det g) = cosh x / cosh y`. Define measurable regions and integrate this\n   density over coordinate triangles first. A \u201ctriangle with one vertex in each\n   region\u201d is not uniquely specified; a meaningful theorem needs explicit\n   vertices and a choice between coordinate-edge and geodesic triangles.\n\n6. **Designing a genuine sign-changing metric.** Search among diagonal metrics\n   `E(y) dx\u00b2 + G(x) dy\u00b2` for choices whose Brioschi curvature has a prescribed\n   sign-changing zero set. The formal inequality methods in the current file can\n   then certify the resulting phase portrait.\n",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_0813",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dff51e05",
+    "status": "available",
+    "timestamp": "2026-07-29T12:30:20.287636+00:00",
+    "title": "For the split metric"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT\u2080` and an interpretation in arithmetic such that PA proves `Con(QFT\u2080) \u2192 Con(PA)`. This is falsified by any PA-model satisfying `Con(QFT\u2080) \u2227 \u00acCon(PA)`.\n\n2. **Minimal soundness for the negative independence half.** For recursively axiomatized extensions of Robinson arithmetic, determine whether 1-consistency is strictly stronger than necessary for proving `PA \u22ac \u00acCon(T)` under a fixed arithmetized interpretation. A separating theory would falsify any claimed equivalence.\n\n3. **Constructive physical countermodel.** Replace the empty-world witness separating mathematical from physical consistency by a nonempty, finitely presented operational semantics and a consistent theory whose constraints have no jointly realizable state. The conjecture fails if every consistent finite constraint set in that semantics has a realization.\n\n4. **Completeness boundary for physical semantics.** Characterize semantic conditions on a nonempty class of physical worlds under which `Consistent P T \u2194 PhysicallyConsistent M T` holds for every theory `T`. The proposed characterization is falsified by either a condition-satisfying incomplete semantics or a complete semantics violating one of the stated conditions.\n\n5. **Independence transfer along interpretations.** If theories `U` and `T` are mutually faithfully interpretable over PA and PA verifies preservation of falsum proofs in both directions, then `Con(U)` is PA-independent exactly when `Con(T)` is PA-independent. A single verified pair of interpretations for which only one consistency sentence is independent would refute this conjecture.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_0814",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5843d50f",
+    "status": "available",
+    "timestamp": "2026-07-29T12:31:24.540032+00:00",
+    "title": "1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -7838,7 +7873,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_192",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.72,
     "research_mode": "team",
     "source_exp_id": "seed",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "872b26ee",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n## 1. Length-preserving Collatz inversion under a truncated domain\n\nConjecture: Fix a bit length `b`, sample `n` uniformly from `[2^{b-1},2^b)`, and reveal an encoded value of `T^",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-25T09:21:01",
-      "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-    },
-    {
       "cycle_id": "928798aa",
       "domain": "Physics",
       "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -Δ - 2/r` on `L²(ℝ³)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-29T12:31:28",
       "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+    },
+    {
+      "cycle_id": "687f4282",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register defici",
+      "quality_score": 0.8022499999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-29T12:32:32",
+      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8797684d",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\n## Replace illustrative measurements with audited data\n\nThe formal comparison theorem reduces every fitness claim to a cross-product inequality. A substantive empirical continuati",
-      "quality_score": 0.67,
-      "sorry_count": 1,
-      "theorem_count": 20,
-      "timestamp": "2026-07-20T02:08:03",
-      "title": "Speculative: Mathematics as an Evolving Ecosystem"
-    },
     {
       "cycle_id": "b3f0d755",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-29T12:31:28",
       "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+    },
+    {
+      "cycle_id": "687f4282",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register defici",
+      "quality_score": 0.8022499999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-29T12:32:32",
+      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "afbe2d9b",
-      "domain": "MachineLearning",
-      "name": "cauchyWeight_pos",
-      "quality": 0.7438
-    },
-    {
-      "cycle_id": "afbe2d9b",
-      "domain": "MachineLearning",
-      "name": "unitSphere_dist_le_two",
-      "quality": 0.7438
-    },
-    {
-      "cycle_id": "ee1ae94f",
-      "domain": "NumberTheory",
-      "name": "galoisGroup_commutative",
-      "quality": 0.78664
-    },
     {
       "cycle_id": "ee1ae94f",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "physical_consistency_implies_Con_independent_of_PA",
       "quality": 0.7539499999999999
+    },
+    {
+      "cycle_id": "687f4282",
+      "domain": "Novelty",
+      "name": "for",
+      "quality": 0.8022499999999999
+    },
+    {
+      "cycle_id": "687f4282",
+      "domain": "Novelty",
+      "name": "spillGraph_adj",
+      "quality": 0.8022499999999999
+    },
+    {
+      "cycle_id": "687f4282",
+      "domain": "Novelty",
+      "name": "spillGraph_hasPEO",
+      "quality": 0.8022499999999999
     }
   ],
-  "last_updated": "2026-07-29T12:31:28",
+  "last_updated": "2026-07-29T12:32:32",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2153ae5a",
-        "quality": 0.64,
-        "theorems": 16,
-        "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-      },
-      {
         "cycle_id": "f90ec3a1",
         "quality": 0.69,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.78321,
         "theorems": 12,
         "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+      },
+      {
+        "cycle_id": "687f4282",
+        "quality": 0.8022499999999999,
+        "theorems": 14,
+        "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
       }
     ],
     "NumberTheory": [
