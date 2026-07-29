@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9f0b015d",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\n1. **Tropical normal forms.** Replace the current theorem-driven simplifier with a reflected syntax for finite min-plus polynomials, prove evaluation preservation for normalizatio",
-      "quality_score": 0.74,
-      "sorry_count": 1,
-      "theorem_count": 19,
-      "timestamp": "2026-07-25T15:27:37",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
-    {
       "cycle_id": "2ae125a9",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,…`, determine an exact union-of-intervals description of the sums formed from the first `n",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-29T17:48:52",
       "title": "Noether's Theorem: Symmetries and Conservation Laws"
+    },
+    {
+      "cycle_id": "e771e647",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n- Formalize primitive quadratic Dirichlet characters of arbitrary conductor and connect their periodic values to Mathlib's `DirichletCharacter` API.\n- Define generalized Bernoulli",
+      "quality_score": 0.73183,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-29T17:49:55",
+      "title": "ArXiv paper: On a character-twisted analogue of Schäffer's equation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e3542946",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## 1. Quantitative Complexity–Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T05:36:00",
-      "title": "Speculative: Computational Complexity as Physical Law"
-    },
     {
       "cycle_id": "e3542946",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-29T17:48:52",
       "title": "Noether's Theorem: Symmetries and Conservation Laws"
+    },
+    {
+      "cycle_id": "e771e647",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n- Formalize primitive quadratic Dirichlet characters of arbitrary conductor and connect their periodic values to Mathlib's `DirichletCharacter` API.\n- Define generalized Bernoulli",
+      "quality_score": 0.73183,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-29T17:49:55",
+      "title": "ArXiv paper: On a character-twisted analogue of Schäffer's equation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3e30c45d",
-      "domain": "Cryptography",
-      "name": "radicalTwoEval_on_curve",
-      "quality": 0.7689999999999999
-    },
-    {
-      "cycle_id": "3e30c45d",
-      "domain": "Cryptography",
-      "name": "radicalTwoEval_x_inversion",
-      "quality": 0.7689999999999999
-    },
-    {
-      "cycle_id": "e68f39b0",
-      "domain": "Logic",
-      "name": "produces",
-      "quality": 0.72847
-    },
     {
       "cycle_id": "e68f39b0",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "noether_first_theorem",
       "quality": 0.79196
+    },
+    {
+      "cycle_id": "e771e647",
+      "domain": "Pythagorean",
+      "name": "for",
+      "quality": 0.73183
+    },
+    {
+      "cycle_id": "e771e647",
+      "domain": "Pythagorean",
+      "name": "twistedPowerSum_succ",
+      "quality": 0.73183
+    },
+    {
+      "cycle_id": "e771e647",
+      "domain": "Pythagorean",
+      "name": "twistedPowerSum_translate",
+      "quality": 0.73183
     }
   ],
-  "last_updated": "2026-07-29T17:48:52",
+  "last_updated": "2026-07-29T17:49:55",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "dd6a308e",
-        "quality": 0.79,
-        "theorems": 11,
-        "title": "Deepening: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implement"
-      },
-      {
         "cycle_id": "3d25b5ad",
         "quality": 0.7,
         "theorems": 19,
@@ -3885,6 +3879,12 @@
         "quality": 0.76088,
         "theorems": 11,
         "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
+      },
+      {
+        "cycle_id": "e771e647",
+        "quality": 0.73183,
+        "theorems": 16,
+        "title": "ArXiv paper: On a character-twisted analogue of Schäffer's equation"
       }
     ],
     "Shared": [

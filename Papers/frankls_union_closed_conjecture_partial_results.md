@@ -1,49 +1,56 @@
-# Computational Evidence — Frankl's Union-Closed Conjecture (partial results)
+# Computational evidence: union-closed families on three points
 
-All computations below were run in Lean 4 / Mathlib (`#eval` / `decide` /
-`native_decide`) and directly informed the formal theorems in
-`FranklUnionClosed.lean`, `FranklSmallUniverse.lean`, `FranklLattice.lean`.
+## Encoding and exhaustive small-case calculation
 
-## 1. Singleton injection (centerpiece check)
-Family on `Fin 2`: `F = {∅, {0}, {0,1}}` (union-closed, contains `{0}`).
-- union-closed? `decide (∀ A ∈ F, ∀ B ∈ F, A ∪ B ∈ F)` → `true`.
-- `|F| = 3`, `|{A ∈ F : 0 ∈ A}| = 2`, and `2·2 = 4 ≥ 3`. Element `0` is abundant. ✓
-This confirmed the map `A ↦ insert 0 A` enlarges the "contains 0" side, the proof
-of `frankl_singleton`.
+A subset of a three-element universe was encoded by a 3-bit integer `0,…,7`,
+and a family by an 8-bit integer `0,…,255`. Binary union is bitwise OR. An
+exhaustive enumeration tested binary union-closure and element frequencies for
+all 256 families.
 
-## 2. Three-element universe (full search)
-Statement over all `F : Finset (Finset (Fin 3))` (256 families):
-```
-∀ F, union-closed F → (∃ A ∈ F, A.Nonempty) → ∃ x, |F| ≤ 2·|{A ∈ F : x ∈ A}|
-```
-- `native_decide`: succeeds (verifies the conjecture for every one of the 256
-  families). This is the computational core of `frankl_fin_three`.
-- plain kernel `decide`: hits the recursion limit — so the formal theorem instead
-  splits off the singleton case via `frankl_singleton` and runs the bounded check
-  `frankl_fin3_no_singleton` only on singleton-free families.
+| quantity | count |
+|---|---:|
+| all families on three points | 256 |
+| union-closed families | 122 |
+| union-closed families with a nonempty member | 120 |
+| preceding families containing no singleton | 22 |
+| counterexamples to Frankl's property | 0 |
 
-### Counterexample hunt (smallest-set heuristic)
-We tested the tempting heuristic "an element of a smallest nonempty member is
-abundant". On `Fin 3` families with smallest member of size 2 it FAILS in some
-cases (consistent with Sarvate–Renaud). This is *why* the 3-universe proof needs
-the global search rather than a one-line reduction.
+The distribution of the 122 union-closed families by number of members is:
 
-## 3. Reimer entropy bound — tightness on the cube
-Sum of sizes over all subsets of `Fin n`:
-| n | Σ_{A⊆Fin n} |A| | n·2^(n-1) | |𝒫| = 2^n | avg = Σ/2^n | n/2 |
-|---|------------------|-----------|-----------|-------------|-----|
-| 0 | 0                | 0         | 1         | 0           | 0   |
-| 1 | 1                | 1         | 2         | 0.5         | 0.5 |
-| 2 | 4                | 4         | 4         | 1.0         | 1.0 |
-| 3 | 12               | 12        | 8         | 1.5         | 1.5 |
-| 4 | 32               | 32        | 16        | 2.0         | 2.0 |
-This matches OEIS **A001787** (`n·2^(n-1)`: 0, 1, 4, 12, 32, 80, …). The average
-member size is exactly `n/2 = ½·log₂(2^n)`, i.e. Reimer's bound holds with
-equality on the Boolean cube — formalized as `reimer_tight_cube`.
+| family size | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| count | 1 | 8 | 19 | 27 | 28 | 22 | 12 | 4 | 1 |
 
-## Why this evidence is sufficient
-The infinite content (`frankl_singleton`, `sup_mem`, `reimer_tight_cube`,
-`sum_card_powerset`) is proved by genuine induction / injection / double counting,
-not by enumeration; the finite enumeration is used only where the mathematics is
-genuinely finite (the 3-point universe), and is discharged inside the kernel-checked
-`native_decide`.
+The formal proof in `Catalog/Novelty/FranklSmallUniverse.lean` kernel-checks the
+finite residual case with `decide`; the singleton case is proved structurally by
+an injection in `Catalog/Novelty/FranklUnionClosed.lean`.
+
+## Boolean cubes
+
+For the full powerset of an `n`-element universe, the first values of
+`|𝒫([n])|` and the total cardinality of all members are:
+
+| n | number of subsets | total member size |
+|---:|---:|---:|
+| 0 | 1 | 0 |
+| 1 | 2 | 1 |
+| 2 | 4 | 4 |
+| 3 | 8 | 12 |
+| 4 | 16 | 32 |
+| 5 | 32 | 80 |
+| 6 | 64 | 192 |
+
+These agree with `2^n` and `n·2^(n-1)`, respectively. The identities are proved
+symbolically in `Catalog/Novelty/FranklLattice.lean`.
+
+## OEIS search
+
+The powerset counts `1, 2, 4, 8, 16, …` are OEIS A000079 (powers of two). The
+union-closed-family count `122` is used only as a finite sanity check here; no
+OEIS identification is needed by any theorem.
+
+## Counterexample hunt
+
+The exhaustive three-point search found no counterexample. This computational
+observation is not used as unchecked evidence: the corresponding finite
+proposition is proved by kernel reduction in Lean.

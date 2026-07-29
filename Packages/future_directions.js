@@ -920,23 +920,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
   {
-    "consumed_by_exp_id": "e3e9c821",
-    "description": "Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
-    "domains": [
-      "Physics",
-      "Algebra",
-      "Analysis"
-    ],
-    "id": "fd_0681",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697825+00:00",
-    "title": "Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
     "domains": [
@@ -1123,19 +1106,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
-    "consumed_by_exp_id": "d1098480",
-    "description": "Building on cycle 0268a2b5 (Q=0.790), which proved 14 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map",
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
     "domains": [
-      "Shared"
+      "Physics"
     ],
-    "id": "push_0268a2b5_674fce5f",
-    "phase": "A",
-    "priority_score": 0.89,
+    "id": "push_e3e9c821_a543f97d",
+    "priority_score": 0.89196,
     "research_mode": "team",
-    "source_exp_id": "0268a2b5",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T18:48:03.438961+00:00",
-    "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
+    "source_exp_id": "e3e9c821",
+    "status": "available",
+    "timestamp": "2026-07-29T17:48:52.827384+00:00",
+    "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
   },
   {
     "consumed_by_exp_id": "",
@@ -2675,18 +2657,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Noncommutative Geometry as a Generalization of Topology"
   },
   {
-    "consumed_by_exp_id": "132832ee",
+    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
       "Logic"
     ],
     "id": "seed_357",
-    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -2976,23 +2957,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697840+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-  },
-  {
-    "consumed_by_exp_id": "2bb5622c",
-    "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
-    "domains": [
-      "Algebra",
-      "Computation",
-      "Cryptography"
-    ],
-    "id": "fd_0696",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697851+00:00",
-    "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
   {
     "consumed_by_exp_id": "",
@@ -6061,7 +6025,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean"
     ],
     "id": "fd_0177",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15090v1",
@@ -7286,6 +7250,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T12:21:03.386066+00:00",
     "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Hopf-map surjectivity with an explicit section on two charts.** For every `q : Fin 3 \u2192 \u211d` satisfying `\u2211 i, q i ^ 2 = 1`, prove that there exist `z w : \u2102` with `\u2016z\u2016 ^ 2 + \u2016w\u2016 ^ 2 = 1` and `FourthDimensionPlayground.hopf z w = q`. Construct formulas separately on the regions `q 2 \u2260 -1` and `q 2 \u2260 1`.\n\n2. **Freeness of the full circle action on every nonzero sphere.** Package unit complex phases as `Metric.sphere (0 : \u2102) 1`, package each radius-`r` three-sphere as a subtype of `\u2102 \u00d7 \u2102`, and prove that the induced group action is free for every `r > 0`: if a phase fixes one sphere point, then that phase equals `1`.\n\n3. **Smoothness and rank of the Hopf map.** Prove that `(fun p : \u2102 \u00d7 \u2102 => FourthDimensionPlayground.hopf p.1 p.2)` is `C\u221e`, then prove its derivative restricted to the tangent space of the unit three-sphere has real rank `2` at every point.\n\n4. **Clifford torus as exactly the Hopf equator preimage.** On the unit three-sphere, prove the set equality between `{p | \u2016p.1\u2016 = \u2016p.2\u2016}` and the preimage under `hopf` of `{q | q 2 = 0}`, and prove that the phase action on this set is free.\n\n5. **One-parameter fourth-dimensional rotations.** Define `R(t)(z,w) = (exp(t I) z, exp(t I) w)` and prove jointly smooth dependence on `(t,z,w)`, the flow law `R(s+t)=R(s)\u2218R(t)`, period `2\u03c0`, norm preservation, and pointwise Hopf invariance.\n",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0819",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d1098480",
+    "status": "available",
+    "timestamp": "2026-07-29T17:46:35.268251+00:00",
+    "title": "1. **Hopf-map surjectivity with an explicit section on two charts.** For every `"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe present development establishes the Reed\u2013Solomon root-count, designed-distance, encoder-injectivity, and unique-decoding-radius theorems. It also restores the shared finite-affine-space notions of polynomial zero count and evaluation-word Hamming weight used by the Reed\u2013Muller bridge files.\n\n1. **BCH bound.** Define cyclic codes as ideals in `F[X] / (X^n - 1)`, define consecutive roots in a splitting field, and lift the root-count infrastructure to the Vandermonde argument proving the BCH designed-distance bound.\n2. **Reed\u2013Solomon dimension and MDS equality.** Package degree-`< k` polynomials as a finite-dimensional vector space, prove that the encoder is linear with dimension `k`, and combine the lower bound with the Singleton bound to obtain minimum distance exactly `n-k+1`.\n3. **Reduced generalized Reed\u2013Muller codes.** Represent messages by reduced multivariate polynomials (each variable degree strictly below the field cardinality), then prove the exact generalized Reed\u2013Muller minimum-distance formula. This restriction is essential: unrestricted nonzero polynomials such as `X^q - X` can induce the zero evaluation word over `GF(q)`.\n4. **Syndromes and key equations.** Define syndrome sequences, error-locator and error-evaluator polynomials, then prove the key equation for errors of weight at most half the designed distance.\n5. **Berlekamp\u2013Massey.** Formalize the discrepancy update loop, its minimal-linear-recurrence invariant, termination, and recovery of the error-locator polynomial.\n6. **Concrete decoders.** Instantiate small finite fields and certify complete encode/corrupt/decode scenarios, including explicit behavior beyond the unique-decoding radius.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0820",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2bb5622c",
+    "status": "available",
+    "timestamp": "2026-07-29T17:46:40.681679+00:00",
+    "title": "The present development establishes the Reed\u2013Solomon root-count, designed-distan"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding simulator for the graph 3-colouring protocol and prove that, for every finite verifier strategy whose edge challenge has nonzero probability, its simulated and real transcript distributions are identical (or have an explicit negligible statistical-distance bound).\n\n2. **Fiat\u2013Shamir soundness in a random-oracle model.** Extend the simplified QAP protocol with a formally modelled random oracle and prove that replacing the verifier's random evaluation point by a hash-derived challenge preserves the existing degree-over-field-size soundness bound up to an explicit oracle-query loss.\n\n3. **QAP zero knowledge by polynomial blinding.** Add a blinding polynomial that is a random multiple of the target polynomial and prove both that QAP validity is preserved and that the verifier's opened value distribution is independent of the witness whenever the blinding coefficient is uniform over the field.\n\n4. **Constant-gap PCP for graph 3-colouring.** Construct a polynomial-size gap-amplified proof oracle for finite graph 3-colourability whose verifier makes a fixed constant number of queries and rejects every false instance with probability at least `1/100`, independent of the number of vertices and edges.\n\n5. **Composition of PCP locality with commitment hiding.** Define a committed local-oracle protocol and prove that perfect hiding of unopened coordinates plus perfect simulation of opened coordinates yields perfect honest-verifier zero knowledge for the full constant-query verifier transcript.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0821",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "132832ee",
+    "status": "available",
+    "timestamp": "2026-07-29T17:47:46.089780+00:00",
+    "title": "1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope of the formalization\n\n`Catalog/Physics/Noether/ContinuousSymmetries.lean` proves the differential core of Noether's first theorem for finite-dimensional real inner-product spaces. It derives conservation of the Noether charge from the Euler\u2013Lagrange momentum equation and the on-shell first-variation identity, then specializes the framework to time translations and spatial translations. Three-dimensional rotation, central-force angular momentum, Kepler energy, the Runge\u2013Lenz invariant, and its conic-orbit identity are also formalized.\n\n## Computational-evidence justification\n\nA separate numerical evidence stage was not used. The central claim is a symbolic implication between differentiability identities, valid over arbitrary real inner-product spaces, rather than a finite or discrete conjecture for which small cases or an OEIS search would provide meaningful support. The Kepler cancellations are exact algebraic identities and are checked by the Lean kernel in the proof file. This keeps the delivered artifacts within the requested `.lean` plus `FUTURE_DIRECTIONS.md` output format.\n\n## Extensions\n\n1. Derive `VariationalSymmetry.action_variation` directly from invariance of an integral action under a differentiable one-parameter group, including compactly supported variations and endpoint terms.\n2. Develop the tangent- and cotangent-bundle formulation, replacing the first-order trajectory interface with a Lagrangian `L : TQ \u2192 \u211d`, its fiber derivative, and the Euler\u2013Lagrange equations on manifolds.\n3. Construct the derivative rules for the cross product and inverse norm internally, so the Kepler hypotheses `hcross`, `henergy`, and `hrunge` follow directly from `q' = v` and `v' = -\u03bc q / \u2016q\u2016\u00b3`.\n4. Prove that the conic bridge yields the polar equation `r = \u2113/(1 + e cos \u03b8)`, then classify trajectories as ellipses, parabolas, or hyperbolas according to the conserved energy.\n5. Formalize the Poisson-bracket formulation: a Hamiltonian symmetry generator `J` satisfies `{J,H}=0`, and the Runge\u2013Lenz/angular-momentum brackets realize the hidden symmetry algebra of the bound Kepler problem.\n6. Generalize from one-dimensional symmetry generators to Lie-group actions and prove equivariance of the momentum map.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0822",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e3e9c821",
+    "status": "available",
+    "timestamp": "2026-07-29T17:48:48.924720+00:00",
+    "title": "`Catalog/Physics/Noether/ContinuousSymmetries.lean` proves the differential core"
   },
   {
     "consumed_by_exp_id": "",
