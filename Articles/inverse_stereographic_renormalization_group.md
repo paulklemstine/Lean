@@ -1,153 +1,173 @@
-# When the Universe Changes Its Point of View
+# Renormalization on a Circle: A Geometric Portrait of the One-Dimensional Ising Model
 
-## How mathematicians discovered that the deepest law of physics — renormalization — might be nothing more than geometry
+Renormalization is often described as a change of eyesight. Stand close to a material and every microscopic spin matters; step back, and clusters replace individuals. The renormalization group is the mathematics of that retreat. It asks which features survive as fine detail is erased, which couplings weaken, and which special states remain unchanged at every scale.
 
----
+For the zero-field one-dimensional Ising model, this grand idea becomes unusually exact. The model consists of spins arranged along a line, each preferring to align with its neighbors. If the dimensionless nearest-neighbor coupling is $K$, a particularly natural coordinate is
 
-There is a trick that mapmakers have used for centuries. Take a transparent globe, place a light at the south pole, and let it project the continents onto a flat sheet of paper held above. What you get is a *stereographic projection*: a way to flatten a sphere onto a plane. Greenland looks enormous, Africa gets squeezed, and the south pole itself — the point directly behind the light — maps to infinity.
+$$
+g=\tanh K.
+$$
 
-Now here is the surprising part. If you move the light to a different spot on the globe — say, to the equator — and project again, you get a completely different map. Same globe, same continents, different picture. The transformation between these two maps is a precise, elegant mathematical operation called a *Möbius transformation*.
+In the ferromagnetic finite-temperature regime, $0\leq g<1$. The value $g=0$ represents uncoupled spins, while values approaching $1$ represent increasingly strong alignment. When every other spin is summed out—an operation called decimation—the remaining spins again form an Ising chain, but with a new coupling. In the $g$ coordinate, the entire transformation is simply
 
-For centuries, this was a curiosity of geometry: beautiful, useful for cartography and complex analysis, but seemingly disconnected from the fundamental laws of nature. Until now.
+$$
+R(g)=g^2.
+$$
 
-A new body of mathematical work has revealed that this simple act — *changing where the light sits on the globe* — encodes the same structure as one of the most powerful ideas in theoretical physics: the renormalization group.
+That tiny formula contains the scale evolution of the model. It also admits a striking geometric reinterpretation: the real coupling line can be wrapped around a unit circle, and decimation then becomes an explicit rational motion on that circle.
 
----
+## Wrapping the coupling line around a circle
 
-## The Physicist's Nightmare
+Define the inverse stereographic map $S$ by
 
-In the mid-twentieth century, physicists building the theory of quantum electrodynamics ran into a wall. Their calculations kept producing infinities. The charge of an electron, the mass of a particle — fundamental quantities that should have been finite — came out as infinity plus a little bit more infinity.
+$$
+S(g)=\left(\frac{2g}{1+g^2},\frac{1-g^2}{1+g^2}\right).
+$$
 
-The solution, developed by Richard Feynman, Julian Schwinger, Sin-Itiro Tomonaga, and later systematized by Kenneth Wilson, was renormalization. The core idea is deceptively simple: physics looks different at different scales. Zoom in on a proton with increasing resolution, and the "effective" strength of the strong force changes. The equations describing how physical quantities change as you zoom in and out form the *renormalization group* (RG).
+Write its two coordinates as $S(g)=(x,y)$. A direct expansion gives
 
-The RG is not really a group in the strict mathematical sense — it is a semiflow, a one-way journey from short distances to long ones. But it has transformed physics. Wilson's version of the RG explained phase transitions — why water boils, why magnets lose their magnetism at a precise temperature — and earned him the Nobel Prize in 1982. Today, the RG underpins everything from particle physics to condensed matter to string theory.
+$$
+x^2+y^2
+=\frac{4g^2+(1-g^2)^2}{(1+g^2)^2}
+=\frac{1+2g^2+g^4}{(1+g^2)^2}
+=1.
+$$
 
-But despite its breathtaking success, the RG has always been somewhat mysterious. It works, spectacularly, but *why* does it work? Is there a deeper geometric principle hiding behind the equations?
+Thus every finite real coupling lands on the unit circle. At $g=0$, the image is the north pole $(0,1)$. At $g=1$, it is the point $(1,0)$. Negative couplings occupy the opposite semicircle, while arbitrarily large positive or negative couplings approach the missing south pole $(0,-1)$ from opposite sides. The unbounded line has become a compact geometric object with one point at infinity.
 
----
+This change of picture is more than decorative. Compactification places weak and strong coupling in one bounded scene. It also allows the renormalization step to be expressed without returning to the line.
 
-## A Globe, a Light, and a Coupling Constant
+Define a rational transformation $C$ of circle coordinates by
 
-Here is the new idea, reduced to its essence.
+$$
+C(x,y)=\left(\frac{x^2}{2-x^2},\frac{2y}{1+y^2}\right).
+$$
 
-Think of a physical system described by a single number — a *coupling constant* `g`. This might be the strength of an interaction, the temperature of a magnet, or the fine-structure constant. Now, instead of thinking of `g` as just a number on the real line, *compactify* it: wrap the real line into a circle using stereographic projection.
+The central result is the **Stereographic Conjugacy Theorem**:
 
-Every real number `g` maps to a unique point on the circle. The point at infinity — where your coupling "blows up" — becomes just another point on the circle. This is the deep advantage of compactification: it tames infinities by giving them a home.
+> For every real coupling $g$, applying Ising decimation and then wrapping the result onto the circle gives exactly the same point as first wrapping $g$ onto the circle and then applying $C$. In symbols,
+> $$
+> S(R(g))=C(S(g)).
+> $$
 
-Now here is the key move. The stereographic projection depends on a choice of *pole* — the point on the circle that maps to infinity. Different poles give different coordinate systems on the circle. Changing the pole from `a` to `b` generates a transformation on the coupling constant:
+The theorem says that $R$ and $C$ are two coordinate descriptions of the same dynamics. To see why, put
 
-> Map `g` to the circle using pole `a`, then read off the coordinates using pole `b`.
+$$
+x=\frac{2g}{1+g^2},\qquad y=\frac{1-g^2}{1+g^2}.
+$$
 
-This is a single mathematical operation: the *pole map* `M_a(g) = (ag + 1)/(g - a)`. By itself, this map is boring — it is an *involution*, meaning if you apply it twice, you get back where you started. It is like flipping a coin: flip twice, and nothing has changed.
+The first coordinate of $C(x,y)$ simplifies using
 
-But compose *two different* pole maps — first with pole `a`, then with pole `b` — and something remarkable happens. The result is a *Möbius transformation*:
+$$
+(1+g^2)^2-2g^2=1+g^4
+$$
 
-```
-F_{a,b}(g) = ((ab+1)g + (b-a)) / ((a-b)g + (ab+1))
-```
+to
 
-This is no longer trivial. It is a proper dynamical system acting on the coupling constant. And its properties mirror those of the renormalization group in striking ways.
+$$
+\frac{x^2}{2-x^2}=\frac{2g^2}{1+g^4}.
+$$
 
----
+The second simplifies to
 
-## The Theorem That Changes Everything
+$$
+\frac{2y}{1+y^2}=\frac{1-g^4}{1+g^4}.
+$$
 
-The central mathematical discovery is this: **for distinct poles `a ≠ b`, the two-pole composition `F_{a,b}` has no real fixed points.**
+Together these are precisely
 
-In physics, fixed points of the RG are called *critical points*. They correspond to phase transitions — the exact temperature where a magnet demagnetizes, the precise coupling where a theory becomes scale-invariant. Finding and classifying these fixed points is one of the most important problems in theoretical physics.
+$$
+S(g^2)=\left(\frac{2g^2}{1+g^4},\frac{1-g^4}{1+g^4}\right).
+$$
 
-The geometric version tells us something profound. The fixed-point equation for `F_{a,b}` reduces to:
+The denominators never vanish for real $g$, so the identity holds globally on the finite coupling line.
 
-```
-(a - b)(g² + 1) = 0
-```
+## Flow, fixed points, and a discrete beta observable
 
-Since `a ≠ b`, we need `g² + 1 = 0`. Over the real numbers, this has no solution — you cannot square a real number and get negative one. The fixed points live at `g = ±i`, in the complex plane.
+A beta function usually describes infinitesimal change with continuous scale. Here the transformation occurs in discrete steps, so it is more precise to define the one-step beta observable
 
-This is not a disappointment. It is a revelation. It means that:
+$$
+B(g)=R(g)-g=g^2-g.
+$$
 
-1. **Critical couplings are inherently projective** — they exist on the complexified projective line, not on the real line. This connects RG fixed points to the deep structure of complex geometry.
+The **Fixed-Coupling Theorem** states:
 
-2. **The dynamics are rotational** — since the discriminant of the fixed-point equation is `-4(a-b)² < 0`, the Möbius map is *elliptic*. It acts like a rotation on the projective line. The coupling does not flow to a fixed point; it orbits.
+> For a finite real coupling $g$, $B(g)=0$ if and only if $g=0$ or $g=1$.
 
-3. **Nontrivial dynamics arise from geometry alone** — no physics input is needed. Just the act of changing the observer's viewpoint (the pole) generates dynamical evolution.
+Indeed,
 
----
+$$
+B(g)=g(g-1),
+$$
 
-## The Derivative as a Beta Function
+so its only real zeros are $0$ and $1$. These are exactly the finite fixed points of $R$. In the physical interval $0\leq g<1$, only $g=0$ lies inside the finite-temperature regime; $g=1$ is its zero-temperature boundary.
 
-In physics, the *beta function* `β(g)` describes how a coupling constant changes with scale. At a fixed point `g*`, if `β'(g*) < 0`, the fixed point is stable (attractive); if `β'(g*) > 0`, it is unstable (repulsive). The value of `β'(g*)` determines the *critical exponents* — the universal numbers that characterize phase transitions.
+Between the fixed points, $0<g<1$ implies $g^2<g$, hence $B(g)<0$. Every decimation step moves the coupling toward $0$. The circle makes the same motion visible as a drift along the first quadrant toward the north pole. For example,
 
-The geometric analog is the derivative of `F_{a,b}`:
+$$
+0\mapsto0,\qquad
+\frac14\mapsto\frac1{16},\qquad
+\frac12\mapsto\frac14,\qquad
+\frac34\mapsto\frac9{16},\qquad
+1\mapsto1.
+$$
 
-```
-F'_{a,b}(g) = (1 + a²)(1 + b²) / ((a-b)g + (ab+1))²
-```
+These values show how quickly moderate couplings weaken. Starting at $g=1/2$, successive values are $1/2$, $1/4$, $1/16$, $1/256$, and so on. The formula suggests the general iterate $R^n(g)=g^{2^n}$, although the results established here concern the one-step map and its exact geometric conjugacy.
 
-This formula is exact. It has several remarkable properties:
+## Local sensitivity
 
-- **It is always positive**: `F' > 0` everywhere in the domain. This means the geometric RG is *orientation-preserving* — it never reverses the ordering of couplings.
+Renormalization is not only about where a point moves; it is also about how nearby points separate. Differentiating the update gives the **Linearized Update Theorem**:
 
-- **It factors as a product of Gaussian norms**: The numerator `(1+a²)(1+b²)` equals `|1+ai|² · |1+bi|²`, where `|z|²` is the norm of a Gaussian integer. This connects the RG to number theory.
+> At every real coupling $g$, the derivative of $R(g)=g^2$ is
+> $$
+> R'(g)=2g.
+> $$
 
-- **It provides an exact stability criterion**: At any coupling `g`, the derivative tells you whether the local dynamics is contracting (`F' < 1`), neutral (`F' = 1`), or expanding (`F' > 1`).
+The multiplier is $0$ at $g=0$ and $2$ at $g=1$. Thus the weak-coupling fixed point strongly contracts nearby perturbations, while the boundary fixed point repels perturbations when the full real coordinate is considered. Differentiating the discrete beta observable yields the companion result
 
----
+$$
+B'(g)=2g-1.
+$$
 
-## Energy Conservation and the Hamiltonian Bridge
+Consequently, $B$ decreases for $g<1/2$, is stationary at $g=1/2$, and increases for $g>1/2$. This derivative should not be confused with a continuous field-theoretic beta function: $B$ measures one finite decimation step, whereas a continuous beta function is an infinitesimal generator. The distinction matters whenever one compares formulas across renormalization schemes or coupling coordinates.
 
-The geometric RG connects to another pillar of physics: Hamiltonian mechanics. In a Hamiltonian system, energy is conserved. The mathematical statement is elegant: the derivative of the energy along a solution trajectory is zero.
+There is also a subtle geometric lesson in the phrase “derivative of the stereographic update.” The multiplier $2g$ belongs to the coupling coordinate $g$. On the circle, tangent vectors are rescaled by the chart. Conjugacy guarantees that the dynamics agree, but numerical derivatives in different coordinates transform by the chain rule. Geometry clarifies renormalization; it does not abolish coordinate dependence.
 
-The new framework shows that if an energy function `E` is *compatible* with the geometric RG — meaning `E(F_{a,b}(g)) = E(g)` — then energy conservation along physical trajectories automatically implies energy conservation along RG-transformed trajectories. This creates a bridge between:
+## A map you can see
 
-- **Symplectic mechanics**: the Hamiltonian structure preserving energy
-- **Renormalization**: the RG structure changing scale
-- **Conformal geometry**: the Möbius structure changing viewpoint
+Imagine marking a coupling on a horizontal number line and lifting that mark onto the circle. The formula for $S$ makes the lift continuous: as $g$ runs from $0$ to $1$, the point travels through the first quadrant from $(0,1)$ to $(1,0)$. Decimation replaces $g$ by $g^2$, which is smaller whenever $0<g<1$. The lifted point therefore reverses part of its arc and moves northward. Nothing discontinuous occurs, and no information is lost; applying $g=x/(1+y)$ recovers the original finite coupling from its circle point.
 
-The theorem is:
+This lets a single diagram tell several stories at once. Radial distance is irrelevant because all states lie on the same circle. Position along the arc records coupling strength. Fixed points become stationary landmarks. Local stability appears in the spacing of nearby trajectories. The north pole absorbs physical interior points, whereas the point $(1,0)$ remains fixed but sends a nearby point away under the next coarse-graining step.
 
-> If `g(t)` is a Hamiltonian trajectory with conserved energy `E`, and `E` is compatible with `F_{a,b}`, then `E(F_{a,b}(g(t))) = E(g(0))` for all time.
+The geometric map is also safe from coordinate singularities on the circle. Since $x^2\leq1$, its first denominator satisfies $2-x^2\geq1$; its second denominator satisfies $1+y^2\geq1$. The rational formulas therefore define the next circle point everywhere, including the south pole used to represent infinity. At that pole, $C(0,-1)=(0,-1)$, adding a compactified fixed point that is not a finite zero of $B(g)$. This distinction—finite coupling versus the point at infinity—is exactly why compactification is informative.
 
-This is not a metaphor. It is a mathematical theorem with a machine-verified proof.
+## From microscopic elimination to geometry
 
----
+The squaring law has a direct physical origin. For neighboring spins $\sigma_i$ and $\sigma_{i+1}$, each taking values $\pm1$, one may write the bond weight as
 
-## The Composition Law: A Hidden Group
+$$
+e^{K\sigma_i\sigma_{i+1}}=\cosh K\left(1+g\sigma_i\sigma_{i+1}\right).
+$$
 
-One of the most beautiful aspects of the geometric RG is its composition law. If you first change poles from `a` to `b`, then from `b` to `c`, the result is the same as changing directly from `a` to `c`:
+When an intermediate spin is summed over, terms odd in that spin cancel, while the product of the two adjacent bond couplings survives. Two identical bonds therefore produce the effective coordinate $g'=g\cdot g=g^2$. Stereography does not alter this physics. It packages the exact result into a bounded phase portrait where the coarse-graining trajectory can be followed without an unbounded axis.
 
-```
-F_{b,c} ∘ F_{a,b} = F_{a,c}
-```
+## Why this picture matters
 
-The intermediate pole `b` cancels. This means the set of geometric RG transformations forms a *group*, parameterized by pairs of poles. The group operation is simply: compose the Möbius maps, and the intermediate poles drop out.
+The one-dimensional Ising chain is a laboratory in which an ambitious geometric idea can be tested without approximation. Three facts fit together exactly:
 
-This has a practical consequence: a complicated sequence of RG steps — changing scale many times — collapses to a single transformation determined only by the initial and final poles. The path does not matter; only the endpoints do.
+1. the coupling update is $g\mapsto g^2$;
+2. inverse stereography sends every finite $g$ to the unit circle;
+3. the induced circle dynamics is the rational map
+   $$
+   (x,y)\mapsto\left(\frac{x^2}{2-x^2},\frac{2y}{1+y^2}\right).
+   $$
 
----
+This is a genuine bridge between coarse-graining and conformal geometry, but it is deliberately narrow. It does not establish that a perturbative beta function in four-dimensional $\phi^4$ theory is literally a derivative of stereographic projection. Such a claim would require a chosen dimension, regularization, subtraction scheme, coupling normalization, and continuous scale parameter. Beta functions change under reparametrization, so any comparison must include the relevant coordinate-change law.
 
-## What Comes Next
+What the circle supplies is a disciplined prototype. It suggests studying renormalization maps through compactifying charts, asking when changing stereographic poles produces a coherent family of Möbius transformations, and seeking local conjugacies near hyperbolic fixed points rather than demanding equality of coordinate-dependent expressions.
 
-This work opens several directions:
+The next mathematical steps are clear. One can prove the full iteration formula $R^n(g)=g^{2^n}$ and convergence to $0$ for $0\leq g<1$, then transport that convergence to the circle. One can derive $g'=g^2$ directly by summing over the eliminated spins. One can introduce a continuous semigroup and reserve the name beta function for its generator. Finally, one can let the stereographic pole vary and investigate the cocycle conditions needed for consistent scale evolution.
 
-**Can the 1D Ising model be matched?** The simplest exactly solvable statistical mechanics model has an RG map `T(K) = ½ ln(cosh(2K))`. Numerical tests show that the geometric RG cannot match this map near the trivial fixed point (where `T'(0) = 0` but `F'(g) > 0` always). But away from the fixed point, partial matching is possible. The question of whether a coordinate change can achieve exact conjugacy remains open.
+Renormalization began as the art of forgetting microscopic detail. In this model, forgetting has an unexpectedly elegant portrait: square a number on a line, or move rationally around a circle. The algebra and the geometry are not analogies. They are exactly the same motion viewed through different coordinates.
 
-**Higher dimensions.** The one-dimensional story is about Möbius transformations of the real line. But stereographic projection works in all dimensions: `ℝⁿ → Sⁿ`. The higher-dimensional pole-change maps would generate a much richer dynamics, potentially capturing multi-coupling RG flows.
-
-**Complex extension.** The fixed points at `g = ±i` suggest that the "true" arena for geometric RG is the Riemann sphere — the complex projective line. Complex Möbius transformations have a much richer classification (loxodromic, in addition to elliptic and hyperbolic), and could model a wider class of RG flows.
-
-**Connections to conformal field theory.** The Möbius group `PSL(2,ℝ)` is the symmetry group of conformal field theories in one dimension. The geometric RG operates within this very group. Could conformal field theory data — operator dimensions, OPE coefficients — be read off from the pole parameters?
-
----
-
-## The Bigger Picture
-
-For nearly a century, renormalization has been viewed as a physical procedure: integrate out short-distance fluctuations, rescale, repeat. This work suggests it might be something simpler and more fundamental: a change of geometric perspective.
-
-When you move the light on the globe — when you change the pole of a stereographic projection — you are not doing physics. You are doing geometry. But the resulting transformation on coordinates has exactly the structure of a renormalization group step: it is a Möbius transformation with a positive derivative, a composition law, and fixed points that characterize critical behavior.
-
-The deepest laws of physics may not be about forces, particles, or fields. They may be about how the universe looks when you change your point of view.
-
----
-
-*This research was conducted using rigorous mathematical proof techniques. All theorems described in this article — including the no-fixed-point theorem, the derivative formula, the composition law, and the energy conservation result — have been verified with complete mathematical proofs, leaving no logical gaps.*
+The value of the example is therefore not that a circle magically solves every renormalization problem. It is that an exact solvable case teaches the right questions: What is the coupling space? Which chart compactifies it? Which quantities survive coordinate changes? And can coarse-graining be transported to a clean geometric dynamics? Here every question has an explicit answer.

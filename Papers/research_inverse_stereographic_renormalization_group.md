@@ -1,272 +1,454 @@
-# Inverse Stereographic Renormalization Group: Geometric Dynamics from Pole-Change Möbius Maps
+# Inverse Stereographic Renormalization for the One-Dimensional Ising Decimation Map
 
 ## Abstract
 
-We introduce the *inverse stereographic renormalization group*, a mathematical framework in which renormalization group (RG) transformations arise from changing the pole of a stereographic projection. Starting from the pole map $M_a(t) = (at+1)/(t-a)$ — an involution on $\mathbb{R} \setminus \{a\}$ — we define the *two-pole RG update* $F_{a,b} = M_b \circ M_a$, which is a Möbius transformation. We prove three main theorems: (1) for distinct poles $a \neq b$, $F_{a,b}$ has no real fixed points, being elliptic with discriminant $-4(a-b)^2$; (2) the derivative $F'_{a,b}(g) = (1+a^2)(1+b^2)/((a-b)g+(ab+1))^2$ is always positive, providing an explicit geometric beta coefficient; (3) energy-compatible RG updates preserve conserved quantities along Hamiltonian trajectories. All results are formalized with complete proofs in Lean 4 using Mathlib.
+We develop an exact geometric representation of the zero-field one-dimensional Ising decimation transformation. In the high-temperature coupling coordinate $g=\tanh K$, decimation of alternate spins is the polynomial map $R(g)=g^2$. We compactify the real coupling line by the inverse stereographic parametrization
 
-**Keywords:** renormalization group, stereographic projection, Möbius transformation, conformal geometry, elliptic dynamics, fixed-point theory, beta function, Hamiltonian systems
+$$
+S(g)=\left(\frac{2g}{1+g^2},\frac{1-g^2}{1+g^2}\right)
+$$
 
----
+of the unit circle. We prove that $S$ conjugates the Ising map to the rational circle transformation
+
+$$
+C(x,y)=\left(\frac{x^2}{2-x^2},\frac{2y}{1+y^2}\right).
+$$
+
+We characterize the finite fixed couplings as exactly $0$ and $1$, define the discrete one-step beta observable $B(g)=R(g)-g$, and compute the derivatives $R'(g)=2g$ and $B'(g)=2g-1$. The construction gives a global, exact bridge between a real-space renormalization step and conformal compactification in a solvable model. It does not equate this discrete observable with a continuous field-theoretic beta function; instead, it isolates the additional structures required for such a comparison.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The renormalization group organizes physical theories by scale. A coarse-graining operation removes short-distance variables, after which parameters are adjusted so that the effective model remains in a chosen family. Fixed points represent scale-invariant behavior, while the linearization near a fixed point measures the relevance or irrelevance of perturbations.
 
-The renormalization group (RG) is a cornerstone of modern theoretical physics, governing how physical systems change under scale transformations [Wilson & Kogut, 1974]. Despite its immense success, the RG is typically defined through physical operations — integrating out degrees of freedom, rescaling fields — with the underlying mathematical structure emerging as a consequence rather than a starting point.
+Geometric descriptions of renormalization can reveal structure hidden by a particular coupling coordinate. The simplest useful test is one in which the renormalization map is exact, global, and elementary. The zero-field one-dimensional Ising chain provides such a test. If $K$ denotes the dimensionless nearest-neighbor coupling and
 
-We propose inverting this logic: define a geometric operation first, then recognize its RG-like properties. The operation we study is the composition of two stereographic pole maps. A single pole map $M_a(t) = (at+1)/(t-a)$ is an involution (trivial dynamics), but the composition of two pole maps with distinct poles $a \neq b$ yields a non-trivial Möbius transformation that acts as a dynamical system on the coupling space.
+$$
+g=\tanh K,
+$$
 
-### 1.2 Summary of contributions
+then eliminating alternate spins produces the exact recursion
 
-1. **Definition of the geometric RG update** $F_{a,b} = M_b \circ M_a$ and proof that it equals the Möbius map $((ab+1)t + (b-a))/((a-b)t + (ab+1))$.
-2. **No-real-fixed-point theorem**: For $a \neq b$, $F_{a,b}$ has no real fixed points; the fixed-point equation reduces to $g^2 + 1 = 0$.
-3. **Nontriviality theorem**: If $F_{a,b} = \text{id}$ on all nonsingular points, then $a = b$.
-4. **Explicit derivative formula**: $F'_{a,b}(g) = (1+a^2)(1+b^2)/((a-b)g+(ab+1))^2 > 0$.
-5. **Composition law**: $F_{b,c} \circ F_{a,b} = F_{a,c}$ (intermediate pole cancels).
-6. **Energy conservation**: Under energy-compatibility, conserved Hamiltonian quantities are preserved by the RG update.
-7. **Complete formalization** in Lean 4 with Mathlib, with all proofs machine-verified.
+$$
+g'=g^2.
+$$
 
-### 1.3 Relation to prior work
+The physical ferromagnetic finite-temperature range is $0\leq g<1$. The value $g=0$ is the infinite-temperature, uncoupled point, and $g\to1$ is the zero-temperature strong-coupling limit.
 
-Möbius transformations have been extensively studied in complex analysis and hyperbolic geometry [Beardon, 1983]. The connection between Möbius dynamics and renormalization has been explored informally in several contexts:
+Our aim is to represent this dynamics on a compact geometric space. Inverse stereographic projection identifies the real line with the unit circle minus one point. Under this identification, the polynomial map $g\mapsto g^2$ becomes an explicit rational self-map of the circle. The resulting commutative relation is an exact conjugacy, not a metaphor or perturbative approximation.
 
-- McCoy and Wu [1973] observed Möbius-like structures in the Ising model transfer matrix.
-- Derrida, De Sèze, and Itzykson [1983] studied rational RG maps for hierarchical models.
-- The connection between stereographic projection and conformal field theory is classical [Di Francesco, Mathieu, Sénéchal, 1997].
+The analysis has five principal results. First, the inverse stereographic formula lands on the unit circle for every real coupling. Second, Ising decimation is conjugate to a rational circle map. Third, the finite fixed couplings are exactly $0$ and $1$. Fourth, the linearized coupling update has multiplier $2g$. Fifth, the derivative of the discrete one-step beta observable is $2g-1$. We also give numerical algorithms and discuss what must be added before comparison with a continuous beta function or with $\phi^4$ field theory is mathematically meaningful.
 
-Our contribution is to formalize and prove, from first principles, that the composition of stereographic pole maps generates a well-defined dynamical system with precise algebraic properties.
+## 2. The Ising decimation coordinate
 
----
+Consider the zero-field one-dimensional Ising Hamiltonian on a chain,
 
-## 2. Definitions and Notation
+$$
+-\mathcal H/(k_B T)=K\sum_i \sigma_i\sigma_{i+1},
+$$
 
-### 2.1 The pole map
+where each spin satisfies $\sigma_i\in\{-1,1\}$. Introduce the high-temperature coupling
 
-**Definition 2.1.** For $a \in \mathbb{R}$, the *pole map* is
-$$M_a(t) = \frac{at + 1}{t - a}, \quad t \neq a.$$
+$$
+g=\tanh K.
+$$
 
-This arises as follows: project $\mathbb{R}$ to $S^1$ using stereographic projection with pole at $a$, then project back from the same pole. The map $M_a$ is a Möbius transformation with matrix $\begin{pmatrix} a & 1 \\ 1 & -a \end{pmatrix}$, determinant $-(1+a^2)$, and trace $0$.
+This coordinate is convenient because the nearest-neighbor Boltzmann factor can be written as
 
-**Theorem 2.2** (Involution). *For $t \neq a$ and $M_a(t) \neq a$, we have $M_a(M_a(t)) = t$.*
+$$
+e^{K\sigma_i\sigma_{i+1}}=\cosh K\left(1+g\sigma_i\sigma_{i+1}\right).
+$$
 
-*Proof.* Direct computation: $M_a(M_a(t)) = \frac{a \cdot \frac{at+1}{t-a} + 1}{\frac{at+1}{t-a} - a} = \frac{a(at+1) + (t-a)}{(at+1) - a(t-a)} = \frac{(a^2+1)t}{a^2+1} = t$. ∎
+Summing over an intermediate spin joins two bonds. Up to a multiplicative factor independent of the two retained endpoint spins, the effective high-temperature coupling is the product of the original bond couplings. For two identical bonds this gives $g'=g^2$. Accordingly, we take the exact decimation update to be the following.
 
-### 2.2 The two-pole RG update
+**Definition 2.1 (Ising decimation map).** For $g\in\mathbb R$, define
 
-**Definition 2.3.** The *geometric RG update* with poles $a, b$ is
-$$F_{a,b} = M_b \circ M_a.$$
+$$
+R(g)=g^2.
+$$
 
-**Theorem 2.4** (Explicit formula). *For $g \neq a$ and $M_a(g) \neq b$,*
-$$F_{a,b}(g) = \frac{(ab+1)g + (b-a)}{(a-b)g + (ab+1)}.$$
+The extension from the physical interval to all real numbers is algebraically useful. Negative values may be viewed as an extended antiferromagnetic coordinate, and the full line is the natural domain for stereographic compactification.
 
-*Proof.* Substitute $M_a(g) = (ag+1)/(g-a)$ into $M_b$ and simplify. The denominator condition ensures both maps are defined. ∎
+**Definition 2.2 (Discrete one-step beta observable).** Define
 
-### 2.3 The geometric beta observable
+$$
+B(g)=R(g)-g=g^2-g.
+$$
 
-**Definition 2.5.** The *geometric beta observable* is
-$$\beta_{\text{geom}}(a,b,g) = F_{a,b}(g) - g.$$
+The word “discrete” is essential. In a continuous renormalization semigroup $R_t$, a beta function is normally the infinitesimal generator
 
-**Definition 2.6.** A coupling $g^*$ is an *RG fixed point* if $F_{a,b}(g^*) = g^*$, equivalently $\beta_{\text{geom}}(a,b,g^*) = 0$.
+$$
+\beta(g)=\left.\frac{d}{dt}R_t(g)\right|_{t=0}.
+$$
 
-### 2.4 Energy compatibility
+By contrast, $B(g)$ records displacement under one finite blocking step. It is useful for fixed points and direction of motion, but it is not automatically a continuous beta function.
 
-**Definition 2.7.** An energy function $E: \mathbb{R} \to \mathbb{R}$ is *RG-compatible* with poles $(a,b)$ if $E(F_{a,b}(g)) = E(g)$ for all $g$.
+## 3. Stereographic compactification
 
----
+Let $S^1=\{(x,y)\in\mathbb R^2:x^2+y^2=1\}$ be the unit circle. We use the south pole $(0,-1)$ as the point omitted by the chart.
 
-## 3. Main Results
+**Definition 3.1 (Inverse stereographic map).** Define $S:\mathbb R\to\mathbb R^2$ by
 
-### 3.1 Theorem 1: No real fixed points (Elliptic classification)
+$$
+S(g)=\left(\frac{2g}{1+g^2},\frac{1-g^2}{1+g^2}\right).
+$$
 
-**Theorem 3.1.** *Let $a \neq b$. For all $g \in \mathbb{R}$ with $g \neq a$ and $M_a(g) \neq b$, we have $F_{a,b}(g) \neq g$.*
+The denominator $1+g^2$ is strictly positive for real $g$, so $S$ is globally defined. The first coordinate is odd and the second is even. Representative values are
 
-*Proof sketch.* Setting $F_{a,b}(g) = g$ and clearing denominators yields
-$$(ab+1)g + (b-a) = g((a-b)g + (ab+1))$$
-$$\Leftrightarrow (a-b)(g^2 + 1) = 0.$$
-Since $a \neq b$, we need $g^2 + 1 = 0$, which has no real solutions since $g^2 + 1 \geq 1 > 0$. ∎
+$$
+S(0)=(0,1),\qquad S(1)=(1,0),\qquad S(-1)=(-1,0).
+$$
 
-**Corollary 3.2.** *The fixed points of $F_{a,b}$ over $\mathbb{C}$ are $g = \pm i$, independent of the poles $a, b$.*
+As $|g|\to\infty$, $S(g)\to(0,-1)$. Thus the missing south pole compactifies the two ends of the real line into a single point at infinity.
 
-**Corollary 3.3** (Elliptic classification). *The Möbius discriminant of $F_{a,b}$ is $\Delta = -4(a-b)^2 \leq 0$, with equality iff $a = b$. Hence $F_{a,b}$ is elliptic for $a \neq b$ and the identity for $a = b$.*
+**Theorem 3.2 (Unit-circle image).** For every $g\in\mathbb R$, the point $S(g)$ lies on $S^1$; equivalently,
 
-### 3.2 Theorem 2: Nontriviality
+$$
+\left(\frac{2g}{1+g^2}\right)^2+
+\left(\frac{1-g^2}{1+g^2}\right)^2=1.
+$$
 
-**Theorem 3.4.** *If $F_{a,b}(g) = g$ for all $g$ with $g \neq a$ and $M_a(g) \neq b$, then $a = b$.*
+**Proof sketch.** Put the two terms over the common denominator $(1+g^2)^2$. The numerator is
 
-*Proof sketch.* By contradiction: if $a \neq b$, choose $g = a+1 \neq a$. If $M_a(a+1) = a^2+a+1 = b$, choose $g = a+2$ instead, for which $M_a(a+2) = (a^2+2a+1)/2$. This cannot also equal $b = a^2+a+1$ (would require $a^2+1=0$). Apply Theorem 3.1 to the valid choice to obtain contradiction. ∎
+$$
+4g^2+(1-g^2)^2=4g^2+1-2g^2+g^4=(1+g^2)^2.
+$$
 
-### 3.3 Theorem 3: Derivative formula (Geometric beta coefficient)
+Division by the positive denominator gives $1$. $\square$
 
-**Theorem 3.5.** *The derivative of $F_{a,b}$ at $g$ (where the denominator $(a-b)g + (ab+1) \neq 0$) is*
-$$F'_{a,b}(g) = \frac{(1+a^2)(1+b^2)}{((a-b)g + (ab+1))^2}.$$
+The inverse chart on $S^1\setminus\{(0,-1)\}$ is
 
-*Proof.* Apply the quotient rule to $F_{a,b}(g) = \frac{(ab+1)g + (b-a)}{(a-b)g + (ab+1)}$. The numerator of the derivative is
-$$(ab+1) \cdot ((a-b)g + (ab+1)) - ((ab+1)g + (b-a)) \cdot (a-b)$$
-$$= (ab+1)^2 + (b-a)(a-b) = (ab+1)^2 + (a-b)^2$$
-and $(ab+1)^2 + (a-b)^2 = (1+a^2)(1+b^2)$ by direct expansion. ∎
+$$
+g=\frac{x}{1+y}.
+$$
 
-**Corollary 3.6.** *$F'_{a,b}(g) > 0$ for all $g$ in the domain. Hence $F_{a,b}$ is orientation-preserving.*
+Indeed, for $(x,y)=S(g)$,
 
-**Corollary 3.7.** *The determinant $(ab+1)^2 - (b-a)(a-b) = (1+a^2)(1+b^2)$ factors as a product of Gaussian norms $|1+ai|^2 \cdot |1+bi|^2$.*
+$$
+\frac{x}{1+y}
+=\frac{2g/(1+g^2)}{1+(1-g^2)/(1+g^2)}
+=g.
+$$
 
-### 3.4 Theorem 4: Composition law
+This confirms that $S$ is not merely a parametrized curve: it is a bijective coordinate identification between the real coupling line and the punctured circle.
 
-**Theorem 3.8** (Composition transitivity). *Under appropriate non-degeneracy conditions,*
-$$F_{b,c} \circ F_{a,b} = F_{a,c}.$$
+## 4. The induced rational circle dynamics
 
-*Proof.* Direct computation: the composition of the two Möbius maps yields a Möbius map whose coefficients match those of $F_{a,c}$. ∎
+We now give a circle-coordinate formula for the Ising update.
 
-**Corollary 3.9** (Inverse). *$F_{b,a} \circ F_{a,b} = \text{id}$, i.e., $F_{a,b}^{-1} = F_{b,a}$.*
+**Definition 4.1 (Rational circle update).** For a pair $(x,y)\in\mathbb R^2$ at which the denominators are nonzero, define
 
-*Proof.* Set $c = a$ in the composition law and use $F_{a,a} = \text{id}$. ∎
+$$
+C(x,y)=\left(\frac{x^2}{2-x^2},\frac{2y}{1+y^2}\right).
+$$
 
-### 3.5 Theorem 5: Energy conservation
+On the unit circle, $x^2\leq1$, so $2-x^2\geq1$. Also, $1+y^2\geq1$. Hence both denominators are nonzero, and $C$ is defined everywhere on $S^1$.
 
-**Theorem 3.10.** *Let $E: \mathbb{R} \to \mathbb{R}$ be RG-compatible with poles $(a,b)$, and let $g: \mathbb{R} \to \mathbb{R}$ be a trajectory with $E(g(t)) = E(g(0))$ for all $t$. Then*
-$$E(F_{a,b}(g(t))) = E(g(0)) \quad \forall t.$$
+**Theorem 4.2 (Stereographic conjugacy).** For every $g\in\mathbb R$,
 
-*Moreover, $\frac{d}{dt} E(F_{a,b}(g(t))) = 0$.*
+$$
+S(R(g))=C(S(g)).
+$$
 
-*Proof.* $E(F_{a,b}(g(t))) = E(g(t)) = E(g(0))$ by RG-compatibility and energy conservation. The derivative vanishes since the function is constant. ∎
+Equivalently, the diagram
 
----
+$$
+\begin{array}{ccc}
+\mathbb R & \xrightarrow{R} & \mathbb R\\
+\downarrow S & & \downarrow S\\
+S^1\setminus\{(0,-1)\} & \xrightarrow{C} & S^1\setminus\{(0,-1)\}
+\end{array}
+$$
 
-## 4. Algorithms
+commutes.
 
-### 4.1 Fixed-point detection
+**Proof sketch.** Write
 
-**Algorithm 1: DetectFixedPoints(a, b)**
-```
-Input: poles a, b ∈ ℝ
-Output: list of fixed points
+$$
+x=\frac{2g}{1+g^2},\qquad y=\frac{1-g^2}{1+g^2}.
+$$
 
-if |a - b| < ε then
-    return "all points are fixed (identity map)"
-else
-    return [+i, -i]  // complex fixed points only
-end
-```
+For the first coordinate,
 
-*Complexity:* O(1) time and space.
-*Correctness:* Follows from Theorem 3.1.
+$$
+\frac{x^2}{2-x^2}
+=\frac{4g^2/(1+g^2)^2}{2-4g^2/(1+g^2)^2}
+=\frac{2g^2}{(1+g^2)^2-2g^2}.
+$$
 
-### 4.2 Stability classification
+The denominator simplifies according to
 
-**Algorithm 2: ClassifyStability(a, b, g)**
-```
-Input: poles a, b ∈ ℝ, coupling g ∈ ℝ
-Output: stability type
+$$
+(1+g^2)^2-2g^2=1+g^4,
+$$
 
-d ← (1+a²)(1+b²) / ((a-b)g + (ab+1))²
-if d < 1 then return "contracting"
-if d > 1 then return "expanding"
-return "neutral"
-```
+so
 
-*Complexity:* O(1).
-*Correctness:* Follows from Theorem 3.5.
+$$
+\frac{x^2}{2-x^2}=\frac{2g^2}{1+g^4}.
+$$
 
-### 4.3 Orbit computation
+For the second coordinate,
 
-**Algorithm 3: ComputeOrbit(a, b, g₀, n)**
-```
-Input: poles a, b, initial coupling g₀, steps n
-Output: orbit [g₀, g₁, ..., gₙ]
+$$
+\frac{2y}{1+y^2}
+=\frac{2(1-g^2)/(1+g^2)}{1+(1-g^2)^2/(1+g^2)^2}
+=\frac{2(1-g^2)(1+g^2)}{(1+g^2)^2+(1-g^2)^2}.
+$$
 
-orbit ← [g₀]
-g ← g₀
-for i = 1 to n do
-    g ← ((ab+1)g + (b-a)) / ((a-b)g + (ab+1))
-    append g to orbit
-end
-return orbit
-```
+The numerator is $2(1-g^4)$ and the denominator is $2(1+g^4)$, yielding
 
-*Complexity:* O(n) time, O(n) space.
-*Convergence:* Since the map is elliptic for a ≠ b, orbits are quasi-periodic (conjugate to irrational rotation for generic poles).
+$$
+\frac{2y}{1+y^2}=\frac{1-g^4}{1+g^4}.
+$$
 
-### 4.4 Rotation number estimation
+Therefore
 
-**Algorithm 4: EstimateRotationNumber(a, b, g₀, N)**
-```
-Input: poles a, b, initial coupling g₀, iterations N
-Output: rotation number ρ ∈ [0, 1)
+$$
+C(S(g))=\left(\frac{2g^2}{1+g^4},\frac{1-g^4}{1+g^4}\right)=S(g^2)=S(R(g)).
+$$
 
-total_angle ← 0
-g ← g₀
-for i = 1 to N do
-    g_new ← F_{a,b}(g)
-    Δθ ← 2·arctan(g_new) - 2·arctan(g)  // unwrap
-    total_angle ← total_angle + Δθ
-    g ← g_new
-end
-return (total_angle / (2πN)) mod 1
-```
+All denominators appearing in the calculation are positive. $\square$
 
-*Complexity:* O(N) time, O(1) space.
+**Corollary 4.3 (Circle preservation along the stereographic image).** For every real $g$, $C(S(g))\in S^1$.
 
----
+**Proof sketch.** By Theorem 4.2, $C(S(g))=S(g^2)$, and Theorem 3.2 places $S(g^2)$ on the unit circle. $\square$
 
-## 5. Computational Experiments
+The map $C$ has been written in a form that uses each Cartesian coordinate separately. This apparent separation is special to points constrained by $x^2+y^2=1$ and to the chosen stereographic chart. Away from the circle, $C$ is simply a rational plane map; the physical geometric statement concerns its restriction to the stereographic image.
 
-### 5.1 Orbit structure
+## 5. Fixed couplings and flow direction
 
-For poles $a = 0, b = 1$, starting from $g_0 = 0$:
-- The orbit visits $g_0 = 0, g_1 = -1, g_2 = 0, g_3 = -1, \ldots$ (period 2 in this special case).
+A finite coupling is fixed by one decimation step precisely when its discrete displacement vanishes.
 
-For $a = 0, b = 0.5$, starting from $g_0 = 1$:
-- The orbit is quasi-periodic with estimated rotation number $\rho \approx 0.148$.
+**Theorem 5.1 (Finite fixed-coupling classification).** For $g\in\mathbb R$,
 
-### 5.2 Derivative landscape
+$$
+B(g)=0
+$$
 
-For $a = 0, b = 1$, the derivative $F'(g) = 2/(1-g)^2$ achieves:
-- Minimum value 2 at $g = 0$ (locally expanding)
-- The map is everywhere expanding ($F' > 1$ for all accessible $g$)
+if and only if
 
-### 5.3 Ising model comparison
+$$
+g=0\quad\text{or}\quad g=1.
+$$
 
-The 1D Ising decimation map $T(K) = \frac{1}{2}\ln(\cosh(2K))$ has $T'(0) = 0$, while $F'_{a,b}(g) > 0$ everywhere. This immediately falsifies the conjecture that $T$ is smoothly conjugate to $F_{a,b}$ near the trivial fixed point. However, for $K > 0$ where $T'(K) > 0$, local matching of derivatives is possible by tuning poles.
+**Proof sketch.** Factor the observable:
 
----
+$$
+B(g)=g^2-g=g(g-1).
+$$
 
-## 6. Discussion
+A product of real numbers is zero exactly when one factor is zero. Conversely, direct substitution shows $B(0)=B(1)=0$. $\square$
 
-### 6.1 Physical interpretation
+Under $S$, these fixed couplings correspond to
 
-The two-pole Möbius map $F_{a,b}$ represents a *change of conformal frame*: different stereographic poles correspond to different "observers" of the compactified coupling space. The RG flow is reinterpreted as observer-dependence of coupling coordinates.
+$$
+S(0)=(0,1),\qquad S(1)=(1,0).
+$$
 
-The elliptic nature of $F_{a,b}$ (no real fixed points for $a \neq b$) has a striking interpretation: in the geometric RG, critical couplings are *projective* — they exist on the complexified coupling space at $g = \pm i$, independent of the choice of poles. This universality of the complex fixed points is analogous to the universality of critical exponents in statistical mechanics.
+Thus the north pole and the eastern equatorial point are the two finite-coupling fixed points in the compactified picture. The south pole represents infinite coupling and is not attained by any finite $g$ in this chart.
 
-### 6.2 Limitations
+On the physical interval, the sign of $B$ gives the direction of the flow.
 
-1. The current framework handles only one-coupling systems. Multi-coupling RG requires higher-dimensional Möbius maps (linear fractional transformations on $\mathbb{R}^n$ or projective space).
+**Proposition 5.2 (One-step contraction in the physical interior).** If $0<g<1$, then
 
-2. The geometric RG map is always orientation-preserving ($F' > 0$), while physical RG maps can have $T'(g^*) < 0$ (relevant perturbations). This limits direct physical applicability.
+$$
+0<R(g)<g
+$$
 
-3. The connection to specific physical models (Ising, $\phi^4$, etc.) requires a coordinate change $\psi$ that is model-dependent and may not always exist.
+and therefore $B(g)<0$.
 
-### 6.3 Strengths
+**Proof sketch.** Positivity gives $g^2>0$. Multiplying $g<1$ by the positive number $g$ gives $g^2<g$. $\square$
 
-1. The framework is *exact* — no approximations, no perturbation theory.
-2. The composition law provides a natural algebraic structure (the Möbius group).
-3. All results are machine-verified, providing absolute certainty.
-4. The connection to Hamiltonian mechanics via energy compatibility is genuinely cross-domain.
+The map therefore moves every interior physical coupling toward weak coupling. Although a full iteration theorem is beyond the core one-step results, repeated squaring makes the expected behavior transparent: each step doubles the exponent. This motivates the formula $R^n(g)=g^{2^n}$ and convergence to zero for $0\leq g<1$ as natural extensions.
 
----
+## 6. Linearization and the discrete beta derivative
 
-## 7. Future Work
+The local response of a renormalization map is encoded by its derivative.
 
-1. **Complex extension**: Extend $F_{a,b}$ to $\hat{\mathbb{C}}$ (Riemann sphere) and classify loxodromic cases.
-2. **Multi-coupling generalization**: Define pole maps on $\mathbb{R}^n$ via higher-dimensional stereographic projection.
-3. **Hierarchical model matching**: Find explicit coordinate changes $\psi$ conjugating known rational RG maps to $F_{a,b}$.
-4. **Iterated dynamics**: Study the orbit structure of $F_{a,b}^n$ systematically, including quasi-periodicity and ergodic properties.
-5. **Conformal field theory connection**: Relate pole parameters $(a,b)$ to CFT data (central charge, operator dimensions).
+**Theorem 6.1 (Derivative of the Ising update).** For every $g\in\mathbb R$, the map $R(g)=g^2$ is differentiable and
 
----
+$$
+R'(g)=2g.
+$$
 
-## References
+**Proof sketch.** Using the difference quotient,
 
-- Beardon, A. F. (1983). *The Geometry of Discrete Groups*. Springer.
-- Derrida, B., De Sèze, L., & Itzykson, C. (1983). Fractal structure of zeros in hierarchical models. *J. Stat. Phys.*, 33, 559–569.
-- Di Francesco, P., Mathieu, P., & Sénéchal, D. (1997). *Conformal Field Theory*. Springer.
-- Wilson, K. G., & Kogut, J. (1974). The renormalization group and the ε expansion. *Phys. Rep.*, 12, 75–199.
+$$
+\frac{R(g+h)-R(g)}{h}
+=\frac{(g+h)^2-g^2}{h}
+=2g+h
+$$
+
+for $h\neq0$. Taking $h\to0$ yields $2g$. $\square$
+
+At the fixed point $g=0$, the multiplier is $R'(0)=0$, expressing strong local contraction. At $g=1$, it is $R'(1)=2$, so perturbations are expanded to first order in the unrestricted real coordinate.
+
+**Theorem 6.2 (Derivative of the discrete beta observable).** For every $g\in\mathbb R$, the function $B(g)=R(g)-g$ is differentiable and
+
+$$
+B'(g)=2g-1.
+$$
+
+**Proof sketch.** Differentiate $B(g)=g^2-g$ term by term and apply Theorem 6.1. $\square$
+
+The derivative vanishes at $g=1/2$. Since $B''(g)=2>0$, the one-step displacement reaches its minimum there:
+
+$$
+B\left(\frac12\right)=-\frac14.
+$$
+
+This is the largest negative displacement in absolute coupling units on $[0,1]$. It is a coordinate-dependent statement: after a nonlinear reparametrization, numerical displacements and derivatives change.
+
+Conjugacy provides the correct relation between derivatives in different coordinates. If a one-dimensional chart coordinate $u$ is changed by a differentiable bijection $u=h(g)$, then the transformed map is
+
+$$
+\widetilde R=h\circ R\circ h^{-1}.
+$$
+
+At corresponding points, its derivative satisfies
+
+$$
+\widetilde R'(h(g))=\frac{h'(R(g))}{h'(g)}R'(g),
+$$
+
+provided the derivatives exist and $h'(g)\neq0$. At a fixed point $R(g_*)=g_*$, the chart factors cancel, so the multiplier is invariant under regular one-dimensional coordinate changes:
+
+$$
+\widetilde R'(h(g_*))=R'(g_*).
+$$
+
+This distinction explains why fixed-point eigenvalues are geometrically robust while a beta formula away from a fixed point is scheme dependent.
+
+## 7. Numerical algorithms and examples
+
+The formulas require only elementary arithmetic and are stable on the real line because $1+g^2>0$. For a finite list of couplings, each update and stereographic conversion takes constant time and memory.
+
+### 7.1 Direct decimation
+
+Given $g$, compute $R(g)=g^2$ and $B(g)=g^2-g$. The derivative data are $2g$ and $2g-1$. A representative table is
+
+| $g$ | $R(g)$ | $B(g)$ | $R'(g)$ | $B'(g)$ |
+|---:|---:|---:|---:|---:|
+| $0$ | $0$ | $0$ | $0$ | $-1$ |
+| $1/4$ | $1/16$ | $-3/16$ | $1/2$ | $-1/2$ |
+| $1/2$ | $1/4$ | $-1/4$ | $1$ | $0$ |
+| $3/4$ | $9/16$ | $-3/16$ | $3/2$ | $1/2$ |
+| $1$ | $1$ | $0$ | $2$ | $1$ |
+
+### 7.2 Conjugacy check
+
+For each input $g$, compute two paths:
+
+$$
+P_1=S(R(g)),\qquad P_2=C(S(g)).
+$$
+
+Theorem 4.2 says $P_1=P_2$ exactly. In floating-point arithmetic, the Euclidean residual
+
+$$
+\varepsilon(g)=\|P_1-P_2\|_2
+$$
+
+should be near machine precision. This residual is a numerical diagnostic, not a substitute for the algebraic theorem.
+
+### 7.3 Iterated visualization
+
+Starting from $g_0\in[0,1]$, define $g_{n+1}=g_n^2$ and plot $S(g_n)$ on the circle. Interior points move toward $(0,1)$, while $g_0=1$ remains at $(1,0)$. The corresponding coupling values shrink rapidly because squaring compounds at each step.
+
+## 8. Physical interpretation and limitations
+
+The conjugacy offers a compact global portrait of the exact Ising recursion. Weak coupling, strong coupling, negative coupling, and the point at infinity occupy a single bounded geometry. Rational circle coordinates may be useful when comparing maps under Möbius transformations or when constructing atlases with different stereographic poles.
+
+Nevertheless, the result should be interpreted with precision.
+
+First, $B(g)=R(g)-g$ is a finite-step observable. A continuous beta function requires a scale parameter and a semigroup or flow law. Without these, identifying $B$ with an infinitesimal generator would conflate discrete and continuous notions.
+
+Second, derivatives depend on coordinates away from fixed points. The equality $R'(g)=2g$ is the derivative in the coupling chart $g$. A tangent derivative in another chart includes Jacobian factors. At a regular fixed point, the linear multiplier is preserved by conjugacy, but a global beta formula is not generally invariant.
+
+Third, the construction does not establish a corresponding identity for four-dimensional $\phi^4$ theory. Such a comparison requires the spacetime dimension, regulator, subtraction prescription, coupling normalization, and perturbative order to be fixed. A more plausible coordinate-independent target is local conjugacy of flows near a hyperbolic fixed point rather than literal equality of formulas written in unrelated schemes.
+
+Fourth, the recursion $g'=g^2$ has here been used as the standard exact decimation law. A complete statistical-mechanical development can derive it from the partition function or transfer matrix, tracking the additive constant in the effective free energy as well as the transformed coupling.
+
+## 9. Applications
+
+### 9.1 Compact phase portraits
+
+The stereographic chart turns an unbounded coupling axis into a circle. This can improve qualitative visualization, particularly when extended models permit trajectories toward large positive or negative coupling. The omitted pole records infinity without assigning it a finite coupling value.
+
+### 9.2 Fixed-point diagnostics
+
+The factorization $B(g)=g(g-1)$ gives an exact fixed-point classifier. The derivatives $R'(0)=0$ and $R'(1)=2$ distinguish contraction from expansion. Because fixed-point multipliers survive regular coordinate conjugacy, they provide a natural bridge between algebraic and geometric descriptions.
+
+### 9.3 Testing geometric renormalization proposals
+
+Any proposed geometric representation of an RG map should satisfy at least three checks: the chart must land on its claimed manifold, the induced geometric map must be globally well-defined on the relevant image, and the conjugacy identity must hold. The present model meets all three exactly. It therefore provides a benchmark for more elaborate constructions involving changing poles or higher-dimensional coupling spaces.
+
+### 9.4 Educational computation
+
+The model is simple enough to compute by hand yet rich enough to illustrate compactification, conjugacy, fixed points, linearization, coordinate dependence, and discrete versus continuous scale evolution. Numerical plots can display both the coupling trajectory and its circle image without approximation in the underlying formulas.
+
+## 10. Future work
+
+A first extension is to establish the exact iterate
+
+$$
+R^n(g)=g^{2^n}
+$$
+
+and prove convergence to $0$ for every $0\leq g<1$. Conjugacy would immediately transport this theorem to convergence of circle trajectories toward $(0,1)$.
+
+A second extension is to derive the recursion from spin summation or the transfer matrix. This would connect the geometric dynamics directly to the partition function and identify the free-energy normalization generated by decimation.
+
+A third direction is to introduce a continuous family $R_t$ satisfying $R_{s+t}=R_s\circ R_t$. Its infinitesimal generator would define a genuine continuous beta function and permit a careful comparison with the one-step displacement.
+
+A fourth direction is to vary the stereographic pole. Different poles are related by circle automorphisms, and scale-dependent chart choices lead naturally to cocycle conditions. Determining when these transformations define a consistent RG semigroup would turn the fixed-chart example into a broader geometric theory.
+
+Finally, any comparison with $\phi^4$ theory should begin only after fixing dimension, regularization, subtraction scheme, and coupling normalization. Local flow conjugacy near a hyperbolic fixed point is a mathematically better-motivated objective than literal equality between coordinate-dependent beta expressions.
+
+## 11. Relation to conformal geometry
+
+Stereographic projection is conformal: wherever the chart is regular, it preserves angles between tangent directions. In the present one-dimensional coupling problem, this property is less visible than it would be for a multidimensional coupling manifold, because a one-dimensional tangent space has no nontrivial angle structure. The important immediate benefits are rational parametrization and compactification. Nevertheless, the construction identifies the correct architecture for higher-dimensional questions: choose a geometric compactification, transport the RG map by conjugacy, and distinguish invariant dynamical data from chart-dependent formulas.
+
+The circle map also admits an angular description. If $g=\tan(\theta/2)$, then
+
+$$
+S(g)=(\sin\theta,\cos\theta).
+$$
+
+The decimation law becomes
+
+$$
+\tan\left(\frac{\theta'}{2}\right)=\tan^2\left(\frac{\theta}{2}\right).
+$$
+
+This equation is equivalent to the Cartesian rational map, but the Cartesian form avoids branch choices for inverse trigonometric functions. On the physical interval $0\leq g\leq1$, one has $0\leq\theta\leq\pi/2$, so the angular interpretation is unambiguous: decimation decreases $\theta$ in the interior and fixes both endpoints.
+
+From a dynamical-systems perspective, the theorem is a global conjugacy between $R$ on the finite line and $C$ on the punctured circle. Extending to the south pole compactifies the dynamics continuously: as $|g|\to\infty$, $g^2\to+\infty$, and both the initial and updated images approach $(0,-1)$. Thus the south pole is a fixed point of the extended circle map, although it is not a finite solution of $B(g)=0$. Keeping these two classifications separate prevents compactification from being mistaken for the creation of an additional finite physical coupling.
+
+## 12. Reproducibility of numerical illustrations
+
+The numerical consequences can be reproduced with four elementary functions: squaring for $R$, subtraction for $B$, the two rational expressions for $S$, and the two rational expressions for $C$. A robust implementation should compare $S(R(g))$ with $C(S(g))$ using a tolerance scaled to floating-point precision, and should separately test the circle residual $|x^2+y^2-1|$. For $N$ sampled couplings, both tests require $O(N)$ arithmetic operations and $O(1)$ auxiliary memory if results are streamed.
+
+Plots should distinguish exact mathematical claims from floating-point diagnostics. A residual near $10^{-16}$ illustrates that two evaluation paths agree at double precision, but the exact equality follows from the algebra in Theorem 4.2. Similarly, a plotted orbit suggests convergence, whereas a convergence theorem requires the iterate formula and an analytic limit argument. This separation of theorem, algorithm, and visualization is especially important when the same framework is extended to models whose RG recursions are available only numerically.
+
+## 12.1 Scope of the established statements
+
+The exact claims in this study are deliberately confined to one renormalization step and its local derivative. They require no asymptotic expansion: the circle identity holds for every finite real $g$, including values outside the physical ferromagnetic interval. The fixed-point classification likewise concerns all finite real couplings. Statements about repeated iteration, convergence, continuous-time generators, varying poles, and field-theory comparisons are proposed extensions rather than assumptions used in the proofs.
+
+This limited scope is a strength. The model separates what follows from elementary rational algebra from what needs additional statistical mechanics or dynamical-systems structure. In particular, the conjugacy theorem needs only the formulas for $R$, $S$, and $C$; physical interpretation enters when selecting $0\leq g<1$ and identifying temperature regimes. The same separation can guide future applications: first establish a precise map and chart, then attach the physical meaning appropriate to the model.
+
+## 13. Conclusion
+
+The zero-field one-dimensional Ising decimation map in the coordinate $g=\tanh K$ is $R(g)=g^2$. Inverse stereographic projection sends the coupling line to the unit circle, and the rational transformation
+
+$$
+C(x,y)=\left(\frac{x^2}{2-x^2},\frac{2y}{1+y^2}\right)
+$$
+
+makes the relation exact:
+
+$$
+S\circ R=C\circ S.
+$$
+
+The finite fixed couplings are precisely $0$ and $1$, the update derivative is $2g$, and the derivative of the discrete displacement is $2g-1$. Together these statements give a complete one-step geometric portrait of the solvable recursion. The portrait is modest in scope but exact in content: coarse-graining on the coupling line and rational dynamics on the circle are the same transformation in two coordinate systems.

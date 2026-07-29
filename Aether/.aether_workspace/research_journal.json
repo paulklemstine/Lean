@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b59af725",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n- Extend the extremal Rayleigh results to the full Courant–Fischer hierarchy, indexed by subspace dimension.\n- Develop compact self-adjoint operator theory in infinite-dimensional",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-25T17:22:56",
-      "title": "Spectral Theory: Self-Adjoint Operators"
-    },
-    {
       "cycle_id": "901b537c",
       "domain": "Physics",
       "key_insight": "# Future Directions: From Code Metrics to Emergent Geometry\n\n## 1. Rigidity of Local Tensor-Network Realizations\n\n**Conjecture.** Let a family of bounded-degree stabilizer tensor networks have boundar",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-29T21:21:22",
       "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
+    },
+    {
+      "cycle_id": "576be6d2",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n1. **Well-founded rank generalization.** Replace the natural-valued quality rank by an arbitrary partial order satisfying the ascending-chain condition. This would isolate precise",
+      "quality_score": 0.75955,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-29T22:22:15",
+      "title": "Self-Modifying Research via Reflective Type Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e3b4f2fe",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theore",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T15:09:35",
-      "title": "Speculative: Topological Data Analysis of Theorem Networks"
-    },
     {
       "cycle_id": "fd569acd",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 68,
       "timestamp": "2026-07-29T22:21:30",
       "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
+    },
+    {
+      "cycle_id": "576be6d2",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\n1. **Well-founded rank generalization.** Replace the natural-valued quality rank by an arbitrary partial order satisfying the ascending-chain condition. This would isolate precise",
+      "quality_score": 0.75955,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-29T22:22:15",
+      "title": "Self-Modifying Research via Reflective Type Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d54ed94e",
-      "domain": "Computation",
-      "name": "squareEnergy_smul",
-      "quality": 0.76634
-    },
-    {
-      "cycle_id": "d54ed94e",
-      "domain": "Computation",
-      "name": "det_smul_degree",
-      "quality": 0.76634
-    },
-    {
-      "cycle_id": "8a9b8560",
-      "domain": "Combinatorics",
-      "name": "about",
-      "quality": 0.7322500000000001
-    },
     {
       "cycle_id": "8a9b8560",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "beta_wilsonFisher",
       "quality": 0.78874
+    },
+    {
+      "cycle_id": "576be6d2",
+      "domain": "Logic",
+      "name": "connects",
+      "quality": 0.75955
+    },
+    {
+      "cycle_id": "576be6d2",
+      "domain": "Logic",
+      "name": "Run",
+      "quality": 0.75955
+    },
+    {
+      "cycle_id": "576be6d2",
+      "domain": "Logic",
+      "name": "Run",
+      "quality": 0.75955
     }
   ],
-  "last_updated": "2026-07-29T22:21:30",
+  "last_updated": "2026-07-29T22:22:15",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "2f76a8a3",
-        "quality": 0.7,
-        "theorems": 6,
-        "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
-      },
-      {
         "cycle_id": "ec157a87",
         "quality": 0.57,
         "theorems": 9,
@@ -3513,6 +3507,12 @@
         "quality": 0.72847,
         "theorems": 9,
         "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
+      },
+      {
+        "cycle_id": "576be6d2",
+        "quality": 0.75955,
+        "theorems": 6,
+        "title": "Self-Modifying Research via Reflective Type Theory"
       }
     ],
     "MachineLearning": [
