@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f853fcd6",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Matroid Correspondences\n\n## 1. Representability transfer through linear correspondences\n\nLet a matroid correspondence be induced by a linear relation between two finite-dimensiona",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-25T09:20:47",
-      "title": "ArXiv paper: Matroid correspondence"
-    },
-    {
       "cycle_id": "6296b01e",
       "domain": "Algebra",
       "key_insight": "# Future Directions: Recurrence under Observation\n\n## Established bridge\n\n`Bridges/ObservationPeriodDivisibility.lean` connects discrete dynamical\nrecurrence with elementary number theory.  A semiconj",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-29T12:29:20",
       "title": "Spectral Graph Theory Meets Network Robustness"
+    },
+    {
+      "cycle_id": "dff51e05",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Established result\n\nFor the split metric\n\n\\[\nds^2=\\frac{dx^2}{\\cosh^2y}+\\cosh^2x\\,dy^2,\n\\]\n\nthe computed Gaussian curvature is\n\n\\[\nK_G(x,y)=-\\cosh^2y-\\operatorname{sech}^2x\n +2",
+      "quality_score": 0.78321,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-29T12:30:24",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e3086657",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## 1. Profinite Boolean sphere and Cantor geometry\n\n**Conjecture.** Equip each finite Boolean stage with the discrete topology and the coherent limit with the inverse-limit topolo",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-20T01:50:18",
-      "title": "The Mega-Sphere: All Dimensions at Once"
-    },
     {
       "cycle_id": "0cd9c194",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-29T12:29:20",
       "title": "Spectral Graph Theory Meets Network Robustness"
+    },
+    {
+      "cycle_id": "dff51e05",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## Established result\n\nFor the split metric\n\n\\[\nds^2=\\frac{dx^2}{\\cosh^2y}+\\cosh^2x\\,dy^2,\n\\]\n\nthe computed Gaussian curvature is\n\n\\[\nK_G(x,y)=-\\cosh^2y-\\operatorname{sech}^2x\n +2",
+      "quality_score": 0.78321,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-29T12:30:24",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "38d3a014",
-      "domain": "Novelty",
-      "name": "rule0_fixed_iff",
-      "quality": 0.7097100000000001
-    },
-    {
-      "cycle_id": "38d3a014",
-      "domain": "Novelty",
-      "name": "rule0_unique_fixed",
-      "quality": 0.7097100000000001
-    },
-    {
-      "cycle_id": "09a3e4f4",
-      "domain": "Novelty",
-      "name": "lifted",
-      "quality": 0.77355
-    },
     {
       "cycle_id": "09a3e4f4",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "readout_composition_lipschitz",
       "quality": 0.7815999999999999
+    },
+    {
+      "cycle_id": "dff51e05",
+      "domain": "Novelty",
+      "name": "sechSq_pos",
+      "quality": 0.78321
+    },
+    {
+      "cycle_id": "dff51e05",
+      "domain": "Novelty",
+      "name": "sechSq_le_one",
+      "quality": 0.78321
+    },
+    {
+      "cycle_id": "dff51e05",
+      "domain": "Novelty",
+      "name": "sechSq_zero",
+      "quality": 0.78321
     }
   ],
-  "last_updated": "2026-07-29T12:29:20",
+  "last_updated": "2026-07-29T12:30:24",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b853373a",
-        "quality": 0.66,
-        "theorems": 13,
-        "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implem"
-      },
-      {
         "cycle_id": "2153ae5a",
         "quality": 0.64,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.81107,
         "theorems": 21,
         "title": "Game of Life Universality"
+      },
+      {
+        "cycle_id": "dff51e05",
+        "quality": 0.78321,
+        "theorems": 12,
+        "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
       }
     ],
     "NumberTheory": [
