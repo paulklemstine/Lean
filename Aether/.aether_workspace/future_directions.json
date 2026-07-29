@@ -3972,7 +3972,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Corner Rectangle Visibility Graphs' and formalize its key results. Abstract: We introduce corner rectangle visibility graphs (CRVGs), a combination of two geometrically defined classes of graphs: rectangle visibility graphs (RVGs) and rectangle-of-influence graphs (RIGs). A CRVG has vertices represented by axis-parallel rectangles in the plane, and edges represented by axis-parallel rectangles with one corner at a corner of a vertex-rectangle, an opposite corner at the boundary of another vertex-rectangle, and no vertex-rectangles in their interiors. We also consider CRVGs that only see in one or two directions (south CRVGs and southwest CRVGs). We prove that south CRVGs have at most $\\left[\\frac{n^2}{4}\\right]+n-2$ edges, and this bound is tight. This is the same as the tight edge bound for closed RIGs, but they are different graph classes. We also show that southwest CRVGs have at most $\\left[\\frac{n^2}{3}+\\frac{n}{3}\\right]-1$ edges, and this bound is tight. We prove that CRVGs on $n$ vertices have at most $e$ edges, where $\\lfloor \\frac{3n^2}{8} \\rfloor \\le",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry"
       ],
@@ -6993,7 +6993,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What was established\n\n`Tropical/TropicalFOne/FixedPointEuler.lean` proves a precise finite-orbit theorem supporting one robust numerical part of the proposed tropical–F₁ picture:\n\n- Mathlib's tropical semiring on `WithTop ℝ` has underlying addition `min` and multiplication ordinary addition.\n- For finite toric orbit data with orbit dimension `ambientDim - coneDim`, the additive Euler sum is exactly the number of full-dimensional cones (zero-dimensional torus orbits).\n- Given an equivalence between polytope vertices and fixed cones, this Euler sum equals the formal F₁-point count.\n- This count is multiplicative under products.\n- Standard simplices give the projective-space family `χ = n+1`; products give `(m+1)(n+1)`.\n\n## Important scope limitation\n\nThis does **not** prove that the category of tropical schemes is equivalent to a category of F₁-schemes, nor a tensor/base-change correspondence. Those assertions are not a single well-posed theorem until particular definitions and functors are fixed. Several inequivalent frameworks for F₁-geometry and tropical schemes exist, so a rigorous categorical claim must name one framework on each side.\n\nThe broader lattice-point claim also requires correction: lattice-point count generally does not equal toric degree. For `[0,d]`, these are `d+1` and `d`. The standard valid statements involve normalized volume/degree and Ehrhart polynomials/section counts.\n\n## Next formalization milestones\n\n1. **Full fan data.** Replace the compressed finite orbit model by rational polyhedral fans, define cones, faces, completeness, and maximal cones, and prove the orbit-dimension formula from fan geometry.\n2. **Euler characteristic proper.** Connect `ToricOrbitData.euler` to Mathlib's topological compactly supported Euler characteristic (or build the required constructible-additivity theory) and prove `χ_c((ℂˣ)^d)=0` for `d>0`.\n3. **Polytope–fan duality.** Formalize normal fans and prove that vertices of a full-dimensional lattice polytope correspond to maximal cones of its normal fan.\n4. **Toric realization.** Construct affine monoid algebras `ℤ[M]`, glue them over fan faces, and identify the resulting scheme with the toric variety attached to the fan.\n5. **Choose an F₁ framework.** A tractable route is Deitmar monoid schemes. Define base extension via monoid algebras and prove that base extension of the monoid scheme attached to a fan yields its toric scheme over `ℤ`.\n6. **Correct enumerative bridge.** Formalize the equality between degree and normalized polytope volume, and the equality between lattice-point counts in dilates and dimensions of spaces of sections (Ehrhart/Hilbert correspondence).\n7. **Categorical comparison.** Only after objects, morphisms, and base extension are fixed should one formulate a functor between a restricted tropical category and fan/monoid schemes. Expect an equivalence only for a carefully delimited toric or idempotent subcategory, not all tropical and all F₁-schemes.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Tropical"
@@ -9576,7 +9576,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Information Geometry of Optimization\n\n## 1. Curvature-controlled exponential-map descent\n\n**Conjecture.** On a geodesically complete statistical manifold with sectional curvature in a fixed interval, positive injectivity radius, and a geodesically strongly convex, geodesically smooth loss, exponential-map natural-gradient descent with a constant admissible step has a linear rate whose constants depend on intrinsic curvature and convexity but not on the coordinate condition number of the Fisher matrix.\n\nThe key insight is that coordinate conditioning should disappear only after both the update and the regularity assumptions are expressed intrinsically; curvature distortion then replaces matrix conditioning as the relevant obstruction.\n\n**Why now?** The exact constant-metric cancellation identifies the flat base case, while the Euler-midpoint counterexample isolates the missing geometric ingredient: the exponential map.\n\n## 2. Retraction error as the boundary between local and geodesic descent\n\n**Conjecture.** For a Fisher metric with Lipschitz covariant derivative, one Euler natural-gradient step differs from the corresponding exponential-map step by a cubic local-model error, and this error accumulates to a sharp global convergence penalty proportional to the integrated metric variation along the orbit.\n\nThe key insight is that natural gradient selects the correct tangent vector, but a retraction determines whether that vector is transported along the manifold with controlled geometric error.\n\n**Why now?** A concrete variable-metric example already separates the Euler endpoint from the geodesic midpoint, making the size and accumulation of that discrepancy the next measurable quantity.\n\n## 3. Fisher–Dirichlet preconditioning for repulsive models\n\n**Conjecture.** For determinantal exponential families whose Fisher tensor is a connected weighted graph Laplacian on the zero-sum tangent space, natural-gradient convergence is governed by effective-resistance diameter rather than the ambient Euclidean spectral condition number.\n\nThe key insight is that Laplacian Fisher energy converts statistical curvature into electrical Dirichlet energy, so resistance geometry may provide intrinsic diameter and coercivity estimates simultaneously.\n\n**Why now?** The existing Fisher–Laplacian bridge and the matched-metric energy law together suggest a testable route from repulsive probability models to condition-number-free optimization bounds.\n\n## 4. Sharp classification of harmonic schedules\n\n**Conjecture.** For a geodesically strongly convex loss and update size `a/(t+b)`, the objective gap has a polynomial exponent determined sharply by the product of intrinsic strong convexity and `a`; exponential decay is impossible unless the effective step sizes have a divergent linear-scale average.\n\nThe key insight is that strong convexity alone does not create an exponential iteration rate when the step sizes vanish harmonically; the cumulative step length, not dimension, determines the exponent.\n\n**Why now?** The matched quadratic admits an exact inverse-square objective law, providing a calibration case against which the general intrinsic theorem can be tested.\n\n## 5. Logistic regression under metric mismatch\n\n**Conjecture.** For regularized logistic regression, empirical natural gradient is insensitive to feature covariance conditioning only while the empirical Fisher remains uniformly comparable to the loss Hessian; outside that regime, the rate degrades according to the generalized eigenvalue spread of the Hessian–Fisher pair.\n\nThe key insight is that cancellation is controlled by metric–curvature matching, not by the Fisher condition number in isolation.\n\n**Why now?** The diagonal matched model proves exact cancellation and exposes generalized mismatch as the minimal falsifiable parameter for numerical and theoretical comparison.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Physics"
@@ -10191,7 +10191,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Quantitative Sphere Detection from Finite Data\n\n## 1. Quantitative homotopy recovery under reach and density\n\nLet a compact smooth submanifold have reach at least `τ`, and let a finite sample have Hausdorff distance at most `δ` from it. Conjecture that there is an explicit nonempty interval of Rips scales, with endpoints depending only on `δ` and `τ`, on which the Rips complex is homotopy equivalent to the manifold. For a simply connected closed three-manifold whose recovered homology is that of the three-sphere, determine additional computable local conditions sufficient for sphere recognition. **The key insight is...** perturbation stability must be combined with geometric regularity; homology alone cannot supply the missing local manifold structure. **Why now?** The exact `2δ` scale translation isolates the noise contribution, making a sharp reach-dependent interval a concrete target.\n\n## 2. Probabilistic `n^{-1/d}` coverage law with explicit tails\n\nFor `n` independent uniform samples on the unit `d`-sphere, conjecture matching upper and lower tail bounds for the covering radius of order `(log n / n)^(1/d)`, with constants uniform over a controlled range of dimensions. Determine precisely which alternative sampling or averaged criterion removes the logarithmic factor and yields `n^{-1/d}`. **The key insight is...** the proposed bare power law likely describes typical spacing, whereas full coverage and reliable topology are governed by extreme gaps. **Why now?** Separating diameter, spacing, and coverage thresholds prevents distinct phase transitions from being conflated and gives a falsifiable correction to the original scaling claim.\n\n## 3. Correspondence-based Rips interleaving\n\nGiven finite metric spaces related by a correspondence of distortion at most `2δ`, conjecture that their Rips filtrations admit a natural `2δ` simplicial interleaving that descends functorially to persistent homology in every degree. Establish sharpness by constructing finite spaces for which no smaller uniform translation works. **The key insight is...** indexwise matching is only a special case; correspondences are the correct bridge from perturbation geometry to Gromov–Hausdorff stability. **Why now?** The matched-sample theorem already identifies the sharp triangle-inequality mechanism, so the remaining issue is compatibility with nonfunctional correspondences.\n\n## 4. Local-link certification of spherical manifold structure\n\nConjecture that a finite flag complex with sphere homology, quantitatively controlled vertex links, and a suitable discrete curvature or expansion condition admits a certified manifold core whose geometric realization is a homology sphere; in dimension three, add a verifiable simple-connectivity certificate to obtain a topological three-sphere. **The key insight is...** global Betti numbers must be supplemented by local link data to distinguish manifolds from singular homology mimics. **Why now?** The full-simplex boundary demonstrates that global simplex counts rapidly lose topology, while links remain sensitive to local dimension and singularities.\n\n## 5. Stability of a guarded Poincare interval\n\nDefine the guarded Poincare interval as the set of scales at which the Rips complex simultaneously has sphere homology, manifold-like links, and a prescribed connectivity certificate. Conjecture that its endpoints are Lipschitz-stable, away from critical-value collisions, under matched perturbations of the sample. **The key insight is...** a robust detector should be an interval-valued invariant rather than the smallest scale satisfying a nonmonotone homological predicate. **Why now?** Rips inclusion is monotone, but sphere homology need not be; endpoint stability must therefore exploit persistence gaps rather than monotonicity of the predicate itself.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Bridges"
@@ -11707,7 +11707,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Nonnegative Bakry--Émery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincaré Inequalities' and formalize its key results. Abstract: We prove that every connected simple graph of bounded degree satisfying the classical dimension-free Bakry--Émery condition $\\mathrm{CD}(0,\\infty)$ for the unnormalised Laplacian is volume doubling and supports, at all integer graph scales, a scale-invariant $L^2$-Poincaré inequality with dilation two, with constants depending only on the maximum degree. This settles the polynomial-growth conjecture of Cushing, Liu, and Peyerimhoff in a stronger form. The main novelty is a dimension-free adaptation of the graph-theoretic modified nonlinear heat-flow method introduced by Münch and extended to infinite weighted graphs by Pajot and Russ: point-mass consequences of $Γ_2\\geq0$ and positive-resolvent smoothing replace any global $\\mathrm{CD}(0,n)$ reduction, while diffusive exit-time control and finite-volume localisation yield the Poincaré inequality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -13806,7 +13806,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2d`.\n\nThe Lean development proves `0 ≤ k ≤ D`. Consequently, every nonnegative\noperational entropy bounded by `k` is bounded by `D`. It also separates this\nexact finite-length quantity from the proposed geometric defect\n`G = n - 2d`, proving `D = G + 2`.\n\nFor a family whose block lengths tend to infinity, the normalized exact and\ngeometric defects differ by `2/n`, which tends to zero. If `G` is uniformly\nbounded above, both the logical rate `k/n` and every nonnegative protected\nentropy density `S/n` (when `S ≤ k`) tend to zero. Conversely, a rate at least\n`ε` forces normalized exact defect at least `ε`.\n\n## What this does and does not settle\n\nThis proves the parameter-level obstruction behind “no extensive entropy at\nexact length balance,” including the `O(1)` defect case. It also identifies a\nnecessary positive defect density for positive asymptotic rate. It does not\nprove the conjectured lower bound of rate by defect density: Singleton provides\nonly the upper direction, and geometry/locality would need to supply additional\nstructure.\n\n## Next formal targets\n\n1. **Geometric lower bounds.** Define a concrete class of local CSS codes on\n   bounded-degree cell complexes, then formulate extra expansion or local-testability\n   hypotheses under which defect density yields a logical-rate lower bound.\n2. **Cut-indexed defects.** Introduce finite tensor-network cut data and prove a\n   finite cut-wise Singleton inequality before investigating equality with entropy.\n3. **Syndrome-graph counterexamples.** Formalize syndrome adjacency graphs and\n   exhibit parameter-matched stabilizer presentations with nonisomorphic graphs,\n   demonstrating that `[[n,k,d]]` data does not determine incidence geometry.\n4. **Subsystem-code locality.** Define a local defect field only after fixing a\n   canonical allocation of checks and logical degrees of freedom; test whether\n   different allocations invalidate any proposed curvature identity.\n5. **Sharper asymptotics.** Generalize bounded geometric defect to\n   `G(n) = o(n)` and prove zero logical and protected-entropy rates directly via\n   the same normalized Singleton estimate.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -13888,7 +13888,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Homotopy types of intervals in corank-three higher Bruhat orders' and formalize its key results. Abstract: We prove Reiner's conjecture for higher Bruhat orders in corank 3: the facial intervals of B(n,n-3) are precisely the spherical intervals, and all other intervals are contractible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -13971,7 +13971,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Convex Radiator Laws and Swarm Thermodynamics\n\nThis cycle established that the equal-area optimum of a finite radiating swarm is\nnot special to a quadratic cost, but follows from convexity alone: for any\nstrictly convex radiator-cost law, the uniform allocation is the *unique*\ncost minimizer at fixed total area, and subdividing a collector into independent\nradiators lowers the cost whenever an idle collector is not penalized. The\nfollowing conjectures push this structural picture further.\n\n## 1. Temperature-weighted radiator optimality\n\n**Conjecture.** For a strictly convex radiator-cost law and collectors carrying\nprescribed positive weights (view factors, emissivities, or reservoir\ntemperatures), the unique cost-minimizing allocation at fixed total area assigns\narea to each collector in proportion to a weight-dependent share, and the optimum\ndegenerates to the equal-area rule exactly when the weights coincide.\n\nThe key insight is that unequal collectors correspond to a *weighted* Jensen\ninequality, whose equality case forces every collector to sit at a common\nweighted center of mass rather than at a common area — so the equal-area law is\nthe isotropic shadow of a more general proportional-allocation law.\n\n**Why now?** The unweighted optimum and its uniqueness are settled, isolating the\nequality case as the single ingredient that must be re-derived with weights; this\nmakes the weighted generalization a direct and falsifiable next step.\n\n## 2. Quantitative splitting gain\n\n**Conjecture.** For a strictly convex, twice-differentiable radiator law with\n`f(0) ≤ 0`, the cost reduction from splitting a collector of area `a` into `k`\nequal independent radiators is bounded below by an explicit expression in the\nmodulus of strict convexity of `f` on `[0, a]`, and this bound is asymptotically\nsharp as `k → ∞`.\n\nThe key insight is that the splitting law is currently qualitative (strict\ndecrease), but the size of the decrease is governed by how strongly `f` curves;\na modulus-of-convexity estimate converts the sign statement into a rate.\n\n**Why now?** The qualitative splitting law is proved and its exact hypothesis\n(`f(0) ≤ 0`) identified, so the remaining question is purely quantitative and can\nbe tested against closed-form curvature bounds for standard cost laws.\n\n## 3. Majorization dominance of allocations\n\n**Conjecture.** Given two swarms of equal total area whose area vectors are\ncomparable in the majorization order, the more spread-out (more majorizing) swarm\nhas the larger total cost for *every* convex radiator law, and strictly larger for\nevery strictly convex law unless the two allocations are permutations of each\nother.\n\nThe key insight is that the equal-area optimum is the bottom element of the\nmajorization order, so the scalar optimality theorem should lift to a full order\nisomorphism between allocation spread and cost, unifying every convex law at once.\n\n**Why now?** The equal-area minimum is the extreme case of exactly this order;\nproving the general monotone comparison would subsume the current result and\nconnect swarm design to the classical theory of Schur-convex functions.\n\n## 4. Joint area–temperature power optimization\n\n**Conjecture.** In an isotropic stellar model where each collector radiates by a\nStefan–Boltzmann law at its own temperature under a fixed material budget, the\nnet-power-maximizing swarm splits its material into equal-temperature collectors,\nand the optimal common temperature is the unique root of an explicit balance\nbetween intercepted flux and re-radiated power.\n\nThe key insight is that intercepted power is linear in area while thermal\nrejection is convex in temperature, so the joint optimum couples the equal-area\nprinciple of this cycle with a one-dimensional convex temperature trade-off.\n\n**Why now?** The area side of the optimization (equal allocation) is now on firm\nground; supplying an explicit radiation law closes the loop without disturbing the\nresource-accounting layer, yielding a fully constrained extremum.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -14541,7 +14541,7 @@
       "depth_estimate": 3,
       "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Drużkowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Geometry"
@@ -14582,7 +14582,7 @@
       "depth_estimate": 3,
       "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Geometry",
@@ -14830,7 +14830,7 @@
       "depth_estimate": 3,
       "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Analysis"
@@ -14994,7 +14994,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} ≥ vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Analysis"
@@ -15736,7 +15736,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning",
         "Analysis",
@@ -15946,7 +15946,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Tropical",
         "Computation",
@@ -16072,7 +16072,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cramér-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Probability",
@@ -16239,7 +16239,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy–Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for all n)\n\n**Conjecture.** For every `n` there exists a positive integer expressible as a\nsum of two positive cubes in at least `n` distinct ways.\n\nThe key insight is that the affine Fermat cubic `x³ + y³ = N` is an elliptic\ncurve, and a single rational point of infinite order generates infinitely many\nrational representations; clearing denominators by a common cube collapses `n`\nof them onto a single integer that inherits `n` integer representations.\n\nWhy now? The cycle established the exact provable boundary: the elementary\nscaling map multiplies a fixed representation set by a cube but never *creates*\nnew representations, so genuine growth in the count must come from the group law\non the cubic. Isolating this obstruction pinpoints precisely the arithmetic\ninput — a non-torsion rational point — that any full proof must supply.\n\n## 2. Sharp growth rate of Taxicab(n)\n\n**Conjecture.** The cubic floor is far from optimal: `Taxicab(n)` grows faster\nthan any fixed polynomial in `n`, and in fact `log Taxicab(n) / n → ∞`.\n\nThe key insight is that representations correspond to lattice-like points on the\ncubic curve whose heights grow at least geometrically under repeated application\nof the chord-and-tangent construction, forcing the smallest number carrying `n`\nrepresentations to grow super-polynomially rather than at the elementary cubic\nrate proved here.\n\nWhy now? Having proved a clean lower bound `Taxicab(n) > n³` by pigeonhole on\ndistinct smaller summands, the natural next question is how loose it is; the\nobserved values (`1729`, `8.7·10⁷`, `7.0·10¹²`) already grow far faster than\n`n³`, quantitatively motivating a super-polynomial lower bound.\n\n## 3. Multiplicative obstruction and a cube-free core\n\n**Conjecture.** Every taxicab number `N` factors as `N = m³ · N₀` with `N₀`\ncube-free, and the representation count of `N` equals that of its cube-free core\n`N₀`; consequently the *primitive* taxicab numbers (cube-free `N₀`) already carry\nall the representation-count information.\n\nThe key insight is that the scaling map proved in this cycle is a bijection\nbetween representations of `N₀` and representations of `m³ N₀` that preserves the\nordering `a ≤ b`, so cube factors contribute nothing new and can be stripped.\n\nWhy now? The scaling theorem `scaled_reps_card` supplies exactly the injection\nneeded for the easy direction; the open content is the reverse inclusion — that\nscaling by a cube produces *no additional* representations — which would reduce\nthe whole theory to cube-free numbers.\n\n## 4. Cabtaxi numbers (cubes with signs)\n\n**Conjecture.** Allowing one summand to be negative (differences of cubes)\nstrictly lowers the least number with `n` representations for every `n ≥ 2`, and\nthe signed and unsigned growth exponents nevertheless coincide.\n\nThe key insight is that the signed cubic `x³ + y³ = N` with `x, y ∈ ℤ` has\nstrictly more rational points available to the chord-and-tangent process than its\npositive-orthant restriction, so signed representations are strictly cheaper to\naccumulate while remaining governed by the same elliptic-curve height growth.\n\nWhy now? The pigeonhole lower bound in this cycle used only positivity and the\nordering `a ≤ b`; relaxing positivity isolates how much of the growth is forced\nby arithmetic geometry versus by the sign restriction, a clean comparative test.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -16280,7 +16280,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## 1. Composite-index synchronization through cyclotomic primitive parts\n\nFor every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should contain a prime whose divisibility locus is exactly the multiples of that index. This would extend finite-family synchronization from prime indices to the full range of Carmichael’s theorem.\n\nThe key insight is that finite gcd transport already converts an exact apparition law for one prime into synchronization over every finite family, so only primitive-prime existence remains quantitative.\n\nWhy now? The finite-meet mechanism has been isolated from the growth argument, allowing cyclotomic estimates to be developed independently and attached at a single interface.\n\n## 2. Lucas-sequence finite-meet transport\n\nEvery nondegenerate Lucas sequence that is a strong divisibility sequence should satisfy a finite gcd transport theorem, with primitive prime divisors inducing exact synchronization laws outside an explicitly classifiable exceptional set.\n\nThe key insight is that induction over finite insertion uses only the binary strong-divisibility identity, while the apparition argument uses only primality and minimality.\n\nWhy now? The Fibonacci proof identifies precisely which components are sequence-independent and which require Lucas-specific arithmetic.\n\n## 3. Finite lcm law for ranks of apparition\n\nFor pairwise coprime moduli whose ranks of apparition exist, the rank of their product should equal the least common multiple of their individual ranks, subject to explicit local conditions at primes dividing the discriminant.\n\nThe key insight is that the proved gcd synchronization is the meet-side shadow of a dual join law on divisibility loci.\n\nWhy now? Exact prime-index apparition gives a clean family of test cases in which the proposed lcm law predicts simultaneous Fibonacci divisibility without additional recurrence calculations.\n\n## 4. Elliptic divisibility synchronization\n\nFor a nontorsion rational point on an elliptic curve, primitive prime divisors of denominator sequences should produce finite-family synchronization under gcd of indices, apart from a finite exceptional set determined by bad reduction.\n\nThe key insight is that the argument requires a strong divisibility law and a primitive divisor, two structures that elliptic divisibility sequences are expected to share with Fibonacci numbers.\n\nWhy now? Separating finite-meet transport from primitive-divisor existence provides a concrete route for testing exactly where bad reduction obstructs the analogy.\n\n## 5. Effective exceptional-set bounds from finite synchronization\n\nThere should be an explicit bound, polynomial in the logarithmic height of the defining recurrence data, beyond which every index admits a synchronizing primitive prime for all finite index families.\n\nThe key insight is that synchronization itself has no quantitative cost once a primitive divisor exists; every effective bound can therefore focus entirely on the growth of the primitive part.\n\nWhy now? The structural theorem turns a potentially many-family assertion into one primitive-divisor estimate, making uniform quantitative bounds testable.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -16362,7 +16362,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -16484,7 +16484,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. Generalize the scalar output theorem to vector-valued output layers.\n2. Package each selected formula as an affine map and prove continuity across adjacent cell boundaries.\n3. Add explicit genericity assumptions and relate feasible activation cells to maximal linear regions.\n4. Formalize the sharper hyperplane-arrangement region bound in fixed input dimension.\n5. Extend the argument inductively to deep ReLU networks, whose preactivations are piecewise affine relative to earlier-layer cells.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -16524,7 +16524,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: radical isogenies on Montgomery curves\n\nThe following conjectures are concrete extensions of the verified degree-two affine formulas. Each can be falsified by an explicit finite field, curve parameter, and point (or chain) violating the stated property.\n\n1. **Projective extension and exact kernel.** For every field of characteristic different from two and every nonsingular curve\n   \\(E_A : y^2=x^3+Ax^2+x\\), the rational map\n   \\((x,y)\\mapsto(x+x^{-1},\\,y(1-x^{-2}))\\) extends uniquely to a degree-two separable isogeny of smooth projective curves whose kernel is exactly \\(\\{\\mathcal O,(0,0)\\}\\).\n\n2. **Dual composition formula.** Under the same hypotheses, after converting the quotient\n   \\(Y^2=X^3+AX^2-4X-4A\\) back to Montgomery normal form, the analogous quotient by the image two-torsion point is the dual isogeny, and the two maps compose to the multiplication-by-two morphism on \\(E_A\\).\n\n3. **Supersingularity preservation over quadratic finite fields.** Let \\(p>2\\) be prime and \\(A\\in\\mathbb F_{p^2}\\) define a nonsingular supersingular Montgomery curve. The smooth projective model of the verified quotient equation is supersingular and has the same number of \\(\\mathbb F_{p^2}\\)-rational points as \\(E_A\\).\n\n4. **Radical-choice independence up to twist isomorphism.** If \\(r,s\\in\\mathbb F_{p^2}^{\\times}\\) satisfy \\(r^2=s^2=B\\), then the normalize-then-quotient evaluations obtained from `radicalNormalize r` and `radicalNormalize s` are conjugate by the explicit sign isomorphism \\((X,Y)\\mapsto(X,-Y)\\); consequently their induced maps on projective isomorphism classes coincide.\n\n5. **Verified-chain uniqueness.** In any free transitive commutative class-group action modeling supersingular isogeny classes, two finite radical-isogeny chains with the same source and target have equal products of advertised class-group elements, even when their lengths and intermediate curves differ.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -16606,7 +16606,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$' and formalize its key results. Abstract: Given a subset $A \\subseteq \\mathbb F_2^n$, we can consider the distribution of the intersection size of $A$ with a uniformly random $d$-flat $F$. Motivated by the edge statistics problem and the hypercube statistics problem, the affine subspace statistics problem concerns the maximum of $\\mathbb{P}[|F\\cap A|=s]$ among $A \\subseteq \\mathbb F_2^n$ for any fixed $s\\in\\{1,\\dots,2^d\\}$ over a uniformly random $d$-flat $F$. We use $λ^*(d,s)$ to denote the limit of the maximum when $n$ goes to infinity. In this note, we prove tight bounds for $λ^*(d,s)$ in two different regimes. For $s=j2^k$ where $j$ is a positive odd integer, the best known lower bound construction achieving $λ^*(d,s)\\ge 1-2^{-k}$ is due to taking $A$ as the union of $j$ parallel $(n-d+k)$-flats in $\\mathbb F_2^n$. Our main result is a matching upper bound with an additive error term of $O(2^{-3k/2})$. We also study the case $s=1$, where we determine $λ^*(d,1)$ exactly. We show that the random construction where each point",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Geometry"
@@ -16647,7 +16647,7 @@
       "depth_estimate": 3,
       "description": "# Spectral Graph Theory Meets Network Robustness\n\n## Formal results\n\n`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version of the proposed spectral certificate.\n\n1. **Exact spectral identity.** For a weighted two-node computation graph, the Dirichlet energy is exactly algebraic connectivity times variance in the unique disagreement mode.\n2. **Spectral-to-Lipschitz theorem.** If a scalar internal state satisfies\n   \\[\n   \\lambda\\,|h(x)-h(y)|^2 \\le G^2 |x-y|^2,\n   \\]\n   with \\(\\lambda>0\\), then its Lipschitz constant is at most \\(G/\\sqrt{\\lambda}\\).\n3. **Readout composition.** A readout with Lipschitz constant \\(K\\) gives an end-to-end bound \\(KG/\\sqrt{\\lambda}\\).\n4. **Certified radius.** At a point with positive classification margin \\(m\\), when \\(G,K>0\\), the positive decision is certified for every perturbation of magnitude strictly below\n   \\[\n   \\frac{m\\sqrt{\\lambda}}{KG}.\n   \\]\n\nThus algebraic connectivity contributes a square-root improvement to the certified radius under an explicit spectral state-gain inequality. The theorem does not confuse graph topology with the independent gain and margin assumptions needed to control the represented function.\n\n## Contrarian conjectures disproved\n\nTwo stronger, tempting formulations are false.\n\n- **“Connectivity alone gives a positive robustness radius.”** Disproved uniformly: for every proposed radius \\(R>0\\), the affine score \\(f(x)=R/2-x\\) has positive score at zero and is 1-Lipschitz, but reaches zero inside that radius. This counterexample works irrespective of the computation graph's connectivity.\n- **“Connectivity alone upper-bounds the network Lipschitz constant.”** Disproved uniformly: for every proposed nonnegative bound \\(B\\), the linear score \\(f(x)=(B+1)x\\) violates it. Graph topology cannot prevent arbitrarily large parameter scaling.\n\nThese disproofs identify the indispensable quantities omitted by the connectivity-only conjectures: a parameter/state gain bound and a positive output margin.\n\n## Computational evidence decision\n\nA separate computational-evidence artifact was not produced because the claims proved here are exact symbolic identities and uniform parametric counterexamples, rather than a finite or asymptotic conjecture inferred from a numerical sequence. The counterexamples cover every positive candidate radius and every nonnegative candidate Lipschitz bound; sampling small cases would be strictly weaker. There is consequently no associated integer sequence or meaningful OEIS query. The two-node spectral calculation is formalized exactly in Lean, avoiding floating-point eigensolver evidence.\n\n## Future directions\n\n1. Replace the scalar `SpectralStateBound` assumption by a theorem derived from a finite graph Laplacian, its Rayleigh quotient, and orthogonality to the constant mode.\n2. Generalize scalar inputs, states, and scores to finite-dimensional Euclidean spaces and operator norms.\n3. Derive state gain bounds compositionally from layer weight matrices, 1-Lipschitz activations, residual edges, and message-passing operators.\n4. Formalize multiclass certification using the gap between the winning logit and every competing logit.\n5. Separate normalized and unnormalized Laplacians and track degree dependence in the resulting certificates.\n6. Study whether graph rewiring that increases algebraic connectivity can worsen parameter gain enough to reduce the final certified radius; the proved formula shows this tradeoff must be controlled.\n7. Extend the deterministic result to node/edge deletion certificates using interlacing bounds for perturbed Laplacians.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -16673,6 +16673,47 @@
       "thread_id": "th_e44fb762",
       "timestamp": "2026-07-29T12:29:16.324227+00:00",
       "title": "`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version o"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n## Established result\n\nFor the split metric\n\n\\[\nds^2=\\frac{dx^2}{\\cosh^2y}+\\cosh^2x\\,dy^2,\n\\]\n\nthe computed Gaussian curvature is\n\n\\[\nK_G(x,y)=-\\cosh^2y-\\operatorname{sech}^2x\n +2\\operatorname{sech}^2x\\operatorname{sech}^2y.\n\\]\n\n`Catalog/Novelty/SplitGeometryCurvature.lean` proves that `K_G ≤ 0` everywhere,\nthat `K_G = 0` exactly at the origin, and hence that `K_G < 0` at every other\npoint. In particular, the two diagonals are not flat phase boundaries. The\nsuggested field `sech²x - sech²y` is a useful antisymmetric phase field, but it\nis not the Gaussian curvature of this metric.\n\n## Next formal targets\n\n1. **Derive curvature directly from a metric tensor.** Package the diagonal\n   coefficients into Mathlib's smooth-manifold/Riemannian framework and prove\n   that the intrinsic curvature definition reduces to the closed formula used\n   here. This would connect the existing coordinate calculation to the fully\n   intrinsic curvature tensor.\n\n2. **Sectional/geodesic consequences of nonpositive curvature.** Establish\n   completeness or identify incomplete directions. If completeness holds,\n   develop consequences such as uniqueness of geodesics between points and\n   convexity of squared distance.\n\n3. **Geodesic equations.** Using the already computed Christoffel symbols,\n   formalize the coupled ODE\n   for affine geodesics. The assertion that geodesics are piecewise exponential\n   and trigonometric should first be tested: the smooth coefficients do not\n   change formula at the diagonals, so literal piecewise behavior is not\n   presently supported.\n\n4. **Diagonal-crossing conjecture.** The claim that every geodesic crosses the\n   diagonals at most twice needs a computational counterexample search before\n   formalization. Since the diagonals are not curvature phase boundaries, there\n   is no curvature-sign mechanism forcing such a bound.\n\n5. **Area measure and triangle area.** The volume density is\n   `sqrt(det g) = cosh x / cosh y`. Define measurable regions and integrate this\n   density over coordinate triangles first. A “triangle with one vertex in each\n   region” is not uniquely specified; a meaningful theorem needs explicit\n   vertices and a choice between coordinate-edge and geodesic triangles.\n\n6. **Designing a genuine sign-changing metric.** Search among diagonal metrics\n   `E(y) dx² + G(x) dy²` for choices whose Brioschi curvature has a prescribed\n   sign-changing zero set. The formal inequality methods in the current file can\n   then certify the resulting phase portrait.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0813",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "dff51e05",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/dff51e05",
+      "status": "available",
+      "thread_id": "th_e44efbb9",
+      "timestamp": "2026-07-29T12:30:20.287636+00:00",
+      "title": "For the split metric"
     },
     {
       "ambition_level": "extension",
@@ -17113,6 +17154,46 @@
       "thread_id": "",
       "timestamp": "2026-07-18T12:32:18.786765+00:00",
       "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 545fa377 (Q=0.782), which proved 10 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "push_545fa377_06b84e6e",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8815999999999998,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "545fa377",
+      "source_path": "Spectral Graph Theory Meets Network Robustness",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-29T12:29:20.468595+00:00",
+      "title": "Deepening: Spectral Graph Theory Meets Network Robustness"
     },
     {
       "ambition_level": "extension",
@@ -17936,7 +18017,7 @@
       "domain_bridges": [
         "Pythagorean <-> Geometry"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -18871,7 +18952,7 @@
       "depth_estimate": 3,
       "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Geometry"
@@ -18993,7 +19074,7 @@
       "depth_estimate": 3,
       "description": "Prove that every Hodge class on a non-singular projective algebraic variety is a rational linear combination of classes of algebraic cycles. Formalize the Hodge decomposition and explore the conjecture for specific varieties like abelian varieties and K3 surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Algebra"
@@ -19321,7 +19402,7 @@
       "depth_estimate": 3,
       "description": "Provide rigorous foundations for Schubert's enumerative geometry. Formalize intersection theory on Grassmannians and flag varieties, proving Schubert calculus results via modern algebraic geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Algebra"
@@ -19362,7 +19443,7 @@
       "depth_estimate": 3,
       "description": "Study the topology of real algebraic curves and surfaces. Formalize the Harnack bound, classify real algebraic curves by arrangement of ovals, and connect to the second part on limit cycles of planar polynomial ODEs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Topology"
@@ -19851,7 +19932,7 @@
       "depth_estimate": 3,
       "description": "Prove the Kakeya conjecture: a Besicovitch set in Rⁿ has Hausdorff dimension n. Formalize the connection to restriction estimates and additive combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Analysis"
@@ -20391,7 +20472,7 @@
       "depth_estimate": 3,
       "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Algebra",
@@ -20433,7 +20514,7 @@
       "depth_estimate": 3,
       "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number ρ = g - (r+1)(g-d+r) ≥ 0. Formalize the connection to classical algebraic geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Geometry",
@@ -20517,7 +20598,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical Bézout theorem with explicit bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Geometry"
@@ -20558,7 +20639,7 @@
       "depth_estimate": 3,
       "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Tropical",
         "Geometry",
@@ -21562,7 +21643,7 @@
       "depth_estimate": 3,
       "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Physics",
@@ -21604,7 +21685,7 @@
       "depth_estimate": 3,
       "description": "A proof is a sequence of steps. Map each step to a point on S^n via stereographic projection. The proof distance between theorems is the spherical distance between their proof endpoints. Conjecture: Two theorems whose proofs are close in spherical distance share a common subproof of length at least n minus spherical_distance. Test: compute proof distances for a set of 20 basic theorems in Lean 4 and verify the subproof bound. Impact: geometric proof mining and automated lemma discovery.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Logic",
@@ -21646,7 +21727,7 @@
       "depth_estimate": 3,
       "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Tropical",
@@ -21730,7 +21811,7 @@
       "depth_estimate": 3,
       "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "NumberTheory",
@@ -21814,7 +21895,7 @@
       "depth_estimate": 3,
       "description": "The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimension d_f(X) of a metric space X as the infimum of d such that X embeds in R^d with Hausdorff dimension preserved. Conjecture: For compact metric spaces, the Hausdorff dimension is a topological invariant modulo homeomorphisms that are bi-Lipschitz on a dense open set. More precisely, if X and Y are homeomorphic compact subsets of R^n, and the homeomorphism is bi-Lipschitz on a set of full Hausdorff dimension in X, then dim_H(X) = dim_H(Y). This would mean that fractal dimension is not just a metric accident but a topological invariant up to rough isometries. Test: compute d_f for the Sierpinski gasket (expected: 1 since connected, Hausdorff dimension log3/log2) and the Cantor set (expected: 0 since totally disconnected). Prove that the Koch curve and any bi-Lipschitz-equivalent curve have equal Hausdorff dimensions. Impact: elevates fractal dimension from a metric curiosity to a topological invariant, with applications to shape classification and topological data analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Topology",
@@ -22024,7 +22105,7 @@
       "depth_estimate": 3,
       "description": "Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability distribution. Conjecture: The EML manifold M_EML is a dually flat statistical manifold whose dual potentials are the cumulant generating functions of the EML activation. The Fisher information on M_EML induces a Hessian metric with constant negative curvature, making it a hyperbolic geometry of model parameters. This means natural gradient descent on M_EML has well-defined geodesics, and the dual flatness enables efficient Fisher vector products. The negative curvature reflects the exponential sensitivity of EML networks to parameter changes: small perturbations in theta cause exponentially large changes in the output. Test: compute the Fisher metric for a single EML neuron f(x; a,b) = exp(a)*log(b*x+1) and verify it induces a Hessian manifold with constant negative curvature. Prove that the alpha-connections on M_EML are projectively flat for alpha=1. Impact: gives EML networks a differential-geometric foundation for natural gradient descent, with provable convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "EML",
         "MachineLearning",
@@ -22108,7 +22189,7 @@
       "depth_estimate": 3,
       "description": "Sheaf theory studies how local data glues to form global objects. The stereographic projection gives S^n a two-chart atlas with Mobius transition maps. Define a new class of sheaves called stereographic sheaves where the gluing data is constrained by the conformal structure of the stereographic atlas. A stereographic sheaf on S^n is a sheaf F such that for each chart U_i of the stereographic cover, the restriction F|U_i is a sheaf on R^n, and the transition function F(U_0 cap U_1) is a sheaf morphism that commutes with the Mobius transition. Conjecture: The category of stereographic sheaves on S^n is a proper subcategory of all sheaves on S^n, characterized by the condition that Cech cohomology with respect to the stereographic cover satisfies a Mobius compatibility. This subcategory has better computational properties: H^k(S^n, F) can be computed from the transition function alone for stereographic sheaves, reducing the computation of sheaf cohomology on S^n to a single gluing datum. Test: prove the equivalence with locally constant sheaves on RP^n for n=2,3. Compute H^1(S^2, Z) = Z/2Z for the constant sheaf Z. Impact: a new computational tool for sheaf cohomology that exploits conformal structure, with applications to topological data analysis and differential equations on spheres.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Algebra",
@@ -22150,7 +22231,7 @@
       "depth_estimate": 3,
       "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "MachineLearning",
@@ -22192,7 +22273,7 @@
       "depth_estimate": 3,
       "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Analysis",
@@ -22234,7 +22315,7 @@
       "depth_estimate": 3,
       "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Computation",
@@ -22276,7 +22357,7 @@
       "depth_estimate": 3,
       "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Computation",
@@ -22823,7 +22904,7 @@
       "depth_estimate": 3,
       "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -23420,7 +23501,7 @@
       "depth_estimate": 3,
       "description": "Mathematics is full of impossibility theorems — things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle — each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility — every CAN'T is a reflection of a free group action.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -23592,7 +23673,7 @@
       "depth_estimate": 3,
       "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form ±p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime — a number-theoretic analog of spin in physics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -23861,7 +23942,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.78321,
       "parent_direction": "",
       "priority_score": 0.81,
       "proof_strategy": "Define the split metric g = diag(1/cosh^2(y), cosh^2(x)) on R^2. Compute the Christoffel symbols: Gamma^1_{11} = tanh(y), Gamma^1_{12} = 0, Gamma^1_{22} = -sinh(x)cosh(x), Gamma^2_{11} = -tanh(y)*cosh^2(x)*cosh^2(y), Gamma^2_{12} = 0, Gamma^2_{22} = -sinh(x)cosh(x). Compute curvature: K = -sech^2(y) + sech^2(x). Verify: K = 0 on y = x and y = -x. K > 0 for |x| > |y| (elliptic). K < 0 for |y| > |x| (hyperbolic). Prove geodesic crossing: a geodesic that enters the elliptic region and then the hyperbolic region crosses the flat boundary at most twice (by convexity of the curvature sign along the geodesic). Compute split triangle area: integral of sqrt(det(g)) = integral of cosh(x)/cosh(y) over the triangle. Test: numerical verification for specific triangles.",
@@ -23872,7 +23953,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
@@ -24019,7 +24100,7 @@
       "depth_estimate": 3,
       "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Tropical",
@@ -24443,7 +24524,7 @@
       "depth_estimate": 3,
       "description": "A cake is a smooth projective variety over R: it has a base (a smooth manifold with boundary), frosting (a sheaf of sections supported on the boundary), and layers (a stratification by codimension). The Fundamental Theorem of Cakes states: every cake C is uniquely determined (up to isomorphism of flavor) by its base B, its frosting sheaf F, and its layer stratification L. The frosting sheaf is a locally free sheaf of rank 1 (the cake has uniform frosting thickness) supported on the boundary of the base. The stratification is a flag of subvarieties C = L_0 > L_1 > ... > L_k = {point} where L_i has codimension i and represents the i-th layer. Conjecture: the moduli space of cakes of genus g (g = number of cherries on top) has dimension 3g-3 for g >= 2, mirroring the moduli space of Riemann surfaces. The cherry number g corresponds to the first Betti number of the cake surface, and the moduli are the positions of the g cherries on the surface. Test: enumerate all topologically distinct cakes with g <= 5 cherries and verify that the moduli space has dimension 3g-3. Compute the Teichmuller space of cakes by varying the cherry positions. Impact: cakes are algebraic varieties, and the mathematics of cake decoration IS the mathematics of moduli spaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -25118,7 +25199,7 @@
       "depth_estimate": 3,
       "description": "In 1952, Turing showed that reaction-diffusion equations produce patterns (spots, stripes, spirals) that explain biological morphogenesis. But Turing patterns are solutions to PDEs, which are hard to analyze. Conjecture: Turing patterns are algebraic varieties. Specifically, the zero set of a Turing pattern (where the concentration equals the background level) is a real algebraic curve in 2D (for spots and stripes) or a real algebraic surface in 3D (for more complex patterns). The degree of the curve is the number of modes in the reaction-diffusion system. For a two-mode system (like the Gray-Scott model), the pattern is a curve of degree 2 (a conic section: circles for spots, parallel lines for stripes, hyperbolas for labyrinthine patterns). For a three-mode system, the pattern is a curve of degree up to 6 (sextic curves that can produce hexagonal patterns). The genus of the curve determines the pattern topology: genus 0 gives spots (topologically a sphere), genus 1 gives stripes (topologically a torus), and genus g > 1 gives labyrinthine patterns with g+1 holes. Test: simulate Turing patterns in the Gray-Scott model, fit the zero-set to an algebraic curve of degree d, and verify that d = 2 for spots and stripes. Compute the genus and verify it matches the pattern topology. Impact: biological patterns are algebraic curves. The mathematics of seashells, leopard spots, and zebra stripes is the mathematics of conic sections.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -25964,7 +26045,7 @@
       "depth_estimate": 3,
       "description": "The Alexander polynomial Delta_K(t) of a knot K is a Laurent polynomial that encodes topological information about the knot. Conjecture: for any knot K with n crossings, the Alexander polynomial Delta_K(t) can be expressed as the generating function of lattice paths in Z^2 that avoid a region determined by the knot diagram. Specifically, define the 'knot lattice' L_K as the set of lattice paths from (0,0) to (n,n) that avoid the 'forbidden region' R_K determined by the crossing structure of K. Then Delta_K(t) = sum_{p in L_K} t^{area(p)} where area(p) is the area under the path p. This conjecture follows from the state sum formula for the Alexander polynomial: Delta_K(t) = sum_{states s} (-1)^{w(s)} t^{a(s)} where w(s) is the writhe and a(s) is the area of the state. The area a(s) is exactly the area under a lattice path determined by the state. Conjecture: every Alexander polynomial arises as a lattice path generating function, and vice versa. This means the Alexander polynomial is not just a knot invariant — it is a combinatorial object that counts lattice paths. Test: compute the Alexander polynomials for the first 50 knots and verify that each can be expressed as a lattice path generating function. Impact: knot invariants are combinatorial. The Alexander polynomial counts lattice paths, connecting topology to combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -26726,7 +26807,7 @@
       "depth_estimate": 3,
       "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -26896,7 +26977,7 @@
       "depth_estimate": 3,
       "description": "The 3D Poincaré conjecture is proven, but the smooth 4D version remains open: does every smooth 4-manifold homotopy equivalent to S⁴ necessarily diffeomorphic to S⁴? Formalize Donaldson's invariants, Seiberg-Witten theory, and explore exotic smooth structures on 4-manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Topology"
@@ -27263,7 +27344,7 @@
       "depth_estimate": 3,
       "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k ≤ 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -27549,7 +27630,7 @@
       "depth_estimate": 3,
       "description": "Prove that every convex body K in Rⁿ of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Analysis"
@@ -27631,7 +27712,7 @@
       "depth_estimate": 3,
       "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, Künneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Algebra"
@@ -27672,7 +27753,7 @@
       "depth_estimate": 3,
       "description": "Prove Hironaka's resolution of singularities theorem for varieties in characteristic p > 0. Formalize known results for dimensions ≤ 3.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Algebra"
@@ -27713,7 +27794,7 @@
       "depth_estimate": 3,
       "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Topology"
@@ -27754,7 +27835,7 @@
       "depth_estimate": 3,
       "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Geometry"
@@ -28286,7 +28367,7 @@
       "depth_estimate": 3,
       "description": "Prove the Yamabe problem on non-compact Riemannian manifolds: find a conformal metric of constant scalar curvature. Formalize the compact case and explore non-compact obstructions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Analysis"
@@ -28327,7 +28408,7 @@
       "depth_estimate": 3,
       "description": "Prove sharp lower bounds for the Willmore energy of surfaces by genus. Extend the Marques-Neves proof for tori to higher-genus surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry"
       ],
@@ -28367,7 +28448,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a Kähler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Algebra"
@@ -28695,7 +28776,7 @@
       "depth_estimate": 3,
       "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges",
         "Geometry"
@@ -29530,7 +29611,7 @@
       "depth_estimate": 3,
       "description": "Develop a rigorous theory of negative-dimensional spaces using pro-spectra and formal dimension theory. Prove that Euler characteristic extends to negative dimensions and that chi(X) for dim X = -n satisfies chi = (-1)^n · |pi_0(X)|. Formalize the stabilization map from negative to positive dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Geometry",
@@ -29572,7 +29653,7 @@
       "depth_estimate": 3,
       "description": "Formalize the mathematical conditions under which impossible figures (Penrose triangles, Escher stairs) can exist as manifolds. Prove that every non-orientable 3-manifold contains an embedded Penrose triangle as a smoothly immersed surface. Classify which impossible figures are realizable as developable surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Geometry",
@@ -29656,7 +29737,7 @@
       "depth_estimate": 3,
       "description": "Prove that 2-dimensional Newtonian gravity is mathematically pathological: orbits don't close, there's no stable circular orbit, and gravitational potential is logarithmic. Formalize the Bertrand-Darboux theorem failure in 2D and prove that stable planetary systems cannot exist in Flatland.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Physics",
@@ -29782,7 +29863,7 @@
       "depth_estimate": 3,
       "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -30075,7 +30156,7 @@
       "depth_estimate": 3,
       "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Physics",
@@ -30201,7 +30282,7 @@
       "depth_estimate": 3,
       "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Geometry",
@@ -30537,7 +30618,7 @@
       "depth_estimate": 3,
       "description": "Construct a single algebraic object whose projections give S^0, S^1, S^2, ... simultaneously. Prove it exists as an inverse limit in the category of spheres. Show that its homology groups encode the Bernoulli numbers and that its cohomology ring is the polynomial ring on Stiefel-Whitney classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Geometry",
@@ -31319,7 +31400,7 @@
       "depth_estimate": 3,
       "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Physics",
         "Geometry"
@@ -31401,7 +31482,7 @@
       "depth_estimate": 3,
       "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics",
         "Geometry"
@@ -31524,7 +31605,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Geometry"
@@ -31565,7 +31646,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical",
         "Geometry"
@@ -32221,7 +32302,7 @@
       "depth_estimate": 3,
       "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Physics",
         "Geometry",
@@ -32758,7 +32839,7 @@
       "depth_estimate": 3,
       "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges",
         "Geometry"
@@ -32840,7 +32921,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Bridges",
         "Physics"
@@ -33004,7 +33085,7 @@
       "depth_estimate": 3,
       "description": "Prove that Gelfand duality (commutative C*-algebras ≅ locally compact Hausdorff spaces) fails for noncommutative C*-algebras, and that this failure defines 'noncommutative topology'. Bridge: the K-theory of a C*-algebra A equals the topological K-theory of its Gelfand spectrum when A is commutative. Prove the Bott periodicity theorem for K_0 and K_1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges",
         "Geometry"
@@ -33086,7 +33167,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Bridges",
         "Tropical"
@@ -33496,7 +33577,7 @@
       "depth_estimate": 3,
       "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Geometry"
@@ -33578,7 +33659,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Geometry"
@@ -33660,7 +33741,7 @@
       "depth_estimate": 3,
       "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical",
         "Algebra"
@@ -34724,7 +34805,7 @@
       "depth_estimate": 3,
       "description": "Formalize 4D geometry: hyperspheres, tesseracts (4-cubes), Clifford tori. Prove: the 4D sphere S^3 has the Hopf fibration with fibers S^1 over S^2. Show: the volume of a 4D ball is (pi^2 / 2) * r^4. Explore: can we formalize Rucker's concept of 'rotation through the fourth dimension' as a smooth map from SO(4) that has no fixed point? Conjecture: every closed 3-manifold embeds in R^4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Geometry"
@@ -34806,7 +34887,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hypothesis that spacetime has nontrivial topology (a 'donut' shape). Prove: if the universe has the topology of a 3-torus T^3, then there exist closed timelike geodesics. Show: the fundamental group pi_1(T^3) = Z^3 implies three independent families of 'wrapping around' the universe. Explore: what is the minimal volume complete hyperbolic 3-manifold? Conjecture: the Weeks manifold (volume ~0.94) is minimal. Connect to Rucker's vision of donut-shaped spacetime.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Physics",
@@ -35223,7 +35304,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Physics",
@@ -37905,122 +37986,122 @@
   ],
   "recent_domain_counts": {
     "Algebra": 8,
-    "Analysis": 1,
+    "Analysis": 2,
     "Bridges": 1,
     "Combinatorics": 1,
     "Computation": 9,
     "Cryptography": 2,
-    "Geometry": 3,
+    "Geometry": 4,
     "Logic": 4,
     "MachineLearning": 4,
-    "Novelty": 5,
+    "Novelty": 6,
     "NumberTheory": 2,
     "Physics": 2,
     "Pythagorean": 3,
-    "Speculative": 2,
+    "Speculative": 3,
     "Tropical": 1
   },
   "recent_theme_keywords": {
+    "'phase": 1,
+    "-sech^2(y": 1,
+    "across": 1,
     "affine": 2,
     "algebraic": 3,
     "arbitrary": 3,
+    "behavior": 1,
+    "boundary": 1,
+    "boundary'": 1,
     "bounds": 2,
-    "certified": 1,
+    "changes": 1,
+    "christoffel": 1,
+    "combinations": 1,
     "complexity": 2,
-    "computation": 1,
-    "conjecture": 6,
-    "connection": 1,
-    "connectivity": 1,
-    "constants": 1,
+    "compute": 1,
+    "conjecture": 7,
+    "consistent": 1,
     "construct": 3,
+    "contracting": 1,
+    "converge": 1,
+    "cosh^2(x": 1,
+    "curvature": 1,
+    "curves": 1,
+    "define": 1,
+    "depends": 1,
+    "diagonals": 1,
     "dimension": 2,
+    "direction": 1,
+    "direction-dependent": 1,
     "directions": 2,
+    "diverge": 1,
+    "dx^2/cosh^2(y": 1,
+    "elliptic": 1,
     "equivalent": 2,
+    "euclid's": 1,
+    "expanding": 1,
     "explicit": 3,
+    "exponential": 1,
     "finite": 6,
+    "flat": 1,
     "formalize": 12,
     "function": 3,
-    "graph": 1,
+    "geodesics": 1,
+    "geometries": 1,
+    "geometry": 1,
+    "hyperbolic": 1,
     "hypotheses": 3,
-    "impact": 4,
-    "liftings": 1,
+    "impact": 5,
+    "impossible": 1,
+    "k(x,y": 1,
     "linear": 2,
-    "lipschitz": 1,
-    "log(4^4": 1,
-    "lovasz": 1,
-    "meets": 1,
-    "microsatellites": 1,
-    "minimum": 1,
-    "monochromatic": 1,
-    "network": 1,
-    "network's": 1,
-    "neural": 1,
-    "nucleotides": 1,
+    "lines": 1,
+    "mathematical": 1,
+    "metric": 1,
     "number": 2,
     "numerical": 2,
-    "overhead": 1,
-    "pigeonhole": 1,
+    "parallel": 1,
+    "piecewise": 1,
     "positive": 2,
+    "postulate": 1,
     "precise": 2,
-    "precisely": 1,
-    "predicts": 1,
     "problem": 3,
-    "program": 1,
     "provability": 2,
     "proves": 2,
     "quantitative": 2,
-    "radius": 1,
-    "ramsey": 1,
-    "ramsey's": 1,
     "random": 3,
-    "regions": 1,
-    "repeated": 1,
-    "repeats": 1,
+    "realization": 1,
+    "region": 1,
+    "regions": 2,
     "replace": 3,
-    "representations": 1,
     "requires": 2,
     "result": 2,
-    "robustness": 1,
+    "riemannian": 1,
+    "sech^2(x": 1,
     "section": 2,
-    "sequence": 1,
-    "sequences": 1,
-    "simulation": 1,
-    "smaller": 1,
-    "specific": 1,
-    "specifically": 1,
-    "spectra": 1,
-    "spectral": 1,
-    "states": 1,
-    "strengthening": 1,
-    "subsequence": 1,
-    "subsequences": 1,
-    "subsequential": 1,
+    "simultaneously": 1,
     "subsets": 2,
-    "subtle": 1,
-    "symmetric": 1,
+    "symbols": 1,
     "system": 4,
-    "template": 1,
+    "tensor": 1,
     "theorem": 5,
     "theory": 3,
-    "theta(k": 1,
-    "things": 1,
-    "topology": 1,
-    "transfer": 1,
-    "transition": 1,
-    "triangle": 1,
-    "turing": 1,
-    "turán's": 1,
+    "triangle": 2,
+    "trigonometric": 1,
+    "twice": 1,
     "unfinished": 1,
     "unique": 1,
     "uniqueness": 1,
     "universality": 1,
+    "universe": 1,
     "unrelated": 1,
     "unresolved": 1,
     "v\\ne0\\}": 1,
     "values": 1,
     "verify": 1,
+    "vertex": 1,
     "well-typed": 1,
-    "without": 1
+    "without": 1,
+    "x-axis": 1,
+    "y-axis": 1
   },
   "selection_log": [
     "cross_domain_bridge",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d6b505de",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Cross-Reality Entropy\n\n## 1. Entropy production with evolving branch weights\n\nLet branch weights evolve under a stochastic transport kernel while each branch undergoes internal dy",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-25T06:37:20",
-      "title": "Cross-Reality-Entropy: Second Law of Thermodynamics for Multiversal Ensembles"
-    },
-    {
       "cycle_id": "f853fcd6",
       "domain": "Bridges",
       "key_insight": "# Future Directions: Matroid Correspondences\n\n## 1. Representability transfer through linear correspondences\n\nLet a matroid correspondence be induced by a linear relation between two finite-dimensiona",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-29T09:58:20",
       "title": "Graceful Tree Conjecture"
+    },
+    {
+      "cycle_id": "545fa377",
+      "domain": "Geometry",
+      "key_insight": "# Spectral Graph Theory Meets Network Robustness\n\n## Formal results\n\n`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version of the proposed spectral certificate.\n\n1. **Exact sp",
+      "quality_score": 0.7815999999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-29T12:29:20",
+      "title": "Spectral Graph Theory Meets Network Robustness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c930e14b",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Transfinite Survival Clocks\n\n## 1. Finite-depth clocks realize every finite power of omega\n\nFor each positive integer d, define a d-level survival clock by lexicographically nesti",
-      "quality_score": 0.71,
-      "sorry_count": 13,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T00:41:04",
-      "title": "Infinite Games Against Death: Immortality Strategies"
-    },
     {
       "cycle_id": "e3086657",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-29T09:58:20",
       "title": "Graceful Tree Conjecture"
+    },
+    {
+      "cycle_id": "545fa377",
+      "domain": "Geometry",
+      "key_insight": "# Spectral Graph Theory Meets Network Robustness\n\n## Formal results\n\n`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version of the proposed spectral certificate.\n\n1. **Exact sp",
+      "quality_score": 0.7815999999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-29T12:29:20",
+      "title": "Spectral Graph Theory Meets Network Robustness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a68d3b50",
-      "domain": "Cryptography",
-      "name": "expectation_sub_le_l1Gap",
-      "quality": 0.7667599999999999
-    },
-    {
-      "cycle_id": "a68d3b50",
-      "domain": "Cryptography",
-      "name": "boolean_distinguisher_advantage",
-      "quality": 0.7667599999999999
-    },
-    {
-      "cycle_id": "38d3a014",
-      "domain": "Novelty",
-      "name": "rule110_algebraic_normal_form",
-      "quality": 0.7097100000000001
-    },
     {
       "cycle_id": "38d3a014",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "starGraph_isGraceful",
       "quality": 0.80057
+    },
+    {
+      "cycle_id": "545fa377",
+      "domain": "Geometry",
+      "name": "twoNode_spectral_gap_exact",
+      "quality": 0.7815999999999999
+    },
+    {
+      "cycle_id": "545fa377",
+      "domain": "Geometry",
+      "name": "spectral_state_lipschitz",
+      "quality": 0.7815999999999999
+    },
+    {
+      "cycle_id": "545fa377",
+      "domain": "Geometry",
+      "name": "readout_composition_lipschitz",
+      "quality": 0.7815999999999999
     }
   ],
-  "last_updated": "2026-07-29T09:58:20",
+  "last_updated": "2026-07-29T12:29:20",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "f3a76d9a",
-        "quality": 0.67,
-        "theorems": 16,
-        "title": "Rucker: Mind Tools — Mathematics as Cognitive Extension"
-      },
-      {
         "cycle_id": "a4c98532",
         "quality": 0.76,
         "theorems": 0,
@@ -3451,6 +3445,12 @@
         "quality": 0.7645199999999999,
         "theorems": 7,
         "title": "Jacobian Conjecture"
+      },
+      {
+        "cycle_id": "545fa377",
+        "quality": 0.7815999999999999,
+        "theorems": 10,
+        "title": "Spectral Graph Theory Meets Network Robustness"
       }
     ],
     "Logic": [
