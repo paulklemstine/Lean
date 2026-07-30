@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3d6ad336",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n## Scope of the completed formalization\n\n`Cryptography/McElieceConnector.lean` proves a cross-domain chain:\n\n1. **Hamming geometry → correctness.** Additive encryption is translat",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-26T00:21:35",
-      "title": "Code-Based Cryptography: McEliece Security on the Binary Goppa Code"
-    },
-    {
       "cycle_id": "d94c6678",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n## What was established\n\n`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed protocol conflates:\n\n1. **Naive random proof-line opening is generally not zero",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-30T03:37:45",
       "title": "Consciousness as Emergent Fixed Point"
+    },
+    {
+      "cycle_id": "c2653f80",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nThe Lean development proves that `78557` is a Sierpiński number by a complete covering-system certificate: every exponent class modulo `36` receives a proper prime divisor from `{",
+      "quality_score": 0.7720099999999999,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-30T03:38:51",
+      "title": "Sierpiński Numbers: Covering Systems"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3d25b5ad",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nThe formal development establishes a concrete genuinely non-strict bicategory: its chosen 1-cell composition has bracketings equal to `5` and `7`, while an invertible associator c",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-20T23:22:27",
-      "title": "Causal Loops in Category Theory: When Composition Loops Back"
-    },
     {
       "cycle_id": "82c8c57a",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-30T03:37:45",
       "title": "Consciousness as Emergent Fixed Point"
+    },
+    {
+      "cycle_id": "c2653f80",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nThe Lean development proves that `78557` is a Sierpiński number by a complete covering-system certificate: every exponent class modulo `36` receives a proper prime divisor from `{",
+      "quality_score": 0.7720099999999999,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-07-30T03:38:51",
+      "title": "Sierpiński Numbers: Covering Systems"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "229af38b",
-      "domain": "Algebra",
-      "name": "starLabel_le",
-      "quality": 0.80057
-    },
-    {
-      "cycle_id": "229af38b",
-      "domain": "Algebra",
-      "name": "starGraph_isGraceful",
-      "quality": 0.80057
-    },
-    {
-      "cycle_id": "545fa377",
-      "domain": "Geometry",
-      "name": "twoNode_spectral_gap_exact",
-      "quality": 0.7815999999999999
-    },
     {
       "cycle_id": "545fa377",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "every_endomorphism_has_fixedPoint",
       "quality": 0.7636799999999999
+    },
+    {
+      "cycle_id": "c2653f80",
+      "domain": "NumberTheory",
+      "name": "pow_periodic",
+      "quality": 0.7720099999999999
+    },
+    {
+      "cycle_id": "c2653f80",
+      "domain": "NumberTheory",
+      "name": "dvd_transfer",
+      "quality": 0.7720099999999999
+    },
+    {
+      "cycle_id": "c2653f80",
+      "domain": "NumberTheory",
+      "name": "CoveringCert",
+      "quality": 0.7720099999999999
     }
   ],
-  "last_updated": "2026-07-30T03:37:45",
+  "last_updated": "2026-07-30T03:38:51",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "227d6015",
-        "quality": 0.75,
-        "theorems": 19,
-        "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
-      },
-      {
         "cycle_id": "29ba074c",
         "quality": 0.6,
         "theorems": 24,
@@ -3699,6 +3693,12 @@
         "quality": 0.78664,
         "theorems": 11,
         "title": "Hilbert 12: Kronecker-Weber Generalization"
+      },
+      {
+        "cycle_id": "c2653f80",
+        "quality": 0.7720099999999999,
+        "theorems": 24,
+        "title": "Sierpiński Numbers: Covering Systems"
       }
     ],
     "Physics": [
