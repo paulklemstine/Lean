@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f8a71afd",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThe following are concrete, falsifiable conjectures extending the proved scalar-extension and isometry results in `Catalog/Algebra/QuadraticFormsNumberFields.lean`.\n\n1. **Concrete",
-      "quality_score": 0.75276,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-27T07:58:55",
-      "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
-    },
-    {
       "cycle_id": "1443bb24",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ances",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-30T18:56:43",
       "title": "Navier-Stokes Existence and Smoothness"
+    },
+    {
+      "cycle_id": "6d7202c5",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nThe following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. Each is stated so that a counterexample consists of a concrete finite family and parameters violatin",
+      "quality_score": 0.73827,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-30T18:57:54",
+      "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9d505535",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-prese",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T20:46:11",
-      "title": "Speculative: Tropical Mathematics of Social Choice"
-    },
     {
       "cycle_id": "ea115bd0",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-30T18:56:43",
       "title": "Navier-Stokes Existence and Smoothness"
+    },
+    {
+      "cycle_id": "6d7202c5",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nThe following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. Each is stated so that a counterexample consists of a concrete finite family and parameters violatin",
+      "quality_score": 0.73827,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-30T18:57:54",
+      "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8aec96a6",
-      "domain": "Probability",
-      "name": "activation_pos",
-      "quality": 0.76977
-    },
-    {
-      "cycle_id": "8aec96a6",
-      "domain": "Probability",
-      "name": "activationMass_pos",
-      "quality": 0.76977
-    },
-    {
-      "cycle_id": "2996b72f",
-      "domain": "Shared",
-      "name": "gammaTerm_nonneg",
-      "quality": 0.77621
-    },
     {
       "cycle_id": "2996b72f",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "norm_transferInto_complement_eq",
       "quality": 0.73786
+    },
+    {
+      "cycle_id": "6d7202c5",
+      "domain": "Shared",
+      "name": "allows",
+      "quality": 0.73827
+    },
+    {
+      "cycle_id": "6d7202c5",
+      "domain": "Shared",
+      "name": "discardsAtLeast_of_log_image_bound",
+      "quality": 0.73827
+    },
+    {
+      "cycle_id": "6d7202c5",
+      "domain": "Shared",
+      "name": "landauerCost_family_lower_bound",
+      "quality": 0.73827
     }
   ],
-  "last_updated": "2026-07-30T18:56:43",
+  "last_updated": "2026-07-30T18:57:54",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "0268a2b5",
-        "quality": 0.79,
-        "theorems": 14,
-        "title": "Rucker: The Fourth Dimension as a Mathematical Playground"
-      },
-      {
         "cycle_id": "0a1b5635",
         "quality": 0.64,
         "theorems": 4,
@@ -3947,6 +3941,12 @@
         "quality": 0.7903499999999999,
         "theorems": 19,
         "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
+      },
+      {
+        "cycle_id": "6d7202c5",
+        "quality": 0.73827,
+        "theorems": 7,
+        "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of leng"
       }
     ],
     "Tropical": [

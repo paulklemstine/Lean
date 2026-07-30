@@ -1243,26 +1243,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "726a20a7",
-    "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
-    "domain_bridges": [],
-    "domains": [
-      "Analysis",
-      "Physics"
-    ],
-    "id": "seed_016",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Navier-Stokes Existence and Smoothness"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
     "domain_bridges": [],
@@ -1506,7 +1486,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "85fa434c",
     "description": "Prove that the rank of an elliptic curve over Q is computable. Formalize the Mordell-Weil theorem, height pairings, and descent algorithms. Connect to the conjecture that ranks are bounded and explore the parity conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -1519,7 +1499,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "BSD Conjecture: Rank Computability"
   },
@@ -2804,6 +2784,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 00b7234b (Q=0.800), which proved 27 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon ",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_00b7234b_589bf5fb",
+    "lineage_refs": [],
+    "priority_score": 0.8997299999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "00b7234b",
+    "status": "available",
+    "timestamp": "2026-07-30T18:54:20.499356+00:00",
+    "title": "Deepening: Quantum Topological Phase Computation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
     "domain_bridges": [],
     "domains": [
@@ -3594,25 +3593,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6d7202c5",
-    "description": "Building on cycle 43fa6482 (Q=0.770), which proved 7 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision procedures on inputs of length `n` irreversibly discard at least `b(n)` unbiased logical bits. Under fini",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_43fa6482_c922ce7d",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "43fa6482",
-    "status": "in_progress",
-    "timestamp": "2026-07-22T18:42:11.729178+00:00",
-    "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle ce71f394 (Q=0.770), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the d",
     "domain_bridges": [],
@@ -4084,25 +4064,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697762+00:00",
     "title": "Homological Algebra: Derived Functors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "15429b4a",
-    "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "fd_0674",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697803+00:00",
-    "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
   {
     "ambition_level": "extension",
@@ -5465,27 +5426,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "00b7234b",
-    "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Topology",
-      "Physics"
-    ],
-    "id": "seed_063",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Quantum Topological Phase Computation"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
     "domain_bridges": [],
@@ -6349,7 +6289,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "513ffc93",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -6362,7 +6302,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697801+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -6791,7 +6731,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02f69ad4",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domain_bridges": [],
     "domains": [
@@ -6804,7 +6744,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Idempotent Probability: Large Deviations"
   },
@@ -8538,7 +8478,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3c425e4",
     "description": "Investigate the ArXiv paper 'The Arithmetic of Semirings Part I: Ideals' and formalize its key results. Abstract: We study ideals in the semiring $\\mathbb{N}$ of natural numbers, with a focus on those which are lost when extending from $\\mathbb{N}$ to $\\mathbb{Z}$. This leads to a new perspective on the classical theory of numerical semigroups, including the introduction of a natural multiplicative structure. We prove that unique factorization of ideals fails in $\\mathbb{N}$ on several levels, introduce a handful of new tropical multiplicative invariants of numerical semigroups, characterize integral closures of ideals in terms of Newton polygons, and analyze the behavior of classical numerical semigroup invariants with respect to the product operation.",
     "domain_bridges": [],
     "domains": [
@@ -8551,7 +8491,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.10778v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T14:08:19.852831+00:00",
     "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
   },
@@ -14844,6 +14784,106 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope and interpretation\n\nA zero set of a real ReLU network is generally a noncompact real polyhedral\nset, not a smooth projective complex variety. Consequently it does not carry\nclassical Hodge numbers `h^{p,q}` without substantial extra choices. Also, a\npolyhedral face being described by linear equalities and inequalities does not\nby itself make that face a complex algebraic cycle. The formal development\ntherefore proves an honest finite cellular analogue rather than asserting the\nclassical Hodge conjecture for arbitrary ReLU zero sets.\n\n## What was established\n\n`Catalog/MachineLearning/NeuralHodgeDecisionSurfaces.lean` computes the rational\ncycle space of the cyclic four-edge square. Boundary cancellation forces all\nfour edge coefficients to coincide, so every cycle is uniquely a rational\nmultiple of the sum of the four linear edges. It also formalizes the proposed\narchitecture expression\n\n`choose(first,p) * choose(last,q) * product(interior widths)`\n\nand proves its support, positivity, layer-reversal symmetry, and an exponential\nupper estimate. Kernel-checked small examples give values `6`, `36`, and `180`,\nand verify vanishing outside the binomial support.\n\n## Next mathematical steps\n\n1. Generalize the square calculation to an oriented cycle with `m` edges and\n   prove its cycle space is one-dimensional over `ℚ`.\n2. Define finite polyhedral chain complexes with incidence numbers, then prove\n   that every homology class is represented by a finite rational sum of faces.\n   This is a cellular-chain statement; it should not be conflated with\n   representability by algebraic cycles.\n3. Connect actual ReLU networks to finite polyhedral complexes on a compact\n   window, with hypotheses excluding cells contained entirely in the zero set\n   and controlling degeneracies.\n4. Replace undefined Hodge numbers by invariants appropriate to real\n   polyhedral sets, such as Betti numbers or dimensions of cellular homology.\n5. Investigate architecture-dependent Betti bounds. Any theorem relating the\n   expression formalized here to a network's topology needs additional\n   geometric hypotheses and a separate proof; the present file deliberately\n   makes no such unsupported identification.\n6. For a genuinely Hodge-theoretic question, choose an algebraic\n   compactification or tropical variety with a specified tropical Hodge\n   theory, then formalize the comparison map and its required assumptions.\n\n## Computational exploration\n\nFurther evidence could enumerate activation patterns for small rational-weight\nnetworks, construct their bounded polyhedral cell complexes, compute boundary\nmatrices over `ℚ`, and compare resulting Betti numbers with architecture-only\ncandidate bounds. No OEIS sequence is asserted: the current data are values of\na multivariable expression, not a canonically selected one-variable sequence.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0848",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a8849f61",
+    "status": "available",
+    "timestamp": "2026-07-30T18:53:05.610105+00:00",
+    "title": "A zero set of a real ReLU network is generally a noncompact real polyhedral"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Fibonacci `B₃` density.** Let `ρFib : BraidGrp 2 →* SU(2)` be obtained from the standard Fibonacci `F`- and `R`-matrices after removing their global phases. Conjecture: `DenseRange ρFib`. This is falsified by exhibiting a proper closed subgroup of `SU(2)` containing both generator images.\n\n2. **Noncommuting infinite-order witness.** Conjecture: a fixed, explicitly specified commutator word in the two phase-normalized Fibonacci braid generators has infinite order and trace outside the finite-subgroup trace list. This can be tested by deriving its exact cyclotomic trace and checking every candidate order.\n\n3. **Quantitative net formation.** For braid words of length at most `L`, let `ε(L)` be their covering radius in `SU(2)` under Frobenius distance. Conjecture: there are explicit constants `C,c > 0` such that `ε(L) ≤ C * exp (-c * L)` for all sufficiently large `L`. A certified finite enumeration at successive lengths can falsify any proposed constants.\n\n4. **Level boundary for universality.** For the fundamental-qubit Jones representations coming from `SU(2)_k`, conjecture that the projective braid image is dense for every integer `k ≥ 3` except the known finite-image exceptional levels, once those levels and the encoding are stated explicitly. Each level is independently testable by determining whether the closure of its two generator matrices is a proper closed subgroup.\n\n5. **Solovay–Kitaev extraction.** Assuming a proved dense Fibonacci representation and a finite inverse-closed base net, conjecture that a verified compiler can output, for every target `U ∈ SU(2)` and `0 < ε < 1`, a braid word within `ε` whose length is bounded by `C * log (1 / ε) ^ 4`. This is falsified by a target/error pair for which the compiler violates either the distance or length certificate.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0849",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "00b7234b",
+    "status": "available",
+    "timestamp": "2026-07-30T18:54:16.146327+00:00",
+    "title": "1. **Fibonacci `B₃` density.** Let `ρFib : BraidGrp 2 →* SU(2)` be obtained from"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Turán extremizers.** For every integer `r ≥ 3` and real `ε > 0`, there exists `δ > 0` such that every `K_r`-free graph on `n` vertices with at least `ex(n,K_r) - δ n²` edges can be changed into the balanced complete `(r-1)`-partite graph by adding or deleting at most `ε n²` edges.\n\n2. **Clique-count shadow hierarchy.** If a finite graph has at least `k.choose t` copies of `K_t`, then for every `2 ≤ s ≤ t` it has at least `k.choose s` copies of `K_s`. This should follow by identifying graph cliques with a uniform set family and applying iterated Kruskal–Katona.\n\n3. **Induced triangle-removal lemma.** For every `ε > 0`, there exists `δ > 0` such that a finite graph with at most `δ n³` induced triangles can be made induced-triangle-free by changing at most `ε n²` adjacencies.\n\n4. **Quantitative Roth bound.** There are constants `C > 0` and `N₀` such that for all `N ≥ N₀`, `rothNumberNat N ≤ C * N / (log N)^(1 + 1/10)`. This strengthens the currently packaged qualitative `o(N)` conclusion and is directly testable against any proposed proof or finite counterexample.\n\n5. **Four-term progression removal route.** Construct a finite hypergraph removal theorem strong enough to prove that the largest four-term-AP-free subset of `{0, …, N-1}` is `o(N)`, with the progression required to have nonzero common difference.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_0850",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "15429b4a",
+    "status": "available",
+    "timestamp": "2026-07-30T18:55:27.159959+00:00",
+    "title": "The following concrete statements are natural next targets. Each is falsifiable "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe Lean development proves an abstract energy estimate, the final measure-theoretic reduction behind an ε-regularity argument, and exact finite-mode energy exchange. It does **not** resolve the open three-dimensional Navier–Stokes existence-and-smoothness problem or formalize the analytic core of the Caffarelli–Kohn–Nirenberg theorem.\n\nThe following are concrete conjectures with outcomes that can be refuted by counterexamples.\n\n1. **Parabolic ε-regularity criterion.** There is a universal constant `ε > 0` such that, for every suitable weak solution on a three-dimensional parabolic cylinder, scale-invariant local velocity-and-pressure excess below `ε` on one subcylinder implies Hölder regularity on a fixed, strictly smaller concentric subcylinder. A counterexample consists of a suitable weak solution and cylinder satisfying the smallness bound but lacking the asserted local regularity.\n\n2. **CKN concentration-set estimate.** For the excess in Conjecture 1, the set of points at which the excess is at least `ε` at every positive scale has zero one-dimensional parabolic Hausdorff measure. A counterexample is a suitable weak solution whose concentration set has positive such measure. Combined with `Criterion.singularSet_measure_zero`, this estimate would give the corresponding abstract partial-regularity conclusion.\n\n3. **Critical-norm continuation criterion.** Every smooth three-dimensional solution on `[0,T)` whose velocity remains bounded in `L∞(0,T; L³(ℝ³))` extends smoothly beyond `T`. A counterexample is a finite-time singular solution satisfying that critical bound.\n\n4. **No universal cascade direction from conservation alone.** There is a finite energy-conserving modal interaction with one state for which transfer into a prescribed proper mode band is positive and another state for which it is negative. Refutation requires showing that one sign is impossible for every such interaction and state. A proof would demonstrate that the conservation identity in `ModeTransfer.lean` fixes the balance but not the direction of turbulent transfer.\n\n5. **Galerkin compactness to a suitable weak solution.** For standard divergence-free Fourier Galerkin approximations with uniformly bounded initial energy, a subsequence converges strongly enough locally to pass to the nonlinear term and its limit satisfies both the Leray–Hopf energy inequality and the local energy inequality. A counterexample is a uniformly energy-bounded Galerkin sequence for which no subsequence has all these properties. This is a proposed bridge from `EnergyMethod.lean` to the hypotheses of Conjectures 1–2.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Bridges"
+    ],
+    "id": "fd_0851",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "726a20a7",
+    "status": "available",
+    "timestamp": "2026-07-30T18:56:38.720688+00:00",
+    "title": "The Lean development proves an abstract energy estimate, the final measure-theor"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. Each is stated so that a counterexample consists of a concrete finite family and parameters violating the displayed conclusion.\n\n1. **Composition increment bound.** For finite families `fₙ : αₙ → βₙ` and `gₙ : βₙ → γₙ`, define conditional erasure as `erasedBits (gₙ ∘ fₙ) - erasedBits fₙ`. If this is at least `c(n)`, then the Landauer cost of the composition exceeds that of `fₙ` by at least `c(n) k_B T log 2` for nonnegative `k_B,T`.\n\n2. **Worst-fiber bound.** If every size-`n` procedure has a fiber containing at least `2 ^ b(n)` inputs, then its erased information is at least `b(n)` bits. (The present image-cardinality model suggests this when the domain admits an appropriate uniform-fiber or entropy hypothesis; without such a hypothesis, find a finite counterexample.)\n\n3. **Polynomial workload growth.** If `b(n) ≥ c n^p` for fixed `c > 0` and natural `p`, then cumulative Landauer cost over sizes `0,…,N` is at least `c k_B T log 2 · ∑ n ∈ range (N+1), n^p`, and hence has order at least `N^(p+1)` with an explicit constant.\n\n4. **Reversible-history tradeoff.** For each finite family, any product-form reversible witness whose auxiliary register has `h(n)` states satisfies `logb 2 (maxFiberSize (fₙ)) ≤ logb 2 h(n)`; equality is attainable exactly when the fibers can be embedded uniformly into a history register of maximum-fiber cardinality.\n\n5. **Expected erasure extension.** For nonuniform input distributions, replacing log-cardinality by Shannon entropy should give `H(Xₙ)-H(fₙ(Xₙ))` as the exact average logical information loss and the corresponding expected Landauer lower bound. A finite rational-distribution formulation would make this directly falsifiable by exhaustive finite sums.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0852",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6d7202c5",
+    "status": "available",
+    "timestamp": "2026-07-30T18:57:50.746259+00:00",
+    "title": "The following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. E"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [
@@ -15112,7 +15152,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3811f14c",
     "description": "Cycle 29ba074c (Q=0.600) proved 24 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
     "domain_bridges": [],
     "domains": [
@@ -15124,7 +15164,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "29ba074c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T06:47:46.532440+00:00",
     "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
   },

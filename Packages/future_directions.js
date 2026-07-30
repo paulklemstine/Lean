@@ -916,22 +916,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hodge Conjecture"
   },
   {
-    "consumed_by_exp_id": "726a20a7",
-    "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
-    "domains": [
-      "Analysis",
-      "Physics"
-    ],
-    "id": "seed_016",
-    "phase": "A",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Navier-Stokes Existence and Smoothness"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
     "domains": [
@@ -2078,6 +2062,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 00b7234b (Q=0.800), which proved 27 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_00b7234b_589bf5fb",
+    "priority_score": 0.8997299999999999,
+    "research_mode": "team",
+    "source_exp_id": "00b7234b",
+    "status": "available",
+    "timestamp": "2026-07-30T18:54:20.499356+00:00",
+    "title": "Deepening: Quantum Topological Phase Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
     "domains": [
       "Physics"
@@ -2668,21 +2666,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
   },
   {
-    "consumed_by_exp_id": "6d7202c5",
-    "description": "Building on cycle 43fa6482 (Q=0.770), which proved 7 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision procedures on inputs of length `n` irreversibly discard at least `b(n)` unbiased logical bits. Under fini",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_43fa6482_c922ce7d",
-    "phase": "A",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "43fa6482",
-    "status": "in_progress",
-    "timestamp": "2026-07-22T18:42:11.729178+00:00",
-    "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle ce71f394 (Q=0.770), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the d",
     "domains": [
@@ -2995,6 +2978,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e1e4ff02 (Q=0.761), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize t",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e1e4ff02_a5044a06",
+    "priority_score": 0.86074,
+    "research_mode": "team",
+    "source_exp_id": "e1e4ff02",
+    "status": "available",
+    "timestamp": "2026-07-30T17:59:48.900810+00:00",
+    "title": "Deepening: EML Training Dynamics as Tropical Gradient Flow"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -3022,21 +3019,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697762+00:00",
     "title": "Homological Algebra: Derived Functors"
-  },
-  {
-    "consumed_by_exp_id": "15429b4a",
-    "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "fd_0674",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697803+00:00",
-    "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
   {
     "consumed_by_exp_id": "",
@@ -3417,17 +3399,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46cb7ee6",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
       "Logic"
     ],
     "id": "seed_371",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -4055,40 +4038,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Category-Theoretic Neural Architectures"
-  },
-  {
-    "consumed_by_exp_id": "00b7234b",
-    "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
-    "domains": [
-      "Computation",
-      "Topology",
-      "Physics"
-    ],
-    "id": "seed_063",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Quantum Topological Phase Computation"
-  },
-  {
-    "consumed_by_exp_id": "e1e4ff02",
-    "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
-    "domains": [
-      "EML",
-      "Tropical",
-      "MachineLearning"
-    ],
-    "id": "seed_071",
-    "phase": "B",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Training Dynamics as Tropical Gradient Flow"
   },
   {
     "consumed_by_exp_id": "",
@@ -11003,6 +10952,81 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T14:42:53.780398+00:00",
     "title": "The proposed powers-of-two family is a **strictly descending**, separated"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Derive the tropical model from finite-temperature EML training.** Define a\n   log-sum-exp-smoothed neuron with scale parameter and prove convergence of its\n   losses and gradient trajectories to the piecewise-linear flow formalized here.\n\n2. **Pass from a scalar chart to the tropical projective torus.** Quotient weight\n   vectors by common translation, define a projective metric, and show the flow\n   is independent of the representative.\n\n3. **More samples and weighted data.** Generalize the three-point theorem to odd\n   finite samples (the median) and weighted samples (weighted median), including\n   even samples where the minimizer is an interval and trajectories may have\n   multiple fixed points.\n\n4. **Multiple tropical neurons.** Study sums and differences of max-affine terms,\n   where activation patterns partition parameter space into polyhedra. Establish\n   existence and convergence results under convexity or error-bound hypotheses.\n\n5. **Discrete training.** Analyze explicit subgradient descent with a step-size\n   schedule and compare it to the continuous clipped flow. Constant steps can\n   oscillate around the median, while diminishing steps should converge under\n   standard summability assumptions.\n\n6. **Perturbation and robustness.** Quantify stability of the limiting median\n   under changes in labels and tropical features, connecting training stability\n   to robust statistics.\n\n7. **Loss alternatives.** Compare tropical `L\u00b9` training with squared loss and\n   Huber loss. Their minimizers connect respectively to means and robust\n   interpolations between means and medians, but their tropical-limit dynamics\n   differ.\n",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_0847",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e1e4ff02",
+    "status": "available",
+    "timestamp": "2026-07-30T17:59:44.982119+00:00",
+    "title": "1. **Derive the tropical model from finite-temperature EML training.** Define a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Scope and interpretation\n\nA zero set of a real ReLU network is generally a noncompact real polyhedral\nset, not a smooth projective complex variety. Consequently it does not carry\nclassical Hodge numbers `h^{p,q}` without substantial extra choices. Also, a\npolyhedral face being described by linear equalities and inequalities does not\nby itself make that face a complex algebraic cycle. The formal development\ntherefore proves an honest finite cellular analogue rather than asserting the\nclassical Hodge conjecture for arbitrary ReLU zero sets.\n\n## What was established\n\n`Catalog/MachineLearning/NeuralHodgeDecisionSurfaces.lean` computes the rational\ncycle space of the cyclic four-edge square. Boundary cancellation forces all\nfour edge coefficients to coincide, so every cycle is uniquely a rational\nmultiple of the sum of the four linear edges. It also formalizes the proposed\narchitecture expression\n\n`choose(first,p) * choose(last,q) * product(interior widths)`\n\nand proves its support, positivity, layer-reversal symmetry, and an exponential\nupper estimate. Kernel-checked small examples give values `6`, `36`, and `180`,\nand verify vanishing outside the binomial support.\n\n## Next mathematical steps\n\n1. Generalize the square calculation to an oriented cycle with `m` edges and\n   prove its cycle space is one-dimensional over `\u211a`.\n2. Define finite polyhedral chain complexes with incidence numbers, then prove\n   that every homology class is represented by a finite rational sum of faces.\n   This is a cellular-chain statement; it should not be conflated with\n   representability by algebraic cycles.\n3. Connect actual ReLU networks to finite polyhedral complexes on a compact\n   window, with hypotheses excluding cells contained entirely in the zero set\n   and controlling degeneracies.\n4. Replace undefined Hodge numbers by invariants appropriate to real\n   polyhedral sets, such as Betti numbers or dimensions of cellular homology.\n5. Investigate architecture-dependent Betti bounds. Any theorem relating the\n   expression formalized here to a network's topology needs additional\n   geometric hypotheses and a separate proof; the present file deliberately\n   makes no such unsupported identification.\n6. For a genuinely Hodge-theoretic question, choose an algebraic\n   compactification or tropical variety with a specified tropical Hodge\n   theory, then formalize the comparison map and its required assumptions.\n\n## Computational exploration\n\nFurther evidence could enumerate activation patterns for small rational-weight\nnetworks, construct their bounded polyhedral cell complexes, compute boundary\nmatrices over `\u211a`, and compare resulting Betti numbers with architecture-only\ncandidate bounds. No OEIS sequence is asserted: the current data are values of\na multivariable expression, not a canonically selected one-variable sequence.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0848",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a8849f61",
+    "status": "available",
+    "timestamp": "2026-07-30T18:53:05.610105+00:00",
+    "title": "A zero set of a real ReLU network is generally a noncompact real polyhedral"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Fibonacci `B\u2083` density.** Let `\u03c1Fib : BraidGrp 2 \u2192* SU(2)` be obtained from the standard Fibonacci `F`- and `R`-matrices after removing their global phases. Conjecture: `DenseRange \u03c1Fib`. This is falsified by exhibiting a proper closed subgroup of `SU(2)` containing both generator images.\n\n2. **Noncommuting infinite-order witness.** Conjecture: a fixed, explicitly specified commutator word in the two phase-normalized Fibonacci braid generators has infinite order and trace outside the finite-subgroup trace list. This can be tested by deriving its exact cyclotomic trace and checking every candidate order.\n\n3. **Quantitative net formation.** For braid words of length at most `L`, let `\u03b5(L)` be their covering radius in `SU(2)` under Frobenius distance. Conjecture: there are explicit constants `C,c > 0` such that `\u03b5(L) \u2264 C * exp (-c * L)` for all sufficiently large `L`. A certified finite enumeration at successive lengths can falsify any proposed constants.\n\n4. **Level boundary for universality.** For the fundamental-qubit Jones representations coming from `SU(2)_k`, conjecture that the projective braid image is dense for every integer `k \u2265 3` except the known finite-image exceptional levels, once those levels and the encoding are stated explicitly. Each level is independently testable by determining whether the closure of its two generator matrices is a proper closed subgroup.\n\n5. **Solovay\u2013Kitaev extraction.** Assuming a proved dense Fibonacci representation and a finite inverse-closed base net, conjecture that a verified compiler can output, for every target `U \u2208 SU(2)` and `0 < \u03b5 < 1`, a braid word within `\u03b5` whose length is bounded by `C * log (1 / \u03b5) ^ 4`. This is falsified by a target/error pair for which the compiler violates either the distance or length certificate.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0849",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "00b7234b",
+    "status": "available",
+    "timestamp": "2026-07-30T18:54:16.146327+00:00",
+    "title": "1. **Fibonacci `B\u2083` density.** Let `\u03c1Fib : BraidGrp 2 \u2192* SU(2)` be obtained from"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Tur\u00e1n extremizers.** For every integer `r \u2265 3` and real `\u03b5 > 0`, there exists `\u03b4 > 0` such that every `K_r`-free graph on `n` vertices with at least `ex(n,K_r) - \u03b4 n\u00b2` edges can be changed into the balanced complete `(r-1)`-partite graph by adding or deleting at most `\u03b5 n\u00b2` edges.\n\n2. **Clique-count shadow hierarchy.** If a finite graph has at least `k.choose t` copies of `K_t`, then for every `2 \u2264 s \u2264 t` it has at least `k.choose s` copies of `K_s`. This should follow by identifying graph cliques with a uniform set family and applying iterated Kruskal\u2013Katona.\n\n3. **Induced triangle-removal lemma.** For every `\u03b5 > 0`, there exists `\u03b4 > 0` such that a finite graph with at most `\u03b4 n\u00b3` induced triangles can be made induced-triangle-free by changing at most `\u03b5 n\u00b2` adjacencies.\n\n4. **Quantitative Roth bound.** There are constants `C > 0` and `N\u2080` such that for all `N \u2265 N\u2080`, `rothNumberNat N \u2264 C * N / (log N)^(1 + 1/10)`. This strengthens the currently packaged qualitative `o(N)` conclusion and is directly testable against any proposed proof or finite counterexample.\n\n5. **Four-term progression removal route.** Construct a finite hypergraph removal theorem strong enough to prove that the largest four-term-AP-free subset of `{0, \u2026, N-1}` is `o(N)`, with the progression required to have nonzero common difference.\n",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_0850",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "15429b4a",
+    "status": "available",
+    "timestamp": "2026-07-30T18:55:27.159959+00:00",
+    "title": "The following concrete statements are natural next targets. Each is falsifiable "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe Lean development proves an abstract energy estimate, the final measure-theoretic reduction behind an \u03b5-regularity argument, and exact finite-mode energy exchange. It does **not** resolve the open three-dimensional Navier\u2013Stokes existence-and-smoothness problem or formalize the analytic core of the Caffarelli\u2013Kohn\u2013Nirenberg theorem.\n\nThe following are concrete conjectures with outcomes that can be refuted by counterexamples.\n\n1. **Parabolic \u03b5-regularity criterion.** There is a universal constant `\u03b5 > 0` such that, for every suitable weak solution on a three-dimensional parabolic cylinder, scale-invariant local velocity-and-pressure excess below `\u03b5` on one subcylinder implies H\u00f6lder regularity on a fixed, strictly smaller concentric subcylinder. A counterexample consists of a suitable weak solution and cylinder satisfying the smallness bound but lacking the asserted local regularity.\n\n2. **CKN concentration-set estimate.** For the excess in Conjecture 1, the set of points at which the excess is at least `\u03b5` at every positive scale has zero one-dimensional parabolic Hausdorff measure. A counterexample is a suitable weak solution whose concentration set has positive such measure. Combined with `Criterion.singularSet_measure_zero`, this estimate would give the corresponding abstract partial-regularity conclusion.\n\n3. **Critical-norm continuation criterion.** Every smooth three-dimensional solution on `[0,T)` whose velocity remains bounded in `L\u221e(0,T; L\u00b3(\u211d\u00b3))` extends smoothly beyond `T`. A counterexample is a finite-time singular solution satisfying that critical bound.\n\n4. **No universal cascade direction from conservation alone.** There is a finite energy-conserving modal interaction with one state for which transfer into a prescribed proper mode band is positive and another state for which it is negative. Refutation requires showing that one sign is impossible for every such interaction and state. A proof would demonstrate that the conservation identity in `ModeTransfer.lean` fixes the balance but not the direction of turbulent transfer.\n\n5. **Galerkin compactness to a suitable weak solution.** For standard divergence-free Fourier Galerkin approximations with uniformly bounded initial energy, a subsequence converges strongly enough locally to pass to the nonlinear term and its limit satisfies both the Leray\u2013Hopf energy inequality and the local energy inequality. A counterexample is a uniformly energy-bounded Galerkin sequence for which no subsequence has all these properties. This is a proposed bridge from `EnergyMethod.lean` to the hypotheses of Conjectures 1\u20132.\n",
+    "domains": [
+      "Physics",
+      "Bridges"
+    ],
+    "id": "fd_0851",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "726a20a7",
+    "status": "available",
+    "timestamp": "2026-07-30T18:56:38.720688+00:00",
+    "title": "The Lean development proves an abstract energy estimate, the final measure-theor"
   },
   {
     "consumed_by_exp_id": "",
