@@ -1,213 +1,557 @@
-# A Positive-Term Series, an Integral Representation, and the Irrationality Engine for the Euler–Mascheroni Constant
+# The Euler–Mascheroni Constant as Accumulated Information Divergence Along Exponential Rates
+
+**Aristotle**  
+**July 29, 2026**
 
 ## Abstract
 
-The Euler–Mascheroni constant $\gamma = \lim_{n\to\infty}(H_n - \ln n)$, where $H_n = \sum_{k=1}^n 1/k$ is the $n$-th harmonic number, is among the most studied constants in mathematics, yet whether it is rational remains a celebrated open problem. We present a unified, elementary development of $\gamma$ organized around a single positive term,
-$$g(k) = \frac{1}{k} - \ln\!\Big(1 + \frac{1}{k}\Big), \qquad k \ge 1.$$
-We prove that $g(k) > 0$ for all $k$, that the partial sums telescope exactly to the classical lower approximants $H_n - \ln(n+1)$, and hence that $\sum_{k\ge 1} g(k) = \gamma$ as a convergent series of strictly positive terms. We exhibit each term as a unit-interval integral $g(k) = \int_k^{k+1}(1/k - 1/y)\,dy$ and assemble these into the staircase integral representation $\gamma = \int_1^\infty (1/\lfloor x\rfloor - 1/x)\,dx$. We establish the sharp per-term bound $g(k) < 1/(2k^2)$ and deduce the explicit convergence rate $0 < \gamma - \sum_{k=1}^n g(k) < 1/(2n)$. We locate $\gamma$ as the zeroth member $\gamma_0$ of the Stieltjes family, whose constants are the Laurent coefficients of the Riemann zeta function at $s=1$. Finally we isolate the abstract irrationality engine common to all known proofs of this type: a real number $x$ is irrational if and only if there exist integer sequences $(a_n), (b_n)$ with $a_n + b_n x \neq 0$ for all $n$ and $a_n + b_n x \to 0$. This reduces the irrationality of $\gamma$ to an explicit Diophantine construction and clarifies that the structural obstruction is the additive logarithmic correction, not the harmonic part.
+The Euler–Mascheroni constant $\gamma$ is classically defined as the limiting discrepancy between harmonic summation and logarithmic integration. This paper gives a self-contained information-theoretic representation of that discrepancy. For positive rates $\lambda$ and $\mu$, the Kullback–Leibler divergence from an exponential distribution of rate $\lambda$ to one of rate $\mu$ is
 
-**Keywords.** Euler–Mascheroni constant; harmonic numbers; integral representation; series acceleration; Stieltjes constants; irrationality criterion; Diophantine approximation; Riemann zeta function.
+$$
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(\lambda)\,\|\,\operatorname{Exp}(\mu)\right)
+=\log(\lambda/\mu)+\mu/\lambda-1.
+$$
 
----
+We prove its nonnegativity directly, identify the divergence between consecutive integer rates $k+1$ and $k+2$ with the classical nonnegative Euler–Mascheroni summand, and telescope all finite partial sums. The resulting main theorem is
+
+$$
+\gamma=\sum_{k=0}^{\infty}
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(k+1)\,\|\,
+\operatorname{Exp}(k+2)\right).
+$$
+
+After $n$ transitions, the accumulated divergence is exactly $H_n-\log(n+1)$. We discuss numerical evaluation, rigorous elementary tail estimates, the local Fisher-information interpretation, and possible extensions toward accelerated approximations and higher Stieltjes constants. No claim concerning the unresolved rationality or irrationality of $\gamma$ is made.
 
 ## 1. Introduction
 
-The Euler–Mascheroni constant
-$$\gamma = \lim_{n\to\infty}\Big(\sum_{k=1}^n \frac{1}{k} - \ln n\Big) = 0.57721566490153286\ldots$$
-measures the persistent gap between the harmonic numbers and the natural logarithm. It surfaces throughout analysis and number theory: in the asymptotics of the divisor and totient functions, in the reflection and digamma identities for the Gamma function, in the Laurent expansion of the Riemann zeta function at its pole, and in countless integral and product formulas. Despite this ubiquity, two of the most basic questions about $\gamma$ — is it rational? is it transcendental? — remain unanswered. By contrast, $\pi$ and $e$ were proved transcendental in the nineteenth century.
+The harmonic numbers
 
-This paper gives a self-contained treatment of $\gamma$ built from a single elementary building block and arranged to expose precisely where the irrationality question becomes hard. Our contributions are:
+$$
+H_n=\sum_{j=1}^{n}\frac1j
+$$
 
-1. **A positive-term series** (Section 3). With $g(k) = 1/k - \ln(1+1/k)$ we show $g(k) > 0$, prove the telescoping identity $\sum_{k=1}^n g(k) = H_n - \ln(n+1)$, and conclude $\sum_{k\ge1} g(k) = \gamma$. Strict positivity makes the partial sums a monotone increasing sequence of certified lower bounds.
-2. **An integral representation** (Section 4). Each term is the area $g(k) = \int_k^{k+1}(1/k - 1/y)\,dy$ between a step and the hyperbola, yielding the staircase formula $\gamma = \int_1^\infty (1/\lfloor x\rfloor - 1/x)\,dx$.
-3. **A sharp convergence rate** (Section 5). We prove $g(k) < 1/(2k^2)$ and hence $0 < \gamma - \sum_{k=1}^n g(k) < 1/(2n)$.
-4. **The Stieltjes anchor** (Section 6). We define the Stieltjes sequence and prove $\gamma_0 = \gamma$, situating the constant at the head of the family appearing in $\zeta$'s Laurent expansion.
-5. **The irrationality engine** (Section 7). We prove the integer-linear-form criterion and its converse, characterizing irrationality, and apply it to reduce the open problem for $\gamma$ to an explicit construction.
+grow logarithmically. Their difference from $\log n$ converges to the Euler–Mascheroni constant
 
-All arguments are elementary, relying only on the inequality $\ln(1+x) < x$, telescoping, comparison of series, basic interval integration, and the impossibility of an integer strictly between $0$ and $1$.
+$$
+\gamma=\lim_{n\to\infty}(H_n-\log n)
+=0.577215664901532\ldots.
+$$
 
----
+The constant occurs throughout analysis and number theory: in asymptotics of the gamma function, regularization of divergent harmonic behavior, and Laurent expansions associated with the Riemann zeta function. Despite its ubiquity, its arithmetic status is unknown. In particular, neither rationality nor irrationality has been proved.
 
-## 2. Preliminaries and notation
+The purpose of this paper is not to resolve that arithmetic question, but to establish and interpret an exact bridge to information theory. Consider the one-parameter family of exponential waiting-time distributions. Moving from rate $1$ to rate $2$, then from $2$ to $3$, and so on, incurs a Kullback–Leibler information cost at every step. We show that the infinite accumulated cost is precisely $\gamma$.
 
-Throughout, $\ln$ denotes the natural logarithm and $\lfloor x \rfloor$ the floor function. We write $H_n = \sum_{k=1}^n 1/k$ for the harmonic number ($H_0 = 0$). We use two standard monotone approximants to $\gamma$:
-$$L_n = H_n - \ln(n+1) \quad (\text{lower}), \qquad U_n = H_n - \ln n \quad (\text{upper, } n \ge 1).$$
-It is classical that $L_n \uparrow \gamma$ strictly from below and $U_n \downarrow \gamma$ strictly from above, so that $L_n < \gamma < U_n$ for all $n \ge 1$. These facts are recovered below from the positivity of $g$.
+The argument rests on three elementary structures. First, relative entropy within the exponential family admits a closed expression. Second, the logarithmic inequality $\log x\le x-1$ makes each step nonnegative. Third, logarithmic ratios telescope along consecutive rates. Together these observations turn the standard harmonic–logarithmic approximation to $\gamma$ into an accumulated statistical discrepancy.
 
-We repeatedly use the **fundamental logarithmic inequality**: for every real $x > 0$,
-$$\ln(1+x) < x. \tag{$\star$}$$
-Equivalently, $\ln t < t - 1$ for $t > 1$, with equality only at $t = 1$.
+This representation is useful conceptually and computationally. It identifies each approximation error as a sum of nonnegative local costs, gives an immediate monotonicity principle, and places the leading asymptotic term $1/(2k^2)$ in the framework of local information geometry. It also suggests grouped or corrected paths that may accelerate convergence.
 
----
+## 2. Analytic and probabilistic preliminaries
 
-## 3. A positive-term series for $\gamma$
+### 2.1 Harmonic numbers and the Euler–Mascheroni constant
 
-**Definition 3.1 (series term).** For $k \in \mathbb{N}$, $k \ge 1$, define
-$$g(k) = \frac{1}{k} - \ln\!\Big(1 + \frac{1}{k}\Big) = \frac{1}{k} - \big(\ln(k+1) - \ln k\big).$$
-(For bookkeeping it is convenient to set $g(0) = 0$, consistent with the convention $1/0 = 0$.)
+**Definition 2.1 (Harmonic numbers).** For an integer $n\ge 1$, the $n$th harmonic number is
 
-**Theorem 3.2 (positivity).** For every integer $k \ge 1$, $g(k) > 0$.
+$$
+H_n=\sum_{j=1}^{n}\frac1j,
+$$
 
-*Proof.* Apply $(\star)$ with $x = 1/k > 0$: $\ln(1 + 1/k) < 1/k$. Subtracting gives $g(k) = 1/k - \ln(1+1/k) > 0$. Equivalently, writing $t = (k+1)/k > 1$, the inequality $\ln t < t-1 = 1/k$ is exactly the claim. $\qquad\blacksquare$
+and we set $H_0=0$.
 
-**Theorem 3.3 (telescoping partial sum).** For every $n \ge 0$,
-$$\sum_{k=1}^{n} g(k) = \Big(\sum_{k=1}^{n}\frac{1}{k}\Big) - \ln(n+1) = H_n - \ln(n+1) = L_n.$$
+**Definition 2.2 (Euler–Mascheroni constant).** The Euler–Mascheroni constant is
 
-*Proof.* Split the term: $g(k) = 1/k - (\ln(k+1) - \ln k)$. Summing the first part gives $H_n$. The second part telescopes:
-$$\sum_{k=1}^n \big(\ln(k+1) - \ln k\big) = \ln(n+1) - \ln 1 = \ln(n+1).$$
-Hence $\sum_{k=1}^n g(k) = H_n - \ln(n+1)$. (By induction: the base case $n=0$ gives $0 = H_0 - \ln 1 = 0$; the step uses $H_{n+1} = H_n + 1/(n+1)$ and $\ln(n+2) - \ln(n+1)$.) $\qquad\blacksquare$
+$$
+\gamma=\lim_{n\to\infty}(H_n-\log n).
+$$
 
-**Theorem 3.4 (series representation).** The series $\sum_{k\ge1} g(k)$ converges and
-$$\sum_{k=1}^{\infty} g(k) = \gamma.$$
+The existence of this limit follows from standard sum–integral comparison. For completeness, because $x\mapsto1/x$ is decreasing on $(0,\infty)$, the excess of each rectangle over the integral on a unit interval is nonnegative, while elementary comparison bounds the cumulative excess. Equivalently, the sequence $H_n-\log(n+1)$ is increasing and bounded above, and it differs from $H_n-\log n$ by $-\log(1+1/n)$, which tends to zero. Thus both sequences converge to the same limit.
 
-*Proof.* By Theorem 3.2 all terms are nonnegative, and by Theorem 3.3 the partial sums equal $L_n = H_n - \ln(n+1)$, which are bounded above by $\gamma$ (indeed $L_n < \gamma$). A nonnegative series with partial sums bounded above converges; thus $\sum_k g(k)$ exists. Its value is $\lim_n L_n$. Since $L_n \to \gamma$ (this is the defining limit, after noting $H_n - \ln(n+1) = (H_n - \ln n) - \ln(1+1/n)$ and $\ln(1+1/n) \to 0$), uniqueness of limits gives $\sum_k g(k) = \gamma$. $\qquad\blacksquare$
+We will use the shifted approximation
 
-**Corollary 3.5 (strict monotonicity and increments).** The lower approximants satisfy $L_{n+1} - L_n = g(n+1) > 0$, so $(L_n)$ is strictly increasing and converges to $\gamma$ from below. In particular $L_n < \gamma$ for all $n$.
+$$
+G_n=H_n-\log(n+1),\qquad n\ge0.
+$$
 
-*Proof.* Immediate from Theorem 3.3, since $L_{n+1} - L_n = \sum_{k=1}^{n+1} g(k) - \sum_{k=1}^{n} g(k) = g(n+1)$, which is positive by Theorem 3.2. $\qquad\blacksquare$
+The shift is natural for a sum indexed from $k=0$ through $k=n-1$.
 
-This is the "Apéry-like" structure of the representation: the rational engine is the harmonic number $H_n$, and the increments are the explicit positive quantities $g(n+1)$.
+### 2.2 Exponential distributions
 
----
+**Definition 2.3 (Exponential law).** For a rate $\lambda>0$, the exponential distribution $\operatorname{Exp}(\lambda)$ on $[0,\infty)$ has density
 
-## 4. An integral representation
+$$
+f_\lambda(x)=\lambda e^{-\lambda x}.
+$$
 
-We now realize each term as area between a step and the hyperbola $y \mapsto 1/y$.
+Its expectation is $\mathbb E_\lambda[X]=1/\lambda$. It models the waiting time to the next event in a memoryless process with constant event rate $\lambda$.
 
-**Lemma 4.1 (integrand nonnegativity).** For $k \ge 1$ and $x \ge k$, we have $1/k - 1/x \ge 0$.
+**Definition 2.4 (Kullback–Leibler divergence).** If probability densities $p$ and $q$ satisfy the usual absolute-continuity and integrability conditions, their directed Kullback–Leibler divergence is
 
-*Proof.* Since $0 < k \le x$, $1/x \le 1/k$. $\qquad\blacksquare$
+$$
+D_{\mathrm{KL}}(p\|q)=\int p(x)\log\!\left(\frac{p(x)}{q(x)}\right)dx.
+$$
 
-**Theorem 4.2 (integral form of a term).** For every $k \ge 1$,
-$$g(k) = \int_{k}^{k+1}\Big(\frac{1}{k} - \frac{1}{y}\Big)\,dy.$$
+It is the expected logarithmic likelihood ratio under $p$. Operationally, it quantifies the expected excess log loss caused by using $q$ to describe observations generated by $p$. It is not generally symmetric.
 
-*Proof.* On $[k, k+1]$ the constant $1/k$ integrates to $1/k$, and $1/y$ is integrable (the interval avoids $0$) with $\int_k^{k+1} dy/y = \ln(k+1) - \ln k = \ln(1 + 1/k)$. Subtracting,
-$$\int_k^{k+1}\Big(\frac1k - \frac1y\Big)\,dy = \frac1k - \ln\!\Big(1+\frac1k\Big) = g(k). \qquad\blacksquare$$
+### 2.3 Closed form for exponential laws
 
-**Theorem 4.3 (staircase integral representation).** Let $\lfloor x \rfloor$ denote the floor. Then
-$$\gamma = \int_{1}^{\infty}\Big(\frac{1}{\lfloor x\rfloor} - \frac{1}{x}\Big)\,dx := \lim_{N\to\infty}\int_1^N\Big(\frac{1}{\lfloor x\rfloor} - \frac{1}{x}\Big)\,dx.$$
+**Proposition 2.5 (Exponential divergence formula).** For $\lambda,\mu>0$,
 
-*Proof.* On each interval $[k, k+1)$ with $k\ge 1$ we have $\lfloor x\rfloor = k$, so $1/\lfloor x\rfloor - 1/x = 1/k - 1/x$, which by Theorem 4.2 integrates over that interval to $g(k)$. Summing over $1 \le k \le N-1$, additivity of the integral over adjacent intervals gives
-$$\int_1^N\Big(\frac{1}{\lfloor x\rfloor} - \frac{1}{x}\Big)\,dx = \sum_{k=1}^{N-1} g(k) = L_{N-1}.$$
-Letting $N \to \infty$ and applying Theorem 3.4 yields $\gamma$. By Lemma 4.1 the integrand is nonnegative, so the truncated integrals increase monotonically to $\gamma$. $\qquad\blacksquare$
+$$
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(\lambda)\|\operatorname{Exp}(\mu)\right)
+=\log\!\left(\frac{\lambda}{\mu}\right)+\frac{\mu}{\lambda}-1.
+$$
 
-Geometrically: $1/\lfloor x\rfloor$ is the harmonic staircase descending over the hyperbola $1/x$, and $\gamma$ is the total area trapped between them on $[1,\infty)$ — the accumulated overshoot of discrete counting over continuous growth.
+**Proof sketch.** The log-density ratio is
 
----
+$$
+\log\!\left(\frac{\lambda e^{-\lambda x}}{\mu e^{-\mu x}}\right)
+=\log(\lambda/\mu)+(\mu-\lambda)x.
+$$
 
-## 5. A sharp convergence rate
+Taking expectation under $\operatorname{Exp}(\lambda)$ and using $\mathbb E_\lambda[X]=1/\lambda$ gives
 
-**Theorem 5.1 (per-term bound).** For every $k \ge 1$,
-$$0 < g(k) < \frac{1}{2k^2}.$$
+$$
+\log(\lambda/\mu)+\frac{\mu-\lambda}{\lambda}
+=\log(\lambda/\mu)+\frac\mu\lambda-1.
+$$
 
-*Proof.* Lower bound is Theorem 3.2. For the upper bound, use the second-order refinement of $(\star)$: for $u > 0$,
-$$\ln(1+u) > u - \frac{u^2}{2},$$
-which follows from $\frac{d}{du}\big[\ln(1+u) - u + u^2/2\big] = \frac{u^2}{1+u} > 0$ and equality at $u=0$. With $u = 1/k$,
-$$g(k) = \frac{1}{k} - \ln\!\Big(1+\frac1k\Big) < \frac1k - \Big(\frac1k - \frac{1}{2k^2}\Big) = \frac{1}{2k^2}. \qquad\blacksquare$$
+This derivation also explains why the formula is directional. $\square$
 
-**Theorem 5.2 (explicit convergence rate).** For every $n \ge 1$,
-$$0 < \gamma - L_n = \gamma - \sum_{k=1}^{n} g(k) < \frac{1}{2n}.$$
+For subsequent arguments, we may take the right-hand side as an algebraic definition of the divergence within the exponential family.
 
-*Proof.* The lower bound is Corollary 3.5. For the upper bound, by Theorem 3.4 the remainder is $\gamma - L_n = \sum_{k=n+1}^\infty g(k)$. By Theorem 5.1 and the standard tail comparison $\sum_{k=n+1}^\infty 1/k^2 < \int_n^\infty dx/x^2 = 1/n$,
-$$\gamma - L_n = \sum_{k=n+1}^{\infty} g(k) < \sum_{k=n+1}^{\infty}\frac{1}{2k^2} < \frac{1}{2}\cdot\frac{1}{n} = \frac{1}{2n}. \qquad\blacksquare$$
+## 3. Positivity and the elementary divergence increment
 
-Thus $L_n = H_n - \ln(n+1)$ approximates $\gamma$ from below with error below $1/(2n)$. The convergence is polynomial (order $1/n$); high-precision computation uses faster accelerations, but the transparent $1/(2n)$ envelope is exactly the certified bound suited to analysis.
+The main bridge begins with the classical inequality governing the logarithm.
 
----
+**Lemma 3.1 (Logarithmic tangent inequality).** For every $x>0$,
 
-## 6. The Stieltjes anchor
+$$
+\log x\le x-1,
+$$
 
-**Definition 6.1 (Stieltjes sequence).** For $m \ge 0$ and $n \ge 1$,
-$$S_m(n) = \sum_{k=1}^{n}\frac{(\ln k)^m}{k} - \frac{(\ln n)^{m+1}}{m+1}.$$
-The $m$-th **Stieltjes constant** is $\gamma_m = \lim_{n\to\infty} S_m(n)$.
+with equality if and only if $x=1$.
 
-The Stieltjes constants are the Laurent coefficients of the Riemann zeta function at its simple pole $s=1$:
-$$\zeta(s) = \frac{1}{s-1} + \sum_{m=0}^{\infty}\frac{(-1)^m}{m!}\,\gamma_m\,(s-1)^m.$$
+**Proof sketch.** Let $g(x)=x-1-\log x$. Then $g'(x)=1-1/x$ and $g''(x)=1/x^2>0$. Hence $g$ is strictly convex and has its unique minimum at $x=1$, where $g(1)=0$. $\square$
 
-**Theorem 6.2 ($\gamma_0 = \gamma$).** The zeroth Stieltjes constant equals the Euler–Mascheroni constant: $\lim_{n\to\infty} S_0(n) = \gamma$.
+**Theorem 3.2 (Gibbs nonnegativity for exponential rates).** If $\lambda,\mu>0$, then
 
-*Proof.* For $m=0$, $(\ln k)^0 = 1$ and the correction term is $(\ln n)^1/1 = \ln n$, so
-$$S_0(n) = \sum_{k=1}^n \frac{1}{k} - \ln n = H_n - \ln n = U_n \qquad (n \ge 1).$$
-This is exactly the upper approximant, and $U_n \to \gamma$. Hence $\lim_n S_0(n) = \gamma$. $\qquad\blacksquare$
+$$
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(\lambda)\|\operatorname{Exp}(\mu)\right)\ge0.
+$$
 
-**Corollary 6.3 (two-sided trapping).** For all $n \ge 1$, $L_n < \gamma < U_n = S_0(n)$, with $U_n - L_n = \ln(1+1/n) \to 0$. The Stieltjes sequence at $m=0$ provides the upper trap, the positive series the lower one.
+Equality holds exactly when $\lambda=\mu$.
 
-This anchors the entire Stieltjes hierarchy at $\gamma$ and embeds the present development in the local theory of $\zeta$ at $s=1$.
+**Proof sketch.** Put $x=\mu/\lambda$. The closed form becomes
 
----
+$$
+D_{\mathrm{KL}}=-\log x+x-1.
+$$
 
-## 7. The irrationality engine
+Lemma 3.1 gives nonnegativity, and its equality condition gives $x=1$, equivalent to $\lambda=\mu$. $\square$
 
-We now isolate the abstract mechanism behind irrationality proofs of Apéry type and reduce the open problem for $\gamma$ to a precise construction.
+**Definition 3.3 (Euler–Mascheroni increment).** For a nonnegative integer $k$, define
 
-**Theorem 7.1 (integer-linear-form criterion; sufficiency).** Let $x \in \mathbb{R}$. Suppose there exist integer sequences $(a_n), (b_n)$ such that
-$$a_n + b_n x \neq 0 \quad \text{for all } n, \qquad \text{and} \qquad a_n + b_n x \to 0.$$
-Then $x$ is irrational.
+$$
+a_k=\frac1{k+1}-\log\!\left(\frac{k+2}{k+1}\right).
+$$
 
-*Proof.* Suppose for contradiction $x = p/q$ with $q \ge 1$ integer. Then
-$$a_n + b_n x = \frac{a_n q + b_n p}{q},$$
-whose numerator $a_n q + b_n p$ is an integer; it is nonzero because $a_n + b_n x \neq 0$. A nonzero integer has absolute value at least $1$, so
-$$|a_n + b_n x| = \frac{|a_n q + b_n p|}{q} \ge \frac{1}{q} > 0 \quad \text{for all } n.$$
-This contradicts $a_n + b_n x \to 0$. Hence $x$ is irrational. $\qquad\blacksquare$
+This increment is nonnegative. One proof applies Lemma 3.1 to $1+1/(k+1)$. Another compares a rectangle to the area below the decreasing function $1/x$:
 
-The crux is the rigidity principle: *a nonzero integer cannot lie strictly between $0$ and $1$*. A rational of denominator $q$ keeps every nonzero linear form $a_n + b_n x$ at distance at least $1/q$ from $0$.
+$$
+a_k=\frac1{k+1}-\int_{k+1}^{k+2}\frac{dx}{x}\ge0.
+$$
 
-**Theorem 7.2 (characterization).** A real number $x$ is irrational **if and only if** there exist integer sequences $(a_n), (b_n)$ with $a_n + b_n x \neq 0$ for all $n$ and $a_n + b_n x \to 0$.
+Thus $a_k$ simultaneously measures a sum–integral discrepancy and an information divergence.
 
-*Proof.* ($\Leftarrow$) is Theorem 7.1. For ($\Rightarrow$), let $x$ be irrational. By Dirichlet's theorem on Diophantine approximation, there are infinitely many rationals $p/q$ (in lowest terms) with
-$$\Big|x - \frac{p}{q}\Big| < \frac{1}{q^2}.$$
-Since these approximations have unbounded denominators (for each $N$ one can choose such a $p/q$ with $q \ge N$), select a sequence $p_n/q_n$ with $q_n \ge n+1$. Put $a_n = -p_n$, $b_n = q_n$. Then
-$$|a_n + b_n x| = q_n\Big|x - \frac{p_n}{q_n}\Big| < q_n \cdot \frac{1}{q_n^2} = \frac{1}{q_n} \le \frac{1}{n+1} \to 0,$$
-and $a_n + b_n x \neq 0$ because $x$ is irrational (so $x \neq p_n/q_n$). $\qquad\blacksquare$
+## 4. The consecutive-rate identity
 
-**Corollary 7.3 (reduction of the open problem).** The Euler–Mascheroni constant $\gamma$ is irrational if and only if there exist integer sequences $(a_n), (b_n)$ with $a_n + b_n\gamma \neq 0$ for all $n$ and $a_n + b_n\gamma \to 0$.
+**Theorem 4.1 (Consecutive exponential divergence identity).** For every integer $k\ge0$,
 
-*Proof.* Apply Theorem 7.2 with $x = \gamma$. $\qquad\blacksquare$
+$$
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(k+1)\|\operatorname{Exp}(k+2)\right)=a_k.
+$$
 
-This is an honest reduction, not a resolution: the existence of such forms for $\gamma$ is unknown.
+Equivalently,
 
-**Where the difficulty lives.** The representation of Sections 3–4 shows that
-$$\gamma = H_n - \ln(n+1) + \big(\gamma - L_n\big), \qquad 0 < \gamma - L_n < \tfrac{1}{2n}.$$
-The harmonic part $H_n$ is denominator-friendly: multiplying by $D_n = \mathrm{lcm}(1,2,\ldots,n)$ clears all denominators, and the Prime Number Theorem gives $\ln D_n = n(1+o(1))$, i.e. $D_n = e^{n(1+o(1))}$. So $D_n H_n \in \mathbb{Z}$ with $D_n$ of controlled exponential size. The obstruction is the additive correction $\ln(n+1)$: the logarithm of an integer is itself transcendental and is *not* cleared by any common denominator. Constructing the linear forms of Corollary 7.3 therefore requires integer combinations that simultaneously clear $H_n$ *and* approximate $\ln(n+1)$ to within an error that the exponential denominator $D_n$ can absorb. This is precisely the balance between the size of $\mathrm{lcm}(1,\ldots,n)$ and rational approximations to logarithms.
+$$
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(k+1)\|\operatorname{Exp}(k+2)\right)
+=\frac1{k+1}-\log\!\left(\frac{k+2}{k+1}\right).
+$$
 
----
+**Proof.** Substitute $\lambda=k+1$ and $\mu=k+2$ into Proposition 2.5:
 
-## 8. Algorithms
+$$
+\begin{aligned}
+D_{\mathrm{KL}}
+&=\log\!\left(\frac{k+1}{k+2}\right)+\frac{k+2}{k+1}-1\\
+&=-\log\!\left(\frac{k+2}{k+1}\right)+\frac1{k+1}\\
+&=a_k.
+\end{aligned}
+$$
 
-We summarize the computational content (full implementations accompany this paper).
+$\square$
 
-**Algorithm A (certified lower approximant).** Compute $L_n = H_n - \ln(n+1)$ by accumulating $g(k) = 1/k - \ln(1+1/k)$ for $k = 1,\ldots,n$. Return $L_n$ together with the certified two-sided bracket $L_n < \gamma < L_n + 1/(2n)$ (Theorem 5.2). Cost: $O(n)$ arithmetic/transcendental operations.
+The statement is exact for every step, not merely asymptotic. It is also sensitive to orientation: reversing the two exponential laws produces a different expression.
 
-**Algorithm B (staircase quadrature).** Approximate $\int_1^N (1/\lfloor x\rfloor - 1/x)\,dx$ exactly term-by-term as $\sum_{k=1}^{N-1} g(k)$, confirming numerically that the staircase-minus-hyperbola area equals $L_{N-1}$ (Theorem 4.3).
+## 5. Finite accumulation and telescoping
 
-**Algorithm C (irrationality-form tester).** Given candidate integer sequences $(a_n),(b_n)$, evaluate $a_n + b_n\,\hat\gamma$ at high precision $\hat\gamma \approx \gamma$ and check the two conditions of Corollary 7.3: nonvanishing and decay to $0$. Useful for empirically probing constructions.
+We next compute the cumulative divergence through the first $n$ transitions.
 
-**Algorithm D (Stieltjes evaluation).** Compute $S_m(n) = \sum_{k=1}^n (\ln k)^m/k - (\ln n)^{m+1}/(m+1)$ and verify $S_0(n) = H_n - \ln n \to \gamma$ (Theorem 6.2).
+**Lemma 5.1 (Logarithmic telescoping).** For every integer $n\ge0$,
 
----
+$$
+\sum_{k=0}^{n-1}\log\!\left(\frac{k+2}{k+1}\right)=\log(n+1),
+$$
 
-## 9. Applications and discussion
+where the empty sum for $n=0$ is zero.
 
-The positive-series and integral pictures give a transparent, fully certified handle on $\gamma$ suited to analysis and teaching: monotone lower bounds $L_n$ with a guaranteed $1/(2n)$ error, an evocative area interpretation, and a clean derivation of the standard $L_n < \gamma < U_n$ trapping. The Stieltjes anchor connects the constant to the analytic theory of $\zeta(s)$ near $s=1$, where $\gamma$ is the leading finite coefficient. The irrationality engine reframes the central open problem as a concrete Diophantine construction and pinpoints the logarithmic correction as the sole obstruction, indicating exactly where future work must concentrate.
+**Proof.** For $n\ge1$, additivity of the logarithm gives
 
-The chief limitation is the rate: $O(1/n)$ convergence makes the bare series unsuited to extreme-precision digit hunting, for which Bessel-function and Euler–Maclaurin accelerations are vastly superior. Our emphasis is structural transparency and certified bounds rather than raw speed.
+$$
+\sum_{k=0}^{n-1}\log\!\left(\frac{k+2}{k+1}\right)
+=\log\!\left(\prod_{k=0}^{n-1}\frac{k+2}{k+1}\right).
+$$
 
----
+The product telescopes:
 
-## 10. Future directions
+$$
+\frac21\cdot\frac32\cdot\frac43\cdots\frac{n+1}{n}=n+1.
+$$
 
-This cycle isolated the abstract engine of every "good rational approximation implies irrationality" argument — a nonzero integer linear form $b_n x - a_n$ that shrinks to zero cannot survive if $x$ is rational, because a rational of denominator $q$ keeps all nonzero such forms at distance at least $1/q$. Applying this to the harmonic numbers exposed a sharp tension: their denominators are cleanly cleared by $n!$ (indeed by $\mathrm{lcm}(1,\ldots,n)$), yet the analytic correction $\ln$ that turns $H_n$ into $\gamma$ destroys integrality. The conjectures below grow directly out of that tension.
+The case $n=0$ reads $0=\log1$. $\square$
 
-**Conjecture 1 (a logarithmic common denominator exists).** There is a sequence of positive integers $b_n$, growing no faster than exponentially, and integers $a_n$, such that $b_n\gamma - a_n$ is never zero yet tends to zero; consequently $\gamma$ is irrational. The key insight is that the obstruction is not the harmonic part — whose denominators are already tamed by $\mathrm{lcm}(1,\ldots,n)$ — but the logarithm, so the search should target integer combinations that simultaneously clear $H_n$ and approximate $\ln(n+1)$ to within a factor that the exponential denominator can absorb. Sharp effective bounds on $\mathrm{lcm}(1,\ldots,n)$ and on rational approximations to logarithms have matured to the point where the two error budgets can, for the first time, be compared on the same scale.
+**Theorem 5.2 (Exact finite accumulated divergence).** For every integer $n\ge0$,
 
-**Conjecture 2 (denominator growth controls the irrationality measure).** If such linear forms exist with $b_n$ of exponential size $e^{cn}$ and error $|b_n\gamma - a_n|$ of size $e^{-c'n}$, then $\gamma$ has finite irrationality measure bounded explicitly by $1 + c/c'$. The universal gap $1/q$ for rationals upgrades, for a fixed construction, into a two-sided squeeze whose exponents $c$ and $c'$ are read straight off the growth of $\mathrm{lcm}(1,\ldots,n)$ and the convergence rate of the bracket. The Prime Number Theorem pins $\mathrm{lcm}(1,\ldots,n)$ to $e^{n(1+o(1))}$, fixing the numerator side precisely, so the only free parameter left to estimate is the analytic decay.
+$$
+\sum_{k=0}^{n-1}
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(k+1)\|\operatorname{Exp}(k+2)\right)
+=H_n-\log(n+1).
+$$
 
-**Conjecture 3 (the Stieltjes family is generically irrational).** Among the Stieltjes constants $\gamma_0 = \gamma, \gamma_1, \gamma_2, \ldots$ (the Laurent coefficients of the Riemann zeta function at its pole), all but finitely many are irrational; in fact no two satisfy a nontrivial linear relation with rational coefficients. Each $\gamma_m$ arises from the same harmonic-type clearing mechanism but weighted by $(\ln k)^m$, so the denominators interleave in a way that makes simultaneous rationality a far more rigid — and thus far less plausible — coincidence than rationality of a single constant. High-precision values reveal no algebraic relations to thousands of digits, and the structural link to $\zeta$'s Laurent expansion provides a uniform framework in which a joint statement can finally be attacked.
+**Proof.** Apply Theorem 4.1 and separate the reciprocal and logarithmic sums:
 
-**Conjecture 4 (no elementary integral certificate).** No elementary integral representation of $\gamma$ — of the schematic shape used above — can simultaneously be reduced to integer linear forms of subexponential denominator and decay, suggesting that any irrationality proof must import genuinely transcendental input beyond the harmonic/logarithmic dichotomy.
+$$
+\begin{aligned}
+\sum_{k=0}^{n-1}D_{\mathrm{KL}}
+&=\sum_{k=0}^{n-1}\frac1{k+1}
+-\sum_{k=0}^{n-1}\log\!\left(\frac{k+2}{k+1}\right)\\
+&=H_n-\log(n+1),
+\end{aligned}
+$$
 
----
+where Lemma 5.1 supplies the second equality. $\square$
 
-## 11. Conclusion
+**Corollary 5.3 (Monotonicity).** The sequence $H_n-\log(n+1)$ is nondecreasing.
 
-Built entirely from the single positive term $g(k) = 1/k - \ln(1+1/k)$, the Euler–Mascheroni constant admits a convergent positive-term series $\gamma = \sum_{k\ge1} g(k)$ with monotone lower approximants $L_n = H_n - \ln(n+1)$, a staircase integral representation $\gamma = \int_1^\infty(1/\lfloor x\rfloor - 1/x)\,dx$, and a certified convergence rate $\gamma - L_n < 1/(2n)$ stemming from the sharp bound $g(k) < 1/(2k^2)$. The constant heads the Stieltjes family with $\gamma_0 = \gamma$, tying it to the Laurent expansion of $\zeta$. The irrationality criterion — a real number is irrational exactly when nonzero integer linear forms in it tend to zero — reduces the open problem to an explicit construction and locates the difficulty in the transcendental logarithmic correction rather than the integer-friendly harmonic part. The path forward is to balance the exponential growth of $\mathrm{lcm}(1,\ldots,n)$ against rational approximations to logarithms.
+**Proof sketch.** Its increment from $n$ to $n+1$ is $a_n$, which is nonnegative. Equivalently, it is a partial sum of nonnegative divergences. $\square$
+
+Theorem 5.2 provides two computational routes to the same quantity. One may sum $n$ individual information costs, or compute a harmonic number and a single logarithm. Agreement between the routes is an effective numerical consistency check.
+
+## 6. Infinite accumulation
+
+We now pass from the finite identity to the central result.
+
+**Theorem 6.1 (Accumulated Information Divergence Theorem).** The series of consecutive-rate exponential divergences converges, and
+
+$$
+\boxed{
+\sum_{k=0}^{\infty}
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(k+1)\|\operatorname{Exp}(k+2)\right)
+=\gamma.
+}
+$$
+
+**Proof.** By Theorem 5.2, the $n$th partial sum is $H_n-\log(n+1)$. Moreover,
+
+$$
+H_n-\log(n+1)
+=(H_n-\log n)-\log\!\left(1+\frac1n\right)
+$$
+
+for $n\ge1$. The first term tends to $\gamma$ by definition, and the second tends to zero. Therefore the partial sums converge to $\gamma$. Each term is nonnegative by Theorem 3.2. $\square$
+
+This theorem is the precise cross-domain connector. It interprets $\gamma$ as the total directed information cost along the discrete path
+
+$$
+\operatorname{Exp}(1)\longrightarrow\operatorname{Exp}(2)
+\longrightarrow\operatorname{Exp}(3)\longrightarrow\cdots.
+$$
+
+Although there are infinitely many transitions, their costs decay rapidly enough to have finite total mass.
+
+## 7. Quantitative behavior and elementary tail bounds
+
+Set $m=k+1$ and $u=1/m$. Then
+
+$$
+a_k=u-\log(1+u).
+$$
+
+The integral identity
+
+$$
+u-\log(1+u)=\int_0^u\frac{t}{1+t}\,dt
+$$
+
+immediately yields rigorous estimates for $u>0$. Since
+
+$$
+\frac{t}{1+u}\le\frac{t}{1+t}\le t
+\qquad(0\le t\le u),
+$$
+
+integration gives
+
+$$
+\frac{u^2}{2(1+u)}\le u-\log(1+u)\le\frac{u^2}{2}.
+$$
+
+Substituting $u=1/(k+1)$ produces the following result.
+
+**Proposition 7.1 (Term bounds).** For every integer $k\ge0$,
+
+$$
+\frac{1}{2(k+1)(k+2)}
+\le a_k\le
+\frac{1}{2(k+1)^2}.
+$$
+
+**Proof sketch.** Apply the integral comparison above and simplify the lower denominator:
+
+$$
+\frac{u^2}{2(1+u)}
+=\frac{1}{2(k+1)(k+2)}.
+$$
+
+$\square$
+
+These estimates show $a_k\sim1/(2(k+1)^2)$. They also bound the remainder after $n$ terms. Let
+
+$$
+R_n=\gamma-(H_n-\log(n+1))=\sum_{k=n}^{\infty}a_k.
+$$
+
+**Corollary 7.2 (Simple tail bounds).** For $n\ge1$,
+
+$$
+\frac{1}{2(n+1)}\le R_n\le\frac{1}{2n}.
+$$
+
+**Proof sketch.** The lower term bound telescopes because
+
+$$
+\frac{1}{(k+1)(k+2)}=\frac1{k+1}-\frac1{k+2},
+$$
+
+so its tail sums to $1/(n+1)$. For the upper bound, use
+
+$$
+\sum_{m=n+1}^{\infty}\frac1{m^2}
+\le\int_n^\infty\frac{dx}{x^2}=\frac1n.
+$$
+
+Multiplication by $1/2$ gives the result. $\square$
+
+The bounds are intentionally elementary rather than asymptotically optimal. They certify the $1/n$ scale of convergence and show that the raw partial sum approaches $\gamma$ from below.
+
+## 8. Information geometry interpretation
+
+The exponential family also supplies a local quadratic explanation for the term size. For a rate perturbation $\mu=\lambda+\delta$, write $r=\delta/\lambda$. The divergence is
+
+$$
+D_{\mathrm{KL}}=r-\log(1+r).
+$$
+
+As $r\to0$,
+
+$$
+r-\log(1+r)=\frac{r^2}{2}-\frac{r^3}{3}+O(r^4).
+$$
+
+For consecutive rates, $\delta=1$ and $\lambda=k+1$, hence
+
+$$
+a_k=\frac{1}{2(k+1)^2}-\frac{1}{3(k+1)^3}+O(k^{-4}).
+$$
+
+The leading quadratic term agrees with Fisher information. For the exponential rate parameter, the score is $1/\lambda-X$, whose variance is $1/\lambda^2$. Thus the Fisher information is
+
+$$
+I(\lambda)=\frac1{\lambda^2}.
+$$
+
+The generic local approximation
+
+$$
+D_{\mathrm{KL}}(\lambda\|\lambda+\delta)
+\approx\frac12 I(\lambda)\delta^2
+$$
+
+becomes $1/(2\lambda^2)$ for a unit rate step. The convergence of the main series can therefore be viewed as finite quadratic information length along a path whose relative steps shrink like $1/k$.
+
+It is important not to overstate this interpretation. Kullback–Leibler divergence is directional and is not a metric: it need not be symmetric and does not satisfy the triangle inequality. The theorem concerns accumulated directed costs along a specified path, not the metric distance between the initial distribution and a limiting distribution.
+
+## 9. Numerical algorithms
+
+### 9.1 Direct divergence summation
+
+Given $n$, compute each term using
+
+$$
+a_k=\frac1{k+1}-\log1p\!\left(\frac1{k+1}\right),
+$$
+
+where $\log1p(u)$ denotes a numerically stable evaluation of $\log(1+u)$. The direct algorithm requires $O(n)$ arithmetic operations and $O(1)$ auxiliary memory when accumulated online. Compensated summation can reduce floating-point loss.
+
+Using $\log((k+2)/(k+1))$ directly is mathematically equivalent but can be less accurate for large $k$, because the ratio rounds close to $1$ and the subtraction in $1/(k+1)-\log(1+1/(k+1))$ cancels leading digits. Stable special functions and higher precision are appropriate when many terms are required.
+
+### 9.2 Telescoped finite evaluation
+
+Theorem 5.2 gives
+
+$$
+S_n=H_n-\log(n+1).
+$$
+
+This also takes $O(n)$ time if $H_n$ is summed directly and $O(1)$ memory. It uses only one logarithm. Pairwise or compensated summation improves the harmonic sum. For very large $n$, asymptotic formulas for $H_n$ can replace explicit summation.
+
+### 9.3 Certified enclosure
+
+Corollary 7.2 gives an immediate interval:
+
+$$
+H_n-\log(n+1)+\frac{1}{2(n+1)}
+\le\gamma\le
+H_n-\log(n+1)+\frac{1}{2n}.
+$$
+
+The enclosure width is $1/(2n(n+1))$, even though the uncorrected approximation has error of order $1/n$. This interval is useful pedagogically and computationally: it turns a finite calculation into a rigorous error statement without assuming a decimal value of $\gamma$.
+
+## 10. Worked examples and computational validation
+
+The first transition compares $\operatorname{Exp}(1)$ with $\operatorname{Exp}(2)$. Its divergence is
+
+$$
+a_0=1-\log2\approx0.3068528194.
+$$
+
+The second compares $\operatorname{Exp}(2)$ with $\operatorname{Exp}(3)$ and contributes
+
+$$
+a_1=\frac12-\log(3/2)\approx0.0945348919.
+$$
+
+The third contributes $1/3-\log(4/3)\approx0.0456512609$. The decreasing scale is already visible, although monotonic decrease is not needed for the main theorem; termwise nonnegativity and the exact partial-sum limit suffice.
+
+For $n=10$, direct summation of the ten divergences agrees with
+
+$$
+S_{10}=H_{10}-\log11.
+$$
+
+This is below $\gamma$, and the certified tail bounds in Corollary 7.2 locate the missing information between $1/22$ and $1/20$. The interval is deliberately coarse at small $n$, but it illustrates how an exact finite identity and a comparison estimate separate numerical approximation from error certification.
+
+A robust numerical experiment should check four properties simultaneously:
+
+1. every computed divergence is nonnegative;
+2. the direct divergence sum agrees with $H_n-\log(n+1)$;
+3. the partial sums increase with $n$;
+4. the known decimal value of $\gamma$ lies within the proved tail enclosure.
+
+The second property is exact in real arithmetic and therefore serves as the strongest implementation check. In floating-point arithmetic, its residual reflects rounding and cancellation. Evaluating $\log(1+u)$ with a dedicated $\log1p(u)$ routine is particularly important when $u$ is small. Without it, forming $1+u$ may discard significant low-order digits before the logarithm is evaluated.
+
+The finite theorem also permits a useful decomposition of error. If $\widehat S_n$ is a floating-point approximation, then
+
+$$
+|\gamma-\widehat S_n|
+\le |S_n-\widehat S_n|+R_n.
+$$
+
+The first term is numerical roundoff and the second is mathematical truncation. Compensated summation addresses the former; analytic tail correction addresses the latter. Keeping these two sources distinct is essential in high-precision computation.
+
+## 11. Applications and extensions
+
+### 11.1 Sequential model retuning
+
+Suppose a waiting-time model is repeatedly retuned through rates $1,2,\ldots,n+1$. If data at each transition are generated by the earlier rate but encoded using the next, the cumulative expected excess log loss is exactly $H_n-\log(n+1)$. The formula compresses a sequence of local model mismatches into a classical analytic quantity.
+
+### 11.2 Sum–integral discrepancy
+
+The identity clarifies why nonnegativity occurs. Each divergence is also
+
+$$
+\frac1{k+1}-\int_{k+1}^{k+2}\frac{dx}{x},
+$$
+
+the gap between a left-endpoint rectangle and the integral beneath a decreasing curve. Thus the same local convexity drives Gibbs' inequality and harmonic sum–integral comparison.
+
+### 11.3 Accelerated approximation
+
+Because $a_k$ has a complete asymptotic expansion in inverse powers of $k+1$, one can subtract analytically summable leading terms or group consecutive transitions. Euler–Maclaurin corrections offer a systematic route. A broader question is whether weighted paths through an exponential family can produce Apéry-like rational approximants or integer linear forms useful for arithmetic investigations.
+
+### 11.4 Stieltjes constants
+
+The Euler–Mascheroni constant is the zeroth Stieltjes constant. Higher Stieltjes constants arise in the Laurent expansion of the zeta function around its pole at $1$. Parameterized divergence sums, Mellin transforms of exponential densities, or derivatives with respect to auxiliary shape parameters may yield analogous representations. Such constructions require additional convergence and differentiation arguments not developed here.
+
+## 12. Broader conceptual consequences
+
+### 12.1 A discrete path through a statistical manifold
+
+The family $\{\operatorname{Exp}(\lambda):\lambda>0\}$ is a one-dimensional statistical manifold. The main theorem chooses a particular discrete path on it, namely the integer rates. At each stage, the absolute rate change is fixed at one, but the relative rate change is
+
+$$
+\frac{(k+2)-(k+1)}{k+1}=\frac1{k+1}.
+$$
+
+Consequently, later steps become small in the natural dimensionless coordinate $\log\lambda$. This is why infinitely many unit changes in the raw rate can have finite accumulated information cost. The phenomenon illustrates a general principle: the significance of a parameter displacement depends on the geometry of the model, not merely on its Euclidean size.
+
+The path dependence is equally important. Directly comparing $\operatorname{Exp}(1)$ with $\operatorname{Exp}(n+1)$ gives one divergence, whereas adding the divergences along all intermediate integer rates gives another quantity. Relative entropy has no path-additivity law in general. The telescoping discovered here is special: the linear ratio terms become harmonic increments, while the logarithmic ratio terms telescope. Thus the theorem depends jointly on the algebra of the exponential family and the arithmetic choice of consecutive rates.
+
+### 12.2 Convexity as the common mechanism
+
+Several proofs in the paper can be traced to convexity. The function $x-1-\log x$ is convex and nonnegative; it generates the exponential divergence after taking $x=\mu/\lambda$. Meanwhile, monotonicity of $1/x$, the derivative of $\log x$, compares each harmonic rectangle with a logarithmic integral. The statistical and analytic arguments are therefore two expressions of the same local shape of the logarithm.
+
+This observation suggests a search strategy for related constants. Begin with a classical sum–integral discrepancy whose terms arise from a convex function. Then ask whether those terms are Bregman divergences or relative entropies inside a natural parametric family. When such an identification exists, positivity, asymptotics, and geometric interpretation may become available simultaneously.
+
+### 12.3 Units and invariance
+
+The divergence formula depends only on the ratio $\mu/\lambda$. If both rates are multiplied by the same positive scale $c$, then
+
+$$
+D_{\mathrm{KL}}\!\left(\operatorname{Exp}(c\lambda)\|\operatorname{Exp}(c\mu)\right)
+=D_{\mathrm{KL}}\!\left(\operatorname{Exp}(\lambda)\|\operatorname{Exp}(\mu)\right).
+$$
+
+This invariance is physically appropriate: changing the unit of time rescales every rate but should not alter the information discrepancy between the corresponding models. The consecutive integer chain fixes one convenient scale, while each individual cost is intrinsically dimensionless.
+
+## 13. Scope and limitations
+
+The accumulated-divergence theorem is an exact analytic identity. It does not establish an irrationality criterion for $\gamma$, nor does it supply the accelerated rational approximations that such a criterion would likely need. Positivity alone is insufficient: limits of positive sums can be rational or irrational, and the logarithms in individual terms do not determine the arithmetic nature of the total.
+
+The treatment uses the closed form of exponential relative entropy. A fuller measure-theoretic development would derive it from probability measures and address absolute continuity and integrability in a general framework. The algebraic formula is adequate for the present connector but leaves room for extensions to gamma, Weibull, or other waiting-time families.
+
+The elementary tail bounds capture the correct order but not the sharpest constants at every asymptotic order. More refined enclosures can be obtained from alternating logarithmic expansions, Euler–Maclaurin summation, or continued-fraction methods.
+
+## 14. Future research directions
+
+Several directions follow naturally.
+
+1. **Measure-theoretic derivation.** Develop exponential probability measures from their densities and derive the closed form directly from the relative-entropy integral.
+2. **Sharper tails.** Transfer refined harmonic and logarithmic estimates into explicit bounds for the information remaining after the first $n$ transitions.
+3. **Fisher-information comparison.** Quantify the difference between each exact divergence and its local quadratic approximation $1/(2(k+1)^2)$.
+4. **Accelerated chains.** Seek grouped or weighted paths whose accumulated costs encode Euler–Maclaurin corrections or faster approximations to $\gamma$.
+5. **Higher Stieltjes constants.** Introduce parameters and differentiate appropriate sums or transforms to search for related information-theoretic identities.
+6. **Arithmetic criteria.** Investigate whether accelerated enclosures can be combined with integer linear forms. The irrationality of $\gamma$ remains open.
+
+## 15. Conclusion
+
+The Euler–Mascheroni constant admits a simple exact interpretation as accumulated information divergence. The divergence between consecutive exponential rates is
+
+$$
+\frac1{k+1}-\log\!\left(\frac{k+2}{k+1}\right),
+$$
+
+its first $n$ values sum to $H_n-\log(n+1)$, and the infinite total is $\gamma$. Nonnegativity follows from the tangent inequality for the logarithm, while convergence reflects the quadratic small-step behavior of relative entropy.
+
+Taken together, these perspectives make the connector both calculable and conceptually transparent.
+
+This identity unifies three views of one discrepancy: the gap between harmonic summation and logarithmic integration, the area between a rectangle and the curve $1/x$, and the expected information penalty incurred when an exponential waiting-time model is advanced through consecutive integer rates. It does not settle the arithmetic nature of $\gamma$, but it supplies a precise bridge on which analytic estimates, numerical algorithms, and further information-geometric generalizations can be built.
