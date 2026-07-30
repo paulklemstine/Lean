@@ -1079,20 +1079,44 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     _clean_catalog_retry_dirs()
 
 
-    # ── Self-healing: auto-prune low-quality directions ──
+    # ── Self-healing & Quality Control: Automatic Aristotle Direction Tournament ──
     try:
         from research_memory import FutureDirectionsManager
+        from direction_tournament import DirectionTournament
         fd_heal = FutureDirectionsManager(extractor.workspace)
         stats = fd_heal.get_stats()
         if stats.get("retried_directions", 0) > 0:
             print(f"[Retry] {stats['retried_directions']} retried directions, "
                   f"rate={stats.get('retry_rate',0):.1%}, avg_attempts={stats.get('avg_attempts',0):.2f}")
-        if stats["available"] > 500:  # Only prune when pool is large
-            result = fd_heal.prune_directions(cap=400, min_quality=0.30)
-            if result["pruned_count"] > 0:
-                print(f"[Self-heal] Auto-pruned {result['pruned_count']} low-quality directions")
+        
+        # Trigger Option B Direction Tournament when total directions > 1000
+        total_dirs = stats.get("total", 0)
+        if total_dirs > 1000:
+            dt = DirectionTournament(workspace=extractor.workspace)
+            batch = dt.get_candidate_batch(batch_size=10)
+            if batch and len(batch) >= 5:
+                print(f"[Tournament] Total directions={total_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
+                prompt = dt.build_tournament_prompt(batch, target_winners=2)
+                if len(extractor.inflight) < max_inflight:
+                    if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):
+                        import tempfile
+                        with tempfile.TemporaryDirectory() as tmp_dir:
+                            tmp_path = Path(tmp_dir)
+                            (tmp_path / "lakefile.lean").write_text("import Lake\nopen Lake DSL\npackage tournament\n@default_target lean_lib Tournament where srcDir := \".\"")
+                            (tmp_path / "Tournament.lean").write_text("import Mathlib\n-- Direction Tournament Evaluation")
+                            (tmp_path / "TOURNAMENT_PROMPT.md").write_text(prompt)
+                            try:
+                                proj_id = await extractor.aristotle.submit_lean_project_only(
+                                    prompt=prompt,
+                                    project_dir=tmp_path
+                                )
+                                print(f"[Tournament] Successfully queued Aristotle evaluation project: {proj_id}")
+                            except Exception as sub_err:
+                                print(f"[Tournament] Aristotle submission note: {sub_err}")
+                else:
+                    print(f"[Tournament] Max inflight slots ({max_inflight}) full — tournament job queued for next available slot.")
     except Exception as e:
-        print(f"[Self-heal] Auto-prune failed: {e}")
+        print(f"[Tournament] Automatic direction tournament check: {e}")
 
     # ── Auto-rebalance: prune overrepresented domains ──
     try:
