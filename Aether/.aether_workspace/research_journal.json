@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7277c96e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n## 1. Effective abc exclusion for powered additive triples\n\n**Conjecture.** There is an explicit constant `N` such that every coprime additive\ntriple `a+b=c` with `a=A^x`, `b=B^y`",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-25T20:16:39",
-      "title": "Beal's Conjecture"
-    },
-    {
       "cycle_id": "92c4b5fc",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Tropical Compactification of Moduli Spaces\n\n## 1. Stacky cone reconstruction from stable weighted graphs\n\n**Conjecture.** For every pair `(g,n)` with `2g - 2 + n > 0`, the categor",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-29T23:23:20",
       "title": "EML Information Geometry: Fisher Information of exp-log Models"
+    },
+    {
+      "cycle_id": "2996b72f",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## Result established\n\n`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector between\nanalytic number theory and information theory:\n\n\\[\n\\gamma=\\sum_{k=0}^{\\inf",
+      "quality_score": 0.77621,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-30T00:20:57",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bb72d587",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision proce",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T20:48:41",
-      "title": "Speculative: Computational Complexity as Physical Law"
-    },
     {
       "cycle_id": "f2b328a7",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-29T23:23:20",
       "title": "EML Information Geometry: Fisher Information of exp-log Models"
+    },
+    {
+      "cycle_id": "2996b72f",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## Result established\n\n`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector between\nanalytic number theory and information theory:\n\n\\[\n\\gamma=\\sum_{k=0}^{\\inf",
+      "quality_score": 0.77621,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-30T00:20:57",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1a03af4c",
-      "domain": "Bridges",
-      "name": "eulerDenominator_map",
-      "quality": 0.78657
-    },
-    {
-      "cycle_id": "1a03af4c",
-      "domain": "Bridges",
-      "name": "centralCharacter_symmetricSquare",
-      "quality": 0.78657
-    },
-    {
-      "cycle_id": "f1303b99",
-      "domain": "Novelty",
-      "name": "neighbors_card",
-      "quality": 0.81107
-    },
     {
       "cycle_id": "f1303b99",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "activationMass_pos",
       "quality": 0.76977
+    },
+    {
+      "cycle_id": "2996b72f",
+      "domain": "Shared",
+      "name": "gammaTerm_nonneg",
+      "quality": 0.77621
+    },
+    {
+      "cycle_id": "2996b72f",
+      "domain": "Shared",
+      "name": "harmonic_cast",
+      "quality": 0.77621
+    },
+    {
+      "cycle_id": "2996b72f",
+      "domain": "Shared",
+      "name": "sum_log_telescope",
+      "quality": 0.77621
     }
   ],
-  "last_updated": "2026-07-29T23:23:20",
+  "last_updated": "2026-07-30T00:20:57",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "e3b4f2fe",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Speculative: Topological Data Analysis of Theorem Networks"
-      },
-      {
         "cycle_id": "2fdbedee",
         "quality": 0.75,
         "theorems": 9,
@@ -3947,6 +3941,12 @@
         "quality": 0.686,
         "theorems": 39,
         "title": "Tropical Brill-Noether Theory"
+      },
+      {
+        "cycle_id": "2996b72f",
+        "quality": 0.77621,
+        "theorems": 11,
+        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
       }
     ],
     "Tropical": [

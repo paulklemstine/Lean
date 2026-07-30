@@ -2172,6 +2172,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2996b72f (Q=0.776), which proved 11 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
+    "domain_bridges": [],
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_2996b72f_fb513ba4",
+    "lineage_refs": [],
+    "priority_score": 0.8762099999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2996b72f",
+    "status": "available",
+    "timestamp": "2026-07-30T00:20:57.662026+00:00",
+    "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 09a3e4f4 (Q=0.774), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the",
     "domain_bridges": [],
     "domains": [
@@ -8173,26 +8192,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2996b72f",
-    "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domain_bridges": [],
-    "domains": [
-      "Analysis",
-      "NumberTheory"
-    ],
-    "id": "fd_0653",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697747+00:00",
-    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Spectral Proof of the Hypergraph Moore Bound' and formalize its key results. Abstract: A nonempty subfamily of a $k$-uniform hypergraph is an \\emph{even cover} if every vertex lies in an even number of its hyperedges; for $k=2$ these are edge-disjoint unions of cycles, so the minimum size of an even cover is the natural hypergraph analogue of girth. We prove Feige's 2008 conjecture on the hypergraph Moore bound: there are absolute constants $A$ and $C$ (independent of $k$) such that for every $k\\ge3$ and every $1\\le\\ell\\le n$, any $k$-uniform hypergraph on $n$ vertices with more than $C\\,n^{k/2}/\\ell^{k/2-1}$ hyperedges contains an even cover of size at most $A\\,\\ell\\log(en/\\ell)$. Our proof is based on sharp spectral bounds for Kikuchi matrices, which we expect to be of independent interest; we apply them to the refutation of random constraint satisfaction problems in a companion paper.",
     "domain_bridges": [],
@@ -9558,6 +9557,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Result established\n\n`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector between\nanalytic number theory and information theory:\n\n\\[\n\\gamma=\\sum_{k=0}^{\\infty}\nD_{\\mathrm{KL}}\\!\\left(\\operatorname{Exp}(k+1)\\,\\|\\,\n                         \\operatorname{Exp}(k+2)\\right).\n\\]\n\nHere the exponential-family divergence is represented by its standard closed\nform\n\n\\[\nD_{\\mathrm{KL}}(\\operatorname{Exp}(\\lambda)\\|\\operatorname{Exp}(\\mu))\n = \\log(\\lambda/\\mu)+\\mu/\\lambda-1.\n\\]\n\nThe development also proves Gibbs nonnegativity for positive rates, identifies\neach consecutive-rate divergence with the classical Euler–Mascheroni series\nterm, identifies every finite partial sum with\n`Real.eulerMascheroniSeq n = Hₙ - log(n+1)`, and proves convergence to Mathlib's\n`Real.eulerMascheroniConstant`.\n\n## Computational evidence\n\nA separate computational-evidence document was not included because the output\ncontract permits only Lean files and this `FUTURE_DIRECTIONS.md`. More\nimportantly, the connector is an exact symbolic identity rather than an inferred\nfinite-data conjecture: all finite telescoping identities and the infinite\n`HasSum` statement are kernel-checked in Lean. Numerical sampling would therefore\nadd illustration, but no evidential support needed by the proof.\n\n## Natural extensions\n\n1. **Measure-theoretic KL derivation.** Define exponential probability measures\n   by densities and derive the closed form from the measure-theoretic relative\n   entropy integral. This would connect the present algebraic interface directly\n   to Mathlib probability distributions.\n2. **Quantitative tails.** Transfer sharp harmonic/logarithmic error estimates to\n   bounds on the remaining accumulated divergence after the first `n` rates.\n3. **Fisher-information interpretation.** Compare each consecutive KL term with\n   the local quadratic form induced by Fisher information and formalize the\n   asymptotic `1/(2(k+1)^2)` behavior.\n4. **Accelerated chains.** Search for grouped or weighted paths through the\n   exponential family whose accumulated divergences yield Euler–Maclaurin or\n   Apéry-like accelerated approximations to `γ`.\n5. **Stieltjes constants.** Differentiate suitable parameterized divergence sums\n   or Mellin transforms to seek analogous information-theoretic representations\n   for higher Stieltjes constants.\n6. **Irrationality criteria.** Combine accelerated rational bounds with integer\n   linear-form criteria. No irrationality claim for `γ` is made here; that\n   question remains open.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0835",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2996b72f",
+    "status": "available",
+    "timestamp": "2026-07-30T00:20:53.229761+00:00",
+    "title": "`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector betwee"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -10157,7 +10176,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72d619d5",
     "description": "In homotopy type theory (HoTT), equal things can be equal in different ways — there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
     "domain_bridges": [],
     "domains": [
@@ -10171,7 +10190,7 @@
     "proof_strategy": "Define the recipe space R(D) for a dish D as the simplicial complex whose vertices are recipes for D, edges connect recipes that differ by one ingredient substitution, triangles connect three recipes that differ by two substitutions, etc. A recipe is a tuple (ingredients, quantities, method). Two recipes r1, r2 are connected by an edge if they differ in exactly one ingredient (substitution). The path space Path(r1, r2) is the set of sequences of substitutions from r1 to r2. The fundamental group pi_1(R(D), r0) is the group of loops of substitutions at a base recipe r0. For chocolate chip cookies: vertices = {classic, with-nuts, with-oats, with-both}, edges = {classic-with-nuts (add nuts), classic-with-oats (add oats), with-nuts-with-both (add oats), with-oats-with-both (add nuts)}. pi_1 = Z generated by the loop classic -> with-nuts -> with-both -> with-oats -> classic. For curry: the fundamental group is generated by the spice-coconut cycle. Test: enumerate recipes from food databases and compute pi_1.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },

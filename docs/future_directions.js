@@ -6116,7 +6116,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "fd_0653",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
