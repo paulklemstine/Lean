@@ -1845,6 +1845,37 @@ class FutureDirectionsManager:
         return list(reversed(self._pruned[-limit:]))
 
 
+    def apply_tournament_results(
+        self,
+        winners: List[Dict[str, str]],
+        rejections: List[Dict[str, str]],
+    ) -> Dict[str, int]:
+        """Apply Aristotle tournament outcomes: promote winners with Lean stubs, retire rejected candidates with formal reasons."""
+        from datetime import datetime, timezone
+        promoted = 0
+        retired = 0
+
+        winner_map = {w["id"]: w.get("lean_stub", "") for w in winners if "id" in w}
+        rejection_map = {r["id"]: r.get("reason", "rejected in aristotle tournament") for r in rejections if "id" in r}
+
+        for d in self._directions:
+            if d.id in winner_map:
+                d.status = "available"
+                d.priority_score = max(d.priority_score, 0.90)
+                if winner_map[d.id]:
+                    d.lean_theorem_stub = winner_map[d.id]
+                d.ambition_level = "grand_challenge"
+                promoted += 1
+            elif d.id in rejection_map:
+                d.status = "pruned"
+                d.prune_reason = f"tournament_rejected: {rejection_map[d.id]}"
+                d.pruned_at = datetime.now(timezone.utc).isoformat()
+                retired += 1
+
+        self._save()
+        return {"promoted": promoted, "retired": retired}
+
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Manage future directions")
