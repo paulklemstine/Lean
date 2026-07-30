@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "279ae676",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n- Develop Hartogs' theorem over an explicit axiomatic set theory without assuming a global choice principle. The present `HartogsType` formulation is type-theoretic and uses Mathl",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T18:47:58",
-      "title": "Rucker: Infinity and the Mind — Formalizing Different Sizes of Infinity"
-    },
-    {
       "cycle_id": "0268a2b5",
       "domain": "Shared",
       "key_insight": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds — open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold e",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-30T17:59:48",
       "title": "EML Training Dynamics as Tropical Gradient Flow"
+    },
+    {
+      "cycle_id": "a8849f61",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\n## Scope and interpretation\n\nA zero set of a real ReLU network is generally a noncompact real polyhedral\nset, not a smooth projective complex variety. Consequently it does not car",
+      "quality_score": 0.668,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-30T18:53:09",
+      "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76074
     }
   ],
-  "last_updated": "2026-07-30T17:59:48",
+  "last_updated": "2026-07-30T18:53:09",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "d14aad94",
-        "quality": 0.71,
-        "theorems": 0,
-        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-      },
-      {
         "cycle_id": "279ae676",
         "quality": 0.76,
         "theorems": 0,
@@ -3575,6 +3569,12 @@
         "quality": 0.8002199999999999,
         "theorems": 21,
         "title": "Attention is All You Need: Formalizing Transformer Architecture"
+      },
+      {
+        "cycle_id": "a8849f61",
+        "quality": 0.668,
+        "theorems": 21,
+        "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
       }
     ],
     "Novelty": [
