@@ -5748,7 +5748,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "63b75a93",
     "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' — can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
     "domain_bridges": [],
     "domains": [
@@ -5761,7 +5761,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
   },
@@ -14879,6 +14879,26 @@
     "status": "available",
     "timestamp": "2026-07-30T18:57:50.746259+00:00",
     "title": "The following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. E"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Specify a complete finite-horizon Werewolf stochastic game: hidden role assignments, public histories, night actions, day ballots, behavioural strategies, and terminal win events.\n- Distinguish the proved one-step MAP objective from optimal control of the full game. A full-game theorem must account for the effect of an elimination on future information and actions; one-step MAP optimality alone does not establish global optimality.\n- Choose an explicit likelihood model for voting and survival evidence. Without such a model, neither the numerical value `0.36` nor a simulation of “Bayesian villagers” is mathematically determined.\n- Once a transition and observation model is fixed, define the value function by backward induction and compare its optimal action against the maximum-posterior action at every reachable information state. This can prove global MAP optimality for the chosen model or produce a certified counterexample.\n- Implement an independently reproducible simulation only after fixing tie-breaking, wolf strategy, villager voting policy, role revelation, day/night order, and likelihood estimation. Report confidence intervals rather than only point estimates.\n- Test the proposed scaling law across several values of `k` for each `n`, estimate the information-structure constant separately from the exponent, and compare against alternative finite-size models. The exact theorem in `BayesianWerewolf.lean` shows that the factor equals `9/25 = 0.36` at `(n,k)=(7,2)` when `C=1`, and vanishes at the parity threshold `n=2k`; these identities do not by themselves establish the conjectured approximation.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_0853",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "177b02a7",
+    "status": "available",
+    "timestamp": "2026-07-30T19:39:17.403036+00:00",
+    "title": "Future directions from cycle 177b02a7"
   },
   {
     "ambition_level": "extension",

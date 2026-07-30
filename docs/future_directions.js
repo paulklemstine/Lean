@@ -1099,17 +1099,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "85fa434c",
     "description": "Prove that the rank of an elliptic curve over Q is computable. Formalize the Mordell-Weil theorem, height pairings, and descent algorithms. Connect to the conjecture that ranks are bounded and explore the parity conjecture.",
     "domains": [
       "Algebra",
       "NumberTheory"
     ],
     "id": "seed_204",
+    "phase": "A",
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "BSD Conjecture: Rank Computability"
   },
@@ -4282,17 +4283,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "63b75a93",
     "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' \u2014 can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
     "domains": [
       "Novelty",
       "Computation"
     ],
     "id": "seed_412",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
   },
@@ -4688,17 +4690,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "513ffc93",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
       "Probability"
     ],
     "id": "fd_0673",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697801+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -5020,17 +5023,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of Mathematical Constants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02f69ad4",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domains": [
       "Tropical",
       "Probability"
     ],
     "id": "seed_243",
+    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Idempotent Probability: Large Deviations"
   },
@@ -6322,17 +6326,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Hereditary 2-WQO Graph Classes Have Bounded Clique-Width"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3c425e4",
     "description": "Investigate the ArXiv paper 'The Arithmetic of Semirings Part I: Ideals' and formalize its key results. Abstract: We study ideals in the semiring $\\mathbb{N}$ of natural numbers, with a focus on those which are lost when extending from $\\mathbb{N}$ to $\\mathbb{Z}$. This leads to a new perspective on the classical theory of numerical semigroups, including the introduction of a natural multiplicative structure. We prove that unique factorization of ideals fails in $\\mathbb{N}$ on several levels, introduce a handful of new tropical multiplicative invariants of numerical semigroups, characterize integral closures of ideals in terms of Newton polygons, and analyze the behavior of classical numerical semigroup invariants with respect to the product operation.",
     "domains": [
       "Algebra",
       "Tropical"
     ],
     "id": "fd_0118",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10778v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T14:08:19.852831+00:00",
     "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
   },
@@ -11030,6 +11035,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. Each is stated so that a counterexample consists of a concrete finite family and parameters violating the displayed conclusion.\n\n1. **Composition increment bound.** For finite families `f\u2099 : \u03b1\u2099 \u2192 \u03b2\u2099` and `g\u2099 : \u03b2\u2099 \u2192 \u03b3\u2099`, define conditional erasure as `erasedBits (g\u2099 \u2218 f\u2099) - erasedBits f\u2099`. If this is at least `c(n)`, then the Landauer cost of the composition exceeds that of `f\u2099` by at least `c(n) k_B T log 2` for nonnegative `k_B,T`.\n\n2. **Worst-fiber bound.** If every size-`n` procedure has a fiber containing at least `2 ^ b(n)` inputs, then its erased information is at least `b(n)` bits. (The present image-cardinality model suggests this when the domain admits an appropriate uniform-fiber or entropy hypothesis; without such a hypothesis, find a finite counterexample.)\n\n3. **Polynomial workload growth.** If `b(n) \u2265 c n^p` for fixed `c > 0` and natural `p`, then cumulative Landauer cost over sizes `0,\u2026,N` is at least `c k_B T log 2 \u00b7 \u2211 n \u2208 range (N+1), n^p`, and hence has order at least `N^(p+1)` with an explicit constant.\n\n4. **Reversible-history tradeoff.** For each finite family, any product-form reversible witness whose auxiliary register has `h(n)` states satisfies `logb 2 (maxFiberSize (f\u2099)) \u2264 logb 2 h(n)`; equality is attainable exactly when the fibers can be embedded uniformly into a history register of maximum-fiber cardinality.\n\n5. **Expected erasure extension.** For nonuniform input distributions, replacing log-cardinality by Shannon entropy should give `H(X\u2099)-H(f\u2099(X\u2099))` as the exact average logical information loss and the corresponding expected Landauer lower bound. A finite rational-distribution formulation would make this directly falsifiable by exhaustive finite sums.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0852",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6d7202c5",
+    "status": "available",
+    "timestamp": "2026-07-30T18:57:50.746259+00:00",
+    "title": "The following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. E"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Specify a complete finite-horizon Werewolf stochastic game: hidden role assignments, public histories, night actions, day ballots, behavioural strategies, and terminal win events.\n- Distinguish the proved one-step MAP objective from optimal control of the full game. A full-game theorem must account for the effect of an elimination on future information and actions; one-step MAP optimality alone does not establish global optimality.\n- Choose an explicit likelihood model for voting and survival evidence. Without such a model, neither the numerical value `0.36` nor a simulation of \u201cBayesian villagers\u201d is mathematically determined.\n- Once a transition and observation model is fixed, define the value function by backward induction and compare its optimal action against the maximum-posterior action at every reachable information state. This can prove global MAP optimality for the chosen model or produce a certified counterexample.\n- Implement an independently reproducible simulation only after fixing tie-breaking, wolf strategy, villager voting policy, role revelation, day/night order, and likelihood estimation. Report confidence intervals rather than only point estimates.\n- Test the proposed scaling law across several values of `k` for each `n`, estimate the information-structure constant separately from the exponent, and compare against alternative finite-size models. The exact theorem in `BayesianWerewolf.lean` shows that the factor equals `9/25 = 0.36` at `(n,k)=(7,2)` when `C=1`, and vanishes at the parity threshold `n=2k`; these identities do not by themselves establish the conjectured approximation.\n",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_0853",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "177b02a7",
+    "status": "available",
+    "timestamp": "2026-07-30T19:39:17.403036+00:00",
+    "title": "Future directions from cycle 177b02a7"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -11229,16 +11264,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3811f14c",
     "description": "Cycle 29ba074c (Q=0.600) proved 24 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
     "domains": [
       "NumberTheory"
     ],
     "id": "sorry_fill_29ba074c_5136a953",
+    "phase": "A",
     "priority_score": 0.65,
     "research_mode": "team",
     "source_exp_id": "29ba074c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T06:47:46.532440+00:00",
     "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
   },
