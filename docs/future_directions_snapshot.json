@@ -2117,7 +2117,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d7202c5",
     "description": "Building on cycle 43fa6482 (Q=0.770), which proved 7 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Complexity, Reversibility, and Thermodynamic Cost\n\n## 1. Size-indexed dissipation lower bounds for irreversible decision procedures\n\n**Conjecture.** Let a family of decision procedures on inputs of length `n` irreversibly discard at least `b(n)` unbiased logical bits. Under fini",
     "domain_bridges": [],
     "domains": [
@@ -2129,7 +2129,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "43fa6482",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T18:42:11.729178+00:00",
     "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
   },
@@ -2561,25 +2561,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "bd7b389e",
-    "description": "Building on cycle 8aec96a6 (Q=0.770), which proved 24 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability di",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_8aec96a6_6f3d3060",
-    "lineage_refs": [],
-    "priority_score": 0.8697699999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "8aec96a6",
-    "status": "in_progress",
-    "timestamp": "2026-07-29T23:23:20.154333+00:00",
-    "title": "Deepening: EML Information Geometry: Fisher Information of exp-log Models"
   },
   {
     "ambition_level": "extension",
@@ -3924,27 +3905,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Generalization Bounds via Rademacher Complexity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "4ecd322f",
-    "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Geometry",
-      "Speculative"
-    ],
-    "id": "seed_333",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Quantum Gravity as Topological Quantum Field Theory"
   },
   {
     "ambition_level": "extension",
@@ -7236,6 +7196,45 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Mixed partition functions are exactly the graph parameters of exponentially bounded edge-connection rank' and formalize its key results. Abstract: We prove a conjecture of Regts and Sevenster: a complex-valued graph parameter $f$ with $f(\\varnothing)=1$ has exponentially bounded edge-connection rank if and only if it is a mixed partition function; moreover, the model may be chosen with its numbers of even and odd colours explicitly bounded in terms of the rank bound. From $f$ we construct a connection category, a rigid symmetric $\\mathbb{C}$-linear monoidal category whose morphism spaces have the connection ranks as dimensions and whose trace pairings are nondegenerate. The rank hypothesis forces moderate tensor growth, and a recent theorem of Etingof and Penneys then shows that every nilpotent endomorphism has trace zero; together with the nondegeneracy of the trace pairing, this makes the category semisimple, and a theorem of Deligne provides a faithful symmetric tensor functor to finite-dimensional super vector spaces. We then identify the resulting super tensor network with the Regts-Sevenster model exactly, viz. with its Eul",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0847",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.27198v1",
+    "status": "available",
+    "timestamp": "2026-07-30T16:58:08.267990+00:00",
+    "title": "ArXiv paper: Mixed partition functions are exactly the graph parameters of exponentially bounded edge-connection rank"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Triviality of promise polymorphisms' and formalize its key results. Abstract: Given two $m$-ary predicates $P,Q$, an $n$-ary polymorphism is a tuple $(f_1,\\dots,f_m)$ of functions such that $x^{(1)},\\dots,x^{(n)} \\in P$ implies $(f_1(y_1),\\dots,f_m(y_m)) \\in Q$, where $y_i = (x^{(1)}_i,\\dots,x^{(m)}_i)$. This generalizes the usual definition in universal algebra, in which $P = Q$ and $f_1 = \\cdots = f_m$. In earlier work, we studied when all polymorphisms of a single predicate are \"trivial\": either all depend on a single coordinate (common to all of them), or they constitute a \"certificate\" for the predicate. We showed that it suffices to check this condition for $2$-ary polymorphisms, and even for $1$-ary polymorphisms, modulo an explicit list of obstructions. In this paper we generalize the first result to the $P,Q$ setting, for a relaxed notion of certificate. We also generalize the second result in the promise setting, in which $P,Q$ range over the same alphabets and $P \\subseteq Q$.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0849",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.27057v1",
+    "status": "available",
+    "timestamp": "2026-07-30T16:58:11.342780+00:00",
+    "title": "ArXiv paper: Triviality of promise polymorphisms"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
@@ -8194,7 +8193,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8849f61",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds — every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domain_bridges": [],
     "domains": [
@@ -8209,7 +8208,7 @@
     "proof_strategy": "For a ReLU network f: R^n -> R with L layers, the decision surface V(f) is a polyhedral complex. Each linear region of f defines a halfspace H_i = {x : a_i . x + b_i > 0}, and V(f) is the union of boundaries of these halfspaces. The homology H_{n-2}(V(f), Z) is generated by the (n-2)-dimensional faces of V(f). Each such face is the intersection of exactly 2 hyperplanes: face_{ij} = {x : a_i . x + b_i = 0, a_j . x + b_j = 0}. Each face is an algebraic cycle (a codimension-2 subvariety of R^n cut out by 2 linear equations). The Hodge conjecture for V(f): every class in H_{n-2}(V(f), Q) is represented by a formal sum of these faces. This is trivially true because H_{n-2}(V(f), Z) is free abelian generated by the faces. The non-trivial content: the NUMBER of faces is bounded by (w_1 choose 2) * prod_{i=2}^{L} w_i (the product of binomial coefficients of widths). This gives the Hodge number bound h^{1,1}(V(f)) <= (w_1 choose 2) * prod w_i. More generally, h^{p,q}(V(f)) <= (w_1 choose p) * (w_L choose q) * prod w_i. Test: for a 2-layer ReLU network with n=2, w_1=4, compute V(f), enumerate faces, compute H_0(V(f)), and verify every class is a sum of vertices.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -8627,6 +8626,25 @@
     "status": "available",
     "timestamp": "",
     "title": "The P vs NP of Cooking: Computational Complexity of Recipes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0848",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-07-30T16:58:14.081808+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "ambition_level": "extension",
