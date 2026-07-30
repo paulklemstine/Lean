@@ -15829,7 +15829,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory and formal generating functions.\n\nFor a finite group `G` acting on each finite grade `X n`, define the coefficient of the series\nattached to `g` to be the number of points in `X n` fixed by `g`. The file proves:\n\n\\[\n  \\sum_{g\\in G} |(X_n)^g| = |G|\\,|X_n/G|\n\\]\n\nfor every `n`, and consequently the coefficientwise q-series identity\n\n\\[\n  \\sum_{g\\in G} T_g(q) = |G|\\,O(q),\n  \\qquad O(q)=\\sum_{n\\ge0}|X_n/G|q^n.\n\\]\n\nIt also proves that every coefficient, and hence every whole series `T_g`, is invariant under\nconjugacy. Thus these element-indexed series genuinely descend to conjugacy-class data. The\naverage coefficient is exactly the number of orbits. This is Burnside's orbit-counting theorem\nlifted grade-by-grade to a formal q-expansion, connecting character values with enumerative\ngenerating functions without imposing unjustified analytic hypotheses.\n\n## Why the proposed product claim was not asserted\n\nThe mission's much stronger product claim should not be treated as an established consequence\nof monstrous moonshine. Several issues must first be resolved:\n\n1. Standard McKay–Thompson series are normalized with leading term `q⁻¹`. A product of 194\n   class representatives therefore begins with `q⁻¹⁹⁴`, so it is generally meromorphic at the\n   cusp rather than a holomorphic modular form as stated.\n2. If “product over all `g in M`” literally means all Monster elements, its leading term is\n   `q^{-|M|}`. If it means one representative of each conjugacy class, it is a different\n   product. These formulations cannot be interchanged.\n3. The series have different invariance groups (often genus-zero groups involving\n   Atkin–Lehner extensions). A product is modular only after specifying a common subgroup,\n   compatible multipliers, cusp behavior, and a coherent notion of weight.\n4. McKay–Thompson series are modular **functions**, normally of weight zero. Multiplying them\n   does not produce weight `|M|/24`; moreover `|M|/24` is not the weight naturally supplied by\n   the moonshine theorem.\n5. Character values are recovered grade by grade from the family of traces and the Monster\n   character table. A single product loses information in general, so the claim that it\n   determines the complete character table, element order, and maximal-subgroup structure\n   requires a separately specified injective reconstruction map.\n\nAccordingly, claiming the requested product theorem would encode an unsupported—and in its\nliteral normalization, incompatible—statement. The formal result supplied here captures the\nvalid additive relationship between all trace/fixed-point series and orbit enumeration.\n\n## Computational evidence decision\n\nA separate computational-evidence file was intentionally omitted because the requested output\npermits only `.lean` files and `FUTURE_DIRECTIONS.md`. More importantly, the connector is proved\nfor every finite group, every graded finite action, and every coefficient; checking selected\nsmall cases would be logically weaker than the completed theorem. The proof is not a\n`native_decide` calculation. The concrete Monster request for 194 × 100 coefficients would\nalso require an external certified dataset containing the Monster character table and the\nnormalized McKay–Thompson coefficients, neither of which is present in this project.\n\n## Concrete next steps\n\n1. Formalize complex-valued graded characters `tr(g | V_n)` and prove conjugacy invariance by\n   trace invariance under similarity.\n2. Define Laurent q-series with the standard `q⁻¹ + O(q)` normalization and formalize the pole\n   order of finite products. This will make the normalization obstruction precise.\n3. Import a provenance-checked table of Monster irreducible characters and the 194 normalized\n   McKay–Thompson series; verify coefficient decompositions by exact integer arithmetic.\n4. State modularity separately for each class, with its actual moonshine group and multiplier.\n5. Investigate information-preserving aggregates—such as the full vector-valued family or a\n   labeled generating function—rather than an unlabeled scalar product that discards data.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -16514,6 +16514,47 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal\n   machine, define `K_U(b)` as the least program length decoding to `b`, and derive\n   the Kraft-inequality version of the incompressibility bound. Exact complexity\n   is machine-dependent and generally uncomputable, so it should not be stated\n   without this parameter.\n2. **Probability formulation.** Put the uniform probability measure on finite\n   books and restate the counting theorem as\n   `P[K_U(b) < L-c] ≤ 2^{-c}` (up to the conventional strict/non-strict boundary).\n3. **Infinite-library limit.** Replace fixed books by infinite streams. The product\n   topology is compact and totally disconnected (Cantor space for a binary\n   alphabet), while the finite Hamming topology remains discrete.\n4. **Formal covering dimension.** The present development proves the standard\n   clopen-basis certificate for dimension zero. If a covering-dimension API is\n   added to Mathlib, connect that certificate to the library's formal Lebesgue\n   covering dimension.\n5. **Hamming geometry.** Continue the chain with exact sphere and ball cardinalities,\n   coding bounds, and concentration of pairwise distance for uniformly random\n   books.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0840",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "1c628216",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/1c628216",
+      "status": "available",
+      "thread_id": "th_a254a411",
+      "timestamp": "2026-07-30T09:52:03.096896+00:00",
+      "title": "1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -16604,7 +16645,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 09a3e4f4 (Q=0.774), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty"
       ],
@@ -17124,7 +17165,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty"
       ],
@@ -17164,7 +17205,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 6a88207a (Q=0.750), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynam",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty"
       ],
@@ -17404,7 +17445,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 83a0d4e2 (Q=0.751), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects — not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare it",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty"
       ],
@@ -17684,7 +17725,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle dff51e05 (Q=0.783), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: l",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty"
       ],
@@ -17844,7 +17885,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f1303b99 (Q=0.811), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty"
       ],
@@ -23025,7 +23066,7 @@
       "depth_estimate": 3,
       "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Topology",
@@ -23152,7 +23193,7 @@
       "depth_estimate": 3,
       "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Algebra",
@@ -23237,7 +23278,7 @@
       "depth_estimate": 3,
       "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Logic",
@@ -23665,7 +23706,7 @@
       "depth_estimate": 3,
       "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... — just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number — the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic — it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -23750,7 +23791,7 @@
       "depth_estimate": 3,
       "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms — it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -24134,7 +24175,7 @@
       "depth_estimate": 3,
       "description": "Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearrangement of the primes q_1, q_2, ... such that the sequence of ratios q_n / p_n converges to 1. In other words, you can shuffle the primes almost arbitrarily and the room numbers barely change. More precisely, the set of permutations sigma for which p_{sigma(n)} / p_n has a limit is dense in the symmetric group (with the topology of pointwise convergence). But NOT every permutation works: the permutation that swaps all even-indexed primes with odd-indexed ones gives q_{2n}/p_{2n} = p_{2n-1}/p_{2n} which converges to 1 by the prime number theorem, but the permutation that reverses order gives q_n/p_n = p_{N-n}/p_n which diverges. Test: compute q_n/p_n for 10 random permutations of the first 10^6 primes and verify that most ratios converge to 1. Find the exact density of 'well-behaved' permutations. Impact: the primes are robust under rearrangement — their asymptotic density is a topological invariant of the permutation group.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -24516,7 +24557,7 @@
       "depth_estimate": 3,
       "description": "1729 = 10^3 + 9^3 = 12^3 + 1^3 is the smallest number expressible as a sum of two cubes in two ways (Ramanujan's taxicab number). But can 1729 be expressed as a sum of three cubes? That is, does 1729 = x^3 + y^3 + z^3 have integer solutions? Conjecture: 1729 = 1^3 + 10^3 + 8^3 = 1 + 1000 + 512 = 1513 (no). 1729 = 9^3 + 9^3 + 7^3 = 729 + 729 + 343 = 1801 (no). Actually, 1729 = 1^3 + 12^3 = 1728 + 1 = 1729 (the original). And 1729 = 10^3 + 9^3 = 1000 + 729 = 1729. So 1729 has TWO representations as a sum of two cubes. The question is: does 1729 have a representation as a sum of three cubes? The answer is YES: 1729 = 1^3 + (-12)^3 + 12^3 = 1 - 1728 + 1728 = 1 = NO, this gives 1, not 1729. Try 1729 = 10^3 + 9^3 + 0^3 = 1729. So 1729 = 10^3 + 9^3 + 0^3 is a trivial representation. The non-trivial question: does 1729 have a representation as x^3 + y^3 + z^3 with x,y,z all nonzero? Conjecture: 1729 has no non-trivial representation as a sum of three cubes with all terms nonzero. Test: brute-force search for x^3 + y^3 + z^3 = 1729 with x,y,z nonzero integers. Impact: even Ramanujan's favorite number has secrets — the taxicab number's relationship to sums of three cubes reveals new Diophantine structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory"
@@ -24557,7 +24598,7 @@
       "depth_estimate": 3,
       "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -24937,7 +24978,7 @@
       "depth_estimate": 3,
       "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set — they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line — they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line — they are a fractal curve.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -25063,7 +25104,7 @@
       "depth_estimate": 3,
       "description": "The Heisenberg uncertainty principle states that Delta(x) * Delta(p) >= hbar/2. But this is NOT a physical principle — it is a THEOREM of Fourier analysis. The Fourier transform of a function f(x) satisfies: if f is concentrated in a region of width Delta(x), then its Fourier transform f_hat is concentrated in a region of width Delta(k) >= 1/(2*Delta(x)). This is the Benedicks-Amrein-Berthier theorem: a function and its Fourier transform cannot both be supported on sets of finite measure. Conjecture: The uncertainty principle generalizes to all integral transforms. For the Laplace transform: if f is supported on [a, infinity), then the Laplace transform L[f](s) cannot be supported on a set of finite measure unless f = 0. For the Mellin transform: if f is supported on a geometric progression, then M[f](s) cannot be supported on a set of finite measure. For the Radon transform: if f is supported on a strip, then R[f] cannot be supported on a set of finite measure. The general principle: no invertible integral transform allows both a function and its transform to have compact support. Test: verify the uncertainty principle for the Fourier, Laplace, Mellin, and Radon transforms numerically. Construct functions with Delta(x) = epsilon and measure Delta(k) for each transform. Impact: the uncertainty principle is not about quantum mechanics — it is about the structure of integral transforms. Every transform has its own uncertainty principle.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Analysis",
@@ -25191,7 +25232,7 @@
       "depth_estimate": 3,
       "description": "The Riemann zeta function zeta(s) has zeros at the non-trivial points s = 1/2 + i*gamma_n where gamma_n are the imaginary parts of the zeros. The Fourier transform of the zero counting function N(t) = #{gamma_n <= t} is related to the distribution of primes by the explicit formula. But what if we take the Fourier transform of zeta itself? Define Z(t) = zeta(1/2 + it) as a function of the real variable t. The Fourier transform Z_hat(w) = integral_{-inf}^{inf} Z(t) * e^{-2*pi*i*w*t} dt. Conjecture: Z_hat(w) has sharp peaks at w = log(p)/2*pi for each prime p. This is because the explicit formula expresses zeta(1/2+it) as a sum over primes: zeta(1/2+it) ~ sum_{p} p^{-1/2-it} = sum_{p} e^{-it*log(p)} / sqrt(p), which is a sum of complex exponentials with frequencies log(p). The Fourier transform of a sum of exponentials is a sum of delta functions at the frequencies log(p)/2*pi. So Z_hat(w) = sum_{p} delta(w - log(p)/2*pi) / sqrt(p) + (error from zeros and smooth terms). The peaks at w = log(p)/2*pi give a 'spectrogram' of the primes. Test: compute Z_hat(w) numerically for the first 10^6 zeros and verify the peaks at log(2)/2*pi, log(3)/2*pi, log(5)/2*pi, etc. Impact: you can HEAR the primes by playing the Fourier transform of the Riemann zeta function — each prime is a distinct note.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -25319,7 +25360,7 @@
       "depth_estimate": 3,
       "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal — they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -25530,7 +25571,7 @@
       "depth_estimate": 3,
       "description": "Conway's surreal numbers No form a proper class containing all real numbers, all ordinal numbers, and all infinitesimals. Every real number r has a surreal representation r = {r - 1 | r + 1}. Every ordinal alpha has a surreal representation alpha = {alpha |}. Every infinitesimal epsilon = {0 | 1, 1/2, 1/4, ...}. The surreal numbers form a field (in fact, a real-closed field). Conjecture: the subfield of surreals born by day omega (the set of surreals with finite birthdays) is isomorphic to the field of real algebraic numbers extended with all dyadic rationals. More precisely: No_{omega} = Q[2^{-n} : n in N] (the rationals extended with all dyadic rationals). The subfield born by day omega^2 contains all real numbers that are algebraic over the dyadic rationals, plus all infinitesimals that are algebraic over the reals. Conjecture: No_{omega^2} = R(x) where x is the smallest positive infinitesimal. Test: compute the field structure of surreals born by day omega and verify the isomorphism with the dyadic rationals. Impact: the surreal number hierarchy encodes the constructive hierarchy of real number fields — each birthday level adds exactly the algebraic closures needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Algebra",
@@ -25698,7 +25739,7 @@
       "depth_estimate": 3,
       "description": "The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omega*T(n)/n} for N large. Conjecture: F_T has a spectral gap: |F_T(omega)| < C for all irrational omega, where C < sqrt(N). This would mean that the Collatz map does not concentrate energy at any irrational frequency — it is 'mixing' in the Fourier sense. Moreover, the spectral gap is related to the convergence rate: the wider the gap, the faster the orbit reaches 1. Conjecture: for the orbit of n, the number of steps to reach 1 is O(log(n)), which is equivalent to F_T having a spectral gap of width Omega(1/log(n)). Test: compute F_T for n up to 10^6 and measure the spectral gap. Compare with the spectral gaps of related maps (5n+1, 7n+1) which do NOT always converge. Impact: the Collatz conjecture is a spectral gap problem. Convergence to 1 means the Fourier transform has no resonances at irrational frequencies.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -25867,7 +25908,7 @@
       "depth_estimate": 3,
       "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Logic",
@@ -25952,7 +25993,7 @@
       "depth_estimate": 3,
       "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic — a concrete example of Godel's incompleteness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Logic",
@@ -26036,7 +26077,7 @@
       "depth_estimate": 3,
       "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Algebra",
@@ -26120,7 +26161,7 @@
       "depth_estimate": 3,
       "description": "Entropy H(X) = -sum p(x) log p(x) measures the information content of a random variable. In category theory, a functor F: C -> D 'loses information' when it maps non-isomorphic objects to isomorphic ones. Define the 'functorial entropy' H(F) as the expected information lost by F: H(F) = -sum_{d in Ob(D)} p(d) * log(p(d)) where p(d) = |F^{-1}(d)| / |Ob(C)|. Conjecture: For the forgetful functor U: Top -> Set that forgets the topology, H(U) = log(2^{aleph_0}) = aleph_0 (infinite entropy, because uncountably many topologies map to the same set). For the abelianization functor Ab: Grp -> AbGrp, H(Ab) = log(2) (each abelian group has 2 non-abelian preimages on average: G and G x Z/2Z). For the inclusion functor Inc: FinGrp -> Grp, H(Inc) = 0 (no information loss, since finite groups embed as themselves). Conjecture: H(F) = 0 iff F is faithful, and H(F) = infinity iff F identifies infinitely many non-isomorphic objects. For finite categories: H(F) = log(|Ob(C)| / |Ob(D)|) when F is 'uniform' (each fiber has the same size). Test: compute H(F) for various functors between finite categories and verify the formula. Impact: entropy is not just a measure-theoretic concept — it is the information-theoretic shadow of functoriality. Every functor loses information, and the entropy measures how much.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Algebra",
@@ -26629,7 +26670,7 @@
       "depth_estimate": 3,
       "description": "The 'uncanny valley' in robotics states that as a robot becomes more human-like, acceptance increases until it looks almost human, then drops sharply before recovering. Conjecture: the same phenomenon exists in mathematics. As a proof becomes more rigorous, acceptance increases until it is 'almost rigorous' (a proof that is correct in spirit but has small gaps), then drops sharply (because mathematicians are suspicious of proofs that look correct but might have subtle errors), before recovering for fully rigorous proofs. The 'mathematical uncanny valley' function U(r) where r in [0,1] is the rigor level: U(0) = high (informal intuition is accepted), U(0.8) = low (almost rigorous but with gaps — very suspicious), U(1.0) = high (fully rigorous proof, formally verified). Conjecture: U(r) has a unique minimum at r = 1 - epsilon where epsilon is the 'gap size' that triggers the most suspicion. For Lean 4 proofs: U(1) = 1 (compiles), U(0.99) = 0.1 (almost compiles but has a 'sorry'), U(0.5) = 0.5 (sketch proof, accepted as intuition). Test: survey 100 mathematicians on their confidence in proofs at varying rigor levels and fit the uncanny valley curve. Impact: almost-right proofs are less trusted than informal intuitions. Formal verification escapes the uncanny valley.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -28972,7 +29013,7 @@
       "depth_estimate": 3,
       "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Logic",
@@ -29098,7 +29139,7 @@
       "depth_estimate": 3,
       "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -29854,7 +29895,7 @@
       "depth_estimate": 3,
       "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic",
@@ -30064,7 +30105,7 @@
       "depth_estimate": 3,
       "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -30147,7 +30188,7 @@
       "depth_estimate": 3,
       "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -30201,7 +30242,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.76172,
       "parent_direction": "",
       "priority_score": 0.81,
       "proof_strategy": "",
@@ -30212,7 +30253,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Borges' Library of Babel: Combinatorics of Everything"
@@ -30357,7 +30398,7 @@
       "depth_estimate": 3,
       "description": "Study near-misses to Fermat's Last Theorem: triples (a,b,c) where |a^n + b^n - c^n| is small. Prove that such near-misses exist for every n and characterize their distribution. Show that the density of near-misses decreases super-exponentially and connect to the ABC conjecture's effective version.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -30483,7 +30524,7 @@
       "depth_estimate": 3,
       "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Algebra",
@@ -30651,7 +30692,7 @@
       "depth_estimate": 3,
       "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Algebra",
@@ -34100,7 +34141,7 @@
       "depth_estimate": 3,
       "description": "Conjecture that mathematical discovery undergoes phase transitions: long periods of incremental progress punctuated by sudden reorganizations (like percolation transitions). Formalize this using statistical mechanics: define an order parameter for 'mathematical coherence' and show it undergoes a second-order phase transition as the number of connected theorems crosses a critical threshold. Predict: the next phase transition in number theory will occur when the connections between Langlands and arithmetic geometry exceed ~10^4 edges.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -34222,7 +34263,7 @@
       "depth_estimate": 3,
       "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -34303,7 +34344,7 @@
       "depth_estimate": 3,
       "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T ≈ Π(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (Gödel-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly ℵ_1^CK (the Church-Kleene ordinal).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -34344,7 +34385,7 @@
       "depth_estimate": 3,
       "description": "Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/ρ for each zero ρ with |Im(ρ)| ≤ n. Prove: the harmonic of n grows as O(log n / log log n). Conjecture: perfect intervals (octaves, fifths, fourths) correspond to numbers whose harmonic is rational. Show: the harmonic of 2 is exactly 1 (the octave), while the harmonic of 3 is transcendental (the fifth).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Pythagorean"
@@ -34467,7 +34508,7 @@
       "depth_estimate": 3,
       "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Algebra"
@@ -34549,7 +34590,7 @@
       "depth_estimate": 3,
       "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy ≥ 95% on number-theoretic statements of length ≤ 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "Pythagorean"
@@ -34590,7 +34631,7 @@
       "depth_estimate": 3,
       "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -34631,7 +34672,7 @@
       "depth_estimate": 3,
       "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n → T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty",
         "Tropical"
@@ -34713,7 +34754,7 @@
       "depth_estimate": 3,
       "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -34795,7 +34836,7 @@
       "depth_estimate": 3,
       "description": "Formalize the concept of 'mind tools' — mathematical structures that extend cognition. Define: a mind tool is a formal system F such that the set of theorems provable in F is strictly larger than the set the human brain can directly apprehend. Prove: ZFC is a mind tool (by Gödel's incompleteness — there exist ZFC theorems the brain cannot directly 'see'). Show: category theory is a more powerful mind tool than set theory for certain classes of problems (it proves things about all categories simultaneously). Conjecture: the hierarchy of mind tools is well-ordered by proof-theoretic ordinal.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -35004,7 +35045,7 @@
       "depth_estimate": 3,
       "description": "Formalize 'strange loops' — hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: Gödel's incompleteness theorem IS a strange loop (the Gödel sentence G says 'G is not provable'). Show: Tarski's undefinability of truth is a stronger strange loop (no formula can assert its own truth). Conjecture: every sufficiently expressive formal system contains infinitely many distinct strange loops. Explore: can we formalize the 'tangled hierarchy' where level N refers to level N-1 which refers to level N?",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -35171,7 +35212,7 @@
       "depth_estimate": 3,
       "description": "Formalize tangled hierarchies — levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent — formalize this in Lean.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -35295,7 +35336,7 @@
       "depth_estimate": 3,
       "description": "Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 with no two consecutive 1s. Conjecture: there exists a base b such that prime numbers have a simple pattern in base b (analog of the Ulam spiral). Explore: what would alien civilizations use as their number base? Would they prefer base 8 (octopus)? Base 12? Base phi?",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "NumberTheory",
@@ -35421,7 +35462,7 @@
       "depth_estimate": 3,
       "description": "Formalize the multiverse interpretation of set theory (Hamkins). Define: a 'set-theoretic multiverse' is a collection of models of ZFC, each with different 'truth' values for independent statements (CH, large cardinals, V=L). Prove: CH is true in some universes and false in others (by forcing). Show: the multiverse is closed under forcing (every universe has forcing extensions). Conjecture: there is no 'true' CH — the question is meaningless without specifying which universe. Explore: formalize 'multiverse truth' — a statement is multiverse-true if it holds in all universes. Prove: ZFC is multiverse-true, CH is not.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty",
         "Logic"
@@ -35503,7 +35544,7 @@
       "depth_estimate": 3,
       "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency — prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' — neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty",
         "MachineLearning"
@@ -35908,7 +35949,7 @@
       "depth_estimate": 3,
       "description": "Cycle 87772396 (Q=0.686) proved 202 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Novelty"
       ],
@@ -39410,14 +39451,14 @@
     "Algebra": 17,
     "Analysis": 5,
     "Bridges": 4,
-    "Combinatorics": 3,
+    "Combinatorics": 4,
     "Computation": 11,
     "Cryptography": 4,
     "EML": 1,
     "Geometry": 5,
-    "Logic": 6,
+    "Logic": 7,
     "MachineLearning": 5,
-    "Novelty": 8,
+    "Novelty": 9,
     "NumberTheory": 3,
     "Physics": 7,
     "Probability": 2,
@@ -39428,38 +39469,31 @@
     "Tropical": 1
   },
   "recent_theme_keywords": {
-    "'interval": 1,
+    "410-page": 1,
     "affine": 2,
     "algebraic": 4,
+    "almost": 1,
     "arbitrary": 5,
-    "because": 1,
+    "babel": 1,
+    "books": 1,
+    "borges'": 1,
     "bounds": 3,
-    "class": 1,
-    "compact": 1,
-    "complete": 1,
-    "complexity": 2,
-    "compute": 1,
+    "combinatorics": 1,
+    "complexity": 3,
+    "compute": 2,
     "conjecture": 13,
-    "connected": 1,
+    "connected": 2,
     "consistent": 2,
     "constant": 2,
     "construct": 4,
-    "containing": 1,
-    "continuous": 1,
-    "continuously": 1,
-    "contractible": 1,
-    "conway's": 1,
-    "dedekind": 1,
-    "deformed": 1,
-    "dimension": 3,
+    "covering": 1,
+    "determine": 1,
+    "dimension": 4,
     "directions": 2,
-    "disconnected": 1,
-    "endpoints": 1,
+    "disconnected": 2,
     "equivalent": 3,
-    "every": 1,
+    "everything": 1,
     "explicit": 3,
-    "field": 1,
-    "filled": 1,
     "finite": 7,
     "formalize": 25,
     "function": 5,
@@ -39467,20 +39501,25 @@
     "generated": 1,
     "group": 2,
     "h(x,t": 1,
+    "hamming": 1,
     "have": 1,
     "homotopy": 1,
     "hypotheses": 3,
     "impact": 9,
+    "incompressible": 1,
     "infinitely": 1,
     "infinitesimals": 1,
     "instead": 1,
     "interval": 1,
     "intervals": 1,
+    "kolmogorov": 1,
     "largest": 1,
+    "library": 1,
     "linear": 2,
     "locally": 1,
     "making": 2,
     "mathematical": 3,
+    "metric": 1,
     "moreover": 1,
     "natural": 2,
     "neighborhood": 1,
@@ -39491,13 +39530,14 @@
     "ordinals": 1,
     "pi_1(no": 1,
     "positive": 3,
+    "possible": 1,
     "precise": 3,
     "problem": 4,
     "proper": 1,
     "provability": 2,
     "proves": 2,
     "quantitative": 2,
-    "random": 4,
+    "random": 5,
     "regions": 2,
     "renormalization": 2,
     "replace": 3,
@@ -39516,9 +39556,10 @@
     "theory": 8,
     "theta": 1,
     "theta_3": 1,
+    "topological": 1,
     "topology": 1,
     "topology'": 1,
-    "totally": 1,
+    "totally": 2,
     "triangle": 2,
     "trivial": 1,
     "uniformly": 1,

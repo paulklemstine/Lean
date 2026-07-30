@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "830d234a",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\nThe formal development proves the finite-action policy-gradient identity directly from coordinatewise score factorization, derives the mean-zero score and baseline invariance, est",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-26T02:25:34",
-      "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
-    },
-    {
       "cycle_id": "ce71f394",
       "domain": "Applications",
       "key_insight": "# Future Directions: Differential Structure of Exponential–Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n ≥ 1`, the `n`th der",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-30T03:41:04",
       "title": "Machine Learning Generalization Bounds"
+    },
+    {
+      "cycle_id": "a1225aa5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThe formal results refute the proposed connectedness, local compactness, and contractibility claims for the interval topology. They suggest the following concrete conjectures.\n\n1.",
+      "quality_score": 0.7423299999999999,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-30T09:50:58",
+      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7fb32c18",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\n## Results established\n\nThe formal development in `Speculative/CategoryDNA.lean` uses a precise minimal semantics:\na theory retains a type of models, and its genome is the discret",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-21T06:49:34",
-      "title": "Speculative: Category Theory as the DNA of Mathematics"
-    },
     {
       "cycle_id": "cd0075c8",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-30T06:51:08",
       "title": "Symmetric Group Generation Probability"
+    },
+    {
+      "cycle_id": "a1225aa5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThe formal results refute the proposed connectedness, local compactness, and contractibility claims for the interval topology. They suggest the following concrete conjectures.\n\n1.",
+      "quality_score": 0.7423299999999999,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-30T09:50:58",
+      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5843d50f",
-      "domain": "Bridges",
-      "name": "consistency_sentence_independent_of_PA",
-      "quality": 0.7539499999999999
-    },
-    {
-      "cycle_id": "5843d50f",
-      "domain": "Bridges",
-      "name": "physical_consistency_implies_Con_independent_of_PA",
-      "quality": 0.7539499999999999
-    },
-    {
-      "cycle_id": "687f4282",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.8022499999999999
-    },
     {
       "cycle_id": "687f4282",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "pacBayes_compression_confidence_bound",
       "quality": 0.76753
+    },
+    {
+      "cycle_id": "a1225aa5",
+      "domain": "Novelty",
+      "name": "interval_topology_is_order_topology",
+      "quality": 0.7423299999999999
+    },
+    {
+      "cycle_id": "a1225aa5",
+      "domain": "Novelty",
+      "name": "interval_neighborhood_basis",
+      "quality": 0.7423299999999999
+    },
+    {
+      "cycle_id": "a1225aa5",
+      "domain": "Novelty",
+      "name": "naturalStepSet_subset_finiteStepRay",
+      "quality": 0.7423299999999999
     }
   ],
-  "last_updated": "2026-07-30T06:51:08",
+  "last_updated": "2026-07-30T09:50:58",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f90ec3a1",
-        "quality": 0.69,
-        "theorems": 12,
-        "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
-      },
-      {
         "cycle_id": "6a88207a",
         "quality": 0.75,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.8022499999999999,
         "theorems": 14,
         "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
+      },
+      {
+        "cycle_id": "a1225aa5",
+        "quality": 0.7423299999999999,
+        "theorems": 15,
+        "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
       }
     ],
     "NumberTheory": [
