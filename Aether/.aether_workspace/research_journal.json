@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "38d3a014",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n- Formalize periodic configurations `Fin n → Bool` and count fixed points for\n  every rule and small period `n` with kernel-checked finite enumeration.\n- Represent local Boolean f",
-      "quality_score": 0.7097100000000001,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-28T12:20:33",
-      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-    },
-    {
       "cycle_id": "09a3e4f4",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory a",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-30T20:38:20",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "513ffc93",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n1. **Poisson connectivity window.** For every fixed real `c`, if `pₙ = (log n + c)/n`, then the number of isolated vertices in `G(n,pₙ)` converges in distribution to `Poisson(exp(",
+      "quality_score": 0.7676799999999999,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-30T22:28:51",
+      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "759f53fa",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Replace discrete carriers by actual categories.** Define an analogy from functors `F : A ⥤ B` and `G : B ⥤ A`, and measure agreement of `G ⋙ F` with the identity using natura",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-22T00:14:30",
-      "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Operation"
-    },
     {
       "cycle_id": "11a0fcb2",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-07-30T22:27:40",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+    },
+    {
+      "cycle_id": "513ffc93",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n1. **Poisson connectivity window.** For every fixed real `c`, if `pₙ = (log n + c)/n`, then the number of isolated vertices in `G(n,pₙ)` converges in distribution to `Poisson(exp(",
+      "quality_score": 0.7676799999999999,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-30T22:28:51",
+      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c2653f80",
-      "domain": "NumberTheory",
-      "name": "dvd_transfer",
-      "quality": 0.7720099999999999
-    },
-    {
-      "cycle_id": "c2653f80",
-      "domain": "NumberTheory",
-      "name": "CoveringCert",
-      "quality": 0.7720099999999999
-    },
-    {
-      "cycle_id": "3c125e46",
-      "domain": "NumberTheory",
-      "name": "specialValue_eq",
-      "quality": 0.73757
-    },
     {
       "cycle_id": "3c125e46",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "monomial_ne_zero",
       "quality": 0.7732699999999999
+    },
+    {
+      "cycle_id": "513ffc93",
+      "domain": "Probability",
+      "name": "for",
+      "quality": 0.7676799999999999
+    },
+    {
+      "cycle_id": "513ffc93",
+      "domain": "Probability",
+      "name": "mass_nonneg",
+      "quality": 0.7676799999999999
+    },
+    {
+      "cycle_id": "513ffc93",
+      "domain": "Probability",
+      "name": "total_mass",
+      "quality": 0.7676799999999999
     }
   ],
-  "last_updated": "2026-07-30T22:27:40",
+  "last_updated": "2026-07-30T22:28:51",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "73ec6b88",
-        "quality": 0.58,
-        "theorems": 24,
-        "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
-      },
-      {
         "cycle_id": "1aa4bedd",
         "quality": 0.7,
         "theorems": 0,
@@ -3823,6 +3817,12 @@
         "quality": 0.73659,
         "theorems": 8,
         "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+      },
+      {
+        "cycle_id": "513ffc93",
+        "quality": 0.7676799999999999,
+        "theorems": 16,
+        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
       }
     ],
     "Pythagorean": [
