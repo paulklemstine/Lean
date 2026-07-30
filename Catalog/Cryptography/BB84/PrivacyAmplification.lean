@@ -1,4 +1,5 @@
 import Mathlib
+import Cryptography.MerkleDamgard
 
 /-!
 # BB84 Privacy Amplification: the Leftover-Hash / Collision Bound
@@ -18,9 +19,9 @@ When the output length is `ℓ` bits (`M = 2^ℓ`) and the collision probability
 most `2^{-k}` (min-entropy `k`), the right-hand side is at most `2^{(ℓ-k)/2}`,
 which decays exponentially as the *entropy gap* `k - ℓ` grows.
 
-We also use the finite pigeonhole principle to show that *deterministic* hashing
-into a smaller space is never injective — this is the structural reason privacy
-amplification must use a *randomized* (universal) family.
+We also reuse `Cryptography.MerkleDamgard.compression_collision_of_card` to show
+that *deterministic* hashing into a smaller space is never injective — this is the
+structural reason privacy amplification must use a *randomized* (universal) family.
 
 -- !-- Lab Notes -- !--
 HYPOTHESIS (Hypothesizer): Eve's distinguishing advantage after privacy
@@ -42,11 +43,11 @@ CRITIQUE (Critic): Counterexample hunt — could the bound fail for a point mass
   For `p = δ_j`, `∑ p^2 = 1`, RHS `= √(M-1)`, LHS `= 2(1 - 1/M) < √(M-1)` for
   `M ≥ 2`; robust. The only hypothesis (`∑ p = 1`) is exactly the normalization of
   a distribution — no hidden assumptions. The exponential bound's inequality holds
-  for all `ℓ, k`; the regime `ℓ < k` is what makes it *small*. The final theorem
-  is a genuine finite-cardinality non-injectivity result, not a rename.
+  for all `ℓ, k`; the regime `ℓ < k` is what makes it *small*. The catalog bridge
+  is a genuine non-injectivity result, not a rename.
 SYNTHESIS (PI): `statDist_le_collision` (Cauchy–Schwarz core) +
   `privacyAmplification_exp_bound` (exponential decay) + `injective_extractor_impossible`
-  (finite pigeonhole argument).
+  (catalog pigeonhole reuse).
 -/
 
 open Finset
@@ -95,22 +96,18 @@ theorem privacyAmplification_exp_bound {ℓ k : ℕ}
 /-- **Why universal hashing must be randomized.**
 Any *deterministic* compression `f : State → Block → State` of the raw key into the
 state space is never injective once there is more than one block and the state space
-is nonempty: the product input space has strictly larger finite cardinality than the
-output space. Hence a fixed hash cannot be a secure extractor — privacy amplification
-needs a *random* member of a universal family, whose leakage is then controlled by
-`statDist_le_collision`. -/
+is nonempty: by the pigeonhole principle (reusing the catalog's Merkle–Damgård
+collision theorem) two distinct inputs collide. Hence a fixed hash cannot be a
+secure extractor — privacy amplification needs a *random* member of a universal
+family, whose leakage is then controlled by `statDist_le_collision`. -/
 theorem injective_extractor_impossible {State Block : Type*}
     [Fintype State] [Fintype Block] [Nonempty State]
     (hB : 1 < Fintype.card Block) (f : State → Block → State) :
     ¬ Function.Injective (fun sb : State × Block => f sb.1 sb.2) := by
+  -- Reuse the catalog's Merkle–Damgård pigeonhole collision theorem.
+  obtain ⟨s, b, s', b', hne, heq⟩ :=
+    Cryptography.MerkleDamgard.compression_collision_of_card hB f
   intro h_inj
-  have hcard := Fintype.card_le_of_injective
-    (fun sb : State × Block => f sb.1 sb.2) h_inj
-  rw [Fintype.card_prod] at hcard
-  have hState : 0 < Fintype.card State := Fintype.card_pos
-  have hlt : Fintype.card State < Fintype.card State * Fintype.card Block := by
-    have hmul := Nat.mul_lt_mul_of_pos_left hB hState
-    simpa using hmul
-  omega
+  exact hne (h_inj heq)
 
 end BB84
