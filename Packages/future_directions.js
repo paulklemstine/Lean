@@ -1106,7 +1106,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "seed_204",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -1955,7 +1955,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02aa1402",
     "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
     "domains": [
       "Logic",
@@ -1963,10 +1963,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_079",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
@@ -2248,6 +2249,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T21:21:22.115983+00:00",
     "title": "Deepening: Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e3c425e4 (Q=0.787), which proved 16 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'The Arithmetic of Semirings Part I: Ideals' and formalize its key results. Abstract: We study ideals in the semiring $\\mathbb{N}$ of natural numbers, with a focus on those which are lost when extending from $\\mathbb{N}$ to $\\mathbb{Z}$. This leads to a new perspective on",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_e3c425e4_b6b21ff1",
+    "priority_score": 0.8868499999999999,
+    "research_mode": "team",
+    "source_exp_id": "e3c425e4",
+    "status": "available",
+    "timestamp": "2026-07-30T22:30:03.435575+00:00",
+    "title": "Deepening: ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
   },
   {
     "consumed_by_exp_id": "",
@@ -2892,16 +2907,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Stone Duality as a Bridge Between Logic and Topology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29953b58",
     "description": "Building on cycle 3e30c45d (Q=0.769), which proved 23 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
     "domains": [
       "Cryptography"
     ],
     "id": "push_3e30c45d_337ca3fb",
+    "phase": "A",
     "priority_score": 0.8689999999999999,
     "research_mode": "team",
     "source_exp_id": "3e30c45d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-28T18:55:07.368117+00:00",
     "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
   },
@@ -3825,17 +3841,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "13e8a4d7",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
       "Algebra"
     ],
     "id": "seed_360",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -6304,22 +6321,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T13:51:52.058528+00:00",
     "title": "ArXiv paper: Hereditary 2-WQO Graph Classes Have Bounded Clique-Width"
-  },
-  {
-    "consumed_by_exp_id": "e3c425e4",
-    "description": "Investigate the ArXiv paper 'The Arithmetic of Semirings Part I: Ideals' and formalize its key results. Abstract: We study ideals in the semiring $\\mathbb{N}$ of natural numbers, with a focus on those which are lost when extending from $\\mathbb{N}$ to $\\mathbb{Z}$. This leads to a new perspective on the classical theory of numerical semigroups, including the introduction of a natural multiplicative structure. We prove that unique factorization of ideals fails in $\\mathbb{N}$ on several levels, introduce a handful of new tropical multiplicative invariants of numerical semigroups, characterize integral closures of ideals in terms of Newton polygons, and analyze the behavior of classical numerical semigroup invariants with respect to the product operation.",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0118",
-    "phase": "B",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10778v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T14:08:19.852831+00:00",
-    "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
   },
   {
     "consumed_by_exp_id": "",
@@ -11087,6 +11088,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T22:28:47.388179+00:00",
     "title": "1. **Poisson connectivity window.** For every fixed real `c`, if `p\u2099 = (log n + "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal \u2115` and `r : \u2115`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if there is some `k \u2265 1` such that `r^k \u2208 I^k`.\n\n2. **Eventual symmetry is rigid.** If a numerical semigroup ideal `S : Ideal \u2115` has symmetric powers `S^k` for every sufficiently large positive `k`, then `S` is integrally equivalent to a two-generator numerical semigroup.\n\n3. **Newton data are complete similarity invariants.** Two nonzero ideals of `\u2115` are similar if and only if their lower Newton polygons agree for every prime dividing either ideal's least positive element.\n\n4. **Unbounded factorization-length discrepancy.** For every `n \u2265 2`, some similarity class of ideals of `\u2115` admits two factorizations into irreducible similarity classes whose lengths differ by exactly `n`.\n\n5. **Power genus is eventually strictly log-convex.** For every nonprincipal numerical semigroup ideal `S`, the sequence `k \u21a6 genus(S^k)` is strictly log-convex for all sufficiently large positive `k`.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0857",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e3c425e4",
+    "status": "available",
+    "timestamp": "2026-07-30T22:29:59.241317+00:00",
+    "title": "1. **Finite-power integrality certificate.** For every ideal `I : Ideal \u2115` and `"
   },
   {
     "consumed_by_exp_id": "",

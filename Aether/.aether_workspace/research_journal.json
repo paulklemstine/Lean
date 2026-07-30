@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "afbe2d9b",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe formal result shows that the unmodified Cauchy kernel on a unit sphere has a deterministic floor of `1/5`; hence randomness alone cannot produce near-zero weights below that t",
-      "quality_score": 0.7438,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-28T14:47:08",
-      "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
-    },
-    {
       "cycle_id": "ee1ae94f",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciproci",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-30T22:30:03",
       "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
+    },
+    {
+      "cycle_id": "85fa434c",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: BSD Rank Computability\n\n## What is formalized\n\n`Catalog/Applications/BSD/RankComputability.lean` proves a complete finite linear-algebra chain for a certified descent presentation",
+      "quality_score": 0.73204,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-30T23:28:09",
+      "title": "BSD Conjecture: Rank Computability"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b31f2cf9",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nThe completed development establishes the abstract logical core in three layers. `Core.lean` studies unrestricted semantic diagonalization and fixed-point arguments; `Independence",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-22T00:14:40",
-      "title": "Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
-    },
     {
       "cycle_id": "4d85ad7f",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-30T22:30:03",
       "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
+    },
+    {
+      "cycle_id": "85fa434c",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: BSD Rank Computability\n\n## What is formalized\n\n`Catalog/Applications/BSD/RankComputability.lean` proves a complete finite linear-algebra chain for a certified descent presentation",
+      "quality_score": 0.73204,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-30T23:28:09",
+      "title": "BSD Conjecture: Rank Computability"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d1f879fc",
-      "domain": "Algebra",
-      "name": "generalizes_of_certificate",
-      "quality": 0.76753
-    },
-    {
-      "cycle_id": "d1f879fc",
-      "domain": "Algebra",
-      "name": "pacBayes_compression_confidence_bound",
-      "quality": 0.76753
-    },
-    {
-      "cycle_id": "a1225aa5",
-      "domain": "Novelty",
-      "name": "interval_topology_is_order_topology",
-      "quality": 0.7423299999999999
-    },
     {
       "cycle_id": "a1225aa5",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "similar_trans",
       "quality": 0.7868499999999999
+    },
+    {
+      "cycle_id": "85fa434c",
+      "domain": "Algebra",
+      "name": "matrixRank_le_generators",
+      "quality": 0.73204
+    },
+    {
+      "cycle_id": "85fa434c",
+      "domain": "Algebra",
+      "name": "descentRank_add_matrixRank",
+      "quality": 0.73204
+    },
+    {
+      "cycle_id": "85fa434c",
+      "domain": "Algebra",
+      "name": "quotientFinrank_add_matrixRank",
+      "quality": 0.73204
     }
   ],
-  "last_updated": "2026-07-30T22:30:03",
+  "last_updated": "2026-07-30T23:28:09",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "9d505535",
-        "quality": 0.75,
-        "theorems": 0,
-        "title": "Speculative: Tropical Mathematics of Social Choice"
-      },
-      {
         "cycle_id": "81b94eec",
         "quality": 0.43,
         "theorems": 11,
@@ -3079,6 +3073,12 @@
         "quality": 0.80162,
         "theorems": 28,
         "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+      },
+      {
+        "cycle_id": "85fa434c",
+        "quality": 0.73204,
+        "theorems": 7,
+        "title": "BSD Conjecture: Rank Computability"
       }
     ],
     "Applications": [

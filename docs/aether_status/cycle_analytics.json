@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-30T22:30:04.656135+00:00",
+  "last_updated": "2026-07-30T23:28:10.691587+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -41634,6 +41634,7 @@
       "outcome_quality": 0.686,
       "phase": "A_only",
       "phase_a_prompt_version": "v27",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v27",
@@ -41750,6 +41751,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-30T22:30:04.537827+00:00",
       "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0456,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Algebra",
+      "duration_seconds": 3551.7493426799774,
+      "end_time": 1785454006.30809,
+      "files_integrated": 4,
+      "job_id": "85fa434c",
+      "outcome_quality": 0.73204,
+      "phase": "complete",
+      "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.70068,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.78,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5944,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.3564,
+        "novelty": 0.71,
+        "proof_depth": 0.2049,
+        "usefulness": 0.5274
+      },
+      "quality_score": 0.73204,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785450454.5587473,
+      "strategy_count": 0,
+      "theorem_count": 7,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-30T23:28:10.571971+00:00",
+      "title": "BSD Conjecture: Rank Computability"
     }
   ]
 }
