@@ -1,4 +1,4 @@
-import Novelty.FranklUnionClosed
+import Combinatorics.FranklUnionClosed
 
 /-!
 # Lattice reformulation and the tight case of Reimer's entropy bound
