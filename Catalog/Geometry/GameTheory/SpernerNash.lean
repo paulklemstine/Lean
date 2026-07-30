@@ -275,6 +275,19 @@ theorem sperner_one_dim (n : ℕ) (c : ℕ → Fin 2) (h0 : c 0 = 0) (hn : c n =
   rw [hn] at hcn
   exact absurd hcn (by decide)
 
+/-!
+## Deferred general-dimensional extension
+
+The original version of this file ended with two declarations depending on a
+full triangulation proof of general-dimensional Sperner's lemma for a product of
+simplices. That development was not supplied, and its central declaration had
+an omitted proof. To keep the catalog sound and every active declaration fully
+proved, those two unfinished declarations are preserved below as commented
+research material rather than exported as theorems. The proved API above ends
+with `sperner_one_dim`.
+-/
+
+/-
 /-! ## The combinatorial core: Sperner's lemma applied to the best-response labeling
 
 This is the single step that uses Sperner's lemma.  Triangulate the product of
@@ -290,21 +303,20 @@ above; it uses **no** fixed-point theorem (Brouwer / Kakutani) and **not** Nash'
 theorem.  It is the combinatorial input from which the main theorem follows
 analytically (see `sperner_yields_approx_nash`).
 
-IMPLEMENTATION STATUS.  This lemma is currently *admitted* (`sorry`).  It packages
+IMPLEMENTATION STATUS.  This proposed lemma requires
 the full general-dimensional Sperner's lemma together with a mesh-`δ`
 triangulation of the product polytope `Δ(A) × Δ(B)`, neither of which is
 available in Mathlib; formalizing them is a substantial independent development.
-Everything else in this file — the analytic infrastructure, the regret-from-support
-reduction, the best-response labeling and its properness, the one-dimensional
-Sperner base case, and the deduction of the main theorem from this lemma — is
-fully proved with no `sorry` and no fixed-point input. -/
+The active declarations preceding this research note — the analytic infrastructure,
+the regret-from-support reduction, the best-response labeling and its properness,
+and the one-dimensional Sperner base case — are fully proved. -/
 theorem spernerCore [Fintype A] [Fintype B] [Nonempty A] [Nonempty B]
     (pA pB : A → B → ℝ) (L : ℝ) (hL : ∀ a b, |pA a b| ≤ L ∧ |pB a b| ≤ L) :
     ∃ C : ℝ, ∀ δ : ℝ, 0 < δ →
       ∃ σ₁ ∈ stdSimplex ℝ A, ∃ σ₂ ∈ stdSimplex ℝ B,
         (∀ a, 0 < σ₁ a → brValA pA σ₂ - purePayA pA a σ₂ ≤ C * L * δ) ∧
         (∀ b, 0 < σ₂ b → brValB pB σ₁ - purePayB pB b σ₁ ≤ C * L * δ) := by
-  sorry
+  -- The general-dimensional triangulation proof was not supplied.
 
 /-! ## Main theorem -/
 
@@ -329,5 +341,7 @@ theorem sperner_yields_approx_nash {A B : Type*} [Fintype A] [Fintype B]
   refine ⟨σ₁, hσ₁, σ₂, hσ₂, ?_, ?_⟩
   · exact regretA_le_of_support pA σ₁ σ₂ (C * L * δ) hσ₁ hsupp₁
   · exact regretB_le_of_support pB σ₁ σ₂ (C * L * δ) hσ₂ hsupp₂
+
+-/
 
 end SpernerNash
