@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "95b84694",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\nThe formalization makes the speculative claim precise for a finite formal library: gravitational weight is the number of direct users, proof length is a natural-number cost, and d",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T14:31:40",
-      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-    },
-    {
       "cycle_id": "977e8d8d",
       "domain": "Cryptography",
       "key_insight": "# Future Directions: Topology of Theorem Networks\n\n## 1. Labeled persistence and mathematical communities\n\n**Conjecture.** In a temporally filtered co-citation hypergraph, long-lived first-homology cl",
@@ -2501,6 +2491,16 @@
       "theorem_count": 28,
       "timestamp": "2026-07-30T14:42:57",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "bd7b389e",
+      "domain": "Probability",
+      "key_insight": "# EML information geometry: results and future directions\n\n## Formal results\n\nThe new self-contained module `Catalog/Probability/EMLInformationGeometryDeepening.lean`\nstudies the normalized finite mod",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-07-30T16:57:57",
+      "title": "Deepening: EML Information Geometry: Fisher Information of exp-log Models"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.80162
     }
   ],
-  "last_updated": "2026-07-30T14:42:57",
+  "last_updated": "2026-07-30T16:57:57",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "bf4ad478",
-        "quality": 0.66,
-        "theorems": 9,
-        "title": "ArXiv paper: A Census of New Snake-in-the-Box Records"
-      },
-      {
         "cycle_id": "642478f0",
         "quality": 0.77,
         "theorems": 3,
@@ -3823,6 +3817,12 @@
         "quality": 0.677,
         "theorems": 15,
         "title": "Symmetric Group Generation Probability"
+      },
+      {
+        "cycle_id": "bd7b389e",
+        "quality": 0.686,
+        "theorems": 35,
+        "title": "Deepening: EML Information Geometry: Fisher Information of exp-log Models"
       }
     ],
     "Pythagorean": [
