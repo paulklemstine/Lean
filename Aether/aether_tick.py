@@ -1089,21 +1089,15 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             print(f"[Retry] {stats['retried_directions']} retried directions, "
                   f"rate={stats.get('retry_rate',0):.1%}, avg_attempts={stats.get('avg_attempts',0):.2f}")
         
-        # Trigger Option B Direction Tournament when candidate pool is large
-        if stats.get("available", 0) > 300:
+        # Trigger Option B Direction Tournament when total directions > 1000
+        total_dirs = stats.get("total", 0)
+        if total_dirs > 1000:
             dt = DirectionTournament(workspace=extractor.workspace)
-            domain_counts = {}
-            for d in fd_heal._directions:
-                if d.status == "available":
-                    for dom in d.domains:
-                        domain_counts[dom] = domain_counts.get(dom, 0) + 1
-
-            target_domain = max(domain_counts, key=domain_counts.get) if domain_counts else None
-            if target_domain and domain_counts[target_domain] >= 10:
-                batch = dt.get_candidate_batch(domain=target_domain, batch_size=10)
-                if batch and len(batch) >= 5:
-                    print(f"[Tournament] Auto-running Direction Tournament for domain '{target_domain}' ({len(batch)} candidates)")
-                    prompt = dt.build_tournament_prompt(batch, target_winners=2)
+            batch = dt.get_candidate_batch(batch_size=10)
+            if batch and len(batch) >= 5:
+                print(f"[Tournament] Total directions={total_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
+                prompt = dt.build_tournament_prompt(batch, target_winners=2)
+                if len(extractor.inflight) < max_inflight:
                     if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):
                         import tempfile
                         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -1116,9 +1110,11 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                                     prompt=prompt,
                                     project_dir=tmp_path
                                 )
-                                print(f"[Tournament] Queued Aristotle evaluation project: {proj_id}")
+                                print(f"[Tournament] Successfully queued Aristotle evaluation project: {proj_id}")
                             except Exception as sub_err:
                                 print(f"[Tournament] Aristotle submission note: {sub_err}")
+                else:
+                    print(f"[Tournament] Max inflight slots ({max_inflight}) full — tournament job queued for next available slot.")
     except Exception as e:
         print(f"[Tournament] Automatic direction tournament check: {e}")
 
