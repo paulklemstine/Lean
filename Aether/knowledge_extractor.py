@@ -4733,6 +4733,11 @@ Research mode: {concept.research_mode}
                         break
                 if not title_line:
                     title_line = f"Future directions from cycle {job.job_id[:8]}"
+                
+                # Fix auto-summary title prefixes
+                if hasattr(fd_manager, '_fix_auto_title'):
+                    title_line = fd_manager._fix_auto_title(title_line, fd_text)
+
                 fd = FutureDirection(
                     id=fd_manager._next_id(),
                     title=title_line,
@@ -4750,11 +4755,11 @@ Research mode: {concept.research_mode}
             else:
                 print(f"[Cycle] No future directions found for cycle {job.job_id}")
             # Mark the consumed direction as completed. Use a robust lookup that
-            # handles the case where stale-recovery already cleared the direction's
-            # consumed_by_exp_id or changed its status.
+            # handles case where consumed_by_exp_id, project_id, or direction_id match.
             marked = False
+            job_keys = {job.job_id, getattr(job, 'project_id', ''), getattr(job, 'direction_id', '')} - {'', None}
             for d in fd_manager._directions:
-                if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
+                if (d.consumed_by_exp_id in job_keys or d.id in job_keys) and d.status in ("in_progress", "available"):
                     if job.quality_score > 0:
                         d.outcome_quality = job.quality_score
                         print(f"[Cycle] Direction {d.id} outcome_quality={job.quality_score:.2f}")
@@ -4763,25 +4768,22 @@ Research mode: {concept.research_mode}
                     marked = True
                     break
             if not marked:
-                # Fallback: look for any in_progress direction this job might have consumed
-                # (in case the stale-recovery already touched it). Check attempt_count
-                # to ensure we don't re-dispatch immediately.
+                # Fallback: match by title or recent attempt time
+                job_title_lower = (getattr(job.concept, 'title', '') if hasattr(job, 'concept') else '').lower().strip()
                 for d in fd_manager._directions:
-                    if d.status == "in_progress" and d.last_attempt_time:
-                        # The direction was probably ours if its last_attempt_time is recent
+                    if (d.status == "in_progress" or d.title.lower().strip() == job_title_lower) and d.status != "completed":
                         import datetime
                         try:
-                            last_attempt = datetime.datetime.fromisoformat(d.last_attempt_time)
+                            last_attempt = datetime.datetime.fromisoformat(d.last_attempt_time) if d.last_attempt_time else None
                             now = datetime.datetime.now(datetime.timezone.utc)
-                            if (now - last_attempt).total_seconds() < 3600:  # within last hour
+                            if (last_attempt and (now - last_attempt).total_seconds() < 86400) or d.title.lower().strip() == job_title_lower:
                                 if job.quality_score > 0:
                                     d.outcome_quality = job.quality_score
                                 fd_manager.mark_direction_completed(d.id)
-                                print(f"[Cycle] Recovered: marked direction {d.id} as completed "
-                                      f"(consumed_by_exp_id was reset, matched by recency)")
+                                print(f"[Cycle] Recovered: marked direction {d.id} as completed (quality={d.outcome_quality:.2f})")
                                 marked = True
                                 break
-                        except (ValueError, TypeError):
+                        except Exception:
                             pass
         except Exception as e:
             print(f"[Cycle] Warning: Failed to extract future directions: {e}")

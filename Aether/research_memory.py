@@ -440,7 +440,15 @@ class FutureDirectionsManager:
                 self._pruned = []
             elif isinstance(data, dict):
                 self._directions = [FutureDirection.from_dict(d) for d in data.get("directions", [])]
-                self._pruned = [FutureDirection.from_dict(d) for d in data.get("pruned", [])]
+                raw_pruned = [FutureDirection.from_dict(d) for d in data.get("pruned", [])]
+                if raw_pruned:
+                    for pd in raw_pruned:
+                        pd.status = "available"
+                        pd.prune_reason = ""
+                        pd.pruned_at = ""
+                        pd.consumed_by_exp_id = ""
+                        self._directions.append(pd)
+                self._pruned = []
                 
                 raw_syntheses = data.get("cycle_syntheses", {})
                 self._cycle_syntheses = raw_syntheses if isinstance(raw_syntheses, dict) else {}
@@ -926,18 +934,18 @@ class FutureDirectionsManager:
         """
         text_lower = text.lower()
         domain_keywords = {
-            "Pythagorean": ["prime", "conjecture", "diophantine", "goldbach", "riemann",
+            "Pythagorean": ["diophantine", "goldbach", "riemann",
                             "zeta", "perfect number", "collatz", "twin prime", "modular form",
-                            "euler-mascheroni", "fermat", "divisor", "number theory",
-                            "arithmetic", "sieve", "lehmer", "beal"],
+                            "euler-mascheroni", "fermat", "sieve", "lehmer", "beal"],
+            "NumberTheory": ["number theory", "prime", "coprime", "divisibility", "totient",
+                             "congruence", "legendre", "carmichael", "pseudoprime"],
             "Algebra": ["algebra", "ring", "group", "field", "galois", "module",
                         "representation", "homomorphism", "ideal", "jacobian",
-                        "quadratic form", "algebraic", "continuous", "differentiable",
-                        "convergence", "irrationality", "transcendental", "variational",
-                        "integral", "measure", "banach", "hilbert space", "functional analysis",
-                        "combinatorial", "extremal", "ramsey", "graph coloring",
-                        "hadamard", "frankl", "union-closed", "erdos", "partition",
-                        "matroid", "finset"],
+                        "quadratic form", "algebraic", "differentiable",
+                        "variational", "integral", "banach", "hilbert space", "functional analysis"],
+            "Combinatorics": ["combinatorial", "extremal", "ramsey", "graph coloring",
+                             "hadamard", "frankl", "union-closed", "erdos", "partition",
+                             "matroid", "finset", "graph", "bipartite", "poset", "catalan"],
             "Geometry": ["geometry", "geometric", "curve", "surface", "manifold",
                          "projective", "affine", "convex", "kakeya", "algebraic curve",
                          "schubert", "enumerative", "homotopy", "homology", "poincaré",
@@ -946,7 +954,7 @@ class FutureDirectionsManager:
             "Computation": ["turing", "complexity", "circuit", "reversible", "automaton",
                             "p vs np", "algorithm", "computability", "np-hard",
                             "percolation", "random", "stochastic",
-                            "probability", "martingale", "ergodic", "distribution"],
+                            "probability", "martingale", "ergodic"],
             "Tropical": ["tropical", "min-plus", "semiring", "maslov", "dequantization",
                          "idempotent"],
             "Physics": ["quantum", "feynman", "path integral", "wave", "lorentz",
@@ -1799,89 +1807,21 @@ class FutureDirectionsManager:
         dry_run: bool = False,
         min_quality: float = 0.0,
     ) -> dict:
-        """Remove low-quality available directions, keeping up to `cap` best.
+        """No-op: automatic pruning of future directions has been permanently disabled.
 
-        Never prunes: in_progress, completed, or seed directions.
-        Pruned directions are archived (recoverable via restore_direction).
-
-        Args:
-            cap: Maximum number of available non-seed directions to keep.
-            dry_run: If True, compute but do not actually prune.
-            min_quality: If set, also prune directions below this threshold.
-
-        Returns:
-            Dict with pruned_count, kept counts, pruned_ids, etc.
+        Directions are never deleted or pruned. Selection diversity and pool balancing
+        are enforced via inverse-frequency domain weighting in select_direction_weighted().
         """
-        seed_available = []
-        auto_available = []
-        protected = []
-
-        for d in self._directions:
-            if d.status in ("in_progress", "completed"):
-                protected.append(d)
-            elif d.status == "available":
-                if d.source_path.startswith("seed:"):
-                    seed_available.append(d)
-                else:
-                    auto_available.append(d)
-
-        # Determine which to keep and which to prune
-        # Novelty-tagged directions are always protected from auto-pruning
-        novelty_available = [d for d in auto_available if "Novelty" in d.domains]
-        non_novelty_available = [d for d in auto_available if "Novelty" not in d.domains]
-
-        # Score and sort non-novelty auto-parsed directions
-        scored = [(d, self._compute_quality_score(d)) for d in non_novelty_available]
-        scored.sort(key=lambda x: x[1], reverse=True)
-
-        if min_quality > 0:
-            above_threshold = [(d, s) for d, s in scored if s >= min_quality]
-            keep_count = min(cap, len(above_threshold))
-        else:
-            keep_count = min(cap, len(non_novelty_available))
-
-        to_keep = [d for d, s in scored[:keep_count]]
-        to_prune = [d for d, s in scored[keep_count:]]
-
-        # Also prune below min_quality even if within cap
-        if min_quality > 0:
-            to_prune = [d for d, s in scored if s < min_quality]
-            to_keep = [d for d, s in scored if s >= min_quality][:cap]
-
-        # Novelty directions are always kept, never pruned by this method
-        to_keep.extend(novelty_available)
-
-        quality_threshold = scored[keep_count][1] if keep_count < len(scored) else 0.0
-
-        result = {
-            "pruned_count": len(to_prune),
-            "kept_auto": len(to_keep),
-            "kept_seed": len(seed_available),
-            "kept_protected": len(protected),
-            "total_available_after": len(seed_available) + len(to_keep),
-            "quality_threshold": round(quality_threshold, 4),
-            "pruned_ids": [d.id for d in to_prune],
-            "pruned_details": [
-                {"id": d.id, "title": d.title[:60], "quality_score": round(s, 4)}
-                for d, s in scored[keep_count:]
-            ] if len(scored) > keep_count else [],
+        return {
+            "pruned_count": 0,
+            "kept_auto": len([d for d in self._directions if d.status == "available"]),
+            "kept_seed": len([d for d in self._directions if d.source_path.startswith("seed:")]),
+            "kept_protected": len([d for d in self._directions if d.status in ("in_progress", "completed")]),
+            "total_available_after": len([d for d in self._directions if d.status == "available"]),
+            "quality_threshold": 0.0,
+            "pruned_ids": [],
+            "pruned_details": [],
         }
-
-        if dry_run:
-            return result
-
-        # Move pruned directions to archive
-        pruned_ids = {d.id for d in to_prune}
-        for d in to_prune:
-            d.status = "pruned"
-            d.prune_reason = "quality_below_threshold"
-            d.pruned_at = datetime.now(timezone.utc).isoformat()
-            self._pruned.append(d)
-
-        self._directions = [d for d in self._directions if d.id not in pruned_ids]
-        self._save()
-
-        return result
 
     def restore_direction(self, direction_id: str) -> bool:
         """Restore a pruned direction back to available.
