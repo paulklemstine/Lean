@@ -1,183 +1,420 @@
-# Density Forces Structure: Extremal Bounds for Cliques, Shadows, and Arithmetic Progressions
+# Extremal Graphs, Set-Family Shadows, and Arithmetic Progressions
+
+**Aristotle**
+
+**July 30, 2026**
 
 ## Abstract
 
-We present a unified development of four cornerstone results in extremal combinatorics, each an instance of a single guiding principle: *sufficient density forces unavoidable structure*. First, we establish Turán's theorem in a clean closed integer form — every $K_{r+1}$-free graph on $n$ vertices satisfies $2r\,e(G) \le (r-1)n^2$ — and specialize it to Mantel's theorem $4e(G) \le n^2$ for triangle-free graphs, together with a sharp extremal witness showing the Mantel bound is attained exactly by balanced complete bipartite graphs. Second, we extract from the Kruskal–Katona theorem a directly applicable single-shadow lower bound: an $r$-uniform family with at least $\binom{k}{r}$ members has a shadow of size at least $\binom{k}{r-1}$; its $r=2$ specialization is the graph-theoretic statement that $\binom{k}{2}$ edges must touch at least $k$ vertices. Third, we present Roth's theorem on three-term arithmetic progressions in a *positive* existence form: a sufficiently dense subset of a finite abelian group contains a genuine non-degenerate progression $a, a+d, a+2d$ with $d \ne 0$, specialized to the cyclic groups $\mathbb{Z}/N\mathbb{Z}$. We discuss the regularity and removal-lemma machinery that links these graph- and number-theoretic phenomena, give algorithms and numerical demonstrations, and outline research directions including stability refinements, quantitative density thresholds, iterated-shadow rigidity, and spectral analogues.
-
-**Keywords:** extremal graph theory, Turán's theorem, Mantel's theorem, Kruskal–Katona theorem, shadows of set families, Roth's theorem, three-term arithmetic progressions, regularity, triangle removal lemma.
-
----
+This paper presents a self-contained account of five linked results in extremal combinatorics. First, the exact Turán number for a forbidden complete graph is expressed by the edge count of a balanced complete multipartite graph, including the residue correction when the number of parts does not divide the number of vertices; the usual real-valued density bound follows. Second, the Kruskal–Katona theorem is stated in colexicographic form, together with minimization of iterated lower shadows and the numerical Lovász consequence. Third, Szemerédi’s regularity lemma is formulated as an equitable partition theorem whose bound is uniform in the order of the graph. Fourth, the triangle removal lemma is given both as a repair theorem and as a supersaturation statement for graphs far from triangle-free. Finally, Roth’s theorem is stated in finite-density, witness, and asymptotic extremal forms. Proof sketches emphasize the common mechanisms: symmetrization, compression, energy increment, counting, removal, and arithmetic encoding. Algorithms for evaluating extremal quantities and exploring finite examples are also described.
 
 ## 1. Introduction
 
-Extremal combinatorics studies how large a discrete structure can be while avoiding a forbidden configuration, and what the near-maximal structures must look like. A recurring meta-theorem governs the field: **once a structure surpasses a density threshold, the forbidden pattern becomes unavoidable, and the structures that come closest to avoiding it are rigid and highly symmetric.**
+Extremal combinatorics studies the maximum size of a finite object that avoids a prescribed configuration. A graph may avoid a complete subgraph, a family of sets may be constrained by the size of its boundary, and a set of integers may avoid equally spaced triples. The guiding phenomenon is that sufficiently high density forces structure.
 
-This paper assembles four classical pillars of the subject into a coherent, self-contained narrative around this meta-theorem:
+The results considered here occupy several levels of precision. Turán’s theorem gives an exact finite maximum. Kruskal–Katona gives an exact structural minimizer for shadows. Szemerédi regularity replaces exact structure by a bounded statistical model. Triangle removal translates a small number of local obstructions into a small global edit distance. Roth’s theorem concludes that positive density in an initial interval of the integers forces a nontrivial three-term arithmetic progression.
 
-1. **Turán's theorem** and its progenitor **Mantel's theorem** — edge density forces large cliques.
-2. The **Kruskal–Katona theorem** — the size of a uniform set family forces the size of its shadow.
-3. **Roth's theorem** — density of a subset of an abelian group forces three-term arithmetic progressions.
+These levels are complementary. Exact extremal theorems identify optimal configurations when the forbidden pattern is rigid enough. Compression theorems control the boundary of high-dimensional set systems. Regularity is useful when no concise exact description exists. Removal principles then make regularity operational: if a graph is far from satisfying a hereditary-looking property such as triangle-freeness, it must contain many witnesses. Arithmetic encodings carry these graph-theoretic conclusions to additive patterns.
 
-We state each result precisely, give a proof sketch, identify the extremal configurations, and emphasize the common thread. Sections 5–6 describe the deeper regularity philosophy that explains why graph-theoretic and number-theoretic extremal phenomena are two faces of one coin.
+Throughout, all graphs are finite, simple, and undirected. For a finite set $X$, its cardinality is denoted $|X|$, and $\binom{a}{b}$ denotes a binomial coefficient. The interval $[N]$ will mean $\{0,1,\dots,N-1\}$ when arithmetic progressions are discussed.
 
-Throughout, $G$ denotes a finite simple graph with vertex set $V(G)$, $n = |V(G)|$, and edge set $E(G)$; we write $e(G) = |E(G)|$. For a positive integer $r$, $K_r$ is the complete graph (clique) on $r$ vertices. We say $G$ is **$K_{r}$-free** if it contains no subgraph isomorphic to $K_{r}$. We write $\binom{m}{j}$ for the binomial coefficient.
+## 2. Graph-theoretic preliminaries
 
----
+### 2.1. Cliques and extremal numbers
 
-## 2. Turán's and Mantel's theorems
+A **simple graph** $G=(V,E)$ consists of a finite vertex set $V$ and a set $E$ of two-element subsets of $V$. A set $S\subseteq V$ is a **clique** if every two distinct vertices of $S$ form an edge. The complete graph on $r$ vertices is denoted $K_r$. The graph $G$ is **$K_r$-free** if it has no clique of cardinality $r$.
 
-### 2.1 Definitions
+The **extremal number** $\operatorname{ex}(n,K_r)$ is the maximum of $|E(G)|$ over all $K_r$-free graphs on $n$ vertices.
 
-A **clique** in $G$ of size $r$ is a set of $r$ pairwise-adjacent vertices. A graph is **$K_{r+1}$-free** if it has no clique of size $r+1$. The **Turán graph** $T(n,r)$ is the complete $r$-partite graph on $n$ vertices whose parts are as equal as possible (sizes $\lceil n/r\rceil$ or $\lfloor n/r\rfloor$): two vertices are adjacent if and only if they lie in distinct parts.
+A graph is **complete $t$-partite** if its vertices can be partitioned into $t$ independent sets and every pair of vertices in different parts is adjacent. The **Turán graph** $T_t(n)$ is the complete $t$-partite graph whose part sizes differ by at most one. If
 
-### 2.2 Main bound
+$$
+n=qt+s,\qquad 0\le s<t,
+$$
 
-> **Theorem 2.1 (Turán, closed integer form).** If $G$ is a $K_{r+1}$-free graph on $n$ vertices with $r \ge 1$, then
-> $$2r \cdot e(G) \;\le\; (r-1)\, n^2.$$
-> Equivalently, $e(G) \le \left(1 - \frac{1}{r}\right)\frac{n^2}{2}$.
+then $T_t(n)$ has $s$ parts of size $q+1$ and $t-s$ parts of size $q$.
 
-**Proof sketch.** The sharp form of Turán's theorem identifies the Turán graph $T(n,r)$ as the unique maximizer of the edge count among $K_{r+1}$-free graphs on $n$ vertices; hence $e(G) \le e(T(n,r))$. Writing $n = qr + s$ with $0 \le s < r$, a direct count gives
-$$e(T(n,r)) = \frac{n^2 - s^2}{2}\cdot\frac{r-1}{r} + \binom{s}{2},$$
-and one checks the elementary inequality $e(T(n,r)) \le \frac{r-1}{2r}n^2$ by bounding the integer remainder terms (the correction $\binom{s}{2}$ minus the deficit from $s^2$ is non-positive). Multiplying through by $2r$ yields $2r\,e(G) \le (r-1)n^2$. $\;\square$
+### 2.2. Edge density and regular pairs
 
-An equivalent and frequently more convenient route is the probabilistic/degree-sequence argument: in a $K_{r+1}$-free graph the neighborhoods contain no $K_r$, and an averaging (or Motzkin–Straus / Zykov symmetrization) argument shows that shifting weight toward a balanced complete $r$-partite configuration never decreases the edge count, again pinning the maximum at $T(n,r)$.
+For disjoint nonempty vertex sets $X,Y\subseteq V(G)$, let $e_G(X,Y)$ be the number of edges with one endpoint in $X$ and the other in $Y$. Their **edge density** is
 
-### 2.3 Mantel's theorem and its sharpness
+$$
+d_G(X,Y)=\frac{e_G(X,Y)}{|X||Y|}.
+$$
 
-> **Theorem 2.2 (Mantel).** A triangle-free graph $G$ on $n$ vertices satisfies $4\,e(G) \le n^2$.
+For $\varepsilon>0$, the pair $(X,Y)$ is **$\varepsilon$-regular** if for every $X'\subseteq X$ and $Y'\subseteq Y$ satisfying $|X'|\ge\varepsilon|X|$ and $|Y'|\ge\varepsilon|Y|$, one has
 
-**Proof sketch.** Apply Theorem 2.1 with $r = 2$: $K_3$-free means $K_{r+1}$-free for $r=2$, giving $4\,e(G) \le n^2$. $\;\square$
+$$
+|d_G(X',Y')-d_G(X,Y)|<\varepsilon.
+$$
 
-> **Theorem 2.3 (Sharpness of Mantel).** For every $k \in \mathbb{N}$, the balanced complete bipartite graph $K_{k,k}$ (equivalently the Turán graph $T(2k,2)$) on $n = 2k$ vertices is triangle-free and satisfies $4\,e = n^2$ with equality.
+A vertex partition is **equitable** if the sizes of any two parts differ by at most one. A partition into $m$ parts is **$\varepsilon$-uniform** if all but at most $\varepsilon m^2$ ordered pairs of distinct parts are $\varepsilon$-regular. Equivalent conventions using unordered pairs change only harmless normalization constants.
 
-**Proof sketch.** $K_{k,k}$ is bipartite, hence contains no odd cycle and in particular no triangle. It has $e = k\cdot k = k^2$ edges, so $4e = 4k^2 = (2k)^2 = n^2$. $\;\square$
+### 2.3. Triangle-freeness and edit distance
 
-Theorems 2.2 and 2.3 together show the bound $n^2/4$ is exact and identifies the balanced bipartite graph as extremal — the prototype of the "density forces structure" phenomenon.
+A **triangle** is a clique of order $3$. A graph on $n$ vertices is **$\varepsilon$-far from triangle-free** if at least $\varepsilon n^2$ edge deletions are required to make it triangle-free. Since deleting edges cannot create triangles, additions are unnecessary for this property.
 
----
+## 3. Turán’s theorem
 
-## 3. The Kruskal–Katona shadow bound
+The balanced multipartite construction is automatically $K_r$-free when it has $r-1$ parts: among any $r$ vertices, two lie in the same independent part. Turán’s theorem says this construction is optimal.
 
-### 3.1 Definitions
+### Theorem 3.1 (Exact Turán theorem)
 
-Let $[n] = \{1,\dots,n\}$ (or any $n$-element ground set). A family $\mathcal A$ of subsets is **$r$-uniform** (or *$r$-sized*) if every member has exactly $r$ elements. The **shadow** of $\mathcal A$ is
-$$\partial \mathcal A \;=\; \{\, B : |B| = r-1,\ B \subseteq A \text{ for some } A \in \mathcal A \,\},$$
-the family of all $(r-1)$-subsets obtained by deleting one element from a member of $\mathcal A$.
+Let $n,r$ be integers with $r\ge2$, and put
 
-### 3.2 Single-shadow lower bound
+$$
+s=n\bmod(r-1),\qquad 0\le s<r-1.
+$$
 
-The full Kruskal–Katona theorem describes the *minimum possible shadow size* of a family of a given size via the colex order; its Lovász form packages this into a clean binomial inequality, and iterating handles higher shadows. We isolate the most applicable single-shadow consequence.
+Then the maximum number of edges in a $K_r$-free graph on $n$ vertices is
 
-> **Theorem 3.1 (Single-shadow Kruskal–Katona).** Let $1 \le r \le k \le n$ and let $\mathcal A$ be an $r$-uniform family of subsets of an $n$-element set with $|\mathcal A| \ge \binom{k}{r}$. Then
-> $$|\partial \mathcal A| \;\ge\; \binom{k}{r-1}.$$
+$$
+\operatorname{ex}(n,K_r)
+=
+\frac{\bigl(n^2-s^2\bigr)(r-2)}{2(r-1)}+\binom{s}{2}.
+$$
 
-**Proof sketch.** The Lovász form of Kruskal–Katona states that for each $i \ge 1$, if $|\mathcal A| \ge \binom{k}{r}$ then the $i$-th iterated shadow satisfies $|\partial^{(i)} \mathcal A| \ge \binom{k}{r-i}$. Taking $i = 1$ and noting $\partial^{(1)} = \partial$ gives the claim. The hypotheses $1 \le r \le k \le n$ are load-bearing: they ensure the binomial coefficients are the relevant non-degenerate quantities and that a witnessing family (the colex-initial segment, realized by the full $k$-set system) exists. $\;\square$
+This number is the edge count of the balanced complete $(r-1)$-partite graph $T_{r-1}(n)$.
 
-### 3.3 Graph interpretation
+#### Proof sketch
 
-A $2$-element set is precisely an edge; a family $E$ of $2$-sets is a graph's edge set, and its shadow $\partial E$ is the family of singletons $\{v\}$ for vertices $v$ incident to some edge — i.e., the **non-isolated vertices**. Specializing Theorem 3.1 to $r = 2$:
+The standard symmetrization argument begins with an extremal $K_r$-free graph. If two nonadjacent vertices $u$ and $v$ have unequal degrees, replace the lower-degree vertex by a twin of the higher-degree vertex: remove its incident edges and connect it to precisely the neighbors of the other. This does not decrease the edge count. It also preserves $K_r$-freeness, because a newly created clique using the cloned vertex would correspond to a clique using its model.
 
-> **Corollary 3.2 (Edge density forces vertex spread).** Let $2 \le k \le n$ and let $E$ be a family of $2$-element subsets of an $n$-element vertex set with $|E| \ge \binom{k}{2}$. Then the set of vertices covered by $E$ has size at least $k$:
-> $$|\partial E| \ge k.$$
+Applying this operation consistently, including a tie-breaking version for equal degrees, transforms an extremal graph into a complete multipartite graph without losing edges. Such a graph can have at most $r-1$ nonempty parts, since selecting one vertex from each of $r$ parts would form $K_r$.
 
-**Proof sketch.** Apply Theorem 3.1 with $r = 2$, using $\binom{k}{2-1} = \binom{k}{1} = k$. $\;\square$
+For fixed $n$ and number of parts, the number of edges is
 
-This bound is tight: the clique $K_k$ has exactly $\binom{k}{2}$ edges on exactly $k$ vertices, so $\binom{k}{2}$ edges cannot be packed onto fewer than $k$ vertices. Like Turán's theorem, it expresses that an abundance of one resource (edges, or $r$-sets) forces a spread of its support (vertices, or $(r-1)$-sets).
+$$
+\sum_{i<j}n_i n_j
+=\frac12\left(n^2-\sum_i n_i^2\right),
+$$
 
----
+where $n_i$ are the part sizes. If two part sizes differ by at least $2$, moving one vertex from the larger part to the smaller decreases $\sum_i n_i^2$ and hence increases the edge count. Thus all part sizes differ by at most one. The extremal graph is therefore $T_{r-1}(n)$.
 
-## 4. Roth's theorem on three-term arithmetic progressions
+To count its edges, set $t=r-1$ and write $n=qt+s$. The sum of squared part sizes is
 
-### 4.1 Definitions
+$$
+s(q+1)^2+(t-s)q^2.
+$$
 
-Let $G$ be a finite abelian group, written additively. A **three-term arithmetic progression (3-AP)** in $G$ is a triple $(a,\ a+d,\ a+2d)$ with $a, d \in G$; it is **non-degenerate** if $d \ne 0$. A set $A \subseteq G$ is **3-AP-free** (or *progression-free*) if the only 3-APs it contains are the trivial ones, i.e. whenever $a, b, c \in A$ satisfy $a + c = 2b$ then $a = b = c$. We measure density relative to $|G|$: $A$ has density $\ge \varepsilon$ if $|A| \ge \varepsilon |G|$.
+Substitution into $\frac12(n^2-\sum_i n_i^2)$ and algebraic simplification yield the stated residue formula.
 
-### 4.2 Positive existence form
+### Corollary 3.2 (Turán density bound)
 
-The standard quantitative formulation of Roth's theorem is *negative*: a sufficiently dense set is **not** progression-free. For applications one wants the *positive* statement, exhibiting an actual progression. We record it explicitly. Here $B(\varepsilon)$ denotes the effective threshold for the density $\varepsilon$ supplied by the quantitative (corners/regularity) proof — a finite quantity depending only on $\varepsilon$.
+Every $K_r$-free graph $G$ on $n$ vertices, where $r\ge2$, satisfies
 
-> **Theorem 4.1 (Roth, positive form).** Let $G$ be a finite abelian group and $\varepsilon > 0$. If $|G| \ge B(\varepsilon)$ and $A \subseteq G$ satisfies $|A| \ge \varepsilon |G|$, then $A$ contains a non-degenerate three-term arithmetic progression: there exist $a, d \in G$ with $d \ne 0$ and
-> $$a \in A,\qquad a + d \in A,\qquad a + 2d \in A.$$
+$$
+|E(G)|\le
+\left(1-\frac{1}{r-1}\right)\frac{n^2}{2}.
+$$
 
-**Proof sketch.** The quantitative Roth/corners theorem gives that under $|A| \ge \varepsilon|G|$ and $|G| \ge B(\varepsilon)$, $A$ is not progression-free. Unfolding the definition of progression-freeness, its negation yields witnesses $a, b, c \in A$ with $a + c = b + b$ and $a \ne b$. Set $d := b - a$. Then $b = a + d$, and from $a + c = 2b$ we obtain $c = 2b - a = 2(a+d) - a = a + 2d$. Non-degeneracy $d \ne 0$ follows from $a \ne b$ since $d = b - a = 0$ would force $a = b$. Thus $(a, a+d, a+2d)$ is a non-degenerate 3-AP entirely contained in $A$. $\;\square$
+#### Proof sketch
 
-The non-vacuousness of Theorem 4.1 hinges on both hypotheses: density $|A| \ge \varepsilon|G|$ and largeness $|G| \ge B(\varepsilon)$. Without them the underlying quantitative theorem does not apply, so the statement is genuinely a consequence of Roth's theorem and not a triviality.
+For $t=r-1$, the balanced complete $t$-partite graph satisfies
 
-### 4.3 Specialization to cyclic groups
+$$
+|E(T_t(n))|=\frac12\left(n^2-\sum_{i=1}^{t}n_i^2\right).
+$$
 
-> **Corollary 4.2 (Roth in $\mathbb{Z}/N\mathbb{Z}$).** Let $N \ge 1$ and $\varepsilon > 0$ with $N \ge B(\varepsilon)$. If $A \subseteq \mathbb{Z}/N\mathbb{Z}$ satisfies $|A| \ge \varepsilon N$, then $A$ contains a non-degenerate 3-AP $a, a+d, a+2d$ with $d \ne 0$.
+Cauchy’s inequality gives $\sum_i n_i^2\ge n^2/t$, so
 
-**Proof sketch.** Apply Theorem 4.1 with $G = \mathbb{Z}/N\mathbb{Z}$, using $|G| = N$. $\;\square$
+$$
+|E(T_t(n))|\le\frac12\left(1-\frac1t\right)n^2.
+$$
 
-This is the form most useful in additive combinatorics and number theory: any positive-density set of residues modulo a large $N$ contains a genuine arithmetic progression.
+Theorem 3.1 transfers this bound to every $K_r$-free graph. Equality in the smooth bound occurs when $t$ divides $n$.
 
----
+### Example 3.3
 
-## 5. The common thread: density forces structure
+For $n=10$ and $r=4$, there are $t=3$ parts and $s=1$. The balanced part sizes are $4,3,3$, so the extremal edge count is
 
-The four theorems are instances of one principle, and the connection between the graph results and the arithmetic result is more than analogical.
+$$
+4\cdot3+4\cdot3+3\cdot3=33.
+$$
 
-- **Turán/Mantel:** Among $K_{r+1}$-free graphs, edge density is maximized by the balanced $r$-partite Turán graph; exceeding the threshold forces a clique. The extremal object is unique and rigid.
-- **Kruskal–Katona:** Among $r$-uniform families of a given size, the shadow is minimized by the colex-initial (clique-like) family; size forces shadow. For graphs, edges force covered vertices, tight at the clique.
-- **Roth:** Among subsets of a finite abelian group, progression-freeness caps the density; exceeding the cap forces a 3-AP.
+The smooth bound gives $\frac23\cdot\frac{100}{2}=100/3$, confirming the integer bound $33$.
 
-The deep bridge is the **regularity method**. Szemerédi's regularity lemma asserts that the vertex set of any large graph can be partitioned into a bounded number of parts so that almost all pairs of parts behave pseudorandomly (the edge distribution between them is uniform up to a small error $\varepsilon$). Within such a partition, the count of any small subgraph — a triangle, say — can be estimated as if edges were placed independently at random. This yields:
+## 4. Uniform set families and their shadows
 
-> **Triangle Removal Lemma (statement).** For every $\delta > 0$ there is $\gamma > 0$ such that any $n$-vertex graph with at most $\gamma n^3$ triangles can be made triangle-free by deleting at most $\delta n^2$ edges.
+Let $[n]=\{1,2,\dots,n\}$. A family $\mathcal A\subseteq\binom{[n]}{r}$ is **$r$-uniform**. Its **lower shadow** is
 
-Roth's theorem follows by a now-classical reduction. Given a progression-free set $A \subseteq \mathbb{Z}/N\mathbb{Z}$, one builds a tripartite graph whose triangles correspond exactly to 3-APs in $A$. Progression-freeness makes the triangles essentially disjoint (each edge lies in at most one triangle), so the triangle removal lemma forces the triangle count — hence $|A|$ — to be small. This is the precise sense in which "edge density forcing triangles" (Mantel/Turán's world) and "set density forcing progressions" (Roth's world) are the same theorem viewed through two windows.
+$$
+\partial\mathcal A
+=
+\left\{B\in\binom{[n]}{r-1}: B\subset A\text{ for some }A\in\mathcal A\right\}.
+$$
 
-A complementary, purely enumerative viewpoint is the **first-moment method**: in a random graph, the expected number of $r$-cliques is $\binom{n}{r} p^{\binom{r}{2}}$, where $p$ is the edge probability. Comparing this *expected* count against the *deterministic* extremal count (e.g. the $0$ triangles realized by the extremal Turán graph $T(2k,2)$ versus the $\binom{n}{3}$ potential triangles of the complete graph) pinches the density of forbidden configurations from two sides. This pincer — random upper bound meeting extremal lower bound — is a powerful and reusable proof template.
+Define the iterated shadows recursively by $\partial^0\mathcal A=\mathcal A$ and $\partial^{i+1}\mathcal A=\partial(\partial^i\mathcal A)$.
 
----
+For distinct finite sets $A$ and $B$, the **colexicographic order** declares $A<_{\mathrm{colex}}B$ if the greatest element of $A\triangle B$ belongs to $B$. An **initial colex segment** consists of the first prescribed number of $r$-sets in this order.
 
-## 6. Algorithms
+### Theorem 4.1 (Kruskal–Katona)
 
-We summarize three computational procedures that operationalize the results above. Full type-hinted implementations appear in the accompanying demonstration code.
+Let $\mathcal A\subseteq\binom{[n]}{r}$, and let $\mathcal C$ be an initial colex segment of $r$-subsets of $[n]$ satisfying $|\mathcal C|\le|\mathcal A|$. Then
 
-### 6.1 Turán bound checker and extremal generator
+$$
+|\partial\mathcal C|\le|\partial\mathcal A|.
+$$
 
-**Purpose.** Given $n$ and $r$, compute the Turán edge bound and the exact edge count of $T(n,r)$, and verify $e(T(n,r)) \le \frac{r-1}{2r}n^2$.
+Thus, among uniform families of a given cardinality, initial colex segments minimize the lower shadow.
 
-**Method.** Write $n = qr + s$. The part sizes are $s$ parts of size $q+1$ and $r-s$ parts of size $q$. The Turán graph edge count is $\binom{n}{2}$ minus the within-part edges: $e(T(n,r)) = \binom{n}{2} - s\binom{q+1}{2} - (r-s)\binom{q}{2}$. Complexity $O(1)$ arithmetic.
+#### Proof sketch
 
-### 6.2 Kruskal–Katona shadow computation
+One applies a sequence of compressions. A compression replaces a larger label by a smaller available label whenever this replacement creates a set not already in the family. It preserves the cardinality and uniformity of the family and does not increase its shadow. Repeated compressions produce a left-compressed family.
 
-**Purpose.** Given an explicit $r$-uniform family, compute its shadow and verify the bound $|\partial\mathcal A| \ge \binom{k}{r-1}$ for the largest $k$ with $\binom{k}{r} \le |\mathcal A|$.
+The compressed family is analyzed by splitting according to the largest ground-set element and applying induction on $n$ and $r$. The binomial representation of the family size tracks how many complete layers occur. Colexicographic initial segments realize precisely this representation, and their shadows inherit the shifted binomial coefficients. The induction proves that no other family has fewer shadow members.
 
-**Method.** For each set in the family, generate all $(r-1)$-subsets by single-element deletion; collect into a set to deduplicate. Complexity $O(|\mathcal A|\cdot r)$ subset generations.
+### Theorem 4.2 (Iterated Kruskal–Katona)
 
-### 6.3 Progression search via triangle counting
+Under the hypotheses of Theorem 4.1, for every integer $i\ge0$ for which the iterated shadow is defined,
 
-**Purpose.** Given $A \subseteq \mathbb{Z}/N\mathbb{Z}$, exhibit a non-degenerate 3-AP, or certify density too low.
+$$
+|\partial^i\mathcal C|\le|\partial^i\mathcal A|.
+$$
 
-**Method.** Brute-force scan over $a \in A$ and nonzero $d$; report the first $(a, a+d, a+2d)$ all lying in $A$. A Fourier-analytic count of progressions (via the discrete transform of the indicator of $A$) gives the asymptotic count $\approx |A|^3/N$ and confirms positivity above the Roth threshold. Complexity $O(N^2)$ brute force, or $O(N\log N)$ via FFT for the count.
+#### Proof sketch
 
----
+Apply Theorem 4.1 first to $\mathcal A$ and $\mathcal C$. The shadow of a colex initial segment is again a colex initial segment at the next lower rank. Reapply the theorem to the two shadows and iterate. Cardinality inequalities are preserved at each stage.
 
-## 7. Applications
+### Theorem 4.3 (Lovász form of Kruskal–Katona)
 
-- **Network science.** Mantel/Turán bounds cap the edge density of networks that must avoid small dense clusters (cliques), informing the design of conflict-free schedules and interference-free communication graphs.
-- **Extremal set theory and coding.** Kruskal–Katona governs trade-offs between the size of a uniform family and the size of its shadow, underpinning bounds on error-correcting codes and the combinatorics of simplicial complexes.
-- **Additive number theory.** Roth's theorem is the first nontrivial case of Szemerédi's theorem on arbitrarily long arithmetic progressions, foundational to additive combinatorics and the Green–Tao theorem on primes.
-- **Theoretical computer science.** The regularity and removal-lemma machinery powers property testing — certifying global structural properties of huge graphs from constant-size random samples.
+Let $0\le i\le r\le k\le n$. If $\mathcal A\subseteq\binom{[n]}{r}$ and
 
----
+$$
+|\mathcal A|\ge\binom{k}{r},
+$$
 
-## 8. Discussion and future work
+then
 
-The results assembled here are exact and sharp in their extremal cases, but each opens onto a richer landscape.
+$$
+|\partial^i\mathcal A|\ge\binom{k}{r-i}.
+$$
 
-1. **Stability for Mantel/Turán.** Near-extremal triangle-free graphs (with $4e \ge n^2 - cn$) are conjectured to be $O(c)$-close to balanced bipartite — robustness of the unique extremal witness $K_{k,k}$.
-2. **Quantitative density thresholds for Roth.** Replacing the fixed density $\varepsilon$ with a shrinking $\varepsilon(N) \to 0$ pushes Roth from the positive-density regime into the quantitative regime, tracking how small the density may be as $N$ grows.
-3. **Iterated-shadow rigidity.** For an $r$-uniform family of size exactly $\binom{k}{r}$, every iterated shadow satisfies $|\partial^{(i)}\mathcal A| \ge \binom{k}{r-i}$, with equality conjecturally characterizing the colex-isomorphic full $k$-set system.
-4. **Hypergraph removal and multidimensional Roth.** The contrast between deterministic extremal counts (zero forbidden configurations) and random first-moment counts can be leveraged, via hypergraph removal, toward corner-free set sparsity and higher-dimensional patterns.
-5. **Spectral Mantel.** A triangle-free graph is conjectured to satisfy $\lambda_1(G) \le \sqrt{e}$ on its largest adjacency eigenvalue, with the same extremal graphs $K_{k,k}$ — a spectral refinement of Mantel's theorem.
+#### Proof sketch
 
-These directions share the program's signature: convert a global density hypothesis into a local structural conclusion, and characterize the boundary cases exactly.
+Take $\mathcal C$ to be the first $\binom{k}{r}$ sets in colex order. These are exactly the $r$-subsets of the first $k$ ground elements. Their $i$-fold shadow consists of all $(r-i)$-subsets of those $k$ elements and therefore has size $\binom{k}{r-i}$. Theorem 4.2 gives the required lower bound.
 
----
+### Remark 4.4 (Clique-shadow interpretation)
 
-## 9. Conclusion
+If the $t$-cliques of a graph are regarded as a $t$-uniform set family, every lower face of a clique is itself a clique. Consequently, shadow estimates relate counts of large cliques to counts of smaller cliques. Care is needed because the shadow of the family of all $t$-cliques need not equal the entire family of smaller cliques, but it is contained in it, which is the direction required for lower bounds.
 
-Across graphs, set systems, and the integers, a single law recurs: cross a density threshold and forbidden structure becomes inevitable, while the objects that barely avoid it are forced into rigid, symmetric shapes. Turán's and Mantel's theorems quantify it for cliques, Kruskal–Katona for shadows, and Roth's theorem for arithmetic progressions — and the regularity method reveals these as facets of one phenomenon. The boundary between abundance and order is sharper, and more beautiful, than intuition suggests.
+## 5. Szemerédi regularity
+
+Regularity is a structural approximation theorem. It does not claim that every large graph is close to one exact model. Instead, it partitions the graph into a bounded number of cells so that almost every pair of cells behaves pseudorandomly at large scales.
+
+### Theorem 5.1 (Szemerédi’s regularity lemma)
+
+For every $\varepsilon>0$ and every positive integer $\ell$, there exists an integer $M(\varepsilon,\ell)$ with the following property. Every finite graph $G$ with at least $\ell$ vertices admits an equitable partition
+
+$$
+V(G)=V_1\sqcup\cdots\sqcup V_m
+$$
+
+such that
+
+$$
+\ell\le m\le M(\varepsilon,\ell)
+$$
+
+and all but at most $\varepsilon m^2$ ordered pairs $(V_i,V_j)$ with $i\ne j$ are $\varepsilon$-regular.
+
+#### Proof sketch
+
+For a partition $\mathcal P=\{V_1,\dots,V_m\}$, define its energy by a weighted mean of squared pair densities,
+
+$$
+q(\mathcal P)
+=
+\frac{1}{|V(G)|^2}
+\sum_{i,j}|V_i||V_j|d_G(V_i,V_j)^2.
+$$
+
+This quantity lies between $0$ and $1$. Refining a partition cannot decrease energy, by convexity of the square function.
+
+If the partition is not $\varepsilon$-uniform, many pairs $(V_i,V_j)$ fail regularity. For every irregular pair choose witness subsets on which density differs by at least $\varepsilon$. Refine each cell according to membership in the relevant witnesses, then rebalance into an equitable refinement. The witness inequalities imply an energy increment bounded below by a positive function of $\varepsilon$, independent of the order of the graph.
+
+Since energy is at most $1$, only finitely many refinement rounds can occur. The number of parts may grow very rapidly at each round, but it is bounded recursively in terms of $\varepsilon$ and $\ell$ alone. The process stops at an equitable $\varepsilon$-uniform partition.
+
+### 5.2. Reduced graphs and counting
+
+Given a regular partition and a density threshold $d>0$, form a **reduced graph** whose vertices are the partition classes and whose edges correspond to $\varepsilon$-regular pairs of density at least $d$. The reduced graph is a coarse model with bounded order.
+
+A typical counting lemma says that if three partition classes form a triangle in the reduced graph and the three corresponding pairs are regular with densities bounded below, then the original graph contains many triangles with one vertex in each class. The reason is that regularity makes typical vertices have approximately the expected number of neighbors in the other classes; intersecting these large neighborhoods produces many closing edges.
+
+The exact numerical bounds can be weak, and the regularity bound $M(\varepsilon,\ell)$ is enormous. Nevertheless, its independence from $|V(G)|$ is the essential qualitative feature.
+
+## 6. Triangle removal
+
+### Theorem 6.1 (Triangle removal lemma)
+
+For every $\varepsilon>0$, there exists $\delta>0$ such that every finite graph $G$ on $n$ vertices with fewer than $\delta n^3$ triangles contains a spanning triangle-free subgraph $G'\subseteq G$ satisfying
+
+$$
+|E(G)|-|E(G')|<\varepsilon n^2.
+$$
+
+In other words, fewer than $\varepsilon n^2$ edge deletions suffice to remove all triangles.
+
+#### Proof sketch
+
+Choose regularity parameters much smaller than $\varepsilon$ and apply Theorem 5.1. Delete edges of three types: edges inside partition classes, edges between irregular pairs, and edges between regular pairs whose density is below a small threshold. Equitability and the parameter choices ensure that fewer than $\varepsilon n^2$ edges are deleted in total.
+
+If the remaining graph contained a triangle, its vertices would lie in three distinct classes, and each of the three class pairs would be regular and have density above the threshold. The triangle counting lemma would then yield at least $\delta n^3$ triangles in the original graph, for some positive $\delta$ determined by the fixed parameters. This contradicts the assumed triangle count. Therefore the remaining graph is triangle-free.
+
+### Corollary 6.2 (Many triangles in a far graph)
+
+For every $\varepsilon>0$, there exists $\delta>0$ such that every graph on $n$ vertices that is $\varepsilon$-far from triangle-free contains at least
+
+$$
+\delta n^3
+$$
+
+triangles.
+
+#### Proof sketch
+
+This is the contrapositive of Theorem 6.1. If the graph had fewer than $\delta n^3$ triangles, fewer than $\varepsilon n^2$ deletions would make it triangle-free, contrary to its assumed distance.
+
+### 6.3. Algorithmic application: property testing
+
+The contrapositive gives a constant-query randomized test. Sample uniformly random triples of vertices and check whether each spans a triangle. If the graph is triangle-free, the test never rejects incorrectly. If it is $\varepsilon$-far from triangle-free, at least a constant fraction proportional to $\delta$ of vertex triples are triangles. After $O(\delta^{-1}\log(1/\eta))$ independent samples, a triangle is found with probability at least $1-\eta$. The query count depends on $\varepsilon$ and the desired error probability, but not on $n$.
+
+## 7. Roth’s theorem on three-term arithmetic progressions
+
+A triple $(a,b,c)$ of integers is a **three-term arithmetic progression** if
+
+$$
+a+c=2b.
+$$
+
+It is **nontrivial** if $a\ne b$; the displayed equation then also forces $b\ne c$. A set is **three-progression-free** if it contains no nontrivial such triple.
+
+Define the extremal function
+
+$$
+R(N)=\max\bigl\{|A|:A\subseteq[N]\text{ is three-progression-free}\bigr\}.
+$$
+
+### Theorem 7.1 (Roth’s theorem, finite-density form)
+
+For every real number $\varepsilon>0$, there exists a threshold $N_0(\varepsilon)$ such that, whenever $N\ge N_0(\varepsilon)$ and
+
+$$
+A\subseteq[N],\qquad |A|\ge\varepsilon N,
+$$
+
+there exist $a,b,c\in A$ satisfying
+
+$$
+a+c=2b,\qquad a\ne b.
+$$
+
+#### Proof sketch
+
+One route passes through a multidimensional corners theorem, itself obtained by a removal argument. Embed the one-dimensional set into a two-dimensional grid using a construction in which a corner
+
+$$
+(x,y),\quad (x+d,y),\quad (x,y+d),\qquad d\ne0,
+$$
+
+corresponds to three elements of $A$ satisfying an additive relation. A dense subset of a sufficiently large grid determines an auxiliary tripartite graph with many edge-disjoint triangles. Triangle removal implies that the auxiliary graph contains many triangles in total. The encoding is arranged so that a triangle beyond the designated trivial ones yields a nonzero corner, and the corner decodes to a nontrivial arithmetic progression in $A$.
+
+Boundary losses and the conversion between one- and two-dimensional densities require a smaller working density, commonly a fixed fraction of $\varepsilon$. Once $N$ exceeds the resulting corner-theorem threshold, the construction produces the desired witnesses.
+
+### Corollary 7.2 (Asymptotic extremal form)
+
+The largest three-progression-free subset of $[N]$ has vanishing relative density:
+
+$$
+R(N)=o(N).
+$$
+
+Equivalently,
+
+$$
+\lim_{N\to\infty}\frac{R(N)}{N}=0.
+$$
+
+#### Proof sketch
+
+If the ratio did not tend to zero, there would be some $\varepsilon>0$ and arbitrarily large $N$ for which $R(N)\ge\varepsilon N$. An extremal progression-free set of that size would contradict Theorem 7.1 once $N\ge N_0(\varepsilon)$.
+
+Conversely, the little-$o$ statement implies the density formulation: for fixed $\varepsilon>0$, eventually $R(N)<\varepsilon N$, so every set of size at least $\varepsilon N$ contains a nontrivial progression.
+
+### Example 7.3
+
+The set $\{0,1,3,4\}\subseteq[5]$ does not contain the candidate progression $(0,2,4)$ because $2$ is absent; however, checking that one candidate alone does not settle progression-freeness. Exhaustive finite checking must inspect every pair of possible endpoints whose sum is even. For a set $A$, one may enumerate $a<c$ in $A$, set $b=(a+c)/2$ when $a+c$ is even, and report a progression exactly when $b\in A$. Such enumeration illustrates the definition but does not replace Roth’s asymptotic argument.
+
+## 8. Computational procedures
+
+The central theorems are structural, but several finite aspects admit transparent algorithms.
+
+### 8.1. Exact Turán evaluation
+
+Given $n$ and $r\ge2$, set $t=r-1$, compute $s=n\bmod t$, and return
+
+$$
+\frac{(n^2-s^2)(t-1)}{2t}+\binom{s}{2}.
+$$
+
+Integer divisibility is guaranteed by the combinatorial derivation. The running time is $O(1)$ in the unit-cost arithmetic model and polynomial in the bit lengths under bit complexity.
+
+A constructive variant forms part sizes $q+1$ repeated $s$ times and $q$ repeated $t-s$ times, where $q=\lfloor n/t\rfloor$. Summing all cross-products independently checks the formula.
+
+### 8.2. Shadow generation
+
+For an $r$-uniform family $\mathcal A$, generate its lower shadow by deleting each of the $r$ elements from every member and inserting the resulting $(r-1)$-set into a hash set. For $m=|\mathcal A|$, this requires $O(mr)$ generated faces, with representation-dependent hashing costs. Iterating this process computes $\partial^i\mathcal A$.
+
+To generate a colex initial segment on a small ground set, sort all $r$-subsets by their colex rank or comparison key and select the first $m$. Comparing its shadow with arbitrary families provides finite demonstrations of Theorem 4.1.
+
+### 8.3. Progression search and finite extremal enumeration
+
+A direct progression search examines every ordered or unordered endpoint pair. With hash-set membership, it runs in $O(|A|^2)$ time and $O(|A|)$ auxiliary space. For small $N$, exhaustive search over all $2^N$ subsets computes $R(N)$ exactly; pruning subsets no larger than the best known candidate improves practice but not the worst-case exponential bound.
+
+These computations are demonstrations rather than proofs of asymptotic claims. Their value lies in exposing extremizers, residue effects, and the difference between finite behavior and eventual density theorems.
+
+## 9. Applications and synthesis
+
+### 9.1. Network design and forbidden clusters
+
+Turán’s theorem gives an exact capacity bound for a pairwise interaction network forbidden from containing a fully mutually connected group of size $r$. The balanced multipartite extremizer describes not just the maximum but an architecture: dense cross-group interaction and no within-group interaction.
+
+### 9.2. Discrete boundaries and data representation
+
+Kruskal–Katona quantifies how many lower-dimensional features a collection of high-dimensional records must expose. In a simplicial complex, chosen $r$-faces force a minimum number of $(r-i)$-faces. Colex order supplies the most economical packing. This perspective is useful whenever storage or enumeration cost is attached to all subfeatures of selected objects.
+
+### 9.3. Graph compression
+
+Regularity represents a massive graph by a bounded matrix of pair densities plus a controlled exceptional set. It is not an efficient compression method in ordinary numerical terms—the theoretical bounds are very large—but it is a decisive conceptual reduction. Statements about all large graphs can be reduced to statements about finitely many reduced graphs for fixed accuracy.
+
+### 9.4. Robustness and local certification
+
+Triangle removal equates global distance with abundance of local certificates. This is the conceptual basis of sublinear property testing: one can detect a graph far from triangle-free without reading all of its edges. Similar removal statements exist for broader fixed patterns and connect extremal graph theory with probabilistic algorithms.
+
+### 9.5. Additive combinatorics
+
+Roth’s theorem shows that positive density in the integers is incompatible with avoiding the simplest nontrivial affine pattern. The proof route through corners and removal demonstrates a general transfer principle: encode arithmetic equations as subgraphs or hypergraphs, apply a combinatorial removal theorem, and decode the resulting configuration.
+
+## 10. Limitations and future directions
+
+The exact Turán result addresses forbidden cliques, but near-extremal structure invites a stability theorem: a $K_r$-free graph with nearly the maximum number of edges should be close in edit distance to the balanced complete $(r-1)$-partite graph.
+
+The shadow results suggest a clique-count hierarchy. If a graph contains many $K_t$ subgraphs, viewing those cliques as a uniform family should force quantitative lower bounds on its $K_s$ subgraphs for $s<t$.
+
+Triangle removal controls ordinary triangles under edge deletion. An induced version would count triples spanning exactly the prescribed induced pattern and permit both additions and deletions of adjacencies. Such a result is subtler because deleting an edge may create a new induced configuration.
+
+Roth’s theorem here is qualitative: $R(N)/N\to0$. A quantitative bound, for example one of the form
+
+$$
+R(N)\le C\frac{N}{(\log N)^{1+1/10}}
+$$
+
+for sufficiently large $N$, requires considerably sharper harmonic or combinatorial analysis than the qualitative removal route.
+
+Finally, four-term arithmetic progressions naturally lead beyond graph removal to hypergraph removal. Constructing a sufficiently strong finite hypergraph framework would extend the local-to-global method to prove that the largest subset of $[N]$ without a nonzero four-term progression is $o(N)$.
+
+## 11. Conclusion
+
+The five results form a coherent progression. Turán’s theorem gives the exact edge threshold for a forbidden clique and identifies the balanced multipartite extremizer. Kruskal–Katona identifies colex segments as the uniform families with the smallest shadows and supplies exact binomial lower bounds. Szemerédi regularity reduces arbitrary large graphs to bounded pseudorandom pieces. Triangle removal turns a sparse collection of triangles into a cheap repair procedure, or contrapositively turns global distance into many local witnesses. Roth’s theorem transfers this principle to arithmetic and shows that a positive-density subset of a long integer interval must contain three equally spaced elements.
+
+The common theme is that density cannot indefinitely coexist with avoidance. Depending on the setting, the forced structure appears as a clique, a shadow, a regular partition, a robust population of triangles, or an arithmetic progression. Exact optimization, compression, approximation, and removal are therefore not isolated techniques; they are successive tools for making the same extremal principle visible at different scales.
