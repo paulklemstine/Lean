@@ -2491,28 +2491,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d5c8afaa",
-    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_134",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Define the F_1-tropical correspondence: a tropical scheme over F_1 is a monoid object M in the tropical semiring (R union infty, min, +). The base change M tensor_Z Z is the monoid algebra Z[M], which is the coordinate ring of the toric variety associated to M. Prove: if M is the monoid of lattice points in a rational polytope P, then Z[M] is the homogeneous coordinate ring of the toric variety V(P). Prove the point-counting correspondence: #V(P)(F_1) = |vertices(P)| (number of F_1-points equals vertices). Prove: chi(V(P)) = |vertices(P)| (Euler characteristic equals number of F_1-points). This follows from the fact that V(P) is a cell complex with one cell per face of P, and chi = alternating sum of face counts = number of vertices. Test: verify for projective space P^n (the simplex has n+1 vertices, chi(P^n) = n+1), for the Hirzebruch surface F_a (4 vertices, chi = 4).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
     "domain_bridges": [],
@@ -3205,26 +3183,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c2653f80",
-    "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "seed_208",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Sierpiński Numbers: Covering Systems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
     "domain_bridges": [],
@@ -3261,27 +3219,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Yamabe Problem: Non-Compact Case"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "6ef427dd",
-    "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Bridges"
-    ],
-    "id": "seed_256",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Consciousness as Emergent Fixed Point"
   },
   {
     "ambition_level": "extension",
@@ -3966,48 +3903,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d1f879fc",
-    "description": "Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameterized networks provably generalize.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Computation",
-      "Algebra"
-    ],
-    "id": "seed_041",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Machine Learning Generalization Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "3c125e46",
-    "description": "The Schanuel conjecture predicts deep algebraic independence results for exp and log. Specialize this to EML values. Conjecture: For algebraic numbers a_1,...,a_n linearly independent over Q, the numbers exp(a_1)*log(1+a_1), ..., exp(a_n)*log(1+a_n) are algebraically independent over Q. This is a specialization of Schanuel's conjecture to the EML operator. The n=1 case reduces to showing that exp(a)*log(1+a) is transcendental for algebraic a != 0, which follows from the Lindemann-Weierstrass theorem (exp(a) is transcendental for algebraic a != 0) combined with the Gelfond-Schneider theorem. The n=2 case requires showing that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients, which is open. The EML specialization has the advantage that the multiplicative structure of exp(a)*log(b) constrains the possible algebraic relations more tightly than the general Schanuel conjecture. Test: prove the n=1 case using Lindemann-Weierstrass and Gelfond-Schneider. For n=2, show that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients. Impact: connects EML to the deepest open problems in transcendental number theory, with implications for the theory of periods and special values of L-functions.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_088",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "Step 1 (n=1): Prove exp(a)*log(1+a) is transcendental for algebraic a != 0. By Lindemann-Weierstrass, exp(a) is transcendental. If log(1+a) were algebraic, then a = exp(log(a)) would be transcendonic, contradiction. So log(1+a) is transcendental, and their product is transcendental by Baker's theorem. Step 2 (n=2): Assume P(exp(sqrt(2))*log(1+sqrt(2)), exp(sqrt(3))*log(1+sqrt(3))) = 0 for algebraic P. Derive contradiction using the linear independence of sqrt(2) and sqrt(3) over Q and Baker's theorem on linear forms in logarithms.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Algebraic Independence: Transcendence Results"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
     "domain_bridges": [],
@@ -4439,7 +4334,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3308088b",
     "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
     "domain_bridges": [],
     "domains": [
@@ -4452,7 +4347,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
   },
@@ -7215,7 +7110,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1c628216",
     "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
     "domain_bridges": [],
     "domains": [
@@ -7229,7 +7124,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
@@ -8233,6 +8128,45 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Mixed partition functions are exactly the graph parameters of exponentially bounded edge-connection rank' and formalize its key results. Abstract: We prove a conjecture of Regts and Sevenster: a complex-valued graph parameter $f$ with $f(\\varnothing)=1$ has exponentially bounded edge-connection rank if and only if it is a mixed partition function; moreover, the model may be chosen with its numbers of even and odd colours explicitly bounded in terms of the rank bound. From $f$ we construct a connection category, a rigid symmetric $\\mathbb{C}$-linear monoidal category whose morphism spaces have the connection ranks as dimensions and whose trace pairings are nondegenerate. The rank hypothesis forces moderate tensor growth, and a recent theorem of Etingof and Penneys then shows that every nilpotent endomorphism has trace zero; together with the nondegeneracy of the trace pairing, this makes the category semisimple, and a theorem of Deligne provides a faithful symmetric tensor functor to finite-dimensional super vector spaces. We then identify the resulting super tensor network with the Regts-Sevenster model exactly, viz. with its Eul",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0836",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.27198v1",
+    "status": "available",
+    "timestamp": "2026-07-30T03:41:09.313448+00:00",
+    "title": "ArXiv paper: Mixed partition functions are exactly the graph parameters of exponentially bounded edge-connection rank"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Triviality of promise polymorphisms' and formalize its key results. Abstract: Given two $m$-ary predicates $P,Q$, an $n$-ary polymorphism is a tuple $(f_1,\\dots,f_m)$ of functions such that $x^{(1)},\\dots,x^{(n)} \\in P$ implies $(f_1(y_1),\\dots,f_m(y_m)) \\in Q$, where $y_i = (x^{(1)}_i,\\dots,x^{(m)}_i)$. This generalizes the usual definition in universal algebra, in which $P = Q$ and $f_1 = \\cdots = f_m$. In earlier work, we studied when all polymorphisms of a single predicate are \"trivial\": either all depend on a single coordinate (common to all of them), or they constitute a \"certificate\" for the predicate. We showed that it suffices to check this condition for $2$-ary polymorphisms, and even for $1$-ary polymorphisms, modulo an explicit list of obstructions. In this paper we generalize the first result to the $P,Q$ setting, for a relaxed notion of certificate. We also generalize the second result in the promise setting, in which $P,Q$ range over the same alphabets and $P \\subseteq Q$.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0837",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.27057v1",
+    "status": "available",
+    "timestamp": "2026-07-30T03:41:12.598370+00:00",
+    "title": "ArXiv paper: Triviality of promise polymorphisms"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
@@ -8272,7 +8206,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7edbd52d",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
     "domain_bridges": [],
     "domains": [
@@ -8285,7 +8219,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Frankl's Union-Closed Conjecture"
   },
@@ -8462,7 +8396,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "67548200",
     "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
     "domain_bridges": [],
     "domains": [
@@ -8476,7 +8410,7 @@
     "proof_strategy": "Define a CA rule f of radius r as f: {0,1}^{2r+1} -> {0,1}. The Wolfram number of f is N = sum_{x=0}^{2^{2r+1}-1} f(x) * 2^x. A CA is reversible iff its global function F: {0,1}^Z -> {0,1}^Z is bijective. Hedlund's theorem: F is bijective iff the local rule is a permutation of neighborhoods that preserves the shift. For r=1: there are 2^8 = 256 rules. The reversible ones are: Rule 15, 51, 85, 170, 204, 240 (6 rules). Their local rules as permutations: Rule 170 = left shift (identity on neighborhoods), Rule 15 = NOT(left shift), Rule 51 = complement, Rule 85 = NOT(right shift), Rule 204 = identity (trivial), Rule 240 = right shift. These generate a subgroup of S_8. Conjecture: this subgroup is isomorphic to S_4 (the symmetry group of the square) acting on the 4 non-trivial neighborhoods. For r >= 2: G(r, {0,1}) is conjectured to be S_{2^{2r+1}}, meaning any permutation of neighborhoods is achievable by composing reversible CA rules. Test: compute the group generated by the reversible elementary CA rules using GAP or similar, verify the structure.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
@@ -8937,7 +8871,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c352e1f",
     "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
     "domain_bridges": [],
     "domains": [
@@ -8951,7 +8885,7 @@
     "proof_strategy": "Define the data sheaf: for a dataset with n features and m observations, the poset P is the set of feature subsets S subset {1,...,n} ordered by inclusion. The sheaf F assigns to each S the set of observations that have all features in S present (complete rows restricted to columns in S). The restriction maps F(S) -> F(T) for T subset S are projections that drop columns in S\\T. Define H^0(F) = ker(delta_0) = global sections (observations complete on ALL features). Define H^1(F) = ker(delta_1)/im(delta_0) = obstructions to patching local observations into global ones. Compute delta_0 and delta_1 using the Cech complex. Estimate dim(H^1): for missing rate r and n features, each observation is missing r*n features on average. The expected number of complete observations is m*(1-r)^n (each feature present with probability 1-r). The obstruction dim(H^1) grows with the number of incompatible local patches. Each missing feature creates a potential obstruction. Estimated dim(H^1) ~ m * r * (1-(1-r)^n) ~ m * r * n * r for small r. Test: generate data from a known multivariate normal, introduce MCAR missing values at rate r, compute H^0 and H^1, fit dim(H^1) ~ C * r * n * r * log(1/r).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },

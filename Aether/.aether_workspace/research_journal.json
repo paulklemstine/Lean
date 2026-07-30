@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "25e8f86d",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Neural Tangent Dynamics\n\n## 1. Uniform infinite-width kernel concentration\n\nFor fully connected networks with sub-Gaussian initialization and Lipschitz activation derivative, the",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-26T02:25:29",
-      "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
-    },
-    {
       "cycle_id": "830d234a",
       "domain": "Computation",
       "key_insight": "# Future directions\n\nThe formal development proves the finite-action policy-gradient identity directly from coordinatewise score factorization, derives the mean-zero score and baseline invariance, est",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-30T03:39:58",
       "title": "EML Algebraic Independence: Transcendence Results"
+    },
+    {
+      "cycle_id": "d1f879fc",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThe following are concrete conjectures extending the proved algebraic bounds. Each is\nfalsifiable by an explicit profile, architecture, or loss distribution violating the\nstated i",
+      "quality_score": 0.76753,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-30T03:41:04",
+      "title": "Machine Learning Generalization Bounds"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fbb9076c",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Thermodynamics of Mathematical Proof\n\n## 1. Fiber-entropy law for proof normalization\n\nFor every finite terminating normalization system equipped with a probability law on proof t",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T00:19:44",
-      "title": "Thermodynamics of Mathematical Proof"
-    },
     {
       "cycle_id": "3df39c71",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-30T03:39:58",
       "title": "EML Algebraic Independence: Transcendence Results"
+    },
+    {
+      "cycle_id": "d1f879fc",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThe following are concrete conjectures extending the proved algebraic bounds. Each is\nfalsifiable by an explicit profile, architecture, or loss distribution violating the\nstated i",
+      "quality_score": 0.76753,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-30T03:41:04",
+      "title": "Machine Learning Generalization Bounds"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "dff51e05",
-      "domain": "Novelty",
-      "name": "sechSq_le_one",
-      "quality": 0.78321
-    },
-    {
-      "cycle_id": "dff51e05",
-      "domain": "Novelty",
-      "name": "sechSq_zero",
-      "quality": 0.78321
-    },
-    {
-      "cycle_id": "5843d50f",
-      "domain": "Bridges",
-      "name": "goedel_second_incompleteness",
-      "quality": 0.7539499999999999
-    },
     {
       "cycle_id": "5843d50f",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "specialValue_ne_zero",
       "quality": 0.73757
+    },
+    {
+      "cycle_id": "d1f879fc",
+      "domain": "Algebra",
+      "name": "effectiveRate_le_certificate",
+      "quality": 0.76753
+    },
+    {
+      "cycle_id": "d1f879fc",
+      "domain": "Algebra",
+      "name": "generalizes_of_certificate",
+      "quality": 0.76753
+    },
+    {
+      "cycle_id": "d1f879fc",
+      "domain": "Algebra",
+      "name": "pacBayes_compression_confidence_bound",
+      "quality": 0.76753
     }
   ],
-  "last_updated": "2026-07-30T03:39:58",
+  "last_updated": "2026-07-30T03:41:04",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "e3086657",
-        "quality": 0.68,
-        "theorems": 12,
-        "title": "The Mega-Sphere: All Dimensions at Once"
-      },
-      {
         "cycle_id": "c4a6ce21",
         "quality": 0.65,
         "theorems": 15,
@@ -3079,6 +3073,12 @@
         "quality": 0.78874,
         "theorems": 12,
         "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
+      },
+      {
+        "cycle_id": "d1f879fc",
+        "quality": 0.76753,
+        "theorems": 13,
+        "title": "Machine Learning Generalization Bounds"
       }
     ],
     "Applications": [

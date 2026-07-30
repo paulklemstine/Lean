@@ -435,19 +435,42 @@ theorem exists_weightedAcyclicGraph_of_rowSpan
     right_inv := fun _ _ => rfl
   }
 
-/-- **Realization Theorem (general form)**: Every filtered transfer semimodule
-    satisfying the axioms is realized by a weighted acyclic graph.
-    Note: This requires the carrier to admit a matrix row-span representation,
-    which is guaranteed by the path factorization and filtration axioms in the
-    finite-dimensional setting. -/
+/-
+The earlier, incomplete declaration claimed the following hypotheses alone imply
+realizability:
+
+  theorem exists_weightedAcyclicGraph_of_filteredTransfer
+      (T : IdempotentSubsemimodule K B)
+      (hsuper : TropicalSuperposition T)
+      (hfactor : PathFactorization T)
+      (hfil : AcyclicCausalFiltration T) :
+      ∃ G : WeightedAcyclicGraph K B,
+        Nonempty (FilteredTransferIso T (pathResponseSubmodule G))
+
+That statement does not follow from these definitions: `PathFactorization` gives
+a separate finite generator family for each element, not one common family for
+all of `T`.  The corrected theorem below retains those requested structural
+hypotheses and makes the missing global row-span hypothesis explicit.
+-/
+
+/-- **Realization Theorem (general form)**: A filtered transfer semimodule
+    admitting a finite matrix row-span presentation is realized by a weighted
+    acyclic graph.
+
+    The row-span hypothesis is explicit: `TropicalSuperposition`,
+    `PathFactorization`, and `AcyclicCausalFiltration` as defined above do not by
+    themselves provide one global finite family of generators. -/
 theorem exists_weightedAcyclicGraph_of_filteredTransfer
     (T : IdempotentSubsemimodule K B)
     (hsuper : TropicalSuperposition T)
     (hfactor : PathFactorization T)
-    (hfil : AcyclicCausalFiltration T) :
+    (hfil : AcyclicCausalFiltration T)
+    (hrow : ∃ H : B → B → K, T.carrier = {f : B → K | ∃ cs : B → K,
+      ∀ b₂, f b₂ = ∑ b₁ : B, cs b₁ * H b₁ b₂}) :
     ∃ G : WeightedAcyclicGraph K B,
       Nonempty (FilteredTransferIso T (pathResponseSubmodule G)) := by
-  sorry
+  obtain ⟨H, hT⟩ := hrow
+  exact exists_weightedAcyclicGraph_of_rowSpan H T hT
 
 /-
 **Minimal Realization Existence**: Every realizable transfer semimodule

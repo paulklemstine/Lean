@@ -1629,6 +1629,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2996b72f (Q=0.776), which proved 11 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_2996b72f_fb513ba4",
+    "priority_score": 0.8762099999999999,
+    "research_mode": "team",
+    "source_exp_id": "2996b72f",
+    "status": "available",
+    "timestamp": "2026-07-30T00:20:57.662026+00:00",
+    "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 09a3e4f4 (Q=0.774), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the",
     "domains": [
       "Novelty"
@@ -1640,6 +1654,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T12:21:06.834733+00:00",
     "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c2653f80 (Q=0.772), which proved 24 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_c2653f80_2718676a",
+    "priority_score": 0.8720099999999998,
+    "research_mode": "team",
+    "source_exp_id": "c2653f80",
+    "status": "available",
+    "timestamp": "2026-07-30T03:38:51.386504+00:00",
+    "title": "Deepening: Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
     "consumed_by_exp_id": "",
@@ -1852,24 +1880,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
-  },
-  {
-    "consumed_by_exp_id": "d5c8afaa",
-    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
-    "domains": [
-      "Novelty",
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_134",
-    "phase": "A",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -2111,6 +2121,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T06:49:40.513188+00:00",
     "title": "Deepening: Lattice Cryptography: LWE Hardness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 6ef427dd (Q=0.764), which proved 22 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_6ef427dd_dbb2bb80",
+    "priority_score": 0.8636799999999999,
+    "research_mode": "team",
+    "source_exp_id": "6ef427dd",
+    "status": "available",
+    "timestamp": "2026-07-30T03:37:45.965135+00:00",
+    "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
   {
     "consumed_by_exp_id": "",
@@ -2394,22 +2418,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
   {
-    "consumed_by_exp_id": "c2653f80",
-    "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "seed_208",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Sierpi\u0144ski Numbers: Covering Systems"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
     "domains": [
@@ -2438,23 +2446,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Yamabe Problem: Non-Compact Case"
-  },
-  {
-    "consumed_by_exp_id": "6ef427dd",
-    "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Bridges"
-    ],
-    "id": "seed_256",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Consciousness as Emergent Fixed Point"
   },
   {
     "consumed_by_exp_id": "",
@@ -2975,30 +2966,13 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_041",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "in_progress",
     "timestamp": "",
     "title": "Machine Learning Generalization Bounds"
-  },
-  {
-    "consumed_by_exp_id": "3c125e46",
-    "description": "The Schanuel conjecture predicts deep algebraic independence results for exp and log. Specialize this to EML values. Conjecture: For algebraic numbers a_1,...,a_n linearly independent over Q, the numbers exp(a_1)*log(1+a_1), ..., exp(a_n)*log(1+a_n) are algebraically independent over Q. This is a specialization of Schanuel's conjecture to the EML operator. The n=1 case reduces to showing that exp(a)*log(1+a) is transcendental for algebraic a != 0, which follows from the Lindemann-Weierstrass theorem (exp(a) is transcendental for algebraic a != 0) combined with the Gelfond-Schneider theorem. The n=2 case requires showing that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients, which is open. The EML specialization has the advantage that the multiplicative structure of exp(a)*log(b) constrains the possible algebraic relations more tightly than the general Schanuel conjecture. Test: prove the n=1 case using Lindemann-Weierstrass and Gelfond-Schneider. For n=2, show that exp(sqrt(2))*log(1+sqrt(2)) and exp(sqrt(3))*log(1+sqrt(3)) satisfy no polynomial relation with algebraic coefficients. Impact: connects EML to the deepest open problems in transcendental number theory, with implications for the theory of periods and special values of L-functions.",
-    "domains": [
-      "EML",
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_088",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Algebraic Independence: Transcendence Results"
   },
   {
     "consumed_by_exp_id": "",
@@ -6109,22 +6083,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Homotopy types of intervals in corank-three higher Bruhat orders"
   },
   {
-    "consumed_by_exp_id": "2996b72f",
-    "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domains": [
-      "Analysis",
-      "NumberTheory"
-    ],
-    "id": "fd_0653",
-    "phase": "B",
-    "priority_score": 0.8,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697747+00:00",
-    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Spectral Proof of the Hypergraph Moore Bound' and formalize its key results. Abstract: A nonempty subfamily of a $k$-uniform hypergraph is an \\emph{even cover} if every vertex lies in an even number of its hyperedges; for $k=2$ these are edge-disjoint unions of cycles, so the minimum size of an even cover is the natural hypergraph analogue of girth. We prove Feige's 2008 conjecture on the hypergraph Moore bound: there are absolute constants $A$ and $C$ (independent of $k$) such that for every $k\\ge3$ and every $1\\le\\ell\\le n$, any $k$-uniform hypergraph on $n$ vertices with more than $C\\,n^{k/2}/\\ell^{k/2-1}$ hyperedges contains an even cover of size at most $A\\,\\ell\\log(en/\\ell)$. Our proof is based on sharp spectral bounds for Kikuchi matrices, which we expect to be of independent interest; we apply them to the refutation of random constraint satisfaction problems in a companion paper.",
     "domains": [
@@ -7161,6 +7119,81 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Result established\n\n`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector between\nanalytic number theory and information theory:\n\n\\[\n\\gamma=\\sum_{k=0}^{\\infty}\nD_{\\mathrm{KL}}\\!\\left(\\operatorname{Exp}(k+1)\\,\\|\\,\n                         \\operatorname{Exp}(k+2)\\right).\n\\]\n\nHere the exponential-family divergence is represented by its standard closed\nform\n\n\\[\nD_{\\mathrm{KL}}(\\operatorname{Exp}(\\lambda)\\|\\operatorname{Exp}(\\mu))\n = \\log(\\lambda/\\mu)+\\mu/\\lambda-1.\n\\]\n\nThe development also proves Gibbs nonnegativity for positive rates, identifies\neach consecutive-rate divergence with the classical Euler\u2013Mascheroni series\nterm, identifies every finite partial sum with\n`Real.eulerMascheroniSeq n = H\u2099 - log(n+1)`, and proves convergence to Mathlib's\n`Real.eulerMascheroniConstant`.\n\n## Computational evidence\n\nA separate computational-evidence document was not included because the output\ncontract permits only Lean files and this `FUTURE_DIRECTIONS.md`. More\nimportantly, the connector is an exact symbolic identity rather than an inferred\nfinite-data conjecture: all finite telescoping identities and the infinite\n`HasSum` statement are kernel-checked in Lean. Numerical sampling would therefore\nadd illustration, but no evidential support needed by the proof.\n\n## Natural extensions\n\n1. **Measure-theoretic KL derivation.** Define exponential probability measures\n   by densities and derive the closed form from the measure-theoretic relative\n   entropy integral. This would connect the present algebraic interface directly\n   to Mathlib probability distributions.\n2. **Quantitative tails.** Transfer sharp harmonic/logarithmic error estimates to\n   bounds on the remaining accumulated divergence after the first `n` rates.\n3. **Fisher-information interpretation.** Compare each consecutive KL term with\n   the local quadratic form induced by Fisher information and formalize the\n   asymptotic `1/(2(k+1)^2)` behavior.\n4. **Accelerated chains.** Search for grouped or weighted paths through the\n   exponential family whose accumulated divergences yield Euler\u2013Maclaurin or\n   Ap\u00e9ry-like accelerated approximations to `\u03b3`.\n5. **Stieltjes constants.** Differentiate suitable parameterized divergence sums\n   or Mellin transforms to seek analogous information-theoretic representations\n   for higher Stieltjes constants.\n6. **Irrationality criteria.** Combine accelerated rational bounds with integer\n   linear-form criteria. No irrationality claim for `\u03b3` is made here; that\n   question remains open.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0835",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2996b72f",
+    "status": "available",
+    "timestamp": "2026-07-30T00:20:53.229761+00:00",
+    "title": "`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector betwee"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed formal development proves a precise theorem at the combinatorial core of tropical hypersurface geometry: when a tropical polynomial is represented by its finite family of term-value functions, multiplication forms all pairwise sums, and the product corner locus is exactly the union of the factor corner loci. It also proves the pointwise minimal-term characterization, the set-valued corner-locus equality, and invariance under adding a common tropical scalar function.\n\nThe repository-wide incomplete realization theorem was also repaired. Its original hypotheses supplied only an element-by-element finite factorization, which does not imply a single global finite generating family. The corrected theorem explicitly assumes a common matrix row-span presentation and then constructs the direct weighted acyclic graph realization.\n\n## Computational-evidence decision\n\nA separate computational-evidence stage was not used because the principal result is a structural identity for arbitrary index types, point types, and ordered additive groups, rather than a conjecture inferred from a numerical sequence. Small finite tests would exercise only decidable equality and would not strengthen the universal proof. Consequently there is no associated OEIS sequence, numerical plot, or meaningful bounded counterexample search. The Lean development instead proves the factor-minimum characterization from which both directions follow.\n\n## Next formal targets\n\n1. Specialize term functions to integral affine maps on `\u2124\u207f` and define tropical Laurent polynomials as finite supports with coefficients.\n2. Quotient presentations by deletion of inessential terms, and prove the corner locus is presentation-independent.\n3. Connect corner loci to lower faces of lifted Newton polytopes; this is the natural bridge to regular subdivisions.\n4. Formalize Newton polytopes and prove `Newt(f \u2299 g) = Newt(f) + Newt(g)` (Minkowski sum), complementing the corner-locus union theorem.\n5. For complete smooth fans, build the orbit decomposition of a toric variety and prove that its Euler characteristic is the number of zero-dimensional torus orbits, equivalently the number of maximal cones. For a smooth projective polytope this corresponds to vertices.\n6. Distinguish vertex counts, lattice-point counts, degree, and Euler characteristic. They are not equal in general: lattice-point count controls section dimensions, normalized volume controls degree, and (under suitable smooth complete hypotheses) vertex count controls Euler characteristic.\n7. State any comparison with schemes over the field with one element only after selecting a precise model of `F\u2081`-geometry (for example monoid schemes). Different established definitions do not yield an unconditional equivalence with all tropical schemes.\n\nThe broad categorical and base-change claims in the mission require definitions of tropical schemes, an `F\u2081`-scheme category, and a base-change functor. None should be identified merely by terminology; a future equivalence must supply functors, natural isomorphisms, and proofs of full faithfulness and essential surjectivity.\n\n## Verification status\n\n`Tropical/CornerLocusProduct.lean` and the repaired realization development in `Catalog/Bridges/AlgebraTropicalPhysics/TropicalScatteringDuality.lean` compile independently from beginning to end. Their completed declarations contain no proof holes or stubbed theorem bodies. The principal corner-locus theorems depend only on Lean's standard permitted foundational axioms (`propext`, `Classical.choice`, and `Quot.sound`).\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0836",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d5c8afaa",
+    "status": "available",
+    "timestamp": "2026-07-30T03:36:36.030230+00:00",
+    "title": "The completed formal development proves a precise theorem at the combinatorial c"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Internalize the construction in a general Cartesian closed category using a point-surjective morphism `A \u27f6 B ^ A`, then recover the current theorem by specializing to `Type`.\n- Compare Lawvere fixed points with least and greatest fixed points of monotone self-modeling operators on complete lattices.\n- Replace one-step orbit graphs by a directed topological realization and prove that the Lawvere witness induces a nonempty family of cycles in its path space.\n- Formulate the Yoneda connection with Mathlib's categorical Yoneda embedding and prove that the diagonal witness is invariant under isomorphisms of self-models.\n- Study guarded self-reference, where completeness is weakened by a delay modality; this may permit nontrivial models while retaining unique guarded fixed points.\n- Quantify finite incompleteness: for finite `A` and `B`, bound the number of observers omitted by every map `A \u2192 (A \u2192 B)`.\n",
+    "domains": [
+      "Logic",
+      "Geometry"
+    ],
+    "id": "fd_0837",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6ef427dd",
+    "status": "available",
+    "timestamp": "2026-07-30T03:37:41.903492+00:00",
+    "title": "Future directions from cycle 6ef427dd"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe Lean development proves that `78557` is a Sierpi\u0144ski number by a complete covering-system certificate: every exponent class modulo `36` receives a proper prime divisor from `{3, 5, 7, 13, 19, 37, 73}`. The finite certificate itself supplies kernel-checked computational evidence for all 36 residue classes, so a separate informal evidence report was not used.\n\nThe requested minimality statement is not included because it is the unresolved Sierpi\u0144ski problem. Proving it would require eliminating every smaller positive odd candidate; in particular, the outstanding candidates traditionally listed are `21181`, `22699`, `24737`, `55459`, and `67607`. For each such candidate, one must prove that `k * 2^n + 1` is prime for some exponent `n`, or otherwise obtain a theorem excluding its universal compositeness.\n\nNatural formal extensions are:\n\n1. Prove the converse generalized Chinese-remainder criterion, so compatibility of two classes is equivalent to congruence of their residues modulo the gcd of their moduli.\n2. Develop certificates for finite unions of covering systems and automatic conversion from class-indexed certificates to period tables.\n3. Formalize certified primality witnesses for eliminated Sierpi\u0144ski candidates below `78557` as such witnesses become available.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0838",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c2653f80",
+    "status": "available",
+    "timestamp": "2026-07-30T03:38:47.604737+00:00",
+    "title": "The Lean development proves that `78557` is a Sierpi\u0144ski number by a complete co"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: EML Algebraic Independence\n\nThe formal development isolates the open input rather than treating transcendence of two factors as sufficient for transcendence of their product. The following are concrete conjectures suggested by that reduction.\n\n1. **One-variable EML transcendence.** For every nonzero algebraic real number `a` with `1 + a > 0`,\n   \\[\n   \\exp(a)\\log(1+a)\n   \\]\n   is transcendental over `\u211a`. A counterexample would be a specific algebraic `a \u2260 0`, `a > -1`, together with a nonzero rational polynomial vanishing at this value.\n\n2. **Factor independence.** For every nonzero algebraic real `a` with `1 + a > 0`, the pair\n   \\[\n   (\\exp(a),\\log(1+a))\n   \\]\n   is algebraically independent over `\u211a`. This strictly stronger conjecture implies Conjecture 1 by `specialValue_transcendental_of_independent` in `Catalog/NumberTheory/EMLAlgebraicIndependence.lean`.\n\n3. **The concrete square-root pair.** The two numbers\n   \\[\n   \\exp(\\sqrt2)\\log(1+\\sqrt2),\\qquad\n   \\exp(\\sqrt3)\\log(1+\\sqrt3)\n   \\]\n   are algebraically independent over `\u211a`. Equivalently, every rational-coefficient bivariate polynomial vanishing at this pair is the zero polynomial; the exact conditional elimination statement is formalized as `sqrtPair_no_rational_polynomial_relation`.\n\n4. **Finite-family EML independence.** If positive algebraic reals `a\u2081,\u2026,a\u2099` are linearly independent over `\u211a`, then the values `exp(a\u1d62) log(1+a\u1d62)` are algebraically independent over `\u211a`. This can be falsified by an explicit linearly independent algebraic family and a nonzero rational multivariate polynomial relation among its EML values.\n\nNo numerical evidence can certify any of these statements: finite-precision approximations cannot distinguish an exact polynomial relation from a sufficiently small nonzero value. The unconditional positivity results in the Lean file supply basic consistency checks, while the transcendence and independence assertions remain conjectural inputs.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0839",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3c125e46",
+    "status": "available",
+    "timestamp": "2026-07-30T03:39:54.312157+00:00",
+    "title": "The formal development isolates the open input rather than treating transcendenc"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -7615,7 +7648,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Topology of Argumentation: Why Debates Have Holes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72d619d5",
     "description": "In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
     "domains": [
       "Novelty",
@@ -7623,10 +7656,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_151",
+    "phase": "A",
     "priority_score": 0.66,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
