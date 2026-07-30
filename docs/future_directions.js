@@ -4696,7 +4696,7 @@ window.FUTURE_DIRECTIONS = [
       "Probability"
     ],
     "id": "fd_0673",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
