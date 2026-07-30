@@ -105,7 +105,7 @@ class DirectionTournament:
                 block = entries[idx + 1] if idx + 1 < len(entries) else ""
                 code_match = re.search(r'```(?:lean4?|lean)?\s*(.*?)```', block, re.DOTALL)
                 stub = code_match.group(1).strip() if code_match else ""
-                if wid.startswith(("fd_", "dir_", "push_", "sorry_fill_", "scifi_")):
+                if wid.startswith(("fd_", "dir_", "push_", "sorry_fill_", "scifi_", "seed_")) or "_" in wid:
                     winners.append({"id": wid, "lean_stub": stub})
 
         # Extract Rejections section
@@ -118,7 +118,7 @@ class DirectionTournament:
                 m = re.search(r'([a-zA-Z0-9_\-]+)\s*:\s*(.*)', line)
                 if m:
                     rid, reason = m.group(1), m.group(2)
-                    if rid.startswith("fd_") or rid.startswith("dir_") or rid.startswith("push_") or rid.startswith("sorry_fill_") or rid.startswith("scifi_"):
+                    if rid.startswith(("fd_", "dir_", "push_", "sorry_fill_", "scifi_", "seed_")) or "_" in rid:
                         rejections.append({"id": rid, "reason": reason.strip()})
 
         return {
