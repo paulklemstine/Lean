@@ -667,6 +667,26 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             print(f"[Tick] Skipping {job.job_id[:8]} (status={job.status})")
             continue
 
+        # ── Special handling for Direction Tournament jobs ──
+        # Tournament jobs only need to download results and parse TOURNAMENT_RESULTS.
+        # They skip normal quality evaluation, retry logic, Phase B, and Catalog integration.
+        if getattr(job, 'direction_id', '') == '__direction_tournament__':
+            print(f"[Tournament] Processing completed tournament job {job.job_id[:8]}...")
+            try:
+                job = await extractor.extract_async(job)
+                if job.error_message:
+                    print(f"[Tournament] Extract failed: {job.error_message}")
+                else:
+                    extractor._extract_future_directions(job)
+                    print(f"[Tournament] Tournament job {job.job_id[:8]} processed successfully")
+            except Exception as e:
+                print(f"[Tournament] Error processing tournament job: {e}")
+            # Remove from inflight regardless
+            if job.project_id and job.project_id in extractor.inflight:
+                del extractor.inflight[job.project_id]
+                extractor._save_inflight()
+            continue
+
         # Check if another retry of this job has already dispatched Phase B or completed.
         # This prevents duplicate/stale retries from overwriting/aborting active Phase B.
         if job.phase == "A":
@@ -1092,12 +1112,20 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         # Trigger Option B Direction Tournament when total directions > 1000
         total_dirs = stats.get("total", 0)
         if total_dirs > 1000:
-            dt = DirectionTournament(workspace=extractor.workspace)
-            batch = dt.get_candidate_batch(batch_size=10)
-            if batch and len(batch) >= 5:
-                print(f"[Tournament] Total directions={total_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
-                prompt = dt.build_tournament_prompt(batch, target_winners=2)
-                if len(extractor.inflight) < max_inflight:
+            # Skip if a tournament job is already inflight
+            tournament_already_inflight = any(
+                getattr(j, 'direction_id', '') == '__direction_tournament__'
+                for j in extractor.inflight.values()
+            )
+            if tournament_already_inflight:
+                print(f"[Tournament] Total directions={total_dirs} > 1000 but tournament job already inflight — skipping.")
+            else:
+                dt = DirectionTournament(workspace=extractor.workspace)
+                batch = dt.get_candidate_batch(batch_size=10)
+                if batch and len(batch) >= 5:
+                    print(f"[Tournament] Total directions={total_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
+                    prompt = dt.build_tournament_prompt(batch, target_winners=2)
+                    # Tournament is allowed to exceed max_inflight by 1 — it's a maintenance job
                     if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):
                         import tempfile
                         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -1111,10 +1139,27 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                                     project_dir=tmp_path
                                 )
                                 print(f"[Tournament] Successfully queued Aristotle evaluation project: {proj_id}")
+                                # Track tournament job in inflight so results get polled & processed
+                                from knowledge_extractor import ResearchJob, ResearchConcept
+                                tournament_job = ResearchJob(
+                                    job_id=f"tournament_{proj_id[:8]}",
+                                    cycle_n=0,
+                                    concept=ResearchConcept(
+                                        title="Direction Tournament Evaluation",
+                                        domain="meta",
+                                        concept_description="Aristotle evaluates candidate directions for quality pruning"
+                                    ),
+                                    prompt=prompt,
+                                    project_id=proj_id,
+                                    status="dispatched",
+                                    dispatch_time=time.time(),
+                                    direction_id="__direction_tournament__",
+                                )
+                                extractor.inflight[proj_id] = tournament_job
+                                extractor._save_inflight()
+                                print(f"[Tournament] Tournament job {proj_id[:8]} added to inflight for polling")
                             except Exception as sub_err:
                                 print(f"[Tournament] Aristotle submission note: {sub_err}")
-                else:
-                    print(f"[Tournament] Max inflight slots ({max_inflight}) full — tournament job queued for next available slot.")
     except Exception as e:
         print(f"[Tournament] Automatic direction tournament check: {e}")
 
