@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "735a1ab0",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Neural Tangent Kernel Convergence\n\n## 1. Quantitative universality under approximately equal kernels\n\n**Conjecture.** Consider two lazy-training residual recursions with the same",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-26T05:37:01",
-      "title": "Neural Tangent Kernel: Convergence"
-    },
-    {
       "cycle_id": "078d5371",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction f",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-30T09:52:06",
       "title": "Borges' Library of Babel: Combinatorics of Everything"
+    },
+    {
+      "cycle_id": "72d619d5",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe formal result establishes a tractable cubical recipe model: fixed-flavor recipes are optional ingredient assignments, and substitution methods are classified by their parity s",
+      "quality_score": 0.78874,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-30T12:13:11",
+      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1a2d7e50",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## Formal-machine Kolmogorov complexity\n\nThe development uses binary code length under an injective encoding, which captures the counting core of incompressibility but is computab",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-21T09:48:25",
-      "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-    },
     {
       "cycle_id": "c4a6ce21",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 37,
       "timestamp": "2026-07-30T12:12:00",
       "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
+    },
+    {
+      "cycle_id": "72d619d5",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe formal result establishes a tractable cubical recipe model: fixed-flavor recipes are optional ingredient assignments, and substitution methods are classified by their parity s",
+      "quality_score": 0.78874,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-07-30T12:13:11",
+      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5f676746",
-      "domain": "Algebra",
-      "name": "depth_lt_size",
-      "quality": 0.74002
-    },
-    {
-      "cycle_id": "5f676746",
-      "domain": "Algebra",
-      "name": "minimumDepth_le_of_term",
-      "quality": 0.74002
-    },
-    {
-      "cycle_id": "132832ee",
-      "domain": "Cryptography",
-      "name": "interactive_view_probability_eq",
-      "quality": 0.74352
-    },
     {
       "cycle_id": "132832ee",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "card_borges_library",
       "quality": 0.76172
+    },
+    {
+      "cycle_id": "72d619d5",
+      "domain": "Novelty",
+      "name": "cookie_fiber_card",
+      "quality": 0.78874
+    },
+    {
+      "cycle_id": "72d619d5",
+      "domain": "Novelty",
+      "name": "binary_fiber_card",
+      "quality": 0.78874
+    },
+    {
+      "cycle_id": "72d619d5",
+      "domain": "Novelty",
+      "name": "toggle_apply",
+      "quality": 0.78874
     }
   ],
-  "last_updated": "2026-07-30T12:12:00",
+  "last_updated": "2026-07-30T12:13:11",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6a88207a",
-        "quality": 0.75,
-        "theorems": 9,
-        "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-      },
-      {
         "cycle_id": "d7591934",
         "quality": 0.6299480519480519,
         "theorems": 9240,
@@ -3637,6 +3631,12 @@
         "quality": 0.7423299999999999,
         "theorems": 15,
         "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+      },
+      {
+        "cycle_id": "72d619d5",
+        "quality": 0.78874,
+        "theorems": 21,
+        "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
       }
     ],
     "NumberTheory": [
