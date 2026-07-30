@@ -2609,6 +2609,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 46cb7ee6 (Q=0.773), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, th",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_46cb7ee6_7daee92f",
+    "priority_score": 0.8732699999999999,
+    "research_mode": "team",
+    "source_exp_id": "46cb7ee6",
+    "status": "available",
+    "timestamp": "2026-07-30T20:38:20.977467+00:00",
+    "title": "Deepening: EML Transseries: Asymptotic Expansions Beyond Power Series"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
     "domains": [
       "Physics"
@@ -2757,7 +2771,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae875fd7",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -2765,10 +2779,11 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "seed_086",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -3398,22 +3413,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
-  },
-  {
-    "consumed_by_exp_id": "46cb7ee6",
-    "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "id": "seed_371",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
   {
     "consumed_by_exp_id": "",
@@ -9042,18 +9041,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
   },
   {
-    "consumed_by_exp_id": "692c3b94",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## What is proved\n\nThe four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensional theory for a three-term cellular chain complex over any field. In the middle degree, if `d\u2081 \u2218 d\u2082 = 0`, then\n\n`\u03b2\u2081 + rank(d\u2081) + rank(d\u2082) = dim(C\u2081)`.\n\nThey derive exact criteria for nonzero, vanishing, and maximal middle homology; prove that every quotient class lifts to a cellular cycle; count activation patterns; and establish monotone cell-count bounds. The Euler\u2013Poincar\u00e9 development additionally proves\n\n`dim(H\u2080) - dim(H\u2081) + dim(H\u2082) = dim(C\u2080) - dim(C\u2081) + dim(C\u2082)`,\n\nshows that this integer is independent of the differentials once the chain-group dimensions are fixed, and bounds its absolute value by the total chain dimension. Under a common activation-pattern bound `P` on all three chain dimensions, it obtains `|\u03c7| \u2264 3P`. Taking the field to be `\u211a` gives the rational cellular statements relevant to finite polyhedral decision surfaces.\n\n## Mathematical correction to the motivating conjecture\n\nA general ReLU zero set is a real, usually noncompact, piecewise-linear set. It is not automatically a smooth complex projective variety, so classical Hodge numbers `h^{p,q}` are not canonically defined for it. Moreover, a polyhedral face is contained in an affine hyperplane but is generally not itself an algebraic subvariety or a global hyperplane section. Thus the classical Hodge conjecture cannot literally be declared trivial for neural-network decision surfaces.\n\nThe theorem proved here is the rigorous replacement that is available without extra geometric hypotheses: cellular homology classes are represented by cellular cycles, and their dimensions obey an exact rank formula. Calling these cellular generators \u201calgebraic cycles\u201d requires an additional, separately formalized realization map and should not be inferred merely from linear containment of each face.\n\n## Next formal targets\n\n1. **Finite polyhedral complexes.** Define a finite rational polyhedral complex and its cellular boundary maps, then instantiate the abstract theorem in every degree.\n2. **ReLU-to-complex construction.** Formalize affine ReLU networks, activation regions, and a finite polyhedral complex for a compact truncation of the zero set. Prove the boundary-square-zero law.\n3. **Locally finite or compactly supported theories.** Unbounded decision surfaces need locally finite homology, compactly supported cohomology, or a specified compactification; ordinary finite cellular homology is not enough.\n4. **Realization map.** Define an explicit cycle class map from rational polyhedral cycles into a chosen geometric cohomology theory. Only then can surjectivity be called a Hodge-type representability theorem.\n5. **Architecture bounds.** Prove bounds on the number of cells in each dimension from network architecture. The activation-pattern count `2^(sum widths)` is valid as a coarse combinatorial ceiling, but a proposed binomial bigrading needs a definition of the bigraded invariant before it is a meaningful theorem.\n6. **Sharp examples.** Construct network families whose cellular boundary ranks are computable and compare actual Betti numbers with cell-count bounds. The exact criterion in this development reduces this to determining two adjacent differential ranks.\n7. **Stability.** Study how the rank criterion changes under perturbations of weights and biases, especially across parameter values where activation complexes change combinatorial type.\n",
     "domains": [
       "Geometry",
       "Algebra"
     ],
     "id": "fd_0402",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "c58345ac",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T05:39:19.230565+00:00",
     "title": "The four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensio"
   },
@@ -11063,6 +11061,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T19:39:17.403036+00:00",
     "title": "Future directions from cycle 177b02a7"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Extend `GrowthRank` from three lexicographic levels to recursively generated exponential\u2013logarithmic monomial groups.\n- Construct composition, logarithm, and exponential on suitable Hahn-series subfields and prove closure.\n- Define an EML expression syntax with domain conditions and prove existence of compatible transseries expansions by structural induction.\n- Prove uniqueness of those expansions using `EMLTransseries.asymptotic_comparison`.\n- Develop ordered-field and valuation infrastructure toward a real-closedness theorem for the resulting full transseries field.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0854",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "46cb7ee6",
+    "status": "available",
+    "timestamp": "2026-07-30T20:38:16.190457+00:00",
+    "title": "Future directions from cycle 46cb7ee6"
   },
   {
     "consumed_by_exp_id": "",
