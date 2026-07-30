@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f2b328a7",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\n- Replace the illustrative rational census by an audited dataset and use `fitness_lt_iff_cross_product` as the exact validation criterion. In particular, the labels “ZFC” and “ZFC",
-      "quality_score": 0.64,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-20T22:25:32",
-      "title": "Speculative: Mathematics as an Evolving Ecosystem"
-    },
-    {
       "cycle_id": "fc320765",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\n## Results established\n\nThe accompanying Lean development proves the finite algebraic core of homological quantum error correction over `𝔽₂`.\n\n1. **Cellular CSS codes are chain co",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-30T00:20:57",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+    },
+    {
+      "cycle_id": "d5c8afaa",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\nThe completed formal development proves a precise theorem at the combinatorial core of tropical hypersurface geometry: when a tropical polynomial is represented by its finite fami",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-07-30T03:36:40",
+      "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77621
     }
   ],
-  "last_updated": "2026-07-30T00:20:57",
+  "last_updated": "2026-07-30T03:36:40",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "cc0903e0",
-        "quality": 0.74,
-        "theorems": 14,
-        "title": "Categorification of Entropy: The Information Loss of Functors"
-      },
-      {
         "cycle_id": "d00870b3",
         "quality": 0.7,
         "theorems": 14,
@@ -4009,6 +4003,12 @@
         "quality": 0.7311099999999999,
         "theorems": 19,
         "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
+      },
+      {
+        "cycle_id": "d5c8afaa",
+        "quality": 0.686,
+        "theorems": 40,
+        "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
       }
     ]
   }
