@@ -1,191 +1,155 @@
-# When Time Can Run Backwards: The Hidden Symmetry of Reversible Cellular Automata
+# Six Islands of Reversibility in the Ocean of Elementary Cellular Automata
 
-## A universe on a ring
+A row of lamps stretches around a circular track. Each lamp is either off or on. At the tick of a clock, every lamp looks at three bits of information—its left neighbor, itself, and its right neighbor—and all lamps update simultaneously according to the same rule. This is an elementary cellular automaton: one of the simplest mathematical universes in which local decisions create global dynamics.
 
-Imagine a circular necklace of $n$ beads, each of which is either black or
-white. At every tick of a clock, all the beads change color simultaneously,
-according to a fixed rule that looks only at each bead and its two immediate
-neighbors. That is the whole of a *cellular automaton*: a tiny toy universe
-whose physics is nothing more than a lookup table.
+Simplicity is deceptive. There are only eight possible three-lamp neighborhoods, and a rule chooses an output bit for each one. Thus there are
 
-These deceptively simple systems have fascinated scientists for decades. From a
-single local rule — "if my left neighbor is black and I am white, become black,
-otherwise stay the same," and so on — extraordinary complexity can emerge:
-fractals, chaos, gliders that sail across the grid, even patterns rich enough to
-perform arbitrary computation. Cellular automata are the physicists' Lego set
-for building whole worlds out of one repeated rule.
+$$
+2^8=256
+$$
 
-Now ask a question that goes to the heart of physics: **can such a universe run
-backwards?** In our own world, the fundamental microscopic laws are believed to
-be reversible — if you knew the exact state of everything, you could in
-principle reconstruct the entire past. Yet most cellular automata are ruthlessly
-forgetful. Apply the rule that turns *every* bead white, and after one step the
-whole necklace is white regardless of how it started. The past has been erased.
-There is no rewinding.
+possible elementary rules. Yet their behavior ranges from extinction to intricate moving structures. A particularly sharp question asks whether time can be run backward. If we see the new row of lamps, can we reconstruct exactly one previous row?
 
-A cellular automaton is called **reversible** when no information is ever lost:
-every configuration has exactly one predecessor, so the dynamics can be undone,
-step by step, forever. Reversible automata are the ones that behave like honest
-physical laws. And here is the beautiful question this article is about: *which*
-rules are reversible, and — the deeper part — **what structure do the reversible
-rules form when you consider them all together?**
+For circular rows of every positive length, the answer is unexpectedly rigid. Among all $256$ elementary rules, exactly six are reversible on every circle:
 
-The answer turns out to be a story about **symmetry** and **groups**, the
-mathematical language of things that can be undone and combined.
+$$
+15,\ 51,\ 85,\ 170,\ 204,\ 240.
+$$
 
-## The formal stage
+They are not six unrelated miracles. Each performs only two basic operations: move the entire configuration one place, or flip every bit. The classification reveals a general lesson about reversible computation: when many local updates occur at once, preserving information globally is far harder than merely making a locally balanced truth table.
 
-Let us fix notation so that every claim below is precise. Our lattice is the
-cyclic group $\mathbb{Z}/n$ — the $n$ positions arranged in a ring. A
-**configuration** is an assignment of a bit to each site,
-$$c : \mathbb{Z}/n \to \{0,1\}.$$
-There are $2^n$ possible configurations in all.
+## From a lookup table to a universe
 
-An **elementary rule** (radius $1$) is a function
-$$r : \{0,1\}^3 \to \{0,1\}$$
-that reads a cell's left neighbor, the cell itself, and its right neighbor, and
-outputs the cell's next value. Because there are $2^3 = 8$ possible
-neighborhoods and each can be sent to either $0$ or $1$, there are exactly
-$$2^{8} = 256$$
-elementary rules — the famous "Wolfram rules," numbered $0$ through $255$.
+Write a circular configuration of length $n$ as
 
-Each local rule $r$ induces a **global map** on configurations,
-$$(F_r c)(i) = r\big(c(i-1),\, c(i),\, c(i+1)\big),$$
-applied simultaneously at every site. The automaton is **reversible** precisely
-when $F_r$ is a bijection of the $2^n$ configurations — a permutation of the
-state space with a well-defined inverse.
+$$
+x=(x_0,x_1,\ldots,x_{n-1}),\qquad x_i\in\{0,1\},
+$$
 
-## The first law: everything respects translation
+with indices interpreted modulo $n$. A local rule is a function
 
-Before asking which rules are reversible, there is a structural fact true of
-*every* rule, reversible or not. Because the local rule is applied identically
-at every site, the global dynamics cannot tell one position on the ring from
-another. Concretely, let the **shift** $S$ rotate a configuration by one site,
-$(Sc)(i) = c(i+1)$. Then for every elementary rule,
-$$F_r \circ S = S \circ F_r.$$
+$$
+f:\{0,1\}^3\longrightarrow\{0,1\}.
+$$
 
-In words: **shifting and then updating gives the same result as updating and
-then shifting.** This translation invariance — a finite-lattice version of a
-classical observation of Hedlund — is the seed of all the symmetry to come. It
-says that the shift is a fundamental symmetry of *any* cellular automaton, and
-so the reversible ones, in particular, live inside the world of maps that
-commute with the shift.
+It induces a global update $F_{f,n}$ by
 
-## The six honest rules
+$$
+(F_{f,n}(x))_i=f(x_{i-1},x_i,x_{i+1}).
+$$
 
-Which of the $256$ elementary rules are reversible? On a ring, the reversible
-elementary rules are exactly **six** of them — and they are the simplest
-imaginable. Each depends on a *single* neighbor, optionally flipped:
+The rule is reversible on the $n$-cycle when $F_{f,n}$ is a bijection of the $2^n$ configurations: no two pasts merge into one future, and every possible future has a past. We call an elementary rule universally finite-cycle reversible when this holds for every integer $n\ge 1$.
 
-- **Rule 204** copies the cell itself: $F(c) = c$. This is the **identity** —
-  nothing ever changes.
-- **Rule 51** flips the cell: $F(c)(i) = \lnot c(i)$. This is the
-  **complement**, which swaps black and white everywhere.
-- **Rule 170** copies the right neighbor: $F(c)(i) = c(i+1)$. This is the
-  **left shift** — the whole pattern slides one step.
-- **Rule 240** copies the left neighbor: $F(c)(i) = c(i-1)$. This is the
-  **right shift**, the inverse slide.
-- **Rule 15** copies the *flipped* left neighbor: the **complement of the right
-  shift**.
-- **Rule 85** copies the *flipped* right neighbor: the **complement of the left
-  shift**.
+Wolfram numbering packages the eight outputs into an integer from $0$ to $255$. For a neighborhood $(l,c,r)$, assign the index
 
-Every one of these is a bijection, for a transparent reason: shifting is
-reversible (just shift back), complementing is reversible (complement again),
-and composing reversible operations is reversible. The identity is trivially
-reversible. So all six are genuinely invertible dynamics — six honest little
-universes that can run backwards.
+$$
+k=4l+2c+r.
+$$
 
-What is striking is that these six exhaust the reversible elementary rules.
-Every rule that actually *combines* information from two or more neighbors — and
-that is the overwhelming majority — destroys information and cannot be undone.
-Reversibility is a razor: it slices away all but the affine single-site rules.
+The output is the $k$th binary digit of the rule number. This convention lets one enumerate all rules without hiding their mathematical meaning.
 
-## The rule that forgets
+A tempting but incorrect shortcut is to describe a local rule as a permutation of the eight neighborhoods. It cannot be: its input set has eight elements, but its output set has only two. Reversibility belongs to the global map on entire configurations. Local outputs overlap, because one cell’s right neighbor is another cell’s center. That overlap is where information may be preserved—or destroyed.
 
-To feel why reversibility is special, look at its opposite. Take the constant
-rule that outputs $0$ no matter what: $F(c)(i) = 0$ for all $i$. After a single
-tick, *every* starting configuration collapses to the all-white necklace.
-Infinitely many pasts, one present. The all-black configuration has no
-predecessor at all — nothing ever maps to it. So $F$ is not a bijection: it is
-not surjective, and it is wildly non-injective. On any nontrivial ring
-($n \ge 1$), the constant rule is irreversible. Time, for that universe, has a
-firm arrow.
+## The six survivors
 
-## Reversible rules form a group
+The six reversible rules have transparent formulas. Let $L$ and $R$ denote cyclic shifts,
 
-Here is where the "Galois theory" of the title enters. Reversibility is not just
-a property of individual rules — the reversible dynamics fit together into an
-algebraic object. If $F$ and $G$ are both reversible, so is their composition
-$F \circ G$ (do one then the other, and undo in reverse order), and so is the
-inverse $F^{-1}$. In the language of algebra, the reversible, shift-commuting
-maps form a **group**: a set closed under composition and inversion, with the
-identity as neutral element.
+$$
+(Lx)_i=x_{i-1},\qquad (Rx)_i=x_{i+1},
+$$
 
-More precisely, since every cellular map commutes with the shift $S$, the
-reversible ones live inside the **centralizer of the shift** — the set of all
-permutations of the $2^n$ configurations that commute with $S$. This centralizer
-is a genuine subgroup of the full symmetric group on the state space, and it is
-the natural home of reversible dynamics. We call it the **reversibility group**.
+and let $C$ denote pointwise complement,
 
-Both of our fundamental building blocks belong to it: the shift $S$ commutes
-with itself, and the complement $C$ commutes with the shift (flipping colors and
-rotating can be done in either order with the same result).
+$$
+(Cx)_i=1-x_i.
+$$
 
-## The arithmetic of shift and complement
+Then the six global maps are
 
-What does the group generated by the shift $S$ and the complement $C$ actually
-look like? Its structure is clean and completely computable.
+$$
+\begin{array}{c|c}
+\text{Rule} & \text{Global action}\\ \hline
+15 & CL\\
+51 & C\\
+85 & CR\\
+170 & R\\
+204 & I\\
+240 & L
+\end{array}
+$$
 
-- **The complement is an involution:** $C^2 = \mathrm{id}$. Flip twice and you
-  are back where you started.
-- **The shift has order exactly $n$:** $S^n = \mathrm{id}$, and no smaller power
-  works. This is not obvious — one must show that for $0 < k < n$, the $k$-fold
-  shift genuinely moves *something*. The clean witness is the "point mass"
-  configuration that is black at a single site and white elsewhere: shifting it
-  $k$ steps relocates the lone black bead, so $S^k$ cannot be the identity. Thus
-  the shift has order precisely $n$, matching the size of the ring.
-- **The two commute:** $SC = CS$.
+Here $I$ is the identity. Rule $204$ simply copies the center cell. Rules $170$ and $240$ transport bits around the circle in opposite directions. Rule $51$ flips every bit. The remaining two combine a shift with a flip.
 
-From these three facts the group $\langle S, C\rangle$ is **abelian** — every
-pair of its elements commutes — and it is a product of a cyclic rotation part of
-order $n$ and a two-element flip part. Symbolically it behaves like
-$\mathbb{Z}/n \times \mathbb{Z}/2$: rotate by some amount, optionally flip, and
-that is every element. A small, transparent, perfectly reversible algebra of
-symmetries sitting inside the vast symmetric group on $2^n$ states.
+Why are they reversible? Left and right shifts undo one another:
 
-## A cautionary tale about numerology
+$$
+LR=RL=I.
+$$
 
-The original motivating conjecture for this line of work proposed that the
-radius-$1$ reversibility group had order $8!/4 = 10080$ — the idea being that
-reversible rules could realize a large chunk of all permutations of the eight
-neighborhoods. It is a tempting guess, and it is **false**. Two facts sink it.
-First, the permutations of the eight neighborhoods that commute with the natural
-cyclic symmetry form a group of order only $36$, not $10080$. Second, and more
-fundamentally, a *global* reversible map is far more constrained than an
-arbitrary shuffle of neighborhoods: as we saw, only six local rules survive the
-reversibility razor at all. The honest structure is the small abelian group of
-shifts and complements — humbler than the conjecture, but true, and provably so.
+Complement is its own inverse:
 
-This is a healthy reminder that in mathematics, an elegant formula is worth
-nothing until it is proved, and that the real structure a problem hides is often
-quieter and more beautiful than the one we first imagine.
+$$
+C^2=I.
+$$
 
-## Why it matters
+Moreover, complement commutes with shifting. Therefore every map in the table has an explicit inverse. The inverses are just as simple: $R^{-1}=L$, $L^{-1}=R$, $C^{-1}=C$, $(CR)^{-1}=CL$, and $(CL)^{-1}=CR$.
 
-Reversible cellular automata are not a mere curiosity. They are the discrete
-model for **reversible computation** — computation that, in principle, dissipates
-no energy, because it never erases information (Landauer's principle ties the
-erasure of a bit to an unavoidable release of heat). They model conservative,
-time-symmetric physics on a lattice. They underlie certain cryptographic and
-lattice-gas simulations, where invertibility guarantees that a scrambling step
-can be perfectly unscrambled.
+This gives the structural half of the classification: the six named rules work on every nonempty circular lattice, regardless of size.
 
-Understanding *which* rules are reversible, and how the reversible ones assemble
-into a group, is understanding the landscape of computations that can be run
-backwards. The message of this article is that the landscape, at least for the
-elementary rules on a ring, is not a chaotic thicket but a crystalline structure
-— six generators, one commuting shift, one flipping complement, and an abelian
-group that ties them together. In the smallest universe we could build, time's
-arrow, when it can be reversed at all, is governed by a symmetry as clean as
-arithmetic.
+## Four tiny circles expose every impostor
+
+The striking half is not that these six are reversible, but that no others are. One might expect a bad rule to conceal its information loss until a very large ring exhibits a delicate collision. It never needs to. Circles of lengths $1$, $2$, $3$, and $4$ are enough.
+
+The finite witness theorem states:
+
+> **Short-Period Obstruction Theorem.** If an elementary rule is not one of $15,51,85,170,204,240$, then for some $n\in\{1,2,3,4\}$ its global map on the $n$-cycle is not bijective.
+
+The argument is exhaustive but conceptually clean. For each of the $256$ local rules and each $n$ from $1$ through $4$, list all $2^n$ circular configurations, apply the rule, and inspect the outputs. A map from a finite set to itself is bijective exactly when its outputs are all distinct. Passing all four tests leaves precisely the six rules above.
+
+This finite calculation combines with the explicit inverses to produce the full result:
+
+> **Classification Theorem.** An elementary binary cellular automaton is reversible on every nonempty finite cycle if and only if its Wolfram number is one of $15,51,85,170,204,240$.
+
+The logic matters. Testing four sizes alone does not generally prove behavior at all larger sizes. Here it identifies six candidates; a separate symbolic argument proves those candidates reversible for arbitrary $n$. Conversely, any rule claimed to be universal must pass the first four sizes, so it must be on the list.
+
+## Watching information disappear
+
+Consider rule $0$, which sends every neighborhood to $0$. Every initial row becomes the all-zero row in one step. Its many-to-one collapse is obvious. Other failures are subtler. Two distinct patterns may produce the same successor only because neighborhoods overlap around a particular cycle. That collision destroys injectivity. Since the configuration space is finite and has equal-sized domain and codomain, failure of injectivity is equivalent to failure of surjectivity: some future has no past.
+
+The obstruction theorem says every excluded rule exhibits such information loss on a loop no longer than four cells. This is useful computationally. The largest test has only $2^4=16$ configurations, so the whole elementary universe can be screened with tiny tables. It is also useful scientifically: a short periodic pattern can be repeated indefinitely, turning a finite collision into evidence about periodic behavior on an unbounded line.
+
+## What “Galois theory” should mean here
+
+The language of groups naturally enters reversible dynamics, but it must enter at the right level. Bijective global maps of a fixed configuration space form a group under composition: composition preserves bijectivity, the identity is present, and each map has an inverse. The local truth tables themselves do not form permutations of the eight neighborhoods.
+
+On an $n$-cycle, the six elementary reversible maps are generated by the shift $R$ and complement $C$. They satisfy
+
+$$
+R^n=I,\qquad C^2=I,\qquad CR=RC.
+$$
+
+Thus their composites have the form $R^kC^e$, where $k$ is taken modulo $n$ and $e\in\{0,1\}$. For $n>1$, these operations give a group isomorphic to
+
+$$
+\mathbb Z/n\mathbb Z\times\mathbb Z/2\mathbb Z,
+$$
+
+while the one-cell circle is degenerate because shifting does nothing. This is the genuine algebraic landscape behind the six rules: spatial translation and bitwise duality.
+
+There is another subtlety. Composing a radius-$r$ automaton with a radius-$s$ automaton may require radius as large as $r+s$. Therefore maps of exactly one fixed radius need not be closed under composition. A robust theory should study all reversible finite-radius, shift-compatible global maps, organized by a radius filtration, rather than force closure where it does not exist.
+
+## Reversible computation and physics
+
+Why care whether a toy universe can run backward? Information loss has thermodynamic meaning. In physical models of computation, erasing a bit carries an energetic cost. Reversible logic avoids merging computational histories, making it relevant to low-energy computing and quantum circuit design. Cellular automata provide a spatially distributed laboratory for these ideas: every site acts locally, but reversibility is a global constraint.
+
+The six-rule theorem shows that radius-one binary rules are too cramped to support rich universally reversible finite-cycle computation. Their only possibilities are transport, complement, identity, and combinations thereof. Complexity may appear in many elementary automata, but universal reversibility at this radius forces austere dynamics.
+
+This does not mean reversible cellular automata are always trivial. Larger neighborhoods, larger alphabets, partitioned updates, and higher dimensions support sophisticated reversible behavior. Instead, the classification marks a boundary. With two states and nearest-neighbor synchronous updating, there is no room for a reversible elementary rule that genuinely mixes neighboring information on every finite ring.
+
+## A small theorem with a broad method
+
+The proof strategy is a reusable pattern. First, define reversibility globally. Second, use exhaustive search only where the state space is genuinely finite. Third, turn surviving cases into formulas. Fourth, prove those formulas invertible at arbitrary size. Finally, extract small counterexamples for every excluded case.
+
+For larger radii, raw configuration enumeration grows quickly. A binary ring of length $n$ has $2^n$ states, while a radius-$r$ local rule has $2^{2r+1}$ input neighborhoods. De Bruijn graphs offer a more scalable language: vertices encode overlapping words, edges encode neighborhoods, and product graphs detect pairs of configurations that evolve identically. The same central question remains—whether distinct histories can merge—but graph structure replaces brute force.
+
+The elementary case ends with an unusually crisp picture. Out of $256$ local laws, $250$ betray themselves on a circle of at most four cells. The six that remain merely shift, flip, or stand still. In a universe built from overlapping local observations, reversibility is not a property of isolated neighborhoods. It is the global art of never forgetting where a bit came from.
