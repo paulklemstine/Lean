@@ -1099,22 +1099,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
   },
   {
-    "consumed_by_exp_id": "85fa434c",
-    "description": "Prove that the rank of an elliptic curve over Q is computable. Formalize the Mordell-Weil theorem, height pairings, and descent algorithms. Connect to the conjecture that ranks are bounded and explore the parity conjecture.",
-    "domains": [
-      "Algebra",
-      "NumberTheory"
-    ],
-    "id": "seed_204",
-    "phase": "B",
-    "priority_score": 0.92,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "BSD Conjecture: Rank Computability"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove or disprove: for every \u03b5 > 0, there exists k such that distinguishing value \u2265 1-\u03b5 from value \u2264 \u03b5 for unique 2-prover games with k labels is NP-hard. Connect to MAX-CUT and SDP gaps.",
     "domains": [
@@ -4303,7 +4287,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_412",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -4433,16 +4417,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Quantum Activation Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "343eb494",
     "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
     "domains": [
       "Combinatorics"
     ],
     "id": "seed_212",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
   },
@@ -11106,6 +11091,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: BSD Rank Computability\n\n## What is formalized\n\n`Catalog/Applications/BSD/RankComputability.lean` proves a complete finite linear-algebra chain for a certified descent presentation over `\u211a`:\n\n1. the relation-matrix rank is at most the number of generators;\n2. the candidate rank `n - A.rank` satisfies rank\u2013nullity;\n3. it equals the dimension of the quotient by the span of the matrix columns;\n4. any algebraic rank equipped with such a presentation is therefore identified with that candidate rank;\n5. parity and a root-number equality can be transported across this identification.\n\nThe companion files formalize a Frobenius trace recurrence and analytic consequences of a functional equation. All results in these files are fully proved.\n\n## Scope limitation\n\nThis development does **not** claim an unconditional algorithm for the Mordell\u2013Weil rank of every elliptic curve over `\u211a`. The missing step is not finite-dimensional linear algebra: it is the production, for every curve, of a terminating and complete descent certificate identifying the Mordell\u2013Weil free quotient. The formal result is consequently stated with an explicit certified-presentation hypothesis.\n\n## Next formalization steps\n\n1. **Executable rational Gaussian elimination.** Define a computable row-reduction procedure for finite rational matrices and prove that its pivot count agrees with `Matrix.rank`. This would turn the present mathematical rank expression into an extracted executable certificate checker.\n\n2. **Presentation certificates.** Introduce a structure containing a relation matrix, proposed generators, and proofs that the resulting quotient presents the rationalized Mordell\u2013Weil group. Prove that checking such a certificate computes the asserted rank.\n\n3. **Elliptic curves and rational points.** Connect the abstract rank parameter to Mathlib's elliptic-curve definitions and to a precise model of `E(\u211a)`. Formalize the group law and the torsion/free decomposition needed at the interface.\n\n4. **Height machinery.** Develop the naive and canonical heights, prove the quadraticity and bounded-difference properties, and derive Northcott finiteness over `\u211a`. These are central ingredients in a formal Mordell\u2013Weil theorem.\n\n5. **Mordell\u2013Weil theorem.** Formalize weak Mordell\u2013Weil for a fixed descent degree and combine it with height descent to prove finite generation of `E(\u211a)`.\n\n6. **Concrete descent.** Start with full rational `2`-torsion, where a `2`-descent can be represented using square classes and finite local conditions. Prove soundness of the resulting Selmer upper bound and certify independent points for lower bounds.\n\n7. **Termination gap.** Isolate the exact additional hypothesis under which upper and lower rank bounds meet. This keeps conditional algorithms precise and prevents a finite Selmer computation from being mistaken for an unconditional exact-rank algorithm.\n\n8. **Parity bridge.** Specialize the abstract root-number transport theorem to complex signs and connect it to `BSD.FunctionalEquation.analyticRank_parity`. Keep the parity conjecture or BSD rank equality as explicit hypotheses wherever required.\n\n9. **Bounded-rank questions.** Treat uniform boundedness of ranks only as a conjectural research direction. Formalize finite-family maximum-rank results separately, since those follow from certified computations without asserting a global bound.\n\n10. **Computational examples.** After executable row reduction and certificate structures are available, add small certified matrices and selected elliptic-curve descent certificates as kernel-checked examples rather than relying on external numerical tables.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0858",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "85fa434c",
+    "status": "available",
+    "timestamp": "2026-07-30T23:28:05.565547+00:00",
+    "title": "`Catalog/Applications/BSD/RankComputability.lean` proves a complete finite linea"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -11310,7 +11310,7 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "sorry_fill_29ba074c_5136a953",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.65,
     "research_mode": "team",
     "source_exp_id": "29ba074c",
