@@ -2171,7 +2171,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "593a0386",
     "description": "Building on cycle 2996b72f (Q=0.776), which proved 11 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -2183,7 +2183,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "2996b72f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-30T00:20:57.662026+00:00",
     "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -8746,27 +8746,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "883686fe",
-    "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Combinatorics",
-      "Probability"
-    ],
-    "id": "seed_009",
-    "lineage_refs": [],
-    "priority_score": 0.78,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Symmetric Group Generation Probability"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
     "domain_bridges": [],
@@ -9506,6 +9485,26 @@
     "status": "available",
     "timestamp": "2026-07-30T00:20:53.229761+00:00",
     "title": "`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector betwee"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe following are concrete conjectures extending the proved exact formula and parity bound.  Here `pₙ` denotes `SymmetricGroupGeneration.symmetricGenProb n`.\n\n1. **Dixon limit for the symmetric-group event.**\n   \\[\n   \\lim_{n\\to\\infty} p_n=\\frac34.\n   \\]\n   This is falsified by any rational `ε > 0` for which infinitely many `n` satisfy `|pₙ - 3/4| ≥ ε`.\n\n2. **First-order convergence bound.** There are rational constants `C > 0` and `N` such that for every `n ≥ N`,\n   \\[\n   0\\le \\frac34-p_n\\le \\frac Cn.\n   \\]\n   This can be tested against exact finite generating-pair counts, and is falsified if `n(3/4-pₙ)` is unbounded.\n\n3. **Eventual strict positivity below the parity ceiling.** There is an `N` such that for every `n ≥ N`,\n   \\[\n   0 < p_n < \\frac34.\n   \\]\n   The upper inequality asserts that, at every sufficiently large finite degree, obstructions other than the pair being even still have positive probability.\n\n4. **Alternating-or-symmetric generation.** Let `qₙ` be the probability that two uniform elements of `Sₙ` generate either `Aₙ` or `Sₙ`. Then\n   \\[\n   \\lim_{n\\to\\infty} q_n=1\n   \\quad\\text{and}\\quad\n   \\exists C>0\\;\\exists N\\;\\forall n\\ge N,\\;1-q_n\\le C/n.\n   \\]\n   Formalizing `qₙ` would connect the catalog's `Sₙ`-only count to the standard random-permutation formulation of Dixon's theorem.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0838",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "883686fe",
+    "status": "available",
+    "timestamp": "2026-07-30T06:51:04.202085+00:00",
+    "title": "The following are concrete conjectures extending the proved exact formula and pa"
   },
   {
     "ambition_level": "extension",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3df39c71",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Agreement Subtrees in Multiple Phylogenetic Trees\n\n## 1. Compatibility-sensitive state compression\n\n**Conjecture.** For each fixed leaf number `a`, the number of restrictions to a",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-21T03:52:55",
-      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-    },
-    {
       "cycle_id": "7fb32c18",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\n## Results established\n\nThe formal development in `Speculative/CategoryDNA.lean` uses a precise minimal semantics:\na theory retains a type of models, and its genome is the discret",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-30T03:41:04",
       "title": "Machine Learning Generalization Bounds"
+    },
+    {
+      "cycle_id": "883686fe",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nThe following are concrete conjectures extending the proved exact formula and parity bound.  Here `pₙ` denotes `SymmetricGroupGeneration.symmetricGenProb n`.\n\n1. **Dixon limit for",
+      "quality_score": 0.677,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-30T06:51:08",
+      "title": "Symmetric Group Generation Probability"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76753
     }
   ],
-  "last_updated": "2026-07-30T03:41:04",
+  "last_updated": "2026-07-30T06:51:08",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "fc320765",
-        "quality": 0.69,
-        "theorems": 24,
-        "title": "Speculative: Topological Quantum Error Correction from Mathematical Structures"
-      },
-      {
         "cycle_id": "bf4ad478",
         "quality": 0.66,
         "theorems": 9,
@@ -3823,6 +3817,12 @@
         "quality": 0.76977,
         "theorems": 24,
         "title": "EML Information Geometry: Fisher Information of exp-log Models"
+      },
+      {
+        "cycle_id": "883686fe",
+        "quality": 0.677,
+        "theorems": 15,
+        "title": "Symmetric Group Generation Probability"
       }
     ],
     "Pythagorean": [

@@ -1628,16 +1628,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "593a0386",
     "description": "Building on cycle 2996b72f (Q=0.776), which proved 11 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Shared"
     ],
     "id": "push_2996b72f_fb513ba4",
+    "phase": "A",
     "priority_score": 0.8762099999999999,
     "research_mode": "team",
     "source_exp_id": "2996b72f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-30T00:20:57.662026+00:00",
     "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -1654,20 +1655,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T12:21:06.834733+00:00",
     "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c2653f80 (Q=0.772), which proved 24 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_c2653f80_2718676a",
-    "priority_score": 0.8720099999999998,
-    "research_mode": "team",
-    "source_exp_id": "c2653f80",
-    "status": "available",
-    "timestamp": "2026-07-30T03:38:51.386504+00:00",
-    "title": "Deepening: Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
     "consumed_by_exp_id": "",
@@ -2121,20 +2108,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T06:49:40.513188+00:00",
     "title": "Deepening: Lattice Cryptography: LWE Hardness"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 6ef427dd (Q=0.764), which proved 22 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_6ef427dd_dbb2bb80",
-    "priority_score": 0.8636799999999999,
-    "research_mode": "team",
-    "source_exp_id": "6ef427dd",
-    "status": "available",
-    "timestamp": "2026-07-30T03:37:45.965135+00:00",
-    "title": "Deepening: Consciousness as Emergent Fixed Point"
   },
   {
     "consumed_by_exp_id": "",
@@ -2958,23 +2931,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Schanuel's Conjecture"
   },
   {
-    "consumed_by_exp_id": "d1f879fc",
-    "description": "Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameterized networks provably generalize.",
-    "domains": [
-      "MachineLearning",
-      "Computation",
-      "Algebra"
-    ],
-    "id": "seed_041",
-    "phase": "B",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Machine Learning Generalization Bounds"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
     "domains": [
@@ -3301,17 +3257,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3308088b",
     "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "seed_365",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
   },
@@ -5398,7 +5355,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1c628216",
     "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
     "domains": [
       "Novelty",
@@ -5406,10 +5363,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_283",
+    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
@@ -6114,6 +6072,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Mixed partition functions are exactly the graph parameters of exponentially bounded edge-connection rank' and formalize its key results. Abstract: We prove a conjecture of Regts and Sevenster: a complex-valued graph parameter $f$ with $f(\\varnothing)=1$ has exponentially bounded edge-connection rank if and only if it is a mixed partition function; moreover, the model may be chosen with its numbers of even and odd colours explicitly bounded in terms of the rank bound. From $f$ we construct a connection category, a rigid symmetric $\\mathbb{C}$-linear monoidal category whose morphism spaces have the connection ranks as dimensions and whose trace pairings are nondegenerate. The rank hypothesis forces moderate tensor growth, and a recent theorem of Etingof and Penneys then shows that every nilpotent endomorphism has trace zero; together with the nondegeneracy of the trace pairing, this makes the category semisimple, and a theorem of Deligne provides a faithful symmetric tensor functor to finite-dimensional super vector spaces. We then identify the resulting super tensor network with the Regts-Sevenster model exactly, viz. with its Eul",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0836",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.27198v1",
+    "status": "available",
+    "timestamp": "2026-07-30T03:41:09.313448+00:00",
+    "title": "ArXiv paper: Mixed partition functions are exactly the graph parameters of exponentially bounded edge-connection rank"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Triviality of promise polymorphisms' and formalize its key results. Abstract: Given two $m$-ary predicates $P,Q$, an $n$-ary polymorphism is a tuple $(f_1,\\dots,f_m)$ of functions such that $x^{(1)},\\dots,x^{(n)} \\in P$ implies $(f_1(y_1),\\dots,f_m(y_m)) \\in Q$, where $y_i = (x^{(1)}_i,\\dots,x^{(m)}_i)$. This generalizes the usual definition in universal algebra, in which $P = Q$ and $f_1 = \\cdots = f_m$. In earlier work, we studied when all polymorphisms of a single predicate are \"trivial\": either all depend on a single coordinate (common to all of them), or they constitute a \"certificate\" for the predicate. We showed that it suffices to check this condition for $2$-ary polymorphisms, and even for $1$-ary polymorphisms, modulo an explicit list of obstructions. In this paper we generalize the first result to the $P,Q$ setting, for a relaxed notion of certificate. We also generalize the second result in the promise setting, in which $P,Q$ range over the same alphabets and $P \\subseteq Q$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0837",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.27057v1",
+    "status": "available",
+    "timestamp": "2026-07-30T03:41:12.598370+00:00",
+    "title": "ArXiv paper: Triviality of promise polymorphisms"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -6143,17 +6130,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 15: Schubert Calculus Rigorization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7edbd52d",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
     "domains": [
       "Combinatorics",
       "Algebra"
     ],
     "id": "seed_031",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Frankl's Union-Closed Conjecture"
   },
@@ -6288,7 +6276,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "67548200",
     "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
     "domains": [
       "Novelty",
@@ -6296,10 +6284,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_176",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
@@ -6553,23 +6542,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
-    "consumed_by_exp_id": "883686fe",
-    "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
-    "domains": [
-      "Algebra",
-      "Combinatorics",
-      "Probability"
-    ],
-    "id": "seed_009",
-    "phase": "A",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Symmetric Group Generation Probability"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
     "domains": [
@@ -6649,7 +6621,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c352e1f",
     "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
     "domains": [
       "Novelty",
@@ -6657,10 +6629,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_157",
+    "phase": "A",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
@@ -7134,63 +7107,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThe completed formal development proves a precise theorem at the combinatorial core of tropical hypersurface geometry: when a tropical polynomial is represented by its finite family of term-value functions, multiplication forms all pairwise sums, and the product corner locus is exactly the union of the factor corner loci. It also proves the pointwise minimal-term characterization, the set-valued corner-locus equality, and invariance under adding a common tropical scalar function.\n\nThe repository-wide incomplete realization theorem was also repaired. Its original hypotheses supplied only an element-by-element finite factorization, which does not imply a single global finite generating family. The corrected theorem explicitly assumes a common matrix row-span presentation and then constructs the direct weighted acyclic graph realization.\n\n## Computational-evidence decision\n\nA separate computational-evidence stage was not used because the principal result is a structural identity for arbitrary index types, point types, and ordered additive groups, rather than a conjecture inferred from a numerical sequence. Small finite tests would exercise only decidable equality and would not strengthen the universal proof. Consequently there is no associated OEIS sequence, numerical plot, or meaningful bounded counterexample search. The Lean development instead proves the factor-minimum characterization from which both directions follow.\n\n## Next formal targets\n\n1. Specialize term functions to integral affine maps on `\u2124\u207f` and define tropical Laurent polynomials as finite supports with coefficients.\n2. Quotient presentations by deletion of inessential terms, and prove the corner locus is presentation-independent.\n3. Connect corner loci to lower faces of lifted Newton polytopes; this is the natural bridge to regular subdivisions.\n4. Formalize Newton polytopes and prove `Newt(f \u2299 g) = Newt(f) + Newt(g)` (Minkowski sum), complementing the corner-locus union theorem.\n5. For complete smooth fans, build the orbit decomposition of a toric variety and prove that its Euler characteristic is the number of zero-dimensional torus orbits, equivalently the number of maximal cones. For a smooth projective polytope this corresponds to vertices.\n6. Distinguish vertex counts, lattice-point counts, degree, and Euler characteristic. They are not equal in general: lattice-point count controls section dimensions, normalized volume controls degree, and (under suitable smooth complete hypotheses) vertex count controls Euler characteristic.\n7. State any comparison with schemes over the field with one element only after selecting a precise model of `F\u2081`-geometry (for example monoid schemes). Different established definitions do not yield an unconditional equivalence with all tropical schemes.\n\nThe broad categorical and base-change claims in the mission require definitions of tropical schemes, an `F\u2081`-scheme category, and a base-change functor. None should be identified merely by terminology; a future equivalence must supply functors, natural isomorphisms, and proofs of full faithfulness and essential surjectivity.\n\n## Verification status\n\n`Tropical/CornerLocusProduct.lean` and the repaired realization development in `Catalog/Bridges/AlgebraTropicalPhysics/TropicalScatteringDuality.lean` compile independently from beginning to end. Their completed declarations contain no proof holes or stubbed theorem bodies. The principal corner-locus theorems depend only on Lean's standard permitted foundational axioms (`propext`, `Classical.choice`, and `Quot.sound`).\n",
+    "description": "# Future directions\n\nThe following are concrete conjectures extending the proved exact formula and parity bound.  Here `p\u2099` denotes `SymmetricGroupGeneration.symmetricGenProb n`.\n\n1. **Dixon limit for the symmetric-group event.**\n   \\[\n   \\lim_{n\\to\\infty} p_n=\\frac34.\n   \\]\n   This is falsified by any rational `\u03b5 > 0` for which infinitely many `n` satisfy `|p\u2099 - 3/4| \u2265 \u03b5`.\n\n2. **First-order convergence bound.** There are rational constants `C > 0` and `N` such that for every `n \u2265 N`,\n   \\[\n   0\\le \\frac34-p_n\\le \\frac Cn.\n   \\]\n   This can be tested against exact finite generating-pair counts, and is falsified if `n(3/4-p\u2099)` is unbounded.\n\n3. **Eventual strict positivity below the parity ceiling.** There is an `N` such that for every `n \u2265 N`,\n   \\[\n   0 < p_n < \\frac34.\n   \\]\n   The upper inequality asserts that, at every sufficiently large finite degree, obstructions other than the pair being even still have positive probability.\n\n4. **Alternating-or-symmetric generation.** Let `q\u2099` be the probability that two uniform elements of `S\u2099` generate either `A\u2099` or `S\u2099`. Then\n   \\[\n   \\lim_{n\\to\\infty} q_n=1\n   \\quad\\text{and}\\quad\n   \\exists C>0\\;\\exists N\\;\\forall n\\ge N,\\;1-q_n\\le C/n.\n   \\]\n   Formalizing `q\u2099` would connect the catalog's `S\u2099`-only count to the standard random-permutation formulation of Dixon's theorem.\n",
     "domains": [
       "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0836",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d5c8afaa",
-    "status": "available",
-    "timestamp": "2026-07-30T03:36:36.030230+00:00",
-    "title": "The completed formal development proves a precise theorem at the combinatorial c"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n- Internalize the construction in a general Cartesian closed category using a point-surjective morphism `A \u27f6 B ^ A`, then recover the current theorem by specializing to `Type`.\n- Compare Lawvere fixed points with least and greatest fixed points of monotone self-modeling operators on complete lattices.\n- Replace one-step orbit graphs by a directed topological realization and prove that the Lawvere witness induces a nonempty family of cycles in its path space.\n- Formulate the Yoneda connection with Mathlib's categorical Yoneda embedding and prove that the diagonal witness is invariant under isomorphisms of self-models.\n- Study guarded self-reference, where completeness is weakened by a delay modality; this may permit nontrivial models while retaining unique guarded fixed points.\n- Quantify finite incompleteness: for finite `A` and `B`, bound the number of observers omitted by every map `A \u2192 (A \u2192 B)`.\n",
-    "domains": [
-      "Logic",
-      "Geometry"
-    ],
-    "id": "fd_0837",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6ef427dd",
-    "status": "available",
-    "timestamp": "2026-07-30T03:37:41.903492+00:00",
-    "title": "Future directions from cycle 6ef427dd"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe Lean development proves that `78557` is a Sierpi\u0144ski number by a complete covering-system certificate: every exponent class modulo `36` receives a proper prime divisor from `{3, 5, 7, 13, 19, 37, 73}`. The finite certificate itself supplies kernel-checked computational evidence for all 36 residue classes, so a separate informal evidence report was not used.\n\nThe requested minimality statement is not included because it is the unresolved Sierpi\u0144ski problem. Proving it would require eliminating every smaller positive odd candidate; in particular, the outstanding candidates traditionally listed are `21181`, `22699`, `24737`, `55459`, and `67607`. For each such candidate, one must prove that `k * 2^n + 1` is prime for some exponent `n`, or otherwise obtain a theorem excluding its universal compositeness.\n\nNatural formal extensions are:\n\n1. Prove the converse generalized Chinese-remainder criterion, so compatibility of two classes is equivalent to congruence of their residues modulo the gcd of their moduli.\n2. Develop certificates for finite unions of covering systems and automatic conversion from class-indexed certificates to period tables.\n3. Formalize certified primality witnesses for eliminated Sierpi\u0144ski candidates below `78557` as such witnesses become available.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
+      "Computation"
     ],
     "id": "fd_0838",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "c2653f80",
+    "source_exp_id": "883686fe",
     "status": "available",
-    "timestamp": "2026-07-30T03:38:47.604737+00:00",
-    "title": "The Lean development proves that `78557` is a Sierpi\u0144ski number by a complete co"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: EML Algebraic Independence\n\nThe formal development isolates the open input rather than treating transcendence of two factors as sufficient for transcendence of their product. The following are concrete conjectures suggested by that reduction.\n\n1. **One-variable EML transcendence.** For every nonzero algebraic real number `a` with `1 + a > 0`,\n   \\[\n   \\exp(a)\\log(1+a)\n   \\]\n   is transcendental over `\u211a`. A counterexample would be a specific algebraic `a \u2260 0`, `a > -1`, together with a nonzero rational polynomial vanishing at this value.\n\n2. **Factor independence.** For every nonzero algebraic real `a` with `1 + a > 0`, the pair\n   \\[\n   (\\exp(a),\\log(1+a))\n   \\]\n   is algebraically independent over `\u211a`. This strictly stronger conjecture implies Conjecture 1 by `specialValue_transcendental_of_independent` in `Catalog/NumberTheory/EMLAlgebraicIndependence.lean`.\n\n3. **The concrete square-root pair.** The two numbers\n   \\[\n   \\exp(\\sqrt2)\\log(1+\\sqrt2),\\qquad\n   \\exp(\\sqrt3)\\log(1+\\sqrt3)\n   \\]\n   are algebraically independent over `\u211a`. Equivalently, every rational-coefficient bivariate polynomial vanishing at this pair is the zero polynomial; the exact conditional elimination statement is formalized as `sqrtPair_no_rational_polynomial_relation`.\n\n4. **Finite-family EML independence.** If positive algebraic reals `a\u2081,\u2026,a\u2099` are linearly independent over `\u211a`, then the values `exp(a\u1d62) log(1+a\u1d62)` are algebraically independent over `\u211a`. This can be falsified by an explicit linearly independent algebraic family and a nonzero rational multivariate polynomial relation among its EML values.\n\nNo numerical evidence can certify any of these statements: finite-precision approximations cannot distinguish an exact polynomial relation from a sufficiently small nonzero value. The unconditional positivity results in the Lean file supply basic consistency checks, while the transcendence and independence assertions remain conjectural inputs.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0839",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3c125e46",
-    "status": "available",
-    "timestamp": "2026-07-30T03:39:54.312157+00:00",
-    "title": "The formal development isolates the open input rather than treating transcendenc"
+    "timestamp": "2026-07-30T06:51:04.202085+00:00",
+    "title": "The following are concrete conjectures extending the proved exact formula and pa"
   },
   {
     "consumed_by_exp_id": "",

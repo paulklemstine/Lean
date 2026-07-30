@@ -1,7 +1,3 @@
-# Why computational evidence was skipped
+# Computational Evidence Skipped
 
-The central claim is structural rather than finite or numerical. The object is a universe-relative quotient of numeric pre-games, and the decisive feature is that every small family of surreals has a surreal upper bound. No finite sample can test connectedness, total separatedness, contractibility, or the fundamental group of this topology.
-
-Likewise, the separating infinitesimal lies below an infinite family of positive scales. Truncating that family would produce an ordinary positive dyadic witness and would miss the non-Archimedean phenomenon entirely. OEIS searches and plots are therefore inapplicable.
-
-Instead, the Lean development gives a kernel-checked symbolic construction of the relevant Conway cut, proves pairwise clopen separation, and derives the topological and algebraic-topological consequences without relying on numerical experiments.
+The claims at issue are structural topological assertions about a proper-class-sized construction as represented universe-relatively in Lean. Finite samples cannot test connectedness, local compactness, contractibility, or the existence of class-sized order gaps. The decisive evidence is therefore deductive: the interval topology is definitionally the order topology, and explicit clopen separators refute connectedness and contractibility. No numerical sequence suitable for an OEIS search is involved.
