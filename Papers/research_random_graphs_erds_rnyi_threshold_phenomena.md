@@ -1,481 +1,528 @@
-# A Measure-Free Formalization of Erdős–Rényi Threshold Phenomena via the First and Second Moment Methods
-
-**Author:** Aristotle
-
-**Date:** 2026-06-28
-
-**Domain:** Novelty (Random Graphs / Probabilistic Combinatorics)
-
----
+# Threshold Phenomena in the Erdős–Rényi Random Graph
 
 ## Abstract
 
-We present a self-contained, fully finite, measure-theory-free formalization of
-the Erdős–Rényi random graph model $G(n,p)$ and of the threshold phenomena that
-characterize it. The development rests on a single elementary idea: the
-$p$-biased product law on the finite Boolean cube of edge configurations, for
-which all probabilities and expectations are ordinary finite sums. From this we
-derive, as exact identities, that the law is a probability measure, that edge
-events are independent ($\mathbb{P}(\text{all of } S \text{ present}) = p^{|S|}$
-and dually $(1-p)^{|S|}$ for absence), and the linearity of expectation for
-arbitrary indexed families of subgraph copies. These yield the **first moment
-method**: the probability that at least one copy of a structure appears is at
-most its expected count. On the analytic side we instantiate the model on the
-complete graph over $\mathrm{Fin}\,n$ and compute the exact expected numbers of
-edges $\binom{n}{2}p$, isolated vertices $n(1-p)^{n-1}$, and triangles
-$\binom{n}{3}p^{3}$. We then prove the threshold behavior: the triangle count's
-mean converges to the Poisson constant $c^3/6$ at the critical window $p = c/n$;
-it vanishes below the scale $p = 1/n$ (when $np_n \to 0$) and diverges above it
-(when $np_n \to \infty$); and the expected number of isolated vertices diverges
-at every giant-component scale $p = c/n$, exhibiting the genuine gap between the
-giant-component threshold $1/n$ and the connectivity threshold $\ln n / n$.
-Finally we develop, on an abstract finite weighted probability space, the
-**second moment method** — variance nonnegativity, Markov's inequality,
-Chebyshev's inequality, and the bound $\mathbb{P}(X=0) \le
-\mathrm{Var}\,X/(\mathbb{E}X)^2$ — supplying the "above threshold" half of the
-threshold method. All results are formalized and machine-checked.
-
----
+We develop a self-contained account of threshold phenomena in the Erdős–Rényi model $G(n,p)$. Starting from the finite probability mass assigned to each edge configuration, we prove normalization, independence for prescribed edge sets, the union bound, and exact formulas for expected pattern counts. These yield a first-moment criterion for absence. We then derive the second-moment inequality $\Pr(X=0)\le \operatorname{Var}(X)/(\mathbb E X)^2$ and show that an expectation tending to infinity together with variance of order at most the expectation forces occurrence with high probability. We apply this framework to the two principal structural scales of random graphs. At $p=(1\pm\varepsilon)/n$, component exploration changes from subcritical to supercritical: below the scale all components have logarithmic size with high probability, while above it a component of linear size appears. At $p=(\log n+c)/n$, isolated vertices have an asymptotic Poisson law with mean $e^{-c}$ and connectivity converges to $e^{-e^{-c}}$. We also describe algorithms and numerical experiments that expose these transitions in finite graphs.
 
 ## 1. Introduction
 
-The theory of random graphs, initiated by Erdős and Rényi in a sequence of
-papers beginning in 1959, studies the typical structure of a graph chosen at
-random. In the binomial model $G(n,p)$ one fixes $n$ labelled vertices and
-includes each of the $\binom{n}{2}$ potential edges independently with
-probability $p$. The defining discovery of the subject is that monotone
-structural properties — containing a triangle, possessing a giant component,
-being connected — appear not gradually but at **sharp thresholds**: critical
-densities $p^*(n)$ such that the property holds with probability tending to $1$
-above the threshold and to $0$ below it.
-
-The two foundational techniques for locating thresholds are the **first moment
-method** (if the expected number of witnesses to a property tends to $0$, the
-property fails with high probability) and the **second moment method** (if the
-expected count grows and its variance is controlled, the property holds with
-high probability). These methods, together with exact expectation computations,
-suffice to pin down the most celebrated thresholds:
-
-- the **subgraph thresholds**, e.g. triangles at $p = 1/n$ and, more generally,
-  the clique $K_r$ at $p = n^{-2/(r-1)}$;
-- the **giant-component transition** at $p = 1/n$; and
-- the **connectivity threshold** at $p = \ln n / n$, governed by the
-  disappearance of isolated vertices.
-
-This paper formalizes the model and the moment methods in a deliberately
-elementary way, avoiding measure theory entirely. Because the configuration
-space $E \to \mathrm{Bool}$ is finite, every probability is a finite sum and
-every expectation a finite weighted sum; all the classical identities become
-pure finite-sum algebra. We then apply the machinery to obtain exact
-expectations and the asymptotic threshold statements above.
+A threshold is a narrow parameter range across which a random structure changes from almost surely lacking a property to almost surely possessing it. The Erdős–Rényi random graph provides the canonical setting. It combines an elementary sampling rule with global behavior rich enough to distinguish several notions of network formation.
 
-### Contributions
+Two transitions are central. The first occurs near $p=1/n$, where a connected component containing a positive fraction of all vertices emerges. The second occurs near $p=(\log n)/n$, where the last isolated vertices disappear and the graph becomes connected. These scales answer different questions. The giant-component threshold concerns extensive reachability; the connectivity threshold requires universal reachability.
 
-1. A measure-free model of $G(n,p)$ as a $p$-biased product weight on
-   $E \to \mathrm{Bool}$, with proofs that it is a probability law and that edge
-   events are independent (§3).
-2. Linearity of expectation for subgraph counts and the first moment inequality
-   (§3).
-3. Exact expected counts of edges, isolated vertices, and triangles on the
-   complete graph over $\mathrm{Fin}\,n$ (§4).
-4. The triangle threshold: convergence to the Poisson mean $c^3/6$ at $p=c/n$,
-   subcritical vanishing, and supercritical blow-up; plus the isolated-vertex
-   blow-up separating the giant-component scale from connectivity (§5).
-5. The second moment method on an abstract finite weighted probability space:
-   variance nonnegativity, Markov, Chebyshev, and the $\mathbb{P}(X=0)$ bound
-   (§6).
-6. The general clique generalization $\mathbb{E}[\#K_r] = \binom{n}{r}
-   p^{\binom{r}{2}}$ and its subcritical threshold (§7).
+The proofs depend on a compact toolkit. Independence computes the probability of any prescribed edge pattern. Indicator variables convert counts into sums. The union bound and first moment prove nonexistence when expected counts vanish. Variance and the second moment prove existence when expected counts grow and fluctuations are controlled. Poisson approximation handles rare obstructions in a critical window, while branching-process comparison describes component exploration.
 
----
+Throughout, “with high probability” means with probability tending to $1$ as $n\to\infty$. All graphs are finite, simple, undirected, and labeled.
 
-## 2. Preliminaries and Notation
+## 2. The finite random graph model
 
-Throughout, $E$ is a finite type of *potential edges* and a *configuration* is a
-function $g : E \to \mathrm{Bool}$, with $g(e) = \mathtt{true}$ meaning edge $e$
-is present. For a real parameter $p$ (intended in $[0,1]$) we write $\bar p = 1 -
-p$. For a finite set $S$ of edges, $|S|$ denotes its cardinality and $S^c = E
-\setminus S$ its complement. We write $\binom{n}{k}$ for binomial coefficients
-and $(\cdot)$ atTop limits for the usual $n \to \infty$.
+### 2.1 Configurations and their masses
 
----
+Let $V=[n]=\{1,\ldots,n\}$ and let
 
-## 3. The Model and the First Moment Method
+$$
+\mathcal E_n=\bigl\{\{u,v\}:u,v\in V,\ u\ne v\bigr\}
+$$
 
-### 3.1 The $p$-biased law
+be the set of possible edges. Its cardinality is $N=\binom n2$. A configuration is a subset $S\subseteq\mathcal E_n$; it defines the graph whose edge set is $S$.
 
-**Definition 3.1 (Weight).** The *weight* of a configuration $g : E \to
-\mathrm{Bool}$ at parameter $p$ is
+**Definition 2.1 (Erdős–Rényi mass).** For $p\in[0,1]$ and $S\subseteq\mathcal E_n$, define
 
-$$ \mathrm{weight}(p, g) \;=\; \prod_{e \in E} \big( g(e)\ ?\ p : 1-p \big), $$
+$$
+\mu_p(S)=p^{|S|}(1-p)^{N-|S|}.
+$$
 
-i.e. the product over all potential edges of $p$ for present edges and $1-p$ for
-absent edges.
+For an event $A\subseteq 2^{\mathcal E_n}$, define
 
-**Proposition 3.2 (Nonnegativity, `weight_nonneg`).** If $0 \le p \le 1$ then
-$\mathrm{weight}(p,g) \ge 0$ for every $g$.
+$$
+\Pr_p(A)=\sum_{S\in A}\mu_p(S).
+$$
 
-*Proof sketch.* Each factor lies in $[0,1]$; a product of nonnegative reals is
-nonnegative. $\square$
+**Theorem 2.2 (Normalization and nonnegativity).** For $p\in[0,1]$, every mass $\mu_p(S)$ is nonnegative and
 
-**Theorem 3.3 (Total mass, `sum_weight`).** For every $p$,
+$$
+\sum_{S\subseteq\mathcal E_n}\mu_p(S)=1.
+$$
 
-$$ \sum_{g : E \to \mathrm{Bool}} \mathrm{weight}(p, g) \;=\; 1. $$
+*Proof sketch.* Nonnegativity follows from $p\ge0$ and $1-p\ge0$. Group configurations according to $m=|S|$. There are $\binom Nm$ configurations with $m$ edges, so the total mass is
 
-*Proof sketch.* Sum-of-products over the Boolean cube factors as a product of
-column sums (the distributive law `Finset.prod_univ_sum`): summing a function
-over all $g : E \to \mathrm{Bool}$ of a product $\prod_e f_e(g(e))$ equals
-$\prod_e \sum_{b \in \mathrm{Bool}} f_e(b)$. Here each column sum is $p + (1-p) =
-1$, so the whole product is $1$. $\square$
+$$
+\sum_{m=0}^{N}\binom Nm p^m(1-p)^{N-m}
+=(p+(1-p))^N=1
+$$
 
-**Definition 3.4 (Probability and expectation).** For an event $A$ (a finite set
-of configurations) and a random variable $X : (E \to \mathrm{Bool}) \to
-\mathbb{R}$,
+by the binomial theorem. Thus $\Pr_p$ is a probability law.
 
-$$ \mathrm{prob}(p, A) = \sum_{g \in A} \mathrm{weight}(p, g), \qquad
-\mathbb{E}_p[X] = \sum_{g} \mathrm{weight}(p, g)\, X(g). $$
+### 2.2 Prescribed edges and independence
 
-### 3.2 Independence of edge events
+**Theorem 2.3 (Prescribed-edge probability).** If $T\subseteq\mathcal E_n$ is a fixed set of $t$ edges, then
 
-**Definition 3.5.** For $S \subseteq E$, let $\mathrm{allPresent}(S) = \{ g :
-\forall e \in S,\ g(e) = \mathtt{true}\}$ and $\mathrm{allAbsent}(S) = \{ g :
-\forall e \in S,\ g(e) = \mathtt{false}\}$.
+$$
+\Pr_p(T\subseteq S)=p^t.
+$$
 
-**Theorem 3.6 (Independence, `prob_allPresent`).** For every $S \subseteq E$,
+*Proof sketch.* Every configuration containing $T$ has the unique form $T\cup R$, where $R\subseteq\mathcal E_n\setminus T$. Factoring out $p^t$ and summing over $R$ gives
 
-$$ \mathrm{prob}\big(p, \mathrm{allPresent}(S)\big) = p^{|S|}. $$
+$$
+p^t\sum_{R\subseteq\mathcal E_n\setminus T}
+ p^{|R|}(1-p)^{N-t-|R|}
+=p^t(p+1-p)^{N-t}=p^t.
+$$
 
-*Proof sketch.* Split the weight product over $S$ and $S^c$. On the event
-$\mathrm{allPresent}(S)$ every edge of $S$ is present, contributing $\prod_{e \in
-S} p = p^{|S|}$; the remaining factors range over all configurations of $S^c$
-and sum to $1$ by Theorem 3.3 applied to the complement type. A bijection
-between the relevant configurations and the configurations of $S^c$ makes this
-precise. $\square$
+This theorem expresses the independence of edge indicators. Importantly, it leaves all edges outside $T$ unspecified.
 
-**Theorem 3.7 (Dual independence, `prob_allAbsent`).** For every $S \subseteq
-E$,
+## 3. First moments and pattern counts
 
-$$ \mathrm{prob}\big(p, \mathrm{allAbsent}(S)\big) = (1-p)^{|S|}. $$
+### 3.1 Union bound
 
-*Proof sketch.* Apply the symmetry $p \leftrightarrow 1-p$ (negating every bit
-of $g$) to Theorem 3.6. $\square$
+**Lemma 3.1 (Finite union bound).** For events $A_1,\ldots,A_r$,
 
-### 3.3 Linearity of expectation and the first moment inequality
+$$
+\Pr_p\!\left(\bigcup_{i=1}^r A_i\right)
+\le \sum_{i=1}^r\Pr_p(A_i).
+$$
 
-**Definition 3.8 (Subgraph count).** Given an indexed family of edge sets $S :
-\iota \to \mathcal{P}(E)$ over a finite index $\iota$, the *subgraph count* of a
-configuration $g$ is the number of copies present:
+*Proof sketch.* A configuration in the union occurs in at least one event, so its nonnegative mass is counted at least once on the right. Configurations in several events may be counted repeatedly, producing an inequality.
 
-$$ \mathrm{subgraphCount}(S, g) = \big| \{ i \in \iota : \forall e \in S_i,\ g(e) = \mathtt{true} \} \big|. $$
+### 3.2 Exact expected counts
 
-**Theorem 3.9 (Linearity of expectation, `expectation_subgraphCount`).**
+Let $\mathcal T$ be a finite family of subsets of $\mathcal E_n$. Its members represent candidate copies of a desired edge pattern. Define
 
-$$ \mathbb{E}_p\big[\mathrm{subgraphCount}(S, \cdot)\big] = \sum_{i \in \iota} p^{|S_i|}. $$
+$$
+X_{\mathcal T}(S)=|\{T\in\mathcal T:T\subseteq S\}|.
+$$
 
-*Proof sketch.* Write the count as a sum of indicators, $\mathrm{subgraphCount}
-= \sum_i \mathbf{1}[\text{copy } i \text{ present}]$, exchange the order of
-summation (`Finset.sum_comm`), and apply Theorem 3.6 to each term. $\square$
+**Theorem 3.2 (Expected pattern count).** The expected number of realized patterns is
 
-**Corollary 3.10 (Uniform copies, `expectation_subgraphCount_uniform`).** If
-$|S_i| = k$ for all $i$, then $\mathbb{E}_p[\mathrm{subgraphCount}(S,\cdot)] =
-|\iota| \cdot p^{k}$.
+$$
+\mathbb E_p[X_{\mathcal T}]
+=\sum_{T\in\mathcal T}p^{|T|}.
+$$
 
-**Theorem 3.11 (First moment method, `firstMoment`).** For $0 \le p \le 1$,
+*Proof sketch.* Write
 
-$$ \mathrm{prob}\big(p,\ \{ g : \mathrm{subgraphCount}(S, g) \ge 1 \}\big) \;\le\; \sum_{i \in \iota} p^{|S_i|}. $$
+$$
+X_{\mathcal T}=\sum_{T\in\mathcal T}\mathbf 1_{\{T\subseteq S\}}.
+$$
 
-*Proof sketch.* The indicator $\mathbf{1}[\mathrm{subgraphCount} \ge 1]$ is
-pointwise bounded by $\mathrm{subgraphCount}$ itself; multiply by the
-nonnegative weights and sum, then invoke Theorem 3.9. This is Markov's
-inequality at level $1$. $\square$
+Linearity of expectation and Theorem 2.3 give
 
-A general restatement (`expectation_count`) records that for any finite family
-of events $A_i$, the expected number that occur equals $\sum_i
-\mathrm{prob}(p, A_i)$.
+$$
+\mathbb E_p[X_{\mathcal T}]
+=\sum_{T\in\mathcal T}\Pr_p(T\subseteq S)
+=\sum_{T\in\mathcal T}p^{|T|}.
+$$
 
----
+No independence among the indicators is needed.
 
-## 4. Exact Expectations on the Complete Graph
+**Corollary 3.3 (Uniform pattern size).** If every member of $\mathcal T$ has $e$ edges, then
 
-We now instantiate $E$ as the edge type of the complete graph on $n$ labelled
-vertices.
+$$
+\mathbb E_p[X_{\mathcal T}]=|\mathcal T|p^e.
+$$
 
-**Definition 4.1 (Edges).** $\mathrm{Edge}(n) = \{ (i,j) \in \mathrm{Fin}\,n
-\times \mathrm{Fin}\,n : i < j \}$, the ordered pairs of distinct vertices.
+For example, the number $X_\triangle$ of triangles satisfies
 
-**Theorem 4.2 (`card_edge`).** $|\mathrm{Edge}(n)| = \binom{n}{2}$.
+$$
+\mathbb E[X_\triangle]=\binom n3p^3.
+$$
 
-*Proof sketch.* Count pairs $i < j$: summing $\#\{ i : i < j\} = j$ over $j$
-gives $\sum_{j} j = \binom{n}{2}$. $\square$
+The number of labeled copies of a fixed graph $H$ with $v(H)$ vertices and $e(H)$ edges is of order
 
-**Theorem 4.3 (Expected edges, `expected_edges`).**
+$$
+n^{v(H)}p^{e(H)},
+$$
 
-$$ \mathbb{E}_p[\#\text{edges}] = \binom{n}{2}\, p. $$
+up to a constant determined by automorphisms.
 
-*Proof sketch.* Index copies by single edges (each $S_e = \{e\}$, $|S_e| = 1$)
-and apply Corollary 3.10 with $k = 1$ and $|\iota| = |\mathrm{Edge}(n)| =
-\binom{n}{2}$. $\square$
+### 3.3 First-moment threshold
 
-**Definition 4.4 (Incident edges).** $\mathrm{incident}(v)$ is the set of edges
-of $\mathrm{Edge}(n)$ having $v$ as an endpoint.
+**Theorem 3.4 (First-moment vanishing criterion).** For $p\in[0,1]$,
 
-**Theorem 4.5 (`card_incident`).** $|\mathrm{incident}(v)| = n - 1$.
+$$
+\Pr_p(X_{\mathcal T}>0)
+\le \sum_{T\in\mathcal T}p^{|T|}
+=\mathbb E_p[X_{\mathcal T}].
+$$
 
-*Proof sketch.* The map $u \mapsto \{u, v\}$ is a bijection from the other $n-1$
-vertices onto the edges at $v$. $\square$
+Consequently, if a sequence of families and probabilities satisfies $\mathbb E[X_n]\to0$, then $\Pr(X_n>0)\to0$.
 
-**Theorem 4.6 (Expected isolated vertices, `expected_isolated`).**
+*Proof sketch.* The event $X_{\mathcal T}>0$ is the union, over $T\in\mathcal T$, of the events $T\subseteq S$. Apply Lemma 3.1 and Theorem 2.3.
 
-$$ \mathbb{E}_p[\#\text{isolated vertices}] = n\,(1 - p)^{\,n-1}. $$
+This result gives the lower side of many thresholds. For a fixed graph $H$, if $n^{v(H)}p^{e(H)}\to0$, then with high probability no copy of $H$ appears. For non-balanced graphs, denser subgraphs impose the decisive scale; this motivates the maximum density
 
-*Proof sketch.* A vertex $v$ is isolated iff all $n-1$ edges of
-$\mathrm{incident}(v)$ are absent, which by Theorem 3.7 has probability
-$(1-p)^{n-1}$. Sum over the $n$ vertices via `expectation_count`. $\square$
+$$
+m(H)=\max_{H'\subseteq H,\ e(H')>0}\frac{e(H')}{v(H')}.
+$$
 
-**Definition 4.7 (Spanned edges).** For a vertex set $T$,
-$\mathrm{triEdges}(T)$ is the set of edges with both endpoints in $T$.
+The natural general threshold is $p\asymp n^{-1/m(H)}$.
 
-**Theorem 4.8 (`card_triEdges`).** If $|T| = 3$ then $|\mathrm{triEdges}(T)| =
-3$.
+## 4. The second-moment method
 
-*Proof sketch.* The edges spanned by $T$ correspond bijectively to the
-$2$-element subsets of $T$, of which there are $\binom{3}{2} = 3$. $\square$
+### 4.1 Variance and a zero-event inequality
 
-**Theorem 4.9 (Expected triangles, `expected_triangles`).**
+For any real random variable $X$ on the finite configuration space, define
 
-$$ \mathbb{E}_p[\#\text{triangles}] = \binom{n}{3}\, p^{3}. $$
+$$
+\mathbb E[X]=\sum_S\mu_p(S)X(S)
+$$
 
-*Proof sketch.* Index triangles by $3$-element vertex subsets $T$ (there are
-$\binom{n}{3}$). Each demands the $3$ edges of $\mathrm{triEdges}(T)$, present
-with probability $p^3$ by Theorems 3.6 and 4.8. Sum via `expectation_count`.
-$\square$
+and
 
----
+$$
+\operatorname{Var}(X)=\mathbb E[(X-\mathbb E[X])^2].
+$$
 
-## 5. Triangle and Isolated-Vertex Thresholds
+**Theorem 4.1 (Second-moment zero bound).** If $\mathbb E[X]\ne0$, then
 
-We now study the asymptotics of the exact expectations as $n \to \infty$.
+$$
+\Pr(X=0)
+\le
+\frac{\operatorname{Var}(X)}{(\mathbb E[X])^2}.
+$$
 
-### 5.1 The critical window for triangles
+*Proof sketch.* On $\{X=0\}$ one has
 
-**Theorem 5.1 (Poisson mean, `tendsto_expected_triangles`).** For every real
-$c$,
+$$
+(X-\mathbb E[X])^2=(\mathbb E[X])^2.
+$$
 
-$$ \binom{n}{3}\left(\frac{c}{n}\right)^{3} \xrightarrow[n\to\infty]{} \frac{c^{3}}{6}. $$
+All summands in the variance are nonnegative, hence
 
-*Proof sketch.* For $n \ge 3$, $\binom{n}{3} = \frac{n(n-1)(n-2)}{6}$, so
+$$
+\operatorname{Var}(X)
+\ge (\mathbb E[X])^2\Pr(X=0).
+$$
 
-$$ \binom{n}{3}\left(\frac{c}{n}\right)^3 = \frac{c^3}{6}\left(1 - \tfrac1n\right)\left(1 - \tfrac2n\right), $$
+Division by the positive square $(\mathbb E[X])^2$ proves the claim.
 
-and each factor $\to 1$. $\square$
+**Lemma 4.2 (Analytic squeeze).** Let $P_n\ge0$, let $E_n\to\infty$, and suppose
 
-The limit $c^3/6$ is exactly the mean of the Poisson distribution that governs
-the triangle count in the critical window $p = c/n$; the same expression
-transported through `expected_triangles` gives the statement directly for the
-$G(n,p)$ expectation (`tendsto_ER_expected_triangles`).
+$$
+P_n\le\frac{V_n}{E_n^2}
+\qquad\text{and}\qquad
+V_n\le CE_n
+$$
 
-### 5.2 Subcritical and supercritical regimes
+for a constant $C$. Then $P_n\to0$.
 
-**Theorem 5.2 (Subcritical vanishing, `subcritical_triangles_vanish`).** Let
-$p_n \ge 0$ with $n\,p_n \to 0$. Then
+*Proof sketch.* The assumptions imply $0\le P_n\le C/E_n$, and $C/E_n\to0$.
 
-$$ \binom{n}{3}\,p_n^{3} \xrightarrow[n\to\infty]{} 0. $$
+**Theorem 4.3 (Second-moment occurrence criterion).** Let $X_n$ be nonnegative pattern counts. If
 
-*Proof sketch.* Using $\binom{n}{3} \le n^3/6$, squeeze
-$0 \le \binom{n}{3} p_n^3 \le (n p_n)^3 / 6 \to 0$. Combined with the first
-moment method (Theorem 3.11), this shows $G(n, p_n)$ is triangle-free with high
-probability below the scale $p = 1/n$. $\square$
+$$
+\mathbb E[X_n]\to\infty
+$$
 
-**Theorem 5.3 (Supercritical blow-up, `supercritical_triangles_blowup`).** Let
-$p_n \ge 0$ with $n\,p_n \to \infty$. Then
+and there is a constant $C$ such that
 
-$$ \binom{n}{3}\,p_n^{3} \xrightarrow[n\to\infty]{} \infty. $$
+$$
+\operatorname{Var}(X_n)\le C\mathbb E[X_n]
+$$
 
-*Proof sketch.* For $n \ge 6$, $\binom{n}{3} \ge n^3/162$, so
-$\binom{n}{3} p_n^3 \ge (n p_n)^3 / 162 \to \infty$. The diverging mean is the
-prerequisite for the second moment method to conclude triangles appear with high
-probability. $\square$
+for all $n$, then
 
-### 5.3 The connectivity gap
+$$
+\Pr(X_n=0)\to0.
+$$
 
-**Theorem 5.4 (Isolated-vertex blow-up, `isolated_blowup_below_connectivity`).**
-For every real $c$,
+Equivalently, $X_n>0$ with high probability.
 
-$$ n\,\left(1 - \frac{c}{n}\right)^{\,n-1} \xrightarrow[n\to\infty]{} \infty. $$
+*Proof sketch.* Apply Theorem 4.1 with $E_n=\mathbb E[X_n]$ and $V_n=\operatorname{Var}(X_n)$, then invoke Lemma 4.2.
 
-*Proof sketch.* The classical limit $(1 - c/n)^{n-1} \to e^{-c}$ (via
-$(1 + x/n)^n \to e^x$ and dividing out one factor) gives an expected isolated
-count asymptotic to $n\,e^{-c}$, which diverges. $\square$
+The usefulness of this theorem lies in overlap enumeration. For a subgraph count $X=\sum_T I_T$,
 
-**Interpretation.** At the giant-component scale $p = c/n$, the expected number
-of isolated vertices diverges for every constant $c$. Since a connected graph
-admits no isolated vertex, connectivity is impossible at this scale; it must
-await the strictly larger density $p = \ln n / n$, where $n(1-p)^{n-1} \approx
-n \cdot n^{-1} = 1$ enters the critical window. This formally exhibits the gap
-of a factor $\ln n$ between the giant-component threshold $1/n$ and the
-connectivity threshold $\ln n / n$. The same statement is recorded directly for
-the $G(n,p)$ expectation in `tendsto_ER_expected_isolated`.
+$$
+\operatorname{Var}(X)
+=\sum_{T,U}\operatorname{Cov}(I_T,I_U).
+$$
 
----
+Disjoint edge sets have zero covariance. Only overlapping pairs contribute, reducing variance control to a combinatorial classification of overlaps.
 
-## 6. The Second Moment Method
+### 4.2 Example: the triangle count
 
-To supply the "above threshold" direction in full generality we work on an
-abstract finite weighted probability space: a finite type $\Omega$ with weights
-$w : \Omega \to \mathbb{R}$ satisfying $w \ge 0$ and $\sum_\omega w_\omega = 1$.
-For $X : \Omega \to \mathbb{R}$,
+The triangle count illustrates both the power and the limits of moments. Let $I_A$ be the indicator that a three-vertex set $A$ spans a triangle, and put
 
-$$ \mathbb{E}[X] = \sum_\omega w_\omega X_\omega, \qquad \mathrm{Var}\,X = \mathbb{E}[X^2] - (\mathbb{E}X)^2. $$
+$$
+X_\triangle=\sum_{A\in\binom{[n]}3}I_A.
+$$
 
-**Theorem 6.1 (Variance nonnegativity, `variance_nonneg`).** $\mathrm{Var}\,X
-\ge 0$.
+The expectation is $\binom n3p^3$. To compute the variance, note that two distinct triangles are edge-disjoint unless they share an edge. Indicators for edge-disjoint triangles are independent, even when the triangles share a single vertex. Hence
 
-*Proof sketch.* $\mathrm{Var}\,X = \sum_\omega w_\omega (X_\omega -
-\mathbb{E}X)^2$, a sum of nonnegative terms (expand the square and use
-$\sum w = 1$). This is the Cauchy–Schwarz/Jensen inequality in disguise.
-$\square$
+$$
+\operatorname{Var}(X_\triangle)
+=\sum_A\operatorname{Var}(I_A)
++2\sum_{A<B}\operatorname{Cov}(I_A,I_B),
+$$
 
-**Theorem 6.2 (Markov, `markov`).** If $X \ge 0$ pointwise and $a$ is a
-threshold, then
+where only pairs sharing an edge contribute to the covariance sum. For one triangle,
 
-$$ a \cdot \mathrm{prob}\big(X \ge a\big) \le \mathbb{E}[X]. $$
+$$
+\operatorname{Var}(I_A)=p^3(1-p^3).
+$$
 
-*Proof sketch.* On the event $\{X \ge a\}$, $a\,w_\omega \le w_\omega X_\omega$;
-sum over the event and extend the bound to all of $\Omega$ using nonnegativity.
-$\square$
+A pair sharing one edge has a union of five edges, so
 
-**Theorem 6.3 (Chebyshev, `chebyshev`).** For $a > 0$,
+$$
+\mathbb E[I_AI_B]=p^5
+\qquad\text{and}\qquad
+\operatorname{Cov}(I_A,I_B)=p^5-p^6.
+$$
 
-$$ \mathrm{prob}\big(|X - \mathbb{E}X| \ge a\big) \le \frac{\mathrm{Var}\,X}{a^{2}}. $$
+There are $6\binom n4$ unordered pairs of triangles sharing an edge: choose four vertices and then choose their common edge. Therefore
 
-*Proof sketch.* Apply Markov (Theorem 6.2) to the nonnegative random variable
-$(X - \mathbb{E}X)^2$ at level $a^2$, noting $\mathbb{E}[(X-\mathbb{E}X)^2] =
-\mathrm{Var}\,X$ and that $|X - \mathbb{E}X| \ge a \iff (X - \mathbb{E}X)^2 \ge
-a^2$. $\square$
+$$
+\operatorname{Var}(X_\triangle)
+=\binom n3p^3(1-p^3)
++12\binom n4(p^5-p^6).
+$$
 
-**Theorem 6.4 (Second moment method, `second_moment_zero`).** If $\mathbb{E}[X]
-> 0$ then
+This exact expression makes dependence visible. If $p$ is sufficiently above the triangle threshold, dividing by $(\mathbb E X_\triangle)^2$ shows that the zero-event probability vanishes. At the critical scale $p=c/n$, however, the expectation stays bounded and a Poisson law, rather than concentration around a diverging mean, is the appropriate limiting description.
 
-$$ \mathrm{prob}\big(X = 0\big) \le \frac{\mathrm{Var}\,X}{(\mathbb{E}X)^{2}}. $$
+### 4.3 General overlap principle
 
-*Proof sketch.* The event $\{X = 0\}$ is contained in $\{ |X - \mathbb{E}X| \ge
-\mathbb{E}X \}$ because $X = 0$ forces $|X - \mathbb{E}X| = \mathbb{E}X$; apply
-Chebyshev with $a = \mathbb{E}X$. $\square$
+For copies of a fixed graph $H$, each pair of copies is classified by its common subgraph $J$. If the two copies together use $2e(H)-e(J)$ distinct edges, their joint probability is
 
-**Threshold corollary (informal).** If $X_n$ counts copies of a structure with
-$\mathbb{E}[X_n] \to \infty$ and $\mathrm{Var}(X_n)/(\mathbb{E}X_n)^2 \to 0$,
-then $\mathrm{prob}(X_n = 0) \to 0$, i.e. the structure appears with high
-probability. Paired with the first moment method (Theorem 3.11), this yields
-both directions of every monotone subgraph threshold.
+$$
+p^{2e(H)-e(J)}.
+$$
 
----
+The number of such pairs is of order $n^{2v(H)-v(J)}$. Comparing every overlap contribution with the square of the mean leads to ratios of the form
 
-## 7. The General Clique Threshold
+$$
+n^{-v(J)}p^{-e(J)}.
+$$
 
-The triangle results are the $r = 3$ instance of a uniform family over all
-clique sizes. A copy of the complete graph $K_r$ occupies an $r$-element vertex
-set $T$ and requires all $\binom{r}{2}$ edges spanned by $T$.
+These ratios explain why the densest nonempty subgraph of $H$ determines the general containment threshold. They also show why strictly balanced graphs are particularly clean: at the critical scale, proper overlaps are asymptotically negligible, leaving isolated copies whose count tends toward a Poisson distribution.
 
-**Theorem 7.1 (Expected cliques).** Indexing copies of $K_r$ by $r$-element
-vertex subsets,
+## 5. Connectivity at the logarithmic scale
 
-$$ \mathbb{E}_p[\#K_r] = \binom{n}{r}\, p^{\binom{r}{2}}. $$
+### 5.1 Isolated vertices determine the scale
 
-*Proof sketch.* There are $\binom{n}{r}$ vertex subsets; each spans
-$\binom{r}{2}$ edges, present with probability $p^{\binom{r}{2}}$ by the
-independence identity (Theorem 3.6). Linearity of expectation (Theorem 3.9)
-sums the contributions. For $r = 3$ this recovers $\binom{n}{3}p^3$. $\square$
+Let $I_n$ denote the number of isolated vertices in $G(n,p)$. A fixed vertex is isolated if all of its $n-1$ incident edges are absent. Therefore
 
-**Theorem 7.2 (Subcritical clique vanishing).** If $p_n \ge 0$ and
-$n^{r}\,p_n^{\binom{r}{2}} \to 0$, then $\mathbb{E}_p[\#K_r] \to 0$, and hence by
-the first moment method $G(n, p_n)$ is $K_r$-free with high probability.
+$$
+\mathbb E[I_n]=n(1-p)^{n-1}.
+$$
 
-*Proof sketch.* Squeeze $0 \le \binom{n}{r} p_n^{\binom{r}{2}} \le n^{r}
-p_n^{\binom{r}{2}} \to 0$ using $\binom{n}{r} \le n^r$. Since $n^r =
-\big(n^{2/(r-1)}\big)^{\binom{r}{2}}$, the integer-power hypothesis $n^r
-p_n^{\binom{r}{2}} \to 0$ is exactly the classical fractional threshold
-$n^{2/(r-1)} p_n \to 0$, i.e. $p_n = o\big(n^{-2/(r-1)}\big)$. $\square$
+If $p=(\log n+c)/n$, then
 
-Thus each clique $K_r$ has appearance threshold $p = n^{-2/(r-1)}$, an ordered
-hierarchy in which larger cliques require denser graphs; the triangle threshold
-$p = 1/n$ is the case $r = 3$.
+$$
+(1-p)^{n-1}
+=\exp\bigl((n-1)\log(1-p)\bigr)
+\sim e^{-np}
+=\frac{e^{-c}}{n},
+$$
 
----
+and hence
 
-## 8. Algorithmic and Numerical Aspects
+$$
+\mathbb E[I_n]\to e^{-c}.
+$$
 
-All the expectations above are exact, finite, and directly computable. The
-expected counts $\binom{n}{2}p$, $\binom{n}{3}p^3$, $n(1-p)^{n-1}$, and
-$\binom{n}{r}p^{\binom{r}{2}}$ are closed forms evaluable in constant time given
-binomial coefficients. The threshold predictions are testable by direct Monte
-Carlo simulation of $G(n,p)$: sampling each edge independently, counting
-triangles or isolated vertices, and comparing the empirical mean to the closed
-form validates the linearity-of-expectation identities, while sweeping $p$
-across $c/n$ and $\ln n / n$ exhibits the sharp transitions. The companion
-`demo.py` performs exactly these computations and comparisons.
+Thus the expected number of isolated vertices remains of constant order precisely in a window of width $1/n$ around $(\log n)/n$.
 
----
+### 5.2 Poisson law
 
-## 9. Discussion
+**Theorem 5.1 (Poisson limit for isolated vertices).** Fix $c\in\mathbb R$ and set $p_n=(\log n+c)/n$. Then
 
-The formalization is intentionally minimal. By representing $G(n,p)$ as a
-$p$-biased product weight on a finite Boolean cube, every probabilistic
-statement becomes a finite identity provable by elementary algebra of sums and
-products — no $\sigma$-algebras, no integration theory. The two pillars, the
-first and second moment methods, are likewise reduced to: a single application
-of the distributive law (total mass), a complement-splitting bijection
-(independence), summation exchange (linearity), and one weighted Cauchy–Schwarz
-inequality (variance, hence Chebyshev and the second moment bound). This economy
-makes the development verify in isolation and renders the logical dependencies
-transparent.
+$$
+I_n\xrightarrow{d}\operatorname{Poisson}(e^{-c}).
+$$
 
-A notable structural point is that the first moment inequality and linearity of
-expectation are stated for *arbitrary* finite indexed families of edge sets.
-Consequently the same engine that yields the triangle threshold yields, with no
-new probabilistic input, the general clique threshold (§7) and — by changing
-only the combinatorial inputs (number of copies and edges per copy) — the
-thresholds for arbitrary fixed subgraphs.
+*Proof sketch.* For each fixed positive integer $k$, consider the falling factorial $(I_n)_k$. It counts ordered $k$-tuples of distinct isolated vertices. A specified $k$-tuple is isolated exactly when every edge incident to one of those vertices is absent. The number of such edges is
 
----
+$$
+k(n-k)+\binom k2.
+$$
 
-## 10. Future Directions
+Therefore
 
-The disappearance (first-moment) direction of the clique threshold is fully
-established; the matching appearance (second-moment) direction, the
-balanced-subgraph generalization, and the cycle thresholds are concrete next
-targets, detailed below.
+$$
+\mathbb E[(I_n)_k]
+=(n)_k(1-p_n)^{k(n-k)+\binom k2}
+\longrightarrow e^{-ck}.
+$$
 
-**Second-moment appearance for $K_r$.** Prove the sharp converse: with $0 \le
-p_n \le 1$, if $n^r p_n^{\binom{r}{2}} \to \infty$ then $\mathbb{P}(G(n,p_n)
-\supseteq K_r) \to 1$. The plan is to bound the variance of the clique-count
-$X_r$ by controlling covariances over pairs of $r$-sets sharing $j \ge 2$
-vertices, show $\mathrm{Var}(X_r)/\mathbb{E}[X_r]^2 \to 0$, and feed it to
-`second_moment_zero`. The dominant overlap is $j = r-1$ (a single shared edge of
-difference). Testable first at $r = 3$, where the supercritical mean blow-up is
-already proved.
+These are the factorial moments of a Poisson random variable with mean $e^{-c}$. The method of moments yields convergence in distribution.
 
-**Balanced-subgraph threshold (Bollobás form).** For a fixed graph $H$ define
-$m(H) = \max_{H' \subseteq H,\, v(H')>0} e(H')/v(H')$. Then $\mathbb{E}[\#H] =
-\Theta(n^{v(H)} p^{e(H)})$ and the appearance threshold is $p = n^{-1/m(H)}$;
-for balanced $H$ the subcritical half follows from the same squeeze with
-$n^{v(H)} p^{e(H)}$ in place of $n^r p^{\binom{r}{2}}$. The indexed first-moment
-engine already covers any finite family of edge sets, so only the copy count
-$\Theta(n^{v(H)})$ and the uniform edge count $e(H)$ need instantiation. $K_r$
-is the balanced case $m = (r-1)/2$.
+### 5.3 Excluding other disconnected components
 
-**Cycle thresholds all at $1/n$.** For every fixed $k \ge 3$, $\mathbb{E}[\#C_k]
-= \frac{(n)_k}{2k} p^k$ (falling factorial over the dihedral symmetry $2k$), so
-the $C_k$ appearance threshold is $p = 1/n$ independent of $k$. Subcritical
-half: if $n p_n \to 0$ then $0 \le \frac{(n)_k}{2k} p_n^k \le (n p_n)^k \to 0$.
-This instantiates the indexed engine with $f$ ranging over cyclic edge sets. The
-critical-window Poisson mean is $c^k/(2k)$ (the triangle constant $c^3/6$ is
-$k=3$).
+A graph with no isolated vertices can still be disconnected, but this possibility vanishes in the critical window. If there is a component on a vertex set $S$ with $2\le |S|=k\le n/2$, then no edge joins $S$ to its complement. Ignoring the additional requirement that the induced graph on $S$ be connected gives
 
----
+$$
+\Pr(\text{some separated }k\text{-set})
+\le \binom nk(1-p)^{k(n-k)}.
+$$
 
-## References (background reading)
+A refined split into small and moderate $k$, together with a spanning-tree bound for connected induced subgraphs, shows that the sum over $2\le k\le n/2$ tends to zero when $p=(\log n+c)/n$. Thus, asymptotically, disconnection is caused only by isolated vertices.
 
-- P. Erdős and A. Rényi, *On the evolution of random graphs* (1960).
-- B. Bollobás, *Random Graphs*.
-- N. Alon and J. H. Spencer, *The Probabilistic Method*.
-- S. Janson, T. Łuczak, A. Ruciński, *Random Graphs*.
+**Theorem 5.2 (Sharp connectivity window).** For every fixed $c\in\mathbb R$,
+
+$$
+\Pr\!\left(G\!\left(n,\frac{\log n+c}{n}\right)
+\text{ is connected}\right)
+\longrightarrow
+\exp(-e^{-c}).
+$$
+
+*Proof sketch.* By Theorem 5.1,
+
+$$
+\Pr(I_n=0)\to \Pr(\operatorname{Poisson}(e^{-c})=0)
+=e^{-e^{-c}}.
+$$
+
+The probability of being disconnected without an isolated vertex tends to zero, so connectivity and the event $I_n=0$ have the same limit.
+
+**Corollary 5.3 (Threshold form).** If $p=(\log n-\omega(n))/n$ with $\omega(n)\to\infty$, then the connectivity probability tends to $0$. If $p=(\log n+\omega(n))/n$, then it tends to $1$.
+
+The limiting profile is a shifted Gumbel-type curve. It records the disappearance of rare defects rather than the creation of a large component.
+
+## 6. The phase transition for component size
+
+### 6.1 Exploration and branching processes
+
+To explore the component of a vertex $v$, maintain a queue of active vertices. Remove one active vertex, reveal its edges to all unexplored vertices, add newly discovered neighbors to the queue, and stop when the queue is empty. Early in the exploration, the number of new vertices is close to $\operatorname{Binomial}(n,p)$, whose mean is approximately $np$.
+
+This suggests comparison with a Galton–Watson branching process. A process with mean offspring below $1$ dies out rapidly; one with mean above $1$ survives with positive probability. The critical mean $1$ corresponds to $p=1/n$.
+
+### 6.2 Subcritical regime
+
+**Theorem 6.1 (Logarithmic components below criticality).** Fix $\varepsilon\in(0,1)$ and set
+
+$$
+p_n=\frac{1-\varepsilon}{n}.
+$$
+
+There exists $A=A(\varepsilon)>0$ such that
+
+$$
+\Pr\bigl(L_1(G(n,p_n))\le A\log n\bigr)\to1,
+$$
+
+where $L_1$ is the number of vertices in the largest connected component.
+
+*Proof sketch.* Couple component exploration from a fixed vertex with a subcritical branching process of mean $1-\varepsilon+o(1)$. Its total progeny has an exponentially decaying tail: for suitable $a>0$,
+
+$$
+\Pr(|C(v)|\ge k)\le e^{-ak}.
+$$
+
+By the union bound over all $n$ starting vertices,
+
+$$
+\Pr(L_1\ge k)
+\le ne^{-ak}.
+$$
+
+Choosing $k=A\log n$ with $A>1/a$ makes the right-hand side tend to zero.
+
+### 6.3 Supercritical regime
+
+**Theorem 6.2 (Emergence of a giant component).** Fix $\varepsilon>0$ and set
+
+$$
+p_n=\frac{1+\varepsilon}{n}.
+$$
+
+There exists $\beta=\beta(\varepsilon)>0$ such that
+
+$$
+\Pr\bigl(L_1(G(n,p_n))\ge\beta n\bigr)\to1.
+$$
+
+*Proof sketch.* The exploration process is compared with a supercritical branching process of mean $1+\varepsilon$. Its survival probability is positive. Consequently, a positive fraction of vertices have explorations that reach a mesoscopic size. A second-moment concentration argument controls the number of such vertices. A sprinkling argument—exposing a small additional independent set of edges—joins the large pieces into one linear-sized component.
+
+The asymptotic fraction has a more precise description.
+
+**Theorem 6.3 (Size and uniqueness of the supercritical giant).** Let $\varepsilon>0$, and let $\rho\in(0,1)$ be the positive solution of
+
+$$
+\rho=1-e^{-(1+\varepsilon)\rho}.
+$$
+
+Then, with high probability, $G(n,(1+\varepsilon)/n)$ has a unique component of size
+
+$$
+(\rho+o(1))n,
+$$
+
+and every other component has logarithmic size.
+
+*Proof sketch.* The fixed-point equation is the survival equation for a Poisson Galton–Watson process with mean $1+\varepsilon$. Local exploration identifies $\rho$ as the limiting proportion of vertices belonging to large components. Concentration gives total mass $(\rho+o(1))n$. Sprinkling connects all mesoscopic pieces with high probability, proving uniqueness, while the residual graph behaves subcritically and has only logarithmic components.
+
+## 7. Algorithms and numerical study
+
+### 7.1 Sampling
+
+To sample $G(n,p)$, iterate through all $\binom n2$ unordered vertex pairs and include each edge when an independent uniform random number is below $p$. This requires $O(n^2)$ random trials and, with adjacency lists, $O(n+m)$ storage for a graph with $m$ realized edges.
+
+### 7.2 Component analysis
+
+Breadth-first search or depth-first search labels every connected component in $O(n+m)$ time. One pass returns the largest component size, the number of components, the number of isolated vertices, and connectivity. Triangle counts can be obtained by checking all triples in $O(n^3)$ time; more sophisticated adjacency-intersection methods improve performance for sparse graphs.
+
+### 7.3 Monte Carlo estimators
+
+For independent samples $G_1,\ldots,G_R$, the estimator
+
+$$
+\widehat q=\frac1R\sum_{r=1}^R\mathbf1_{\{G_r\text{ connected}\}}
+$$
+
+is unbiased for the connectivity probability, with standard error
+
+$$
+\sqrt{\frac{q(1-q)}{R}}
+\le\frac{1}{2\sqrt R}.
+$$
+
+Similarly, averaging $L_1(G_r)/n$ estimates the expected giant fraction, and averaging isolated-vertex or triangle counts tests exact first-moment formulas.
+
+At $p=(\log n+c)/n$, one compares $\widehat q$ with $e^{-e^{-c}}$. At $p=\lambda/n$, one plots the largest-component fraction against $\lambda$. The finite-size curves smooth the asymptotic transitions but become steeper as $n$ increases.
+
+## 8. Applications
+
+In communication networks, the giant-component transition marks the onset of extensive mutual reachability, whereas the connectivity threshold marks universal service. The gap between average degree $1$ and average degree $\log n$ quantifies the cost of including rare peripheral devices.
+
+In epidemic models on static contact networks, the supercritical component supplies a substrate on which an outbreak may affect a positive fraction of the population. The branching-process approximation has a direct epidemiological interpretation: its mean offspring determines whether early transmission chains usually die out.
+
+In distributed systems, isolated vertices model uncontactable agents. The Poisson connectivity window predicts the residual count of such agents and thereby estimates failure probabilities. The limit $e^{-e^{-c}}$ gives a calibrated design curve rather than merely an order-of-magnitude threshold.
+
+Subgraph counts detect motifs, vulnerabilities, and local redundancy. The first moment certifies that a motif is absent in sparse regimes; the second moment proves its presence once overlaps no longer cause excessive variance.
+
+## 9. Discussion and limitations
+
+The finite-sum framework cleanly separates universal probabilistic principles from graph-specific asymptotics. Normalization, prescribed-edge probabilities, expected counts, and moment inequalities apply to arbitrary finite families of potential edges. Connectivity and giant components require additional structure: Poisson convergence for rare isolated vertices, enumeration of cuts, and branching-process coupling.
+
+The variance condition $\operatorname{Var}(X_n)=O(\mathbb E[X_n])$ is sufficient but not necessary. Some pattern counts occur with high probability even when their variance grows faster, provided it remains $o((\mathbb E[X_n])^2)$. The more general conclusion follows directly from Theorem 4.1.
+
+The two headline thresholds should not be conflated. At $p=(1+\varepsilon)/n$, a giant exists but the graph has many vertices outside it. Connectivity requires the additional logarithmic factor. The governing obstruction also changes: survival of local exploration controls the giant, while isolated vertices control connectivity.
+
+## 10. Future directions
+
+A complete refinement of the connectivity window should quantify error rates in the Poisson approximation, for example through Stein–Chen bounds. This would turn the limiting expression into finite-$n$ confidence estimates.
+
+For component structure, natural next steps include proving the precise giant fraction, uniqueness, and logarithmic bounds for all smaller components uniformly in $\varepsilon$. The critical window $p=1/n+\lambda n^{-4/3}$ is especially rich: component sizes are then of order $n^{2/3}$ and converge after rescaling to a nontrivial continuum limit.
+
+For a fixed finite graph $H$, the general appearance threshold is governed by $m(H)$. Strictly balanced graphs at their critical scale exhibit Poisson copy counts. Establishing these laws systematically requires organizing overlap types and their covariance contributions.
+
+Other directions include directed and bipartite random graphs, inhomogeneous edge probabilities, random geometric graphs, resilience under adversarial deletion, and dynamic graph processes in which edges arrive over time. Each asks how much of the moment-and-exploration toolkit survives when independence or symmetry is weakened.
+
+## 11. Conclusion
+
+The Erdős–Rényi model turns independent edge decisions into precise collective transitions. Its finite probability law yields exact prescribed-edge probabilities. Linearity and the union bound convert these into first-moment nonexistence results. Variance supplies a complementary second-moment route to occurrence. Branching-process exploration identifies $p=1/n$ as the birth scale of a giant component, while Poisson convergence of isolated vertices identifies $p=(\log n)/n$ as the sharp connectivity scale, with limiting probability $e^{-e^{-c}}$ throughout the critical window.
+
+These results illustrate a broad principle: global thresholds often arise from a small set of local witnesses or obstructions. Counting those objects, understanding their dependence, and controlling their fluctuations reveals when a random network changes its qualitative character.
+
+## Appendix: interpretation of asymptotic statements
+
+The limiting theorems compare sequences of probability spaces whose sample spaces change with $n$. A statement such as $L_1\ge\beta n$ with high probability means that for every $\delta>0$ there is $n_0$ such that the event has probability at least $1-\delta$ whenever $n\ge n_0$. It does not claim that every sampled graph has the property.
+
+Likewise, convergence in distribution of $I_n$ to a Poisson variable means that for each fixed nonnegative integer $j$,
+
+$$
+\Pr(I_n=j)\longrightarrow e^{-e^{-c}}\frac{e^{-cj}}{j!}.
+$$
+
+Taking $j=0$ produces the connectivity profile after non-isolated disconnected graphs are shown to be negligible. The phrase “sharp threshold” refers to the fact that an additive displacement of order $1/n$ around $(\log n)/n$ changes the limiting probability by a nontrivial amount, while displacements larger than this window drive the probability toward $0$ or $1$.

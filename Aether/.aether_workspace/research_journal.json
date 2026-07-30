@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "decbe545",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n## 1. Optimal-cover hitting time\n\n**Conjecture.** In the random graph process, with probability tending to one, the first graph whose minimum degree is two is also the first graph",
-      "quality_score": 0.64,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-22T00:14:24",
-      "title": "ArXiv paper: Efficient Hamilton covers and linear arboricity of random graphs"
-    },
-    {
       "cycle_id": "759f53fa",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n1. **Replace discrete carriers by actual categories.** Define an analogy from functors `F : A ⥤ B` and `G : B ⥤ A`, and measure agreement of `G ⋙ F` with the identity using natura",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-07-30T20:38:20",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "ae875fd7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## What is established\n\n`Catalog/Applications/EML/StoneWeierstrassConnector.lean` proves a cross-domain bridge from finite-dimensional topology to exp-log networks:\n\n- a continuou",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-30T22:27:40",
+      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7732699999999999
     }
   ],
-  "last_updated": "2026-07-30T20:38:20",
+  "last_updated": "2026-07-30T22:27:40",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "86d1611f",
-        "quality": 0.63,
-        "theorems": 15,
-        "title": "The original proposal mixes two different notions. The files now separate them."
-      },
-      {
         "cycle_id": "cc3b4f99",
         "quality": 0.52,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.7732699999999999,
         "theorems": 16,
         "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+      },
+      {
+        "cycle_id": "ae875fd7",
+        "quality": 0.686,
+        "theorems": 26,
+        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
       }
     ],
     "Bridges": [
