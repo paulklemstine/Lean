@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ce71f394",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Differential Structure of Exponential–Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n ≥ 1`, the `n`th der",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-26T05:36:56",
-      "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
-    },
-    {
       "cycle_id": "735a1ab0",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: Neural Tangent Kernel Convergence\n\n## 1. Quantitative universality under approximately equal kernels\n\n**Conjecture.** Consider two lazy-training residual recursions with the same",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-30T09:50:58",
       "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "cycle_id": "1c628216",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal\n   machine, define `K_U(b)` as the least program length decoding to `b`, and derive\n   the Kraft-in",
+      "quality_score": 0.76172,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-30T09:52:06",
+      "title": "Borges' Library of Babel: Combinatorics of Everything"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cd0075c8",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n## Result of the contrarian test\n\nThe exact proposed fixed-point equation was formalized in\n`Catalog/Computation/ConsciousFixedPoints.lean` as\n\n\\[\n  \\exists P:T\\to\\mathrm{Prop},\\q",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T06:49:41",
-      "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
-    },
     {
       "cycle_id": "d5fe8eb3",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-30T09:50:58",
       "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+    },
+    {
+      "cycle_id": "1c628216",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal\n   machine, define `K_U(b)` as the least program length decoding to `b`, and derive\n   the Kraft-in",
+      "quality_score": 0.76172,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-30T09:52:06",
+      "title": "Borges' Library of Babel: Combinatorics of Everything"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "687f4282",
-      "domain": "Novelty",
-      "name": "spillGraph_adj",
-      "quality": 0.8022499999999999
-    },
-    {
-      "cycle_id": "687f4282",
-      "domain": "Novelty",
-      "name": "spillGraph_hasPEO",
-      "quality": 0.8022499999999999
-    },
-    {
-      "cycle_id": "5f676746",
-      "domain": "Algebra",
-      "name": "applies",
-      "quality": 0.74002
-    },
     {
       "cycle_id": "5f676746",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "naturalStepSet_subset_finiteStepRay",
       "quality": 0.7423299999999999
+    },
+    {
+      "cycle_id": "1c628216",
+      "domain": "Combinatorics",
+      "name": "behind",
+      "quality": 0.76172
+    },
+    {
+      "cycle_id": "1c628216",
+      "domain": "Combinatorics",
+      "name": "card_book",
+      "quality": 0.76172
+    },
+    {
+      "cycle_id": "1c628216",
+      "domain": "Combinatorics",
+      "name": "card_borges_library",
+      "quality": 0.76172
     }
   ],
-  "last_updated": "2026-07-30T09:50:58",
+  "last_updated": "2026-07-30T09:52:06",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "0cd9c194",
-        "quality": 0.69,
-        "theorems": 5,
-        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-      },
-      {
         "cycle_id": "4505be0f",
         "quality": 0.77,
         "theorems": 5,
@@ -3265,6 +3259,12 @@
         "quality": 0.73176,
         "theorems": 4,
         "title": "Rota's Basis Conjecture"
+      },
+      {
+        "cycle_id": "1c628216",
+        "quality": 0.76172,
+        "theorems": 15,
+        "title": "Borges' Library of Babel: Combinatorics of Everything"
       }
     ],
     "Computation": [
