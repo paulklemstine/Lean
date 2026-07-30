@@ -1147,7 +1147,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                                     concept=ResearchConcept(
                                         title="Direction Tournament Evaluation",
                                         domain="meta",
-                                        concept_description="Aristotle evaluates candidate directions for quality pruning"
+                                        concept_description="Aristotle evaluates candidate directions for quality pruning",
+                                        mathematical_framing="Direction tournament: select top directions by mathematical merit"
                                     ),
                                     prompt=prompt,
                                     project_id=proj_id,
