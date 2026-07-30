@@ -1,66 +1,142 @@
-# Cooking as Homotopy: Why Two Ways of Combining Recipes Must Secretly Be One
+# The Geometry of a Recipe
 
-Imagine two cooks in the same kitchen, both chasing the same dish — say a bowl of curry whose flavor lands at exactly the right point in the space of tastes. One cook builds the dish *in series*: finish one procedure, then start the next, stacking steps like beads on a string. The other builds it *in parallel*: blend two methods together at once, folding them into a single motion. They are combining recipes according to two genuinely different rules. And yet, under one mild and very natural assumption, those two rules are forced to be **the same rule** — and that rule is automatically **commutative** and **associative**. Order stops mattering. Grouping stops mattering. The kitchen, at the level of methods, becomes a place where combination is as clean and symmetric as addition of numbers.
+## When the same dish has more than one route
 
-This is not a metaphor stretched thin. It is a precise theorem, one of the most elegant surprises in modern mathematics, and it explains a deep fact about the shape of space itself. It is called the **Eckmann–Hilton argument**, and the story of how a purely *topological* observation forces a purely *algebraic* conclusion — with no continuity, no limits, no analysis, just a single bookkeeping law — is the story we want to tell.
+A recipe looks like a list, but anyone who cooks knows that it behaves more like a landscape. There are crossroads: butter or oil, walnuts or no walnuts, one chile or two. There are reversible moves, detours, and changes that can be made in either order. Two cooks may begin with the same batter, make different choices, and nevertheless arrive at dishes with the same observable flavor.
 
-## Dishes as points, methods as paths
+This suggests a geometric question. Instead of asking only whether two recipes produce the same dish, can we study the *space of ways* to move between recipes?
 
-Start with a picture. Think of every possible dish as a *point* in a space of flavors. A flavor profile is a list of numbers — how sweet, how salty, how sour, how bitter, how much heat — so a dish is a point in some coordinate space, and two recipes that land on the same point are, as far as the palate is concerned, *equal*.
+To make that question precise, separate a recipe into two kinds of data. Its **core** is the observable feature we care about—here, a flavor profile. Its **optional data** records choices that our simplified flavor measurement does not distinguish. A recipe is therefore a pair
 
-But here is the twist that makes this interesting rather than trivial: two recipes can produce the same dish while following different *methods*. If a dish is a point, a method is a **path** — a way of getting from "raw ingredients" to "finished dish." And when two methods reach the same destination, we can ask a richer question than "are these dishes equal?" We can ask: *how* are they equal? Is there a way to deform one method continuously into the other? Are there many such deformations? Are some of them essentially different from others?
+$$
+(c,o),
+$$
 
-This is exactly the spirit of homotopy theory, the branch of mathematics that studies spaces not by measuring them but by asking which paths and loops can be slid into one another. In that world, the interesting object attached to a point is the collection of **loops** based there — paths that start and end at the same place — together with a way to *compose* them: to travel one loop, then the next. Loops that can be shrunk to a standstill are "trivial"; loops that cannot be shrunk record genuine holes in the space. The set of loops, up to deformation, forms the celebrated **fundamental group**.
+where $c$ is the core and $o$ is an optional assignment. The flavor map simply forgets the optional data:
 
-## The moment two compositions appear
+$$
+F(c,o)=c.
+$$
 
-Now climb one level higher. Instead of loops in a space, consider *loops between loops* — deformations of one path into another, and then deformations of those deformations. This two-dimensional structure is where the plot thickens, because at this level there are suddenly **two** honest ways to compose.
+For a fixed dish $d$, the **flavor fiber** is the collection of all recipes measured as $d$:
 
-Picture a little square whose sides are paths. You can glue two such squares **side by side** (horizontal composition) or **stack them top to bottom** (vertical composition). Both are legitimate; both take two two-dimensional cells and return one. The same doubling happens for a topological group or, in our kitchen, for methods that can be combined either *in series* or *in parallel*.
+$$
+F^{-1}(d)=\{(c,o):F(c,o)=d\}.
+$$
 
-So we have a set $\alpha$ — call its elements "methods," or "two-cells," or "loops-between-loops," whichever picture you prefer — carrying two operations. Write the vertical one as $a \circ b$ and the horizontal one as $a \star b$. Two ingredients make these operations well-behaved:
+The first result is simple but decisive: this fiber is in one-to-one correspondence with the possible optional data. Every recipe in the fiber has core $d$, so it is determined by its optional part; conversely, every optional assignment $o$ creates the recipe $(d,o)$. Thus the hidden choices are not merely associated with the fiber—they completely describe it.
 
-1. **A shared unit.** There is a single "do nothing" element $e$ — the constant loop, the empty procedure, the recipe that changes nothing — and it is neutral for *both* operations. Doing nothing before or after any method leaves that method unchanged, whether you combine in series or in parallel:
-$$e \circ a = a = a \circ e, \qquad e \star a = a = a \star e.$$
+That observation turns recipe variation into combinatorics and then into geometry.
 
-2. **The interchange law.** This is the heart of the matter. When you assemble four cells into a $2\times 2$ grid, it should not matter whether you first glue the rows horizontally and then stack the results vertically, or first glue the columns vertically and then join them horizontally. In symbols:
-$$(a \star b) \circ (c \star d) \;=\; (a \circ c) \star (b \circ d).$$
-In kitchen language: combining-in-series a pair of parallel blends equals combining-in-parallel a pair of serial blends. This is just the statement that the grid can be assembled in either order and give the same thing — a compatibility condition so mild it feels like an accounting triviality.
+## The cookie with two faces
 
-## The collapse
+Imagine that a cookie recipe has one optional binary choice: nuts or no nuts. Suppose, for the purpose of the model, that both versions have the same measured core flavor. The optional state is then a Boolean value, either $0$ or $1$. Because the fiber is exactly the optional state space, there are precisely two recipes over the chosen flavor.
 
-Here is the astonishing part. From those two innocuous facts — a shared unit and the interchange law — *everything* follows. The two operations are not merely compatible; they are **identical**, and the single operation they collapse into is commutative and associative.
+If we regard those two recipes as isolated possibilities, with no permitted transformation between them, their shape is the zero-dimensional sphere $S^0$: two separate points. This description requires an important qualification. The two-point topology comes from treating the alternatives as a discrete subspace. If “add or remove nuts” is admitted as an edge, the resulting object is an interval, which is connected and contractible. Topology depends not just on the recipes one lists, but on which substitutions one allows.
 
-The proof is a short chain of substitutions, and it is worth seeing because its cleverness is the entire point: it wields the unit like a crowbar to pry the interchange law open in exactly the right places.
+Now give the cook $n$ independent yes-or-no choices. A recipe is a binary vector
 
-**The two operations coincide.** Take any $a$ and $b$. Insert the unit for free — since $e$ is neutral, $a = a \star e$ and $b = e \star b$ — and then apply interchange:
-$$a \circ b = (a \star e) \circ (e \star b) = (a \circ e) \star (e \circ b) = a \star b.$$
-The middle step is interchange; the outer steps are just the unit doing nothing. So $a \circ b = a \star b$ always. The two ways of combining were the same way all along.
+$$
+r=(r_1,\ldots,r_n)\in\{0,1\}^n.
+$$
 
-**The operation is commutative.** Play the same trick with the units placed on the other diagonal:
-$$a \star b = (e \circ a) \star (b \circ e) = (e \star b) \circ (a \star e) = b \circ a.$$
-Reading off the ends and remembering that $\star$ and $\circ$ agree, we get $a \circ b = b \circ a$. Swapping the order changes nothing.
+There are $2^n$ such vectors, so every fixed-flavor fiber has exactly $2^n$ recipe states. Geometrically, these states are the vertices of an $n$-dimensional cube. One choice gives two endpoints of a line segment. Two choices give four corners of a square. Three choices give eight corners of an ordinary cube. The familiar explosion of recipe variants is just the exponential growth of cubical vertices.
 
-**The operation is associative.** One more application, now recognizing a "medial" identity — that for these compatible operations, $(x \circ y)\circ(z \circ w) = (x \circ z)\circ(y \circ w)$ — and feeding it the unit in the second slot yields $(a \circ b)\circ c = a \circ(b \circ c)$.
+## Cooking methods as paths
 
-Put together, these three facts say something clean and complete: **a set with two unital operations sharing a unit and obeying the interchange law is a commutative monoid, under either operation, and the two operations are equal.** A tiny topological input — "there are two ways to compose, and they interchange" — produces a rigid algebraic output — "the composition is single, commutative, and associative" — with nothing analytic in between.
+A state is not yet a method. To model action, label the optional choices by $1,\ldots,n$. A **toggle** at coordinate $i$ reverses the $i$th choice and leaves all others unchanged. A **method** is a finite list
 
-## Why this rules the shape of space
+$$
+p=[i_1,i_2,\ldots,i_k],
+$$
 
-This little argument is the reason behind a famous fact that at first sounds mysterious. The fundamental group — the loops-in-a-space group — can be wildly non-commutative; the order in which you traverse loops can matter enormously, and this non-commutativity encodes the intricate branching of a space's holes. But the **higher** homotopy groups, which measure higher-dimensional holes using spheres instead of loops, are *always* commutative. Every one of them, for every space, in every dimension above the first.
+executed from left to right. It is a path through the cube’s vertices.
 
-Why the sudden onset of order-independence? Precisely because at dimension two and above there are two ways to compose — the horizontal and vertical gluings of cells — they share the constant map as a unit, and they satisfy interchange. Eckmann–Hilton then forces commutativity. The same reasoning explains why the fundamental group of a topological *group* (a space that is also a group, its multiplication supplying a second composition) must be abelian. The abelian-ness is not a coincidence discovered case by case; it is legislated in advance by a two-line algebraic law.
+A long method may contain much less information than its length suggests. Toggle the same ingredient twice, and the second action undoes the first. Toggle ingredient $i$ and then ingredient $j$, and the endpoint is the same as toggling $j$ and then $i$. What survives is only parity: for each coordinate, was it toggled an odd or an even number of times?
 
-## Back to the kitchen
+Define the **signature** $\sigma(p)\in\{0,1\}^n$ by
 
-So what does this say about cooking? Take the analogy seriously. Let dishes be points in taste space and let methods be the paths between raw ingredients and finished plates. Suppose you can combine methods in two ways — in series and in parallel — and suppose there is a trivial "do nothing" method neutral for both, and suppose the two combinations interchange in the natural $2\times 2$ sense. Then the theorem descends into the kitchen verbatim: the two ways of combining methods are secretly one way, and that way is commutative and associative.
+$$
+\sigma(p)_j=
+\begin{cases}
+1,&\text{if }j\text{ occurs an odd number of times in }p,\\
+0,&\text{if }j\text{ occurs an even number of times in }p.
+\end{cases}
+$$
 
-Concretely, it means that at this idealized level the *order* in which you fold two techniques together stops mattering, and so does the *grouping* — combine A with B and then C, or B with C and then A, and you reach the same dish. The rich, non-commutative texture of cooking — where searing before simmering is a different world from simmering before searing — lives at the *first* level, the level of single procedures strung in sequence. The moment you have honest two-dimensional structure with a shared trivial recipe and the interchange compatibility, the freedom collapses and combination becomes as symmetric as arithmetic.
+The Endpoint Theorem says that following $p$ from recipe $r$ produces
 
-There is even a hint of where the interesting behavior comes back. If you *weaken* the shared unit — allow the "do nothing" recipe to be only approximately neutral, neutral up to a further deformation — the collapse no longer happens, and instead of plain commutativity you get **braiding**: two methods can be swapped, but the swap remembers a direction, like strands crossing over rather than through one another. This is the doorway to some of the richest structures in modern topology and physics, and in our culinary fable it is the difference between a cuisine whose techniques commute freely and one whose techniques weave around each other with memory.
+$$
+\operatorname{follow}(r,p)=r\oplus\sigma(p),
+$$
 
-## The moral
+where $\oplus$ denotes coordinatewise exclusive-or. In ordinary words, a choice changes exactly when the method mentions it an odd number of times.
 
-The Eckmann–Hilton argument is a small miracle of leverage: two mild hypotheses, three lines of algebra, and out falls a structural theorem that governs the shape of every space in every dimension above the first. It is also a perfect specimen of what mathematicians prize most — a **bridge**, carrying information from topology to algebra without any of the machinery you would expect to need. There is no measurement, no limit, no continuity in the proof; there is only the insistence that a grid can be assembled two ways and give the same answer.
+The proof follows the method one step at a time. The empty method has zero signature and changes nothing. Adding one toggle flips the relevant coordinate in both the executed recipe and the signature. Induction then gives the formula for every finite list.
 
-Cooking is homotopy theory. Every dish is a point, every method a path, every substitution a deformation, and every cuisine a homotopy type. And buried in that playful picture is a genuine theorem, the same one that quietly commands the higher symmetry of space: when there are two ways to combine and they interchange around a shared do-nothing, the two ways are one, and that one way forgets both order and grouping. Two operations, it turns out, can only ever have been one.
+This formula is a complete classification of endpoints. For a fixed starting recipe $r$, two methods $p$ and $q$ finish at the same recipe exactly when
+
+$$
+\sigma(p)=\sigma(q).
+$$
+
+There is no hidden ambiguity. A three-page sequence of substitutions and a three-step shortcut have the same endpoint precisely when their coordinate parities agree.
+
+## Squares, backtracking, and loops
+
+The cube already contains elementary geometry. Consider two distinct choices $i$ and $j$. The methods $[i,j]$ and $[j,i]$ trace different two-edge routes around a square, yet they meet at the opposite corner. This is the **commuting-square law**:
+
+$$
+\operatorname{follow}(r,[i,j])=
+\operatorname{follow}(r,[j,i]).
+$$
+
+Meanwhile, doing the same substitution twice is immediate backtracking:
+
+$$
+\operatorname{follow}(r,[i,i])=r.
+$$
+
+These laws resemble everyday kitchen reasoning. Sweeten, then thicken; or thicken, then sweeten. In the independent-choice model, order does not affect the final assignment. Add nuts, then remove nuts: one returns to the starting state.
+
+A **loop** is any method that ends where it began. The loop criterion is exact: a method is a loop if and only if every coordinate is toggled an even number of times, equivalently
+
+$$
+\sigma(p)=0.
+$$
+
+There is also a universal way to manufacture a loop. Perform any method and then perform its list of toggles in reverse order. If
+
+$$
+p=[i_1,\ldots,i_k],
+$$
+
+then concatenate it with
+
+$$
+p^{\mathrm{rev}}=[i_k,\ldots,i_1].
+$$
+
+Every toggle appears twice in the combined method, and the endpoint returns to the initial recipe. This is a precise version of retracing one’s culinary steps.
+
+## What the model establishes—and what it does not
+
+The cubical picture proves several concrete facts: fixed-flavor recipes are classified by optional assignments; $n$ binary choices produce $2^n$ states; method endpoints are classified by parity signatures; independent substitutions commute; repeated substitutions cancel; and loops are exactly the even-parity methods.
+
+It does not, by itself, prove that an empirical space of real recipes has a particular homotopy type. Nor does a sequence with repeated stages automatically create a nontrivial topological loop. The full cube, with all its edges and higher-dimensional faces, is contractible: every apparent route can ultimately be filled in. To obtain a genuine circle with an integer winding number, one must specify a cyclic substitution graph and a rule for when paths count as equivalent. To infer topology from a hundred cookie recipes, one must also declare a flavor metric, a tolerance threshold, and a rule for building edges or simplices from data.
+
+Those cautions are not defects. They reveal the scientific value of the framework: it forces vague comparisons to become explicit modeling choices.
+
+## From pantry constraints to data science
+
+Real kitchens rarely offer fully independent choices. Allergies may forbid nuts. Vegan constraints may link butter and eggs. Ingredient availability can remove vertices. Flavor preservation may allow some edges but not others. Such restrictions carve a subcomplex out of the cube, and that subcomplex can have disconnected regions or unfilled cycles.
+
+This opens practical possibilities. A meal-planning system could identify whether two admissible recipes lie in the same connected component—whether one can transform into the other without violating constraints. A substitution engine could search for a shortest method. A dataset of measured flavor vectors could be grouped into tolerance neighborhoods, producing a complex whose persistent features describe robust families of alternatives rather than accidental similarities.
+
+The parity signature also gives an efficient algorithm. To predict a method’s endpoint, there is no need to preserve its whole history. Scan the list once, flipping one bit per substitution. The result uses $O(n)$ memory for $n$ choices and $O(k)$ time for a method of length $k$. Two methods can then be compared by their signatures rather than replayed from scratch.
+
+There is even a shortest summary of any method. Write down, once each, precisely the choices whose signature bits are $1$. This compact list has the same effect as the original instructions, and no equivalent method can be shorter: every choice that changes between the start and finish must be touched at least once. A tangled cooking history can therefore be reduced to a canonical shopping-list-like set of net changes. The reduction does not preserve the experience of the route—timing and order may matter outside the model—but it perfectly preserves the modeled endpoint.
+
+The geometry becomes richer when binary decisions are replaced by multi-state choices: mild, medium, or hot; dairy, coconut, or broth; raw, toasted, or caramelized. The state count becomes a product of coordinate sizes, and substitutions act by cyclic changes or permutations rather than Boolean parity.
+
+The enduring idea is that a dish is not only an endpoint. Around it lies a structured space of variants, and between those variants lie methods whose algebra records cancellation, independence, and return. In the simplest model, the pantry becomes a cube and cooking becomes motion through it. That is already enough to turn “What can I substitute?” into a precise geometric question—and to show that the route through a recipe can be as mathematically meaningful as the plate at the end.

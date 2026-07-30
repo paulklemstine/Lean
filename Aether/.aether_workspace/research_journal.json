@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d5fe8eb3",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Functional Fibres and Subjective Structure\n\n## 1. Nontrivial qualia coverings\n\nConjecture: there are natural state spaces in which functional observation forms a nontrivial finite",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-21T06:49:45",
-      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-    },
-    {
       "cycle_id": "1a2d7e50",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n## Formal-machine Kolmogorov complexity\n\nThe development uses binary code length under an injective encoding, which captures the counting core of incompressibility but is computab",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-30T09:52:06",
       "title": "Borges' Library of Babel: Combinatorics of Everything"
+    },
+    {
+      "cycle_id": "3308088b",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThe completed development proves finite normalized max-plus tropical\nCarathéodory in `Catalog/Tropical/TropicalConvexity/Caratheodory.lean`, including\nsingleton membership, monoto",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-07-30T12:12:00",
+      "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76172
     }
   ],
-  "last_updated": "2026-07-30T09:52:06",
+  "last_updated": "2026-07-30T12:12:00",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "a4c98532",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "Hofstadter: Gödel, Escher, Bach — Isomorphism Across Domains"
-      },
-      {
         "cycle_id": "2a77d2cb",
         "quality": 0.66,
         "theorems": 9,
@@ -3451,6 +3445,12 @@
         "quality": 0.7815999999999999,
         "theorems": 10,
         "title": "Spectral Graph Theory Meets Network Robustness"
+      },
+      {
+        "cycle_id": "3308088b",
+        "quality": 0.686,
+        "theorems": 37,
+        "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
       }
     ],
     "Logic": [

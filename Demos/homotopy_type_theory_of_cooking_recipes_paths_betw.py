@@ -1,192 +1,171 @@
-"""
-Numerical demonstrations of the Eckmann--Hilton argument.
+#!/usr/bin/env python3
+"""Numerical demonstrations for finite cubical recipe spaces.
 
-An *interchange structure* on a finite carrier is a pair of binary operations
-(vcomp, hcomp) sharing a two-sided unit and satisfying the interchange law
-
-    (a * b) o (c * d) = (a o c) * (b o d)
-
-where 'o' = vcomp (series composition) and '*' = hcomp (parallel composition).
-
-The Eckmann--Hilton theorem states that any such structure forces:
-  1. vcomp == hcomp                     (the two operations coincide),
-  2. the common operation is commutative,
-  3. the common operation is associative,
-so the carrier is a commutative monoid.
-
-This file demonstrates all three conclusions on concrete finite structures,
-and shows that dropping either hypothesis breaks the conclusion.
-
-Interpretation (recipes / homotopy of dishes): elements are cooking METHODS,
-vcomp combines methods "in series", hcomp combines them "in parallel", and the
-unit is the trivial "do nothing" method.
+The program uses only the Python standard library.  A recipe state is a tuple of
+Booleans and a method is a tuple of zero-based coordinate indices.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from itertools import product
-from typing import Callable, List, Tuple
+from typing import Iterable, Sequence
 
-BinOp = Callable[[int, int], int]
-
-
-# ---------------------------------------------------------------------------
-# Verification of the interchange-structure axioms
-# ---------------------------------------------------------------------------
-
-def is_two_sided_unit(op: BinOp, elems: List[int], unit: int) -> bool:
-    """Return True iff `unit` is a two-sided identity for `op` on `elems`."""
-    return all(op(unit, a) == a and op(a, unit) == a for a in elems)
+Recipe = tuple[bool, ...]
+Method = tuple[int, ...]
 
 
-def satisfies_interchange(vcomp: BinOp, hcomp: BinOp, elems: List[int]) -> bool:
-    """Check (a*b) o (c*d) == (a o c) * (b o d) for all quadruples.  O(|elems|^4)."""
-    for a, b, c, d in product(elems, repeat=4):
-        lhs = vcomp(hcomp(a, b), hcomp(c, d))
-        rhs = hcomp(vcomp(a, c), vcomp(b, d))
-        if lhs != rhs:
-            return False
-    return True
+def all_recipes(n: int) -> list[Recipe]:
+    """Enumerate the 2**n vertices of the n-dimensional Boolean cube."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    return [tuple(bits) for bits in product((False, True), repeat=n)]
 
 
-def is_interchange_structure(
-    vcomp: BinOp, hcomp: BinOp, elems: List[int], unit: int
-) -> bool:
-    """Verify all axioms of an interchange structure."""
-    return (
-        is_two_sided_unit(vcomp, elems, unit)
-        and is_two_sided_unit(hcomp, elems, unit)
-        and satisfies_interchange(vcomp, hcomp, elems)
+def validate_method(n: int, method: Sequence[int]) -> None:
+    """Check that every method coordinate belongs to range(n)."""
+    invalid = [i for i in method if not 0 <= i < n]
+    if invalid:
+        raise ValueError(f"coordinates outside 0..{n - 1}: {invalid}")
+
+
+def toggle(recipe: Recipe, coordinate: int) -> Recipe:
+    """Reverse one binary ingredient choice."""
+    validate_method(len(recipe), (coordinate,))
+    result = list(recipe)
+    result[coordinate] = not result[coordinate]
+    return tuple(result)
+
+
+def follow(recipe: Recipe, method: Sequence[int]) -> Recipe:
+    """Execute coordinate toggles from left to right."""
+    validate_method(len(recipe), method)
+    result = recipe
+    for coordinate in method:
+        result = toggle(result, coordinate)
+    return result
+
+
+def signature(n: int, method: Sequence[int]) -> Recipe:
+    """Return the parity vector recording odd coordinate multiplicities."""
+    validate_method(n, method)
+    parity = [False] * n
+    for coordinate in method:
+        parity[coordinate] = not parity[coordinate]
+    return tuple(parity)
+
+
+def xor_recipes(left: Recipe, right: Recipe) -> Recipe:
+    """Compute coordinatewise exclusive-or of equally sized states."""
+    if len(left) != len(right):
+        raise ValueError("states must have equal dimension")
+    return tuple(a != b for a, b in zip(left, right))
+
+
+def canonical_method(method_signature: Recipe) -> Method:
+    """Return the increasing minimal method realizing a signature."""
+    return tuple(i for i, bit in enumerate(method_signature) if bit)
+
+
+def is_loop(recipe: Recipe, method: Sequence[int]) -> bool:
+    """Test the zero-signature loop criterion."""
+    return not any(signature(len(recipe), method))
+
+
+def bit_string(recipe: Recipe) -> str:
+    """Format a Boolean recipe as a compact binary vector."""
+    return "".join("1" if bit else "0" for bit in recipe)
+
+
+@dataclass(frozen=True)
+class Demonstration:
+    title: str
+    lines: tuple[str, ...]
+
+
+def cardinality_demo(max_dimension: int = 6) -> Demonstration:
+    """Compare enumerated fiber sizes with the formula 2**n."""
+    rows = tuple(
+        f"n={n}: enumerated={len(all_recipes(n)):2d}, formula={2**n:2d}"
+        for n in range(max_dimension + 1)
+    )
+    assert all(len(all_recipes(n)) == 2**n for n in range(max_dimension + 1))
+    return Demonstration("Binary fiber cardinalities", rows)
+
+
+def endpoint_demo() -> Demonstration:
+    """Exhibit endpoint classification and canonical reduction."""
+    start: Recipe = (False, True, False, True)
+    first: Method = (0, 2, 1, 2, 3, 0, 3)
+    sig = signature(len(start), first)
+    short = canonical_method(sig)
+    direct = follow(start, first)
+    predicted = xor_recipes(start, sig)
+    reduced = follow(start, short)
+    assert direct == predicted == reduced
+    return Demonstration(
+        "Endpoint prediction by parity signature",
+        (
+            f"start       = {bit_string(start)}",
+            f"method      = {first}",
+            f"signature   = {bit_string(sig)}",
+            f"endpoint    = {bit_string(direct)}",
+            f"canonical   = {short}",
+            f"same result = {direct == reduced}",
+        ),
     )
 
 
-# ---------------------------------------------------------------------------
-# Auditing the Eckmann--Hilton conclusions
-# ---------------------------------------------------------------------------
-
-def operations_coincide(vcomp: BinOp, hcomp: BinOp, elems: List[int]) -> bool:
-    return all(vcomp(a, b) == hcomp(a, b) for a in elems for b in elems)
-
-
-def is_commutative(op: BinOp, elems: List[int]) -> bool:
-    return all(op(a, b) == op(b, a) for a in elems for b in elems)
-
-
-def is_associative(op: BinOp, elems: List[int]) -> bool:
-    return all(
-        op(op(a, b), c) == op(a, op(b, c))
-        for a in elems
-        for b in elems
-        for c in elems
+def path_laws_demo() -> Demonstration:
+    """Check a commuting square, cancellation, and reversal loop."""
+    start: Recipe = (False, True, False)
+    i, j = 0, 2
+    square_left = follow(start, (i, j))
+    square_right = follow(start, (j, i))
+    backtrack = follow(start, (i, i))
+    path: Method = (0, 1, 2, 1)
+    reverse_loop = path + tuple(reversed(path))
+    assert square_left == square_right
+    assert backtrack == start
+    assert follow(start, reverse_loop) == start
+    assert is_loop(start, reverse_loop)
+    return Demonstration(
+        "Cubical path laws",
+        (
+            f"commuting square endpoints: {bit_string(square_left)} and "
+            f"{bit_string(square_right)}",
+            f"double toggle returns:      {bit_string(backtrack)}",
+            f"path + reverse returns:     {bit_string(follow(start, reverse_loop))}",
+            f"reverse method signature:   {bit_string(signature(3, reverse_loop))}",
+        ),
     )
 
 
-def audit(vcomp: BinOp, hcomp: BinOp, elems: List[int], unit: int) -> dict:
-    """Run the full Eckmann--Hilton audit on a structure and return a report."""
-    return {
-        "is_interchange_structure": is_interchange_structure(vcomp, hcomp, elems, unit),
-        "operations_coincide": operations_coincide(vcomp, hcomp, elems),
-        "vcomp_commutative": is_commutative(vcomp, elems),
-        "vcomp_associative": is_associative(vcomp, elems),
-    }
-
-
-# ---------------------------------------------------------------------------
-# Demo 1: a genuine commutative monoid (Z/m under addition) as both operations
-# ---------------------------------------------------------------------------
-
-def demo_cyclic(m: int) -> None:
-    elems = list(range(m))
-    add: BinOp = lambda a, b: (a + b) % m
-    report = audit(add, add, elems, 0)
-    print(f"[Demo 1] Z/{m} with vcomp = hcomp = addition, unit = 0")
-    for k, v in report.items():
-        print(f"    {k}: {v}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Demo 2: two *syntactically different* operation tables that share a unit and
-# interchange -- the collapse (vcomp == hcomp) becomes visible.
-# ---------------------------------------------------------------------------
-
-def demo_collapse() -> None:
-    # Carrier {0,1,2,3} identified with Z/2 x Z/2; unit = 0 = (0,0).
-    # Represent (x,y) as 2*x + y.  Both series and parallel are group addition,
-    # but written via two different-looking closures to emphasize the theorem.
-    elems = list(range(4))
-
-    def to_pair(n: int) -> Tuple[int, int]:
-        return (n // 2, n % 2)
-
-    def of_pair(p: Tuple[int, int]) -> int:
-        return 2 * (p[0] % 2) + (p[1] % 2)
-
-    def vcomp(a: int, b: int) -> int:
-        (x1, y1), (x2, y2) = to_pair(a), to_pair(b)
-        return of_pair((x1 + x2, y1 + y2))
-
-    def hcomp(a: int, b: int) -> int:
-        # A deliberately different-looking formula that is nonetheless equal.
-        (x1, y1), (x2, y2) = to_pair(a), to_pair(b)
-        return of_pair(((x2 + x1), (y2 + y1)))
-
-    report = audit(vcomp, hcomp, elems, 0)
-    print("[Demo 2] Two differently-written operations on Z/2 x Z/2")
-    for k, v in report.items():
-        print(f"    {k}: {v}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Demo 3: breaking a hypothesis breaks the conclusion.
-# A non-commutative operation cannot be part of a valid interchange structure.
-# ---------------------------------------------------------------------------
-
-def demo_counterexample() -> None:
-    # Left projection: a o b = a.  It has NO two-sided unit, and it is
-    # non-commutative, so it is not an interchange structure.
-    elems = [0, 1, 2]
-    left: BinOp = lambda a, b: a
-    print("[Demo 3] Left-projection operation a o b = a")
-    print(f"    has two-sided unit (any candidate 0): "
-          f"{is_two_sided_unit(left, elems, 0)}")
-    print(f"    commutative: {is_commutative(left, elems)}")
-    print("    => Not an interchange structure; theorem does not apply.\n")
-
-
-# ---------------------------------------------------------------------------
-# Demo 4: exhaustive search -- among all binary operations on a 2-element set
-# that share unit 0 with themselves and self-interchange, all are commutative.
-# ---------------------------------------------------------------------------
-
-def demo_exhaustive_two_element() -> None:
-    elems = [0, 1]
-    count_valid = 0
-    all_commutative = True
-    # Encode an operation as a tuple of its 4 outputs (00,01,10,11).
-    for table in product(elems, repeat=4):
-        op: BinOp = lambda a, b, t=table: t[2 * a + b]
-        if not is_two_sided_unit(op, elems, 0):
-            continue
-        if not satisfies_interchange(op, op, elems):
-            continue
-        count_valid += 1
-        if not is_commutative(op, elems):
-            all_commutative = False
-    print("[Demo 4] All self-interchanging unital operations on a 2-element set")
-    print(f"    number found: {count_valid}")
-    print(f"    all commutative: {all_commutative}\n")
+def exhaustive_check(max_dimension: int = 4, max_method_length: int = 5) -> int:
+    """Exhaustively test the endpoint formula over small finite cubes."""
+    checked = 0
+    for n in range(max_dimension + 1):
+        methods: Iterable[Method]
+        for length in range(max_method_length + 1):
+            methods = (tuple(p) for p in product(range(n), repeat=length))
+            if n == 0 and length > 0:
+                continue
+            for method in methods:
+                sig = signature(n, method)
+                for recipe in all_recipes(n):
+                    assert follow(recipe, method) == xor_recipes(recipe, sig)
+                    checked += 1
+    return checked
 
 
 def main() -> None:
-    print("=" * 68)
-    print("Eckmann--Hilton argument: numerical demonstrations")
-    print("=" * 68 + "\n")
-    demo_cyclic(5)
-    demo_collapse()
-    demo_counterexample()
-    demo_exhaustive_two_element()
+    """Print three demonstrations and an exhaustive finite consistency check."""
+    demos = (cardinality_demo(), endpoint_demo(), path_laws_demo())
+    for demo in demos:
+        print(f"\n=== {demo.title} ===")
+        print("\n".join(demo.lines))
+    checked = exhaustive_check()
+    print(f"\nEndpoint formula checked on {checked} state-method pairs.")
 
 
 if __name__ == "__main__":
