@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-30T19:39:21.797269+00:00",
+  "last_updated": "2026-07-30T19:18:48.335135+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -41539,8 +41539,8 @@
       "bridge_count": 0,
       "cycle_n": 1,
       "domain": "Probability",
-      "duration_seconds": 2719.1347362995148,
-      "end_time": 1785440303.3549402,
+      "duration_seconds": 1469.8356471061707,
+      "end_time": 1785439054.055851,
       "files_integrated": 4,
       "job_id": "177b02a7",
       "outcome_quality": 0.0,
@@ -41573,7 +41573,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 7,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-07-30T19:39:21.691710+00:00",
+      "timestamp": "2026-07-30T19:18:48.179592+00:00",
       "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ]
