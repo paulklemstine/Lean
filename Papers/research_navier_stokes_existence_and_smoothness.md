@@ -1,198 +1,437 @@
-# Two Anti-Blowup Mechanisms Unified: Viscous Energy Dissipation and Tropical Idempotency
+# Epsilon-Regularity Reductions and Conservative Modal Energy Transfer for Three-Dimensional Fluid Flow
 
-**Author:** Aristotle
-**Domain:** Novelty (Mathematical Physics / Fluid Dynamics)
-**Date:** 2026-06-26
+**Aristotle**  
+**July 30, 2026**
 
 ## Abstract
 
-The global regularity problem for the three-dimensional incompressible Navier–Stokes equations remains open, but the *a priori* energy estimate that yields global weak (Leray–Hopf) solutions is completely understood. We isolate the structural core of that estimate and show that it is an instance of a single, domain-independent principle: **a system cannot blow up along directions monitored by a Lyapunov observable**, i.e. by a real scalar quantity that is nonincreasing along the evolution. We formalize two concrete realizations of this principle. The first is the classical **viscous energy method** for an abstract Galerkin/spectral Navier–Stokes model on a real inner-product space: using the trilinear cancellation $\langle B(v,v),v\rangle = 0$ and the positivity of the viscous operator, the kinetic energy $E(t)=\lVert u(t)\rVert^2$ satisfies $E'(t)=-2\nu\langle Au,u\rangle\le 0$, hence the energy norm never increases. The second is a **discrete tropical (max-plus) diffusion** framework on a finite index set, where the global supremum $\mathrm{tropEnergy}(u)=\max_j u_j$ is nonincreasing under the Bellman/Lax–Oleinik dilation operator by a pure maximum principle. We prove that the tropical energy of the iterates forms an *antitone sequence* — strictly stronger than the bound against the initial datum — and we combine both worlds into a single statement asserting both no-blowup conclusions simultaneously. The unification clarifies why 3D regularity is hard: the natural obstruction (enstrophy) fails to be a Lyapunov observable because the cancellation that protects energy disappears when the nonlinearity is tested against the viscous operator.
+The three-dimensional incompressible Navier–Stokes existence-and-smoothness problem remains open. This paper develops two rigorous, self-contained reductions relevant to partial regularity and turbulence without claiming a resolution of that problem. First, an abstract epsilon-regularity criterion is introduced on a measurable spacetime. If excess below a positive threshold at one scale implies regularity at a point, then every singular point has excess at least the threshold at every positive scale. Consequently, the singular set is contained in the persistent-concentration set. Nullity of the concentration set for any chosen measure therefore implies nullity of the singular set, both globally and after localization to an arbitrary region; equivalently, regularity holds almost everywhere. This isolates the final logical and measure-theoretic step in a Caffarelli–Kohn–Nirenberg-type argument. Second, for a finite family of modes in a real inner-product space, modal nonlinear transfer is defined by the inner product of the nonlinear interaction with the state. If total nonlinear transfer vanishes, then transfer into any mode band is exactly the negative of transfer into its complement. Positive transfer into a band forces negative transfer outside it, with equal magnitude. The identity provides the algebraic core of conservative spectral redistribution but does not determine a direction of cascade. Numerical algorithms and examples demonstrate both mechanisms and clarify the additional analytic ingredients required for applications to suitable weak solutions.
 
 ## 1. Introduction
 
-The incompressible Navier–Stokes system
+The incompressible Navier–Stokes equations in three spatial dimensions are
 
-$$ \partial_t u + (u\cdot\nabla)u = \nu\,\Delta u - \nabla p, \qquad \operatorname{div} u = 0, $$
+$$
+\partial_t u+(u\cdot\nabla)u+\nabla p=\nu\Delta u+f,
+\qquad \nabla\cdot u=0,
+$$
 
-models the velocity field $u$ and pressure $p$ of a viscous fluid. Whether smooth, finite-energy initial data in three dimensions produce solutions that remain smooth for all time, or whether a finite-time singularity ("blowup") can occur, is one of the Clay Millennium Prize Problems. Leray (1934) and Hopf (1951) established global existence of *weak* solutions through a single decisive *a priori* estimate: the kinetic energy is nonincreasing. The gap between weak and strong solutions — uniqueness and full regularity in 3D — remains.
+where $u:\Omega\times[0,T)\to\mathbb{R}^3$ is velocity, $p$ is pressure, $\nu>0$ is kinematic viscosity, and $f$ is external forcing. The central global question asks whether smooth divergence-free initial data always produce solutions that remain smooth for all time, or whether a finite-time singularity can occur. No answer is presently known in full generality.
 
-This paper does not address the open problem. Instead it extracts the *mechanism* of the Leray–Hopf estimate and demonstrates that the same mechanism, abstracted to its order-theoretic essence, obstructs blowup in an entirely discrete, nonlinear, idempotent setting. Our thesis is the slogan
+Two major viewpoints organize much of the surrounding theory. Partial regularity studies the possible singular set of weak solutions. It seeks local criteria under which a solution becomes regular and geometric estimates showing that points failing those criteria form a small set. Turbulence theory studies transfer across scales, often by decomposing a flow into Fourier or other modes and measuring how the quadratic nonlinearity redistributes energy.
 
-$$ \boxed{\ \text{singularity obstruction} \;=\; \text{existence of a monotone (Lyapunov) observable.}\ } $$
+This paper isolates one exact mechanism from each viewpoint.
 
-We make this precise in two formalized frameworks and bridge them with a single theorem.
+1. **Epsilon-regularity reduction.** An abstract excess $E(z,r)$ probes a point $z$ at scale $r$. If small excess at one positive scale implies regularity, then a singular point must exhibit threshold-sized excess at every positive scale. The singular set is therefore contained in a concentration set. Any null estimate for that concentration set transfers immediately to the singular set.
 
-**Contributions.**
-1. An abstract Galerkin Navier–Stokes model on a real inner-product space, with the energy dissipation identity and the resulting no-blowup bound (§3).
-2. A discrete tropical diffusion theory with a maximum principle, oscillation contraction, and uniform iterate bounds (§4).
-3. A unification: the tropical energy of iterates is *antitone* (a strengthening of the per-iterate bound), and a single bridge theorem packages both anti-blowup conclusions (§5).
-4. A discussion of why the natural 3D obstruction (enstrophy) escapes this framework, and a research program for closing the gap (§6–7).
+2. **Finite-mode transfer balance.** For finitely many modes, define nonlinear energy transfer mode by mode. If the total transfer is zero, then every chosen band exchanges energy exactly with its complement. This determines balance and magnitude, but not the sign or direction of transfer.
 
-## 2. Preliminaries and Notation
+The first mechanism is independent of the detailed formula for excess and of the selected measure. This abstraction is useful because it separates the logical endpoint of a partial-regularity proof from its difficult analytic input. In the classical setting, that input consists of local energy inequalities, scale-invariant estimates, compactness, pressure control, and a covering argument in parabolic geometry.
 
-Throughout, $V$ is a real inner-product space (normed additive commutative group with a real inner-product structure), with inner product $\langle\cdot,\cdot\rangle$ and induced norm $\lVert v\rVert = \sqrt{\langle v,v\rangle}$. We write $E(t)=\lVert u(t)\rVert^2 = \langle u(t),u(t)\rangle$ for the energy of a curve $u:\mathbb{R}\to V$.
+The second mechanism is finite-dimensional and algebraic. It applies to any real inner-product state space and any finite mode family. It expresses the cancellation expected from an energy-conserving nonlinear term. It is therefore useful both conceptually and as a consistency diagnostic for spectral computations.
 
-For the discrete theory, $\iota$ is a finite, nonempty index type; a *state* is a function $u:\iota\to\mathbb{R}$. We use $\max_j$ and $\min_j$ for suprema and infima over $\iota$ (attained, since $\iota$ is finite and nonempty). A *cost matrix* is a function $K:\iota\times\iota\to\mathbb{R}$.
+Throughout, no theorem asserts global smoothness, nonexistence of singularities, the full Caffarelli–Kohn–Nirenberg theorem, or a universal turbulent cascade direction.
 
-## 3. The Viscous Energy Method
+## 2. Abstract epsilon-regularity framework
 
-### 3.1 The abstract model
+### 2.1. Scaling and the role of excess
 
-After projecting the Navier–Stokes system onto a finite- or infinite-dimensional space of divergence-free fields (a Galerkin or spectral truncation), one obtains an evolution equation of the form $u'(t) = -\nu A u - B(u,u)$. We axiomatize its structure.
+The Navier–Stokes equations possess a natural rescaling: if $(u,p)$ is a solution, then, where defined,
 
-> **Definition 3.1 (Abstract Galerkin Navier–Stokes model).**
-> A *model* on $V$ consists of:
-> - a viscosity $\nu \ge 0$;
-> - a continuous linear *viscous operator* $A:V\to V$ that is **positive semidefinite**, $\langle A v, v\rangle \ge 0$ for all $v$ (the abstract form of $-\Delta$);
-> - a continuous bilinear *transport nonlinearity* $B:V\times V\to V$ satisfying the **trilinear cancellation** $\langle B(v,v), v\rangle = 0$ for all $v$ (the abstract form of $\int (u\cdot\nabla)u\cdot u = 0$ for divergence-free $u$).
->
-> A curve $u:\mathbb{R}\to V$ is a *solution* (`IsSolution`) if it is differentiable with
-> $$ u'(t) = -\nu\,A\,u(t) - B\big(u(t),u(t)\big) \quad\text{for all } t. $$
+$$
+u_\lambda(x,t)=\lambda u(\lambda x,\lambda^2t),
+\qquad
+p_\lambda(x,t)=\lambda^2p(\lambda x,\lambda^2t)
+$$
 
-The cancellation $\langle B(v,v),v\rangle=0$ is the structural heart of the theory: it expresses that the nonlinear transport term redistributes energy among modes without producing or dissipating any.
+has the same formal structure. Quantities unchanged by this transformation are called scale invariant or critical. They are natural candidates for an excess because a possible singularity cannot be ruled out merely by changing observational units. Parabolic cylinders use spatial radius $r$ and temporal depth $r^2$, matching the same scaling.
 
-### 3.2 The energy dissipation identity
+The abstract argument below does not assume this particular PDE scaling, but its distinction between a point $z$ and a positive scale $r$ is designed for it. The threshold $\varepsilon$ is fixed independently of $z$ and $r$. Uniformity is important: if every point or scale had an unrelated threshold, the resulting concentration set would not provide a common geometric object suitable for covering estimates.
 
-> **Theorem 3.2 (Energy dissipation identity, `energy_hasDerivAt`).**
-> For any solution $u$, the energy $E(t)=\lVert u(t)\rVert^2$ is differentiable with
-> $$ E'(t) = -2\nu\,\langle A\,u(t),\,u(t)\rangle. $$
+The word “excess” should not be taken to imply one unique formula. Depending on the regularity theorem, it may measure velocity oscillation, normalized integral size, pressure fluctuation, or a sum of several dimensionless terms. The reduction needs only the implication from one-scale smallness to regularity. All PDE-specific inequalities are concentrated in the task of proving that implication and estimating points where its premise always fails.
 
-*Proof sketch.* By the product rule for the inner product (`HasDerivAt.inner`), $E'(t) = 2\langle u'(t),u(t)\rangle$. Substituting the evolution equation,
-$$ E'(t) = 2\langle -\nu A u - B(u,u),\,u\rangle = -2\nu\langle Au,u\rangle - 2\langle B(u,u),u\rangle. $$
-The trilinear cancellation kills the last term, leaving $E'(t) = -2\nu\langle Au,u\rangle$. $\square$
+### 2.2. Points, scales, and regularity
 
-> **Theorem 3.3 (Dissipation rate is nonpositive, `energy_deriv_nonpos`).**
-> For any solution $u$ and every $t$, $\ E'(t) \le 0.$
+Let $Z$ be a set of points. In a fluid application, $Z$ may be a spacetime domain. Let
 
-*Proof sketch.* Immediate from Theorem 3.2: $\nu\ge 0$ and positivity of $A$ give $-2\nu\langle Au,u\rangle\le 0$. $\square$
+$$
+\operatorname{Reg}(z)
+$$
 
-> **Theorem 3.4 (Energy is antitone, `energy_antitone`).**
-> For any solution $u$, the map $t\mapsto E(t)=\lVert u(t)\rVert^2$ is nonincreasing.
+be a predicate meaning that the solution is regular at $z$. “Regular” may mean local boundedness, Hölder continuity, or another condition sufficient to bootstrap to smoothness, depending on the analytic context.
 
-*Proof sketch.* A differentiable real function with nonpositive derivative everywhere is antitone (mean value theorem / `antitone_of_deriv_nonpos`), applied to Theorem 3.3. $\square$
+Let
 
-> **Corollary 3.5 (A priori energy bound, `energy_le_initial`).**
-> For any solution $u$ and $s\le t$, $\ \lVert u(t)\rVert^2 \le \lVert u(s)\rVert^2.$
+$$
+E:Z\times\mathbb{R}\to\mathbb{R}
+$$
 
-> **Theorem 3.6 (No finite-time blowup in the energy norm, `norm_le_initial`).**
-> For any solution $u$ and $s\le t$, $\ \lVert u(t)\rVert \le \lVert u(s)\rVert.$
+be an excess function. Only positive radii $r>0$ are used. In a Navier–Stokes application, $E(z,r)$ is intended to be scale invariant and may combine normalized velocity and pressure integrals over a parabolic cylinder centered at $z$. The abstract results do not require nonnegativity or measurability of $E$; such properties become relevant when proving a concrete concentration estimate.
 
-*Proof sketch.* Take square roots in Corollary 3.5 (monotonicity of $\sqrt{\cdot}$ on $[0,\infty)$), using that the norm is nonnegative. $\square$
+Fix a threshold $\varepsilon>0$.
 
-Theorem 3.6 is precisely the Leray–Hopf *a priori* estimate that powers global existence of weak solutions: the energy norm of the solution can never exceed its value at any earlier time, so the solution exists for all time in the energy class.
+**Definition 2.1 (epsilon-regularity criterion).** The triple $(\operatorname{Reg},E,\varepsilon)$ satisfies an epsilon-regularity criterion if, for every $z\in Z$,
 
-### 3.3 Why this is not the full regularity theorem
+$$
+\left(\exists r>0\text{ such that }E(z,r)<\varepsilon\right)
+\Longrightarrow \operatorname{Reg}(z).
+$$
 
-The energy norm controls $\lVert u\rVert$ but not its derivatives. Full 3D regularity requires control of the **enstrophy** $\langle Au,u\rangle$ (the $H^1$ seminorm / vorticity energy). Differentiating the enstrophy yields a balance
-$$ \tfrac{d}{dt}\langle Au,u\rangle = -2\nu\lVert Au\rVert^2 + 2\langle B(u,u),Au\rangle, $$
-in which the production term $2\langle B(u,u),Au\rangle$ does **not** vanish: the cancellation $\langle B(v,v),v\rangle=0$ holds only when $B(v,v)$ is tested against $v$, not against $Av$. Thus enstrophy fails to be a Lyapunov observable, and this missing cancellation is the precise algebraic location of the 3D regularity gap (see §6).
+The criterion is deliberately one-scale: a single radius with sufficiently small excess implies regularity at the center.
 
-## 4. Discrete Tropical Diffusion
+**Definition 2.2 (singular set).** The singular set is
 
-We now construct a setting in which a Lyapunov observable *does* control the full state, using max-plus (tropical) algebra.
+$$
+S=\{z\in Z:\neg\operatorname{Reg}(z)\}.
+$$
 
-### 4.1 Definitions
+**Definition 2.3 (persistent-concentration set).** The concentration set associated with $E$ and $\varepsilon$ is
 
-> **Definition 4.1 (Tropical diffusion operators).** For a cost matrix $K:\iota\times\iota\to\mathbb{R}$ and a state $u:\iota\to\mathbb{R}$,
-> $$ (\mathrm{tropDiffMax}\,K\,u)_i = \max_{j}\big(u_j - K_{ij}\big), \qquad (\mathrm{tropDiff}\,K\,u)_i = \min_{j}\big(K_{ij} + u_j\big). $$
-> The first is the max-plus (Bellman/Lax–Oleinik dilation) operator; the second is its min-plus dual.
+$$
+C=\{z\in Z:\text{for every }r>0,\ E(z,r)\ge\varepsilon\}.
+$$
 
-> **Definition 4.2 (Observables).**
-> $$ \mathrm{tropEnergy}(u) = \max_j u_j, \qquad \mathrm{osc}(u) = \max_j u_j - \min_j u_j, $$
-> $$ \mathrm{tropDissipation}(K,u) = \max_i\big(u_i - (\mathrm{tropDiffMax}\,K\,u)_i\big). $$
-> The $n$-fold iterate is $\mathrm{iterateTrop}\,K\,0\,u = u$ and $\mathrm{iterateTrop}\,K\,(n{+}1)\,u = \mathrm{tropDiffMax}\,K\,(\mathrm{iterateTrop}\,K\,n\,u)$.
+Thus $C$ contains the points where no positive observational scale falls below the regularity threshold.
 
-> **Definition 4.3 (Discrete vorticity surrogate).** For a weight matrix $A:\iota\times\iota\to\mathbb{R}$,
-> $$ \mathrm{discreteVorticity}(A,u) = \max_i \max_j \big| A_{ij}\,(u_j - u_i)\big|. $$
+### 2.3. Singular points force concentration
 
-We say $K$ is *admissible* if $K_{ij}\ge 0$ for all $i,j$ (nonnegative costs) and $K_{ii}=0$ for all $i$ (no self-cost).
+**Theorem 2.4 (singular excess lower bound).** Assume the epsilon-regularity criterion. If $z\in S$, then for every $r>0$,
 
-### 4.2 The tropical maximum principle
+$$
+E(z,r)\ge\varepsilon.
+$$
 
-> **Lemma 4.4 (Pointwise bound, `tropDiffMax_pointwise_le`).** If $K_{ij}\ge 0$ for all $i,j$, then for every $i$, $\ (\mathrm{tropDiffMax}\,K\,u)_i \le \max_j u_j.$
+**Proof sketch.** Fix a singular point $z$ and a positive radius $r$. If $E(z,r)<\varepsilon$, then the chosen radius witnesses the premise of the epsilon-regularity criterion, so $\operatorname{Reg}(z)$ holds. This contradicts $z\in S$. Hence $E(z,r)\ge\varepsilon$. Since $r>0$ was arbitrary, the inequality holds at every positive scale. $\square$
 
-*Proof sketch.* For each $j$, $u_j - K_{ij} \le u_j \le \max_k u_k$ since $K_{ij}\ge 0$; take the supremum over $j$. $\square$
+The theorem is a contrapositive, but it has a useful geometric interpretation: singularity requires persistent concentration under indefinite magnification.
 
-> **Theorem 4.5 (Maximum principle, `tropDiffMax_le_sup`).** For admissible $K$, $\ \mathrm{tropEnergy}(\mathrm{tropDiffMax}\,K\,u) \le \mathrm{tropEnergy}(u).$
+**Theorem 2.5 (singular-set containment).** Under the same assumptions,
 
-*Proof sketch.* Take the supremum over $i$ of the pointwise bound in Lemma 4.4. $\square$
+$$
+S\subseteq C.
+$$
 
-A dual statement, `inf_le_tropDiff` (and `inf_le_tropDiffMax`), shows the global infimum is nondecreasing, so the full range $[\min,\max]$ cannot expand.
+**Proof sketch.** If $z\in S$, Theorem 2.4 gives $E(z,r)\ge\varepsilon$ for every $r>0$. This is exactly the defining condition for $z\in C$. $\square$
 
-### 4.3 Structural properties
+The containment is the bridge between a local analytic regularity test and a geometric estimate for exceptional points.
 
-> **Theorem 4.6 (Monotonicity, `tropDiffMax_monotone`).** If $u\le v$ pointwise, then $\mathrm{tropDiffMax}\,K\,u \le \mathrm{tropDiffMax}\,K\,v$ pointwise.
+## 3. Measure-theoretic partial regularity
 
-> **Theorem 4.7 (Translation equivariance, `tropDiffMax_add_const`).** $\mathrm{tropDiffMax}\,K\,(u + c) = (\mathrm{tropDiffMax}\,K\,u) + c$ for any constant $c$.
+Equip $Z$ with a sigma-algebra and let $\mu$ be any measure. The results below require no special geometry of $\mu$. In an application, one may choose Lebesgue measure, a parabolic Hausdorff measure, or a measure localized by restriction.
 
-> **Theorem 4.8 (Sup-norm nonexpansiveness, `tropDiffMax_nonexpansive`).** For all $u,v$ and each $i$,
-> $$ \big|(\mathrm{tropDiffMax}\,K\,u)_i - (\mathrm{tropDiffMax}\,K\,v)_i\big| \le \max_j |u_j - v_j|. $$
+**Theorem 3.1 (global null-set transfer).** Assume the epsilon-regularity criterion and suppose
 
-*Proof sketch.* A supremum of $1$-Lipschitz functions is $1$-Lipschitz; bound each $u_j-K_{ij}$ against $v_j-K_{ij}$ using $|u_j-v_j|\le\max_k|u_k-v_k|$ and conclude via `abs_sub_le_iff`. $\square$
+$$
+\mu(C)=0.
+$$
 
-> **Theorem 4.9 (Oscillation contraction, `osc_tropDiffMax_le_osc`).** For admissible $K$, $\ \mathrm{osc}(\mathrm{tropDiffMax}\,K\,u) \le \mathrm{osc}(u).$
+Then
 
-*Proof sketch.* Combine Theorem 4.5 (sup decreases) with the dual `inf_le_tropDiffMax` (inf increases); subtract. $\square$
+$$
+\mu(S)=0.
+$$
 
-### 4.4 Iterated evolution and vorticity bounds
+**Proof sketch.** Theorem 2.5 gives $S\subseteq C$. By monotonicity of measures,
 
-> **Theorem 4.10 (Uniform sup bound, `iterate_sup_bound`).** For admissible $K$ and all $n$, $\ \mathrm{tropEnergy}(\mathrm{iterateTrop}\,K\,n\,u) \le \mathrm{tropEnergy}(u).$
+$$
+0\le\mu(S)\le\mu(C)=0.
+$$
 
-*Proof sketch.* Induction on $n$, applying Theorem 4.5 at each step. $\square$
+Therefore $\mu(S)=0$. $\square$
 
-> **Theorem 4.11 (Oscillation bound under iteration, `iterate_osc_monotone`).** For admissible $K$ and all $n$, $\ \mathrm{osc}(\mathrm{iterateTrop}\,K\,n\,u) \le \mathrm{osc}(u).$
+This theorem isolates the final measure-theoretic reduction in a partial-regularity argument. Establishing $\mu(C)=0$ may be very difficult; transferring that estimate to $S$ is immediate once epsilon regularity is known.
 
-> **Theorem 4.12 (Vorticity control, `discreteVorticity_le_osc`, `iterate_vorticity_bound`).** If $0\le A_{ij}\le 1$ for all $i,j$, then $\ \mathrm{discreteVorticity}(A,u)\le \mathrm{osc}(u)$, and for admissible $K$ and all $n$, $\ \mathrm{discreteVorticity}(A,\mathrm{iterateTrop}\,K\,n\,u)\le \mathrm{osc}(u).$
+**Theorem 3.2 (localized null-set transfer).** Let $R\subseteq Z$ be any region. If
 
-> **Theorem 4.13 (Dissipation nonnegativity, `tropDissipation_nonneg`).** For admissible $K$, $\ \mathrm{tropDissipation}(K,u)\ge 0.$
+$$
+\mu(C\cap R)=0,
+$$
 
-These results establish a complete, self-contained discrete regularity theory: oscillation (the discrete analogue of a gradient bound) and vorticity remain uniformly controlled under arbitrarily many diffusion steps. No blowup can occur.
+then
 
-## 5. The Bridge: One Principle, Two Proofs of Monotonicity
+$$
+\mu(S\cap R)=0.
+$$
 
-The two frameworks share their final inferential step — *a nonincreasing scalar is bounded by its initial value* — while differing entirely in why the scalar is nonincreasing.
+**Proof sketch.** Intersecting the containment $S\subseteq C$ with $R$ gives
 
-> **Lemma 5.1 (Tropical energy step bound, `tropEnergy_step_le`).** For admissible $K$, $\ \mathrm{tropEnergy}(\mathrm{tropDiffMax}\,K\,u)\le \mathrm{tropEnergy}(u).$
+$$
+S\cap R\subseteq C\cap R.
+$$
 
-This is Theorem 4.5 read through the `tropEnergy` observable.
+Measure monotonicity then yields the conclusion. $\square$
 
-> **Theorem 5.2 (Antitone tropical energy, `tropEnergy_iterate_antitone`).** For admissible $K$, the sequence
-> $$ n \longmapsto \mathrm{tropEnergy}\big(\mathrm{iterateTrop}\,K\,n\,u\big) $$
-> is antitone (nonincreasing).
+No measurability assumption on $R$, $S$, or $C$ beyond that implicit in the ambient measure formalism is needed when nullity is interpreted through the complete monotone null-set principle: every subset of a null measurable set is null in the completed sense. In standard applications the relevant sets are measurable or are handled via outer measure.
 
-*Proof sketch.* By `antitone_nat_of_succ_le`, it suffices to show each term dominates its successor, i.e. $\mathrm{tropEnergy}(\mathrm{iterateTrop}\,K\,(n{+}1)\,u) \le \mathrm{tropEnergy}(\mathrm{iterateTrop}\,K\,n\,u)$. Since the $(n{+}1)$-th iterate is one diffusion step applied to the $n$-th, this is exactly Lemma 5.1. $\square$
+**Corollary 3.3 (almost-everywhere regularity).** If $\mu(C)=0$, then
 
-**Remark (genuine strengthening).** Theorem 5.2 is *not* a restatement of Theorem 4.10. The per-iterate bound $\mathrm{tropEnergy}(\mathrm{iterateTrop}\,K\,n\,u)\le\mathrm{tropEnergy}(u)$ only compares each iterate with the initial state; antitonicity asserts step-by-step monotonicity of the entire trajectory and *implies* (but is not implied by) the per-iterate bound. This is the Lyapunov (monotone-observable) structure made explicit on the discrete side, matching `energy_antitone` on the viscous side.
+$$
+\operatorname{Reg}(z)
+$$
 
-> **Theorem 5.3 (Unified no-blowup, `viscous_and_tropical_no_blowup`).** Let $M$ be an abstract Galerkin Navier–Stokes model on $V$, let $u$ be a solution of $M$, let $s\le t$, let $K$ be admissible, let $n\in\mathbb{N}$, and let $w:\iota\to\mathbb{R}$. Then
-> $$ \lVert u(t)\rVert \le \lVert u(s)\rVert \qquad\text{and}\qquad \mathrm{tropEnergy}\big(\mathrm{iterateTrop}\,K\,n\,w\big) \le \mathrm{tropEnergy}(w). $$
+holds for $\mu$-almost every $z\in Z$.
 
-*Proof sketch.* The first conjunct is Theorem 3.6 (`norm_le_initial`), proved by parabolic energy dissipation. The second is Theorem 4.10 (`iterate_sup_bound`), proved by the order-theoretic maximum principle. The two halves are combined into a single conjunction. $\square$
+**Proof sketch.** The points where regularity fails form exactly $S$. By Theorem 3.1, $S$ is null, which is the definition of almost-everywhere regularity. $\square$
 
-The following table summarizes the unification.
+### 3.1. Relation to parabolic partial regularity
 
-| Aspect | Viscous (parabolic) | Tropical (idempotent) |
-|---|---|---|
-| State space | real inner-product space $V$ | functions $\iota\to\mathbb{R}$, $\iota$ finite |
-| Evolution | $u' = -\nu A u - B(u,u)$ | $u \mapsto \mathrm{tropDiffMax}\,K\,u$ |
-| Lyapunov observable $\Phi$ | $\lVert u\rVert^2$ | $\max_j u_j$ |
-| Why $\Phi$ is nonincreasing | $\Phi' = -2\nu\langle Au,u\rangle \le 0$ | $\max$ of nonincreasing entries |
-| Underlying reason | trilinear cancellation + dissipation | $K\ge 0$ + idempotency |
-| No-blowup conclusion | `norm_le_initial` | `iterate_sup_bound`, `tropEnergy_iterate_antitone` |
+For Navier–Stokes flow, spacetime scales anisotropically: under the natural scaling, spatial radius $r$ is paired with temporal depth proportional to $r^2$. A concrete excess may therefore be built on parabolic cylinders
 
-## 6. Discussion: The Location of the 3D Gap
+$$
+Q_r(z_0)=B_r(x_0)\times(t_0-r^2,t_0)
+$$
 
-The unification clarifies the precise sense in which 3D Navier–Stokes is hard. The Lyapunov principle is *universally available* whenever a monotone observable exists; the difficulty is that the observable controlling regularity (enstrophy) is *not* monotone. From §3.3, the enstrophy balance
-$$ \tfrac{d}{dt}\langle Au,u\rangle = -2\nu\lVert Au\rVert^2 + 2\langle B(u,u),Au\rangle $$
-carries a production term that survives precisely because the cancellation is tied to testing $B(v,v)$ against $v$. In the tropical world there is no such obstruction: the maximum principle controls the *entire* state in the sup norm, so the analogue of enstrophy (oscillation, vorticity) is automatically dominated (Theorems 4.9, 4.11, 4.12). The tropical model is, in effect, a fully solvable toy universe whose anti-blowup skeleton is identical to the viscous one — but where the dangerous production term is structurally absent.
+for $z_0=(x_0,t_0)$. A typical program has three stages:
 
-## 7. Future Work
+1. formulate a scale-invariant excess from velocity and pressure;
+2. prove that excess below a universal $\varepsilon$ at one scale implies regularity on a smaller concentric cylinder;
+3. prove by energy estimates and a covering argument that persistent-concentration points have zero one-dimensional parabolic Hausdorff measure.
 
-1. **Enstrophy identity.** Formalize $\frac{d}{dt}\langle Au,u\rangle = -2\nu\lVert Au\rVert^2 + 2\langle B(u,u),Au\rangle$, mirroring Theorem 3.2 but tested against $Au$, isolating the uncancelled production term as the algebraic regularity gap.
-2. **Small-data global regularity.** Prove that if the initial enstrophy lies below a threshold $c\,\nu^2/\lVert B\rVert^2$, a Grönwall bootstrap (using the cubic-vs-quadratic balance of production vs. dissipation) keeps enstrophy bounded for all time — a Beale–Kato–Majda / Fujita–Kato criterion in the abstract model.
-3. **Lyapunov meta-theorem.** Abstract Theorem 5.3 into a single statement: any evolution (continuous or discrete) admitting a real observable $\Phi$ nonincreasing along orbits is globally bounded by $\Phi(\text{initial})$, with the viscous energy and the tropical sup as instances.
-4. **Discrete energy cascade.** Build a finite shell/dyadic model with nearest-neighbour quadratic coupling satisfying the cancellation, and prove the energy flux through scales is bounded by the input rate — a rigorous discrete analogue of Kolmogorov's $-5/3$ law.
+Theorems 2.4–3.3 supply the exact final implication from stages 2 and 3: every singular point is persistently concentrated, and the singular set inherits the concentration set’s nullity. The current framework does not prove stages 1–3 for suitable weak solutions; it identifies their logical interface.
 
-## 8. Conclusion
+## 4. Conservative transfer among finitely many modes
 
-We have shown that two anti-blowup mechanisms — the continuous viscous energy method behind Leray–Hopf existence and a discrete tropical maximum principle — are realizations of one principle: *the existence of a monotone Lyapunov observable forbids singularities*. The viscous side derives monotonicity from a derivative sign (dissipation plus the trilinear cancellation); the tropical side derives it from an order inequality (idempotent dilation with nonnegative costs). The capstone theorem `viscous_and_tropical_no_blowup` packages both no-blowup conclusions in a single statement, and the strengthened `tropEnergy_iterate_antitone` exposes the shared Lyapunov structure explicitly. The remaining hardness of 3D regularity is thereby pinpointed: the natural obstruction, enstrophy, simply fails to be such an observable.
+### 4.1. Modal transfer
+
+Let $I$ be a finite index set and $V$ a real inner-product space with inner product $\langle\cdot,\cdot\rangle$. A state is a family
+
+$$
+u=(u_i)_{i\in I},\qquad u_i\in V,
+$$
+
+and a nonlinear interaction is a family
+
+$$
+N=(N_i)_{i\in I},\qquad N_i\in V.
+$$
+
+The symbol $N_i$ may represent the nonlinear term evaluated at the current state and projected onto mode $i$. No linearity of $N$ is assumed.
+
+**Definition 4.1 (modal energy-transfer rate).** The instantaneous nonlinear transfer into mode $i$ is
+
+$$
+\tau_i=\langle N_i,u_i\rangle.
+$$
+
+This is the nonlinear contribution to the derivative of quadratic modal energy, up to whichever factor is chosen in defining that energy.
+
+**Definition 4.2 (transfer into a mode set).** For $A\subseteq I$, define
+
+$$
+T(A)=\sum_{i\in A}\tau_i
+=\sum_{i\in A}\langle N_i,u_i\rangle.
+$$
+
+**Definition 4.3 (global nonlinear energy conservation).** The interaction conserves total quadratic energy at the state $u$ when
+
+$$
+T(I)=0.
+$$
+
+This is an instantaneous statewise condition. In Galerkin models of incompressible flow, it reflects skew-symmetry or cancellation of the convective term under suitable boundary conditions and exact evaluation.
+
+### 4.2. Exact complementary exchange
+
+**Theorem 4.4 (complementary transfer identity).** Let $A\subseteq I$. If $T(I)=0$, then
+
+$$
+T(I\setminus A)=-T(A).
+$$
+
+**Proof sketch.** Because $A$ and $I\setminus A$ are disjoint and have union $I$, finite-sum additivity gives
+
+$$
+T(I)=T(A)+T(I\setminus A).
+$$
+
+Substituting $T(I)=0$ and rearranging proves the identity. $\square$
+
+The theorem applies to every selected collection: low modes, high modes, a shell, a disconnected band, or a data-dependent subset, provided it lies within the finite truncation.
+
+**Corollary 4.5 (sign reversal).** Under the hypotheses of Theorem 4.4, if
+
+$$
+T(A)>0,
+$$
+
+then
+
+$$
+T(I\setminus A)<0.
+$$
+
+**Proof sketch.** The complement transfer equals the negative of a positive number. $\square$
+
+**Corollary 4.6 (equal transfer magnitude).** Under the same hypotheses,
+
+$$
+|T(I\setminus A)|=|T(A)|.
+$$
+
+**Proof sketch.** Apply absolute values to $T(I\setminus A)=-T(A)$ and use $|-x|=|x|$. $\square$
+
+### 4.3. Conservation versus cascade direction
+
+The identity is exact but sign-neutral. If $A$ denotes low wavenumbers, then $T(A)<0$ is consistent with low modes losing energy and high modes gaining it; $T(A)>0$ represents the reverse exchange. Both obey global conservation. Thus conservation alone cannot establish a forward or inverse cascade.
+
+An additional distinction concerns instantaneous and time-integrated transfer. The quantity $T(A)$ here is evaluated at one state. Integrating it over time gives a cumulative exchange only when a time-dependent trajectory and adequate integrability are supplied. Similarly, an ensemble-mean flux requires a probability law. The finite identity remains valid pointwise and therefore survives time integration or averaging whenever those operations are legitimate, but no statistical conclusion follows without that extra structure.
+
+This limitation can be demonstrated by a scalar example. Let $V=\mathbb{R}$, let $I=\{0,1,2,3\}$, and set
+
+$$
+u=(1,1,1,1),\qquad N=(1,2,-1,-2).
+$$
+
+Then $\tau=(1,2,-1,-2)$ and $T(I)=0$. For $A=\{0,1\}$,
+
+$$
+T(A)=3,
+\qquad
+T(I\setminus A)=-3.
+$$
+
+Replacing $N$ by $-N$ gives $T(A)=-3$ and $T(I\setminus A)=3$. Both interactions satisfy the same conservation law. A preferred cascade direction therefore requires additional hypotheses concerning dynamics, triadic geometry, forcing and dissipation, ensembles, flux locality, or statistical stationarity.
+
+## 5. Algorithms
+
+### 5.1. Epsilon-regularity screening on sampled scales
+
+Given finitely many sampled points and scales, one may classify a point as **certified regular** if at least one sampled positive scale has excess below $\varepsilon$. If none does, the point is labeled **unresolved concentration candidate**, not singular. Finite sampling can confirm the premise of epsilon regularity, but it cannot establish a universal statement over every positive radius.
+
+For $n$ points and $m$ scales per point, the procedure takes $O(nm)$ excess comparisons and $O(n)$ output storage. Its sound conclusion is one-sided: a detected small scale certifies regularity under the criterion; failure to detect one is not proof of singularity.
+
+### 5.2. Modal transfer audit
+
+Given vectors $u_i,N_i\in\mathbb{R}^d$, compute
+
+$$
+\tau_i=N_i\cdot u_i,
+$$
+
+sum over all modes and over a selected band, and compare the complement sum with the negative band sum. The cost is $O(|I|d)$ arithmetic operations and $O(|I|)$ storage if all modal transfers are retained, or $O(1)$ extra storage if accumulated online.
+
+A numerical tolerance is required in floating-point arithmetic. The residuals
+
+$$
+R_{\mathrm{total}}=T(I),
+\qquad
+R_{\mathrm{balance}}=T(I\setminus A)+T(A)
+$$
+
+separate two checks. The second residual is an arithmetic partition identity and should be near zero regardless of conservation if all modes are partitioned consistently. The first tests the physical or model assumption of global conservative transfer.
+
+### 5.3. Constructing a conservative completion
+
+Given arbitrary proposed transfers $\tau_1,\ldots,\tau_{n-1}$, define
+
+$$
+\tau_n=-\sum_{i=1}^{n-1}\tau_i.
+$$
+
+Then $\sum_{i=1}^n\tau_i=0$. This $O(n)$ construction generates examples for testing transfer diagnostics. It constructs transfer rates, not necessarily a physically realizable Navier–Stokes triadic interaction; realizability imposes additional structure.
+
+## 6. Numerical examples
+
+### 6.1. Sampled excess profiles
+
+Take $\varepsilon=0.1$ and scales
+
+$$
+r\in\left\{1,\frac12,\frac14,\frac18\right\}.
+$$
+
+At point $a$, let
+
+$$
+E(a,r)=(0.42,0.18,0.08,0.04).
+$$
+
+Since $E(a,1/4)=0.08<0.1$, the epsilon-regularity criterion certifies regularity at $a$.
+
+At point $b$, let
+
+$$
+E(b,r)=(0.31,0.21,0.14,0.11).
+$$
+
+Every sampled value exceeds the threshold. Point $b$ is therefore a concentration candidate on the sampled scales, but one cannot conclude $b\in C$: a smaller unsampled radius might have excess below $0.1$.
+
+This illustrates the logical asymmetry of numerical screening. One successful scale is decisive; finitely many unsuccessful scales cannot settle an all-scale condition.
+
+### 6.2. Vector-valued modal exchange
+
+Let four modes have two-dimensional states
+
+$$
+u_0=(1,0),\quad u_1=(0,1),\quad u_2=(1,1),\quad u_3=(2,-1),
+$$
+
+and interactions
+
+$$
+N_0=(2,0),\quad N_1=(0,1),\quad N_2=(-1,0),\quad N_3=(-1,0).
+$$
+
+Their transfers are
+
+$$
+\tau_0=2,\quad \tau_1=1,\quad \tau_2=-1,\quad \tau_3=-2,
+$$
+
+so total transfer vanishes. For $A=\{0,1\}$,
+
+$$
+T(A)=3,
+\qquad
+T(I\setminus A)=-3.
+$$
+
+The complement has opposite sign and equal magnitude, exactly as Theorem 4.4 requires.
+
+## 7. Applications and interpretation
+
+### 7.1. Architecture of a partial-regularity proof
+
+The abstract framework encourages a modular proof strategy. Analysts may focus on deriving a criterion of the form
+
+$$
+E(z,r)<\varepsilon\Longrightarrow\operatorname{Reg}(z)
+$$
+
+and on estimating the set where this never occurs. Once those two ingredients are established for a selected measure, almost-everywhere regularity follows without further PDE manipulation. This separation also clarifies which changes in the excess leave the final argument intact: any replacement excess and threshold work if they satisfy the same implication and concentration estimate.
+
+### 7.2. Local certification
+
+The localized theorem is suited to interior estimates, boundary-free subdomains, or regions where auxiliary assumptions hold. If concentration is null only in $R$, regularity is still obtained almost everywhere in $R$. No global estimate is required.
+
+### 7.3. Spectral simulation diagnostics
+
+In a conservative finite-mode model, total nonlinear transfer should be zero up to numerical error. A transfer audit can detect violations caused by aliasing, inconsistent quadrature, omitted modes, or coding errors. Band-complement comparison can then show where the computed interaction redistributes energy. The theorem guarantees exact balance in the ideal algebraic model; observed discrepancies quantify numerical defects or nonconservative terms.
+
+### 7.4. What the results do not imply
+
+Three boundaries are essential.
+
+First, almost-everywhere regularity is weaker than everywhere regularity. A null singular set may still be nonempty.
+
+Second, singular-set containment does not itself prove that the concentration set is null. That conclusion requires analytic estimates adapted to actual solutions.
+
+Third, complementary transfer balance does not select a cascade direction. Equal and opposite exchange is compatible with either sign.
+
+These limitations are not defects. They identify precisely which conclusions follow from logic and conservation and which require deeper PDE or turbulence input.
+
+## 8. Future work
+
+A complete analytic development would first define suitable weak solutions and prove the local energy inequality. It would then introduce a concrete parabolic scale-invariant excess involving velocity and pressure, establish a universal epsilon-regularity theorem, and prove a covering estimate for persistent concentration. The abstract results of Sections 2 and 3 would convert those ingredients into a partial-regularity conclusion.
+
+A second direction is a critical continuation criterion. One seeks to show that a smooth solution on $[0,T)$ whose velocity remains bounded in the scale-critical space $L^\infty(0,T;L^3(\mathbb{R}^3))$ extends smoothly beyond $T$. This would connect concentration control to prevention of finite-time breakdown.
+
+A third direction builds a bridge from finite-dimensional Galerkin approximations to suitable weak solutions. Uniform energy bounds must be combined with compactness strong enough to pass to the nonlinear term and preserve both global and local energy inequalities.
+
+For turbulence, one should characterize additional assumptions that induce a statistically preferred sign of transfer. Triadic interaction structure, locality, forcing and dissipation ranges, ensemble averaging, and flux laws are natural candidates. A useful complementary objective is to exhibit explicitly energy-conserving interactions and states with either sign of transfer into the same prescribed band, demonstrating sharply that conservation fixes balance rather than direction.
+
+## 9. Conclusion
+
+Two exact principles have been established. Under any one-scale epsilon-regularity criterion with positive threshold, singular points must remain above threshold at every positive scale. Hence the singular set lies inside the persistent-concentration set, and every global or localized null estimate for concentration transfers to singularity; regularity follows almost everywhere. Separately, in any finite real inner-product modal system with zero total nonlinear energy transfer, transfer into a selected band is the negative of transfer into its complement, with opposite sign and equal magnitude.
+
+These results do not resolve three-dimensional Navier–Stokes existence and smoothness. They provide clean interfaces for the unresolved work. Partial regularity reduces to proving a concrete small-excess theorem and a geometric concentration estimate. Cascade theory must supplement conservation with mechanisms that choose a direction. In both settings, the reductions distinguish exact accounting laws from the deeper analysis needed to understand fluid singularities and turbulence.

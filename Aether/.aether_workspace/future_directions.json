@@ -1855,7 +1855,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Campos-Griffiths-Morris-Sahasrabudhe exponential improvement on diagonal Ramsey bounds R(k,k) ≤ (4-ε)^k.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -1975,7 +1975,7 @@
       "depth_estimate": 3,
       "description": "Proves the Alon-Boppana theorem establishing lower bounds λ_2 ≥ 2√(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -27279,7 +27279,7 @@
       "depth_estimate": 3,
       "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -27401,7 +27401,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Probability"
@@ -28148,7 +28148,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical",
         "Algebra",
@@ -30363,7 +30363,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Derive the tropical model from finite-temperature EML training.** Define a\n   log-sum-exp-smoothed neuron with scale parameter and prove convergence of its\n   losses and gradient trajectories to the piecewise-linear flow formalized here.\n\n2. **Pass from a scalar chart to the tropical projective torus.** Quotient weight\n   vectors by common translation, define a projective metric, and show the flow\n   is independent of the representative.\n\n3. **More samples and weighted data.** Generalize the three-point theorem to odd\n   finite samples (the median) and weighted samples (weighted median), including\n   even samples where the minimizer is an interval and trajectories may have\n   multiple fixed points.\n\n4. **Multiple tropical neurons.** Study sums and differences of max-affine terms,\n   where activation patterns partition parameter space into polyhedra. Establish\n   existence and convergence results under convexity or error-bound hypotheses.\n\n5. **Discrete training.** Analyze explicit subgradient descent with a step-size\n   schedule and compare it to the continuous clipped flow. Constant steps can\n   oscillate around the median, while diminishing steps should converge under\n   standard summability assumptions.\n\n6. **Perturbation and robustness.** Quantify stability of the limiting median\n   under changes in labels and tropical features, connecting training stability\n   to robust statistics.\n\n7. **Loss alternatives.** Compare tropical `L¹` training with squared loss and\n   Huber loss. Their minimizers connect respectively to means and robust\n   interpolations between means and medians, but their tropical-limit dynamics\n   differ.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -30486,7 +30486,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Turán extremizers.** For every integer `r ≥ 3` and real `ε > 0`, there exists `δ > 0` such that every `K_r`-free graph on `n` vertices with at least `ex(n,K_r) - δ n²` edges can be changed into the balanced complete `(r-1)`-partite graph by adding or deleting at most `ε n²` edges.\n\n2. **Clique-count shadow hierarchy.** If a finite graph has at least `k.choose t` copies of `K_t`, then for every `2 ≤ s ≤ t` it has at least `k.choose s` copies of `K_s`. This should follow by identifying graph cliques with a uniform set family and applying iterated Kruskal–Katona.\n\n3. **Induced triangle-removal lemma.** For every `ε > 0`, there exists `δ > 0` such that a finite graph with at most `δ n³` induced triangles can be made induced-triangle-free by changing at most `ε n²` adjacencies.\n\n4. **Quantitative Roth bound.** There are constants `C > 0` and `N₀` such that for all `N ≥ N₀`, `rothNumberNat N ≤ C * N / (log N)^(1 + 1/10)`. This strengthens the currently packaged qualitative `o(N)` conclusion and is directly testable against any proposed proof or finite counterexample.\n\n5. **Four-term progression removal route.** Construct a finite hypergraph removal theorem strong enough to prove that the largest four-term-AP-free subset of `{0, …, N-1}` is `o(N)`, with the progression required to have nonzero common difference.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -30512,6 +30512,47 @@
       "thread_id": "th_880cedc6",
       "timestamp": "2026-07-30T18:55:27.159959+00:00",
       "title": "The following concrete statements are natural next targets. Each is falsifiable "
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\nThe Lean development proves an abstract energy estimate, the final measure-theoretic reduction behind an ε-regularity argument, and exact finite-mode energy exchange. It does **not** resolve the open three-dimensional Navier–Stokes existence-and-smoothness problem or formalize the analytic core of the Caffarelli–Kohn–Nirenberg theorem.\n\nThe following are concrete conjectures with outcomes that can be refuted by counterexamples.\n\n1. **Parabolic ε-regularity criterion.** There is a universal constant `ε > 0` such that, for every suitable weak solution on a three-dimensional parabolic cylinder, scale-invariant local velocity-and-pressure excess below `ε` on one subcylinder implies Hölder regularity on a fixed, strictly smaller concentric subcylinder. A counterexample consists of a suitable weak solution and cylinder satisfying the smallness bound but lacking the asserted local regularity.\n\n2. **CKN concentration-set estimate.** For the excess in Conjecture 1, the set of points at which the excess is at least `ε` at every positive scale has zero one-dimensional parabolic Hausdorff measure. A counterexample is a suitable weak solution whose concentration set has positive such measure. Combined with `Criterion.singularSet_measure_zero`, this estimate would give the corresponding abstract partial-regularity conclusion.\n\n3. **Critical-norm continuation criterion.** Every smooth three-dimensional solution on `[0,T)` whose velocity remains bounded in `L∞(0,T; L³(ℝ³))` extends smoothly beyond `T`. A counterexample is a finite-time singular solution satisfying that critical bound.\n\n4. **No universal cascade direction from conservation alone.** There is a finite energy-conserving modal interaction with one state for which transfer into a prescribed proper mode band is positive and another state for which it is negative. Refutation requires showing that one sign is impossible for every such interaction and state. A proof would demonstrate that the conservation identity in `ModeTransfer.lean` fixes the balance but not the direction of turbulent transfer.\n\n5. **Galerkin compactness to a suitable weak solution.** For standard divergence-free Fourier Galerkin approximations with uniformly bounded initial energy, a subsequence converges strongly enough locally to pass to the nonlinear term and its limit satisfies both the Leray–Hopf energy inequality and the local energy inequality. A counterexample is a uniformly energy-bounded Galerkin sequence for which no subsequence has all these properties. This is a proposed bridge from `EnergyMethod.lean` to the hypotheses of Conjectures 1–2.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics",
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0851",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "726a20a7",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/726a20a7",
+      "status": "available",
+      "thread_id": "th_1a2bdb1a",
+      "timestamp": "2026-07-30T18:56:38.720688+00:00",
+      "title": "The Lean development proves an abstract energy estimate, the final measure-theor"
     },
     {
       "ambition_level": "extension",
@@ -30807,7 +30848,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1c628216 (Q=0.762), which proved 15 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressib",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -31527,7 +31568,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Novelty"
       ],
@@ -31847,7 +31888,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7edbd52d (Q=0.790), which proved 19 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -35224,7 +35265,7 @@
       "depth_estimate": 3,
       "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -35765,7 +35806,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.73786,
       "parent_direction": "",
       "priority_score": 0.94,
       "proof_strategy": "",
@@ -35776,7 +35817,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Navier-Stokes Existence and Smoothness"
@@ -39826,7 +39867,7 @@
       "depth_estimate": 3,
       "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k ≤ 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -39867,7 +39908,7 @@
       "depth_estimate": 3,
       "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -39989,7 +40030,7 @@
       "depth_estimate": 3,
       "description": "Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -45153,7 +45194,7 @@
       "depth_estimate": 3,
       "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -45863,7 +45904,7 @@
   "pruned": [],
   "recent_domain_counts": {
     "Algebra": 21,
-    "Analysis": 5,
+    "Analysis": 6,
     "Applications": 1,
     "Bridges": 4,
     "Combinatorics": 6,
@@ -45875,7 +45916,7 @@
     "MachineLearning": 6,
     "Novelty": 12,
     "NumberTheory": 3,
-    "Physics": 8,
+    "Physics": 9,
     "Probability": 2,
     "Pythagorean": 4,
     "Shared": 2,
@@ -45884,38 +45925,31 @@
     "Tropical": 3
   },
   "recent_theme_keywords": {
-    "**conjecture.**": 1,
-    "43fa6482": 1,
-    "`b(n)`": 1,
     "affine": 2,
     "algebraic": 6,
-    "applications": 1,
     "arbitrary": 5,
     "bounds": 4,
-    "building": 1,
+    "caffarelli-kohn-nirenberg": 1,
     "complexity": 4,
     "compute": 5,
     "conjecture": 21,
     "connected": 2,
+    "connections": 1,
     "consistent": 2,
     "constant": 3,
     "construct": 4,
-    "decision": 1,
-    "deepening": 1,
-    "deeper": 1,
+    "counterexample": 1,
     "dimension": 5,
-    "direction": 1,
     "directions": 3,
-    "discard": 1,
     "disconnected": 2,
-    "dissipation": 1,
     "element": 2,
+    "equations": 1,
     "equivalent": 4,
+    "existence": 1,
     "explicit": 3,
-    "extend": 1,
-    "family": 1,
+    "explore": 1,
     "finite": 8,
-    "formalize": 29,
+    "formalize": 30,
     "function": 6,
     "future": 1,
     "general": 1,
@@ -45931,9 +45965,11 @@
     "making": 2,
     "mathematical": 3,
     "natural": 2,
+    "navier-stokes": 1,
     "number": 6,
     "numerical": 2,
     "original": 1,
+    "partial": 1,
     "points": 3,
     "positive": 3,
     "possible": 3,
@@ -45947,15 +45983,19 @@
     "quantitative": 2,
     "random": 5,
     "regions": 2,
+    "regularity": 1,
     "remaining": 1,
     "renormalization": 2,
     "replace": 3,
     "requires": 2,
     "result": 5,
+    "results": 1,
     "reversibility": 1,
     "section": 2,
     "setting": 1,
     "size-indexed": 1,
+    "smoothness": 1,
+    "solutions": 1,
     "sorries": 1,
     "sphere": 2,
     "strongest": 1,
@@ -45970,6 +46010,7 @@
     "transitions": 1,
     "triangle": 3,
     "tropical": 1,
+    "turbulence": 1,
     "turán": 1,
     "turán's": 1,
     "unbiased": 1,

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e50f9bec",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\n1. **General-resolution Haken bound.** For the standard DAG-resolution calculus over `phpCNF (n+1) n`, there is a constant `c > 1` and threshold `N` such that every refutation has",
-      "quality_score": 0.78468,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-27T07:58:34",
-      "title": "Proof Complexity: Resolution and Cutting Planes"
-    },
-    {
       "cycle_id": "92e6405b",
       "domain": "Probability",
       "key_insight": "# FUTURE DIRECTIONS — 2D Ising phase transition\n\n## Verified results in this delivery\n\nThe Lean files under `Catalog/Applications/IsingModel/` establish the following\nparts of the requested developmen",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-30T18:54:20",
       "title": "Quantum Topological Phase Computation"
+    },
+    {
+      "cycle_id": "15429b4a",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Turán extremizers.** For every integer",
+      "quality_score": 0.73393,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-30T18:55:31",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bf4ad478",
-      "domain": "Probability",
-      "key_insight": "# Future Directions for Snake-in-the-Box Records\n\n## 1. Asymptotic density of induced hypercube paths\n\n**Conjecture.** There is an absolute constant `c > 0` such that every sufficiently large hypercub",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-21T20:45:23",
-      "title": "ArXiv paper: A Census of New Snake-in-the-Box Records"
-    },
     {
       "cycle_id": "f3a76d9a",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-30T18:54:20",
       "title": "Quantum Topological Phase Computation"
+    },
+    {
+      "cycle_id": "15429b4a",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Turán extremizers.** For every integer",
+      "quality_score": 0.73393,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-30T18:55:31",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "576be6d2",
-      "domain": "Logic",
-      "name": "Run",
-      "quality": 0.75955
-    },
-    {
-      "cycle_id": "576be6d2",
-      "domain": "Logic",
-      "name": "Run",
-      "quality": 0.75955
-    },
-    {
-      "cycle_id": "e722c646",
-      "domain": "Physics",
-      "name": "proves",
-      "quality": 0.7708899999999999
-    },
     {
       "cycle_id": "e722c646",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "phi_sq",
       "quality": 0.7997299999999999
+    },
+    {
+      "cycle_id": "15429b4a",
+      "domain": "Combinatorics",
+      "name": "This",
+      "quality": 0.73393
+    },
+    {
+      "cycle_id": "15429b4a",
+      "domain": "Combinatorics",
+      "name": "turan_extremalNumber_exact",
+      "quality": 0.73393
+    },
+    {
+      "cycle_id": "15429b4a",
+      "domain": "Combinatorics",
+      "name": "turan_density_bound",
+      "quality": 0.73393
     }
   ],
-  "last_updated": "2026-07-30T18:54:20",
+  "last_updated": "2026-07-30T18:55:31",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "1a27f9f3",
-        "quality": 0.7,
-        "theorems": 15,
-        "title": "The Fractal Dimension of Mathematical Truth"
-      },
-      {
         "cycle_id": "91cdf1e0",
         "quality": 0.69,
         "theorems": 18,
@@ -3265,6 +3259,12 @@
         "quality": 0.78958,
         "theorems": 19,
         "title": "Frankl's Union-Closed Conjecture"
+      },
+      {
+        "cycle_id": "15429b4a",
+        "quality": 0.73393,
+        "theorems": 11,
+        "title": "Extremal Graph Theory: Turán and Szemerédi"
       }
     ],
     "Computation": [
