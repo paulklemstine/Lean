@@ -1,446 +1,429 @@
-# Formal Limits of Molecular Computing: Discrete Reaction Networks, Parallelism, and Storage
+# Molecular Computation Under Explicit Resource Accounting: Universality, Description Volume, and Preparation-Limited Parallelism
 
 ## Abstract
 
-Molecular computing proposes to perform computation with populations of molecules
-that transform one another through chemical reactions. We develop a rigorous
-discrete framework for such systems and prove a coherent body of results
-delimiting their power. We adopt the standard *population* (Petri-net) semantics
-of a chemical reaction network (CRN): states are molecule-count vectors and
-reactions consume reactant complexes and create product complexes. We prove that
-this dynamics is **strongly monotone** and **translation-invariant**, that
-**coverability** is upward monotone, and that any balanced linear functional is a
-**conserved quantity** along every trajectory. From monotonicity we derive the
-central structural limitation: **no reaction can detect the absence of a
-species** (no zero-test), which is precisely the obstruction that keeps the exact
-discrete model strictly below Turing power. Turning to performance, we formalize
-the folklore that molecular parallelism gives only a **constant-factor speedup**:
-if work $W$ is spread across $T$ steps with at most $p$ operations per step, then
-$W \le T \cdot p$, whence the speedup is at most $p$; and with a fixed volume cap
-$P$ on simultaneous operations, exponential work forces unbounded parallel time,
-$T \ge 2^n/P$. Finally, we establish information-theoretic **storage bounds**: a
-register of $k$ two-state units distinguishes at most $2^k$ inputs, so
-distinguishing $N$ inputs requires $k \ge \log_2 N$ units, and any injective
-description scheme for $M$ behaviors requires $k \ge \log_2 M$ — a discrete shadow
-of the "volume proportional to Kolmogorov complexity" principle. All results are
-elementary in statement, exact (non-asymptotic where possible), and proved from
-first principles.
-
-**Keywords:** chemical reaction networks, mass-action kinetics, Petri nets,
-monotone dynamics, zero-test, conservation laws, molecular parallelism, DNA
-storage, Kolmogorov complexity, coverability.
-
----
+Chemical reaction networks provide a minimal language in which molecular populations represent data and reactions represent state transitions. This paper develops a self-contained mathematical account of three foundational questions: computational universality, physical description capacity, and the end-to-end value of molecular parallelism. First, any deterministic transition system is compiled into a unary reaction network whose one-hot population follows every finite execution trace exactly. Under discrete stochastic mass-action kinetics, the transition enabled at a one-hot source has propensity equal to its assigned rate, and positive rate therefore implies positive propensity. Decoded outputs and fixed halting states are preserved. Second, for a medium with positive integer capacity $b$ bits per volume unit, the exact minimum integer volume for a $K$-bit description is $\lceil K/b\rceil$; feasibility is equivalent to being at least this minimum. This gives a precise conditional form of description-volume proportionality and implies that a reliable $N$-bit register has $2^N$ Boolean states. Third, a preparation-aware cost model distinguishes parallel testing from candidate construction. If each of $N$ candidates costs $c\ge1$ units to prepare, sequential elapsed time is $(c+1)N$ and ideal molecular elapsed time is $cN+1$. The sequential time is at most twice the molecular time, even when $N=2^n$ for Boolean exhaustive search. The results separate mathematical consequences of explicit models from empirical claims about DNA density and reaction throughput.
 
 ## 1. Introduction
 
-A *molecular computer* is a physical system — canonically a solution of DNA
-strands or other reactive species — that carries out computation through chemical
-reactions rather than through electronic logic gates. The appeal is twofold. First,
-the information density of matter is extraordinary: a cubic micrometer can hold an
-enormous number of molecules, each a potential unit of state. Second, all those
-molecules react *in parallel*, suggesting a natural, massively concurrent
-substrate for computation. These observations have fueled ambitious conjectures:
-that a speck of DNA might store on the order of $10^{18}$ bits, that molecular
-parallelism might crush NP-complete problems, and that chemical reaction networks
-might be universal computers.
-
-Each of these claims is partly true and partly mistaken, and the boundary between
-the two is sharp and mathematical. This paper draws that boundary. We work in the
-discrete, population-level model of chemical reaction networks, which abstracts a
-reacting mixture as a bag of molecules undergoing state transitions. Within this
-model we prove:
-
-1. **Structural laws** of the dynamics: strong monotonicity, translation
-   invariance, monotone coverability, and conservation of balanced functionals.
-2. **A universality obstruction**: reactions cannot test for the absence of a
-   species, so the exact discrete model cannot implement a register machine's
-   zero-test and is therefore not Turing-complete on its own.
-3. **A parallelism bound**: molecular concurrency yields at most a constant-factor
-   ($p$-fold, volume-capped) speedup, and cannot reduce exponential work to
-   bounded time.
-4. **Storage and description bounds**: $\log_2 N$ two-state units are necessary to
-   distinguish $N$ inputs, and description length (hence volume) is bounded below
-   by the log of the number of realizable behaviors.
-
-The results are individually elementary; their value lies in their precision and
-in assembling them into a single, self-consistent account of what molecular
-computers can and cannot do.
-
----
-
-## 2. The discrete model of a chemical reaction network
-
-Throughout, let $S$ be a type of *species*. A **state** is a function
-$x : S \to \mathbb{N}$ recording the count $x(s)$ of each species. States are
-ordered pointwise: $x \le y$ means $x(s) \le y(s)$ for all $s$. Addition and
-truncated subtraction are pointwise, with $\mathbb{N}$-subtraction
-$a - b = \max(a-b, 0)$.
-
-**Definition 2.1 (Reaction).** A *reaction* $r$ consists of two states, the
-*reactant complex* $r.\mathrm{reactant} : S \to \mathbb{N}$ and the *product
-complex* $r.\mathrm{product} : S \to \mathbb{N}$.
-
-**Definition 2.2 (Enabled).** A reaction $r$ is *enabled* at a state $x$, written
-$r.\mathrm{enabled}(x)$, when $r.\mathrm{reactant} \le x$: every reactant molecule
-required is present.
-
-**Definition 2.3 (Firing).** Firing $r$ at $x$ yields the state
-$$r.\mathrm{fire}(x)(s) \;=\; x(s) - r.\mathrm{reactant}(s) + r.\mathrm{product}(s).$$
-On enabled states the truncated subtraction is exact, so firing consumes exactly
-the reactants and creates exactly the products.
-
-**Definition 2.4 (CRN, step, reachability).** A *chemical reaction network* is a
-finite list $rs$ of reactions. A *step* relates $x$ to $y$, written
-$\mathrm{Step}_{rs}(x,y)$, when some $r \in rs$ is enabled at $x$ and
-$y = r.\mathrm{fire}(x)$. *Reachability* $\mathrm{Reach}_{rs}$ is the reflexive–
-transitive closure of $\mathrm{Step}_{rs}$: $\mathrm{Reach}_{rs}(x,y)$ holds when
-$y$ can be obtained from $x$ by finitely many firings.
-
-This is exactly the vector-addition-system / Petri-net view of mass-action
-kinetics, stripped to its combinatorial core. Reaction *rates* are abstracted away;
-we keep only the reachable transitions, which is the appropriate level for
-questions of computational power.
-
----
-
-## 3. Structural laws of the dynamics
-
-### 3.1 Monotonicity
-
-**Lemma 3.1 (Enabledness is upward closed).** If $r$ is enabled at $x$ and
-$x \le y$, then $r$ is enabled at $y$.
-
-*Proof.* $r.\mathrm{reactant} \le x \le y$ by transitivity. $\qquad\blacksquare$
-
-**Theorem 3.2 (Strong monotonicity).** If $r$ is enabled at $x$, then for every
-surplus $d : S \to \mathbb{N}$,
-$$r.\mathrm{fire}(x + d) \;=\; r.\mathrm{fire}(x) + d.$$
-
-*Proof.* Fix a species $s$. Since $r.\mathrm{reactant}(s) \le x(s)$, the truncated
-subtraction is exact, and
-$(x(s) + d(s)) - r.\mathrm{reactant}(s) + r.\mathrm{product}(s)
-= \big(x(s) - r.\mathrm{reactant}(s) + r.\mathrm{product}(s)\big) + d(s)$
-is a valid identity over $\mathbb{N}$. $\qquad\blacksquare$
-
-**Corollary 3.3 (Monotone firing).** If $r$ is enabled at $x$ and $x \le y$, then
-$r.\mathrm{fire}(x) \le r.\mathrm{fire}(y)$.
-
-The content of Theorem 3.2 is that extra molecules are *inert bystanders*: firing
-a reaction on an enriched state does the same thing and leaves the surplus exactly
-as it was. This is the defining feature of the model and the source of both its
-robustness and its limitations.
-
-### 3.2 Translation invariance
-
-**Theorem 3.4 (Step shift).** If $\mathrm{Step}_{rs}(x,y)$ then
-$\mathrm{Step}_{rs}(x+d, y+d)$ for every $d$.
-
-*Proof.* Let $r$ witness the step, enabled at $x$ with $y = r.\mathrm{fire}(x)$.
-Then $r$ is enabled at $x + d$ (Lemma 3.1), and by Theorem 3.2,
-$r.\mathrm{fire}(x+d) = r.\mathrm{fire}(x) + d = y + d$. $\qquad\blacksquare$
+Molecular computation replaces electronic gates with transformations among molecular species. Its appeal rests on three observations. Molecules are small, so a physical volume may contain an enormous number of distinguishable components. Chemical reactions are intrinsically concurrent, so many local transformations can proceed at once. Finally, reaction rules can be designed to represent symbolic processes, suggesting that chemistry can implement general computation rather than only numerical simulation.
 
-**Theorem 3.5 (Reachability shift).** If $\mathrm{Reach}_{rs}(x,y)$ then
-$\mathrm{Reach}_{rs}(x+d, y+d)$ for every $d$.
+These observations motivate several different claims that should not be conflated. A **logical universality claim** asks whether a reaction formalism can reproduce arbitrary computation. A **capacity claim** asks how much reliable information fits in a given volume. A **throughput claim** asks how many correct transitions occur per unit time. A **complexity claim** asks whether parallel chemistry changes the end-to-end asymptotic cost of solving a problem. The first and fourth can be studied within mathematical models. The second and third require empirical premises before mathematics can draw numerical conclusions.
 
-*Proof.* Induction on the reflexive–transitive closure, applying Theorem 3.4 at
-each step. $\qquad\blacksquare$
+We adopt deliberately transparent models. Computation is represented by discrete molecular populations and integer-stoichiometric reactions. Deterministic state transitions are compiled into unary reactions using one species per configuration. Kinetic availability is described by stochastic mass-action propensity using falling factorials. Storage capacity is represented by a fixed number of reliable bits per integer volume unit. Exhaustive search is charged both for preparing candidate witnesses and for testing them.
 
-Adding a fixed background of molecules translates entire trajectories rigidly:
-the network's behavior is invariant under a global additive shift of the state.
+Within these models, four conclusions follow. First, reaction networks exactly simulate every finite trace of an arbitrary deterministic machine, including a Turing machine represented by its instantaneous configurations. Second, unary compiled transitions agree cleanly with mass-action kinetics at their source states. Third, minimum description volume is exactly ceiling division by bit density. Fourth, perfect parallel testing does not create an exponential end-to-end speedup when every candidate must be separately prepared at positive cost.
 
-### 3.3 Coverability
+The finite-trace qualification is important. A mathematical compilation may associate a species with every configuration, potentially yielding an infinite species family. The simulation theorem concerns exact traces in the reaction formalism; it does not assert that an unlimited family can be synthesized in a laboratory. Likewise, numerical DNA claims are treated conditionally. If a device reliably stores $10^{18}$ bits, then it has $2^{10^{18}}$ Boolean states. If it performs $10^{15}$ correct operations in one second, its throughput is $10^{15}$ operations per second. Establishing those antecedents belongs to experimental science.
 
-**Definition 3.6 (Coverable).** A target $t$ is *coverable* from $x$ if some
-reachable $y$ dominates it: $\exists y,\ \mathrm{Reach}_{rs}(x,y) \wedge t \le y$.
+## 2. Reaction-Network Model
 
-**Theorem 3.7 (Coverability is upward monotone).** If $x \le x'$ and $t$ is
-coverable from $x$, then $t$ is coverable from $x'$.
+### 2.1 Species, populations, and reactions
 
-*Proof.* Let $y$ witness coverability from $x$, so $\mathrm{Reach}_{rs}(x,y)$ and
-$t \le y$. Put $d = x' - x$, so $x + d = x'$ (exact since $x \le x'$). By
-Theorem 3.5, $\mathrm{Reach}_{rs}(x', y + d)$, and $t \le y \le y + d$. Thus
-$y + d$ witnesses coverability from $x'$. $\qquad\blacksquare$
+Let $I$ be a finite or discrete set of molecular species. A **population** is a function
 
-Coverability — "can we eventually accumulate at least a given amount of each
-species?" — is the canonical decidable question about such systems, and its upward
-monotonicity is the structural hallmark that separates CRN/Petri-net dynamics from
-more expressive models.
+$$
+x:I\to\mathbb{N},
+$$
 
-### 3.4 Conservation laws
+where $x(i)$ is the number of molecules of species $i$. A **reaction** $R$ is a pair of functions
 
-Let $S$ be finite. A *linear functional* is a weighting $w : S \to \mathbb{Z}$
-(mass, charge, atom count of a fixed element, etc.). Its value on a state is
-$$\mathrm{mass}_w(x) \;=\; \sum_{s \in S} w(s)\, x(s) \ \in \mathbb{Z}.$$
+$$
+r_R,p_R:I\to\mathbb{N},
+$$
 
-**Definition 3.8 (Conserved by a reaction).** $w$ is *conserved* by $r$ if
-$\sum_s w(s)\, r.\mathrm{product}(s) = \sum_s w(s)\, r.\mathrm{reactant}(s)$ — the
-reactant and product complexes carry equal $w$-weight (the reaction is
-$w$-balanced).
+with finite support, called its reactant and product stoichiometries. The reaction is written formally as
 
-**Theorem 3.9 (Invariance under firing).** If $w$ is conserved by $r$ and $r$ is
-enabled at $x$, then $\mathrm{mass}_w(r.\mathrm{fire}(x)) = \mathrm{mass}_w(x)$.
+$$
+\sum_{i\in I}r_R(i)S_i\longrightarrow\sum_{i\in I}p_R(i)S_i.
+$$
 
-*Proof.* On enabled states $r.\mathrm{fire}(x)(s) = x(s) - r.\mathrm{reactant}(s) +
-r.\mathrm{product}(s)$ over $\mathbb{Z}$. Substituting and splitting the sum,
-$$\mathrm{mass}_w(r.\mathrm{fire}(x)) = \mathrm{mass}_w(x)
-- \sum_s w(s)\, r.\mathrm{reactant}(s) + \sum_s w(s)\, r.\mathrm{product}(s),$$
-and the last two terms cancel by the balance condition. $\qquad\blacksquare$
+The reaction is **enabled** at population $x$ if
 
-**Theorem 3.10 (Conservation along trajectories).** If every reaction of $rs$
-conserves $w$, then $\mathrm{mass}_w(y) = \mathrm{mass}_w(x)$ whenever
-$\mathrm{Reach}_{rs}(x,y)$.
+$$
+r_R(i)\le x(i)
+$$
 
-*Proof.* Induction on reachability using Theorem 3.9. $\qquad\blacksquare$
+for every $i\in I$. When enabled, it produces the updated population
 
-Theorem 3.10 simultaneously expresses conservation of mass, of charge, and of each
-atomic species, and it furnishes *non-reachability certificates*: if
-$\mathrm{mass}_w(x) \ne \mathrm{mass}_w(t)$ for some balanced $w$, then $t$ is
-unreachable from $x$.
+$$
+x'(i)=x(i)-r_R(i)+p_R(i).
+$$
 
----
+All subtraction here is safe because enabledness guarantees enough reactants.
 
-## 4. The fundamental limitation: no zero-test
+For $q\in I$, define the **one-hot population** $e_q$ by
 
-Register (counter) machines are Turing-complete, and their power rests on the
-*zero-test*: the ability to branch on whether a counter is empty. We show the
-discrete CRN model cannot implement it.
+$$
+e_q(i)=
+\begin{cases}
+1,&i=q,\\
+0,&i\ne q.
+\end{cases}
+$$
 
-**Theorem 4.1 (No zero-test / no absence detector).** Let $S$ have decidable
-equality and fix a species $s_0$. There is no reaction $r$ whose enabling
-condition coincides with "$s_0$ is absent"; that is,
-$$\neg\; \big(\forall x,\ r.\mathrm{enabled}(x) \iff x(s_0) = 0\big).$$
+One-hot encoding uses the identity of a single molecule, rather than a concentration, to represent a discrete state.
 
-*Proof.* Suppose such an $r$ exists. A reaction is always enabled at its own
-reactant complex, $r.\mathrm{enabled}(r.\mathrm{reactant})$, so the hypothesis
-forces $r.\mathrm{reactant}(s_0) = 0$. Now define
-$$z(s) = \begin{cases} 1 & s = s_0,\\ r.\mathrm{reactant}(s) & s \ne s_0.\end{cases}$$
-Then $r.\mathrm{reactant} \le z$ (they agree off $s_0$, and at $s_0$ we have
-$0 \le 1$), so $r.\mathrm{enabled}(z)$. The hypothesis then yields $z(s_0) = 0$,
-contradicting $z(s_0) = 1$. $\qquad\blacksquare$
+### 2.2 Deterministic transition compilation
 
-The proof is a direct exploitation of monotonicity (Lemma 3.1): enabling is
-upward closed, but "$x(s_0) = 0$" is downward closed, and no nontrivial condition
-is both. Consequently the exact discrete mass-action model is only as strong as a
-vector addition system / Petri net, for which coverability is decidable — a
-positive counterpoint that also precludes universality.
+Let $Q$ be a set of configurations and let
 
-**Remark 4.2 (Recovering universality).** The obstruction is specific to the
-*exact, deterministic* reading of the dynamics. Stochastic chemical reaction
-networks with mass-action rates can simulate register machines with unbounded time
-and vanishing error probability (Soloveichik–Cook–Winfree–Bruck): given more time,
-the probability of an erroneous "phantom" reaction masking a nonempty counter can
-be driven to zero. Universality thus reappears once one adds a probabilistic,
-continuous-time layer and tolerates error — precisely the ingredients the exact
-model lacks.
+$$
+T:Q\to Q
+$$
 
----
+be a deterministic transition function. Associate one species $S_q$ with each configuration $q\in Q$. For every $q$, introduce the unary reaction
 
-## 5. Molecular parallelism yields only a constant-factor speedup
+$$
+R_q:S_q\longrightarrow S_{T(q)}.
+$$
 
-We now abstract a computation by its **work** $W$ (total primitive operations
-required) and a **schedule** over $T$ steps, where $\mathrm{ops}(t)$ operations
-occur at step $t$, each step bounded by the parallelism $p$.
+The **compiled run** from initial configuration $q_0$ is the population sequence $X_0,X_1,\ldots$ defined by
 
-**Theorem 5.1 (Work–time bound).** If $\mathrm{ops}(t) \le p$ for all
-$t \in \{0,\dots,T-1\}$ and $W \le \sum_t \mathrm{ops}(t)$, then $W \le T \cdot p$.
+$$
+X_0=e_{q_0},
+$$
 
-*Proof.* $W \le \sum_t \mathrm{ops}(t) \le \sum_t p = T \cdot p$. $\qquad\blacksquare$
+and by firing $R_q$ whenever $X_t=e_q$. Because exactly one molecule is present, this produces a deterministic reaction trace.
 
-**Theorem 5.2 (Parallel time lower bound).** Under the hypotheses of Theorem 5.1
-with $p \ge 1$, we have $\lfloor W / p \rfloor \le T$.
+This construction is intentionally extensional: it compiles the full next-state function. For a finite transition system it is a finite network. For an infinite configuration set it is a mathematical reaction schema. A physically economical compiler may instead encode a configuration into several species and use finite control; that is a separate engineering problem.
 
-*Proof.* Divide $W \le T \cdot p$ by $p$ and cancel. $\qquad\blacksquare$
+## 3. Exact Finite-Trace Universality
 
-**Theorem 5.3 (Speedup at most $p$).** Under the same hypotheses, $W \le p \cdot T$.
-Since the sequential running time is $W$ (one operation per step) and the parallel
-time is $T$, the speedup satisfies $W/T \le p$.
+### 3.1 Trace simulation
 
-*Proof.* Commute the product in Theorem 5.1. $\qquad\blacksquare$
+Write $T^t$ for the $t$-fold iterate of $T$, with $T^0$ the identity.
 
-**Theorem 5.4 (Volume-bounded speedup).** If the device admits at most $P$
-simultaneously active molecules ($p \le P$, a bound proportional to volume), then
-$W \le P \cdot T$.
+**Theorem 1 (Exact Finite-Trace Simulation).** Let $Q$ be any deterministic configuration space, let $T:Q\to Q$, let $q_0\in Q$, and let $t\in\mathbb{N}$. The compiled unary reaction network satisfies
 
-*Proof.* Chain $W \le p \cdot T \le P \cdot T$. $\qquad\blacksquare$
+$$
+X_t=e_{T^t(q_0)}.
+$$
 
-**Theorem 5.5 (No exponential speedup).** Suppose a family of problems indexed by
-input size $n$ has work at least $2^n$, run on a device of fixed volume so that
-$2^n \le P \cdot T_{\mathrm{par}}(n)$ for all $n$. Then $T_{\mathrm{par}}$ is
-unbounded: there is no constant $C$ with $T_{\mathrm{par}}(n) \le C$ for all $n$.
+**Proof sketch.** Use induction on $t$. At $t=0$, the statement is $X_0=e_{q_0}$, which is the initialization rule. Suppose $X_t=e_{T^t(q_0)}$. The compiled reaction associated with $T^t(q_0)$ consumes the unique molecule of that species and produces one molecule of species $T(T^t(q_0))=T^{t+1}(q_0)$. Hence $X_{t+1}=e_{T^{t+1}(q_0)}$. This proves the statement for every finite $t$. $\square$
 
-*Proof.* If such a $C$ existed, then $2^n \le P \cdot T_{\mathrm{par}}(n) \le P\cdot C$
-for all $n$, contradicting the unboundedness of $2^n$. $\qquad\blacksquare$
+A deterministic Turing machine fits the theorem by taking $Q$ to be its set of instantaneous descriptions. Such a description contains the control state, tape contents, and head position. Its transition rule is a deterministic function after adopting the usual convention that a halting configuration maps to itself. Therefore every finite Turing-machine execution trace has an exact unary CRN trace.
 
-**Theorem 5.6 (Quantitative exponential lower bound).** With a fixed budget
-$P \ge 1$ and $2^n \le P \cdot T_{\mathrm{par}}(n)$ for all $n$, we have
-$T_{\mathrm{par}}(n) \ge \lfloor 2^n / P \rfloor$.
+The theorem supplies a precise universality notion: the reaction formalism can simulate the transition semantics of an arbitrary deterministic machine. It is stronger than merely computing the same final Boolean function, because it preserves every intermediate configuration. It is also carefully limited: it does not claim a finite-species laboratory realization for an infinite set $Q$.
 
-*Proof.* Divide the hypothesis by $P$ and cancel. $\qquad\blacksquare$
+### 3.2 Preservation of observations
 
-**Interpretation.** Parallelism divides running time by the number of concurrent
-workers and no more. A test tube contains roughly $2^{80}$ molecules; treated as a
-fixed constant $P$, this yields a one-time factor-$P$ speedup — dramatic but
-constant — and cannot convert exponential work into bounded, or even polynomial,
-time. The bound also encodes a physical truth: only $P$ molecules fit, and those
-molecules must first be *prepared* (synthesized and mixed), so the search space is
-never explored for free.
+Often the complete configuration is not itself the output. Let $Y$ be an output space and let
 
----
+$$
+D:Q\to Y
+$$
 
-## 6. Information-theoretic storage and description bounds
+be any decoding function.
 
-Model $k$ bits of molecular state as the type $\mathrm{Fin}\,k \to \mathrm{Bool}$,
-of which there are exactly $2^k$. A **configuration map** assigns to each
-distinguishable input a molecular state.
+**Corollary 2 (Decoded-Output Preservation).** Under the assumptions of Theorem 1, decoding the unique configuration represented at reaction time $t$ yields
 
-**Theorem 6.1 (Storage capacity).** If $I$ is finite and
-$\mathrm{config} : I \to (\mathrm{Fin}\,k \to \mathrm{Bool})$ is injective, then
-$|I| \le 2^k$.
+$$
+D(T^t(q_0)).
+$$
 
-*Proof.* An injection into a set of size $2^k = |\mathrm{Fin}\,k \to \mathrm{Bool}|$
-bounds the domain cardinality. $\qquad\blacksquare$
+Equivalently, there exists a represented state $q=T^t(q_0)$ such that $X_t=e_q$ and $D(q)=D(T^t(q_0))$.
 
-**Theorem 6.2 (Bit lower bound).** Under the hypotheses of Theorem 6.1,
-$\log_2 |I| \le k$; distinguishing $N$ inputs requires at least $\log_2 N$
-two-state units.
+**Proof sketch.** Theorem 1 identifies the represented state exactly as $T^t(q_0)$. Applying $D$ to this equality gives the result. $\square$
 
-*Proof.* Apply the monotone $\log_2$ to $|I| \le 2^k$ and simplify
-$\log_2 2^k = k$. $\qquad\blacksquare$
+This applies to output tapes, accept/reject predicates, numerical result registers, or any other deterministic observation of a machine configuration.
 
-**Theorem 6.3 (Insufficient volume).** If $2^k < |I|$, no injective encoding
-$I \to (\mathrm{Fin}\,k \to \mathrm{Bool})$ exists: some two inputs must share a
-state.
+### 3.3 Fixed halting states
 
-*Proof.* Immediate from Theorem 6.1 by contradiction. $\qquad\blacksquare$
+A configuration $h$ is a **fixed halting state** if
 
-**Theorem 6.4 (Kolmogorov-style volume lower bound).** For a finite family $B$ of
-distinct behaviors, any injective description scheme
-$\mathrm{descr} : B \to (\mathrm{Fin}\,k \to \mathrm{Bool})$ satisfies
-$\log_2 |B| \le k$.
+$$
+T(h)=h.
+$$
 
-*Proof.* Specialize Theorem 6.2 to $B$. $\qquad\blacksquare$
+**Corollary 3 (Halting Preservation).** If $h$ is a fixed halting state, then a compiled reaction run initialized at $e_h$ satisfies
 
-Since the number of two-state molecules — and hence the physical volume — scales
-with the description length $k$, Theorem 6.4 is the discrete shadow of the
-principle that the minimum volume of a molecular computer for a family of tasks is
-bounded below by the family's descriptive (Kolmogorov) complexity: more distinct
-behaviors demand proportionally more volume.
+$$
+X_t=e_h
+$$
 
-**Theorem 6.5 (Density sanity check).** $2^{59} < 10^{18} \le 2^{60}$.
-Consequently a $59$-unit register holds fewer than $10^{18}$ configurations, so no
-injective encoding of $10^{18}$ behaviors fits in $59$ units; $60$ units suffice.
+for every $t\in\mathbb{N}$.
 
-*Proof.* Direct numerical verification. $\qquad\blacksquare$
+**Proof sketch.** By induction, $T^t(h)=h$ for all $t$. Apply Theorem 1. $\square$
 
-The headline claim of storing $10^{18}$ bits is therefore consistent with
-information theory: it requires on the order of $60$ two-state units per
-addressable state, feasible only because molecular components are extraordinarily
-small. Information theory constrains and quantifies the density conjecture rather
-than refuting it.
+The compiled dynamics therefore do not invent post-halting behavior. Once the deterministic machine remains fixed, its molecular encoding remains fixed as a represented state as well.
 
----
+## 4. Discrete Mass-Action Kinetics
 
-## 7. Algorithms and computational illustrations
+Logical enabledness says that a reaction may fire; kinetics quantifies its tendency to fire. For natural numbers $n$ and $m$, define the descending factorial
 
-The theory suggests several concrete algorithms, developed in the accompanying
-computational material:
+$$
+(n)_m=
+\begin{cases}
+1,&m=0,\\
+n(n-1)\cdots(n-m+1),&m>0.
+\end{cases}
+$$
 
-1. **CRN reachability / coverability search.** A breadth-first exploration of the
-   reachable set from an initial state, pruned by conservation certificates
-   (Theorem 3.10): any target disagreeing with the source on a balanced functional
-   is discarded without search. Complexity is governed by the (possibly infinite)
-   reachable set; conservation invariants and coverability monotonicity
-   (Theorem 3.7) bound it in practice.
+For a reaction $R$ with nonnegative integer rate $k$, define its discrete stochastic mass-action propensity at population $x$ by
 
-2. **Conservation-law finder.** Given a CRN, the balanced functionals $w$ form the
-   integer kernel of the stoichiometry matrix (products minus reactants). Computing
-   an integer basis of this kernel yields all linear conservation laws, each an
-   independent non-reachability certificate.
+$$
+a_R(x)=k\prod_{i\in I}(x(i))_{r_R(i)}.
+$$
 
-3. **Speedup/volume calculator.** Given work $W$, parallelism $p$, and volume cap
-   $P$, compute the parallel time lower bound $\lceil W/p \rceil$, the speedup cap
-   $\min(p, W)$, and — for an exponential-work family — the forced growth
-   $\lceil 2^n/P \rceil$ of parallel time (Theorems 5.3–5.6).
+Only species with nonzero reactant stoichiometry affect the product. This expression counts ordered reactant tuples, multiplied by the kinetic rate parameter.
 
-4. **Storage sizer.** Given $N$ inputs (or $M$ behaviors), return the minimal
-   register size $\lceil \log_2 N \rceil$ and verify feasibility against a volume
-   budget (Theorems 6.1–6.5).
+**Theorem 4 (Exact Source Propensity).** For the compiled transition $R_q:S_q\to S_{T(q)}$ evaluated at its source population $e_q$,
 
----
+$$
+a_{R_q}(e_q)=k.
+$$
 
-## 8. Applications
+**Proof sketch.** The reactant stoichiometry is one at $q$ and zero elsewhere. At $q$, the factor is $(1)_1=1$. At every other species, the factor is $(0)_0=1$. Their product is $1$, leaving $a_{R_q}(e_q)=k$. $\square$
 
-- **Design certification.** Conservation laws (Theorem 3.10) certify that a
-  proposed molecular computer *cannot* reach an illegal state, a lightweight
-  correctness check independent of full reachability analysis.
-- **Feasibility screening.** The storage bounds (Section 6) give an immediate,
-  encoding-independent lower bound on the molecular resources any proposed device
-  must have, ruling out impossible designs before synthesis.
-- **Expectation setting for DNA computing.** Theorem 5.5 tempers the hope of
-  brute-forcing NP-complete problems with molecular parallelism, redirecting
-  effort toward tasks where a large constant-factor speedup is genuinely valuable.
-- **Guidance toward universality.** Theorem 4.1 identifies the exact missing
-  ingredient — absence detection — explaining why practical universal molecular
-  computers are built on *stochastic*, error-tolerant primitives (Remark 4.2).
+**Corollary 5 (Enabledness and Positive Propensity).** If $k>0$, then $R_q$ is enabled at $e_q$ and has strictly positive propensity there.
 
----
+**Proof sketch.** The source contains exactly the one required molecule, so the reaction is enabled. Theorem 4 gives propensity $k>0$. $\square$
 
-## 9. Discussion
+These results link transition compilation with the local mass-action rule. They do not establish global timing guarantees in the presence of competing reactions, degradation, diffusion, or measurement error. Such effects would require an expanded stochastic model.
 
-The results form a self-consistent map of molecular computation's frontier. On the
-side of *power*, the discrete model is provably limited: monotonicity forbids
-absence detection (Theorem 4.1), and volume-bounded parallelism forbids
-exponential speedup (Theorem 5.5). On the side of *structure*, the same
-monotonicity delivers translation invariance and monotone coverability, while
-balance delivers conservation laws that both constrain dynamics and certify
-impossibility. On the side of *resources*, information theory pins the storage
-cost at $\log_2 N$ units and the volume at the log of the behavioral repertoire.
+## 5. Description Capacity and Minimum Volume
 
-A recurring theme is that the model's greatest strength and its sharpest weakness
-are the same property. Monotonicity makes chemistry robust to surplus and
-analytically tractable (decidable coverability), yet it is exactly what blocks the
-zero-test and thus universality. The way forward — randomness with vanishing error —
-is not a patch but a principled trade of certainty for power.
+### 5.1 Capacity model
 
-**Limitations.** We treat the exact, rate-free discrete dynamics; quantitative
-stochastic behavior and continuous-time kinetics are outside the present scope. The
-parallelism model is deliberately abstract (work and per-step throughput),
-capturing the counting argument that underlies the speedup limit rather than the
-details of any particular molecular architecture.
+Let $b\in\mathbb{N}$ denote reliable bits per integer volume unit, let $K\in\mathbb{N}$ be a description length, and let $V\in\mathbb{N}$ be volume. Define the feasibility relation
 
----
+$$
+\operatorname{Fits}(b,V,K)\quad\Longleftrightarrow\quad K\le bV.
+$$
 
-## 10. Future directions
+Assume $b>0$. Define minimum volume by ceiling division:
 
-This work formalizes three pillars of the nanotechnology-computation program:
-discrete mass-action CRNs, the parallelism limit, and information-theoretic
-storage bounds. Natural next steps:
+$$
+V_{\min}(b,K)=\left\lceil\frac{K}{b}\right\rceil.
+$$
 
-1. **Turing-completeness with error.** The no-zero-test obstruction is exactly why
-   *exact* CRNs are only as strong as Petri nets (decidable coverability).
-   Formalize the Soloveichik–Cook–Winfree–Bruck construction: stochastic CRNs that
-   simulate a register machine with unbounded time and vanishing error probability
-   recover full Turing power. This requires a probabilistic / continuous-time layer
-   atop the present discrete semantics.
+For integers, this may be computed without floating point as
 
-2. **Decidability of coverability.** Prove that the well-quasi-order machinery
-   (Dickson's lemma) and a Karp–Miller construction imply coverability of the CRN
-   model is decidable — a positive counterpart to the no-zero-test theorem.
+$$
+V_{\min}(b,K)=\left\lfloor\frac{K+b-1}{b}\right\rfloor.
+$$
 
-3. **Reachability invariants via conservation.** Use conservation along
-   trajectories to derive Farkas-style non-reachability certificates: when no
-   nonnegative combination of conserved functionals separates source from target,
-   seek additional siphon/trap structure to certify non-reachability.
+### 5.2 Exact characterization
 
----
+**Theorem 6 (Minimum Volume Fits).** If $b>0$, then
+
+$$
+K\le bV_{\min}(b,K).
+$$
+
+**Proof sketch.** By the defining property of the ceiling, $K/b\le\lceil K/b\rceil$. Multiplication by positive $b$ preserves the inequality. $\square$
+
+**Theorem 7 (Feasibility–Minimality Equivalence).** If $b>0$, then for every $V$,
+
+$$
+V_{\min}(b,K)\le V
+\quad\Longleftrightarrow\quad
+K\le bV.
+$$
+
+**Proof sketch.** If $V_{\min}(b,K)\le V$, Theorem 6 and monotonicity give $K\le bV$. Conversely, if $K\le bV$, then $K/b\le V$; because $V$ is an integer, the least integer no smaller than $K/b$ is at most $V$. $\square$
+
+**Corollary 8 (Strict Minimality).** If $V<V_{\min}(b,K)$, then the $K$-bit description does not fit in volume $V$.
+
+**Proof sketch.** Otherwise Theorem 7 would imply $V_{\min}(b,K)\le V$, contradicting the strict inequality. $\square$
+
+**Corollary 9 (Unit-Density Proportionality).** At one bit per volume unit,
+
+$$
+V_{\min}(1,K)=K.
+$$
+
+**Proof sketch.** Ceiling division by one is the identity. $\square$
+
+This is an exact proportionality theorem under an explicit capacity convention. If $K$ is interpreted as a chosen description length of a function, implementation, or reaction network, then physical volume grows linearly with that length. A two-sided theorem in terms of Kolmogorov complexity $K(f)$ would additionally require a universal prefix-free description language and a fabrication model that translates descriptions to devices with bounded additive overhead. Without those choices, an unconditional physical equation between volume and Kolmogorov complexity would be under-specified.
+
+### 5.3 State count
+
+An $N$-bit register is a function from $N$ bit positions to the two-element set $\{0,1\}$. Independent choice at each position gives the following result.
+
+**Theorem 10 (Boolean Register State Count).** A reliable $N$-bit register has exactly
+
+$$
+2^N
+$$
+
+distinct Boolean states. In particular, a reliable register advertised as containing $10^{18}$ bits has
+
+$$
+2^{10^{18}}
+$$
+
+possible Boolean states.
+
+**Proof sketch.** There are two choices at each of $N$ labeled positions, and the multiplication principle yields a product of $N$ factors of $2$. $\square$
+
+The adjective “reliable” matters. Correlated errors, inaccessible configurations, or ambiguous readout reduce the number of distinguishable states. The theorem states the mathematical consequence of the bit-register premise; it does not establish a physical density for DNA.
+
+## 6. Preparation-Aware Molecular Parallelism
+
+### 6.1 Cost definitions
+
+Let $N$ be the number of candidate solutions and let $c$ be the preparation cost per candidate. Normalize one candidate test to one unit of time.
+
+A sequential exhaustive method prepares and tests all candidates one by one:
+
+$$
+T_{\mathrm{seq}}(c,N)=(c+1)N.
+$$
+
+An idealized molecular method prepares all $N$ witnesses and tests them in one perfectly parallel round:
+
+$$
+T_{\mathrm{mol}}(c,N)=cN+1.
+$$
+
+This model grants the molecular method perfect testing parallelism. Its only charged bottleneck is separate candidate preparation. The model does not claim that all real preparation must literally occur serially; rather, it makes explicit the accounting assumption under which the theorem is derived.
+
+### 6.2 Linear lower bound and constant-factor comparison
+
+**Theorem 11 (Preparation Lower Bound).** For all $c,N\in\mathbb{N}$,
+
+$$
+cN\le T_{\mathrm{mol}}(c,N).
+$$
+
+**Proof sketch.** By definition, $T_{\mathrm{mol}}(c,N)=cN+1$. $\square$
+
+**Theorem 12 (Preparation-Aware Constant-Factor Bound).** If $c\ge1$, then for every $N$,
+
+$$
+T_{\mathrm{seq}}(c,N)\le2T_{\mathrm{mol}}(c,N).
+$$
+
+**Proof sketch.** Since $c\ge1$, one has $c+1\le2c$. Therefore
+
+$$
+(c+1)N\le2cN\le2(cN+1).
+$$
+
+The left side is $T_{\mathrm{seq}}(c,N)$ and the final expression is $2T_{\mathrm{mol}}(c,N)$. $\square$
+
+For $N>0$, the speedup ratio is
+
+$$
+\frac{T_{\mathrm{seq}}(c,N)}{T_{\mathrm{mol}}(c,N)}
+=
+\frac{(c+1)N}{cN+1}
+<
+\frac{c+1}{c}
+\le2.
+$$
+
+As $N\to\infty$, the ratio approaches $(c+1)/c$, which is largest at $c=1$ and then approaches $2$.
+
+### 6.3 Boolean exhaustive search
+
+A Boolean search problem on $n$ variables has
+
+$$
+N=2^n
+$$
+
+candidate assignments. Substitution into Theorem 12 gives the central complexity statement.
+
+**Corollary 13 (Exhaustive Boolean Search Bound).** If $c\ge1$, then
+
+$$
+T_{\mathrm{seq}}(c,2^n)
+\le
+2T_{\mathrm{mol}}(c,2^n)
+$$
+
+for every $n\in\mathbb{N}$.
+
+Thus, in this preparation-charged model, ideal molecular parallel testing yields at most a constant-factor end-to-end advantage, not an exponential one. Both elapsed times remain $\Theta(c2^n)$ when $c$ is fixed and positive.
+
+For $c=1$, the first eight cases are:
+
+| Variables $n$ | Candidates $2^n$ | Molecular time $2^n+1$ | Sequential time $2^{n+1}$ | Speedup |
+|---:|---:|---:|---:|---:|
+| $0$ | $1$ | $2$ | $2$ | $1.000$ |
+| $1$ | $2$ | $3$ | $4$ | $1.333$ |
+| $2$ | $4$ | $5$ | $8$ | $1.600$ |
+| $3$ | $8$ | $9$ | $16$ | $1.778$ |
+| $4$ | $16$ | $17$ | $32$ | $1.882$ |
+| $5$ | $32$ | $33$ | $64$ | $1.939$ |
+| $6$ | $64$ | $65$ | $128$ | $1.969$ |
+| $7$ | $128$ | $129$ | $256$ | $1.984$ |
+
+The table shows the ratio tending toward $2$. The exponential number of tests has been compressed to one test round, but the exponential preparation term remains.
+
+## 7. Algorithms and Numerical Evaluation
+
+### 7.1 Deterministic trace compilation
+
+Given a transition function $T$, initial state $q_0$, and horizon $t$, simulation requires repeated application of $T$. A direct algorithm stores only the current state and performs $t$ updates. Its running time is $O(tC_T)$, where $C_T$ is the cost of evaluating $T$, and its auxiliary space is $O(S_Q)$ for one state representation. The reaction interpretation labels each update $q\mapsto T(q)$ as the unary reaction $S_q\to S_{T(q)}$.
+
+The inductive invariant is that after $j$ iterations the current state equals $T^j(q_0)$. This invariant is exactly the content of Theorem 1.
+
+### 7.2 Exact minimum-volume computation
+
+For $b>0$, compute
+
+$$
+V_{\min}=\frac{K+b-1}{b}
+$$
+
+using integer floor division. The algorithm uses a constant number of arithmetic operations. In a bit-complexity model its cost is dominated by addition and division on $O(\log K+\log b)$-bit integers. It avoids floating-point rounding and directly satisfies $K\le bV_{\min}$ and, when $V_{\min}>0$, $b(V_{\min}-1)<K$.
+
+### 7.3 Preparation-aware comparison
+
+Given $c$ and either a candidate count $N$ or Boolean dimension $n$, compute
+
+$$
+T_{\mathrm{mol}}=cN+1,
+\qquad
+T_{\mathrm{seq}}=(c+1)N.
+$$
+
+For Boolean search, first compute $N=2^n$. Arbitrary-precision integer arithmetic makes the calculation exact. The algorithm takes a constant number of arithmetic operations after exponentiation; exponentiation by squaring takes $O(\log n)$ integer multiplications when viewed as computing the power, while writing the resulting $2^n$-scale integer requires $O(n)$ bits.
+
+## 8. Applications and Interpretation
+
+### 8.1 Universal molecular control
+
+The trace theorem applies to finite controllers, protocol state machines, cellular automata represented globally, and Turing-machine configurations. It provides a reference semantics for compilation: the intended chemical trace can be compared step by step with the source machine. A practical compiler would seek a more compact species representation, bounded molecular counts, bimolecular reactions, and robustness to stochastic failure.
+
+### 8.2 Description-aware nanodevice design
+
+The volume law gives an immediate lower bound whenever a device must carry a $K$-bit explicit specification and the medium exposes at most $b$ reliable bits per chosen volume unit. The law is independent of whether the bits are DNA bases, molecular conformations, magnetic domains, or another substrate. What changes between technologies is the defensible value of $b$ and the overhead required for addressing, error correction, and readout.
+
+### 8.3 Molecular search and NP-complete problems
+
+Molecular systems may evaluate many assignments concurrently, which can shorten the testing phase of satisfiability search. The preparation-aware theorem warns against counting only reaction depth while omitting witness generation. If every assignment requires a separate prepared object and preparation is charged linearly, exhaustive search remains exponential in $n$. An asymptotic improvement would require additional structure: compressed generation, shared computation between candidates, non-exhaustive algorithms, or a physical preparation process whose resource accounting differs from the present model.
+
+### 8.4 Conditional capacity and throughput statements
+
+Two frequently cited scales can be stated without confusing arithmetic with measurement. First, if a cubic micrometre device reliably stores $10^{18}$ independent bits, then its Boolean state count is $2^{10^{18}}$. Second, if a device completes exactly $10^{15}$ logically correct operations in one second, then it achieves $10^{15}$ operations per second. Neither antecedent follows from the abstract models developed here. A meaningful experimental protocol must specify temperature, duration, error correction, energy and material inputs, read/write conventions, and what counts as a logically correct operation.
+
+## 9. Limitations
+
+The universality construction uses one species per configuration. This is mathematically direct but can be physically extravagant or infinite. It establishes expressiveness, not manufacturing feasibility. The mass-action result concerns a single compiled transition at a one-hot source; it does not analyze races, leakage, side reactions, or expected completion times in larger networks.
+
+The storage model treats capacity as an integer number of independent reliable bits per volume unit. Real media have geometry, addressing costs, redundancy, correlated noise, and thermodynamic constraints. The ceiling law remains correct once an effective capacity $b$ is justified, but the model itself does not supply that value.
+
+The parallelism result is conditional on the chosen preparation accounting. If witnesses can be generated through a shared physical process at sublinear charged cost, a different model is needed. Conversely, bounds on fabrication throughput may strengthen the lower bound by converting required witness count into elapsed time.
+
+Finally, no claim is made that raw reaction events are equivalent to useful logical operations. Throughput comparisons require a common operational definition and an error-corrected benchmark.
+
+## 10. Future Work
+
+Several directions sharpen the boundary between logical possibility and physical realization.
+
+1. **Bimolecular finite-control compilation.** Develop finite CRNs using reactions with at most two reactants and fixed controller overhead, with quantitative stochastic guarantees for each simulated transition.
+2. **Robust noisy traces.** Encode each logical state redundantly and prove exponentially decreasing majority-decoding error over finite traces when individual failures remain below one half.
+3. **Two-sided description-volume laws.** Fix a universal prefix-free CRN language and a fabrication model, then relate minimum implementation volume to Kolmogorov complexity up to additive constants.
+4. **Preparation-throughput lower bounds.** If every assignment needs a distinct witness and fabrication throughput is at most $R$, prove an end-to-end lower bound of $2^n/R$ for exhaustive Boolean search.
+5. **Empirical DNA benchmarks.** Test storage density and sustained error-corrected transition rate simultaneously under declared environmental and protocol conditions.
 
 ## 11. Conclusion
 
-Molecular computing is neither omnipotent nor illusory. In the exact discrete
-model, chemical reaction networks are monotone, conservative, blind to absence,
-capped in speedup by their volume, and bounded in memory by information. These are
-theorems, not engineering contingencies. They delimit the possible precisely, and
-in doing so they point ingenuity where it can succeed: randomized, error-tolerant
-designs for universality; exploitation of molecular memory's staggering density;
-and problems for which a large constant-factor speedup is a decisive advantage.
+Chemical reaction networks can reproduce arbitrary deterministic computation at the level of exact finite traces. Their compiled unary transitions are compatible with discrete mass-action kinetics: at a one-hot source, propensity equals the assigned rate. Physical descriptions obey a sharp capacity law, with minimum integer volume $\lceil K/b\rceil$ for $K$ bits at positive density $b$. Molecular parallel testing can collapse many tests into one round, but under linear per-candidate preparation cost it yields at most a factor-two end-to-end improvement over sequential exhaustive search.
+
+Together these results offer a disciplined foundation for molecular computing. Universality is a theorem about expressiveness. Capacity and throughput figures are conditional on measurable premises. Complexity conclusions depend on complete resource accounting. Keeping these categories separate makes the genuine promise of molecular computation clearer: extraordinary density and concurrency, constrained—as every computation is—by representation, preparation, reliability, and time.
