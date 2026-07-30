@@ -1,72 +1,179 @@
-# When Neural Networks Dream of Palm Trees: The Tropical Geometry of Machine Learning
+# The Median Is a Destination: Tropical Training in Three Data Points
 
-*How a branch of pure mathematics born in the study of algebraic curves turns out to describe what happens inside neural networks as they learn*
+Modern machine learning is often described in the language of smooth landscapes. A model sits somewhere on a rolling surface of error; training follows the downhill slope; and, with luck, the parameters settle into a valley. That picture is useful, but it is not universal. Some important models live in landscapes made not of rolling hills but of facets, ridges, and corners. Their natural geometry is **tropical geometry**, where maxima, minima, and addition replace much of ordinary curved algebra.
 
----
+In this angular world, training can become startlingly transparent. For a single tropical neuron trained on three observations, the entire optimization problem reduces to a familiar act: finding the median. The training trajectory is not merely convergent in the distant limit. It marches directly toward the median at unit speed, arrives after a precisely known amount of time, and then stops forever.
 
-In the 1990s, a Russian mathematician named Victor Maslov noticed something peculiar. If you take the fundamental equation of quantum mechanics and slowly dial the temperature toward infinity, something beautiful happens: smooth, wave-like quantum behavior snaps into sharp, crystalline geometry. Curves become polygons. Waves become zigzags. The continuous becomes discrete.
+That small model reveals a broad idea. Robust statistics, piecewise-linear dynamics, and neural optimization are not separate stories here. They are three descriptions of the same mechanism.
 
-Maslov called this process "dequantization" — undoing the quantum — and the geometry that emerged belonged to a strange new world called **tropical mathematics**, where addition means "take the maximum" and multiplication means "add." It sounded like a mathematical curiosity, the kind of thing that might earn a footnote in a textbook and little else.
+## From tropical neurons to three targets
 
-Three decades later, tropical geometry has become one of the most surprising bridges in all of mathematics. It connects algebraic geometry to optimization, combinatorics to analysis, and — as recent research reveals — pure mathematics to the inner workings of artificial intelligence.
+A tropical neuron combines inputs through max-affine or min-affine operations. In a scalar projective chart, one remaining parameter can be represented by a real number $x$. After each fixed tropical feature value is subtracted from its corresponding label, three training observations become three reduced targets. Write them in increasing order as
 
-## The Neural Network That Became a Polygon
+$$
+a\le m\le c.
+$$
 
-To understand this connection, consider what a neural network actually computes. At its core, a typical deep learning model applies a series of transformations to input data, each one involving a simple nonlinear function called ReLU: given an input *x*, output *x* if *x* is positive, and zero otherwise. Mathematically: max(*x*, 0).
+The letters suggest their roles: $a$ is the lower target, $c$ the upper target, and $m$ the middle target. Under absolute-error training, the empirical loss is
 
-This innocent-looking function is the bridge to tropical geometry. The function max(*x*, 0) is precisely a tropical polynomial — it's the tropical sum of *x* and 0. A neural network with ReLU activations is, in a precise mathematical sense, computing a tropical rational function: a difference of tropical polynomials.
+$$
+L(x)=|x-a|+|x-m|+|x-c|.
+$$
 
-But the deeper connection emerges when we ask: what happens when neural networks *learn*? Training a neural network means adjusting its parameters — the weights and biases — to minimize a loss function that measures how far the network's predictions are from the truth. This optimization process is typically described by gradient descent: at each step, you compute the gradient (the direction of steepest ascent) and take a small step in the opposite direction.
+This is a continuous, convex, piecewise-linear function. Each absolute value contributes a V-shaped graph. Adding the three graphs produces a polygonal valley whose only lowest point is $m$.
 
-## The Tropical Limit
+This gives the first central result, the **Three-Point Median Theorem**: if $a\le m\le c$, then
 
-Here is where things get interesting. Consider a specific type of neural network neuron called an **EML neuron** — one that computes exp(*wx* + *b*) minus log(*w'x* + *b'*). This combines exponential growth with logarithmic compression, a structure that appears naturally in models of biological neural computation and information processing.
+$$
+L(m)\le L(x)
+$$
 
-What happens to this neuron when the weights become very large? In the "tropical limit" — when we scale all weights by a temperature parameter *t* and let *t* go to infinity — something remarkable occurs. The smooth exponential function exp(*t* · (*wx* + *b*)) concentrates all its mass at the maximum of its arguments. The smooth function becomes sharp. The curve becomes a polygon.
+for every real $x$, and equality at the global minimum occurs only when $x=m$.
 
-Quantitatively, the smooth approximation (called the **softplus** function, log(1 + exp(*x*))) approximates the hard maximum max(*x*, 0) with an error of at most log(2)/*t*. This is not merely an asymptotic statement — it's a precise, uniform bound. At *t* = 10, the error is at most 0.069. At *t* = 100, at most 0.0069. The smooth neural network converges to a tropical rational function at a rate of 1/*t*.
+Why? The two outside observations already impose a basic toll. By the triangle inequality,
 
-This convergence is the **Maslov dequantization** of neural networks.
+$$
+|x-a|+|x-c|\ge c-a.
+$$
 
-## The Geometry of the Loss Landscape
+At $x=m$, the outer distances exactly fill the interval from $a$ to $c$:
 
-Once we're in the tropical limit, the entire training dynamics changes character. The loss function — which measures how well the network fits the data — becomes piecewise linear. Instead of the smooth valleys and saddle points of conventional optimization, we get a polyhedral landscape: a terrain made of flat facets meeting at sharp ridges.
+$$
+|m-a|+|m-c|=(m-a)+(c-m)=c-a.
+$$
 
-This is not merely a simplification — it's a revelation about structure. A piecewise-linear loss function has only finitely many "breakpoints" where the gradient changes. For a tropical neuron trained on *n* data points, there are at most *n* breakpoints in each parameter direction. Between breakpoints, the loss is perfectly linear — it decreases at a constant rate.
+The middle residual also vanishes there. Thus $L(m)=c-a$. Anywhere else, the middle term $|x-m|$ is positive, and a direct examination of the linear pieces shows strict increase away from $m$. To the left of $m$, moving right lowers the loss; to the right, moving left lowers it.
 
-This means that gradient descent on a tropical loss landscape is fundamentally different from gradient descent on a smooth landscape. On a smooth landscape, you spiral slowly toward a minimum, never quite sure if you've found the global one. On a tropical landscape, you walk in straight lines between the ridges of a polyhedron. Each step either crosses a ridge (changing the gradient) or moves steadily along a facet. The optimization becomes a combinatorial problem: navigating the 1-skeleton of a polyhedral complex.
+This is the classical robustness of the median appearing inside tropical training. A distant outlier can pull the mean dramatically, but among three ordered targets it cannot dislodge the absolute-loss optimum from the middle observation.
 
-## The Convergence Guarantee
+## A flow made of straight lines
 
-This combinatorial structure yields a powerful guarantee: **finite convergence**. Since the piecewise-linear loss has finitely many regions, and the gradient descent trajectory visits at most one new region per step, the algorithm must terminate. For a single tropical neuron trained on *n* data points, convergence is guaranteed within *O*(*n*) steps — regardless of the starting point, regardless of the learning rate (as long as it's properly chosen).
+Knowing the destination is not the same as understanding the journey. To describe training, choose a nonnegative elapsed time $t$ and define the clipped unit-speed flow
 
-Compare this to the situation in smooth optimization, where convergence rates are typically 1/√*T* for general convex functions or 1/*T* for smooth convex functions, meaning you need *T* steps to get within ε of the optimum — and *T* grows as ε shrinks. The tropical version gives exact convergence in finite time.
+$$
+\Phi_t(x)=
+\begin{cases}
+\min\{m,x+t\},&x<m,\\
+\max\{m,x-t\},&x\ge m.
+\end{cases}
+$$
 
-The key insight is that the tropical loss function, while not globally convex (the absolute value function introduces non-convexity), has a Lipschitz property: the loss can't change faster than the number of data points times the parameter change. This Lipschitz bound, combined with the piecewise-linear structure, traps the gradient descent trajectory in a finite combinatorial cage.
+If the current parameter lies below the median, it increases at speed one. If it lies above the median, it decreases at speed one. The minimum and maximum prevent overshooting. This is a piecewise-linear subgradient flow adapted to the nonsmooth corner of the loss.
 
-## A Bridge Between Worlds
+The formula can be read without calculus. Imagine $x$ as a bead on a wire and $m$ as a magnetic notch. The bead travels toward the notch at constant speed. Once it reaches the notch, the clipping rule locks it in place.
 
-What makes this result genuinely surprising is the direction of the bridge. Tropical geometry was developed to study algebraic curves and counting problems in enumerative geometry. The Maslov dequantization was a tool in mathematical physics. Neither community was thinking about neural networks.
+The **Finite-Time Arrival Theorem** says that whenever
 
-Yet the mathematics insists on the connection. The tropical neuron — max(*a* + *x*, 0) minus max(*b* + *x*, 0) — is simultaneously:
+$$
+|x-m|\le t,
+$$
 
-- A **tropical rational function**, the fundamental object of tropical algebraic geometry
-- A **neural network computation**, the building block of deep learning
-- A **piecewise-linear map**, the natural setting for combinatorial optimization
-- An **antisymmetric operator**: swapping the two parameters negates the output, revealing an unexpected algebraic symmetry
+we have
 
-This antisymmetry property is particularly striking. It means that the space of tropical neurons has a natural involution — a mirror symmetry that pairs every neural computation with its negative. In the language of tropical geometry, this corresponds to the duality between tropical polynomials and their Newton polytopes. In the language of neural networks, it means that for every feature detector, there's a complementary "anti-detector" that responds to exactly the opposite pattern.
+$$
+\Phi_t(x)=m.
+$$
 
-## What Lies Ahead
+The proof is embedded in the definition. If $x<m$, the condition says $x+t\ge m$, so $\min\{m,x+t\}=m$. If $x\ge m$, it says $x-t\le m$, so $\max\{m,x-t\}=m$. Consequently, a trajectory initialized at $x_0$ reaches its destination no later than time
 
-The formalization of tropical gradient flow opens several tantalizing directions. The most immediate is extending from single neurons to networks: what is the tropical limit of a deep network? Theory predicts that the loss landscape becomes a tropical variety — a higher-dimensional polyhedral complex whose combinatorial structure encodes the network's learning dynamics.
+$$
+T=|x_0-m|.
+$$
 
-A deeper question concerns the topology of the tropical loss landscape. In smooth optimization, the topology of sublevel sets (how the landscape is "shaped" at different loss values) controls convergence. In the tropical setting, these sublevel sets are polyhedral complexes whose topology can be computed exactly using tropical homology. This suggests a new approach to understanding the optimization landscape of neural networks: not through Hessian eigenvalues and saddle points, but through the combinatorial topology of tropical varieties.
+In fact the full trajectory for $t\ge0$ can be written as
 
-Perhaps most exciting is the possibility of *designing* neural network architectures using tropical geometry. If the training dynamics of a network are determined by its tropical limit, then choosing an architecture amounts to choosing a tropical variety. The vast machinery of tropical algebraic geometry — intersection theory, divisor theory, Riemann-Roch theorems — becomes available for architecture design.
+$$
+\Phi_t(x_0)=m+\operatorname{sgn}(x_0-m)\max\{|x_0-m|-t,0\}.
+$$
 
-The palm trees of tropical geometry, it turns out, may be growing in the same soil as the artificial neurons of machine learning. The Maslov dequantization, a tool born from quantum physics, has found its way to the frontier of artificial intelligence. Mathematics, as it so often does, has revealed a unity where we saw only difference.
+Its distance to the optimum obeys the exact law
 
----
+$$
+|\Phi_t(x_0)-m|=\max\{|x_0-m|-t,0\}.
+$$
 
-*This research establishes rigorous mathematical foundations for the tropical limit of neural network training, proving 25 theorems that characterize the convergence properties of piecewise-linear gradient flow systems. The results bridge tropical algebraic geometry, optimization theory, and machine learning — three fields that, until now, have been studied largely in isolation.*
+There is no asymptotic tail, no slowing crawl, and no oscillation. The error decreases linearly until it becomes zero.
+
+## When optimization and stationarity coincide
+
+A fixed point is a state that training leaves unchanged. Here one must ask for invariance under every positive duration: a point $x$ is stationary when
+
+$$
+\Phi_t(x)=x
+$$
+
+for every $t>0$.
+
+The **Fixed-Point Characterization Theorem** states that this happens exactly when $x=m$. One direction is immediate: starting at the median leaves nothing to change. Conversely, if $x\ne m$, choose more time than its distance from $m$. The finite-time arrival theorem sends it to $m$, which differs from $x$; therefore it cannot have been fixed.
+
+Combining this statement with the median theorem produces the main bridge:
+
+> For three ordered reduced targets, a parameter minimizes the tropical absolute-error loss if and only if it is fixed by every positive-time training map. Moreover, every initialization reaches this unique point in finite time and hence converges to it.
+
+This equivalence joins three concepts that are often studied separately:
+
+1. **Statistical optimality:** $x$ minimizes the sum of absolute residuals.
+2. **Dynamical stationarity:** every positive-time flow leaves $x$ unchanged.
+3. **Order geometry:** $x$ is the median of the three reduced targets.
+
+For this model, these are not merely related properties. They select exactly the same real number.
+
+## A numerical walk through the landscape
+
+Take the reduced targets
+
+$$
+(a,m,c)=(-2,1,5).
+$$
+
+At the median, the loss is
+
+$$
+L(1)=|1+2|+|1-1|+|1-5|=3+0+4=7.
+$$
+
+At $x=-1$ it is
+
+$$
+L(-1)=1+2+6=9,
+$$
+
+and at $x=4$ it is
+
+$$
+L(4)=6+3+1=10.
+$$
+
+Now initialize at $x_0=-2$. The distance to the median is $3$, so the trajectory is $-2,-1,0,1$ at integer times from $0$ through $3$. At time $3$ it arrives exactly. Initialize instead at $x_0=5$ and allow time $10$; clipping prevents the point from crossing to the other side, so the result is still $1$.
+
+These examples expose the whole geometry. The loss is polygonal, the optimum is the center target, and training follows a straight route to it.
+
+## Why the tropical viewpoint matters
+
+Large-scale or low-temperature limits often turn smooth functions such as log-sum-exp into maxima. Curved response surfaces sharpen into polyhedral ones. In that regime, a derivative may jump abruptly at a boundary, yet the resulting dynamics can become easier to describe because each region has a simple linear rule.
+
+The three-sample model is the smallest setting in which several essential phenomena coexist: nonsmooth loss, an order-statistical optimum, a clipped subgradient trajectory, a fixed-point principle, and global convergence from arbitrary initialization. It functions as a clean laboratory for larger tropical networks, where activation patterns divide parameter space into many polyhedral cells.
+
+There are practical lessons as well. Absolute loss protects against extreme labels. Exact arrival gives a stopping certificate: once elapsed continuous time covers the initial distance to the median, optimization is complete. The formula also makes perturbation intuitive. If the data change without changing which reduced target is in the middle, the destination moves exactly with that middle target rather than being dragged by both extremes.
+
+## The edge of the simple picture
+
+Three observations give a unique median, but richer data introduce new geometry. For any odd number of unweighted scalar observations, the absolute-loss optimizer is again the median. For an even number, every point in the interval between the two central observations minimizes the loss; the destination may no longer be unique. Weighted observations lead to weighted medians. Multiple tropical neurons create interacting max-affine pieces and higher-dimensional polyhedral landscapes.
+
+Discrete optimization also differs from continuous flow. A constant-size update can leap across the median and oscillate, whereas the clipped flow never overshoots. Diminishing step sizes or an explicit clipping rule are natural ways to recover convergence.
+
+Another frontier is to start from a smooth, finite-scale neuron and prove that both its loss and its training trajectories approach this polygonal model as the tropical scale grows. That would connect ordinary differentiable training to the exact median-seeking dynamics described here.
+
+## A model one can audit by eye
+
+There is another virtue in the example’s simplicity: every ingredient can be inspected directly. The loss at any proposed parameter is just the total walking distance to three marked points on a line. The optimizer is found by ordering those points. The state after time $t$ is obtained by subtracting $t$ from the initial distance and clipping the result at zero. These are not black-box calculations; they are geometric facts visible in a sketch.
+
+That transparency makes the model useful for teaching and testing. A new optimization rule can be compared against the exact trajectory. A numerical implementation can check that it never crosses $m$, that distance falls at unit rate before arrival, and that the state remains constant afterward. More elaborate tropical systems will not always admit formulas this compact, but this solvable case supplies a benchmark: any approximation meant to capture median-seeking tropical training should reproduce its direction, stopping behavior, and fixed point.
+
+## A small theorem with a broad message
+
+The usual metaphor of learning as a ball rolling down a smooth hill hides what happens at corners. Tropical geometry offers a different image: a traveler crossing flat facets, changing direction at sharp walls, and sometimes reaching the destination in finite time.
+
+For one neuron and three reduced observations, that destination is completely determined. It is the median. It is the unique minimizer of the absolute-error landscape. It is the unique state fixed by every positive training time. Every trajectory reaches it after traveling exactly its initial distance.
+
+In one compact model, optimization becomes geometry, geometry becomes dynamics, and dynamics rediscovers one of statistics’ oldest robust estimators. The median is not just an answer computed after training. It is the place toward which the entire tropical system is built to move.

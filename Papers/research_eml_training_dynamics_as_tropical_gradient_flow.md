@@ -1,291 +1,457 @@
-# Tropical Gradient Flow: Training Dynamics in the Maslov Dequantization Limit
+# Three-Sample Tropical Training as Median-Seeking Piecewise-Linear Gradient Flow
+
+**Aristotle**  
+**July 30, 2026**
 
 ## Abstract
 
-We introduce the **Tropical Subgradient Flow System** (TSFS), a novel mathematical framework for analyzing neural network training dynamics in the tropical (large-weight) limit. Under Maslov dequantization, smooth neural network operations converge to piecewise-linear tropical operations at rate O(1/t), where t is the temperature parameter. We prove that the resulting tropical loss landscape is piecewise-linear with Lipschitz constant bounded by the number of data points, that the tropical ReLU activation is convex, and that gradient descent on affine regions achieves exact loss decrease. Our framework yields 25 machine-verified theorems establishing the foundations of tropical training dynamics, including the first formal proof of the Maslov dequantization convergence theorem with explicit error bounds.
+We analyze a scalar tropical neuron trained on three observations under absolute-error loss. After absorbing the fixed feature contributions into the labels, the problem is governed by three ordered reduced targets $a\le m\le c$ and the empirical objective
 
-**Keywords**: Tropical geometry, neural network optimization, Maslov dequantization, piecewise-linear dynamics, gradient flow, softplus convergence
+$$
+L(x)=|x-a|+|x-m|+|x-c|.
+$$
 
----
+We prove that the middle target $m$ is the unique global minimizer. We then study the clipped unit-speed piecewise-linear flow
+
+$$
+\Phi_t(x)=
+\begin{cases}
+\min\{m,x+t\},&x<m,\\
+\max\{m,x-t\},&x\ge m,
+\end{cases}
+$$
+
+which is a canonical median-seeking subgradient dynamics. Every initialization $x_0$ reaches $m$ after time $|x_0-m|$ and remains there, so convergence is finite-time rather than merely asymptotic. A point minimizes the empirical loss if and only if it is fixed by every positive-time flow map. Thus statistical optimality, dynamical stationarity, and the median condition coincide exactly. We give complete proof sketches, executable algorithms, numerical examples, and a discussion of extensions to weighted samples, projective tropical parameter spaces, smooth approximations, multiple neurons, and discrete descent.
 
 ## 1. Introduction
 
-The connection between tropical geometry and neural networks has been observed by several authors (Zhang et al. 2018, Alfarra et al. 2022), primarily through the observation that ReLU networks compute piecewise-linear functions, which are tropical rational functions. However, the *dynamical* aspect — how training proceeds in the tropical limit — has received far less attention.
+Tropical models replace smooth algebraic combinations by max-affine or min-affine operations. Their parameter spaces are consequently divided into polyhedral regions on which model outputs and losses have simple affine descriptions. This geometry is especially relevant when a smooth architecture is examined in a large-scale or low-temperature limit: log-sum-exp expressions sharpen toward maxima, and smoothly varying gradients approach piecewise-constant subgradients.
 
-In this paper, we study what happens to gradient-based training when the weights of a neural network are scaled to infinity. Under the Maslov dequantization (sending temperature t → ∞), smooth neural network operations converge to their tropical counterparts:
+The resulting nonsmoothness can complicate conventional differential analysis, but it may also expose exact dynamics that smooth models conceal. This paper develops the smallest nontrivial example. A one-parameter tropical neuron is trained on three reduced scalar observations using an $L^1$ objective. The loss is the sum of three absolute residuals, and the dynamics move directly toward their median.
 
-- exp(tx)/t → max(x, 0) (the ReLU activation)
-- log(exp(ta) + exp(tb))/t → max(a, b) (tropical addition)
-- Smooth gradients → piecewise-constant subgradients
+Three features make the example useful. First, the optimizer is an order statistic rather than an average, connecting tropical learning to robust estimation. Second, the loss is convex but not differentiable at its data knots, so a piecewise-linear subgradient description is natural. Third, the proposed flow reaches equilibrium in an explicitly bounded finite time. The model therefore distinguishes ordinary limit convergence from the stronger property of eventual exact stationarity.
 
-The key insight is that the training dynamics inherit tropical structure: the loss landscape becomes polyhedral, the gradient descent trajectory becomes piecewise-linear, and convergence becomes a finite combinatorial problem.
+Our main statement is a connector theorem: for three ordered targets, global empirical-risk minimization is equivalent to invariance under every positive-time flow map; both conditions hold precisely at the median. In addition, every initial condition converges globally to that point and becomes equal to it once elapsed time covers the initial distance.
 
-### 1.1 Contributions
+The scope should be stated carefully. The analysis concerns the reduced scalar tropical model itself. It does not by itself establish convergence from a finite-temperature smooth network to this limit, nor does it address arbitrary multidimensional tropical architectures. Those are natural extensions, discussed in Section 9.
 
-1. **Novel Structure**: We introduce the Tropical Subgradient Flow System, a discrete dynamical system on ℝⁿ where the loss is a piecewise-linear convex function and the dynamics follow the subgradient. This structure bridges tropical geometry and optimization theory.
+## 2. Reduced three-sample model
 
-2. **Maslov Dequantization with Explicit Bounds**: We prove that the Maslov soft maximum approximates the hard maximum with error exactly bounded by log(2)/t, with formal convergence as t → ∞.
+### 2.1 Tropical reduction
 
-3. **Tropical Neuron Characterization**: We fully characterize the behavior of the tropical neuron f(x; a, b) = max(a+x, 0) - max(b+x, 0) in all four regions of the (a+x, b+x) sign plane, proving Lipschitz bounds, antisymmetry, and range estimates.
+Consider a scalar projective coordinate $x$ for a tropical neuron. For each observation, the fixed tropical feature contribution can be subtracted from its label. This produces a reduced target against which $x$ is compared directly. With three samples, sort the reduced targets and denote them by
 
-4. **Loss Landscape Geometry**: We prove that the tropical L₁ loss is Lipschitz with constant equal to the number of data points, that the ReLU activation is convex, and that the loss is affine between consecutive breakpoints.
+$$
+a\le m\le c.
+$$
 
-5. **Subgradient Descent Analysis**: We establish the fundamental lower bound for subgradient steps and prove exact loss decrease on affine regions.
+No strict inequality is required. Repeated targets are permitted. The center value $m$ is the median, including in degenerate cases such as $a=m$ or $m=c$.
 
-All results are machine-verified in Lean 4 with Mathlib, using only standard axioms (propext, Classical.choice, Quot.sound).
+### 2.2 Empirical loss
 
----
+**Definition 2.1 (Three-point tropical absolute loss).** For ordered reduced targets $a\le m\le c$ and parameter $x\in\mathbb R$, define
 
-## 2. Preliminary Definitions
+$$
+L_{a,m,c}(x)=|x-a|+|x-m|+|x-c|.
+$$
 
-### 2.1 Maslov Dequantization
+The objective is continuous, convex, coercive, and piecewise affine, with possible breakpoints at $a$, $m$, and $c$. Coercivity follows because $L_{a,m,c}(x)$ grows linearly as $|x|\to\infty$.
 
-**Definition 2.1** (Maslov Soft Maximum). For t > 0 and a, b ∈ ℝ, define:
-$$\text{MSM}(t, a, b) = \frac{1}{t} \log(\exp(ta) + \exp(tb))$$
+For intuition, away from repeated knots its slopes are
 
-This is the "soft maximum" or "log-sum-exp" function, scaled by temperature.
+$$
+-3\quad(x<a),\qquad -1\quad(a<x<m),\qquad
+1\quad(m<x<c),\qquad 3\quad(x>c).
+$$
 
-**Definition 2.2** (Softplus). The softplus function is:
-$$\sigma_+(x) = \log(1 + \exp(x))$$
+Thus the sign changes at $m$. The results below avoid relying on differentiability and remain valid when targets coincide.
 
-This is the smooth approximation to the ReLU function max(x, 0).
+### 2.3 Clipped median flow
 
-### 2.2 Tropical Neuron
+**Definition 2.2 (Clipped unit-speed tropical flow).** For elapsed time $t\ge0$, target median $m$, and initial point $x\in\mathbb R$, define
 
-**Definition 2.3** (Tropical Neuron). A tropical neuron with parameters a, b ∈ ℝ evaluated at input x ∈ ℝ is:
-$$f(x; a, b) = \max(a + x, 0) - \max(b + x, 0)$$
+$$
+\Phi_t^m(x)=
+\begin{cases}
+\min\{m,x+t\},&x<m,\\
+\max\{m,x-t\},&x\ge m.
+\end{cases}
+$$
 
-This is a tropical rational function: the difference of two tropical polynomials.
+The superscript will be omitted when $m$ is clear. The trajectory moves toward $m$ at unit speed and clips at $m$ to prevent overshoot. Although the raw subgradient magnitude of $L_{a,m,c}$ varies by region, this normalized flow follows the loss-decreasing direction and retains only its orientation. It is therefore best viewed as a normalized subgradient flow or median-seeking tropical training dynamics.
 
-### 2.3 Tropical L₁ Loss
+An equivalent formula, valid for $t\ge0$, is
 
-**Definition 2.4** (Tropical L₁ Loss). Given data points {(xᵢ, yᵢ)}ᵢ₌₁ⁿ and a single-parameter tropical model f(x; a) = max(a + x, 0), the tropical L₁ loss is:
-$$L(a) = \sum_{i=1}^{n} |f(x_i; a) - y_i| = \sum_{i=1}^{n} |\max(a + x_i, 0) - y_i|$$
+$$
+\Phi_t^m(x)=m+\operatorname{sgn}(x-m)\max\{|x-m|-t,0\},
+$$
 
-### 2.4 Tropical Subgradient Flow System (Novel Structure)
+where $\operatorname{sgn}(0)=0$. This representation makes the exact distance law transparent:
 
-**Definition 2.5** (Tropical Subgradient Flow System). A TSFS consists of:
-1. A **piecewise-linear convex loss function** L: ℝ → ℝ, represented as the maximum of finitely many affine functions
-2. A **step size** η > 0
-3. A **subgradient oracle** that returns the slope of the maximally active piece at any point
+$$
+|\Phi_t^m(x)-m|=\max\{|x-m|-t,0\}.
+$$
 
-The dynamics are given by:
-$$\theta_{k+1} = \theta_k - \eta \cdot g_k$$
-where g_k is the subgradient of L at θ_k.
+## 3. Geometry of the loss
 
-The trajectory θ₀, θ₁, θ₂, ... is the **tropical gradient flow**.
+We first isolate the optimization facts needed later.
 
----
+**Lemma 3.1 (Outer-distance bound).** For every $x\in\mathbb R$ and every $a\le c$,
 
-## 3. Main Results
+$$
+|x-a|+|x-c|\ge c-a.
+$$
 
-### 3.1 Maslov Dequantization Convergence
+**Proof sketch.** The triangle inequality gives
 
-**Theorem 3.1** (Maslov Sandwich). For all t > 0 and a, b ∈ ℝ:
-$$\max(a, b) \leq \text{MSM}(t, a, b) \leq \max(a, b) + \frac{\log 2}{t}$$
+$$
+|c-a|=|(x-a)-(x-c)|\le |x-a|+|x-c|.
+$$
 
-*Proof sketch*. For the lower bound: exp(ta) + exp(tb) ≥ exp(t · max(a,b)), so log(exp(ta) + exp(tb)) ≥ t · max(a,b). For the upper bound: exp(ta) + exp(tb) ≤ 2 · exp(t · max(a,b)), so log(exp(ta) + exp(tb)) ≤ log 2 + t · max(a,b). □
+Since $c-a\ge0$, one has $|c-a|=c-a$. At any $x\in[a,c]$, equality holds because the two distances partition the interval from $a$ to $c$. $\square$
 
-**Corollary 3.2** (Convergence Rate). |MSM(t, a, b) - max(a, b)| ≤ log(2)/t.
+**Theorem 3.2 (Median minimization).** Let $a\le m\le c$. Then for every $x\in\mathbb R$,
 
-**Theorem 3.3** (Pointwise Convergence). MSM(t, a, b) → max(a, b) as t → ∞.
+$$
+L_{a,m,c}(m)\le L_{a,m,c}(x).
+$$
 
-*Proof sketch*. Squeeze theorem applied to Theorem 3.1. □
+**Proof sketch.** At the median,
 
-### 3.2 Softplus-ReLU Bridge
+$$
+L_{a,m,c}(m)=|m-a|+0+|m-c|=(m-a)+(c-m)=c-a.
+$$
 
-**Theorem 3.4** (Softplus Bounds). For all x ∈ ℝ:
-1. σ_+(x) > 0 (strict positivity)
-2. max(x, 0) ≤ σ_+(x) (softplus dominates ReLU)
-3. σ_+(x) - max(x, 0) ≤ log 2 (error bound)
+For arbitrary $x$, Lemma 3.1 and nonnegativity of absolute value give
 
-**Theorem 3.5** (Scaled Softplus Convergence). For all x ∈ ℝ:
-$$\left|\frac{1}{t} \sigma_+(tx) - \max(x, 0)\right| \leq \frac{\log 2}{t}$$
+$$
+L_{a,m,c}(x)
+=|x-a|+|x-c|+|x-m|
+\ge(c-a)+0
+=L_{a,m,c}(m).
+$$
 
-and (1/t)σ_+(tx) → max(x, 0) as t → ∞.
+Hence $m$ is a global minimizer. $\square$
 
-### 3.3 Tropical Neuron Structure
+That argument establishes minimality but not, by itself, uniqueness, because the outer-distance inequality is an equality throughout $[a,c]$. The middle residual supplies strictness.
 
-**Theorem 3.6** (Regional Characterization). The tropical neuron f(x; a, b) = max(a+x, 0) - max(b+x, 0) satisfies:
+**Lemma 3.3 (Strict increase away from the median).** If $a\le m\le c$, then
 
-| Region | Condition | f(x; a, b) |
-|--------|-----------|-------------|
-| Both active | a+x ≥ 0, b+x ≥ 0 | a - b |
-| Both inactive | a+x ≤ 0, b+x ≤ 0 | 0 |
-| a active only | a+x ≥ 0, b+x ≤ 0 | a + x |
-| b active only | a+x ≤ 0, b+x ≥ 0 | -(b + x) |
+$$
+x<m\implies L_{a,m,c}(m)<L_{a,m,c}(x),
+$$
 
-**Theorem 3.7** (Antisymmetry). f(x; a, b) = -f(x; b, a).
+and
 
-**Theorem 3.8** (Lipschitz Bounds).
-- f is 2-Lipschitz in x (for fixed a, b)
-- f is 1-Lipschitz in a (for fixed b, x)
+$$
+m<x\implies L_{a,m,c}(m)<L_{a,m,c}(x).
+$$
 
-**Theorem 3.9** (Range Bound). |f(x; a, b)| ≤ |a| + |b| + 2M for |x| ≤ M.
+**Proof sketch.** Consider first $x<m$. If $a\le x<m$, then direct expansion of the absolute values gives
 
-### 3.4 Loss Landscape Geometry
+$$
+L_{a,m,c}(x)=(x-a)+(m-x)+(c-x)=m+c-a-x,
+$$
 
-**Theorem 3.10** (Loss Lipschitz Bound).
-$$|L(a_1) - L(a_2)| \leq n \cdot |a_1 - a_2|$$
-where n is the number of data points.
+whereas $L_{a,m,c}(m)=c-a$. Their difference is $m-x>0$. If $x<a$, then
 
-**Theorem 3.11** (ReLU Convexity). The function a ↦ max(a + x, 0) is convex on ℝ.
+$$
+L_{a,m,c}(x)=(a-x)+(m-x)+(c-x),
+$$
 
-**Theorem 3.12** (Breakpoint Structure). The tropical L₁ loss has breakpoints at a = -xᵢ. Between consecutive breakpoints (where both endpoints have the same sign of a + xᵢ for all i), max(a + xᵢ, 0) interpolates linearly:
-$$\max(a_1 + t(a_2 - a_1) + x, 0) = \max(a_1 + x, 0) + t \cdot (\max(a_2 + x, 0) - \max(a_1 + x, 0))$$
+and comparison with $c-a$ yields
 
-### 3.5 Subgradient Descent
+$$
+L_{a,m,c}(x)-L_{a,m,c}(m)=2(a-x)+(m-x)>0.
+$$
 
-**Theorem 3.13** (Subgradient Lower Bound). If g is a subgradient of f at a, then:
-$$f(a - \eta g) \geq f(a) - \eta g^2$$
+The right side is analogous. If $m<x\le c$, expansion gives a difference $x-m>0$. If $x>c$, the difference may be written as $2(x-c)+(x-m)>0$. These cases include the possible equalities among $a$, $m$, and $c$. $\square$
 
-**Theorem 3.14** (Affine Exactness). On a linear region f(x) = mx + c, the gradient step gives:
-$$f(a - \eta m) = f(a) - \eta m^2$$
+**Corollary 3.4 (Unique empirical-risk minimizer).** For $a\le m\le c$ and $x\in\mathbb R$, the following are equivalent:
 
-This means that on linear regions of the tropical loss, gradient descent achieves *exact* loss decrease, not merely approximate.
+1. $L_{a,m,c}(x)\le L_{a,m,c}(y)$ for every $y\in\mathbb R$;
+2. $x=m$.
 
----
+**Proof sketch.** Theorem 3.2 proves that $m$ satisfies the first condition. Conversely, if a minimizing $x$ were smaller or larger than $m$, the corresponding part of Lemma 3.3 would show that $m$ has strictly lower loss, a contradiction. Trichotomy leaves only $x=m$. $\square$
 
-## 4. The Tropical Subgradient Flow System: Properties
+This result is robust under repeated targets. If $a=m<c$, for example, two observations already occur at $m$, and $m$ remains uniquely optimal. The same is true when $a<m=c$ or all three values coincide.
 
-### 4.1 Structure Theory
+## 4. Dynamics of the clipped flow
 
-The TSFS is defined by a PLConvexLoss structure containing:
-- A finite list of (slope, intercept) pairs defining the affine pieces
-- Non-emptiness guarantee
+### 4.1 Exact arrival
 
-The evaluation function computes the maximum over all pieces, and the subgradient oracle returns the slope of the maximally active piece.
+**Theorem 4.1 (Finite-time arrival).** Let $m,x\in\mathbb R$ and $t\ge0$. If
 
-### 4.2 Trajectory Analysis
+$$
+|x-m|\le t,
+$$
 
-The trajectory of a TSFS is defined recursively:
-- θ₀ = initial parameter
-- θ_{k+1} = θ_k - η · subgradient(θ_k)
+then
 
-On each linear region of the loss, the trajectory is a straight line with slope determined by the active piece. The trajectory changes direction only at breakpoints.
+$$
+\Phi_t^m(x)=m.
+$$
 
-### 4.3 Connection to Tropical Geometry
+**Proof sketch.** If $x<m$, then $m-x=|x-m|\le t$, hence $m\le x+t$. The lower branch of the definition becomes $\min\{m,x+t\}=m$. If $x\ge m$, then $x-m=|x-m|\le t$, hence $x-t\le m$. The upper branch becomes $\max\{m,x-t\}=m$. $\square$
 
-The TSFS is the natural dynamical system on the tropical projective torus ℝ/ℝ·1. The loss function is a tropical polynomial in the parameters, and the subgradient flow follows the 1-skeleton of the dual Newton polytope. This connects:
+**Corollary 4.2 (Exact hitting time).** For an initialization $x_0$, the trajectory reaches $m$ by time
 
-- **Tropical varieties** (zero loci of tropical polynomials) ↔ **decision boundaries** of the neural network
-- **Newton polytopes** ↔ **parameter space decomposition**
-- **Tropical intersection theory** ↔ **gradient flow topology**
+$$
+T(x_0)=|x_0-m|.
+$$
 
----
+If $x_0\ne m$, no smaller nonnegative time reaches $m$. Thus $T(x_0)$ is the exact first hitting time.
 
-## 5. PEGB Analysis for Key Theorems
+**Proof sketch.** Arrival at time $T(x_0)$ is Theorem 4.1. For $0\le t<T(x_0)$, the equivalent signed-distance formula leaves positive residual distance $T(x_0)-t$, so the trajectory has not yet reached $m$. $\square$
 
-### Theorem: Maslov Dequantization Convergence (Theorem 3.1-3.3)
+The flow also has a semigroup interpretation.
 
-**Proof**: Machine-verified in Lean 4. Uses Real.log_le_log, Real.exp_le_exp, and the squeeze theorem.
+**Proposition 4.3 (Semigroup law).** For $s,t\ge0$ and $x\in\mathbb R$,
 
-**Example**: At t = 10, a = 1, b = 2: MSM(10, 1, 2) = 0.1 · log(e¹⁰ + e²⁰) ≈ 2.0000454. Error = 0.0000454 < log(2)/10 ≈ 0.0693.
+$$
+\Phi_s^m(\Phi_t^m(x))=\Phi_{s+t}^m(x).
+$$
 
-**Generalization**: The Maslov dequantization extends to n arguments: (1/t)log(Σᵢ exp(taᵢ)) → max_i(aᵢ) with error ≤ log(n)/t.
+**Proof sketch.** The distance from $m$ after time $t$ is $\max\{|x-m|-t,0\}$ and the side of $m$ is unchanged unless the trajectory has arrived. Applying another duration $s$ subtracts $s$ and clips at zero:
 
-**Boundary**: The bound log(2)/t is tight: achieved when a = b, giving MSM(t, a, a) = a + log(2)/t exactly.
+$$
+\max\{\max\{|x-m|-t,0\}-s,0\}
+=\max\{|x-m|-(s+t),0\}.
+$$
 
-### Theorem: Tropical Neuron Antisymmetry (Theorem 3.7)
+The sign is preserved before arrival and is zero afterward, giving the identity. $\square$
 
-**Proof**: Direct algebraic computation: max(a+x,0) - max(b+x,0) = -(max(b+x,0) - max(a+x,0)).
+The semigroup law is useful conceptually, although finite-time convergence and the principal connector theorem require only the explicit clipped map.
 
-**Example**: f(0; 1, -1) = max(1,0) - max(-1,0) = 1 - 0 = 1. f(0; -1, 1) = max(-1,0) - max(1,0) = 0 - 1 = -1 = -f(0; 1, -1). ✓
+### 4.2 Fixed points
 
-**Generalization**: For tropical rational functions p/q where p,q are tropical polynomials with the same support, the antisymmetry extends to a duality between the Newton polytopes.
+**Theorem 4.4 (Fixed-point characterization).** For $m,x\in\mathbb R$, the following are equivalent:
 
-**Boundary**: Antisymmetry breaks for asymmetric neuron architectures (e.g., max(a+x, c) - max(b+x, d) with c ≠ d).
+1. $\Phi_t^m(x)=x$ for every $t>0$;
+2. $x=m$.
 
-### Theorem: Scaled Softplus Convergence (Theorem 3.5)
+**Proof sketch.** If $x=m$, both branches clip at $m$, so the point is fixed. Conversely, assume invariance for all $t>0$. Choose
 
-**Proof**: Uses softplus_ge_relu and softplus_relu_error to establish the sandwich (1/t)σ_+(tx) ∈ [max(x,0), max(x,0) + log(2)/t], then applies squeeze theorem.
+$$
+t=|x-m|+1.
+$$
 
-**Example**: At x = 1, t = 5: (1/5)·log(1+e⁵) ≈ 1.0135. max(1,0) = 1. Error = 0.0135 < log(2)/5 ≈ 0.139. ✓
+This is positive and exceeds the initial distance, so Theorem 4.1 gives $\Phi_t^m(x)=m$. Invariance also gives $\Phi_t^m(x)=x$, hence $x=m$. $\square$
 
-**Generalization**: For general smooth activations σ satisfying σ(x) = max(x,0) + O(e^{-|x|}), the scaled version (1/t)σ(tx) converges to ReLU at rate O(1/t).
+Requiring every positive time is natural for a continuous flow. In fact, for this specific dynamics, invariance under any one positive duration already forces $x=m$: a nonmedian point must move by a positive amount or arrive at the distinct point $m$.
 
-**Boundary**: The convergence is pointwise and uniform on compact sets, but NOT uniform on all of ℝ. At x = 0, the error is always log(2)/t regardless of t.
+### 4.3 Global convergence
 
----
+**Theorem 4.5 (Global finite-time convergence).** For every $m,x_0\in\mathbb R$,
+
+$$
+\lim_{t\to\infty}\Phi_t^m(x_0)=m.
+$$
+
+More strongly,
+
+$$
+\Phi_t^m(x_0)=m
+$$
+
+for every $t\ge |x_0-m|$.
+
+**Proof sketch.** The second statement is exactly Theorem 4.1. An eventually constant trajectory converges to its eventual value, proving the limit. $\square$
+
+This is stronger than a decay estimate. Many smooth gradient flows approach an equilibrium while never reaching it at finite time. Here the nonsmooth normalized dynamics give exact arrival.
+
+## 5. The optimization–dynamics connector
+
+The preceding results can now be assembled.
+
+**Theorem 5.1 (Three-sample tropical training connector).** Let $a\le m\le c$. For every $x\in\mathbb R$, the following conditions are equivalent:
+
+1. $x$ is a global empirical-risk minimizer, meaning
+
+   $$
+   L_{a,m,c}(x)\le L_{a,m,c}(y)
+   $$
+
+   for every $y\in\mathbb R$;
+
+2. $x$ is dynamically stationary, meaning
+
+   $$
+   \Phi_t^m(x)=x
+   $$
+
+   for every $t>0$;
+
+3. $x=m$.
+
+Moreover, for every initialization $x_0\in\mathbb R$, the trajectory $t\mapsto\Phi_t^m(x_0)$ reaches this common point after time $|x_0-m|$ and converges to it as $t\to\infty$.
+
+**Proof sketch.** Corollary 3.4 identifies the global minimizers exactly with $m$. Theorem 4.4 identifies points fixed by all positive-time maps exactly with $m$. Therefore conditions 1–3 are equivalent. The final assertion follows from Theorem 4.5. $\square$
+
+The theorem supplies a precise bridge among order statistics, optimization, and dynamics. It also gives uniqueness without an assumption of strict convexity: the loss is piecewise linear and may contain linear stretches, but the odd number of observations makes the median residual enforce a unique optimum.
 
 ## 6. Algorithms
 
-### Algorithm 1: Tropical Subgradient Descent
+### 6.1 Direct median optimizer
 
-```
-Input: Data points {(xᵢ, yᵢ)}ᵢ₌₁ⁿ, step size η, initial parameter a₀
-Output: Optimized parameter a*
+Given three real reduced targets, the exact optimizer is obtained by sorting them and selecting the middle entry.
 
-1. Compute breakpoints B = {-x₁, ..., -xₙ}, sort B
-2. For k = 0, 1, 2, ...:
-   a. Compute subgradient gₖ = Σᵢ sign(max(aₖ+xᵢ,0) - yᵢ) · 𝟙[aₖ+xᵢ > 0]
-   b. Update: aₖ₊₁ = aₖ - η · gₖ
-   c. If gₖ = 0 or aₖ₊₁ = aₖ: return aₖ
-3. Return aₖ
-```
+**Algorithm 6.1 (Three-sample tropical empirical-risk minimization).** Input three reduced targets $r_1,r_2,r_3$. Sort them as $a\le m\le c$ and return $m$.
 
-Convergence: At most O(n) iterations (one per breakpoint region).
+A comparison sort uses constant storage and, for three elements, a constant number of comparisons. Expressed for a variable input size $n$, sorting costs $O(n\log n)$, while a selection algorithm can find a median in expected $O(n)$ time. Here $n=3$, so both time and space are $O(1)$.
 
-### Algorithm 2: Maslov Dequantization Approximation
+### 6.2 Evaluation of the clipped flow
 
-```
-Input: Temperature t, values a, b
-Output: Approximation to max(a, b)
+**Algorithm 6.2 (Exact tropical flow evaluation).** Given median $m$, elapsed time $t\ge0$, and initialization $x$, return $\min\{m,x+t\}$ if $x<m$; otherwise return $\max\{m,x-t\}$.
 
-1. Compute s = t * max(a, b)  // shift for numerical stability
-2. Return max(a,b) + (1/t) * log(exp(t*(a - max(a,b))) + exp(t*(b - max(a,b))))
-```
+The algorithm uses one comparison and a constant number of arithmetic operations, hence $O(1)$ time and $O(1)$ auxiliary space. Unlike numerical integration, it incurs no time-discretization error because it evaluates the trajectory in closed form.
 
-Error guarantee: |output - max(a,b)| ≤ log(2)/t.
+### 6.3 Trajectory sampling
 
----
+For visualization, choose a time grid $0=t_0<t_1<\cdots<t_N$ and evaluate the closed-form flow at each time. This costs $O(N)$ time and $O(N)$ space if all samples are retained, or $O(1)$ space for streaming output. The exact hitting time $|x_0-m|$ should be included in the grid if one wants the plotted path to display the transition to the stationary phase precisely.
 
-## 7. Discussion
+## 7. Numerical examples
 
-### 7.1 What We Found
+Take
 
-The tropical limit of neural network training is not merely a simplification — it reveals fundamental structure. The key discoveries are:
+$$
+a=-2,\qquad m=1,\qquad c=5.
+$$
 
-1. **Exact error bounds**: The Maslov dequantization error is bounded by log(2)/t, not just asymptotically small. This gives practitioners concrete guidance on when the tropical approximation is accurate enough.
+The loss at the optimizer is
 
-2. **Antisymmetry of tropical neurons**: The identity f(x; a, b) = -f(x; b, a) reveals that tropical neural networks have a built-in duality. Every feature detector has a complementary anti-detector.
+$$
+L(1)=|3|+|0|+|-4|=7.
+$$
 
-3. **Affine loss regions**: Between breakpoints, the loss is not just piecewise-linear but actually affine. This means gradient descent on these regions achieves exact (not approximate) loss decrease.
+Two comparison points give
 
-### 7.2 What Surprised Us
+$$
+L(-1)=|-1+2|+|-1-1|+|-1-5|=1+2+6=9
+$$
 
-The disproof of single-point loss convexity was unexpected. While max(a+x, 0) is convex in a, the absolute value |max(a+x, 0) - y| is NOT convex. This means the tropical L₁ loss is not globally convex, even for a single data point. This has implications for training: the tropical loss landscape can have local minima that are not global minima.
+and
 
-### 7.3 Connections to Existing Work
+$$
+L(4)=|4+2|+|4-1|+|4-5|=6+3+1=10.
+$$
 
-Our results connect to:
-- **Zhang et al. (2018)**: Tropical geometry of deep neural networks — we extend their static analysis to dynamics
-- **Maslov (1992)**: Idempotent analysis — we make his dequantization constructive with explicit bounds
-- **The Catalog**: Our `maslov_dequant_tendsto` theorem complements `tropical_gradient_descent_loss_decrease` from `FINAL/MachineLearning/TropicalNTKDynamics.lean`
+For initialization $x_0=-2$, the hitting time is
 
----
+$$
+|-2-1|=3.
+$$
 
-## 8. Falsifiable Conjecture
+At elapsed times $0,1,2,3,4$, the states are respectively
 
-**Conjecture** (Tropical Convergence Rate). For a single tropical neuron trained on n data points with the optimal step size, the tropical subgradient descent converges to an ε-optimal solution in at most ⌈n/ε⌉ steps.
+$$
+-2,-1,0,1,1.
+$$
 
-**Computational Test**: For n = 100 random data points in [0,1]², run tropical subgradient descent with step size η = 1/n. Track the loss at each step. The conjecture predicts the loss reaches within ε of the minimum by step ⌈100/ε⌉. If the loss plateaus or oscillates beyond this bound, the conjecture is false.
+For initialization $x_0=5$, the hitting time is $4$, and the states at integer times $0$ through $5$ are
 
----
+$$
+5,4,3,2,1,1.
+$$
 
-## 9. Future Work
+Large elapsed times do not create overshoot. For example,
 
-1. Extend the TSFS to multi-dimensional parameter spaces (tropical projective torus ℝⁿ/ℝ·1)
-2. Characterize the topology of tropical loss sublevel sets using tropical homology
-3. Connect the breakpoint structure to the Newton polytope of the loss as a tropical polynomial
-4. Develop a tropical analogue of the Neural Tangent Kernel for the infinite-width limit
+$$
+\Phi_{10}^1(5)=1.
+$$
 
----
+The examples illustrate both sides of the flow and the eventual constant phase.
 
-## References
+## 8. Structural consequences of the exact formula
 
-1. Maslov, V.P. "Idempotent Analysis." Advances in Soviet Mathematics, 1992.
-2. Mikhalkin, G. "Tropical Geometry and its Applications." Proceedings of the ICM, 2006.
-3. Zhang, L., Naitzat, G., Lim, L.-H. "Tropical Geometry of Deep Neural Networks." ICML, 2018.
-4. Alfarra, M., Bibi, A., Hammoud, H., Gaber, M., Ghanem, B. "On the Decision Boundaries of Neural Networks: A Tropical Geometry Perspective." IEEE TPAMI, 2022.
-5. Joswig, M. "Essentials of Tropical Combinatorics." Springer, 2021.
+The closed-form distance law permits several deductions that sharpen the convergence theorem.
+
+**Proposition 8.1 (Nonexpansiveness in the initial condition).** For fixed $m$ and $t\ge0$, the map $x\mapsto\Phi_t^m(x)$ is $1$-Lipschitz:
+
+$$
+|\Phi_t^m(x)-\Phi_t^m(y)|\le |x-y|
+$$
+
+for all $x,y\in\mathbb R$.
+
+**Proof sketch.** The flow map is the projection toward $m$ after a translation of magnitude $t$. On each of the regions where both points remain below $m$, both remain above $m$, or both have arrived, its slope is respectively $1$, $1$, or $0$. If two points occupy different regions, monotonicity and continuity across the clipping boundaries show that their output separation cannot exceed their input separation. Equivalently, the graph is continuous, nondecreasing, and piecewise affine with slopes only $0$ and $1$, which implies the Lipschitz bound. $\square$
+
+Thus perturbations in initialization are never amplified. Two trajectories may preserve their separation while traveling on the same side, but clipping can only reduce it.
+
+**Proposition 8.2 (Monotone distance and eventual zero loss gap).** Along every trajectory, the distance to the optimizer is nonincreasing and obeys
+
+$$
+|\Phi_t^m(x_0)-m|=\max\{|x_0-m|-t,0\}.
+$$
+
+Furthermore, the empirical loss $L_{a,m,c}(\Phi_t^m(x_0))$ is nonincreasing in $t$ and equals its minimum value $c-a$ for every $t\ge|x_0-m|$.
+
+**Proof sketch.** The distance identity follows by expanding the two branches of the clipped flow. Before arrival, the state moves toward $m$ without changing sides. Lemma 3.3 shows that movement toward $m$ strictly lowers loss whenever the state is not already $m$. After arrival, both state and loss are constant. At $m$, Theorem 3.2 gives the minimum value $L_{a,m,c}(m)=c-a$. $\square$
+
+The loss can decrease at different linear rates as the trajectory crosses $a$ or $c$, because the number of residuals pulling in each direction changes. Nevertheless, the parameter distance always falls at the same unit rate. This distinction reflects normalization: the flow uses the sign of a descent direction, not the full magnitude of the loss subgradient.
+
+**Proposition 8.3 (Translation equivariance).** If a common offset $q\in\mathbb R$ is added to all targets and to the initialization, then loss values and relative trajectories are unchanged:
+
+$$
+L_{a+q,m+q,c+q}(x+q)=L_{a,m,c}(x)
+$$
+
+and
+
+$$
+\Phi_t^{m+q}(x+q)=\Phi_t^m(x)+q.
+$$
+
+**Proof sketch.** Every residual is unchanged because $(x+q)-(a+q)=x-a$, and similarly for $m$ and $c$. The inequalities determining the flow branch are also unchanged, while addition by $q$ commutes with the relevant minimum and maximum. $\square$
+
+Translation equivariance explains why subtracting fixed feature contributions is natural: only relative positions matter. It also anticipates the projective viewpoint, in which common translations are treated as redundant descriptions of the same tropical state.
+
+## 9. Interpretation and applications
+
+### 9.1 Robustness
+
+The optimizer depends on the ordering of the three reduced targets, not on their magnitudes through an average. If $c$ is moved farther to the right while $a\le m\le c$ remains true, the optimizer stays at $m$. This is the elementary source of the median's resistance to a single extreme observation.
+
+The optimal value does change: $L(m)=c-a$ records the span of the outer points. Thus the parameter estimate is robust even though the achieved empirical loss reflects the outlier's distance.
+
+### 9.2 Stopping certificates
+
+The exact distance law provides a deterministic stopping criterion. If the median is known and training begins at $x_0$, then elapsed continuous time $t\ge|x_0-m|$ certifies that the parameter equals the optimizer. No tolerance parameter is required in the idealized model.
+
+### 9.3 Polyhedral optimization
+
+The scalar example is a single-cell prototype of higher-dimensional tropical learning. In larger models, active max-affine terms partition parameter space into polyhedra. Within each cell, residuals and descent directions can be affine or constant; crossing a wall changes the active pattern. The present flow demonstrates how clipping at a nonsmooth optimum can convert such regional rules into a globally convergent trajectory.
+
+### 9.4 Projective interpretation
+
+Tropical parameter vectors are often considered modulo common translation. A scalar coordinate can be regarded as a chart on this projective quotient after redundant translation has been removed. Extending the analysis intrinsically requires a projective metric and a proof that the dynamics do not depend on the chosen representative. The current model captures the chart-level median mechanism while leaving that quotient construction for future work.
+
+## 10. Limitations and future work
+
+The exact theorem relies on a scalar parameter, three unweighted observations, absolute loss, and a normalized clipped flow centered at the known median. Each assumption points to a concrete extension.
+
+First, one may begin with a smooth log-sum-exp neuron depending on a scale parameter and prove that its losses and gradient trajectories converge to the piecewise-linear system as the scale tends to the tropical limit. Loss convergence alone is not enough; trajectory convergence must control behavior near moving nonsmooth boundaries.
+
+Second, the scalar chart should be replaced by the tropical projective torus. Weight vectors would be quotiented by common translation, equipped with a projective metric, and the flow shown invariant under representatives.
+
+Third, odd finite samples should yield the ordinary median, while positive weights yield a weighted median. For an even number of samples, the minimizer set is the interval between the two center order statistics. Dynamics may then possess a continuum of equilibria, and initialization or flow convention may determine which minimizer is selected.
+
+Fourth, multiple tropical neurons produce sums and differences of max-affine terms. Their activation patterns form a polyhedral complex in parameter space. Convex subclasses may admit global convergence, while nonconvex cases will require local analysis, error bounds, or conditions excluding cycling among activation regions.
+
+Fifth, practical training is discrete. An explicit constant-step subgradient method can overshoot the median repeatedly. Clipping, proximal updates, or diminishing step sizes may restore convergence. A useful comparison would quantify how closely an interpolated discrete trajectory shadows the continuous flow.
+
+Sixth, perturbation theory should measure how changes in labels or tropical features alter the reduced median. This would connect training stability directly to robust statistics and provide finite-sample sensitivity bounds.
+
+Finally, alternative losses change both estimators and dynamics. Squared loss selects the mean and leads to smooth contraction. Huber loss interpolates between mean-like and median-like behavior. Comparing their tropical-limit trajectories would clarify which finite-time and robustness properties are specific to $L^1$ geometry.
+
+## 11. Conclusion
+
+For three ordered reduced targets $a\le m\le c$, the scalar tropical absolute-error loss
+
+$$
+L(x)=|x-a|+|x-m|+|x-c|
+$$
+
+has the unique global minimizer $m$. The clipped unit-speed flow moves any initialization toward that point without overshoot and reaches it exactly after time $|x_0-m|$. The median is also the unique point fixed by every positive-time flow map. Consequently, empirical-risk minimization, dynamical stationarity, and the order-statistical median condition are equivalent.
+
+The result is elementary enough to admit complete formulas, yet it captures characteristic features of tropical learning: polyhedral objectives, nonsmooth descent, robust estimators, and finite-time stabilization. It provides a base case for studying how smooth neural optimization degenerates into piecewise-linear tropical dynamics and how the same mechanism scales to weighted data, projective spaces, discrete algorithms, and multi-neuron networks.
