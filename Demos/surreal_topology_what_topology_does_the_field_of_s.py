@@ -1,118 +1,106 @@
 #!/usr/bin/env python3
-"""Finite numerical illustrations of infinitesimal clopen-cut arguments.
+"""Finite rational illustrations of infinitesimal-ladder and path-rigidity arguments.
 
-Real floating-point arithmetic cannot contain a positive epsilon whose every
-natural multiple stays below a fixed positive gap. These demonstrations use
-finite cutoffs to show the mechanism and, equally importantly, the exact point
-at which Archimedean arithmetic differs from surreal arithmetic.
+These examples are finite shadows: rational arithmetic cannot represent a positive
+number smaller than d/n for every natural n. Instead, a cutoff N is chosen and an
+exact rational step is made small enough for the first N multiples.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from fractions import Fraction
 from typing import Iterable, Sequence
 
 
 @dataclass(frozen=True)
-class FiniteScaleExperiment:
-    """A finite analogue of a gap and an infinitesimal step."""
+class LadderReport:
+    """Exact data for a finite natural-step ladder below a prescribed width."""
 
-    gap: float
+    width: Fraction
     cutoff: int
-    epsilon: float
-    multiples: tuple[float, ...]
+    step: Fraction
+    rungs: tuple[Fraction, ...]
+    strictly_increasing: bool
+    all_below_width: bool
 
 
-def finite_scale_experiment(gap: float, cutoff: int) -> FiniteScaleExperiment:
-    """Choose epsilon = gap/(cutoff+1) and list multiples through the cutoff."""
-    if gap <= 0.0:
-        raise ValueError("gap must be positive")
-    if cutoff < 1:
-        raise ValueError("cutoff must be at least 1")
-    epsilon = gap / (cutoff + 1)
-    multiples = tuple(n * epsilon for n in range(cutoff + 1))
-    return FiniteScaleExperiment(gap, cutoff, epsilon, multiples)
+def finite_ladder(width: Fraction, cutoff: int) -> LadderReport:
+    """Construct 0, epsilon, ..., cutoff*epsilon strictly below ``width``.
 
-
-def finite_step_membership(z: float, origin: float, epsilon: float, cutoff: int) -> bool:
-    """Test membership below one of the first cutoff+1 finite thresholds."""
-    if epsilon <= 0.0:
-        raise ValueError("epsilon must be positive")
+    The choice epsilon = width/(cutoff+1) gives exact inequalities using
+    ``fractions.Fraction``. Runtime and output size are O(cutoff).
+    """
+    if width <= 0:
+        raise ValueError("width must be positive")
     if cutoff < 0:
         raise ValueError("cutoff must be nonnegative")
-    return any(z < origin + n * epsilon for n in range(cutoff + 1))
+    step = width / (cutoff + 1)
+    rungs = tuple(n * step for n in range(cutoff + 1))
+    increasing = all(rungs[i] < rungs[i + 1] for i in range(len(rungs) - 1))
+    below = all(rung < width for rung in rungs)
+    return LadderReport(width, cutoff, step, rungs, increasing, below)
 
 
-def first_crossing(gap: float, epsilon: float) -> int:
-    """Return the first natural n with n*epsilon >= gap in real arithmetic."""
-    if gap <= 0.0 or epsilon <= 0.0:
-        raise ValueError("gap and epsilon must be positive")
-    n = int(gap / epsilon)
-    while n * epsilon < gap:
-        n += 1
-    while n > 0 and (n - 1) * epsilon >= gap:
-        n -= 1
-    return n
+def translated_ladder(a: Fraction, x: Fraction, b: Fraction, cutoff: int) -> tuple[Fraction, ...]:
+    """Place a finite ladder based at x inside the interval (a,b)."""
+    if not a < x < b:
+        raise ValueError("the basepoint must satisfy a < x < b")
+    report = finite_ladder(b - x, cutoff)
+    points = tuple(x + rung for rung in report.rungs)
+    assert all(a < point < b for point in points)
+    return points
 
 
-def ascii_threshold_plot(values: Sequence[float], gap: float, width: int = 56) -> str:
-    """Render finite multiples on a text scale from zero to the gap."""
-    if gap <= 0.0 or width < 10:
-        raise ValueError("invalid plot scale")
-    rows: list[str] = []
-    for n, value in enumerate(values):
-        position = min(width - 1, max(0, round((value / gap) * (width - 1))))
-        line = ["-"] * width
-        line[position] = "●"
-        line[-1] = "|"
-        rows.append(f"n={n:2d}  {''.join(line)}  {value:.6g}")
-    return "\n".join(rows)
+def has_next_larger_rung(rungs: Sequence[Fraction], step: Fraction) -> bool:
+    """Check that every displayed rung has a strictly larger successor."""
+    if step <= 0:
+        return False
+    return all(rung + step > rung for rung in rungs)
 
 
-def demonstrate_finite_window(gap: float = 1.0, cutoff: int = 12) -> None:
-    """Print a finite imitation of natural multiples staying below a gap."""
-    experiment = finite_scale_experiment(gap, cutoff)
-    print("DEMO 1 — Finite window below a prescribed gap")
-    print(f"gap d = {gap:g}, cutoff N = {cutoff}")
-    print(f"epsilon = d/(N+1) = {experiment.epsilon:.8g}")
-    print(f"All n*epsilon < d for 0 <= n <= N: "
-          f"{all(v < gap for v in experiment.multiples)}")
-    print(ascii_threshold_plot(experiment.multiples, gap))
-    print(f"At n=N+1, n*epsilon = {(cutoff + 1) * experiment.epsilon:.8g}\n")
+def is_constant_discrete_path(values: Sequence[Fraction]) -> bool:
+    """Test continuity in a finite totally separated path model.
+
+    A connected chain mapped continuously to a discrete target must assign equal
+    values to adjacent vertices, hence must be constant.
+    """
+    return all(values[i] == values[i + 1] for i in range(len(values) - 1))
 
 
-def demonstrate_separator(origin: float = 2.0, target: float = 5.0, cutoff: int = 10) -> None:
-    """Show a cutoff finite-step lower ray containing origin but not target."""
-    if target <= origin:
-        raise ValueError("target must exceed origin")
-    gap = target - origin
-    epsilon = gap / (cutoff + 1)
-    sample_points = (origin - 0.5, origin, origin + gap / 3, target, target + 0.5)
-    print("DEMO 2 — Truncated finite-step separator")
-    print(f"origin x = {origin:g}, target y = {target:g}, epsilon = {epsilon:.8g}")
-    for z in sample_points:
-        status = finite_step_membership(z, origin, epsilon, cutoff)
-        print(f"z={z:8.4f}  belongs below a threshold: {status}")
-    print("The finite model contains x and excludes y through cutoff N.\n")
+def format_fraction(value: Fraction) -> str:
+    """Format an exact rational compactly."""
+    return str(value.numerator) if value.denominator == 1 else f"{value.numerator}/{value.denominator}"
 
 
-def demonstrate_archimedean_contrast(gap: float = 1.0,
-                                     steps: Iterable[float] = (0.2, 0.05, 0.001)) -> None:
-    """Show that each fixed positive real step eventually crosses the gap."""
-    print("DEMO 3 — The Archimedean contrast")
-    print(f"gap d = {gap:g}")
-    for epsilon in steps:
-        crossing = first_crossing(gap, epsilon)
-        print(f"epsilon={epsilon:.8g}: first crossing n={crossing}, "
-              f"n*epsilon={crossing * epsilon:.8g}")
-    print("Every positive real epsilon crosses eventually; the surreal theorem")
-    print("asserts the existence of a positive infinitesimal that never does.")
+def print_sequence(label: str, values: Iterable[Fraction]) -> None:
+    """Print a labeled sequence of exact rationals."""
+    print(f"{label}: " + ", ".join(format_fraction(v) for v in values))
 
 
 def main() -> None:
-    demonstrate_finite_window()
-    demonstrate_separator()
-    demonstrate_archimedean_contrast()
+    """Run three explanatory numerical demonstrations."""
+    print("DEMO 1 — A finite shadow of an infinitesimal ladder")
+    report = finite_ladder(Fraction(1), 12)
+    print(f"width = {format_fraction(report.width)}, epsilon = {format_fraction(report.step)}")
+    print_sequence("rungs", report.rungs)
+    print(f"strictly increasing: {report.strictly_increasing}")
+    print(f"all displayed rungs below width: {report.all_below_width}")
+    print(f"every displayed rung admits a larger next rung: {has_next_larger_rung(report.rungs, report.step)}")
+
+    print("\nDEMO 2 — Translating the ladder into an arbitrary neighborhood")
+    a, x, b = Fraction(-2), Fraction(1, 3), Fraction(5, 4)
+    points = translated_ladder(a, x, b, 10)
+    print(f"interval = ({format_fraction(a)}, {format_fraction(b)}), basepoint = {format_fraction(x)}")
+    print_sequence("translated points", points)
+    print(f"all points lie in the interval: {all(a < p < b for p in points)}")
+
+    print("\nDEMO 3 — Path rigidity in a finite totally separated model")
+    constant_path = [Fraction(2, 3)] * 8
+    attempted_motion = [Fraction(0), Fraction(0), Fraction(1, 10), Fraction(1, 10)]
+    print(f"constant sample is continuous in the model: {is_constant_discrete_path(constant_path)}")
+    print(f"attempted nonconstant motion is continuous in the model: {is_constant_discrete_path(attempted_motion)}")
+    print("The full theorem is stronger: every continuous path in the surreal interval topology is constant.")
 
 
 if __name__ == "__main__":
