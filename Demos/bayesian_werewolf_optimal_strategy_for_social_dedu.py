@@ -1,151 +1,132 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for Bayesian elimination decisions and spin scores."""
+"""Numerical demonstrations for Bayesian one-step elimination.
+
+The program uses only Python's standard library. It demonstrates posterior
+normalization, maximum-posterior optimality against several randomized rules,
+uniform-elimination baselines, and exact values of the proposed scaling factor.
+"""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from fractions import Fraction
 from math import isclose
+from random import Random
 from typing import Iterable, Sequence
 
 
-@dataclass(frozen=True)
-class BayesianDecision:
-    """The normalized posterior and its maximum-posterior action."""
-
-    posterior: tuple[float, ...]
-    map_index: int
-    evidence_mass: float
-
-
-def normalize_bayesian_weights(
+def bayesian_posterior(
     priors: Sequence[float], likelihoods: Sequence[float]
-) -> BayesianDecision:
-    """Normalize prior-times-likelihood weights and return a MAP index.
-
-    Raises ValueError for unequal, empty, negative, or zero-mass inputs.
-    """
+) -> list[float]:
+    """Return normalized prior-times-likelihood scores."""
     if len(priors) != len(likelihoods) or not priors:
-        raise ValueError("priors and likelihoods must have equal positive length")
-    if any(x < 0.0 for x in priors) or any(x < 0.0 for x in likelihoods):
-        raise ValueError("probabilistic priors and likelihoods must be nonnegative")
-    weights = tuple(prior * likelihood for prior, likelihood in zip(priors, likelihoods))
-    mass = sum(weights)
-    if mass <= 0.0:
-        raise ValueError("evidence mass must be positive")
-    posterior = tuple(weight / mass for weight in weights)
-    map_index = max(range(len(weights)), key=weights.__getitem__)
-    return BayesianDecision(posterior, map_index, mass)
+        raise ValueError("priors and likelihoods must have equal nonzero length")
+    if any(p < 0.0 for p in priors) or any(x < 0.0 for x in likelihoods):
+        raise ValueError("probability inputs must be nonnegative")
+    scores = [p * likelihood for p, likelihood in zip(priors, likelihoods)]
+    normalizer = sum(scores)
+    if normalizer <= 0.0:
+        raise ValueError("the sum of Bayesian scores must be positive")
+    return [score / normalizer for score in scores]
 
 
-def symmetric_continuation_values(
-    posterior: Sequence[float], good: float, bad: float
-) -> tuple[float, ...]:
-    """Evaluate B + (G-B)p for every action in a symmetric model."""
-    if not posterior or any(p < 0.0 for p in posterior):
-        raise ValueError("posterior must be a nonempty nonnegative sequence")
-    if not isclose(sum(posterior), 1.0, rel_tol=1e-9, abs_tol=1e-12):
-        raise ValueError("posterior must sum to one")
-    return tuple(bad + (good - bad) * p for p in posterior)
+def randomized_success(rule: Sequence[float], posterior: Sequence[float]) -> float:
+    """Compute the one-step success probability of a randomized rule."""
+    if len(rule) != len(posterior) or not rule:
+        raise ValueError("rule and posterior must have equal nonzero length")
+    if any(q < 0.0 for q in rule):
+        raise ValueError("rule weights must be nonnegative")
+    if not isclose(sum(rule), 1.0, rel_tol=1e-12, abs_tol=1e-12):
+        raise ValueError("rule weights must sum to one")
+    return sum(q * probability for q, probability in zip(rule, posterior))
 
 
-def identity_dependent_values(
-    posterior: Sequence[float], hit_rewards: Sequence[float]
-) -> tuple[float, ...]:
-    """Expected values p_i R_i when misses have value zero."""
-    if len(posterior) != len(hit_rewards) or not posterior:
-        raise ValueError("posterior and rewards must have equal positive length")
-    return tuple(p * reward for p, reward in zip(posterior, hit_rewards))
+def maximum_posterior_targets(posterior: Sequence[float]) -> list[int]:
+    """Return all zero-based indices attaining the largest posterior."""
+    if not posterior:
+        raise ValueError("posterior must be nonempty")
+    maximum = max(posterior)
+    return [i for i, value in enumerate(posterior) if isclose(value, maximum)]
 
 
-def spin_score(probability: float) -> float:
-    """Map a binary-role probability to its centered spin score 2p-1."""
-    return 2.0 * probability - 1.0
+def uniform_elimination_probability(n_players: int, n_wolves: int) -> Fraction:
+    """Return the exact probability of hitting a wolf uniformly."""
+    if n_players <= 0 or not 0 <= n_wolves <= n_players:
+        raise ValueError("require n_players > 0 and 0 <= n_wolves <= n_players")
+    return Fraction(n_wolves, n_players)
 
 
-def constant_magnetization(rows: int, columns: int, probability: float) -> float:
-    """Magnetization of a rows-by-columns constant posterior field."""
-    if rows <= 0 or columns <= 0:
-        raise ValueError("lattice dimensions must be positive")
-    return rows * columns * spin_score(probability)
+def proposed_scaling(n_players: int, n_wolves: int, constant: Fraction) -> Fraction:
+    """Evaluate C(1-k/(n-k))^2 exactly."""
+    if n_players == n_wolves:
+        raise ValueError("the scaling expression is undefined when n = k")
+    ratio = Fraction(n_wolves, n_players - n_wolves)
+    return constant * (1 - ratio) ** 2
 
 
-def fmt(values: Iterable[float]) -> str:
-    """Format a numerical vector for console output."""
+def monte_carlo_rule_success(
+    rule: Sequence[float], posterior: Sequence[float], trials: int, seed: int = 20260730
+) -> float:
+    """Estimate success by sampling a target and its Bernoulli role indicator."""
+    if trials <= 0:
+        raise ValueError("trials must be positive")
+    randomized_success(rule, posterior)  # validate the inputs
+    rng = Random(seed)
+    cumulative: list[float] = []
+    running = 0.0
+    for weight in rule:
+        running += weight
+        cumulative.append(running)
+    hits = 0
+    for _ in range(trials):
+        draw = rng.random()
+        target = next(i for i, cutoff in enumerate(cumulative) if draw <= cutoff)
+        hits += rng.random() < posterior[target]
+    return hits / trials
+
+
+def format_vector(values: Iterable[float]) -> str:
+    """Format a vector compactly."""
     return "[" + ", ".join(f"{value:.6f}" for value in values) + "]"
 
 
-def demonstrate_normalization_and_map() -> None:
-    """Show normalization, score-order preservation, and symmetric optimality."""
-    priors = (0.40, 0.35, 0.25)
-    likelihoods = (0.20, 0.80, 0.50)
-    decision = normalize_bayesian_weights(priors, likelihoods)
-    values = symmetric_continuation_values(decision.posterior, good=0.9, bad=0.2)
-    value_index = max(range(len(values)), key=values.__getitem__)
-
-    print("Example 1 — Bayesian normalization and symmetric continuation")
-    print(f"  evidence mass: {decision.evidence_mass:.6f}")
-    print(f"  posterior:     {fmt(decision.posterior)}")
-    print(f"  posterior sum: {sum(decision.posterior):.12f}")
-    print(f"  MAP suspect:   {decision.map_index}")
-    print(f"  values:        {fmt(values)}")
-    print(f"  value maximizer agrees with MAP: {value_index == decision.map_index}\n")
-
-
-def demonstrate_regret_bound() -> None:
-    """Compare exact symmetric regret with the theorem's upper bound."""
-    posterior = (0.58, 0.33, 0.09)
-    good, bad = 0.95, 0.15
-    best, approximate = 0, 1
-    epsilon = posterior[best] - posterior[approximate]
-    values = symmetric_continuation_values(posterior, good, bad)
-    regret = values[best] - values[approximate]
-    bound = (good - bad) * epsilon
-
-    print("Example 2 — posterior-approximation regret")
-    print(f"  posterior gap epsilon: {epsilon:.6f}")
-    print(f"  exact regret:          {regret:.6f}")
-    print(f"  theorem bound:         {bound:.6f}")
-    print(f"  bound respected:       {regret <= bound + 1e-12}\n")
-
-
-def demonstrate_asymmetry_counterexample() -> None:
-    """Show that identity-dependent rewards can overturn MAP ranking."""
-    posterior = (3.0 / 5.0, 2.0 / 5.0)
-    rewards = (1.0 / 10.0, 1.0)
-    values = identity_dependent_values(posterior, rewards)
-    map_index = max(range(2), key=posterior.__getitem__)
-    utility_index = max(range(2), key=values.__getitem__)
-
-    print("Example 3 — identity-dependent counterexample")
-    print(f"  posterior:        {fmt(posterior)}")
-    print(f"  hit rewards:      {fmt(rewards)}")
-    print(f"  expected values:  {fmt(values)}")
-    print(f"  MAP suspect:      {map_index}")
-    print(f"  utility maximizer:{utility_index}")
-    print(f"  rankings disagree:{map_index != utility_index}\n")
-
-
-def demonstrate_spin_flip() -> None:
-    """Show centered-score complementation and magnetization reversal."""
-    probability = 0.70
-    complement = 1.0 - probability
-    magnetization = constant_magnetization(4, 5, probability)
-    flipped = constant_magnetization(4, 5, complement)
-
-    print("Example 4 — posterior complementation as spin flip")
-    print(f"  s({probability:.2f}) = {spin_score(probability):.6f}")
-    print(f"  s({complement:.2f}) = {spin_score(complement):.6f}")
-    print(f"  4x5 magnetization:         {magnetization:.6f}")
-    print(f"  complemented magnetization:{flipped:.6f}")
-    print(f"  exact sign reversal:       {isclose(flipped, -magnetization)}")
-
-
 def main() -> None:
-    """Run all numerical demonstrations."""
-    demonstrate_normalization_and_map()
-    demonstrate_regret_bound()
-    demonstrate_asymmetry_counterexample()
-    demonstrate_spin_flip()
+    """Run deterministic and Monte Carlo demonstrations."""
+    n, k = 7, 2
+    priors = [k / n] * n
+    likelihoods = [0.12, 0.08, 0.25, 0.10, 0.18, 0.09, 0.18]
+    posterior = bayesian_posterior(priors, likelihoods)
+    targets = maximum_posterior_targets(posterior)
+
+    deterministic = [0.0] * n
+    deterministic[targets[0]] = 1.0
+    uniform = [1.0 / n] * n
+    mixed = [0.0] * n
+    mixed[2] = 0.5
+    mixed[4] = 0.5
+
+    print("Bayesian one-step elimination demonstration")
+    print(f"posterior: {format_vector(posterior)}")
+    print(f"sum: {sum(posterior):.12f}")
+    print(f"maximum-posterior player(s), one-based: {[i + 1 for i in targets]}")
+    print(f"deterministic MAP success: {randomized_success(deterministic, posterior):.6f}")
+    print(f"player 3/5 mixture success: {randomized_success(mixed, posterior):.6f}")
+    print(f"uniform target success in normalized target model: {randomized_success(uniform, posterior):.6f}")
+
+    best = max(posterior)
+    for name, rule in [("deterministic", deterministic), ("mixed", mixed), ("uniform", uniform)]:
+        assert randomized_success(rule, posterior) <= best + 1e-12, name
+
+    baseline = uniform_elimination_probability(n, k)
+    seven_two = proposed_scaling(7, 2, Fraction(1))
+    parity = proposed_scaling(2 * k, k, Fraction(1))
+    print(f"role-count uniform baseline k/n: {baseline} = {float(baseline):.6f}")
+    print(f"scaling factor at (n,k,C)=(7,2,1): {seven_two} = {float(seven_two):.2f}")
+    print(f"scaling factor at parity n=2k: {parity}")
+
+    trials = 100_000
+    estimate = monte_carlo_rule_success(deterministic, posterior, trials)
+    print(f"Monte Carlo MAP estimate ({trials:,} trials): {estimate:.6f}")
+    print("All exact inequality checks passed.")
 
 
 if __name__ == "__main__":

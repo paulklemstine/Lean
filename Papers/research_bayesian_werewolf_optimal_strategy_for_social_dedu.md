@@ -1,492 +1,407 @@
-# Bayesian Werewolf: Local Posterior Optimality, Symmetric Continuation Value, and Spin Symmetry
+# Bayesian One-Step Decisions in Social Deduction Games
+
+**Aristotle**  
+**July 30, 2026**
 
 ## Abstract
 
-Social-deduction games motivate a basic sequential decision question: should a decision maker always act against the player with the largest posterior probability of holding a hidden adversarial role? We isolate the valid local principle from the stronger global claim. In a finite Bayesian model, normalized prior-times-likelihood weights form a posterior distribution, and their ordering agrees with that of the unnormalized weights whenever the evidence mass is positive. Eliminating a maximum-a-posteriori suspect maximizes the probability of an immediately correct elimination. For continuation utility that assigns a common value $G$ to every correct elimination and a common value $B$ to every incorrect elimination, expected value is the affine function $B+(G-B)p_a$ of the selected suspect’s posterior $p_a$. Consequently, if $B\le G$, every maximum-a-posteriori action maximizes continuation value. The same identity yields a sharp approximation-regret bound of $(G-B)\varepsilon$. We show by an explicit two-suspect example that identity symmetry is essential: a lower-posterior action can have much greater expected value when correct-hit rewards depend on identity. Finally, the centered posterior score $s(p)=2p-1$ preserves posterior order and turns role complementation into spin flip. Constant posterior fields therefore have magnetization equal to lattice size times centered posterior, with complementation reversing its sign. The results provide a precise foundation for Bayesian voting while delimiting what cannot be concluded about full-game win probabilities without an explicit sequential model.
+We study the decision problem faced by an uninformed faction in a finite social deduction game when it must select one player for elimination. Given a prior role probability and a likelihood for the observed evidence under each single-player role hypothesis, we define an unnormalized Bayesian score and its normalized posterior distribution. We prove that normalization preserves score order whenever the normalizing constant is positive. Our principal result is a one-step maximum-a-posteriori optimality theorem: eliminating a player of maximal posterior probability maximizes the conditional probability of eliminating a werewolf, not only among deterministic choices but among all randomized elimination rules. We also establish the exact success probability $k/n$ for uniform elimination when $k$ of $n$ players are werewolves, and show that under a common prior, likelihood ordering and posterior ordering coincide. Finally, we analyze the proposed scaling factor $C(1-k/(n-k))^2$: for $n=7$, $k=2$, and $C=1$, it is exactly $9/25=0.36$, while it vanishes at the parity threshold $n=2k$. These identities do not determine the value of a complete dynamic game. We distinguish immediate classification from full-horizon control and specify the additional modeling needed for simulation and backward induction.
 
 ## 1. Introduction
 
-Games such as Werewolf and Mafia combine hidden roles, public actions, strategic deception, and repeated elimination. A typical informal prescription tells the uninformed team to vote for the player most likely to be an adversary. This prescription mixes two claims:
+Social deduction games combine hidden state, strategic communication, sequential action, and asymmetric information. In Werewolf or Mafia, a minority knows the hidden roles while the majority attempts to identify that minority through public behavior. A typical round contains a night elimination controlled by the informed faction and a day elimination selected through public voting. The majority wins by eliminating all werewolves; the werewolves win when they equal or outnumber the villagers.
 
-1. the selected player is most likely to be an adversary; and
-2. selecting that player maximizes the probability of eventually winning.
+The natural Bayesian recommendation is to eliminate the player currently most likely to be a werewolf. That recommendation contains two logically distinct claims. The first is local: the action maximizes the probability that the present elimination is correct. The second is global: the action maximizes the probability that the villagers eventually win. Only the first follows from posterior maximization without further assumptions. The second depends on how actions alter future observations, strategic behavior, and continuation values.
 
-The first claim is a classification decision. The second is a sequential control decision. They coincide under important conditions, but not automatically. The distinction is familiar in decision theory: posterior probability quantifies belief, whereas expected utility combines belief with consequences.
+This paper isolates the model-independent local result. The setup accepts any finite player set and any specified prior and evidence likelihood. It does not assume a particular psychological model of voting, speech, or survival. Once those quantities are supplied, the posterior is obtained by normalization. The central proof then reduces to a basic property of convex combinations: no weighted average exceeds its largest component.
 
-This paper develops the finite mathematics needed to state that distinction exactly. We treat a finite set of mutually exclusive role hypotheses. Priors and likelihoods produce posterior probabilities through normalization. The immediate utility for a correct elimination is represented by a zero-one indicator. A more general continuation model assigns value $G$ to a hit and $B$ to a miss, independently of the chosen identity. This exchangeability makes continuation value affine in the posterior coordinate of the chosen player, and monotonicity then proves global optimality for the decision stage.
+This abstraction has two advantages. First, it states precisely what can be concluded independently of detailed game rules. Second, it exposes what remains unspecified in claims about complete-game win rates. A numerical value such as $0.36$ cannot be inferred from player counts alone; it requires a transition model, observation model, policies, and tie-breaking conventions. We therefore treat a proposed scaling law as an expression whose special-case arithmetic can be established exactly, not as an established law of game value.
 
-The symmetry assumption is also shown to be necessary for any unconditional claim of this form. With two suspects having posterior probabilities $3/5$ and $2/5$, identity-dependent hit rewards can make the lower-posterior suspect preferable by a wide margin. Thus maximum-posterior selection is a theorem about immediate correctness and symmetric consequences, not a universal theorem about arbitrary games.
-
-A second theme is representational. The centered posterior $2p-1$ has the algebra of a mean spin: posterior order is preserved, while swapping a role with its complement reverses the score. This creates a direct bridge to spin systems and suggests models of correlated suspicion based on interacting variables.
-
-The contribution is deliberately foundational. No particular seven-player win probability and no asymptotic scaling law follows without specifying transition rules, observation channels, and strategic behavior. Instead, the analysis identifies which conclusions hold for every finite posterior and which require further game structure.
+The paper proceeds from definitions through one-step optimality, baselines, numerical methods, dynamic limitations, and applications. All probabilities below are conditional on the currently available public evidence unless stated otherwise.
 
 ## 2. Finite Bayesian model
 
-### 2.1 Hypotheses, priors, and evidence
+### 2.1 Players, hypotheses, priors, and likelihoods
 
-Let $I$ be a finite, nonempty set of suspects. The elementary hypothesis indexed by $i\in I$ is that $i$ is the hidden target relevant to the present decision. In the simplest reading, exactly one listed player is the werewolf to be found. In a game with several werewolves, the same model can describe a marginal one-target decision, but dependencies between role assignments then require a larger joint state space for a complete analysis.
-
-Let
+Let $I$ be a finite nonempty set of surviving players. For each $i\in I$, let $W_i$ denote the hypothesis that player $i$ is a werewolf. Let
 
 $$
-\pi:I\to\mathbb R
+p_i=P(W_i)
 $$
 
-be a prior weight and
+be the prior probability of that hypothesis, and let $E$ denote the observed evidence. Define
 
 $$
-L:I\to\mathbb R
+\ell_i=P(E\mid W_i).
 $$
 
-be a likelihood for the observed evidence. Standard probabilistic use assumes $\pi_i\ge 0$ and $L_i\ge 0$, although the normalization identity below only needs nonzero total mass. Define the unnormalized Bayesian weight
+The evidence may aggregate multiple events. Under an explicitly assumed conditional factorization, it may be written
 
 $$
-w_i=\pi_iL_i
+\ell_i=\prod_{t=1}^{T}P(E_t\mid E_1,\ldots,E_{t-1},W_i).
 $$
 
-and evidence mass
+The product is the chain rule when each factor conditions on the preceding evidence. Replacing those conditional factors by independent marginal factors is an additional modeling assumption and is not automatic.
+
+The hypotheses $W_i$ need not be mutually exclusive when several werewolves exist. Accordingly, the normalization used here should be interpreted as a distribution over the candidate selected by the model for one-step targeting, or as normalized marginal scores. If $p_i$ and $\ell_i$ arise from a coherent joint role model, the resulting target probabilities must be interpreted consistently with that model. The optimization theorem itself requires only a finite list of normalized nonnegative target probabilities.
+
+### 2.2 Scores and posteriors
+
+**Definition 1 (Bayesian score).** The unnormalized Bayesian score of player $i$ is
 
 $$
-Z=\sum_{j\in I}w_j.
+s_i=p_i\ell_i.
 $$
 
-Whenever $Z\neq 0$, define the posterior coordinate
+Define the normalizing constant
 
 $$
-p_i=\frac{w_i}{Z}.
+Z=\sum_{j\in I}s_j.
 $$
 
-If priors and likelihoods are probabilistically valid and at least one hypothesis has positive weight, then $Z>0$ and $(p_i)_{i\in I}$ is a probability distribution.
-
-### Theorem 1 (Finite posterior normalization)
-
-If $Z\neq 0$, then
+**Definition 2 (Normalized posterior score).** If $Z\ne0$, define
 
 $$
-\sum_{i\in I}p_i=1.
+\pi_i=\frac{s_i}{Z}.
 $$
 
-**Proof sketch.** Substitute $p_i=w_i/Z$, factor the common denominator out of the finite sum, and use $\sum_iw_i=Z$:
+For a probabilistic interpretation, one ordinarily assumes $p_i\ge0$, $\ell_i\ge0$, and $Z>0$. The algebraic normalization identity needs only $Z\ne0$; order preservation needs $Z>0$.
+
+**Theorem 1 (Normalization).** If $Z\ne0$, then the normalized scores sum to one:
 
 $$
-\sum_i p_i=\frac{\sum_iw_i}{Z}=\frac ZZ=1.
+\sum_{i\in I}\pi_i=1.
 $$
 
-The nonzero-mass condition is exactly what makes the final division valid.
-
-### Theorem 2 (Positive normalization preserves order)
-
-If $Z>0$, then for every $i,j\in I$,
+**Proof sketch.** Substitute $\pi_i=s_i/Z$, factor the common denominator from the finite sum, and use the definition of $Z$:
 
 $$
-p_i\le p_j\quad\Longleftrightarrow\quad w_i\le w_j.
+\sum_i\pi_i=\sum_i\frac{s_i}{Z}=\frac{\sum_i s_i}{Z}=\frac{Z}{Z}=1.
 $$
 
-**Proof sketch.** Both posterior coordinates have the same positive denominator $Z$. Multiplication by $Z$ preserves inequalities, yielding the equivalence.
+The nonzero assumption makes the final quotient defined. $\square$
 
-This theorem justifies comparing log-scores or unnormalized scores in implementations. Normalization is needed for calibrated probabilities, but not for selecting an argmax.
+**Lemma 1 (Order preservation under positive normalization).** Suppose $Z>0$. If $s_i\le s_m$, then $\pi_i\le\pi_m$.
 
-### 2.2 Maximum-a-posteriori actions
-
-A suspect $a\in I$ is called **maximum-a-posteriori**, abbreviated MAP, if
+**Proof sketch.** Division by a common positive number preserves inequalities, so
 
 $$
-p_i\le p_a\qquad\text{for every }i\in I.
+\frac{s_i}{Z}\le\frac{s_m}{Z}.
 $$
 
-### Lemma 3 (Existence of a MAP action)
+These two quotients are $\pi_i$ and $\pi_m$. $\square$
 
-Every real-valued posterior score on a finite nonempty suspect set has at least one MAP action.
+This elementary lemma is the bridge from evidence scoring to decision theory. Computing the denominator is unnecessary if one needs only the identity of a maximizing player.
 
-**Proof sketch.** The finite set $\{p_i:i\in I\}$ is nonempty and therefore has a maximum. Any index attaining that maximum is MAP.
+### 2.3 Uniform priors
 
-MAP actions need not be unique. All subsequent optimality statements apply to every maximizer.
-
-## 3. Immediate correctness
-
-Define the correctness utility for selecting $a$ when the true hidden identity is $w$ by
+If the initial assignment is exchangeable with exactly $k$ werewolves among $n$ players, then each player has marginal prior
 
 $$
-u_{\mathrm{hit}}(a,w)=
+p_i=\frac{k}{n}.
+$$
+
+More generally, suppose all candidates share a common prior $c\ge0$.
+
+**Theorem 2 (Likelihood ordering under a common prior).** Let $p_i=c$ for all $i$, with $c\ge0$, and suppose $Z>0$. If $\ell_i\le\ell_m$, then $\pi_i\le\pi_m$.
+
+**Proof sketch.** Multiplication by $c\ge0$ preserves order, giving $c\ell_i\le c\ell_m$. These products are the scores $s_i$ and $s_m$. Lemma 1 then yields the posterior inequality. $\square$
+
+Thus, under a uniform prior, selecting a maximum-posterior candidate is equivalent to selecting a maximum-likelihood candidate. This does not mean the common prior is irrelevant to every quantity; it means it is irrelevant to ranking.
+
+## 3. One-step elimination as a decision problem
+
+### 3.1 Deterministic and randomized rules
+
+A deterministic rule selects one player $m\in I$. Its conditional one-step success probability is $\pi_m$.
+
+A randomized elimination rule is a probability mass function $q:I\to[0,1]$ satisfying
+
+$$
+q_i\ge0
+\qquad\text{and}\qquad
+\sum_{i\in I}q_i=1.
+$$
+
+The rule first samples a target according to $q$. Its conditional success probability is
+
+$$
+S(q)=\sum_{i\in I}q_i\pi_i.
+$$
+
+This expression is linear in $q$. The feasible rules form a simplex, and deterministic rules are its vertices.
+
+### 3.2 Maximum-posterior optimality
+
+**Theorem 3 (One-Step Maximum-Posterior Elimination Theorem).** Assume $Z>0$, and let $m$ be a player with maximal Bayesian score:
+
+$$
+s_i\le s_m\quad\text{for every }i\in I.
+$$
+
+Then for every randomized elimination rule $q$,
+
+$$
+S(q)=\sum_{i\in I}q_i\pi_i\le\pi_m.
+$$
+
+Consequently, deterministically eliminating $m$ maximizes the conditional probability that the current elimination removes a werewolf.
+
+**Proof sketch.** Lemma 1 gives $\pi_i\le\pi_m$ for every $i$. Since $q_i\ge0$, multiplication preserves each inequality:
+
+$$
+q_i\pi_i\le q_i\pi_m.
+$$
+
+Summing over all players and using $\sum_iq_i=1$ gives
+
+$$
+S(q)
+\le\sum_iq_i\pi_m
+=\pi_m\sum_iq_i
+=\pi_m.
+$$
+
+The deterministic rule concentrated at $m$ attains equality. $\square$
+
+**Corollary 1 (Randomization cannot strictly improve one-step success).** No lottery over players has a greater one-step success probability than a deterministic maximum-posterior choice.
+
+**Proof sketch.** This is the final inequality of Theorem 3, together with attainability by placing probability one on $m$. $\square$
+
+**Corollary 2 (Characterization of optimal lotteries).** Assume the posteriors are nonnegative. A randomized rule is one-step optimal if all of its probability is supported on players attaining the maximal posterior. Conversely, any rule assigning positive probability to a strictly submaximal player is strictly suboptimal.
+
+**Proof sketch.** A weighted average equals its maximum when every component receiving positive weight equals that maximum. If a strictly smaller component receives positive weight, the average is strictly below the maximum. $\square$
+
+The theorem is a finite decision-theoretic result, not a claim about equilibrium play. It requires no assumption about how wolves or villagers generated the evidence. Such assumptions enter upstream through the likelihoods.
+
+## 4. Uniform elimination baseline
+
+Let $I$ contain $n$ players, and let $A\subseteq I$ be the set of werewolves with $|A|=k$. Under uniform elimination, every player is selected with probability $1/n$.
+
+**Theorem 4 (Uniform-elimination success).** The probability that uniform elimination selects a werewolf is exactly
+
+$$
+\frac{k}{n}.
+$$
+
+**Proof sketch.** Sum $1/n$ over the werewolf set and $0$ over its complement:
+
+$$
+\sum_{i\in I}
 \begin{cases}
-1,&a=w,\\
-0,&a\ne w.
+1/n,&i\in A,\\
+0,&i\notin A
 \end{cases}
+=
+\sum_{i\in A}\frac1n
+=rac{|A|}{n}
+=rac{k}{n}.
 $$
 
-For any utility function $u:I\times I\to\mathbb R$, define posterior expected utility by
+$\square$
+
+This baseline has a different interpretation from the posterior maximum. The value $k/n$ is an ex ante success probability based only on role counts. The posterior maximum is conditional on evidence and may vary by information state. Under a coherent posterior whose average marginal wolf probability is $k/n$, the largest posterior is at least the average, but care is needed when normalized candidate scores are not literal marginal role probabilities.
+
+For $n=7$ and $k=2$, uniform elimination succeeds with probability
 
 $$
-U_p(a;u)=\sum_{w\in I}p_wu(a,w).
+\frac27\approx0.285714.
 $$
 
-### Lemma 4 (Expected correctness identity)
+## 5. The proposed scaling expression
 
-For every action $a\in I$,
-
-$$
-U_p(a;\nu_{\mathrm{hit}})=p_a.
-$$
-
-**Proof sketch.** Every summand vanishes except the term with $w=a$, whose utility is $1$. The remaining term is $p_a$.
-
-### Theorem 5 (Local MAP Optimality Theorem)
-
-If $a$ is MAP, then for every action $b\in I$,
+Consider the proposed family
 
 $$
-U_p(b;\nu_{\mathrm{hit}})\le U_p(a;\nu_{\mathrm{hit}}).
+F(n,k;C)=C\left(1-\frac{k}{n-k}\right)^2,
 $$
 
-Equivalently, a MAP elimination maximizes the probability that the present elimination is correct.
+where $n>k$ and $C$ represents dependence on the information structure. This expression is intended as a possible approximation to a full-game villager win probability, not a consequence of the one-step theorem.
 
-**Proof sketch.** By Lemma 4, the two expected utilities are $p_b$ and $p_a$. The defining property of a MAP action gives $p_b\le p_a$.
-
-The theorem is distribution-free: it does not depend on how the posterior was obtained. Voting patterns, survival information, speech acts, or any other evidence may determine $L_i$; once a posterior is available, the result follows.
-
-The theorem is also local. It evaluates a hit indicator, not the eventual outcome of a multi-round game. Conflating these objectives is the central error addressed next.
-
-## 4. Identity-symmetric continuation
-
-### 4.1 Definition and affine representation
-
-Let $G\in\mathbb R$ be the continuation value after a correct elimination and $B\in\mathbb R$ the continuation value after an incorrect elimination. Define the **identity-symmetric continuation utility**
+**Theorem 5 (Seven-player identity).** For $n=7$, $k=2$, and $C=1$,
 
 $$
-u_{G,B}(a,w)=
-\begin{cases}
-G,&a=w,\\
-B,&a\ne w.
-\end{cases}
+F(7,2;1)=\frac9{25}=0.36.
 $$
 
-The adjective “identity-symmetric” means that all correct eliminations share the same continuation value and all incorrect eliminations share another. The utility may summarize the probability of eventual village victory, a discounted reward, or any scalar value-to-go, but it may not depend on which named player was selected beyond hit versus miss.
-
-### Theorem 6 (Affine Continuation Formula)
-
-If $\sum_{i\in I}p_i=1$, then for every $a\in I$,
+**Proof sketch.** Direct simplification gives
 
 $$
-U_p(a;\nu_{G,B})=B+(G-B)p_a.
+\left(1-\frac{2}{7-2}\right)^2
+=\left(1-\frac25\right)^2
+=\left(\frac35\right)^2
+=\frac9{25}.
 $$
 
-**Proof sketch.** Separate the true state $w=a$ from all others:
+$\square$
+
+**Theorem 6 (Vanishing at parity).** For every nonzero real $k$,
 
 $$
-U_p(a;\nu_{G,B})=p_aG+\sum_{w\ne a}p_wB.
+\left(1-\frac{k}{2k-k}\right)^2=0.
 $$
 
-Normalization gives $\sum_{w\ne a}p_w=1-p_a$, so
+**Proof sketch.** Since $k\ne0$, the denominator $2k-k=k$ is nonzero. Hence the fraction is $k/k=1$, and the expression is $(1-1)^2=0$. $\square$
+
+An equivalent form exposes the geometry:
 
 $$
-p_aG+(1-p_a)B=B+(G-B)p_a.
+1-\frac{k}{n-k}=\frac{n-2k}{n-k},
 $$
 
-The formula shows that symmetric continuation utility is a modular, one-coordinate function of the posterior. All strategic detail is compressed into the slope $G-B$ and intercept $B$.
-
-### 4.2 Guarded global optimality
-
-### Theorem 7 (Symmetric Continuation Optimality Theorem)
-
-Assume $\sum_i p_i=1$ and $B\le G$. If $a$ is MAP, then for every $b\in I$,
+so
 
 $$
-U_p(b;\nu_{G,B})\le U_p(a;\nu_{G,B}).
+F(n,k;C)=C\frac{(n-2k)^2}{(n-k)^2}.
 $$
 
-Thus every MAP action maximizes continuation value whenever a correct elimination is at least as valuable as an incorrect one and continuation is identity-symmetric.
+The numerator is the square of the population margin between the total population and twice the wolf count. Vanishing at $n=2k$ is therefore built into the algebra. The square also makes the expression nonnegative whenever defined. Neither property validates the expression as a stochastic-game value function.
 
-**Proof sketch.** By Theorem 6,
+## 6. Algorithms
 
-$$
-U_p(a;\nu_{G,B})-U_p(b;\nu_{G,B})=(G-B)(p_a-p_b).
-$$
+### 6.1 Posterior computation and target selection
 
-Both factors are nonnegative: $G-B\ge 0$ by assumption, and $p_a-p_b\ge 0$ because $a$ is MAP. Their product is therefore nonnegative.
+Given arrays of priors and likelihoods, compute $s_i=p_i\ell_i$, sum the scores to obtain $Z$, reject the input if $Z\le0$ for probabilistic use, normalize, and return any maximizing index. This procedure takes $O(n)$ time and $O(n)$ storage if all posteriors are retained. If only the target is needed, normalization can be omitted and the maximum score found in $O(n)$ time and $O(1)$ auxiliary storage.
 
-The qualifier “guarded” is important. If $G=B$, every action has the same value. If $G<B$, the ordering reverses and minimizing the posterior maximizes utility, reflecting a perverse objective in which a miss is preferred. Under the natural condition $B\le G$, posterior ranking and utility ranking agree.
-
-### 4.3 Interpretation in a sequential game
-
-Suppose a belief state summarizes all public evidence at the start of a day. For each possible action, a complete dynamic model would average over immediate role uncertainty, subsequent night actions, future observations, and later votes. Theorem 7 applies when this entire value-to-go collapses to two identity-independent numbers: $G$ after a hit and $B$ after a miss.
-
-This condition can hold in an exchangeable abstraction where surviving identities are strategically indistinguishable once hit versus miss is known. It may fail if:
-
-- different werewolves have different powers;
-- eliminating a particular player reveals more information;
-- social influence differs by identity;
-- voting histories create identity-specific future coalitions;
-- survival changes the likelihood of later observations; or
-- the action itself changes future policies in an identity-dependent way.
-
-The theorem therefore supplies a sufficient structural criterion, not a blanket characterization of every social-deduction game.
-
-## 5. Approximate posterior decisions
-
-Exact Bayesian computation may be expensive, evidence models may be misspecified, and human players may only identify a near-maximal suspect. The affine continuation formula yields a quantitative stability statement.
-
-### Theorem 8 (Posterior Approximation Regret Bound)
-
-Assume $\sum_i p_i=1$ and $B\le G$. Let $a,b\in I$ satisfy
+Numerical implementations should use log scores when products of many small likelihood factors may underflow:
 
 $$
-p_a\le p_b+\varepsilon.
+\log s_i=\log p_i+\sum_t\log P(E_t\mid E_{<t},W_i).
 $$
 
-Then
+Subtracting the largest log score before exponentiation yields a stable log-sum-exp normalization.
+
+### 6.2 Evaluating randomized policies
+
+For a proposed rule $q$, first verify $q_i\ge0$ and $\sum_iq_i=1$ within numerical tolerance. Compute
 
 $$
-U_p(a;\nu_{G,B})-U_p(b;\nu_{G,B})\le (G-B)\varepsilon.
+S(q)=q\cdot\pi.
 $$
 
-In particular, if $a$ is an exact MAP action and $b$ is within $\varepsilon$ of its posterior, choosing $b$ loses at most $(G-B)\varepsilon$ continuation value.
+Compare this with $\max_i\pi_i$. Theorem 3 guarantees $S(q)\le\max_i\pi_i$ under valid inputs. This is $O(n)$ time.
 
-**Proof sketch.** Theorem 6 gives
+### 6.3 Evaluating the scaling factor
 
-$$
-U_p(a;\nu_{G,B})-U_p(b;\nu_{G,B})=(G-B)(p_a-p_b).
-$$
-
-The posterior assumption implies $p_a-p_b\le\varepsilon$. Multiplication by the nonnegative factor $G-B$ preserves the inequality.
-
-The bound is sharp whenever $p_a-p_b=\varepsilon$. It separates inferential accuracy from decision sensitivity. The approximation gap $\varepsilon$ measures ranking error, while $G-B$ measures the marginal value of correctness.
-
-## 6. Failure without identity symmetry
-
-A global MAP principle cannot survive arbitrary identity-dependent utilities.
-
-### Theorem 9 (Two-Suspect Counterexample)
-
-There exists a posterior on two suspects for which the unique MAP action has strictly smaller expected continuation value than the other action.
-
-Specifically, take
+For $n>k$, evaluate
 
 $$
-p_0=\frac35,\qquad p_1=\frac25.
+C\left(1-\frac{k}{n-k}\right)^2.
 $$
 
-Let an incorrect elimination have value $0$. Let a correct elimination of suspect $0$ have value $1/10$, and a correct elimination of suspect $1$ have value $1$. Then suspect $0$ is MAP, but
+Exact rational arithmetic is preferable for small integer cases because it preserves identities such as $9/25$. The formula is undefined at $n=k$ and should not be used outside a clearly stated parameter regime. If interpreted as a probability approximation, values must also be checked against $[0,1]$; the algebra alone does not enforce that range for arbitrary $C,n,k$.
+
+## 7. Numerical illustration
+
+Consider seven candidates with common prior $2/7$ and likelihood vector
 
 $$
-U_p(0)=\frac35\cdot\frac1{10}=\frac3{50}=0.06,
+\ell=(0.12,0.08,0.25,0.10,0.18,0.09,0.18).
 $$
 
-whereas
+Because the likelihoods sum to one and the prior is common, the normalized posterior equals this vector. The maximum-posterior action targets candidate $3$ and has one-step success probability $0.25$.
+
+A lottery assigning probability $1/2$ to candidate $3$ and $1/2$ to candidate $5$ has success
 
 $$
-U_p(1)=\frac25\cdot1=\frac25=0.4.
+S(q)=\frac12(0.25)+\frac12(0.18)=0.215.
 $$
 
-Hence $U_p(0)<U_p(1)$.
-
-**Proof sketch.** The posterior comparison $3/5>2/5$ establishes the MAP choice. Direct multiplication by the identity-dependent hit rewards gives the expected values above, and $3/50<2/5$.
-
-The example does not contradict Bayesian decision theory. On the contrary, Bayesian decision theory prescribes maximizing expected utility, which selects suspect $1$. It refutes only the unrestricted substitution of posterior maximization for utility maximization.
-
-More generally, if action $a$ has identity-dependent hit value $R_a$ and zero miss value, its expected utility is $p_aR_a$. Ordering by $p_a$ alone is justified only when the rewards are equal, or under other assumptions strong enough to preserve the order of these products.
-
-## 7. Centered posteriors and spin symmetry
-
-### 7.1 The centered score
-
-Define the **centered posterior score**
+The uniform lottery over candidates has success
 
 $$
-s(p)=2p-1.
+S(q)=\frac17\sum_i\pi_i=\frac17\approx0.142857
 $$
 
-For $p\in[0,1]$, this maps probability to $[-1,1]$. Certainty against the hidden role maps to $-1$, complete uncertainty maps to $0$, and certainty for the role maps to $+1$.
+under this normalized single-target model. This value should not be confused with the role-count baseline $2/7$. The difference illustrates an important modeling issue: a posterior distribution normalized across mutually exclusive target hypotheses sums to one, whereas the marginal probabilities that each of seven players is among two wolves sum to two. A complete multi-wolf Bayesian model must respect that distinction.
 
-### Theorem 10 (Order preservation under centering)
-
-For all real $p$ and $q$,
+For a marginal-probability illustration, consider
 
 $$
-s(p)\le s(q)\quad\Longleftrightarrow\quad p\le q.
+r=(0.20,0.18,0.45,0.22,0.35,0.25,0.35),
 $$
 
-**Proof sketch.** Subtracting $1$ from both sides and multiplying by the positive constant $2$ preserve order. Equivalently, $s$ is a strictly increasing affine function.
+whose entries sum to $2$. Uniform targeting succeeds with the average $2/7$, while targeting candidate $3$ succeeds with probability $0.45$. The same weighted-average argument establishes maximum-marginal targeting as the one-step optimum.
 
-Thus selecting a maximum posterior is exactly equivalent to selecting a maximum centered spin score.
+The numerical examples are diagnostic rather than empirical estimates. They show the theorem’s mechanics for specified inputs; they do not claim that these likelihoods describe human play.
 
-### Theorem 11 (Role complementation is spin flip)
+## 8. Why one-step optimality is not full-game optimality
 
-For every real $p$,
-
-$$
-s(1-p)=-s(p).
-$$
-
-**Proof sketch.** Expand directly:
+Let a public history $h$ encode all revealed actions and observations. A complete finite-horizon model must specify a hidden role state, legal day and night actions, behavioral strategies, an observation kernel, transition probabilities, terminal events, and utilities. If $a$ is a day elimination and $h'$ a subsequent history, a value function has the form
 
 $$
-s(1-p)=2(1-p)-1=1-2p=-(2p-1).
+V(h)=\max_a\sum_{h'}P(h'\mid h,a)V(h'),
 $$
 
-The operation $p\mapsto1-p$ swaps a binary role with its complement. In centered coordinates, this becomes the sign reversal familiar as global spin flip.
+with terminal value $1$ for villager victory and $0$ for werewolf victory. The maximizing action depends on continuation values $V(h')$, not solely on the immediate probability that $a$ removes a wolf.
 
-### 7.2 Constant-field magnetization
+An action can have lower immediate success but greater information value. Eliminating one player may reveal a role, split a voting coalition, or change which night target is attractive. Conversely, an immediate high-probability target may destroy a source of information or induce an unfavorable transition. Therefore a theorem identifying the best immediate classification action does not establish global control optimality.
 
-Consider a rectangular array indexed by pairs $(x,y)$ with $0\le x\le m$ and $0\le y\le n$. It contains $(m+1)(n+1)$ sites. For a field $\sigma$ on these sites, define magnetization as
+A global maximum-posterior theorem would require additional structural conditions. One possible condition would be that continuation value depends on the current action only through whether the eliminated player is a wolf, with a fixed advantage for success independent of player identity and history. Under such a condition, maximizing immediate wolf probability would also maximize continuation value. Real social deduction models generally violate this simplification because identities and information pathways matter.
 
-$$
-M(\sigma)=\sum_{x=0}^{m}\sum_{y=0}^{n}\sigma(x,y).
-$$
+## 9. Simulation protocol for a complete model
 
-### Theorem 12 (Constant Posterior Magnetization)
+A reproducible simulation must specify more than $n$ and $k$. At minimum it must define:
 
-If every site carries the constant field $\sigma(x,y)=s(p)$, then
+1. the distribution over hidden role assignments;
+2. the order of night and day actions;
+3. the wolf policy for selecting night victims;
+4. the villager ballot policy and its tie-breaking rule;
+5. whether eliminated roles are revealed;
+6. the evidence extracted from votes, speech, and survival;
+7. the likelihood model or estimator used for updating;
+8. behavior when several players maximize the posterior; and
+9. the exact terminal conditions.
 
-$$
-M(\sigma)=(m+1)(n+1)s(p).
-$$
-
-**Proof sketch.** Magnetization sums the same value over $(m+1)(n+1)$ sites, so it equals the number of sites multiplied by that value.
-
-### Corollary 13 (Complementation reverses magnetization)
-
-If every site’s posterior is complemented from $p$ to $1-p$, then
+After fixing these choices, repeated independent games can estimate a win probability. If $X_r$ is the indicator of villager victory in trial $r$, the estimator is
 
 $$
-M(1-p)=-M(p).
+\widehat{P}_N=\frac1N\sum_{r=1}^{N}X_r.
 $$
 
-**Proof sketch.** By Theorem 11, every site value changes from $s(p)$ to $-s(p)$. Summation is linear, hence the total magnetization changes sign.
-
-This correspondence is exact at the level of one-site marginals and constant fields. It does not by itself assert that a full posterior over correlated role assignments is an Ising Gibbs distribution. Such a representation would require specifying joint likelihoods and fixed-role-count constraints.
-
-## 8. Algorithms
-
-### 8.1 MAP selection from Bayesian weights
-
-Given arrays of priors $\pi_i$ and likelihoods $L_i$, compute $w_i=\pi_iL_i$, verify that $Z=\sum_iw_i$ is positive, normalize to $p_i=w_i/Z$, and return any index attaining $\max_i p_i$. Theorem 2 permits selection directly from $w_i$. For $N=|I|$, time complexity is $O(N)$ and storage is $O(N)$ if all posterior values are returned, or $O(1)$ auxiliary storage if only an argmax is required.
-
-For long evidence sequences, products may underflow. One may instead compute
+Its estimated standard error is
 
 $$
-\ell_i=\log\pi_i+\sum_t\log L_{i,t}
+\sqrt{\frac{\widehat{P}_N(1-\widehat{P}_N)}{N}}.
 $$
 
-and apply a log-sum-exp normalization. Since logarithm is increasing, the maximizing index remains unchanged.
-
-### 8.2 Symmetric continuation evaluation
-
-Given posterior $p$, values $G$ and $B$, evaluate each action by
+For large $N$, an approximate $95\%$ interval is
 
 $$
-V_i=B+(G-B)p_i.
+\widehat{P}_N\pm1.96
+\sqrt{\frac{\widehat{P}_N(1-\widehat{P}_N)}{N}}.
 $$
 
-This requires $O(N)$ time for all actions. If $B\le G$, the MAP action is immediately optimal and no separate value scan is mathematically necessary beyond finding the maximum posterior.
+Near $\widehat{P}_N=0.36$ with $N=10^6$, the standard error is about $0.00048$, but this quantifies Monte Carlo sampling error only. It does not account for misspecified behavior or likelihoods.
 
-### 8.3 Diagnostic test for identity dependence
+Testing the scaling proposal requires varying $k$ for each $n$, estimating $C$ rather than fixing it from a single point, and comparing residuals against alternative finite-size models. Data at $n=7$ through $20$ with only one $k$ per $n$ cannot cleanly distinguish dependence on wolf fraction from dependence on population size.
 
-When action-specific hit rewards $R_i$ are supplied and misses have common value zero, compare $p_iR_i$ rather than $p_i$. A disagreement between the two argmax sets certifies that MAP and utility maximization differ in the given instance. This diagnostic runs in $O(N)$ time.
+## 10. Applications beyond games
 
-## 9. Numerical examples
+The one-step theorem is an instance of a general classification principle. If an action selects one candidate and reward is one exactly when that candidate has a target property, expected reward equals the candidate’s posterior probability. A maximum-posterior action is therefore Bayes-optimal under zero-one loss.
 
-Consider priors
+In fraud screening, if one account can be audited and all audits have equal cost and downstream effect, auditing the account with the largest fraud posterior maximizes the immediate detection probability. In cybersecurity, if one endpoint can be isolated and isolation has symmetric consequences, choosing the endpoint with the highest compromise posterior is locally optimal. In diagnosis, if one mutually exclusive condition must be named under zero-one loss, the maximum-posterior diagnosis minimizes immediate error.
 
-$$
-\pi=(0.4,0.35,0.25)
-$$
+The limitations transfer as well. Audits teach investigators, isolations change attackers’ behavior, and medical tests produce information. Once actions have unequal costs or future effects, the objective becomes expected utility or dynamic value rather than posterior probability alone.
 
-and likelihoods
+## 11. Discussion
 
-$$
-L=(0.2,0.8,0.5).
-$$
+The results identify a robust mathematical core beneath informal advice. Bayesian scores combine prior plausibility with evidential fit. Positive normalization converts those scores into a distribution without changing their order. Linear expectation then makes a maximal posterior optimal for the immediate hit objective, and shows that randomization cannot outperform a deterministic maximizer.
 
-The weights are
+Several boundaries deserve emphasis. First, likelihoods are inputs, not conclusions. They must be learned or postulated from a behavioral model. Second, with multiple wolves, normalized candidate scores and marginal role probabilities are conceptually different objects. Third, the arithmetic equality $0.36=9/25$ at $(n,k)=(7,2)$ does not establish an actual win rate. Fourth, a full-game optimum is a policy over information states, not a single ranking rule.
 
-$$
-w=(0.08,0.28,0.125),
-$$
+These qualifications strengthen rather than weaken the result. They make the theorem reusable wherever its assumptions hold and prevent a local decision principle from being overextended into an unsupported strategic claim.
 
-with evidence mass $Z=0.485$. The posterior is approximately
+## 12. Future work
 
-$$
-p=(0.16495,0.57732,0.25773).
-$$
+The next step is to define a complete finite-horizon stochastic game with hidden role assignments, public histories, night actions, ballots, behavioral strategies, observations, and terminal win events. An explicit likelihood model for voting and survival evidence is indispensable.
 
-The second suspect is MAP whether weights or normalized probabilities are compared.
+Once the model is fixed, backward induction can compute the value function and compare its maximizing action with the maximum-posterior action at every reachable information state. Agreement would establish global optimality for that model; disagreement would produce a concrete counterexample and quantify the value of information.
 
-If $G=0.9$ and $B=0.2$, continuation values are
-
-$$
-V_i=0.2+0.7p_i,
-$$
-
-or approximately
-
-$$
-V=(0.31546,0.60412,0.38041).
-$$
-
-The same suspect maximizes continuation value. If a near-MAP procedure chooses the third suspect, its posterior deficit is approximately $0.31959$ and the exact value deficit is $0.7$ times that amount, approximately $0.22371$, attaining the regret formula with equality.
-
-For the asymmetric counterexample, posterior ranking selects suspect $0$ because $0.6>0.4$, while expected-utility ranking selects suspect $1$ because $0.4>0.06$.
-
-Finally, at posterior $p=0.7$, the centered score is $s(p)=0.4$. On a $4$-by-$5$ set of sites, corresponding to $m=3$ and $n=4$, magnetization is $20\cdot0.4=8$. Complementation gives posterior $0.3$, score $-0.4$, and magnetization $-8$.
-
-## 10. Applications
-
-The theory applies wherever a posterior ranking is used to choose an intervention.
-
-**Social deduction.** MAP voting maximizes the chance of the present hit. It maximizes a value-to-go only when hit and miss continuation values are identity-exchangeable.
-
-**Medical testing.** Testing the most likely diagnosis maximizes immediate diagnostic hit probability under a one-diagnosis model. It may not maximize health value when diseases differ in urgency or treatability.
-
-**Cybersecurity.** Investigating the most likely compromised node maximizes immediate detection probability. Criticality, containment effects, and information gained can favor a lower-posterior node.
-
-**Fraud review.** Auditing the most suspicious transaction maximizes expected immediate positives when each detected fraud has equal value. Different transaction sizes and network effects break that symmetry.
-
-**Active learning and search.** Querying the most likely label or location is locally optimal for zero-one success, but information gain and downstream decisions can produce identity-dependent continuation value.
-
-Across these domains, the methodological sequence is the same: estimate posterior beliefs, specify action-conditioned utilities, test exchangeability, and only then infer whether posterior ranking is an optimal policy.
-
-## 11. Limitations and relation to full-game claims
-
-The present results do not determine a village win probability for a specified player count. A numerical assertion such as a $0.36$ win rate for seven players with two werewolves depends on rules and policies absent from the finite one-step model. At minimum, a full analysis must specify:
-
-- whether eliminated roles are revealed;
-- how ties are resolved;
-- the order of day and night phases;
-- how wolves choose night targets;
-- how villagers generate and update evidence;
-- whether role assignments are sampled without replacement;
-- how multiple-wolf correlations are represented; and
-- what happens when wolves equal or outnumber villagers.
-
-Likewise, a proposed scaling law such as
-
-$$
-C\left(1-\frac{k}{n-k}\right)^2
-$$
-
-cannot be established from MAP optimality. The constant $C$ and even the functional form depend on the information channel and transition process. The local theory can serve as a component of such a model, but does not replace it.
-
-The one-target posterior also abstracts away the fixed total number of wolves. If exactly $k$ of $n$ players are wolves, a complete posterior is a distribution on the $k$-element subsets of players. Marginal probabilities still support local hit maximization—selecting the largest marginal maximizes the chance that the chosen player is a wolf—but continuation effects can depend on the entire joint posterior.
-
-## 12. Future research
-
-Several directions emerge from the boundary established here.
-
-First, adaptive submodularity may generalize the affine one-step theorem. If continuation value has diminishing returns in eliminated wolves and is exchangeable over identities, greedy posterior voting may admit global guarantees.
-
-Second, an exchangeable noisy voting channel may exhibit a value-of-information threshold. Posterior concentration, rather than ranking alone, should determine whether villagers overcome the adversaries’ elimination rate as population grows.
-
-Third, information-free games may retain parity effects because a missed daytime vote followed by a night elimination removes villagers in pairs. Separate even- and odd-population asymptotics may be required.
-
-Fourth, pairwise log-linear likelihoods for voting histories may induce a constrained spin system on role assignments. Centered marginal symmetry supplies the one-site boundary case; correlations would become couplings.
-
-Fifth, the one-step approximation bound invites a sequential regret theory. Calibrated posterior errors could be accumulated through martingale or dynamic-programming arguments to obtain horizon-sensitive guarantees.
+Simulation should follow only after tie-breaking, role revelation, action order, and all policies are fixed. Report confidence intervals and conduct sensitivity analysis. To investigate the scaling expression, vary $k$ within each $n$, estimate both $C$ and the exponent, and compare against alternative models. The exact seven-player and parity identities provide useful checks for software and algebra, but not validation of the approximation.
 
 ## 13. Conclusion
 
-Maximum-posterior voting has an exact but bounded scope. It always maximizes immediate correctness in a finite posterior model. It also maximizes continuation value when the future distinguishes only a correct elimination from an incorrect one and values the former at least as highly. In that symmetric setting, continuation value is affine in the selected posterior and approximate choices enjoy the sharp regret bound $(G-B)\varepsilon$.
+For a finite set of candidates with positive total Bayesian score, score normalization preserves ranking. A player with maximal prior-times-likelihood score has maximal posterior probability. Deterministically eliminating such a player maximizes the conditional probability of an immediate werewolf elimination among every randomized policy. Uniform elimination has exact success probability $k/n$ when $k$ of $n$ players are wolves.
 
-Identity-dependent consequences break the conclusion, as a two-suspect counterexample demonstrates. The correct general principle is therefore expected-utility maximization, with MAP emerging as a special case under zero-one or identity-symmetric rewards.
-
-The centered transformation $s(p)=2p-1$ adds a complementary structural insight: posterior ranking becomes spin ranking, role complementation becomes sign flip, and constant posterior fields acquire the expected magnetization law. Together, these results provide both a decision-theoretic foundation for social-deduction voting and a precise map of the assumptions needed before local suspicion can be promoted to global strategy.
+The proposed factor $(1-k/(n-k))^2$ equals $9/25=0.36$ for seven players and two wolves, and equals zero at parity. These exact statements concern the expression itself. Determining complete-game win probabilities requires a specified stochastic game and a dynamic value calculation. The central lesson is therefore precise: maximum-posterior elimination is the optimal answer to the one-step question, while optimal play over the entire game remains a problem of sequential information and control.

@@ -1,163 +1,170 @@
-# Bayesian Werewolf: When the Most Suspicious Player Is—and Is Not—the Right Choice
+# Bayesian Werewolf: What the Village Should Do Next
 
-A village wakes to bad news. During the night, a hidden werewolf has removed another villager from the game. Now the survivors must vote. One player contradicted herself yesterday. Another joined a suspicious coalition. A third has survived several nights despite appearing dangerous to the wolves. Whom should the village eliminate?
+A village goes to sleep with seven people alive. Two are secretly werewolves. By morning, one villager will be gone. During the day, everyone will argue, accuse, defend, and finally vote to eliminate a suspect. The villagers possess no direct test for guilt; they have only behavior. Who voted with whom? Who survived? Whose story changed? In this setting, suspicion is not merely a feeling. It can be treated as a probability.
 
-The natural answer is: eliminate the player most likely to be a werewolf. That principle sounds obvious, but it hides a crucial ambiguity. Does “right” mean most likely to make the correct decision *today*, or most likely to win the entire game? Those are different optimization problems. The first has a clean Bayesian solution. The second agrees with it only under a precise symmetry condition.
+That simple observation leads to a precise answer to one important question: **if the village’s sole objective for the current vote is to eliminate a werewolf, it should choose a player with the largest posterior probability of being a werewolf.** No lottery over suspects can do better for that one vote.
 
-This distinction reaches far beyond Werewolf or Mafia. Medical triage, fraud investigation, cybersecurity, search, and active learning all face the same tension. The item most likely to be positive is not always the item whose inspection has the greatest long-term value. Probability ranks beliefs; utility ranks actions. They coincide only when the reward structure permits it.
+The qualification “for the current vote” matters. Werewolf is a dynamic game. Today’s choice changes tomorrow’s information, alliances, and strategic incentives. A locally best elimination need not always be the move that maximizes the chance of ultimately winning. The mathematics here cleanly establishes the local result, explains why randomization cannot improve it, and marks the boundary between one-step Bayesian judgment and full-game strategy.
 
-## Turning suspicion into probability
+## Turning suspicion into a score
 
-Suppose there is a finite set $I$ of suspects. For each player $i\in I$, assign a prior probability $\pi_i$ that the player has the hidden role and a likelihood $L_i$ measuring how compatible the observed evidence is with that hypothesis. The unnormalized Bayesian weight is
+Let the surviving players form a finite set. For each player $i$, assign a prior probability $p_i$ that the player is a werewolf before the latest evidence is considered. Also assign a likelihood $\ell_i$, meaning the probability of observing the available evidence under the hypothesis that player $i$ is a werewolf.
 
-$$
-w_i=\pi_iL_i.
-$$
+The evidence might include ballots, statements, survival, or any other modeled observation. The mathematics does not prescribe the behavioral model that produces $\ell_i$; it begins once those likelihoods have been specified.
 
-The total evidence mass is
+Bayes’ rule says to multiply prior plausibility by evidential fit. Define the unnormalized score
 
 $$
-Z=\sum_{j\in I}w_j,
+s_i=p_i\ell_i.
 $$
 
-and, provided $Z\neq 0$, the posterior probability is
+If the total score
 
 $$
-p_i=\frac{w_i}{Z}.
+Z=\sum_j s_j
 $$
 
-These posteriors sum to one. If $Z>0$, dividing every weight by the same positive number cannot change their order, so
+is positive, the posterior probability assigned to player $i$ is
 
 $$
-p_i\le p_j\quad\text{if and only if}\quad w_i\le w_j.
+\pi_i=\frac{s_i}{Z}.
 $$
 
-This gives a useful computational shortcut: to find the most probable suspect, one may compare prior-times-likelihood scores without explicitly normalizing them.
-
-A maximum-a-posteriori, or MAP, suspect is any player $a$ satisfying $p_i\le p_a$ for every $i\in I$. Because the suspect set is finite and nonempty, at least one MAP suspect always exists. Ties do not undermine the principle: every tied maximizer is locally optimal.
-
-## The theorem behind the obvious vote
-
-Imagine that exactly one of the listed hypotheses is true, and define the utility of eliminating player $a$ when the hidden werewolf is $w$ to be $1$ if $a=w$ and $0$ otherwise. The expected utility of choosing $a$ is
+The normalization has exactly the expected effect:
 
 $$
-\sum_{w\in I}p_w\mathbf 1_{\{a=w\}}=p_a.
+\sum_i \pi_i=\frac{\sum_i s_i}{Z}=1.
 $$
 
-This identity yields the **Local MAP Optimality Theorem**: *among all possible eliminations, a MAP choice maximizes the probability that the current elimination is correct.*
+Thus the scores become a probability distribution. Just as importantly, every score is divided by the same positive number. Therefore score order and posterior order agree: if $s_i\le s_m$, then $\pi_i\le\pi_m$. A player with the highest score also has the highest posterior probability.
 
-The proof is only one line of mathematics once the model is stated. The expected correctness of choosing $a$ is exactly $p_a$, and a MAP player has the largest posterior coordinate. Yet this small theorem is the firm core inside a much larger strategic claim that is often made too casually.
-
-The theorem does not say that MAP voting always maximizes the chance of eventually winning. A correct elimination can have different consequences depending on whom it removes. One hidden adversary may be more influential than another. Eliminating a particular player may reveal voting blocs, alter later information, or change the survival prospects of key villagers. The future can attach identity-dependent value to today’s action.
-
-## When the local rule becomes globally valid
-
-There is, however, an important setting in which the local and global objectives align. Suppose a correct elimination leads to continuation value $G$, an incorrect elimination leads to continuation value $B$, and these values do not depend on the identity selected. Assume also that $B\le G$: hitting a werewolf is at least as good as missing.
-
-For a suspect with posterior $p_a$, the expected continuation value is
+When roles are initially assigned uniformly among $n$ players with exactly $k$ werewolves, every player begins with the same prior $k/n$. In that case,
 
 $$
-p_aG+(1-p_a)B=B+(G-B)p_a.
+s_i=\frac{k}{n}\ell_i,
 $$
 
-This affine formula is the center of the analysis. Since $G-B\ge 0$, expected continuation value increases with $p_a$. It follows that every MAP action maximizes eventual value in this identity-symmetric model.
+so posterior ranking is simply likelihood ranking. The common prior changes the numerical normalization but not whom the evidence ranks first.
 
-This is the **Symmetric Continuation Theorem**: *if future value depends only on whether the present elimination is correct, not on which identity is selected, and correctness is no worse than error, then maximum-posterior voting is globally optimal for that decision stage.*
+## The one-step optimality theorem
 
-The symmetry assumption is not decorative. It does the real work. It says that identities are strategically exchangeable after conditioning on hit versus miss. In a simplified game with indistinguishable hidden adversaries and no identity-specific information effects, that can be a sensible approximation. In a rich social game, it must be tested rather than presumed.
-
-## How costly is an approximate decision?
-
-Real players rarely compute exact posteriors. They estimate. Fortunately, the affine formula gives a sharp robustness guarantee.
-
-Suppose action $a$ is the benchmark and action $b$ has posterior no more than $\varepsilon$ below it:
+Suppose player $m$ has maximal score, so that $s_i\le s_m$ for every player $i$. The village might eliminate $m$ with certainty. Or it might randomize: choose player $i$ with probability $q_i$, where
 
 $$
-p_a\le p_b+\varepsilon.
+q_i\ge 0
+\qquad\text{and}\qquad
+\sum_i q_i=1.
 $$
 
-Under symmetric continuation with $B\le G$, the loss from choosing $b$ instead of $a$ is at most
+Conditional on the evidence, the chance that this randomized elimination hits a werewolf is
 
 $$
-(G-B)\varepsilon.
+\sum_i q_i\pi_i.
 $$
 
-This is the **Posterior Approximation Regret Bound**. It cleanly separates two sources of sensitivity. The term $\varepsilon$ measures inferential error: how far the chosen posterior is from the benchmark. The term $G-B$ measures strategic stakes: how much better a hit is than a miss. A rough probability estimate may be harmless when the two outcomes have similar continuation values, but costly when today’s decision is pivotal.
-
-The bound also explains why near-ties deserve calm rather than false precision. If two suspects differ by only $0.01$ in posterior probability, no identity-symmetric continuation model can assign more than $0.01(G-B)$ additional expected value to the higher one.
-
-## A two-player warning
-
-To see exactly why symmetry matters, consider two suspects. Their posterior probabilities are
+Because $\pi_i\le\pi_m$ for every $i$, each weighted term satisfies $q_i\pi_i\le q_i\pi_m$. Summing gives
 
 $$
-p_0=\frac35,\qquad p_1=\frac25.
+\sum_i q_i\pi_i
+\le \sum_i q_i\pi_m
+=\pi_m\sum_i q_i
+=\pi_m.
 $$
 
-Suspect $0$ is the MAP choice. Now suppose a correct elimination of suspect $0$ is worth only $1/10$, while a correct elimination of suspect $1$ is worth $1$; an incorrect elimination is worth $0$ in either case. The expected values are
+This is the **One-Step Maximum-Posterior Elimination Theorem**: among all deterministic and randomized elimination rules, choosing a maximum-posterior player maximizes the conditional probability that today’s elimination removes a werewolf.
+
+The proof is short because the underlying geometry is simple. A weighted average cannot exceed the largest number being averaged. Randomization mixes posterior probabilities; it cannot manufacture a value above their maximum.
+
+Ties cause no difficulty. If several players share the largest posterior, any one of them is optimal. A lottery supported entirely on those tied leaders is also optimal. Randomization is harmless in a tie, but it provides no strict improvement.
+
+## A seven-player example
+
+Imagine seven surviving players with two werewolves. The uniform prior for each player is $2/7$. Suppose a voting-pattern model gives the likelihoods
 
 $$
-\frac35\cdot\frac1{10}=0.06
+(0.12,0.08,0.25,0.10,0.18,0.09,0.18).
 $$
 
-for suspect $0$, and
+Their sum is $1$, so multiplication by the common prior and subsequent normalization leaves these numbers unchanged as posterior probabilities. Player $3$ has posterior $0.25$, the largest value. Eliminating player $3$ therefore succeeds with probability $0.25$ under this model.
+
+Suppose instead that the village flips a fair coin between players $3$ and $5$. Its success probability becomes
 
 $$
-\frac25\cdot 1=0.4
+\frac12(0.25)+\frac12(0.18)=0.215,
 $$
 
-for suspect $1$. The less likely suspect is overwhelmingly the better action.
-
-Nothing Bayesian has failed. The posteriors correctly describe which identity is more likely to be the target. What failed is the substitution of probability for utility. The example establishes a sharp negative result: *without identity symmetry, MAP need not maximize global value.*
-
-That lesson appears whenever actions have heterogeneous payoffs. A doctor may test a less likely disease because delay would be catastrophic. A security team may inspect a moderately suspicious server because it controls critical infrastructure. A detective may pursue a weaker lead because resolving it unlocks many other cases. The correct decision maximizes expected utility, not probability in isolation.
-
-## Suspicion as a spin
-
-There is a surprising geometric way to represent a posterior probability. Transform $p\in[0,1]$ into the centered score
+which is lower. A uniform lottery over all seven players has success probability
 
 $$
-s(p)=2p-1.
+\frac17\sum_i\pi_i=\frac17.
 $$
 
-The endpoints $p=0$ and $p=1$ become spins $-1$ and $+1$, while complete uncertainty $p=1/2$ becomes $0$. Because this transformation is increasing,
+The best informed choice beats both lotteries for the current decision.
+
+There is also a model-independent baseline. If exactly $k$ of $n$ players are werewolves and one player is selected uniformly, then the chance of selecting a werewolf is exactly
 
 $$
-s(p)\le s(q)\quad\text{if and only if}\quad p\le q.
+\frac{k}{n}.
 $$
 
-Thus MAP voting is exactly the same as maximum-spin voting.
+This follows by adding $1/n$ once for each of the $k$ werewolves. For $n=7$ and $k=2$, the random baseline is $2/7$, approximately $0.286$. A posterior policy improves on this baseline only when the evidence concentrates enough probability on its leading suspect.
 
-Even more suggestively, complementing the role label flips the sign:
+## The alluring number $0.36$
 
-$$
-s(1-p)=-s(p).
-$$
-
-Calling “werewolf” what was formerly called “villager” acts like a global spin flip in statistical mechanics. If a rectangular lattice has $(m+1)(n+1)$ sites and every site carries the same score $s(p)$, its magnetization—the sum of all spins—is
+A proposed approximation for the villagers’ eventual win probability has the form
 
 $$
-M=(m+1)(n+1)s(p).
+C\left(1-\frac{k}{n-k}\right)^2,
 $$
 
-Complementing the posterior changes $M$ to $-M$. This bridge is elementary but useful: individual suspicion becomes a spin variable, and role-label symmetry becomes the familiar symmetry of a magnetic system.
+where $C$ is intended to capture the information structure. The expression has two exact and illuminating arithmetic features.
 
-The one-site correspondence suggests a richer future model. If voting relationships create correlated suspicion, pairwise interactions might be represented as couplings between spins. Coalitions could resemble aligned domains; polarized voting could resemble competing phases. Such extensions require new assumptions and new analysis, but the basic symmetry is exact.
+For $n=7$, $k=2$, and $C=1$,
 
-## What the results do—and do not—settle
+$$
+\left(1-\frac{2}{7-2}\right)^2
+=\left(1-\frac25\right)^2
+=\left(\frac35\right)^2
+=\frac9{25}
+=0.36.
+$$
 
-The analysis proves a decision principle, not a universal numerical win rate for the full game. A complete Werewolf model must specify the number of hidden roles, night eliminations, voting behavior, information revealed after eliminations, tie rules, and how evidence changes over time. Claims such as a particular win probability for seven players, or a universal quadratic scaling law in the wolf-to-villager ratio, cannot be inferred from the local MAP theorem alone.
+At the parity threshold $n=2k$, where werewolves occupy half the population,
 
-What can be stated exactly is more foundational:
+$$
+\left(1-\frac{k}{2k-k}\right)^2
+=\left(1-1\right)^2
+=0
+$$
 
-1. Bayesian posteriors normalize to one, and positive normalization preserves the ranking of prior-times-likelihood weights.
-2. A MAP suspect always exists in a finite nonempty set.
-3. MAP maximizes immediate correctness.
-4. MAP also maximizes continuation value under identity symmetry and the condition $B\le G$.
-5. Posterior approximation incurs at most $(G-B)\varepsilon$ regret in that model.
-6. Without identity symmetry, MAP can fail dramatically.
-7. Centered posterior scores obey the order and complement symmetries of spins.
+for $k\ne0$. These are exact identities, not evidence that the formula predicts a full game. The appearance of $0.36$ in the seven-player case is a consistency check for the proposed expression when $C=1$; it is not a derivation of the villagers’ actual win probability.
 
-These statements draw a boundary around a popular intuition. “Vote for the most suspicious player” is not wrong. It is exactly right for the immediate classification problem, and exactly right for a broad symmetric continuation model. But strategy begins where symmetry ends.
+That distinction is essential because the full-game probability is not determined until the rules and behavior are completely specified. Do eliminated roles become public? How do wolves select a night target? How are tied ballots resolved? How do players translate voting histories into likelihoods? Do villagers coordinate? Different answers define different games and can produce different values.
 
-The deepest practical message is therefore not a voting slogan but a modeling discipline. First infer what is likely. Then ask what each action changes. Bayesian probability supplies the beliefs; the continuation utility supplies the stakes. Only after both are visible can a village—or a hospital, a network defender, or a scientific search team—choose rationally.
+## Why the best move now may not be the best plan
+
+The one-step theorem optimizes a clear quantity: the chance that the next eliminated player is a werewolf. Eventual victory is a different objective.
+
+Consider a stylized situation in which one suspect is slightly more likely to be a wolf, while eliminating another player would reveal far more information about the remaining group. The first action may maximize today’s hit probability; the second might improve all later decisions enough to raise the total chance of victory. Strategic opponents complicate matters further: wolves may manipulate ballots precisely because they know how villagers update beliefs.
+
+To solve the complete game, one must define a state containing the public history and the players’ beliefs, specify legal actions and transition probabilities, and assign terminal values to villager and werewolf victories. A value function can then be computed backward from terminal states. At each information state, the optimal action maximizes expected continuation value—not necessarily immediate hit probability.
+
+This is a familiar divide across decision science. Medical triage distinguishes the most likely diagnosis from the test with the greatest future informational value. Cybersecurity distinguishes blocking the most suspicious account from observing it to expose a network. Fraud investigation distinguishes the transaction most likely to be fraudulent from the intervention that best disrupts a criminal strategy. In every case, maximum posterior probability answers “which hypothesis is most likely now?” Dynamic control asks “which action creates the best future?”
+
+## What has been established
+
+The rigorous core can be summarized in five statements.
+
+First, prior times likelihood gives an unnormalized Bayesian score. Second, if the total score is nonzero, normalized scores sum to one. Third, when the total score is positive, score ranking and posterior ranking coincide. Fourth, deterministically choosing a maximum-posterior player is optimal for the one-step objective, and no randomized rule can improve its success probability. Fifth, uniform elimination hits one of $k$ werewolves among $n$ players with probability exactly $k/n$.
+
+Alongside these decision results, the proposed scaling factor equals exactly $9/25=0.36$ for seven players and two wolves when $C=1$, and it vanishes exactly at parity. Those arithmetic facts clarify the conjecture’s shape while leaving its empirical and strategic validity open.
+
+The result is both useful and disciplined. It converts a folk strategy—“vote for the most suspicious player”—into a theorem for a precisely stated objective. It also refuses to claim more than that theorem proves. Bayesian reasoning identifies the best immediate target once priors and likelihoods are given. Whether the same action is optimal for winning the entire game is the next, richer question: one that requires a complete model of information, behavior, and time.
+
+## The discipline of evidence
+
+The framework also highlights that Bayes’ rule does not create information; it organizes information supplied by a model. Calling a silence, a ballot, or survival “suspicious” is not yet a likelihood. One needs conditional probabilities describing how often that observation would arise under competing role hypotheses. If those probabilities are poorly estimated, the posterior can be precise-looking but misleading. Good play therefore has two layers: construct a credible evidence model, then apply the decision rule correctly.
+
+That observation suggests a careful experimental program. Fix every gameplay convention and every behavioral policy, simulate complete games, and report uncertainty intervals rather than isolated percentages. Vary both $n$ and $k$, estimate the constant $C$ independently of the proposed exponent, and compare the square law against plausible finite-size alternatives. Most importantly, compare maximum-posterior actions with actions selected by backward induction. Such experiments could reveal where the simple rule remains globally optimal, where it is merely a strong heuristic, and where information-seeking moves decisively outperform it.
+
+The village’s problem is dramatic because mistakes remove voices from the table, but its mathematical lesson is universal. Beliefs should be updated by evidence, actions should be matched to objectives, and a theorem about the next move should never be mistaken for a theorem about the whole future.
