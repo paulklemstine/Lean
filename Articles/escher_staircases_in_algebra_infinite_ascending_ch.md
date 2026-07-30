@@ -1,179 +1,148 @@
-# Escher Staircases in Algebra: When Climbing Forever Means Noetherianity Has Failed
+# The Staircase That Goes the Other Way
 
-Imagine walking up a staircase in an M. C. Escher print. Every step is genuinely higher than the last, yet the architecture seems to fold back toward its beginning. Algebra has a structure with a similar visual flavor: an infinite sequence of ideals
+## An algebraic illusion, a corrected picture, and the meaning of infinite descent
 
-$$
-I_0 \subsetneq I_1 \subsetneq I_2 \subsetneq \cdots.
-$$
+A staircase in an M. C. Escher print can rise forever and still return to its beginning. The eye accepts each local step, yet the whole structure is impossible. Algebra has its own architectural temptations. Ideals—special subsets of a ring that absorb addition and multiplication—can be nested like rooms inside rooms. It is natural to ask whether an infinite sequence of ideals might climb strictly upward while somehow “looping back” through their common intersection.
 
-Each inclusion is strict. At every stage, the next ideal contains something new. Such a chain will be called an **Escher staircase**. The name is picturesque, but the mathematics behind it is precise: the existence of this staircase is exactly the failure of one of commutative algebra's central finiteness conditions.
-
-The story also contains a warning. A seductive first example—requiring values to be divisible by larger and larger powers of $2$—points in the wrong direction. Correcting that reversal reveals what the staircase really measures, why some enormous rings contain one, and why the infinite-looking world of $p$-adic integers does not.
-
-## What is an ideal staircase?
-
-A commutative ring is a system in which elements can be added, subtracted, and multiplied. An **ideal** $I$ is a subset closed under addition and under multiplication by arbitrary ring elements. Ideals package divisibility, equations, and quotient constructions. In the integers, every ideal has the form $m\mathbb Z$. In a polynomial ring, ideals may encode simultaneous algebraic equations.
-
-An Escher staircase in a commutative ring $R$ is a sequence of ideals $(I_n)_{n\ge 0}$ satisfying
+A particularly seductive candidate comes from divisibility by powers of two. Consider all functions from the integers to the integers. For each nonnegative integer $n$, place a function $f$ on level $D_n$ when every value $f(z)$ is divisible by $2^n$:
 
 $$
-I_m \subsetneq I_n \qquad \text{whenever }m<n.
+D_n=\{f:\mathbb Z\to\mathbb Z: 2^n\mid f(z)\text{ for every }z\in\mathbb Z\}.
 $$
 
-Equivalently, every adjacent step is strict: $I_n\subsetneq I_{n+1}$. The crucial word is *infinite*. A finite chain of strict containments is ordinary. An endless chain says that no finite stage captures everything accumulated later.
-
-A ring is **Noetherian** when every ascending chain of ideals eventually stabilizes. Thus, whenever
+The proposed staircase looks infinite, and its common core really is only the zero function. But it does not ascend. It descends:
 
 $$
-J_0\subseteq J_1\subseteq J_2\subseteq\cdots,
+D_0\supsetneq D_1\supsetneq D_2\supsetneq\cdots,
+\qquad
+\bigcap_{n\ge 0}D_n=\{0\}.
 $$
 
-there is some $N$ such that $J_n=J_N$ for all $n\ge N$. Noetherianity is the algebraic principle that growth cannot continue forever. It underlies finite descriptions of systems of polynomial equations and makes many algebraic procedures terminate.
+That reversal is not a technicality. It changes an impossible loop into a familiar and useful mathematical object: a separated divisibility filtration.
 
-The central result is therefore both simple and definitive.
+## Why stronger divisibility means a smaller room
 
-**Staircase Characterization Theorem.** *A commutative ring has an Escher staircase if and only if it is not Noetherian.*
-
-The forward implication is immediate from the meaning of Noetherianity: a strictly growing chain never stabilizes. For the reverse implication, if a ring is not Noetherian, then some ascending chain fails to stabilize. From that chain, choose a first rung, then a later strictly larger rung, then a later strictly larger rung again. Repeating this extraction produces an infinite strict chain.
-
-So staircase existence is not a new independent invariant. It is a vivid restatement of failure of the ascending chain condition.
-
-## A staircase made from integer sequences
-
-The cleanest concrete model lives in the ring
+The containment direction can be settled without sophisticated machinery. If an integer is divisible by $2^{n+1}$, then it is certainly divisible by $2^n$. Therefore every function in $D_{n+1}$ belongs to $D_n$. The converse fails. The constant function
 
 $$
-R=\prod_{k\in\mathbb N}\mathbb Z,
+f_n(z)=2^n
 $$
 
-the set of all integer sequences $a=(a_0,a_1,a_2,\ldots)$, with addition and multiplication performed coordinate by coordinate.
+belongs to $D_n$, because all of its values equal $2^n$, but it does not belong to $D_{n+1}$, because $2^{n+1}$ does not divide $2^n$. Thus each step is genuinely smaller than the one before it.
 
-For each $n\ge 0$, define
+This is the first lesson of the staircase: a stricter condition produces fewer objects. Requiring divisibility by $2$, then by $4$, then by $8$, is like passing through successively narrower sieves. The labels increase, but the sets decrease.
 
-$$
-S_n=\{a\in R: a_k=0\text{ for every }k\ge n\}.
-$$
+The second lesson concerns the intersection. Suppose one integer $x$ is divisible by $2^n$ for every $n$. If $x\ne 0$, choose $n$ so large that $2^n>|x|$. A nonzero integer divisible by $2^n$ must have absolute value at least $2^n$, a contradiction. Hence $x=0$. Applying this argument at every input $z$ shows that a function belonging to every $D_n$ vanishes everywhere.
 
-Thus $S_n$ consists of sequences supported only among the first $n$ coordinates. The first few rungs look like
+So the filtration is *separated*: infinitely fine divisibility detects zero exactly. This resembles many limiting constructions across mathematics and science. A signal surviving every threshold must be null; a quantity divisible by arbitrarily large scales must vanish; an object invisible at every resolution is forced into the common core.
 
-$$
-S_0=\{(0,0,0,\ldots)\},
-$$
+## From arbitrary functions to integer-valued polynomials
+
+The same phenomenon occurs in a subtler ring. Define
 
 $$
-S_1=\{(a_0,0,0,\ldots):a_0\in\mathbb Z\},
+\operatorname{Int}(\mathbb Z)
+=
+\{p\in\mathbb Q[X]:p(z)\in\mathbb Z\text{ for every }z\in\mathbb Z\}.
 $$
 
-$$
-S_2=\{(a_0,a_1,0,0,\ldots):a_0,a_1\in\mathbb Z\}.
-$$
-
-Each $S_n$ is an ideal. Adding two sequences that vanish from position $n$ onward preserves that property. Multiplying such a sequence coordinatewise by any sequence also leaves every coordinate from $n$ onward equal to zero.
-
-The inclusions $S_n\subseteq S_{n+1}$ are clear: if a sequence vanishes at every coordinate $k\ge n$, it certainly vanishes at every coordinate $k\ge n+1$. They are strict because the sequence with a single $1$ in coordinate $n$ and zeros elsewhere belongs to $S_{n+1}$ but not to $S_n$. Hence
+These are rational-coefficient polynomials that nevertheless take integer values at every integer. They include ordinary integer-coefficient polynomials, but they also include expressions such as
 
 $$
-S_0\subsetneq S_1\subsetneq S_2\subsetneq\cdots
+\binom{X}{2}=\frac{X(X-1)}{2},
 $$
 
-is an Escher staircase.
-
-This example explains the architectural metaphor. The intersection of all rungs is
+whose coefficients are not all integers. For each $n\ge 0$, define the ideal
 
 $$
-\bigcap_{n\ge 0}S_n=S_0=\{0\}.
+J_n=
+\{p\in\operatorname{Int}(\mathbb Z):2^n\mid p(z)\text{ for every }z\in\mathbb Z\}.
 $$
 
-There is no paradox here. Because the chain is ascending, its intersection is automatically its smallest member. The staircase “returns to its beginning” only in the sense that the common core of every rung is exactly the starting ideal.
+Here divisibility refers to the integer value $p(z)$. These sets are ideals: sums preserve divisibility, and multiplying a divisible-valued polynomial by any integer-valued polynomial preserves divisibility point by point.
 
-This observation corrects a possible type confusion. The intersection of ideals contains ring elements, not ideals. Saying that $I_0$ is “an element” of $\bigcap_n I_n$ is therefore not meaningful. One may say either that the zero element belongs to every ideal—which is always true—or that $I_0$ equals the intersection—which is automatic for any ascending chain indexed from its least rung. The real mathematical content is strict growth without end.
-
-## The divisibility staircase that descends
-
-Now consider functions $f:\mathbb Z\to\mathbb Z$. For each $n$, let
+The **Divisibility Filtration Theorem** states that for every $n$,
 
 $$
-D_n=\{f:2^n\text{ divides }f(z)\text{ for every }z\in\mathbb Z\}.
+J_{n+1}\subsetneq J_n.
 $$
 
-At first glance, increasing $n$ may feel like increasing the rung. In fact, it strengthens the requirement. Every multiple of $2^{n+1}$ is a multiple of $2^n$, so
+The proof uses the same crisp witness as before. The constant polynomial $2^n$ belongs to $J_n$ but not to $J_{n+1}$. Therefore the filtration never stabilizes.
+
+The **Zero-Intersection Theorem** states that
 
 $$
-D_{n+1}\subseteq D_n.
+\bigcap_{n\ge 0}J_n=\{0\}.
 $$
 
-The containment is strict. The constant function $f(z)=2^n$ lies in $D_n$, but it does not lie in $D_{n+1}$. Therefore
+Indeed, if $p$ lies in every $J_n$, then for each integer $z$, the value $p(z)$ is divisible by every power of two, hence equals zero. Thus $p$ vanishes at every integer. A nonzero polynomial over a field has only finitely many roots, whereas the integers form an infinite set. Consequently $p$ is the zero polynomial.
+
+This last step reveals why the polynomial case is richer than the function case. For functions, pointwise vanishing already is equality to zero. For polynomials, one invokes rigidity: infinitely many roots determine a polynomial completely.
+
+## Where the alleged loop disappears
+
+The original Escher-like intuition focused on the fact that the zero polynomial belongs to the infinite intersection and also belongs to the first ideal. But every ideal contains zero. That shared point is not a return path; it is the universal basement of ideal theory.
+
+There is also a type mismatch hidden in the phrase “the first ideal is an element of the intersection.” The intersection is itself an ideal whose elements are ring elements, such as polynomials—not other ideals. What can be true is that a particular polynomial, especially zero, lies in every ideal. That does not make a chain loop.
+
+Once this confusion is removed, two honest structures remain. A descending filtration can shrink forever and have zero intersection. An ascending chain can grow forever in some rings, but not in rings satisfying the ascending-chain condition. Neither phenomenon loops back.
+
+## The ascending-chain barrier
+
+A commutative ring is called **Noetherian** when every ascending chain of ideals stabilizes. In other words, whenever
 
 $$
-D_0\supsetneq D_1\supsetneq D_2\supsetneq\cdots.
+I_0\subseteq I_1\subseteq I_2\subseteq\cdots,
 $$
 
-This is a strictly descending chain, not an Escher staircase. The same inclusion argument applies when the functions are restricted to a suitable subring, such as integer-valued polynomials. Divisibility by a higher prime power produces a smaller ideal.
-
-The distinction matters computationally. Ascending chains model the progressive addition of generators or consequences; descending chains model increasingly stringent congruence or vanishing conditions. Confusing their orientations can reverse the conclusion of an entire construction.
-
-## Infinitely many variables versus finitely many
-
-A second explicit staircase appears in a polynomial ring with countably many indeterminates,
+there is an index $N$ after which no ideal changes:
 
 $$
-k[x_0,x_1,x_2,\ldots].
+I_n=I_N\qquad\text{for all }n\ge N.
 $$
 
-Let
+The **Noetherian Obstruction Theorem** follows immediately: no Noetherian ring admits an infinite chain satisfying $I_n\subsetneq I_{n+1}$ for every $n$. If it did, stabilization at $N$ would force $I_N=I_{N+1}$, contradicting strict containment.
+
+This theorem corrects two tempting comparisons. First, a polynomial ring $k[x_1,\ldots,x_m]$ in finitely many variables over a field $k$ is Noetherian. It therefore has no infinite strictly ascending chain of ideals. Its Krull dimension is $m$, but Krull dimension measures chains of *prime* ideals, not the length of an arbitrary infinite ascending chain. These are different notions.
+
+Second, a discrete valuation ring is Noetherian, so it too forbids infinite strict ascent. Its powers of a uniformizing element form a descending chain, much like the powers-of-two filtration, not an ascending Escher staircase.
+
+## What survives the impossible architecture
+
+The corrected picture is more useful than the illusion. The ideals $J_n$ provide an infinite, strict, separated filtration of $\operatorname{Int}(\mathbb Z)$. It has three precise features:
+
+1. **Antitonicity:** increasing the required exponent decreases the ideal.
+2. **Strictness:** the constant polynomial $2^n$ separates consecutive levels.
+3. **Separation:** membership at every level characterizes the zero polynomial.
+
+These properties make the filtration a measuring instrument. It records how deeply a polynomial’s values are divisible by two. For a nonzero integer-valued polynomial $p$, there must be some finite level it fails to enter; otherwise it would vanish. In computational terms, sampling values can suggest a divisibility depth, while the theorem explains why no nonzero polynomial can have infinite depth.
+
+The same architecture appears throughout mathematics. In number theory, powers of a prime define increasingly fine congruence conditions. In algebraic geometry, powers of an ideal describe infinitesimal neighborhoods. In analysis, nested scales separate visible structure from a limiting core. In digital computation, divisibility by powers of two is measured by the number of trailing binary zeros. All are staircases of resolution, descending toward what cannot be detected any further.
+
+## A small experiment in binary depth
+
+The filtration can be explored numerically. Given finitely many integer values, compute for each nonzero value the largest exponent $r$ for which $2^r$ divides it; this is its $2$-adic valuation. The entire list is divisible by $2^n$ exactly when its smallest valuation is at least $n$. For example, the values $12$, $20$, and $28$ have valuations $2$, $2$, and $2$, so they survive through $D_2$ but not $D_3$. By contrast, $16$, $48$, and $80$ survive through $D_4$.
+
+Zero needs special care because it is divisible by every positive power of two. In a finite computation it may be represented by infinite valuation. This convention mirrors the theorem: only a function or polynomial whose *every* value is zero belongs to all levels. A finite sample cannot certify polynomial identity, but it can display the nesting and quickly find failures of membership. Exact symbolic reasoning supplies the global conclusion that sampling alone cannot.
+
+The constant witnesses make strictness especially visible. At level $n$, inspect the constant value $2^n$. It passes every divisibility test up to exponent $n$ and fails the very next one. This produces a certificate for every strict inclusion, not merely evidence from a large experiment. The distinction matters: examples reveal the geometry, while a parametrized witness proves that the geometry continues without end.
+
+## Beyond powers of two
+
+The natural generalization replaces $2$ by an element $a$ of a domain and studies the ideals generated by $a^n$. When does
 
 $$
-J_n=(x_0,x_1,\ldots,x_{n-1}).
+\bigcap_{n\ge 0}(a^n)=\{0\}?
 $$
 
-Then $J_n\subsetneq J_{n+1}$, because $x_n$ belongs to $J_{n+1}$ but not to $J_n$. The latter fact can be seen by setting $x_0,\ldots,x_{n-1}$ equal to zero while leaving $x_n$ untouched: every element of $J_n$ vanishes under this specialization, but $x_n$ does not. Thus countably many variables provide an endless supply of genuinely new generators.
-
-By contrast, for a field $k$, the finite-variable ring
+The answer depends on the ring and leads toward classical intersection theorems. Another direction is genuine non-Noetherian ascent. In a polynomial ring with countably many variables, the ideals
 
 $$
-k[x_1,\ldots,x_d]
+(x_1)\subsetneq(x_1,x_2)\subsetneq(x_1,x_2,x_3)\subsetneq\cdots
 $$
 
-is Noetherian. This is Hilbert's basis theorem iterated $d$ times. Consequently it has no Escher staircase, regardless of the number $d$ of variables.
+really do rise forever. Each new variable witnesses strictness. Yet even this chain does not loop: it simply demonstrates failure of the ascending-chain condition.
 
-This separates two notions that may look deceptively similar. The ring $k[x_1,\ldots,x_d]$ has Krull dimension $d$, a measure based on chains of prime ideals. But it does not have an infinite ascending chain of arbitrary ideals. Krull dimension and failure of Noetherianity measure different aspects of a ring. Therefore one cannot define an “Escher height” by declaring it equal to the number of variables while also defining a staircase as an infinite ascending ideal chain.
+The ring of all algebraic integers is also non-Noetherian and offers a serious setting for studying ascending chains. But before assigning a numerical “height,” one must define an invariant that does not conflate arbitrary ideal chains, prime-ideal chains, and descending filtrations.
 
-## Why the $p$-adic integers stop the climb
-
-The $p$-adic integers $\mathbb Z_p$ contain infinitely detailed information about divisibility by a prime $p$. Their elements have expansions extending forever,
-
-$$
-a_0+a_1p+a_2p^2+\cdots,
-$$
-
-with digits $0\le a_i<p$. That infinite expansion might suggest endless ideal complexity. Yet $\mathbb Z_p$ is a discrete valuation ring. Its nonzero ideals are exactly
-
-$$
-(p^m),\qquad m\ge 0.
-$$
-
-These ideals form a descending tower as $m$ increases:
-
-$$
-\mathbb Z_p\supsetneq(p)\supsetneq(p^2)\supsetneq\cdots.
-$$
-
-Ascending chains move in the opposite direction and must terminate after finitely many steps. Since a discrete valuation ring is Noetherian, the Staircase Characterization Theorem implies that $\mathbb Z_p$ has no Escher staircase.
-
-This is an instructive contrast. An object may be infinite, topologically subtle, and built from arbitrarily high powers of a prime, yet still satisfy a powerful algebraic finiteness condition.
-
-## What remains of “height”?
-
-If staircase existence is exactly non-Noetherianity, then a numerical height requires a different definition. Counting the length of a chain indexed by the natural numbers gives the same answer—countably infinite—whenever a staircase exists. Taking the intersection adds nothing when the chain begins with its least member. And Krull dimension cannot be substituted without changing the subject.
-
-A useful refined invariant might instead measure ordinal lengths of chains, restrict which ideals are allowed, track numbers of generators, or quantify how quickly finite computations encounter new generators. Each choice would need invariance proofs and examples separating it from established dimensions.
-
-The ring of all algebraic integers presents a compelling test case, but it must first be specified precisely, for example as the integral closure of $\mathbb Z$ in a chosen algebraic closure of $\mathbb Q$. A promising route to non-Noetherianity is to choose compatible roots of a prime and orient the resulting principal ideals carefully. Once non-Noetherianity is established, an Escher staircase follows from the characterization theorem. What does not follow is a canonical numerical height.
-
-## The lesson of the impossible staircase
-
-The metaphor survives, but in a sharpened form. An Escher staircase is not mysterious extra structure hidden inside selected rings. It is the visible footprint of a familiar failure: ideals can keep acquiring new content forever.
-
-The integer-sequence ring displays that failure coordinate by coordinate. The countably generated polynomial ring displays it variable by variable. Finite polynomial rings and $p$-adic integers block it through Noetherianity. The power-divisibility construction teaches a complementary lesson: stronger divisibility conditions descend rather than ascend.
-
-Algebra often advances through such acts of orientation. Which way does inclusion run? What sort of object belongs to an intersection? Is an apparent new invariant genuinely new, or an old condition in new architectural clothing? Once those questions are answered, the impossible staircase becomes possible to understand: not a loop in logic, but an endless ascent whose common foundation remains the point from which it began.
+Escher’s art works because every local step looks plausible while the global geometry refuses to exist. The algebraic version teaches the same discipline. Check the arrows. Check the types. Ask what the intersection actually contains. The impossible staircase then resolves into two coherent landscapes: strict descent toward zero, and strict ascent obstructed by Noetherianity. The illusion vanishes, but the mathematics becomes sharper.
