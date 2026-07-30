@@ -1,246 +1,146 @@
-# Beyond Power Series: The Strange Arithmetic of Things That Grow Forever
+# The First Place Two Infinite Expansions Disagree
 
-## A number system built for infinity
+## A map for scales beyond power series
 
-Ask a calculus student how fast a function grows, and they will reach for a
-familiar toolbox: polynomials, exponentials, logarithms. We say $x^2$ grows
-faster than $x$, that $e^x$ outruns every polynomial, and that $\log x$ creeps
-upward so slowly it seems almost to stand still. These statements feel obvious.
-But they hide a deep question: *is there a single, self-consistent number system
-in which all of these growth rates live side by side — and in which we can do
-ordinary algebra?*
+Power series are among mathematics’ most successful compression devices. Near a point, a complicated function can be replaced by a list of coefficients attached to $1,x,x^2,x^3,\ldots$. That list can turn differentiation into bookkeeping and approximation into truncation. Yet many functions arising in asymptotic analysis refuse to live on a single power scale. Exponentials outrun powers, logarithms trail behind them, and nested expressions such as $\exp(\exp x)$ create still more distant levels of growth.
 
-The answer is yes, and its name is **transseries**. A transseries is an
-asymptotic expansion that is allowed to mix powers, logarithms, exponentials, and
-even towers of exponentials like $e^{e^x}$, all in one formal object. Where an
-ordinary power series can only describe behavior like $1 + x + x^2 + \dots$, a
-transseries can describe genuinely wild objects such as
+To compare such expressions, it is not enough to ask for the coefficient of $x^n$. We need an organized atlas of scales: exponential, polynomial, and logarithmic. The framework developed here supplies a rigorous finite-level model of that atlas. Its central message is strikingly simple:
 
-$$e^{e^x} + 3\,e^x \cdot x^{1/2} - 7 + \frac{2}{x} + \frac{\log x}{x^2} + \cdots$$
+> An expansion is completely determined by all of its coefficients, and two unequal expansions have a first rank at which they disagree.
 
-This article tells the story of a rigorous, machine-checked construction of the
-field of transseries, and of three things we can prove about it: that powers are
-*formally* powerless against exponentials, that a transseries is uniquely pinned
-down by its asymptotic expansion, and that this number system is rich enough to
-take square roots and $n$-th roots — the property that, in the classical theory,
-makes transseries a *real closed field*, an arithmetic universe as complete as the
-real numbers themselves.
+That statement sounds inevitable until one remembers that the expansions may have infinitely many terms and their exponents need not march along the ordinary integers. The decisive ingredient is not finiteness but a well-ordered support condition, which prevents the nonzero terms from descending forever without a first one.
 
-## The trouble with power series
+## Three coordinates of growth
 
-Power series are the workhorses of analysis. Near a point, almost any smooth
-function looks like an infinite polynomial. But power series have a built-in
-ceiling: each one carries a single notion of "size," its **order** — the exponent
-of its smallest nonzero term. The order of $3x^2 + 5x^7$ is $2$, because near
-zero the $x^2$ term dominates.
+A **growth rank** is a triple of integers
 
-This works beautifully until you try to compare a power series with an
-exponential. The function $e^x$ has no finite order in the world of powers of
-$x$: it beats $x$, it beats $x^{10}$, it beats $x^{1000}$, it beats $x^a$ for
-*every* real $a$, no matter how astronomically large. There is simply no slot in
-the power-series filing cabinet where $e^x$ belongs. You cannot say "$e^x$ is the
-$x^{\infty}$ term," because $\infty$ is not a number.
+$$
+r=(e,p,\ell)\in\mathbb Z^3,
+$$
 
-Transseries fix this by enlarging the filing cabinet. Instead of indexing terms
-by a single exponent, we index them by an entire *hierarchy* of growth scales.
+ordered lexicographically. Thus $(e,p,\ell)<(e',p',\ell')$ if the first coordinate at which the two triples differ is smaller. The coordinates may be read as exponential, polynomial, and logarithmic levels. This interpretation is schematic rather than a claim that every possible exponential–logarithmic expression has already been encoded. It gives a clean three-level laboratory in which the essential order theory can be seen.
 
-## Transmonomials: a periodic table of growth
+A **three-level transseries** is a formal sum
 
-The building blocks of a transseries are called **transmonomials**. A
-transmonomial is a formal product of powers drawn from a whole tower of scales:
+$$
+F=\sum_{r\in\mathbb Z^3} a_r\,\mathfrak m^r,
+$$
 
-$$\cdots (e^{e^x})^{a_2} \cdot (e^x)^{a_1} \cdot x^{a_0} \cdot (\log x)^{a_{-1}} \cdots$$
+with real coefficients $a_r$, subject to the condition that the set of ranks with $a_r\ne0$ is well ordered. The symbol $\mathfrak m^r$ denotes a formal transmonomial of rank $r$; one can picture it heuristically as carrying exponential, power, and logarithmic information. Formal means that identity is determined by coefficients rather than by evaluating at a numerical value of $x$.
 
-Each scale sits at an integer **tower height** $h$. Height $0$ is the ordinary
-variable $x$. Height $1$ is $e^x$. Height $-1$ is $\log x$. Height $2$ is the
-double exponential $e^{e^x}$, and so on, climbing up toward faster and faster
-growth and down toward slower and slower growth. A transmonomial records, for
-each height, the real exponent of that scale; only finitely many of these
-exponents are allowed to be nonzero.
+Well ordering is the quiet engine of the theory. Every nonempty collection of occupied ranks has a least element. Consequently, every nonzero transseries has an **order**: the least rank carrying a nonzero coefficient. This resembles the lowest exponent in a polynomial, the order of vanishing of an analytic function, or the valuation of a Laurent series.
 
-Formally, then, a transmonomial is just a **finitely supported function from the
-integers (heights) to the reals (exponents)**. In the verified construction this
-is written `ℤ →₀ ℝ` — finitely supported maps from $\mathbb{Z}$ to $\mathbb{R}$.
+The simplest object is a **transmonomial** $M_{r,c}$, which has coefficient $c$ at rank $r$ and coefficient $0$ everywhere else. Its coefficient at its own rank is exactly $c$. If $c\ne0$, then $M_{r,c}$ is nonzero. Moreover, if $r\ne s$ and $a\ne0$, then $M_{r,a}$ cannot equal $M_{s,b}$ for any $b$: inspecting the coefficient at $r$ distinguishes them.
 
-The genius is in how we *order* these monomials, because that order is exactly the
-notion of asymptotic dominance. We compare two transmonomials **lexicographically,
-giving the highest tower height the most weight**. To decide which of two
-transmonomials is bigger, look first at the highest height where they differ:
-whoever has the larger exponent there wins outright, no matter what happens at
-lower heights.
+## Listening below the leading order
 
-This single rule encodes all of our intuitions at once:
+Suppose $F$ has order $q$. No coefficient below $q$ can be nonzero; otherwise $q$ would not be least. In symbols,
 
-- **Higher towers always win.** $e^{e^x}$ (height $2$) beats any power of $e^x$
-  (height $1$), which beats any power of $x$ (height $0$), which beats any power
-  of $\log x$ (height $-1$). In the verified development this is the theorem
-  `mono_lt_mono_of_height`: *a transmonomial of strictly higher tower height (with
-  positive exponent) dominates any transmonomial of lower height, whatever its
-  exponent.*
+$$
+r<\operatorname{ord}(F)\quad\Longrightarrow\quad [\mathfrak m^r]F=0,
+$$
 
-- **At the same height, the larger exponent wins.** $x^3$ beats $x^2$, exactly as
-  it should. This is the theorem `mono_lt_mono_same`.
+where $[\mathfrak m^r]F$ denotes the coefficient of $F$ at rank $r$.
 
-The crown jewel is the formal statement that exponentials annihilate powers,
-proved as `exp_dominates_pow`:
+This elementary observation becomes powerful when applied to a difference. Given two transseries $F$ and $G$, set
 
-> For **every** real number $a$, the transmonomial $e^x$ dominates the
-> transmonomial $x^a$.
+$$
+D=F-G.
+$$
 
-Read that quantifier carefully: *every* real $a$, including $a = 10^{100}$. No
-single order in the power-series world can express this. Here it falls out
-cleanly from the lexicographic order, because $e^x$ lives one tower height above
-every power of $x$.
+At every rank below $\operatorname{ord}(D)$, the coefficient of $D$ vanishes. Since coefficients subtract term by term, this says
 
-## From monomials to series — and a free field
+$$
+r<\operatorname{ord}(F-G)
+\quad\Longrightarrow\quad
+[\mathfrak m^r]F=[\mathfrak m^r]G.
+$$
 
-Once we have a linearly ordered group of transmonomials, we build transseries the
-way mathematicians build all generalized series: as **Hahn series**. A Hahn
-series is a formal sum $\sum_g c_g \cdot g$, with real coefficients $c_g$, whose
-collection of nonzero terms forms a *well-ordered* set (every nonempty subset has
-a smallest element). Well-orderedness is the magic condition that lets you add,
-multiply, and even *divide* such infinite sums without ever needing to compute an
-infinite numerical sum.
+Thus the two expansions agree completely below the order of their difference.
 
-A foundational theorem of algebra — Hahn's theorem — says that when the value
-group is linearly ordered and the coefficients form a field, the Hahn series
-themselves form a field. Applying this to our ordered group of transmonomials and
-real coefficients, we obtain:
+If $F\ne G$, then $D\ne0$. Its coefficient at its own order is nonzero. Therefore
 
-> **The transseries form a field.**
+$$
+[\mathfrak m^{\operatorname{ord}(F-G)}]F
+\ne
+[\mathfrak m^{\operatorname{ord}(F-G)}]G.
+$$
 
-Addition, subtraction, multiplication, and division by any nonzero element all
-make sense. This is not an analytic miracle requiring convergence; it is pure
-algebra, and in the formal development it is simply inherited from the general
-Hahn-series field construction.
+These two statements combine into the **First Disagreement Theorem**:
 
-Every transseries now carries a **valuation**, written `orderTop`: the
-transmonomial of its leading (most dominant) term, or the symbol $\top$
-("infinitely small") reserved for the zero series. The valuation behaves
-multiplicatively — the leading term of a product is the product of the leading
-terms, `orderTop_mul` — and it is the rigorous replacement for the single
-"order" of a power series. The real numbers sit inside this field as the constant
-transseries (`C_injective`), so transseries genuinely extend ordinary arithmetic.
+> For any unequal three-level transseries $F$ and $G$, there is a rank $q$ such that their coefficients agree at every rank below $q$ and differ at $q$. One may take $q=\operatorname{ord}(F-G)$.
 
-## The comparison theorem: expansions don't lie
+Imagine comparing two infinitely long musical scores from the quietest note upward. Well ordering guarantees that, if the scores differ at all, there is a first audible discrepancy. No endless search through ever-lower ranks is possible.
 
-Here is a question that sounds philosophical but turns out to be a precise
-theorem. Suppose you compute the asymptotic expansion of a function term by term —
-its leading behavior, then the next correction, then the next — and you never
-stop. Could two genuinely different functions produce the *same* expansion all the
-way down? Could the expansion secretly lose information?
+## Agreement to every order
 
-For transseries, the answer is a reassuring **no**. We formalize the idea of two
-transseries "agreeing to all orders": their difference is asymptotically smaller
-than *every* transmonomial — smaller than every conceivable scale of growth. The
-**asymptotic comparison theorem** (`agreeToAllOrders_iff_eq`) then states:
+Say that $F$ and $G$ **agree below a cut** $q$ if their coefficients coincide at every rank $r<q$. Say that they **agree to all orders** if
 
-> Two transseries agree to all orders **if and only if** they are equal.
+$$
+[\mathfrak m^r]F=[\mathfrak m^r]G
+\qquad\text{for every }r\in\mathbb Z^3.
+$$
 
-In other words, the asymptotic expansion of a transseries is a perfect
-fingerprint. Nothing hides "below all orders." If two transseries match scale by
-scale, they are literally the same object. The proof is a clean piece of valuation
-logic: the only way for a difference to be smaller than every transmonomial is for
-its valuation to be $\top$, and the only element with valuation $\top$ is zero. As
-a bonus, "agreeing to all orders" is verified to be an equivalence relation
-(`agreeToAllOrders_equivalence`) — which, given the theorem, just confirms that it
-*is* equality in disguise.
+The **Asymptotic Comparison Theorem** states:
 
-This is the formal heart of why asymptotic analysis works at all. When physicists
-and engineers expand a solution in powers of a small parameter and trust the
-result, they are implicitly relying on a uniqueness principle of exactly this
-kind.
+> Two three-level transseries agree to all orders if and only if they are equal.
 
-To make sure the formal order is not an empty abstraction, the development also
-ties it back to honest real analysis. The theorem `isLittleO_pow_exp` proves that
-every polynomial $x^n$ is little-o of $e^x$ at infinity — the analytic shadow of
-the formal `exp_dominates_pow`. And `isLittleO_expPow_expExp` proves that every
-power of $e^x$ is little-o of $e^{e^x}$, the analytic shadow of "higher towers
-win." The formal order and the analytic order agree.
+The forward direction follows because a formal series is determined by its coefficient function. The reverse direction is immediate: equal objects have equal coefficients. The theorem also follows conceptually from first disagreement. If two series were unequal, there would be a first coefficient at which they differ, contradicting agreement to all orders.
 
-## A non-Archimedean world
+A useful corollary is the **No-Flatness Theorem**:
 
-Transseries form an **ordered** field, and a strange one. The element $x$ is a
-*positive infinitesimal*: it is bigger than zero, yet smaller than every positive
-fraction $\tfrac{1}{n+1}$ (`x_infinitesimal`). Meanwhile $1/x$ is *infinite*: it
-exceeds every natural number $n$ (`inv_x_infinite`). And of course they are
-reciprocals, $x \cdot \tfrac1x = 1$ (`x_mul_inv_x`).
+> If every coefficient of a three-level transseries $F$ is zero, then $F=0$.
 
-A field with infinitesimals and infinities is called **non-Archimedean** — it
-violates the Archimedean principle that you can always reach any size by adding $1$
-to itself enough times. The transseries field is non-Archimedean in the most
-vivid possible way, with infinitely many distinct scales of infinity ($x$,
-$e^x$, $e^{e^x}$, …) and infinitely many distinct scales of smallness. Crucially,
-$\mathbb{R}$ still embeds as an ordered subfield: real constants compare exactly
-as they do on the number line (`C_lt_iff`, `C_strictMono`).
+In ordinary smooth analysis, a nonzero function can be “flat” at a point: for example, the function equal to $e^{-1/x^2}$ for $x>0$ and $0$ for $x\le0$ has every derivative zero at the origin. Its Taylor series cannot detect it. In the present formal setting, that pathology is absent by construction. There is no nonzero series whose entire coefficient data vanish.
 
-## Roots and real closure: why real exponents matter
+This distinction matters. The theorem concerns equality inside the formal series model; it does not by itself prove that every analytic or exponential–logarithmic function possesses such an expansion. Existence of expansions is a separate and deeper question. But once an expansion belongs to this model, uniqueness is absolute.
 
-Now for the property that elevates transseries from "a useful bookkeeping device"
-to "a complete arithmetic universe." A **real closed field** is, informally, a
-field that behaves like the real numbers for the purposes of algebra and order:
-every positive element has a square root, and every odd-degree polynomial has a
-root. Real closure is the algebraic analogue of having no holes.
+## Arithmetic respects complete agreement
 
-The classical theory of transseries proves they are real closed. The verified
-development here establishes the decisive structural *ingredients* of that result,
-and pinpoints exactly why ordinary Laurent series fall short.
+A useful language of asymptotics must survive calculation. Suppose $F_1$ agrees to all orders with $G_1$, and $F_2$ agrees to all orders with $G_2$. Then coefficientwise addition gives
 
-The key is the **value group** — the group of all the leading scales. For an
-ordinary Laurent or formal power series, exponents are integers, and the value
-group is $\mathbb{Z}$. To extract a square root of a monomial you must halve its
-exponent — but you cannot halve an odd integer and stay inside $\mathbb{Z}$. The
-verified theorem `laurent_value_group_not_divisible` makes the obstruction
-brutally concrete:
+$$
+F_1+F_2\quad\text{agreeing to all orders with}\quad G_1+G_2.
+$$
 
-> There is no integer $k$ with $2k = 1$.
+For multiplication, complete agreement first yields $F_1=G_1$ and $F_2=G_2$ by the comparison theorem. Substitution then gives $F_1F_2=G_1G_2$, so the products also agree to all orders. Thus complete asymptotic identity is compatible with both addition and multiplication.
 
-That single missing solution is the entire reason Laurent series fail to be real
-closed. Transseries dodge it by allowing **real** exponents. Now halving is always
-possible, and the development proves the value group is **divisible**
-(`valueGroup_divisible`): for every transmonomial $g$ and every positive integer
-$n$, there is a transmonomial $g'$ with $n \cdot g' = g$. Concretely you just
-divide every exponent by $n$.
+This is more than a tidiness condition. It means that coefficient data can act as a reliable computational interface. Once two inputs are known coefficient by coefficient, ordinary algebra cannot make their representatives diverge.
 
-From divisibility, root extraction follows. The theorem `exists_nthRoot_term`
-shows every one-term transseries has an $n$-th root for every $n > 0$, and its
-special case `isSquare_term` shows every one-term transseries is a perfect square.
-The recipe is exactly the intuitive one: to take the square root of a monomial,
-halve all its exponents. With integer exponents this is impossible; with real
-exponents it is automatic. That contrast — `laurent_value_group_not_divisible`
-versus `valueGroup_divisible` — is the cleanest possible explanation of why
-mathematicians had to invent transseries in the first place.
+## A finite window onto an infinite structure
 
-## Climbing the tower: the exp-shift symmetry
+A computer demonstration can only store finitely many terms, but it can reproduce the logic exactly within that window. Represent a rank by an integer triple and a sparse transseries by a dictionary from ranks to nonzero real coefficients. Sort ranks lexicographically. To compare two inputs, subtract matching coefficients and choose the least rank with nonzero difference. Every lower listed coefficient agrees, while the chosen coefficient differs.
 
-There is one more piece of structure worth meeting: the **exp-shift**. Applying
-the exponential to the variable, $x \mapsto e^x$, ought to slide every scale up by
-one tower height — turning $x$ into $e^x$, turning $e^x$ into $e^{e^x}$, and
-turning $\log x$ back into $x$. The development realizes this as an actual
-**field automorphism** of the transseries (`expShiftEquiv`): a structure-preserving
-symmetry of the entire number system, with an inverse log-shift that slides
-everything back down. It is verified to send the variable to the exponential
-(`expShift_var`) and to be a genuine isomorphism (`logShift_expShift`,
-`expShift_logShift`). This makes precise the idea that the tower of growth scales
-is *self-similar*: it looks the same one level up as it does where you started,
-and there is always another exponential waiting above any scale you name
-(`exists_exp_tower_gt`).
+For example, consider
 
-## Why this matters
+$$
+F=2\mathfrak m^{(0,0,0)}-3\mathfrak m^{(0,1,-1)}
+   +5\mathfrak m^{(1,-2,0)}
+$$
 
-Transseries are not an exotic curiosity. They are the natural habitat of solutions
-to differential equations that cannot be solved in closed form, of asymptotic
-expansions in physics, and of the modern theory of o-minimal structures and
-model theory of the real exponential field. They are central to **resurgence
-theory**, the framework physicists use to extract sense from divergent series in
-quantum field theory and string theory. The reason all of these fields can treat
-asymptotic expansions as honest algebraic objects — adding them, multiplying them,
-inverting them, taking roots — is that those expansions live in a real closed,
-non-Archimedean field with a faithful valuation.
+and
 
-What this construction delivers is that whole edifice, built from the ground up
-and checked to the last detail: an ordered field where exponentials provably crush
-every power, where every expansion uniquely determines its function, and where the
-real exponents that distinguish transseries from mere Laurent series are exactly
-what unlock square roots and real closure. It is a small, complete window into how
-infinity can be made to obey the ordinary rules of arithmetic.
+$$
+G=2\mathfrak m^{(0,0,0)}-3\mathfrak m^{(0,1,-1)}
+   +7\mathfrak m^{(1,-2,0)}.
+$$
+
+The first two occupied ranks match. At $(1,-2,0)$, the coefficients are $5$ and $7$. Their difference has coefficient $-2$ there, so that rank is the order of $F-G$ and the first disagreement.
+
+If instead every stored coefficient agrees, the finite representations are equal. The exact infinite theorem says the same thing without a storage boundary, because the coefficient function itself is the object.
+
+## What has—and has not—been reached
+
+The three-level theory establishes a dependable Hahn-series foundation: coefficient extensionality, nonzero and distinct monomials, vanishing below order, first disagreement, absence of nonzero flat series, and compatibility of complete agreement with addition and multiplication.
+
+It does not yet establish the much broader vision sometimes associated with full exponential–logarithmic transseries. A complete theory would require recursively generated towers of monomials rather than only three integer coordinates. It would need well-defined composition, logarithm, and exponential on appropriate classes; a syntax and semantics for exponential–logarithmic expressions with domain conditions; an existence theorem assigning expansions to those expressions; and substantial ordered-field theory, potentially culminating in real closedness. Those are future constructions, not consequences of coefficient uniqueness alone.
+
+Still, the foundation isolates the key logical hinge. Existence asks whether a function can be translated into a transseries. Uniqueness asks whether two translations could conflict. Here uniqueness is settled for the model: all-order agreement forces equality, and inequality always reveals a first witness.
+
+## Why first disagreement matters
+
+The same pattern appears across mathematics and applications. In perturbation theory, one seeks the first order at which two models predict different behavior. In symbolic computation, sparse leading terms guide simplification. In non-Archimedean geometry, valuations measure the earliest nonzero contribution. In algorithm design, lexicographic keys separate objects efficiently. In multiscale modeling, locating the first disagreement tells us which scale carries new information.
+
+The philosophical lesson is equally useful. Infinity need not erase distinguishability. With the right order on scales, an infinite expansion can be inspected from its leading edge. Equality is global, but inequality has a local certificate: one rank and two unequal coefficients.
+
+Beyond ordinary power series lies a landscape of exponentials, powers, and logarithms. The present three-level model does not map the whole territory. It does, however, provide a trustworthy compass. Every occupied expansion has a first term; every unequal pair has a first disagreement; and complete coefficient data leave no room for ambiguity. That principle is modest enough to state in one sentence, yet strong enough to organize comparison, computation, and future expansion theories around a single canonical witness.

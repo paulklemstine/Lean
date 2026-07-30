@@ -1,493 +1,447 @@
-# A Grid-Based Hahn-Series Model of EML Transseries: Dominance, Asymptotic Comparison, and Ingredients of Real Closure
+# Hahn-Series Foundations for Three-Level Exponential–Polynomial–Logarithmic Expansions
 
-**Author:** Aristotle
-**Date:** 2026-06-28
-**Domain:** Applications (asymptotic analysis, ordered fields, formal series)
-
----
+**Aristotle**  
+**30 July 2026**
 
 ## Abstract
 
-We develop a rigorous, fully formalized model of *transseries* — formal asymptotic
-expansions that combine real powers of the variable $x$ with iterated exponentials
-and logarithms $\log x, x, e^x, e^{e^x}, \dots$ — built on top of the theory of
-Hahn series. The carrier is the field of Hahn series with real coefficients over
-the lexicographically ordered group of *transmonomials*, modeled as the
-finitely-supported maps $\mathbb{Z} \to_{\mathrm f} \mathbb{R}$ from integer
-*tower heights* to real exponents. Within this model we establish three families
-of results. First, the lexicographic order on transmonomials is exactly
-asymptotic dominance: a higher tower height dominates any lower one regardless of
-exponent, and within a fixed height the larger exponent dominates; in particular
-$e^x$ dominates $x^a$ for *every* real $a$, a statement no power-series order can
-express. Second, the **asymptotic comparison theorem**: two transseries that agree
-to all orders (their difference is asymptotically smaller than every
-transmonomial) are equal — so a transseries is uniquely determined by its
-expansion. Third, the structural **ingredients of real closure**: the value group
-is divisible, every one-term transseries admits an $n$-th root and is a square,
-and we isolate the precise obstruction (non-divisibility of $\mathbb{Z}$) that
-prevents Laurent series from being real closed and that real exponents overcome.
-We also exhibit the field as a non-Archimedean ordered field containing
-$\mathbb{R}$, and construct the exp-shift field automorphism realizing the
-self-similarity of the growth-scale tower. All statements correspond to
-machine-checked theorems; proof sketches are given throughout.
-
----
+We develop a three-level formal model for asymptotic expansions whose ranks encode exponential, polynomial, and logarithmic growth. The rank group is the lexicographically ordered abelian group $\Gamma=\mathbb Z\times_{\mathrm{lex}}(\mathbb Z\times_{\mathrm{lex}}\mathbb Z)$, and the expansions are real-coefficient Hahn series over $\Gamma$. We define agreement below a rank and agreement to all orders, then prove an asymptotic comparison theorem: two expansions agree to all orders if and only if they are equal. More sharply, any unequal pair has a first formal disagreement, namely the order of its difference; all lower coefficients coincide, while the coefficient at that order differs. We also establish the coefficient law for single transmonomials, nonvanishing and rank separation for monomials, vanishing below the order, the absence of nonzero flat series, and compatibility of all-order agreement with addition and multiplication. Sparse algorithms for finite representations illustrate these results and make their computational content explicit. The model supplies the uniqueness and comparison layer required by broader theories of exponential–logarithmic transseries. It does not, by itself, construct recursive exponential towers, composition, logarithm, exponential, expansions of all exponential–logarithmic functions, or a real-closed field; those remain separate extensions.
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-Asymptotic analysis pervades applied mathematics: solutions of differential
-equations near singular points, the WKB method, perturbation theory, and the
-divergent series of quantum field theory are all routinely manipulated through
-their asymptotic expansions. The natural ambient objects for such expansions are
-*transseries*: formal series that may involve, simultaneously, real powers of $x$,
-logarithms, exponentials, and exponentials of exponentials. Transseries form the
-backbone of Écalle's resurgence theory, of the model theory of the real
-exponential field, and of the differential algebra of Hardy fields.
-
-A central structural fact, established classically by van der Hoeven and others, is
-that the field of transseries is an *ordered, real closed, differential field*. Our
-goal here is a clean, self-contained, and verifiable model that captures the
-order-theoretic and field-theoretic core of this picture — enough to state and
-prove dominance laws, the asymptotic comparison (uniqueness) theorem, and the
-decisive ingredients of real closure — using as foundation only the general theory
-of Hahn series.
-
-### 1.2 Contributions
-
-1. A model `TSeries` of the transseries field as a Hahn-series field over the
-   lexicographically ordered transmonomial group `TransMono = Lex (ℤ →₀ ℝ)`
-   (Section 3), with $\mathbb{R}$ embedded as a subfield.
-2. Dominance laws making the lexicographic order coincide with asymptotic
-   dominance, culminating in `exp_dominates_pow` (Section 4), and their analytic
-   counterparts `isLittleO_pow_exp` and `isLittleO_expPow_expExp`.
-3. The asymptotic comparison theorem `agreeToAllOrders_iff_eq` and the fact that
-   asymptotic agreement is an equivalence relation (Section 5).
-4. The ordered-field structure, including the non-Archimedean phenomena
-   `x_infinitesimal`, `inv_x_infinite`, and the order embedding of $\mathbb{R}$
-   (Section 6).
-5. The ingredients of real closure: `valueGroup_divisible`,
-   `exists_nthRoot_term`, `isSquare_term`, and the obstruction
-   `laurent_value_group_not_divisible` (Section 7).
-6. The exp-shift automorphism `expShiftEquiv` and the unboundedness of the
-   tower `exists_exp_tower_gt` (Section 8).
-
----
-
-## 2. Preliminaries: Hahn series
-
-Let $\Gamma$ be a linearly ordered abelian group (the *value group*) and $R$ a
-ring (the *coefficient ring*). A **Hahn series** over $(\Gamma, R)$ is a function
-$f : \Gamma \to R$ whose **support** $\{ g : f(g) \neq 0 \}$ is well-ordered (every
-nonempty subset has a least element). We write $f = \sum_{g} f(g)\, t^g$
-informally. Hahn series form a ring under pointwise addition and Cauchy-type
-convolution; well-orderedness of supports guarantees that each coefficient of a
-product is a finite sum.
-
-**Fact (Hahn).** If $R$ is a field and $\Gamma$ is a linearly ordered abelian
-group, then the Hahn series over $(\Gamma, R)$ form a field.
-
-For a nonzero Hahn series $f$, its **order** $\mathrm{ord}(f)$ is the least element
-of its support — the exponent of its leading (most dominant) term. We package this
-as a valuation
-$$\mathrm{orderTop}(f) \in \Gamma \cup \{\top\}, \qquad \mathrm{orderTop}(0) = \top,$$
-with the conventions that $\top$ is strictly greater than every $g \in \Gamma$ and
-$\mathrm{orderTop}(f) = g \in \Gamma$ iff $f \neq 0$ and $g$ is the order of $f$.
-The key valuation properties we use are:
-
-- **Multiplicativity:** $\mathrm{orderTop}(xy) = \mathrm{orderTop}(x) + \mathrm{orderTop}(y)$.
-- **Dominant-term addition:** if $\mathrm{orderTop}(f) < \mathrm{orderTop}(g)$, then
-  $\mathrm{orderTop}(f+g) = \mathrm{orderTop}(f)$.
-- **Triviality criterion:** $\mathrm{orderTop}(f) = \top$ iff $f = 0$.
-- **Single terms:** for $c \neq 0$, the one-term series $\mathrm{single}(g, c)$
-  (the series whose only nonzero coefficient is $c$, at $g$) has
-  $\mathrm{orderTop} = g$ and leading coefficient $c$.
-
-These are exactly the hooks through which our model inherits its field and order
-structure.
-
----
-
-## 3. The transmonomial group and the transseries field
-
-### 3.1 Transmonomials
-
-A monomial in the transseries world is a formal product
-$$\cdots (e^{e^x})^{a_2}\,(e^x)^{a_1}\, x^{a_0}\, (\log x)^{a_{-1}} \cdots,$$
-with finitely many nonzero real exponents $a_h$, indexed by the integer **tower
-height** $h$: height $0$ is $x$, height $1$ is $e^x$, height $-1$ is $\log x$,
-height $2$ is $e^{e^x}$, and so on.
-
-**Definition 3.1 (Transmonomials).** The group of transmonomials is
-$$\mathtt{TransMono} := \mathrm{Lex}(\mathbb{Z} \to_{\mathrm f} \mathbb{R}),$$
-the finitely-supported maps from heights to real exponents, equipped with the
-lexicographic order. Group operation is pointwise addition of exponents
-(corresponding to multiplication of monomials).
-
-A subtlety governs the *direction* of the order. The lexicographic order on
-finitely-supported functions compares at the *smallest* differing index. To make
-"highest tower height = most significant" we store the exponent of height $h$ at
-finsupp index $-h$. Concretely:
-
-**Definition 3.2.** $\mathtt{mono}(h, a) := \mathrm{toLex}\big(\mathrm{single}(-h, a)\big)$,
-the transmonomial with real exponent $a$ at tower height $h$ and zero elsewhere.
-
-The lexicographic order makes `TransMono` a `LinearOrderedAddCommGroup`.
-
-### 3.2 The field
+Classical power series organize local behavior using the integer scale $1,x,x^2,\ldots$. Asymptotic problems frequently demand a richer hierarchy. The functions $\log x$, $x^a$, $e^x$, and $e^{e^x}$ occupy qualitatively different growth levels as $x\to+\infty$, while products and quotients combine those levels. Transseries are designed to record such behavior in formal expansions whose monomials belong to an ordered multiplicative group.
 
-**Definition 3.3 (Transseries).** The **field of transseries** is
-$$\mathtt{TSeries} := \mathrm{HahnSeries}(\mathtt{TransMono}, \mathbb{R}).$$
-By Hahn's theorem (Section 2), `TSeries` is a field (`instField`). For $h \in
-\mathbb{Z}$, $a \in \mathbb{R}$ we write $\mathtt{term}(h,a) :=
-\mathrm{single}(\mathtt{mono}(h,a), 1)$ for the one-term transseries
-$(\text{level } h)^a$, and we set $x := \mathtt{term}(0,1)$, $e^x :=
-\mathtt{term}(1,1)$, $\log x := \mathtt{term}(-1,1)$.
+This paper studies a deliberately bounded but rigorous model. Three integer coordinates encode successive growth levels, interpreted as exponential, polynomial, and logarithmic. The resulting rank set is lexicographically ordered. Real coefficients indexed by these ranks form Hahn series, subject to a well-ordered-support condition. The latter condition provides a leading rank for every nonzero series and thereby supports a valuation-like comparison theory.
 
-The real numbers embed via the constant series map $C : \mathbb{R} \to
-\mathtt{TSeries}$.
+The principal question is uniqueness. If two formal asymptotic expansions agree at every rank, must they be the same expansion? The answer is yes, because Hahn series are coefficient-extensional. A more informative theorem locates the obstruction to equality: unequal series have a least rank of disagreement. This rank is exactly the order of their difference.
 
-**Theorem 3.4 (`C_injective`).** $C : \mathbb{R} \to \mathtt{TSeries}$ is an
-injective ring homomorphism. Hence $\mathbb{R}$ is a subfield of the transseries.
+The distinction between uniqueness and existence is essential. The present framework proves that coefficient data uniquely determine a series already inside the model. It does not assert that every exponential–logarithmic function has such an expansion, nor that the three-coordinate class is closed under functional composition, exponentiation, or logarithms. It also does not establish real closedness. Those claims require further definitions and arguments. By separating the comparison layer from those larger goals, the current theory provides a clean foundation on which they may later be built.
 
-*Proof sketch.* This is the injectivity of the constant embedding for Hahn series:
-$C(r)$ is the one-term series with coefficient $r$ at the identity monomial, and
-$C(r) = 0$ forces $r = 0$. $\qquad\blacksquare$
+The paper proceeds as follows. Section 2 defines the ordered rank group and Hahn series. Section 3 introduces coefficient agreement and order. Section 4 treats transmonomials. Section 5 proves vanishing below order and the first-disagreement theorem. Section 6 derives all-order comparison and no-flatness. Section 7 shows arithmetic compatibility. Section 8 presents sparse algorithms and numerical examples. Sections 9 and 10 discuss applications, limitations, and future development.
 
----
+## 2. Ordered ranks and Hahn series
 
-## 4. Dominance: the lexicographic order is asymptotic dominance
+### 2.1. The rank group
 
-The defining feature of transseries is that exponentials dominate powers
-*absolutely*. We show the lexicographic order encodes this.
+Let
 
-**Theorem 4.1 (Height dominance, `mono_lt_mono_of_height`).** For heights $h < h'$,
-all $a \in \mathbb{R}$, and $a' > 0$,
-$$\mathtt{mono}(h, a) < \mathtt{mono}(h', a').$$
+$$
+\Gamma=\mathbb Z\times_{\mathrm{lex}}(\mathbb Z\times_{\mathrm{lex}}\mathbb Z).
+$$
 
-*Proof sketch.* By the lexicographic criterion for finsupp, it suffices to exhibit
-the least index at which the two exponent-vectors differ and check the inequality
-there. The relevant index is $-h'$ (stored slot for the higher height). At every
-index $d < -h'$ both vectors vanish (each is a single-support vector at $-h$ or
-$-h'$, and $-h > -h'$). At index $-h'$ the left vector is $0$ while the right is
-$a' > 0$. Hence the right side is lexicographically larger. $\qquad\blacksquare$
+An element $r\in\Gamma$ is a triple $r=(e,p,\ell)$. Addition is coordinatewise:
 
-**Theorem 4.2 (Same-height comparison, `mono_lt_mono_same`).** For a fixed height
-$h$ and $a < a'$, $\mathtt{mono}(h,a) < \mathtt{mono}(h,a')$.
+$$
+(e,p,\ell)+(e',p',\ell')=(e+e',p+p',\ell+\ell').
+$$
 
-*Proof sketch.* Both vectors are supported only at index $-h$; they first differ
-there, and $a < a'$. $\qquad\blacksquare$
+The order is lexicographic. Explicitly,
 
-**Theorem 4.3 (Exp dominates every power, `exp_dominates_pow`).** For *every* real
-$a$,
-$$\mathtt{mono}(0, a) < \mathtt{mono}(1, 1), \qquad\text{i.e.}\qquad x^a \prec e^x.$$
+$$
+(e,p,\ell)<(e',p',\ell')
+$$
 
-*Proof sketch.* Immediate from Theorem 4.1 with $h = 0 < 1 = h'$ and $a' = 1 > 0$.
-The point is the universally quantified $a$: no order valued in $\mathbb{Z}$ or
-$\mathbb{R}$ (as for Laurent/Puiseux series) can place $e^x$ above $x^a$ for all
-$a$ simultaneously; the extra tower dimension is essential. $\qquad\blacksquare$
+if and only if either $e<e'$, or $e=e'$ and $p<p'$, or $e=e'$, $p=p'$, and $\ell<\ell'$. This is a total order compatible with group addition.
 
-**Valuation laws.** The one-term valuation $\mathrm{orderTop}(\mathtt{term}(h,a)) =
-\mathtt{mono}(h,a)$ (`orderTop_term`) and multiplicativity
-$\mathrm{orderTop}(xy) = \mathrm{orderTop}(x) + \mathrm{orderTop}(y)$
-(`orderTop_mul`) make `orderTop` a faithful measure of asymptotic size.
+The three coordinates may be interpreted as exponential, polynomial, and logarithmic levels. That interpretation motivates the construction, but all the results below depend only on the ordered-group structure.
 
-### 4.1 Analytic grounding
+### 2.2. Formal expansions
 
-To certify that the *formal* order models real asymptotics, we connect to honest
-little-o statements at $+\infty$.
+For each $r\in\Gamma$, write $\mathfrak m^r$ for a formal transmonomial. A **three-level transseries** is a formal sum
 
-**Theorem 4.4 (`isLittleO_pow_exp`).** For every $n \in \mathbb{N}$,
-$x^n = o(e^x)$ as $x \to +\infty$.
+$$
+F=\sum_{r\in\Gamma} a_r\mathfrak m^r,
+\qquad a_r\in\mathbb R,
+$$
 
-**Theorem 4.5 (`isLittleO_expPow_expExp`).** For every $n \in \mathbb{N}$,
-$(e^x)^n = o\big(e^{e^x}\big)$ as $x \to +\infty$.
+whose support
 
-*Proof sketch.* Theorem 4.4 is the classical growth comparison
-$x^n / e^x \to 0$. Theorem 4.5 follows by composing Theorem 4.4 with the
-substitution $x \mapsto e^x$ (which tends to $+\infty$), yielding $(e^x)^n =
-o(e^{e^x})$. These are the analytic shadows of `exp_dominates_pow` (Theorem 4.3)
-and height dominance (Theorem 4.1). $\qquad\blacksquare$
+$$
+\operatorname{supp}(F)=\{r\in\Gamma:a_r\ne0\}
+$$
 
----
+is well ordered. Thus every nonempty subset of $\operatorname{supp}(F)$ has a least member. We denote the coefficient $a_r$ by $[\mathfrak m^r]F$.
 
-## 5. The asymptotic comparison theorem
+Two such series are equal precisely when their coefficients agree at every rank. Addition is coefficientwise:
 
-We now formalize the uniqueness principle: a transseries is determined by its
-asymptotic expansion.
+$$
+[\mathfrak m^r](F+G)=[\mathfrak m^r]F+[\mathfrak m^r]G.
+$$
 
-**Definition 5.1 (Agreement to all orders, `AgreeToAllOrders`).** Two transseries
-$a, b$ **agree to all orders** when, for every transmonomial $g$,
-$$g < \mathrm{orderTop}(a - b)$$
-(in $\mathtt{TransMono} \cup \{\top\}$). That is, the difference $a-b$ is
-asymptotically smaller than *every* transmonomial scale.
+Negation and subtraction are likewise coefficientwise. Multiplication is the Hahn convolution
 
-**Theorem 5.2 (Asymptotic comparison, `agreeToAllOrders_iff_eq`).** For all
-transseries $a, b$,
-$$\mathrm{AgreeToAllOrders}(a,b) \iff a = b.$$
+$$
+[\mathfrak m^r](FG)
+=
+\sum_{u+v=r} [\mathfrak m^u]F\,[\mathfrak m^v]G.
+$$
 
-*Proof sketch.* ($\Rightarrow$) Suppose $a-b$ is dominated by every transmonomial.
-If $\mathrm{orderTop}(a-b) \neq \top$, then it equals some $g \in \mathtt{TransMono}$;
-instantiating the hypothesis at this $g$ gives $g < g$, a contradiction. Hence
-$\mathrm{orderTop}(a-b) = \top$, so $a - b = 0$ by the triviality criterion, i.e.
-$a = b$. ($\Leftarrow$) If $a = b$ then $a - b = 0$, $\mathrm{orderTop}(0) = \top$,
-and $g < \top$ for every $g$. $\qquad\blacksquare$
+The well-ordered-support hypotheses ensure that this construction defines a series and that the coefficient sum is meaningful in the Hahn-series sense.
 
-**Corollary 5.3 (`agreeToAllOrders_equivalence`).** Agreement to all orders is an
-equivalence relation — indeed it *is* equality.
+### 2.3. Order
 
-**Corollary 5.4 (`not_agree_zero_of_ne_zero`).** A nonzero transseries does not
-agree to all orders with $0$; it has a genuine leading term.
+For a nonzero transseries $F$, its **order** is the least occupied rank:
 
-The mathematical weight of the theorem lies in Section 4: it is the *order
-structure* on transmonomials that makes `orderTop` capture asymptotic size, and
-Theorem 5.2 is the clean consequence that the asymptotic data are complete. The
-quantification ranges over the entire uncountable monomial group, so the statement
-is not vacuous.
+$$
+\operatorname{ord}(F)=\min\operatorname{supp}(F).
+$$
 
----
+The ambient Hahn-series convention may assign a distinguished order to the zero series, but every result that uses a nonzero leading coefficient explicitly assumes nonzeroness. For nonzero $F$,
 
-## 6. The ordered, non-Archimedean field
+$$
+[\mathfrak m^{\operatorname{ord}(F)}]F\ne0.
+$$
 
-Equipping the transseries field with the leading-term (lexicographic) order makes
-it an ordered field.
+Order is the mechanism that converts an infinite formal object into a finite certificate: the least nonzero coefficient.
 
-**Definition 6.1.** $\mathtt{OTSeries} := \mathrm{Lex}(\mathtt{TSeries})$, the
-transseries field with the order induced by comparing leading terms.
+## 3. Agreement relations
 
-**Theorem 6.2 (Ordered field, `orderedField`).** $\mathtt{OTSeries}$ is a field
-with a compatible linear order (a strict ordered ring).
+### Definition 3.1 (Agreement below a cut)
 
-**Theorem 6.3 (Positivity of monomials, `term_pos`).** Every one-term transseries
-$\mathtt{term}(h,a)$ is positive, since its leading coefficient is $1 > 0$.
+For transseries $F,G$ and a rank $q\in\Gamma$, we say that **$F$ and $G$ agree below $q$** if
 
-The order is **non-Archimedean**:
+$$
+[\mathfrak m^r]F=[\mathfrak m^r]G
+\qquad\text{for every }r<q.
+$$
 
-**Theorem 6.4 ($x$ is infinitesimal, `x_infinitesimal`).** For every $n \in
-\mathbb{N}$, $(n+1)\cdot x < 1$. Thus the positive element $x$ is smaller than every
-positive rational $1/(n+1)$.
+No assertion is made at $q$ or above it.
 
-**Theorem 6.5 ($1/x$ is infinite, `inv_x_infinite`).** For every $n \in
-\mathbb{N}$, $n < \mathtt{term}(0,-1) = 1/x$.
+### Definition 3.2 (Agreement to all orders)
 
-**Theorem 6.6 (Reciprocity, `x_mul_inv_x`).** $x \cdot (1/x) = 1$.
+We say that **$F$ and $G$ agree to all orders** if
 
-*Proof sketch.* For 6.4, compute $(n+1)\cdot x = \mathrm{single}(\mathtt{mono}(0,1),
-n+1)$; comparing leading terms against $1 = \mathrm{single}(0, 1)$ uses that
-$\mathtt{mono}(0,1) > 0$ (the identity monomial), so the $x$-scale term is
-dominated, giving $(n+1)x < 1$. Theorem 6.5 follows from 6.4 by inverting and
-using positivity of $\mathtt{term}(0,-1)$. Theorem 6.6 is
-$\mathtt{term}(0,1)\cdot \mathtt{term}(0,-1) = \mathtt{term}(0,0) = 1$ via the
-exponent-addition law. $\qquad\blacksquare$
+$$
+[\mathfrak m^r]F=[\mathfrak m^r]G
+\qquad\text{for every }r\in\Gamma.
+$$
 
-**Theorem 6.7 ($\mathbb{R}$ as an ordered subfield, `C_lt_iff`, `C_strictMono`).**
-The constant embedding satisfies $C(a) < C(b) \iff a < b$, and is strictly
-monotone. Combined with `C_injective`, this realizes $\mathbb{R}$ as a linearly
-ordered subfield.
+Agreement to all orders is coefficientwise identity across the entire ordered scale. In analytic asymptotics, “to all orders” can sometimes leave room for a flat remainder. In the present formal setting it cannot, because the coefficient function is the series itself.
 
----
+### Remark 3.3
 
-## 7. Ingredients of real closure
+The terminology is formal and rank-based. No evaluation map $x\mapsto F(x)$ is required. Consequently, the results concern equality of formal expansions, not equality of functions on a numerical domain. If an external expansion theorem associates functions injectively with these series, the comparison results can then transfer to functions, but such an expansion theorem lies outside the present assumptions.
 
-A real closed field is one that is ordered, in which every positive element has a
-square root, and in which every odd-degree polynomial has a root. The classical
-theorem that transseries are real closed rests on a structural criterion for Hahn
-fields: roughly, the value group must be divisible and the residue field real
-closed. We establish the value-group half explicitly and pinpoint the obstruction
-that distinguishes transseries from Laurent series.
+## 4. Single transmonomials
 
-**Theorem 7.1 (Divisibility of the value group, `valueGroup_divisible`).** For
-every transmonomial $g$ and every $n > 0$ there exists $g'$ with $n \cdot g' = g$.
+### Definition 4.1 (Single transmonomial)
 
-*Proof sketch.* Take $g' := \mathrm{toLex}\big(\tfrac1n \cdot \mathrm{ofLex}(g)\big)$,
-i.e. divide every real exponent of $g$ by $n$. Then $n\cdot g' = g$ coordinatewise,
-using $n \cdot (n^{-1} a) = a$ in $\mathbb{R}$. $\qquad\blacksquare$
+For $q\in\Gamma$ and $c\in\mathbb R$, define $M_{q,c}$ by
 
-**Theorem 7.2 (Root extraction for monomials, `exists_nthRoot_term`).** For every
-$h, a$ and $n > 0$ there exists $y \in \mathtt{OTSeries}$ with $y^n =
-\mathtt{term}(h,a)$.
+$$
+[\mathfrak m^r]M_{q,c}=
+\begin{cases}
+c,&r=q,\\
+0,&r\ne q.
+\end{cases}
+$$
 
-*Proof sketch.* Take $y := \mathtt{term}(h, a/n)$. By the power law for one-term
-series, $\big(\mathtt{term}(h,a/n)\big)^n = \mathtt{term}(h, n\cdot(a/n)) =
-\mathtt{term}(h,a)$. $\qquad\blacksquare$
+Equivalently, $M_{q,c}=c\mathfrak m^q$.
 
-**Theorem 7.3 (Monomials are squares, `isSquare_term`).** Every one-term
-transseries is a square: $\mathtt{term}(h,a) = \big(\mathtt{term}(h,a/2)\big)^2$.
+### Theorem 4.2 (Coefficient at the designated rank)
 
-*Proof sketch.* The $n=2$ case of Theorem 7.2; equivalently $\mathtt{term}(h,a/2)
-\cdot \mathtt{term}(h,a/2) = \mathtt{term}(h,a)$ by exponent addition.
-$\qquad\blacksquare$
+For every $q\in\Gamma$ and $c\in\mathbb R$,
 
-**Theorem 7.4 (The obstruction, `laurent_value_group_not_divisible`).** There is no
-integer $k$ with $2k = 1$. Hence the value group $\mathbb{Z}$ of Laurent series is
-not divisible.
+$$
+[\mathfrak m^q]M_{q,c}=c.
+$$
 
-*Proof sketch.* $2k = 1$ has no integer solution (parity / `omega`).
-$\qquad\blacksquare$
+**Proof sketch.** This is immediate from the defining coefficient function of a single transmonomial. $\square$
 
-**Discussion.** Theorems 7.1 and 7.4 are two sides of one coin. Laurent series use
-integer exponents; halving an odd-exponent monomial leaves $\mathbb{Z}$, so $x$
-has no square root and the field is *not* real closed. Transseries use *real*
-exponents, restoring divisibility (7.1) and hence monomial root extraction (7.2,
-7.3). This is the precise structural reason real exponents are mandatory, and it
-identifies exactly the missing ingredient that the transseries construction
-supplies. The full real-closure theorem additionally requires extending root
-extraction from monomials to general series (via Newton-polygon / fixed-point
-arguments over the real closed residue field $\mathbb{R}$); the present development
-formalizes the value-group ingredient and the monomial-level roots, which are the
-genuinely transseries-specific components.
+### Corollary 4.3 (Nonvanishing)
 
----
+If $c\ne0$, then $M_{q,c}\ne0$.
 
-## 8. The exp-shift automorphism
+**Proof sketch.** Its coefficient at $q$ equals the nonzero scalar $c$, whereas every coefficient of the zero series is zero. $\square$
 
-The substitution $x \mapsto e^x$ should raise every tower height by one. We realize
-it as a field automorphism.
+### Theorem 4.4 (Separation of distinct ranks)
 
-**Definition 8.1 (`expShift`, `expShiftEquiv`).** The exp-shift is the ring
-homomorphism induced by the height shift $h \mapsto h+1$ on transmonomials;
-together with the inverse log-shift $h \mapsto h-1$ it forms a field isomorphism
-$\mathtt{expShiftEquiv} : \mathtt{TSeries} \xrightarrow{\ \cong\ } \mathtt{TSeries}$.
+Let $r,s\in\Gamma$ satisfy $r\ne s$, and let $a,b\in\mathbb R$. If $a\ne0$, then
 
-**Theorem 8.2 (Action on generators, `expShift_term`, `expShift_var`,
-`expShift_log`).** $\mathtt{expShift}(\mathtt{term}(h,a)) = \mathtt{term}(h+1,a)$;
-in particular $\mathtt{expShift}(x) = e^x$, $\mathtt{expShift}(e^x) =
-\mathtt{term}(2,1) = e^{e^x}$, and $\mathtt{expShift}(\log x) = x$. Real constants
-are fixed (`expShift_C`).
+$$
+M_{r,a}\ne M_{s,b}.
+$$
 
-**Theorem 8.3 (Inverse laws, `expShift_logShift`, `logShift_expShift`).** The
-log-shift is a two-sided inverse, so `expShiftEquiv` is an automorphism.
+**Proof sketch.** Compare coefficients at rank $r$. The left series has coefficient $a$. Since $r\ne s$, the right series has coefficient $0$ there. Equality would force $a=0$, contrary to hypothesis. $\square$
 
-**Theorem 8.4 (Unbounded tower, `exists_exp_tower_gt`).** For every transmonomial
-$g$ there is a natural number $n$ with $g < \mathtt{mono}(n, 1)$: no finite scale
-is cofinal; the exponential tower has no top.
+This theorem confirms that ranks are observable through coefficients. Distinct formal scales cannot be collapsed when one carries a nonzero coefficient.
 
-*Proof sketch.* Any $g$ has finite support, hence a maximal active height $h_{\max}$;
-choosing $n > h_{\max}$ makes $\mathtt{mono}(n,1)$ dominate by height dominance
-(Theorem 4.1). $\qquad\blacksquare$
+## 5. Order and first disagreement
 
-These results express the self-similarity of the growth-scale tower: the field
-looks the same one exponential level up, and the tower extends without bound.
+### Lemma 5.1 (Vanishing below order)
 
----
+Let $F$ be a transseries and let $r\in\Gamma$. If
 
-## 9. Algorithms
+$$
+r<\operatorname{ord}(F),
+$$
 
-The model is constructive enough to support symbolic computation on transmonomials
-and on finite (truncated) transseries. We highlight three algorithms.
+then
 
-### 9.1 Dominance comparison of transmonomials
+$$
+[\mathfrak m^r]F=0.
+$$
 
-**Input:** two transmonomials as finite exponent maps $A, B : \mathbb{Z}
-\to_{\mathrm f} \mathbb{R}$.
-**Output:** the order relation $<, =, >$ (asymptotic dominance), matching the
-lexicographic order with highest height most significant.
-
-The algorithm scans heights from highest to lowest and returns at the first
-disagreement. Complexity is $O(k \log k)$ to sort the union of active heights of
-size $k$, then $O(k)$ to scan. This is the computational form of Theorems 4.1–4.2.
-
-### 9.2 Leading-term (valuation) extraction
-
-**Input:** a finite transseries as a list of (transmonomial, coefficient) pairs
-with nonzero coefficients.
-**Output:** the leading transmonomial (the `orderTop`) and its coefficient, or the
-report that the series is $0$.
-
-Take the maximum transmonomial under §9.1; its coefficient is the leading
-coefficient. Complexity $O(m \cdot k)$ for $m$ terms over $k$ heights. This
-computes `orderTop`/leading coefficient and underlies the comparison theorem of
-Section 5.
-
-### 9.3 Monomial $n$-th root
-
-**Input:** a one-term transseries $\mathtt{term}(h,a)$ and $n > 0$.
-**Output:** $\mathtt{term}(h, a/n)$, an $n$-th root.
-
-This is the direct realization of Theorems 7.1–7.3: divide every real exponent by
-$n$. Constant time per active height. With integer exponents this fails exactly
-when $n \nmid a$ — the obstruction of Theorem 7.4.
-
----
-
-## 10. Applications
-
-- **Asymptotics of ODE solutions.** Formal transseries solutions of nonlinear ODEs
-  near irregular singular points live precisely in a field of this kind; the
-  comparison theorem (5.2) justifies term-by-term determination of coefficients.
-- **Resurgence and divergent series.** The non-Archimedean ordered structure
-  (Section 6) is the algebraic setting for Borel–Écalle summation and trans-series
-  ansätze in physics.
-- **Model theory of $\exp$.** The dominance laws (Section 4) and exp-shift (Section
-  8) mirror the structure of Hardy fields and of the model-complete theory of
-  $(\mathbb{R}, \exp)$.
-- **Symbolic computation.** The algorithms of Section 9 give certified primitives
-  for a transseries calculator: comparison, leading-term extraction, and roots.
-
----
-
-## 11. Discussion
-
-The model deliberately isolates the *order-theoretic and algebraic* skeleton of
-transseries, deferring differential structure. Two design choices are central.
-First, encoding tower height $h$ at finsupp index $-h$ aligns "highest tower" with
-"least lexicographic index," so asymptotic dominance is *literally* the ambient
-lexicographic order — no auxiliary translation is needed, and dominance theorems
-reduce to the finsupp lex criterion. Second, using *real* exponents (value group
-$\mathbb{R}^{(\mathbb{Z})}$ rather than $\mathbb{Z}^{(\mathbb{Z})}$) is what makes
-the value group divisible; Theorem 7.4 shows this is not a convenience but a
-necessity for real closure.
-
-A natural question is whether the comparison theorem (5.2) is "too easy" inside the
-Hahn model. The honest answer: the depth is in Section 4, where the order is shown
-to model asymptotics; given that, uniqueness is the clean valuation-theoretic
-consequence, exactly as in the classical theory once one accepts Hahn coefficients
-as asymptotic data. We additionally anchor the formal order to genuine little-o
-statements (Theorems 4.4–4.5) so the abstraction is not empty.
-
----
-
-## 12. Future work
-
-- **Differential structure.** Equip the field with the derivation extending
-  $\frac{d}{dx}$, satisfying $x' = 1$, $(e^x)' = e^x \cdot 1$, and the chain rule
-  across tower heights, making it a differential field and enabling formal ODE
-  solving.
-- **Full real closure.** Extend monomial root extraction (Section 7) to arbitrary
-  series via Newton polygons and a fixed-point/Hensel argument over the real closed
-  residue field $\mathbb{R}$, yielding the complete real-closedness theorem.
-- **Composition and the exp/log functions.** Define composition of transseries and
-  the genuine $\exp$ and $\log$ operators (not just the height-shift automorphism),
-  and verify their inverse and functional laws.
-- **Summability and Borel transform.** Connect the formal field to analyzable
-  functions via Borel–Laplace summation, formalizing a slice of resurgence theory.
-- **Reconstruction pipeline.** Formalize the inverse map from a well-ordered
-  leading-term sequence back to its transseries and prove the round-trip
-  correctness and uniqueness, giving a certified bridge between expansions and the
-  objects they describe.
-
----
-
-## 13. Summary of formal results
-
-| Result | Name | Statement |
-|---|---|---|
-| Field structure | `instField` / `C_injective` | transseries form a field containing $\mathbb{R}$ |
-| Height dominance | `mono_lt_mono_of_height` | higher tower dominates lower |
-| Same-height order | `mono_lt_mono_same` | larger exponent dominates |
-| Exp beats powers | `exp_dominates_pow` | $x^a \prec e^x$ for all real $a$ |
-| Valuation laws | `orderTop_term`, `orderTop_mul` | leading term; multiplicativity |
-| Analytic dominance | `isLittleO_pow_exp`, `isLittleO_expPow_expExp` | little-o at $+\infty$ |
-| Comparison theorem | `agreeToAllOrders_iff_eq` | agree to all orders $\iff$ equal |
-| Equivalence | `agreeToAllOrders_equivalence` | agreement is equality |
-| Ordered field | `orderedField`, `term_pos` | strict ordered field; monomials positive |
-| Non-Archimedean | `x_infinitesimal`, `inv_x_infinite`, `x_mul_inv_x` | infinitesimals and infinities |
-| $\mathbb{R}$ ordered subfield | `C_lt_iff`, `C_strictMono` | order embedding of $\mathbb{R}$ |
-| Value group divisible | `valueGroup_divisible` | $n\cdot g' = g$ solvable |
-| Monomial roots | `exists_nthRoot_term`, `isSquare_term` | $n$-th roots; squares |
-| Obstruction | `laurent_value_group_not_divisible` | $\nexists k\in\mathbb{Z},\ 2k=1$ |
-| Exp-shift automorphism | `expShiftEquiv`, `expShift_var` | $x\mapsto e^x$ field iso |
-| Unbounded tower | `exists_exp_tower_gt` | no cofinal scale |
-
-All entries correspond to machine-checked theorems in the formal development.
+**Proof sketch.** If the coefficient at $r$ were nonzero, then $r$ would lie in the support of $F$. By minimality of the order, one would have $\operatorname{ord}(F)\le r$, contradicting $r<\operatorname{ord}(F)$. $\square$
+
+### Theorem 5.2 (Agreement below the order of a difference)
+
+For any transseries $F$ and $G$, the two series agree below $\operatorname{ord}(F-G)$. Equivalently,
+
+$$
+r<\operatorname{ord}(F-G)
+\quad\Longrightarrow\quad
+[\mathfrak m^r]F=[\mathfrak m^r]G.
+$$
+
+**Proof sketch.** By Lemma 5.1, the coefficient of $F-G$ at such an $r$ is zero. Coefficientwise subtraction gives
+
+$$
+0=[\mathfrak m^r](F-G)
+=[\mathfrak m^r]F-[\mathfrak m^r]G,
+$$
+
+which is equivalent to equality of the two coefficients. $\square$
+
+### Theorem 5.3 (Disagreement at the order of a nonzero difference)
+
+If $F\ne G$, then
+
+$$
+[\mathfrak m^{\operatorname{ord}(F-G)}]F
+\ne
+[\mathfrak m^{\operatorname{ord}(F-G)}]G.
+$$
+
+**Proof sketch.** The hypothesis implies $F-G\ne0$. A nonzero Hahn series has a nonzero coefficient at its order. Hence
+
+$$
+[\mathfrak m^{\operatorname{ord}(F-G)}](F-G)\ne0.
+$$
+
+Expanding the coefficient of the difference yields the desired inequality. $\square$
+
+### Theorem 5.4 (First Disagreement Theorem)
+
+If $F\ne G$, there exists $q\in\Gamma$ such that:
+
+1. $F$ and $G$ agree below $q$; and
+2. $[\mathfrak m^q]F\ne[\mathfrak m^q]G$.
+
+One may choose
+
+$$
+q=\operatorname{ord}(F-G).
+$$
+
+**Proof sketch.** Choose the stated $q$. The first assertion is Theorem 5.2, and the second is Theorem 5.3. $\square$
+
+The theorem gives both existence and a canonical formula for the first discrepancy. Its force comes from the well-ordering of support. In an arbitrary coefficient system without that condition, a nonzero difference could have nonzero ranks but no least nonzero rank.
+
+### Corollary 5.5 (Finite witness of inequality)
+
+Inequality of two transseries has a certificate consisting of one rank $q$ and the pair of unequal real numbers
+
+$$
+[\mathfrak m^q]F,
+\qquad
+[\mathfrak m^q]G.
+$$
+
+Moreover, the canonical least certificate is the order of $F-G$.
+
+**Proof sketch.** Apply Theorem 5.4. $\square$
+
+## 6. All-order comparison and flatness
+
+### Theorem 6.1 (Asymptotic Comparison Theorem)
+
+For transseries $F$ and $G$, the following are equivalent:
+
+1. $F$ and $G$ agree to all orders;
+2. $F=G$.
+
+**Proof sketch.** If all coefficients agree, coefficient extensionality for formal series gives equality. Conversely, substituting equal series into any coefficient map gives equal coefficients at every rank. Alternatively, if all coefficients agreed but $F\ne G$, the First Disagreement Theorem would produce a rank at which they differ, a contradiction. $\square$
+
+### Theorem 6.2 (No nonzero flat transseries)
+
+If a transseries $F$ satisfies
+
+$$
+[\mathfrak m^r]F=0
+\qquad\text{for every }r\in\Gamma,
+$$
+
+then $F=0$.
+
+**Proof sketch.** The hypothesis says that $F$ agrees to all orders with the zero series. Theorem 6.1 then gives $F=0$. Equivalently, apply coefficient extensionality directly. $\square$
+
+### Discussion of flatness
+
+Theorem 6.2 should not be confused with a theorem about arbitrary smooth functions. A smooth function can have a zero Taylor series while remaining nonzero away from its expansion point. The standard example is
+
+$$
+f(x)=
+\begin{cases}
+e^{-1/x^2},&x>0,\\
+0,&x\le0.
+\end{cases}
+$$
+
+Every derivative of $f$ at $0$ vanishes. The present no-flatness result holds because a formal Hahn series is defined by its coefficients. To claim no-flatness for a class of functions, one would additionally need a faithful map from those functions into the transseries model.
+
+## 7. Compatibility with arithmetic
+
+### Theorem 7.1 (Additive compatibility)
+
+Suppose $F_1$ agrees to all orders with $G_1$, and $F_2$ agrees to all orders with $G_2$. Then $F_1+F_2$ agrees to all orders with $G_1+G_2$.
+
+**Proof sketch.** At each rank $r$, coefficientwise addition gives
+
+$$
+[\mathfrak m^r](F_1+F_2)
+=[\mathfrak m^r]F_1+[\mathfrak m^r]F_2.
+$$
+
+Replace each coefficient using the two hypotheses, then reverse the coefficient formula for $G_1+G_2$. $\square$
+
+### Theorem 7.2 (Multiplicative compatibility)
+
+Under the same hypotheses, $F_1F_2$ agrees to all orders with $G_1G_2$.
+
+**Proof sketch.** By Theorem 6.1, the hypotheses imply $F_1=G_1$ and $F_2=G_2$. Multiplication preserves equality, so $F_1F_2=G_1G_2$. The reverse direction of Theorem 6.1 then gives agreement of every product coefficient. $\square$
+
+### Corollary 7.3 (Congruence of complete agreement)
+
+Agreement to all orders is an equivalence relation compatible with the ring operations. Thus algebraic expressions formed from completely agreeing inputs by addition, subtraction, and multiplication continue to agree to all orders.
+
+**Proof sketch.** Reflexivity, symmetry, and transitivity hold coefficientwise. Addition and multiplication are Theorems 7.1 and 7.2; subtraction follows from addition and negation. $\square$
+
+## 8. Algorithms and numerical demonstrations
+
+Exact Hahn series may have infinite support, so a general implementation requires symbolic descriptions. Finite sparse series nevertheless exhibit the comparison theorems exactly and are useful for experimentation.
+
+### 8.1. Sparse representation
+
+Represent a rank $r=(e,p,\ell)$ by an integer triple. The host language’s lexicographic tuple order realizes the order on $\Gamma$. Represent a finite transseries by a map from ranks to nonzero floating-point coefficients. Zero entries are removed after a tolerance test.
+
+For $n$ stored terms, normalization takes expected time $O(n)$ using a hash map. Sorting all occupied ranks costs $O(n\log n)$. Coefficient lookup has expected cost $O(1)$.
+
+### 8.2. First-disagreement algorithm
+
+Given sparse series $F$ and $G$:
+
+1. form the union $U$ of their stored ranks;
+2. sort $U$ lexicographically;
+3. scan ranks in increasing order;
+4. return the first rank $r$ with $|F_r-G_r|$ exceeding a chosen numerical tolerance;
+5. if no such rank exists, declare the finite representations equal within tolerance.
+
+If $n=|U|$, the sorting implementation costs $O(n\log n)$ time and $O(n)$ auxiliary space. If both inputs are already stored as sorted lists, a merge scan finds the first disagreement in $O(n)$ time.
+
+The tolerance belongs to numerical demonstration, not to the exact theorem. Exact rational or symbolic coefficients permit exact zero tests.
+
+### 8.3. Sparse addition and multiplication
+
+Addition combines coefficients at matching ranks, requiring expected $O(n+m)$ time for hash-map inputs of sizes $n$ and $m$.
+
+Multiplication uses the group law on ranks:
+
+$$
+(e,p,\ell)+(e',p',\ell')=(e+e',p+p',\ell+\ell').
+$$
+
+Every input pair contributes a product coefficient, so the direct sparse convolution costs $O(nm)$ arithmetic operations and uses up to $O(nm)$ output storage before collisions are combined.
+
+### 8.4. Example: locating the first difference
+
+Let
+
+$$
+F=2\mathfrak m^{(0,0,0)}-3\mathfrak m^{(0,1,-1)}
++5\mathfrak m^{(1,-2,0)},
+$$
+
+and
+
+$$
+G=2\mathfrak m^{(0,0,0)}-3\mathfrak m^{(0,1,-1)}
++7\mathfrak m^{(1,-2,0)}.
+$$
+
+At $(0,0,0)$ and $(0,1,-1)$ the coefficients agree. At $(1,-2,0)$ they are $5$ and $7$. Therefore
+
+$$
+\operatorname{ord}(F-G)=(1,-2,0),
+$$
+
+and this is the first disagreement.
+
+### 8.5. Example: arithmetic compatibility
+
+Let $F_1=G_1$ and $F_2=G_2$ be represented by separately allocated but coefficient-identical sparse maps. Addition produces identical output maps. Convolution also produces identical output maps, even when multiple pairs of input ranks collide at the same sum rank. This numerically illustrates Theorems 7.1 and 7.2.
+
+### 8.6. Example: rank separation
+
+For $r=(0,2,0)$, $s=(1,-5,3)$, and $a=4$, the series $M_{r,4}$ has coefficient $4$ at $r$, while $M_{s,b}$ has coefficient $0$ at $r$ for every $b$. Thus a single lookup witnesses their inequality.
+
+### 8.7. Correctness of the finite comparison procedure
+
+For finite sparse inputs with exact coefficients, the first-disagreement algorithm is not merely illustrative; it is a decision procedure for equality in the finite subcase. Let $U$ be the finite union of the two supports. If the algorithm returns a rank $q$, every earlier element of the sorted set $U$ has equal coefficients, and ranks outside $U$ have coefficient zero in both inputs. Hence the two inputs agree below $q$ and differ at $q$. If the algorithm reaches the end without returning a rank, the coefficients agree on $U$ and vanish jointly outside $U$, so the series are equal by the Asymptotic Comparison Theorem.
+
+Floating-point execution weakens this conclusion to tolerance-relative comparison. A coefficient difference smaller than the tolerance may be treated as zero, and roundoff during convolution may create or erase tiny residuals. For mathematically exact demonstrations, integer, rational, algebraic, or symbolic coefficients should therefore be preferred. The supplied numerical implementation displays the tolerance explicitly so that this distinction remains visible.
+
+### 8.8. Canonical normalization
+
+A sparse representation is normalized by combining repeated ranks and deleting zero coefficients. Normalization does not alter the represented transseries, since coefficients at equal ranks add and zero coefficients contribute nothing. After normalization, two finite maps are equal exactly when they contain the same rank–coefficient pairs. The first-disagreement routine can thus be viewed as an ordered diagnostic refinement of ordinary map equality: rather than returning only a Boolean value, it returns the least mathematical reason for failure.
+
+## 9. Applications and interpretation
+
+### 9.1. Multiscale asymptotic bookkeeping
+
+When models contain several growth regimes, the first-disagreement rank identifies the earliest scale at which their predictions diverge. The three coordinates can label broad exponential, polynomial, and logarithmic layers. Within this interpretation, the theorem turns a global inequality into a sharply localized diagnostic.
+
+### 9.2. Symbolic computation
+
+Sparse symbolic systems routinely use leading terms to guide reduction, normalization, and comparison. The order of $F-G$ is a canonical comparison key. If it does not exist because $F=G$, all coefficients agree; otherwise, it supplies an explicit witness. This can support regression tests for algebraic transformations and canonical-form procedures.
+
+### 9.3. Valuation-style reasoning
+
+The order behaves like a valuation-oriented leading exponent. Vanishing below order is the basic valuation principle, and first disagreement is its comparison consequence. The construction therefore connects asymptotic series with methods familiar from valued fields, generalized power series, and non-Archimedean geometry.
+
+### 9.4. Uniqueness layer for expression semantics
+
+Suppose a future semantics assigns a transseries $\mathcal T(E)$ to each admissible exponential–logarithmic expression $E$. Once existence and compatibility are proved, Theorem 6.1 gives immediate uniqueness: any two candidate expansions whose coefficients agree at every rank must be equal. The present work supplies precisely this last step, but not the proposed semantics itself.
+
+## 10. Scope, limitations, and future work
+
+The exact achievements are confined to the real-coefficient Hahn-series model over the three-level rank group $\Gamma$. They include:
+
+1. coefficient characterization of transmonomials;
+2. nonvanishing of nonzero monomials;
+3. separation of monomials at distinct ranks;
+4. vanishing of coefficients below series order;
+5. agreement below the order of a difference;
+6. disagreement at that order for unequal series;
+7. existence of a first disagreement;
+8. equality from all-order agreement;
+9. absence of nonzero flat series; and
+10. additive and multiplicative compatibility of all-order agreement.
+
+Several broader goals require additional work. First, three integer coordinates do not represent arbitrary finite or transfinite nesting of exponentials and logarithms. A full monomial group should be generated recursively and equipped with an appropriate order.
+
+Second, composition, logarithm, and exponential must be constructed on suitable subfields, with proofs that supports remain admissible. These operations are subtler than Hahn addition and multiplication.
+
+Third, one needs a syntax of admissible exponential–logarithmic expressions, including domain conditions, and a structural expansion theorem. Such a theorem would establish existence of compatible transseries rather than merely uniqueness once coefficients are supplied.
+
+Fourth, ordered-field and valuation infrastructure would be needed for a real-closedness theorem. No real-closedness conclusion follows solely from the comparison results proved here.
+
+These limitations sharpen rather than diminish the contribution: the paper isolates the coefficient-comparison foundation and states exactly what it supports.
+
+## 11. Conclusion
+
+Three lexicographically ordered integer coordinates provide a transparent model of exponential, polynomial, and logarithmic ranks. Real Hahn series over this group admit a least nonzero rank whenever they are nonzero. From that single structural fact follows a complete comparison theory.
+
+Below the order of a difference, two series agree. If they are unequal, they disagree at that order. Hence every unequal pair has a first formal disagreement. Conversely, agreement at every rank forces equality, and a series with all coefficients zero must itself vanish. These statements remain stable under addition and multiplication.
+
+The result is a rigorous uniqueness layer for multiscale formal asymptotics. It does not yet constitute the full theory of exponential–logarithmic transseries, but it supplies the comparison principle such a theory needs: infinite expansions remain distinguishable because inequality always appears at a first rank.
