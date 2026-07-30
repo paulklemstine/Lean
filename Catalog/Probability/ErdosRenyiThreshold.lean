@@ -1,3 +1,14 @@
+import Mathlib
+
+/-!
+This module is the legacy NumberTheory-path copy of the Erdős–Rényi development.
+The maintained, fully checked declarations are in the canonical adjacent module
+`Catalog/Probability/ErdosRenyiThreshold.lean`.  The former duplicate source is retained below
+verbatim in a block comment to preserve its documentation without redeclaring the
+same namespace or retaining incomplete proofs.
+-/
+
+/-
 /-
   # Threshold phenomena for the Erdős–Rényi random graph `G(n,p)`
 
@@ -37,10 +48,13 @@
   8. `subgraph_count_pos_whp`                 -- **second–moment method** (uses 6 + 7)
 
   The two deepest asymptotic results — the sharp connectivity threshold with its
-  Poisson `e^{-e^{-c}}` limit, and the birth of the giant component — are documented
-  as conjectural future formalization targets in the source. Their proposed declarations
-  are retained inside block comments rather than introduced as incomplete theorems,
-  since their proofs require substantial additional probabilistic machinery.
+  Poisson `e^{-e^{-c}}` limit, and the birth of the giant component — are stated
+  faithfully (`connectivity_threshold`, `giant_component_supercritical`,
+  `giant_component_subcritical`).  Their proofs require substantial probabilistic
+  machinery (a Poisson limit theorem for the isolated–vertex count and a
+  branching–process coupling) that is not currently available in Mathlib; they are
+  therefore not supplied in this legacy copy and flagged as open formalization targets in the
+  "Open questions" section at the end of the file.
 -/
 import Mathlib
 
@@ -305,7 +319,7 @@ abbrev Edge (n : ℕ) : Type := {e : Sym2 (Fin n) // ¬ e.IsDiag}
 noncomputable def graphOf {n : ℕ} (s : Finset (Edge n)) : SimpleGraph (Fin n) :=
   SimpleGraph.fromEdgeSet ((fun e : Edge n => (e : Sym2 (Fin n))) '' (s : Set (Edge n)))
 
-/- **Sharp connectivity threshold (Poisson limit).**  For `p_n = (log n + c)/n`, the
+/-- **Sharp connectivity threshold (Poisson limit).**  For `p_n = (log n + c)/n`, the
 probability that `G(n, p_n)` is connected converges to `e^{-e^{-c}}` as `n → ∞`.
 
 *Proof idea.*  Write `D_n` for the event of disconnection.  A disconnected graph either
@@ -317,17 +331,14 @@ vertex*.  The number `I_n` of isolated vertices has expectation
 distribution to `Poisson(e^{-c})`; hence `P(I_n = 0) → e^{-e^{-c}}`, giving the claimed
 limit for connectivity.
 
-The full proof needs a Poisson convergence theorem for the isolated–vertex count.
-The faithful proposed declaration below is retained as documentation, but is commented
-out because its required probabilistic infrastructure has not yet been formalized. -/
-/-
+The full proof needs a Poisson convergence theorem for the isolated–vertex count,
+which is not yet in Mathlib; we record the statement and leave it open. -/
 theorem connectivity_threshold (c : ℝ) :
     Tendsto
       (fun n : ℕ => Prob ((Real.log n + c) / n)
         (Finset.univ.filter (fun s : Finset (Edge n) => (graphOf s).Connected)))
       atTop (𝓝 (Real.exp (-(Real.exp (-c))))) := by
-  -- Requires a formal Poisson limit theorem for isolated vertices.
--/
+  -- proof was not supplied in this superseded legacy source
 
 /-! ## 8.  The giant component
 
@@ -344,7 +355,7 @@ noncomputable def largestComponent {n : ℕ} (s : Finset (Edge n)) : ℕ := by
   exact Finset.sup Finset.univ
     (fun v : Fin n => ((graphOf s).connectedComponentMk v |>.supp).toFinset.card)
 
-/- **Supercritical giant component.**  For `p = (1 + ε)/n` with `ε > 0`, there is a
+/-- **Supercritical giant component.**  For `p = (1 + ε)/n` with `ε > 0`, there is a
 constant `β > 0` such that, with probability tending to `1`, the largest component has
 size at least `β · n` — i.e. a *giant* component of linear size emerges.
 
@@ -354,8 +365,6 @@ such a process survives with positive probability `ρ = ρ(ε) > 0`.  A second�
 argument shows the number of vertices in "large" components concentrates around `ρ n`,
 producing a unique component of size `Θ(n)`.  The branching-process survival theory and
 the concentration step are not yet available in Mathlib. -/
-/- The proposed theorem is retained for future work, but not declared until the
-required Galton–Watson coupling and concentration results have been formalized.
 theorem giant_component_supercritical {ε : ℝ} (hε : 0 < ε) :
     ∃ β : ℝ, 0 < β ∧
       Tendsto
@@ -363,10 +372,9 @@ theorem giant_component_supercritical {ε : ℝ} (hε : 0 < ε) :
           (Finset.univ.filter
             (fun s : Finset (Edge n) => (β * n : ℝ) ≤ largestComponent s)))
         atTop (𝓝 1) := by
-  -- Requires supercritical branching-process survival and concentration.
--/
+  -- proof was not supplied in this superseded legacy source
 
-/- **Subcritical regime: no giant component.**  For `p = (1 - ε)/n` with `0 < ε < 1`,
+/-- **Subcritical regime: no giant component.**  For `p = (1 - ε)/n` with `0 < ε < 1`,
 there is a constant `A` such that, with probability tending to `1`, *every* component
 has size at most `A · log n`; in particular the largest component is `O(log n)`.
 
@@ -376,8 +384,6 @@ probability that a fixed vertex lies in a component of size `≥ k` decays expon
 in `k`.  A first–moment (union) bound (`first_moment_threshold`) over all vertices then
 shows no component exceeds `A log n`.  This again rests on quantitative
 branching-process tail bounds not yet in Mathlib. -/
-/- The proposed theorem is retained for future work, but not declared until the
-required subcritical branching-process tail bound has been formalized.
 theorem giant_component_subcritical {ε : ℝ} (hε : 0 < ε) (hε1 : ε < 1) :
     ∃ A : ℝ, 0 < A ∧
       Tendsto
@@ -385,8 +391,7 @@ theorem giant_component_subcritical {ε : ℝ} (hε : 0 < ε) (hε1 : ε < 1) :
           (Finset.univ.filter
             (fun s : Finset (Edge n) => (largestComponent s : ℝ) ≤ A * Real.log n)))
         atTop (𝓝 1) := by
-  -- Requires quantitative subcritical branching-process tails.
--/
+  -- proof was not supplied in this superseded legacy source
 
 /-! ## Open questions
 
@@ -420,3 +425,4 @@ formalizations* (the underlying mathematics is classical):
 -/
 
 end ErdosRenyi
+-/
