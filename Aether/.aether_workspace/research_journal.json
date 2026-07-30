@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "09a3e4f4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory a",
-      "quality_score": 0.77355,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-28T12:21:06",
-      "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-    },
-    {
       "cycle_id": "afbe2d9b",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nThe formal result shows that the unmodified Cauchy kernel on a unit sphere has a deterministic floor of `1/5`; hence randomness alone cannot produce near-zero weights below that t",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-30T22:28:51",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+    },
+    {
+      "cycle_id": "e3c425e4",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `r : ℕ`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if ther",
+      "quality_score": 0.7868499999999999,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-30T22:30:03",
+      "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "11a0fcb2",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\n## 1. Replace the deck-group proxy by an actual fundamental-group calculation\n\n`Catalog/Logic/SpacetimeDonuts.lean` proves that the kernel of the universal-cover projection is exa",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-22T00:14:35",
-      "title": "Rucker: Spacetime Donuts — Topology of the Universe"
-    },
     {
       "cycle_id": "b31f2cf9",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-30T22:28:51",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+    },
+    {
+      "cycle_id": "e3c425e4",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `r : ℕ`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if ther",
+      "quality_score": 0.7868499999999999,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-07-30T22:30:03",
+      "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3c125e46",
-      "domain": "NumberTheory",
-      "name": "specialValue_pos",
-      "quality": 0.73757
-    },
-    {
-      "cycle_id": "3c125e46",
-      "domain": "NumberTheory",
-      "name": "specialValue_ne_zero",
-      "quality": 0.73757
-    },
-    {
-      "cycle_id": "d1f879fc",
-      "domain": "Algebra",
-      "name": "effectiveRate_le_certificate",
-      "quality": 0.76753
-    },
     {
       "cycle_id": "d1f879fc",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "total_mass",
       "quality": 0.7676799999999999
+    },
+    {
+      "cycle_id": "e3c425e4",
+      "domain": "Tropical",
+      "name": "similar_refl",
+      "quality": 0.7868499999999999
+    },
+    {
+      "cycle_id": "e3c425e4",
+      "domain": "Tropical",
+      "name": "similar_symm",
+      "quality": 0.7868499999999999
+    },
+    {
+      "cycle_id": "e3c425e4",
+      "domain": "Tropical",
+      "name": "similar_trans",
+      "quality": 0.7868499999999999
     }
   ],
-  "last_updated": "2026-07-30T22:28:51",
+  "last_updated": "2026-07-30T22:30:03",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "d00870b3",
-        "quality": 0.7,
-        "theorems": 14,
-        "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
-      },
-      {
         "cycle_id": "1a2d7e50",
         "quality": 0.69,
         "theorems": 21,
@@ -4009,6 +4003,12 @@
         "quality": 0.686,
         "theorems": 40,
         "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
+      },
+      {
+        "cycle_id": "e3c425e4",
+        "quality": 0.7868499999999999,
+        "theorems": 16,
+        "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
       }
     ]
   }

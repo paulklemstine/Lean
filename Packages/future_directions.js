@@ -2771,23 +2771,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
   },
   {
-    "consumed_by_exp_id": "ae875fd7",
-    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
-    "domains": [
-      "EML",
-      "Analysis",
-      "MachineLearning"
-    ],
-    "id": "seed_086",
-    "phase": "A",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domains": [
@@ -2921,6 +2904,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T18:55:07.368117+00:00",
     "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 513ffc93 (Q=0.768), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_513ffc93_b66bad8e",
+    "priority_score": 0.8676799999999999,
+    "research_mode": "team",
+    "source_exp_id": "513ffc93",
+    "status": "available",
+    "timestamp": "2026-07-30T22:28:51.411799+00:00",
+    "title": "Deepening: Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
     "consumed_by_exp_id": "",
@@ -4689,22 +4686,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "513ffc93",
-    "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
-    "domains": [
-      "Combinatorics",
-      "Probability"
-    ],
-    "id": "fd_0673",
-    "phase": "B",
-    "priority_score": 0.82,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697801+00:00",
-    "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
     "domains": [
@@ -6332,7 +6313,7 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "id": "fd_0118",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10778v1",
@@ -11079,6 +11060,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What is established\n\n`Catalog/Applications/EML/StoneWeierstrassConnector.lean` proves a cross-domain bridge from finite-dimensional topology to exp-log networks:\n\n- a continuous injection of a compact space into `\u211d\u207f` gives exponential coordinate functions that separate points;\n- the real subalgebra generated by those functions is dense in the continuous real-valued functions, by Stone\u2013Weierstrass;\n- one explicit exp-log neuron separates any two distinct real inputs, and a coordinate neuron separates distinct vectors;\n- a Cartesian mesh has exactly `m^d` sites, and matching `\u03b1`-H\u00f6lder functions differ by at most `2 L \u03b4^\u03b1` near a sample;\n- `x\u00b2` is represented exactly by an EML expression of leaf width two, so its uniform approximation error on `[0,1]` is zero for every width budget at least two.\n\n## Corrected scope of universal approximation\n\nThe completed development also removes two unsupported statements from the earlier\n`Catalog/Bridges/NeuralCoding/EMLUniversalApproximation.lean` draft. A single scaled\nexponential `a \u00b7 exp (b x)` is not a universal approximator, and Stone\u2013Weierstrass\nfor a generated algebra does not by itself prove universality for a restricted\nsingle-hidden-layer linear sum of logistic units. The corrected file proves the\nprecise closure-level result: an injective continuous EML feature generates a dense\nreal subalgebra on a compact space. It also proves that the former fixed-point premise\n`f x = exp (f x)` is inconsistent on a nonempty real-valued domain.\n\n## Important scope distinction\n\nThe proposed general Jackson statement combines two separate assertions:\n\n1. a geometric sampling bound of order `\u03b4\u207b\u1d48`, with `\u03b4` chosen on the order of `\u03b5^(1/\u03b1)`;\n2. an EML representation theorem turning the sampled interpolant into a network with width comparable to the number of samples.\n\nThe formal development proves the first mechanism (mesh cardinality plus H\u00f6lder error) and the qualitative EML density theorem. It does **not** conflate these with the second assertion. A general width `O(\u03b5^(-d/\u03b1))` theorem requires a precise network architecture, a precise width/circuit-sharing convention, and a constructive realization of local interpolants in that architecture.\n\n## Next formal targets\n\n1. Define multivariate EML directed acyclic graphs, distinguishing leaf count, gate count, and layer width.\n2. Formalize regular cubical grids in `[0,1]^d`, including a nearest-grid-point map and its distance bound.\n3. Build continuous multilinear or simplicial interpolants and prove their uniform H\u00f6lder error.\n4. Compile those interpolants into EML circuits, tracking sharing and gate complexity explicitly.\n5. Combine the compilation theorem with `cartesianMesh_card` and `holder_mesh_error` to obtain a fully constructive Jackson rate.\n6. Extend the compact-space result from a supplied embedding to compact subsets `K \u2286 \u211d\u207f` via restricted coordinate maps.\n7. Compare exact polynomial realizations (such as `squareTerm`) with exp-only Taylor constructions under architectures that disallow direct multiplication of inputs.\n8. Develop a separate constructive theorem for finite linear combinations of logistic ridge functions if the single-hidden-layer architecture is required; this needs more than the generated-algebra Stone\u2013Weierstrass argument.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0855",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ae875fd7",
+    "status": "available",
+    "timestamp": "2026-07-30T22:27:36.301859+00:00",
+    "title": "`Catalog/Applications/EML/StoneWeierstrassConnector.lean` proves a cross-domain "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Poisson connectivity window.** For every fixed real `c`, if `p\u2099 = (log n + c)/n`, then the number of isolated vertices in `G(n,p\u2099)` converges in distribution to `Poisson(exp(-c))`, and the connectivity probability converges to `exp(-exp(-c))`.\n\n2. **Subcritical component bound.** For every `\u03b5 \u2208 (0,1)`, there is a constant `A > 0` such that at `p\u2099 = (1-\u03b5)/n`, the probability that every connected component has at most `A log n` vertices tends to one.\n\n3. **Supercritical giant and uniqueness.** For every `\u03b5 > 0`, at `p\u2099 = (1+\u03b5)/n` there is, with probability tending to one, a unique component of size `(\u03c1(\u03b5)+o(1))n`, where `\u03c1(\u03b5)` is the positive solution of `\u03c1 = 1 - exp(-(1+\u03b5)\u03c1)`; every other component has logarithmic size.\n\n4. **Strictly balanced subgraph Poisson law.** For every fixed strictly balanced finite simple graph `H`, at `p\u2099 = c n^{-v(H)/e(H)}`, the number of copies of `H` converges to a Poisson random variable with the parameter given by the limiting first moment.\n\n5. **General fixed-subgraph threshold.** For every fixed finite simple graph `H` with at least one edge, the threshold for containing a copy of `H` is `n^{-1/m(H)}`, where `m(H) = max_{H' \u2286 H, e(H')>0} e(H')/v(H')`.\n",
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_0856",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "513ffc93",
+    "status": "available",
+    "timestamp": "2026-07-30T22:28:47.388179+00:00",
+    "title": "1. **Poisson connectivity window.** For every fixed real `c`, if `p\u2099 = (log n + "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -11263,17 +11274,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
-    "consumed_by_exp_id": "c961538a",
+    "consumed_by_exp_id": "",
     "description": "Cycle 95478b50 (Q=0.610) proved 794 theorems in Probability but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Probability"
     ],
     "id": "sorry_fill_95478b50_dd4f3c48",
-    "phase": "A",
     "priority_score": 0.66,
     "research_mode": "team",
     "source_exp_id": "95478b50",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-27T00:19:54.838542+00:00",
     "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
   },

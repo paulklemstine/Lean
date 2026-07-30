@@ -2641,7 +2641,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02aa1402",
     "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
     "domain_bridges": [],
     "domains": [
@@ -2655,7 +2655,7 @@
     "proof_strategy": "Construct a Gentzen-style sequent calculus where the Cut rule is replaced by a consequence verification rule: if Gamma proves A and A has desirable consequences verified by a computational check, then A is accepted. Prove cut-elimination fails in general but holds for consequence-stable formulas. Test: show that Fermat's Last Theorem for n=4 is consequence-stable, enabling a retrocausal proof.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
@@ -3032,6 +3032,25 @@
     "status": "available",
     "timestamp": "2026-07-29T21:21:22.115983+00:00",
     "title": "Deepening: Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e3c425e4 (Q=0.787), which proved 16 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'The Arithmetic of Semirings Part I: Ideals' and formalize its key results. Abstract: We study ideals in the semiring $\\mathbb{N}$ of natural numbers, with a focus on those which are lost when extending from $\\mathbb{N}$ to $\\mathbb{Z}$. This leads to a new perspective on",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_e3c425e4_b6b21ff1",
+    "lineage_refs": [],
+    "priority_score": 0.8868499999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e3c425e4",
+    "status": "available",
+    "timestamp": "2026-07-30T22:30:03.435575+00:00",
+    "title": "Deepening: ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
   },
   {
     "ambition_level": "extension",
@@ -3732,27 +3751,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ae875fd7",
-    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Analysis",
-      "MachineLearning"
-    ],
-    "id": "seed_086",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domain_bridges": [],
@@ -3914,7 +3912,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29953b58",
     "description": "Building on cycle 3e30c45d (Q=0.769), which proved 23 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
     "domain_bridges": [],
     "domains": [
@@ -3926,9 +3924,28 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3e30c45d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-28T18:55:07.368117+00:00",
     "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 513ffc93 (Q=0.768), which proved 16 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_513ffc93_b66bad8e",
+    "lineage_refs": [],
+    "priority_score": 0.8676799999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "513ffc93",
+    "status": "available",
+    "timestamp": "2026-07-30T22:28:51.411799+00:00",
+    "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
   {
     "ambition_level": "extension",
@@ -5143,7 +5160,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "13e8a4d7",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domain_bridges": [],
     "domains": [
@@ -5156,7 +5173,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -6284,26 +6301,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697766+00:00",
     "title": "Quaternion Algebras and Rotations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "513ffc93",
-    "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics",
-      "Probability"
-    ],
-    "id": "fd_0673",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697801+00:00",
-    "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
   {
     "ambition_level": "extension",
@@ -8473,26 +8470,6 @@
     "status": "available",
     "timestamp": "2026-07-16T13:51:52.058528+00:00",
     "title": "ArXiv paper: Hereditary 2-WQO Graph Classes Have Bounded Clique-Width"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e3c425e4",
-    "description": "Investigate the ArXiv paper 'The Arithmetic of Semirings Part I: Ideals' and formalize its key results. Abstract: We study ideals in the semiring $\\mathbb{N}$ of natural numbers, with a focus on those which are lost when extending from $\\mathbb{N}$ to $\\mathbb{Z}$. This leads to a new perspective on the classical theory of numerical semigroups, including the introduction of a natural multiplicative structure. We prove that unique factorization of ideals fails in $\\mathbb{N}$ on several levels, introduce a handful of new tropical multiplicative invariants of numerical semigroups, characterize integral closures of ideals in terms of Newton polygons, and analyze the behavior of classical numerical semigroup invariants with respect to the product operation.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0118",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.10778v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T14:08:19.852831+00:00",
-    "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
   },
   {
     "ambition_level": "extension",
@@ -14918,6 +14895,66 @@
     "status": "available",
     "timestamp": "2026-07-30T20:38:16.190457+00:00",
     "title": "Future directions from cycle 46cb7ee6"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## What is established\n\n`Catalog/Applications/EML/StoneWeierstrassConnector.lean` proves a cross-domain bridge from finite-dimensional topology to exp-log networks:\n\n- a continuous injection of a compact space into `ℝⁿ` gives exponential coordinate functions that separate points;\n- the real subalgebra generated by those functions is dense in the continuous real-valued functions, by Stone–Weierstrass;\n- one explicit exp-log neuron separates any two distinct real inputs, and a coordinate neuron separates distinct vectors;\n- a Cartesian mesh has exactly `m^d` sites, and matching `α`-Hölder functions differ by at most `2 L δ^α` near a sample;\n- `x²` is represented exactly by an EML expression of leaf width two, so its uniform approximation error on `[0,1]` is zero for every width budget at least two.\n\n## Corrected scope of universal approximation\n\nThe completed development also removes two unsupported statements from the earlier\n`Catalog/Bridges/NeuralCoding/EMLUniversalApproximation.lean` draft. A single scaled\nexponential `a · exp (b x)` is not a universal approximator, and Stone–Weierstrass\nfor a generated algebra does not by itself prove universality for a restricted\nsingle-hidden-layer linear sum of logistic units. The corrected file proves the\nprecise closure-level result: an injective continuous EML feature generates a dense\nreal subalgebra on a compact space. It also proves that the former fixed-point premise\n`f x = exp (f x)` is inconsistent on a nonempty real-valued domain.\n\n## Important scope distinction\n\nThe proposed general Jackson statement combines two separate assertions:\n\n1. a geometric sampling bound of order `δ⁻ᵈ`, with `δ` chosen on the order of `ε^(1/α)`;\n2. an EML representation theorem turning the sampled interpolant into a network with width comparable to the number of samples.\n\nThe formal development proves the first mechanism (mesh cardinality plus Hölder error) and the qualitative EML density theorem. It does **not** conflate these with the second assertion. A general width `O(ε^(-d/α))` theorem requires a precise network architecture, a precise width/circuit-sharing convention, and a constructive realization of local interpolants in that architecture.\n\n## Next formal targets\n\n1. Define multivariate EML directed acyclic graphs, distinguishing leaf count, gate count, and layer width.\n2. Formalize regular cubical grids in `[0,1]^d`, including a nearest-grid-point map and its distance bound.\n3. Build continuous multilinear or simplicial interpolants and prove their uniform Hölder error.\n4. Compile those interpolants into EML circuits, tracking sharing and gate complexity explicitly.\n5. Combine the compilation theorem with `cartesianMesh_card` and `holder_mesh_error` to obtain a fully constructive Jackson rate.\n6. Extend the compact-space result from a supplied embedding to compact subsets `K ⊆ ℝⁿ` via restricted coordinate maps.\n7. Compare exact polynomial realizations (such as `squareTerm`) with exp-only Taylor constructions under architectures that disallow direct multiplication of inputs.\n8. Develop a separate constructive theorem for finite linear combinations of logistic ridge functions if the single-hidden-layer architecture is required; this needs more than the generated-algebra Stone–Weierstrass argument.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0855",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ae875fd7",
+    "status": "available",
+    "timestamp": "2026-07-30T22:27:36.301859+00:00",
+    "title": "`Catalog/Applications/EML/StoneWeierstrassConnector.lean` proves a cross-domain "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Poisson connectivity window.** For every fixed real `c`, if `pₙ = (log n + c)/n`, then the number of isolated vertices in `G(n,pₙ)` converges in distribution to `Poisson(exp(-c))`, and the connectivity probability converges to `exp(-exp(-c))`.\n\n2. **Subcritical component bound.** For every `ε ∈ (0,1)`, there is a constant `A > 0` such that at `pₙ = (1-ε)/n`, the probability that every connected component has at most `A log n` vertices tends to one.\n\n3. **Supercritical giant and uniqueness.** For every `ε > 0`, at `pₙ = (1+ε)/n` there is, with probability tending to one, a unique component of size `(ρ(ε)+o(1))n`, where `ρ(ε)` is the positive solution of `ρ = 1 - exp(-(1+ε)ρ)`; every other component has logarithmic size.\n\n4. **Strictly balanced subgraph Poisson law.** For every fixed strictly balanced finite simple graph `H`, at `pₙ = c n^{-v(H)/e(H)}`, the number of copies of `H` converges to a Poisson random variable with the parameter given by the limiting first moment.\n\n5. **General fixed-subgraph threshold.** For every fixed finite simple graph `H` with at least one edge, the threshold for containing a copy of `H` is `n^{-1/m(H)}`, where `m(H) = max_{H' ⊆ H, e(H')>0} e(H')/v(H')`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_0856",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "513ffc93",
+    "status": "available",
+    "timestamp": "2026-07-30T22:28:47.388179+00:00",
+    "title": "1. **Poisson connectivity window.** For every fixed real `c`, if `pₙ = (log n + "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `r : ℕ`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if there is some `k ≥ 1` such that `r^k ∈ I^k`.\n\n2. **Eventual symmetry is rigid.** If a numerical semigroup ideal `S : Ideal ℕ` has symmetric powers `S^k` for every sufficiently large positive `k`, then `S` is integrally equivalent to a two-generator numerical semigroup.\n\n3. **Newton data are complete similarity invariants.** Two nonzero ideals of `ℕ` are similar if and only if their lower Newton polygons agree for every prime dividing either ideal's least positive element.\n\n4. **Unbounded factorization-length discrepancy.** For every `n ≥ 2`, some similarity class of ideals of `ℕ` admits two factorizations into irreducible similarity classes whose lengths differ by exactly `n`.\n\n5. **Power genus is eventually strictly log-convex.** For every nonprincipal numerical semigroup ideal `S`, the sequence `k ↦ genus(S^k)` is strictly log-convex for all sufficiently large positive `k`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0857",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e3c425e4",
+    "status": "available",
+    "timestamp": "2026-07-30T22:29:59.241317+00:00",
+    "title": "1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `"
   },
   {
     "ambition_level": "extension",
