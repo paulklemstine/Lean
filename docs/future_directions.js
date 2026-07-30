@@ -315,17 +315,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hodge Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "726a20a7",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domains": [
       "Analysis",
       "Physics"
     ],
     "id": "seed_016",
+    "phase": "A",
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Navier-Stokes Existence and Smoothness"
   },
@@ -1046,6 +1047,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 67548200 (Q=0.792), which proved 34 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA ru",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_67548200_2df4faa1",
+    "priority_score": 0.8916099999999999,
+    "research_mode": "team",
+    "source_exp_id": "67548200",
+    "status": "available",
+    "timestamp": "2026-07-30T14:40:38.463626+00:00",
+    "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the j-function is just the TIP of the iceberg. Conjecture: The full moonshine correspondence associates to each conjugacy class g in M a McKay-Thompson series T_g(q) = sum a_n(g) q^n that is a modular function of a specific level, and the product over all g in M of T_g(q) equals a modular form of weight |M|/24 that encodes the complete character table of M. The secret message: the Monster group IS a modular form, and every property of M (its order, its character table, its maximal subgroups) can be read off from the q-expansion of this product. Test: compute the first 100 coefficients of T_g(q) for each conjugacy class of M and verify they match the known character values. Prove that the product of all T_g(q) converges to a modular form. Impact: the Monster is not just connected to modular forms \u2014 it IS a modular form. The 194 conjugacy classes of M correspond to 194 modular forms, and their product encodes everything.",
     "domains": [
       "Novelty",
@@ -1181,6 +1196,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 7edbd52d (Q=0.790), which proved 19 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_7edbd52d_1385c3bc",
+    "priority_score": 0.8895799999999999,
+    "research_mode": "team",
+    "source_exp_id": "7edbd52d",
+    "status": "available",
+    "timestamp": "2026-07-30T14:41:47.783526+00:00",
+    "title": "Deepening: Frankl's Union-Closed Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -1640,21 +1669,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
-  },
-  {
-    "consumed_by_exp_id": "593a0386",
-    "description": "Building on cycle 2996b72f (Q=0.776), which proved 11 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_2996b72f_fb513ba4",
-    "phase": "B",
-    "priority_score": 0.8762099999999999,
-    "research_mode": "team",
-    "source_exp_id": "2996b72f",
-    "status": "in_progress",
-    "timestamp": "2026-07-30T00:20:57.662026+00:00",
-    "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
     "consumed_by_exp_id": "",
@@ -2169,16 +2183,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homological Algebra: Derived Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "15429b4a",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
     ],
     "id": "fd_0674",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697803+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -3579,7 +3594,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Category-Theoretic Neural Architectures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00b7234b",
     "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
     "domains": [
       "Computation",
@@ -3587,10 +3602,11 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "id": "seed_063",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Quantum Topological Phase Computation"
   },
@@ -6108,22 +6124,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 15: Schubert Calculus Rigorization"
   },
   {
-    "consumed_by_exp_id": "7edbd52d",
-    "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
-    "domains": [
-      "Combinatorics",
-      "Algebra"
-    ],
-    "id": "seed_031",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Frankl's Union-Closed Conjecture"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
@@ -6164,7 +6164,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_113",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -6253,23 +6253,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Arithmetic of Games: Surreal Numbers as Number Fields"
-  },
-  {
-    "consumed_by_exp_id": "67548200",
-    "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Algebra"
-    ],
-    "id": "seed_176",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
   {
     "consumed_by_exp_id": "",
@@ -7158,6 +7141,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T12:13:07.063539+00:00",
     "title": "The formal result establishes a tractable cubical recipe model: fixed-flavor rec"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Sharp two-sided summand asymptotics.** For every `k : \u2115`, prove\n   `1 / (2 * (k + 2 : \u211d)^2) \u2264 gammaTerm k` in addition to the formalized upper\n   bound `gammaTerm k \u2264 1 / (2 * (k + 1 : \u211d)^2)`. This would give a purely\n   rational squeeze of every term.\n\n2. **Quantitative remainder bound.** For every positive `n : \u2115`, prove\n   `0 < Real.eulerMascheroniConstant - Real.eulerMascheroniSeq n` and\n   `Real.eulerMascheroniConstant - Real.eulerMascheroniSeq n \u2264 1 / (2*n : \u211d)`.\n   The present inverse-square term estimate should supply the upper bound after\n   formalizing the corresponding tail estimate.\n\n3. **Midpoint-corrected acceleration.** Define\n   `accelerated n = Real.eulerMascheroniSeq n + 1 / (2*(n+1 : \u211d))` and prove an\n   explicit `O(n\u207b\u00b2)` error bound, for example\n   `|Real.eulerMascheroniConstant - accelerated n| \u2264 1 / (12*(n+1 : \u211d)^2)`\n   for all sufficiently large `n` (with the exact threshold stated and checked).\n\n4. **Symmetrized information tail.** For positive rates `a,b`, the formalized\n   identity gives\n   `D(a\u2016b)+D(b\u2016a)=(a-b)^2/(ab)`. Use it to characterize exactly when a chain of\n   positive exponential rates has summable symmetrized adjacent divergences,\n   and test the characterization on polynomial and geometric rate sequences.\n\n5. **Ap\u00e9ry-style linear forms criterion.** Construct explicit integer sequences\n   `A n, B n` from accelerated harmonic/logarithmic approximants and determine\n   whether the nonzero forms `A n + B n * Real.eulerMascheroniConstant` can be\n   proved to decay exponentially. Either an exponential bound or a concrete\n   obstruction (failure for some `n`) is a falsifiable outcome.\n",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0843",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "593a0386",
+    "status": "available",
+    "timestamp": "2026-07-30T12:14:14.942703+00:00",
+    "title": "1. **Sharp two-sided summand asymptotics.** For every `k : \u2115`, prove"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed development classifies elementary Boolean cellular automata by\n**universal finite-cycle reversibility**: exactly Wolfram rules\n`15, 51, 85, 170, 204, 240` are reversible on every nonempty finite cycle, and\nevery other rule has an obstruction of period at most four.  The following are\nnatural extensions of that verified baseline.\n\n1. **Bi-infinite configurations.** Define configurations as `\u2124 \u2192 Bool` and\n   package the explicit inverses for the six projection/complement rules.  A\n   subsequent theorem can transfer each finite-cycle collision to a collision\n   between periodic bi-infinite configurations, yielding the corresponding\n   classification on `Bool^\u2124`.\n\n2. **The correct reversible group.** For a fixed configuration space,\n   reversible global maps form a subgroup of its permutation group.  Formalize\n   the subgroup of finite-radius, shift-equivariant permutations instead of\n   treating a local map `Bool\u00b3 \u2192 Bool` as a permutation of eight neighborhoods.\n\n3. **Radius filtration under composition.** Composition of radius-`r` and\n   radius-`s` cellular automata has radius at most `r + s`; maps of exactly one\n   fixed radius are generally not closed under composition.  Define the full\n   reversible finite-radius group together with its radius filtration, and\n   prove the composition and inverse-radius bounds that are available.\n\n4. **The group generated by the six elementary reversible maps.** On an\n   `n`-cycle, cyclic shift and pointwise complement commute, shift has order\n   `n`, and complement has order two.  Prove the resulting presentation and\n   identify the faithful permutation group, handling the degeneracy at\n   `n = 1` separately.\n\n5. **Minimal finite witnesses.** Refine `short_period_obstruction` into a\n   certified table assigning each excluded Wolfram rule its least failing cycle\n   length.  Record explicit collisions for injectivity failure (or omitted\n   outputs for surjectivity failure), rather than retaining only the existential\n   obstruction.\n\n6. **Larger alphabets and radii.** Implement the de Bruijn-graph product\n   criterion for injectivity and surjectivity.  This gives a finite decision\n   procedure that scales better than enumerating all global configurations and\n   is the appropriate next step for binary radius two and nonbinary alphabets.\n\n7. **Separate finite and infinite notions.** Investigate which results require\n   reversibility on every finite cycle, which require bijectivity on the full\n   shift, and when periodic-point tests suffice.  State conversion theorems with\n   all compactness or finite-alphabet assumptions explicit.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0844",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "67548200",
+    "status": "available",
+    "timestamp": "2026-07-30T14:40:33.827405+00:00",
+    "title": "The completed development classifies elementary Boolean cellular automata by"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions for the union-closed sets formalization\n\nThe unrestricted statement requested in the mission is Frankl's union-closed sets conjecture and remains unresolved. The Lean development therefore records the conjecture faithfully and proves only the stated special cases and structural reductions. The following are concrete next targets; each can be refuted by one explicit finite family.\n\n1. **Four-point universe.** For every `F : Finset (Finset (Fin 4))`, if `F` is union-closed and has a nonempty member, then `FranklProperty F` holds. This is the immediate finite extension of `frankl_fin_three`.\n\n2. **Five-point universe without singletons.** For every union-closed `F : Finset (Finset (Fin 5))` having a nonempty member and containing no singleton, some point is abundant. Together with `frankl_singleton`, this would settle the five-point case while isolating the genuinely new finite residue.\n\n3. **Two-generator families.** If a finite union-closed family is the closure under union of two finite sets `A` and `B`, and at least one generator is nonempty, then every point in `A \u2229 B` is abundant; if `A \u2229 B` is empty, at least one point in `A \u222a B` is abundant. A counterexample is a concrete pair of generators.\n\n4. **Exact Boolean-cube frequency.** Strengthen `abundant_powerset` to the identity that, for `x \u2208 s`, exactly `2^(s.card - 1)` members of `s.powerset` contain `x`. This is a precise counting refinement of the current injection-based inequality.\n\n5. **Adjoining the top member preserves a witness.** If `F` has an abundant element `x` and `x \u2208 F.sup id`, then `x` remains abundant after adjoining `F.sup id` to `F`. The parity of `F.card` makes this claim directly falsifiable and should reveal the exact additional hypothesis needed if it fails.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0845",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7edbd52d",
+    "status": "available",
+    "timestamp": "2026-07-30T14:41:44.022882+00:00",
+    "title": "The unrestricted statement requested in the mission is Frankl's union-closed set"
   },
   {
     "consumed_by_exp_id": "",

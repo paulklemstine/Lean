@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9fe269b0",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## Completed formal boundary\n\nThe Lean development is complete and contains no unfinished proofs. It establishes the incidence-theoretic coordinatization theorem: every `PlanarTer",
-      "quality_score": 0.7311199999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-26T22:24:17",
-      "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-    },
-    {
       "cycle_id": "1f5ea34f",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture → Al",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-30T14:41:47",
       "title": "Frankl's Union-Closed Conjecture"
+    },
+    {
+      "cycle_id": "bf94368f",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\n## Corrected mathematical status\n\nThe proposed powers-of-two family is a **strictly descending**, separated\nfiltration, not an ascending chain.  The formal development proves this",
+      "quality_score": 0.80162,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-30T14:42:57",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fee59e0b",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n## Result status\n\nThe motivating fixed-length claim was **disproved**, not proved. With a finite alphabet and a fixed length bound (such as 100), the collection of encoded stateme",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-21T14:31:27",
-      "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-    },
     {
       "cycle_id": "95b84694",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-07-30T14:41:47",
       "title": "Frankl's Union-Closed Conjecture"
+    },
+    {
+      "cycle_id": "bf94368f",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\n## Corrected mathematical status\n\nThe proposed powers-of-two family is a **strictly descending**, separated\nfiltration, not an ascending chain.  The formal development proves this",
+      "quality_score": 0.80162,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-07-30T14:42:57",
+      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8c9ac99e",
-      "domain": "Tropical",
-      "name": "TropicalPolynomial",
-      "quality": 0.7311099999999999
-    },
-    {
-      "cycle_id": "8c9ac99e",
-      "domain": "Tropical",
-      "name": "TropicalRational",
-      "quality": 0.7311099999999999
-    },
-    {
-      "cycle_id": "42454fab",
-      "domain": "Combinatorics",
-      "name": "states",
-      "quality": 0.7628999999999999
-    },
     {
       "cycle_id": "42454fab",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "sup_id_isGreatest",
       "quality": 0.78958
+    },
+    {
+      "cycle_id": "bf94368f",
+      "domain": "Algebra",
+      "name": "excluding",
+      "quality": 0.80162
+    },
+    {
+      "cycle_id": "bf94368f",
+      "domain": "Algebra",
+      "name": "divisibilityIdeal_antitone",
+      "quality": 0.80162
+    },
+    {
+      "cycle_id": "bf94368f",
+      "domain": "Algebra",
+      "name": "pow_two_mem_divisibilityIdeal",
+      "quality": 0.80162
     }
   ],
-  "last_updated": "2026-07-30T14:41:47",
+  "last_updated": "2026-07-30T14:42:57",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "c4a6ce21",
-        "quality": 0.65,
-        "theorems": 15,
-        "title": "Thermodynamics of Mathematical Proof"
-      },
-      {
         "cycle_id": "9d505535",
         "quality": 0.75,
         "theorems": 0,
@@ -3079,6 +3073,12 @@
         "quality": 0.76753,
         "theorems": 13,
         "title": "Machine Learning Generalization Bounds"
+      },
+      {
+        "cycle_id": "bf94368f",
+        "quality": 0.80162,
+        "theorems": 28,
+        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
       }
     ],
     "Applications": [
