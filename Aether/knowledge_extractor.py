@@ -4724,6 +4724,19 @@ Research mode: {concept.research_mode}
                 if fd_blocks:
                     fd_text = '\n\n'.join(fd_blocks)
             if fd_text:
+                # Check if this output contains Aristotle Direction Tournament results
+                if "TOURNAMENT_RESULTS" in fd_text:
+                    try:
+                        from direction_tournament import DirectionTournament
+                        dt = DirectionTournament(workspace=self.workspace)
+                        parsed = dt.parse_tournament_report(fd_text)
+                        if parsed["winners"] or parsed["rejections"]:
+                            res = dt.apply_tournament_outcomes(parsed["winners"], parsed["rejections"])
+                            print(f"[Tournament] Applied tournament results: {res['promoted']} promoted, {res['retired']} retired")
+                            return
+                    except Exception as e:
+                        print(f"[Tournament] Warning: Failed to parse tournament results: {e}")
+
                 # Use the entire future_directions text as one single entry
                 title_line = ""
                 for line in fd_text.split("\n"):

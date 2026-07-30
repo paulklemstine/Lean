@@ -1079,20 +1079,48 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     _clean_catalog_retry_dirs()
 
 
-    # ── Self-healing: auto-prune low-quality directions ──
+    # ── Self-healing & Quality Control: Automatic Aristotle Direction Tournament ──
     try:
         from research_memory import FutureDirectionsManager
+        from direction_tournament import DirectionTournament
         fd_heal = FutureDirectionsManager(extractor.workspace)
         stats = fd_heal.get_stats()
         if stats.get("retried_directions", 0) > 0:
             print(f"[Retry] {stats['retried_directions']} retried directions, "
                   f"rate={stats.get('retry_rate',0):.1%}, avg_attempts={stats.get('avg_attempts',0):.2f}")
-        if stats["available"] > 500:  # Only prune when pool is large
-            result = fd_heal.prune_directions(cap=400, min_quality=0.30)
-            if result["pruned_count"] > 0:
-                print(f"[Self-heal] Auto-pruned {result['pruned_count']} low-quality directions")
+        
+        # Trigger Option B Direction Tournament when candidate pool is large
+        if stats.get("available", 0) > 300:
+            dt = DirectionTournament(workspace=extractor.workspace)
+            domain_counts = {}
+            for d in fd_heal._directions:
+                if d.status == "available":
+                    for dom in d.domains:
+                        domain_counts[dom] = domain_counts.get(dom, 0) + 1
+
+            target_domain = max(domain_counts, key=domain_counts.get) if domain_counts else None
+            if target_domain and domain_counts[target_domain] >= 10:
+                batch = dt.get_candidate_batch(domain=target_domain, batch_size=10)
+                if batch and len(batch) >= 5:
+                    print(f"[Tournament] Auto-running Direction Tournament for domain '{target_domain}' ({len(batch)} candidates)")
+                    prompt = dt.build_tournament_prompt(batch, target_winners=2)
+                    if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):
+                        import tempfile
+                        with tempfile.TemporaryDirectory() as tmp_dir:
+                            tmp_path = Path(tmp_dir)
+                            (tmp_path / "lakefile.lean").write_text("import Lake\nopen Lake DSL\npackage tournament\n@default_target lean_lib Tournament where srcDir := \".\"")
+                            (tmp_path / "Tournament.lean").write_text("import Mathlib\n-- Direction Tournament Evaluation")
+                            (tmp_path / "TOURNAMENT_PROMPT.md").write_text(prompt)
+                            try:
+                                proj_id = await extractor.aristotle.submit_lean_project_only(
+                                    prompt=prompt,
+                                    project_dir=tmp_path
+                                )
+                                print(f"[Tournament] Queued Aristotle evaluation project: {proj_id}")
+                            except Exception as sub_err:
+                                print(f"[Tournament] Aristotle submission note: {sub_err}")
     except Exception as e:
-        print(f"[Self-heal] Auto-prune failed: {e}")
+        print(f"[Tournament] Automatic direction tournament check: {e}")
 
     # ── Auto-rebalance: prune overrepresented domains ──
     try:
