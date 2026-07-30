@@ -1,25 +1,54 @@
-# Computational evidence
+# Computational evidence: powers-of-two divisibility filtration
 
-The decisive issue is containment direction, so only elementary small cases are needed.
+## Small cases
 
-| `n` | generator `2^n` | ideal `(2^n)` | relation to next ideal |
-|---:|---:|---|---|
-| 0 | 1 | all integers | `(2) ⊊ (1)` |
-| 1 | 2 | even integers | `(4) ⊊ (2)` |
-| 2 | 4 | multiples of 4 | `(8) ⊊ (4)` |
-| 3 | 8 | multiples of 8 | `(16) ⊊ (8)` |
-| 4 | 16 | multiples of 16 | `(32) ⊊ (16)` |
+For
+\[
+D_n=\{f: f(z)\in 2^n\mathbb Z\text{ for every }z\in\mathbb Z\},
+\]
+the first levels impose divisibility by `1, 2, 4, 8, 16, 32`.
 
-At each step, `2^(n+1)` is divisible by `2^n`, while `2^n` is not divisible by `2^(n+1)`. Hence the chain is descending and strict.
+| level `n` | required divisor | constant witness in `D_n \ D_{n+1}` |
+|---:|---:|---:|
+| 0 | 1 | 1 |
+| 1 | 2 | 2 |
+| 2 | 4 | 4 |
+| 3 | 8 | 8 |
+| 4 | 16 | 16 |
+| 5 | 32 | 32 |
 
-For the proposed integer-valued-polynomial family, the same constant polynomials give immediate tests. The constant polynomial `2^n` takes values in `2^n ℤ`, but not in `2^(n+1) ℤ`. Thus the claimed ascending containment fails at every tested—and indeed every—stage.
+Thus each tested containment is `D_(n+1) ⊊ D_n`, not `D_n ⊊ D_(n+1)`.
+The same constant polynomials are elements of the ring of integer-valued
+polynomials, so the direction test applies there as well.
+
+## OEIS search
+
+The divisors form the standard powers-of-two sequence
+`1, 2, 4, 8, 16, 32, ...` (OEIS A000079).  No new enumerative sequence is
+needed for the formal result.
 
 ## Counterexample hunt
 
-The universal motivating assertion is already contradicted at the first step: the constant polynomial `2` belongs to the value-divisibility ideal for `n = 1`, but it does not belong to the ideal for `n = 2`. Therefore `I_1 ⊆ I_2` is false.
+The constant polynomial `2^n` is a counterexample to the proposed inclusion
+`D_n ⊆ D_(n+1)` for every tested `n`: all of its values are divisible by `2^n`
+but not by `2^(n+1)`.  This pattern is proved for every natural `n` in
+`Catalog/Novelty/EscherStaircase.lean`.
 
-The extra intersection condition based on zero supplies no discrimination: zero lies in every ideal, so it lies in every intersection of ideals.
+The phrase “`I_1` is an element of the infinite intersection” is ill-typed for
+ordinary ideals: the intersection contains ring elements, whereas `I_1` is an
+ideal.  If the intended element is zero, then the condition is automatic for
+any family of ideals.
 
-## OEIS and plots
+## Relevant table
 
-The generators are the standard powers-of-two sequence `1, 2, 4, 8, 16, …` (OEIS A000079). No plot is needed because the formal question is order-theoretic rather than asymptotic. The Lean development proves the general containment facts and the zero-intersection theorem, rather than relying on these calculations.
+For a sample integer `x = 24`, divisibility across the first levels is:
+
+| divisor | 1 | 2 | 4 | 8 | 16 | 32 |
+|---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| divides 24? | yes | yes | yes | yes | no | no |
+
+Every nonzero integer eventually fails the test because powers of two become
+larger than its absolute value.  Pointwise, this explains why the intersection
+of all levels is zero; the Lean development proves this and then proves that an
+integer-valued rational polynomial vanishing on every integer is the zero
+polynomial.

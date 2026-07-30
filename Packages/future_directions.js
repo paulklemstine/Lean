@@ -1184,6 +1184,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 72d619d5 (Q=0.789), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_72d619d5_76cfa23a",
+    "priority_score": 0.88874,
+    "research_mode": "team",
+    "source_exp_id": "72d619d5",
+    "status": "available",
+    "timestamp": "2026-07-30T12:13:11.239098+00:00",
+    "title": "Deepening: Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 89e28e84 (Q=0.789), which proved 12 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
     "domains": [
       "Algebra"
@@ -1634,7 +1648,7 @@ window.FUTURE_DIRECTIONS = [
       "Shared"
     ],
     "id": "push_2996b72f_fb513ba4",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8762099999999999,
     "research_mode": "team",
     "source_exp_id": "2996b72f",
@@ -2068,16 +2082,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moonshot: Multiverse Set Theory \u2014 Mathematics Across Branches"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd7b389e",
     "description": "Building on cycle 8aec96a6 (Q=0.770), which proved 24 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Information geometry studies statistical manifolds via the Fisher information metric. Define the EML statistical manifold M_EML as the set of probability distributions parameterized by EML functions: p(x; theta) = exp(theta_1 * g_1(x)) * log(theta_2 * g_2(x) + theta_3) normalized to a probability di",
     "domains": [
       "Probability"
     ],
     "id": "push_8aec96a6_6f3d3060",
+    "phase": "A",
     "priority_score": 0.8697699999999999,
     "research_mode": "team",
     "source_exp_id": "8aec96a6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-29T23:23:20.154333+00:00",
     "title": "Deepening: EML Information Geometry: Fisher Information of exp-log Models"
   },
@@ -2108,6 +2123,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T06:49:40.513188+00:00",
     "title": "Deepening: Lattice Cryptography: LWE Hardness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1c628216 (Q=0.762), which proved 15 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressib",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_1c628216_12f3d7fc",
+    "priority_score": 0.8617199999999999,
+    "research_mode": "team",
+    "source_exp_id": "1c628216",
+    "status": "available",
+    "timestamp": "2026-07-30T09:52:06.695169+00:00",
+    "title": "Deepening: Borges' Library of Babel: Combinatorics of Everything"
   },
   {
     "consumed_by_exp_id": "",
@@ -3255,22 +3284,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "3308088b",
-    "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "seed_365",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
   },
   {
     "consumed_by_exp_id": "",
@@ -5337,23 +5350,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
-    "consumed_by_exp_id": "1c628216",
-    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
-    "domains": [
-      "Novelty",
-      "Combinatorics",
-      "Logic"
-    ],
-    "id": "seed_283",
-    "phase": "B",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Borges' Library of Babel: Combinatorics of Everything"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
     "domains": [
@@ -6160,7 +6156,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Tropical Lift"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bf94368f",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -6168,10 +6164,11 @@ window.FUTURE_DIRECTIONS = [
       "Logic"
     ],
     "id": "seed_113",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -7119,6 +7116,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal\n   machine, define `K_U(b)` as the least program length decoding to `b`, and derive\n   the Kraft-inequality version of the incompressibility bound. Exact complexity\n   is machine-dependent and generally uncomputable, so it should not be stated\n   without this parameter.\n2. **Probability formulation.** Put the uniform probability measure on finite\n   books and restate the counting theorem as\n   `P[K_U(b) < L-c] \u2264 2^{-c}` (up to the conventional strict/non-strict boundary).\n3. **Infinite-library limit.** Replace fixed books by infinite streams. The product\n   topology is compact and totally disconnected (Cantor space for a binary\n   alphabet), while the finite Hamming topology remains discrete.\n4. **Formal covering dimension.** The present development proves the standard\n   clopen-basis certificate for dimension zero. If a covering-dimension API is\n   added to Mathlib, connect that certificate to the library's formal Lebesgue\n   covering dimension.\n5. **Hamming geometry.** Continue the chain with exact sphere and ball cardinalities,\n   coding bounds, and concentration of pairwise distance for uniformly random\n   books.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0840",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1c628216",
+    "status": "available",
+    "timestamp": "2026-07-30T09:52:03.096896+00:00",
+    "title": "1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed development proves finite normalized max-plus tropical\nCarath\u00e9odory in `Catalog/Tropical/TropicalConvexity/Caratheodory.lean`, including\nsingleton membership, monotonicity, extensivity, and the `d + 1` support bound.\nIt also proves tropical convexity of finite tropical hulls and boxes, Helly's\ntheorem for tropical boxes, and the associated two-box infeasibility certificate\nin `Catalog/Tropical/TropicalAlgebra/HellyGeometry.lean`.\n\nNatural extensions are:\n\n1. **Closure-operator API.** Prove idempotence of `tropicalConvexHull` and package\n   it with the already established monotonicity and extensivity results as a\n   closure operator.\n2. **Unify the two hull interfaces.** Relate the normalized finite-family hull\n   `TropicalConvexity.tropicalConvexHull` to\n   `TropicalHelly.tropConvHull`, whose weights currently have no normalization\n   condition. This should make the convexity theorem and Carath\u00e9odory theorem\n   directly reusable through one interface.\n3. **Tropical Radon theorem.** Define tropical affine dependence for `d + 2`\n   points and extract a partition whose two normalized tropical convex hulls\n   intersect.\n4. **General tropical Helly theorem.** Develop the separation or\n   Radon-to-Helly argument for arbitrary finite families of tropically convex\n   subsets of `Fin d \u2192 \u211d`. The proved box theorem supplies a coordinatewise\n   special case with Helly number two.\n5. **Convention comparisons.** Prove equivalences between normalized max-plus,\n   min-plus, and projective formulations of tropical convexity.\n6. **Scalar generality.** Generalize the finite-support argument from `\u211d` to\n   suitable linearly ordered additive groups admitting finite suprema.\n7. **Finite examples.** After adding Radon and general Helly, formalize small\n   explicit configurations that exercise partition and intersection witnesses\n   and serve as regression tests.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0841",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3308088b",
+    "status": "available",
+    "timestamp": "2026-07-30T12:11:55.752557+00:00",
+    "title": "The completed development proves finite normalized max-plus tropical"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal result establishes a tractable cubical recipe model: fixed-flavor recipes are optional ingredient assignments, and substitution methods are classified by their parity signatures. It suggests the following extensions.\n\n1. **Geometric realization.** Define the cubical set whose vertices are `Fin n \u2192 Bool`, whose edges are single toggles, and whose higher cubes are sets of mutually independent toggles. Prove that its realization is contractible, while selected discrete subspaces (such as the one-choice cookie fiber with no substitution edge) realize `S^0`.\n\n2. **Rewriting and path homotopy.** Generate an equivalence on methods by deleting adjacent duplicate toggles and swapping adjacent independent toggles. Prove that two methods are equivalent exactly when their signatures agree. This would upgrade the endpoint classification into a normal-form theorem for recipe transformations.\n\n3. **Constrained recipes.** Replace the full Boolean cube by a predicate encoding incompatibilities, allergies, ingredient availability, or flavor-preservation constraints. The induced subcomplex can have nontrivial topology; compute connected components and cycle ranks for concrete finite predicates.\n\n4. **A genuine circle model.** A claim such as `\u03c0\u2081 = \u2124` requires a specified space with a cycle. Build a finite cyclic substitution graph for a curry model, define edge-path reduction, and prove that reduced loops have an integer winding number classifying homotopy classes.\n\n5. **Measured flavor maps.** Given an actual finite recipe dataset and a declared flavor map, construct fibers or tolerance neighborhoods reproducibly. Only after specifying a distance, threshold, and simplex rule should one compute persistent homology or compare cuisines.\n\n6. **Non-binary substitutions.** Generalize optional choices from `Bool` to finite ingredient-state types. Fibers then have cardinality equal to the product of coordinate cardinalities, while methods become actions of finite permutation groups or cyclic groups rather than Boolean parity.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0842",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "72d619d5",
+    "status": "available",
+    "timestamp": "2026-07-30T12:13:07.063539+00:00",
+    "title": "The formal result establishes a tractable cubical recipe model: fixed-flavor rec"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -7571,23 +7613,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Topology of Argumentation: Why Debates Have Holes"
-  },
-  {
-    "consumed_by_exp_id": "72d619d5",
-    "description": "In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Speculative"
-    ],
-    "id": "seed_151",
-    "phase": "A",
-    "priority_score": 0.66,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
   {
     "consumed_by_exp_id": "c961538a",

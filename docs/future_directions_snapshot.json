@@ -423,7 +423,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "726a20a7",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domain_bridges": [],
     "domains": [
@@ -436,7 +436,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Navier-Stokes Existence and Smoothness"
   },
@@ -1582,6 +1582,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 72d619d5 (Q=0.789), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In homotopy type theory (HoTT), equal things can be equal in different ways — there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_72d619d5_76cfa23a",
+    "lineage_refs": [],
+    "priority_score": 0.88874,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "72d619d5",
+    "status": "available",
+    "timestamp": "2026-07-30T12:13:11.239098+00:00",
+    "title": "Deepening: Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 89e28e84 (Q=0.789), which proved 12 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
     "domain_bridges": [],
     "domains": [
@@ -2167,25 +2186,6 @@
     "status": "available",
     "timestamp": "",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "593a0386",
-    "description": "Building on cycle 2996b72f (Q=0.776), which proved 11 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domain_bridges": [],
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_2996b72f_fb513ba4",
-    "lineage_refs": [],
-    "priority_score": 0.8762099999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "2996b72f",
-    "status": "in_progress",
-    "timestamp": "2026-07-30T00:20:57.662026+00:00",
-    "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
     "ambition_level": "extension",
@@ -2871,7 +2871,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "15429b4a",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -2883,7 +2883,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697803+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -4353,26 +4353,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3308088b",
-    "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "seed_365",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
     "domain_bridges": [],
@@ -4761,7 +4741,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00b7234b",
     "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
     "domain_bridges": [],
     "domains": [
@@ -4775,7 +4755,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Quantum Topological Phase Computation"
   },
@@ -9526,6 +9506,65 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed development proves finite normalized max-plus tropical\nCarathéodory in `Catalog/Tropical/TropicalConvexity/Caratheodory.lean`, including\nsingleton membership, monotonicity, extensivity, and the `d + 1` support bound.\nIt also proves tropical convexity of finite tropical hulls and boxes, Helly's\ntheorem for tropical boxes, and the associated two-box infeasibility certificate\nin `Catalog/Tropical/TropicalAlgebra/HellyGeometry.lean`.\n\nNatural extensions are:\n\n1. **Closure-operator API.** Prove idempotence of `tropicalConvexHull` and package\n   it with the already established monotonicity and extensivity results as a\n   closure operator.\n2. **Unify the two hull interfaces.** Relate the normalized finite-family hull\n   `TropicalConvexity.tropicalConvexHull` to\n   `TropicalHelly.tropConvHull`, whose weights currently have no normalization\n   condition. This should make the convexity theorem and Carathéodory theorem\n   directly reusable through one interface.\n3. **Tropical Radon theorem.** Define tropical affine dependence for `d + 2`\n   points and extract a partition whose two normalized tropical convex hulls\n   intersect.\n4. **General tropical Helly theorem.** Develop the separation or\n   Radon-to-Helly argument for arbitrary finite families of tropically convex\n   subsets of `Fin d → ℝ`. The proved box theorem supplies a coordinatewise\n   special case with Helly number two.\n5. **Convention comparisons.** Prove equivalences between normalized max-plus,\n   min-plus, and projective formulations of tropical convexity.\n6. **Scalar generality.** Generalize the finite-support argument from `ℝ` to\n   suitable linearly ordered additive groups admitting finite suprema.\n7. **Finite examples.** After adding Radon and general Helly, formalize small\n   explicit configurations that exercise partition and intersection witnesses\n   and serve as regression tests.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0841",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3308088b",
+    "status": "available",
+    "timestamp": "2026-07-30T12:11:55.752557+00:00",
+    "title": "The completed development proves finite normalized max-plus tropical"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal result establishes a tractable cubical recipe model: fixed-flavor recipes are optional ingredient assignments, and substitution methods are classified by their parity signatures. It suggests the following extensions.\n\n1. **Geometric realization.** Define the cubical set whose vertices are `Fin n → Bool`, whose edges are single toggles, and whose higher cubes are sets of mutually independent toggles. Prove that its realization is contractible, while selected discrete subspaces (such as the one-choice cookie fiber with no substitution edge) realize `S^0`.\n\n2. **Rewriting and path homotopy.** Generate an equivalence on methods by deleting adjacent duplicate toggles and swapping adjacent independent toggles. Prove that two methods are equivalent exactly when their signatures agree. This would upgrade the endpoint classification into a normal-form theorem for recipe transformations.\n\n3. **Constrained recipes.** Replace the full Boolean cube by a predicate encoding incompatibilities, allergies, ingredient availability, or flavor-preservation constraints. The induced subcomplex can have nontrivial topology; compute connected components and cycle ranks for concrete finite predicates.\n\n4. **A genuine circle model.** A claim such as `π₁ = ℤ` requires a specified space with a cycle. Build a finite cyclic substitution graph for a curry model, define edge-path reduction, and prove that reduced loops have an integer winding number classifying homotopy classes.\n\n5. **Measured flavor maps.** Given an actual finite recipe dataset and a declared flavor map, construct fibers or tolerance neighborhoods reproducibly. Only after specifying a distance, threshold, and simplex rule should one compute persistent homology or compare cuisines.\n\n6. **Non-binary substitutions.** Generalize optional choices from `Bool` to finite ingredient-state types. Fibers then have cardinality equal to the product of coordinate cardinalities, while methods become actions of finite permutation groups or cyclic groups rather than Boolean parity.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0842",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "72d619d5",
+    "status": "available",
+    "timestamp": "2026-07-30T12:13:07.063539+00:00",
+    "title": "The formal result establishes a tractable cubical recipe model: fixed-flavor rec"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Sharp two-sided summand asymptotics.** For every `k : ℕ`, prove\n   `1 / (2 * (k + 2 : ℝ)^2) ≤ gammaTerm k` in addition to the formalized upper\n   bound `gammaTerm k ≤ 1 / (2 * (k + 1 : ℝ)^2)`. This would give a purely\n   rational squeeze of every term.\n\n2. **Quantitative remainder bound.** For every positive `n : ℕ`, prove\n   `0 < Real.eulerMascheroniConstant - Real.eulerMascheroniSeq n` and\n   `Real.eulerMascheroniConstant - Real.eulerMascheroniSeq n ≤ 1 / (2*n : ℝ)`.\n   The present inverse-square term estimate should supply the upper bound after\n   formalizing the corresponding tail estimate.\n\n3. **Midpoint-corrected acceleration.** Define\n   `accelerated n = Real.eulerMascheroniSeq n + 1 / (2*(n+1 : ℝ))` and prove an\n   explicit `O(n⁻²)` error bound, for example\n   `|Real.eulerMascheroniConstant - accelerated n| ≤ 1 / (12*(n+1 : ℝ)^2)`\n   for all sufficiently large `n` (with the exact threshold stated and checked).\n\n4. **Symmetrized information tail.** For positive rates `a,b`, the formalized\n   identity gives\n   `D(a‖b)+D(b‖a)=(a-b)^2/(ab)`. Use it to characterize exactly when a chain of\n   positive exponential rates has summable symmetrized adjacent divergences,\n   and test the characterization on polynomial and geometric rate sequences.\n\n5. **Apéry-style linear forms criterion.** Construct explicit integer sequences\n   `A n, B n` from accelerated harmonic/logarithmic approximants and determine\n   whether the nonzero forms `A n + B n * Real.eulerMascheroniConstant` can be\n   proved to decay exponentially. Either an exponential bound or a concrete\n   obstruction (failure for some `n`) is a falsifiable outcome.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0843",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "593a0386",
+    "status": "available",
+    "timestamp": "2026-07-30T12:14:14.942703+00:00",
+    "title": "1. **Sharp two-sided summand asymptotics.** For every `k : ℕ`, prove"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -10121,27 +10160,6 @@
     "status": "available",
     "timestamp": "",
     "title": "The Topology of Argumentation: Why Debates Have Holes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "72d619d5",
-    "description": "In homotopy type theory (HoTT), equal things can be equal in different ways — there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Speculative"
-    ],
-    "id": "seed_151",
-    "lineage_refs": [],
-    "priority_score": 0.66,
-    "proof_strategy": "Define the recipe space R(D) for a dish D as the simplicial complex whose vertices are recipes for D, edges connect recipes that differ by one ingredient substitution, triangles connect three recipes that differ by two substitutions, etc. A recipe is a tuple (ingredients, quantities, method). Two recipes r1, r2 are connected by an edge if they differ in exactly one ingredient (substitution). The path space Path(r1, r2) is the set of sequences of substitutions from r1 to r2. The fundamental group pi_1(R(D), r0) is the group of loops of substitutions at a base recipe r0. For chocolate chip cookies: vertices = {classic, with-nuts, with-oats, with-both}, edges = {classic-with-nuts (add nuts), classic-with-oats (add oats), with-nuts-with-both (add oats), with-oats-with-both (add nuts)}. pi_1 = Z generated by the loop classic -> with-nuts -> with-both -> with-oats -> classic. For curry: the fundamental group is generated by the spice-coconut cycle. Test: enumerate recipes from food databases and compute pi_1.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
   },
   {
     "ambition_level": "extension",
