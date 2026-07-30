@@ -1,208 +1,213 @@
-# The Number That Never Makes a Prime
+# Seven Small Primes Against an Infinite Tower
 
-## A riddle hidden in the powers of two
+## How a finite covering system proves that $78557\cdot 2^n+1$ is composite forever
 
-Pick a whole number $k$. Now build an infinite family of numbers from it by
-multiplying by powers of two and adding one:
+There is something audacious about an infinite claim. Compute a million examples and the next one may rebel. Check a trillion, and infinity remains untouched. Yet number theory often turns the infinite into the finite by finding the right rhythm.
 
-$$k\cdot 2^1 + 1,\quad k\cdot 2^2 + 1,\quad k\cdot 2^3 + 1,\quad \dots$$
+The number $78557$ offers a striking example. For every nonnegative integer $n$, form
 
-For most starting values of $k$, this sequence is a fountain of primes. Take
-$k = 1$: you get $3, 5, 9, 17, 33, 65, 129, 257, \dots$, and scattered through it
-are the famous Fermat-style primes $3, 5, 17, 257$. Take $k = 3$ and you again
-stumble onto primes almost immediately. Number theorists long believed that *every*
-odd $k$ must eventually produce a prime in this list — after all, the numbers grow,
-they thin out, but primes keep appearing forever, so why should any starting value
-be forbidden from ever hitting one?
+$$
+N_n=78557\cdot 2^n+1.
+$$
 
-In 1960, the Polish mathematician Wacław Sierpiński proved something startling:
-there exist odd numbers $k$ for which $k\cdot 2^n + 1$ is **never** prime — not for
-$n = 1$, not for $n = 2$, not for any $n$ at all, no matter how far you go. Such a
-number is called a **Sierpiński number**. It is a starting value that has been
-permanently exiled from the world of primes.
+The first few terms are $78558$, $157115$, $314229$, and $628457$. They grow exponentially. Nevertheless, none is prime. The reason is not a heroic factorization of ever-larger integers. It is a repeating choreography involving only seven primes:
 
-This raises an irresistible question: *what is the smallest Sierpiński number?* In
-1962 John Selfridge found a candidate that has resisted every attempt to dethrone
-it for more than sixty years:
+$$
+3,\ 5,\ 7,\ 13,\ 19,\ 37,\ 73.
+$$
 
-$$\boxed{78557}$$
+Each exponent $n$ falls into one of seven congruence classes, and the class tells us in advance which small prime divides $N_n$. The classes cover every possible exponent, so no exponent can escape.
 
-This article tells the story of *why* $78557$ never makes a prime — a story whose
-hero is not a giant calculation but a single, elegant idea called a **covering
-system**. It is one of those rare arguments where, instead of checking infinitely
-many numbers one by one, we trap all of them at once inside a finite net.
+This is the central result:
 
-## The trick: catch infinitely many fish with a finite net
+**Universal compositeness theorem.** For every nonnegative integer $n$, the number $78557\cdot 2^n+1$ has a proper prime divisor belonging to $\{3,5,7,13,19,37,73\}$. Consequently, $78557\cdot 2^n+1$ is composite for every $n\ge 0$.
 
-Here is the problem in its rawest form. To show $78557$ is a Sierpiński number we
-must show that *every* number in the infinite list
+An odd positive integer $k$ with this universal compositeness property is called a **Sierpiński number**. Thus $78557$ is a Sierpiński number. This statement should not be confused with the famous unresolved question of whether $78557$ is the *smallest* one. The covering argument proves membership, not minimality.
 
-$$78557\cdot 2^1 + 1,\quad 78557\cdot 2^2 + 1,\quad 78557\cdot 2^3 + 1,\quad \dots$$
+## The clocks hidden inside powers of two
 
-is composite — that each one has a factor other than $1$ and itself. We cannot check
-infinitely many numbers. So we need a structural reason, a guarantee that applies to
-all of them simultaneously.
+Why should seven primes control infinitely many exponents? Modular arithmetic makes powers repeat. Consider powers of $2$ modulo $3$:
 
-The covering-system idea is this. Suppose we could find a small fixed list of primes —
-call them the **covering primes** — with the magical property that *for every
-exponent $n$, at least one prime on the list divides $78557\cdot 2^n + 1$.* Then the
-sequence can never be prime: every term is divisible by one of a handful of small
-primes (and is far bigger than any of them), so every term is composite. The infinite
-problem collapses to checking that the net has no holes.
+$$
+2^0\equiv 1,\qquad 2^1\equiv 2,\qquad 2^2\equiv 1\pmod 3.
+$$
 
-For $78557$ the covering primes are exactly seven small numbers:
+The pattern has period $2$. Modulo $5$, powers of $2$ have period $4$. More generally, if
 
-$$\{3,\ 5,\ 7,\ 13,\ 19,\ 37,\ 73\}.$$
+$$
+2^M\equiv 1\pmod p,
+$$
 
-The remaining question is: how do we *guarantee* that one of these seven always lands
-a hit, for every one of the infinitely many exponents?
+then multiplication by another block of $2^M$ changes nothing modulo $p$. Writing $n=qM+r$ gives
 
-## Powers of two run in circles
+$$
+2^n=2^{qM+r}=(2^M)^q2^r\equiv 2^r\pmod p.
+$$
 
-The secret is that powers of two, when viewed through the lens of a fixed prime, are
-not chaotic — they cycle. Look at the remainders of $2^n$ when you divide by $7$:
+This yields the **periodicity principle**: whenever $2^M\equiv1\pmod p$, the residue of $2^n$ modulo $p$ depends only on $n\bmod M$.
 
-$$2^1 = 2,\ 2^2 = 4,\ 2^3 = 8 \equiv 1,\ 2^4 \equiv 2,\ 2^5 \equiv 4,\ 2^6 \equiv 1,\ \dots$$
+A second principle follows immediately. Suppose $p$ divides $k2^r+1$, and $n\equiv r\pmod M$. Then $2^n\equiv2^r\pmod p$, so
 
-The pattern $2, 4, 1, 2, 4, 1, \dots$ repeats with period $3$. We say the
-*multiplicative order of $2$ modulo $7$* is $3$. Every prime $p$ has such a period:
-modulo $3$ the cycle has length $2$, modulo $5$ it has length $4$, modulo $13$ length
-$12$, and so on.
+$$
+k2^n+1\equiv k2^r+1\equiv0\pmod p.
+$$
 
-This periodicity is the engine of the whole argument, and it is worth stating
-precisely. If a prime $p$ satisfies $2^m \equiv 1 \pmod p$, then $2^n$ depends only on
-the remainder of $n$ upon division by $m$:
+Call this the **divisor-transfer principle**. One divisibility check at a representative exponent propagates along an entire arithmetic progression of exponents.
 
-> **The Clockwork Lemma.** If $2^m \equiv 1 \pmod p$ and $n$ leaves remainder $a$ when
-> divided by $m$, then $2^n \equiv 2^a \pmod p$.
+The infinite sequence has become a collection of modular clocks.
 
-In words: once you know where $n$ sits inside one period, you know the value of $2^n$
-modulo $p$ for free. The powers of two are a clock, and only the hour matters, not how
-many full days have passed.
+## Seven nets cover every exponent
 
-A companion fact lets us turn this into a statement about our actual sequence:
+For $78557$, use these seven classes:
 
-> **The Transfer Lemma.** If a prime $p$ divides $78557\cdot 2^a + 1$, and
-> $2^n \equiv 2^a \pmod p$, then $p$ also divides $78557\cdot 2^n + 1$.
+| Condition on $n$ | Guaranteed divisor of $78557\cdot2^n+1$ |
+|---|---:|
+| $n\equiv0\pmod2$ | $3$ |
+| $n\equiv1\pmod4$ | $5$ |
+| $n\equiv1\pmod3$ | $7$ |
+| $n\equiv11\pmod{12}$ | $13$ |
+| $n\equiv15\pmod{18}$ | $19$ |
+| $n\equiv27\pmod{36}$ | $37$ |
+| $n\equiv3\pmod9$ | $73$ |
 
-So if $p$ catches the term at exponent $a$, it automatically catches the term at every
-exponent $n$ that sits at the same hour on $p$'s clock. One verified hit pays for an
-entire arithmetic progression of exponents.
+A finite collection of congruence classes that contains every nonnegative integer is called a **covering system**. The table above is such a system.
 
-## The seven-cog machine
+To see the coverage, first catch every even exponent with $n\equiv0\pmod2$. Among odd exponents, those congruent to $1$ modulo $4$ are caught by the second class. The remaining odd exponents are congruent to $3$ modulo $4$. Some satisfy $n\equiv1\pmod3$ and enter the third class. What remains is easiest to inspect over one common period.
 
-Now we can assemble the net. Each covering prime patrols a particular set of exponents,
-described by a congruence — "all $n$ leaving a fixed remainder modulo a fixed number."
-For $78557$ the assignment is:
+All seven moduli divide $36$, so the whole pattern repeats every $36$ exponents. Examining residues $0$ through $35$ is enough. The associated divisor table is
 
-| If the exponent $n$ satisfies... | then this prime divides $78557\cdot 2^n+1$ |
-|---|---|
-| $n \equiv 0 \pmod 2$ | $3$ |
-| $n \equiv 1 \pmod 4$ | $5$ |
-| $n \equiv 1 \pmod 3$ | $7$ |
-| $n \equiv 11 \pmod{12}$ | $13$ |
-| $n \equiv 15 \pmod{18}$ | $19$ |
-| $n \equiv 27 \pmod{36}$ | $37$ |
-| $n \equiv 3 \pmod 9$ | $73$ |
+$$
+\begin{array}{c|rrrrrrrrrrrr}
+r&0&1&2&3&4&5&6&7&8&9&10&11\\
+\hline
+p&3&5&3&73&3&5&3&7&3&5&3&13
+\end{array}
+$$
 
-Read it like a set of patrol beats. The prime $3$ covers every even exponent — half of
-all numbers in one stroke. The prime $5$ takes a quarter of what's left. The remaining
-primes mop up the increasingly rare exponents that slip through. The largest modulus is
-$36$, which is the least common multiple of all the periods involved. Because of the
-Clockwork Lemma, *the entire infinite question reduces to checking the $36$ exponents
-$n = 0, 1, 2, \dots, 35$.* If those $36$ residues are all covered — and they are — then
-periodicity guarantees every exponent forever is covered too.
+$$
+\begin{array}{c|rrrrrrrrrrrr}
+r&12&13&14&15&16&17&18&19&20&21&22&23\\
+\hline
+p&3&5&3&19&3&5&3&7&3&5&3&13
+\end{array}
+$$
 
-You can check the corners of the machine by hand. Take $n = 35$. It is odd, so $3$
-misses. $35 \bmod 4 = 3$, not $1$, so $5$ misses. $35 \bmod 3 = 2$, so $7$ misses.
-$35 \bmod 12 = 11$ — a hit! The prime $13$ divides $78557\cdot 2^{35} + 1$. The net
-holds. Run through all $36$ residues and not a single one escapes; every exponent in the
-universe falls into at least one patrol beat. That is the whole proof of compositeness,
-compressed into a table you could write on a napkin.
+$$
+\begin{array}{c|rrrrrrrrrrrr}
+r&24&25&26&27&28&29&30&31&32&33&34&35\\
+\hline
+p&3&5&3&37&3&5&3&7&3&5&3&13.
+\end{array}
+$$
 
-## What "covering" really means
+Every column has a prime. That is the finite heart of the infinite proof.
 
-Behind the table lies a clean piece of mathematics worth naming in its own right. A
-**congruence class** is the set of all integers leaving a fixed remainder $a$ when
-divided by a fixed modulus $m$ (with $0 \le a < m$). A **covering system** is a finite
-collection of congruence classes whose union is *all* the integers — every number, no
-matter how large, lands in at least one class.
+## Why the divisors really work
 
-Covering systems were introduced by Paul Erdős in the 1930s and are deceptively subtle.
-It is easy to cover the integers if you allow the trivial class "everything modulo $1$,"
-but covering with *distinct, larger* moduli is a delicate combinatorial art. The Sierpiński
-argument bolts a covering system onto number theory: it pairs each congruence class with a
-prime, so that "land in this class" implies "be divisible by this prime."
+The entries are not arbitrary. Each comes from a congruence that matches the period of powers of two.
 
-The bridge that makes congruence classes fit together so neatly is the **Chinese
-Remainder Theorem**, a result over fifteen centuries old. It says that if two moduli
-share no common factor, then you can always find a number with any prescribed pair of
-remainders. In the language of covering systems: congruence classes with coprime moduli
-are always *compatible* — they overlap. This is the structural glue that lets a designer
-of covering systems mix periods like $4$, $9$, and $25$ freely without fear that two beats
-contradict each other.
+For even $n$, $2^n\equiv1\pmod3$, while $78557\equiv2\pmod3$. Therefore
 
-There is also a hard limit on how cheaply you can cover. If every patrol beat uses the
-*same* modulus $m$, then you are forced to use at least $m$ of them — one for each
-possible remainder. This is a pigeonhole fact: $m$ distinct remainders cannot be covered
-by fewer than $m$ classes. Real covering systems escape this tax precisely by using a
-*variety* of moduli, letting a small modulus like $2$ shoulder half the load while large
-moduli handle the stragglers. The $78557$ system is a small masterpiece of this
-balancing act: seven primes, seven moduli, perfect coverage with no waste large enough to
-remove.
+$$
+78557\cdot2^n+1\equiv2\cdot1+1\equiv0\pmod3.
+$$
 
-## The verification, made finite
+For $n\equiv1\pmod4$, powers of two repeat modulo $5$ with period $4$. Since $78557\equiv2\pmod5$ and $2^1=2$,
 
-One genuinely beautiful feature of the argument is that an infinite claim becomes a
-finite computation. The periodicity of every patrol beat means the coverage pattern
-repeats with period equal to the least common multiple of all the moduli — here, $36$.
-Formally:
+$$
+78557\cdot2^n+1\equiv2\cdot2+1\equiv0\pmod5.
+$$
 
-> **Finite Verification.** A covering system covers *every* natural number if and only if
-> it covers each of the residues $0, 1, \dots, L-1$, where $L$ is the least common multiple
-> of the moduli.
+For $n\equiv1\pmod3$, powers repeat modulo $7$ with period $3$; because $78557\equiv3\pmod7$,
 
-So to certify the seven-cog machine, you check $36$ cases and you are done — for all
-eternity. This is the difference between a hope and a proof: not "we tested it up to a
-billion," but "we tested it for one full period, and the period is all there is."
+$$
+78557\cdot2^n+1\equiv3\cdot2+1\equiv0\pmod7.
+$$
 
-## The unconquered summit: is 78557 really the smallest?
+The four exceptional-looking classes work the same way:
 
-Sierpiński proved such numbers exist; Selfridge produced $78557$ and its seven-cog
-covering. But proving that $78557$ is the *smallest* Sierpiński number is a different and
-far harder task — and it remains **open to this day.**
+$$
+\begin{aligned}
+2^{12}&\equiv1\pmod{13}, & 13&\mid78557\cdot2^{11}+1,\\
+2^{18}&\equiv1\pmod{19}, & 19&\mid78557\cdot2^{15}+1,\\
+2^{36}&\equiv1\pmod{37}, & 37&\mid78557\cdot2^{27}+1,\\
+2^9&\equiv1\pmod{73}, & 73&\mid78557\cdot2^3+1.
+\end{aligned}
+$$
 
-To dethrone $78557$ you would have to show that every odd number below it eventually does
-produce a prime. The vast majority were eliminated long ago by simply finding such a
-prime. But a handful of stubborn holdouts remain. For each surviving candidate $k$, the
-challenge is starkly concrete:
+The divisor-transfer principle extends each base divisibility to its full congruence class. Coverage then guarantees that at least one row applies to every $n$.
 
-> **Find a single exponent $n$ for which $k\cdot 2^n + 1$ is prime.**
+There is one subtlety. A divisor does not prove compositeness if it equals the entire number. Here each assigned prime is a **proper** divisor. At the representative residues this is immediate from direct comparison, and the terms only increase as the exponent increases. Equivalently, the smallest term is already $78558$, far larger than the largest covering prime $73$. Thus every $N_n$ has a prime divisor strictly between $1$ and $N_n$.
 
-For the smallest holdout, $k = 21181$, distributed computing projects have tested
-exponents into the tens of millions without success. Nobody has found a prime; nobody has
-proved one cannot exist. The number sits in a strange limbo — almost certainly not a
-Sierpiński number, but not yet proven innocent. If even one of these holdouts turned out
-to be a genuine Sierpiński number smaller than $78557$, the sixty-year-old guess would
-collapse.
+## A reusable certificate
 
-So the final picture is a tale of two certainties. That $78557$ never makes a prime is
-secured by an argument so tight it fits in a table of seven rows — a finite net thrown
-over an infinite sea. That $78557$ is the *smallest* such number is a conjecture hanging
-on a thread, waiting for a single prime to be found among a few astronomically large
-candidates. The same multiplication, $k \cdot 2^n + 1$, gives us one of mathematics'
-cleanest finished proofs and one of its most tantalizing open problems, side by side.
+The argument suggests a compact recipe for proving universal compositeness of other sequences $k2^n+1$. Choose a positive period $M$. For each residue $r\in\{0,1,\dots,M-1\}$, assign a prime $p_r$ satisfying three conditions:
 
-## Why the idea endures
+1. $2^M\equiv1\pmod{p_r}$;
+2. $p_r\mid k2^r+1$;
+3. $p_r<k2^r+1$.
 
-The covering-system trick is bigger than $78557$. The very same machinery — periodicity of
-$b^n$ modulo $p$, a covering of the exponents, the Chinese Remainder Theorem stitching the
-pieces together — proves the existence of analogous "forbidden" starting values for
-$k\cdot b^n + 1$ in other bases, and for **Riesel numbers**, where one studies
-$k\cdot 2^n - 1$ instead. Each variation reuses the identical skeleton: powers run in
-circles, a finite table catches every exponent, and an infinite question is settled in a
-single page.
+Then every exponent $n$ reduces to $r=n\bmod M$. Periodicity transfers the divisibility from $r$ to $n$, and monotonicity preserves properness. Therefore $k2^n+1$ is never prime.
 
-That is the quiet power on display here. Faced with infinity, the mathematician does not
-flinch and start counting. They look for the hidden clockwork — the period that makes the
-endless repeat itself — and then they only have to look once.
+Call such data a **finite covering certificate**. Its power lies in the mismatch of scales: infinitely many enormous integers are controlled by a finite table of small modular facts. For $k=78557$, the period is $M=36$, and the displayed table is the certificate.
+
+This idea reaches beyond a single sequence. In computation, periodic certificates let a program replace unbounded search with a bounded audit. In cryptography, the same modular habits—periods, residue classes, and divisibility—shape both algorithms and attacks, even though cryptographic parameters are chosen to avoid exactly this kind of predictable small-factor trap. In scheduling, congruence classes describe recurring events on clocks with different cycle lengths. The mathematical language is the same: local rhythms combine into a global pattern.
+
+## When clocks must agree
+
+Covering systems naturally lead to the Chinese remainder theorem. A normalized congruence class is a condition
+
+$$
+n\equiv a\pmod m,
+$$
+
+where $m>0$ and $0\le a<m$. Two classes are **compatible** if some integer satisfies both.
+
+If their moduli $m_1$ and $m_2$ are coprime, every pair of residues is compatible. This is the familiar Chinese remainder theorem. A more general compatibility theorem says that the conditions
+
+$$
+n\equiv a_1\pmod{m_1},\qquad n\equiv a_2\pmod{m_2}
+$$
+
+have a simultaneous solution whenever
+
+$$
+a_1\equiv a_2\pmod{\gcd(m_1,m_2)}.
+$$
+
+The reason is necessary to the geometry of the clocks: any common solution makes $a_1-a_2$ divisible by both moduli’ common divisor. It is also sufficient: after removing the shared gcd, the remaining moduli can be reconciled by the coprime theorem.
+
+These compatibility results do not alone prove that a list covers all integers; coverage is a union problem, while compatibility concerns intersections. But together they provide a toolkit for designing and combining modular schedules.
+
+## A miniature journey through the table
+
+Take an exponent that looks far removed from the small representatives, say $n=63$. Reducing modulo $36$ gives $27$. The table therefore assigns the prime $37$. We do not need to construct or factor the twenty-four-digit integer $78557\cdot2^{63}+1$. Since $2^{36}\equiv1\pmod{37}$ and $37$ divides $78557\cdot2^{27}+1$, the extra block of $36$ in the exponent is invisible modulo $37$:
+
+$$
+78557\cdot2^{63}+1
+=78557\cdot2^{27}2^{36}+1
+\equiv78557\cdot2^{27}+1
+\equiv0\pmod{37}.
+$$
+
+Or take $n=1000$. Its residue modulo $36$ is $28$, an even residue, so the table chooses $3$. Because every even exponent makes $2^n\equiv1\pmod3$ and $78557\equiv2\pmod3$, the entire $306$-digit term is divisible by $3$. A tiny remainder calculation settles what direct factorization would make needlessly difficult.
+
+This is why a certificate is more informative than a long list of factorizations. It explains *why* each future case must behave in the same way. The table is not evidence gathered from a sample; it is a map of every possible modular state. There are only $36$ states because all seven clocks reset together after $36$ steps.
+
+The covering is also deliberately redundant in places. An exponent may satisfy more than one class, and then several small primes may divide the same term. Covering systems require at least one gate for every exponent, not exactly one. The period table simply chooses one available gate in each column, turning an overlapping family into an unambiguous lookup rule.
+
+## What the proof does—and does not—settle
+
+The covering gives an exact, unconditional conclusion: $78557$ is a Sierpiński number, and every term $78557\cdot2^n+1$ has a proper divisor among seven named primes.
+
+It does **not** prove that $78557$ is the smallest Sierpiński number. That minimality question remains open. Five smaller odd candidates are traditionally outstanding:
+
+$$
+21181,\quad22699,\quad24737,\quad55459,\quad67607.
+$$
+
+To exclude one, it would be enough to find an exponent $n$ for which $k2^n+1$ is prime and establish that primality. Until each smaller candidate is excluded—or one is shown to have universal compositeness—the word “smallest” remains beyond the theorem.
+
+That boundary is part of the beauty of the story. A seven-row table defeats an infinity of exponents for one carefully structured number. Yet nearby integers can resist years of computation and theory. Number theory alternates between these two moods: rigid periodic order and stubborn uncertainty.
+
+For $78557$, the order is complete. Every exponent enters one of seven gates. Behind each gate waits a small prime. And no matter how high the tower $2^n$ rises, it never escapes the net.
