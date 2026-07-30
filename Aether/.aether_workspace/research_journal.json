@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d94c6678",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n## What was established\n\n`ZeroKnowledgeTheoremProving.lean` separates three facts that the proposed protocol conflates:\n\n1. **Naive random proof-line opening is generally not zero",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-26T00:21:39",
-      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-    },
-    {
       "cycle_id": "25e8f86d",
       "domain": "Computation",
       "key_insight": "# Future Directions: Neural Tangent Dynamics\n\n## 1. Uniform infinite-width kernel concentration\n\nFor fully connected networks with sub-Gaussian initialization and Lipschitz activation derivative, the",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-30T03:38:51",
       "title": "Sierpiński Numbers: Covering Systems"
+    },
+    {
+      "cycle_id": "3c125e46",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: EML Algebraic Independence\n\nThe formal development isolates the open input rather than treating transcendence of two factors as sufficient for transcendence of their product. The",
+      "quality_score": 0.73757,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-30T03:39:58",
+      "title": "EML Algebraic Independence: Transcendence Results"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "82c8c57a",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Coherent All-Stage Objects\n\n## 1. Coordinate-deletion limits over arbitrary coefficient objects\n\nLet `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding map",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-20T23:22:31",
-      "title": "Close Proofs: The Mega-Sphere: All Dimensions at Once"
-    },
     {
       "cycle_id": "fbb9076c",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 24,
       "timestamp": "2026-07-30T03:38:51",
       "title": "Sierpiński Numbers: Covering Systems"
+    },
+    {
+      "cycle_id": "3c125e46",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: EML Algebraic Independence\n\nThe formal development isolates the open input rather than treating transcendence of two factors as sufficient for transcendence of their product. The",
+      "quality_score": 0.73757,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-30T03:39:58",
+      "title": "EML Algebraic Independence: Transcendence Results"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "545fa377",
-      "domain": "Geometry",
-      "name": "spectral_state_lipschitz",
-      "quality": 0.7815999999999999
-    },
-    {
-      "cycle_id": "545fa377",
-      "domain": "Geometry",
-      "name": "readout_composition_lipschitz",
-      "quality": 0.7815999999999999
-    },
-    {
-      "cycle_id": "dff51e05",
-      "domain": "Novelty",
-      "name": "sechSq_pos",
-      "quality": 0.78321
-    },
     {
       "cycle_id": "dff51e05",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "CoveringCert",
       "quality": 0.7720099999999999
+    },
+    {
+      "cycle_id": "3c125e46",
+      "domain": "NumberTheory",
+      "name": "specialValue_eq",
+      "quality": 0.73757
+    },
+    {
+      "cycle_id": "3c125e46",
+      "domain": "NumberTheory",
+      "name": "specialValue_pos",
+      "quality": 0.73757
+    },
+    {
+      "cycle_id": "3c125e46",
+      "domain": "NumberTheory",
+      "name": "specialValue_ne_zero",
+      "quality": 0.73757
     }
   ],
-  "last_updated": "2026-07-30T03:38:51",
+  "last_updated": "2026-07-30T03:39:58",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "29ba074c",
-        "quality": 0.6,
-        "theorems": 24,
-        "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
-      },
-      {
         "cycle_id": "3984694e",
         "quality": 0.618,
         "theorems": 14,
@@ -3699,6 +3693,12 @@
         "quality": 0.7720099999999999,
         "theorems": 24,
         "title": "Sierpiński Numbers: Covering Systems"
+      },
+      {
+        "cycle_id": "3c125e46",
+        "quality": 0.73757,
+        "theorems": 9,
+        "title": "EML Algebraic Independence: Transcendence Results"
       }
     ],
     "Physics": [

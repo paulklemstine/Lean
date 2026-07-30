@@ -1,210 +1,411 @@
-# Spectral-Compression Complexity: A Unified Framework for Deep Network Generalization Bounds
+# Additive Compression and PAC-Bayes Budgets for Overparameterized Neural Networks
+
+**Aristotle**  
+**July 30, 2026**
 
 ## Abstract
 
-We introduce the Spectral-Compression Complexity (SCC), a unified complexity measure for deep neural networks that bridges spectral-norm-based and compression-based approaches to generalization. The SCC is defined as L² · R_eff · (∏σᵢ/γ)², where L is the depth, R_eff is the total effective rank (sum of squared Frobenius-to-spectral norm ratios), and ∏σᵢ/γ is the product of spectral norms divided by the margin. We prove that: (1) the SCC-based generalization bound converges to zero as the sample size increases, establishing consistency; (2) the bound is independent of network width, depending only on spectral structure; (3) there exist networks where higher effective rank yields tighter generalization bounds, providing a mathematical explanation for the double descent phenomenon. All results are formalized and verified in the Lean 4 proof assistant with the Mathlib library.
-
-**Keywords**: generalization bounds, PAC-Bayes, spectral norms, compression, overparameterization, double descent, formal verification
+We present an algebraic framework that combines compression complexity and posterior information into a single generalization budget for neural-network profiles. A profile records ambient parameter dimension, quotient complexity, code length, posterior Kullback–Leibler divergence, and sample size. Its effective complexity is the sum of quotient complexity, code length, and posterior divergence. We prove that any simultaneous compression and posterior certificate upper-bounds this effective complexity; if the certificate budget is at most $n\varepsilon^2$, the associated square-root complexity radius is at most $\varepsilon$. A standard confidence specialization uses a posterior allowance of $\log(1/\delta)$. We also introduce a retained-architecture complexity equal to the number of active parameters plus the sum of layer widths, and derive an explicit architecture-to-sample-complexity criterion. Strict compression strictly improves the radius at every positive sample size. Most importantly, increasing only the ambient parameter dimension preserves the certificate and every guarantee derived from it. Explicit profiles with arbitrarily many more parameters than samples, fixed nonzero effective complexity, and valid generalization budgets demonstrate that ambient dimension alone does not determine certified sample complexity. The results isolate a reusable deterministic core for PAC-Bayes and compression analyses and clarify the precise sense in which overparameterized networks can generalize.
 
 ## 1. Introduction
 
-The remarkable empirical success of overparameterized deep neural networks has posed a fundamental challenge to classical statistical learning theory. Networks with far more parameters than training samples can interpolate the training data perfectly, yet still achieve excellent test performance — a phenomenon that contradicts the classical bias-variance tradeoff.
+Classical capacity intuition associates a larger hypothesis class with a greater risk of overfitting. Neural networks challenge a simplistic version of that intuition: a trained network may have more adjustable parameters than training examples and still perform well on unseen data. Resolving this tension requires separating the dimension of the parameter space from the complexity of the predictor selected within it.
 
-Several approaches have been proposed to explain this behavior:
+Several mechanisms can make realized complexity much smaller than raw dimension. Different parameter vectors may represent the same function because hidden units can be permuted or rescaled. Many weights may be pruned, quantized, or reconstructed from a short code. A learned distribution over predictors may remain close to a prior distribution, producing a small information cost. These observations motivate two broad families of bounds. Compression bounds charge for describing a predictor; PAC-Bayes bounds charge for moving from a prior to a data-dependent posterior. Their mathematical interpretations differ, but their complexity contributions can be organized additively.
 
-- **PAC-Bayes bounds** [McAllester 1999, Catoni 2007] provide data-dependent generalization certificates through the KL divergence between posterior and prior distributions over hypotheses.
-- **Spectral norm bounds** [Bartlett et al. 2017, Neyshabur et al. 2018] control generalization through the product of layer-wise spectral norms, yielding width-independent bounds.
-- **Compression bounds** [Arora et al. 2018] show that if a network's predictions can be described using fewer bits, it generalizes better.
+This paper develops that additive organization. The framework is deliberately algebraic. It begins after the application-specific probabilistic work has produced valid quotient, coding, and posterior-divergence quantities. It then answers four questions. How do these quantities combine? How does a combined budget translate into a square-root radius? How can a retained architecture control sample complexity? What happens when the ambient network is widened without changing any effective term?
 
-Despite addressing the same phenomenon, these approaches have been developed largely independently. In this work, we unify them through a single complexity measure — the Spectral-Compression Complexity (SCC) — and prove that it explains the double descent curve as an algebraic consequence.
+The answers are concise. If $q$ is quotient complexity, $c$ is code length, $K$ is posterior divergence, and $n$ is sample size, define
 
-## 2. Definitions
+$$
+R=q+c+K.
+$$
 
-### 2.1 Spectral Profile
+A certificate with $q+c\le B$ and $K\le J$ gives $R\le B+J$. If $B+J\le n\varepsilon^2$, then $R\le n\varepsilon^2$ and the radius $\sqrt{R/n}$ is at most $\varepsilon$ whenever $n>0$. In the common confidence specialization, $J$ is bounded by $\log(1/\delta)$. If a network's quotient and coding costs are bounded by the number of retained parameters plus the sum of layer widths, that architectural quantity replaces raw parameter count in the sample criterion. Finally, adding unused ambient parameters changes none of $q$, $c$, $K$, or $n$, so it changes neither the certificate nor the radius.
 
-**Definition 2.1** (Spectral Profile). A *spectral profile* of an L-layer deep network is a tuple P = (σ₁,...,σ_L, F₁,...,F_L, γ) where:
-- σᵢ > 0 is the spectral norm (operator norm) of the weight matrix at layer i
-- Fᵢ ≥ σᵢ is the Frobenius norm of the weight matrix at layer i
-- γ > 0 is the classification margin
+The contribution is not a new probabilistic PAC-Bayes inequality for a particular loss. Rather, it is a self-contained deterministic calculus for composing valid bounds supplied by such inequalities. This separation makes assumptions transparent and prevents raw parameter dimension from re-entering an argument where it plays no mathematical role.
 
-The condition Fᵢ ≥ σᵢ is always satisfied since the Frobenius norm dominates the spectral norm.
+## 2. Complexity profiles and certificates
 
-### 2.2 Spectral Complexity
+### 2.1 Effective-complexity profiles
 
-**Definition 2.2** (Spectral Complexity). The *spectral complexity* of a profile P is:
+**Definition 2.1 (Effective-complexity profile).** An effective-complexity profile is a tuple
 
-$$\mathcal{C}_{spec}(P) = \frac{\prod_{i=1}^{L} \sigma_i}{\gamma}$$
+$$
+P=(d,q,c,K,n),
+$$
 
-This measures how much the network amplifies perturbations relative to its decision confidence.
+where $d,q,c,n$ are nonnegative integers and $K$ is a real number. The components are interpreted as follows:
 
-### 2.3 Effective Rank
+- $d$ is the ambient parameter dimension;
+- $q$ is quotient complexity, measuring the discrete cost remaining after equivalent parameterizations are identified;
+- $c$ is the code length needed to specify a representative predictor;
+- $K$ is a posterior information cost, typically a Kullback–Leibler divergence;
+- $n$ is the number of samples.
 
-**Definition 2.3** (Effective Rank). The *effective rank* of layer i is:
+The **effective complexity** of $P$ is
 
-$$r_i = \left(\frac{F_i}{\sigma_i}\right)^2$$
+$$
+R(P)=q+c+K.
+$$
 
-The *total effective rank* is R_eff = Σᵢ rᵢ.
+For divergence-based applications one has $K\ge0$. The algebraic upper-bound results need only the inequalities stated in each theorem; nonnegativity becomes essential when interpreting square roots or certificates as information quantities.
 
-The effective rank satisfies rᵢ ≥ 1 always, with equality iff Fᵢ = σᵢ (rank-1 weight matrices). The effective rank is at most the matrix dimension, providing a data-dependent complexity measure strictly smaller than the parameter count.
+**Definition 2.2 (Generalization at a prescribed scale).** For real numbers $\varepsilon$ and $\delta$, a profile $P$ generalizes at scale $(\varepsilon,\delta)$ when
 
-### 2.4 Spectral-Compression Complexity
+$$
+\varepsilon>0,\qquad \delta>0,\qquad R(P)\le n\varepsilon^2.
+$$
 
-**Definition 2.4** (Spectral-Compression Complexity). The *SCC* of a profile P is:
+This definition packages the deterministic numerical condition that appears after a probabilistic theorem has translated its confidence parameter into a complexity budget. It does not by itself assert a probability-of-error statement. In applications, the semantics of $\delta$ and the empirical-loss terms come from the chosen PAC-Bayes or compression theorem.
 
-$$\text{SCC}(P) = L^2 \cdot R_{\text{eff}} \cdot \mathcal{C}_{spec}(P)^2$$
+### 2.2 Simultaneous certificates
 
-The SCC captures three independent sources of complexity: network depth (L²), effective dimensionality (R_eff), and amplification behavior (C_spec²).
+**Definition 2.3 (Compression–posterior certificate).** A certificate for $P$ consists of a nonnegative integer $B$, called the structural budget, and a real number $J$, called the posterior budget, satisfying
 
-### 2.5 Compression Scheme
+$$
+q+c\le B,
+$$
 
-**Definition 2.5** (Compression Scheme). A *compression scheme* with k bits, n samples, and confidence δ ∈ (0,1) yields a generalization gap bound:
+$$
+K\le J,
+$$
 
-$$\text{gap}(k,n,\delta) = \sqrt{\frac{k \ln 2 + \ln(1/\delta)}{2n}}$$
+and $K\ge0$. The total certified budget is
 
-## 3. Main Results
+$$
+T=B+J.
+$$
 
-### 3.1 Spectral Complexity Properties
+The structural budget merges quotient and coding costs. This grouping is convenient because both are discrete description costs, whereas $J$ is supplied by a posterior comparison. Other decompositions are possible, but the resulting addition principle is the same.
 
-**Theorem 3.1** (Depth Bound). For networks with spectral norms bounded by B > 0:
+## 3. Additive budget theorems
 
-$$\mathcal{C}_{spec}(P) \leq \frac{B^L}{\gamma}$$
+**Theorem 3.1 (Certificate domination).** For every effective-complexity profile $P$ and every compression–posterior certificate with total budget $T$,
 
-This shows that depth creates exponential complexity unless spectral norms are controlled near 1.
+$$
+R(P)\le T.
+$$
 
-*Proof sketch.* The product ∏σᵢ ≤ B^L by Finset.prod_le_prod since each σᵢ ≤ B. Dividing by γ > 0 preserves the inequality. □
+**Proof sketch.** The certificate gives $q+c\le B$ and $K\le J$. Addition preserves order, so
 
-**Theorem 3.2** (Orthogonality). If all spectral norms equal 1:
+$$
+q+c+K\le B+J.
+$$
 
-$$\mathcal{C}_{spec}(P) = \frac{1}{\gamma}$$
+The left side is $R(P)$ and the right side is $T$. $\square$
 
-This is independent of depth, explaining why orthogonal initialization aids generalization.
+This elementary theorem provides the interface between independently derived bounds. One analysis can establish $q+c\le B$ by constructing a quotient code; another can establish $K\le J$ by selecting a prior and posterior. Neither argument needs to reproduce the other.
 
-**Theorem 3.3** (Scaling). Scaling all spectral norms by α > 0 scales the complexity by α^L:
+**Theorem 3.2 (Unified certificate criterion).** Let $P$ have sample size $n$, and let a certificate have total budget $T$. If $\varepsilon>0$, $\delta>0$, and
 
-$$\mathcal{C}_{spec}(\alpha \cdot P) = \alpha^L \cdot \mathcal{C}_{spec}(P)$$
+$$
+T\le n\varepsilon^2,
+$$
 
-**Theorem 3.4** (Margin Sensitivity). Doubling the margin halves the complexity:
+then $P$ generalizes at scale $(\varepsilon,\delta)$.
 
-$$\mathcal{C}_{spec}(P_{2\gamma}) = \frac{1}{2} \mathcal{C}_{spec}(P_\gamma)$$
+**Proof sketch.** Theorem 3.1 gives $R(P)\le T$. Composing this inequality with $T\le n\varepsilon^2$ yields $R(P)\le n\varepsilon^2$. Together with positivity of $\varepsilon$ and $\delta$, this is precisely Definition 2.2. $\square$
 
-### 3.2 Effective Rank Properties
+The criterion gives an explicit sufficient sample threshold. Whenever $\varepsilon>0$,
 
-**Theorem 3.5** (Rank Lower Bound). For all layers: rᵢ ≥ 1.
+$$
+n\ge\frac{T}{\varepsilon^2}
+$$
 
-*Proof.* Since Fᵢ ≥ σᵢ > 0, we have Fᵢ/σᵢ ≥ 1, hence (Fᵢ/σᵢ)² ≥ 1. □
+is sufficient, subject to integer rounding when selecting an actual sample count.
 
-**Theorem 3.6** (Total Rank Lower Bound). R_eff ≥ L.
+**Corollary 3.3 (Confidence-specialized compression criterion).** Suppose $\varepsilon>0$ and $\delta>0$. If the posterior budget satisfies
 
-*Proof.* Sum of L terms, each ≥ 1, gives at least L. □
+$$
+J\le\log(1/\delta)
+$$
 
-**Theorem 3.7** (Rank-1 Characterization). rᵢ = 1 iff Fᵢ = σᵢ.
+and the structural and confidence budgets satisfy
 
-### 3.3 Compression Properties
+$$
+B+\log(1/\delta)\le n\varepsilon^2,
+$$
 
-**Theorem 3.8** (Monotonicity in Compression). More bits yield a (weakly) larger gap:
-if k₁ ≤ k₂ then gap(k₁,n,δ) ≤ gap(k₂,n,δ).
+then $P$ generalizes at scale $(\varepsilon,\delta)$.
 
-### 3.4 SCC Generalization Bound
+**Proof sketch.** Since $T=B+J$, the posterior inequality gives
 
-**Theorem 3.9** (Consistency). The SCC-based generalization bound:
+$$
+T\le B+\log(1/\delta).
+$$
 
-$$\text{bound}(P, n, \delta) = \sqrt{\frac{\text{SCC}(P) \cdot \ln(2n)}{n} + \frac{\ln(1/\delta)}{n}}$$
+The second hypothesis therefore implies $T\le n\varepsilon^2$, and Theorem 3.2 applies. $\square$
 
-converges to zero as n → ∞ for any fixed profile P and confidence δ > 0.
+No restriction such as $\delta<1$ is needed for the algebraic implication itself. In the usual probabilistic interpretation one takes $0<\delta<1$, ensuring $\log(1/\delta)>0$ and identifying $\delta$ as a failure probability.
 
-*Proof sketch.* The argument of sqrt is O(log(n)/n) → 0, and sqrt is continuous at 0 with sqrt(0) = 0. The convergence of log(n)/n → 0 follows from the fact that log grows slower than any positive power of n. □
+## 4. Square-root radii and strict improvement
 
-### 3.5 The Double Descent Theorem
+**Definition 4.1 (Complexity radius).** For real complexity $x$ and real sample count $s$, define
 
-**Theorem 3.10** (Double Descent Algebraic). For any sample size n ≥ 1, margin γ > 0, and confidence δ ∈ (0,1), there exist spectral profiles P₁ and P₂ such that:
-1. P₁.margin = P₂.margin = γ
-2. R_eff(P₁) < R_eff(P₂) (P₂ has more "parameters")
-3. bound(P₂, n, δ) < bound(P₁, n, δ) (P₂ generalizes better)
+$$
+\rho(x,s)=\sqrt{\frac{x}{s}}.
+$$
 
-*Proof.* Take P₁ as a 2-layer network with spectral norms = 10 and Frobenius norms = 10 (rank-1 matrices). Take P₂ as a 1-layer network with spectral norm = 1 and Frobenius norm = 10 (effective rank 100). Then:
-- R_eff(P₁) = 2 × (10/10)² = 2
-- R_eff(P₂) = (10/1)² = 100
-- SCC(P₁) = 4 × 2 × (100/γ)² = 80,000/γ²
-- SCC(P₂) = 1 × 100 × (1/γ)² = 100/γ²
+The statistical interpretation assumes $x\ge0$ and $s>0$.
 
-Since 100/γ² < 80,000/γ², the bound for P₂ is strictly smaller. □
+**Theorem 4.2 (Budget-to-radius conversion).** Let $P$ have positive integer sample size $n$. If $\varepsilon\ge0$ and
 
-This theorem demonstrates that the SCC framework naturally produces the double descent phenomenon: a network with 50× more effective parameters can have an 800× tighter generalization bound.
+$$
+R(P)\le n\varepsilon^2,
+$$
 
-## 4. Algorithms
+then
 
-### 4.1 SCC Computation
+$$
+\rho(R(P),n)\le\varepsilon.
+$$
 
-Given a trained neural network, the SCC can be computed as follows:
+**Proof sketch.** Positivity of $n$ permits division of the budget inequality by $n$, giving $R(P)/n\le\varepsilon^2$. The square-root function is monotone on nonnegative values, and $\sqrt{\varepsilon^2}=\varepsilon$ because $\varepsilon\ge0$. Hence $\sqrt{R(P)/n}\le\varepsilon$. $\square$
 
-```
-Algorithm: ComputeSCC
-Input: Weight matrices W₁, ..., W_L, margin γ
-Output: SCC value
+This theorem explains the familiar scaling $\rho\asymp\sqrt{R/n}$. At fixed complexity, multiplying the sample size by four halves the radius. At fixed sample size, reducing complexity by a factor of four also halves it.
 
-1. For each layer i = 1, ..., L:
-   a. σᵢ ← largest singular value of Wᵢ
-   b. Fᵢ ← Frobenius norm of Wᵢ
-   c. rᵢ ← (Fᵢ/σᵢ)²
-2. R_eff ← Σᵢ rᵢ
-3. C_spec ← (∏ᵢ σᵢ) / γ
-4. Return L² × R_eff × C_spec²
-```
+**Theorem 4.3 (Strict compression improvement).** Let $x$ and $y$ be real complexity values and let $s>0$. If
 
-Time complexity: O(Σᵢ dᵢ × dᵢ₊₁ × min(dᵢ, dᵢ₊₁)) for the SVD computations, where dᵢ is the width of layer i.
+$$
+0\le x<y,
+$$
 
-### 4.2 SCC-Regularized Training
+then
 
-The SCC suggests a principled regularization strategy:
+$$
+\rho(x,s)<\rho(y,s).
+$$
 
-```
-Algorithm: SCC-Regularized SGD
-Input: Network f, data (X,Y), learning rate η, regularization λ
-1. For each mini-batch:
-   a. Compute gradient g ← ∇ℓ(f(X), Y)
-   b. Compute SCC(f)
-   c. Update: W ← W - η(g + λ · ∇_W SCC(f))
-```
+**Proof sketch.** Division by the positive number $s$ preserves strict order, so $x/s<y/s$. Since $x/s\ge0$, strict monotonicity of the square-root function yields the claim. $\square$
 
-The gradient of SCC can be computed efficiently via the chain rule applied to SVDs.
+Thus every genuine reduction in certified complexity produces a genuine improvement in the radius. The result does not depend on the magnitude of the sample size, only on its positivity.
 
-## 5. Discussion
+## 5. Architecture-sensitive complexity
 
-### 5.1 Comparison with Existing Bounds
+### 5.1 Retained architecture summaries
 
-| Bound Type | Complexity Measure | Width-Independent? |
-|---|---|---|
-| VC dimension | O(pL) | No |
-| Rademacher | O(∏σᵢ · √(Σrᵢ)/γ) | Yes |
-| PAC-Bayes | O(KL(Q‖P)/n) | Depends on prior |
-| **SCC (ours)** | O(L² · R_eff · (∏σᵢ/γ)²) | Yes |
+**Definition 5.1 (Architecture summary).** A finite architecture summary consists of layer widths
 
-The SCC bound is tighter than the Rademacher bound when L is small (since it has L² instead of no depth dependence in the Rademacher factor), and is more interpretable than PAC-Bayes bounds because it depends on observable network properties rather than a choice of prior.
+$$
+(w_1,\ldots,w_L),
+$$
 
-### 5.2 The Role of Depth
+an ambient parameter count $d$, and an active parameter count $a$, with $a\le d$. Its retained structural complexity is
 
-The L² factor in SCC penalizes depth, reflecting the compositional nature of deep networks. However, deeper networks often achieve smaller spectral norms per layer (each layer only needs to perform a small transformation), so the total SCC can decrease with depth even as L² increases. This is consistent with the empirical observation that deeper networks generalize better when properly trained.
+$$
+S(A)=a+\sum_{\ell=1}^{L}w_\ell.
+$$
 
-### 5.3 Connection to Implicit Regularization
+The active parameters are those retained by a compression certificate. The width sum supplies a simple charge for recording the layer structure. This choice is intentionally transparent rather than universally optimal; an application can replace it with any certified upper bound on $q+c$.
 
-The "edge of stability" phenomenon — where gradient descent maintains the largest Hessian eigenvalue near 2/η — can be understood through the SCC lens. Since the Hessian eigenvalue is related to the product of squared spectral norms, maintaining stability implicitly bounds the spectral complexity. This provides a mechanistic explanation for why SGD-trained networks have bounded SCC even without explicit regularization.
+**Theorem 5.2 (Architecture-to-sample-complexity bridge).** Let $P$ have sample size $n$, and let $A$ be an architecture summary. Suppose $\varepsilon>0$, $\delta>0$, and
 
-## 6. Future Work
+$$
+q+c\le S(A),
+$$
 
-1. **Data-dependent SCC bounds**: Incorporate the training data distribution into the SCC, potentially through Fisher information or empirical Rademacher complexity.
+$$
+K\le\kappa.
+$$
 
-2. **Architecture-specific bounds**: Derive SCC bounds for specific architectures (transformers, convnets, residual networks) that exploit structural constraints.
+If
 
-3. **Optimization dynamics**: Prove that gradient descent on overparameterized networks converges to solutions with bounded SCC, completing the story from training to generalization.
+$$
+S(A)+\kappa\le n\varepsilon^2,
+$$
 
-4. **Double descent sharpness**: Characterize the exact location and height of the double descent peak in terms of the SCC.
+then $P$ generalizes at scale $(\varepsilon,\delta)$.
 
-## 7. References
+**Proof sketch.** Adding the first two hypotheses gives
 
-- Bartlett, P.L., Foster, D.J., and Telgarsky, M.J. (2017). Spectrally-normalized margin bounds for neural networks. *NeurIPS*.
-- Belkin, M., Hsu, D., Ma, S., and Mandal, S. (2019). Reconciling modern machine learning practice and the classical bias–variance trade-off. *PNAS*.
-- Catoni, O. (2007). PAC-Bayesian supervised classification. *Lecture Notes-Monograph Series*, IMS.
-- Cohen, J., Kaur, S., Li, Y., Kolter, J.Z., and Talwalkar, A. (2021). Gradient descent on neural networks typically occurs at the edge of stability. *ICLR*.
-- McAllester, D.A. (1999). PAC-Bayesian model averaging. *COLT*.
-- Neyshabur, B., Bhojanapalli, S., McAllester, D., and Srebro, N. (2017). Exploring generalization in deep nets. *NeurIPS*.
-- Arora, S., Ge, R., Neyshabur, B., and Zhang, Y. (2018). Stronger generalization bounds for deep nets via a compression approach. *ICML*.
+$$
+R(P)=q+c+K\le S(A)+\kappa.
+$$
+
+The sample-budget hypothesis then gives $R(P)\le n\varepsilon^2$. Positivity of $\varepsilon$ and $\delta$ completes Definition 2.2. $\square$
+
+**Corollary 5.3 (Explicit sample threshold).** Under the hypotheses controlling $q+c$ and $K$, any integer sample size satisfying
+
+$$
+n\ge\frac{S(A)+\kappa}{\varepsilon^2}
+$$
+
+meets the budget condition, provided $\varepsilon>0$.
+
+**Proof sketch.** Multiply the displayed inequality by the positive quantity $\varepsilon^2$ to obtain $S(A)+\kappa\le n\varepsilon^2$, then apply Theorem 5.2. $\square$
+
+The theorem distinguishes available parameters from retained parameters. If pruning reduces $a$ while preserving the predictor and its posterior budget, the certified numerator decreases. If a wider architecture adds inactive channels without changing $a$ or the width-description convention used in the certificate, its ambient parameter count can grow without affecting the effective rate. When added widths must themselves be described, their cost should be included honestly in $S(A)$; invariance applies only to changes that leave all certified effective terms unchanged.
+
+### 5.2 Numerical illustration
+
+Take layer widths $(100,50,10)$, active count $a=240$, posterior allowance $\kappa=90$, and sample size $n=4{,}000$. Then
+
+$$
+S(A)=240+100+50+10=400,
+$$
+
+and the total numerator is at most $490$. The radius is bounded by
+
+$$
+\sqrt{\frac{490}{4000}}=0.35.
+$$
+
+If an improved compression procedure reduces the active count to $80$ while leaving all other terms fixed, the structural complexity becomes $240$ and the radius becomes
+
+$$
+\sqrt{\frac{330}{4000}}\approx0.2872.
+$$
+
+The strict improvement is guaranteed by Theorem 4.3. These calculations illustrate conditional consequences of certified budgets; they do not establish that a specific empirical network has those budgets without an accompanying coding and posterior analysis.
+
+## 6. Overparameterization invariance
+
+**Definition 6.1 (Ambient overparameterization).** For a nonnegative integer $k$, the $k$-fold ambient enlargement of
+
+$$
+P=(d,q,c,K,n)
+$$
+
+is
+
+$$
+P^{+k}=(d+k,q,c,K,n).
+$$
+
+Only the raw parameter dimension changes.
+
+**Theorem 6.2 (Certificate preservation under ambient enlargement).** If $C$ is a compression–posterior certificate for $P$, then for every $k\ge0$ there is a certificate for $P^{+k}$ with exactly the same structural budget, posterior budget, and total budget. Consequently, every generalization guarantee derived from $C$ is also valid for $P^{+k}$.
+
+**Proof sketch.** The defining certificate inequalities mention $q$, $c$, and $K$, all of which are unchanged by ambient enlargement. Hence the same $B$ and $J$ satisfy the same inequalities. The sample size is also unchanged, so a bound $B+J\le n\varepsilon^2$ remains true. Theorem 3.2 then supplies the same guarantee. $\square$
+
+This theorem is exact but conditional. It does not say that arbitrary widening preserves the learned function or its certificate. It says that if widening changes only ambient dimension—for example, by adding provably unused coordinates—then ambient dimension alone creates no penalty.
+
+**Theorem 6.3 (Arbitrarily overparameterized profiles with fixed nonzero complexity).** Let $n,e$ be nonnegative integers and let $\varepsilon>0$ and $\delta>0$. If
+
+$$
+1\le n\varepsilon^2,
+$$
+
+then there exists an effective-complexity profile $P$ such that
+
+$$
+d=n+e+1,
+$$
+
+$$
+R(P)=1,
+$$
+
+$$
+d>n,
+$$
+
+and $P$ generalizes at scale $(\varepsilon,\delta)$.
+
+**Proof sketch.** Choose
+
+$$
+P=(n+e+1,1,0,0,n).
+$$
+
+Then $R(P)=1+0+0=1$. Since $e\ge0$, $n+e+1>n$. The assumed inequality $1\le n\varepsilon^2$ is exactly the required effective-complexity budget. Together with $\varepsilon>0$ and $\delta>0$, it proves the claim. $\square$
+
+Because $e$ is arbitrary, the ratio or difference between ambient dimension and sample size can grow without changing effective complexity. This construction establishes a logical separation: no theorem depending only on the inequality $d>n$ can conclude failure of every effective-complexity certificate.
+
+## 7. Algorithms
+
+### 7.1 Certificate evaluation
+
+Given $(q,c,K,n)$, budgets $(B,J)$, and target $(\varepsilon,\delta)$, a certificate evaluator performs four checks:
+
+1. verify $q+c\le B$;
+2. verify $K\le J$ and $K\ge0$;
+3. compute $T=B+J$;
+4. test $\varepsilon>0$, $\delta>0$, and $T\le n\varepsilon^2$.
+
+The procedure uses constant arithmetic time once the summary values are available. Its output is only as sound as the supplied component bounds; deriving $q$, $c$, or $K$ may be the dominant application-specific computation.
+
+### 7.2 Architecture budgeting
+
+For widths $(w_1,\ldots,w_L)$ and active count $a$, compute
+
+$$
+S=a+\sum_{\ell=1}^{L}w_\ell.
+$$
+
+Then add a posterior allowance $\kappa$, compute the radius $\sqrt{(S+\kappa)/n}$ for $n>0$, and compute the minimum integer sample count
+
+$$
+\left\lceil\frac{S+\kappa}{\varepsilon^2}\right\rceil.
+$$
+
+The runtime is $O(L)$ and the auxiliary space is $O(1)$ apart from storing the width list.
+
+### 7.3 Compression comparison
+
+For candidate certified complexities $x_1,\ldots,x_m$ at a common positive sample size $n$, compute each radius $\sqrt{x_i/n}$ and rank candidates by $x_i$. Because square root and division by $n$ are strictly increasing on nonnegative inputs, ranking by complexity and ranking by radius are identical. The computation takes $O(m)$ time, or $O(m\log m)$ if a full sorted ordering is required.
+
+## 8. Applications and interpretation
+
+The framework applies whenever one can supply honest bounds on its three effective terms.
+
+**Pruning and sparsification.** A sparse subnetwork can reduce active count and code length. The architecture theorem turns those reductions into a smaller sufficient sample budget, provided the cost of describing locations and values is included.
+
+**Quantization.** Replacing high-precision weights with a finite alphabet can reduce code length. If predictive behavior is preserved and the quotient term is unchanged, Theorem 4.3 yields a strictly smaller radius.
+
+**Symmetry reduction.** Hidden-unit permutations, positive-homogeneous rescalings, or other equivalences can place many parameter vectors in one functional class. Coding the class rather than a raw vector can lower $q$.
+
+**Prior-informed learning.** A prior centered on reusable structure can reduce posterior divergence $K$ when the learned posterior remains nearby. The confidence-specialized criterion then combines this information advantage with compression.
+
+**Safe widening.** Identity channels, zero residual channels, or dormant coordinates can enlarge the parameterization while preserving a predictor and its effective certificate. Theorem 6.2 formalizes why such widening does not automatically worsen a complexity bound.
+
+These applications share a caution. A raw network does not arrive with a small certificate merely because it is large, sparse-looking, or easy to describe informally. The quotient relation, code, posterior, and all associated inequalities must be specified and justified. The present results then compose those ingredients without adding hidden dependence on ambient dimension.
+
+## 9. Discussion and limitations
+
+The framework's strength is modularity. Compression and PAC-Bayes analyses can be developed separately, then joined through addition. Architecture appears through a certified structural summary rather than a universal parameter-count heuristic. Overparameterization is treated as an explicit transformation, making clear exactly which quantities must remain fixed for invariance.
+
+The same modularity marks the limits of the results. First, the framework does not derive a loss-specific stochastic generalization inequality; it captures the numerical core that remains once such an inequality is available. Second, it does not show that a training algorithm will discover a low-complexity solution. Third, the additive budget may be conservative. Compression and posterior information can encode overlapping structure, and a sharper theory might use a minimum or a joint code rather than their sum. Fourth, the architecture summary $a+\sum w_\ell$ is one sufficient proxy, not a uniquely optimal measure. Finally, an ambient enlargement that changes optimization dynamics, posterior divergence, or functional behavior falls outside the invariance theorem.
+
+These limitations prevent an overly broad conclusion. The results do not claim that all overparameterized networks generalize. They prove that overparameterization alone is compatible with generalization, and that valid effective-complexity certificates are insensitive to parameters that do not alter their ingredients.
+
+## 10. Future work
+
+Several extensions are natural. Layerwise codes may compose subadditively, with strict savings when adjacent layers share symmetry. Margin information may control quotient complexity for positively homogeneous classifiers. Compression length and posterior divergence may admit a minimum principle when both describe the same posterior. Residual networks may support width-independent bounds under controlled path norms. Finally, free actions of finite symmetry groups should produce explicit savings proportional to the logarithm of group order.
+
+Each direction asks for more than algebra: it requires a concrete construction connecting network function, data, code, and posterior. If established, the resulting bounds would plug directly into the certificate and radius theorems developed here.
+
+## 11. Worked confidence calculation
+
+Consider a profile with quotient complexity $q=120$, code length $c=180$, posterior divergence $K=40$, and sample size $n=10{,}000$. A structural certificate may take $B=300$, while a posterior certificate may take $J=40$. The total certified budget is therefore
+
+$$
+T=300+40=340.
+$$
+
+Theorem 3.1 gives $R(P)\le340$; in this example equality holds because $R(P)=120+180+40=340$. The associated radius is
+
+$$
+\rho(R(P),n)=\sqrt{\frac{340}{10{,}000}}\approx0.1844.
+$$
+
+Thus every target $\varepsilon\ge0.1844$ meets the square-root budget. For example, $\varepsilon=0.2$ gives
+
+$$
+T=340\le10{,}000(0.2)^2=400.
+$$
+
+For a confidence specialization with $\delta=0.01$, one has $\log(1/\delta)=\log(100)\approx4.605$. A posterior allowance $J=40$ would not satisfy $J\le\log(100)$, so that particular confidence certificate would fail even though the generic certificate succeeds. This distinction illustrates why component checks must not be skipped: a total numerical budget does not retroactively establish a stronger, specifically structured posterior bound.
+
+Now suppose a better prior lowers the posterior divergence and its certified allowance $J$ to $4$ while the structural budget remains $300$. The new total is $304$, the radius is approximately $0.1744$, and the confidence inequality $4\le\log(100)$ holds. Since
+
+$$
+300+\log(100)\approx304.605\le400,
+$$
+
+Corollary 3.3 certifies the target scale $(0.2,0.01)$. This example shows the complete pipeline: verify each component, aggregate the permitted budgets, compare with the sample–accuracy product, and only then interpret the resulting radius and confidence.
+
+## 12. Conclusion
+
+Generalization budgets for neural networks need not scale with every available parameter. Quotient complexity, code length, and posterior divergence combine into an effective complexity that is upper-bounded by a simultaneous certificate. A certificate below $n\varepsilon^2$ yields the target scale, and strict compression strictly improves the associated square-root radius. Retained architecture supplies a direct sample-complexity bridge, while ambient enlargement preserves all certificate-derived guarantees when effective terms remain unchanged. Explicit profiles with fixed nonzero complexity and arbitrarily large parameter surplus show why raw dimension cannot by itself settle the generalization question. The decisive quantity is not the size of the space a network could use, but the certified information required to identify the predictor it actually uses.
