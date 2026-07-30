@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1443bb24",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ances",
-      "quality_score": 0.7907,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-27T13:44:25",
-      "title": "Causal Inference: Do-Calculus as Formal Logic"
-    },
-    {
       "cycle_id": "a68d3b50",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThe completed development establishes two reusable foundations: an operational\nbound translating finite `ℓ¹` game distance into advantage for every bounded or\nBoolean distinguishe",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-30T18:57:54",
       "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+    },
+    {
+      "cycle_id": "177b02a7",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n- Specify a complete finite-horizon Werewolf stochastic game: hidden role assignments, public histories, night actions, day ballots, behavioural strategies, and terminal win event",
+      "quality_score": 0.73659,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-30T19:18:48",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ea115bd0",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Renormalized zeta harmonic convergence\n\nDefine the multiplicity-sensitive, conjugate-symmetric sum\n`H(T) = Σ_{|Im ρ|≤T} 1/ρ` and determine an expl",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-21T22:19:10",
-      "title": "Speculative: Number Theory as Music Theory"
-    },
     {
       "cycle_id": "a4c98532",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-07-30T18:57:54",
       "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
+    },
+    {
+      "cycle_id": "177b02a7",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n- Specify a complete finite-horizon Werewolf stochastic game: hidden role assignments, public histories, night actions, day ballots, behavioural strategies, and terminal win event",
+      "quality_score": 0.73659,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-30T19:18:48",
+      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2996b72f",
-      "domain": "Shared",
-      "name": "harmonic_cast",
-      "quality": 0.77621
-    },
-    {
-      "cycle_id": "2996b72f",
-      "domain": "Shared",
-      "name": "sum_log_telescope",
-      "quality": 0.77621
-    },
-    {
-      "cycle_id": "6ef427dd",
-      "domain": "Bridges",
-      "name": "in",
-      "quality": 0.7636799999999999
-    },
     {
       "cycle_id": "6ef427dd",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "landauerCost_family_lower_bound",
       "quality": 0.73827
+    },
+    {
+      "cycle_id": "177b02a7",
+      "domain": "Probability",
+      "name": "sum_posterior_eq_one",
+      "quality": 0.73659
+    },
+    {
+      "cycle_id": "177b02a7",
+      "domain": "Probability",
+      "name": "posterior_le_of_score_le",
+      "quality": 0.73659
+    },
+    {
+      "cycle_id": "177b02a7",
+      "domain": "Probability",
+      "name": "map_elimination_optimal",
+      "quality": 0.73659
     }
   ],
-  "last_updated": "2026-07-30T18:57:54",
+  "last_updated": "2026-07-30T19:18:48",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "642478f0",
-        "quality": 0.77,
-        "theorems": 3,
-        "title": "Conjecture: there are natural state spaces in which functional observation forms"
-      },
-      {
         "cycle_id": "73ec6b88",
         "quality": 0.58,
         "theorems": 24,
@@ -3823,6 +3817,12 @@
         "quality": 0.686,
         "theorems": 35,
         "title": "Deepening: EML Information Geometry: Fisher Information of exp-log Models"
+      },
+      {
+        "cycle_id": "177b02a7",
+        "quality": 0.73659,
+        "theorems": 8,
+        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
       }
     ],
     "Pythagorean": [

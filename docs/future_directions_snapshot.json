@@ -12206,7 +12206,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "692c3b94",
     "description": "# Future Directions\n\n## What is proved\n\nThe four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensional theory for a three-term cellular chain complex over any field. In the middle degree, if `d₁ ∘ d₂ = 0`, then\n\n`β₁ + rank(d₁) + rank(d₂) = dim(C₁)`.\n\nThey derive exact criteria for nonzero, vanishing, and maximal middle homology; prove that every quotient class lifts to a cellular cycle; count activation patterns; and establish monotone cell-count bounds. The Euler–Poincaré development additionally proves\n\n`dim(H₀) - dim(H₁) + dim(H₂) = dim(C₀) - dim(C₁) + dim(C₂)`,\n\nshows that this integer is independent of the differentials once the chain-group dimensions are fixed, and bounds its absolute value by the total chain dimension. Under a common activation-pattern bound `P` on all three chain dimensions, it obtains `|χ| ≤ 3P`. Taking the field to be `ℚ` gives the rational cellular statements relevant to finite polyhedral decision surfaces.\n\n## Mathematical correction to the motivating conjecture\n\nA general ReLU zero set is a real, usually noncompact, piecewise-linear set. It is not automatically a smooth complex projective variety, so classical Hodge numbers `h^{p,q}` are not canonically defined for it. Moreover, a polyhedral face is contained in an affine hyperplane but is generally not itself an algebraic subvariety or a global hyperplane section. Thus the classical Hodge conjecture cannot literally be declared trivial for neural-network decision surfaces.\n\nThe theorem proved here is the rigorous replacement that is available without extra geometric hypotheses: cellular homology classes are represented by cellular cycles, and their dimensions obey an exact rank formula. Calling these cellular generators “algebraic cycles” requires an additional, separately formalized realization map and should not be inferred merely from linear containment of each face.\n\n## Next formal targets\n\n1. **Finite polyhedral complexes.** Define a finite rational polyhedral complex and its cellular boundary maps, then instantiate the abstract theorem in every degree.\n2. **ReLU-to-complex construction.** Formalize affine ReLU networks, activation regions, and a finite polyhedral complex for a compact truncation of the zero set. Prove the boundary-square-zero law.\n3. **Locally finite or compactly supported theories.** Unbounded decision surfaces need locally finite homology, compactly supported cohomology, or a specified compactification; ordinary finite cellular homology is not enough.\n4. **Realization map.** Define an explicit cycle class map from rational polyhedral cycles into a chosen geometric cohomology theory. Only then can surjectivity be called a Hodge-type representability theorem.\n5. **Architecture bounds.** Prove bounds on the number of cells in each dimension from network architecture. The activation-pattern count `2^(sum widths)` is valid as a coarse combinatorial ceiling, but a proposed binomial bigrading needs a definition of the bigraded invariant before it is a meaningful theorem.\n6. **Sharp examples.** Construct network families whose cellular boundary ranks are computable and compare actual Betti numbers with cell-count bounds. The exact criterion in this development reduces this to determining two adjacent differential ranks.\n7. **Stability.** Study how the rank criterion changes under perturbations of weights and biases, especially across parameter values where activation complexes change combinatorial type.\n",
     "domain_bridges": [],
     "domains": [
@@ -12219,7 +12219,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "c58345ac",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T05:39:19.230565+00:00",
     "title": "The four files in `MachineLearning/HodgeCycles/` give a complete finite-dimensio"
   },
@@ -14879,6 +14879,26 @@
     "status": "available",
     "timestamp": "2026-07-30T18:57:50.746259+00:00",
     "title": "The following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. E"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Specify a complete finite-horizon Werewolf stochastic game: hidden role assignments, public histories, night actions, day ballots, behavioural strategies, and terminal win events.\n- Distinguish the proved one-step MAP objective from optimal control of the full game. A full-game theorem must account for the effect of an elimination on future information and actions; one-step MAP optimality alone does not establish global optimality.\n- Choose an explicit likelihood model for voting and survival evidence. Without such a model, neither the numerical value `0.36` nor a simulation of “Bayesian villagers” is mathematically determined.\n- Once a transition and observation model is fixed, define the value function by backward induction and compare its optimal action against the maximum-posterior action at every reachable information state. This can prove global MAP optimality for the chosen model or produce a certified counterexample.\n- Implement an independently reproducible simulation only after fixing tie-breaking, wolf strategy, villager voting policy, role revelation, day/night order, and likelihood estimation. Report confidence intervals rather than only point estimates.\n- Test the proposed scaling law across several values of `k` for each `n`, estimate the information-structure constant separately from the exponent, and compare against alternative finite-size models. The exact theorem in `BayesianWerewolf.lean` shows that the factor equals `9/25 = 0.36` at `(n,k)=(7,2)` when `C=1`, and vanishes at the parity threshold `n=2k`; these identities do not by themselves establish the conjectured approximation.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_0853",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "177b02a7",
+    "status": "available",
+    "timestamp": "2026-07-30T19:18:43.969055+00:00",
+    "title": "Future directions from cycle 177b02a7"
   },
   {
     "ambition_level": "extension",
