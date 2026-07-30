@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1f5ea34f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture → Al",
-      "quality_score": 0.77698,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-26T23:20:00",
-      "title": "EML Number Theory: Transcendence and Algebraic Independence"
-    },
-    {
       "cycle_id": "060e882c",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n## Topological realization of the classification theorem\n\nThe completed result classifies **connected groupoids**, hence connected homotopy 1-types, by the automorphism group at a",
@@ -499,19 +489,19 @@
       "theorem_count": 28,
       "timestamp": "2026-07-30T14:42:57",
       "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    },
+    {
+      "cycle_id": "e1e4ff02",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n1. **Derive the tropical model from finite-temperature EML training.** Define a\n   log-sum-exp-smoothed neuron with scale parameter and prove convergence of its\n   losses and grad",
+      "quality_score": 0.76074,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-30T17:59:48",
+      "title": "EML Training Dynamics as Tropical Gradient Flow"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2fdbedee",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces\n\n## 1. Quasi-invariance of critical indices under efficient recoding\n\nLet two prefix-free encodings of the same deductive system translat",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-21T16:50:02",
-      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-    },
     {
       "cycle_id": "279ae676",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-07-30T16:58:04",
       "title": "Quantum Gravity as Topological Quantum Field Theory"
+    },
+    {
+      "cycle_id": "e1e4ff02",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n1. **Derive the tropical model from finite-temperature EML training.** Define a\n   log-sum-exp-smoothed neuron with scale parameter and prove convergence of its\n   losses and grad",
+      "quality_score": 0.76074,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-30T17:59:48",
+      "title": "EML Training Dynamics as Tropical Gradient Flow"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "42454fab",
-      "domain": "Combinatorics",
-      "name": "rather",
-      "quality": 0.7628999999999999
-    },
-    {
-      "cycle_id": "42454fab",
-      "domain": "Combinatorics",
-      "name": "sup_id_isGreatest",
-      "quality": 0.7628999999999999
-    },
-    {
-      "cycle_id": "89e28e84",
-      "domain": "Algebra",
-      "name": "sunset_weights_sum",
-      "quality": 0.78874
-    },
     {
       "cycle_id": "89e28e84",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "pow_two_mem_divisibilityIdeal",
       "quality": 0.80162
+    },
+    {
+      "cycle_id": "e1e4ff02",
+      "domain": "Applications",
+      "name": "identifies",
+      "quality": 0.76074
+    },
+    {
+      "cycle_id": "e1e4ff02",
+      "domain": "Applications",
+      "name": "median_minimizes",
+      "quality": 0.76074
+    },
+    {
+      "cycle_id": "e1e4ff02",
+      "domain": "Applications",
+      "name": "loss_strict_left",
+      "quality": 0.76074
     }
   ],
-  "last_updated": "2026-07-30T16:58:04",
+  "last_updated": "2026-07-30T17:59:48",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b4f06498",
-        "quality": 0.57,
-        "theorems": 16,
-        "title": "ArXiv paper: Ranks of Elliptic Curves Twisted by Quadratic Forms"
-      },
-      {
         "cycle_id": "b519e277",
         "quality": 0.63,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.686,
         "theorems": 38,
         "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+      },
+      {
+        "cycle_id": "e1e4ff02",
+        "quality": 0.76074,
+        "theorems": 15,
+        "title": "EML Training Dynamics as Tropical Gradient Flow"
       }
     ],
     "Bridges": [

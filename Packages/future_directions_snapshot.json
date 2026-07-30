@@ -4030,6 +4030,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e1e4ff02 (Q=0.761), which proved 15 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize t",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e1e4ff02_a5044a06",
+    "lineage_refs": [],
+    "priority_score": 0.86074,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e1e4ff02",
+    "status": "available",
+    "timestamp": "2026-07-30T17:59:48.900810+00:00",
+    "title": "Deepening: EML Training Dynamics as Tropical Gradient Flow"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -4591,7 +4610,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46cb7ee6",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -4604,7 +4623,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -5463,27 +5482,6 @@
     "status": "in_progress",
     "timestamp": "",
     "title": "Quantum Topological Phase Computation"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e1e4ff02",
-    "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Tropical",
-      "MachineLearning"
-    ],
-    "id": "seed_071",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Training Dynamics as Tropical Gradient Flow"
   },
   {
     "ambition_level": "extension",
@@ -14821,6 +14819,26 @@
     "status": "available",
     "timestamp": "2026-07-30T14:42:53.780398+00:00",
     "title": "The proposed powers-of-two family is a **strictly descending**, separated"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Derive the tropical model from finite-temperature EML training.** Define a\n   log-sum-exp-smoothed neuron with scale parameter and prove convergence of its\n   losses and gradient trajectories to the piecewise-linear flow formalized here.\n\n2. **Pass from a scalar chart to the tropical projective torus.** Quotient weight\n   vectors by common translation, define a projective metric, and show the flow\n   is independent of the representative.\n\n3. **More samples and weighted data.** Generalize the three-point theorem to odd\n   finite samples (the median) and weighted samples (weighted median), including\n   even samples where the minimizer is an interval and trajectories may have\n   multiple fixed points.\n\n4. **Multiple tropical neurons.** Study sums and differences of max-affine terms,\n   where activation patterns partition parameter space into polyhedra. Establish\n   existence and convergence results under convexity or error-bound hypotheses.\n\n5. **Discrete training.** Analyze explicit subgradient descent with a step-size\n   schedule and compare it to the continuous clipped flow. Constant steps can\n   oscillate around the median, while diminishing steps should converge under\n   standard summability assumptions.\n\n6. **Perturbation and robustness.** Quantify stability of the limiting median\n   under changes in labels and tropical features, connecting training stability\n   to robust statistics.\n\n7. **Loss alternatives.** Compare tropical `L¹` training with squared loss and\n   Huber loss. Their minimizers connect respectively to means and robust\n   interpolations between means and medians, but their tropical-limit dynamics\n   differ.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_0847",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e1e4ff02",
+    "status": "available",
+    "timestamp": "2026-07-30T17:59:44.982119+00:00",
+    "title": "1. **Derive the tropical model from finite-temperature EML training.** Define a"
   },
   {
     "ambition_level": "extension",
