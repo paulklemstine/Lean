@@ -1063,26 +1063,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Prove that every Hodge class on a non-singular projective algebraic variety is a rational linear combination of classes of algebraic cycles. Formalize the Hodge decomposition and explore the conjecture for specific varieties like abelian varieties and K3 surfaces.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_014",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hodge Conjecture"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domain_bridges": [],
     "domains": [
@@ -1137,46 +1117,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697769+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_004",
-    "lineage_refs": [],
-    "priority_score": 0.93,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Twin Prime Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "seed_097",
-    "lineage_refs": [],
-    "priority_score": 0.93,
-    "proof_strategy": "Define Collatz hash H_k(x) = T^k(x) mod 2^256. Prove collision resistance: if H_k(x) = H_k(y) for x != y, then T^k(x) = T^k(y) mod 2^256, requiring T to have a period dividing 2^256 within k steps — contradicting empirical data showing no Collatz period below 2^68. Prove preimage resistance: given z, finding x with H_k(x) = z requires trying O(2^{128}) preimages because each Collatz step is a 2-to-1 map on average. Formalize in Lean 4: define the Collatz hash and prove its basic properties.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
   {
     "ambition_level": "extension",
@@ -1480,6 +1420,25 @@
     "status": "in_progress",
     "timestamp": "",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 7c352e1f (Q=0.806), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (compl",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_7c352e1f_261f0be9",
+    "lineage_refs": [],
+    "priority_score": 0.90603,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7c352e1f",
+    "status": "available",
+    "timestamp": "2026-07-31T06:05:27.279191+00:00",
+    "title": "Deepening: Sheaf Cohomology of Data: The Topology of Missing Information"
   },
   {
     "ambition_level": "extension",
@@ -4923,7 +4882,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f63237d",
     "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
     "domain_bridges": [],
     "domains": [
@@ -4936,7 +4895,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
@@ -5608,7 +5567,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "972f5eac",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domain_bridges": [],
     "domains": [
@@ -5621,7 +5580,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sums of Three Cubes"
   },
@@ -5927,7 +5886,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50db037d",
     "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
     "domain_bridges": [],
     "domains": [
@@ -5940,7 +5899,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
@@ -6466,26 +6425,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Sensitivity Conjecture Extensions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that π, e, √2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Probability"
-    ],
-    "id": "seed_226",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Normality of Mathematical Constants"
   },
   {
     "ambition_level": "extension",
@@ -14558,6 +14497,66 @@
     "status": "available",
     "timestamp": "2026-07-30T14:42:53.780398+00:00",
     "title": "The proposed powers-of-two family is a **strictly descending**, separated"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal results show that a scalar missing rate and feature count do not determine first cohomology: restriction-map ranks and overlap incidence are essential. The following conjectures make the additional assumptions explicit and are falsifiable by finite simulation.\n\n1. **Random-incidence rank law.** Fix a finite field `𝔽_q`. For a specified random overlap hypergraph model and independently sampled restriction matrices conditioned on `d¹ ∘ d⁰ = 0`, the normalized obstruction dimension\n   `dim H¹ / dim C¹` converges in probability to a deterministic function of the hypergraph parameters and `q` as the number of features tends to infinity. This can be tested by enumerating finite matrices for small sizes and Monte Carlo sampling for larger sizes.\n\n2. **Failure of a universal missing-rate scaling law.** For every fixed missing rate `r ∈ (0,1)` and arbitrarily large feature counts, there are two data-generating models with the same marginal missingness probabilities but whose expected first-cohomology dimensions differ by a positive linear fraction of `n`. A counterexample would be a proof that marginal missingness alone forces asymptotically equal normalized dimensions.\n\n3. **Flag-nerve reduction.** In datasets whose overlap nerve is flag and whose restriction maps are linear, computing `H¹` from the full nerve gives the same result as computing it from the clique complex generated by pairwise overlaps. This should be checked on synthetic nerves by comparing the two coboundary matrices; a single flag nerve producing unequal dimensions would refute the conjecture.\n\n4. **Obstruction dimension predicts consistency failure.** Under an explicitly specified noisy linear observation model, after conditioning on identical sample size, feature count, missing rate, and noise variance, the probability that local observations admit an exact global patch is strictly decreasing in `dim H¹`. This can be tested by stratifying simulations by computed cohomology dimension.\n\n5. **Cohomological regularization versus scalar imputation.** For a fixed synthetic low-rank generative model with nontrivial overlap incidence, an estimator minimizing a weighted coboundary residual has lower held-out reconstruction error than mean imputation whenever `dim H¹ > 0`, but not necessarily when `dim H¹ = 0`. The claim is refuted by any preregistered parameter regime in which mean imputation has equal or lower expected error in the positive-`H¹` stratum.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0849",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7c352e1f",
+    "status": "available",
+    "timestamp": "2026-07-31T06:05:23.570575+00:00",
+    "title": "The formal results show that a scalar missing rate and feature count do not dete"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b`\n   cylinder intervals imply interval equidistribution of `fract (b^n x)`, first for\n   `b`-adic intervals and then for arbitrary intervals by approximation.\n2. **Weyl criterion.** Connect interval equidistribution to vanishing exponential\n   sums `N⁻¹ ∑_{n<N} exp(2π i m b^n x)` for every nonzero integer `m`.\n3. **Measure-theoretic normality.** Use ergodicity of the map `x ↦ fract (b*x)` and\n   a pointwise ergodic theorem to prove that almost every real is base-`b` normal.\n4. **Absolute normality.** Intersect the full-measure normality sets over all integer\n   bases to show that almost every real is absolutely normal.\n5. **Specific constants.** A proof for `π`, `e`, or `√2` would require genuinely new\n   number theory: normality of each in every familiar base remains open. Their known\n   transcendence or algebraicity does not by itself supply the exponential-sum bounds\n   needed by Weyl's criterion.\n6. **Algebraic independence boundary.** Formalize the limited implications currently\n   available between digit statistics and algebraic properties. Rational numbers are\n   not normal in any base, but it is unknown whether familiar algebraic irrationals\n   such as `√2` are normal. Transcendence, and even algebraic independence results,\n   do not by themselves provide the orbit estimates needed for normality of familiar\n   constants such as `π` and `e`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0850",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "70779ff4",
+    "status": "available",
+    "timestamp": "2026-07-31T06:06:55.586907+00:00",
+    "title": "1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Executable encoder.** Package the well-founded existence proof as a computable `encode : ℤ → List Bool`, then prove both round trips and derive certified addition and multiplication by decoding ordinary integer operations.\n2. **General negative radix.** Replace `-2` by an arbitrary radix `-b`, `b ≥ 2`, with digits `0,…,b-1`, and prove a canonical equivalence with `ℤ`.\n3. **Representation-length bounds.** Prove sharp logarithmic bounds on the length of the canonical expansion in terms of `Int.natAbs z`, including the exact intervals represented by strings of bounded length.\n4. **Normalization as rewriting.** Develop local carry rules such as replacing non-binary coefficients while preserving value, and prove termination and confluence toward the canonical representation.\n5. **Phinary arithmetic.** Formalize finite base-golden-ratio expressions with binary digits. Because `φ² = φ + 1`, unrestricted expansions are not unique; impose the standard no-consecutive-ones normalization and connect coefficients to Zeckendorf representations.\n6. **Gaussian negative/complex radices.** Relate the existing base-`i-1` Gaussian-integer result to a common Euclidean-radix framework encompassing negabinary, identifying a reusable norm-decrease criterion plus finitely many exceptional states.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0851",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "275a5749",
+    "status": "available",
+    "timestamp": "2026-07-31T06:08:08.446413+00:00",
+    "title": "1. **Executable encoder.** Package the well-founded existence proof as a computa"
   },
   {
     "ambition_level": "extension",

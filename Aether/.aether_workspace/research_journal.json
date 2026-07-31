@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9da9b807",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## Result formalized\n\n`Catalog/Geometry/JacobianConjecture/AffineWeylBridge.lean` proves an explicit\nconnection between the Jacobian and Dixmier settings in degree one.\n\nFor the a",
-      "quality_score": 0.7645199999999999,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-28T23:26:36",
-      "title": "Jacobian Conjecture"
-    },
-    {
       "cycle_id": "1a03af4c",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\nThe completed Lean development proves the unramified local symmetric-square transfer on Satake parameters. The following are concrete next statements whose truth can be checked ag",
@@ -499,19 +489,19 @@
       "theorem_count": 4,
       "timestamp": "2026-07-31T06:06:59",
       "title": "Normality of Mathematical Constants"
+    },
+    {
+      "cycle_id": "275a5749",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n1. **Executable encoder.** Package the well-founded existence proof as a computable `encode : ℤ → List Bool`, then prove both round trips and derive certified addition and multipl",
+      "quality_score": 0.75115,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-31T06:08:11",
+      "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3dce6722",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Dyson-Swarm Thermodynamic Optimization\n\n## 1. Strictly convex radiator laws\n\n**Conjecture.** For every strictly convex radiator-cost function, every finite swarm with fixed total",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-22T12:13:55",
-      "title": "Moonshot: Dyson Sphere Mathematics — Energy Collection Optimization"
-    },
     {
       "cycle_id": "227d6015",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 4,
       "timestamp": "2026-07-31T06:06:59",
       "title": "Normality of Mathematical Constants"
+    },
+    {
+      "cycle_id": "275a5749",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n1. **Executable encoder.** Package the well-founded existence proof as a computable `encode : ℤ → List Bool`, then prove both round trips and derive certified addition and multipl",
+      "quality_score": 0.75115,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-31T06:08:11",
+      "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "00b7234b",
-      "domain": "Computation",
-      "name": "tau_fusion_channels",
-      "quality": 0.7997299999999999
-    },
-    {
-      "cycle_id": "00b7234b",
-      "domain": "Computation",
-      "name": "phi_sq",
-      "quality": 0.7997299999999999
-    },
-    {
-      "cycle_id": "15429b4a",
-      "domain": "Combinatorics",
-      "name": "This",
-      "quality": 0.73393
-    },
     {
       "cycle_id": "15429b4a",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "patchable_h1_finrank",
       "quality": 0.80603
+    },
+    {
+      "cycle_id": "275a5749",
+      "domain": "Shared",
+      "name": "value_nil",
+      "quality": 0.75115
+    },
+    {
+      "cycle_id": "275a5749",
+      "domain": "Shared",
+      "name": "value_cons",
+      "quality": 0.75115
+    },
+    {
+      "cycle_id": "275a5749",
+      "domain": "Shared",
+      "name": "canonical_nil",
+      "quality": 0.75115
     }
   ],
-  "last_updated": "2026-07-31T06:06:59",
+  "last_updated": "2026-07-31T06:08:11",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "0a1b5635",
-        "quality": 0.64,
-        "theorems": 4,
-        "title": "Close Proofs: Non-Desarguesian Worlds: Geometry Without Desargues"
-      },
-      {
         "cycle_id": "c760f6fc",
         "quality": 0.63,
         "theorems": 18,
@@ -3947,6 +3941,12 @@
         "quality": 0.73827,
         "theorems": 7,
         "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of leng"
+      },
+      {
+        "cycle_id": "275a5749",
+        "quality": 0.75115,
+        "theorems": 19,
+        "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
       }
     ],
     "Tropical": [
