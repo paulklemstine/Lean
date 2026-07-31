@@ -840,38 +840,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Bridges"
-    ],
-    "id": "seed_053",
-    "priority_score": 0.92,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Certified Novelty Detection for Theorem Provers"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that Godel's incompleteness arises because a formal system cannot prove statements about itself \u2014 but a TYPE SYSTEM can. Construct a dependent type theory where types can refer to their own terms, creating a system where proofs can modify the specifications they are proving. Conjecture: There exists a consistent type theory T in which the type Type : Type is stratified by a self-reference level, and T can prove its own consistency within each level. The stratification prevents the paradox: Type_n : Type_{n+1} allows self-reference at level n without contradiction at level n+1. Why now: homotopy type theory has shown that types can be spaces, and the univalence axiom provides a principled way to equate equivalent types. Self-referential types are the natural next step. Test: formalize a type theory where terms can modify type specifications, prove that it is consistent by constructing a model in the category of globular sets, and show that Godel's incompleteness theorem does not apply because the stratification prevents diagonalization. Impact: a new foundation for mathematics where proofs can evolve their own specifications, enabling self-improving formal systems.",
-    "domains": [
-      "Logic",
-      "Algebra",
-      "Speculative"
-    ],
-    "id": "seed_099",
-    "priority_score": 0.92,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve over Q is computable. Formalize the Mordell-Weil theorem, height pairings, and descent algorithms. Connect to the conjecture that ranks are bounded and explore the parity conjecture.",
     "domains": [
       "Algebra",
@@ -4769,22 +4737,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sensitivity Conjecture Extensions"
   },
   {
-    "consumed_by_exp_id": "02f69ad4",
-    "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
-    "domains": [
-      "Tropical",
-      "Probability"
-    ],
-    "id": "seed_243",
-    "phase": "A",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Idempotent Probability: Large Deviations"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
@@ -6101,17 +6053,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Tur\u00e1n-Type Bounds for Graphs Containing Large $F$-Sparse Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5e9a5f6",
     "description": "Investigate the ArXiv paper 'Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields' and formalize its key results. Abstract: Let $K$ be a global function field of characteristic $p>0$ and $\\ell\\neq p$ be a prime number. We study Selmer groups over a $\\mathbb{Z}_\\ell$-extension $K_\\infty/K$. For a lisse $\\mathbb Z_\\ell$-sheaf we prove that the Pontryagin dual of the associated Selmer group is a finitely generated torsion module over the Iwasawa algebra and has $\u03bc$-invariant equal to zero. This gives a positive-characteristic, prime to $p$, analogue of Greenberg's $\u03bc=0$ conjecture. Our result applies in particular to abelian varieties, fine Selmer groups, and adjoint representations. We also prove an analogue of the weak Leopoldt conjecture in this context over $K_\\infty$, and deduce that the framed deformation ring of a residual representation is a formal power series ring. The same conclusion holds for the unframed deformation ring if the residual representation has no non-scalar endomorphisms.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0122",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10728v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:16:11.220023+00:00",
     "title": "ArXiv paper: Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields"
   },
@@ -10792,6 +10745,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T06:33:25.091505+00:00",
     "title": "Future directions from cycle c961538a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Exact finite-event bound for exposed velocities.** For every finite max-plus law `\u03bc` and every velocity `x` exposed by a unique tilt `\u03b8`, there is an integer `N` such that, whenever `n \u2265 N` and some `n`-step path has empirical velocity `x`, the maximum normalized score among all such paths is exactly `-\u03bc.rate x`. A finite law, exposed velocity, and arbitrarily large accessible `n` violating this equality would refute the conjecture.\n\n2. **Tensorization of the rate.** For finite max-plus laws `\u03bc\u2081` and `\u03bc\u2082`, give the product law value `(i,j) \u21a6 \u03bc\u2081.value i + \u03bc\u2082.value j` and weight `(i,j) \u21a6 \u03bc\u2081.weight i + \u03bc\u2082.weight j`. Whenever the three real-valued Legendre suprema are bounded above, its rate satisfies `rateProd (x\u2081 + x\u2082) = inf_y (\u03bc\u2081.rate y + \u03bc\u2082.rate (x\u2081 + x\u2082 - y))`. A finite pair of laws and a point where this infimal-convolution identity fails would refute the conjecture.\n\n3. **Convex-hull domain characterization.** For every finite max-plus law, the affine set defining its real-valued Legendre\u2013Fenchel rate is bounded above at `x` if and only if `x` belongs to the convex hull of the finite set `Set.range \u03bc.value`. Either an exterior point with bounded defining set or an interior point with unbounded defining set would be a counterexample.\n\n4. **Full closed-set upper bound.** For every finite max-plus law and closed set `C \u2286 \u211d`, let `W\u2099(C)` be the maximum normalized score of length-`n` paths whose empirical velocity lies in `C` (with empty events assigned `-\u221e` in an extended-real formulation). Then `limsup (n \u2192 \u221e) W\u2099(C) \u2264 - inf x \u2208 C, \u03bc.rate x`. Any finite law and closed set with a strictly larger limsup would refute the conjecture.\n\n5. **Open-set lower bound under accessibility.** If a finite max-plus law has rational increment values and every increment has finite real weight, then for every open set `G` meeting the convex hull of the increments, the corresponding extended-real event weights satisfy `liminf (n \u2192 \u221e) W\u2099(G) \u2265 - inf x \u2208 G, \u03bc.rate x`. A rational finite law and open interval violating this inequality would refute the conjecture.\n",
+    "domains": [
+      "Geometry",
+      "NumberTheory"
+    ],
+    "id": "fd_0853",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "02f69ad4",
+    "status": "available",
+    "timestamp": "2026-07-31T07:20:51.506566+00:00",
+    "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
   },
   {
     "consumed_by_exp_id": "",

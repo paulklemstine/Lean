@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-31T06:33:31.083946+00:00",
+  "last_updated": "2026-07-31T07:20:58.412244+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -42294,6 +42294,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v24",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v24",
@@ -42322,6 +42323,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-31T06:33:30.960921+00:00",
       "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2427,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 5,
+      "domain": "Probability",
+      "duration_seconds": 5510.014609098434,
+      "end_time": 1785482435.8055732,
+      "files_integrated": 3,
+      "job_id": "02f69ad4",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8827,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8763,
+        "novelty": 0.95,
+        "proof_depth": 0.8447,
+        "usefulness": 0.9224
+      },
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785476925.7909641,
+      "strategy_count": 0,
+      "theorem_count": 43,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 31,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-31T07:20:58.315284+00:00",
+      "title": "Idempotent Probability: Large Deviations"
     }
   ]
 }
