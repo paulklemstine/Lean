@@ -2891,19 +2891,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Stone Duality as a Bridge Between Logic and Topology"
   },
   {
-    "consumed_by_exp_id": "29953b58",
-    "description": "Building on cycle 3e30c45d (Q=0.769), which proved 23 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 63b75a93 (Q=0.769), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a fun",
     "domains": [
-      "Cryptography"
+      "Novelty"
     ],
-    "id": "push_3e30c45d_337ca3fb",
-    "phase": "A",
-    "priority_score": 0.8689999999999999,
+    "id": "push_63b75a93_1bb8da2a",
+    "priority_score": 0.86935,
     "research_mode": "team",
-    "source_exp_id": "3e30c45d",
-    "status": "in_progress",
-    "timestamp": "2026-07-28T18:55:07.368117+00:00",
-    "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+    "source_exp_id": "63b75a93",
+    "status": "available",
+    "timestamp": "2026-07-30T23:42:04.920023+00:00",
+    "title": "Deepening: Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
   },
   {
     "consumed_by_exp_id": "",
@@ -4278,22 +4277,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
-  },
-  {
-    "consumed_by_exp_id": "63b75a93",
-    "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' \u2014 can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "seed_412",
-    "phase": "B",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
   },
   {
     "consumed_by_exp_id": "",
@@ -11103,6 +11086,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T23:28:05.565547+00:00",
     "title": "`Catalog/Applications/BSD/RankComputability.lean` proves a complete finite linea"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Molecular Computing Limits\n\n1. **Bimolecular finite-control compilation.** For every finite deterministic transition system, there is a CRN using only reactions with at most two reactants and a fixed finite controller overhead whose stochastic mass-action semantics reaches the encoded successor state with probability at least `1 - \u03b5` in expected time `O(log(1/\u03b5))` per simulated step.\n\n2. **Robust noisy trace simulation.** If each compiled unary reaction has independent failure probability at most `\u03b4`, then a redundancy-`r` encoding with majority decoding simulates a trace of length `t` with total failure probability at most `t * exp(-c*r)` for an explicit universal constant `c > 0`, provided `\u03b4 < 1/2`.\n\n3. **Two-sided description-volume law.** Fix a universal prefix-free CRN description language and a fabrication model with capacity `b > 0` bits per cubic micrometer. There are constants `c\u2081, c\u2082` independent of the computed finite function `f` such that its minimum implementation volume `V(f)` satisfies `K(f)/b - c\u2081 \u2264 V(f) \u2264 K(f)/b + c\u2082`.\n\n4. **Preparation-aware SAT lower bound.** In a molecular SAT model where each independently tested assignment requires at least one separately prepared molecular witness and preparation throughput is at most `R`, every exhaustive solver for `n` variables has end-to-end elapsed time at least `2^n / R`, regardless of the number of simultaneous reaction vessels.\n\n5. **Empirical DNA density/rate test.** Under specified temperature, error-correction level, and read/write protocol, a cubic micrometer DNA device simultaneously supports at least `10^18` reliably distinguishable stored bits and `10^15` logically correct state transitions per second for one hour. This is falsified if either measured capacity or sustained error-corrected throughput falls below its threshold.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0859",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "63b75a93",
+    "status": "available",
+    "timestamp": "2026-07-30T23:42:00.853777+00:00",
+    "title": "1. **Bimolecular finite-control compilation.** For every finite deterministic tr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Ramified fiber classification.** For every field of characteristic other than two and every nonzero `x` with `x\u00b2 = 1`, prove that the complete fiber of `radicalTwoEval` above `radicalTwoEval (x,y)` is a singleton exactly when the ordinate multiplier `1 - x\u207b\u00b2` vanishes, and classify all exceptional ordinate collisions. This is falsifiable by exhaustive evaluation over `ZMod p` for odd primes `p`.\n\n2. **Projective extension at the kernel.** Construct the projective Montgomery models associated to `OnMontgomery` and `OnTwoQuotient`, extend `radicalTwoEval` across `x = 0`, and prove that its kernel is exactly the identity together with `(0,0)`. A counterexample would be any additional projective point mapping to the target identity.\n\n3. **Separability in odd characteristic.** Over every field of characteristic other than two, prove that the induced function-field extension defined by `X = x + x\u207b\u00b9` has degree two and is separable, with automorphism group generated by `radicalTwoDeck`. This is refuted by any odd-characteristic field where the minimal polynomial `T\u00b2 - X*T + 1` has zero formal derivative at its generic root.\n\n4. **Composition into a four-isogeny.** Define the second compatible radical two-isogeny on the quotient model and prove that the composite map has generic fibers of cardinality four, classified by the two successive deck involutions. This can be tested over finite fields away from all poles and ramification points.\n\n5. **Quadratic-extension descent.** For a finite field `\ud835\udd3d_q` of odd characteristic and its quadratic extension, prove that radical normalization followed by `radicalTwoEval` commutes with Frobenius exactly when the chosen radical is in `\ud835\udd3d_q`, and otherwise lands on the corresponding quadratic twist. A finite-field counterexample would refute the claimed equivalence.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0860",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "29953b58",
+    "status": "available",
+    "timestamp": "2026-07-31T00:06:19.207203+00:00",
+    "title": "1. **Ramified fiber classification.** For every field of characteristic other th"
   },
   {
     "consumed_by_exp_id": "",
