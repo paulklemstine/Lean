@@ -1,5 +1,5 @@
-# Why computational evidence was skipped
+# Why a Computational Evidence Stage Was Skipped
 
-The central theorem is structural rather than numerical: it classifies connected groupoids (the algebraic models of connected homotopy 1-types) by an automorphism group at a basepoint. There is no naturally associated integer sequence, small-instance trend, OEIS entry, or informative plot.
+The principal claim is structural rather than numerical: it classifies connected groupoids by the automorphism group at one object, and interprets connected groupoids as algebraic models of connected homotopy 1-types. There is no naturally associated integer sequence or informative range of small numerical instances, so an OEIS search, plots, and numerical tables would not test the claim.
 
-The counterexample is also exact and elementary rather than experimental: the one-point discrete space and the two-point discrete space both have trivial based fundamental groups, while a homotopy equivalence between totally disconnected spaces must be a bijection. A machine-checked proof supplies stronger evidence than sampling finite cases.
+The counterexample is also exact and finite: the discrete spaces `Unit` and `Bool` have one and two points respectively. Their based fundamental groups are proved trivial in Lean, while any homotopy equivalence between totally disconnected spaces is proved to induce a bijection of points. Thus the relevant “small-case check” is already subsumed by the machine-checked proof rather than requiring separate computational evidence.

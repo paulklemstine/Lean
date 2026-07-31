@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "229af38b",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThe universal Graceful Tree Conjecture remains open. The verified path and star constructions in this project suggest the following precise next targets. Each target has a finite",
-      "quality_score": 0.80057,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-29T09:58:20",
-      "title": "Graceful Tree Conjecture"
-    },
-    {
       "cycle_id": "545fa377",
       "domain": "Geometry",
       "key_insight": "# Spectral Graph Theory Meets Network Robustness\n\n## Formal results\n\n`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version of the proposed spectral certificate.\n\n1. **Exact sp",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-31T09:23:08",
       "title": "Sums of Three Cubes"
+    },
+    {
+      "cycle_id": "0f63237d",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nThe current formalization establishes the foundational connector between tropical corner loci and scheme-theoretic bend equations, together with a semiring-valued sheaf and its fu",
+      "quality_score": 0.7743899999999999,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-31T09:24:21",
+      "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "699db10f",
-      "domain": "Computation",
-      "key_insight": "# Future directions: the Báez–Duarte transform\n\n## 1. Quantitative passage from finite cutoffs to the full criterion\n\n**Conjecture.** For each fixed nonnegative integer `k`, the cutoff geometric\nmixtu",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-22T18:42:21",
-      "title": "ArXiv paper: A few remarks on the Baez-Duarte Criterion"
-    },
     {
       "cycle_id": "5d6a1919",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-31T09:23:08",
       "title": "Sums of Three Cubes"
+    },
+    {
+      "cycle_id": "0f63237d",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nThe current formalization establishes the foundational connector between tropical corner loci and scheme-theoretic bend equations, together with a semiring-valued sheaf and its fu",
+      "quality_score": 0.7743899999999999,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-31T09:24:21",
+      "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6d7202c5",
-      "domain": "Shared",
-      "name": "discardsAtLeast_of_log_image_bound",
-      "quality": 0.73827
-    },
-    {
-      "cycle_id": "6d7202c5",
-      "domain": "Shared",
-      "name": "landauerCost_family_lower_bound",
-      "quality": 0.73827
-    },
     {
       "cycle_id": "177b02a7",
       "domain": "Probability",
@@ -2803,9 +2791,21 @@
       "domain": "NumberTheory",
       "name": "representable_not_forbidden",
       "quality": 0.77705
+    },
+    {
+      "cycle_id": "0f63237d",
+      "domain": "Tropical",
+      "name": "identifies",
+      "quality": 0.7743899999999999
+    },
+    {
+      "cycle_id": "0f63237d",
+      "domain": "Tropical",
+      "name": "functionPresheaf_isSheaf",
+      "quality": 0.7743899999999999
     }
   ],
-  "last_updated": "2026-07-31T09:23:08",
+  "last_updated": "2026-07-31T09:24:21",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "09546bb0",
-        "quality": 0.74,
-        "theorems": 31,
-        "title": "Rucker: Saucer Wisdom — Non-Human Mathematical Intuition"
-      },
-      {
         "cycle_id": "edb35a0b",
         "quality": 0.5,
         "theorems": 14,
@@ -4009,6 +4003,12 @@
         "quality": 0.79392,
         "theorems": 15,
         "title": "Inverse Stereographic Tropical Lift"
+      },
+      {
+        "cycle_id": "0f63237d",
+        "quality": 0.7743899999999999,
+        "theorems": 22,
+        "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
       }
     ]
   }

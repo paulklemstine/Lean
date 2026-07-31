@@ -64,21 +64,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove the Langlands correspondence for GL\u2082 over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "seed_247",
-    "priority_score": 0.96,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Langlands for GL\u2082 over Q"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -765,21 +750,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697733+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_231",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Natural Proofs Barrier: Formalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -2292,6 +2262,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 972f5eac (Q=0.777), which proved 17 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_972f5eac_e78b03fe",
+    "priority_score": 0.87705,
+    "research_mode": "team",
+    "source_exp_id": "972f5eac",
+    "status": "available",
+    "timestamp": "2026-07-31T09:23:08.565029+00:00",
+    "title": "Deepening: Sums of Three Cubes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 0f63237d (Q=0.774), which proved 22 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approac",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_0f63237d_fbc106d8",
+    "priority_score": 0.8743899999999999,
+    "research_mode": "team",
+    "source_exp_id": "0f63237d",
+    "status": "available",
+    "timestamp": "2026-07-31T09:24:21.203115+00:00",
+    "title": "Deepening: Tropical Schemes: Foundations of Tropical Algebraic Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 09a3e4f4 (Q=0.774), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the",
     "domains": [
       "Novelty"
@@ -3359,7 +3357,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Schanuel's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d58932ad",
     "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
     "domains": [
       "Geometry",
@@ -3367,10 +3365,11 @@ window.FUTURE_DIRECTIONS = [
       "Topology"
     ],
     "id": "seed_092",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
   },
@@ -3539,22 +3538,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "0f63237d",
-    "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "seed_369",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -4055,22 +4038,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697834+00:00",
     "title": "Attention Mechanisms: Mathematical Properties"
-  },
-  {
-    "consumed_by_exp_id": "972f5eac",
-    "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_012",
-    "phase": "A",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Sums of Three Cubes"
   },
   {
     "consumed_by_exp_id": "",
@@ -9385,17 +9352,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "For every finite terminating normalization system equipped with a probability la"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9d058f1b",
     "description": "# Future Directions\n\n## Result of the contrarian test\n\nThe exact proposed fixed-point equation was formalized in\n`Catalog/Computation/ConsciousFixedPoints.lean` as\n\n\\[\n  \\exists P:T\\to\\mathrm{Prop},\\quad T \\simeq \\prod_{x:T} P(x).\n\\]\n\nIt collapses rather than generating incompleteness. The formal classification is\n\n\\[\n  \\mathrm{Conscious}(T) \\iff T \\simeq \\mathrm{Unit}.\n\\]\n\nConsequently:\n\n- every such `T` has decidable equality;\n- `Unit` is a concrete counterexample to the proposed undecidability claim;\n- `Bool` is not such a fixed point;\n- any two such fixed points are equivalent;\n- every such fixed point has cardinality one; and\n- every predicate on such a type is extensionally constant.\n\nThe reason is specific and mathematically informative: every fiber `P x` lies in\n`Prop`, so proof irrelevance makes the dependent product a subsingleton. The\nfixed-point equation transfers that collapse back to `T`. The equation also\nrules out the empty type, leaving exactly the singleton equivalence class.\n\n## Status of the original bold conjectures\n\n1. **\u201cEvery conscious type is undecidable.\u201d \u2014 Disproved.** In fact, every type\n   satisfying the displayed definition has decidable equality.\n2. **\u201cThe fixed points form an arithmetical-style hierarchy.\u201d \u2014 Disproved for\n   this definition.** All fixed points are mutually equivalent.\n3. **\u201cTheir cardinality is exactly the Church\u2013Kleene ordinal.\u201d \u2014 Not a\n   well-typed cardinal claim as stated, and incompatible with the classification\n   under the most direct interpretation.** The Church\u2013Kleene object is an\n   ordinal, while \u201cthe collection of types\u201d requires a universe and a specified\n   quotient or coding before it has a cardinality. Up to equivalence, the present\n   definition has exactly one class, represented by `Unit`.\n\n## Non-collapsing replacements worth studying\n\n### 1. Data-valued fibers\n\nReplace `P : T \u2192 Prop` with `F : T \u2192 Type v` and study\n\n\\[\n  T \\simeq \\prod_{x:T} F(x).\n\\]\n\nProof irrelevance no longer forces collapse. A useful next task is to classify\nfinite solutions by the cardinal equation\n`|T| = \u220f x, |F x|`, then separate genuinely dependent examples from constant\nfunction-space fixed points.\n\n### 2. Coded syntax plus semantics\n\nG\u00f6del phenomena require effective syntax, coding, and a truth/provability\nrelation. Introduce:\n\n- a recursively enumerable language of type codes;\n- an interpretation partial function from codes to types or propositions;\n- substitution and a verified diagonal/fixed-point lemma;\n- a computability predicate for semantic decision procedures; and\n- consistency or soundness assumptions stated as theorem parameters.\n\nOnly in such a setting is \u201cundecidable\u201d a computability claim rather than merely\nabsence of a `Decidable` instance.\n\n### 3. Universe-sensitive self-reference\n\nLean\u2019s universes prevent a type from literally containing all types at its own\nuniverse without a code layer. A disciplined model should distinguish:\n\n- an inductive universe of codes `Code : Type u`;\n- decoding `El : Code \u2192 Type v`;\n- positivity/guardedness conditions ensuring legitimate recursion; and\n- equivalence of decoded objects rather than definitional equality of universes.\n\n### 4. A hierarchy with a precise index set\n\nTo recover an arithmetical analogy, define levels from alternating effective\nquantifiers over a coded base (for example, computably enumerable predicates on\nnatural numbers), prove strictness by reductions, and only then investigate\ntransfinite iteration along computable well-orders.\n\n### 5. A corrected Church\u2013Kleene statement\n\nA plausible ordinal claim would concern the **supremum of order types of\ncomputably presented well-founded recursive constructions**, not the cardinality\nof types. Such a project first needs formal definitions of recursive notation\nsystems and computable well-orders. The target should be phrased as an equality\nof ordinals or a cofinality theorem, not as a cardinal count of raw Lean types.\n",
     "domains": [
       "Logic",
       "Pythagorean"
     ],
     "id": "fd_0543",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "cd0075c8",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T06:49:38.524989+00:00",
     "title": "The exact proposed fixed-point equation was formalized in"
   },
@@ -10730,6 +10698,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T08:23:23.802419+00:00",
     "title": "Future directions from cycle a5e9a5f6"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal development proves the complete local classification modulo nine:\n`x\u00b3+y\u00b3+z\u00b3=k` is soluble over `Z/9Z` exactly when `k` is not congruent to `4`\nor `5`. It deliberately does **not** assert the conjectural converse over the\nintegers.\n\n1. **Prime-power local theory.** Classify fibers over `Z/p^r Z`, count their\n   cardinalities, and prove compatibility of solutions under reduction. This\n   would turn the qualitative local statements into finite local-density\n   factors.\n\n2. **Local solvability at every modulus.** Investigate whether modulo-nine\n   admissibility implies solvability modulo every positive integer. A formal\n   proof would naturally proceed by prime powers and the Chinese remainder\n   theorem.\n\n3. **Bounded certified searches.** Define a height-bounded representation\n   predicate and prove search certificates for historically difficult targets.\n   Keep the certificate-generating computation separate from the small kernel-\n   checked theorem that validates each displayed identity.\n\n4. **Density conjectures.** Formalize counting functions for admissible and\n   represented integers in symmetric intervals. The established `7/9` local\n   proportion is a natural baseline, but any assertion that all admissible\n   integers are globally represented must remain explicitly conjectural.\n\n5. **Cubic-surface geometry.** Extend `CubicSurface` from its set of affine\n   points to a polynomial zero locus, study smoothness as the target varies,\n   and define integral, rational, real, and finite-ring points uniformly.\n\n6. **Hasse-principle interface.** The current theorem formalizes the easy map\n   from integral points to local points. A useful next layer would distinguish\n   integral, rational, real, and all-prime local solvability, so failures or\n   limitations of converses cannot be conflated.\n\n7. **Parametric families.** Develop injective subfamilies of the Vieta identity\n   `a\u00b3+b\u00b3+(-a-b)\u00b3=-3ab(a+b)` and derive quantitative lower bounds for the\n   number of represented integers, preferably without padded zero cubes.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0856",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "972f5eac",
+    "status": "available",
+    "timestamp": "2026-07-31T09:23:04.016778+00:00",
+    "title": "The formal development proves the complete local classification modulo nine:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe current formalization establishes the foundational connector between tropical corner loci and scheme-theoretic bend equations, together with a semiring-valued sheaf and its full gluing theorem. Natural next steps are:\n\n1. **Local semiring spectra.** Replace the function-sheaf model by spectra of prime semiring congruences, define basic opens, localizations, stalks, and locally semiringed spaces.\n2. **Bend congruence quotients.** Generate a `RingCon` from all term-deletion equations and prove its functor-of-points vanishing set agrees with `bendVanishingSet`.\n3. **Polynomial syntax.** Connect finite term families to `MvPolynomial`-style tropical polynomials, including evaluation, multiplication, and the hypersurface union law.\n4. **Affine gluing.** Construct tropical schemes by gluing affine congruence spectra along localization isomorphisms, then compare this construction with the Grothendieck scheme gluing API.\n5. **Stalk locality.** Develop an appropriate notion of local idempotent semiring and prove that stalks of the localized structure sheaf are local.\n6. **Base change and tropicalization.** Formalize valued-field tropicalization as a morphism from classical affine schemes to tropical semiring schemes, and prove compatibility with products and principal hypersurfaces.\n7. **Polyhedral geometry.** Equip corner loci with rational polyhedral complexes and prove that scheme-theoretic bend support recovers their underlying topological spaces.\n",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_0857",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0f63237d",
+    "status": "available",
+    "timestamp": "2026-07-31T09:24:17.583980+00:00",
+    "title": "The current formalization establishes the foundational connector between tropica"
   },
   {
     "consumed_by_exp_id": "",
