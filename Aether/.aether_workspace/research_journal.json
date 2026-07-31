@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8c9ac99e",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Integer-slope criterion.** For every compiled network whose affine weights and linear-combination weights are integers, both polynomials produced by `compile` can be represen",
-      "quality_score": 0.7311099999999999,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-29T19:52:46",
-      "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
-    },
-    {
       "cycle_id": "42454fab",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n1. **Universe size four.** Extend the singleton/residual decomposition used for\n   `Fin 3`. A direct search has 65,536 candidate families, so useful structural\n   reductions (sing",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-31T22:24:57",
       "title": "EML Universal Approximation: Density of EML Functions"
+    },
+    {
+      "cycle_id": "ff2a2247",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-gr",
+      "quality_score": 0.7582199999999999,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-31T22:26:12",
+      "title": "Reconstruction Conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6c18f01c",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Arithmetic Coherence after Deformation Stability\n\n## 1. Higher-rank compatibility percolation with a deformation-invariant boundary\n\nFor a fixed global field and bounded ramificat",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-23T22:26:19",
-      "title": "The conjectures below are ranked by expected scientific impact. Each proposal se"
-    },
     {
       "cycle_id": "abab9083",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-31T22:24:57",
       "title": "EML Universal Approximation: Density of EML Functions"
+    },
+    {
+      "cycle_id": "ff2a2247",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-gr",
+      "quality_score": 0.7582199999999999,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-31T22:26:12",
+      "title": "Reconstruction Conjecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "02aa1402",
-      "domain": "Novelty",
-      "name": "This",
-      "quality": 0.72637
-    },
-    {
-      "cycle_id": "02aa1402",
-      "domain": "Novelty",
-      "name": "uniform_retrocausal_confirmation_iff",
-      "quality": 0.72637
-    },
-    {
-      "cycle_id": "02aa1402",
-      "domain": "Novelty",
-      "name": "universal_retrocausal_rule_collapses",
-      "quality": 0.72637
-    },
     {
       "cycle_id": "343eb494",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "expCoordinateAlgebra_dense",
       "quality": 0.7666899999999999
+    },
+    {
+      "cycle_id": "ff2a2247",
+      "domain": "Combinatorics",
+      "name": "The",
+      "quality": 0.7582199999999999
+    },
+    {
+      "cycle_id": "ff2a2247",
+      "domain": "Combinatorics",
+      "name": "kelly_double_count",
+      "quality": 0.7582199999999999
+    },
+    {
+      "cycle_id": "ff2a2247",
+      "domain": "Combinatorics",
+      "name": "inducedCopyFamily_uniform",
+      "quality": 0.7582199999999999
     }
   ],
-  "last_updated": "2026-07-31T22:24:57",
+  "last_updated": "2026-07-31T22:26:12",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "759f53fa",
-        "quality": 0.66,
-        "theorems": 21,
-        "title": "Hofstadter: Fluid Concepts and Creative Analogies — Analogy as a Mathematical Op"
-      },
-      {
         "cycle_id": "6c3aaf50",
         "quality": 0.66,
         "theorems": 24,
@@ -3265,6 +3259,12 @@
         "quality": 0.76494,
         "theorems": 13,
         "title": "Erdős-Faber-Lovász Conjecture"
+      },
+      {
+        "cycle_id": "ff2a2247",
+        "quality": 0.7582199999999999,
+        "theorems": 12,
+        "title": "Reconstruction Conjecture"
       }
     ],
     "Computation": [

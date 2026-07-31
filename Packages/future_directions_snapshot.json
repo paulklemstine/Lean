@@ -3521,6 +3521,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 61e33133 (Q=0.767), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_61e33133_5d721590",
+    "lineage_refs": [],
+    "priority_score": 0.8666899999999998,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61e33133",
+    "status": "available",
+    "timestamp": "2026-07-31T22:24:57.334382+00:00",
+    "title": "Deepening: EML Universal Approximation: Density of EML Functions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d54ed94e (Q=0.766), which proved 11 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Determinant values on lattices' and formalize its key results. Abstract: We study the distribution of determinant values on lattices in $\\operatorname{M}_d(\\mathbb R)$ for $d\\ge 2$. Let $Λ<\\operatorname{M}_d(\\mathbb R)$ be a lattice whose elements all have algebraic entr",
     "domain_bridges": [],
     "domains": [
@@ -3875,7 +3894,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "150a94b2",
     "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) — matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
     "domain_bridges": [],
     "domains": [
@@ -3889,7 +3908,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Neural Network Expressiveness: Depth vs Width"
   },
@@ -4039,26 +4058,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "61e33133",
-    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Analysis"
-    ],
-    "id": "seed_336",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Universal Approximation: Density of EML Functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
     "domain_bridges": [],
@@ -4139,7 +4138,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb566a68",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -4152,7 +4151,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -4194,6 +4193,25 @@
     "status": "available",
     "timestamp": "2026-07-29T22:22:15.442777+00:00",
     "title": "Deepening: Self-Modifying Research via Reflective Type Theory"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle ff2a2247 (Q=0.758), which proved 12 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_ff2a2247_728c2682",
+    "lineage_refs": [],
+    "priority_score": 0.8582199999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ff2a2247",
+    "status": "available",
+    "timestamp": "2026-07-31T22:26:12.535067+00:00",
+    "title": "Deepening: Reconstruction Conjecture"
   },
   {
     "ambition_level": "extension",
@@ -5973,26 +5991,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Brocard's Problem: n! + 1 = m²"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ff2a2247",
-    "description": "Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics",
-      "Logic"
-    ],
-    "id": "seed_215",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Reconstruction Conjecture"
   },
   {
     "ambition_level": "extension",
@@ -14269,7 +14267,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "febd9c83",
     "description": "# Future Directions\n\n- Formalize continuous cohomology of profinite groups with finite discrete modules and lift the finite-group averaging theorem to the paper's vanishing result for pro-prime-to-`ℓ` groups.\n- Connect étale cohomology of affine curves to the required cohomological-dimension and finiteness statements.\n- Develop completed group algebras and compact Nakayama theory for `ℤ_ℓ[[Γ]]`, then formalize the equivalence between finite reduction modulo `ℓ` and torsion with vanishing `μ`-invariant.\n- Define cartesian Selmer structures and Pontryagin duals, allowing the finite-cohomology and Iwasawa-module results to assemble into the paper's main Selmer theorem.\n- Formalize obstruction theory for framed and unframed deformation functors so that degree-two cohomology vanishing yields formal smoothness and power-series deformation rings.\n",
     "domain_bridges": [],
     "domains": [
@@ -14282,7 +14280,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a5e9a5f6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T08:23:23.802419+00:00",
     "title": "Future directions from cycle a5e9a5f6"
   },
@@ -14485,6 +14483,65 @@
     "status": "available",
     "timestamp": "2026-07-31T20:49:38.690316+00:00",
     "title": "The present development verifies algebraic search-to-decision ingredients, finit"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Package the finite Fisher form as a Mathlib `InnerProductSpace` on the tangent hyperplane of the open probability simplex.\n- Formalize differentiability of parameterized statistical models and prove that the Fisher form is the Hessian of KL divergence on the diagonal.\n- Extend the construction from finite categorical distributions to dominated measure families under explicit regularity hypotheses.\n- Strengthen the Berggren realization interfaces with full positive-semidefinite Gram hypotheses before stating GNS reconstruction results.\n- Formulate generalized Reed–Muller distance using reduced polynomial representatives (coordinate degrees below the field cardinality), which excludes nonzero polynomials inducing the zero evaluation word.\n- Extend the direct one- and two-dimensional max-plus eigenvector constructions to arbitrary finite dimension by formalizing maximum cycle means and Bellman path potentials.\n- Generalize the finite PAC-Bayes change-of-measure and Pinsker results from strictly positive distributions to distributions with zero mass using explicit absolute-continuity conventions.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0866",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4be361b7",
+    "status": "available",
+    "timestamp": "2026-07-31T22:23:37.623106+00:00",
+    "title": "Future directions from cycle 4be361b7"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass result into an explicit approximation operator on `[0,1]^n`, with error controlled by a modulus of continuity and expression size/depth controlled in terms of `n` and the tolerance.\n\n2. **Depth hierarchy.** Define a typed EML syntax carrying both depth and width, prove closure of its semantics under composition, and establish upper and lower approximation bounds for each fixed depth.\n\n3. **Shallow approximation beyond the square.** Extend the one-exponential Taylor construction from `x²` to monomials and multivariate polynomials, tracking constants uniformly on the cube.\n\n4. **Hölder and Sobolev classes.** Combine explicit polynomial approximation bounds with EML realizations of polynomials to derive rates for regularity classes, such as `C^k`, Hölder, and Sobolev functions.\n\n5. **Measure-theoretic corollary.** Instantiate the continuous-linear-observable connector using integration against finite regular Borel measures, yielding a moment-determination theorem: agreement on the EML coordinate algebra implies equality of measures.\n\n6. **Minimal generating fragments.** Compare the expressive and approximation power of exp-only, log-only on positive domains, and full exp-log-field grammars, including the role of constants and division.\n\n7. **Lower bounds.** Develop oscillation-count, zero-count, or metric-entropy tools that can prove genuine limitations for bounded-depth or bounded-width EML expressions.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Applications"
+    ],
+    "id": "fd_0867",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61e33133",
+    "status": "available",
+    "timestamp": "2026-07-31T22:24:53.172149+00:00",
+    "title": "1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the same vertex deck and `G` is regular, then `G ≃g H`.\n2. **Tree reconstruction.** If finite simple graphs `G` and `H` have the same vertex deck, at least three vertices, and `G` is a tree, then `G ≃g H`.\n3. **Degree-multiset reconstruction.** For finite simple graphs on at least three vertices with the same deck, the multisets of vertex degrees are equal.\n4. **Induced-pattern count reconstruction.** If a finite pattern `F` has fewer vertices than deck-equivalent finite graphs `G` and `H`, then `inducedCopyFamily G F` and `inducedCopyFamily H F` have equal cardinality.\n5. **Complement compatibility.** Finite graphs `G` and `H` have the same deck if and only if their complements have the same deck; consequently, any formally reconstructed graph class closed under complement yields a second reconstructed class.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_0868",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ff2a2247",
+    "status": "available",
+    "timestamp": "2026-07-31T22:26:08.353865+00:00",
+    "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
   },
   {
     "ambition_level": "extension",
@@ -14697,25 +14754,6 @@
     "status": "available",
     "timestamp": "2026-07-27T00:20:02.013198+00:00",
     "title": "Close Proofs: Perfect Numbers: Structure of Even Perfects"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "4be361b7",
-    "description": "Cycle 55a94506 (Q=0.630) proved 38205 theorems in Bridges but left 22 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler diverg",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "sorry_fill_55a94506_fb01c909",
-    "lineage_refs": [],
-    "priority_score": 0.68,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "55a94506",
-    "status": "in_progress",
-    "timestamp": "2026-07-26T05:36:47.309939+00:00",
-    "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
   {
     "ambition_level": "extension",
