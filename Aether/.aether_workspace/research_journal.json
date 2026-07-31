@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e68f39b0",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\n`Catalog/Logic/ProofSpaceTransitionWindows.lean` advances the finite transition model from pointwise descent to blockwise drift. It proves that strict decrease only at sampled blo",
-      "quality_score": 0.72847,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-28T18:56:08",
-      "title": "`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a"
-    },
-    {
       "cycle_id": "627f5167",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\n1. **Guarded fixed points are semantically monotone.** Define a polarity judgment on `RType` and prove that every code positive in its distinguished bound variable induces a monot",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-31T03:29:57",
       "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+    },
+    {
+      "cycle_id": "343eb494",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n- Formalize the full Erdős–Faber–Lovász theorem for finite linear hypergraphs with `k` edges of size `k`, using the rainbow-edge formulation in `Combinatorics/ErdosFaberLovasz.lea",
+      "quality_score": 0.76494,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-31T04:01:28",
+      "title": "Erdős-Faber-Lovász Conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "47ca7342",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\n## What is proved here\n\nThe Lean development establishes a reusable discrete CRN semantics and an exact compiler for deterministic finite-state transition systems. Each state is r",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-07-22T06:54:41",
-      "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-    },
     {
       "cycle_id": "2a77d2cb",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-31T03:29:57",
       "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+    },
+    {
+      "cycle_id": "343eb494",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n- Formalize the full Erdős–Faber–Lovász theorem for finite linear hypergraphs with `k` edges of size `k`, using the rainbow-edge formulation in `Combinatorics/ErdosFaberLovasz.lea",
+      "quality_score": 0.76494,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-31T04:01:28",
+      "title": "Erdős-Faber-Lovász Conjecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "67548200",
-      "domain": "Novelty",
-      "name": "rightIdx_injective",
-      "quality": 0.7916099999999999
-    },
-    {
-      "cycle_id": "67548200",
-      "domain": "Novelty",
-      "name": "rightIdx_leftIdx",
-      "quality": 0.7916099999999999
-    },
-    {
-      "cycle_id": "7edbd52d",
-      "domain": "Combinatorics",
-      "name": "states",
-      "quality": 0.78958
-    },
     {
       "cycle_id": "7edbd52d",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "universal_retrocausal_rule_collapses",
       "quality": 0.72637
+    },
+    {
+      "cycle_id": "343eb494",
+      "domain": "Combinatorics",
+      "name": "properColoring_injective_on_edge",
+      "quality": 0.76494
+    },
+    {
+      "cycle_id": "343eb494",
+      "domain": "Combinatorics",
+      "name": "unique_intersection_on_edge",
+      "quality": 0.76494
+    },
+    {
+      "cycle_id": "343eb494",
+      "domain": "Combinatorics",
+      "name": "exists_unique_intersection_on_edge",
+      "quality": 0.76494
     }
   ],
-  "last_updated": "2026-07-31T03:29:57",
+  "last_updated": "2026-07-31T04:01:28",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "91cdf1e0",
-        "quality": 0.69,
-        "theorems": 18,
-        "title": "Speculative: The Lean Theorem Prover as an Ecological Niche"
-      },
-      {
         "cycle_id": "759f53fa",
         "quality": 0.66,
         "theorems": 21,
@@ -3265,6 +3259,12 @@
         "quality": 0.73393,
         "theorems": 11,
         "title": "Extremal Graph Theory: Turán and Szemerédi"
+      },
+      {
+        "cycle_id": "343eb494",
+        "quality": 0.76494,
+        "theorems": 13,
+        "title": "Erdős-Faber-Lovász Conjecture"
       }
     ],
     "Computation": [

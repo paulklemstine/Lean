@@ -132,46 +132,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Prove the Langlands correspondence for GL₂ over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "seed_247",
-    "lineage_refs": [],
-    "priority_score": 0.96,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Langlands for GL₂ over Q"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "fd_0645",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697712+00:00",
-    "title": "Goldbach Verification Framework"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 5ae7f8c1 (Q=0.850), which proved 19 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, comp",
     "domain_bridges": [],
     "domains": [
@@ -1182,29 +1142,9 @@
     "title": "Poincaré Conjecture Revisited: 4D Smooth"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the classical zero-free region of the Riemann zeta function: ζ(s) ≠ 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2π) log(T/(2πe)). Formalize the connection between zero-free regions and prime counting error bounds.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "fd_0647",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697733+00:00",
-    "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "275a5749",
     "description": "Building on cycle e24b36f0 (Q=0.840), which proved 45 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
     "domain_bridges": [],
     "domains": [
@@ -1216,74 +1156,12 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "e24b36f0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T09:46:30.052991+00:00",
     "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that every Hodge class on a non-singular projective algebraic variety is a rational linear combination of classes of algebraic cycles. Formalize the Hodge decomposition and explore the conjecture for specific varieties like abelian varieties and K3 surfaces.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_014",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hodge Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Physics",
-      "Analysis"
-    ],
-    "id": "seed_096",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "Define the neural RG flow: for a network f_theta with parameters theta in R^N, the coarse-graining operator C_epsilon averages over parameters within epsilon-balls. Prove that the flow d(theta)/dt = -nabla L(theta) has fixed points that coincide with the RG fixed points of C_epsilon. For a 2-layer ReLU network f(x) = sum_j a_j * ReLU(w_j . x + b_j), prove that the NTK (neural tangent kernel) at the fixed point satisfies K*(x,y) = C * |x-y|^{-2+eta} for some critical exponent eta. Compare with the Wilson-Fisher fixed point in d=2.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Neural Network Training as Renormalization Group Flow"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that the AdS/CFT correspondence in physics says a gravitational theory in the bulk is equivalent to a conformal field theory on the boundary. Translate this to proof theory: a proof of length n in the bulk (the full proof) corresponds to a verified specification of length O(log n) on the boundary (a certificate). Conjecture: Every proof of a theorem T in Peano Arithmetic of length n has a holographic certificate of length O(log n) that can be verified in time O((log n)^2). The certificate is constructed by projecting each proof step onto the boundary of the proof space (the initial axioms and final conclusion) and keeping only the holographic data. Why now: the PCP theorem already shows that proofs have short probabilistic certificates, but holographic verification would give DETERMINISTIC short certificates — a much stronger result. Test: for a specific proof system (Frege), construct holographic certificates for proofs of the pigeonhole principle and verify that the certificate length is O(log n). Impact: proof verification becomes as fast as reading the theorem statement, enabling trustless proof checking at scale.",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Computation",
-      "Physics"
-    ],
-    "id": "seed_101",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "Define the holographic certificate of a proof pi as follows: (1) embed the proof as a graph in hyperbolic space H^n where each step is a vertex and edges connect dependent steps, (2) project the graph onto the boundary S^{n-1} via the Poincare disk model, (3) the certificate is the boundary data (vertices on S^{n-1} with their holographic data). Prove the holographic verification theorem: given a certificate of length O(log n), verification requires checking O((log n)^2) local consistency conditions, each checkable in O(1) time. The key is that the AdS geometry ensures that bulk errors propagate to detectable boundary inconsistencies. Test: construct holographic certificates for PHP proofs of length n=100, 1000, 10000 and verify the O(log n) length bound.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "AdS/CFT for Proof Theory: Holographic Verification"
-  },
-  {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
@@ -1301,45 +1179,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Natural Proofs Barrier: Formalization"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "fd_0646",
-    "lineage_refs": [],
-    "priority_score": 0.93,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697730+00:00",
-    "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
-    "domain_bridges": [],
-    "domains": [
-      "Analysis",
-      "Physics"
-    ],
-    "id": "fd_0660",
-    "lineage_refs": [],
-    "priority_score": 0.93,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697769+00:00",
-    "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
   {
     "ambition_level": "extension",
@@ -3986,6 +3825,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 343eb494 (Q=0.765), which proved 13 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_343eb494_7154716c",
+    "lineage_refs": [],
+    "priority_score": 0.8649399999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "343eb494",
+    "status": "available",
+    "timestamp": "2026-07-31T04:01:28.964688+00:00",
+    "title": "Deepening: Erdős-Faber-Lovász Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1c628216 (Q=0.762), which proved 15 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressib",
     "domain_bridges": [],
     "domains": [
@@ -5879,25 +5737,6 @@
     "status": "available",
     "timestamp": "",
     "title": "EML Quantum Activation Functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "343eb494",
-    "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "seed_212",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Erdős-Faber-Lovász Conjecture"
   },
   {
     "ambition_level": "extension",
@@ -15053,6 +14892,26 @@
     "status": "available",
     "timestamp": "2026-07-31T02:56:59.782833+00:00",
     "title": "`Tournament.lean` now compiles end-to-end without proof placeholders. It proves "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Formalize the full Erdős–Faber–Lovász theorem for finite linear hypergraphs with `k` edges of size `k`, using the rainbow-edge formulation in `Combinatorics/ErdosFaberLovasz.lean`.\n- Develop partial transversals and systems of distinct representatives for the incidence matrix; connect these to list coloring of the clique-union graph.\n- Formalize random partial colorings, concentration bounds, and a Lovász-local-lemma completion step for sparse/high-degree regimes.\n- Add the dual formulation: `k` pairwise-intersecting cliques of order `k`, any two sharing at most one vertex, have chromatic number at most `k`.\n- Verify extremal finite-projective-plane instances and prove that their natural incidence colorings meet the expected bound.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_0866",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "343eb494",
+    "status": "available",
+    "timestamp": "2026-07-31T04:01:24.831823+00:00",
+    "title": "Future directions from cycle 343eb494"
   },
   {
     "ambition_level": "extension",
