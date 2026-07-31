@@ -59,7 +59,6 @@ def collect_directions_from_git():
     print("[Reconcile] Scanning git commit history for future_directions.json...")
     
     files_to_check = [
-        "Aether/.aether_workspace/future_directions.json",
         "Packages/future_directions.json",
         "docs/future_directions.json",
     ]
@@ -191,14 +190,10 @@ def main():
         "directions": all_directions
     }
 
-    # Write to workspace
-    WORKSPACE.mkdir(parents=True, exist_ok=True)
-    ws_file.write_text(json.dumps(final_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"[Reconcile] Saved reconciled directions to {ws_file}")
-
-    # Write to Packages/
+    # Write to Packages/ (single source of truth; docs/ rsyncs from here)
     PACKAGES_DIR.mkdir(parents=True, exist_ok=True)
     (PACKAGES_DIR / "future_directions.json").write_text(json.dumps(final_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"[Reconcile] Saved reconciled directions to Packages/")
 
     # Run update_index.py in Packages/ and rsync to docs/
     print("[Reconcile] Rebuilding website index...")

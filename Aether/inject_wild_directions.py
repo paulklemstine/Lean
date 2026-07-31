@@ -3,7 +3,7 @@ import uuid
 import random
 from pathlib import Path
 
-FD_PATH = Path('Aether/.aether_workspace/future_directions.json')
+FD_PATH = Path('Packages/future_directions.json')
 
 with open(FD_PATH, 'r') as f:
     data = json.load(f)

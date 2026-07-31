@@ -379,7 +379,11 @@ class FutureDirectionsManager:
 
     def __init__(self, workspace: Path):
         self.workspace = Path(workspace)
-        self._file = self.workspace / "future_directions.json"
+        # Single source of truth: the persisted Packages/ copy (git-tracked).
+        # The workspace copy was eliminated to avoid duplication — docs/ rsyncs
+        # straight from Packages/, so this is the only file that matters.
+        repo_root = self.workspace.parent.parent
+        self._file = repo_root / "Packages" / "future_directions.json"
         self._directions: List[FutureDirection] = []
         self._pruned: List[FutureDirection] = []
         self._cycle_syntheses: Dict[str, str] = {}  # exp_id -> synthesis text

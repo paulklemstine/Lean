@@ -2142,9 +2142,10 @@ def rebuild_commit_push() -> bool:
                        ("Demos/", 120), ("Visuals/", 60)):
             subprocess.run(["git", "add", _d], cwd=str(REPO_ROOT), capture_output=True, timeout=_t)
 
-        # Force add core state files to ensure they are tracked and pushed
+        # Force add core state files to ensure they are tracked and pushed.
+        # future_directions.json lives in Packages/ (single source of truth).
         state_files = [
-            "Aether/.aether_workspace/future_directions.json",
+            "Packages/future_directions.json",
             "Aether/.aether_workspace/cycle_analytics.json",
             "Aether/.aether_workspace/research_journal.json",
             "Aether/.aether_workspace/research_threads.json",

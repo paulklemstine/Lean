@@ -4208,9 +4208,9 @@ Research mode: {concept.research_mode}
             # Fallback: look up source_exp_ids from FutureDirectionsManager
             try:
                 from research_memory import FutureDirectionsManager
-                fd_path = Path(__file__).parent / ".aether_workspace" / "future_directions.json"
-                if fd_path.exists():
-                    fd_mgr = FutureDirectionsManager(Path(__file__).parent / ".aether_workspace")
+                ws = Path(__file__).parent / ".aether_workspace"
+                fd_mgr = FutureDirectionsManager(ws)
+                if fd_mgr._file.exists():
                     pkg["source_exp_ids"] = fd_mgr.get_source_exp_ids_for(job.job_id)
             except Exception:
                 pass
@@ -4422,9 +4422,10 @@ Research mode: {concept.research_mode}
                         # git add relative to repo root
                         rel = abs_path.relative_to(self.catalog_root.parent)
                         paths_to_add.append(str(rel))
-            # Always add workspace changes (future directions, memory)
+            # Always add workspace changes (future directions, memory).
+            # future_directions.json now lives in Packages/ (single source of truth).
             state_files = [
-                "Aether/.aether_workspace/future_directions.json",
+                "Packages/future_directions.json",
                 "Aether/.aether_workspace/cycle_analytics.json",
                 "Aether/.aether_workspace/research_journal.json",
                 "Aether/.aether_workspace/research_threads.json",
