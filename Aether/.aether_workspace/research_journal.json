@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "83a0d4e2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n1. **Bundle the graph diagram.** Replace the unbundled `deBruijnEdge` relation by finite directed graphs and package every truncation map as a graph homomorphism. Prove the invers",
-      "quality_score": 0.75101,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-28T22:26:29",
-      "title": "Strange Attractors as Algebraic Objects"
-    },
-    {
       "cycle_id": "d54ed94e",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the formally verified algebraic results in `Catalog/Computation/DeterminantValuesOnLattices.lean`. Each is falsifiable by an e",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-31T04:25:29",
       "title": "Inverse Stereographic Tropical Lift"
+    },
+    {
+      "cycle_id": "77d39a70",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\nThe completed connector identifies the matrix word `A D A` with both the third\nraw moment of the degree distribution and the number of homomorphisms from the\nthree-leaf star. The",
+      "quality_score": 0.76844,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-31T05:11:22",
+      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3e9a9a06",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Multiverse Truth and Forcing Branches\n\n## 1. Internal Boolean-Valued Realization\n\nConstruct a Boolean-valued universe whose generic quotients instantiate the abstract frame, with",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 129,
-      "timestamp": "2026-07-22T09:46:20",
-      "title": "Moonshot: Multiverse Set Theory — Mathematics Across Branches"
-    },
     {
       "cycle_id": "e24b36f0",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-31T04:25:29",
       "title": "Inverse Stereographic Tropical Lift"
+    },
+    {
+      "cycle_id": "77d39a70",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\nThe completed connector identifies the matrix word `A D A` with both the third\nraw moment of the degree distribution and the number of homomorphisms from the\nthree-leaf star. The",
+      "quality_score": 0.76844,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-31T05:11:22",
+      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bf94368f",
-      "domain": "Algebra",
-      "name": "divisibilityIdeal_antitone",
-      "quality": 0.80162
-    },
-    {
-      "cycle_id": "bf94368f",
-      "domain": "Algebra",
-      "name": "pow_two_mem_divisibilityIdeal",
-      "quality": 0.80162
-    },
-    {
-      "cycle_id": "e1e4ff02",
-      "domain": "Applications",
-      "name": "identifies",
-      "quality": 0.76074
-    },
     {
       "cycle_id": "e1e4ff02",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "tropicalStereo_pole_independence",
       "quality": 0.79392
+    },
+    {
+      "cycle_id": "77d39a70",
+      "domain": "Physics",
+      "name": "adjacencyDegreeMoment_eq_sum_rowSum_cube",
+      "quality": 0.76844
+    },
+    {
+      "cycle_id": "77d39a70",
+      "domain": "Physics",
+      "name": "adjMatrix_rowSum_eq_degree",
+      "quality": 0.76844
+    },
+    {
+      "cycle_id": "77d39a70",
+      "domain": "Physics",
+      "name": "graph_adjacencyDegreeMoment_eq_sum_degree_cube",
+      "quality": 0.76844
     }
   ],
-  "last_updated": "2026-07-31T04:25:29",
+  "last_updated": "2026-07-31T05:11:22",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "928798aa",
-        "quality": 0.7,
-        "theorems": 23,
-        "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
-      },
-      {
         "cycle_id": "b59af725",
         "quality": 0.73,
         "theorems": 0,
@@ -3761,6 +3755,12 @@
         "quality": 0.73786,
         "theorems": 13,
         "title": "Navier-Stokes Existence and Smoothness"
+      },
+      {
+        "cycle_id": "77d39a70",
+        "quality": 0.76844,
+        "theorems": 7,
+        "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
       }
     ],
     "Probability": [

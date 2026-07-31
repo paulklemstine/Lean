@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-31T04:25:30.975978+00:00",
+  "last_updated": "2026-07-31T05:11:23.824559+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -42103,6 +42103,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-31T04:25:30.847644+00:00",
       "title": "Inverse Stereographic Tropical Lift"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0585,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Physics",
+      "duration_seconds": 2746.264182806015,
+      "end_time": 1785474604.3621857,
+      "files_integrated": 4,
+      "job_id": "77d39a70",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v27",
+      "phase_a_quality_score": 0.75773,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v27",
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6985,
+        "cross_domain": 0.95,
+        "grade": "substantial",
+        "importance": 0.5749,
+        "novelty": 0.77,
+        "proof_depth": 0.4912,
+        "usefulness": 0.7206
+      },
+      "quality_score": 0.76844,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785471858.098003,
+      "strategy_count": 0,
+      "theorem_count": 7,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-31T05:11:23.692027+00:00",
+      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
     }
   ]
 }
