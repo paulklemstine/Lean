@@ -1,185 +1,189 @@
-# The Shape of Missing Information
+# Sheaf Cohomology of Data: The Topology of Missing Information
 
-## When an empty cell is not just an empty cell
+*By Aristotle — July 31, 2026*
 
-A blank entry in a spreadsheet looks local: one measurement is absent from one row. Yet the difficulty of repairing it is rarely local. A hospital record may contain blood pressure and age in one table, age and medication in another, and medication and outcome in a third. Each fragment can look reasonable on its own. The real question is whether all fragments can be assembled into one coherent record.
+A spreadsheet with blank cells looks like an unfinished object. The natural response is to fill the blanks: insert a column mean, consult nearby rows, fit a probabilistic model, or ask a neural network to guess. But this familiar picture hides a more basic question. Before choosing *which* values to insert, can the pieces of information we already possess be made mutually consistent at all?
 
-That question has a shape. It is the same kind of shape mathematicians study when they ask whether maps drawn on overlapping pieces of a landscape can be joined into a map of the whole country. The relevant language is sheaf cohomology, but its central lesson is intuitive: **missing information lives not only in blank cells, but in failures of agreement around networks of overlap.**
+Topology offers a language for asking exactly that question. It does not begin by guessing a missing number. It begins by recording which local views of a dataset overlap, how values move between those views, and whether compatible-looking fragments can be assembled into one global observation. In this language, missing information can form a genuine obstruction—a “hole” not in physical space, but in the logic of data assembly.
 
-This viewpoint replaces a single missing-rate statistic with a richer diagnosis. Two datasets can have the same number of observed and missing entries, and even the same number of overlap constraints, while one is perfectly repairable and the other carries a maximal obstruction. What matters is how observations overlap and how much independent corrective power the available local data provides.
+The central lesson is both simple and cautionary: **a missing-value percentage does not determine the amount of missing information**. Two datasets can have the same number of features, the same sizes of local and overlap spaces, and even the same headline missingness rate, yet have completely different patching behavior. The decisive ingredient is the network of overlaps and the maps that compare data across them.
 
-## Local views and overlap alarms
+## From local tables to a data complex
 
-Fix a field of numbers, such as the real numbers. We organize the data into three finite-dimensional vector spaces.
+Imagine that no record contains every feature. One clinic measures blood pressure and age; another records age and glucose; a third sees glucose and treatment outcome. Each feature subset supplies a local view. Whenever two views overlap, their shared coordinates can be compared. A consistent global record must give the same answer wherever the local views meet.
 
-* $C^0$ is the space of local observations or local proposed values.
-* $C^1$ is the space of discrepancies on pairwise overlaps.
-* $C^2$ is the space of consistency checks on triple overlaps.
+For linear data, this comparison process can be summarized by three finite-dimensional vector spaces over a field $\mathbb{K}$:
 
-A linear map
+- $C^0$, the space of local assignments;
+- $C^1$, the space of residuals on pairwise overlaps;
+- $C^2$, the space of higher-order consistency checks.
 
-$$
-d^0:C^0\longrightarrow C^1
-$$
-
-records how changing local observations changes their pairwise discrepancies. A second linear map
+Two linear maps connect them:
 
 $$
-d^1:C^1\longrightarrow C^2
+C^0 \xrightarrow{d^0} C^1 \xrightarrow{d^1} C^2,
 $$
 
-checks whether a pattern of pairwise discrepancies is itself consistent around triples. The basic coherence rule is
+with the compatibility law
 
 $$
 d^1d^0=0.
 $$
 
-In words, a discrepancy created by an actual change of local values automatically passes every higher consistency check. This is the algebraic version of a familiar fact: if three temperature sensors are shifted by definite amounts, the induced pairwise differences add consistently around the triangle.
+The map $d^0$ measures disagreement created on overlaps by a collection of local assignments. The map $d^1$ checks whether an overlap residual itself satisfies the next level of consistency. Because every residual produced by $d^0$ automatically passes the $d^1$ check, the image of $d^0$ lies inside the kernel of $d^1$.
 
-Two spaces summarize the situation. The zeroth cohomology is
-
-$$
-H^0=\ker d^0.
-$$
-
-It consists of changes that create no overlap discrepancy at all—globally compatible local observations. The first cohomology is
+The first cohomology space is the quotient
 
 $$
-H^1=\ker d^1/\operatorname{im}d^0.
+H^1=\ker(d^1)/\operatorname{im}(d^0).
 $$
 
-The numerator contains discrepancy patterns that pass every local consistency test. The denominator contains patterns that can be explained away by changing local observations. Thus $H^1$ measures the residual ambiguity: locally consistent patterns that no available patch can remove.
+This definition separates two kinds of residual. Elements of $\ker(d^1)$ are admissible overlap patterns: they satisfy all higher-order checks. Elements of $\operatorname{im}(d^0)$ are harmless in the sense that they come from changing local assignments. The quotient retains precisely those admissible residuals that no local correction can remove. Thus $\dim H^1$ counts independent obstruction directions.
 
-A nonzero class in $H^1$ is a genuine obstruction. It says that local agreement tests do not guarantee a global repair.
-
-## The information-loss equation
-
-The central result is an exact accounting identity.
-
-**Cohomological Information-Loss Theorem.** For every finite-dimensional data complex satisfying $d^1d^0=0$,
+The zeroth cohomology space is
 
 $$
-\dim H^1+\operatorname{rank}d^0+\operatorname{rank}d^1=\dim C^1.
+H^0=\ker(d^0).
 $$
 
-Equivalently,
+It consists of local assignments that already agree everywhere, so it represents globally consistent sections. In an imputation problem, $H^0$ describes exact patchings, while $H^1$ records why exact patching may fail.
+
+## Two datasets that look the same to a dashboard
+
+The sharpest way to see the limits of scalar summaries is to build two extreme examples. Fix a positive integer $n$, and take
 
 $$
-\dim H^1=\dim C^1-\operatorname{rank}d^0-\operatorname{rank}d^1.
+C^0=C^1=\mathbb{K}^n, \qquad C^2=\{0\}.
 $$
 
-The proof is a two-stage count. Rank–nullity gives
+Both models therefore have exactly the same cochain dimensions: $n$ local coordinates, $n$ overlap coordinates, and no nonzero second-level coordinates. Any report that records only these counts sees no difference between them.
+
+In the first model, let both maps vanish:
 
 $$
-\dim\ker d^1=\dim C^1-\operatorname{rank}d^1.
+d^0=0, \qquad d^1=0.
 $$
 
-Because $d^1d^0=0$, the image of $d^0$ lies inside this kernel. Quotienting by that image subtracts another $\operatorname{rank}d^0$ dimensions. What remains is exactly $\dim H^1$.
-
-The formula separates two mechanisms. The rank of $d^1$ counts overlap patterns rejected by higher-order checks. The rank of $d^0$ counts accepted patterns that can be generated—and therefore removed—by adjusting local data. An obstruction survives only when it escapes both mechanisms.
-
-This leads immediately to a diagnostic test.
-
-**Rank-Deficit Criterion.** If
+Every vector in $C^1$ belongs to $\ker(d^1)$, and no nonzero vector belongs to $\operatorname{im}(d^0)$. Therefore
 
 $$
-\operatorname{rank}d^0+\operatorname{rank}d^1<\dim C^1,
+H^1\cong\mathbb{K}^n,
+\qquad
+\dim H^1=n.
 $$
 
-then $\dim H^1>0$, so some locally consistent discrepancy cannot be patched.
+Every overlap residual survives as an obstruction. Local adjustments produce no overlap corrections at all.
 
-The criterion is useful because it needs only matrix ranks. It does not require enumerating every obstruction individually.
-
-## Exactly when patching succeeds
-
-There is also a clean all-or-nothing statement.
-
-**Exact Patchability Theorem.** The obstruction space vanishes, $\dim H^1=0$, if and only if
+In the second model, keep $d^1=0$ but set $d^0$ equal to the identity map:
 
 $$
-\ker d^1=\operatorname{im}d^0.
+d^0=I_n, \qquad d^1=0.
 $$
 
-So every discrepancy that passes the triple-overlap checks is patchable precisely when the complex is exact at $C^1$. One direction is immediate: if the two spaces coincide, their quotient is zero. Conversely, a zero-dimensional quotient of finite-dimensional spaces can occur only when the subspace being divided out is the whole numerator.
-
-A particularly strong sufficient condition is surjectivity of $d^0$. If every possible pairwise discrepancy can be produced by adjusting local observations, then $\operatorname{im}d^0=C^1$. Coherence forces $d^1$ to vanish on all of $C^1$, and therefore $H^1=0$.
-
-At the opposite extreme, suppose both maps are zero. Then no discrepancy can be removed and no discrepancy is rejected. Every vector in $C^1$ survives:
+Again every overlap vector passes the higher consistency check. This time, however, every such vector is also generated by a local correction, because the identity map is surjective. Hence
 
 $$
-\dim H^1=\dim C^1.
+H^1=\{0\},
+\qquad
+\dim H^1=0.
 $$
 
-These boundary cases are not curiosities. They disprove the idea that a scalar such as missing rate can, by itself, determine the amount of cohomological obstruction. Consider two systems with equal overlap-space dimension. In the first, both maps are zero, so the obstruction is maximal. In the second, $d^0$ is surjective, so the obstruction vanishes. Their coarse size statistics agree; their repairability is opposite.
+These two constructions establish a non-identifiability theorem: **for every $n>0$, identical dimensions of $C^0$, $C^1$, and $C^2$ can coexist with different first-cohomology dimensions, namely $n$ and $0$**. Feature counts and cochain counts cannot determine obstruction size. A fortiori, a feature count combined with a single missingness percentage cannot do so without assumptions about incidence and restriction maps.
 
-## Why the overlap network matters
+This is not an exotic technicality. Consider two hospital networks with the same fraction of absent measurements. In one, the available panels overlap along informative biomarkers, allowing discrepancies to be traced back to correctable local choices. In the other, the panels meet through comparisons that carry no corrective information. Their blank-cell rates can match while their recoverability differs radically.
 
-The local pieces also form a combinatorial object called a nerve. Make one vertex for each local chart or feature group. Connect two vertices when the corresponding charts overlap. Add a triangular face when three charts have a genuine common overlap, and continue similarly in higher dimensions.
+## Why a tempting scaling law fails
 
-Sometimes all higher overlaps are determined by pairwise ones. A nerve with this property is called **flag**: whenever a finite collection of vertices is pairwise connected, that collection spans a face.
-
-**Flag-Nerve Reconstruction Theorem.** If the data nerve is flag, then it is recovered exactly from its pairwise-overlap graph by filling every clique with a simplex. Equivalently, every finite family of pairwise-compatible local charts forms a genuine higher-order overlap face.
-
-The proof is built into the flag condition. Every face certainly has all its pairs connected. Conversely, flagness declares that every clique is already a face. The two collections therefore coincide.
-
-This theorem marks the precise boundary of pairwise reasoning. In a flag nerve, the overlap graph contains the full combinatorial story. Without flagness, three charts may overlap pairwise while having no common triple intersection. A graph alone then invents a triangle that the data never possessed, and higher consistency checks can be misrepresented.
-
-## A small numerical parable
-
-Suppose $C^1$ has dimension $6$. In one system, $d^0$ has rank $2$ and $d^1$ has rank $3$. The information-loss theorem gives
+A proposed proxy for obstruction size is
 
 $$
-\dim H^1=6-2-3=1.
+P_n(r)=nr^2\log(1/r),
 $$
 
-One independent obstruction remains. In another system with the same six-dimensional overlap space, let $d^0$ have rank $4$ and $d^1$ have rank $2$. Then
+where $n>0$ is the feature count and $r$ is the missing rate. On part of the interval $0<r<1$, this expression has an appealing shape: it combines the number of features with a nonlinear penalty for missingness. But it cannot represent a quantity that should grow monotonically all the way to complete missingness.
+
+At $r=1$,
 
 $$
-\dim H^1=6-4-2=0.
+P_n(1)=n\log(1)=0.
 $$
 
-The amount of overlap data is unchanged, but its algebraic organization has eliminated the hole.
-
-The equation also suggests an algorithm. Encode the restriction and consistency operations as matrices $D_0$ and $D_1$. Check that $D_1D_0=0$. Compute their ranks by Gaussian elimination, and return
+At $r=1/2$,
 
 $$
-h_1=\text{number of columns of }D_1-\operatorname{rank}D_0-\operatorname{rank}D_1.
+P_n(1/2)=\frac{n}{4}\log 2>0.
 $$
 
-To inspect actual obstructions, compute a basis of $\ker D_1$ and reduce it modulo a basis of $\operatorname{im}D_0$.
-
-## What this does—and does not—say about imputation
-
-The topology gives a rigorous answer to a structural question: can locally consistent information be patched globally, and how many independent obstructions remain? It does not, by itself, choose the numerically best filled-in value. Nor does it make an estimator maximum-likelihood without a probability model.
-
-This distinction matters. A proposed law such as
+Since $1/2<1$ but $P_n(1/2)>P_n(1)$, the proxy is not monotone nondecreasing on $[0,1]$. In fact, differentiation gives
 
 $$
-\dim H^1\approx r^2n\log(1/r)
+P_n'(r)=nr\bigl(2\log(1/r)-1\bigr),
 $$
 
-for missing rate $r$ and feature count $n$ cannot be universal. The exact formula shows why: $\dim H^1$ depends on two ranks shaped by overlap incidence and restriction maps. A scalar $r$ does not determine either rank. Such an asymptotic law might emerge under a carefully specified random model, but it would be a theorem about that model, not about missingness in general.
+so its interior maximum occurs at $r=e^{-1/2}$. It then falls back to zero as $r$ approaches $1$.
 
-Likewise, minimizing an overlap-residual norm is a natural least-squares procedure, but calling it maximum-likelihood requires assumptions such as Gaussian noise. Comparisons with mean imputation, nearest-neighbor methods, or chained equations require a shared data-generating process and explicit loss function.
+This does not make the expression useless. It may describe a phenomenon under a carefully specified random model and within a restricted range of rates. What fails is the universal interpretation. No scalar law depending only on $n$ and $r$ can recover information that actually resides in the ranks and incidence structure of the comparison maps.
 
-The present framework therefore acts less like an automatic imputer and more like a structural scan. Before asking which value to insert, it asks whether the available pieces even determine a coherent answer.
+## Computing the obstruction
 
-## From exact holes to noisy near-holes
-
-Real measurements rarely satisfy equations exactly. A matrix that should have a zero singular value may instead have a tiny one. This points toward a robust version of cohomology: count singular values below a tolerance, and distinguish structural holes from directions that are merely weakly constrained.
-
-Random overlap networks offer another direction. As missingness increases, cycles can appear in the nerve; restriction maps may cancel some and preserve others. A realistic threshold theory must therefore track both combinatorial cycle creation and algebraic rank cancellation.
-
-Finally, under an explicit Gaussian model, the spectrum of a sheaf Laplacian could separate irreducible ambiguity from numerical instability. Zero eigenvalues would record cohomology; small positive eigenvalues would warn that reconstruction is possible but fragile.
-
-## The deeper lesson
-
-A missing entry is visible. A missing relation is not. Cohomology reveals the latter by examining how local pieces meet, how discrepancies circulate, and which of them can be absorbed by legitimate corrections.
-
-The decisive quantity is not simply how much data is absent. It is
+Once the maps are known, the linear calculation is direct. If matrices $D_0$ and $D_1$ represent $d^0$ and $d^1$, and $D_1D_0=0$, then rank–nullity yields
 
 $$
-\dim C^1-\operatorname{rank}d^0-\operatorname{rank}d^1,
+\dim H^1
+=\dim\ker(D_1)-\dim\operatorname{im}(D_0)
+=\bigl(\dim C^1-\operatorname{rank}D_1\bigr)-\operatorname{rank}D_0.
 $$
 
-the part of overlap space that is neither rejected by consistency nor explained by a patch. That is the topology of missing information: an exact measure of the holes left after every local test has passed and every available correction has been tried.
+Thus the obstruction dimension can be found by two rank computations. In dense arithmetic this costs roughly cubic time in the largest matrix dimension; sparse incidence patterns can be much cheaper.
+
+The same matrices suggest a practical imputation principle. Given an observed overlap discrepancy $b\in C^1$, choose a local correction $x\in C^0$ minimizing
+
+$$
+\|D_0x-b\|_2^2.
+$$
+
+The fitted component lies in $\operatorname{im}(D_0)$ and is patchable. The residual is the part that the chosen local model cannot explain. When the complex has inner products, orthogonal projection cleanly separates correctable and obstructed components. Cohomology does not magically reconstruct values that the observations never constrained; rather, it tells us which inconsistencies are removable and which demand more information or a richer model.
+
+## An unexpected information-theoretic echo
+
+There is another way that “accumulated discrepancy” appears in mathematics. For positive rates $\lambda$ and $\mu$, the Kullback–Leibler divergence from an exponential distribution of rate $\lambda$ to one of rate $\mu$ is
+
+$$
+D_{\mathrm{KL}}\bigl(\operatorname{Exp}(\lambda)\,\|\,\operatorname{Exp}(\mu)\bigr)
+=\log(\lambda/\mu)+\mu/\lambda-1.
+$$
+
+This quantity is always nonnegative. The inequality follows from $\log x\le x-1$ for $x>0$, applied to $x=\mu/\lambda$.
+
+Now compare consecutive rates, setting $\lambda=k+1$ and $\mu=k+2$. A short rearrangement gives
+
+$$
+D_{\mathrm{KL}}\bigl(\operatorname{Exp}(k+1)\,\|\,\operatorname{Exp}(k+2)\bigr)
+=\frac{1}{k+1}-\log\frac{k+2}{k+1}.
+$$
+
+Summing the first $n$ terms makes the logarithms telescope:
+
+$$
+\sum_{k=0}^{n-1}D_{\mathrm{KL}}\bigl(\operatorname{Exp}(k+1)\,\|\,\operatorname{Exp}(k+2)\bigr)
+=H_n-\log(n+1),
+$$
+
+where $H_n=1+1/2+\cdots+1/n$. As $n$ tends to infinity, this converges to the Euler–Mascheroni constant $\gamma$. Therefore
+
+$$
+\gamma=
+\sum_{k=0}^{\infty}D_{\mathrm{KL}}\bigl(\operatorname{Exp}(k+1)\,\|\,\operatorname{Exp}(k+2)\bigr).
+$$
+
+The identity is not a theorem about missing values, but it illuminates the same broad idea: a global quantity can be assembled from local discrepancies. Here every step is small, nonnegative, and patchable into a telescoping analytic expression; in a data complex, local discrepancies are sorted into correctable directions and persistent obstructions.
+
+## What should be measured next?
+
+The topology-of-data viewpoint changes the experimental agenda. Rather than plotting performance against missing rate alone, one should specify the overlap hypergraph, construct the comparison matrices, compute their ranks, and stratify experiments by $\dim H^1$. Synthetic studies can hold feature count, sample size, noise, and marginal missingness fixed while changing only overlap incidence. That is the controlled test the two-model theorem demands.
+
+Several questions then become concrete. Under random incidence, does normalized obstruction dimension converge to a deterministic law? For flag-shaped overlap nerves, can pairwise overlaps determine first cohomology? Does a larger obstruction dimension predict a lower probability of exact global consistency? When does minimizing a weighted coboundary residual beat scalar imputation methods?
+
+This perspective also changes what counts as a useful diagnostic. A single number can summarize prevalence, but a structural report should show the overlap network, the ranks of its comparison maps, and the dimensions of its consistency spaces. Such a report can distinguish a dataset that merely looks sparse from one whose local evidence is genuinely impossible to reconcile. It can also identify where an additional measurement would matter most: not simply in the emptiest column, but on an overlap that removes an obstruction direction.
+
+The most important conclusion is already clear. Missingness is not merely a count of blanks. It has architecture. Two collections of fragments may be equally incomplete by every scalar summary and yet differ between perfect patchability and $n$ independent obstructions. To understand what data has lost, we must look not only at how much is absent, but at how the surviving pieces still speak to one another.

@@ -1,187 +1,167 @@
 #!/usr/bin/env python3
-"""Numerical demonstrations for cohomological obstructions in incomplete data.
+"""Numerical demonstrations for missing-information cohomology.
 
-The script uses only the Python standard library.  It computes matrix ranks by
-Gaussian elimination, checks the cochain identity D1 D0 = 0, evaluates the
-first-cohomology dimension, extracts simple quotient representatives, and
-reconstructs a flag nerve from its overlap graph.
+The script uses only Python's standard library.  It demonstrates:
+1. equal-sized complexes with first-cohomology dimensions n and 0;
+2. the nonmonotone proxy n*r^2*log(1/r);
+3. convergence of consecutive exponential KL divergences to gamma;
+4. least-squares patching for diagonal coboundary maps.
 """
 
 from __future__ import annotations
 
-from itertools import combinations
-from typing import Iterable, Sequence
+import math
+from typing import Iterable, List, Sequence, Tuple
 
-Matrix = list[list[float]]
-
-
-def shape(a: Sequence[Sequence[float]]) -> tuple[int, int]:
-    """Return matrix dimensions, accepting an empty matrix as 0 by 0."""
-    if not a:
-        return (0, 0)
-    width = len(a[0])
-    if any(len(row) != width for row in a):
-        raise ValueError("Matrix rows have inconsistent lengths")
-    return (len(a), width)
+Matrix = List[List[float]]
+Vector = List[float]
 
 
-def transpose(a: Sequence[Sequence[float]]) -> Matrix:
-    """Transpose a rectangular matrix."""
-    rows, cols = shape(a)
-    return [[float(a[i][j]) for i in range(rows)] for j in range(cols)]
+def matrix_rank(matrix: Sequence[Sequence[float]], tol: float = 1e-10) -> int:
+    """Return numerical row rank by Gaussian elimination with pivoting."""
+    if not matrix:
+        return 0
+    a = [list(map(float, row)) for row in matrix]
+    rows, cols = len(a), len(a[0])
+    if any(len(row) != cols for row in a):
+        raise ValueError("matrix must be rectangular")
+    rank = 0
+    for col in range(cols):
+        pivot = max(range(rank, rows), key=lambda i: abs(a[i][col]), default=rank)
+        if rank >= rows or abs(a[pivot][col]) <= tol:
+            continue
+        a[rank], a[pivot] = a[pivot], a[rank]
+        pivot_value = a[rank][col]
+        a[rank] = [value / pivot_value for value in a[rank]]
+        for row in range(rows):
+            if row != rank and abs(a[row][col]) > tol:
+                factor = a[row][col]
+                a[row] = [x - factor * y for x, y in zip(a[row], a[rank])]
+        rank += 1
+        if rank == rows:
+            break
+    return rank
 
 
 def matmul(a: Sequence[Sequence[float]], b: Sequence[Sequence[float]]) -> Matrix:
-    """Multiply two rectangular matrices."""
-    ar, ac = shape(a)
-    br, bc = shape(b)
-    if ac != br:
-        raise ValueError(f"Incompatible shapes {(ar, ac)} and {(br, bc)}")
-    return [
-        [sum(float(a[i][k]) * float(b[k][j]) for k in range(ac)) for j in range(bc)]
-        for i in range(ar)
-    ]
+    """Multiply rectangular matrices."""
+    if not a:
+        return []
+    if not b:
+        return [[] for _ in a]
+    if len(a[0]) != len(b):
+        raise ValueError("incompatible matrix dimensions")
+    return [[sum(x * y for x, y in zip(row, col)) for col in zip(*b)] for row in a]
 
 
-def rref(a: Sequence[Sequence[float]], tolerance: float = 1e-10) -> tuple[Matrix, list[int]]:
-    """Compute reduced row-echelon form and pivot columns."""
-    matrix = [list(map(float, row)) for row in a]
-    rows, cols = shape(matrix)
-    pivots: list[int] = []
-    pivot_row = 0
-    for col in range(cols):
-        candidate = max(range(pivot_row, rows), key=lambda i: abs(matrix[i][col]), default=-1)
-        if candidate < 0 or abs(matrix[candidate][col]) <= tolerance:
-            continue
-        matrix[pivot_row], matrix[candidate] = matrix[candidate], matrix[pivot_row]
-        scale = matrix[pivot_row][col]
-        matrix[pivot_row] = [x / scale for x in matrix[pivot_row]]
-        for i in range(rows):
-            if i == pivot_row:
-                continue
-            factor = matrix[i][col]
-            if abs(factor) > tolerance:
-                matrix[i] = [x - factor * y for x, y in zip(matrix[i], matrix[pivot_row])]
-        pivots.append(col)
-        pivot_row += 1
-        if pivot_row == rows:
-            break
-    matrix = [[0.0 if abs(x) <= tolerance else x for x in row] for row in matrix]
-    return matrix, pivots
-
-
-def matrix_rank(a: Sequence[Sequence[float]], tolerance: float = 1e-10) -> int:
-    """Compute numerical matrix rank."""
-    return len(rref(a, tolerance)[1])
-
-
-def nullspace(a: Sequence[Sequence[float]], tolerance: float = 1e-10) -> Matrix:
-    """Return a basis of the null space as a list of column vectors."""
-    reduced, pivots = rref(a, tolerance)
-    _, cols = shape(a)
-    free = [j for j in range(cols) if j not in pivots]
-    basis: Matrix = []
-    for free_col in free:
-        vector = [0.0] * cols
-        vector[free_col] = 1.0
-        for row, pivot_col in enumerate(pivots):
-            vector[pivot_col] = -reduced[row][free_col]
-        basis.append(vector)
-    return basis
-
-
-def column_basis(a: Sequence[Sequence[float]], tolerance: float = 1e-10) -> Matrix:
-    """Return independent columns of a as vectors."""
-    _, pivots = rref(a, tolerance)
-    rows, _ = shape(a)
-    return [[float(a[i][j]) for i in range(rows)] for j in pivots]
-
-
-def rank_of_vectors(vectors: Sequence[Sequence[float]], tolerance: float = 1e-10) -> int:
-    """Compute the dimension of the span of column vectors."""
-    if not vectors:
-        return 0
-    return matrix_rank(transpose(vectors), tolerance)
-
-
-def is_zero_matrix(a: Sequence[Sequence[float]], tolerance: float = 1e-10) -> bool:
-    """Test whether all matrix entries vanish within tolerance."""
-    return all(abs(x) <= tolerance for row in a for x in row)
-
-
-def h1_dimension(d0: Matrix, d1: Matrix, tolerance: float = 1e-10) -> int:
-    """Return dim H^1 = dim C1 - rank(D0) - rank(D1)."""
-    d0_rows, _ = shape(d0)
-    _, d1_cols = shape(d1)
-    if d0_rows != d1_cols:
-        raise ValueError("D0 must map into the domain of D1")
-    if not is_zero_matrix(matmul(d1, d0), tolerance):
-        raise ValueError("The matrices do not satisfy D1 D0 = 0")
-    answer = d0_rows - matrix_rank(d0, tolerance) - matrix_rank(d1, tolerance)
+def h1_dimension(d0: Matrix, d1: Matrix, c1_dimension: int, tol: float = 1e-10) -> int:
+    """Compute dim H^1 = dim C^1 - rank(d1) - rank(d0)."""
+    if d1 and len(d1[0]) != c1_dimension:
+        raise ValueError("d1 must have one column per C1 coordinate")
+    if d0 and len(d0) != c1_dimension:
+        raise ValueError("d0 must have one row per C1 coordinate")
+    product = matmul(d1, d0) if d1 else []
+    if any(abs(value) > tol for row in product for value in row):
+        raise ValueError("cochain condition d1*d0 = 0 is violated")
+    answer = c1_dimension - matrix_rank(d1, tol) - matrix_rank(d0, tol)
     if answer < 0:
-        raise ArithmeticError("Negative dimension indicates inconsistent rank tolerance")
+        raise ValueError("inconsistent ranks for a cochain complex")
     return answer
 
 
-def h1_representatives(d0: Matrix, d1: Matrix, tolerance: float = 1e-10) -> Matrix:
-    """Extract vectors in ker(D1) independent modulo im(D0)."""
-    if not is_zero_matrix(matmul(d1, d0), tolerance):
-        raise ValueError("The matrices do not satisfy D1 D0 = 0")
-    accepted = column_basis(d0, tolerance)
-    representatives: Matrix = []
-    current_rank = rank_of_vectors(accepted, tolerance)
-    for vector in nullspace(d1, tolerance):
-        trial = accepted + [vector]
-        trial_rank = rank_of_vectors(trial, tolerance)
-        if trial_rank > current_rank:
-            representatives.append(vector)
-            accepted.append(vector)
-            current_rank = trial_rank
-    return representatives
+def identity(n: int) -> Matrix:
+    """Return the n-by-n identity matrix."""
+    return [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
 
 
-def all_cliques(vertices: Iterable[str], edges: Iterable[tuple[str, str]]) -> list[tuple[str, ...]]:
-    """Enumerate nonempty faces of the clique complex of an overlap graph."""
-    ordered = sorted(set(vertices))
-    edge_set = {frozenset((u, v)) for u, v in edges if u != v}
-    faces: list[tuple[str, ...]] = []
-    for size in range(1, len(ordered) + 1):
-        for subset in combinations(ordered, size):
-            if all(frozenset(pair) in edge_set for pair in combinations(subset, 2)):
-                faces.append(subset)
-    return faces
+def zeros(rows: int, cols: int) -> Matrix:
+    """Return a zero matrix."""
+    return [[0.0 for _ in range(cols)] for _ in range(rows)]
 
 
-def print_complex(name: str, d0: Matrix, d1: Matrix) -> None:
-    """Print ranks, obstruction dimension, and representatives."""
-    print(f"\n{name}")
-    print("-" * len(name))
-    print(f"rank(D0) = {matrix_rank(d0)}")
-    print(f"rank(D1) = {matrix_rank(d1)}")
-    print(f"dim(C1)  = {len(d0)}")
-    print(f"dim(H1)  = {h1_dimension(d0, d1)}")
-    print(f"representatives = {h1_representatives(d0, d1)}")
+def rate_proxy(n: float, r: float) -> float:
+    """Evaluate n*r^2*log(1/r), continuously extended by zero at 0."""
+    if n < 0.0 or not 0.0 <= r <= 1.0:
+        raise ValueError("require n >= 0 and 0 <= r <= 1")
+    if r == 0.0:
+        return 0.0
+    return n * r * r * math.log(1.0 / r)
+
+
+def exponential_kl(rate1: float, rate2: float) -> float:
+    """KL(Exp(rate1) || Exp(rate2)) for positive rates."""
+    if rate1 <= 0.0 or rate2 <= 0.0:
+        raise ValueError("rates must be positive")
+    return math.log(rate1 / rate2) + rate2 / rate1 - 1.0
+
+
+def gamma_divergence_partial_sum(terms: int) -> float:
+    """Sum KL(Exp(k+1)||Exp(k+2)) for k from 0 through terms-1."""
+    if terms < 0:
+        raise ValueError("terms must be nonnegative")
+    return math.fsum(exponential_kl(k + 1.0, k + 2.0) for k in range(terms))
+
+
+def diagonal_least_squares(diagonal: Sequence[float], residual: Sequence[float]) -> Tuple[Vector, Vector]:
+    """Solve min_x ||diag(diagonal)x-residual|| and return x and remainder."""
+    if len(diagonal) != len(residual):
+        raise ValueError("vectors must have equal length")
+    correction: Vector = []
+    remainder: Vector = []
+    for coefficient, observed in zip(diagonal, residual):
+        if coefficient == 0.0:
+            correction.append(0.0)
+            remainder.append(float(observed))
+        else:
+            correction.append(float(observed) / coefficient)
+            remainder.append(0.0)
+    return correction, remainder
+
+
+def demo_equal_dimensions(n: int = 6) -> None:
+    """Print the obstruction dimensions of the two canonical models."""
+    disconnected = h1_dimension(zeros(n, n), zeros(0, n), n)
+    patchable = h1_dimension(identity(n), zeros(0, n), n)
+    print("Equal cochain dimensions (C0, C1, C2):", (n, n, 0))
+    print("  disconnected dim H1:", disconnected)
+    print("  patchable    dim H1:", patchable)
+
+
+def demo_proxy(n: float = 100.0) -> None:
+    """Print proxy values showing positivity at one half and zero at one."""
+    rates = [0.0, 0.1, 0.25, 0.5, math.exp(-0.5), 0.8, 1.0]
+    print("\nMissing-rate proxy P_n(r) for n =", n)
+    for rate in rates:
+        print(f"  r={rate:0.6f}  P={rate_proxy(n, rate):0.9f}")
+    print("  theoretical maximizer exp(-1/2) =", math.exp(-0.5))
+
+
+def demo_gamma() -> None:
+    """Print convergence of accumulated exponential divergences to gamma."""
+    gamma_reference = 0.5772156649015329
+    print("\nAccumulated consecutive exponential KL divergence")
+    for terms in (1, 2, 5, 10, 100, 1000, 10000):
+        value = gamma_divergence_partial_sum(terms)
+        print(f"  terms={terms:5d}  sum={value:.12f}  error={abs(value-gamma_reference):.3e}")
+
+
+def demo_patching() -> None:
+    """Contrast an uncorrectable zero map with a fully patchable identity map."""
+    observed = [2.0, -1.0, 0.5]
+    _, disconnected_remainder = diagonal_least_squares([0.0, 0.0, 0.0], observed)
+    correction, patchable_remainder = diagonal_least_squares([1.0, 1.0, 1.0], observed)
+    print("\nLeast-squares patching of overlap residual", observed)
+    print("  zero map remainder:    ", disconnected_remainder)
+    print("  identity correction:   ", correction)
+    print("  identity remainder:    ", patchable_remainder)
 
 
 def main() -> None:
-    """Run three demonstrations of the principal results."""
-    d0_one = [[1, 0], [0, 1], [0, 0], [0, 0]]
-    d1_one = [[0, 0, 1, 0]]
-    print_complex("A complex with one surviving obstruction", d0_one, d1_one)
-
-    d0_maximal = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-    d1_zero = [[0, 0, 0]]
-    d0_surjective = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
-    print_complex("Maximal obstruction with zero maps", d0_maximal, d1_zero)
-    print_complex("Vanishing obstruction with a surjective patch map", d0_surjective, d1_zero)
-
-    vertices = ["A", "B", "C", "D"]
-    edges = [("A", "B"), ("A", "C"), ("B", "C"), ("C", "D")]
-    faces = all_cliques(vertices, edges)
-    print("\nFlag nerve reconstructed from pairwise overlaps")
-    print("-" * 48)
-    print("faces:", faces)
-    print("The clique {A, B, C} becomes a filled triangular overlap face.")
+    """Run all demonstrations."""
+    demo_equal_dimensions()
+    demo_proxy()
+    demo_gamma()
+    demo_patching()
 
 
 if __name__ == "__main__":
