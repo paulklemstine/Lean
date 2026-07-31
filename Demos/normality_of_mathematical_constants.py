@@ -1,193 +1,201 @@
-"""
-demo.py — Numerical demonstrations for the combinatorial theory of simple normality
-of digit streams.
+#!/usr/bin/env python3
+"""Numerical illustrations of the orbit-to-digit-block correspondence.
 
-This script is fully self-contained (standard library only) and illustrates every
-core result of the accompanying paper:
-
-  * countDigit / freq / SimplyNormal primitives
-  * the conservation law          sum_d countDigit(s,d,n) = n
-  * the simplex constraint        sum_d freq(s,d,n)       = 1   (n > 0)
-  * monotonicity of the count
-  * the single-coordinate obstruction
-  * the cyclic stream cyc_b(k) = k mod b: periodicity, exact count,
-    O(1) discrepancy, and convergence of frequencies to 1/b
-
-Run:  python3 demo.py
+The program uses exact integer and rational arithmetic.  Finite experiments do not
+prove normality; they demonstrate the exact coding lemma and measure finite-sample
+block discrepancies.
 """
 
 from __future__ import annotations
 
-from typing import Callable, Dict, List
-
-# A digit stream is a function s : N -> {0, ..., b-1}.
-DigitStream = Callable[[int], int]
-
-
-# --------------------------------------------------------------------------- #
-# Core combinatorial primitives (mirror the Lean definitions)
-# --------------------------------------------------------------------------- #
-def count_digit(s: DigitStream, d: int, n: int) -> int:
-    """Number of indices k < n with s(k) == d  (== countDigit s d n)."""
-    return sum(1 for k in range(n) if s(k) == d)
+from dataclasses import dataclass
+from fractions import Fraction
+from math import floor
+from random import Random
+from typing import Iterable, Sequence
 
 
-def freq(s: DigitStream, d: int, n: int) -> float:
-    """Empirical frequency of digit d in the first n terms (junk value 0 at n=0)."""
-    if n == 0:
-        return 0.0
-    return count_digit(s, d, n) / n
+@dataclass(frozen=True)
+class HistogramReport:
+    """Summary of a block-frequency experiment."""
+
+    base: int
+    block_length: int
+    samples: int
+    counts: tuple[int, ...]
+    maximum_discrepancy: float
+    chi_square: float
 
 
-def is_simply_normal_window(s: DigitStream, b: int, n: int, tol: float) -> bool:
-    """Heuristic finite-window check: every digit frequency within tol of 1/b."""
-    return all(abs(freq(s, d, n) - 1.0 / b) <= tol for d in range(b))
+def validate_parameters(base: int, block_length: int, samples: int) -> None:
+    """Validate shared numerical parameters."""
+    if base < 2:
+        raise ValueError("base must be at least 2")
+    if block_length < 1:
+        raise ValueError("block_length must be positive")
+    if samples < 1:
+        raise ValueError("samples must be positive")
 
 
-# --------------------------------------------------------------------------- #
-# Example streams
-# --------------------------------------------------------------------------- #
-def cyc(b: int) -> DigitStream:
-    """The cyclic / round-robin stream cyc_b(k) = k mod b (periodic, simply normal)."""
-    return lambda k: k % b
+def exact_orbit_block_histogram(
+    numerator: int,
+    denominator: int,
+    base: int,
+    block_length: int,
+    samples: int,
+) -> HistogramReport:
+    """Count equal-cell visits for x = numerator/denominator exactly.
 
-
-def constant_stream(value: int) -> DigitStream:
-    """Degenerate stream that always emits the same digit (NOT simply normal)."""
-    return lambda k: value
-
-
-def digits_of_real(x: float, b: int) -> DigitStream:
+    At step n, the remainder r represents fract(base**n * x) = r/denominator.
+    The code floor(base**block_length * r / denominator) is simultaneously the
+    equal-cell index and the extracted digit-block code.
     """
-    Base-b digit stream of x in [0,1) via the multiply-by-b map:
-        d_n = floor(b * (b^n x mod 1)).
-    (Float precision limits this to the first ~15-50 base-b digits; for serious
-    use one would carry exact arithmetic. Here it illustrates the bridge.)
-    """
-    def s(n: int) -> int:
-        y = (x * (b ** n)) % 1.0
-        return min(int(y * b), b - 1)
-    return s
+    validate_parameters(base, block_length, samples)
+    if denominator <= 0:
+        raise ValueError("denominator must be positive")
+    cells = base**block_length
+    counts = [0] * cells
+    remainder = numerator % denominator
+    for _ in range(samples):
+        code = (cells * remainder) // denominator
+        counts[code] += 1
+        remainder = (base * remainder) % denominator
+    return summarize_counts(counts, base, block_length, samples)
 
 
-# --------------------------------------------------------------------------- #
-# Exact count for the cyclic stream (Theorem cyc_count_bounds):
-#     countDigit(cyc_b, d, n) = n // b + (1 if d < n % b else 0)
-# --------------------------------------------------------------------------- #
-def cyc_count_closed_form(b: int, d: int, n: int) -> int:
-    return n // b + (1 if d < n % b else 0)
+def verify_floor_interval_dictionary(
+    numerator: int,
+    denominator: int,
+    base: int,
+    block_length: int,
+    samples: int,
+) -> bool:
+    """Check both sides of the floor--interval equivalence exactly."""
+    validate_parameters(base, block_length, samples)
+    if denominator <= 0:
+        raise ValueError("denominator must be positive")
+    cells = base**block_length
+    remainder = numerator % denominator
+    for _ in range(samples):
+        floor_code = (cells * remainder) // denominator
+        lower_holds = floor_code * denominator <= cells * remainder
+        upper_holds = cells * remainder < (floor_code + 1) * denominator
+        if not (lower_holds and upper_holds):
+            return False
+        remainder = (base * remainder) % denominator
+    return True
 
 
-# --------------------------------------------------------------------------- #
-# Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_conservation_and_simplex(b: int = 10, n: int = 137) -> None:
-    print("=" * 70)
-    print(f"Conservation law & simplex constraint  (base b={b}, window n={n})")
-    print("-" * 70)
-    s = digits_of_real(0.123456789, b)
-    counts = [count_digit(s, d, n) for d in range(b)]
-    total = sum(counts)
-    freqs = [freq(s, d, n) for d in range(b)]
-    print(f"counts per digit : {counts}")
-    print(f"sum of counts    : {total}   (must equal n = {n})  -> {total == n}")
-    print(f"sum of freqs     : {sum(freqs):.12f}   (must equal 1)")
-    assert total == n, "conservation law violated!"
-    assert abs(sum(freqs) - 1.0) < 1e-9, "simplex constraint violated!"
-    print("OK: counts partition the window; frequencies live on the simplex.")
-    print()
+def block_histogram_from_digits(
+    digits: Sequence[int], base: int, block_length: int
+) -> HistogramReport:
+    """Count overlapping length-k blocks in a finite digit sequence."""
+    samples = len(digits) - block_length + 1
+    validate_parameters(base, block_length, samples)
+    if any(digit < 0 or digit >= base for digit in digits):
+        raise ValueError("every digit must lie between 0 and base - 1")
+    cells = base**block_length
+    counts = [0] * cells
+    code = 0
+    for digit in digits[:block_length]:
+        code = base * code + digit
+    counts[code] += 1
+    leading_weight = base ** (block_length - 1)
+    for start in range(1, samples):
+        code -= digits[start - 1] * leading_weight
+        code = base * code + digits[start + block_length - 1]
+        counts[code] += 1
+    return summarize_counts(counts, base, block_length, samples)
 
 
-def demo_monotonicity(b: int = 7) -> None:
-    print("=" * 70)
-    print(f"Monotonicity of the digit count  (base b={b}, digit d=3)")
-    print("-" * 70)
-    s = cyc(b)
-    prev = 0
-    monotone = True
-    for n in range(0, 40):
-        c = count_digit(s, 3, n)
-        if c < prev:
-            monotone = False
-        prev = c
-    print(f"count_digit(cyc_{b}, 3, n) for n=0..39 is non-decreasing: {monotone}")
-    assert monotone
-    print()
-
-
-def demo_obstruction(b: int = 10, n: int = 500) -> None:
-    print("=" * 70)
-    print(f"Single-coordinate obstruction  (constant stream, base b={b})")
-    print("-" * 70)
-    s = constant_stream(4)  # every digit is 4
-    f4 = freq(s, 4, n)
-    f0 = freq(s, 0, n)
-    print(f"freq(digit 4) -> {f4}  (tends to 1, not 1/{b})")
-    print(f"freq(digit 0) -> {f0}  (tends to 0, not 1/{b})")
-    print(f"is simply normal (window)? "
-          f"{is_simply_normal_window(s, b, n, tol=0.05)}  (expected False)")
-    assert not is_simply_normal_window(s, b, n, tol=0.05)
-    print("OK: one coordinate converging to the wrong value forbids normality.")
-    print()
-
-
-def demo_cyclic_normality(b: int = 10) -> None:
-    print("=" * 70)
-    print(f"Cyclic stream cyc_{b}: closed-form count, O(1) discrepancy, convergence")
-    print("-" * 70)
-    s = cyc(b)
-    # Verify the closed-form count formula against brute force.
-    ok_formula = all(
-        count_digit(s, d, n) == cyc_count_closed_form(b, d, n)
-        for n in range(0, 200)
-        for d in range(b)
+def summarize_counts(
+    counts: Sequence[int], base: int, block_length: int, samples: int
+) -> HistogramReport:
+    """Compute maximum discrepancy and a descriptive chi-square statistic."""
+    expected_frequency = 1.0 / len(counts)
+    maximum_discrepancy = max(
+        abs(count / samples - expected_frequency) for count in counts
     )
-    print(f"closed-form count matches brute force (n<200, all d): {ok_formula}")
-    assert ok_formula
-
-    # Discrepancy |count - n/b| <= 1 uniformly.
-    max_disc = max(
-        abs(count_digit(s, d, n) - n / b)
-        for n in range(1, 2000)
-        for d in range(b)
+    expected_count = samples / len(counts)
+    chi_square = sum(
+        (count - expected_count) ** 2 / expected_count for count in counts
     )
-    print(f"max discrepancy |count - n/b| over n<2000 : {max_disc:.4f}  (<= 1)")
-    assert max_disc <= 1.0 + 1e-9
-
-    # Frequency convergence to 1/b.
-    print(f"\n  digit 0 frequency approaching 1/{b} = {1/b}:")
-    for n in (10, 100, 1000, 10000, 100000):
-        print(f"    n={n:>7}  freq(0)={freq(s, 0, n):.6f}")
-    final = freq(s, 0, 100000)
-    assert abs(final - 1.0 / b) < 1.0 / 100000 + 1e-9
-    print("OK: cyc is simply normal (frequencies -> 1/b).")
-    print()
+    return HistogramReport(
+        base=base,
+        block_length=block_length,
+        samples=samples,
+        counts=tuple(counts),
+        maximum_discrepancy=maximum_discrepancy,
+        chi_square=chi_square,
+    )
 
 
-def demo_periodicity_means_rational(b: int = 10) -> None:
-    print("=" * 70)
-    print(f"Periodicity: cyc_{b} is rational yet simply normal")
-    print("-" * 70)
-    s = cyc(b)
-    periodic = all(s(k + b) == s(k) for k in range(100))
-    print(f"cyc_{b}(k+{b}) == cyc_{b}(k) for k=0..99 : {periodic}")
-    assert periodic
-    # The corresponding real number 0.(0123...{b-1}) repeating is rational.
-    block = "".join(str(s(k)) for k in range(b))
-    print(f"repeating block of digits : {block}")
-    print("=> the number 0." + block + block + "... is RATIONAL,")
-    print("   yet (by demo_cyclic_normality) it is simply normal.")
-    print("   Hence: simple normality does NOT imply irrationality/transcendence.")
-    print()
+def seeded_uniform_digits(base: int, length: int, seed: int = 20260731) -> list[int]:
+    """Generate a reproducible finite uniform digit sample for comparison."""
+    if base < 2 or length < 1:
+        raise ValueError("base must be at least 2 and length must be positive")
+    generator = Random(seed)
+    return [generator.randrange(base) for _ in range(length)]
+
+
+def format_code(code: int, base: int, width: int) -> str:
+    """Render a nonnegative code in base b, retaining leading zeroes."""
+    alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    if base > len(alphabet):
+        return str(code).zfill(width)
+    output: list[str] = []
+    value = code
+    for _ in range(width):
+        output.append(alphabet[value % base])
+        value //= base
+    return "".join(reversed(output))
+
+
+def print_report(title: str, report: HistogramReport, limit: int = 20) -> None:
+    """Print a compact frequency table and discrepancy summary."""
+    print(f"\n{title}")
+    print("=" * len(title))
+    expected = 1.0 / len(report.counts)
+    for code, count in enumerate(report.counts[:limit]):
+        observed = count / report.samples
+        label = format_code(code, report.base, report.block_length)
+        print(f"block {label}: count={count:6d}, frequency={observed:.6f}")
+    if len(report.counts) > limit:
+        print(f"... {len(report.counts) - limit} additional blocks omitted")
+    print(f"expected frequency per block: {expected:.6f}")
+    print(f"maximum discrepancy:          {report.maximum_discrepancy:.6f}")
+    print(f"descriptive chi-square:       {report.chi_square:.3f}")
 
 
 def main() -> None:
-    demo_conservation_and_simplex()
-    demo_monotonicity()
-    demo_obstruction()
-    demo_cyclic_normality()
-    demo_periodicity_means_rational()
-    print("All demonstrations passed.")
+    """Run three demonstrations of the mathematical results."""
+    dictionary_ok = verify_floor_interval_dictionary(
+        numerator=3141592653589793,
+        denominator=10**15,
+        base=10,
+        block_length=2,
+        samples=500,
+    )
+    print("Exact floor--interval dictionary check:", dictionary_ok)
+
+    periodic = exact_orbit_block_histogram(
+        numerator=1,
+        denominator=7,
+        base=10,
+        block_length=1,
+        samples=600,
+    )
+    print_report("Periodic rational orbit: x = 1/7 in base 10", periodic)
+
+    digits = seeded_uniform_digits(base=10, length=100_001)
+    synthetic = block_histogram_from_digits(digits, base=10, block_length=2)
+    print_report("Reproducible uniform digit sample: decimal pairs", synthetic)
+
+    print(
+        "\nInterpretation: the first check is an exact identity. The histograms are "
+        "finite illustrations only; neither a small discrepancy nor a long sample "
+        "proves normality of an infinite expansion."
+    )
 
 
 if __name__ == "__main__":
