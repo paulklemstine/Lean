@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "43fa6482",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Size-Indexed Information Loss and Fluctuation Bounds\n\nThe formal result in `Catalog/Applications/SizeIndexedLandauerBridge.lean` connects two resources that share an input-size in",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-22T18:42:11",
-      "title": "**Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
-    },
-    {
       "cycle_id": "c612ec41",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n## Result established\n\nFor code parameters satisfying the quantum Singleton inequality\n`k + 2(d - 1) ≤ n` with positive distance, define the exact Singleton defect\n\n`D = n + 2 - 2",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-31T08:23:20",
       "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
+    },
+    {
+      "cycle_id": "a5e9a5f6",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\n- Formalize continuous cohomology of profinite groups with finite discrete modules and lift the finite-group averaging theorem to the paper's vanishing result for pro-prime-to-`ℓ`",
+      "quality_score": 0.699,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-31T08:23:27",
+      "title": "ArXiv paper: Greenberg's $μ=0$ conjecture for lisse sheaves over global function fields"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7722199999999999
     }
   ],
-  "last_updated": "2026-07-31T08:23:20",
+  "last_updated": "2026-07-31T08:23:27",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "3d25b5ad",
-        "quality": 0.7,
-        "theorems": 19,
-        "title": "Causal Loops in Category Theory: When Composition Loops Back"
-      },
-      {
         "cycle_id": "2c3f15cd",
         "quality": 0.55,
         "theorems": 22,
@@ -3885,6 +3879,12 @@
         "quality": 0.73183,
         "theorems": 16,
         "title": "ArXiv paper: On a character-twisted analogue of Schäffer's equation"
+      },
+      {
+        "cycle_id": "a5e9a5f6",
+        "quality": 0.699,
+        "theorems": 4,
+        "title": "ArXiv paper: Greenberg's $μ=0$ conjecture for lisse sheaves over global function"
       }
     ],
     "Shared": [

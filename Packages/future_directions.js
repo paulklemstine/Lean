@@ -275,16 +275,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "SCP-Containment-Topology: Non-Euclidean Geometric Lock for Anomalous Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "20d659ed",
     "description": "Formalizes conditions where two spatially separated identical agents undergo instant state-space synchronization upon observing identical environmental stimuli.",
     "domains": [
       "Logic"
     ],
     "id": "scifi_50_15_e4106456",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:57.541980+00:00",
     "title": "Doppelg\u00e4nger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
   },
@@ -767,20 +768,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle e24b36f0 (Q=0.840), which proved 45 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi \u2014 the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_e24b36f0_f306ed30",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "e24b36f0",
-    "status": "available",
-    "timestamp": "2026-07-22T09:46:30.052991+00:00",
-    "title": "Deepening: Moonshot: Alien Number Systems \u2014 Mathematics Beyond Base-10"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domains": [
       "Computation",
@@ -837,36 +824,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Riemann Hypothesis: Zero-Free Regions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the rank of an elliptic curve over Q is computable. Formalize the Mordell-Weil theorem, height pairings, and descent algorithms. Connect to the conjecture that ranks are bounded and explore the parity conjecture.",
-    "domains": [
-      "Algebra",
-      "NumberTheory"
-    ],
-    "id": "seed_204",
-    "priority_score": 0.92,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "BSD Conjecture: Rank Computability"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove or disprove: for every \u03b5 > 0, there exists k such that distinguishing value \u2265 1-\u03b5 from value \u2264 \u03b5 for unique 2-prover games with k labels is NP-hard. Connect to MAX-CUT and SDP gaps.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_232",
-    "priority_score": 0.92,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Unique Games Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -2346,6 +2303,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T12:21:06.834733+00:00",
     "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 50db037d (Q=0.772), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_50db037d_3ae60772",
+    "priority_score": 0.8722199999999999,
+    "research_mode": "team",
+    "source_exp_id": "50db037d",
+    "status": "available",
+    "timestamp": "2026-07-31T08:23:20.837940+00:00",
+    "title": "Deepening: Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
     "consumed_by_exp_id": "",
@@ -4327,22 +4298,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Logic of Provability and Fixed Points in Arithmetic"
   },
   {
-    "consumed_by_exp_id": "50db037d",
-    "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_361",
-    "phase": "B",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
@@ -6052,22 +6007,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T14:24:54.994704+00:00",
     "title": "ArXiv paper: Tur\u00e1n-Type Bounds for Graphs Containing Large $F$-Sparse Sets"
-  },
-  {
-    "consumed_by_exp_id": "a5e9a5f6",
-    "description": "Investigate the ArXiv paper 'Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields' and formalize its key results. Abstract: Let $K$ be a global function field of characteristic $p>0$ and $\\ell\\neq p$ be a prime number. We study Selmer groups over a $\\mathbb{Z}_\\ell$-extension $K_\\infty/K$. For a lisse $\\mathbb Z_\\ell$-sheaf we prove that the Pontryagin dual of the associated Selmer group is a finitely generated torsion module over the Iwasawa algebra and has $\u03bc$-invariant equal to zero. This gives a positive-characteristic, prime to $p$, analogue of Greenberg's $\u03bc=0$ conjecture. Our result applies in particular to abelian varieties, fine Selmer groups, and adjoint representations. We also prove an analogue of the weak Leopoldt conjecture in this context over $K_\\infty$, and deduce that the framed deformation ring of a residual representation is a formal power series ring. The same conclusion holds for the unframed deformation ring if the residual representation has no non-scalar endomorphisms.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0122",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.10728v2",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:16:11.220023+00:00",
-    "title": "ArXiv paper: Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -10761,6 +10700,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T07:30:51.669151+00:00",
     "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > 0`, and any `t - 1` distinct nonzero evaluation points, conditioning a uniformly sampled degree-`< t` Shamir polynomial on its constant coefficient leaves the induced share vector uniformly distributed on `F^(t-1)`, independently of the secret.\n\n2. **Feldman batch soundness.** If the commitment homomorphism is injective and a vector of claimed shares passes Feldman verification at `d + 1` distinct locations, then interpolating those claims yields exactly the committed degree-at-most-`d` polynomial.\n\n3. **Error-correcting reconstruction.** Given `n` distinct Shamir shares of a polynomial of degree at most `d`, the secret is uniquely recoverable in the presence of at most `e` adversarial shares whenever `n \u2265 d + 2e + 1`; this bound is sharp.\n\n4. **Pedersen hiding and binding separation.** In a two-generator Pedersen verifiable secret-sharing formalization, coefficient commitments are perfectly hiding without further assumptions, while acceptance of inconsistent shares is impossible assuming injectivity of the corresponding two-base exponent map on the allowed coefficient domain.\n\n5. **Proactive refresh invariance.** Adding an independently sampled degree-`< t` polynomial with zero constant coefficient preserves the reconstructed Shamir secret and makes every collection of at most `t - 1` refreshed shares statistically independent of its previous values.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0854",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "50db037d",
+    "status": "available",
+    "timestamp": "2026-07-31T08:23:15.991566+00:00",
+    "title": "1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Formalize continuous cohomology of profinite groups with finite discrete modules and lift the finite-group averaging theorem to the paper's vanishing result for pro-prime-to-`\u2113` groups.\n- Connect \u00e9tale cohomology of affine curves to the required cohomological-dimension and finiteness statements.\n- Develop completed group algebras and compact Nakayama theory for `\u2124_\u2113[[\u0393]]`, then formalize the equivalence between finite reduction modulo `\u2113` and torsion with vanishing `\u03bc`-invariant.\n- Define cartesian Selmer structures and Pontryagin duals, allowing the finite-cohomology and Iwasawa-module results to assemble into the paper's main Selmer theorem.\n- Formalize obstruction theory for framed and unframed deformation functors so that degree-two cohomology vanishing yields formal smoothness and power-series deformation rings.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0855",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a5e9a5f6",
+    "status": "available",
+    "timestamp": "2026-07-31T08:23:23.802419+00:00",
+    "title": "Future directions from cycle a5e9a5f6"
   },
   {
     "consumed_by_exp_id": "",
