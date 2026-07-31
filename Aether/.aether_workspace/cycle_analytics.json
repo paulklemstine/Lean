@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-31T10:11:12.121359+00:00",
+  "last_updated": "2026-07-31T14:49:25.077966+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -42675,6 +42675,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-31T10:11:11.998249+00:00",
       "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0091,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Logic",
+      "duration_seconds": 8609.234383106232,
+      "end_time": 1785509285.645268,
+      "files_integrated": 4,
+      "job_id": "9d058f1b",
+      "outcome_quality": 0.74478,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_a_quality_score": 0.73946,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.58,
+        "applications": 0.62,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6309,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.6369,
+        "novelty": 0.83,
+        "proof_depth": 0.5542,
+        "usefulness": 0.5271
+      },
+      "quality_score": 0.74478,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785500676.4108849,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 4,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 2,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-31T14:49:24.945315+00:00",
+      "title": "The exact proposed fixed-point equation was formalized in"
     }
   ]
 }

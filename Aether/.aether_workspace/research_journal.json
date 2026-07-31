@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "687f4282",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register defici",
-      "quality_score": 0.8022499999999999,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-29T12:32:32",
-      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
-    },
-    {
       "cycle_id": "5f676746",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n1. **Rational-constant density conjecture.** Extend the catalog EML syntax with rational constant leaves encoded by finite binary strings. For every continuous `f : C([0,1], ℝ)` a",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-31T10:11:09",
       "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
+    },
+    {
+      "cycle_id": "9d058f1b",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThe explicit `Bool` witness shows that moving from `Prop`-valued to data-valued\nfibers avoids collapse, but it also raises the question of how restrictive the\nnew equation really",
+      "quality_score": 0.74478,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-31T14:49:23",
+      "title": "The exact proposed fixed-point equation was formalized in"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6622cac1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n- Replace the stipulated variance-of-the-mean formula with a probability-space model of independent, identically distributed neural responses, and derive the `1 / √N` error law fr",
-      "quality_score": 0.69,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-23T02:29:55",
-      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-    },
     {
       "cycle_id": "642478f0",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-31T10:11:09",
       "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
+    },
+    {
+      "cycle_id": "9d058f1b",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThe explicit `Bool` witness shows that moving from `Prop`-valued to data-valued\nfibers avoids collapse, but it also raises the question of how restrictive the\nnew equation really",
+      "quality_score": 0.74478,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-31T14:49:23",
+      "title": "The exact proposed fixed-point equation was formalized in"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e3c425e4",
-      "domain": "Tropical",
-      "name": "similar_refl",
-      "quality": 0.7868499999999999
-    },
-    {
-      "cycle_id": "e3c425e4",
-      "domain": "Tropical",
-      "name": "similar_symm",
-      "quality": 0.7868499999999999
-    },
-    {
-      "cycle_id": "e3c425e4",
-      "domain": "Tropical",
-      "name": "similar_trans",
-      "quality": 0.7868499999999999
-    },
     {
       "cycle_id": "85fa434c",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "gammaQuotient_pos",
       "quality": 0.7781
+    },
+    {
+      "cycle_id": "9d058f1b",
+      "domain": "Logic",
+      "name": "bool_dataConscious",
+      "quality": 0.74478
+    },
+    {
+      "cycle_id": "9d058f1b",
+      "domain": "Logic",
+      "name": "boolFiber_not_equiv",
+      "quality": 0.74478
+    },
+    {
+      "cycle_id": "9d058f1b",
+      "domain": "Logic",
+      "name": "bool_sections_not_subsingleton",
+      "quality": 0.74478
     }
   ],
-  "last_updated": "2026-07-31T10:11:09",
+  "last_updated": "2026-07-31T14:49:23",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "ec157a87",
-        "quality": 0.57,
-        "theorems": 9,
-        "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
-      },
-      {
         "cycle_id": "4ffa8161",
         "quality": 0.6,
         "theorems": 0,
@@ -3513,6 +3507,12 @@
         "quality": 0.75955,
         "theorems": 6,
         "title": "Self-Modifying Research via Reflective Type Theory"
+      },
+      {
+        "cycle_id": "9d058f1b",
+        "quality": 0.74478,
+        "theorems": 9,
+        "title": "The exact proposed fixed-point equation was formalized in"
       }
     ],
     "MachineLearning": [

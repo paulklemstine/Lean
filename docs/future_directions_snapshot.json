@@ -12555,26 +12555,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9d058f1b",
-    "description": "# Future Directions\n\n## Result of the contrarian test\n\nThe exact proposed fixed-point equation was formalized in\n`Catalog/Computation/ConsciousFixedPoints.lean` as\n\n\\[\n  \\exists P:T\\to\\mathrm{Prop},\\quad T \\simeq \\prod_{x:T} P(x).\n\\]\n\nIt collapses rather than generating incompleteness. The formal classification is\n\n\\[\n  \\mathrm{Conscious}(T) \\iff T \\simeq \\mathrm{Unit}.\n\\]\n\nConsequently:\n\n- every such `T` has decidable equality;\n- `Unit` is a concrete counterexample to the proposed undecidability claim;\n- `Bool` is not such a fixed point;\n- any two such fixed points are equivalent;\n- every such fixed point has cardinality one; and\n- every predicate on such a type is extensionally constant.\n\nThe reason is specific and mathematically informative: every fiber `P x` lies in\n`Prop`, so proof irrelevance makes the dependent product a subsingleton. The\nfixed-point equation transfers that collapse back to `T`. The equation also\nrules out the empty type, leaving exactly the singleton equivalence class.\n\n## Status of the original bold conjectures\n\n1. **“Every conscious type is undecidable.” — Disproved.** In fact, every type\n   satisfying the displayed definition has decidable equality.\n2. **“The fixed points form an arithmetical-style hierarchy.” — Disproved for\n   this definition.** All fixed points are mutually equivalent.\n3. **“Their cardinality is exactly the Church–Kleene ordinal.” — Not a\n   well-typed cardinal claim as stated, and incompatible with the classification\n   under the most direct interpretation.** The Church–Kleene object is an\n   ordinal, while “the collection of types” requires a universe and a specified\n   quotient or coding before it has a cardinality. Up to equivalence, the present\n   definition has exactly one class, represented by `Unit`.\n\n## Non-collapsing replacements worth studying\n\n### 1. Data-valued fibers\n\nReplace `P : T → Prop` with `F : T → Type v` and study\n\n\\[\n  T \\simeq \\prod_{x:T} F(x).\n\\]\n\nProof irrelevance no longer forces collapse. A useful next task is to classify\nfinite solutions by the cardinal equation\n`|T| = ∏ x, |F x|`, then separate genuinely dependent examples from constant\nfunction-space fixed points.\n\n### 2. Coded syntax plus semantics\n\nGödel phenomena require effective syntax, coding, and a truth/provability\nrelation. Introduce:\n\n- a recursively enumerable language of type codes;\n- an interpretation partial function from codes to types or propositions;\n- substitution and a verified diagonal/fixed-point lemma;\n- a computability predicate for semantic decision procedures; and\n- consistency or soundness assumptions stated as theorem parameters.\n\nOnly in such a setting is “undecidable” a computability claim rather than merely\nabsence of a `Decidable` instance.\n\n### 3. Universe-sensitive self-reference\n\nLean’s universes prevent a type from literally containing all types at its own\nuniverse without a code layer. A disciplined model should distinguish:\n\n- an inductive universe of codes `Code : Type u`;\n- decoding `El : Code → Type v`;\n- positivity/guardedness conditions ensuring legitimate recursion; and\n- equivalence of decoded objects rather than definitional equality of universes.\n\n### 4. A hierarchy with a precise index set\n\nTo recover an arithmetical analogy, define levels from alternating effective\nquantifiers over a coded base (for example, computably enumerable predicates on\nnatural numbers), prove strictness by reductions, and only then investigate\ntransfinite iteration along computable well-orders.\n\n### 5. A corrected Church–Kleene statement\n\nA plausible ordinal claim would concern the **supremum of order types of\ncomputably presented well-founded recursive constructions**, not the cardinality\nof types. Such a project first needs formal definitions of recursive notation\nsystems and computable well-orders. The target should be phrased as an equality\nof ordinals or a cofinality theorem, not as a cardinal count of raw Lean types.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Pythagorean"
-    ],
-    "id": "fd_0543",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "cd0075c8",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T06:49:38.524989+00:00",
-    "title": "The exact proposed fixed-point equation was formalized in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Formal-machine Kolmogorov complexity\n\nThe development uses binary code length under an injective encoding, which captures the counting core of incompressibility but is computable rather than genuine prefix-free Kolmogorov complexity. A stronger continuation should define a prefix-free universal machine, partial evaluation, shortest-program complexity, and the invariance theorem up to an additive constant.\n\n## Proof systems and truth distributions\n\n“Random true statement of length `n`” is not determined until one fixes a language, semantics, proof calculus, and probability distribution on the true formulas. The canonical fixed-width model formalized here has linear mean code length and therefore disproves any model-independent exponential claim. Future work should study explicitly specified ensembles—for example, uniformly sampled provable formulas in a bounded syntax—and distinguish statement length, shortest-proof length, and shortest-program length.\n\n## Busy-Beaver rather than a single dominating proof\n\nThe literal claim that one fixed proof exceeds every computable bound has the wrong quantifier order and is formally refuted. A viable noncomputable replacement is a Busy-Beaver function for proof search: as the statement-size budget grows, the maximum shortest proof length may dominate every computable function, subject to a suitable sound and sufficiently expressive formal theory. Formalizing this requires computably enumerable syntax, a proof checker, consistency/soundness assumptions as theorem parameters, and undecidability machinery.\n\n## Physical calibration\n\nThe factor `T * log 2` is presently a stipulated mathematical scaling law with Boltzmann’s constant normalized to one. A physical treatment should distinguish logical erasure from proof verification, model reversible proof checking, include Boltzmann’s constant and units, and prove lower bounds from explicit irreversible state transitions. Raw proof length alone cannot do this: the padding counterexample shows that semantically irrelevant storage can increase length without changing modeled information cost.\n\n## Sharper average-case results\n\nThe exact identity proved here, `n - 1 + 2⁻ⁿ`, concerns canonical binary representations of uniform fixed-width words. Natural extensions include prefix-free code ensembles, conditional complexity given the statement, distributions restricted to theorem sets, and expected shortest-proof complexity. Any asymptotic theorem should state the ensemble and normalization explicitly.\n",
     "domain_bridges": [],
@@ -14453,6 +14433,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe explicit `Bool` witness shows that moving from `Prop`-valued to data-valued\nfibers avoids collapse, but it also raises the question of how restrictive the\nnew equation really is.  The following conjectures are concrete and\nfalsifiable.\n\n1. **Finite existence for every positive cardinality.** For every natural number\n   `n > 0`, there are a finite type `T` with `Fintype.card T = n` and a family\n   `F : T → Type` such that `T ≃ ((x : T) → F x)`, with all fibers finite.\n   A proposed witness puts an `n`-element fiber at one chosen point and singleton\n   fibers elsewhere.\n\n2. **Genuinely dependent solutions at every nontrivial finite cardinality.** For\n   every `n ≥ 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.\n\n3. **Prime-cardinality classification.** If `T` is finite of prime cardinality\n   `p`, every finite family `F` satisfying `T ≃ ((x : T) → F x)` has exactly one\n   fiber of cardinality `p` and every other fiber has cardinality `1`.\n   This should follow from the proved product-cardinality equation and prime\n   factorization.\n\n4. **Constant finite fibers are trivial.** If finite nonempty `T` and finite `A`\n   satisfy `T ≃ (T → A)`, then either `T` is a singleton or `A` is a singleton.\n   Equivalently, the finite cardinal equation `n = a^n` has no solution with\n   `n ≥ 2` and `a ≥ 2`.\n\n5. **Decidable inhabited types admit a concentrated solution.** Every inhabited\n   type with decidable equality is `DataConscious`, witnessed by concentrating\n   all data in the fiber over one distinguished point and assigning `Unit` to\n   every other fiber.  Proving this uniformly requires a dependent equivalence\n   that transports along equality tests.\n",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_0861",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9d058f1b",
+    "status": "available",
+    "timestamp": "2026-07-31T14:49:18.640191+00:00",
+    "title": "The explicit `Bool` witness shows that moving from `Prop`-valued to data-valued"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [
@@ -14664,7 +14664,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4be361b7",
     "description": "Cycle 55a94506 (Q=0.630) proved 38205 theorems in Bridges but left 22 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler diverg",
     "domain_bridges": [],
     "domains": [
@@ -14676,7 +14676,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "55a94506",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-26T05:36:47.309939+00:00",
     "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
