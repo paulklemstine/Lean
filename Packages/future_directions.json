@@ -775,7 +775,7 @@
       "depth_estimate": 3,
       "description": "Formally proves perfect completeness, knowledge soundness, and zero-knowledge properties of Quadratic Arithmetic Program (QAP) based zk-SNARKs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -1295,7 +1295,7 @@
       "depth_estimate": 3,
       "description": "Formally proves upper bounds on ciphertext noise growth during homomorphic evaluation and bootstrapping steps in BGV/BFV FHE schemes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -1375,7 +1375,7 @@
       "depth_estimate": 3,
       "description": "Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -1415,7 +1415,7 @@
       "depth_estimate": 3,
       "description": "Derives proven soundness error upper bounds for the Fast Reed-Solomon Interactive Oracle Proof of Proximity (FRI) protocol in zk-STARKs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -6976,7 +6976,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.699,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -6987,7 +6987,7 @@
       "source": "",
       "source_exp_id": "2607.10728v2",
       "source_path": "http://arxiv.org/abs/2607.10728v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-16T15:16:11.220023+00:00",
       "title": "ArXiv paper: Greenberg's $μ=0$ conjecture for lisse sheaves over global function fields"
@@ -9492,7 +9492,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a Möbius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -28064,7 +28064,7 @@
       "depth_estimate": 3,
       "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| ≤ 2√p.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -28728,7 +28728,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What has and has not been established\n\nThe exact connective constant of nearest-neighbour self-avoiding walk on the square lattice is an open problem. The requested value `(2 + √2) / 2` is ruled out here because it is less than `2`, while the formal square-lattice model has connective constant at least `2`. The Nienhuis constant `√(2 + √2)` belongs to the hexagonal lattice.\n\nThe present formal chain establishes:\n\n1. strict elementary bounds on `√2`;\n2. strict bounds `1 < (2 + √2)/2 < 2`;\n3. `(2 + √2)/2 < μ_square`, hence inequality of the two values;\n4. positivity, square, fourth-power, and quartic identities for `√(2 + √2)`;\n5. a verified square-lattice interval separating the proposed value from `μ_square`;\n6. exhaustive square-lattice SAW counts through length six.\n\nIt does **not** claim an exact value for `μ_square`, identify an abstract constant with hexagonal-lattice SAW counts, or formalize the full lace expansion.\n\n## Next formalization steps\n\n1. **Unify walk representations.** The catalog currently contains both direction-word and vertex-sequence encodings. Prove an equivalence preserving length, self-avoidance, concatenation, and finite counts.\n2. **Sharpen the elementary upper bound.** Formalize the no-immediate-backtracking injection to obtain `c_n ≤ 4·3^(n-1)` and then `μ_square ≤ 3`. This requires connecting the infimum definition to uniform exponential bounds without assuming the desired limit theorem.\n3. **Formalize Fekete convergence completely.** Starting from count submultiplicativity and positivity, prove convergence of `c_n^(1/n)` to the infimum definition of the connective constant. This would turn the present infimum framework into the usual limiting statement.\n4. **Hexagonal lattice model.** Define the honeycomb graph explicitly, define its SAW counts, and state the Duminil-Copin–Smirnov theorem as an honest theorem target equating its connective constant with `√(2 + √2)`. The algebraic facts proved here can then serve as downstream lemmas; they are not a substitute for the parafermionic-observable proof.\n5. **Hara–Slade program.** Hara–Slade lace-expansion results concern sufficiently high-dimensional lattices and mean-field asymptotics, not an exact square-lattice constant. A faithful development should first formalize convolution, the two-point function, susceptibility, the lace coefficients, and the bootstrap estimates, then derive the applicable high-dimensional asymptotics.\n6. **Certified larger enumeration.** Replace brute-force word enumeration with endpoint-indexed dynamic programming and prove it equivalent to the direct definition. This should allow substantially longer checked prefixes while keeping kernel replay manageable.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -30681,6 +30681,47 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n- Formalize continuous cohomology of profinite groups with finite discrete modules and lift the finite-group averaging theorem to the paper's vanishing result for pro-prime-to-`ℓ` groups.\n- Connect étale cohomology of affine curves to the required cohomological-dimension and finiteness statements.\n- Develop completed group algebras and compact Nakayama theory for `ℤ_ℓ[[Γ]]`, then formalize the equivalence between finite reduction modulo `ℓ` and torsion with vanishing `μ`-invariant.\n- Define cartesian Selmer structures and Pontryagin duals, allowing the finite-cohomology and Iwasawa-module results to assemble into the paper's main Selmer theorem.\n- Formalize obstruction theory for framed and unframed deformation functors so that degree-two cohomology vanishing yields formal smoothness and power-series deformation rings.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0855",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "a5e9a5f6",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/a5e9a5f6",
+      "status": "available",
+      "thread_id": "th_3ba6f1dd",
+      "timestamp": "2026-07-31T08:23:23.802419+00:00",
+      "title": "Future directions from cycle a5e9a5f6"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -31211,7 +31252,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3e30c45d (Q=0.769), which proved 23 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography"
       ],
@@ -31356,6 +31397,46 @@
       "thread_id": "",
       "timestamp": "2026-07-19T02:44:51.313246+00:00",
       "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 50db037d (Q=0.772), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "push_50db037d_3ae60772",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8722199999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "50db037d",
+      "source_path": "Secret Sharing: Shamir's Scheme and Verifiable Variants",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-31T08:23:20.837940+00:00",
+      "title": "Deepening: Secret Sharing: Shamir's Scheme and Verifiable Variants"
     },
     {
       "ambition_level": "extension",
@@ -32251,7 +32332,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a68d3b50 (Q=0.767), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography"
       ],
@@ -32625,14 +32706,14 @@
       "parent_direction": "",
       "priority_score": 0.94,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-07-31T08:23:22Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "e24b36f0",
       "source_path": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-22T09:46:30.052991+00:00",
       "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
@@ -33182,7 +33263,7 @@
       "domain_bridges": [
         "Pythagorean <-> Cryptography"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "Cryptography"
@@ -39652,7 +39733,7 @@
       "title": "Riemann Hypothesis: Zero-Free Regions"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -39680,14 +39761,14 @@
       "parent_direction": "",
       "priority_score": 0.92,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-07-31T08:23:22Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "BSD Conjecture: Rank Computability"
@@ -40605,7 +40686,7 @@
       "depth_estimate": 3,
       "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions → pseudorandom generators → pseudorandom functions → secure encryption. Prove separation results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography",
         "Computation"
@@ -40646,7 +40727,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography",
         "Computation"
@@ -40687,7 +40768,7 @@
       "depth_estimate": 3,
       "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -40756,7 +40837,7 @@
       "title": "Natural Proofs Barrier: Formalization"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -40784,14 +40865,14 @@
       "parent_direction": "",
       "priority_score": 0.92,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-07-31T08:23:22Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Unique Games Conjecture"
@@ -41915,7 +41996,7 @@
       "depth_estimate": 3,
       "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Logic"
@@ -41956,7 +42037,7 @@
       "depth_estimate": 3,
       "description": "Formalize fully homomorphic encryption (FHE) schemes based on the ring-LWE problem. Prove correctness: Dec(Enc(m) + Enc(m')) = m + m'. Prove security under ring-LWE. Show that the Gentry bootstrapping procedure converts a somewhat homomorphic scheme into an FHE scheme. Compute the multiplicative depth before bootstrapping is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography",
         "Computation"
@@ -42038,7 +42119,7 @@
       "depth_estimate": 3,
       "description": "Formalize the SIDH key exchange: two parties compute a shared secret from supersingular isogenies of elliptic curves. Prove that computing the isogeny from j-invariant is as hard as the quaternion isogeny path problem. Analyze the Castryck-Decru attack.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -42079,7 +42160,7 @@
       "depth_estimate": 3,
       "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography",
         "Computation"
@@ -42120,7 +42201,7 @@
       "depth_estimate": 3,
       "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -42653,7 +42734,7 @@
       "depth_estimate": 3,
       "description": "Construct a Diffie-Hellman key exchange over the tropical semiring (min-plus algebra). Prove that the tropical matrix product problem is NP-hard for matrices over the min-plus semiring. Analyze security against known tropical cryptanalysis techniques.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -44092,7 +44173,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography",
         "Computation"
@@ -44133,7 +44214,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Cryptography",
         "Logic"
@@ -44174,7 +44255,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography",
         "Computation"
@@ -44215,7 +44296,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -44338,7 +44419,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography",
         "Computation"
@@ -45986,31 +46067,88 @@
   ],
   "pruned": [],
   "recent_domain_counts": {
-    "Algebra": 1,
-    "Cryptography": 1
+    "Algebra": 2,
+    "Cryptography": 1,
+    "Pythagorean": 1
   },
   "recent_theme_keywords": {
+    "$\\ell\\neq": 1,
+    "$\\mathbb": 1,
+    "$\\mathbb{z}_\\ell$-extension": 1,
+    "$k_\\infty$": 1,
+    "$k_\\infty/k$": 1,
+    "$μ$-invariant": 1,
+    "$μ=0$": 1,
+    "'greenberg's": 1,
+    "abelian": 1,
+    "abstract": 1,
+    "adjoint": 1,
+    "algebra": 1,
+    "analogue": 1,
+    "applies": 1,
+    "arxiv": 1,
+    "associated": 1,
     "caught": 1,
+    "characteristic": 1,
     "cheating": 1,
+    "conclusion": 1,
+    "conjecture": 1,
+    "context": 1,
     "dealers": 1,
+    "deduce": 1,
+    "deformation": 1,
     "degree": 1,
+    "endomorphisms": 1,
     "equals": 1,
     "feldman's": 1,
-    "formalize": 1,
+    "fields": 1,
+    "fields'": 1,
+    "finitely": 1,
+    "formal": 1,
+    "formalize": 2,
+    "framed": 1,
+    "function": 1,
+    "generated": 1,
+    "global": 1,
+    "greenberg's": 1,
+    "groups": 1,
     "information": 1,
     "information-theoretically": 1,
+    "investigate": 1,
+    "iwasawa": 1,
+    "leopoldt": 1,
+    "lisse": 1,
+    "module": 1,
+    "non-scalar": 1,
+    "number": 1,
+    "paper": 1,
+    "particular": 1,
     "polynomial": 1,
+    "pontryagin": 1,
+    "positive-characteristic": 1,
     "reconstruction": 1,
+    "representation": 1,
+    "representations": 1,
+    "residual": 1,
+    "result": 1,
+    "results": 1,
     "reveal": 1,
     "scheme": 1,
     "secret": 1,
     "secure": 1,
+    "selmer": 1,
+    "series": 1,
     "shamir's": 1,
     "shares": 1,
     "sharing": 1,
+    "sheaves": 1,
     "threshold": 1,
+    "torsion": 1,
+    "unframed": 1,
     "variants": 1,
-    "verifiable": 1
+    "varieties": 1,
+    "verifiable": 1,
+    "z_\\ell$-sheaf": 1
   },
   "selection_log": []
 }
