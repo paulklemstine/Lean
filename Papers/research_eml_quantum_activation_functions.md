@@ -1,279 +1,524 @@
-# Quantum EML Activation Functions: A Noncommutative Generalization of exp-log Neurons
+# Unitarity Obstructions and Design Criteria for Quantum Exponential–Logarithm Activations
+
+**Aristotle**  
+**31 July 2026**
 
 ## Abstract
 
-We introduce the **Quantum EML Gate Algebra**, a rigorous algebraic framework that lifts the scalar EML (exp-minus-log) neuron `eml(x,y) = exp(x) - log(y)` to noncommutative normed algebras, including matrix algebras relevant to quantum computing. The central construction is the Quantum EML Gate `QEML(h₁, h₂) = exp(h₁) · exp(h₂)`, which reduces to `exp(h₁ + h₂)` in the commutative case but acquires Baker-Campbell-Hausdorff (BCH) corrections in the noncommutative regime. We define and study the **BCH defect** `D(h₁, h₂) = exp(h₁)·exp(h₂) - exp(h₁+h₂)` as a noncommutativity witness, prove that the associated quantum channel is an algebra automorphism, establish a spectral bridge theorem connecting quantum and classical EML for diagonal matrices, and develop a metric theory of QEML gates. All main results are formalized and verified in Lean 4 with Mathlib, working at the level of abstract complete normed algebras over ℚ.
+We study the matrix-valued activation
 
-**Keywords**: quantum activation functions, Baker-Campbell-Hausdorff formula, noncommutative algebra, quantum channels, matrix exponential, EML neurons, formal verification
+$$
+N(H_1,H_2)=\exp(iH_1)\,\Log(I+iH_2),
+$$
 
----
+where $H_1$ and $H_2$ are Hermitian elements of a nontrivial unital complex $C^*$-algebra, $I$ is the identity, and $\Log$ is the principal logarithm defined by continuous functional calculus. The expression is motivated by replacing scalar exponential and logarithmic operations in exponential–matrix-logarithm architectures with operator analogues. We prove that the raw activation is not unitary-valued: for every $H_1$, setting $H_2=0$ gives $N(H_1,0)=0$, which cannot be unitary. More generally, we prove that a unitary output forces the logarithmic factor $\Log(I+iH_2)$ itself to be unitary. Equivalently, multiplication by the unitary exponential factor cannot correct any failure of unitarity in the logarithmic factor. We give a spectral characterization in finite dimensions, derive a practical numerical diagnostic, and describe algorithms illustrating the obstruction. The results distinguish the false claim that the raw expression defines an $SU(2)$-valued activation on its full domain from the still-open restricted question of whether selected parameters can cover $U(2)$ or $SU(2)$. We conclude with mathematically coherent repairs based on domain restriction, polar normalization, and determinant correction.
 
 ## 1. Introduction
 
-### 1.1 Background and Motivation
+Parameterized quantum circuits require transformations compatible with quantum kinematics. For a closed finite-dimensional system, deterministic reversible evolution is represented by a unitary matrix. In a single-qubit model the ambient gate group is $U(2)$, while physically significant phase-normalized gates are often represented by
 
-The EML (Exponential-Minus-Logarithm) neuron, defined as `eml(x, y) = exp(x) - log(y)` for real parameters, has emerged as a fundamental building block in neural architecture design. Its distinctive property — balancing exponential growth with logarithmic compression — yields activation functions with desirable analytic properties including strict convexity of the self-pairing function and natural connections to information-theoretic quantities.
+$$
+SU(2)=\{U\in M_2(\mathbb C):U^*U=I,\ \det U=1\}.
+$$
 
-A natural question arises: what is the correct generalization of the EML neuron to the quantum setting? In quantum computation, scalars are replaced by operators (matrices), and the fundamental difference is **noncommutativity**: the order of matrix multiplication matters.
+A natural route from classical neural architectures to quantum ones is to replace scalar functions by matrix functions. If $H$ is Hermitian, the exponential $\exp(iH)$ is unitary, making it a standard and robust parameterization of quantum gates. This encourages the proposed exponential–logarithm expression
 
-### 1.2 Our Contribution
+$$
+N(H_1,H_2)=\exp(iH_1)\,\Log(I+iH_2).
+$$
 
-We propose and rigorously analyze the **Quantum EML Gate Algebra**, which generalizes EML neurons to arbitrary complete normed algebras over ℚ. Our main contributions are:
+At first sight, the formula appears expressive. For $2\times2$ matrices, each Hermitian input contributes four real parameters, whereas $SU(2)$ is three-dimensional. The first factor is always unitary, and the second uses an analytically rich matrix function. These observations may suggest that the map could implement arbitrary single-qubit gates.
 
-1. **Novel Structure**: The QuantumEMLGate structure, parametrized by two algebra elements (h₁, h₂), with gate evaluation exp(h₁)·exp(h₂).
+Such parameter counting does not establish either codomain membership or surjectivity. A map can have many parameters and nevertheless leave a target manifold, collapse dimensions, or encounter singularities. The first question must therefore be whether $N(H_1,H_2)$ is unitary for all Hermitian inputs. We answer this question negatively with a universal boundary case. We then prove a factor criterion showing that the first exponential can neither mask nor repair a nonunitary logarithmic factor.
 
-2. **BCH Defect as Noncommutativity Witness**: We define `bchDefect(h₁, h₂) = exp(h₁)·exp(h₂) - exp(h₁+h₂)` and prove it vanishes precisely for commuting parameters, establishing it as a computable certificate for "quantumness."
+The results hold not only for matrices but in every nontrivial unital complex $C^*$-algebra, including bounded operators on a two-dimensional complex Hilbert space. This generality makes clear that the obstruction is algebraic rather than a numerical artifact of a chosen representation.
 
-3. **Automorphism Property**: The quantum EML channel `ρ ↦ exp(h)·ρ·exp(-h)` preserves the algebraic structure (identity, products, sums), making it a genuine algebra automorphism.
+The contributions are:
 
-4. **Spectral Bridge Theorem**: For diagonal 2×2 complex matrices, the quantum EML gate reduces to applying scalar EML independently to each eigenvalue, providing an exact quantum-classical bridge.
+1. a precise definition of the raw quantum exponential–logarithm activation in a unital $C^*$-algebra;
+2. a zero-input theorem showing that every choice with $H_2=0$ produces zero;
+3. a proof that the activation is therefore not unitary-valued on its natural full domain;
+4. an exclusion theorem showing that no first Hamiltonian repairs the zero-second-input case;
+5. a necessary, and in fact equivalent, condition reducing output unitarity to unitarity of the logarithmic factor;
+6. a finite-dimensional spectral criterion and numerical procedures for diagnosing the obstruction; and
+7. design alternatives that preserve unitarity by construction.
 
-5. **Metric Theory**: The gate distance `‖eval(g₁) - eval(g₂)‖` defines a pseudometric satisfying symmetry, self-zero, and the triangle inequality.
+A crucial logical distinction runs throughout. Our results disprove the claim that the raw formula is an everywhere $SU(2)$-valued activation. They do not by themselves disprove the weaker set-theoretic possibility that every target in $SU(2)$ might occur for at least one specially chosen pair $(H_1,H_2)$. The latter question requires restrictions ensuring that the logarithmic factor lies in the unitary group.
 
-All results are formalized in Lean 4 using Mathlib's normed algebra infrastructure.
+## 2. Algebraic and analytic setting
 
----
+### 2.1 Unital $C^*$-algebras
 
-## 2. Definitions
+Let $A$ be a complex unital $C^*$-algebra, with identity $I$, involution $a\mapsto a^*$, multiplication, and norm satisfying
 
-### 2.1 Quantum EML Gate
+$$
+\|a^*a\|=\|a\|^2.
+$$
 
-**Definition 2.1** (QuantumEMLGate). Let 𝔸 be a complete normed algebra over ℚ. A *Quantum EML Gate* is a pair (h₁, h₂) ∈ 𝔸 × 𝔸, called the *exp parameter* and *log parameter* respectively.
+The canonical example is $A=M_n(\mathbb C)$ with $a^*$ equal to conjugate transpose and the operator norm. We assume that $A$ is nontrivial, meaning $0\ne I$.
 
-**Definition 2.2** (Gate Evaluation). The *evaluation* of a QEML gate (h₁, h₂) is:
-```
-qemlEval(h₁, h₂) = exp(h₁) · exp(h₂)
-```
-where `exp` denotes the normed space exponential (convergent power series ∑ xⁿ/n!).
+**Definition 2.1 (Hermitian element).** An element $H\in A$ is Hermitian, or self-adjoint, if $H^*=H$.
 
-**Definition 2.3** (BCH Defect). The *Baker-Campbell-Hausdorff defect* of h₁, h₂ ∈ 𝔸 is:
-```
-bchDefect(h₁, h₂) = exp(h₁) · exp(h₂) - exp(h₁ + h₂)
-```
+**Definition 2.2 (Unitary element).** An element $U\in A$ is unitary if
 
-### 2.2 Quantum EML Channel
+$$
+U^*U=UU^*=I.
+$$
 
-**Definition 2.4** (QEML Channel). For h ∈ 𝔸, the *quantum EML channel* is the map:
-```
-Φ_h(ρ) = exp(h) · ρ · exp(-h)
-```
+Unitary elements form a group under multiplication. If $U$ is unitary, then $U^{-1}=U^*$, and in a nontrivial algebra $U\ne0$.
 
-**Definition 2.5** (QEML Neuron). The *full quantum EML neuron* with rotation parameter h ∈ 𝔸 and bias t ∈ ℚ is:
-```
-N_{h,t}(ρ) = Φ_h(ρ) + t · 1 = exp(h) · ρ · exp(-h) + t · 1
-```
+**Lemma 2.3 (Closure properties).** If $U$ and $V$ are unitary, then $U^*$ and $UV$ are unitary.
 
-### 2.3 Gate Metric
+**Proof sketch.** Direct calculation gives $(U^*)^*U^*=UU^*=I$ and $U^*(U^*)=U^*U=I$. Similarly,
 
-**Definition 2.6** (QEML Distance). The distance between gates g₁, g₂ is:
-```
-d(g₁, g₂) = ‖eval(g₁) - eval(g₂)‖
-```
+$$
+(UV)^*(UV)=V^*U^*UV=V^*V=I,
+$$
 
----
+with the reverse product treated analogously. $\square$
 
-## 3. Main Results
+### 2.2 Exponential and principal logarithm
 
-### 3.1 Identity and Classical Reduction
+For $a\in A$, define the exponential by the norm-convergent series
 
-**Theorem 3.1** (Identity Gate). `qemlEval(0, 0) = 1`.
+$$
+\exp(a)=\sum_{k=0}^{\infty}\frac{a^k}{k!}.
+$$
 
-*Proof*. `exp(0) · exp(0) = 1 · 1 = 1`. □
+**Lemma 2.4 (Hermitian exponential is unitary).** If $H$ is Hermitian, then $\exp(iH)$ is unitary.
 
-**Theorem 3.2** (Classical Reduction). If `Commute(h₁, h₂)`, then `qemlEval(h₁, h₂) = exp(h₁ + h₂)`.
+**Proof sketch.** Since $(iH)^*=-iH$, functional calculus gives $\exp(iH)^*=\exp(-iH)$. The two exponentials commute and multiply to $\exp(0)=I$. $\square$
 
-*Proof*. By `exp_add_of_commute`. □
+For a normal element whose spectrum avoids the branch cut $(-\infty,0]$, the principal logarithm is defined by continuous or holomorphic functional calculus. If $H$ is Hermitian, then the spectrum of $I+iH$ lies on the vertical line $1+i\mathbb R$, which is disjoint from the nonpositive real axis. Thus $\Log(I+iH)$ is well-defined. The scalar branch is
 
-This theorem is the quantum-classical bridge: in any commutative algebra, the QEML gate is equivalent to a single exponential.
+$$
+\Log z=\log|z|+i\Arg z,
+$$
 
-### 3.2 BCH Defect Theory
+with $\Arg z\in(-\pi,\pi)$.
 
-**Theorem 3.3** (BCH Defect Vanishes for Commuting Elements). `Commute(h₁, h₂) ⟹ bchDefect(h₁, h₂) = 0`.
+A basic identity is
 
-*Proof*. When h₁, h₂ commute, `exp(h₁)·exp(h₂) = exp(h₁+h₂)`, so the defect is zero. □
+$$
+\Log(I)=0.
+$$
 
-**Theorem 3.4** (Self-Inverse Defect). `bchDefect(h, -h) = 0` for all h.
+### 2.3 The activation
 
-*Proof*. Since h commutes with -h, apply Theorem 3.3. □
+**Definition 2.5 (Raw quantum exponential–logarithm activation).** For Hermitian $H_1,H_2\in A$, define
 
-**Theorem 3.5** (BCH Defect Symmetry Relation). For all h₁, h₂:
-```
-bchDefect(h₁, h₂) - bchDefect(h₂, h₁) = [exp(h₁), exp(h₂)]
-```
-where `[A, B] = AB - BA` is the commutator.
+$$
+N(H_1,H_2)=\exp(iH_1)\,\Log(I+iH_2).
+$$
 
-*Proof*. Unfold the definitions and use `h₁ + h₂ = h₂ + h₁` (additive commutativity). The result follows by abelian group manipulation. □
+We write
 
-**Corollary 3.6** (Commutative Algebra). In any commutative normed algebra, `bchDefect(h₁, h₂) = 0` for all h₁, h₂.
+$$
+E(H_1)=\exp(iH_1),\qquad L(H_2)=\Log(I+iH_2),
+$$
 
-**Numerical Observation**: For small ε, `‖bchDefect(εA, εB)‖ ≈ ½ε²·‖[A,B]‖`, confirming the first-order BCH approximation. The ratio converges to 0.5 as ε → 0 (verified computationally for Pauli matrices).
+so that $N(H_1,H_2)=E(H_1)L(H_2)$. Lemma 2.4 guarantees that $E(H_1)$ is unitary. No corresponding general statement holds for $L(H_2)$.
 
-### 3.3 Channel Properties
+## 3. The zero-input obstruction
 
-**Theorem 3.7** (Channel Identity). `Φ_0(ρ) = ρ` for all ρ.
+The key obstruction is visible at the origin of the second parameter space.
 
-*Proof*. `exp(0)·ρ·exp(0) = 1·ρ·1 = ρ`. □
+**Theorem 3.1 (Zero-Input Theorem).** For every Hermitian $H_1\in A$,
 
-**Theorem 3.8** (Channel Preserves Unit). `Φ_h(1) = 1` for all h.
+$$
+N(H_1,0)=0.
+$$
 
-*Proof*. `exp(h)·1·exp(-h) = exp(h)·exp(-h)`. Since h commutes with -h, `exp(h)·exp(-h) = exp(h+(-h)) = exp(0) = 1`. □
+**Proof.** Substituting $H_2=0$ gives
 
-**Theorem 3.9** (Channel Additivity). `Φ_h(ρ₁ + ρ₂) = Φ_h(ρ₁) + Φ_h(ρ₂)`.
+$$
+N(H_1,0)=\exp(iH_1)\Log(I+i0)
+=\exp(iH_1)\Log(I)
+=\exp(iH_1)0
+=0.
+$$
 
-*Proof*. By distributivity of multiplication over addition. □
+$\square$
 
-**Theorem 3.10** (Channel Multiplicativity). `Φ_h(ρ₁·ρ₂) = Φ_h(ρ₁)·Φ_h(ρ₂)`.
+This immediately resolves the full-domain codomain question.
 
-*Proof sketch*. Expand:
-```
-exp(h)·(ρ₁·ρ₂)·exp(-h) = exp(h)·ρ₁·(exp(-h)·exp(h))·ρ₂·exp(-h)
-                        = (exp(h)·ρ₁·exp(-h))·(exp(h)·ρ₂·exp(-h))
-```
-using `exp(-h)·exp(h) = 1`. □
+**Theorem 3.2 (Failure of global unitary-valuedness).** In every nontrivial unital complex $C^*$-algebra, there exist Hermitian $H_1,H_2$ for which $N(H_1,H_2)$ is not unitary. In particular, the raw activation does not define a map from all Hermitian pairs into $U(A)$, and for $A=M_2(\mathbb C)$ it does not define an unrestricted map into $SU(2)$.
 
-**Theorem 3.11** (Channel Composition). If `Commute(h₁, h₂)`, then `Φ_{h₁} ∘ Φ_{h₂} = Φ_{h₁+h₂}`.
+**Proof.** Choose $H_1=0$ and $H_2=0$. By Theorem 3.1 the output is zero. If zero were unitary, then
 
-*Proof sketch*. Use `exp(h₁+h₂) = exp(h₁)·exp(h₂)` (commutativity hypothesis) and similarly for the negative, then associativity. □
+$$
+0^*0=I,
+$$
 
-**Remark**. Theorems 3.7–3.10 together show that `Φ_h` is a unital algebra automorphism of 𝔸. Combined with Theorem 3.9 (scalar compatibility), `Φ_h` is in fact a ℚ-algebra automorphism.
+which would imply $0=I$, contradicting nontriviality. $\square$
 
-### 3.4 Spectral Bridge
+The obstruction is stronger than the existence statement suggests: every first input fails when the second input is zero.
 
-**Theorem 3.12** (Diagonal Spectral Bridge). For diagonal 2×2 complex matrices `D₁ = diag(a₁, a₂)` and `D₂ = diag(b₁, b₂)`:
-```
-exp(D₁) · exp(D₂) = diag(exp(a₁)·exp(b₁), exp(a₂)·exp(b₂))
-```
+**Theorem 3.3 (Unitary-target exclusion at zero second input).** Let $H_1$ be Hermitian and let $U$ be any unitary element of a nontrivial unital complex $C^*$-algebra. Then
 
-*Proof sketch*. The matrix exponential of a diagonal matrix applies exp to each diagonal entry: `exp(diag(a₁, a₂)) = diag(exp(a₁), exp(a₂))`. The result follows from diagonal matrix multiplication. □
+$$
+N(H_1,0)\ne U.
+$$
 
-**Significance**: This theorem shows that in the eigenbasis, the quantum EML gate reduces to the classical (scalar) EML applied independently to each eigenvalue. The quantum structure only manifests through non-diagonal components — exactly the non-commutative corrections captured by the BCH defect.
+**Proof.** Theorem 3.1 gives $N(H_1,0)=0$. A unitary element cannot equal zero because $U^*U=I\ne0$. Therefore the two elements are unequal. $\square$
 
-### 3.5 Metric Theory
+This theorem rules out the possibility that $H_1$ could compensate for the degenerate logarithmic factor. The failure is independent of the expressivity of the Hermitian exponential.
 
-**Theorem 3.13** (QEML Distance is a Pseudometric). The gate distance d satisfies:
-- Symmetry: d(g₁, g₂) = d(g₂, g₁)
-- Self-zero: d(g, g) = 0
-- Triangle inequality: d(g₁, g₃) ≤ d(g₁, g₂) + d(g₂, g₃)
+## 4. The logarithmic factor controls unitarity
 
-*Proof*. Symmetry follows from `‖a - b‖ = ‖b - a‖`. Self-zero from `‖0‖ = 0`. Triangle inequality from `‖(a-b) + (b-c)‖ ≤ ‖a-b‖ + ‖b-c‖`. □
+The zero case belongs to a general phenomenon. Left multiplication by a unitary element preserves unitary membership.
 
-### 3.6 Neuron Properties
+**Lemma 4.1 (Unitary cancellation).** Let $E\in A$ be unitary and $L\in A$ arbitrary. If $EL$ is unitary, then $L$ is unitary.
 
-**Theorem 3.14** (Neuron at Zero). `N_{0,t}(ρ) = ρ + t·1`.
+**Proof.** Since $E$ is unitary, $E^*$ is unitary. If $EL$ is unitary, closure under products implies that $E^*(EL)$ is unitary. Associativity and $E^*E=I$ yield
 
-**Theorem 3.15** (Neuron Bias Composition). `N_{0,t₁}(N_{0,t₂}(ρ)) = ρ + (t₁+t₂)·1`.
+$$
+E^*(EL)=(E^*E)L=IL=L.
+$$
 
-**Theorem 3.16** (Gate Composition Law). If `Commute(g₁.logParam, g₂.expParam)`:
-```
-eval(g₁)·eval(g₂) = exp(g₁.expParam)·exp(g₁.logParam + g₂.expParam)·exp(g₂.logParam)
-```
+Hence $L$ is unitary. $\square$
 
----
+The converse is immediate from closure under products, giving an equivalence.
 
-## 4. Algorithms
+**Corollary 4.2 (Factor equivalence).** If $E$ is unitary, then
 
-### 4.1 BCH Defect Computation
+$$
+EL\text{ is unitary}\quad\Longleftrightarrow\quad L\text{ is unitary}.
+$$
 
-```
-Input: Matrices h₁, h₂ ∈ ℂⁿˣⁿ
-Output: BCH defect D ∈ ℂⁿˣⁿ
+Applying this to the activation gives the central structural result.
 
-1. Compute E₁ = exp(h₁) using Padé approximation
-2. Compute E₂ = exp(h₂)
-3. Compute E₁₂ = exp(h₁ + h₂)
-4. Return D = E₁ · E₂ - E₁₂
-```
+**Theorem 4.3 (Log-Factor Necessity Theorem).** For Hermitian $H_1,H_2\in A$, if $N(H_1,H_2)$ is unitary, then
 
-Time complexity: O(n³ log(1/ε)) for n×n matrices to precision ε.
+$$
+\Log(I+iH_2)
+$$
 
-### 4.2 QEML Gate Optimization
+is unitary.
 
-Given a target matrix T, find QEML parameters (h₁, h₂) minimizing ‖exp(h₁)·exp(h₂) - T‖:
+**Proof.** Set $E=\exp(iH_1)$ and $L=\Log(I+iH_2)$. Lemma 2.4 makes $E$ unitary. Since $N(H_1,H_2)=EL$, Lemma 4.1 applies. $\square$
 
-```
-Input: Target T ∈ ℂⁿˣⁿ, tolerance δ
-Output: Gate parameters (h₁, h₂)
+**Corollary 4.4 (Nonunitary-log obstruction).** If $\Log(I+iH_2)$ is not unitary, then $N(H_1,H_2)$ is not unitary for every Hermitian $H_1$.
 
-1. Initialize h₁ = log(T), h₂ = 0 (if T is invertible)
-2. For k = 1, 2, ...:
-   a. Compute gradient ∇_{h₁}‖exp(h₁)·exp(h₂) - T‖²
-   b. Update h₁, h₂ via gradient descent
-   c. If ‖exp(h₁)·exp(h₂) - T‖ < δ, return (h₁, h₂)
-```
+**Proof.** This is the contrapositive of Theorem 4.3. $\square$
 
----
+One can also see the result through a Gram identity.
 
-## 5. Applications
+**Lemma 4.5 (Preservation of the Gram element).** For Hermitian $H_1,H_2$,
 
-### 5.1 Quantum-Classical Neural Network Bridge
+$$
+N(H_1,H_2)^*N(H_1,H_2)
+=L(H_2)^*L(H_2).
+$$
 
-The spectral bridge theorem (Theorem 3.12) provides a precise interface between quantum and classical neural network layers. A hybrid architecture can use:
-- Classical EML neurons for diagonal (commuting) layers
-- Quantum EML gates for non-diagonal (entangling) layers
+**Proof.** With $E=E(H_1)$ and $L=L(H_2)$,
 
-The BCH defect provides a trainable "quantumness" measure: architectures can be designed to maximize or minimize the defect depending on the task.
+$$
+(EL)^*(EL)=L^*E^*EL=L^*L.
+$$
 
-### 5.2 Quantum Channel Verification
+$\square$
 
-The channel automorphism properties (Theorems 3.7–3.11) provide correctness criteria for quantum EML implementations. Any implementation must satisfy:
-- Φ_h(I) = I
-- Φ_h(AB) = Φ_h(A)·Φ_h(B)
+In finite dimensions, Lemma 4.5 implies that $N(H_1,H_2)$ and $L(H_2)$ have exactly the same singular values. Therefore $H_1$ changes the left singular vectors but cannot change norm distortion, rank, invertibility, or distance from unitarity as measured by $\|L^*L-I\|$ in any unitarily invariant norm.
 
-These can be checked computationally as unit tests for quantum hardware.
+## 5. Finite-dimensional spectral characterization
 
-### 5.3 Noncommutativity Diagnostics
+Let $A=M_n(\mathbb C)$ and let $H_2$ be Hermitian. By the spectral theorem there are a unitary matrix $Q$ and real numbers $\lambda_1,\ldots,\lambda_n$ such that
 
-The BCH defect provides a practical diagnostic for quantum error correction. If two noise generators h₁, h₂ have small BCH defect, they can be treated as approximately classical (commuting) for error correction purposes.
+$$
+H_2=Q\operatorname{diag}(\lambda_1,\ldots,\lambda_n)Q^*.
+$$
 
----
+Functional calculus yields
 
-## 6. Conjectures and Open Questions
+$$
+L(H_2)=Q\operatorname{diag}\bigl(\Log(1+i\lambda_1),\ldots,
+\Log(1+i\lambda_n)\bigr)Q^*.
+$$
 
-### 6.1 BCH Defect Bound Conjecture
+Because this matrix is normal, it is unitary exactly when all its eigenvalues have modulus one.
 
-**Conjecture**: For all h₁, h₂ in a Banach algebra:
-```
-‖bchDefect(h₁, h₂)‖ ≤ ½·‖[h₁, h₂]‖ · F(‖h₁‖, ‖h₂‖)
-```
-where F is a function depending only on the norms of h₁, h₂ (not their commutator).
+**Theorem 5.1 (Spectral unitary criterion).** For Hermitian $H_2\in M_n(\mathbb C)$, the logarithmic factor $L(H_2)=\Log(I+iH_2)$ is unitary if and only if
 
-**Test**: Compute the ratio ‖bchDefect‖ / ‖[h₁, h₂]‖ for random matrices of increasing dimension and verify it's bounded by a function of the norms.
+$$
+|\Log(1+i\lambda_j)|=1
+$$
 
-**Status**: Computationally verified for 2×2 matrices. The bound appears to be `F(a,b) = sinh(a)·sinh(b)/(a·b)`.
+for every eigenvalue $\lambda_j$ of $H_2$.
 
-### 6.2 Universality Question
+**Proof sketch.** The displayed diagonalization gives
 
-**Question**: For a fixed algebra 𝔸, does the set of all QEML gate values `{exp(h₁)·exp(h₂) : h₁, h₂ ∈ 𝔸}` generate all invertible elements of 𝔸?
+$$
+L(H_2)^*L(H_2)
+=Q\operatorname{diag}\bigl(|\Log(1+i\lambda_1)|^2,\ldots,
+|\Log(1+i\lambda_n)|^2\bigr)Q^*.
+$$
 
-For matrix algebras, this reduces to: do products of two matrix exponentials generate GL(n)?
+This equals $I$ exactly when every diagonal entry is $1$. $\square$
 
-**Known**: For SU(2) and any connected matrix Lie group, the exponential map is surjective, so single exponentials already suffice. The QEML parameterization is therefore an over-parameterization — but the BCH defect measures by how much.
+For real $t$, the principal argument of $1+it$ is $\arctan t$ and its modulus is $\sqrt{1+t^2}$. Hence
 
----
+$$
+\Log(1+it)=\frac12\log(1+t^2)+i\arctan t,
+$$
 
-## 7. Discussion
+and
 
-The Quantum EML Gate Algebra provides a principled mathematical framework for lifting classical activation functions to the quantum domain. The key insight is that the BCH defect — the gap between the product of exponentials and the exponential of the sum — serves as a natural measure of "quantumness." This defect is identically zero in the commutative (classical) case and nonzero in the noncommutative (quantum) case, providing a clean algebraic boundary between the two regimes.
+$$
+|\Log(1+it)|^2
+=\frac14\log^2(1+t^2)+\arctan^2t.
+$$
 
-The framework is formulated at the level of abstract complete normed algebras over ℚ, which means the results apply simultaneously to:
-- Scalar fields (ℝ, ℂ): the commutative case, where QEML reduces to classical EML
-- Matrix algebras (M_n(ℂ)): the quantum computing case
-- Operator algebras (B(H)): infinite-dimensional quantum systems
-- Any Banach algebra satisfying the hypotheses
+Define the scalar diagnostic
 
-This generality is mathematically natural and practically useful: the same theorems apply whether one is working with qubit gates, continuous-variable quantum systems, or abstract algebraic structures.
+$$
+g(t)=\frac14\log^2(1+t^2)+\arctan^2t-1.
+$$
 
----
+Then the logarithmic factor is unitary precisely when every eigenvalue $\lambda_j$ of $H_2$ is a zero of $g$. In particular, $g(0)=-1$, so any zero eigenvalue of $H_2$ forces a zero eigenvalue of $L(H_2)$ and prevents unitarity.
 
-## 8. References
+**Corollary 5.2 (Kernel obstruction).** If a finite-dimensional Hermitian $H_2$ has $0$ as an eigenvalue, then $N(H_1,H_2)$ is nonunitary for every Hermitian $H_1$.
 
-1. Baker, H.F. (1905). "Alternants and continuous groups." *Proc. London Math. Soc.*
-2. Campbell, J.E. (1897). "On a law of combination of operators." *Proc. London Math. Soc.*
-3. Hausdorff, F. (1906). "Die symbolische Exponentialformel in der Gruppentheorie." *Berichte der Sächsischen Akademie.*
-4. EML neuron definition and properties: `EML/EMLv17Core.lean` in the Catalog
-5. Scalar EML self-pairing convexity: `EML/Core.lean` (`emlSelfPair_strictConvex`)
-6. Quantum EML hybrid framework: `EML/EMLQuantumHybrid.lean`
+**Proof sketch.** The corresponding eigenvalue of $L(H_2)$ is $\Log(1)=0$, which has modulus different from one. Apply Theorem 5.1 and Corollary 4.4. $\square$
 
----
+For a scalar second Hamiltonian $H_2=tI$,
 
-*All theorems in this paper have been formalized and verified in Lean 4 with Mathlib. The formalization uses Mathlib's NormedSpace.exp infrastructure and works over abstract NormedRing/NormedAlgebra types.*
+$$
+L(H_2)=\Log(1+it)I.
+$$
+
+Thus scalar choices reduce the matrix condition to the one-dimensional equation $g(t)=0$. The values $g(0)=-1$ and the eventual growth of the logarithmic term suggest an intermediate-value route to nonzero roots. Producing a certified interval for such a root, and incorporating the resulting phase into a complete $U(2)$ or $SU(2)$ coverage theorem, are explicit next tasks.
+
+## 6. Numerical algorithms and examples
+
+### 6.1 Stable evaluation by spectral calculus
+
+Directly evaluating a generic matrix logarithm can obscure the special structure of $I+iH_2$. For Hermitian $H_2$, diagonalization provides a transparent algorithm.
+
+**Algorithm 6.1 (Hermitian spectral activation evaluation).**
+
+**Input:** Hermitian matrices $H_1,H_2\in M_n(\mathbb C)$.
+
+1. Compute eigendecompositions $H_k=Q_kD_kQ_k^*$ for $k=1,2$.
+2. Form
+   $$
+   E=Q_1\operatorname{diag}(e^{i(D_1)_{jj}})Q_1^*.
+   $$
+3. Form
+   $$
+   L=Q_2\operatorname{diag}(\Log(1+i(D_2)_{jj}))Q_2^*.
+   $$
+4. Return $N=EL$, together with residuals
+   $$
+   r_L=\|L^*L-I\|_F,
+   \qquad
+   r_N=\|N^*N-I\|_F.
+   $$
+
+Hermitian eigendecomposition costs $O(n^3)$ time and $O(n^2)$ storage. Matrix multiplication has the same asymptotic time. Lemma 4.5 predicts $r_L=r_N$ up to floating-point error.
+
+### 6.2 Representative cases
+
+For $H_1=\operatorname{diag}(0.3,-0.7)$ and $H_2=0$, the algorithm gives $L=0$ and $N=0$. The residual is
+
+$$
+\|N^*N-I\|_F=\|I\|_F=\sqrt{2},
+$$
+
+so the output is maximally separated from satisfying the unitary identity in this simple Frobenius measure.
+
+For a generic Hermitian second input such as
+
+$$
+H_2=
+\begin{pmatrix}
+0.8 & 0.2-0.1i\\
+0.2+0.1i & -0.4
+\end{pmatrix},
+$$
+
+the eigenvalues of $H_2$ determine two scalar values $\Log(1+i\lambda_j)$. Unless both happen to have modulus one, $L$ is nonunitary. Changing $H_1$ alters $N$ but leaves $N^*N=L^*L$ unchanged.
+
+### 6.3 Scalar root search
+
+A bisection procedure can explore the equation $g(t)=0$.
+
+**Algorithm 6.2 (Scalar unit-circle intersection search).**
+
+**Input:** numbers $a<b$ with $g(a)g(b)\le0$ and tolerance $\varepsilon>0$.
+
+1. While $b-a>\varepsilon$, set $m=(a+b)/2$.
+2. If $g(a)g(m)\le0$, replace $b$ by $m$; otherwise replace $a$ by $m$.
+3. Return $(a+b)/2$.
+
+After $k$ iterations the interval width is $(b-a)/2^k$, so obtaining width at most $\varepsilon$ requires $O(\log((b-a)/\varepsilon))$ evaluations and $O(1)$ additional storage. A floating-point root is exploratory rather than a proof; a rigorous coverage result would require certified interval bounds for the transcendental functions.
+
+## 7. Consequences for single-qubit coverage
+
+Every $U\in U(2)$ has a Hermitian logarithm and may be expressed as $U=\exp(iH)$ for some Hermitian $H$. This fact makes the first factor highly expressive, but it does not establish coverage by the product under an arbitrary second input.
+
+Suppose a selected $H_2$ makes $L(H_2)$ unitary. Then for a target $U$, the equation
+
+$$
+\exp(iH_1)L(H_2)=U
+$$
+
+is equivalent to
+
+$$
+\exp(iH_1)=U L(H_2)^*.
+$$
+
+The right-hand side is unitary, so finite-dimensional exponential surjectivity supplies a Hermitian $H_1$. Therefore any single fixed admissible unitary logarithmic factor would be enough for $U(n)$ coverage. Establishing such a factor and tracking branch and determinant conditions are the essential next steps.
+
+For $SU(2)$, determinant bookkeeping is necessary. Since
+
+$$
+\det(\exp(iH_1))=\exp(i\operatorname{tr}H_1),
+$$
+
+the determinant-one condition on the product becomes
+
+$$
+\exp(i\operatorname{tr}H_1)\det L(H_2)=1.
+$$
+
+If $H_2=tI$ and $\Log(1+it)=e^{i\theta}$ has unit modulus, then in dimension two
+
+$$
+\det L(H_2)=e^{2i\theta}.
+$$
+
+Thus the trace must satisfy
+
+$$
+\operatorname{tr}H_1+2\theta\equiv0\pmod{2\pi}.
+$$
+
+This congruence identifies the form of the required trace correction. A complete $SU(2)$ theorem must show that a representing Hermitian logarithm can be selected in the appropriate congruence class.
+
+## 8. Architecture repairs
+
+### 8.1 Restricting the second parameter
+
+The simplest repair is to define the activation only on
+
+$$
+\mathcal D=\{H_2=H_2^*:L(H_2)^*L(H_2)=I\}.
+$$
+
+On pairs $(H_1,H_2)$ with $H_2\in\mathcal D$, the activation is unitary by Corollary 4.2. In finite dimensions, Theorem 5.1 characterizes $\mathcal D$ spectrally. The cost is that $\mathcal D$ is highly constrained and may be disconnected or inconvenient for gradient-based optimization.
+
+### 8.2 Polar normalization
+
+For invertible $L$, define
+
+$$
+P(L)=L(L^*L)^{-1/2}.
+$$
+
+**Proposition 8.1 (Unitarity of the polar factor).** If $L$ is invertible, then $P(L)$ is unitary.
+
+**Proof sketch.** The positive element $L^*L$ is invertible. Functional calculus defines $(L^*L)^{-1/2}$. Then
+
+$$
+P(L)^*P(L)
+=(L^*L)^{-1/2}L^*L(L^*L)^{-1/2}=I.
+$$
+
+In finite dimensions, a square matrix with $P(L)^*P(L)=I$ is unitary. $\square$
+
+This leads to the normalized activation
+
+$$
+\widetilde N(H_1,H_2)
+=\exp(iH_1)P\bigl(\Log(I+iH_2)\bigr),
+$$
+
+which is unitary whenever the logarithmic factor is invertible. The point $H_2=0$ remains singular because $L(0)=0$. A regularized polar map may improve numerical stability but must be analyzed carefully: replacing $L^*L$ by $L^*L+\varepsilon I$ generally yields a contraction rather than an exactly unitary matrix.
+
+### 8.3 Determinant correction
+
+For $V\in U(2)$, choose a square root of $\det V$ and define
+
+$$
+V_{\mathrm{special}}=\frac{V}{\sqrt{\det V}}.
+$$
+
+Then $V_{\mathrm{special}}\in SU(2)$, although a globally continuous choice of square root introduces phase and branch issues. An architecture intended for $SU(2)$ must state and manage this choice explicitly.
+
+### 8.4 Keep the logarithm inside a Hermitian generator
+
+Another design is to construct a Hermitian function $K(H_1,H_2)$ and output
+
+$$
+\exp(iK(H_1,H_2)).
+$$
+
+For example, Hermitian and skew-Hermitian components of a logarithmic feature may be combined before exponentiation. This approach guarantees unitarity on the full domain, although its approximation properties differ from those of the original product.
+
+## 9. Applications and interpretation
+
+The results have immediate relevance to quantum machine learning. If an activation is advertised as a deterministic quantum gate, exact unitarity is a structural requirement. A nonunitary map may still represent a valid quantum operation after embedding it in a larger system, introducing Kraus operators, conditioning on measurement outcomes, or interpreting it as an unnormalized amplitude transformation. Those interpretations require additional data and have different physical and optimization semantics.
+
+The factor criterion also supplies a useful training diagnostic. Since
+
+$$
+N^*N-I=L^*L-I,
+$$
+
+any penalty based on the Gram residual is independent of $H_1$. Optimizing $H_1$ cannot reduce that penalty. A learning algorithm that attempts to repair nonunitarity by updating both parameter blocks wastes effort in the first block; only $H_2$, normalization, or the architecture itself can change the residual.
+
+In numerical linear algebra, the same identity implies identical condition numbers and singular spectra for $N$ and $L$ whenever these notions are defined. Hence instability near $H_2=0$ cannot be ameliorated by the first exponential. In model design, this separation is advantageous: $H_1$ controls a unitary orientation, while $H_2$ controls all radial distortion.
+
+## 10. Discussion
+
+The mathematical obstruction is elementary but decisive. The expression combines one factor known to be unitary with another factor that vanishes at a natural input. Multiplication does not average their properties. Because the first factor is invertible and norm-preserving, the second factor completely determines whether the product satisfies the unitary equations.
+
+This observation corrects a common inference: replacing scalar functions with matrix functions does not automatically preserve the geometry of a target matrix group. The scalar exponential $e^{ix}$ lies on the unit circle for real $x$, but the scalar logarithm $\Log(1+ix)$ generally does not. Functional calculus transfers this scalar behavior to eigenvalues. The matrix setting adds expressive eigenspaces but cannot eliminate the scalar modulus condition.
+
+There are three levels of claim that should not be conflated:
+
+1. **Full-domain codomain claim:** every Hermitian pair produces a unitary output. This is false by Theorem 3.2.
+2. **Restricted codomain claim:** every pair satisfying an explicit condition on $H_2$ produces a unitary output. This follows when $L(H_2)$ is unitary, or after exact polar normalization on the invertible domain.
+3. **Coverage claim:** every target unitary has at least one representing pair. This may be approachable once a single admissible unitary logarithmic factor is established and exponential surjectivity and determinant constraints are handled.
+
+The zero-input theorem settles only the first, but the log-factor theorem precisely identifies the missing hypothesis needed for the second and the key gateway to the third.
+
+## 11. Future work
+
+Several concrete questions follow.
+
+First, certify a nonzero real solution of
+
+$$
+\frac14\log^2(1+t^2)+\arctan^2t=1.
+$$
+
+A rigorous interval proof would produce a scalar unitary logarithmic factor.
+
+Second, use such a scalar $t$ to prove $U(2)$ coverage with $H_2=tI$. The problem reduces to global surjectivity of the Hermitian exponential and phase tracking.
+
+Third, determine the exact trace congruence for $SU(2)$ representations. If $\Log(1+it)=e^{i\theta}$, the expected condition is
+
+$$
+\operatorname{tr}H_1\equiv-2\theta\pmod{2\pi},
+$$
+
+but a complete theorem must align this with the choice of Hermitian logarithm of each target.
+
+Fourth, analyze the polar-normalized architecture on the domain where $L$ is invertible, including differentiability, behavior near singular values, and determinant-one phase correction. One should determine whether traceless Hermitian parameters suffice after normalization.
+
+Finally, compare the optimization geometry of restricted, polar-normalized, and generator-based architectures. The relevant criteria include exact group membership, smoothness, conditioning, expressive coverage, gradient stability, and physical implementability.
+
+## 12. Conclusion
+
+The raw quantum exponential–logarithm activation
+
+$$
+\exp(iH_1)\Log(I+iH_2)
+$$
+
+does not define a unitary-valued map on all Hermitian inputs. Its second-zero slice is identically zero, so it cannot be an unrestricted $SU(2)$ activation. More generally, output unitarity is equivalent to unitarity of the logarithmic factor: the first Hamiltonian contributes a unitary left multiplier but cannot change singular values or repair a defective factor.
+
+These results replace an overbroad universality conjecture with a precise design criterion. Any viable version must restrict the logarithmic spectrum, normalize the logarithmic factor, or move the logarithmic information inside a unitary-by-construction parameterization. The remaining coverage problem is thereby isolated in a form suitable for scalar analysis, spectral methods, and determinant-aware quantum architecture design.
