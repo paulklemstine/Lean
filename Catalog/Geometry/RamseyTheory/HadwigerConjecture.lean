@@ -139,7 +139,7 @@ theorem completeGraph_minor_of_clique {G : SimpleGraph V}
     IsMinor G (completeGraph (Fin s.card)) := by
   use fun i => { f i |>.1 };
   · exact fun _ => Set.singleton_nonempty _;
-  · simp +decide [ Pairwise, Set.disjoint_left ];
+  · simp +decide [ Pairwise ];
   · grind +suggestions;
   · aesop
 
@@ -215,7 +215,7 @@ theorem colorable_of_degenerate [Fintype V] [DecidableEq V]
   rcases n with ( _ | n );
   · simp_all +decide [ Fintype.card_eq_zero_iff ];
     grind +suggestions;
-  · -- By the induction hypothesis, the � sub�graph induced by $V \setminus \{v\}$ is $(k+1)$-colorable.
+  · -- By the induction hypothesis, the subgraph induced by $V \setminus \{v\}$ is $(k+1)$-colorable.
     obtain ⟨v, hv⟩ : ∃ v : V, (Finset.filter (G.Adj v) Finset.univ).card ≤ k := by
       simpa using hd Finset.univ ( Finset.card_pos.mp ( by simp +decide [ h ] ) );
     have h_ind : (G.induce {w : V | w ≠ v}).Colorable (k + 1) := by
@@ -225,7 +225,7 @@ theorem colorable_of_degenerate [Fintype V] [DecidableEq V]
           simp +decide [ Finset.card_image_of_injective, Function.Injective, SimpleGraph.comap ];
           exact ⟨ fun ⟨ a, ha, ha', ha'' ⟩ => ⟨ a, ⟨ ha, ha' ⟩, ha'' ⟩, fun ⟨ a, ⟨ ha, ha' ⟩, ha'' ⟩ => ⟨ a, ha, ha', ha'' ⟩ ⟩;
         · exact ⟨ _, Finset.mem_image_of_mem _ hS.choose_spec ⟩;
-      · simp +decide [ Finset.filter_ne', h ];
+      · simp +decide [ h ];
     obtain ⟨f, hf⟩ := h_ind;
     -- Extend the coloring $f$ to include $v$.
     obtain ⟨c, hc⟩ : ∃ c : Fin (k + 1), ∀ w : {w : V | w ≠ v}, G.Adj v w → f w ≠ c := by
@@ -279,5 +279,65 @@ def KostochkaThomason : Prop :=
 def HadwigerSmall (n : ℕ) : Prop :=
   ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (k : ℕ),
     G.chromaticNumber = k → IsMinor G (completeGraph (Fin k))
+
+/-! ## Indexed Cases and the Wagner/Four-Color Connection -/
+
+/-- The `(k+1)`-clique case of Hadwiger's conjecture, phrased without making a
+choice of a numerical chromatic number. -/
+def HadwigerCase (k : ℕ) : Prop :=
+  ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
+    ¬ G.Colorable k → IsMinor G (completeGraph (Fin (k + 1)))
+
+/-- Hadwiger's conjecture in the one-clique case.  Failure of a zero-coloring
+forces the vertex type to be nonempty, and a vertex is a `K₁` minor model. -/
+theorem hadwigerCase_zero : HadwigerCase 0 := by
+  intro V _ _ G _ h
+  haveI : Nonempty V := not_isEmpty_iff.mp fun hV => h (G.colorable_zero_iff.mpr hV)
+  simpa using hadwiger_case_one G
+
+/-- Hadwiger's conjecture in the two-clique case.  A graph which is not
+one-colorable has an edge, whose endpoints form a `K₂` minor model. -/
+theorem hadwigerCase_one : HadwigerCase 1 := by
+  intro V _ _ G _ h
+  have hne : G ≠ ⊥ := by
+    intro hbot
+    apply h
+    exact ⟨.mk 0 (by simp [hbot])⟩
+  obtain ⟨u, v, huv⟩ := SimpleGraph.ne_bot_iff_exists_adj.mp hne
+  simpa using hadwiger_of_adj huv
+
+/-- The `k = 4` indexing of `HadwigerCase` is exactly the existing `K₅`
+formulation. -/
+theorem hadwigerCase_four_iff_hadwigerFive : HadwigerCase 4 ↔ HadwigerFive := by
+  simp only [HadwigerCase, HadwigerFive, Nat.reduceAdd]
+
+/-- Wagner's contrapositive formulation of the `K₅` case: every finite
+`K₅`-minor-free graph is four-colorable. -/
+def WagnerK5Coloring : Prop :=
+  ∀ (V : Type) [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj],
+    ¬ IsMinor G (completeGraph (Fin 5)) → G.Colorable 4
+
+/-- The `K₅` case and Wagner's minor-free coloring formulation are logically
+ equivalent, by contraposition. -/
+theorem wagner_equivalence : HadwigerFive ↔ WagnerK5Coloring := by
+  constructor
+  · intro h V _ _ G _ hminor
+    by_contra hcolor
+    exact hminor (h V G hcolor)
+  · intro h V _ _ G _ hcolor
+    by_contra hminor
+    exact hcolor (h V G hminor)
+
+/-- Wagner's minor-free coloring statement implies the Four Color Theorem for
+`IsPlanar`, since planarity includes exclusion of a `K₅` minor. -/
+theorem fourColorTheorem_of_wagner : WagnerK5Coloring → FourColorTheorem := by
+  intro h V _ _ G _ hplanar
+  exact h V G hplanar.1
+
+/-- Consequently, the `k = 4` Hadwiger case implies the Four Color Theorem. -/
+theorem fourColorTheorem_of_hadwigerCase_four : HadwigerCase 4 → FourColorTheorem := by
+  intro h
+  exact fourColorTheorem_of_wagner (wagner_equivalence.mp
+    (hadwigerCase_four_iff_hadwigerFive.mp h))
 
 end Hadwiger

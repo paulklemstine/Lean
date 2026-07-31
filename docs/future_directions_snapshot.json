@@ -1182,25 +1182,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 7c352e1f (Q=0.806), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (compl",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_7c352e1f_261f0be9",
-    "lineage_refs": [],
-    "priority_score": 0.90603,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7c352e1f",
-    "status": "available",
-    "timestamp": "2026-07-31T06:05:27.279191+00:00",
-    "title": "Deepening: Sheaf Cohomology of Data: The Topology of Missing Information"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
     "domain_bridges": [],
     "domains": [
