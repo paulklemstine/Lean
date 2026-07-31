@@ -1119,28 +1119,7 @@
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode — exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Topology",
-      "Analysis"
-    ],
-    "id": "seed_100",
-    "lineage_refs": [],
-    "priority_score": 0.93,
-    "proof_strategy": "Define the energy filtration F_t = {x : E(x) <= t} for energy function E on state space X. Compute the persistent homology barcode {b_i, d_i} of this filtration. Prove: S(E) = k * sum_i (d_i - b_i) + C where C is a constant depending only on X. Key lemma: for the Ising model on L x L lattice with E(sigma) = -J sum_{<i,j>} sigma_i sigma_j, the barcode has bars born at -4JL^2 (ground state) and dying at 0 (paramagnetic), with total persistence = 4JL^2 = kT log(2^{L^2}) at the critical point.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Entropy as a Topological Invariant: The Boltzmann Bridge"
-  },
-  {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that a positive proportion of zeros of the Riemann zeta function lie on the critical line. Formalize Selberg's result (positive proportion on), Conrey's 2/5 result, and explore connections to random matrix theory and the moment problem.",
@@ -1158,25 +1137,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Riemann Hypothesis: Zero-Free Regions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b31f2cf9 (Q=0.830), which proved 21 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize 'strange loops' — hierarchical levels that fold back on themselves. Define: a strange loop in a formal system F is a formula phi such that phi asserts its own provability or unprovability. Prove: Gödel's incompleteness theorem IS a strange loop (the Gödel sentence G says 'G is not provable",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_b31f2cf9_51d634f4",
-    "lineage_refs": [],
-    "priority_score": 0.9299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "b31f2cf9",
-    "status": "available",
-    "timestamp": "2026-07-22T00:14:40.319211+00:00",
-    "title": "Deepening: Hofstadter: Strange Loops in Formal Systems — Self-Reference as a Theorem"
   },
   {
     "ambition_level": "extension",
@@ -5725,7 +5685,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb6f9bc5",
     "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
     "domain_bridges": [],
     "domains": [
@@ -5738,7 +5698,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
@@ -14562,6 +14522,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- The exact connective constant of the square lattice is not known. The proposed value `(2 + √2) / 2` is ruled out in `Catalog/Tropical/SAW/ConnectiveConstant.lean`, since it is strictly below the proved lower bound `2`.\n- The proved honeycomb-lattice algebraic results in `Catalog/EML/PosetTheory/SelfAvoidingWalk.lean` concern the exact value `√(2 + √2)`, not the square lattice.\n- A faithful formal statement of the Duminil-Copin–Smirnov honeycomb theorem should connect an independently defined honeycomb SAW counting sequence to `√(2 + √2)`; proving only algebraic properties of that real number is not yet that theorem.\n- A Hara–Slade development should define the lace-expansion coefficients and derive mean-field asymptotics in the dimensions covered by their theorem. It should not be presented as an exact evaluation of the square-lattice connective constant.\n- Computational evidence was not used to infer an exact square-lattice value: finite SAW counts cannot establish the unknown exact limit. The formal result added here instead gives a symbolic contradiction between the proposed candidate and a machine-checked lower bound.\n- `Catalog/Probability/NumberTheory/ErdosRenyiThreshold.lean` now contains complete reduction proofs for its connectivity and giant-component limits. The remaining mathematical work is to derive their explicit vanishing-error hypotheses from Poisson approximation and branching-process estimates; those deep inputs are no longer represented by incomplete Lean declarations.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0852",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c961538a",
+    "status": "available",
+    "timestamp": "2026-07-31T06:33:25.091505+00:00",
+    "title": "Future directions from cycle c961538a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [
@@ -14807,25 +14787,6 @@
     "status": "available",
     "timestamp": "2026-07-26T14:03:58.556772+00:00",
     "title": "Close Proofs: Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "c961538a",
-    "description": "Cycle 95478b50 (Q=0.610) proved 794 theorems in Probability but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "sorry_fill_95478b50_dd4f3c48",
-    "lineage_refs": [],
-    "priority_score": 0.66,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "95478b50",
-    "status": "in_progress",
-    "timestamp": "2026-07-27T00:19:54.838542+00:00",
-    "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
   },
   {
     "ambition_level": "extension",

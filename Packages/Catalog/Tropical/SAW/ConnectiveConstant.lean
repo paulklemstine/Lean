@@ -211,6 +211,20 @@ theorem connectiveConstant_ge_two : 2 ≤ connectiveConstant := by
   refine' le_ciInf _;
   exact fun n => le_trans ( by rw [ ← Real.rpow_natCast, ← Real.rpow_mul ] <;> norm_num ) ( Real.rpow_le_rpow ( by positivity ) ( h_sawcount_ge_2_pow n ) ( by positivity ) )
 
+/-- The proposed value `(2 + √2) / 2` cannot be the connective constant of the
+square lattice: it is strictly less than the elementary lower bound `2`. -/
+theorem connectiveConstant_ne_proposed_value :
+    connectiveConstant ≠ (2 + Real.sqrt 2) / 2 := by
+  intro h
+  have hsqrt : Real.sqrt 2 < 2 := by
+    rw [Real.sqrt_lt' (by norm_num : (0 : ℝ) < 2)]
+    norm_num
+  have hcandidate : (2 + Real.sqrt 2) / 2 < (2 : ℝ) := by
+    linarith
+  have hlower := connectiveConstant_ge_two
+  rw [h] at hlower
+  exact (not_lt_of_ge hlower) hcandidate
+
 /-
 SAW counts are bounded by 4^n (trivial bound: at most 4 choices per step).
 -/

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "227d6015",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n1. Replace natural-number theorem codes by a concrete recursively enumerable syntax for first-order set theory, with a proof-checking predicate and explicit enumeration of derivat",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-22T14:30:05",
-      "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
-    },
-    {
       "cycle_id": "0a1b5635",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n## Completed foundation\n\nThe current development is complete and `sorry`-free.  For the concrete order-nine Hall multiplication it proves right distributivity, a proper three-elem",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-31T06:08:11",
       "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+    },
+    {
+      "cycle_id": "c961538a",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n- The exact connective constant of the square lattice is not known. The proposed value `(2 + √2) / 2` is ruled out in `Catalog/Tropical/SAW/ConnectiveConstant.lean`, since it is s",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-07-31T06:33:29",
+      "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.75115
     }
   ],
-  "last_updated": "2026-07-31T06:08:11",
+  "last_updated": "2026-07-31T06:33:29",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "1163ea67",
-        "quality": 0.68,
-        "theorems": 0,
-        "title": "Entropy Power Inequality: Sharp Version"
-      },
-      {
         "cycle_id": "311c4349",
         "quality": 0.54,
         "theorems": 13,
@@ -3823,6 +3817,12 @@
         "quality": 0.7678799999999999,
         "theorems": 4,
         "title": "Normality of Mathematical Constants"
+      },
+      {
+        "cycle_id": "c961538a",
+        "quality": 0.686,
+        "theorems": 35,
+        "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
       }
     ],
     "Pythagorean": [
