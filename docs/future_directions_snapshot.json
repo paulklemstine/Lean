@@ -15019,6 +15019,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Status of this follow-up\n\n`Tournament.lean` now compiles end-to-end without proof placeholders. It proves two honest milestones corresponding to the selected directions:\n\n1. `goldbach_verified_up_to_one_hundred` checks Goldbach's assertion for every even natural number in `[4, 100]` by a finite executable certificate.\n2. `riemannZeta_nonzero_right_half_plane` proves that the Riemann zeta function has no zero when `1 < re(s)`.\n\nThe original statements were not silently asserted: the million-case Goldbach claim requires a substantially larger certified computation, while the critical-strip claim was exactly the still-open Riemann hypothesis. Their former declarations are retained only inside a block comment in `Tournament.lean`, together with an explanation of why they were replaced.\n\n## Goldbach verification framework\n\nThe immediate next step is to improve the certificate representation rather than merely increasing the bound in the current all-at-once decision procedure. A scalable development should:\n\n- implement a verified sieve producing primality certificates;\n- search for one prime-pair witness for each even input;\n- store or generate compact witnesses rather than asking reduction to decide a proposition with nested existential search;\n- prove a general theorem that a validated table covers every even number in a specified interval; and\n- only then raise the certified bound to `1_000_000`.\n\nThis would turn the finite check into reusable infrastructure and keep compilation and kernel checking manageable.\n\n## Riemann zeta direction\n\nThe proved zero-free region `1 < re(s)` is a sound starting point, not a proof of RH. Useful formal extensions include:\n\n- package the functional equation into explicit symmetry statements for zeros;\n- derive the standard trivial zeros at negative even integers;\n- isolate poles and zeros carefully at the boundary of the critical strip;\n- formalize additional classical zero-free regions when the required analytic estimates are available; and\n- state equivalent finite or quantitative intermediate goals without presenting them as RH itself.\n\nAny future critical-strip theorem should clearly distinguish established consequences of existing zeta theory from conjectural assertions.\n\n## Verification policy\n\nFuture additions should remain free of `sorry` and `admit`, build as explicit Lake targets, and be checked for unexpected axioms. Open conjectures should be preserved as documentation or clearly labeled conjectural statements rather than introduced as unproved Lean declarations in a completed artifact.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0863",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "tournament_1978ca8d",
+    "status": "available",
+    "timestamp": "2026-07-31T02:56:59.782833+00:00",
+    "title": "`Tournament.lean` now compiles end-to-end without proof placeholders. It proves "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [
