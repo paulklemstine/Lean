@@ -513,16 +513,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hawking-Information-Retrieval: Unitary S-Matrix Proof for Evaporating Black Holes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a7ba7617",
     "description": "Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
     "domains": [
       "Physics"
     ],
     "id": "scifi_50_35_f9db249d",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:58.529287+00:00",
     "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
   },
@@ -867,22 +868,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Whitehead Problem: Independence from ZFC"
-  },
-  {
-    "consumed_by_exp_id": "aeb64258",
-    "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "id": "seed_248",
-    "phase": "A",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
   {
     "consumed_by_exp_id": "",
@@ -2312,6 +2297,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 03b10997 (Q=0.770), which proved 17 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit secur",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_03b10997_b34b2217",
+    "priority_score": 0.8701199999999999,
+    "research_mode": "team",
+    "source_exp_id": "03b10997",
+    "status": "available",
+    "timestamp": "2026-07-31T20:49:43.464129+00:00",
+    "title": "Deepening: Post-Quantum Cryptography: Lattice-Based Key Exchange"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -3487,22 +3486,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
-  },
-  {
-    "consumed_by_exp_id": "03b10997",
-    "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "seed_356",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
   },
   {
     "consumed_by_exp_id": "",
@@ -6950,17 +6933,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: T_k = O(k^2)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e86cdc26",
     "description": "For every integer k \u2265 5, there exists a constant C_k > 0 such that for a uniformly random simple k-regular graph G on n vertices (with n \u2192 \u221e through admissible values), with probability tending to 1, G satisfies the following asymptotic Brill-Noether existence property at half-canonical degree: for every integer r \u2265 0 with \u03c1(g, r, g-1) \u2265 0 (where g = n(k/2 - 1) + 1 is the genus of G), there exists a divisor D on G of degree at most C_k(g-1) and rank at least r/C_k. Here \u03c1(g,r,d) = g - (r+1)(g-d+r) is the Brill-Noether number.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
     "id": "fd_0243",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15213v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T23:47:33.062521+00:00",
     "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical Degree"
   },
@@ -10735,6 +10719,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T18:57:38.452584+00:00",
     "title": "1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following conjectures are concrete extensions of the proved bridge.  Each is\nfalsifiable because it specifies an exact equality, involution, bound, or congruence.\n\n1. **Graded genus-zero mirror/Picard specialization.**  For a specified mirror pair of\n   Calabi\u2013Yau threefolds `(X,Y)` and a specified finite set `S` of effective primitive\n   curve classes on `X`, the sum of genus-zero BPS invariants over `S` equals\n   `rank Pic(Y)`.  This should first be tested on an explicitly named toric mirror family;\n   a single mismatch disproves that specialization.\n\n2. **Integral SYZ monodromy duality.**  For an integral affine base with singular locus\n   and torus local system `L`, dualizing fibers sends every monodromy matrix `M` to\n   `(M\u207b\u00b9)\u1d40`, and dualizing twice gives an isomorphic local system.  A counterexample is\n   any admissible loop for which the computed dual monodromy differs from `(M\u207b\u00b9)\u1d40`.\n\n3. **Mirror point-count congruence.**  For every good prime `p` in a fixed smooth proper\n   mirror family `(X,Y)` of dimension `n`,\n   `#X(F_p) \u2261 (-1)^n #Y(F_p) (mod p)` after removing explicitly specified algebraic\n   cohomology factors.  Computing one good-prime point count violating the congruence\n   refutes the conjecture for that family.\n\n4. **Reciprocal middle zeta factor.**  If `P_X(T)` is the middle \u00e9tale-cohomology factor\n   of a smooth proper Calabi\u2013Yau `n`-fold over `F_q`, then there is a sign `\u03b5 \u2208 {\u22121,1}`\n   such that\n   `T^(deg P_X) P_X(1/(q^n T)) = \u03b5 q^((n * deg P_X)/2) P_X(T)`, whenever the displayed\n   exponent is integral.  Explicit Frobenius polynomials make this directly testable.\n\n5. **Weight-four modularity for a rigid threefold.**  For a fixed rigid Calabi\u2013Yau\n   threefold over `Q`, the trace of Frobenius on middle cohomology equals the `p`-th\n   Fourier coefficient of a specified weight-four newform at every prime of good\n   reduction.  Any good prime with unequal traces is a counterexample.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0864",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "aeb64258",
+    "status": "available",
+    "timestamp": "2026-07-31T20:48:24.225333+00:00",
+    "title": "The following conjectures are concrete extensions of the proved bridge.  Each is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe present development verifies algebraic search-to-decision ingredients, finite-distribution hybrid bounds for IND-CPA and post-compromise security, reconciliation inequalities, discrete-Gaussian facts, and concrete arithmetic checks. The following extensions would be needed for a full end-to-end formalization of the standard cryptographic claims.\n\n- Replace the abstract `LatticeSpectrum` interface with Euclidean lattices, dual lattices, successive minima, smoothing parameters, and discrete-Gaussian sampling; then prove the geometric transference estimates used by the quantum GapSVP/SIVP-to-LWE reduction.\n- Define search-LWE and decisional-LWE as explicit distribution ensembles indexed by a security parameter. Formalize polynomial-time reductions and negligible functions so that the existing coordinate and affine-rerandomization lemmas can be assembled into a complexity-theoretic reduction theorem.\n- Instantiate the finite IND-CPA experiment with complete Regev key generation, encryption, and decryption distributions. Prove correctness from the noise bounds and discharge each common-ideal hybrid premise from decisional LWE.\n- Extend the post-compromise experiment to an authenticated, multi-session key-exchange model with partnering, active adversaries, ephemeral-state erasure, and adaptive corruption. Derive the existing common-ideal premises from session-specific LWE assumptions.\n- Replace the raw `2^128` keyspace lower bound with a formal concrete-security estimator covering primal, dual, and decoding attacks. Include estimator assumptions, operation-cost models, decryption-failure probability, and a theorem connecting the resulting minimum work factor to a stated 128-bit security target.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0865",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "03b10997",
+    "status": "available",
+    "timestamp": "2026-07-31T20:49:38.690316+00:00",
+    "title": "The present development verifies algebraic search-to-decision ingredients, finit"
   },
   {
     "consumed_by_exp_id": "",
