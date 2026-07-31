@@ -1,172 +1,456 @@
-# The Modular Obstruction for Sums of Three Cubes: A Complete Local Characterization and the Density Conjecture
+# Sums of Three Cubes: The Exact Modulo-Nine Obstruction, Integral Families, and Cubic Surfaces
+
+**Aristotle**  
+**July 31, 2026**
 
 ## Abstract
 
-We study the classical Diophantine problem of representing an integer $n$ as a sum of three integer cubes, $x^3 + y^3 + z^3 = n$, where $x, y, z \in \mathbb{Z}$ are unrestricted in sign. We give a complete and rigorous treatment of the only known local obstruction to such representations: an integer congruent to $4$ or $5$ modulo $9$ admits no representation as a sum of three cubes. We prove this from first principles by establishing that every integer cube lies in the set $\{0,1,8\}$ modulo $9$ and that no sum of three such residues equals $4$ or $5$ modulo $9$. We then situate this obstruction within the broader conjectural framework of Heath-Brown, which asserts that congruence to $4$ or $5$ modulo $9$ is the *only* obstruction — that every other integer is a sum of three cubes. We make explicit the logical structure of the resulting characterization, isolating precisely which direction is a theorem (the obstruction) and which remains an open conjecture (the density/sufficiency statement). We connect the problem to the geometry of cubic surfaces, the symmetry $n \mapsto -n$, the existence of one-parameter polynomial families of representations, and the Hasse principle. We supplement the theory with explicit witnesses for all small representable residue classes and with numerical demonstrations.
+We study integral and modular solutions of the Diophantine equation
 
-**Keywords.** sums of three cubes, Diophantine equations, local obstruction, modular arithmetic, cubic surfaces, Heath-Brown conjecture, Hasse principle, density of representations.
+$$
+x^3+y^3+z^3=k.
+$$
+
+The central result is a complete local classification modulo nine: the congruence has a solution if and only if $k$ is not congruent to $4$ or $5$ modulo nine. The proof rests on the fact that every cube is congruent to $0$, $1$, or $-1$ modulo nine, followed by an explicit construction for each of the seven admissible residue classes. Consequently, every globally representable integer avoids the two forbidden classes, and the progressions $9t+4$ and $9t+5$ contain no sums of three integer cubes. We establish the general passage from integral solutions to solutions modulo every modulus, interpret representability as the existence of an integral point on an affine cubic surface, prove sign symmetry, and develop the two-parameter identity
+
+$$
+a^3+b^3+(-a-b)^3=-3ab(a+b).
+$$
+
+This identity yields an infinite family of represented targets and, in particular, nondegenerate representations $6t^3=(2t)^3+(-t)^3+(-t)^3$ for every nonzero integer $t$. We also give finite algorithms for local classification and bounded global search, clarify the distinction between local admissibility and global representability, and frame further questions in terms of prime-power densities, cubic-surface geometry, and the Hasse principle.
 
 ## 1. Introduction
 
 The equation
+
 $$
-x^3 + y^3 + z^3 = n, \qquad x, y, z \in \mathbb{Z},
-$$
-asks for which integers $n$ there exists a representation as a sum of three (signed) integer cubes. Because cubes may be negative, the search space is unbounded in every direction: a single integer $n$ may require representations in which all three coordinates are enormous and nearly cancel. For example,
-$$
-30 = 2{,}220{,}422{,}932^3 + (-2{,}218{,}888{,}517)^3 + (-283{,}059{,}965)^3,
-$$
-and the resolution of $33$ and $42$ required distributed computations producing sixteen- and seventeen-digit coordinates respectively. This combination of an elementary statement with extreme computational depth makes the three-cube problem a touchstone of modern Diophantine number theory.
-
-The problem decomposes naturally into two parts of completely different logical status:
-
-1. **Obstruction (local non-representability).** Certain integers are provably *not* sums of three cubes for a simple congruence reason. This part is entirely settled.
-2. **Sufficiency (density).** All remaining integers *are* sums of three cubes. This is the open conjecture of Heath-Brown.
-
-This paper gives a self-contained, rigorous account of the obstruction, and a careful logical analysis of how it combines with the sufficiency conjecture into a clean (partly conjectural) characterization. Throughout, we are explicit about which statements are proven and which are conjectural.
-
-### 1.1 Notation and definitions
-
-We write $\mathbb{Z}$ for the integers and $\mathbb{Z}/9\mathbb{Z}$ for the ring of residues modulo $9$. For $a \in \mathbb{Z}$ we write $\bar a$ for its image in $\mathbb{Z}/9\mathbb{Z}$.
-
-**Definition 1 (Sum of three cubes).** An integer $n$ is a *sum of three cubes* if there exist integers $x, y, z$ with
-$$
-x^3 + y^3 + z^3 = n.
-$$
-We denote this property by $S(n)$.
-
-## 2. The cubic residues modulo nine
-
-The entire obstruction rests on a single elementary fact.
-
-**Lemma 1 (Cubic residues mod 9).** For every integer $x$,
-$$
-\overline{x^3} \in \{\,\bar 0, \bar 1, \bar 8\,\} \subseteq \mathbb{Z}/9\mathbb{Z}.
+x^3+y^3+z^3=k
 $$
 
-*Proof.* The value of $\overline{x^3}$ depends only on $\bar x \in \mathbb{Z}/9\mathbb{Z}$, so it suffices to check the nine residues. Writing each residue as $x$ and computing $x \cdot (x \cdot x)$ in $\mathbb{Z}/9\mathbb{Z}$:
+asks whether a prescribed integer $k$ can be expressed as the sum of three integer cubes. The variables are allowed to be negative or zero. Unlike equations involving only nonnegative variables, this equation permits severe cancellation: the individual magnitudes $|x|^3$, $|y|^3$, and $|z|^3$ may greatly exceed $|k|$. Consequently, the failure of a bounded search is not evidence of nonexistence unless an independent height bound is known.
+
+Congruences supply unconditional necessary conditions. If an integral solution exists, reducing its coordinates modulo any positive integer $n$ gives a solution of the corresponding congruence. Modulo nine, cubes have an exceptionally sparse image, and this produces the familiar obstruction $k\not\equiv 4,5\pmod 9$. The first purpose of this paper is to state and prove the stronger exact local result: those two classes are not merely obstructed; they are the only classes not represented modulo nine.
+
+The second purpose is to organize the elementary global consequences around a geometric framework. For each target $k$, the equation defines an affine cubic surface. Integral representability is exactly nonemptiness of its set of integral points, while modular representability is nonemptiness after reduction to a finite residue ring. This language separates a global point from its local shadows and prevents a local theorem from being mistaken for a global converse.
+
+The third purpose is constructive. A polynomial identity supplies a two-parameter family of integral points and a simple specialization yields representations of all targets $6t^3$ using three nonzero coordinates. These families do not settle the general global problem, but they demonstrate how algebraic structure can replace unbounded search.
+
+The results are elementary in their prerequisites and exact in scope. No claim is made that every integer avoiding the modulo-nine obstruction has an integral representation. Rather, the established statements give a complete finite classification at modulus nine, rigorous global exclusions, general functorial reduction, symmetry, and explicit infinite families.
+
+## 2. Definitions and basic framework
+
+### 2.1. Global representability
+
+**Definition 2.1 (global three-cube representability).** An integer $k$ is **globally representable** if there exist integers $x,y,z$ such that
+
 $$
-\begin{aligned}
-0^3 &\equiv 0, & 1^3 &\equiv 1, & 2^3 = 8 &\equiv 8,\\
-3^3 = 27 &\equiv 0, & 4^3 = 64 &\equiv 1, & 5^3 = 125 &\equiv 8,\\
-6^3 = 216 &\equiv 0, & 7^3 = 343 &\equiv 1, & 8^3 = 512 &\equiv 8.
-\end{aligned}
-$$
-In every case the result lies in $\{0,1,8\}$. $\qquad\blacksquare$
-
-Note the clean structure: residues $\equiv 0 \pmod 3$ cube to $0$, residues $\equiv 1 \pmod 3$ cube to $1$, and residues $\equiv 2 \pmod 3$ cube to $8 \equiv -1$. Thus modulo $9$ a cube records only the residue of its base modulo $3$, mapped to $\{0, 1, -1\}$.
-
-## 3. The modular obstruction
-
-**Lemma 2 (No triple sum hits 4 or 5).** For all $a, b, c \in \{\bar 0, \bar 1, \bar 8\} \subseteq \mathbb{Z}/9\mathbb{Z}$,
-$$
-a + b + c \neq \bar 4 \quad\text{and}\quad a + b + c \neq \bar 5.
-$$
-
-*Proof.* This is a finite check over the $3^3 = 27$ ordered triples (equivalently, $9^3 = 729$ if one ranges over all residues and restricts). Identifying $\bar 8$ with $-\bar 1$, the achievable sums are exactly the values $i \cdot 1 + j\cdot(-1)$ with $i + j \le 3$ together with contributions of $0$, namely
-$$
-\{-3,-2,-1,0,1,2,3\} \pmod 9 = \{\bar 0,\bar 1,\bar 2,\bar 3,\bar 6,\bar 7,\bar 8\}.
-$$
-Neither $\bar 4$ nor $\bar 5$ appears. $\qquad\blacksquare$
-
-**Theorem 3 (Modular obstruction).** If $\bar n = \bar 4$ or $\bar n = \bar 5$ in $\mathbb{Z}/9\mathbb{Z}$, then $n$ is not a sum of three cubes; that is, $\neg S(n)$.
-
-*Proof.* Suppose, for contradiction, that $x^3 + y^3 + z^3 = n$. Reducing modulo $9$ gives $\overline{x^3} + \overline{y^3} + \overline{z^3} = \bar n$. By Lemma 1 each summand lies in $\{\bar 0, \bar 1, \bar 8\}$, so by Lemma 2 the sum cannot equal $\bar 4$ or $\bar 5$, contradicting $\bar n \in \{\bar 4, \bar 5\}$. $\qquad\blacksquare$
-
-Theorem 3 eliminates the two arithmetic progressions
-$$
-\{\dots, 4, 13, 22, 31, \dots\} \quad\text{and}\quad \{\dots, 5, 14, 23, 32, \dots\},
-$$
-i.e. all $n \equiv \pm 4 \pmod 9$. These integers are unconditionally and forever excluded.
-
-## 4. Symmetry
-
-**Proposition 4 (Negation symmetry).** For every integer $n$, $S(n)$ holds if and only if $S(-n)$ holds.
-
-*Proof.* If $x^3 + y^3 + z^3 = n$, then $(-x)^3 + (-y)^3 + (-z)^3 = -n$, and conversely. $\qquad\blacksquare$
-
-This reflects the central symmetry of the cubic surface $x^3+y^3+z^3 = n$ under $(x,y,z) \mapsto (-x,-y,-z)$ and is consistent with the obstruction: the excluded classes $\bar 4$ and $\bar 5 = -\bar 4$ are themselves swapped by negation.
-
-## 5. Explicit witnesses for representable residue classes
-
-The residues modulo $9$ that are *not* excluded are $\{0,1,2,3,6,7,8\}$. Each is realized by a small explicit representation, demonstrating that the obstruction of Theorem 3 is the only one visible at the level of residues modulo $9$.
-
-**Proposition 5 (Small witnesses).** The following representations hold:
-$$
-\begin{aligned}
-0 &= 0^3 + 0^3 + 0^3, & 1 &= 1^3 + 0^3 + 0^3, & 2 &= 1^3 + 1^3 + 0^3,\\
-3 &= 1^3 + 1^3 + 1^3, & 6 &= 2^3 + (-1)^3 + (-1)^3, & 7 &= 2^3 + 0^3 + (-1)^3,\\
-8 &= 2^3 + 0^3 + 0^3. &&&&
-\end{aligned}
+x^3+y^3+z^3=k.
 $$
 
-*Proof.* Direct computation. $\qquad\blacksquare$
+The adjective “global” emphasizes that the equality holds in the integers, not merely after reduction modulo a modulus.
 
-These cover all seven admissible residue classes modulo $9$ (since $0,1,2,3,6,7,8$ are representatives of every class except $4,5$), confirming that no residue class outside $\{4,5\}$ is locally obstructed.
+**Definition 2.2 (the forbidden modulo-nine condition).** An integer $k$ is **forbidden modulo nine** if
 
-## 6. The characterization theorem and the Heath-Brown conjecture
-
-We now combine the proven obstruction with the open sufficiency statement.
-
-**Conjecture 6 (Heath-Brown sufficiency).** Every integer $n$ with $\bar n \notin \{\bar 4, \bar 5\}$ is a sum of three cubes.
-
-This is one of the central open problems concerning the three-cube equation. It is *not* reducible to a finite computation: each admissible residue class modulo $9$ contains infinitely many integers (for example $0, 9, 18, 27, \dots$ all lie in the class of $\bar 0$), and these may require genuinely different and arbitrarily large representations. No finite list of witnesses can certify the entire conjecture.
-
-**Theorem 7 (Complete characterization, one direction conjectural).** For every integer $n$,
 $$
-\neg S(n) \iff \bar n \in \{\bar 4, \bar 5\}.
+k\equiv 4\pmod 9
 $$
-The implication $(\Leftarrow)$ — if $\bar n \in \{\bar 4, \bar 5\}$ then $n$ is not a sum of three cubes — is the proven Theorem 3. The implication $(\Rightarrow)$ — if $n$ is not a sum of three cubes then $\bar n \in \{\bar 4, \bar 5\}$ — is logically equivalent (by contraposition) to Conjecture 6 and is therefore open.
 
-*Proof.* The $(\Leftarrow)$ direction is Theorem 3. For $(\Rightarrow)$, contraposition gives: $\bar n \notin \{\bar 4, \bar 5\} \implies S(n)$, which is exactly Conjecture 6. $\qquad\blacksquare$
+or
 
-The honest accounting in Theorem 7 is the central methodological point of this paper: the characterization is genuinely complete *as a statement*, but only one of its two directions is currently a theorem. The other is supported by overwhelming computational evidence — every integer below $100$ has been verified, including the famously difficult cases $33$ and $42$ resolved in $2019$ — yet remains unproven.
-
-## 7. Geometry of cubic surfaces and the Hasse principle
-
-The set of real solutions of $x^3 + y^3 + z^3 = n$ is a smooth cubic surface in $\mathbb{R}^3$ (for $n \neq 0$). The representability question asks whether this surface contains an integer point.
-
-**Local versus global.** The *Hasse principle* (local–global principle) asks whether solvability in all completions of $\mathbb{Q}$ (the reals and all $p$-adic fields) implies solvability over $\mathbb{Q}$ — or, in the integral setting, whether the absence of congruence obstructions implies the existence of an integer solution. For three cubes:
-
-- Over $\mathbb{R}$ the surface is unbounded and always contains real points, so there is no real obstruction.
-- The only $p$-adic / congruence obstruction is the one modulo $9$ identified in Theorem 3 (the prime $3$ being the relevant one).
-
-Conjecture 6 is precisely the assertion that for the three-cube equation, local solvability is sufficient for global (integral) solvability: nine is the *whole story*. The extreme size of minimal solutions (e.g. for $30$, $33$, $42$) is consistent with heuristic lattice-point counts predicting that solutions exist but are sparse and remote.
-
-## 8. Polynomial families of representations
-
-Some values admit infinitely many representations via one-parameter polynomial identities, in contrast to the deep isolated witnesses required for hard targets. Classical examples include identities producing representations of $1$ and of $2$ for every value of a parameter; for instance, the identity
 $$
-(9t^4)^3 + (3t - 9t^4)^3 + (1 - 9t^3)^3 = 1
+k\equiv 5\pmod 9.
 $$
-yields infinitely many representations of $1$. The existence of such families motivates the conjecture that any value representable in more than one essentially distinct way lies on an algebraic curve within the cubic surface, producing an unbounded supply of integral representations. This phenomenon, together with the negation symmetry of Proposition 4, structures the search for representations and the study of their density.
 
-## 9. Algorithms
+Equivalently, the least nonnegative remainder of $k$ upon division by $9$ is $4$ or $5$.
 
-We describe the two basic computational procedures associated with the results above.
+### 2.2. Local representability
 
-**Algorithm A — Local obstruction test.** Given $n$, compute $r = n \bmod 9$. If $r \in \{4, 5\}$ output "not representable" (certified by Theorem 3). Otherwise output "no local obstruction" (representability is then conjectural but expected). Complexity $O(1)$ after a single modular reduction.
+**Definition 2.3 (local representability modulo $n$).** Let $n$ be a positive integer. An integer $k$ is **locally representable modulo $n$** if there exist residue classes $x,y,z$ modulo $n$ for which
 
-**Algorithm B — Bounded search for witnesses.** Given $n$ and a bound $B$, search for integers $x, y, z$ with $|x|,|y|,|z| \le B$ and $x^3+y^3+z^3 = n$. A standard refinement fixes $z$ and $x$ and tests whether $n - x^3 - z^3$ is a perfect cube; the negation symmetry of Proposition 4 halves the work by treating $n$ and $-n$ together. Naive complexity $O(B^2 \log B)$ per target with the cube-test refinement. This procedure finds the small witnesses of Proposition 5 immediately but is hopeless for hard targets like $33$, whose minimal solution lies far beyond any feasible $B$ — motivating the sophisticated sieves used in record computations.
+$$
+x^3+y^3+z^3\equiv k\pmod n.
+$$
 
-## 10. Discussion
+This is a finite existence question. There are only $n^3$ triples of residues to inspect, although algebraic structure can make exhaustive inspection unnecessary.
 
-The three-cube problem exhibits a sharp dichotomy. The *negative* side — impossibility — is completely understood and elementary: a remainder computation modulo $9$ settles it once and for all. The *positive* side — possibility — is conjectural, computationally savage, and tied to the deepest principles of Diophantine geometry. The clean separation of these two halves, and the precise identification of which is proven, is the contribution of this paper.
+### 2.3. The affine cubic surface
 
-It is worth emphasizing why the positive side cannot be reduced to computation. Verifying any finite set of integers leaves infinitely many untested in each residue class, and there is no known effective bound on the size of a minimal representation as a function of $n$. Indeed the absence of such a bound is what makes individual cases like $33$ historically intractable until massive computational resources were applied.
+**Definition 2.4 (three-cube surface).** Let $R$ be a commutative ring and let $k\in R$. Define
 
-## 11. Future directions
+$$
+S_k(R)=\{(x,y,z)\in R^3:x^3+y^3+z^3=k\}.
+$$
 
-We highlight several directions, growing directly from the separation of the local and global halves of the problem.
+When $R=\mathbb Z$, this is the set of integral points on the affine cubic surface with target $k$. When $R=\mathbb Z/n\mathbb Z$, it is the set of solutions modulo $n$.
 
-**Nine is the whole story.** Prove that every integer not congruent to $4$ or $5$ modulo $9$ is a sum of three cubes (Conjecture 6). The proportion of admissible residues modulo $9$ is exactly $7/9$, and no second obstruction has ever been observed; with all targets below $100$ now settled, the goal is to explain why no further barrier appears.
+These definitions immediately recast the two notions of solvability:
 
-**Infinitely many essentially different families.** For each value representable in more than one way, exhibit a one-parameter polynomial family producing infinitely many representations, generalizing the classical identities for $1$ and $2$ and exploiting the central symmetry of the surface.
+$$
+k\text{ is globally representable}\quad\Longleftrightarrow\quad S_k(\mathbb Z)\ne\varnothing,
+$$
 
-**Unbounded growth of representation counts.** Show that for every admissible $n$, the number of representations with coordinates bounded by $T$ tends to infinity as $T \to \infty$, in accordance with lattice-point heuristics mirroring the $7/9$ residue density.
+and
 
-**Balanced minimal witnesses.** For values requiring very large coordinates, establish that minimal witnesses are asymptotically balanced — two large terms of opposite sign with a controlled remainder — as forced by the symmetry of the surface.
+$$
+k\text{ is locally representable modulo }n\quad\Longleftrightarrow\quad
+S_k(\mathbb Z/n\mathbb Z)\ne\varnothing.
+$$
 
-## 12. Conclusion
+The first equivalence will be recorded formally in Section 5.
 
-We have given a complete, elementary, and rigorous proof that no integer congruent to $4$ or $5$ modulo $9$ is a sum of three cubes, established explicit witnesses for every admissible residue class, recorded the negation symmetry, and assembled these into a precise characterization whose sole open direction is exactly Heath-Brown's density conjecture. The result delineates the boundary between what is known and what is believed in one of number theory's most enduring elementary problems.
+## 3. Cubes modulo nine
+
+The complete modulo-nine classification begins with the image of the cubing map.
+
+**Lemma 3.1 (cube residues modulo nine).** For every integer $x$,
+
+$$
+x^3\equiv 0,1,\text{ or }-1\pmod 9.
+$$
+
+In least nonnegative residues, the possibilities are $0$, $1$, and $8$.
+
+**Proof sketch.** The residue of $x^3$ depends only on the residue of $x$. Cubing representatives $0,1,\ldots,8$ gives
+
+$$
+0^3,3^3,6^3\equiv 0\pmod 9,
+$$
+
+$$
+1^3,4^3,7^3\equiv 1\pmod 9,
+$$
+
+and
+
+$$
+2^3,5^3,8^3\equiv -1\pmod 9.
+$$
+
+These three cases exhaust all integers. $\square$
+
+The sparse image of cubing reduces the sumset calculation to three small symbols.
+
+**Lemma 3.2 (avoidance by three cube residues).** If each of $a,b,c$ is congruent modulo nine to one of $0$, $1$, and $-1$, then
+
+$$
+a+b+c\not\equiv 4\pmod 9
+$$
+
+and
+
+$$
+a+b+c\not\equiv 5\pmod 9.
+$$
+
+**Proof sketch.** Choose integer representatives from $\{-1,0,1\}$. Their sum lies in the interval $[-3,3]$, so its possible residues modulo nine are
+
+$$
+6,7,8,0,1,2,3.
+$$
+
+Neither $4$ nor $5$ occurs. Equivalently, a direct enumeration of the $3^3=27$ triples gives the same seven-element sumset. $\square$
+
+Combining the two lemmas yields the principal global obstruction.
+
+**Theorem 3.3 (global modulo-nine obstruction).** If $k$ is globally representable as a sum of three integer cubes, then $k$ is not forbidden modulo nine.
+
+**Proof sketch.** Write $k=x^3+y^3+z^3$. By Lemma 3.1, each summand is congruent to $0$, $1$, or $-1$ modulo nine. Lemma 3.2 excludes residues $4$ and $5$ for their sum. $\square$
+
+**Corollary 3.4 (two impossible arithmetic progressions).** For every integer $t$, neither $9t+4$ nor $9t+5$ is globally representable.
+
+**Proof sketch.** The two targets are congruent to $4$ and $5$ modulo nine, respectively, contradicting Theorem 3.3 if a representation existed. $\square$
+
+This is a uniform nonexistence theorem. It excludes infinitely many targets without any search over coordinates.
+
+## 4. Exact local classification modulo nine
+
+The preceding obstruction is also sufficient for solvability in the finite ring $\mathbb Z/9\mathbb Z$.
+
+**Theorem 4.1 (exact modulo-nine theorem).** For every integer $k$, the congruence
+
+$$
+x^3+y^3+z^3\equiv k\pmod 9
+$$
+
+has a solution if and only if
+
+$$
+k\not\equiv 4,5\pmod 9.
+$$
+
+**Proof sketch.** If the congruence has a solution, Lemmas 3.1 and 3.2 show that its target cannot have residue $4$ or $5$. Conversely, every other residue has an explicit witness. The complete table is
+
+| Target residue $r$ | Witness $(x,y,z)$ modulo $9$ | Cubic sum |
+|---:|:---:|:---:|
+| $0$ | $(0,0,0)$ | $0$ |
+| $1$ | $(1,0,0)$ | $1$ |
+| $2$ | $(1,1,0)$ | $2$ |
+| $3$ | $(1,1,1)$ | $3$ |
+| $6$ | $(-1,-1,-1)$ | $-3\equiv 6$ |
+| $7$ | $(-1,-1,0)$ | $-2\equiv 7$ |
+| $8$ | $(-1,0,0)$ | $-1\equiv 8$ |
+
+Because $0^3=0$, $1^3=1$, and $(-1)^3=-1$, each displayed triple gives the asserted residue. The table covers exactly the seven nonforbidden classes. $\square$
+
+**Corollary 4.2 (modulo-nine local density).** Exactly seven of the nine target residue classes are locally representable modulo nine. Hence the proportion of admissible residue classes is
+
+$$
+\frac{7}{9}.
+$$
+
+In any sequence of symmetric or one-sided intervals whose lengths tend to infinity, the proportion of integers avoiding the modulo-nine obstruction tends to $7/9$.
+
+**Proof sketch.** Theorem 4.1 leaves precisely the classes $0,1,2,3,6,7,8$. Residue classes modulo nine are equidistributed in long intervals up to an endpoint error bounded independently of the interval length. Dividing by interval length and taking a limit gives $7/9$. $\square$
+
+The density $7/9$ is strictly a density of local admissibility at this modulus. It must not be identified with the density of globally represented integers without a separate global theorem.
+
+## 5. Global solutions, local shadows, and surfaces
+
+The relation between integral and modular points is natural and holds for every modulus.
+
+**Theorem 5.1 (global solutions reduce locally).** Let $n$ be a positive integer. If $k$ is globally representable, then $k$ is locally representable modulo $n$.
+
+**Proof sketch.** Given integers $x,y,z$ with $x^3+y^3+z^3=k$, apply the reduction map $\mathbb Z\to\mathbb Z/n\mathbb Z$ to both sides. Since reduction respects addition and multiplication, it respects cubing and gives the desired congruence. $\square$
+
+This theorem supplies an unlimited family of necessary tests: failure modulo even one modulus proves global nonrepresentability. It does not supply a converse. Solutions modulo separate moduli are finite shadows; they need not arise from one common integral triple.
+
+**Theorem 5.2 (integral-point interpretation).** For every integer $k$, the following are equivalent:
+
+1. There exist integers $x,y,z$ satisfying $x^3+y^3+z^3=k$.
+2. The affine cubic surface $S_k(\mathbb Z)$ is nonempty.
+
+**Proof sketch.** By Definition 2.4, an element of $S_k(\mathbb Z)$ is exactly an integer triple satisfying the required equation. Thus the two statements unpack to the same existence assertion. $\square$
+
+Although tautological at the level of sets, the surface interpretation changes the available viewpoint. One may compare $S_k(\mathbb Z)$ with rational points $S_k(\mathbb Q)$, real points $S_k(\mathbb R)$, and finite-ring points $S_k(\mathbb Z/n\mathbb Z)$. The global-to-local map sends an integral point to a compatible family of residue points.
+
+The **Hasse principle** is the general expectation, valid for some classes of equations and invalid for others, that suitable local solvability conditions should imply global solvability. In the present setting, Theorem 5.1 proves only the easy direction. The exact modulo-nine classification says precisely what happens over $\mathbb Z/9\mathbb Z$; it neither establishes local solvability at every modulus nor converts local points into integral ones.
+
+## 6. Symmetry and parametric integral points
+
+### 6.1. Sign symmetry
+
+Because cubing is odd, representability is invariant under changing the sign of the target.
+
+**Theorem 6.1 (sign symmetry).** For every integer $k$, the integer $k$ is globally representable if and only if $-k$ is globally representable.
+
+**Proof sketch.** If
+
+$$
+x^3+y^3+z^3=k,
+$$
+
+then
+
+$$
+(-x)^3+(-y)^3+(-z)^3=-k.
+$$
+
+Applying the same operation again proves the reverse implication. $\square$
+
+This symmetry pairs positive and negative targets and preserves the absolute values of the coordinates.
+
+### 6.2. The Vieta-type identity
+
+A broad source of integral points appears when the coordinate sum is constrained to vanish.
+
+**Theorem 6.2 (two-parameter cubic identity).** For all integers $a,b$,
+
+$$
+a^3+b^3+(-a-b)^3=-3ab(a+b).
+$$
+
+**Proof sketch.** Expand the third cube:
+
+$$
+(-a-b)^3=-(a+b)^3=-a^3-3a^2b-3ab^2-b^3.
+$$
+
+After adding $a^3+b^3$, the pure cubic terms cancel and the remainder factors as
+
+$$
+-3a^2b-3ab^2=-3ab(a+b).
+$$
+
+$\square$
+
+**Corollary 6.3 (two-parameter represented family).** For every pair of integers $a,b$, the target
+
+$$
+-3ab(a+b)
+$$
+
+is globally representable, with representing triple
+
+$$
+(a,b,-a-b).
+$$
+
+**Proof sketch.** Substitute the displayed triple into Theorem 6.2. $\square$
+
+The family is polynomial and immediately computable. It may contain repetitions: distinct pairs $(a,b)$ can produce the same target or triples related by permutation. No injectivity is asserted. Its role is to certify a large structured set of global points.
+
+### 6.3. A nondegenerate one-parameter family
+
+Setting $a=2t$ and $b=-t$ makes the third coordinate $-t$.
+
+**Theorem 6.4 (nonzero representations of $6t^3$).** For every nonzero integer $t$, there exist nonzero integers $x,y,z$ satisfying
+
+$$
+x^3+y^3+z^3=6t^3.
+$$
+
+One may take
+
+$$
+(x,y,z)=(2t,-t,-t).
+$$
+
+**Proof sketch.** If $t\ne 0$, all three coordinates are nonzero. Direct calculation gives
+
+$$
+(2t)^3+(-t)^3+(-t)^3=8t^3-t^3-t^3=6t^3.
+$$
+
+$\square$
+
+This theorem excludes the possibility that the family is generated merely by appending a zero cube to a two-cube identity. It also illustrates cubic scaling: a single representation of $6$ scales by $t$ in the coordinates and by $t^3$ in the target.
+
+## 7. Algorithms and numerical exploration
+
+### 7.1. Constant-time modulo-nine classifier
+
+The exact local theorem yields an optimal decision procedure for solvability modulo nine.
+
+**Algorithm 7.1 (exact local classification).** Given an integer $k$:
+
+1. Compute the least nonnegative remainder $r=k\bmod 9$.
+2. If $r\in\{4,5\}$, report that no solution exists modulo nine.
+3. Otherwise return the witness from the table in Theorem 4.1.
+
+Under a unit-cost integer-arithmetic model, the procedure takes constant time and constant storage. In bit complexity, computing the remainder takes time quasi-linear or linear in the bit length under standard implementations, while table lookup is constant. The output coordinates are drawn from $\{-1,0,1\}$.
+
+Correctness has two parts. Lemma 3.2 proves that the negative answers are sound. The witness table proves that every positive answer is sound and complete.
+
+### 7.2. Bounded search for integral representations
+
+For exploratory computation, fix a height bound $B\ge 0$ and search for triples with
+
+$$
+|x|,|y|,|z|\le B.
+$$
+
+A direct triple loop uses $O(B^3)$ arithmetic operations. A meet-in-the-middle method precomputes the pair sums
+
+$$
+x^3+y^3
+$$
+
+for $-B\le x,y\le B$ and stores one witness for each value. It then scans $z$ and tests whether $k-z^3$ occurs in the table. This requires $O(B^2)$ stored entries, expected $O(B^2)$ time with hashing, and $O(B^2)$ memory.
+
+The method is complete only within the selected box. If it returns a triple, direct substitution certifies a genuine representation. If it returns no triple, the conclusion is only that no representation exists with all coordinates bounded by $B$. Because cancellation can force very large coordinates, this is not a global nonexistence proof.
+
+### 7.3. Generating polynomial families
+
+For bounded parameters $|a|,|b|\le A$, one can enumerate
+
+$$
+k=-3ab(a+b)
+$$
+
+and attach the certificate $(a,b,-a-b)$. This takes $O(A^2)$ evaluations and at most $O(A^2)$ storage if duplicate targets are consolidated. Every output is globally valid by Theorem 6.2. Unlike bounded target search, family generation is constructive by design and never produces a false candidate.
+
+## 8. Examples
+
+The local classifier immediately gives:
+
+- $k=4$ and $k=5$ are impossible globally because they are forbidden modulo nine.
+- $k=13$ is impossible because $13\equiv 4\pmod 9$.
+- $k=-4$ is impossible because $-4\equiv 5\pmod 9$, consistent with sign symmetry.
+- $k=3$ is locally represented modulo nine by $(1,1,1)$.
+- $k=7$ is locally represented modulo nine by $(-1,-1,0)$ because $-2\equiv 7\pmod 9$.
+
+The polynomial family gives, for $a=2$ and $b=-1$,
+
+$$
+2^3+(-1)^3+(-1)^3=8-1-1=6.
+$$
+
+Scaling by $t=3$ yields
+
+$$
+6^3+(-3)^3+(-3)^3=216-27-27=162=6\cdot 3^3.
+$$
+
+For a different two-parameter example, take $a=4$ and $b=2$. Then
+
+$$
+4^3+2^3+(-6)^3=64+8-216=-144,
+$$
+
+while
+
+$$
+-3\cdot 4\cdot 2\cdot(4+2)=-144.
+$$
+
+Changing all signs gives a representation of $144$:
+
+$$
+(-4)^3+(-2)^3+6^3=144.
+$$
+
+These examples exhibit the three main mechanisms: modular exclusion, explicit local witnessing, and global construction by identity.
+
+## 9. Discussion
+
+Modulo nine is distinguished because cubing compresses nine input classes into the three values $0$, $1$, and $-1$. The threefold sumset is then the seven-element interval of residues represented by ordinary sums from $-3$ through $3$. This explains both the obstruction and its exactness with almost no computation.
+
+The global conclusions divide into negative and positive statements. Negatively, two infinite arithmetic progressions contain no represented targets. Positively, the two-parameter identity supplies infinitely many represented values, and the $6t^3$ specialization ensures three nonzero coordinates. Sign symmetry doubles every construction away from zero.
+
+What remains unresolved by these results is equally important. Modulo-nine admissibility is necessary for an integer solution but is not here proved sufficient. The local theorem concerns one finite ring. Even proving solvability modulo every positive integer would still require a distinct argument to infer an integral point, if such an inference were valid. Accordingly, conjectural density statements about globally represented integers must be kept separate from the exact $7/9$ local proportion.
+
+The cubic-surface language provides a disciplined hierarchy:
+
+$$
+S_k(\mathbb Z)\longrightarrow S_k(\mathbb Z/n\mathbb Z)
+$$
+
+for every $n$. One may also consider $S_k(\mathbb Q)$ and $S_k(\mathbb R)$, or compatible points over prime-power rings. Questions about failures of converse maps belong to the arithmetic geometry of the surface, not merely to finite enumeration.
+
+## 10. Future work
+
+Several directions naturally extend the established framework.
+
+First, one may classify and count solutions over $\mathbb Z/p^r\mathbb Z$ for prime powers, including compatibility under reduction from $p^{r+1}$ to $p^r$. Such counts would turn qualitative local existence into local-density factors.
+
+Second, one may investigate whether modulo-nine admissibility implies solvability modulo every positive integer. A natural route separates prime powers and then combines solutions using the Chinese remainder theorem.
+
+Third, bounded searches can be equipped with independently checkable identity certificates for difficult targets. A certificate proves the displayed representation, while the search process that found it need not be part of the mathematical argument.
+
+Fourth, one may define counting functions for admissible and globally represented targets in intervals. The local proportion $7/9$ is a rigorous baseline; a claim that all admissible integers are globally represented would be a substantially stronger conjecture.
+
+Fifth, the affine sets $S_k(R)$ can be developed as polynomial zero loci and studied for smoothness, rational points, integral points, real points, and finite-ring points in a uniform language.
+
+Sixth, a refined local-global interface should distinguish integral, rational, real, and all-prime local solvability. This distinction is essential when discussing any Hasse-principle phenomenon.
+
+Finally, the identity $a^3+b^3+(-a-b)^3=-3ab(a+b)$ invites the construction of injective subfamilies. Controlling collisions among parameter pairs could yield quantitative lower bounds for the number of distinct represented integers without introducing zero coordinates.
+
+## 11. Conclusion
+
+The equation $x^3+y^3+z^3=k$ has a complete and transparent local theory modulo nine. Every cube is $0$, $1$, or $-1$ modulo nine; therefore sums of three cubes avoid $4$ and $5$; and explicit triples show that all seven remaining classes occur. This proves the exact modulo-nine criterion and excludes the progressions $9t+4$ and $9t+5$ globally.
+
+Integral points reduce to modular points for every modulus, and global representability is precisely the existence of an integral point on the affine cubic surface $S_k$. The equation is symmetric under $k\mapsto -k$, while the identity
+
+$$
+a^3+b^3+(-a-b)^3=-3ab(a+b)
+$$
+
+provides a two-parameter family of integral points. Its specialization
+
+$$
+6t^3=(2t)^3+(-t)^3+(-t)^3
+$$
+
+uses three nonzero coordinates whenever $t\ne 0$.
+
+Together, these results draw a sharp boundary. The modulo-nine obstruction is exact locally and supplies unconditional global exclusions. Polynomial identities supply unconditional global constructions. Between them lies the local-to-global problem: determining when a finite shadow is cast by an actual integral point.

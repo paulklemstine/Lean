@@ -1,157 +1,165 @@
-"""
-Numerical demonstrations for the Sum of Three Cubes problem.
+#!/usr/bin/env python3
+"""Numerical demonstrations for sums of three cubes.
 
-This self-contained script demonstrates the central results:
-
-  1. Every integer cube is congruent to 0, 1, or 8 modulo 9.
-  2. No sum of three such residues equals 4 or 5 modulo 9, so any integer
-     congruent to 4 or 5 modulo 9 is NOT a sum of three cubes (the modular
-     obstruction).
-  3. Every admissible residue class modulo 9 has a small explicit witness.
-  4. A bounded brute-force search exhibiting representations, exploiting the
-     negation symmetry S(n) <=> S(-n).
-
-Run with:  python demo.py
+The program verifies the complete modulo-nine classification, prints explicit
+local witnesses, demonstrates the two-parameter polynomial identity, checks the
+nonzero family for 6*t^3, and performs an optional bounded meet-in-the-middle
+search. It uses only the Python standard library.
 """
 
 from __future__ import annotations
 
-from typing import Optional, Tuple, List, Set
+from dataclasses import dataclass
+from typing import Dict, Iterable, Optional, Tuple
+
+Triple = Tuple[int, int, int]
 
 
-# ---------------------------------------------------------------------------
-# 1. Cubic residues modulo 9
-# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class LocalResult:
+    """Result of deciding the three-cube congruence modulo nine."""
 
-def cubic_residues_mod9() -> Set[int]:
-    """Return the set of values x^3 mod 9 over all residues x mod 9."""
-    return {(x ** 3) % 9 for x in range(9)}
+    target: int
+    residue: int
+    witness: Optional[Triple]
 
-
-# ---------------------------------------------------------------------------
-# 2. Attainable sums of three cubic residues modulo 9
-# ---------------------------------------------------------------------------
-
-def attainable_triple_sums_mod9() -> Set[int]:
-    """Return all residues mod 9 expressible as a sum of three cubes mod 9."""
-    residues = cubic_residues_mod9()
-    return {(a + b + c) % 9 for a in residues for b in residues for c in residues}
+    @property
+    def solvable(self) -> bool:
+        return self.witness is not None
 
 
-def is_locally_obstructed(n: int) -> bool:
-    """True iff n is provably NOT a sum of three cubes (n = 4 or 5 mod 9)."""
-    return (n % 9) in (4, 5)
-
-
-# ---------------------------------------------------------------------------
-# 3. Small explicit witnesses for the admissible residue classes
-# ---------------------------------------------------------------------------
-
-SMALL_WITNESSES: dict[int, Tuple[int, int, int]] = {
+MOD_NINE_WITNESSES: Dict[int, Triple] = {
     0: (0, 0, 0),
     1: (1, 0, 0),
     2: (1, 1, 0),
     3: (1, 1, 1),
-    6: (2, -1, -1),
-    7: (2, 0, -1),
-    8: (2, 0, 0),
+    6: (-1, -1, -1),
+    7: (-1, -1, 0),
+    8: (-1, 0, 0),
 }
 
 
-def verify_witness(n: int, xyz: Tuple[int, int, int]) -> bool:
-    """Check that x^3 + y^3 + z^3 == n."""
-    x, y, z = xyz
-    return x ** 3 + y ** 3 + z ** 3 == n
+def cube_sum(triple: Triple) -> int:
+    """Return x^3 + y^3 + z^3 for a triple of integers."""
+
+    x, y, z = triple
+    return x**3 + y**3 + z**3
 
 
-# ---------------------------------------------------------------------------
-# 4. Bounded brute-force search for representations
-# ---------------------------------------------------------------------------
+def classify_mod_nine(target: int) -> LocalResult:
+    """Decide local representability modulo nine and return a small witness."""
 
-def is_perfect_cube(m: int) -> Optional[int]:
-    """Return the integer cube root of m if m is a perfect cube, else None."""
-    if m == 0:
-        return 0
-    sign = 1 if m > 0 else -1
-    a = abs(m)
-    r = round(a ** (1.0 / 3.0))
-    for cand in (r - 1, r, r + 1):
-        if cand >= 0 and cand ** 3 == a:
-            return sign * cand
-    return None
+    residue = target % 9
+    return LocalResult(target, residue, MOD_NINE_WITNESSES.get(residue))
 
 
-def find_representation(n: int, bound: int) -> Optional[Tuple[int, int, int]]:
-    """Search for x^3 + y^3 + z^3 = n with |x|, |z| <= bound.
+def all_cube_residues(modulus: int) -> set[int]:
+    """Compute the image of the cubing map modulo a positive modulus."""
 
-    Fixes x and z, then tests whether n - x^3 - z^3 is a perfect cube.
+    if modulus <= 0:
+        raise ValueError("modulus must be positive")
+    return {x**3 % modulus for x in range(modulus)}
+
+
+def all_three_cube_residues(modulus: int) -> set[int]:
+    """Compute every sum-of-three-cubes residue modulo a positive modulus."""
+
+    cubes = all_cube_residues(modulus)
+    return {(a + b + c) % modulus for a in cubes for b in cubes for c in cubes}
+
+
+def vieta_triple(a: int, b: int) -> Tuple[int, Triple]:
+    """Return the target and triple from a^3+b^3+(-a-b)^3=-3ab(a+b)."""
+
+    triple = (a, b, -a - b)
+    target = -3 * a * b * (a + b)
+    assert cube_sum(triple) == target
+    return target, triple
+
+
+def six_times_cube_triple(t: int) -> Tuple[int, Triple]:
+    """Return the nonzero representation of 6*t^3; require t != 0."""
+
+    if t == 0:
+        raise ValueError("t must be nonzero to make all coordinates nonzero")
+    triple = (2 * t, -t, -t)
+    target = 6 * t**3
+    assert all(value != 0 for value in triple)
+    assert cube_sum(triple) == target
+    return target, triple
+
+
+def bounded_representation(target: int, bound: int) -> Optional[Triple]:
+    """Find a representation with |x|,|y|,|z| <= bound, if one exists.
+
+    The meet-in-the-middle table uses O(bound^2) time and memory, followed by
+    O(bound) expected-time hash lookups. A None result is only a bounded-search
+    statement, not a proof of global nonrepresentability.
     """
-    for x in range(-bound, bound + 1):
-        x3 = x ** 3
-        for z in range(x, bound + 1):  # z >= x avoids some duplicate work
-            rem = n - x3 - z ** 3
-            y = is_perfect_cube(rem)
-            if y is not None:
-                return (x, y, z)
+
+    if bound < 0:
+        raise ValueError("bound must be nonnegative")
+    values = range(-bound, bound + 1)
+    pair_sums: Dict[int, Tuple[int, int]] = {}
+    for x in values:
+        for y in values:
+            pair_sums.setdefault(x**3 + y**3, (x, y))
+    for z in values:
+        pair = pair_sums.get(target - z**3)
+        if pair is not None:
+            triple = (pair[0], pair[1], z)
+            assert cube_sum(triple) == target
+            return triple
     return None
 
 
-# ---------------------------------------------------------------------------
-# Demonstration driver
-# ---------------------------------------------------------------------------
+def demonstrate_targets(targets: Iterable[int]) -> None:
+    """Print local classifications and bounded examples for selected targets."""
+
+    print("Exact modulo-nine classification")
+    print("-" * 38)
+    for target in targets:
+        result = classify_mod_nine(target)
+        if result.witness is None:
+            print(f"k={target:4d}: residue {result.residue}; forbidden modulo 9")
+        else:
+            witness_sum = cube_sum(result.witness) % 9
+            print(
+                f"k={target:4d}: residue {result.residue}; "
+                f"witness {result.witness}, cubic sum residue {witness_sum}"
+            )
+
 
 def main() -> None:
-    print("=" * 70)
-    print("SUMS OF THREE CUBES — NUMERICAL DEMONSTRATIONS")
-    print("=" * 70)
+    """Run all demonstrations and internal consistency checks."""
 
-    print("\n[1] Cubic residues modulo 9:")
-    res = sorted(cubic_residues_mod9())
-    print(f"    {{x^3 mod 9 : x}} = {res}")
-    assert res == [0, 1, 8]
-    print("    -> Confirmed: every cube is 0, 1, or 8 modulo 9.")
+    cubes = all_cube_residues(9)
+    sums = all_three_cube_residues(9)
+    assert cubes == {0, 1, 8}
+    assert sums == {0, 1, 2, 3, 6, 7, 8}
+    print(f"Cube residues modulo 9: {sorted(cubes)}")
+    print(f"Three-cube target residues modulo 9: {sorted(sums)}")
+    print(f"Forbidden target residues: {sorted(set(range(9)) - sums)}\n")
 
-    print("\n[2] Attainable sums of three cubic residues modulo 9:")
-    sums = sorted(attainable_triple_sums_mod9())
-    print(f"    attainable = {sums}")
-    print(f"    missing    = {sorted(set(range(9)) - set(sums))}")
-    assert 4 not in sums and 5 not in sums
-    print("    -> Confirmed: 4 and 5 are unreachable (modular obstruction).")
+    demonstrate_targets([-14, -4, 0, 1, 2, 3, 4, 5, 6, 7, 8, 13])
 
-    print("\n[3] The modular obstruction in action:")
-    for n in [4, 5, 13, 14, 22, 23, 31, 32]:
-        print(f"    n = {n:>3}: n mod 9 = {n % 9} -> "
-              f"{'NOT a sum of three cubes (proven)' if is_locally_obstructed(n) else 'admissible'}")
+    print("\nTwo-parameter identity examples")
+    print("-" * 38)
+    for a, b in [(2, -1), (4, 2), (-3, 5)]:
+        target, triple = vieta_triple(a, b)
+        print(f"a={a:2d}, b={b:2d}: {triple} -> {target}")
 
-    print("\n[4] Small explicit witnesses for admissible residue classes:")
-    for n, xyz in SMALL_WITNESSES.items():
-        ok = verify_witness(n, xyz)
-        assert ok
-        print(f"    {n} = {xyz[0]}^3 + {xyz[1]}^3 + {xyz[2]}^3   [verified: {ok}]")
+    print("\nNonzero representations of 6*t^3")
+    print("-" * 38)
+    for t in [-3, -1, 1, 2, 3]:
+        target, triple = six_times_cube_triple(t)
+        print(f"t={t:2d}: {triple} -> {target}")
 
-    print("\n[5] Bounded brute-force search (bound = 25):")
-    targets = [0, 1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18, 20, 24, 29]
-    for n in targets:
-        if is_locally_obstructed(n):
-            print(f"    n = {n:>3}: obstructed mod 9, skipping")
-            continue
-        rep = find_representation(n, 25)
-        if rep is not None:
-            x, y, z = rep
-            assert x ** 3 + y ** 3 + z ** 3 == n
-            print(f"    n = {n:>3}: {x}^3 + {y}^3 + {z}^3 = {n}")
-        else:
-            print(f"    n = {n:>3}: no representation found within bound (try larger)")
-
-    print("\n[6] Negation symmetry S(n) <=> S(-n):")
-    for n in [6, 29]:
-        rep = find_representation(n, 25)
-        if rep:
-            x, y, z = rep
-            print(f"    {n}  = {x}^3 + {y}^3 + {z}^3")
-            print(f"    {-n} = {-x}^3 + {-y}^3 + {-z}^3")
-
-    print("\nAll assertions passed.")
+    print("\nBounded meet-in-the-middle search (bound 25)")
+    print("-" * 48)
+    for target in [6, 9, 12, 18, 33]:
+        triple = bounded_representation(target, 25)
+        print(f"k={target:2d}: {triple if triple is not None else 'not found in box'}")
 
 
 if __name__ == "__main__":

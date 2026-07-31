@@ -1,82 +1,173 @@
-# The Three-Cube Puzzle: Which Numbers Hide a Triple of Cubes?
+# The Two Locked Doors in the Hall of Three Cubes
 
-Pick a whole number — say $29$. Can you write it as the sum of three perfect cubes, allowing negative numbers? After a little fiddling you might find
+## A simple equation with a hidden arithmetic map
+
+Take an integer, any integer, and ask whether it can be assembled from three perfect cubes:
+
 $$
-29 = 3^3 + 1^3 + 1^3 = 27 + 1 + 1.
+x^3+y^3+z^3=k,
 $$
-Easy. Now try $30$. This one is far harder; the smallest solution known is
+
+where $x$, $y$, and $z$ may be positive, negative, or zero. The question looks like a close cousin of familiar school exercises. Yet allowing negative numbers turns it into a vast search through a three-dimensional lattice, and cubic growth makes that search deceptive. A small target can arise from enormous cubes that almost cancel. For example, there is no reason that a solution for a modest $k$ must use modest values of $x$, $y$, and $z$.
+
+Before searching this infinite landscape, arithmetic offers a lantern: look at the equation through a finite clock. On a clock with nine positions, almost every integer cube collapses to one of only three marks. That small observation identifies two doors that no sum of three cubes can ever open, completely classifies the equation modulo nine, and separates what is known from the much deeper global question over the integers.
+
+This is a story about local information: what an equation looks like after only remainders are retained. Local information cannot always construct an integer solution, but it can expose impossibility instantly. Here it does so with unusual sharpness.
+
+## The nine-position clock
+
+For an integer $m$, its residue modulo nine is the remainder in $\{0,1,2,3,4,5,6,7,8\}$. Two integers occupy the same position on the nine-position clock when their difference is divisible by $9$.
+
+The key lemma is elementary but decisive.
+
+**Cube-Residue Lemma.** For every integer $x$, the cube $x^3$ is congruent modulo nine to exactly one of $0$, $1$, or $-1$. In the standard nonnegative residue notation, these are $0$, $1$, and $8$.
+
+To see why, it is enough to cube the nine possible remainders. The pattern is
+
 $$
-30 = 2{,}220{,}422{,}932^3 + (-2{,}218{,}888{,}517)^3 + (-283{,}059{,}965)^3,
+0^3\equiv 3^3\equiv 6^3\equiv 0\pmod 9,
 $$
-a triple of ten-digit giants that nearly cancel one another out. And then try $33$. For decades nobody could decide whether it was possible at all — until $2019$, when a worldwide computation finally produced an answer with numbers sixteen digits long.
 
-This is the **sum of three cubes** problem, one of the most deceptively simple questions in all of mathematics. It asks, for a given integer $n$, whether there exist integers $x$, $y$, $z$ with
 $$
-x^3 + y^3 + z^3 = n.
+1^3\equiv 4^3\equiv 7^3\equiv 1\pmod 9,
 $$
-The catch — and the beauty — is that the cubes may be negative, so there is no upper limit on how large the ingredients can grow. A number might be representable using astronomically large cubes that all but annihilate each other, leaving behind a small remainder. There is no obvious way to bound the search, and that is precisely what makes the problem so slippery.
 
-## A wall that nine builds
+and
 
-Before chasing giant solutions, there is a much cheaper question to ask: are there numbers for which the answer is *obviously no*? Remarkably, yes — and the reason is a single, elegant piece of arithmetic involving the number nine.
-
-Look at what cubes do modulo $9$ (that is, look at their remainders after dividing by $9$). Run through the possibilities:
 $$
-0^3 \equiv 0,\quad 1^3 \equiv 1,\quad 2^3 \equiv 8,\quad 3^3 \equiv 0,\quad 4^3 \equiv 1,\quad 5^3 \equiv 8,\ \dots
+2^3\equiv 5^3\equiv 8^3\equiv -1\pmod 9.
 $$
-The pattern never escapes a tiny set. **Every cube of an integer leaves a remainder of $0$, $1$, or $8$ when divided by $9$.** There are no other options. This is the heart of the matter, and it is easy to see why: any integer is one of $0, \pm 1, \pm 2, \pm 3, \pm 4$ modulo $9$, and cubing each of these nine possibilities only ever yields $0$, $1$, or $8$.
 
-Now suppose $n$ is a sum of three cubes. Then modulo $9$, $n$ must be a sum of three numbers each drawn from the set $\{0, 1, 8\}$. How many totals can three such picks produce? We can simply list them. The possible sums are
+Thus each variable in the equation contributes only $-1$, $0$, or $1$ on this clock. Adding three such contributions gives an ordinary sum between $-3$ and $3$. Modulo nine, the possible target residues are therefore
+
 $$
-0,\ 1,\ 2,\ 3,\ 8,\ 9,\ 10,\ 16,\ 17,\ 24,
+-3,-2,-1,0,1,2,3,
 $$
-which modulo $9$ collapse to the remainders
+
+or, written from $0$ to $8$,
+
 $$
-0,\ 1,\ 2,\ 3,\ 6,\ 7,\ 8.
+0,1,2,3,6,7,8.
 $$
-Two remainders are conspicuously missing: **$4$ and $5$**. No matter how you combine three elements of $\{0,1,8\}$, you can never land on $4$ or $5$ modulo $9$.
 
-The conclusion is immediate and airtight:
+The missing residues are $4$ and $5$.
 
-> **The Modular Obstruction.** If $n \equiv 4$ or $n \equiv 5 \pmod 9$, then $n$ is *not* a sum of three integer cubes.
+**Three-Cube Obstruction Theorem.** If an integer $k$ has a representation $k=x^3+y^3+z^3$ with integers $x,y,z$, then $k$ is not congruent to $4$ or $5$ modulo nine.
 
-This rules out infinitely many numbers in one stroke — $4, 5, 13, 14, 22, 23, \dots$ and so on, the entire arithmetic progressions $\equiv \pm 4 \pmod 9$. It is a complete, unconditional proof of impossibility, and it costs nothing more than checking a handful of remainders. Mathematicians call this kind of barrier a *local obstruction*: a failure that can be detected by looking at a single modulus.
+The proof simply reduces a claimed equality modulo nine and applies the Cube-Residue Lemma. Three entries chosen from $\{-1,0,1\}$ cannot total $4$ or $5$ on the nine-position clock.
 
-## The conjecture: is nine the *only* wall?
+This immediately rules out two infinite arithmetic progressions.
 
-The obvious next question is whether nine tells the whole story. We now know that $n \equiv 4, 5 \pmod 9$ is impossible. But is *every other* number representable?
+**Forbidden-Progressions Corollary.** For every integer $t$, neither $9t+4$ nor $9t+5$ is a sum of three integer cubes.
 
-Concretely: if $n$ is **not** congruent to $4$ or $5$ modulo $9$, must $n$ be a sum of three cubes? This is the celebrated **conjecture of Heath-Brown**, and it remains *open* — one of the genuinely unsolved problems of modern number theory. All available evidence says yes. Every integer below $100$ has now been settled, including the two notorious holdouts $33$ and $42$, cracked only in $2019$ after enormous distributed computations. Not a single admissible number has ever resisted. Yet there is no proof, and the difficulty is structural: each residue class contains infinitely many integers, and there is no finite list of examples that could ever certify them all. The number $0$, the number $9$, the number $18$ — all live in the same class modulo $9$, yet each may demand a genuinely different and larger representation. A conjecture about infinitely many numbers cannot be settled by checking finitely many of them.
+So $4,5,13,14,22,23$ and infinitely many others are impossible—not because a search has failed to find them, but because arithmetic proves no search can succeed.
 
-So the problem splits cleanly into two halves of utterly different character:
+## Exactness: all seven other doors open locally
 
-- **The impossibility half** is *finished*. The modular obstruction is a theorem, proved completely and rigorously: numbers congruent to $4$ or $5$ modulo $9$ are forever beyond reach.
-- **The possibility half** is *conjectural*. Whether nine is the only obstacle is unknown, and it cannot be reduced to a finite computation.
+An obstruction is especially satisfying when it is exact. Modulo nine, the two missing residues are the only missing residues.
 
-We can package both halves into a single statement, being scrupulously honest about which side is settled:
+Define a target $k$ to be **locally representable modulo $n$** when there exist residue classes $x,y,z$ modulo $n$ satisfying
 
-> **Characterization (one direction open).** An integer $n$ fails to be a sum of three cubes *if and only if* $n \equiv 4$ or $5 \pmod 9$. The "if" direction — that these residues are impossible — is a proven theorem. The "only if" direction — that nothing else is impossible — is exactly Heath-Brown's open conjecture.
-
-## Why the giants appear
-
-What makes the *possibility* half so computationally savage? Geometry offers a clue. The equation $x^3 + y^3 + z^3 = n$ describes a surface floating in three-dimensional space — a smooth **cubic surface**. Asking whether $n$ is a sum of three cubes is asking whether this surface passes through any point with whole-number coordinates.
-
-The surface stretches off to infinity, and integer points on it can be extraordinarily sparse and far from the origin. Heuristic counting arguments — essentially estimating how many lattice points lie near the surface — predict that solutions should exist for every admissible $n$, but that the *smallest* one can be wildly large. That is why $30$ needs ten-digit cubes and $33$ needs sixteen-digit ones: not because the numbers are special, but because the surface only grazes the integer lattice at remote outposts. The hunt for these points is a triumph of clever number theory and raw computational power, often phrased as searching for $x, y$ with $x^3 + y^3 - n$ divisible by a cube and combing through residues with sophisticated sieves.
-
-There is also a built-in symmetry that softens the search: since
 $$
-(-x)^3 + (-y)^3 + (-z)^3 = -(x^3+y^3+z^3),
+x^3+y^3+z^3\equiv k\pmod n.
 $$
-a number $n$ is a sum of three cubes exactly when $-n$ is. Representations come in mirror-image pairs, halving the work and reflecting the central symmetry of the cubic surface itself.
 
-## Families that never run out
+**Exact Modulo-Nine Theorem.** A target $k$ is locally representable modulo nine if and only if $k$ is not congruent to $4$ or $5$ modulo nine.
 
-Not every number is a tightrope walk. Some values are *abundantly* representable, and the reason is algebraic identity rather than brute search. For instance, there is a polynomial recipe that produces solutions for the value $1$ for every parameter, and a classical identity does the same for $2$. These are not lucky accidents; they are whole one-parameter families of solutions, infinite assembly lines that manufacture representations on demand. Small targets like $0 = 0^3+0^3+0^3$, $2 = 1^3 + 1^3 + 0^3$, $3 = 1^3+1^3+1^3$, $6 = 2^3 + (-1)^3 + (-1)^3$, and $7 = 2^3 + 0^3 + (-1)^3$ fall out instantly, while the same surface can hide its solutions for a number like $33$ for the better part of a century.
+One direction is the obstruction already proved. The converse has explicit witnesses. For residues $0,1,2,3$, use respectively
 
-This contrast — effortless families on one side, deep isolated giants on the other — is the signature of the three-cube problem. It is what links a question a schoolchild can pose to the frontier of analytic number theory, the geometry of cubic surfaces, and the grand philosophy of the **Hasse principle**, which asks when local solvability (no obstruction at any modulus, no obstruction over the real numbers) guarantees global solvability (an actual integer solution). The modular obstruction modulo $9$ is the one and only local barrier here; Heath-Brown's conjecture is the bold claim that, for three cubes, local solvability is *enough*.
+$$
+(0,0,0),\quad (1,0,0),\quad (1,1,0),\quad (1,1,1).
+$$
 
-## The state of play
+For residues $6,7,8$, use
 
-So where do we stand? We have a clean, complete, and final answer to one of the two halves: the numbers that are $\pm 4$ modulo $9$ are impossible, no exceptions, no loopholes, proved by nothing more than the arithmetic of remainders. We have overwhelming computational evidence, and not a single counterexample, for the other half. And we have a beautiful conjecture — nine is the whole story — that has resisted proof for decades despite its innocent appearance.
+$$
+(-1,-1,-1),\quad (-1,-1,0),\quad (-1,0,0).
+$$
 
-The sum of three cubes problem endures because it sits exactly on the boundary between the knowable and the unknown. One small number, nine, draws an unbreakable wall. Beyond that wall, we believe everything is reachable — but the proof, like the cubes for $33$, may be hiding very far away indeed.
+Cubing does not change $0$, $1$, or $-1$, so these triples deliver all seven admissible residues. This proof does more than certify existence: it supplies a tiny lookup table that constructs a modular solution at once.
+
+Among the nine residue classes, exactly seven pass this test. In a long interval, therefore, the modulo-nine admissible targets occupy an asymptotic proportion of $7/9$. This is a local density, not a theorem that $7/9$ of all integers have integer representations. It is the baseline population left after the first unavoidable filter.
+
+## Local shadows and global objects
+
+Every genuine integer solution casts a shadow modulo every positive modulus.
+
+**Global-to-Local Principle.** If $x^3+y^3+z^3=k$ holds in integers, then for every positive integer $n$, the residues of $x,y,z$ modulo $n$ solve the same equation modulo $n$.
+
+The proof is reduction of the integer equality modulo $n$. Addition and multiplication respect congruence, so cubes and their sum do as well.
+
+The reverse direction is where mystery lives. Passing every finite congruence test does not automatically provide one triple of integers. Local witnesses for different moduli may fail to assemble into a global witness, and even compatible local information may not control the size of integer coordinates. The exact modulo-nine theorem must therefore be read carefully: it completely settles solvability on the nine-position clock, but it does not claim that every admissible integer is globally representable.
+
+This distinction echoes the **Hasse principle**, a guiding question in number theory: when does solvability over all relevant local worlds force solvability in the global one? For sums of three cubes, the easy implication runs from integer solutions to modular solutions. Any converse requires substantially more information and remains outside the results established here.
+
+## Turning the equation into a surface
+
+The equation has a geometric life. For a fixed target $k$, consider the affine cubic surface
+
+$$
+S_k=\{(x,y,z):x^3+y^3+z^3=k\}.
+$$
+
+The ambient number system can be the integers, rational numbers, real numbers, or a finite ring of residues. Over the integers, asking whether $k$ is a sum of three cubes is exactly asking whether $S_k$ contains an integral point.
+
+**Surface Interpretation Theorem.** An integer $k$ is representable as a sum of three integer cubes if and only if the cubic surface $S_k$ has at least one integral point.
+
+This equivalence follows directly from the definition of $S_k$: an integral point is precisely a triple of integers satisfying the equation. Although logically simple, the translation is conceptually powerful. A Diophantine equation becomes a family of geometric objects, one surface for every $k$. Reduction modulo nine asks whether the corresponding finite surface has a point. Searching over the integers asks for lattice points on the full surface.
+
+Geometry also makes cancellation visible. Far from the origin, the three cubic terms may be huge while their sum remains fixed. The surface can thread through distant regions of the lattice, explaining why bounded searches may miss genuine solutions.
+
+## Mirrors and families
+
+Odd powers respect signs, giving the family a perfect mirror symmetry.
+
+**Sign-Symmetry Theorem.** An integer $k$ is a sum of three integer cubes if and only if $-k$ is.
+
+Indeed, if $x^3+y^3+z^3=k$, then
+
+$$
+(-x)^3+(-y)^3+(-z)^3=-k.
+$$
+
+Thus every solution generates a reflected solution, and investigations may often pair positive and negative targets.
+
+There is also a broad, explicit source of global solutions. Set the third coordinate equal to the negative sum of the first two. Expanding gives the classical identity
+
+$$
+a^3+b^3+(-a-b)^3=-3ab(a+b).
+$$
+
+**Two-Parameter Family Theorem.** For every pair of integers $a,b$, the integer $-3ab(a+b)$ is a sum of three integer cubes, represented by the triple $(a,b,-a-b)$.
+
+The proof is a direct expansion:
+
+$$
+(-a-b)^3=-a^3-3a^2b-3ab^2-b^3,
+$$
+
+so the pure cubes cancel and leave $-3ab(a+b)$.
+
+A particularly clean specialization takes $a=2t$ and $b=-t$. Then the third coordinate is also $-t$, and
+
+$$
+(2t)^3+(-t)^3+(-t)^3=8t^3-t^3-t^3=6t^3.
+$$
+
+**Nonzero $6t^3$ Family Theorem.** For every nonzero integer $t$, the target $6t^3$ has a representation by three nonzero cubes, namely
+
+$$
+6t^3=(2t)^3+(-t)^3+(-t)^3.
+$$
+
+The nonzero condition matters: it excludes padded identities that use a zero cube and exhibits genuine three-term cancellation. As $t$ varies, this creates infinitely many integral points on infinitely many members of the cubic-surface family.
+
+## What the map tells us—and what it does not
+
+The modulo-nine map is complete at its own scale. Cubes occupy three residue classes; sums of three cubes occupy seven; residues $4$ and $5$ are impossible; and every other residue has an explicit modular witness. Globally, the consequences are rigorous and immediate: two full arithmetic progressions are excluded, every integral solution survives every modular reduction, sign reflection preserves representability, and polynomial identities generate infinite represented families.
+
+But the great gap remains between an unlocked local door and an actual integer point. A modular triple is a shadow, not necessarily the object casting it. Closing that gap invites several kinds of work: classification and counting modulo prime powers, Chinese-remainder assembly, carefully certified bounded searches, quantitative study of represented targets, and geometric analysis of the surfaces $S_k$.
+
+Numerical experiments can make this map tangible. One can enumerate all nine input residues, verify that their cubes collapse to $0$, $1$, and $8$, and then form all $27$ sums of three cube residues. Such a finite experiment reproduces the seven admissible targets exactly. A second experiment can sample parameters $a$ and $b$ in the polynomial identity, plotting the represented targets and the coordinate sizes. These computations illustrate the theorems, while the residue argument and algebraic expansion explain why the observed patterns persist beyond every finite sample.
+
+The equation $x^3+y^3+z^3=k$ thus compresses a central theme of number theory into one line. Finite arithmetic can prove impossibility with striking economy. Algebraic identities can build infinite islands of certainty. Geometry explains why the global ocean between those islands is difficult to navigate. And on the nine-position clock, two doors remain locked forever while the other seven open onto a much larger world.
