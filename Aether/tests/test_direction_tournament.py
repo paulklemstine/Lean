@@ -56,12 +56,33 @@ class TestDirectionTournament(unittest.TestCase):
     def test_build_tournament_prompt(self):
         batch = self.tournament.get_candidate_batch(batch_size=3)
         prompt = self.tournament.build_tournament_prompt(batch, target_winners=1)
-        
+
         self.assertIn("ARISTOTLE DIRECTION TOURNAMENT EVALUATION", prompt)
-        self.assertIn("Candidate 1", prompt)
-        self.assertIn("Select the top 1 WINNER conjectures", prompt)
+        # Prompt must request the machine-parseable JSON output file.
+        self.assertIn("tournament_results.json", prompt)
+        self.assertIn("winners", prompt)
+        self.assertIn("rejections", prompt)
+        # Candidates are listed as JSON, not as Markdown ## headings.
+        self.assertIn("Select the top 1 WINNER", prompt)
+
+    def test_load_tournament_results(self):
+        """The JSON result file is loaded and normalized into id dicts."""
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)
+            (p / "tournament_results.json").write_text(
+                '{"winners": ["dir_test_1", "dir_test_2"],'
+                ' "rejections": ["dir_test_3", {"id": "dir_test_4", "reason": "trivial"}]}'
+            )
+            res = self.tournament.load_tournament_results(p)
+        self.assertIsNotNone(res)
+        self.assertEqual([w["id"] for w in res["winners"]], ["dir_test_1", "dir_test_2"])
+        self.assertEqual([r["id"] for r in res["rejections"]], ["dir_test_3", "dir_test_4"])
+        self.assertEqual(res["rejections"][1]["reason"], "trivial")
 
     def test_parse_tournament_report(self):
+        """Legacy Markdown fallback parser still extracts ids."""
         sample_report = """
 ## TOURNAMENT_RESULTS
 
@@ -78,31 +99,60 @@ theorem test_conjecture_2 : 1 + 1 = 2 := by sorry
         parsed = self.tournament.parse_tournament_report(sample_report)
         self.assertEqual(len(parsed["winners"]), 1)
         self.assertEqual(parsed["winners"][0]["id"], "dir_test_2")
-        self.assertIn("theorem test_conjecture_2", parsed["winners"][0]["lean_stub"])
-        
+
         self.assertEqual(len(parsed["rejections"]), 2)
         self.assertEqual(parsed["rejections"][0]["id"], "dir_test_1")
         self.assertIn("Trivial identity", parsed["rejections"][0]["reason"])
 
+    def test_parse_rejection_id_prefix_format(self):
+        """Regression: '- ID: fd_0003: reason' must resolve to fd_0003, not 'ID'."""
+        sample_report = """## TOURNAMENT_RESULTS
+
+### WINNERS
+- ID: dir_test_2
+```lean
+theorem test_conjecture_2 : 1 + 1 = 2 := by sorry
+```
+
+### REJECTIONS
+- ID: dir_test_1: Trivial identity collapsing under basic simplification
+- ID: dir_test_3: Redundant with existing Catalog theorem
+- dir_test_4: Trivial consequence of the intermediate value theorem
+"""
+        parsed = self.tournament.parse_tournament_report(sample_report)
+        rej_ids = [r["id"] for r in parsed["rejections"]]
+        # Must NOT capture the literal "ID"; must capture the direction ids.
+        self.assertNotIn("ID", rej_ids)
+        self.assertIn("dir_test_1", rej_ids)
+        self.assertIn("dir_test_3", rej_ids)
+        self.assertIn("dir_test_4", rej_ids)
+        self.assertEqual(len(rej_ids), 3)
+
     def test_apply_tournament_outcomes(self):
-        winners = [{"id": "dir_test_2", "lean_stub": "theorem test_2 : True := by sorry"}]
-        rejections = [{"id": "dir_test_1", "reason": "Trivial"}]
+        # Entries may be plain IDs (from the JSON file) or dicts.
+        winners = ["dir_test_2", {"id": "dir_test_5", "reason": ""}]
+        rejections = [{"id": "dir_test_1", "reason": "Trivial"}, "dir_test_3"]
 
         res = self.tournament.apply_tournament_outcomes(winners, rejections)
-        self.assertEqual(res["promoted"], 1)
-        self.assertEqual(res["retired"], 1)
+        self.assertEqual(res["promoted"], 2)
+        self.assertEqual(res["retired"], 2)
 
         mgr = FutureDirectionsManager(self.workspace)
         dir2 = next((d for d in mgr._directions if d.id == "dir_test_2"), None)
         self.assertIsNotNone(dir2)
         self.assertEqual(dir2.status, "available")
         self.assertEqual(dir2.priority_score, 0.90)
-        self.assertIn("theorem test_2", dir2.lean_theorem_stub)
 
         dir1 = next((d for d in mgr._directions if d.id == "dir_test_1"), None)
         self.assertIsNotNone(dir1)
         self.assertEqual(dir1.status, "pruned")
         self.assertIn("tournament_rejected: Trivial", dir1.prune_reason)
+
+        dir3 = next((d for d in mgr._directions if d.id == "dir_test_3"), None)
+        self.assertIsNotNone(dir3)
+        self.assertEqual(dir3.status, "pruned")
+        # A plain-ID rejection with no reason gets the default message.
+        self.assertIn("tournament_rejected", dir3.prune_reason)
 
 
 if __name__ == "__main__":

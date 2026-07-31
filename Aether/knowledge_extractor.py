@@ -87,6 +87,7 @@ class ResearchJob:
     result_research_paper: Optional[str] = None
     result_algorithms: Optional[str] = None
     result_json_package: Optional[str] = None
+    tournament_results_json: Optional[str] = None  # Direction Tournament JSON (winners/rejections)
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
     quality_detail: Optional[Any] = None  # 8-axis QualityScore from quality_evaluator
@@ -2083,6 +2084,17 @@ Research mode: {concept.research_mode}
                         except Exception as e:
                             print(f"[Extract] Failed to parse Aristotle self-score file {f}: {e}")
                         continue  # Don't treat self-score files as package deliverables
+
+                    # Capture the Direction Tournament results file. It is a
+                    # plain {"winners":[...],"rejections":[...]} dict with no
+                    # "title", so it must be handled before the title check.
+                    if f == "tournament_results.json":
+                        try:
+                            job.tournament_results_json = fp.read_text(encoding="utf-8", errors="ignore")
+                            print(f"[Tournament] Captured {f} ({len(job.tournament_results_json)} bytes)")
+                        except Exception as e:
+                            print(f"[Tournament] Failed to read {f}: {e}")
+                        continue
 
                     # Verify that the JSON file has a 'title' field or is a list (future directions)
                     try:
@@ -4723,8 +4735,55 @@ Research mode: {concept.research_mode}
                     fd_blocks.append('\n'.join(current_block))
                 if fd_blocks:
                     fd_text = '\n\n'.join(fd_blocks)
+            # Direction Tournament results: prefer the dedicated JSON file
+            # (tournament_results.json); fall back to a legacy Markdown report.
+            if getattr(job, "tournament_results_json", None):
+                try:
+                    from direction_tournament import DirectionTournament
+                    import json as _json
+                    dt = DirectionTournament(workspace=self.workspace)
+                    data = _json.loads(job.tournament_results_json)
+                    winners = data.get("winners", [])
+                    rejections = data.get("rejections", [])
+                    if winners or rejections:
+                        res = dt.apply_tournament_outcomes(winners, rejections)
+                        print(f"[Tournament] Applied tournament JSON results: {res['promoted']} promoted, {res['retired']} retired")
+                    return
+                except Exception as e:
+                    print(f"[Tournament] Warning: Failed to apply tournament JSON: {e}")
+
             if fd_text:
-                # Check if this output contains Aristotle Direction Tournament results
+                # Try to pull a {"winners":[...],"rejections":[...]} object out of
+                # the text — Aristotle may emit it as a JSON code block rather
+                # than a standalone file. This is more robust than the legacy
+                # Markdown parser.
+                try:
+                    import json as _json
+                    from direction_tournament import DirectionTournament
+                    dt = DirectionTournament(workspace=self.workspace)
+                    data = None
+                    # Prefer an explicit winners/rejections object.
+                    for m in _re.finditer(r'\{[^{}]*"winners"[^{}]*"rejections"[^{}]*\}', fd_text, re.DOTALL):
+                        try:
+                            candidate = _json.loads(m.group(0))
+                            if isinstance(candidate.get("winners"), list) and isinstance(candidate.get("rejections"), list):
+                                data = candidate
+                                break
+                        except Exception:
+                            continue
+                    if data is None:
+                        # Last resort: parse the whole text as JSON.
+                        parsed = _json.loads(fd_text)
+                        if isinstance(parsed, dict) and isinstance(parsed.get("winners"), list):
+                            data = parsed
+                    if data is not None:
+                        res = dt.apply_tournament_outcomes(data["winners"], data["rejections"])
+                        print(f"[Tournament] Applied tournament JSON (from text): {res['promoted']} promoted, {res['retired']} retired")
+                        return
+                except Exception:
+                    pass
+
+                # Legacy Markdown TOURNAMENT_RESULTS fallback.
                 if "TOURNAMENT_RESULTS" in fd_text:
                     try:
                         from direction_tournament import DirectionTournament

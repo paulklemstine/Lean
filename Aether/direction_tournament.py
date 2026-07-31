@@ -18,6 +18,21 @@ from typing import List, Dict, Any, Optional, Tuple
 
 WORKSPACE_DIR = Path(__file__).parent / ".aether_workspace"
 
+
+def _normalize_entry(entry: Any) -> Dict[str, str]:
+    """Coerce a tournament result entry to {"id": ..., "reason": ...}.
+
+    Accepts either a plain ID string ("fd_0421") or a dict with id/reason keys.
+    """
+    if isinstance(entry, str):
+        return {"id": entry, "reason": ""}
+    if isinstance(entry, dict):
+        eid = entry.get("id", "")
+        reason = entry.get("reason", "")
+        return {"id": str(eid), "reason": str(reason) if reason else ""}
+    return {"id": str(entry), "reason": ""}
+
+
 class DirectionTournament:
     """Manages direction tournament packaging, submission, and parsing."""
 
@@ -57,69 +72,114 @@ class DirectionTournament:
         directions: List[Any],
         target_winners: int = 2,
     ) -> str:
-        """Construct a structured prompt for Aristotle to evaluate candidate directions."""
+        """Construct a prompt for Aristotle to evaluate candidate directions.
+
+        Aristotle returns a single JSON file ``tournament_results.json`` with the
+        winner and rejection IDs — no free-form Markdown, no Lean stubs. Simple
+        and machine-parseable.
+        """
+        import json as _json
+        candidates = []
+        for d in directions:
+            candidates.append({
+                "id": d.id,
+                "title": d.title,
+                "domains": d.domains if d.domains else ["General"],
+                "description": d.description,
+            })
+
         prompt_parts = [
             "# ARISTOTLE DIRECTION TOURNAMENT EVALUATION\n",
             "You are evaluating a batch of candidate mathematical conjectures to identify the most",
             "mathematically fruitful, non-trivial, and actionable research directions.\n",
-            f"Please evaluate the following {len(directions)} candidate conjectures:\n"
+            f"Evaluate the following {len(directions)} candidate conjectures:\n",
+            "```json",
+            _json.dumps(candidates, indent=2),
+            "```\n",
+            "---",
+            "## INSTRUCTIONS\n",
+            f"1. Select the top {target_winners} WINNER conjectures that are mathematically non-trivial and fruitful.",
+            "2. Reject the rest — they are trivial, redundant, ill-defined, or less promising.\n",
+            "Write a single file named ``tournament_results.json`` containing ONLY this JSON:\n",
+            "```json",
+            '{"winners": ["<id1>", "<id2>"], "rejections": ["<id3>", "<id4>"]}',
+            "```\n",
+            "Rules:",
+            "- Use the exact candidate IDs (e.g. fd_0421, seed_007).",
+            "- List ALL candidates — every ID must appear in either winners or rejections.",
+            "- Output the JSON file and nothing else. No Markdown commentary, no Lean code.",
         ]
-
-        for idx, d in enumerate(directions, 1):
-            prompt_parts.append(f"## Candidate {idx} (ID: {d.id})")
-            prompt_parts.append(f"**Title**: {d.title}")
-            prompt_parts.append(f"**Domains**: {', '.join(d.domains) if d.domains else 'General'}")
-            prompt_parts.append(f"**Description**: {d.description}")
-            if d.proof_strategy:
-                prompt_parts.append(f"**Proposed Strategy**: {d.proof_strategy}")
-            if d.catalog_references:
-                prompt_parts.append(f"**Catalog References**: {', '.join(d.catalog_references)}")
-            prompt_parts.append("")
-
-        prompt_parts.append("---")
-        prompt_parts.append("## INSTRUCTIONS FOR ARISTOTLE\n")
-        prompt_parts.append(f"1. Select the top {target_winners} WINNER conjectures that are mathematically non-trivial and fruitful.")
-        prompt_parts.append("2. For each WINNER conjecture:")
-        prompt_parts.append("   - Provide a formal Lean 4 theorem statement stub using `by sorry` that typechecks against Mathlib/Catalog.")
-        prompt_parts.append("3. For the remaining REJECTED conjectures:")
-        prompt_parts.append("   - Provide a 1-sentence formal mathematical reason explaining why it is trivial, redundant, or ill-defined.\n")
-        prompt_parts.append("Format your final markdown output in a section titled `## TOURNAMENT_RESULTS` with explicit subsections:")
-        prompt_parts.append("- `### WINNERS` (Include ID, Title, and Lean 4 code block)")
-        prompt_parts.append("- `### REJECTIONS` (Include ID, Title, and Reason)")
 
         return "\n".join(prompt_parts)
 
+    def load_tournament_results(self, project_dir: Path) -> Optional[Dict[str, Any]]:
+        """Load Aristotle's ``tournament_results.json`` from a project directory.
+
+        Returns {"winners": [...], "rejections": [...]} or None if the file is
+        missing/invalid. Each entry is a dict with at least an ``id`` key; the
+        optional ``reason`` key carries Aristotle's rejection rationale.
+        """
+        if not project_dir or not project_dir.exists():
+            return None
+        for fp in project_dir.rglob("tournament_results.json"):
+            try:
+                data = json.loads(fp.read_text(encoding="utf-8", errors="replace"))
+            except Exception as e:
+                print(f"[Tournament] Failed to parse {fp}: {e}")
+                continue
+            if not isinstance(data, dict):
+                continue
+            winners = data.get("winners", [])
+            rejections = data.get("rejections", [])
+            if not isinstance(winners, list) or not isinstance(rejections, list):
+                continue
+            return {
+                "winners": [_normalize_entry(w) for w in winners],
+                "rejections": [_normalize_entry(r) for r in rejections],
+            }
+        return None
+
+    # Keep the old text-based parser as a fallback for already-queued jobs.
     def parse_tournament_report(self, report_text: str) -> Dict[str, Any]:
-        """Parse Aristotle's generated TOURNAMENT_RESULTS report."""
+        """Parse a legacy TOURNAMENT_RESULTS Markdown report (fallback)."""
         winners = []
         rejections = []
 
-        # Extract Winners section
+        dir_id_re = re.compile(r"\b((?:fd|seed|dir|push|scifi|sorry_fill|pyth|auto)_[a-zA-Z0-9_\-]+)")
+
         winners_match = re.search(r'###\s+WINNERS(.*?)(?=###\s+REJECTIONS|\Z)', report_text, re.DOTALL | re.IGNORECASE)
         if winners_match:
             winners_block = winners_match.group(1)
-            # Find candidate IDs and associated lean code blocks
-            entries = re.split(r'[-\*]\s*(?:ID:\s*|Candidate\s+\d+\s*\()?([a-zA-Z0-9_\-]+)', winners_block)
-            for idx in range(1, len(entries), 2):
-                wid = entries[idx].strip()
-                block = entries[idx + 1] if idx + 1 < len(entries) else ""
-                code_match = re.search(r'```(?:lean4?|lean)?\s*(.*?)```', block, re.DOTALL)
-                stub = code_match.group(1).strip() if code_match else ""
-                if wid.startswith(("fd_", "dir_", "push_", "sorry_fill_", "scifi_", "seed_")) or "_" in wid:
-                    winners.append({"id": wid, "lean_stub": stub})
+            split_pat = (
+                r"(?=-[\s]*(?:ID:\s*)?(?:Candidate\s+\d+\s*\(ID:\s*)?"
+                + dir_id_re.pattern.replace("((?:", "(?:(?:")
+                + r")"
+            )
+            chunks = re.split(split_pat, winners_block)
+            for chunk in chunks:
+                m = dir_id_re.search(chunk)
+                if not m:
+                    continue
+                wid = m.group(1)
+                winners.append({"id": wid, "lean_stub": ""})
 
-        # Extract Rejections section
         rejections_match = re.search(r'###\s+REJECTIONS(.*?)\Z', report_text, re.DOTALL | re.IGNORECASE)
         if rejections_match:
             rejections_block = rejections_match.group(1)
-            # Find ID + Reason lines (e.g. "- ID: fd_0001: Reason text")
             for line in rejections_block.splitlines():
                 line = line.strip()
-                m = re.search(r'([a-zA-Z0-9_\-]+)\s*:\s*(.*)', line)
-                if m:
-                    rid, reason = m.group(1), m.group(2)
-                    if rid.startswith(("fd_", "dir_", "push_", "sorry_fill_", "scifi_", "seed_")) or "_" in rid:
-                        rejections.append({"id": rid, "reason": reason.strip()})
+                if not line:
+                    continue
+                matches = dir_id_re.findall(line)
+                if not matches:
+                    continue
+                rid = matches[-1]
+                reason_m = re.search(re.escape(rid) + r"\s*:?\s*(.*)", line)
+                reason = reason_m.group(1).strip() if reason_m else ""
+                if not reason:
+                    tail = line.split(rid, 1)[-1].lstrip(": -").strip()
+                    reason = tail
+                rejections.append({"id": rid, "reason": reason})
 
         return {
             "winners": winners,
@@ -132,14 +192,18 @@ class DirectionTournament:
         winners: List[Dict[str, str]],
         rejections: List[Dict[str, str]],
     ) -> Dict[str, int]:
-        """Apply tournament results to future_directions.json."""
+        """Apply tournament results to future_directions.json.
+
+        Entries may be plain ID strings ("fd_0421") from the JSON file or dicts
+        ({"id": ..., "reason": ..., "lean_stub": ...}) from the legacy parser.
+        """
         mgr = self.FutureDirectionsManager(self.workspace)
-        
+
         promoted = 0
         retired = 0
 
-        winner_map = {w["id"]: w.get("lean_stub", "") for w in winners}
-        rejection_map = {r["id"]: r.get("reason", "rejected in aristotle tournament") for r in rejections}
+        winner_map = {e["id"]: e.get("reason", "") for e in [_normalize_entry(w) for w in winners]}
+        rejection_map = {e["id"]: e.get("reason", "rejected in aristotle tournament") for e in [_normalize_entry(r) for r in rejections]}
 
         for d in mgr._directions:
             if d.id in winner_map:

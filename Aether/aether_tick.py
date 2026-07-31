@@ -677,6 +677,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 if job.error_message:
                     print(f"[Tournament] Extract failed: {job.error_message}")
                 else:
+                    # Mark integrated so _extract_future_directions passes its
+                    # status guard (it early-returns unless status=="integrated").
+                    # Tournament jobs skip integrate_async, so set the flag here.
+                    job.status = "integrated"
                     extractor._extract_future_directions(job)
                     print(f"[Tournament] Tournament job {job.job_id[:8]} processed successfully")
             except Exception as e:
