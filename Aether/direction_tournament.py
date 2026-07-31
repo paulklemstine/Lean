@@ -74,9 +74,9 @@ class DirectionTournament:
     ) -> str:
         """Construct a prompt for Aristotle to evaluate candidate directions.
 
-        Aristotle returns a single JSON file ``tournament_results.json`` with the
-        winner and rejection IDs — no free-form Markdown, no Lean stubs. Simple
-        and machine-parseable.
+        Each direction is judged on its own mathematical merit — there is no
+        fixed quota of winners. Aristotle returns a single JSON file
+        ``tournament_results.json`` with the winner and rejection IDs.
         """
         import json as _json
         candidates = []
@@ -90,16 +90,21 @@ class DirectionTournament:
 
         prompt_parts = [
             "# ARISTOTLE DIRECTION TOURNAMENT EVALUATION\n",
-            "You are evaluating a batch of candidate mathematical conjectures to identify the most",
-            "mathematically fruitful, non-trivial, and actionable research directions.\n",
+            "You are evaluating a batch of candidate mathematical conjectures.\n",
+            "For EACH direction, judge it on its own mathematical merit:\n",
+            "  - Is it non-trivial, well-defined, and mathematically fruitful?\n",
+            "  - Is it actionable — can it lead to real theorems and proofs?\n",
+            "  - Is it original, or redundant with known results?\n",
+            "There is NO fixed number of winners. Accept every direction that is",
+            "genuinely worth pursuing and reject every direction that is trivial,",
+            "redundant, ill-defined, or unproductive. The winners list may be long",
+            "or short depending on the actual quality of the batch.\n",
             f"Evaluate the following {len(directions)} candidate conjectures:\n",
             "```json",
             _json.dumps(candidates, indent=2),
             "```\n",
             "---",
             "## INSTRUCTIONS\n",
-            f"1. Select the top {target_winners} WINNER conjectures that are mathematically non-trivial and fruitful.",
-            "2. Reject the rest — they are trivial, redundant, ill-defined, or less promising.\n",
             "Write a single file named ``tournament_results.json`` containing ONLY this JSON:\n",
             "```json",
             '{"winners": ["<id1>", "<id2>"], "rejections": ["<id3>", "<id4>"]}',
@@ -107,6 +112,7 @@ class DirectionTournament:
             "Rules:",
             "- Use the exact candidate IDs (e.g. fd_0421, seed_007).",
             "- List ALL candidates — every ID must appear in either winners or rejections.",
+            "- Judge each direction on its own merit; do not force a fixed number of winners.",
             "- Output the JSON file and nothing else. No Markdown commentary, no Lean code.",
         ]
 
