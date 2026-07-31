@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4bc3344b",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Reflective Systems and First-Return Structure\n\n## 1. Partial quotation for universal machines\n\n**Conjecture.** Every acceptable programming system admits a computable quotation ma",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-22T03:54:07",
-      "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
-    },
-    {
       "cycle_id": "09546bb0",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n- Replace the abstract consequence operator with a concrete encoding of first-order Peano arithmetic, and connect semantic consequence to a syntactic proof calculus through soundn",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-30T23:42:04",
       "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+    },
+    {
+      "cycle_id": "29953b58",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n1. **Ramified fiber classification.** For every field of characteristic other than two and every nonzero `x` with `x² = 1`, prove that the complete fiber of `radicalTwoEval` above",
+      "quality_score": 0.6988599999999999,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-31T00:06:23",
+      "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76935
     }
   ],
-  "last_updated": "2026-07-30T23:42:04",
+  "last_updated": "2026-07-31T00:06:23",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "d05d57b6",
-        "quality": 0.68,
-        "theorems": 21,
-        "title": "Lattice-LWE: Formal Equivalence Between Decision-LWE and Search-LWE"
-      },
-      {
         "cycle_id": "aa1e249d",
         "quality": 0.59,
         "theorems": 11,
@@ -3389,6 +3383,12 @@
         "quality": 0.686,
         "theorems": 36,
         "title": "Quantum Key Distribution: BB84 Security Proof"
+      },
+      {
+        "cycle_id": "29953b58",
+        "quality": 0.6988599999999999,
+        "theorems": 7,
+        "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
       }
     ],
     "Geometry": [
