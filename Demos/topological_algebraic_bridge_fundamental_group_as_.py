@@ -1,144 +1,142 @@
 #!/usr/bin/env python3
-"""Finite demonstrations of connected-groupoid classification and its boundary."""
+"""Finite demonstrations of groupoid compression and the discrete counterexample.
+
+No third-party packages are required.  The connected groupoid used below has
+objects 0,...,n-1 and arrows (source, group_element, target), with group
+C_k = Z/kZ.  Composition adds labels modulo k.  It is equivalent to the
+one-object groupoid BC_k, and conjugating an arrow to the basepoint recovers
+its group label.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from itertools import permutations
-from typing import Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Iterable
 
 
 @dataclass(frozen=True)
 class Arrow:
-    """An arrow between two objects, labelled by an element of a cyclic group."""
+    """An arrow source -> target carrying an element of a cyclic vertex group."""
 
     source: int
-    target: int
     label: int
+    target: int
 
 
-class CyclicConnectedGroupoid:
-    """Connected groupoid with n objects and vertex group Z/modulus Z."""
-
-    def __init__(self, object_count: int, modulus: int) -> None:
-        if object_count < 1 or modulus < 1:
-            raise ValueError("object_count and modulus must be positive")
-        self.object_count = object_count
-        self.modulus = modulus
-
-    def arrows(self) -> List[Arrow]:
-        return [Arrow(a, b, g) for a in range(self.object_count)
-                for b in range(self.object_count) for g in range(self.modulus)]
-
-    def identity(self, obj: int) -> Arrow:
-        return Arrow(obj, obj, 0)
-
-    def inverse(self, arrow: Arrow) -> Arrow:
-        return Arrow(arrow.target, arrow.source, (-arrow.label) % self.modulus)
-
-    def compose(self, first: Arrow, second: Arrow) -> Arrow:
-        """Return second after first."""
-        if first.target != second.source:
-            raise ValueError("arrows are not composable")
-        return Arrow(first.source, second.target,
-                     (first.label + second.label) % self.modulus)
-
-    def vertex_group_table(self, base: int = 0) -> List[List[int]]:
-        if not 0 <= base < self.object_count:
-            raise ValueError("invalid base object")
-        return [[(a + b) % self.modulus for b in range(self.modulus)]
-                for a in range(self.modulus)]
-
-    def encode_at_vertex(self, arrow: Arrow) -> int:
-        """Encode an arrow by its loop label at the chosen reference vertex."""
-        return arrow.label % self.modulus
+def compose(first: Arrow, second: Arrow, modulus: int) -> Arrow:
+    """Return second ∘ first in the standard connected C_modulus-groupoid."""
+    if first.target != second.source:
+        raise ValueError("arrows are not composable")
+    return Arrow(first.source, (first.label + second.label) % modulus, second.target)
 
 
-def cyclic_groups_isomorphic(m: int, n: int) -> bool:
-    """Two finite cyclic groups are isomorphic exactly when their orders agree."""
-    return m == n
+def inverse(arrow: Arrow, modulus: int) -> Arrow:
+    """Return the inverse arrow."""
+    return Arrow(arrow.target, (-arrow.label) % modulus, arrow.source)
 
 
-def brute_force_group_isomorphism(
-    table_a: Sequence[Sequence[int]], table_b: Sequence[Sequence[int]]
-) -> Optional[Tuple[int, ...]]:
-    """Find a multiplication-preserving bijection between finite group tables."""
-    n = len(table_a)
-    if n != len(table_b) or any(len(row) != n for row in table_a + table_b):
-        return None
-    for candidate in permutations(range(n)):
-        if candidate[0] != 0:
-            continue
-        if all(candidate[table_a[x][y]] == table_b[candidate[x]][candidate[y]]
-               for x in range(n) for y in range(n)):
-            return candidate
-    return None
+def connected_cyclic_groupoid(objects: int, modulus: int) -> list[Arrow]:
+    """Construct one arrow for every (source, label, target) triple."""
+    if objects < 1 or modulus < 1:
+        raise ValueError("objects and modulus must be positive")
+    return [
+        Arrow(source, label, target)
+        for source in range(objects)
+        for target in range(objects)
+        for label in range(modulus)
+    ]
 
 
-def discrete_fundamental_group_order(point_count: int, base: int = 0) -> int:
-    """Return the order of the based fundamental group of a finite discrete space."""
-    if point_count < 1 or not 0 <= base < point_count:
-        raise ValueError("a valid basepoint is required")
-    return 1
+def connector(base: int, target: int) -> Arrow:
+    """Choose the zero-labelled reference arrow from base to target."""
+    return Arrow(base, 0, target)
 
 
-def discrete_spaces_homotopy_equivalent(point_count_a: int,
-                                         point_count_b: int) -> bool:
-    """Finite discrete spaces are homotopy equivalent exactly when cardinalities agree."""
-    return point_count_a == point_count_b
+def encode_at_basepoint(arrow: Arrow, base: int, modulus: int) -> int:
+    """Compute p_target^{-1} ∘ arrow ∘ p_source as a vertex-group element."""
+    p_source = connector(base, arrow.source)
+    p_target = connector(base, arrow.target)
+    loop = compose(compose(p_source, arrow, modulus), inverse(p_target, modulus), modulus)
+    if loop.source != base or loop.target != base:
+        raise AssertionError("encoding did not produce a basepoint loop")
+    return loop.label
 
 
-def demonstrate_compression() -> None:
-    large = CyclicConnectedGroupoid(object_count=5, modulus=4)
-    small = CyclicConnectedGroupoid(object_count=2, modulus=4)
-    different = CyclicConnectedGroupoid(object_count=5, modulus=3)
+def decode_from_basepoint(
+    source: int, target: int, label: int, base: int, modulus: int
+) -> Arrow:
+    """Recover p_target ∘ label ∘ p_source^{-1} from a vertex-group element."""
+    p_source = connector(base, source)
+    p_target = connector(base, target)
+    loop = Arrow(base, label % modulus, base)
+    return compose(compose(inverse(p_source, modulus), loop, modulus), p_target, modulus)
+
+
+def verify_compression(objects: int, modulus: int, base: int = 0) -> bool:
+    """Check encode/decode and composition preservation for every finite arrow."""
+    arrows = connected_cyclic_groupoid(objects, modulus)
+    for arrow in arrows:
+        label = encode_at_basepoint(arrow, base, modulus)
+        if decode_from_basepoint(arrow.source, arrow.target, label, base, modulus) != arrow:
+            return False
+    for first in arrows:
+        for second in arrows:
+            if first.target == second.source:
+                composite = compose(first, second, modulus)
+                expected = (
+                    encode_at_basepoint(first, base, modulus)
+                    + encode_at_basepoint(second, base, modulus)
+                ) % modulus
+                if encode_at_basepoint(composite, base, modulus) != expected:
+                    return False
+    return True
+
+
+def discrete_space_signature(points: int) -> tuple[int, int]:
+    """Return (number of components, order of any based fundamental group)."""
+    if points < 1:
+        raise ValueError("a based finite space must be nonempty")
+    return points, 1
+
+
+def discrete_homotopy_equivalent(points_x: int, points_y: int) -> bool:
+    """Decide homotopy equivalence for finite discrete spaces: it is cardinality."""
+    if points_x < 0 or points_y < 0:
+        raise ValueError("cardinalities must be nonnegative")
+    return points_x == points_y
+
+
+def print_discrete_table(sizes: Iterable[int]) -> None:
+    """Print how identical fundamental groups coexist with distinct homotopy types."""
+    print("points | components | |pi_1| | homotopy equivalent to one point?")
+    print("-------+------------+--------+----------------------------------")
+    for points in sizes:
+        components, group_order = discrete_space_signature(points)
+        equivalent = discrete_homotopy_equivalent(points, 1)
+        print(f"{points:6d} | {components:10d} | {group_order:6d} | {str(equivalent):>32}")
+
+
+def main() -> None:
+    """Run both demonstrations."""
+    object_count, modulus = 4, 3
+    arrows = connected_cyclic_groupoid(object_count, modulus)
     print("CONNECTED GROUPOID COMPRESSION")
-    print(f"large model: {large.object_count} objects, {len(large.arrows())} arrows")
-    print(f"small model: {small.object_count} objects, {len(small.arrows())} arrows")
-    print(f"both vertex groups have order {large.modulus}")
-    print("equivalent by vertex-group classification:",
-          cyclic_groups_isomorphic(large.modulus, small.modulus))
-    print("different modulus gives equivalence:",
-          cyclic_groups_isomorphic(large.modulus, different.modulus))
-    print("vertex multiplication table for Z/4Z:")
-    for row in large.vertex_group_table():
-        print(" ", row)
+    print(f"Objects: {object_count}")
+    print(f"Arrows in redundant presentation: {len(arrows)}")
+    print(f"Arrows in one-object vertex group C_{modulus}: {modulus}")
+    print(f"All encoding and composition checks pass: {verify_compression(object_count, modulus)}")
+    sample = Arrow(2, 2, 3)
+    encoded = encode_at_basepoint(sample, base=0, modulus=modulus)
+    print(f"Sample arrow {sample} encodes as {encoded} and decodes as "
+          f"{decode_from_basepoint(2, 3, encoded, 0, modulus)}")
 
-
-def demonstrate_transport() -> None:
-    model = CyclicConnectedGroupoid(object_count=3, modulus=5)
-    f = Arrow(0, 1, 2)
-    g = Arrow(1, 2, 4)
-    composite = model.compose(f, g)
-    print("\nTRANSPORT TO ONE VERTEX")
-    print(f"labels {f.label} and {g.label} compose to {composite.label} modulo 5")
-    print("composition is preserved:",
-          model.encode_at_vertex(composite)
-          == (model.encode_at_vertex(f) + model.encode_at_vertex(g)) % 5)
-
-
-def demonstrate_counterexample() -> None:
-    point_group = discrete_fundamental_group_order(1)
-    two_point_group = discrete_fundamental_group_order(2)
-    print("\nCOUNTEREXAMPLE OUTSIDE THE CONNECTED SETTING")
-    print("fundamental-group orders:", point_group, two_point_group)
-    print("based groups agree:", point_group == two_point_group)
-    print("spaces homotopy equivalent:", discrete_spaces_homotopy_equivalent(1, 2))
-    print("reason: a homotopy equivalence of discrete spaces must be a bijection")
-
-
-def run_self_checks() -> None:
-    for objects in range(1, 5):
-        for modulus in range(1, 7):
-            groupoid = CyclicConnectedGroupoid(objects, modulus)
-            assert len(groupoid.arrows()) == objects * objects * modulus
-            assert brute_force_group_isomorphism(
-                groupoid.vertex_group_table(), groupoid.vertex_group_table()) is not None
-    assert discrete_fundamental_group_order(1) == discrete_fundamental_group_order(2)
-    assert not discrete_spaces_homotopy_equivalent(1, 2)
+    print("\nDISCRETE COUNTEREXAMPLE FAMILY")
+    print_discrete_table(range(1, 7))
+    assert discrete_space_signature(1)[1] == discrete_space_signature(2)[1]
+    assert not discrete_homotopy_equivalent(1, 2)
+    print("\nOne and two points have the same trivial based fundamental group,"
+          " but are not homotopy equivalent.")
 
 
 if __name__ == "__main__":
-    run_self_checks()
-    demonstrate_compression()
-    demonstrate_transport()
-    demonstrate_counterexample()
+    main()

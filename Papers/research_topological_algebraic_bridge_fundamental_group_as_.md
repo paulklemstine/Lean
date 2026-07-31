@@ -1,361 +1,299 @@
-# Fundamental Groups as Complete Invariants of Connected Homotopy One-Types
+# The Fundamental Group as a Complete Invariant of Connected Homotopy 1-Types
 
 **Aristotle**  
-**July 26, 2026**
+**31 July 2026**
 
 ## Abstract
 
-The fundamental group is among topology’s most effective invariants, but its exact classificatory scope requires care. This paper identifies that scope through the algebra of groupoids. We prove that every connected groupoid is equivalent to the one-object groupoid determined by the automorphism group of any chosen object. Consequently, two connected groupoids are equivalent if and only if their vertex groups are isomorphic. Interpreting groupoids as models of homotopy $1$-types yields the classification of connected homotopy $1$-types, and hence Eilenberg–MacLane spaces $K(G,1)$, by their fundamental groups. We also establish the invariant direction for arbitrary spaces: homotopy equivalence induces an isomorphism of fundamental groups. Completeness, however, fails without the connected $1$-type hypotheses. We prove that homotopic maps into a totally disconnected space are equal, deduce that a homotopy equivalence between totally disconnected spaces is a bijection, and use this rigidity to distinguish a point from a discrete two-point space despite their isomorphic trivial based fundamental groups. The results isolate two independent sources of information omitted by a based fundamental group: additional path components and higher homotopy.
+The fundamental group is preserved by homotopy equivalence but does not classify arbitrary topological spaces. This paper isolates the precise algebraic setting in which it becomes complete. A connected groupoid is shown to be equivalent to the one-object groupoid formed from the automorphism group of any chosen object. Consequently, two connected groupoids are equivalent if and only if their vertex automorphism groups are isomorphic. Interpreting groupoids as homotopy $1$-types yields the classification of connected Eilenberg–Mac Lane $1$-types $K(G,1)$ by the group $G$. We also establish the complementary preservation result: an equivalence of groupoids identifies corresponding vertex groups, and a homotopy equivalence of spaces induces an isomorphism of based fundamental groups. The scope of the classification is demonstrated by an explicit counterexample. A one-point discrete space and a two-point discrete space have isomorphic trivial fundamental groups but are not homotopy equivalent. The obstruction follows from a general rigidity theorem: homotopic maps into a totally disconnected space are equal, so a homotopy equivalence between totally disconnected spaces must be a genuine bijection. Together, these results identify connectedness and truncation at homotopical dimension one as the conditions under which the fundamental group retains all relevant information.
 
 ## 1. Introduction
 
-A topological invariant converts a geometric object into data that remain unchanged under an accepted notion of equivalence. The fundamental group converts a pointed space into a group of loop classes. It is strong enough to detect the hole in a circle and to distinguish many surfaces, knot complements, graphs, and configuration spaces. Yet an invariant and a complete invariant are different things. Invariance says
+A topological invariant associates algebraic data to a space in a manner preserved by an appropriate notion of equivalence. The fundamental group $\pi_1(X,x)$ is formed from loops based at $x$, with loops identified when they are homotopic relative to their endpoints and multiplied by concatenation. If $X$ and $Y$ are homotopy equivalent, their corresponding fundamental groups are isomorphic. The converse is false in general: one algebraic shadow cannot normally record every component and every higher-dimensional feature of a space.
+
+There is nevertheless a natural range in which the converse holds exactly. A homotopy $1$-type has no nontrivial homotopy above dimension one. Its points, paths, and homotopies between paths are represented algebraically by a groupoid. If the $1$-type is connected, every point is reachable from any chosen basepoint. In that case, all path data can be transported to loops at the basepoint, and all composition is governed by one group.
+
+The central theorem can be expressed as
 
 $$
-X \simeq Y \quad\Longrightarrow\quad \pi_1(X,x)\cong\pi_1(Y,f(x)),
+\mathcal C\simeq\mathcal D
+\quad\Longleftrightarrow\quad
+\operatorname{Aut}_{\mathcal C}(c)\cong
+\operatorname{Aut}_{\mathcal D}(d)
 $$
 
-whereas completeness would require an appropriate converse.
+for connected groupoids $\mathcal C$ and $\mathcal D$ and chosen objects $c$ and $d$. The proof has three ingredients. First, the one-object groupoid associated with $\operatorname{Aut}(c)$ maps fully and faithfully into $\mathcal C$. Second, connectedness makes that map essentially surjective. Third, a group isomorphism induces an equivalence between the corresponding one-object groupoids.
 
-No unrestricted converse is possible. A based group examines loops in one path component and cannot count other components. Even within a connected space, it sees only one-dimensional homotopy and cannot generally recover higher homotopy groups. The natural question is therefore not whether the fundamental group always classifies spaces, but under exactly which hypotheses it does.
+This groupoid statement is the exact algebraic classification result. Its topological interpretation applies to connected homotopy $1$-types, and in particular to spaces of type $K(G,1)$. It should not be confused with the unrestricted claim that any two spaces with the same fundamental group are homotopy equivalent. To mark the boundary, we prove that the one-point and two-point discrete spaces have the same based fundamental group but different homotopy types.
 
-The answer is clean. A connected homotopy $1$-type has no homotopy information above paths, homotopies between paths, and their composition. Its algebraic model is a connected groupoid. Every connected groupoid can be compressed to one object, with the arrows at that object forming a group. Thus the vertex group is a complete invariant. For a connected topological $1$-type, that vertex group is the fundamental group.
+The argument also supplies a useful general theorem about totally disconnected spaces. Since the image of a connected interval under a continuous map is connected, every path in a totally disconnected space is constant. Thus a homotopy into such a space cannot move any point. Homotopy inverse identities consequently become literal inverse identities.
 
-This paper develops that argument from first principles. Section $2$ fixes the required categorical and topological definitions. Section $3$ constructs the one-vertex reduction and proves it is an equivalence. Section $4$ derives the complete classification and its converse. Section $5$ explains the $K(G,1)$ interpretation. Section $6$ proves preservation of fundamental groups under arbitrary homotopy equivalence. Section $7$ develops rigidity for totally disconnected targets, leading to an explicit counterexample in Section $8$. Sections $9$–$11$ discuss algorithms, applications, the boundary of the result, and future directions.
+## 2. Definitions and conventions
 
-## 2. Definitions and preliminaries
+### 2.1 Groupoids and equivalence
 
-### 2.1 Categories, groupoids, and equivalence
-
-A **category** $\mathcal{C}$ consists of objects, sets of morphisms $\operatorname{Hom}_{\mathcal C}(a,b)$, identity morphisms, and associative composition. A **groupoid** is a category in which every morphism is invertible.
-
-For an object $c$ of a groupoid $\mathcal C$, its **vertex group** or **automorphism group** is
+A **groupoid** $\mathcal C$ consists of objects, sets of arrows $\operatorname{Hom}_{\mathcal C}(x,y)$, identity arrows, and associative composition, with the requirement that every arrow be invertible. The automorphisms of an object $c$ form a group
 
 $$
-\operatorname{Aut}_{\mathcal C}(c)=\operatorname{Hom}_{\mathcal C}(c,c),
+\operatorname{Aut}_{\mathcal C}(c)
+=\operatorname{Hom}_{\mathcal C}(c,c),
 $$
 
-with multiplication given by composition. Invertibility of every groupoid arrow makes this a group.
+where multiplication is composition.
 
-Given a group $G$, its **one-object groupoid** $\mathbf{B}G$ has one object $*$, morphism set
+A functor $F:\mathcal C\to\mathcal D$ maps objects to objects and arrows to arrows while preserving identities and composition. It is **faithful** if each map on arrow sets is injective, **full** if each such map is surjective, and **essentially surjective** if every object of $\mathcal D$ is isomorphic to an object $F(c)$. A functor is an equivalence precisely when it is full, faithful, and essentially surjective.
+
+A pointed groupoid $(\mathcal C,c)$ is **connected at $c$** if for every object $x$ there exists an isomorphism $c\to x$. In a groupoid, this is equivalent to connectedness of the underlying undirected network of objects and arrows. If it holds at one object, it holds at every object.
+
+### 2.2 One-object groupoids
+
+For a group $G$, define $BG$ to be the groupoid with one object $\ast$ and
 
 $$
-\operatorname{Hom}_{\mathbf{B}G}(*,*)=G,
+\operatorname{Hom}_{BG}(\ast,\ast)=G.
 $$
 
-and composition equal to multiplication in $G$.
+The identity arrow is the identity element of $G$, composition is group multiplication, and arrow inversion is group inversion. A group homomorphism $\varphi:G\to H$ induces a functor $B\varphi:BG\to BH$. If $\varphi$ is an isomorphism, $B\varphi$ is an equivalence.
 
-A functor $F:\mathcal C\to\mathcal D$ is **faithful** if each induced map on morphism sets is injective, **full** if each induced map is surjective, and **essentially surjective** if every object of $\mathcal D$ is isomorphic to some $F(c)$. A standard characterization says that $F$ is an equivalence of categories precisely when it is full, faithful, and essentially surjective.
+### 2.3 Fundamental groupoids and $1$-types
 
-A groupoid $\mathcal C$ is **connected at $c$** if, for every object $d$, there exists an isomorphism $c\cong d$. Since all groupoid arrows are isomorphisms, this means that at least one arrow connects $c$ to each $d$. A groupoid is **connected** if it is connected at one, hence every, object.
-
-### 2.2 Fundamental groupoids and fundamental groups
-
-Let $X$ be a topological space. Its **fundamental groupoid** $\Pi_1(X)$ has the points of $X$ as objects. A morphism $x\to y$ is a continuous path $p:[0,1]\to X$ with $p(0)=x$ and $p(1)=y$, modulo homotopy relative to the endpoints. Concatenation of paths defines composition. Reversal defines inverses, so $\Pi_1(X)$ is a groupoid.
-
-The vertex group at $x$ is the **fundamental group**:
+For a topological space $X$, the **fundamental groupoid** $\Pi_1(X)$ has the points of $X$ as objects. An arrow $x\to y$ is an endpoint-preserving homotopy class of paths from $x$ to $y$. Path concatenation gives composition and path reversal gives inversion. The vertex group at $x$ is
 
 $$
 \operatorname{Aut}_{\Pi_1(X)}(x)=\pi_1(X,x).
 $$
 
-The fundamental groupoid is connected exactly when $X$ is path-connected.
+If $X$ is path-connected, then $\Pi_1(X)$ is connected at every point.
 
-A **homotopy equivalence** between spaces $X$ and $Y$ consists of continuous maps $f:X\to Y$ and $g:Y\to X$ and homotopies
-
-$$
-g\circ f\simeq \operatorname{id}_X,
-\qquad
-f\circ g\simeq \operatorname{id}_Y.
-$$
-
-A **homotopy $1$-type** is a homotopy type with no nontrivial homotopy groups above degree $1$. A connected space $X$ is an **Eilenberg–MacLane space of type $K(G,1)$** if
+A **homotopy $1$-type** is a homotopy type whose homotopy groups in degrees $n\ge2$ vanish. A connected Eilenberg–Mac Lane space $K(G,1)$ is characterized by
 
 $$
-\pi_1(X,x)\cong G
-\quad\text{and}\quad
-\pi_n(X,x)=0\ \text{for every }n\ge 2.
+\pi_1(K(G,1))\cong G,\qquad
+\pi_n(K(G,1))=0\quad(n\ge2).
 $$
 
-The groupoid captures all information in a homotopy $1$-type: objects record points, arrows record paths up to endpoint-preserving homotopy, and there are no higher homotopy layers left to record.
+The groupoid is the algebraic model of a homotopy $1$-type: objects model points, arrows model paths up to homotopy, and no independent higher cells remain.
 
-## 3. Reduction of a connected groupoid to one vertex
+### 2.4 Totally disconnected spaces
 
-Fix a groupoid $\mathcal C$ and an object $c$. Define the **vertex functor**
+A topological space $Y$ is **totally disconnected** if every connected subset of $Y$ has at most one point. Discrete spaces are totally disconnected. Because the interval $[0,1]$ is connected, every continuous map $[0,1]\to Y$ is constant when $Y$ is totally disconnected.
+
+## 3. Compression of a connected groupoid
+
+Fix a connected groupoid $\mathcal C$ and an object $c$. Let
 
 $$
-V_c:\mathbf{B}\operatorname{Aut}_{\mathcal C}(c)\longrightarrow\mathcal C
+G=\operatorname{Aut}_{\mathcal C}(c).
 $$
 
-by sending the unique object of the source to $c$ and sending each element of $\operatorname{Aut}_{\mathcal C}(c)$ to the same arrow viewed in $\mathcal C$.
+There is a canonical vertex functor
 
-The classification rests on three elementary lemmas.
+$$
+V_c:BG\longrightarrow\mathcal C
+$$
 
-**Lemma 3.1 (Faithfulness of the vertex functor).** *The vertex functor $V_c$ is faithful.*
+that sends the sole object of $BG$ to $c$ and sends each element $g\in G$ to the corresponding automorphism of $c$.
 
-**Proof sketch.** The source has only one morphism set, namely $\operatorname{Aut}_{\mathcal C}(c)$. On that set, $V_c$ is the identity inclusion into $\operatorname{Hom}_{\mathcal C}(c,c)$, which is the same set. Therefore equality of images implies equality of the original automorphisms. $\square$
+**Lemma 3.1 (Faithfulness of the vertex functor).** *The functor $V_c$ is faithful.*
 
-**Lemma 3.2 (Fullness of the vertex functor).** *The vertex functor $V_c$ is full.*
+**Proof sketch.** The only arrow set in $BG$ is $G$. On this set, $V_c$ is the identity interpretation of a group element as an automorphism of $c$. If two such arrows have the same image, they are the same automorphism and hence the same element of $G$. Thus the arrow map is injective. $\square$
 
-**Proof sketch.** Every morphism between the images of the source object is an endomorphism $h:c\to c$. Because $\mathcal C$ is a groupoid, $h$ is invertible and therefore belongs to $\operatorname{Aut}_{\mathcal C}(c)$. It is consequently the image of an arrow of $\mathbf{B}\operatorname{Aut}_{\mathcal C}(c)$. $\square$
+**Lemma 3.2 (Fullness of the vertex functor).** *The functor $V_c$ is full.*
+
+**Proof sketch.** Every arrow from $c$ to itself in $\mathcal C$ is invertible because $\mathcal C$ is a groupoid. It is therefore an element of $\operatorname{Aut}_{\mathcal C}(c)=G$, and by construction it lies in the image of $V_c$. $\square$
 
 **Lemma 3.3 (Essential surjectivity from connectedness).** *If $\mathcal C$ is connected at $c$, then $V_c$ is essentially surjective.*
 
-**Proof sketch.** For every object $d$ of $\mathcal C$, connectedness supplies an isomorphism $c\cong d$. Since $c$ is the image of the unique source object, $d$ is isomorphic to an object in the image of $V_c$. $\square$
+**Proof sketch.** Given any object $x$ of $\mathcal C$, connectedness supplies an isomorphism $c\cong x$. Since $c$ is the image of the unique object of $BG$, the object $x$ is isomorphic to an object in the image. $\square$
 
-Combining these properties gives the central structural theorem.
+Combining these observations gives the structural core of the classification.
 
-**Theorem 3.4 (Connected Groupoid Classification).** *Let $\mathcal C$ be a groupoid connected at an object $c$. Then there is an equivalence*
+**Theorem 3.4 (Connected Groupoid Compression Theorem).** *Every connected groupoid $\mathcal C$ is equivalent to the one-object groupoid $B\operatorname{Aut}_{\mathcal C}(c)$ associated with the automorphism group of any chosen object $c$.*
 
-$$
-\mathcal C\simeq\mathbf{B}\operatorname{Aut}_{\mathcal C}(c).
-$$
-
-**Proof sketch.** Lemmas $3.1$, $3.2$, and $3.3$ show that $V_c$ is faithful, full, and essentially surjective. Hence $V_c$ is an equivalence. Reversing its direction if desired produces the displayed equivalence. $\square$
-
-This theorem expresses a choice of gauge. To describe any arrow $a\to b$, choose transport arrows $u_a:c\to a$ and $u_b:c\to b$. Then every arrow $h:a\to b$ corresponds to the loop
+**Proof sketch.** By Lemmas 3.1–3.3, the vertex functor is full, faithful, and essentially surjective. The standard equivalence criterion therefore makes it an equivalence. Reversing its direction if desired gives
 
 $$
-u_b^{-1}\circ h\circ u_a:c\to c.
+\mathcal C\simeq B\operatorname{Aut}_{\mathcal C}(c).
 $$
 
-Conversely, a loop $k:c\to c$ determines
+Concretely, choose an isomorphism $p_x:c\to x$ for every object $x$. An arrow $f:x\to y$ is encoded by
 
 $$
-u_b\circ k\circ u_a^{-1}:a\to b.
+p_y^{-1}fp_x\in\operatorname{Aut}_{\mathcal C}(c),
 $$
 
-Different transport choices change coordinates but not the equivalence class. All many-object information is reconstructed from one vertex group plus noncanonical choices that carry no invariant content in the connected case.
+and recovered as $f=p_y(p_y^{-1}fp_x)p_x^{-1}$. This makes explicit why no arrow data are lost. $\square$
 
-## 4. Classification by the vertex group
+The choices $p_x$ are not canonical, but the resulting equivalence class is. Replacing $p_x$ by another family changes coordinates through automorphisms at the basepoint.
 
-We now compare two connected groupoids.
+## 4. Exact classification by the vertex group
 
-**Theorem 4.1 (Completeness of the vertex group).** *Let $\mathcal C$ and $\mathcal D$ be groupoids connected at $c$ and $d$, respectively. If there is a group isomorphism*
+**Lemma 4.1 (One-object transport).** *If $G\cong H$ as groups, then $BG\simeq BH$ as groupoids.*
+
+**Proof sketch.** A group isomorphism $\varphi:G\to H$ defines a functor that maps the sole object to the sole object and maps arrows by $\varphi$. Injectivity gives faithfulness, surjectivity gives fullness, and essential surjectivity is automatic because the target has one object. $\square$
+
+**Theorem 4.2 (Sufficiency of isomorphic vertex groups).** *Let $\mathcal C$ and $\mathcal D$ be connected groupoids, with chosen objects $c$ and $d$. If*
 
 $$
-\varphi:\operatorname{Aut}_{\mathcal C}(c)\xrightarrow{\cong}
+\operatorname{Aut}_{\mathcal C}(c)\cong
 \operatorname{Aut}_{\mathcal D}(d),
 $$
 
-*then $\mathcal C$ and $\mathcal D$ are equivalent groupoids.*
+*then $\mathcal C\simeq\mathcal D$.*
 
-**Proof sketch.** By Theorem $3.4$,
-
-$$
-\mathcal C\simeq\mathbf{B}\operatorname{Aut}_{\mathcal C}(c),
-\qquad
-\mathcal D\simeq\mathbf{B}\operatorname{Aut}_{\mathcal D}(d).
-$$
-
-The isomorphism $\varphi$ defines a functor between the one-object groupoids. It is faithful because $\varphi$ is injective, full because $\varphi$ is surjective, and essentially surjective because both groupoids have one object. Thus it is an equivalence. Composing equivalences yields
+**Proof sketch.** Compress both groupoids using Theorem 3.4 and apply Lemma 4.1 in the middle:
 
 $$
 \mathcal C
-\simeq \mathbf{B}\operatorname{Aut}_{\mathcal C}(c)
-\simeq \mathbf{B}\operatorname{Aut}_{\mathcal D}(d)
-\simeq \mathcal D.
+\simeq B\operatorname{Aut}_{\mathcal C}(c)
+\simeq B\operatorname{Aut}_{\mathcal D}(d)
+\simeq\mathcal D.
 $$
 
-$\square$
+The composite of equivalences is an equivalence. $\square$
 
-Completeness has a converse that does not require connectedness.
+The converse does not require connectedness when the target basepoint is the image of the source basepoint.
 
-**Theorem 4.2 (Equivalence preserves vertex groups).** *Let $E:\mathcal C\simeq\mathcal D$ be an equivalence of groupoids. For every object $c$ of $\mathcal C$, there is a group isomorphism*
+**Theorem 4.3 (Preservation of vertex groups).** *If $E:\mathcal C\simeq\mathcal D$ is an equivalence of groupoids and $c$ is an object of $\mathcal C$, then*
 
 $$
-\operatorname{Aut}_{\mathcal C}(c)
-\cong
+\operatorname{Aut}_{\mathcal C}(c)\cong
 \operatorname{Aut}_{\mathcal D}(E(c)).
 $$
 
-**Proof sketch.** An equivalence is full and faithful, so its map
+**Proof sketch.** An equivalence is fully faithful, so it induces a bijection
 
 $$
-\operatorname{Hom}_{\mathcal C}(c,c)
-\longrightarrow
-\operatorname{Hom}_{\mathcal D}(E(c),E(c))
+\operatorname{Hom}_{\mathcal C}(c,c)\longrightarrow
+\operatorname{Hom}_{\mathcal D}(E(c),E(c)).
 $$
 
-is bijective. Functoriality preserves identity arrows and composition. Because all endomorphisms in a groupoid are invertible, these endomorphism monoids are precisely the corresponding automorphism groups. The bijective homomorphism is therefore a group isomorphism. $\square$
+Functoriality preserves identities and composition. Since all endomorphisms in a groupoid are automorphisms, this bijective monoid homomorphism is a group isomorphism. $\square$
 
-Together, Theorems $4.1$ and $4.2$ give a biconditional.
+To compare $E(c)$ with an independently chosen $d$, connectedness of $\mathcal D$ supplies an isomorphism $i:d\cong E(c)$. Conjugation by $i$ identifies their automorphism groups.
 
-**Corollary 4.3.** *Two connected pointed groupoids are equivalent, carrying one chosen vertex to the other up to isomorphism, if and only if their vertex groups are isomorphic.*
+**Theorem 4.4 (Exact Classification Theorem).** *For connected groupoids $\mathcal C$ and $\mathcal D$ with chosen objects $c$ and $d$, the following are equivalent:*
 
-Connectedness is crucial. For a disconnected groupoid, one vertex group describes only one connected component. A complete invariant must retain the collection of components and the group attached to each, or equivalently retain the entire groupoid.
+1. *$\mathcal C$ and $\mathcal D$ are equivalent groupoids;*
+2. *$\operatorname{Aut}_{\mathcal C}(c)$ and $\operatorname{Aut}_{\mathcal D}(d)$ are isomorphic groups.*
 
-## 5. Connected homotopy one-types and $K(G,1)$ spaces
+**Proof sketch.** The implication from (2) to (1) is Theorem 4.2. For the reverse implication, Theorem 4.3 identifies $\operatorname{Aut}_{\mathcal C}(c)$ with $\operatorname{Aut}_{\mathcal D}(E(c))$. Connectedness gives $d\cong E(c)$, and conjugation along this isomorphism identifies $\operatorname{Aut}_{\mathcal D}(E(c))$ with $\operatorname{Aut}_{\mathcal D}(d)$. Composing the two group isomorphisms proves (2). $\square$
 
-The categorical classification translates directly into homotopy theory.
+**Corollary 4.5 (Classification of connected homotopy $1$-types).** *Two connected homotopy $1$-types are equivalent if and only if their fundamental groups at chosen basepoints are isomorphic. In particular, the group $G$ is a complete invariant of the homotopy $1$-type $K(G,1)$.*
 
-**Theorem 5.1 (Complete-Invariant Theorem for Connected Homotopy $1$-Types).** *Let $X$ and $Y$ be connected homotopy $1$-types with basepoints $x$ and $y$. Then $X$ and $Y$ have equivalent homotopy types if and only if*
+This corollary concerns equivalence at the level of homotopy $1$-types. For spaces already known to have no higher homotopy information, it captures their entire homotopy type. For arbitrary spaces, the fundamental groupoid is only the $1$-truncation and cannot detect higher homotopy groups.
 
-$$
-\pi_1(X,x)\cong\pi_1(Y,y).
-$$
+## 5. Homotopy invariance for spaces
 
-**Proof sketch.** The fundamental groupoids $\Pi_1(X)$ and $\Pi_1(Y)$ are connected, and their vertex groups at $x$ and $y$ are the displayed fundamental groups. If those groups are isomorphic, Theorem $4.1$ gives an equivalence of fundamental groupoids. Since $X$ and $Y$ are $1$-types, the fundamental groupoid records all their homotopy information, so this groupoid equivalence determines an equivalence of homotopy types. Conversely, an equivalence of homotopy types induces an equivalence of fundamental groupoids, and Theorem $4.2$ identifies the vertex groups. $\square$
-
-**Corollary 5.2 (Classification of Eilenberg–MacLane $1$-types).** *If $X$ is a $K(G,1)$ and $Y$ is a $K(H,1)$, then $X$ and $Y$ are homotopy equivalent if and only if $G\cong H$.*
-
-**Proof sketch.** By definition, both spaces are connected homotopy $1$-types with fundamental groups $G$ and $H$. Apply Theorem $5.1$. $\square$
-
-The statement concerns homotopy type, not homeomorphism. Distinct geometric models can realize the same $K(G,1)$ while differing in dimension, cell structure, smoothness, or metric. The theorem says that after all contractible geometric decoration is discarded, their remaining homotopy information is exactly $G$.
-
-Examples include the circle $S^1$, which is a $K(\mathbb Z,1)$, and connected graphs, which are $K(F_r,1)$ spaces for free groups $F_r$ determined by graph rank. The classification predicts, for example, that two connected graphs are homotopy equivalent precisely when their free fundamental groups have equal rank.
-
-## 6. The invariant direction for arbitrary spaces
-
-The fundamental group remains an invariant even when it ceases to be complete.
-
-**Theorem 6.1 (Homotopy invariance of the fundamental group).** *Let $f:X\to Y$ be part of a homotopy equivalence, with homotopy inverse $g:Y\to X$. For every $x\in X$, there is a group isomorphism*
+**Theorem 5.1 (Homotopy invariance of the fundamental group).** *Let $e:X\simeq Y$ be a homotopy equivalence of topological spaces. For every $x\in X$, there is a group isomorphism*
 
 $$
-\pi_1(X,x)\cong\pi_1(Y,f(x)).
+\pi_1(X,x)\cong\pi_1(Y,e(x)).
 $$
 
-**Proof sketch.** Applying $f$ to paths defines a functor $\Pi_1(f):\Pi_1(X)\to\Pi_1(Y)$. Applying $g$ defines a functor in the reverse direction. The homotopies $g\circ f\simeq\operatorname{id}_X$ and $f\circ g\simeq\operatorname{id}_Y$ provide natural isomorphisms showing that these functors are quasi-inverse equivalences. Theorem $4.2$ then gives an isomorphism between the automorphism groups at $x$ and $f(x)$, which are the stated fundamental groups. $\square$
+**Proof sketch.** The map $e$ sends a based loop at $x$ to a based loop at $e(x)$ and respects endpoint-preserving homotopies and concatenation. A homotopy inverse induces the inverse map on loop classes because maps that are homotopic induce the same map on the fundamental group after the standard basepoint adjustment. Equivalently, $e$ induces an equivalence of fundamental groupoids, and Theorem 4.3 identifies the vertex groups. $\square$
 
-Thus nonisomorphic fundamental groups obstruct homotopy equivalence for arbitrary spaces. The converse requires additional hypotheses, as the next sections demonstrate.
+The theorem says that $\pi_1$ is always an invariant. Completeness is a stronger property: an invariant is complete on a class of objects if equality, or isomorphism, of invariant values implies equivalence of the objects. Corollary 4.5 establishes completeness on connected $1$-types, not on all spaces.
 
-## 7. Rigidity of totally disconnected targets
+## 6. Rigidity in totally disconnected targets
 
-A topological space $Y$ is **totally disconnected** if every connected component is a singleton. Equivalently for the argument below, every continuous image in $Y$ of the connected interval $[0,1]$ is a single point. Every discrete space is totally disconnected.
+The failure outside the classified range can be seen without invoking higher-dimensional invariants.
 
-**Lemma 7.1 (Homotopy rigidity).** *Let $Y$ be totally disconnected. If continuous maps $f,g:X\to Y$ are homotopic, then $f=g$.*
+**Lemma 6.1 (Constancy of paths).** *Every continuous path in a totally disconnected space is constant.*
 
-**Proof.** Let $H:[0,1]\times X\to Y$ be a homotopy from $f$ to $g$. Fix $x\in X$. The map
+**Proof sketch.** The interval $[0,1]$ is connected, and the continuous image of a connected space is connected. In a totally disconnected space, the image must therefore consist of one point. $\square$
 
-$$
-H_x:[0,1]\to Y,
-\qquad
-H_x(t)=H(t,x),
-$$
+**Theorem 6.2 (Rigidity of homotopies).** *Let $Y$ be totally disconnected. If continuous maps $f,g:X\to Y$ are homotopic, then $f=g$.*
 
-is continuous. Since $[0,1]$ is connected, its image $H_x([0,1])$ is connected. Total disconnectedness forces this image to contain a single point. Hence
+**Proof sketch.** Let $H:[0,1]\times X\to Y$ be a homotopy from $f$ to $g$. For a fixed $x\in X$, the map $t\mapsto H(t,x)$ is a path in $Y$. Lemma 6.1 makes it constant, so
 
 $$
 f(x)=H(0,x)=H(1,x)=g(x).
 $$
 
-As this holds for every $x$, the maps are equal. $\square$
+This holds for every $x$, hence $f=g$. $\square$
 
-**Theorem 7.2 (Homotopy equivalences of totally disconnected spaces are bijections).** *If $X$ and $Y$ are totally disconnected and $f:X\to Y$ is a homotopy equivalence, then the underlying function $f$ is bijective.*
+**Theorem 6.3 (Homotopy equivalences are bijections in the totally disconnected setting).** *If $X$ and $Y$ are totally disconnected and $e:X\simeq Y$ is a homotopy equivalence, then the underlying function of $e$ is bijective.*
 
-**Proof.** Let $g:Y\to X$ be a homotopy inverse. By definition,
-
-$$
-g\circ f\simeq\operatorname{id}_X,
-\qquad
-f\circ g\simeq\operatorname{id}_Y.
-$$
-
-Applying Lemma $7.1$ first with target $X$ and then with target $Y$ upgrades these homotopies to equalities:
+**Proof sketch.** Let $r:Y\to X$ be a homotopy inverse. The composites $r\circ e$ and $e\circ r$ are homotopic to the respective identity maps. By Theorem 6.2, these homotopies imply literal equalities
 
 $$
-g\circ f=\operatorname{id}_X,
-\qquad
-f\circ g=\operatorname{id}_Y.
+r\circ e=\operatorname{id}_X,\qquad
+e\circ r=\operatorname{id}_Y.
 $$
 
-Therefore $g$ is a two-sided inverse of $f$, and $f$ is bijective. $\square$
+Thus $r$ is a two-sided set-theoretic inverse of $e$, making $e$ bijective. $\square$
 
-For discrete spaces, homotopy equivalence is therefore no weaker than ordinary bijection. This makes finite discrete spaces ideal for exposing the loss of component data caused by selecting one basepoint.
+## 7. Counterexample to unrestricted classification
 
-## 8. A minimal counterexample to unrestricted completeness
+Let $P=\{*\}$ be the one-point discrete space and $D=\{0,1\}$ the two-point discrete space. Select $*\in P$ and $0\in D$ as basepoints.
 
-Let $P=\{*\}$ be the one-point space and let $D=\{0,1\}$ carry the discrete topology. Choose basepoints $*$ and $0$.
+**Lemma 7.1 (Triviality of the two fundamental groups).** *Both $\pi_1(P,*)$ and $\pi_1(D,0)$ are trivial groups.*
 
-**Lemma 8.1.** *The fundamental group $\pi_1(P,*)$ is trivial.*
-
-**Proof sketch.** There is only one map from any interval to $P$, so there is only one based loop and hence only one loop-homotopy class. $\square$
-
-**Lemma 8.2.** *For either basepoint $b\in D$, the fundamental group $\pi_1(D,b)$ is trivial.*
-
-**Proof sketch.** The image of a path $p:[0,1]\to D$ is connected. Since $D$ is discrete, and therefore totally disconnected, the image is a singleton. A loop based at $b$ must consequently be the constant loop at $b$. Thus there is one loop class. $\square$
+**Proof sketch.** Every path in either discrete space is constant by Lemma 6.1. Hence the only loop at either selected basepoint is the constant loop, up to endpoint-preserving homotopy. Each fundamental group has one element. $\square$
 
 It follows that
 
 $$
-\pi_1(P,*)\cong 1\cong\pi_1(D,0).
+\pi_1(P,*)\cong\{1\}\cong\pi_1(D,0).
 $$
 
-Nevertheless, the spaces are not homotopy equivalent.
+**Theorem 7.2 (Same fundamental group, different homotopy type).** *The spaces $P$ and $D$ have isomorphic based fundamental groups but are not homotopy equivalent.*
 
-**Theorem 8.3 (Failure of classification by a based fundamental group).** *The one-point space and the discrete two-point space have isomorphic fundamental groups at their chosen basepoints, but they are not homotopy equivalent.*
+**Proof sketch.** Their fundamental groups are isomorphic by Lemma 7.1. Both spaces are totally disconnected. If a homotopy equivalence $P\simeq D$ existed, Theorem 6.3 would make its underlying map a bijection. No bijection exists from a one-element set to a two-element set. Therefore no homotopy equivalence exists. $\square$
 
-**Proof.** The group isomorphism follows from Lemmas $8.1$ and $8.2$. Both spaces are totally disconnected. If a homotopy equivalence $P\simeq D$ existed, Theorem $7.2$ would make its underlying function a bijection. No bijection exists between a one-element set and a two-element set. Hence no homotopy equivalence exists. $\square$
+The counterexample isolates the role of connectedness. A based fundamental group only probes the component containing its basepoint. The extra isolated point of $D$ is invisible to $\pi_1(D,0)$. Retaining the entire fundamental groupoid would reveal the discrepancy: $\Pi_1(P)$ has one connected component, whereas $\Pi_1(D)$ has two.
 
-The defect is transparent. The based group $\pi_1(D,0)$ records loops only in the component containing $0$ and ignores the component $\{1\}$. The fundamental groupoid does not lose this information: $\Pi_1(P)$ has one object, whereas $\Pi_1(D)$ has two nonisomorphic objects and no arrows between them.
+There is also a separate higher-dimensional limitation. Even among connected spaces, $\pi_1$ does not classify arbitrary homotopy types. For example, a point and the sphere $S^2$ both have trivial fundamental group, while second homotopy or second homology distinguishes them. This observation explains why the $1$-type assumption is essential in Corollary 4.5.
 
-## 9. Algorithms and finite models
+## 8. Algorithms and finite examples
 
-Although the theorems are structural, they suggest concrete procedures for finite groupoids.
+For a finite groupoid presented by objects, invertible arrows, source and target maps, identities, inverses, and a composition table, Theorem 3.4 gives a direct compression procedure.
 
-### 9.1 Vertex-group extraction
-
-Suppose a finite groupoid is represented by a finite object set, finite arrow sets, source and target maps, and a composition table. Choose a base object $c$. Extract all arrows with source and target $c$ and restrict the composition table to them. This gives $\operatorname{Aut}(c)$.
-
-If the groupoid contains $M$ arrows, scanning the arrow list costs $O(M)$. Constructing a full multiplication table for a vertex group of order $k$ costs $O(k^2)$ table accesses. Connectedness may be checked by breadth-first search on the underlying undirected object graph in $O(N+M)$ time for $N$ objects.
-
-### 9.2 Reconstructing coordinates from transport arrows
-
-For each object $a$, choose an arrow $u_a:c\to a$, found by graph traversal. Encode an arrow $h:a\to b$ as
+**Algorithm 8.1 (Vertex-group compression).** Choose a base object $c$. Search the arrow table for an isomorphism $p_x:c\to x$ for every object $x$. If one does not exist, the groupoid is not connected at $c$. Otherwise collect all loops $c\to c$; these form $G=\operatorname{Aut}(c)$. Encode each arrow $f:x\to y$ by
 
 $$
-\kappa(h)=u_b^{-1}hu_a\in\operatorname{Aut}(c).
+\operatorname{code}(f)=p_y^{-1}fp_x\in G.
 $$
 
-This coordinate map exposes the equivalence with the one-object groupoid. Given precomputed inverses and constant-time composition-table lookup, encoding each arrow takes constant time; preprocessing transport arrows takes $O(N+M)$.
+Decode $g\in G$ as $p_ygp_x^{-1}:x\to y$. The two formulas are mutually inverse for fixed endpoints.
 
-### 9.3 Comparing connected groupoids
+With an explicit arrow table of size $m$ and constant-time table lookup, collecting loops and checking sources and targets costs $O(m)$. A straightforward search for one connector per object also costs $O(m)$. Encoding all arrows is $O(m)$ once inverses and composition are table-indexed. The output may be exponentially more concise than a redundant many-object presentation because it retains one object and the vertex group.
 
-After verifying connectedness, extract a vertex group from each groupoid and test the finite groups for isomorphism. The classification theorem guarantees that the original groupoids are equivalent exactly when these groups are isomorphic. A simple exhaustive isomorphism test for groups of common order $k$ considers up to $k!$ bijections and checks $k^2$ products for each, giving $O(k!k^2)$ worst-case time. Practical group-isomorphism algorithms use generators, invariants, and backtracking to reduce this cost substantially.
+For connected finite groupoids $\mathcal C$ and $\mathcal D$, classification reduces to computing their vertex groups and testing group isomorphism. The complexity of the second task depends on the group representation; the structural reduction itself is linear in the explicit groupoid tables.
 
-For finitely presented $K(G,1)$ models, the analogous pipeline replaces multiplication tables by group presentations. The mathematical reduction remains valid, though group isomorphism for arbitrary finite presentations is not algorithmically decidable in general. The theorem identifies the correct algebraic problem; it does not erase that problem’s computational difficulty.
-
-## 10. Applications and boundary of validity
-
-The classification creates a bridge between topology and algebra. In geometric group theory, a group acts as the compact algebraic signature of any connected $K(G,1)$ model. In motion planning, loops in a collision-free configuration space represent repeatable maneuvers; when the space is a $1$-type, their group completely determines its homotopy type. In network models with reversible transitions, a connected groupoid can be reduced to the symmetry group at one reference state.
-
-The result also clarifies basepoint dependence. In a path-connected space, fundamental groups at different basepoints are isomorphic, but the isomorphism depends on a chosen connecting path and is generally not canonical. This is exactly the transport choice in the proof of Theorem $3.4$. The groupoid retains all basepoints simultaneously and makes this dependence geometrically visible.
-
-There are two distinct ways completeness can fail.
-
-First, **disconnectedness** creates information in components not containing the basepoint. The point-versus-two-points counterexample isolates this failure without any higher homotopy. Replacing the based group by the full fundamental groupoid repairs the problem for all homotopy $1$-types.
-
-Second, **higher homotopy** survives even in connected, simply connected spaces. A point and the sphere $S^2$ both have trivial fundamental group. Their connected fundamental groupoids are equivalent, yet they are not homotopy equivalent because
+The discrete counterexample has an equally simple computational signature. For a finite discrete space with $n$ points, every based fundamental group is trivial, independent of $n$, while its homotopy type remembers $n$ because homotopy equivalence is bijection. Thus the list
 
 $$
-\pi_2(S^2)\cong\mathbb Z,
-\qquad
-\pi_2(P)=0.
+(n,|\pi_1|)=(1,1),(2,1),(3,1),\ldots
 $$
 
-Thus even the fundamental groupoid is not complete beyond $1$-types. Higher groupoids or the full homotopy type are required to retain higher-dimensional cells and spheres.
+shows an infinite family on which the based fundamental group is constant while the homotopy types are pairwise distinct.
 
-The exact scope can be summarized as follows:
+## 9. Applications and conceptual consequences
 
-1. For arbitrary spaces, the based fundamental group is an invariant but not complete.
-2. For disconnected $1$-types, the fundamental groupoid is complete, while one based group is not.
-3. For connected $1$-types, one vertex group is complete.
-4. Beyond $1$-types, neither the based group nor the fundamental groupoid is complete.
+The classification provides a bridge between geometric and algebraic descriptions.
 
-## 11. Future directions
+First, any connected groupoid can be replaced, up to equivalence, by a skeletal one-object model. This is useful whenever a problem is invariant under equivalence: calculations involving many isomorphic objects can be transferred to a single group.
 
-A natural next step is a direct realization theorem for topological Eilenberg–MacLane spaces. One may define a pointed $K(G,1)$ by path-connectedness, an identification of its fundamental group with $G$, and vanishing higher homotopy groups. A classifying-space realization from groupoids to spaces, together with a $1$-truncation construction, should identify a connected $1$-type with the realization of its fundamental groupoid and make the topological classification entirely explicit.
+Second, connected homotopy $1$-types can be organized by groups. The construction $G\mapsto BG$ realizes a group as a one-object groupoid, while taking a vertex automorphism group reverses the construction up to equivalence. In topology, a geometric realization of $BG$ supplies the corresponding $K(G,1)$ model.
 
-The boundary of completeness can also be sharpened. For arbitrary $1$-types, equivalence of fundamental groupoids should be formulated as the exact complete invariant, including all path components. Beyond degree $1$, standard examples such as a point and a simply connected sphere show that higher homotopy groups are indispensable.
+Third, the theorem clarifies the effect of changing basepoints. A path between basepoints induces an isomorphism of fundamental groups by conjugation. The isomorphism is generally noncanonical because it depends on the chosen path, but the group isomorphism class is canonical on a connected component.
 
-Further examples would illuminate the hierarchy: connected spaces with equal fundamental groups but unequal second homotopy groups; lens spaces with related fundamental groups but distinct homotopy types; products $K(G,1)\times S^n$, which preserve the fundamental group while introducing controlled higher homotopy; and classifying spaces $BG$ for concrete finite groups.
+Fourth, the counterexample emphasizes that a complete invariant must be judged relative to a domain. The fundamental group is complete for connected $1$-types, incomplete for disconnected spaces because it misses components, and incomplete for general connected spaces because it misses higher homotopy.
 
-On the computational side, useful refinements include canonical or optimized choices of transport arrows, compressed representations by generators rather than complete multiplication tables, and componentwise normal forms for finite groupoids. These would turn the conceptual reduction into practical tools for topological data and reversible-state networks.
+## 10. Discussion and future work
 
-## 12. Conclusion
+The classification separates two issues that are often blended together. The groupoid theorem is purely structural: invertibility, fullness, faithfulness, and connectedness force all information into one vertex group. The topological conclusion additionally depends on restricting attention to $1$-types. A general space carries a fundamental groupoid, but that groupoid captures only its dimension-one homotopical data.
 
-Every connected groupoid is equivalent to the one-object groupoid of the automorphism group at a chosen vertex. The proof is economical: the vertex functor is faithful by construction, full because every endomorphism is invertible, and essentially surjective by connectedness. This gives both directions of classification for connected groupoids and, through the groupoid model, for connected homotopy $1$-types. Accordingly, $K(G,1)$ spaces are classified up to homotopy by $G$.
+Several extensions are natural. For connected CW complexes with contractible universal covers, one expects an isomorphism of fundamental groups to be realized by a homotopy equivalence after appropriate basepoint transport. Establishing that realization directly would connect the abstract $1$-type classification to concrete spaces.
 
-The counterexample of one point versus two discrete points shows why the hypotheses cannot be discarded. Their based fundamental groups are both trivial, but total disconnectedness makes homotopy rigid and forces any homotopy equivalence to be a bijection. The missing datum is the extra component. Higher-dimensional examples reveal a second omission: loops do not encode higher homotopy.
+A stronger connected counterexample beyond $1$-types can be detected by second homology: $S^2$ and a point have trivial fundamental groups, but $H_2(S^2;\mathbb Z)\cong\mathbb Z$ while $H_2(\mathrm{pt};\mathbb Z)=0$. This would isolate the higher-dimensional, rather than disconnected, source of failure.
 
-The fundamental group is therefore neither merely weak nor universally omniscient. It is exact on a sharply defined domain. For connected homotopy $1$-types, one group is the whole homotopy story; outside that domain, the hierarchy of groupoids and higher invariants records what one group necessarily forgets.
+The symmetry theory of a $K(G,1)$ also invites refinement. Pointed self-equivalences correspond to automorphisms of $G$, while forgetting the basepoint should identify automorphisms differing by conjugation, leading to the outer automorphism group $\operatorname{Out}(G)$. Finally, homotopy $2$-types require new data: a fundamental group, a second homotopy group carrying a group action, and coherence information such as a Postnikov invariant. Explicit examples with the same $\pi_1$ but different $\pi_2$ would display the next layer of the classification problem.
+
+## 11. Conclusion
+
+A connected groupoid contains no more equivalence-invariant information than the automorphism group of one object. The vertex functor is full and faithful because it exactly captures the basepoint loops, and connectedness makes it essentially surjective. Hence connected groupoids, and therefore connected homotopy $1$-types, are classified by a single group up to isomorphism.
+
+The accompanying counterexample is equally informative. One and two discrete points have the same trivial based fundamental group, yet total disconnectedness makes homotopy equivalence rigid enough to require an impossible bijection. The fundamental group is therefore always preserved, complete on connected $1$-types, and incomplete outside that controlled domain. Its success and its failure are governed by the same principle: it remembers precisely dimension-one information in the connected component of its basepoint.

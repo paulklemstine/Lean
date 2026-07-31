@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "545fa377",
-      "domain": "Geometry",
-      "key_insight": "# Spectral Graph Theory Meets Network Robustness\n\n## Formal results\n\n`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version of the proposed spectral certificate.\n\n1. **Exact sp",
-      "quality_score": 0.7815999999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-29T12:29:20",
-      "title": "Spectral Graph Theory Meets Network Robustness"
-    },
-    {
       "cycle_id": "dff51e05",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n## Established result\n\nFor the split metric\n\n\\[\nds^2=\\frac{dx^2}{\\cosh^2y}+\\cosh^2x\\,dy^2,\n\\]\n\nthe computed Gaussian curvature is\n\n\\[\nK_G(x,y)=-\\cosh^2y-\\operatorname{sech}^2x\n +2",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-31T09:24:21",
       "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
+    },
+    {
+      "cycle_id": "78bbd545",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **Kapranov reverse inclusion for Laurent hypersurfaces.** For an algebraically closed, complete, nontrivially valued field and every finite Laurent polynomial with nonzero coef",
+      "quality_score": 0.7874099999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-31T10:08:45",
+      "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5d6a1919",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## 1. Exact classification of the repaired trajectory\n\n**Conjecture.** The globally additive-avoiding greedy trajectory beginning at one is exactly the odd sequence: its term at i",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-22T18:42:27",
-      "title": "1. **Repair the definition before studying asymptotics.** The literal rule exclu"
-    },
     {
       "cycle_id": "f65064a1",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-31T09:24:21",
       "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
+    },
+    {
+      "cycle_id": "78bbd545",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **Kapranov reverse inclusion for Laurent hypersurfaces.** For an algebraically closed, complete, nontrivially valued field and every finite Laurent polynomial with nonzero coef",
+      "quality_score": 0.7874099999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-31T10:08:45",
+      "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "177b02a7",
-      "domain": "Probability",
-      "name": "sum_posterior_eq_one",
-      "quality": 0.73659
-    },
-    {
-      "cycle_id": "177b02a7",
-      "domain": "Probability",
-      "name": "posterior_le_of_score_le",
-      "quality": 0.73659
-    },
-    {
-      "cycle_id": "177b02a7",
-      "domain": "Probability",
-      "name": "map_elimination_optimal",
-      "quality": 0.73659
-    },
     {
       "cycle_id": "46cb7ee6",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "functionPresheaf_isSheaf",
       "quality": 0.7743899999999999
+    },
+    {
+      "cycle_id": "78bbd545",
+      "domain": "Tropical",
+      "name": "of",
+      "quality": 0.7874099999999999
+    },
+    {
+      "cycle_id": "78bbd545",
+      "domain": "Tropical",
+      "name": "isCorner_neg_iff_isMaxCorner",
+      "quality": 0.7874099999999999
+    },
+    {
+      "cycle_id": "78bbd545",
+      "domain": "Tropical",
+      "name": "valuation_max_not_unique",
+      "quality": 0.7874099999999999
     }
   ],
-  "last_updated": "2026-07-31T09:24:21",
+  "last_updated": "2026-07-31T10:08:45",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "edb35a0b",
-        "quality": 0.5,
-        "theorems": 14,
-        "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
-      },
-      {
         "cycle_id": "ee9035cd",
         "quality": 0.68,
         "theorems": 13,
@@ -4009,6 +4003,12 @@
         "quality": 0.7743899999999999,
         "theorems": 22,
         "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
+      },
+      {
+        "cycle_id": "78bbd545",
+        "quality": 0.7874099999999999,
+        "theorems": 10,
+        "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
       }
     ]
   }
