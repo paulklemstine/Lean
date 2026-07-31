@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "627f5167",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n1. **Guarded fixed points are semantically monotone.** Define a polarity judgment on `RType` and prove that every code positive in its distinguished bound variable induces a monot",
-      "quality_score": 0.7662,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-28T18:57:10",
-      "title": "Reflective Type Theory: Proving Things About Proving Things"
-    },
-    {
       "cycle_id": "83a0d4e2",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n1. **Bundle the graph diagram.** Replace the unbundled `deBruijnEdge` relation by finite directed graphs and package every truncation map as a graph homomorphism. Prove the invers",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-31T04:01:28",
       "title": "Erdős-Faber-Lovász Conjecture"
+    },
+    {
+      "cycle_id": "1fc64f82",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **Higher-dimensional finite projective spaces.** Define `TP^n_fin` as the\n   quotient of `ℝ^(n+1)` by diagonal translation, choose a normalization, and\n   test whether analogou",
+      "quality_score": 0.79392,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-31T04:25:29",
+      "title": "Inverse Stereographic Tropical Lift"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2a77d2cb",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## 1. Locally finite orbit-triangular decomposition on the Tits cone\n\n**Conjecture.** For every symmetrizable Kac–Moody root datum and twisting weight, the shifted Chinta–Gunnells",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-22T06:54:45",
-      "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetrizable Kac-Moody roo"
-    },
     {
       "cycle_id": "3e9a9a06",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-31T04:01:28",
       "title": "Erdős-Faber-Lovász Conjecture"
+    },
+    {
+      "cycle_id": "1fc64f82",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **Higher-dimensional finite projective spaces.** Define `TP^n_fin` as the\n   quotient of `ℝ^(n+1)` by diagonal translation, choose a normalization, and\n   test whether analogou",
+      "quality_score": 0.79392,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-31T04:25:29",
+      "title": "Inverse Stereographic Tropical Lift"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7edbd52d",
-      "domain": "Combinatorics",
-      "name": "rather",
-      "quality": 0.78958
-    },
-    {
-      "cycle_id": "7edbd52d",
-      "domain": "Combinatorics",
-      "name": "sup_id_isGreatest",
-      "quality": 0.78958
-    },
-    {
-      "cycle_id": "bf94368f",
-      "domain": "Algebra",
-      "name": "excluding",
-      "quality": 0.80162
-    },
     {
       "cycle_id": "bf94368f",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "exists_unique_intersection_on_edge",
       "quality": 0.76494
+    },
+    {
+      "cycle_id": "1fc64f82",
+      "domain": "Tropical",
+      "name": "tropicalStereo_eq_identity",
+      "quality": 0.79392
+    },
+    {
+      "cycle_id": "1fc64f82",
+      "domain": "Tropical",
+      "name": "tropicalStereoAt_eq_identity",
+      "quality": 0.79392
+    },
+    {
+      "cycle_id": "1fc64f82",
+      "domain": "Tropical",
+      "name": "tropicalStereo_pole_independence",
+      "quality": 0.79392
     }
   ],
-  "last_updated": "2026-07-31T04:01:28",
+  "last_updated": "2026-07-31T04:25:29",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "1a2d7e50",
-        "quality": 0.69,
-        "theorems": 21,
-        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-      },
-      {
         "cycle_id": "09546bb0",
         "quality": 0.74,
         "theorems": 31,
@@ -4009,6 +4003,12 @@
         "quality": 0.7868499999999999,
         "theorems": 16,
         "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
+      },
+      {
+        "cycle_id": "1fc64f82",
+        "quality": 0.79392,
+        "theorems": 15,
+        "title": "Inverse Stereographic Tropical Lift"
       }
     ]
   }
