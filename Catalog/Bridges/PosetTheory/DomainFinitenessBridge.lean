@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.NumberTheory.NumberTheoryBridge
+import Bridges.NumberTheoryBridge
 
 /-! # Domain Finiteness Bridge
 
