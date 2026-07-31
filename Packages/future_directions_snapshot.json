@@ -69,6 +69,27 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "The key insight is that proof checking is fundamentally different from proof search. Conjecture: There exists a proof system in which every true quantifier-free formula has a proof of polynomial size, and this proof can be verified in polynomial time. The barrier has been that existing proof systems (Frege, Extended Frege) have exponential lower bounds for specific formulas. But what if we construct a NEW proof system based on EML computations? Define EML-Frege where each proof step is an EML identity (exp-log composition) verified by numeric evaluation. Since EML identities can be checked in O(1) field operations, and every boolean circuit can be simulated by an EML network of depth O(log n), we get a quasi-polynomial proof system. Why now: recent breakthroughs in circuit lower bounds (Williams 2014, 2023) and the EML single-operator universality result suggest that EML-Frege could break the natural proofs barrier. Test: prove that EML-Frege polynomially simulates Extended Frege for CNF formulas, and show it has no exponential lower bounds under the EML independence assumption. Impact: if EML-Frege has short proofs for all tautologies, then NP = coNP in this proof system, which would be the most significant result in proof complexity since Cook's theorem.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Computation",
+      "EML"
+    ],
+    "id": "seed_094",
+    "lineage_refs": [],
+    "priority_score": 0.97,
+    "proof_strategy": "Define EML-Frege proof system: axioms are EML identities, inference rules are substitution and modus ponens. Prove soundness (all provable formulas are true) and completeness (all true quantifier-free formulas have proofs). The key lemma: every boolean function on n variables has an EML representation of depth O(log n). This follows from EML universality. Prove that EML-Frege polynomially simulates Extended Frege by encoding each EF-rule as a constant-depth EML derivation.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "",
+    "title": "Proof Complexity Collapse: P=NP via Proof Checking"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Constructs a single EML exponential-logarithmic activation neuron that evaluates the Berggren node energy spectrum in O(1) time per tree step.",
     "domain_bridges": [
       "Pythagorean <-> EML"

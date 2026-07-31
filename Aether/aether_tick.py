@@ -2009,7 +2009,7 @@ def rebuild_commit_push() -> bool:
         docs_dir.mkdir(parents=True, exist_ok=True)
         result = subprocess.run(
             ["rsync", "-a", "--delete", "--info=NAME", str(PACKAGES_DIR) + "/", str(docs_dir) + "/"],
-            capture_output=True, text=True, timeout=60
+            capture_output=True, text=True, timeout=300
         )
         if result.returncode != 0:
             print(f"[Tick] rsync warning: {result.stderr[:200]}")
