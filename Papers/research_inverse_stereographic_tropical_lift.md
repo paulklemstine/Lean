@@ -1,220 +1,445 @@
-# Tropical Stereographic Projection: Max-Plus Möbius Transformations and Their Representation Theory
+# Inverse Stereographic Tropical Lift: Rigidity, Degree Collapse, and Compactness
+
+**Aristotle**  
+**July 31, 2026**
 
 ## Abstract
 
-We develop the theory of tropical Möbius transformations — piecewise-linear functions of the form φ(t) = max(a+t, b) − max(c+t, d) — and their representation via tropical (max-plus) 2×2 matrices. We prove that the homogeneous action of tropical matrices respects tropical matrix multiplication (the representation theorem), establish sharp bounds on the affine evaluation (the boundedness theorem), characterize the piecewise-linear structure via breakpoints and active intervals, and prove a super-multiplicativity inequality for the tropical determinant. We define the tropical stereographic projection as a distinguished tropical Möbius transformation and compute its key invariants: tropical width |p|, tropical determinant max(p, 0), and active interval. All results are formalized and verified in Lean 4 with Mathlib.
+We study a one-dimensional max-plus analogue of stereographic projection. The finite tropical projective line is the quotient of $\mathbb{R}^2$ by diagonal translation and is canonically parametrized by the coordinate difference $x=x_1-x_0$. In this coordinate, the proposed pole construction is the tropical rational expression
 
-**Keywords**: tropical geometry, max-plus algebra, Möbius transformation, stereographic projection, piecewise-linear functions, tropical determinant
+$$
+S(x)=\max(2x,x)-\max(x,0).
+$$
+
+Although this expression has a quadratic-over-linear presentation, it simplifies globally to $S(x)=x$. More generally, moving the finite pole to $p\in\mathbb{R}$ gives
+
+$$
+S_p(x)=\max(2x,x+p)-\max(x,p),
+$$
+
+and every member of this family is again the identity. Thus finite pole position disappears after projective normalization. The resulting map is a homeomorphism from the finite tropical projective line to $\mathbb{R}$, but its intrinsic minimal degree cannot be two because it has a linear presentation. Under the compactified convention, the tropical projective line is modeled by the extended real line and is compact; consequently, no homeomorphism to $\mathbb{R}$ exists. We give elementary proofs, branch-evaluation algorithms, numerical diagnostics, and implications for intrinsic tropical rational degree and higher-dimensional constructions.
 
 ## 1. Introduction
 
-### 1.1 Background
+Tropical geometry replaces ordinary arithmetic by an idempotent semiring operation. In the max-plus convention,
 
-Tropical geometry studies algebraic varieties over the *tropical semiring* (ℝ ∪ {−∞}, ⊕, ⊙), where a ⊕ b = max(a, b) and a ⊙ b = a + b. This "tropicalization" procedure replaces polynomial equations with piecewise-linear equations, turning algebraic curves into polyhedral complexes while preserving deep structural information [1, 2].
+$$
+a\oplus b=\max(a,b),\qquad a\odot b=a+b.
+$$
 
-Independently, the *max-plus algebra* — the same algebraic structure — has been extensively studied in optimization, control theory, and discrete event systems [3]. The connection between these two traditions, while well-known, has not been fully exploited.
+Repeated tropical multiplication turns a variable $x$ into an ordinary integer multiple: the tropical square $x\odot x$ is $2x$. Tropical polynomials are consequently maxima of affine functions. Their graphs are piecewise linear, and their breakpoints record changes in the dominant monomial.
 
-Stereographic projection, dating to Ptolemy's *Planisphaerium* (c. 150 CE), is a fundamental tool in geometry, complex analysis, and topology. It provides a conformal bijection between the n-sphere (minus a point) and ℝⁿ, and is encoded by Möbius transformations — rational functions of the form (az + b)/(cz + d).
+Stereographic projection, by contrast, is a classical geometric construction in which a chosen pole sends a sphere minus that pole to an affine plane. In dimension one, classical fractional-linear or Möbius transformations provide the relevant coordinate changes. This motivates a tropical question: can a pole construction define a tropical rational homeomorphism from a tropical projective line to a tropical affine line, and does it have a meaningful degree-two character?
 
-### 1.2 Contributions
+Two issues must be separated. First, “the tropical projective line” may refer either to a quotient formed solely from finite coordinates or to a compactified object admitting infinite coordinates. These spaces have different topology. Second, the syntactic degree of a difference of tropical polynomials may not survive cancellation. A formula displaying a quadratic term need not define a function of minimal degree two.
 
-This paper introduces the *tropical Möbius transformation* as the tropicalization of the classical Möbius transformation and develops its theory systematically. Our main contributions are:
+The present study resolves both issues for the proposed one-dimensional map. The finite map is exactly the identity, not merely conjugate to it. Moving the pole does not produce a nontrivial family. The map genuinely possesses the requested quadratic-over-linear presentation, but it also has a linear presentation, refuting the stronger minimal-degree claim. The compactified source cannot be homeomorphic to the noncompact real line.
 
-1. **Representation Theorem** (Theorem 3.1): The homogeneous action of tropical 2×2 matrices respects tropical matrix multiplication.
+The argument is elementary but structurally useful. It isolates three principles relevant to broader tropical constructions:
 
-2. **Associativity** (Theorem 3.2): Tropical 2×2 matrix multiplication is associative.
+1. projective normalization may erase parameters that appear geometrically meaningful before quotienting;
+2. common max-plus factors can cancel between tropical numerator and denominator;
+3. compactification changes the global topological category and therefore the admissible targets.
 
-3. **Boundedness Theorem** (Theorem 4.1): Every tropical Möbius transformation has image contained in [min(a−c, b−d), max(a−c, b−d)].
+## 2. Max-plus preliminaries
 
-4. **Piecewise-Linear Structure** (Theorem 5.1): On the "active interval" [b−a, d−c], the transformation is affine-linear with slope +1.
+### 2.1 Tropical arithmetic
 
-5. **Injectivity** (Theorem 5.2): The transformation is injective on its active interval.
+We work over finite real tropical scalars unless compactification is stated explicitly. The max-plus operations are
 
-6. **Super-Multiplicativity** (Theorem 6.1): det⊕(M⊗N) ≥ det⊕(M) + det⊕(N).
+$$
+a\oplus b=\max(a,b),\qquad a\odot b=a+b.
+$$
 
-7. **Stereographic Width** (Theorem 7.1): The tropical width of the stereographic projection from pole p equals |p|.
+The tropical power $x^{\odot k}$ is the ordinary quantity $kx$. A one-variable tropical polynomial is a function of the form
 
-## 2. Definitions
+$$
+P(x)=\max_{0\leq i\leq m}(ix+a_i),
+$$
 
-### 2.1 Tropical 2×2 Matrices
+where the coefficients $a_i$ are real. Such a function is convex and piecewise affine. A tropical rational function can be represented as a difference
 
-**Definition 2.1** (Tropical Matrix). A *tropical 2×2 matrix* is a quadruple M = (a, b, c, d) ∈ ℝ⁴, written as
+$$
+R(x)=P(x)-Q(x)
+$$
 
-$$M = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$$
+of tropical polynomials. It is continuous and piecewise affine, though no longer necessarily convex.
 
-**Definition 2.2** (Tropical Matrix Multiplication). The *tropical product* M ⊗ N is defined by
+The same function may have many presentations. In particular, the identity
 
-$$(M \otimes N)_{ij} = \max_k (M_{ik} + N_{kj})$$
+$$
+c+\max(u,v)=\max(c+u,c+v)
+$$
 
-Explicitly:
+allows common affine contributions to be factored out of maxima. When identical terms then occur in both $P$ and $Q$, subtraction cancels them. Accordingly, the largest displayed exponent in one presentation is not automatically an invariant of the represented function.
 
-$$M \otimes N = \begin{pmatrix} \max(a_1+a_2, b_1+c_2) & \max(a_1+b_2, b_1+d_2) \\ \max(c_1+a_2, d_1+c_2) & \max(c_1+b_2, d_1+d_2) \end{pmatrix}$$
+### 2.2 Finite tropical projective space
 
-### 2.2 Homogeneous Action
+The finite tropical projective line is obtained from $\mathbb{R}^2$ by identifying pairs that differ by simultaneous translation.
 
-**Definition 2.3** (Homogeneous Action). The *homogeneous action* of M on a point (x, y) ∈ ℝ² is
+> **Definition 2.1 (Finite tropical projective line).** Two pairs $(x_0,x_1)$ and $(y_0,y_1)$ are projectively equivalent when there exists $\lambda\in\mathbb{R}$ such that
+> $$
+> (y_0,y_1)=(x_0+\lambda,x_1+\lambda).
+> $$
+> The quotient is denoted $\mathbb{TP}^1_{\mathrm{fin}}$.
 
-$$M \cdot (x, y) = (\max(a+x, b+y), \max(c+x, d+y))$$
+The coordinate difference
 
-This gives a well-defined action on the *tropical projective line* TP¹, the quotient of (ℝ ∪ {−∞})² ∖ {(−∞, −∞)} by the equivalence (x, y) ∼ (x+λ, y+λ).
+$$
+\nu(x_0,x_1)=x_1-x_0
+$$
 
-### 2.3 Affine Evaluation
+is invariant under simultaneous translation. Conversely, every class has the unique representative $(0,x)$, where $x=x_1-x_0$. Thus $\nu$ identifies $\mathbb{TP}^1_{\mathrm{fin}}$ with $\mathbb{R}$. We equip the quotient with the topology transported through this normalized coordinate.
 
-**Definition 2.4** (Affine Evaluation). The *affine evaluation* of M at t ∈ ℝ is
+> **Proposition 2.2 (Normalized coordinate).** The map sending the projective class of $(x_0,x_1)$ to $x_1-x_0$ is a bijection from $\mathbb{TP}^1_{\mathrm{fin}}$ to $\mathbb{R}$. With the normalized-coordinate topology, it is a homeomorphism.
 
-$$\varphi_M(t) = \max(a+t, b) - \max(c+t, d)$$
+**Proof sketch.** Simultaneous translation leaves the difference unchanged, so the map is well defined. Every $x\in\mathbb{R}$ is represented by $(0,x)$, proving surjectivity. Equal differences imply that two pairs differ by the diagonal translation $\lambda=y_0-x_0$, proving injectivity. The topological statement follows from the definition of the normalized-coordinate topology. $\square$
 
-This is obtained from the homogeneous action by setting y = 0 and taking the difference of coordinates, which corresponds to the affine chart of TP¹.
+### 2.3 Compactified convention
 
-### 2.4 Tropical Determinant
+A second standard convention admits infinite coordinates before projectivization. In dimension one, the normalized compactified line is modeled by the extended real line
 
-**Definition 2.5** (Tropical Determinant). The *tropical determinant* of M is
+$$
+\overline{\mathbb{R}}=[-\infty,+\infty]
+$$
 
-$$\det_\oplus(M) = \max(a+d, b+c)$$
+with its order topology. This space is compact. The ordinary real line is not compact.
 
-This is the tropical analog of the classical determinant ad − bc, with × replaced by + and − replaced by max.
+> **Definition 2.3 (Compactified tropical projective line).** The compactified tropical projective line $\mathbb{TP}^1_{\mathrm{comp}}$ is the endpoint-completed normalized tropical line, identified topologically with $\overline{\mathbb{R}}$.
 
-**Definition 2.6** (Non-Degeneracy). M is *non-degenerate* if a + d ≠ b + c.
+This convention is not interchangeable with the finite one when discussing global homeomorphisms.
 
-### 2.5 Tropical Stereographic Projection
+## 3. The pole construction
 
-**Definition 2.7** (Tropical Stereographic Projection). The *tropical stereographic projection from pole p* is the tropical matrix
+### 3.1 The basic expression
 
-$$S_p = \begin{pmatrix} 0 & 0 \\ 0 & p \end{pmatrix}$$
+The proposed inverse stereographic tropical lift in normalized coordinates is
 
-with affine evaluation φ_p(t) = max(t, 0) − max(t, p).
+$$
+S(x)=\max(2x,x)-\max(x,0).
+$$
 
-### 2.6 Breakpoints and Tropical Width
+The first maximum resembles a tropical polynomial containing a quadratic monomial and a linear monomial. The second resembles a tropical linear polynomial. This motivates the following presentation classes.
 
-**Definition 2.8** (Breakpoints). The *left breakpoint* and *right breakpoint* of M are
+> **Definition 3.1 (Pole-shaped quadratic presentation).** A function $f:\mathbb{R}\to\mathbb{R}$ has a pole-shaped quadratic tropical presentation if there exist $a,b,c,d\in\mathbb{R}$ such that
+> $$
+> f(x)=\max(2x+a,x+b)-\max(x+c,d)
+> $$
+> for every $x\in\mathbb{R}$.
 
-$$\ell(M) = \min(b-a, d-c), \qquad r(M) = \max(b-a, d-c)$$
+> **Definition 3.2 (Linear presentation).** A function $f:\mathbb{R}\to\mathbb{R}$ has a linear tropical presentation in normalized coordinate if there exists $c\in\mathbb{R}$ such that
+> $$
+> f(x)=x+c
+> $$
+> for every $x\in\mathbb{R}$.
 
-**Definition 2.9** (Tropical Width). The *tropical width* is w(M) = r(M) − ℓ(M).
+The latter definition captures translations, the degree-at-most-one maps relevant here.
 
-## 3. The Representation Theorem
+### 3.2 Global simplification
 
-**Theorem 3.1** (Representation). For all tropical matrices M, N and points p ∈ ℝ²,
+> **Theorem 3.3 (Identity theorem).** For every $x\in\mathbb{R}$,
+> $$
+> S(x)=x.
+> $$
 
-$$(M \otimes N) \cdot p = M \cdot (N \cdot p)$$
+**Proof.** If $x\leq 0$, then $2x\leq x$ and therefore
 
-*Proof sketch.* Both sides expand to pairs involving four-fold maxima. The key identity is the distributivity law
+$$
+\max(2x,x)=x,
+$$
 
-$$a + \max(b, c) = \max(a+b, a+c)$$
+while $\max(x,0)=0$. Hence $S(x)=x$.
 
-which allows distributing addition through the nested max operations. Each component resolves to max over the same four terms. □
+If $x\geq 0$, then $2x\geq x$, so $\max(2x,x)=2x$, while $\max(x,0)=x$. Hence $S(x)=2x-x=x$. The two calculations agree at $x=0$, completing the proof. $\square$
 
-**Theorem 3.2** (Associativity). Tropical matrix multiplication is associative:
+The apparent breakpoint in each maximum does not produce a breakpoint in their difference. Both pieces have slope one after subtraction.
 
-$$(M \otimes N) \otimes P = M \otimes (N \otimes P)$$
+### 3.3 Arbitrary finite poles
 
-*Proof sketch.* This follows from the representation theorem: both sides act identically on all points of ℝ², and the action determines the matrix (by evaluating at the standard basis). Alternatively, direct expansion using distributivity and commutativity of max. □
+Move the pole from $0$ to $p\in\mathbb{R}$ and define
 
-## 4. The Boundedness Theorem
+$$
+S_p(x)=\max(2x,x+p)-\max(x,p).
+$$
 
-**Theorem 4.1** (Boundedness). For all M and t ∈ ℝ,
+> **Theorem 3.4 (Finite-pole rigidity).** For every $p,x\in\mathbb{R}$,
+> $$
+> S_p(x)=x.
+> $$
 
-$$\min(a-c, b-d) \leq \varphi_M(t) \leq \max(a-c, b-d)$$
+**Proof.** Tropical distributivity, written in ordinary arithmetic, gives
 
-*Proof sketch.* Case analysis on the four regions determined by the signs of a+t−b and c+t−d. In each case, the value is either a−c, b−d, a+t−d, or b−c−t, and each of these lies within the stated bounds by the case hypotheses. □
+$$
+\max(2x,x+p)=\max(x+x,x+p)=x+\max(x,p).
+$$
 
-**Theorem 4.2** (Asymptotic Left). If t ≤ b−a and t ≤ d−c, then φ_M(t) = b − d.
+Consequently,
 
-**Theorem 4.3** (Asymptotic Right). If t ≥ b−a and t ≥ d−c, then φ_M(t) = a − c.
+$$
+S_p(x)=x+\max(x,p)-\max(x,p)=x.
+$$
 
-*Proof.* When t ≤ b−a, we have a+t ≤ b, so max(a+t, b) = b. Similarly for the denominator. □
+This identity holds without a case split. $\square$
 
-## 5. Piecewise-Linear Structure
+> **Corollary 3.5 (Pole independence).** For all finite pole positions $p,q\in\mathbb{R}$, the functions $S_p$ and $S_q$ are equal.
 
-**Theorem 5.1** (Active Interval). Suppose a + d > b + c. For t ∈ [b−a, d−c],
+**Proof sketch.** By Theorem 3.4, both functions equal the identity at every input. $\square$
 
-$$\varphi_M(t) = a + t - d$$
+The pole parameter is therefore absent from the represented normalized function. It appears only through a common max-plus factor.
 
-*Proof.* The hypothesis a+d > b+c implies b−a < d−c, so the interval is non-empty. For t ≥ b−a, we have a+t ≥ b. For t ≤ d−c, we have c+t ≤ d. Thus max(a+t, b) = a+t and max(c+t, d) = d. □
+## 4. Topological consequences
 
-**Theorem 5.2** (Injectivity on Active Interval). Under the hypotheses of Theorem 5.1, if φ_M(s) = φ_M(t) for s, t ∈ [b−a, d−c], then s = t.
+### 4.1 The finite homeomorphism
 
-*Proof.* Both values equal a + · − d, so a+s−d = a+t−d implies s = t. □
+> **Theorem 4.1 (Finite tropical stereographic homeomorphism).** The map induced by
+> $$
+> S(x)=\max(2x,x)-\max(x,0)
+> $$
+> is a homeomorphism from $\mathbb{TP}^1_{\mathrm{fin}}$ to $\mathbb{R}$.
 
-**Corollary 5.3** (Breakpoint Characterization). Below ℓ(M), the function equals b−d. Above r(M), it equals a−c.
+**Proof sketch.** Proposition 2.2 identifies the finite projective line with $\mathbb{R}$ through the normalized coordinate. Theorem 3.3 says that $S$ is the identity in this coordinate. It is therefore bijective, its inverse is the identity, and both maps are continuous. $\square$
 
-## 6. Tropical Determinant
+The result should be interpreted precisely. It confirms that the proposed formula yields a tropical homeomorphism on the finite model. It does not provide a nontrivial analogue of classical pole-dependent stereography, because normalized finite pole position has already cancelled.
 
-**Theorem 6.1** (Super-Multiplicativity). For all tropical matrices M, N,
+### 4.2 Compactness obstruction
 
-$$\det_\oplus(M) + \det_\oplus(N) \leq \det_\oplus(M \otimes N)$$
+> **Theorem 4.2 (No compactified-to-affine homeomorphism).** There is no homeomorphism
+> $$
+> \mathbb{TP}^1_{\mathrm{comp}}\longrightarrow\mathbb{R}.
+> $$
 
-*Proof sketch.* Expand both sides. The LHS is max over 4 terms (products of diagonal/anti-diagonal sums). Each of these 4 terms appears among the terms of the RHS expansion, which is a max over 8 terms. Therefore the LHS ≤ RHS. □
+**Proof.** By Definition 2.3, $\mathbb{TP}^1_{\mathrm{comp}}$ is compact. The continuous image of a compact space is compact. If a homeomorphism to $\mathbb{R}$ existed, its image would be all of $\mathbb{R}$, forcing $\mathbb{R}$ to be compact. Since $\mathbb{R}$ is noncompact, this is impossible. $\square$
 
-**Remark 6.2.** Equality holds when M and N are "generic" (in a precise tropical sense). The gap det⊕(M⊗N) − det⊕(M) − det⊕(N) measures the "tropical interaction energy" between M and N.
+The correct candidate codomain for compactified stereography is therefore an extended real line or another compact space, not ordinary $\mathbb{R}$.
 
-## 7. Tropical Stereographic Projection
+## 5. Presentation degree and cancellation
 
-**Theorem 7.1** (Stereographic Width). w(S_p) = |p|.
+### 5.1 Existence of a quadratic presentation
 
-*Proof.* S_p = (0, 0, 0, p). The breakpoints are min(0, p) and max(0, p), so the width is max(0, p) − min(0, p) = |p|. □
+> **Proposition 5.1 (Quadratic-over-linear representability).** The function $S$ has a pole-shaped quadratic tropical presentation.
 
-**Theorem 7.2** (Stereographic Linearity). For p ≥ 0 and t ∈ [0, p],
+**Proof.** In Definition 3.1 choose
 
-$$\varphi_p(t) = t - p$$
+$$
+a=b=c=d=0.
+$$
 
-*Proof.* Special case of Theorem 5.1 with a = b = c = 0, d = p. □
+The resulting expression is exactly
 
-**Theorem 7.3** (Stereographic Determinant). det⊕(S_p) = max(p, 0).
+$$
+\max(2x,x)-\max(x,0)=S(x).
+$$
 
-**Theorem 7.4** (Stereographic Non-Degeneracy). S_p is non-degenerate if and only if p ≠ 0.
+Thus the required presentation exists. $\square$
+
+### 5.2 Existence of a linear presentation
+
+> **Proposition 5.2 (Linear representability).** The same function $S$ has a linear presentation.
+
+**Proof.** Theorem 3.3 gives $S(x)=x=x+0$ for every $x$. Hence Definition 3.2 holds with $c=0$. $\square$
+
+> **Theorem 5.3 (Failure of minimal degree two).** It is false that $S$ is pole-shaped quadratic-presentable but not linearly presentable. In particular, the displayed quadratic term does not imply that the represented function has minimal tropical rational degree exactly two.
+
+**Proof sketch.** Proposition 5.1 establishes the quadratic presentation, whereas Proposition 5.2 supplies a linear presentation. Therefore the asserted absence of a linear presentation is false. $\square$
+
+This theorem concerns minimal presentation complexity, not the literal syntax of the original formula. The term $2x$ is genuinely present in that formula. What fails is the inference from that occurrence to an intrinsic degree-two invariant.
+
+### 5.3 Common-factor interpretation
+
+For the full pole family, write
+
+$$
+P_p(x)=\max(2x,x+p),\qquad Q_p(x)=\max(x,p).
+$$
+
+Then
+
+$$
+P_p(x)=x+Q_p(x).
+$$
+
+Thus the numerator is the denominator plus the affine function $x$. In max-plus language, $Q_p$ is a common tropical factor, and the rational difference cancels it. The numerator and denominator each bend at $x=p$, but their difference has no bend.
+
+This suggests a representation-independent degree theory based on reduced forms. At minimum, such a theory should satisfy:
+
+1. equal functions receive the same degree;
+2. translations $x\mapsto x+c$ have degree at most one;
+3. multiplication of numerator and denominator by the same tropical factor does not change degree;
+4. breakpoints cancelled in the difference do not contribute to reduced complexity.
+
+The example shows why raw numerator degree alone violates these requirements.
+
+## 6. Algorithms and numerical diagnostics
+
+Although the main identities are exact, computational procedures help expose the branch structure and guard against implementation mistakes.
+
+### 6.1 Direct evaluation algorithm
+
+Given $x\in\mathbb{R}$, evaluate
+
+$$
+S(x)=\max(2x,x)-\max(x,0).
+$$
+
+The algorithm uses two comparisons, constant-time arithmetic, and constant memory.
+
+**Pseudocode**
+
+```text
+INPUT: real number x
+numerator   <- max(2*x, x)
+denominator <- max(x, 0)
+RETURN numerator - denominator
+```
+
+A useful test table is
+
+$$
+\begin{array}{c|ccccc}
+x&-3&-1&0&2&5\\ \hline
+S(x)&-3&-1&0&2&5
+\end{array}
+$$
+
+which samples the negative branch, breakpoint, and positive branch.
+
+### 6.2 Pole-family evaluation
+
+For a finite pole $p$, compute
+
+$$
+S_p(x)=\max(2x,x+p)-\max(x,p).
+$$
+
+**Pseudocode**
+
+```text
+INPUT: real pole p, real coordinate x
+numerator   <- max(2*x, x+p)
+denominator <- max(x, p)
+RETURN numerator - denominator
+```
+
+This also requires constant time and memory. Testing a grid of values for $p$ and $x$ yields $S_p(x)-x=0$ up to floating-point roundoff. Exact arithmetic is preferable when inputs are rational.
+
+### 6.3 Branch audit
+
+A more explanatory diagnostic records which affine term dominates each maximum. If $x\leq p$, then
+
+$$
+\max(2x,x+p)=x+p,
+\qquad
+\max(x,p)=p,
+$$
+
+and their difference is $x$. If $x\geq p$, then
+
+$$
+\max(2x,x+p)=2x,
+\qquad
+\max(x,p)=x,
+$$
+
+and the difference is again $x$. Both component functions switch branch at the same point. This synchronized switching is the numerical signature of cancellation.
+
+For a list of $n$ input values and $m$ poles, an exhaustive grid audit takes $O(nm)$ time and $O(1)$ auxiliary memory if results are streamed, or $O(nm)$ memory if the full table is retained.
+
+## 7. Applications and interpretation
+
+### 7.1 Tropical coordinate design
+
+The finite projective quotient removes diagonal translation. Any proposed construction depending on absolute representatives must be checked after normalization. The pole-family result demonstrates that a parameter can be entirely gauge-dependent: moving $p$ changes the unreduced numerator and denominator but not their quotient function.
+
+This matters when designing coordinates on tropical moduli spaces or metric graphs. A parameter visible in a chosen formula need not descend to the quotient as an observable. To preserve it, one may need a marking, a distinguished end, a metric normalization, or another structure not removed by projectivization.
+
+### 7.2 Complexity of piecewise-linear models
+
+Differences of maxima occur throughout optimization and piecewise-linear modeling. A max-affine component may have several regions even when the final difference is globally affine. Counting regions separately in numerator and denominator can therefore exaggerate functional complexity.
+
+The present family provides an exact benchmark. Both $P_p$ and $Q_p$ have a breakpoint at $p$, while $P_p-Q_p$ has none. Algorithms for simplification, model compression, or symbolic equivalence should identify this shared breakpoint and cancel it.
+
+### 7.3 Tropical Möbius transformations
+
+In one dimension, an orientation-preserving affine map of slope one has the form $x\mapsto x+c$. The map studied here is the special case $c=0$. Thus it lies in the simplest possible part of any tropical Möbius classification.
+
+A broader classification problem is to determine which functions
+
+$$
+R(x)=\max_i(a_i x+b_i)-\max_j(c_j x+d_j)
+$$
+
+are homeomorphisms of $\mathbb{R}$. Necessary conditions include continuity, strict monotonicity, and unbounded limits of opposite sign at the two ends. Their slopes on every linearity interval must be positive. For slope-one homeomorphisms, the cancellation behavior observed here raises the question whether reduced forms must always be translations.
+
+### 7.4 Compactified targets
+
+The compactness obstruction is a target-selection principle. If endpoints are included in the source, they must be accounted for in the codomain. A compactified coordinate map should take values in $\overline{\mathbb{R}}$ and describe the images of both ends explicitly. Merely reusing an affine target discards the global topology.
 
 ## 8. Discussion
 
-### 8.1 The Representation-Theoretic Perspective
+### 8.1 Comparison with classical stereography
 
-The representation theorem (Theorem 3.1) establishes that tropical 2×2 matrices form a monoid acting faithfully on ℝ² via the homogeneous action. This is the tropical analog of the GL(2) representation on ℂ². The quotient by the "tropical scalar matrices" (diagonal matrices with equal entries) gives the *tropical projective linear group* PGL⊕(2), which acts on TP¹.
+Classical stereographic projection has three features that should not be conflated in a tropical analogue: it supplies a global coordinate away from a pole, it depends on the chosen pole, and it carries conformal information. The present max-plus construction retains only the first feature. It supplies a global coordinate because it is the normalized coordinate itself. The second feature disappears by common-factor cancellation, while no claim of angle preservation is available in a one-dimensional piecewise-linear setting.
 
-### 8.2 Comparison with Classical Stereographic Projection
+This comparison sharpens the scope of the result. Calling the map “stereographic” records the origin of the formula, not an assertion that every classical property survives tropicalization. A faithful higher-dimensional analogue may require a metric or harmonic condition in addition to tropical rationality.
 
-| Property | Classical | Tropical |
-|----------|-----------|----------|
-| Map type | Rational function | Piecewise-linear function |
-| Encoding | Möbius transformation | Tropical Möbius transformation |
-| Matrix group | GL(2, ℂ) | Max-plus 2×2 matrices |
-| Conformality | Angle-preserving | Width-preserving (in tropical sense) |
-| Image | All of ℝ (or ℂ) | Bounded interval [min, max] |
-| Determinant | Multiplicative | Super-multiplicative |
-| Singularity | Pole (essential) | Breakpoints (corners) |
+### 8.2 Stability and exactness
 
-### 8.3 The Super-Multiplicativity Phenomenon
+The identity is algebraic and therefore stable under evaluation: it does not arise from an approximation or limiting process. Nevertheless, direct floating-point evaluation of two large, nearly equal maxima may suffer subtractive cancellation. For example, if $x$ and $p$ are extremely large, the intermediate numerator and denominator can be much larger than the output. A robust implementation may therefore return $x$ after recognizing the shared factor, rather than evaluating the unreduced expression.
 
-The failure of multiplicativity for the tropical determinant (Theorem 6.1) is a genuinely tropical phenomenon with no classical analog. It reflects the fact that the max operation "forgets" information about which term achieved the maximum, leading to a systematic overcount when composing matrices.
+This is an algorithmic benefit of symbolic reduction. It reduces the operation count, removes a branch, and avoids unnecessary loss of precision. The unreduced form remains valuable for auditing the geometry of the two components, but the reduced form is preferable for production computation.
 
-### 8.4 Connections to Optimization
+### 8.3 Scope of the compactness argument
 
-The max-plus matrix multiplication in Definition 2.2 is precisely the operation used in shortest-path algorithms (with min instead of max) and in dynamic programming. The tropical Möbius framework provides a geometric interpretation of these algorithms: each step of dynamic programming is a tropical Möbius transformation, and the composition of steps is a tropical matrix product.
+The topological obstruction uses no special algebraic property of the pole formula. It rules out every possible homeomorphism from the compactified source to $\mathbb{R}$, including maps not expressible tropically. Conversely, it does not obstruct continuous maps, embeddings into other spaces, or homeomorphisms to a compactified target. Its strength lies in cleanly separating an impossible choice of target from questions about formulas.
 
-## 9. Open Problems and Conjectures
+The proposed construction produces a mathematically valid finite homeomorphism, but not for the anticipated reason. Its displayed tropical degree suggests a nonlinear pole map. Reduction shows instead that it is the canonical normalized coordinate itself.
 
-**Conjecture 9.1** (Tropical Conformal Invariant). There exists a functional J[φ] on tropical Möbius transformations that is invariant under tropical PGL(2) conjugation and equals the tropical width for stereographic projections.
+There are two complementary readings. The first is negative: the formula does not retain pole position and does not have minimal degree two. The second is constructive: the collapse identifies the exact common factor responsible for the degeneracy and gives a criterion for improving future definitions. A nontrivial tropical stereographic map must prevent the numerator and denominator from sharing all pole dependence after normalization.
 
-**Conjecture 9.2** (Higher-Dimensional Representation). The representation theorem (Theorem 3.1) extends to tropical n×n matrices acting on TP^(n−1), with the tropical determinant satisfying an analogous super-multiplicativity inequality.
+The compactified result further clarifies the formulation. A statement about the finite quotient may be true while the analogous statement about an endpoint completion is impossible. Topological type must be fixed before degree, rationality, or conformal analogy is discussed.
 
-**Conjecture 9.3** (Tropical Moduli). The space of tropical Möbius transformations modulo tropical PGL(2) conjugation is a tropical variety of dimension 1 (parameterized by the tropical width).
+The result is also an example of why tropical rational functions should be treated extensionally—as functions—rather than only intensionally—as displayed formulas. Syntactic data are useful for computation, but invariants must survive equivalent presentations.
 
-## 10. Formalization
+## 9. Future directions
 
-All definitions and theorems in this paper have been formalized and verified in Lean 4 using the Mathlib library. The formalization consists of approximately 280 lines of Lean code with 16 definitions and theorems, all proved without `sorry`. The key formalization challenges were:
+### 9.1 Higher-dimensional finite projective spaces
 
-- Handling the case analysis for max/min in the boundedness theorem
-- Using the `add_max` lemma from Mathlib for the distributivity of + over max
-- Proving the representation theorem via expansion and the `grind` tactic
-- The associativity theorem, which was proved by reducing to the representation theorem
+Define $\mathbb{TP}^n_{\mathrm{fin}}$ as the quotient of $\mathbb{R}^{n+1}$ by diagonal translation, choose a normalization, and test whether analogous pole expressions again collapse to affine maps. In dimensions above one, several coordinate differences survive, so pole cancellation may be partial rather than total.
 
-## References
+### 9.2 Compactified codomains
 
-[1] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, Graduate Studies in Mathematics, vol. 161, AMS, 2015.
+The compactness obstruction shows that compactified $\mathbb{TP}^1$ cannot be homeomorphic to $\mathbb{R}$. A corrected target is $\overline{\mathbb{R}}$. One should construct and classify homeomorphisms
 
-[2] G. Mikhalkin, "Tropical geometry and its applications," in *Proceedings of the ICM*, Madrid, 2006.
+$$
+\mathbb{TP}^1_{\mathrm{comp}}\longrightarrow\overline{\mathbb{R}}
+$$
 
-[3] F. Baccelli, G. Cohen, G.J. Olsder, and J.-P. Quadrat, *Synchronization and Linearity: An Algebra for Discrete Event Systems*, Wiley, 1992.
+directly from the quotient model and track endpoint behavior.
 
-[4] M. Joswig, *Essentials of Tropical Combinatorics*, Graduate Studies in Mathematics, vol. 219, AMS, 2021.
+### 9.3 Intrinsic tropical rational degree
 
-[5] I. Simon, "Recognizable sets with multiplicities in the tropical semiring," in *Mathematical Foundations of Computer Science*, Lecture Notes in Computer Science, vol. 324, Springer, 1988.
+Develop a representation-independent degree notion after cancellation of common tropical factors. The present example demonstrates that syntactic numerator degree is not intrinsic. Reduced breakpoint multiplicities or asymptotic slope data may contribute to an appropriate definition.
+
+### 9.4 Pole degeneracy versus conformal information
+
+Every finite pole yields the identity after normalized projectivization. Enriched structures—marked ends, metric graphs, harmonic morphisms, or additional incidence data—may preserve pole position. The challenge is to identify the least extra structure needed for a nontrivial analogue of conformal coordinates.
+
+### 9.5 General tropical Möbius maps
+
+Classify one-dimensional maps expressible as differences of maxima of affine forms and characterize exactly which are homeomorphisms. Determine whether every such homeomorphism of slope one is a translation after cancellation.
+
+### 9.6 Max-plus and min-plus duality
+
+Repeat the construction in the min-plus convention and establish equivalence under negation. The finite identities should transport directly, while compactified endpoints require careful reversal of $+\infty$ and $-\infty$.
+
+## 10. Conclusion
+
+The inverse stereographic tropical lift on the finite tropical projective line is governed by the identity
+
+$$
+\max(2x,x+p)-\max(x,p)=x.
+$$
+
+It follows that the map is a homeomorphism, every finite pole gives the same normalized transformation, and the quadratic-over-linear display does not represent minimal degree two. For the compactified projective line, no homeomorphism to the ordinary real line can exist because compactness is preserved by homeomorphism.
+
+Together these results give a complete one-dimensional analysis of the proposed construction. They separate finite from compactified topology, displayed degree from intrinsic degree, and pole syntax from pole information. Any nontrivial higher-dimensional or enriched tropical stereography must be designed to survive precisely these three tests.
