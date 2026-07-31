@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "132832ee",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding simulator for the graph 3-colouring protocol and prove that, for every finite verifier strategy who",
-      "quality_score": 0.74352,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-29T17:47:50",
-      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-    },
-    {
       "cycle_id": "e3e9c821",
       "domain": "Physics",
       "key_insight": "# Future directions\n\n## Scope of the formalization\n\n`Catalog/Physics/Noether/ContinuousSymmetries.lean` proves the differential core of Noether's first theorem for finite-dimensional real inner-produc",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-31T18:56:28",
       "title": "EML Quantum Activation Functions"
+    },
+    {
+      "cycle_id": "1cf3185d",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H → IsMinor H K → IsMinor G K`. This is falsifiable directly against the branc",
+      "quality_score": 0.8116299999999999,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-07-31T18:57:42",
+      "title": "Hadwiger's Conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f14d2570",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis project formalizes the one-dimensional online primitive underlying the paper\n*\"Online Beck–Fiala Down to Logarithmic Sparsity\"* — the compactly supported,\nonline self-balanci",
-      "quality_score": 0.55,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-23T18:46:00",
-      "title": "ArXiv paper: Online Beck--Fiala Down to Logarithmic Sparsity"
-    },
     {
       "cycle_id": "ddd2821f",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-31T18:56:28",
       "title": "EML Quantum Activation Functions"
+    },
+    {
+      "cycle_id": "1cf3185d",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H → IsMinor H K → IsMinor G K`. This is falsifiable directly against the branc",
+      "quality_score": 0.8116299999999999,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-07-31T18:57:42",
+      "title": "Hadwiger's Conjecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "63b75a93",
-      "domain": "Novelty",
-      "name": "transition_massActionPropensity",
-      "quality": 0.76935
-    },
-    {
-      "cycle_id": "63b75a93",
-      "domain": "Novelty",
-      "name": "enabled_and_positive_propensity",
-      "quality": 0.76935
-    },
-    {
-      "cycle_id": "63b75a93",
-      "domain": "Novelty",
-      "name": "crn_simulates_deterministic_machine",
-      "quality": 0.76935
-    },
     {
       "cycle_id": "3811f14c",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "neuron_second_zero_ne_unitary",
       "quality": 0.7712399999999999
+    },
+    {
+      "cycle_id": "1cf3185d",
+      "domain": "Geometry",
+      "name": "singleton_connected",
+      "quality": 0.8116299999999999
+    },
+    {
+      "cycle_id": "1cf3185d",
+      "domain": "Geometry",
+      "name": "singleton_pairwise_disjoint",
+      "quality": 0.8116299999999999
+    },
+    {
+      "cycle_id": "1cf3185d",
+      "domain": "Geometry",
+      "name": "isMinor_refl",
+      "quality": 0.8116299999999999
     }
   ],
-  "last_updated": "2026-07-31T18:56:28",
+  "last_updated": "2026-07-31T18:57:42",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "2a77d2cb",
-        "quality": 0.66,
-        "theorems": 9,
-        "title": "ArXiv paper: A decomposition of Weyl group multiple Dirichlet series for symmetr"
-      },
-      {
         "cycle_id": "82236c9f",
         "quality": 0.65,
         "theorems": 12,
@@ -3451,6 +3445,12 @@
         "quality": 0.686,
         "theorems": 37,
         "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
+      },
+      {
+        "cycle_id": "1cf3185d",
+        "quality": 0.8116299999999999,
+        "theorems": 60,
+        "title": "Hadwiger's Conjecture"
       }
     ],
     "Logic": [

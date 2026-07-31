@@ -797,6 +797,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 1cf3185d (Q=0.812), which proved 60 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k \u2264 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_1cf3185d_7767939d",
+    "priority_score": 0.9116299999999998,
+    "research_mode": "team",
+    "source_exp_id": "1cf3185d",
+    "status": "available",
+    "timestamp": "2026-07-31T18:57:42.174464+00:00",
+    "title": "Deepening: Hadwiger's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f1303b99 (Q=0.811), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Novelty"
@@ -1607,22 +1621,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
   {
-    "consumed_by_exp_id": "1cf3185d",
-    "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k \u2264 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
-    "domains": [
-      "Combinatorics",
-      "Geometry"
-    ],
-    "id": "seed_211",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Hadwiger's Conjecture"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
     "domains": [
@@ -2283,6 +2281,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T08:23:20.837940+00:00",
     "title": "Deepening: Secret Sharing: Shamir's Scheme and Verifiable Variants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8fe295b2 (Q=0.771), which proved 6 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_8fe295b2_8d36337d",
+    "priority_score": 0.8712399999999999,
+    "research_mode": "team",
+    "source_exp_id": "8fe295b2",
+    "status": "available",
+    "timestamp": "2026-07-31T18:56:28.873535+00:00",
+    "title": "Deepening: EML Quantum Activation Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2988,17 +3000,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61e33133",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
       "Analysis"
     ],
     "id": "seed_336",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -4036,23 +4049,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cram\u00e9r's Conjecture on Prime Gaps"
   },
   {
-    "consumed_by_exp_id": "8fe295b2",
-    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
-    "domains": [
-      "EML",
-      "Physics",
-      "MachineLearning"
-    ],
-    "id": "seed_072",
-    "phase": "A",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Quantum Activation Functions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
     "domains": [
@@ -4476,17 +4472,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Brocard's Problem: n! + 1 = m\u00b2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff2a2247",
     "description": "Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
     "domains": [
       "Combinatorics",
       "Logic"
     ],
     "id": "seed_215",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Reconstruction Conjecture"
   },
@@ -10708,6 +10705,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T14:49:18.640191+00:00",
     "title": "The explicit `Bool` witness shows that moving from `Prop`-valued to data-valued"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H\u2082 = 0` produces zero.  They also\nshow that unitary output forces the logarithmic factor itself to be unitary.  This leaves\nthe raw-expression coverage question separate from the question whether the expression\ndefines an `SU(2)`-valued activation.\n\nConcrete, falsifiable next conjectures:\n\n1. **Scalar-log unit-circle intersection.** There exists a nonzero real `t` such that\n   `|Complex.log (1 + t * I)| = 1`.  Equivalently,\n   `(Real.log (Real.sqrt (1+t^2)))^2 + (Real.arctan t)^2 = 1` (with the principal\n   branches).  A certified interval containing such a `t` would give a scalar unitary\n   logarithmic factor.\n\n2. **Scalar second Hamiltonian suffices for `U(2)` coverage.** If `t` satisfies the first\n   conjecture and `H\u2082 = t I`, then every `2 \u00d7 2` unitary matrix is equal to\n   `exp(iH\u2081) * log(I+iH\u2082)` for some Hermitian `H\u2081`.  This reduces to proving global\n   surjectivity of the Hermitian exponential for finite-dimensional complex unitary\n   matrices and tracking the scalar phase.\n\n3. **Trace correction for `SU(2)`.** Under the same scalar choice of `H\u2082`, every element\n   of `SU(2)` has a representing Hermitian `H\u2081` whose trace lies in one explicitly\n   determined congruence class modulo `2\u03c0`; determine and prove that class.\n\n4. **Normalized activation is always unitary on its domain.** Define the polar-normalized\n   logarithmic factor `L (L\u22c6L)^{-1/2}` whenever `L = log(I+iH\u2082)` is invertible.  Conjecture:\n   multiplying this factor by `exp(iH\u2081)` yields a unitary, and every `SU(2)` matrix is\n   obtained with traceless Hermitian parameters after a determinant-one phase correction.\n",
+    "domains": [
+      "Physics",
+      "NumberTheory"
+    ],
+    "id": "fd_0862",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8fe295b2",
+    "status": "available",
+    "timestamp": "2026-07-31T18:56:23.876742+00:00",
+    "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H \u2192 IsMinor H K \u2192 IsMinor G K`. This is falsifiable directly against the branch-set definition and would make the catalog relation a preorder.\n\n2. **The triangle case.** Prove `HadwigerCase 2`: every finite graph with no proper two-coloring has a `K\u2083` branch-set minor. A concrete route is to formalize the odd-cycle characterization of non-bipartite graphs and contract an odd cycle to three branch sets.\n\n3. **The four-clique case.** Prove `HadwigerCase 3`: every finite graph with no proper three-coloring has a `K\u2084` branch-set minor. This should be tested through a formal reduction to the classical low-order Hadwiger theorem rather than finite enumeration.\n\n4. **Wagner structural bridge.** Prove that every finite `K\u2085`-minor-free graph can be reduced, using clique-sums, to planar graphs and the Wagner graph, and derive `FourColorTheorem \u2192 HadwigerFive`. Together with `wagner_forward`, this yields the substantive Wagner equivalence rather than only the logical contrapositive formulation proved here.\n\n5. **Known cases through six colors.** Prove `\u2200 k \u2264 5, HadwigerCase k`. In the indexing used here, the endpoint `k = 5` asserts that every non-five-colorable finite graph contains a `K\u2086` minor; its formal proof should explicitly identify where the Four Color Theorem is used.\n",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_0863",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1cf3185d",
+    "status": "available",
+    "timestamp": "2026-07-31T18:57:38.452584+00:00",
+    "title": "1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`,"
   },
   {
     "consumed_by_exp_id": "",
