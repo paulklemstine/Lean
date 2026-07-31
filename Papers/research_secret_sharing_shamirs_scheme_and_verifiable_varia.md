@@ -1,466 +1,408 @@
-# Polynomial Secret Sharing and Verifiable Variants: Reconstruction, Information-Theoretic Privacy, and the Binding–Hiding Duality
+# Perfect Privacy, Exact Thresholds, and Algebraic Verification in Polynomial Secret Sharing
 
-**Author:** Aristotle
-**Date:** 2026-06-26
-**Domain:** Cryptography (with bridges to Algebra and Linear Algebra)
+**Aristotle**  
+**31 July 2026**
 
 ## Abstract
 
-We present a unified, fully formal treatment of polynomial secret sharing and
-its two canonical verifiable variants. Working over an arbitrary field $F$, we
-prove that Shamir's $(t,n)$ secret sharing scheme satisfies two dual guarantees
-that are, at bottom, the same statement about the evaluation map on polynomials
-of bounded degree. First, **reconstruction**: any $t$ distinct shares determine
-the degree-$(<t)$ sharing polynomial uniquely, so the reconstruction threshold
-equals the polynomial degree plus one. Second, **information-theoretic
-privacy**: any $t-1$ shares are consistent with every secret in exactly one way,
-so a sub-threshold coalition learns nothing. We make reconstruction
-*constructive* via the explicit Lagrange formula with node-only weights summing
-to one, and we derive the additive and multiplicative homomorphisms that make
-Shamir sharing the linear backbone of secure multiparty computation. We then
-formalize two verifiable secret sharing schemes. **Feldman's VSS** is shown to be
-complete, sound (cheating dealers are caught: a share verifies iff it equals the
-committed evaluation), and perfectly **binding**. **Pedersen's VSS** is shown to
-be complete, homomorphic, and perfectly **hiding** — its commitments leak zero
-information about the sharing polynomial — together with the dual property of
-**equivocation**. The binding of Feldman and the hiding of Pedersen are exhibited
-as the injectivity and surjectivity, respectively, of a single commitment map,
-making precise the binding–hiding duality of commitment-based VSS. All results
-are machine-checked.
+Threshold secret sharing distributes a field element among participants so that sufficiently large coalitions can reconstruct it while smaller coalitions obtain no information. This paper develops the algebraic core of Shamir secret sharing and an abstract additive formulation of Feldman verifiable secret sharing. Over an arbitrary field $F$, a secret is the value at zero of a polynomial of degree less than a threshold $t$, and shares are evaluations at distinct nonzero locations. We prove an exact interpolation theorem: after fixing arbitrary observations at $t-1$ nonzero locations, every candidate secret extends those observations in exactly one polynomial of degree less than $t$. Over a finite field with uniform coefficient sampling, this bijection gives information-theoretic privacy. We then prove that the reconstruction threshold for degree-at-most-$d$ polynomials is exactly $d+1$: that many distinct evaluations force equality, whereas $d$ nonzero evaluations can agree for polynomials having different values at zero. Finally, given an injective additive commitment homomorphism, we formulate Feldman’s verification equation, prove completeness for honest shares and perfect algebraic detection of altered shares, and show that $d+1$ accepted evaluations determine the unique committed polynomial. Explicit algorithms, complexity bounds, and examples illustrate reconstruction, privacy witnesses, and verification.
 
 ## 1. Introduction
 
-Secret sharing, introduced independently by Shamir and Blakley in 1979, is the
-problem of splitting a secret $c$ among $n$ participants so that any authorized
-subset can reconstruct $c$ while any unauthorized subset learns nothing. In the
-$(t,n)$-threshold case, authorized subsets are exactly those of size at least
-$t$. Shamir's construction is disarmingly simple: encode the secret as the
-constant term of a random polynomial of degree less than $t$ and distribute
-evaluations of that polynomial as shares.
+A conventional secret is controlled by whoever possesses a single representation of it. Threshold secret sharing instead distributes control. For an integer $t\ge 1$, the intended policy is that any authorized collection of at least $t$ suitable shares can reconstruct the secret, while an unauthorized collection of at most $t-1$ shares cannot distinguish one possible secret from another.
 
-The scheme's two pillars — perfect reconstruction at the threshold and perfect
-secrecy below it — are two readings of one classical algebraic fact: the
-evaluation map sending a polynomial of degree $<t$ to its values at $t$ fixed
-distinct nodes is a bijection. This paper develops that observation into a
-rigorous, self-contained account, and then layers on **verifiability**, the
-property that protects against a malicious *dealer* who distributes inconsistent
-shares.
+Shamir’s construction realizes this policy with polynomial interpolation. Let $F$ be a field and let $s\in F$ be the secret. A dealer chooses coefficients $a_1,\ldots,a_{t-1}\in F$ and forms
 
-Two commitment-based verifiable secret sharing (VSS) schemes occupy opposite
-ends of a fundamental trade-off. Feldman's scheme commits to each polynomial
-coefficient as $C_j = a_j \cdot g$ in a group where discrete logarithms are hard;
-it binds the dealer perfectly to a single polynomial but hides the secret only
-computationally. Pedersen's scheme uses two generators and a random blinding
-polynomial, $C_j = a_j\cdot g + a'_j\cdot h$; it hides the secret perfectly but
-binds only computationally. We prove the formal cores of both, and we present the
-binding of Feldman and the hiding of Pedersen as the two complementary halves of
-a single algebraic dichotomy.
+$$
+p(X)=s+a_1X+\cdots+a_{t-1}X^{t-1}.
+$$
 
-Throughout, we follow the additive-group convention common in formalized
-cryptography: a prime-order cyclic group is modeled as (the additive group of) a
-field $F$ with fixed generators, and group exponentiation $g^a$ is rendered as
-the scalar multiple $a \cdot g$.
+Each participant is assigned a distinct nonzero location $x_i\in F$ and receives $p(x_i)$. The secret is $p(0)$. The construction is linear, conceptually economical, and information-theoretic.
 
-## 2. Preliminaries and definitions
+Three claims must be distinguished. First, **privacy** asks what an undersized coalition can infer. Second, **reconstruction** asks whether enough consistent values determine the secret. Third, **verifiability** asks whether distributed values are consistent with one polynomial selected by the dealer. Basic Shamir sharing provides the first two under honest distribution. Feldman-style coefficient commitments address the third.
 
-Let $F$ be a field and let $F[X]$ denote the ring of univariate polynomials over
-$F$. For $f \in F[X]$ we write $f.\mathrm{coeff}\,j$ for the coefficient of
-$X^j$, $\deg f$ for the degree, $\mathrm{natDegree}\,f$ for the natural-number
-degree, and $f(x)$ (or `f.eval x`) for evaluation at $x \in F$.
+The central results established below are these.
 
-**Definition 1 (Sharing polynomial and secret).** A *sharing polynomial* for
-threshold $t$ is a polynomial $f \in F[X]$ with $\deg f < t$. Its *secret* is the
-constant term $f(0) = f.\mathrm{coeff}\,0$.
+1. For any prescribed values at $t-1$ distinct nonzero points and any prescribed secret, exactly one polynomial of degree less than $t$ realizes all the data.
+2. Consequently, in the finite uniform model, the distribution of any $t-1$ shares is independent of the secret.
+3. Degree-at-most-$d$ polynomials require exactly $d+1$ evaluations for unconditional unique reconstruction: $d+1$ suffice, and $d$ nonzero evaluations can fail to determine even the value at zero.
+4. For an injective additive coefficient-commitment map, an honest share always verifies and every altered share is rejected.
+5. If evaluations of a degree-at-most-$d$ candidate pass against a degree-at-most-$d$ committed polynomial at $d+1$ distinct points, the candidate equals the committed polynomial.
 
-**Definition 2 (Shares).** Given distinct nonzero evaluation nodes
-$x_1, \dots, x_n \in F$, the *share* of participant $i$ is $f(x_i)$.
+The assumptions are deliberately explicit. The privacy and threshold arguments require only field algebra. The verification argument treats commitments through an additive homomorphism and requires injectivity for unconditional soundness. In practical Feldman systems the conventional notation is multiplicative, and the relevant security interpretation is normally computational; the abstract theorem here isolates the exact algebraic implication of injectivity.
 
-For the constructive reconstruction theory we use the Lagrange interpolation
-framework over an index set. Let $s$ be a finite set of participant indices and
-$v : \iota \to F$ an evaluation-node map that is injective on $s$, with $v\,i \ne 0$.
+## 2. Algebraic setting and definitions
 
-**Definition 3 (Lagrange basis and reconstruction coefficient).** The *Lagrange
-basis polynomial* $\mathrm{basis}_s^v(i)$ is the unique polynomial of degree
-$< \#s$ satisfying $\mathrm{basis}_s^v(i)(v\,j) = \delta_{ij}$ for $j \in s$. The
-*reconstruction coefficient* of participant $i$ is
+### 2.1 Fields and polynomials
 
-$$\mathrm{lagrangeCoeff}(s, v, i) \;=\; \mathrm{basis}_s^v(i)(0),$$
+Let $F$ be a field. All polynomial coefficients, evaluation locations, shares, and secrets lie in $F$. For $p\in F[X]$, write $\deg p$ for its degree, with the zero polynomial treated in the usual way as having degree below every natural degree bound. A finite set of locations is always understood to contain distinct elements because it is a set.
 
-a quantity depending only on the nodes, not on the sharing polynomial.
+The foundational fact is the root bound: a nonzero polynomial of degree at most $d$ has at most $d$ distinct roots. Equivalently, if two polynomials of degree at most $d$ agree at $d+1$ distinct points, they are equal.
 
-For the verifiable schemes we fix generators in $F$.
+### 2.2 Shamir sharing
 
-**Definition 4 (Feldman commitment).** For a generator $g \in F$ and sharing
-polynomial $f$, the $j$-th *Feldman commitment* is
-$\mathrm{feldmanCommit}(g, f, j) = (f.\mathrm{coeff}\,j)\cdot g$.
+**Definition 2.1 (Share).** For a polynomial $p\in F[X]$ and a location $x\in F$, the share value at $x$ is
 
-**Definition 5 (Feldman verification).** A claimed share value $s$ at point $x$
-*verifies* against published commitments $C : \mathbb{N} \to F$ with threshold
-$t$ iff $\mathrm{FeldmanVerifies}(g, t, C, x, s)$ holds, where
+$$
+\operatorname{Share}_p(x)=p(x).
+$$
 
-$$\mathrm{FeldmanVerifies}(g, t, C, x, s) \;:\Longleftrightarrow\; s \cdot g = \sum_{j=0}^{t-1} x^j \, C_j.$$
+**Definition 2.2 (Valid threshold polynomial).** Given a threshold $t\in\mathbb N$ and a secret $s\in F$, a polynomial $p$ is valid when
 
-**Definition 6 (Pedersen commitment).** For generators $g, h \in F$, sharing
-polynomial $f$, and blinding polynomial $f'$, the $j$-th *Pedersen commitment* is
+$$
+\deg p<t
+\qquad\text{and}\qquad
+p(0)=s.
+$$
 
-$$\mathrm{pedersenCommit}(g, h, f, f', j) \;=\; (f.\mathrm{coeff}\,j)\cdot g + (f'.\mathrm{coeff}\,j)\cdot h.$$
+Participant locations are required to be nonzero when privacy relative to the secret is discussed. A share at $0$ would reveal $p(0)=s$ directly.
 
-**Definition 7 (Pedersen verification).** A claimed share pair $(s, s')$ at point
-$x$ *verifies* iff
+For randomized Shamir sharing over a finite field, the dealer fixes $a_0=s$ and samples $a_1,\ldots,a_{t-1}$ independently and uniformly from $F$. This selects uniformly from the $|F|^{t-1}$ valid coefficient vectors.
 
-$$\mathrm{PedersenVerifies}(g, h, t, C, x, s, s') \;:\Longleftrightarrow\; s\cdot g + s'\cdot h = \sum_{j=0}^{t-1} x^j\, C_j.$$
+### 2.3 Lagrange interpolation
 
-## 3. Reconstruction: threshold equals degree plus one
+For distinct points $z_1,\ldots,z_m\in F$, define the Lagrange basis polynomials
 
-The reconstruction guarantee is a uniqueness statement about low-degree
-polynomials.
+$$
+L_i(X)=\prod_{\substack{1\le j\le m\\j\ne i}}
+\frac{X-z_j}{z_i-z_j}.
+$$
 
-**Theorem 1 (`shamir_reconstruction`).** Let $t \in \mathbb{N}$, let $s \subseteq F$
-be a finite set with $\#s = t$, and let $f, g \in F[X]$ with $\deg f < t$ and
-$\deg g < t$. If $f(x) = g(x)$ for all $x \in s$, then $f = g$.
+They satisfy $L_i(z_j)=1$ if $i=j$ and $L_i(z_j)=0$ otherwise. Therefore prescribed values $w_1,\ldots,w_m$ have the interpolant
 
-*Proof sketch.* Consider $f - g$. By the triangle inequality for polynomial
-degree, $\deg(f - g) \le \max(\deg f, \deg g) < t = \#s$. But $f - g$ vanishes on
-all $\#s = t$ points of $s$. A nonzero polynomial of degree $< t$ can have at
-most $t-1$ roots, so $f - g$ must be the zero polynomial; hence $f = g$. (In the
-formalization this is `Polynomial.eq_of_degree_sub_lt_of_eval_finset_eq` after
-rewriting the degree bounds through $\#s = t$.) $\qquad\blacksquare$
+$$
+I(X)=\sum_{i=1}^{m}w_iL_i(X),
+$$
 
-**Corollary 1 (`shamir_secret_recovered`).** Under the hypotheses of Theorem 1,
-$f(0) = g(0)$.
+which has degree less than $m$ and obeys $I(z_i)=w_i$. Uniqueness follows because the difference of two such interpolants has $m$ roots but degree less than $m$.
 
-*Proof.* Immediate from $f = g$ by evaluating at $0$. $\qquad\blacksquare$
+### 2.4 Additive coefficient commitments
 
-Theorem 1 is the precise sense in which *the reconstruction threshold equals the
-degree plus one*: a degree-$(t-1)$ polynomial is determined by exactly
-$t = (t-1)+1$ values, and Corollary 1 says the secret is among the determined
-data. Equivalently, two parties holding $t$ consistent shares must agree on the
-secret.
+Let $G$ be an abelian group written additively, and let
 
-Uniqueness is non-constructive. The constructive companion is Lagrange
-interpolation.
+$$
+C:F\longrightarrow G
+$$
 
-**Theorem 9 (`shamir_reconstruct_at`).** Let $v$ be injective on the finite index
-set $s$ and let $f \in F[X]$ with $\deg f < \#s$. Then for every $z \in F$,
+be an additive homomorphism. Thus $C(u+v)=C(u)+C(v)$ and $C(0)=0_G$. The additive notation abstracts the usual multiplicative notation $g^a$: group sums correspond to products of conventional commitments.
 
-$$f(z) = \sum_{i \in s} f(v\,i)\, \mathrm{basis}_s^v(i)(z).$$
+If
 
-*Proof sketch.* Both sides are polynomials in $z$ of degree $< \#s$ that agree at
-the $\#s$ nodes $\{v\,i : i \in s\}$ (the right-hand side evaluates to $f(v\,j)$
-at $z = v\,j$ because $\mathrm{basis}_s^v(i)(v\,j) = \delta_{ij}$). By the
-uniqueness principle (Theorem 1 in spirit), the two polynomials coincide.
-$\qquad\blacksquare$
+$$
+p(X)=\sum_{i=0}^{d}a_iX^i,
+$$
 
-Specializing to $z = 0$ gives the operational reconstruction algorithm.
+the public coefficient commitments are $C(a_0),\ldots,C(a_d)$. For a location $x$ and a claimed value $y$, define the verification condition by
 
-**Theorem 10 (`shamir_explicit_reconstruction`).** Under the hypotheses of
-Theorem 9,
+$$
+C(y)=\sum_{i=0}^{d}C(a_ix^i).
+$$
 
-$$f(0) = \sum_{i \in s} f(v\,i)\, \mathrm{lagrangeCoeff}(s, v, i).$$
+Zero coefficients can be omitted from the finite sum without changing it.
 
-*Proof.* Set $z = 0$ in Theorem 9 and use Definition 3. $\qquad\blacksquare$
+The soundness results assume that $C$ is injective: $C(u)=C(v)$ implies $u=v$. This assumption precisely identifies the algebraic property used to turn equality of commitments into equality of field elements.
 
-Theorem 10 exhibits the secret as a *fixed linear functional* of the shares: the
-weights $\mathrm{lagrangeCoeff}(s,v,i)$ depend only on the nodes, so the same
-recipe recovers the secret of every polynomial shared on those nodes. The weights
-satisfy a normalization identity.
+## 3. Perfect privacy below the threshold
 
-**Lemma 1 (`sum_lagrangeCoeff_eq_one`).** For a nonempty index set $s$ on which
-$v$ is injective, $\sum_{i \in s} \mathrm{lagrangeCoeff}(s, v, i) = 1$.
+### 3.1 Unique extension theorem
 
-*Proof sketch.* Apply Theorem 9 to the constant polynomial $f \equiv 1$ (degree
-$0 < \#s$): the left side is $1$ and each share value $f(v\,i)$ equals $1$, so the
-right side at $z = 0$ is $\sum_i \mathrm{lagrangeCoeff}(s,v,i)$. $\qquad\blacksquare$
+**Theorem 3.1 (Perfect Privacy Extension Theorem).** Let $A\subset F$ consist of exactly $t-1$ distinct nonzero elements. Let $v:A\to F$ prescribe an arbitrary observed value at every point of $A$, and let $s\in F$ be any candidate secret. Then there exists exactly one polynomial $p\in F[X]$ such that
 
-Lemma 1 says reconstruction is an *affine* (indeed, when weights are
-nonnegative, convex-like) combination of the shares — the algebraic analogue of a
-weighted average.
+$$
+\deg p<t,
+\qquad p(0)=s,
+\qquad p(x)=v(x)\quad\text{for every }x\in A.
+$$
 
-## 4. Information-theoretic privacy below threshold
+**Proof sketch.** Since $0\notin A$, the enlarged set $A\cup\{0\}$ contains exactly $t$ distinct points. Prescribe value $s$ at $0$ and value $v(x)$ at each $x\in A$. Lagrange interpolation on these $t$ points produces a polynomial of degree less than $t$ satisfying all conditions. If $p$ and $q$ both satisfy them, then $p-q$ has all $t$ points as roots and has degree less than $t$, unless it is zero. The root bound forces $p-q=0$, proving uniqueness. $\square$
 
-We now prove that a coalition holding $t-1$ shares learns nothing about the
-secret. The statement is an existence-and-uniqueness claim, per candidate secret.
+This statement is stronger than bare existence. For each fixed observation transcript, candidate secrets and compatible low-degree polynomials are in one-to-one correspondence. The secret can vary freely, but once it is selected, the entire polynomial is fixed.
 
-**Theorem 2 (`shamir_privacy`).** Let $t \ge 1$, let $s \subseteq F$ with
-$0 \notin s$ and $\#s = t-1$, let $y : F \to F$ record the observed shares, and
-let $c \in F$ be any candidate secret. Then there exists a *unique* $f \in F[X]$
-with
+**Corollary 3.2 (No candidate secret is excluded).** Under the hypotheses of Theorem 3.1, for any two secrets $s_1,s_2\in F$, there exist valid threshold polynomials $p_1,p_2$ satisfying
 
-$$\deg f < t, \qquad f(0) = c, \qquad \text{and} \qquad f(x) = y(x)\ \text{for all } x \in s.$$
+$$
+p_1(0)=s_1,
+\qquad p_2(0)=s_2,
+\qquad p_1(x)=p_2(x)=v(x)
+$$
 
-*Proof sketch.* Consider the augmented node set $s^+ = \{0\} \cup s$, which has
-$\#s^+ = t$ because $0 \notin s$. Define target values on $s^+$ by assigning $c$
-to the node $0$ and $y(x)$ to each $x \in s$. By Lagrange interpolation there is a
-polynomial $f$ of degree $< t$ hitting all $t$ targets; this $f$ witnesses
-existence. For uniqueness, any two solutions agree on the $t$ points of $s^+$
-(they share the value $c$ at $0$ and the values $y(x)$ on $s$) and both have
-degree $< t$, so Theorem 1 forces them equal. (The formalization constructs the
-interpolant explicitly by induction on $s$, then adjusts the constant term to
-hit $c$ at $0$, and closes uniqueness with `shamir_reconstruction`.) $\qquad\blacksquare$
+for all $x\in A$.
 
-The interpretation is the crux of information-theoretic security. For *every*
-secret $c$ there is *exactly one* sharing polynomial consistent with the
-coalition's view. The map (candidate secret) $\mapsto$ (consistent polynomial) is
-therefore a bijection, so the coalition's $t-1$ shares are equally compatible
-with every secret, each in exactly one way. No statistical test on the observed
-shares can favor one secret over another: the shares carry zero information about
-$c$. The contrapositive packages this as explicit ambiguity.
+**Proof sketch.** Apply Theorem 3.1 separately to $s_1$ and $s_2$. $\square$
 
-**Corollary 2 (`shamir_insufficient`).** Under the hypotheses of Theorem 2, for
-any two distinct secrets $c_1 \ne c_2$ there exist $f, g \in F[X]$ with
-$\deg f < t$, $\deg g < t$, $f(x) = g(x) = y(x)$ for all $x \in s$,
-$f(0) = c_1$, $g(0) = c_2$, and $f \ne g$.
+This corollary captures privacy without probability language: the transcript logically rules out no field element as the secret.
 
-*Proof.* Instantiate Theorem 2 at $c_1$ and at $c_2$ to obtain witnesses $f$ and
-$g$; they differ because their constant terms $c_1 \ne c_2$ differ. $\qquad\blacksquare$
+### 3.2 Distributional consequence over finite fields
 
-Theorems 1 and 2 together expose the threshold as a sharp phase transition.
-Abstractly, the evaluation map $E_k : \{f : \deg f < t\} \to F^k$ sending a
-polynomial to its values on $k$ fixed distinct nodes is *injective* for $k \ge t$
-(Theorem 1) and, once the secret node is included, *bijective at $k = t$* and
-*surjective with uniform fibers at $k = t-1$* (Theorem 2). Security and
-reconstruction are the same bijection read at adjacent cardinalities.
+**Theorem 3.3 (Information-theoretic privacy).** Let $F$ be finite, let $t>0$, and fix $t-1$ distinct nonzero locations. For each secret $s\in F$, choose the remaining $t-1$ coefficients of a degree-less-than-$t$ sharing polynomial independently and uniformly from $F$. Then the resulting vector of $t-1$ shares is uniformly distributed over $F^{t-1}$, and its distribution is independent of $s$.
 
-## 5. Linear homomorphism and secure computation
+**Proof sketch.** Fix a share vector $v\in F^{t-1}$. Theorem 3.1 says that for each fixed secret $s$, exactly one degree-less-than-$t$ polynomial has constant term $s$ and produces $v$. Equivalently, exactly one coefficient tuple $(a_1,\ldots,a_{t-1})$ maps to $v$. There are $|F|^{t-1}$ equally likely tuples, so the probability of $v$ is $|F|^{-(t-1)}$ for every $s$. Thus every transcript has the same probability under every secret. $\square$
 
-Because reconstruction is a fixed linear functional of the shares (Theorem 10),
-secrets inherit the linear algebra of their shares.
+The independence is unconditional. It does not depend on a computational hardness assumption, and an adversary with unlimited computation gains no statistical advantage from the observed shares.
 
-**Theorem 11 (`shamir_reconstruct_additive`).** Let $f, g \in F[X]$ both have
-degree $< \#s$, shared on the same nodes $v$. Then the participant-wise sum of
-shares $i \mapsto f(v\,i) + g(v\,i)$ reconstructs the sum of secrets:
+### 3.3 Why the nonzero condition is necessary
 
-$$\sum_{i \in s} \big(f(v\,i) + g(v\,i)\big)\,\mathrm{lagrangeCoeff}(s,v,i) = f(0) + g(0).$$
+The restriction $0\notin A$ is structural. If $0\in A$, the observation at that location is $p(0)=s$, so the secret is revealed. In the interpolation proof, attempting to adjoin $(0,s)$ would duplicate an already observed location, and arbitrary prescribed data could be inconsistent. Thus nonzero participant identifiers are not a cosmetic convention.
 
-*Proof sketch.* The participant-wise sums are exactly the shares of $f + g$,
-which has degree $< \#s$; apply Theorem 10 to $f + g$ and split the sum by
-linearity, using $(f+g)(0) = f(0) + g(0)$. $\qquad\blacksquare$
+## 4. Reconstruction and the exact threshold
 
-Thus participants can add two shared secrets by adding shares *locally* and then
-running the ordinary reconstruction, never revealing either summand. The same
-linearity yields multiplication by public scalars and hence arbitrary linear
-combinations.
+### 4.1 Sufficiency of $d+1$ values
 
-Multiplication of secrets is governed by degree growth.
+**Theorem 4.1 (Unique reconstruction from degree plus one).** Let $p,q\in F[X]$ have degree at most $d$. If they agree at $d+1$ distinct locations, then $p=q$.
 
-**Theorem 12 (`shamir_reconstruct_mul`).** Let $f, g \in F[X]$ with
-$\deg(f \cdot g) < \#s$ (e.g. $\#s \ge 2t-1$ when $\deg f, \deg g < t$). Then the
-participant-wise products of shares reconstruct the product of secrets:
+**Proof sketch.** Let $r=p-q$. Its degree is at most $d$. Every agreement location is a root of $r$, so $r$ has at least $d+1$ distinct roots. The root bound implies that $r$ cannot be nonzero. Hence $p=q$. $\square$
 
-$$\sum_{i \in s} \big(f(v\,i)\,g(v\,i)\big)\,\mathrm{lagrangeCoeff}(s,v,i) = f(0)\,g(0).$$
+It follows that $d+1$ shares of a degree-at-most-$d$ polynomial determine the polynomial and its secret. Reconstruction can be performed by Lagrange interpolation. If the points are $(x_i,y_i)$ for $1\le i\le d+1$, then
 
-*Proof sketch.* The products $f(v\,i)\,g(v\,i)$ are the shares of the polynomial
-$f\cdot g$. Since $\deg(f\cdot g) < \#s$, Theorem 10 applies to $f\cdot g$ and
-recovers its constant term $(f\cdot g)(0) = f(0)\,g(0)$. $\qquad\blacksquare$
+$$
+p(X)=\sum_{i=1}^{d+1}y_i
+\prod_{j\ne i}\frac{X-x_j}{x_i-x_j}.
+$$
 
-Theorem 12 is the algebraic core of the BGW protocol for general secure
-multiparty computation: products can be reconstructed, but at the cost of doubled
-degree, which a full protocol then reduces via re-sharing. Together with Theorem
-11, Shamir sharing is an $F$-linear secret-sharing scheme supporting addition and
-(degree-permitting) multiplication of secrets held only in shared form.
+If only the secret is required, one evaluates at zero without explicitly expanding the polynomial:
 
-## 6. Feldman's verifiable secret sharing
+$$
+p(0)=\sum_{i=1}^{d+1}y_i
+\prod_{j\ne i}\frac{-x_j}{x_i-x_j}.
+$$
 
-We now defend against a malicious dealer. The algebraic heart of Feldman
-verification is that the homomorphic combination of commitments reproduces the
-commitment to the share.
+A direct implementation uses $O(d^2)$ field operations and $O(d)$ auxiliary storage. Faster multipoint interpolation is available for large instances, but the quadratic method is transparent and adequate for demonstrating the theorem.
 
-**Theorem 3 (`feldman_commitment_eval`).** Let $g \in F$, $t \in \mathbb{N}$, and
-$f \in F[X]$ with $\mathrm{natDegree}\,f < t$. Then for all $x \in F$,
+### 4.2 Necessity: $d$ values can fail
 
-$$\sum_{j=0}^{t-1} x^j\, \mathrm{feldmanCommit}(g, f, j) = f(x)\cdot g.$$
+**Theorem 4.2 (Failure of reconstruction from only $d$ nonzero values).** Let $A\subset F$ contain exactly $d$ distinct nonzero locations. Then there exist distinct polynomials $p,q\in F[X]$, each of degree at most $d$, such that
 
-*Proof sketch.* Substitute $\mathrm{feldmanCommit}(g,f,j) = (f.\mathrm{coeff}\,j)\cdot g$,
-factor $g$ out of the sum, and recognize the remaining sum as $f(x)$ via the
-finite evaluation identity $f(x) = \sum_{j<t}(f.\mathrm{coeff}\,j)\,x^j$, valid
-because $\mathrm{natDegree}\,f < t$. $\qquad\blacksquare$
+$$
+p(x)=q(x)\quad\text{for every }x\in A,
+$$
 
-**Corollary 3 (`feldman_complete`, completeness).** Under the hypotheses of
-Theorem 3, $\mathrm{FeldmanVerifies}(g, t, \mathrm{feldmanCommit}(g,f), x, f(x))$.
+but
 
-*Proof.* The verification equation is exactly the (symmetric) statement of
-Theorem 3. $\qquad\blacksquare$
+$$
+p(0)\ne q(0).
+$$
 
-**Theorem 4 (`feldman_verify_iff`).** If $g \ne 0$ and $\mathrm{natDegree}\,f < t$,
-then a claimed share $s$ verifies iff $s = f(x)$:
+**Proof sketch.** Define
 
-$$\mathrm{FeldmanVerifies}(g, t, \mathrm{feldmanCommit}(g,f), x, s) \iff s = f(x).$$
+$$
+r(X)=\prod_{a\in A}(X-a).
+$$
 
-*Proof sketch.* By Theorem 3 the verification equation reads $s\cdot g = f(x)\cdot g$.
-Since $g \ne 0$ and $F$ is a field, multiplication by $g$ is injective, so this is
-equivalent to $s = f(x)$. $\qquad\blacksquare$
+Take $p=r$ and $q=0$. The polynomial $r$ has degree $d$ and vanishes on $A$, so $p$ and $q$ agree at all supplied locations. Yet
 
-**Corollary 4 (`feldman_catches_cheater`, soundness).** If $g \ne 0$,
-$\mathrm{natDegree}\,f < t$, and $s \ne f(x)$, then verification fails:
-$\lnot\,\mathrm{FeldmanVerifies}(g, t, \mathrm{feldmanCommit}(g,f), x, s)$.
+$$
+r(0)=\prod_{a\in A}(-a)\ne 0
+$$
 
-*Proof.* The contrapositive of the right-to-left direction of Theorem 4.
-$\qquad\blacksquare$
+because a product of nonzero field elements is nonzero. Thus $p(0)\ne q(0)$ and $p\ne q$. $\square$
 
-Corollary 4 is exactly the guarantee that *cheating dealers are caught*: any
-share value inconsistent with the published commitments is rejected by the
-verifier. Finally, the commitments bind the dealer.
+**Theorem 4.3 (Exact Reconstruction Threshold).** For the class of polynomials of degree at most $d$, the unconditional reconstruction threshold is exactly $d+1$: evaluations at any $d+1$ distinct locations uniquely determine the polynomial, while for every set of $d$ distinct nonzero locations there are two admissible polynomials agreeing there and encoding different secrets at zero.
 
-**Theorem 5 (`feldman_binding`).** If $g \ne 0$ and $f, f'$ both have
-$\mathrm{natDegree} < t$, and $\mathrm{feldmanCommit}(g,f,j) = \mathrm{feldmanCommit}(g,f',j)$
-for all $j \in \{0,\dots,t-1\}$, then $f = f'$.
+**Proof sketch.** Combine Theorems 4.1 and 4.2. $\square$
 
-*Proof sketch.* On the index range, $(f.\mathrm{coeff}\,j)\cdot g = (f'.\mathrm{coeff}\,j)\cdot g$
-and cancelling the nonzero $g$ gives equal coefficients; off the range both
-coefficients vanish by the degree bound. Equality of all coefficients gives
-$f = f'$ by polynomial extensionality. $\qquad\blacksquare$
+This theorem explains both sides of Shamir’s threshold $t=d+1$. The threshold is not selected merely because interpolation happens to work there; it is minimal in the strongest general sense.
 
-Thus Feldman commitments are *perfectly binding*: the commitment vector
-determines the polynomial, hence the secret. The cost is that hiding is only
-computational, because $C_0 = c \cdot g$ is a deterministic public function of the
-secret.
+## 5. Verifiable sharing through coefficient commitments
 
-## 7. Pedersen's perfectly hiding VSS
+### 5.1 The evaluation identity
 
-Pedersen's scheme trades the binding/hiding roles by introducing a second
-generator and a blinding polynomial. The verification identity is structurally
-identical to Feldman's.
+**Lemma 5.1 (Committed evaluation identity).** Let $C:F\to G$ be an additive homomorphism and let $p(X)=\sum_i a_iX^i$. For every $x\in F$,
 
-**Theorem 6 (`pedersen_commitment_eval`).** Let $g, h \in F$, $t \in \mathbb{N}$,
-and $f, f' \in F[X]$ with $\mathrm{natDegree}\,f < t$ and
-$\mathrm{natDegree}\,f' < t$. Then for all $x \in F$,
+$$
+C(p(x))=\sum_i C(a_ix^i).
+$$
 
-$$\sum_{j=0}^{t-1} x^j\, \mathrm{pedersenCommit}(g, h, f, f', j) = f(x)\cdot g + f'(x)\cdot h.$$
+**Proof sketch.** Polynomial evaluation gives $p(x)=\sum_i a_ix^i$. Apply $C$ and repeatedly use preservation of finite sums. $\square$
 
-*Proof sketch.* Expand the commitment, split the sum into a $g$-part and an
-$h$-part, and apply the finite evaluation identity to each of $f$ and $f'$. $\qquad\blacksquare$
+The identity is the algebraic engine of Feldman verification. It permits a participant to compare a commitment to a claimed evaluation with a public combination derived from coefficient commitments.
 
-**Corollary 5 (`pedersen_complete`, completeness).** Under the hypotheses of
-Theorem 6, the honest share pair $(f(x), f'(x))$ verifies:
-$\mathrm{PedersenVerifies}(g, h, t, \mathrm{pedersenCommit}(g,h,f,f'), x, f(x), f'(x))$.
+**Theorem 5.2 (Completeness for honest shares).** Every genuine share $y=p(x)$ satisfies the verification equation
 
-*Proof.* This is the symmetric form of Theorem 6. $\qquad\blacksquare$
+$$
+C(y)=\sum_i C(a_ix^i).
+$$
 
-**Theorem 7 (`pedersen_commit_add`, homomorphism).** For all $g, h, f_1, f_1',
-f_2, f_2', j$,
+**Proof sketch.** Substitute $y=p(x)$ and invoke Lemma 5.1. $\square$
 
-$$\mathrm{pedersenCommit}(g,h,f_1+f_2, f_1'+f_2', j) = \mathrm{pedersenCommit}(g,h,f_1,f_1',j) + \mathrm{pedersenCommit}(g,h,f_2,f_2',j).$$
+Thus honest distribution never causes rejection in the exact algebraic model.
 
-*Proof.* Coefficient-wise additivity: $(f_1+f_2).\mathrm{coeff}\,j = f_1.\mathrm{coeff}\,j + f_2.\mathrm{coeff}\,j$,
-and likewise for the blinding; expand and regroup by the ring axioms.
-$\qquad\blacksquare$
+### 5.2 Detection of altered shares
 
-The headline result is perfect hiding.
+**Theorem 5.3 (Cheating Detection Theorem).** Suppose $C:F\to G$ is injective. If a claimed share $y$ at location $x$ satisfies
 
-**Theorem 8 (`pedersen_perfect_hiding`).** Suppose $h \ne 0$. For every threshold
-$t$, every commitment vector $C : \mathbb{N} \to F$, and every sharing polynomial
-$f \in F[X]$, there exists a blinding polynomial $f' \in F[X]$ such that
+$$
+C(y)=\sum_i C(a_ix^i),
+$$
 
-$$\mathrm{pedersenCommit}(g, h, f, f', j) = C_j \qquad \text{for all } j \in \{0,\dots,t-1\}.$$
+then $y=p(x)$. Equivalently, every claim $y\ne p(x)$ fails verification.
 
-*Proof sketch.* Define $f'$ explicitly as the polynomial with $j$-th coefficient
-$(C_j - (f.\mathrm{coeff}\,j)\cdot g)/h$ for $j < t$ (a finite sum of monomials).
-Then $\mathrm{pedersenCommit}(g,h,f,f',j) = (f.\mathrm{coeff}\,j)\cdot g + \big((C_j - (f.\mathrm{coeff}\,j)\cdot g)/h\big)\cdot h = C_j$,
-using $h \ne 0$ to cancel. $\qquad\blacksquare$
+**Proof sketch.** By Lemma 5.1, the right side equals $C(p(x))$. Hence acceptance gives $C(y)=C(p(x))$. Injectivity of $C$ yields $y=p(x)$. Taking the contrapositive proves rejection of every altered value. $\square$
 
-Interpretation: because *every* sharing polynomial $f$ (hence every secret) can
-be made to produce *any* published commitment vector by a suitable choice of
-blinding, the commitments are equally consistent with every secret. They carry no
-information about the sharing polynomial — *perfect hiding*, an
-information-theoretic property matching Shamir's privacy (Theorem 2). The dual
-statement is equivocation.
+The theorem is exact under its assumption: no error probability appears. It is important, however, to distinguish the abstract injective model from concrete group encodings. If the exponent representation identifies multiple field elements, injectivity must be interpreted on an appropriate domain or replaced by the computational binding statement supplied by the application.
 
-**Corollary 6 (`pedersen_equivocation`).** If $h \ne 0$, then for any two sharing
-polynomials $f_1, f_2$ there exist blinding polynomials $f_1', f_2'$ with
+### 5.3 Global consistency from accepted shares
 
-$$\mathrm{pedersenCommit}(g,h,f_1,f_1',j) = \mathrm{pedersenCommit}(g,h,f_2,f_2',j) \qquad \text{for all } j < t.$$
+**Theorem 5.4 (Accepted-Share Reconstruction Theorem).** Let $p$ be the committed polynomial and $q$ a candidate polynomial, both of degree at most $d$. Suppose $C$ is injective and there is a set $A$ of $d+1$ distinct locations such that, for every $x\in A$, the candidate value $q(x)$ passes verification against the coefficient commitments of $p$. Then
 
-*Proof sketch.* Take $f_1' = 0$ and choose $f_2'$ with $j$-th coefficient
-$((f_1.\mathrm{coeff}\,j - f_2.\mathrm{coeff}\,j)\cdot g)/h$ for $j < t$; the two
-commitments then coincide on the range. (Equivalently, apply Theorem 8 with
-$C_j = \mathrm{pedersenCommit}(g,h,f_1,0,j)$.) $\qquad\blacksquare$
+$$
+q=p.
+$$
 
-## 8. The binding–hiding duality
+**Proof sketch.** At each $x\in A$, Theorem 5.3 turns acceptance into $q(x)=p(x)$. The two degree-at-most-$d$ polynomials therefore agree at $d+1$ distinct points. Theorem 4.1 gives $q=p$. $\square$
 
-Theorems 5 and 8 are two halves of one algebraic phenomenon. Fix the
-participant-visible range $\{0, \dots, t-1\}$ and consider, for a fixed sharing
-polynomial $f$, the *commitment map* induced by the blinding:
+This combines local verification and global reconstruction. Verification certifies each accepted point; interpolation then certifies the entire curve. In particular, $q(0)=p(0)$, so the reconstructed secret is the secret fixed by the public coefficient commitments.
 
-$$\Phi_f : f' \longmapsto \big(j \mapsto (f.\mathrm{coeff}\,j)\cdot g + (f'.\mathrm{coeff}\,j)\cdot h\big).$$
+## 6. Algorithms
 
-Pedersen's perfect hiding (Theorem 8) is precisely the **surjectivity** of $\Phi_f$
-onto commitment vectors (when $h \ne 0$): every target $C$ is hit, for every $f$.
-Feldman's binding (Theorem 5) is precisely the **injectivity** of the analogous
-*unblinded* map $f \mapsto (j \mapsto (f.\mathrm{coeff}\,j)\cdot g)$ on degree-$(<t)$
-polynomials (when $g \ne 0$): distinct polynomials give distinct commitments.
-Injectivity binds; surjectivity hides. The presence of the blinding generator $h$
-is exactly what converts the rigid, injective Feldman map into the flexible,
-surjective Pedersen map. No single commitment scheme of this linear form can be
-both perfectly binding and perfectly hiding, and Feldman and Pedersen are the
-canonical witnesses of the two extremes. This is the bridge from **Cryptography**
-to **Algebra**: the security properties are statements about the injectivity and
-surjectivity of explicit linear maps between polynomial spaces.
+### 6.1 Modular arithmetic model
 
-## 9. Algorithms
+For numerical work, take $F=\mathbb F_p$, where $p$ is prime. Addition and multiplication are reduced modulo $p$, and division by nonzero $a$ means multiplication by $a^{p-2}\bmod p$. Locations must be distinct modulo $p$, and participant locations must be nonzero.
 
-**Algorithm A — Threshold dealing.** Given a secret $c$, threshold $t$, and nodes
-$x_1, \dots, x_n$, sample random coefficients $a_1, \dots, a_{t-1} \in F$, set
-$f = c + a_1 X + \dots + a_{t-1}X^{t-1}$, and output shares $f(x_i)$. Cost:
-$O(nt)$ field operations.
+### 6.2 Share generation
 
-**Algorithm B — Lagrange reconstruction.** Given any $t$ shares at distinct nodes,
-precompute the node-only weights $w_i = \mathrm{lagrangeCoeff}(s, v, i)$ and return
-$\sum_i \text{share}_i \cdot w_i$ (Theorem 10). Cost: $O(t^2)$ to form the weights,
-$O(t)$ per reconstruction thereafter; weights are reusable across secrets.
+Given $p$, threshold $t$, secret $s$, distinct nonzero locations, and optional coefficients $a_1,\ldots,a_{t-1}$, form
 
-**Algorithm C — Feldman verify.** Given commitments $C_0, \dots, C_{t-1}$, a node
-$x$, and a claimed share $s$, accept iff $s\cdot g = \sum_{j<t} x^j C_j$ (Theorem
-4). Cost: $O(t)$.
+$$
+f(X)=s+\sum_{j=1}^{t-1}a_jX^j
+$$
 
-**Algorithm D — Pedersen equivocation / hiding witness.** Given $f$ and a target
-commitment vector $C$, output the blinding coefficients
-$a'_j = (C_j - a_j \cdot g)/h$ for $j < t$ (Theorem 8). Cost: $O(t)$.
+and return $(x_i,f(x_i))$ for each participant. Horner evaluation costs $O(t)$ field operations per share, so $n$ shares cost $O(nt)$ operations. Random coefficients must be sampled with a cryptographically secure source in production.
 
-## 10. Applications
+### 6.3 Secret reconstruction
 
-- **Key management and threshold cryptography.** Distribute a master key so that
-  any $t$ of $n$ custodians can recover or use it, while fewer than $t$ learn
-  nothing (Theorems 1, 2).
-- **Secure multiparty computation.** Additive and multiplicative homomorphisms
-  (Theorems 11, 12) let mutually distrustful parties compute arithmetic functions
-  of private inputs held only in shared form (BGW).
-- **Verifiable distribution against malicious dealers.** Feldman verification
-  (Theorem 4, Corollary 4) lets each participant detect inconsistent shares;
-  binding (Theorem 5) prevents later equivocation.
-- **Privacy-preserving commitments.** Pedersen commitments (Theorem 8) underlie
-  zero-knowledge protocols and confidential transactions, where the commitment
-  must reveal nothing about the committed value.
+For any $t$ shares, compute
 
-## 11. Discussion and limitations
+$$
+s=\sum_{i=1}^{t}y_i\lambda_i,
+\qquad
+\lambda_i=\prod_{j\ne i}\frac{-x_j}{x_i-x_j}.
+$$
 
-The formalization works over an arbitrary field $F$ and models the cryptographic
-group additively as $(F, +)$ with scalar generators; the discrete-logarithm
-hardness that underwrites Feldman hiding and Pedersen binding is a *computational*
-assumption outside the algebraic core and is not (and cannot be) an unconditional
-theorem. What is proved unconditionally are the *information-theoretic* facts —
-Shamir reconstruction and privacy, Feldman completeness/soundness/binding, and
-Pedersen completeness/homomorphism/perfect-hiding/equivocation — together with
-the linear-algebraic homomorphisms enabling MPC. Privacy (Theorem 2) requires
-$0 \notin s$ (the secret node must be distinct from observed nodes) and $t \ge 1$;
-both hypotheses are load-bearing. Soundness and binding for Feldman require a
-nonzero generator; completeness does not.
+The straightforward nested-loop algorithm costs $O(t^2)$ field operations and uses $O(t)$ space. It should reject duplicate locations, because then a denominator vanishes.
 
-## 12. Future work
+### 6.4 Constructing privacy witnesses
 
-See the future directions appended to the package. In brief: formalizing a full
-BGW multiplication round with degree reduction; proving that a Pedersen double
-opening computes the discrete logarithm of $h$ base $g$ (computational binding);
-establishing Feldman verification as a homomorphism over share addition for
-verifiable MPC addition; and sharpening sub-threshold privacy to the quantitative
-bijection statement that the evaluation map is surjective iff $k \le t-1$ and
-injective iff $k \ge t$.
+Given $t-1$ observed pairs and a proposed secret $s$, interpolate through those pairs together with $(0,s)$. The resulting unique degree-less-than-$t$ polynomial is a witness that the observations are compatible with $s$. Repeating this for every $s\in\mathbb F_p$ displays the full privacy fiber. Using direct Lagrange interpolation, constructing one expanded coefficient vector costs $O(t^2)$ to $O(t^3)$ depending on polynomial multiplication strategy; for educational small instances, the simple quadratic polynomial-arithmetic approach is sufficient.
 
-## 13. Conclusion
+### 6.5 Feldman-style verification
 
-A single elementary fact — a degree-$(<t)$ polynomial is determined by $t$ of its
-values — yields both perfect reconstruction at the threshold and perfect secrecy
-below it. Layering homomorphic commitments turns the scheme verifiable, and the
-choice between Feldman and Pedersen commitments is precisely the choice between
-perfect binding and perfect hiding, captured as the injectivity versus
-surjectivity of an explicit linear map. The linearity that secures the scheme is
-the same linearity that lets parties compute on secrets they never see.
+For the abstract additive commitment map $C$, compute
+
+$$
+L=C(y),
+\qquad
+R=\sum_i C(a_ix^i),
+$$
+
+and accept exactly when $L=R$. A direct implementation uses $O(d)$ field and group operations. In conventional multiplicative notation with commitments $A_i=g^{a_i}$, the check is usually written
+
+$$
+g^y=\prod_i A_i^{x^i}.
+$$
+
+The additive formulation makes the homomorphism used in the proof explicit.
+
+## 7. Numerical example
+
+Work in $\mathbb F_{17}$ with threshold $t=3$ and polynomial
+
+$$
+p(X)=5+7X+3X^2.
+$$
+
+The secret is $p(0)=5$. Evaluating gives
+
+$$
+p(1)=15,
+\qquad p(2)=14,
+\qquad p(3)=2
+\pmod {17}.
+$$
+
+Using the first three shares, the Lagrange weights at zero are
+
+$$
+\lambda_1=3,
+\qquad \lambda_2=14,
+\qquad \lambda_3=1
+\pmod {17}.
+$$
+
+Therefore
+
+$$
+p(0)=15\cdot3+14\cdot14+2\cdot1
+=243
+\equiv 5\pmod {17}.
+$$
+
+Now expose only $(1,15)$ and $(2,14)$. For every $s\in\mathbb F_{17}$, interpolation through $(0,s)$, $(1,15)$, and $(2,14)$ produces exactly one polynomial of degree at most two. Thus all seventeen candidate secrets fit the same two observed shares.
+
+For an elementary injective commitment demonstration, take $G$ to be the additive group of $\mathbb F_{17}$ and define
+
+$$
+C(a)=4a\pmod {17}.
+$$
+
+Since $4\ne0$, multiplication by $4$ is injective. At $x=2$, the true share is $14$. Its commitment is $C(14)=5$. The right side of the verification equation is
+
+$$
+C(5)+C(7\cdot2)+C(3\cdot2^2)
+=3+5+14
+=22
+\equiv5\pmod {17}.
+$$
+
+The share passes. A modified claim $15$ has commitment $C(15)=9$, so it fails. This toy commitment is intended to reveal the algebra, not to supply a deployed cryptographic commitment.
+
+## 8. Applications and interpretation
+
+Threshold sharing can distribute recovery credentials, certification authority, escrow capability, or control of cryptographic keys. Its security benefit is the removal of a single point of disclosure: compromising fewer than $t$ participants reveals no information about the secret in the ideal model. Its availability benefit is that reconstruction does not require every participant, only an authorized threshold.
+
+Verifiable secret sharing matters when the dealer may be faulty or malicious. Without verification, inconsistent shares can cause different authorized coalitions to interpolate different polynomials. Public coefficient commitments let each participant test whether a received value lies on the committed curve. The Accepted-Share Reconstruction Theorem then guarantees agreement among reconstructions based on sufficiently many accepted shares.
+
+The results also illuminate linear secret-sharing structure. Evaluation is linear in the coefficients, and reconstruction is a fixed linear combination of share values. This makes Shamir shares compatible with many multiparty computations: parties can add shares locally to obtain shares of a sum. Multiplication is subtler because degrees grow, but the polynomial viewpoint remains central.
+
+Several operational concerns lie outside the algebraic model. Implementations must authenticate participant identities, protect private channels, generate coefficients uniformly, erase ephemeral randomness, validate field encodings, and handle absent or malicious participants. Side-channel resistance and robust error correction require additional mechanisms. The present theorems identify the exact mathematical guarantees on which those systems build.
+
+## 9. Discussion
+
+The privacy proof and reconstruction proof are two faces of the same dimension count. A polynomial with $t$ coefficients has $t$ degrees of freedom. Fixing the constant coefficient leaves $t-1$ random degrees of freedom; observing $t-1$ evaluations consumes exactly those, leaving the secret unconstrained. One more evaluation fixes the whole polynomial. The interpolation theorem makes this intuition exact over every field.
+
+The counterexample polynomial
+
+$$
+\prod_{a\in A}(X-a)
+$$
+
+is especially informative. It vanishes precisely where the undersized coalition looks while remaining nonzero at the secret location. Adding any scalar multiple of it to a candidate polynomial preserves every observed share but changes the secret. For exactly $d$ observations and degree bound $d$, this produces the missing one-dimensional ambiguity.
+
+Feldman verification adds a second linear map: coefficients are sent into a commitment group. The committed evaluation identity follows because both polynomial evaluation at a fixed $x$ and the commitment map respect addition. Injectivity then reflects equality back from the group to the field. The entire soundness argument can therefore be read as a composition of linear or additive maps followed by the polynomial root bound.
+
+There is a conceptual tradeoff. Coefficient commitments support consistency checks, but conventional Feldman commitments are not designed to hide coefficients information-theoretically. Pedersen-style commitments add random blinding to separate hiding from binding. The abstract results here focus on the consistency layer and should not be read as claiming that every commitment realization preserves the perfect hiding property of unaided Shamir shares.
+
+## 10. Future work
+
+Several extensions follow naturally.
+
+First, the exact-counting privacy theorem can be developed into a complete probabilistic treatment over finite fields, including conditional distributions and mutual information. The bijection in Theorem 3.1 already supplies the decisive counting step.
+
+Second, batch soundness can be formulated directly for a vector of accepted claims: interpolate the claims and prove that $d+1$ accepted locations yield exactly the committed degree-at-most-$d$ polynomial. Theorem 5.4 gives the core argument.
+
+Third, robust reconstruction should accommodate errors. Reed–Solomon decoding predicts unique recovery of a degree-at-most-$d$ polynomial from $n$ values containing at most $e$ errors when
+
+$$
+n\ge d+2e+1.
+$$
+
+Establishing sharpness and implementing decoding would extend threshold reconstruction from erasures to adversarial corruption.
+
+Fourth, Pedersen verifiable sharing should distinguish hiding and binding in a two-generator setting. One seeks perfect hiding of coefficient commitments while preventing inconsistent accepted shares under an appropriate binding assumption.
+
+Finally, proactive refresh protocols add a random degree-less-than-$t$ polynomial with zero constant term. This leaves the secret unchanged while replacing every participant’s share, limiting the value of compromises accumulated across time.
+
+## 11. Conclusion
+
+Polynomial secret sharing derives privacy and access control from exact interpolation. Any $t-1$ observations at nonzero locations are compatible with every secret in exactly one degree-less-than-$t$ polynomial, yielding information-theoretic privacy under uniform sampling. Any $t=d+1$ distinct evaluations determine a degree-at-most-$d$ polynomial, and the vanishing-product construction proves that one fewer can fail to determine even its value at zero. An injective additive commitment homomorphism then makes Feldman’s verification equation complete and sound: genuine shares pass, altered shares fail, and $d+1$ accepted candidate evaluations recover the unique committed polynomial.
+
+The resulting picture is modular. Interpolation supplies privacy witnesses and reconstruction; root counting proves exactness; homomorphic commitments certify consistency. Together these ingredients explain how a secret can be distributed without being exposed and how participants can ensure that their private fragments belong to one public algebraic story.

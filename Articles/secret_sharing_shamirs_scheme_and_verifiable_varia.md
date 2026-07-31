@@ -1,282 +1,137 @@
-# How to Split a Secret So That Half a Truth Tells You Nothing
+# Secrets in the Shape of a Curve
 
-Imagine a bank vault that can only be opened when at least three of its five
-managers turn their keys together. No single manager — and no pair of them — can
-ever open it alone, no matter how clever they are or how long they scheme. Yet
-any three of them, chosen however you like, can open it instantly. This is not a
-fantasy of mechanical locks. It is a precise mathematical object called a
-**secret sharing scheme**, and the surprising fact is that you can build one out
-of nothing more exotic than a polynomial and a few points on its graph.
+## How polynomial geometry lets a group share power without surrendering privacy
 
-The idea is due to Adi Shamir, who in 1979 noticed that a humble fact from high
-school algebra is, secretly, a fortress. This article is about that fortress:
-how it keeps a secret perfectly hidden, how to recover the secret when enough
-people cooperate, how to catch a dishonest dealer who hands out fake shares, and
-a beautiful twist in which the commitments that prove honesty can themselves be
-made to reveal *absolutely nothing*.
+A locked vault usually has one key. That arrangement is simple, but brittle: lose the key and the vault is sealed forever; copy it and any holder can act alone. Modern organizations often need a subtler rule. A hospital may want several senior staff members to approve access to an emergency archive. A company may want its recovery key distributed across offices. A digital-asset custodian may want no single employee to control a treasury.
 
-## A secret hidden in a polynomial
+Threshold secret sharing replaces one all-powerful key with many individually useless fragments. Choose a threshold $t$. Any $t$ participants can recover the secret, but any group of only $t-1$ participants learns nothing about it. The phrase “learns nothing” is unusually strong here: it does not merely mean that guessing is computationally expensive. It means that every possible secret remains exactly compatible with the observed fragments.
 
-Here is the trick. Suppose your secret is a single number — a password, a
-cryptographic key, the combination to that vault — and call it $c$. Pick a
-field $F$ to do arithmetic in; you can think of it as the integers modulo a
-large prime $p$, where addition, subtraction, multiplication, and division all
-behave just as they do for ordinary fractions.
+The mechanism behind this feat is a familiar object from algebra: a polynomial.
 
-To share the secret among $n$ people so that any $t$ of them can recover it,
-the dealer chooses a polynomial
+## A secret becomes an intercept
 
-$$f(X) = c + a_1 X + a_2 X^2 + \cdots + a_{t-1} X^{t-1}$$
+Work in a field $F$, such as the integers modulo a prime. The dealer chooses a secret $s\in F$ and constructs a polynomial
 
-of degree less than $t$. The constant term is the secret: $f(0) = c$. The other
-coefficients $a_1, \dots, a_{t-1}$ are chosen completely at random. Then the
-dealer assigns each participant $i$ a distinct nonzero evaluation point $x_i$
-and hands them the single number
+$$
+p(X)=s+a_1X+a_2X^2+\cdots+a_{t-1}X^{t-1}.
+$$
 
-$$\text{share}_i = f(x_i).$$
+The coefficients $a_1,\ldots,a_{t-1}$ are chosen at random. Participant $i$ receives a public nonzero location $x_i$ together with the private value $p(x_i)$. This pair is a share. The secret is hidden at the special location $0$, because $p(0)=s$.
 
-That number — one point on the graph of a secret curve — is the participant's
-entire share. Nothing else is revealed.
+Why does the threshold equal $t$? A polynomial of degree less than $t$ is uniquely determined by its values at $t$ distinct points. Thus $t$ valid shares determine the whole polynomial by interpolation, and in particular determine $p(0)$. The standard Lagrange formula makes reconstruction explicit. Given distinct locations $x_1,\ldots,x_t$ and values $y_i=p(x_i)$,
 
-The whole scheme rests on one classical fact about polynomials, which is at once
-completely elementary and completely decisive: **a polynomial of degree less
-than $t$ is pinned down by any $t$ of its values.** Two points determine a line,
-three points determine a parabola, and in general $t$ points determine a
-degree-$(t-1)$ curve uniquely. Push this idea to its logical extreme and you get
-both the strength and the secrecy of the scheme at the same time.
+$$
+p(X)=\sum_{i=1}^{t}y_i\prod_{j\ne i}\frac{X-x_j}{x_i-x_j}.
+$$
 
-## Recovering the secret
+Setting $X=0$ recovers the secret directly:
 
-Suppose $t$ of the participants pool their shares. Each holds a point
-$(x_i, f(x_i))$ on the secret curve, and there are exactly $t$ of them. The
-"two points make a line" principle, generalized, says there is one and only one
-polynomial of degree less than $t$ passing through all of these points. Since
-the dealer's $f$ is such a polynomial, the participants must have recovered
-$f$ itself — and reading off its constant term gives the secret.
+$$
+s=p(0)=\sum_{i=1}^{t}y_i\prod_{j\ne i}\frac{-x_j}{x_i-x_j}.
+$$
 
-In its sharpest form the recovery guarantee is a uniqueness statement: if two
-polynomials $f$ and $g$ both have degree less than $t$, and they agree on a set
-$s$ of $t$ distinct points, then they are literally the same polynomial,
-$f = g$. This is the statement that *the reconstruction threshold equals the
-degree plus one*: you need exactly $t = (t-1) + 1$ points, not one fewer. As an
-immediate consequence, the recovered constant terms agree too, so the secret
-$f(0)$ is determined.
+All arithmetic occurs in $F$. No exhaustive search is involved.
 
-Uniqueness tells you the secret is *recoverable*, but it does not tell you
-*how*. The constructive answer is the **Lagrange interpolation formula**, which
-writes the value of the curve at any point $z$ as a weighted sum of the known
-shares:
+## Why one missing share changes everything
 
-$$f(z) = \sum_{i \in s} f(x_i)\, \ell_i(z),$$
+Reconstruction explains why $t$ shares are enough. Privacy requires the complementary fact: $t-1$ shares are not merely inconvenient but perfectly uninformative.
 
-where each $\ell_i$ is the *Lagrange basis polynomial* — the unique degree-$(t-1)$
-polynomial that equals $1$ at $x_i$ and $0$ at every other node. To get the
-secret we simply set $z = 0$:
+Suppose an observer knows values at a set $A$ of $t-1$ distinct nonzero locations. Pick any proposed secret $s\in F$. Add the point $(0,s)$ to those observations. There are now exactly $t$ distinct prescribed points, so interpolation produces one and only one polynomial of degree less than $t$ passing through all of them.
 
-$$c = f(0) = \sum_{i \in s} f(x_i)\, w_i, \qquad w_i = \ell_i(0).$$
+This yields the **Perfect Privacy Extension Theorem**: for any $t-1$ distinct nonzero observation points, any prescribed values at those points, and any candidate secret $s$, there exists exactly one polynomial of degree less than $t$ whose value at $0$ is $s$ and whose observed values are the prescribed ones.
 
-The magic is in those weights $w_i$. They depend *only* on which evaluation
-points were used — not on the secret, not on the random coefficients, not on the
-shares themselves. The very same fixed recipe of weights recovers the secret of
-*any* polynomial shared on those nodes. Reconstruction is therefore a single
-linear functional: multiply each share by its public weight and add. And these
-weights have a charming property — **they always sum to one**. Reconstruction is
-an *affine combination* of the shares, the algebraic cousin of a weighted
-average.
+The theorem turns privacy into geometry. Imagine that two conspirators hold two points from a quadratic sharing scheme, where $t=3$. Infinitely many ordinary parabolas pass through two real points; over a finite field, a finite family does. Choosing a possible intercept selects exactly one member of that family. Every intercept is represented. The observed points therefore cannot favor one secret over another.
 
-A tiny example makes it concrete. Work modulo the prime $p = 2089$, let the
-secret be $c = 1234$, and choose the random line
+When the random coefficients are sampled uniformly over a finite field, the uniqueness is also a counting argument. For each fixed transcript of $t-1$ shares and each secret, exactly one coefficient tuple produces that transcript. Hence the transcript has the same probability for every secret. The privacy is information-theoretic: it survives unlimited computing power.
 
-$$f(X) = 1234 + 1000\,X.$$
+A useful corollary is the **No-Exclusion Theorem**. Given any observations at $t-1$ allowed locations and any two candidate secrets $s_1$ and $s_2$, there is a valid sharing polynomial for $s_1$ matching all observations and another valid sharing polynomial for $s_2$ matching the same observations. Nothing in the transcript can rule out either candidate.
 
-Three participants sit at points $x = 1, 2, 3$ and receive
-$f(1) = 2234 \equiv 145$, $f(2) = 3234 \equiv 1145$, and
-$f(3) = 4234 \equiv 2145 \equiv 56 \pmod{2089}$. Now hand any two of these
-shares to the reconstruction formula. Using $x = 1$ and $x = 2$, the Lagrange
-weights at $0$ are $w_1 = 2$ and $w_2 = -1$, so
+## The threshold is exact, not conservative
 
-$$w_1 \cdot 145 + w_2 \cdot 1145 = 290 - 1145 = -855 \equiv 1234 \pmod{2089}.$$
+Could fewer than $t$ shares sometimes suffice because the degree bound is known? In general, no. Let the degree limit be $d=t-1$, and suppose only $d$ distinct nonzero locations form a set $A$. Consider
 
-The secret falls right out. Use the points $1$ and $3$ instead, or $2$ and $3$,
-and you get $1234$ every time. Any two shares suffice — which is exactly the
-threshold $t = 2$.
+$$
+r(X)=\prod_{a\in A}(X-a).
+$$
 
-## Zero knowledge below threshold
+This polynomial has degree $d$ and vanishes at every supplied location. The zero polynomial and $r$ therefore produce identical shares there. Yet their secrets differ, because
 
-Now for the heart of the matter, the property that makes secret sharing worth
-caring about: what happens when you have *too few* shares? Intuitively, fewer
-clues should mean a fuzzier picture of the secret. The astonishing truth is far
-stronger. With $t-1$ shares you learn **nothing at all** — not "a little," not
-"a narrowed-down range," but provably *zero information*.
+$$
+r(0)=\prod_{a\in A}(-a)\ne 0,
+$$
 
-Here is why. Suppose a coalition of $t-1$ participants pools its shares: they
-know the value of $f$ at $t-1$ points, none of them the secret point $0$. Pick
-*any* number $c$ you like and ask: is there a degree-$(t-1)$ polynomial that
-matches all $t-1$ observed shares *and* has secret exactly $c$? Adding the
-constraint $f(0) = c$ gives a $t$-th point, $(0, c)$, and now we are back to "$t$
-points determine a unique degree-$(t-1)$ curve." So the answer is yes — and not
-just yes, but *exactly one* such polynomial exists, for **every** candidate
-secret $c$.
+as every $a$ is nonzero. Thus $d$ shares can correspond to two different secrets.
 
-This is the punchline. The coalition's view — those $t-1$ numbers — is equally
-consistent with every possible secret, and consistent in exactly one way each.
-There is a perfect one-to-one correspondence between candidate secrets and the
-polynomials explaining the observed shares. From the coalition's standpoint the
-secret could be anything, with no value more plausible than any other. The
-shares are, statistically, pure noise about $c$.
+Together with interpolation, this proves the **Exact Reconstruction Threshold Theorem**: values at $d+1$ distinct locations uniquely determine every polynomial of degree at most $d$, while at $d$ nonzero locations uniqueness can fail, even at the secret point $0$. The “plus one” in the threshold is not a safety margin. It is forced by algebra.
 
-Contrast this with reconstruction above the threshold and you see the cliff
-edge. With $t$ shares the secret is forced to a single value. With $t-1$ it is
-totally free. There is no gradual fade: the scheme flips from *fully revealed*
-to *fully hidden* the instant you drop below $t$ points. Concretely, given two
-*different* candidate secrets $c_1 \ne c_2$, you can exhibit two genuinely
-different polynomials, both of degree less than $t$, both matching the same
-$t-1$ shares, one with secret $c_1$ and the other with secret $c_2$. The
-coalition literally cannot tell them apart. This kind of security is called
-**information-theoretic**: it does not rest on any assumption that some
-computation is "too hard." Even an adversary with infinite computing power gets
-nothing.
+There is another concise proof of sufficiency. If two degree-at-most-$d$ polynomials agree at $d+1$ distinct locations, their difference has at least $d+1$ roots. A nonzero polynomial of degree at most $d$ cannot have that many roots. Their difference must therefore be zero.
 
-## Catching a cheating dealer
+## Privacy does not guarantee honesty
 
-So far we have trusted the dealer. But what if the dealer is malicious and hands
-out *inconsistent* shares — numbers that do not all lie on a single low-degree
-curve — so that different groups of participants reconstruct different secrets?
-We would like every participant to be able to *check* their own share without
-learning anyone else's, and to detect cheating before it causes harm. This is
-the job of **verifiable secret sharing (VSS)**, and the first solution is due to
-Paul Feldman.
+The basic scheme assumes the dealer distributes values from one polynomial. A malicious or faulty dealer could instead send inconsistent shares. Different groups might then reconstruct different answers. Privacy remains meaningful, but reliability collapses.
 
-The idea is to have the dealer *commit publicly* to the polynomial's
-coefficients in a way that hides them but allows checking. Work in a group where
-multiplying a public generator $g$ by a scalar is easy but going backwards — the
-discrete logarithm — is believed to be infeasible. (In our additive notation,
-"raising $g$ to the power $a$" is just the scalar multiple $a \cdot g$.) For each
-coefficient $a_j$ of the sharing polynomial the dealer publishes the commitment
+Feldman’s verifiable variant adds public commitments to the polynomial coefficients. To describe its algebra cleanly, let $C:F\to G$ be an additive homomorphism from the coefficient field into an abelian group $G$. In conventional multiplicative notation, $C(a)$ is analogous to $g^a$; group addition here plays the role of multiplying commitments. If
 
-$$C_j = a_j \cdot g.$$
+$$
+p(X)=\sum_i a_iX^i,
+$$
 
-A participant at point $x$ with claimed share $s$ checks the equation
+the dealer publishes $C(a_i)$ for every nonzero coefficient position. A participant at location $x$ who receives a claimed share $y$ checks
 
-$$s \cdot g \;=\; \sum_{j=0}^{t-1} x^j \, C_j.$$
+$$
+C(y)=\sum_i C(a_i x^i).
+$$
 
-Why does this work? Substitute $C_j = a_j \cdot g$ into the right-hand side and
-factor out $g$: the sum becomes $\big(\sum_j a_j x^j\big)\cdot g = f(x)\cdot g$.
-So the verification right-hand side is exactly $f(x)\cdot g$ — the commitment to
-the honest share. An honest dealer therefore always passes: the share $f(x)$
-satisfies the check automatically (**completeness**).
+Because $C$ preserves addition, the genuine evaluation always passes:
 
-Now the soundness. Because multiplying by a nonzero $g$ is a reversible
-operation in a field, $s \cdot g = f(x)\cdot g$ holds *if and only if*
-$s = f(x)$. In words: **a claimed share verifies precisely when it equals the
-true committed value.** Any forged share $s \ne f(x)$ fails the test and is
-caught on the spot. The dealer can lie, but the lie cannot survive the public
-equation.
+$$
+C(p(x))=C\!\left(\sum_i a_ix^i\right)=\sum_i C(a_ix^i).
+$$
 
-Finally there is **binding**. Could a sly dealer publish one commitment vector
-but secretly use two different polynomials with different secrets, opening
-whichever is convenient later? No. If two polynomials of degree less than $t$
-produce the *same* commitments $C_0, \dots, C_{t-1}$, then coefficient by
-coefficient $a_j \cdot g = a'_j \cdot g$, and cancelling the nonzero $g$ forces
-$a_j = a'_j$. The polynomials are identical. The commitment vector pins the
-dealer to exactly one polynomial — hence one secret. Feldman commitments are
-*perfectly binding*.
+This is the **Honest Verification Theorem**: every true share of the committed polynomial satisfies the public verification equation.
 
-## Hiding everything, perfectly
+For soundness, assume that $C$ is injective on the relevant coefficient domain. If a claimed share $y$ passes, then its commitment equals the commitment of $p(x)$. Injectivity forces $y=p(x)$. We obtain the **Cheating Detection Theorem**: under an injective commitment map, every altered share fails verification; equivalently, every accepted share is exactly the committed polynomial’s value at that location.
 
-Feldman's scheme has a subtle cost. Because $C_0 = a_0 \cdot g = c \cdot g$ is a
-public, deterministic function of the secret, anyone who can guess the secret
-can confirm it — the hiding is only *computational*, resting on the difficulty
-of discrete logarithms. Torben Pedersen found a beautiful way to flip this
-trade-off and hide the secret *perfectly*, at the price of making the binding
-only computational.
+This conclusion is algebraic rather than probabilistic. There is no small chance that a bad value slips through under the stated assumption. Acceptance itself is a certificate of consistency.
 
-Pedersen's recipe uses *two* generators, $g$ and a second one $h$ whose
-discrete logarithm relative to $g$ nobody knows. Alongside the sharing
-polynomial $f$, the dealer chooses a completely independent random **blinding
-polynomial** $f'$, and commits to each coefficient as
+Finally, combine verification with interpolation. Suppose a committed polynomial and a candidate polynomial both have degree at most $d$. If the candidate’s evaluations pass the committed verification equation at $d+1$ distinct locations, injectivity says the two polynomials agree at each location. The root-counting argument then says they are identical. This is the **Accepted-Share Reconstruction Theorem**: $d+1$ accepted shares reconstruct the unique committed polynomial and therefore its committed secret.
 
-$$C_j = a_j \cdot g + a'_j \cdot h,$$
+## A small example
 
-mixing in the blinding coefficient $a'_j$. A share is now a *pair*
-$(f(x), f'(x))$, and it verifies when
+Take the field of integers modulo $17$, threshold $t=3$, and secret $5$. Let
 
-$$s \cdot g + s' \cdot h \;=\; \sum_{j=0}^{t-1} x^j \, C_j.$$
+$$
+p(X)=5+7X+3X^2\pmod {17}.
+$$
 
-The same algebra as before shows the right-hand side equals
-$f(x)\cdot g + f'(x)\cdot h$, so honest shares verify (**completeness**), and the
-commitments still add coefficient-wise — the commitment of a sum of polynomials
-is the sum of their commitments (**homomorphism**).
+At locations $1$, $2$, and $3$, the shares are
 
-The revelation is what the blinding buys. Fix *any* sharing polynomial $f$ you
-wish — any secret at all — and fix *any* published commitment vector $C$. As
-long as $h \ne 0$, there is always a blinding polynomial $f'$ that makes
-Pedersen's commitments come out exactly equal to $C$. You can read it straight
-off: choose the blinding coefficient so that
+$$
+p(1)=15,\qquad p(2)=14,\qquad p(3)=2\pmod {17}.
+$$
 
-$$a'_j = \frac{C_j - a_j \cdot g}{h},$$
+Any three recover $p(0)=5$. But suppose only the first two values are visible. Every proposed secret in $\{0,1,\ldots,16\}$ determines a unique quadratic-or-lower polynomial through $(0,s)$, $(1,15)$, and $(2,14)$. All seventeen secrets remain possible.
 
-and the commitment $a_j \cdot g + a'_j \cdot h$ collapses back to $C_j$. Because
-*every* secret admits such a blinding, the published commitments are equally
-consistent with every secret. They carry no information whatsoever about the
-sharing polynomial. This is **perfect hiding** — the same information-theoretic
-flavor as Shamir's privacy, now extended to the verification data itself.
+For a transparent verification demonstration, use the injective additive commitment $C(a)=4a\pmod {17}$. The claim at $x=2$ is $14$, and
 
-The flip side has a name too: **equivocation**. Given any two sharing
-polynomials $f_1$ and $f_2$ — encoding two different secrets — one can find
-blinding polynomials that make them produce the *identical* commitment vector.
-This is the exact opposite of Feldman's binding, where the commitments forced a
-single polynomial. Here the commitments refuse to choose; that very refusal is
-what makes them leak nothing. The two schemes sit on opposite shores of a single
-river: Feldman is perfectly binding and only computationally hiding; Pedersen is
-perfectly hiding and only computationally binding. You cannot have both
-perfectly at once, and these two designs are the canonical witnesses to that
-duality.
+$$
+C(14)=4\cdot14=5\pmod {17}.
+$$
 
-## Adding secrets without revealing them
+The committed evaluation gives
 
-There is one last gift hidden in the linear structure, and it is the foundation
-of an entire field called **secure multiparty computation (MPC)**. Recall that
-reconstruction is the fixed weighted sum $c = \sum_i \text{share}_i \cdot w_i$.
-Because this is *linear*, secrets combine in the most convenient possible way.
+$$
+C(5)+C(7\cdot2)+C(3\cdot2^2)=3+5+14=5\pmod {17},
+$$
 
-Suppose two secrets $c$ and $d$ are each shared, on the same evaluation points,
-by polynomials $f$ and $g$. If every participant simply *adds* their two shares
-locally — computing $f(x_i) + g(x_i)$ — they now hold shares of the polynomial
-$f + g$, whose secret is $c + d$. Running the very same reconstruction weights on
-these summed shares yields $c + d$ directly. Nobody ever saw $c$ or $d$; the
-sum emerged from purely local arithmetic followed by public reconstruction. This
-is **additive homomorphism**, the algebraic backbone of MPC addition. The same
-linearity gives scaling by public constants for free, and combining the two
-gives arbitrary linear combinations of secrets.
+so the true share passes. Changing the claim to $15$ changes its commitment to $9$, and verification fails.
 
-Multiplication is harder, because multiplying the two share polynomials produces
-$f \cdot g$, whose degree is roughly *doubled*. But the principle survives: as
-long as the participant set is large enough to interpolate the product —
-formally, when the degree of $f \cdot g$ stays below the number of nodes — the
-product secret $c \cdot d$ is recovered from the participant-wise products of
-shares using the *same* Lagrange weights. This degree-doubling phenomenon is the
-core of the classic BGW protocol for general secure computation; a full
-multiplication round adds a "degree reduction" step to bring the doubled degree
-back down, after which the parties can compute any arithmetic circuit on their
-private inputs.
+## Distributed trust as a mathematical shape
 
-## A small fact, a large fortress
+These results separate three guarantees that are often blurred together. Privacy says that fewer than the threshold reveal no information. Reconstruction says that enough correct shares determine one answer. Verifiability says that accepted shares belong to the publicly committed polynomial. Each guarantee has its own short algebraic reason: interpolation, root bounds, and injectivity.
 
-Step back and the architecture is breathtaking in its economy. A single
-elementary fact — *$t$ points determine a degree-$(t-1)$ polynomial* — read in
-one direction gives perfect recovery, and read in the other gives perfect
-secrecy. The map from low-degree polynomials to their values on $t$ nodes is a
-*bijection*: invertible (that's reconstruction) and, at $t-1$ nodes,
-surjective with every secret equally likely (that's privacy). Layer a homomorphic
-commitment on top and you can police a dishonest dealer; choose the commitment's
-flavor and you decide whether it is the dealer or the secret that is bound
-perfectly. Exploit the linearity and you can compute on secrets you are never
-allowed to see.
+The practical attraction is broad. Threshold sharing can protect backup keys, distribute authority among trustees, support recovery procedures, and remove single points of compromise. Verifiable sharing strengthens multiparty protocols in which participants cannot simply trust the dealer. The mathematics does not decide who should hold shares or how devices should be secured, but it supplies a precise foundation for those systems.
 
-From the combination to a vault to the keys that guard a cryptocurrency wallet,
-from distributing trust across data centers to letting hospitals jointly compute
-statistics without sharing patient records, the same humble polynomial keeps
-turning up. It is one of those rare ideas that is simultaneously simple enough to
-teach in an afternoon and deep enough to anchor a generation of cryptography —
-proof that sometimes the strongest locks are the ones made of pure arithmetic.
+The guarantees also compose cleanly with organizational policy. A seven-member board might choose a threshold of four, allowing business to continue despite three absences while preventing any trio from acting alone. A geographically distributed recovery service can place shares in independent jurisdictions, so that one damaged site or compromised operator is insufficient. The algebra treats these stories identically: identities become distinct nonzero field locations, and authorization becomes the number of evaluations available. Real deployments must additionally protect the private channels, authenticate participants, sample coefficients securely, and account for maliciously missing shares. Those engineering duties do not replace the theorems; they establish the conditions under which the theorems describe the deployed system.
+
+A secret, in this view, is not chopped into recognizable pieces. It is concealed as one coordinate of a curve. Too few points leave every intercept possible; enough points bring the curve into focus; and public coefficient commitments ensure that everyone is looking at the same curve. That is the central elegance of polynomial secret sharing: access, privacy, and consistency emerge from the geometry of interpolation.
