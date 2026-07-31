@@ -5,7 +5,7 @@
   geometric invariants (e): e² = 1 + 2El²/(mk²).
 -/
 import Mathlib
-import Bridges.Catalog.Bridges.KeplerDefs
+import Bridges.KeplerDefs
 
 open Real
 
