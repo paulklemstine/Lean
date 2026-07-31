@@ -513,21 +513,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hawking-Information-Retrieval: Unitary S-Matrix Proof for Evaporating Black Holes"
   },
   {
-    "consumed_by_exp_id": "a7ba7617",
-    "description": "Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_35_f9db249d",
-    "phase": "A",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:07:58.529287+00:00",
-    "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves the existence of Ricci-flat metrics on 7-dimensional manifolds with G2 holonomy for 11D M-theory compactification.",
     "domains": [
@@ -910,6 +895,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T17:01:26.465710+00:00",
     "title": "Deepening: Attention is All You Need: Formalizing Transformer Architecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e86cdc26 (Q=0.800), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k \u2265 5, there exists a constant C_k > 0 such that for a uniformly random simple k-regular graph G on n vertices (with n \u2192 \u221e through admissible values), with probability tending to 1, G satisfies the following asymptotic Brill-Noether existence property at half-canonical degree: for ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_e86cdc26_46af663c",
+    "priority_score": 0.9002199999999999,
+    "research_mode": "team",
+    "source_exp_id": "e86cdc26",
+    "status": "available",
+    "timestamp": "2026-07-31T23:26:34.723598+00:00",
+    "title": "Deepening: Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical D"
   },
   {
     "consumed_by_exp_id": "",
@@ -2183,17 +2182,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "788947d7",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domains": [
       "EML",
       "Algebra"
     ],
     "id": "seed_339",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
@@ -2664,6 +2664,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T09:52:06.695169+00:00",
     "title": "Deepening: Borges' Library of Babel: Combinatorics of Everything"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a7ba7617 (Q=0.762), which proved 10 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_a7ba7617_f32b69e1",
+    "priority_score": 0.8617199999999999,
+    "research_mode": "team",
+    "source_exp_id": "a7ba7617",
+    "status": "available",
+    "timestamp": "2026-07-31T23:27:51.323431+00:00",
+    "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
   },
   {
     "consumed_by_exp_id": "",
@@ -3941,17 +3955,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04022a5b",
     "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' \u2014 can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
     "domains": [
       "Novelty",
       "Computation"
     ],
     "id": "seed_412",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
   },
@@ -6929,22 +6944,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-17T23:12:29.709802+00:00",
     "title": "Conjecture: T_k = O(k^2)"
-  },
-  {
-    "consumed_by_exp_id": "e86cdc26",
-    "description": "For every integer k \u2265 5, there exists a constant C_k > 0 such that for a uniformly random simple k-regular graph G on n vertices (with n \u2192 \u221e through admissible values), with probability tending to 1, G satisfies the following asymptotic Brill-Noether existence property at half-canonical degree: for every integer r \u2265 0 with \u03c1(g, r, g-1) \u2265 0 (where g = n(k/2 - 1) + 1 is the genus of G), there exists a divisor D on G of degree at most C_k(g-1) and rank at least r/C_k. Here \u03c1(g,r,d) = g - (r+1)(g-d+r) is the Brill-Noether number.",
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_0243",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15213v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T23:47:33.062521+00:00",
-    "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical Degree"
   },
   {
     "consumed_by_exp_id": "",
@@ -10792,6 +10791,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T22:26:08.353865+00:00",
     "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) \u2264 C_k (g-1)`, and\n- `g \u2264 (C_k rank(D)+1)^2`.\n\nOnce this square-root rank certificate is available, the Lean theorem\n`squareRootRankCertificate_implies_scaledExistence` supplies the requested\ndivisor for every half-canonical Brill\u2013Noether-admissible rank simultaneously.\n\nNatural next steps are:\n\n1. Formalize finite connected simple regular graphs and prove\n   `2(g-1)=n(k-2)` from the handshaking lemma.\n2. Connect a graph's Laplacian energy pairing and covering radius to an\n   explicit chip-firing divisor rank lower bound.\n3. Derive the needed covering-radius estimate from a Cheeger or spectral-gap\n   hypothesis.\n4. Import a random-regular-graph expansion theorem and lift the pointwise\n   connector through the corresponding probability measure.\n5. Optimize the resulting constant `C_k`; the present connector intentionally\n   separates this analytic optimization from the Brill\u2013Noether arithmetic.\n",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0869",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e86cdc26",
+    "status": "available",
+    "timestamp": "2026-07-31T23:26:30.110033+00:00",
+    "title": "The formal connector isolates a concrete target for the asymptotic random"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What has been established\n\n`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by three real-valued sequences: stored usable energy, externally injected energy, and harvested useful energy. A per-cycle balance equation and nonnegativity assumptions yield:\n\n- exact conservation over every finite horizon;\n- an absolute bound: harvested energy is at most initial reserve plus external input;\n- a net-export bound by the initial reserve alone;\n- exact equality of harvested energy and injected energy for a cyclic apparatus;\n- zero total and pointwise output from a ground-state, unpowered apparatus;\n- a finite-horizon average-power bound;\n- average net power eventually below every positive rate.\n\nThus the result does not assign a finite energy density to quantum vacuum fluctuations. Instead, it proves that fluctuations cannot act as an unaccounted thermodynamic source in any process satisfying the stated global energy balance.\n\n## Computational evidence\n\nComputational evidence was intentionally skipped. The result is a symbolic telescoping consequence of an assumed conservation equation, rather than a numerical or combinatorial conjecture. Testing selected numerical trajectories would merely instantiate the assumptions and would provide no independent support beyond the general Lean proof.\n\n## Natural extensions\n\n1. **Continuous time.** Replace discrete cycles by absolutely continuous energy trajectories and derive the integrated inequality from an almost-everywhere differential balance law.\n2. **Open quantum systems.** Connect `injected` and `harvested` to work and heat terms in completely positive trace-preserving dynamics, making passivity or complete passivity the source of the balance inequality.\n3. **Fluctuating outputs.** Model harvested energy as a random variable and prove expectation, tail-probability, and almost-sure long-time bounds.\n4. **Multiple reservoirs.** Separate work input, heat currents, measurement cost, feedback cost, and entropy production, then derive a Kelvin\u2013Planck-style bound.\n5. **Lossy devices.** Add nonnegative dissipation to the balance equation. The existing extraction bounds should strengthen immediately.\n6. **Relativistic localization.** Index energy accounts by bounded spacetime regions and formalize compatibility between local negative-energy observations and global conservation bounds.\n7. **Tightness constructions.** Exhibit processes attaining the finite bound by converting all initial stored energy into output, and characterize equality conditions.\n8. **Rate units.** Add an explicit positive cycle duration, so average power is energy divided by physical elapsed time rather than cycle count.\n",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0870",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a7ba7617",
+    "status": "available",
+    "timestamp": "2026-07-31T23:27:47.395510+00:00",
+    "title": "`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by t"
   },
   {
     "consumed_by_exp_id": "",

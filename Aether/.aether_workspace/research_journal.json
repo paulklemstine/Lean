@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "89e28e84",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## Completed formal results\n\n`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic formalization of the one-component perturbative model in the chosen nor",
-      "quality_score": 0.78874,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-29T21:21:22",
-      "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
-    },
-    {
       "cycle_id": "576be6d2",
       "domain": "Logic",
       "key_insight": "# Future directions\n\n1. **Well-founded rank generalization.** Replace the natural-valued quality rank by an arbitrary partial order satisfying the ascending-chain condition. This would isolate precise",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-31T23:26:34",
       "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical Degree"
+    },
+    {
+      "cycle_id": "a7ba7617",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n## What has been established\n\n`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by three real-valued sequences: stored usable energy, externally injected",
+      "quality_score": 0.76172,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-31T23:27:51",
+      "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2c3f15cd",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Analogy as a Mathematical Operation\n\nThe discrete model developed in this cycle scores an analogy `(fwd, bwd)` between\nfinite carriers by the number of concepts its round trip re",
-      "quality_score": 0.55,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-23T23:21:47",
-      "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
-    },
     {
       "cycle_id": "274c401c",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-31T23:26:34",
       "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical Degree"
+    },
+    {
+      "cycle_id": "a7ba7617",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\n## What has been established\n\n`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by three real-valued sequences: stored usable energy, externally injected",
+      "quality_score": 0.76172,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-31T23:27:51",
+      "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1fc64f82",
-      "domain": "Tropical",
-      "name": "tropicalStereo_eq_identity",
-      "quality": 0.79392
-    },
-    {
-      "cycle_id": "1fc64f82",
-      "domain": "Tropical",
-      "name": "tropicalStereoAt_eq_identity",
-      "quality": 0.79392
-    },
-    {
-      "cycle_id": "1fc64f82",
-      "domain": "Tropical",
-      "name": "tropicalStereo_pole_independence",
-      "quality": 0.79392
-    },
     {
       "cycle_id": "77d39a70",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "rho_halfCanonical_nonneg_iff_square_le",
       "quality": 0.8002199999999999
+    },
+    {
+      "cycle_id": "a7ba7617",
+      "domain": "Shared",
+      "name": "finite_horizon_conservation",
+      "quality": 0.76172
+    },
+    {
+      "cycle_id": "a7ba7617",
+      "domain": "Shared",
+      "name": "harvested_le_initial_add_injected",
+      "quality": 0.76172
+    },
+    {
+      "cycle_id": "a7ba7617",
+      "domain": "Shared",
+      "name": "netExport_le_initial",
+      "quality": 0.76172
     }
   ],
-  "last_updated": "2026-07-31T23:26:34",
+  "last_updated": "2026-07-31T23:27:51",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "c760f6fc",
-        "quality": 0.63,
-        "theorems": 18,
-        "title": "The formal development studies a precise surrogate for “the space of mathematica"
-      },
-      {
         "cycle_id": "905765f9",
         "quality": 0.76,
         "theorems": 4,
@@ -3947,6 +3941,12 @@
         "quality": 0.75115,
         "theorems": 19,
         "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
+      },
+      {
+        "cycle_id": "a7ba7617",
+        "quality": 0.76172,
+        "theorems": 10,
+        "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
       }
     ],
     "Tropical": [
