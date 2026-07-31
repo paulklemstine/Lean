@@ -1668,6 +1668,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 13e8a4d7 (Q=0.806), which proved 27 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_13e8a4d7_9e41083f",
+    "lineage_refs": [],
+    "priority_score": 0.9063100000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "13e8a4d7",
+    "status": "available",
+    "timestamp": "2026-07-31T00:21:58.255220+00:00",
+    "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
     "domain_bridges": [],
     "domains": [
@@ -5140,26 +5159,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "13e8a4d7",
-    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_360",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
     "domain_bridges": [],
@@ -6426,7 +6425,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33456cc6",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domain_bridges": [],
     "domains": [
@@ -6440,7 +6439,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -14995,6 +14994,26 @@
     "status": "available",
     "timestamp": "2026-07-31T00:07:32.735914+00:00",
     "title": "The following conjectures use the energy from"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Miller-function realization.** Construct the divisor-theoretic Miller function for every nonsingular Mathlib Weierstrass curve over a finite field of characteristic coprime to `n`, and prove that its resulting pairing instantiates `Cryptography.WeilBLS.WeilPairing`.\n\n2. **Prime-order generator criterion.** If the torsion subgroup has prime cardinality and `G ≠ 0`, prove that nondegeneracy alone makes `P ↦ e(P,G)` injective, eliminating `pairing_generator_injective` from `BLSParams`.\n\n3. **Quantitative random-oracle reduction.** For at most `q_H` hash queries, formalize a probabilistic oracle-programming reduction whose CDH success probability is at least the BLS forger's fresh-message success probability divided by `q_H`.\n\n4. **Rogue-key-resistant aggregation.** Add proof-of-possession key registration and prove aggregate unforgeability for distinct signers without assuming independently generated public keys.\n\n5. **Multi-pairing cost bound.** Define a verified Miller-loop cost model and prove that checking an aggregate of `k` signatures uses one transmitted curve point and at most `k + 1` Miller loops, with one shared final exponentiation.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0862",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "13e8a4d7",
+    "status": "available",
+    "timestamp": "2026-07-31T00:21:53.980768+00:00",
+    "title": "1. **Miller-function realization.** Construct the divisor-theoretic Miller funct"
   },
   {
     "ambition_level": "extension",

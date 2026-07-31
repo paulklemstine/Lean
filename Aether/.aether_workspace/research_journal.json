@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b7ae8967",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe current development proves an exact finite-domain universality result for a clearly delimited linear-attention lookup architecture. Natural extensions are:\n\n1. **Softmax atten",
-      "quality_score": 0.8002199999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-28T17:01:26",
-      "title": "Attention is All You Need: Formalizing Transformer Architecture"
-    },
-    {
       "cycle_id": "3e30c45d",
       "domain": "Cryptography",
       "key_insight": "# Future directions: radical isogenies on Montgomery curves\n\nThe following conjectures are concrete extensions of the verified degree-two affine formulas. Each can be falsified by an explicit finite f",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-31T00:07:36",
       "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
+    },
+    {
+      "cycle_id": "13e8a4d7",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n1. **Miller-function realization.** Construct the divisor-theoretic Miller function for every nonsingular Mathlib Weierstrass curve over a finite field of characteristic coprime t",
+      "quality_score": 0.8063100000000001,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-07-31T00:21:58",
+      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ea214ad9",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## 1. Extract an explicit partition-refinement algorithm\n\n`FiniteStateIdentity.lean` proves decidability by reducing trace equivalence to a search over finite Boolean relations. A",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 34,
-      "timestamp": "2026-07-22T04:48:46",
-      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
-    },
     {
       "cycle_id": "939843de",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-31T00:07:36",
       "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
+    },
+    {
+      "cycle_id": "13e8a4d7",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\n1. **Miller-function realization.** Construct the divisor-theoretic Miller function for every nonsingular Mathlib Weierstrass curve over a finite field of characteristic coprime t",
+      "quality_score": 0.8063100000000001,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-07-31T00:21:58",
+      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "72d619d5",
-      "domain": "Novelty",
-      "name": "binary_fiber_card",
-      "quality": 0.78874
-    },
-    {
-      "cycle_id": "72d619d5",
-      "domain": "Novelty",
-      "name": "toggle_apply",
-      "quality": 0.78874
-    },
-    {
-      "cycle_id": "593a0386",
-      "domain": "Shared",
-      "name": "gammaTerm_nonneg",
-      "quality": 0.7903499999999999
-    },
     {
       "cycle_id": "593a0386",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "energy_secondDifference",
       "quality": 0.7326499999999999
+    },
+    {
+      "cycle_id": "13e8a4d7",
+      "domain": "Cryptography",
+      "name": "pair_zero_left",
+      "quality": 0.8063100000000001
+    },
+    {
+      "cycle_id": "13e8a4d7",
+      "domain": "Cryptography",
+      "name": "pair_zero_right",
+      "quality": 0.8063100000000001
+    },
+    {
+      "cycle_id": "13e8a4d7",
+      "domain": "Cryptography",
+      "name": "pair_add_left",
+      "quality": 0.8063100000000001
     }
   ],
-  "last_updated": "2026-07-31T00:07:36",
+  "last_updated": "2026-07-31T00:21:58",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "aa1e249d",
-        "quality": 0.59,
-        "theorems": 11,
-        "title": "ArXiv paper: The Endpoint Cardinality of Discrete Cube Skeleta"
-      },
-      {
         "cycle_id": "3d6ad336",
         "quality": 0.7,
         "theorems": 10,
@@ -3389,6 +3383,12 @@
         "quality": 0.6988599999999999,
         "theorems": 7,
         "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+      },
+      {
+        "cycle_id": "13e8a4d7",
+        "quality": 0.8063100000000001,
+        "theorems": 27,
+        "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
       }
     ],
     "Geometry": [

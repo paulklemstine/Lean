@@ -55,7 +55,7 @@
       "depth_estimate": 3,
       "description": "Establishes spectral gap bounds for integer solutions to non-homogeneous quadratic forms using lattice reduction and theta series expansion.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -95,7 +95,7 @@
       "depth_estimate": 3,
       "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -175,7 +175,7 @@
       "depth_estimate": 3,
       "description": "Constructs the fundamental curve of p-adic Hodge theory and proves its topological properties as a Noetherian scheme of dimension 1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -2015,7 +2015,7 @@
       "depth_estimate": 3,
       "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -26256,7 +26256,7 @@
       "depth_estimate": 3,
       "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -26297,7 +26297,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -26337,7 +26337,7 @@
       "depth_estimate": 3,
       "description": "Formalize the classical zero-free region of the Riemann zeta function: ζ(s) ≠ 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2π) log(T/(2πe)). Formalize the connection between zero-free regions and prime counting error bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -26378,7 +26378,7 @@
       "depth_estimate": 3,
       "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -26459,7 +26459,7 @@
       "depth_estimate": 3,
       "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -26500,7 +26500,7 @@
       "depth_estimate": 3,
       "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -26541,7 +26541,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES ∈ P. Construct efficient modular arithmetic tactics for Lean.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -26623,7 +26623,7 @@
       "depth_estimate": 3,
       "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -28064,7 +28064,7 @@
       "depth_estimate": 3,
       "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| ≤ 2√p.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -28232,7 +28232,7 @@
       "depth_estimate": 3,
       "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "NumberTheory",
@@ -28596,11 +28596,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "77d39a70",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -28613,7 +28613,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0776",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-31T00:07:59.328099+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -28628,7 +28628,7 @@
       "source": "",
       "source_exp_id": "2607.21494v1",
       "source_path": "http://arxiv.org/abs/2607.21494v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-26T23:29:22.547061+00:00",
       "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
@@ -30773,7 +30773,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `r : ℕ`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if there is some `k ≥ 1` such that `r^k ∈ I^k`.\n\n2. **Eventual symmetry is rigid.** If a numerical semigroup ideal `S : Ideal ℕ` has symmetric powers `S^k` for every sufficiently large positive `k`, then `S` is integrally equivalent to a two-generator numerical semigroup.\n\n3. **Newton data are complete similarity invariants.** Two nonzero ideals of `ℕ` are similar if and only if their lower Newton polygons agree for every prime dividing either ideal's least positive element.\n\n4. **Unbounded factorization-length discrepancy.** For every `n ≥ 2`, some similarity class of ideals of `ℕ` admits two factorizations into irreducible similarity classes whose lengths differ by exactly `n`.\n\n5. **Power genus is eventually strictly log-convex.** For every nonprincipal numerical semigroup ideal `S`, the sequence `k ↦ genus(S^k)` is strictly log-convex for all sufficiently large positive `k`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -30896,7 +30896,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Ramified fiber classification.** For every field of characteristic other than two and every nonzero `x` with `x² = 1`, prove that the complete fiber of `radicalTwoEval` above `radicalTwoEval (x,y)` is a singleton exactly when the ordinate multiplier `1 - x⁻²` vanishes, and classify all exceptional ordinate collisions. This is falsifiable by exhaustive evaluation over `ZMod p` for odd primes `p`.\n\n2. **Projective extension at the kernel.** Construct the projective Montgomery models associated to `OnMontgomery` and `OnTwoQuotient`, extend `radicalTwoEval` across `x = 0`, and prove that its kernel is exactly the identity together with `(0,0)`. A counterexample would be any additional projective point mapping to the target identity.\n\n3. **Separability in odd characteristic.** Over every field of characteristic other than two, prove that the induced function-field extension defined by `X = x + x⁻¹` has degree two and is separable, with automorphism group generated by `radicalTwoDeck`. This is refuted by any odd-characteristic field where the minimal polynomial `T² - X*T + 1` has zero formal derivative at its generic root.\n\n4. **Composition into a four-isogeny.** Define the second compatible radical two-isogeny on the quotient model and prove that the composite map has generic fibers of cardinality four, classified by the two successive deck involutions. This can be tested over finite fields away from all poles and ramification points.\n\n5. **Quadratic-extension descent.** For a finite field `𝔽_q` of odd characteristic and its quadratic extension, prove that radical normalization followed by `radicalTwoEval` commutes with Frobenius exactly when the chosen radical is in `𝔽_q`, and otherwise lands on the corresponding quadratic twist. A finite-field counterexample would refute the claimed equivalence.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -30922,6 +30922,47 @@
       "thread_id": "th_11737cf9",
       "timestamp": "2026-07-31T00:06:19.207203+00:00",
       "title": "1. **Ramified fiber classification.** For every field of characteristic other th"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\nThe following conjectures use the energy from\n`Catalog/NumberTheory/PythagoreanEnergySpectrum.lean`. Each is concrete and\nfalsifiable by finite computation at any fixed bound.\n\n1. **Primitive certificate infinitude.** Infinitely many composite integers `N`\n   admit positive coprime integers `a,b,c` with `a²+b²=c²`, `a*b=N`, and\n   `1<a<N`. Equivalently, infinitely many targets have a primitive positive\n   zero-energy certificate whose first leg is a nontrivial factor.\n\n2. **Berggren depth bound for representable targets.** There is a universal\n   constant `C` such that whenever `N=a*b` for the legs of a primitive positive\n   Pythagorean triple, some zero-energy certificate for `N` occurs in the\n   Berggren tree at depth at most `C * log N`.\n\n3. **Greedy descent on representable targets.** Starting at `(3,4,5)`, repeatedly\n   choosing among the three Berggren children and the parent the positive triple\n   of least energy reaches a zero-energy certificate for every target that is a\n   product of the legs of a primitive Pythagorean triple; ties are resolved by\n   the fixed child order `B₁,B₂,B₃,parent`.\n\n4. **No nonglobal local minima on the certificate subtree.** For every target\n   represented by the legs of a primitive Pythagorean triple, every positive\n   Berggren-tree vertex with locally minimal energy among its parent and three\n   children has energy zero.\n\n5. **Polynomial search bound.** For represented targets `N`, the deterministic\n   greedy walk in Conjecture 3 reaches energy zero after at most\n   `(Nat.log2 N + 1)^2` moves.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "NumberTheory",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0861",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "3811f14c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/3811f14c",
+      "status": "available",
+      "thread_id": "th_dfab81be",
+      "timestamp": "2026-07-31T00:07:32.735914+00:00",
+      "title": "The following conjectures use the energy from"
     },
     {
       "ambition_level": "extension",
@@ -31257,7 +31298,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -33017,7 +33058,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e24b36f0 (Q=0.840), which proved 45 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize arithmetic in exotic number bases: negative bases (negabinary), complex bases (base i-1), irrational bases (base phi — the golden ratio). Prove: every integer has a unique representation in base (-2) (negabinary). Show: base phi (golden ratio) represents integers using only digits 0 and 1 ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -33257,7 +33298,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -35712,7 +35753,7 @@
       "depth_estimate": 3,
       "description": "Prove that every even integer greater than 2 is the sum of two primes. Formalize partial results such as Vinogradov's theorem for sufficiently large odd integers, or Chen's theorem that every sufficiently large even number is the sum of a prime and a semiprime. Explore connections to sieve methods and the circle method.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -35753,7 +35794,7 @@
       "depth_estimate": 3,
       "description": "Prove that all non-trivial zeros of the Riemann zeta function lie on Re(s)=1/2. Formalize equivalent statements: the prime counting function error bound, the Mertens conjecture connection, or the spectral interpretation via random matrix theory. Explore connections to quantum chaos and the Hilbert-Polya conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -35835,7 +35876,7 @@
       "depth_estimate": 3,
       "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -35916,7 +35957,7 @@
       "depth_estimate": 3,
       "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -35957,7 +35998,7 @@
       "depth_estimate": 3,
       "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -35997,7 +36038,7 @@
       "depth_estimate": 3,
       "description": "Prove that 10 is a solitary number — no other integer shares its abundancy index σ(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -36120,7 +36161,7 @@
       "depth_estimate": 3,
       "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "NumberTheory",
         "Geometry"
@@ -36161,7 +36202,7 @@
       "depth_estimate": 3,
       "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -36202,7 +36243,7 @@
       "depth_estimate": 3,
       "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -36652,7 +36693,7 @@
       "depth_estimate": 3,
       "description": "Prove that for every positive integer n, there exists a prime between n² and (n+1)². Formalize known partial results on prime gaps and connect to the Cramér model of primes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -36692,7 +36733,7 @@
       "depth_estimate": 3,
       "description": "Prove that there are infinitely many primes of the form n²+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a²+b⁴.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -36732,7 +36773,7 @@
       "depth_estimate": 3,
       "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -36773,7 +36814,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Euler-Mascheroni constant γ ≈ 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Analysis",
         "NumberTheory"
@@ -36855,7 +36896,7 @@
       "depth_estimate": 3,
       "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -36978,7 +37019,7 @@
       "depth_estimate": 3,
       "description": "Prove that for every integer n ≥ 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -37018,7 +37059,7 @@
       "depth_estimate": 3,
       "description": "Prove Schanuel's conjecture: if z₁,...,zₙ are Q-linearly independent complex numbers, then the transcendence degree of {z₁,...,zₙ,e^z₁,...,e^zₙ} over Q is at least n. Formalize implications for the Lindemann-Weierstrass theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -37141,7 +37182,7 @@
       "depth_estimate": 3,
       "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -37181,7 +37222,7 @@
       "depth_estimate": 3,
       "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)²). Formalize probabilistic models of primes and known unconditional bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -37598,7 +37639,7 @@
       "depth_estimate": 3,
       "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "Algebra",
@@ -38885,11 +38926,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "1fc64f82",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38903,7 +38944,7 @@
       ],
       "github_issue": 0,
       "id": "seed_078",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-31T00:07:51.704186+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -38918,7 +38959,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Inverse Stereographic Tropical Lift"
@@ -38979,7 +39020,7 @@
       "depth_estimate": 3,
       "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "NumberTheory",
@@ -39987,7 +40028,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that every directed graph G has a zeta function zeta_G(s) = prod(1 - lambda^{-s})^{-1} where the product is over eigenvalues of the graph's adjacency matrix, and the Riemann Hypothesis for this function is equivalent to a purely combinatorial condition on G. Conjecture: For a directed graph G with n vertices, zeta_G(s) satisfies the Riemann Hypothesis (all non-trivial zeros lie on Re(s) = 1/2) if and only if G is a Ramanujan digraph: every eigenvalue lambda of the adjacency matrix satisfies |lambda| <= 2 sqrt(d-1) where d is the maximum out-degree. This is the directed graph analog of the Ramanujan graph theorem of Lubotzky-Phillips-Sarnak. Why now: the undirected case is settled (Ramanujan graphs exist and have optimal spectral gap), but the directed case is wide open. Recent work by Lubetzky and Peres (2016) on cutoff on directed Ramanujan graphs suggests the spectral gap characterization extends. Test: prove the conjecture for directed Cayley graphs of finite groups, then verify computationally for random directed d-regular graphs with n=20, 50, 100 vertices. Impact: a combinatorial Riemann Hypothesis — if true, it means the deepest mystery of number theory has a purely graph-theoretic characterization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "NumberTheory",
@@ -40070,7 +40111,7 @@
       "depth_estimate": 3,
       "description": "Prove that a positive proportion of zeros of the Riemann zeta function lie on the critical line. Formalize Selberg's result (positive proportion on), Conrey's 2/5 result, and explore connections to random matrix theory and the moment problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -40152,7 +40193,7 @@
       "depth_estimate": 3,
       "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -40193,7 +40234,7 @@
       "depth_estimate": 3,
       "description": "Determine all integer solutions to n! + 1 = m². Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -40233,7 +40274,7 @@
       "depth_estimate": 3,
       "description": "Prove that Wall-Sun-Sun primes exist (primes p where p² divides F_{p-(p|5)}). Formalize the connection to Fermat's Last Theorem and establish search bounds for the first such prime.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -40315,7 +40356,7 @@
       "depth_estimate": 3,
       "description": "Characterize numbers representable as a sum of three squares of primes. Formalize the circle method approach to ternary Goldbach-type problems for squares.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -40355,7 +40396,7 @@
       "depth_estimate": 3,
       "description": "Prove that any integer a ≠ -1,□ that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -40969,7 +41010,7 @@
       "depth_estimate": 3,
       "description": "Prove that π, e, √2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Probability"
@@ -45813,7 +45854,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7326499999999999,
       "parent_direction": "",
       "priority_score": 0.65,
       "proof_strategy": "",
@@ -45824,7 +45865,7 @@
       "source": "",
       "source_exp_id": "29ba074c",
       "source_path": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-24T06:47:46.532440+00:00",
       "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
@@ -46403,7 +46444,7 @@
       "depth_estimate": 3,
       "description": "Cycle e4773f49 (Q=0.640) proved 7 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Ni",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -46441,61 +46482,59 @@
     "Logic": 1,
     "MachineLearning": 1,
     "Novelty": 1,
-    "NumberTheory": 1,
+    "NumberTheory": 2,
     "Probability": 1,
     "Tropical": 1
   },
   "recent_theme_keywords": {
-    "3e30c45d": 1,
-    "algorithms": 1,
+    "29ba074c": 1,
+    "`sorry`": 1,
+    "berggre": 1,
+    "berggren": 1,
     "beyond": 2,
-    "building": 1,
+    "close": 1,
+    "complete": 1,
     "conjecture": 3,
-    "cryptography": 1,
-    "curves": 1,
-    "deepening": 1,
-    "deeper": 1,
-    "direction": 1,
-    "elliptic": 1,
-    "evaluation": 1,
+    "convexity": 1,
+    "descent": 1,
+    "deterministic": 1,
+    "e(a,b,c": 1,
+    "energy": 1,
+    "existence": 1,
     "explore": 2,
-    "extend": 1,
-    "fields": 1,
-    "finite": 1,
+    "factor": 1,
+    "factoring": 1,
+    "first": 1,
     "formalize": 5,
-    "formalizes": 1,
+    "formally": 1,
     "function": 3,
-    "general": 1,
-    "isogeny": 1,
-    "isogeny-sidh": 1,
-    "montgomery": 1,
+    "functional": 1,
+    "gradient": 1,
+    "guides": 1,
+    "important": 1,
     "networks": 2,
-    "numbers": 1,
-    "numerical": 1,
-    "o(epsilon^{-n/alpha}": 1,
-    "operation": 1,
-    "operations/second": 1,
-    "orders": 1,
-    "original": 1,
-    "pairings": 1,
-    "paper": 1,
-    "parallelism": 1,
-    "parameters": 1,
-    "parity": 1,
+    "non-trivial": 1,
+    "numbertheory": 1,
+    "original": 2,
     "performs": 1,
     "perspective": 1,
     "phenomena": 1,
+    "placeholders": 1,
     "points": 1,
     "polygons": 1,
     "power": 1,
     "prepared": 1,
     "problems": 1,
     "product": 1,
+    "proofs": 1,
     "property": 1,
     "proportional": 1,
     "provable": 1,
     "prove": 1,
-    "proved": 1,
+    "proved": 2,
+    "proves": 1,
+    "pythagorean-energy-spectrum": 1,
+    "q=0.600": 1,
     "q=0.769": 1,
     "quadratic": 1,
     "radical": 1,
@@ -46521,8 +46560,10 @@
     "simulate": 1,
     "single": 1,
     "sorries": 1,
+    "spectrum": 1,
     "speedup": 1,
     "stone-weierstrass": 1,
+    "strict": 1,
     "strictly": 1,
     "strongest": 1,
     "structure": 1,
@@ -46532,7 +46573,7 @@
     "surpassing": 1,
     "system": 1,
     "theorem": 3,
-    "theorems": 2,
+    "theorems": 3,
     "theory": 2,
     "threshold": 1,
     "transition": 1,
@@ -46548,6 +46589,7 @@
     "within": 1
   },
   "selection_log": [
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
