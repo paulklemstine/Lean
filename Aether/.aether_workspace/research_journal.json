@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5f676746",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n1. **Rational-constant density conjecture.** Extend the catalog EML syntax with rational constant leaves encoded by finite binary strings. For every continuous `f : C([0,1], ℝ)` a",
-      "quality_score": 0.74002,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-29T15:28:54",
-      "title": "EML Universal Approximation"
-    },
-    {
       "cycle_id": "132832ee",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding simulator for the graph 3-colouring protocol and prove that, for every finite verifier strategy who",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-31T14:49:23",
       "title": "The exact proposed fixed-point equation was formalized in"
+    },
+    {
+      "cycle_id": "8fe295b2",
+      "domain": "Applications",
+      "key_insight": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsicall",
+      "quality_score": 0.7712399999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-31T18:56:28",
+      "title": "EML Quantum Activation Functions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "642478f0",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n## From two-point risk to distributional lower bounds\n\nThe proved two-state theorem is a local obstruction. A next step is to integrate it over couplings of states whose functiona",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-07-23T18:45:55",
-      "title": "Conjecture: there are natural state spaces in which functional observation forms"
-    },
     {
       "cycle_id": "f14d2570",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-31T14:49:23",
       "title": "The exact proposed fixed-point equation was formalized in"
+    },
+    {
+      "cycle_id": "8fe295b2",
+      "domain": "Applications",
+      "key_insight": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsicall",
+      "quality_score": 0.7712399999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-31T18:56:28",
+      "title": "EML Quantum Activation Functions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "85fa434c",
-      "domain": "Algebra",
-      "name": "matrixRank_le_generators",
-      "quality": 0.73204
-    },
-    {
-      "cycle_id": "85fa434c",
-      "domain": "Algebra",
-      "name": "descentRank_add_matrixRank",
-      "quality": 0.73204
-    },
-    {
-      "cycle_id": "85fa434c",
-      "domain": "Algebra",
-      "name": "quotientFinrank_add_matrixRank",
-      "quality": 0.73204
-    },
     {
       "cycle_id": "63b75a93",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "bool_sections_not_subsingleton",
       "quality": 0.74478
+    },
+    {
+      "cycle_id": "8fe295b2",
+      "domain": "Applications",
+      "name": "neuron_second_zero",
+      "quality": 0.7712399999999999
+    },
+    {
+      "cycle_id": "8fe295b2",
+      "domain": "Applications",
+      "name": "neuron_not_always_unitary",
+      "quality": 0.7712399999999999
+    },
+    {
+      "cycle_id": "8fe295b2",
+      "domain": "Applications",
+      "name": "neuron_second_zero_ne_unitary",
+      "quality": 0.7712399999999999
     }
   ],
-  "last_updated": "2026-07-31T14:49:23",
+  "last_updated": "2026-07-31T18:56:28",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "cc3b4f99",
-        "quality": 0.52,
-        "theorems": 0,
-        "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
-      },
-      {
         "cycle_id": "5fcde7e0",
         "quality": 0.76,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.686,
         "theorems": 26,
         "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+      },
+      {
+        "cycle_id": "8fe295b2",
+        "quality": 0.7712399999999999,
+        "theorems": 6,
+        "title": "EML Quantum Activation Functions"
       }
     ],
     "Bridges": [
