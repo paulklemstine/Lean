@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3e30c45d",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: radical isogenies on Montgomery curves\n\nThe following conjectures are concrete extensions of the verified degree-two affine formulas. Each can be falsified by an explicit finite f",
-      "quality_score": 0.7689999999999999,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-28T18:55:07",
-      "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
-    },
-    {
       "cycle_id": "e68f39b0",
       "domain": "Logic",
       "key_insight": "# Future directions\n\n`Catalog/Logic/ProofSpaceTransitionWindows.lean` advances the finite transition model from pointwise descent to blockwise drift. It proves that strict decrease only at sampled blo",
@@ -499,19 +489,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-31T00:21:58",
       "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+    },
+    {
+      "cycle_id": "02aa1402",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe formal results locate a sharp logical boundary: forward implication plus verified, coherent consequences does not establish an antecedent. A sound system must add information",
+      "quality_score": 0.72637,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-31T03:29:57",
+      "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "939843de",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n## 1. Value-dependent gluing of lattice slices\n\nFor every positive profile and every admissible integer coordinate value, determine an\nexplicit transformed profile whose parking-f",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-22T04:48:51",
-      "title": "ArXiv paper: Lattice slices, Ehrhart polynomials, and magic positivity of generalized parking-functi"
-    },
     {
       "cycle_id": "47ca7342",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-07-31T00:21:58",
       "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+    },
+    {
+      "cycle_id": "02aa1402",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe formal results locate a sharp logical boundary: forward implication plus verified, coherent consequences does not establish an antecedent. A sound system must add information",
+      "quality_score": 0.72637,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-31T03:29:57",
+      "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "593a0386",
-      "domain": "Shared",
-      "name": "harmonic_cast",
-      "quality": 0.7903499999999999
-    },
-    {
-      "cycle_id": "593a0386",
-      "domain": "Shared",
-      "name": "sum_log_telescope",
-      "quality": 0.7903499999999999
-    },
-    {
-      "cycle_id": "67548200",
-      "domain": "Novelty",
-      "name": "leftIdx_rightIdx",
-      "quality": 0.7916099999999999
-    },
     {
       "cycle_id": "67548200",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "pair_add_left",
       "quality": 0.8063100000000001
+    },
+    {
+      "cycle_id": "02aa1402",
+      "domain": "Novelty",
+      "name": "This",
+      "quality": 0.72637
+    },
+    {
+      "cycle_id": "02aa1402",
+      "domain": "Novelty",
+      "name": "uniform_retrocausal_confirmation_iff",
+      "quality": 0.72637
+    },
+    {
+      "cycle_id": "02aa1402",
+      "domain": "Novelty",
+      "name": "universal_retrocausal_rule_collapses",
+      "quality": 0.72637
     }
   ],
-  "last_updated": "2026-07-31T00:21:58",
+  "last_updated": "2026-07-31T03:29:57",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "38d3a014",
-        "quality": 0.7097100000000001,
-        "theorems": 10,
-        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-      },
-      {
         "cycle_id": "09a3e4f4",
         "quality": 0.77355,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.76935,
         "theorems": 15,
         "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+      },
+      {
+        "cycle_id": "02aa1402",
+        "quality": 0.72637,
+        "theorems": 14,
+        "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
       }
     ],
     "NumberTheory": [

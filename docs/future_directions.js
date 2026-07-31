@@ -1236,6 +1236,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 13e8a4d7 (Q=0.806), which proved 27 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_13e8a4d7_9e41083f",
+    "priority_score": 0.9063100000000001,
+    "research_mode": "team",
+    "source_exp_id": "13e8a4d7",
+    "status": "available",
+    "timestamp": "2026-07-31T00:21:58.255220+00:00",
+    "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
     "domains": [
       "Novelty"
@@ -1937,23 +1951,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Proof Strategy Mining from Deep Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "02aa1402",
-    "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
-    "domains": [
-      "Logic",
-      "Speculative",
-      "Computation"
-    ],
-    "id": "seed_079",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
   {
     "consumed_by_exp_id": "",
@@ -3824,22 +3821,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
   },
   {
-    "consumed_by_exp_id": "13e8a4d7",
-    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_360",
-    "phase": "B",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
     "domains": [
@@ -4792,7 +4773,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Intersection Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33456cc6",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Analysis",
@@ -4800,10 +4781,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_061",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -4973,17 +4955,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sensitivity Conjecture Extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70779ff4",
     "description": "Prove that \u03c0, e, \u221a2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
     "domains": [
       "NumberTheory",
       "Probability"
     ],
     "id": "seed_226",
+    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Normality of Mathematical Constants"
   },
@@ -7774,6 +7757,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T03:41:12.598370+00:00",
     "title": "ArXiv paper: Triviality of promise polymorphisms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Deformation of the absolute Galois groups of number fields' and formalize its key results. Abstract: The technical goal of this paper is to construct and study profinite monoids DG_K for number fields K such that (1) the unit group of DG_K is isomorphic to the absolute Galois group G_K; (2) the maximal abelian quotient of DG_K is isomorphic to the Deligne-Ribet monoid DR_K; (3) the idempotents of DG_K bijectively correspond to subsets of the set P_K of (finite) primes of K; (4) the maximal Galois groups G_{K, S} with restricted ramifications S all appear as maximal closed subgroups of DG_K at idempotents; (5) all maximal closed subgroups of DG_K at idempotents are of this form. We also discuss the relationship between DG_K and the p-typical Witt vectors of Borger and de Smit, where we will describe the fundamental monoid of the semi-galois category of Lambda-rings of Borger and de Smit in terms of fields of norms of the local field K_p in particular.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0864",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.28465v1",
+    "status": "available",
+    "timestamp": "2026-07-31T03:30:03.603686+00:00",
+    "title": "ArXiv paper: Deformation of the absolute Galois groups of number fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$' and formalize its key results. Abstract: We study the standard nonuniform arithmetic quotient of the affine Bruhat--Tits building attached to $\\operatorname{PGL}_d(\\mathbb F_q(\\!(t^{-1})\\!))$, with Haar measure normalized so that a maximal compact subgroup has volume one. We first compute its vertex volume in closed product form. The proof is entirely building-theoretic: vertices are parametrized by a dominant sector, their stabilizers are counted exactly, and the resulting sum over block compositions is evaluated by a cut-set recursion. On the same quotient, we introduce a homothety-invariant normalized lattice-minima height $\u03b1$. We determine its exact integrability threshold, proving that $\u03b1$ belongs to $L^r$ precisely for $0<r<d$, and establish a sharp cusp-tail estimate of order $T^{-d}$. The associated positive-moment height zeta function, equivalently the Mellin transform of the cusp-height distribution, converges exactly in the half-plane $\\operatorname{Re}(s)<d$. It admits a meromorphic continuation as a rational func",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0865",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.28433v1",
+    "status": "available",
+    "timestamp": "2026-07-31T03:30:06.949990+00:00",
+    "title": "ArXiv paper: Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$"
   },
   {
     "consumed_by_exp_id": "",
@@ -11136,6 +11149,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Miller-function realization.** Construct the divisor-theoretic Miller function for every nonsingular Mathlib Weierstrass curve over a finite field of characteristic coprime to `n`, and prove that its resulting pairing instantiates `Cryptography.WeilBLS.WeilPairing`.\n\n2. **Prime-order generator criterion.** If the torsion subgroup has prime cardinality and `G \u2260 0`, prove that nondegeneracy alone makes `P \u21a6 e(P,G)` injective, eliminating `pairing_generator_injective` from `BLSParams`.\n\n3. **Quantitative random-oracle reduction.** For at most `q_H` hash queries, formalize a probabilistic oracle-programming reduction whose CDH success probability is at least the BLS forger's fresh-message success probability divided by `q_H`.\n\n4. **Rogue-key-resistant aggregation.** Add proof-of-possession key registration and prove aggregate unforgeability for distinct signers without assuming independently generated public keys.\n\n5. **Multi-pairing cost bound.** Define a verified Miller-loop cost model and prove that checking an aggregate of `k` signatures uses one transmitted curve point and at most `k + 1` Miller loops, with one shared final exponentiation.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0862",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "13e8a4d7",
+    "status": "available",
+    "timestamp": "2026-07-31T00:21:53.980768+00:00",
+    "title": "1. **Miller-function realization.** Construct the divisor-theoretic Miller funct"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Status of this follow-up\n\n`Tournament.lean` now compiles end-to-end without proof placeholders. It proves two honest milestones corresponding to the selected directions:\n\n1. `goldbach_verified_up_to_one_hundred` checks Goldbach's assertion for every even natural number in `[4, 100]` by a finite executable certificate.\n2. `riemannZeta_nonzero_right_half_plane` proves that the Riemann zeta function has no zero when `1 < re(s)`.\n\nThe original statements were not silently asserted: the million-case Goldbach claim requires a substantially larger certified computation, while the critical-strip claim was exactly the still-open Riemann hypothesis. Their former declarations are retained only inside a block comment in `Tournament.lean`, together with an explanation of why they were replaced.\n\n## Goldbach verification framework\n\nThe immediate next step is to improve the certificate representation rather than merely increasing the bound in the current all-at-once decision procedure. A scalable development should:\n\n- implement a verified sieve producing primality certificates;\n- search for one prime-pair witness for each even input;\n- store or generate compact witnesses rather than asking reduction to decide a proposition with nested existential search;\n- prove a general theorem that a validated table covers every even number in a specified interval; and\n- only then raise the certified bound to `1_000_000`.\n\nThis would turn the finite check into reusable infrastructure and keep compilation and kernel checking manageable.\n\n## Riemann zeta direction\n\nThe proved zero-free region `1 < re(s)` is a sound starting point, not a proof of RH. Useful formal extensions include:\n\n- package the functional equation into explicit symmetry statements for zeros;\n- derive the standard trivial zeros at negative even integers;\n- isolate poles and zeros carefully at the boundary of the critical strip;\n- formalize additional classical zero-free regions when the required analytic estimates are available; and\n- state equivalent finite or quantitative intermediate goals without presenting them as RH itself.\n\nAny future critical-strip theorem should clearly distinguish established consequences of existing zeta theory from conjectural assertions.\n\n## Verification policy\n\nFuture additions should remain free of `sorry` and `admit`, build as explicit Lake targets, and be checked for unexpected axioms. Open conjectures should be preserved as documentation or clearly labeled conjectural statements rather than introduced as unproved Lean declarations in a completed artifact.\n",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_0863",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "tournament_1978ca8d",
+    "status": "available",
+    "timestamp": "2026-07-31T02:56:59.782833+00:00",
+    "title": "`Tournament.lean` now compiles end-to-end without proof placeholders. It proves "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -11320,16 +11363,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c961538a",
     "description": "Cycle 95478b50 (Q=0.610) proved 794 theorems in Probability but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Probability"
     ],
     "id": "sorry_fill_95478b50_dd4f3c48",
+    "phase": "A",
     "priority_score": 0.66,
     "research_mode": "team",
     "source_exp_id": "95478b50",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-27T00:19:54.838542+00:00",
     "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
   },

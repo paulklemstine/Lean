@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-31T00:21:58.929635+00:00",
+  "last_updated": "2026-07-31T03:29:59.339823+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -41971,6 +41971,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-31T00:21:58.800316+00:00",
       "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0618,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Novelty",
+      "duration_seconds": 1918.177502632141,
+      "end_time": 1785468537.240048,
+      "files_integrated": 4,
+      "job_id": "02aa1402",
+      "outcome_quality": 0.72637,
+      "phase": "complete",
+      "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.7151,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.54,
+        "applications": 0.62,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5782,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.5163,
+        "novelty": 0.89,
+        "proof_depth": 0.3562,
+        "usefulness": 0.4281
+      },
+      "quality_score": 0.72637,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785466619.0625453,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 5,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-31T03:29:59.216205+00:00",
+      "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
     }
   ]
 }
