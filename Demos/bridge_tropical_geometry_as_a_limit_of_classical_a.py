@@ -1,206 +1,169 @@
-"""
-Numerical demonstrations for:
+#!/usr/bin/env python3
+"""Numerical demonstrations for non-Archimedean tropical bridges.
 
-    Tropical Geometry as a Limit of Classical Algebraic Geometry
-    Tropicalization, the Corner Locus, and Tropical Bezout
-
-All routines use the MIN-PLUS convention:
-    tropical addition       a (+) b = min(a, b)
-    tropical multiplication a (*) b = a + b
-    tropical zero           = +inf
-    tropical one            = 0
-
-A tropical polynomial in n variables is represented as a list of monomials
-    (coeff, exponent_vector)
-where `coeff` is the valuation v(c_a) (a real number, or math.inf if absent)
-and `exponent_vector` is a tuple of natural-number exponents.
-
-This file is fully self-contained: every function is inlined and type-hinted,
-and `main()` prints a guided walkthrough of the paper's key results.
+The script uses only the Python standard library. It demonstrates:
+1. non-Archimedean cancellation with exact p-adic orders of integers;
+2. max-corner detection and invariance under positive scaling;
+3. weighted intersection transfer under a multiplicity-preserving bijection.
 """
 
 from __future__ import annotations
 
-import math
-from typing import Sequence
+from dataclasses import dataclass
+from fractions import Fraction
+from typing import Callable, Hashable, Mapping, Sequence, TypeVar
+
+Label = TypeVar("Label", bound=Hashable)
 
 
-# ---------------------------------------------------------------------------
-# Core min-plus primitives
-# ---------------------------------------------------------------------------
-
-Exponent = tuple[int, ...]
-Monomial = tuple[float, Exponent]  # (v(coeff), exponent vector)
-TropPoly = list[Monomial]
-
-
-def lin_form(a: Exponent, w: Sequence[float]) -> float:
-    """The linear form <a, w> = sum_i a_i * w_i."""
-    return sum(ai * wi for ai, wi in zip(a, w))
-
-
-def trop_monomial(coeff: float, a: Exponent, w: Sequence[float]) -> float:
-    """tropMonomial = v(coeff) + <a, w>  (min-plus value of one term)."""
-    return coeff + lin_form(a, w)
+def p_adic_order(value: int, prime: int) -> int:
+    """Return ord_prime(value) for a nonzero integer and a prime base."""
+    if value == 0:
+        raise ValueError("p-adic order of zero is not finite")
+    if prime < 2:
+        raise ValueError("prime must be at least 2")
+    n = abs(value)
+    order = 0
+    while n % prime == 0:
+        n //= prime
+        order += 1
+    return order
 
 
-def trop_poly_value(f: TropPoly, w: Sequence[float]) -> float:
-    """tropPolyValue(f, w) = min over support of tropMonomial."""
-    return min(trop_monomial(c, a, w) for c, a in f)
+def maximal_p_adic_indices(values: Sequence[int], prime: int) -> list[int]:
+    """Indices having maximal p-adic norm, equivalently minimal p-adic order."""
+    if not values or any(value == 0 for value in values):
+        raise ValueError("provide a nonempty sequence of nonzero integers")
+    orders = [p_adic_order(value, prime) for value in values]
+    minimum = min(orders)
+    return [index for index, order in enumerate(orders) if order == minimum]
 
 
-def minimizing_indices(f: TropPoly, w: Sequence[float], tol: float = 1e-9) -> list[int]:
-    """Indices of monomials attaining the defining minimum at w."""
-    m = trop_poly_value(f, w)
-    return [i for i, (c, a) in enumerate(f) if abs(trop_monomial(c, a, w) - m) <= tol]
+def verify_vanishing_sum_cancellation(values: Sequence[int], prime: int) -> bool:
+    """Check that a vanishing nonzero integer sum has at least two maximal norms."""
+    if sum(values) != 0:
+        raise ValueError("the terms must sum to zero")
+    return len(maximal_p_adic_indices(values, prime)) >= 2
 
 
-def is_corner_point(f: TropPoly, w: Sequence[float], tol: float = 1e-9) -> bool:
-    """w is a corner point iff the minimum is attained at >= 2 distinct monomials."""
-    return len(minimizing_indices(f, w, tol)) >= 2
+def maximizing_indices(values: Sequence[Fraction]) -> list[int]:
+    """Return all indices attaining the exact maximum of rational values."""
+    if not values:
+        raise ValueError("at least one tropical term is required")
+    maximum = max(values)
+    return [index for index, value in enumerate(values) if value == maximum]
 
 
-# ---------------------------------------------------------------------------
-# One-variable tropical Bezout via the lower envelope
-# ---------------------------------------------------------------------------
-
-def univariate_roots_with_multiplicity(
-    coeffs: dict[int, float],
-    degree: int,
-    grid: tuple[float, float, int] = (-50.0, 50.0, 200001),
-) -> list[tuple[float, int]]:
-    """
-    Compute tropical roots (corners) and multiplicities (slope drops) of the
-    degree-`degree` univariate tropical polynomial
-
-        T(w) = min_{k} ( coeffs[k] + k * w ).
-
-    The multiplicity at a corner is the drop in the minimizing slope.
-    Returns a list of (root, multiplicity) sorted by root.
-
-    We detect slope changes by scanning the minimizing slope on a fine grid;
-    the total of multiplicities equals `degree` (tropical Bezout).
-    """
-    lo, hi, n = grid
-    xs = [lo + (hi - lo) * i / (n - 1) for i in range(n)]
-
-    def min_slope(w: float) -> int:
-        """The smallest slope k attaining the minimum (lower envelope slope)."""
-        best_val = math.inf
-        best_k = degree
-        for k, c in coeffs.items():
-            val = c + k * w
-            if val < best_val - 1e-12:
-                best_val = val
-                best_k = k
-        return best_k
-
-    roots: list[tuple[float, int]] = []
-    prev_slope = min_slope(xs[0])
-    for i in range(1, len(xs)):
-        s = min_slope(xs[i])
-        if s != prev_slope:
-            drop = prev_slope - s  # concave => nonnegative
-            midpoint = 0.5 * (xs[i - 1] + xs[i])
-            roots.append((midpoint, drop))
-            prev_slope = s
-    return roots
+def is_max_corner(values: Sequence[Fraction]) -> bool:
+    """Decide whether at least two tropical terms attain the maximum."""
+    return len(maximizing_indices(values)) >= 2
 
 
-def total_multiplicity(roots: list[tuple[float, int]]) -> int:
-    """Sum of multiplicities -- should equal the degree (Theorem: tropical_bezout)."""
-    return sum(m for _, m in roots)
+def tropical_line_terms(x: Fraction, y: Fraction) -> list[Fraction]:
+    """Evaluate the affine terms 0, x, and y of the standard tropical line."""
+    return [Fraction(0), x, y]
 
 
-def tropical_roots_from_classical(valuations: Sequence[float]) -> list[float]:
-    """
-    For f = c * prod_j (x - r_j), the tropical roots are exactly the valuations
-    v(r_j) (tropPolyValue_linearFactor). Given the valuations of the classical
-    roots, return the sorted tropical roots.
-    """
-    return sorted(valuations)
+def verify_positive_scale_invariance(
+    values: Sequence[Fraction], scale: Fraction
+) -> bool:
+    """Check equality of maximizer sets before and after positive scaling."""
+    if scale <= 0:
+        raise ValueError("scale must be positive")
+    scaled = [scale * value for value in values]
+    return maximizing_indices(values) == maximizing_indices(scaled)
 
 
-# ---------------------------------------------------------------------------
-# Maslov dequantization
-# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class WeightedCorrespondence:
+    """Finite source-to-target matching with multiplicities on both sides."""
 
-def log_add_exp(x: float, y: float, t: float) -> float:
-    """
-    Dequantized addition (max-convention):
-        x (+)_t y = (1/t) log(e^{tx} + e^{ty}).
-    Numerically stable via factoring out the maximum.
-    """
-    m = max(x, y)
-    return m + math.log(math.exp(t * (x - m)) + math.exp(t * (y - m))) / t
+    mapping: Mapping[str, str]
+    source_multiplicity: Mapping[str, int]
+    target_multiplicity: Mapping[str, int]
+
+    def validate(self) -> None:
+        """Validate bijectivity, support equality, and nonnegative weights."""
+        sources = set(self.mapping)
+        targets = set(self.mapping.values())
+        if sources != set(self.source_multiplicity):
+            raise ValueError("source multiplicities must match mapping domain")
+        if targets != set(self.target_multiplicity):
+            raise ValueError("target multiplicities must match mapping image")
+        if len(targets) != len(self.mapping):
+            raise ValueError("the correspondence must be injective")
+        all_weights = list(self.source_multiplicity.values()) + list(
+            self.target_multiplicity.values()
+        )
+        if any(weight < 0 for weight in all_weights):
+            raise ValueError("multiplicities must be nonnegative")
+        for source, target in self.mapping.items():
+            if self.source_multiplicity[source] != self.target_multiplicity[target]:
+                raise ValueError(f"multiplicity mismatch at {source!r} -> {target!r}")
+
+    def intersection_numbers(self) -> tuple[int, int]:
+        """Return classical and tropical weighted totals after validation."""
+        self.validate()
+        return (
+            sum(self.source_multiplicity.values()),
+            sum(self.target_multiplicity.values()),
+        )
+
+    def verifies_bezout(self, degree_one: int, degree_two: int) -> bool:
+        """Check that both transferred totals equal degree_one * degree_two."""
+        classical, tropical = self.intersection_numbers()
+        return classical == tropical == degree_one * degree_two
 
 
-def dequantization_error(x: float, y: float, t: float) -> float:
-    """Overshoot of the smooth max over the true max; in [0, log(2)/t]."""
-    return log_add_exp(x, y, t) - max(x, y)
+def render_tropical_line_ascii(radius: int = 6) -> str:
+    """Render grid points of max(0,x,y)'s corner locus as an ASCII diagram."""
+    if radius < 1:
+        raise ValueError("radius must be positive")
+    rows: list[str] = []
+    for y in range(radius, -radius - 1, -1):
+        row: list[str] = []
+        for x in range(-radius, radius + 1):
+            terms = tropical_line_terms(Fraction(x), Fraction(y))
+            row.append("#" if is_max_corner(terms) else ".")
+        rows.append("".join(row))
+    return "\n".join(rows)
 
-
-# ---------------------------------------------------------------------------
-# Walkthrough
-# ---------------------------------------------------------------------------
 
 def main() -> None:
-    print("=" * 70)
-    print("Tropical Geometry as a Limit of Classical Algebraic Geometry")
-    print("=" * 70)
+    """Run all demonstrations and print their exact numerical conclusions."""
+    p = 2
+    terms = [12, 20, -32]
+    orders = [p_adic_order(value, p) for value in terms]
+    maximal = maximal_p_adic_indices(terms, p)
+    print("NON-ARCHIMEDEAN CANCELLATION")
+    print(f"terms: {terms}; sum: {sum(terms)}")
+    print(f"2-adic orders: {orders}")
+    print(f"indices of maximal 2-adic norm: {maximal}")
+    print(f"maximum attained at least twice: {verify_vanishing_sum_cancellation(terms, p)}")
 
-    # --- Demo 1: a tropical line in the plane and its corner locus ---------
-    print("\n[1] Tropical line  T(w) = min(0 + w1, 0 + w2, 0)  (trop of x+y+1)")
-    f_line: TropPoly = [(0.0, (1, 0)), (0.0, (0, 1)), (0.0, (0, 0))]
-    test_pts = [(0.0, 0.0), (2.0, 2.0), (-1.0, -1.0), (3.0, -1.0), (0.0, 5.0)]
-    for w in test_pts:
-        val = trop_poly_value(f_line, w)
-        idx = minimizing_indices(f_line, w)
-        corner = is_corner_point(f_line, w)
-        print(f"   w={w!s:>12}  T(w)={val:6.2f}  minimizers={idx}  corner={corner}")
-    print("   The corner locus is the tropical line: three rays from the origin.")
+    point = (Fraction(3), Fraction(3))
+    values = tropical_line_terms(*point)
+    print("\nTROPICAL CORNER AND SCALE INVARIANCE")
+    print(f"point: {point}; term values [0,x,y]: {values}")
+    print(f"maximizing indices: {maximizing_indices(values)}")
+    print(f"is a corner: {is_max_corner(values)}")
+    for scale in [Fraction(1), Fraction(2), Fraction(17, 3)]:
+        print(
+            f"scale {scale}: same maximizers = "
+            f"{verify_positive_scale_invariance(values, scale)}"
+        )
+    print("\nASCII SAMPLE OF THE TROPICAL LINE")
+    print(render_tropical_line_ascii())
 
-    # --- Demo 2: forward inclusion, illustrated -----------------------------
-    print("\n[2] Forward inclusion  Trop(V(f)) subset cornerLocus(trop f)")
-    print("    A classical zero forces the cheapest tropical term to tie (>=2 minimizers).")
-    print("    The origin (0,0) above has 3 minimizers -> a genuine corner point.")
-
-    # --- Demo 3: tropical Bezout in one variable ----------------------------
-    print("\n[3] Tropical Bezout: degree-d poly has exactly d roots (with mult.)")
-    # T(w) = min(6, 3+w, 1+2w, 0+3w): degree 3 with three distinct simple roots
-    # (corners at w = 1, 2, 3 where consecutive lines tie).
-    coeffs = {0: 6.0, 1: 3.0, 2: 1.0, 3: 0.0}
-    degree = 3
-    roots = univariate_roots_with_multiplicity(coeffs, degree)
-    for r, m in roots:
-        print(f"   tropical root ~ {r:7.3f}   multiplicity {m}")
-    tot = total_multiplicity(roots)
-    print(f"   sum of multiplicities = {tot}  (should equal degree d = {degree})")
-    assert tot == degree, "tropical Bezout failed!"
-    print("   VERIFIED: sum of slope drops == degree.")
-
-    # --- Demo 4: tropical roots = valuations of classical roots -------------
-    print("\n[4] tropPolyValue_linearFactor: roots are valuations of classical roots")
-    valuations = [-2.0, 0.0, 5.0]  # v(r_j) for f = c (x-r1)(x-r2)(x-r3)
-    troots = tropical_roots_from_classical(valuations)
-    print(f"   classical root valuations v(r_j) = {valuations}")
-    print(f"   tropical roots                   = {troots}")
-    print("   They coincide (with multiplicity), matching tropical Bezout count.")
-
-    # --- Demo 5: Maslov dequantization limit --------------------------------
-    print("\n[5] Maslov dequantization:  x (+)_t y -> max(x, y)  as t -> infinity")
-    x, y = 3.0, 5.0
-    print(f"   x={x}, y={y}, max(x,y)={max(x, y)}")
-    for t in [0.5, 1.0, 2.0, 5.0, 20.0, 100.0]:
-        s = log_add_exp(x, y, t)
-        err = dequantization_error(x, y, t)
-        bound = math.log(2) / t
-        print(f"   t={t:6.1f}   x(+)_t y={s:8.5f}   error={err:8.5f}   log2/t={bound:8.5f}")
-    print("   error stays in [0, log2/t] and -> 0  (two-sided sandwich).")
-
-    print("\n" + "=" * 70)
-    print("All demonstrations completed successfully.")
-    print("=" * 70)
+    correspondence = WeightedCorrespondence(
+        mapping={"P1": "Q2", "P2": "Q4", "P3": "Q1", "P4": "Q3"},
+        source_multiplicity={"P1": 1, "P2": 2, "P3": 1, "P4": 2},
+        target_multiplicity={"Q1": 1, "Q2": 1, "Q3": 2, "Q4": 2},
+    )
+    classical, tropical = correspondence.intersection_numbers()
+    print("\nWEIGHTED INTERSECTION CORRESPONDENCE")
+    print(f"classical total: {classical}; tropical total: {tropical}")
+    print(f"matches degrees 2 and 3: {correspondence.verifies_bezout(2, 3)}")
 
 
 if __name__ == "__main__":

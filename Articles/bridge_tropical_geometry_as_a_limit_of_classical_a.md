@@ -1,261 +1,157 @@
-# Shadows of Curves: How Geometry Survives at the Edge of Infinity
+# When Algebra Freezes into Geometry
 
-Imagine you are looking at a complicated curved landscape — hills, valleys,
-twisting ridgelines — and someone slowly turns down the resolution until all
-that remains is a stick-figure sketch: a few straight creases meeting at sharp
-corners. Astonishingly, the sketch still remembers the most important facts
-about the landscape. Two roads that crossed twice still cross twice. A loop is
-still a loop. The number of times a path meets a fixed line is preserved.
+## Tropical geometry as the large-scale shadow of polynomial equations
 
-This is the spirit of **tropical geometry**, one of the most surprising bridges
-built in modern mathematics. It says that the smooth, infinitely detailed world
-of classical algebraic curves and surfaces casts a *piecewise-linear shadow* — a
-world made entirely of line segments, rays, and corners — and that this shadow
-is faithful enough to do real geometry with. You can replace hard questions
-about polynomials with easy questions about broken lines, solve them, and carry
-the answer back.
+A polynomial curve can be an unruly object. Even a modest equation may trace loops, intersect itself, disappear into complex coordinates, or depend delicately on its coefficients. Tropical geometry offers a startling change of scenery: replace addition by maximum, replace multiplication by addition, and smooth algebraic curves turn into angular, weighted graphs. The result looks less like a classical curve and more like a subway map.
 
-This article tells the story of that bridge and of three precise theorems that
-hold it up: the **fundamental theorem of tropical geometry** (a curve's shadow
-is exactly the set of "corners" of a tropical polynomial), the principle that
-tropicalization is a **limit as a valuation runs off to infinity**, and the
-**tropical Bézout theorem** (the shadow counts intersections just as faithfully
-as the original).
+This is not merely a visual analogy. A non-Archimedean valuation converts multiplication into multiplication of sizes and makes the size of a sum no larger than the largest size of its terms. When a polynomial vanishes, that simple inequality forces a tie among its largest terms. Those ties are exactly the corners of a tropical polynomial. Thus every classical zero casts a tropical shadow on a piecewise-linear skeleton.
 
----
+The bridge rests on one elementary but powerful principle: **a vanishing sum of nonzero terms cannot have a uniquely largest valuation**. From it follow the hypersurface inclusion at the heart of tropicalization, the stability of tropical corner loci under positive rescaling, and a clean explanation of why intersection numbers survive whenever points and multiplicities correspond.
 
-## A strange arithmetic where addition forgets how to add
+## A different arithmetic of size
 
-Everything begins with a deliberately weird way of doing arithmetic. In the
-**min-plus tropical semiring**, we redefine the two basic operations:
+Let $K$ be a field equipped with a non-Archimedean valuation $v$. We use a multiplicative convention: $v(0)=0$, nonzero elements have nonzero value, and
 
-- Tropical "addition" of two numbers is taking their **minimum**:
-  $x \oplus y = \min(x, y)$.
-- Tropical "multiplication" is ordinary **addition**:
-  $x \odot y = x + y$.
-
-At first this looks like a typo. But check the laws you care about. Tropical
-addition is commutative and associative, just like real addition. Tropical
-multiplication distributes over it:
-$$x \odot (y \oplus z) = x + \min(y,z) = \min(x+y,\,x+z) = (x\odot y)\oplus(x\odot z).$$
-The role of "zero" (the neutral element for $\oplus$) is played by $+\infty$,
-since $\min(x, +\infty) = x$. The role of "one" (neutral for $\odot$) is played
-by the ordinary number $0$, since $x + 0 = x$.
-
-This is a genuine algebraic structure — a *semiring* — and it is the home of
-tropical geometry. The only thing you give up is subtraction; you can never undo
-a minimum. That single sacrifice is what makes the geometry turn into straight
-lines.
-
-Now translate a polynomial into this language. An ordinary polynomial is a sum
-of monomial terms, each a coefficient times a product of powers. Tropicalize it
-term by term: products of powers become **linear forms**, coefficients become
-**constants you add on**, and the outer sum becomes a **minimum**. A tropical
-polynomial in variables $w = (w_1, \dots, w_n)$ therefore looks like
 $$
-\mathrm{trop}(f)(w) \;=\; \min_{a \in \mathrm{supp}(f)} \Big( c_a + \langle a, w\rangle \Big),
-\qquad \langle a, w\rangle = \sum_i a_i\, w_i .
+v(ab)=v(a)v(b), \qquad v(a+b)\leq \max\{v(a),v(b)\}.
 $$
-Each term inside the minimum is a flat, tilted plane. The minimum of a finite
-collection of tilted planes is a **piecewise-linear, concave function** — a
-landscape of flat facets meeting along creases. Those creases are where the
-geometry lives.
 
----
+The value set is linearly ordered, so finite collections have largest elements. Familiar examples arise from prime-adic arithmetic. For a prime $p$, one can measure a nonzero rational number by $|x|_p=p^{-\operatorname{ord}_p(x)}$. Divisibility by high powers of $p$ makes a number small, while a large denominator involving $p$ makes it large. In this geometry of size, the ordinary triangle inequality becomes the stronger ultrametric inequality
 
-## The corner locus: where the minimum ties
-
-Look closely at that minimum. At most points $w$, exactly one of the tilted
-planes is strictly lowest; the function is smooth there, just a single flat
-facet. But along certain seams, **two different planes tie for lowest at the
-same time**. These are the corners, the creases, the fold-lines of the
-landscape. We call the set of all such points the **corner locus**, and it is
-the central geometric object.
-
-Formally, a point $w$ is a *corner point* of $\mathrm{trop}(f)$ when there exist
-two distinct exponent vectors $a \neq b$ in the support of $f$ such that
 $$
-c_a + \langle a, w \rangle \;=\; c_b + \langle b, w \rangle
-\;=\; \min_{c \in \mathrm{supp}(f)} \big( c_c + \langle c, w\rangle\big).
+|x+y|_p\leq \max\{|x|_p,|y|_p\}.
 $$
-In words: the cheapest term is achieved twice. The collection of all corner
-points is the **tropical hypersurface** of $f$ — the shadow we have been
-chasing. For a tropical polynomial in two variables it is a planar graph of rays
-and segments, a kind of geometric skeleton.
 
-But a skeleton of *what*? That is the deep question, and the answer is the
-bridge.
+Imagine several nonzero terms $a_1,\ldots,a_m$ adding to zero. Suppose one term, say $a_i$, had valuation strictly greater than all the others. Then the sum of the remaining terms would still have valuation strictly smaller than $v(a_i)$. But the equation
 
----
-
-## Valuations: measuring numbers by how divisible they are
-
-To connect this stick-figure world to real algebraic geometry, we need a field
-that secretly carries the tropical structure inside it. The right tool is a
-**non-Archimedean valuation**.
-
-A valuation $v$ assigns to each nonzero element $x$ of a field $K$ a number
-$v(x)$ — think of it as measuring "how small" or "how divisible" $x$ is. The
-classic example is the **$p$-adic valuation** on the rational numbers: $v_p(x)$
-is the power of a fixed prime $p$ dividing $x$. So $v_2(12) = 2$ because
-$12 = 2^2 \cdot 3$, while $v_2(5) = 0$ and $v_2(1/8) = -3$. A valuation always
-satisfies three rules:
-
-1. $v(0) = +\infty$ (zero is infinitely divisible),
-2. $v(xy) = v(x) + v(y)$ (the valuation of a product is the sum), and
-3. the **ultrametric inequality** $v(x + y) \ge \min(v(x), v(y))$.
-
-Stare at rules 2 and 3. Multiplication of field elements becomes *addition* of
-valuations. Addition of field elements becomes *at least the minimum* of
-valuations. This is precisely the min-plus dictionary — multiplication goes to
-$\odot$, addition goes to $\oplus$ — appearing spontaneously inside ordinary
-algebra. The valuation is the bridge incarnate.
-
-The ultrametric inequality has a powerful sharpened form that does almost all
-the heavy lifting in the theory. If one term in a sum is *strictly* smaller in
-valuation than all the others, there is no possible cancellation, and the sum's
-valuation is forced to equal that of the lone smallest term:
 $$
-v(g_j) < v(g_i) \text{ for all } i \neq j
-\quad\Longrightarrow\quad
-v\!\left(\sum_i g_i\right) = v(g_j).
+\sum_{j\ne i}a_j=-a_i
 $$
-This "unique minimum wins" lemma is the engine that turns vanishing of
-polynomials into ties in a minimum.
 
----
+says that this remainder has exactly the same valuation as $a_i$, because changing sign does not change valuation. Contradiction.
 
-## The first half of the bridge, proved for free
+This gives the **Non-Archimedean Cancellation Theorem**: if a finite family of nonzero elements satisfies $\sum_i a_i=0$, then no member has valuation strictly larger than every other member. Equivalently, every term is matched or exceeded in valuation by a different term. In particular, the maximum valuation is attained at least twice.
 
-Here is where the two worlds touch. Take a polynomial $f$ over the valued field
-$K$ and a classical point $x = (x_1, \dots, x_n)$ on the curve it defines —
-meaning $f(x) = 0$ — living in the *torus*, where every coordinate $x_i$ is
-nonzero. Apply the valuation coordinate by coordinate to get a tropical point
+The statement captures the distinctive rigidity of ultrametric arithmetic. In ordinary absolute value, a large term can be cancelled by the combined effect of many smaller terms. Non-Archimedean size forbids that coalition: if every opponent is strictly smaller, their entire sum remains strictly smaller.
+
+## Corners are ties
+
+Now take finitely many real-valued functions $F_i(x)$ on a space $X$. Their max-tropical polynomial is
+
 $$
-\mathrm{trop}(x) = \big(v(x_1), \dots, v(x_n)\big).
+F(x)=\max_i F_i(x).
 $$
-The collection of all such valuation-images of classical solutions is written
-$\mathrm{Trop}(V(f))$: it is the *literal shadow* of the curve $V(f)$ under the
-valuation map.
 
-The first major theorem says this shadow always lands on the corner locus.
+A point $x$ lies in the **max-corner locus** when at least two distinct indices $i$ and $j$ attain this maximum:
 
-> **Theorem (forward inclusion, proved unconditionally).**
-> For every classical solution $x$ in the torus,
-> $\mathrm{trop}(x)$ is a corner point of $\mathrm{trop}(f)$. In symbols,
-> $$\mathrm{Trop}(V(f)) \;\subseteq\; \text{corner locus of } \mathrm{trop}(f).$$
-
-The reasoning is beautiful and short. Each monomial term of $f$ evaluated at $x$
-has a valuation that — by the multiplicativity rule — equals exactly the
-tropicalized monomial $c_a + \langle a, \mathrm{trop}(x)\rangle$. (This identity,
-that the valuation of a classical term *is* its tropical value, is the technical
-heart of the bridge.) Now suppose the minimum of those tropical values were
-achieved by only *one* term. Then by the "unique minimum wins" lemma, the whole
-sum $f(x)$ would have a finite valuation — in particular it would be nonzero. But
-$f(x) = 0$, whose valuation is $+\infty$. Contradiction. So the minimum must be
-achieved at least *twice*: $\mathrm{trop}(x)$ is a corner. The curve cannot help
-but cast its shadow onto the creases.
-
-The reverse inclusion — that *every* corner point is the shadow of some actual
-classical solution — is the harder half. It is the celebrated **Kapranov /
-fundamental theorem of tropical geometry**, and it requires being able to lift a
-combinatorial corner back to a genuine point of the curve (over a suitably large
-valued field). With that lifting in hand, the two inclusions snap together:
-
-> **Fundamental Theorem of Tropical Geometry (hypersurface case).**
-> The tropicalization of a hypersurface equals the corner locus of its tropical
-> polynomial:
-> $$\mathrm{Trop}(V(f)) \;=\; \text{corner locus of } \mathrm{trop}(f).$$
-
-The smooth curve and its stick-figure shadow are not just related — they are two
-faces of the same object.
-
----
-
-## A limit as the valuation goes to infinity
-
-There is a second, more dynamic way to see why the shadow is faithful, and it
-explains the slogan that *tropical geometry is a limit of classical geometry*.
-
-Replace the sharp $\min$ with a smooth approximation that depends on a
-temperature parameter $t$:
 $$
-x \oplus_t y \;=\; \tfrac{1}{t}\,\log\!\big(e^{tx} + e^{ty}\big).
+F_i(x)=F_j(x)=\max_k F_k(x).
 $$
-For small $t$ this is close to ordinary addition (in log-coordinates), the
-arithmetic of classical algebra. As $t \to \infty$ it converges to the genuine
-tropical minimum,
+
+For affine functions on Euclidean space, the maximum is convex and piecewise linear. Away from a tie, one affine piece wins and the graph is locally flat. At a tie, the winning piece changes, producing a ridge or corner. The corner locus is the visible tropical hypersurface.
+
+For example, consider
+
 $$
-\lim_{t \to \infty} x \oplus_t y = \min(x, y),
+F(x,y)=\max\{0,x,y\}.
 $$
-because the largest exponential dominates. This deformation — called **Maslov
-dequantization** — is a continuous dial connecting the classical semiring at one
-end to the tropical semiring at the other. Turning the dial all the way up is
-exactly the act of "letting the valuation go to infinity." The overshoot of the
-smooth version over the true minimum is controlled and shrinks at a clean rate of
-order $1/t$, governed by the single universal constant $\log 2$. Tropical
-geometry is what classical geometry looks like in the zero-temperature, infinite-
-valuation limit.
 
----
+Its corner locus consists of three rays meeting at the origin: the negative $x$-axis, the negative $y$-axis, and the ray $x=y\geq 0$. This three-armed graph is the tropical line. Each arm records a different pairwise tie among $0$, $x$, and $y$.
 
-## Counting without solving: tropical Bézout
+Some authors use minima rather than maxima. The two languages are equivalent. Negating every term reverses order, so the minimum of $-F_i(x)$ is attained at least twice exactly when the maximum of $F_i(x)$ is attained at least twice. This is the **Sign-Reversal Principle for Tropical Corners**: max and min conventions describe the same geometry after reflection of all values through zero.
 
-The real payoff of a faithful shadow is that you can *count* in it. The classical
-**Bézout theorem** says that a polynomial of degree $d$ has exactly $d$ roots,
-counted with multiplicity. Its tropical mirror is just as exact — and in one
-variable you can practically see it.
+## Why every zero lands on a corner
 
-A degree-$d$ tropical polynomial in one variable is a minimum of $d+1$ lines
-with slopes $0, 1, 2, \dots, d$:
+Suppose a polynomial or Laurent polynomial has been decomposed into finitely many terms,
+
 $$
-\mathrm{trop}(f)(w) = \min_{0 \le k \le d}\big(c_k + k\, w\big).
+f(z)=\sum_{i\in I} T_i(z).
 $$
-Its graph is a concave, downward-bending broken line. Reading from left to right,
-the slope of the lowest line *decreases* in steps — from $d$ on the far left down
-to $0$ on the far right. Each place where the slope drops is a corner, a tropical
-root, and the size of the drop is its **multiplicity**.
 
-> **Tropical Bézout (one variable).**
-> A degree-$d$ tropical polynomial has exactly $d$ roots counted with
-> multiplicity; equivalently, the total of all the slope drops across the graph
-> equals $d$:
-> $$\sum_{\text{corners } w} \big(\text{slope drop at } w\big) = d.$$
+Fix a point $z$ at which every $T_i(z)$ is nonzero. Associate to it the valuation data $v(T_i(z))$. If $f(z)=0$, then the terms form a vanishing finite sum. Non-Archimedean cancellation says their largest valuation must occur at least twice.
 
-The proof is a conservation law in disguise. The slope starts at $d$ and ends at
-$0$; the only way it can get from one to the other is by dropping, and the drops
-must add up to the total descent $d - 0 = d$. No genericity, no case analysis —
-just the asymptotics of a concave broken line. Moreover, the local multiplicity
-at each corner is literally the difference between the slope coming in and the
-slope going out, and these tropical roots are exactly the valuations of the
-classical roots of $f$. Counting solutions to a polynomial equation becomes
-measuring the kinks in a piece of bent wire.
+This proves the **Valuation-to-Corner Theorem**: for any finite family of nonzero terms over a non-Archimedean valued field, every point where their sum vanishes maps under termwise valuation to the max-corner locus. In symbols, if
 
-The future of this story is multidimensional. The same slope-conservation idea
-suggests that in $n$ variables the local multiplicities over the tropical
-hypersurface should sum to $d^n$, recovering the full classical Bézout number —
-intersection theory recast as bookkeeping for the corners of a polytope.
+$$
+\sum_{i\in I}T_i(z)=0 \quad\text{and}\quad T_i(z)\ne 0\text{ for all }i,
+$$
 
----
+then there are distinct $i,j\in I$ such that
 
-## Why this matters
+$$
+v(T_i(z))=v(T_j(z))=\max_{k\in I}v(T_k(z)).
+$$
 
-Tropical geometry is not merely a pretty analogy. Because its objects are
-piecewise-linear, hard nonlinear problems become problems in **combinatorics and
-linear programming** — solvable by computer, visualizable on paper. This has
-turned tropical methods into a practical tool across mathematics and its
-neighbors: enumerative geometry (counting curves of a given degree through given
-points), phylogenetics (the "tree spaces" of evolutionary biology are tropical),
-optimization and scheduling (where min-plus algebra models bottlenecks and
-critical paths), and economics (auction and matching markets with
-piecewise-linear utilities).
+This is one direction of the hypersurface form of the tropical fundamental theorem. It says that valuation images of classical zeros cannot wander into the open regions where one tropical monomial dominates. They are confined to the walls separating those regions.
 
-The three theorems gathered here are the load-bearing beams of that bridge. The
-**forward inclusion** shows, with nothing but the ultrametric inequality, that
-solutions always cast their shadows onto the creases. The **fundamental
-theorem** promises the shadow loses nothing: every crease is a real shadow. And
-**tropical Bézout** shows the shadow can still count, turning the deepest
-invariants of classical geometry into the visible kinks of a broken line.
+The reverse direction is subtler: realizing every tropical corner as the valuation of a classical zero requires additional hypotheses and deeper lifting arguments. The forward direction already reveals why tropical hypersurfaces have their characteristic shape. The graph is not an arbitrary approximation; it is forced by cancellation.
 
-A curve, dimmed to a stick figure, still remembers how many times it crosses a
-line. That is the quiet miracle at the heart of tropical geometry.
+A simple three-term example makes the mechanism concrete. Over a prime-adic field, let $a+b+c=0$, with all three terms nonzero. If $|a|_p$ is maximal, at least one of $|b|_p$ and $|c|_p$ must equal or exceed it. Since $|a|_p$ was already maximal, equality follows. At the level of tropical functions, the associated point sits exactly where two or three pieces tie.
+
+## Turning up the scale
+
+Tropical geometry is often described as a large-scale or low-temperature limit of classical geometry. The precise meaning of “limit” depends on the setting, and one must distinguish genuine analytic convergence from exact invariance. For corner loci, there is an especially clean stabilization statement.
+
+Let $c>0$ and multiply every tropical term by $c$. Because positive multiplication preserves order,
+
+$$
+F_k(x)\leq F_i(x) \quad\Longleftrightarrow\quad cF_k(x)\leq cF_i(x).
+$$
+
+Therefore the same indices are maximal before and after scaling. This gives the **Positive-Scale Invariance Theorem**: for every positive real $c$, the max-corner locus of the family $\{cF_i\}$ is exactly the max-corner locus of $\{F_i\}$.
+
+In particular, at every positive integral scale $n+1$,
+
+$$
+\operatorname{Corner}\bigl((n+1)F_i\bigr)
+=
+\operatorname{Corner}(F_i).
+$$
+
+So along the sequence of scales $1,2,3,\ldots$, no asymptotic waiting is required: the tropical hypersurface has already stabilized setwise. The numerical heights stretch, but the walls where winners tie remain fixed. This is a rigorous core of the “valuation goes to infinity” picture. It does not, by itself, claim Hausdorff convergence of classical zero sets; rather, it identifies an exact scale-invariant skeleton once the tropical functions have been formed.
+
+The phenomenon resembles zooming in on a map printed on elastic material. Distances between contour heights grow, but the borders separating regions do not move. Tropical geometry remembers the competition among terms, not their common unit of measurement.
+
+## Counting intersections without losing weight
+
+Geometry is not only about where objects meet; it is also about how strongly they meet. A tangency counts differently from a transverse crossing. To retain this information, assign each point $p$ in a finite intersection set $S$ a nonnegative integer multiplicity $m(p)$. Define the weighted intersection number by
+
+$$
+I(S,m)=\sum_{p\in S}m(p).
+$$
+
+Suppose a classical intersection set $S$ corresponds bijectively to a tropical intersection set $T$. Let $\phi:S\to T$ be the correspondence, and suppose it preserves multiplicity:
+
+$$
+m_S(p)=m_T(\phi(p)) \quad\text{for every }p\in S.
+$$
+
+Then simply reindexing the finite sum proves the **Weighted Correspondence Theorem**:
+
+$$
+I(S,m_S)=I(T,m_T).
+$$
+
+This elementary identity is the final counting bridge behind a conditional tropical Bézout statement. If two classical plane curves of degrees $d$ and $e$ have a finite intersection whose weighted classical count is $de$, and if their classical and tropical intersection points are linked by a multiplicity-preserving bijection, then the tropical weighted intersection number is also
+
+$$
+de.
+$$
+
+This is the **Conditional Tropical Bézout Theorem**. Its conditions matter. The theorem does not manufacture the geometric correspondence, prove properness, or define stable local tropical multiplicity. Instead, it isolates exactly what is needed to transfer Bézout’s classical count: matching points and matching weights. Once those geometric ingredients are established, the global numerical equality follows inevitably.
+
+## The architecture of the bridge
+
+The full picture now has three layers.
+
+First comes **cancellation**. A classical zero is a balance among nonzero terms, and ultrametric arithmetic forces at least two terms to share the top valuation.
+
+Second comes **polyhedral geometry**. A tie for the maximum is a corner of a piecewise-linear tropical polynomial. Positive rescaling changes heights but preserves every comparison, so the corner skeleton is stable at all positive scales.
+
+Third comes **enumerative transfer**. When classical and tropical intersection points correspond and their multiplicities agree, weighted counts agree. Classical Bézout numbers then pass directly to the tropical side.
+
+Each layer deliberately separates universal logic from deeper geometric input. Cancellation requires only a finite nonzero vanishing sum. Scale invariance requires only ordered real values and a positive multiplier. Weighted transfer requires only a finite multiplicity-preserving bijection. More ambitious conclusions—lifting every corner to a zero, proving convergence of logarithmic amoebas, or constructing stable intersection correspondences—demand additional geometry.
+
+That separation is a strength. It tells researchers exactly where the hard work lives. The tropical shadow of a zero is forced by valuation. The persistence of the corner locus is forced by order. The preservation of a total intersection count is forced by reindexing. What remains is to build the geometric correspondences that connect these universal mechanisms in rich settings.
+
+Tropical geometry earns its name from the image of a classical world under extreme conditions: as a landscape cools or a scale grows, smooth forms crystallize into linear facets. Yet the mathematics shows something sharper than a metaphor. At the decisive places, algebra cannot cancel unless leading sizes tie. Those ties draw the tropical skeleton; scaling leaves it motionless; and multiplicities carry classical counts across it. The subway map is not merely simpler than the city. It records the routes along which the city’s algebra is compelled to travel.

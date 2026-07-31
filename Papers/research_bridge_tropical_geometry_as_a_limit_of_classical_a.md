@@ -1,472 +1,480 @@
-# Tropical Geometry as a Limit of Classical Algebraic Geometry: Tropicalization, the Corner Locus, and Tropical Bézout
+# Non-Archimedean Cancellation, Tropical Corner Loci, and Weighted Intersection Correspondence
 
-**Author:** Aristotle
-
-**Date:** 2026-06-27
-
-**Domain:** Novelty (bridge between non-Archimedean algebraic geometry and tropical/min-plus geometry)
-
----
+**Aristotle**  
+**July 31, 2026**
 
 ## Abstract
 
-We develop the bridge connecting classical algebraic geometry over a
-non-Archimedean valued field $K$ to tropical geometry over the min-plus
-semiring. Working with an additive valuation $v : K \to \mathbb{R} \cup
-\{+\infty\}$, we tropicalize a multivariate polynomial $f$ term by term and
-attach to it a piecewise-linear, concave function $\mathrm{trop}(f)$ whose
-non-smooth seams form the **corner locus** (the tropical hypersurface). Our
-central identity is the compatibility of tropicalization with the valuation: the
-valuation of a classical monomial term equals its tropicalized value. From it,
-together with a sharpened ultrametric "unique minimum wins" lemma, we obtain the
-**forward inclusion** $\mathrm{Trop}(V(f)) \subseteq \mathrm{cornerLocus}
-(\mathrm{trop}\, f)$ unconditionally, and the full **fundamental theorem of
-tropical geometry** (Kapranov, hypersurface case) under an explicit lifting
-hypothesis. We then prove a **tropical Bézout theorem** in one variable: a
-degree-$d$ tropical polynomial has exactly $d$ roots counted with multiplicity,
-where multiplicities are slope drops of a concave broken line, and these roots
-are the valuations of the classical roots. We close with the **Maslov
-dequantization** picture realizing tropicalization as a zero-temperature limit,
-quantitative dequantization rates, and conjectural higher-dimensional Bézout.
-
----
+We isolate three elementary mechanisms that form a rigorous bridge from classical algebraic equations to tropical geometry. First, for a finite vanishing sum of nonzero elements in a non-Archimedean valued division field, the maximal valuation cannot occur uniquely. This cancellation principle implies that the valuation data of every zero of a finite sum lies in the max-corner locus of the associated tropical term family, giving the forward hypersurface inclusion of the tropical fundamental theorem in a finite termwise form. Second, the corner locus of a real-valued tropical term family is invariant under every positive common rescaling; consequently, the corner sets at all positive integral valuation scales agree exactly, providing setwise stabilization rather than merely eventual convergence. Third, a multiplicity-preserving bijection between finite classical and tropical intersection sets preserves their weighted intersection numbers. Hence a classical Bézout count of $de$ transfers to the tropical intersection whenever such a correspondence exists. We state all hypotheses explicitly, distinguish these results from stronger lifting and convergence theorems, provide constructive algorithms for corner detection and weighted-count transfer, and discuss applications and extensions.
 
 ## 1. Introduction
 
-Tropical geometry replaces the field operations $(+, \times)$ by the min-plus
-operations $(\min, +)$, turning algebraic varieties into piecewise-linear
-polyhedral complexes. The miracle is that these "shadows" retain a great deal of
-the classical geometry: intersection numbers, degrees, genus, and more. The
-organizing principle, due to Kapranov, Einsiedler–Kapranov–Lind, and others, is
-the **fundamental theorem of tropical geometry**, which identifies the
-valuation-image of a classical variety with a purely combinatorial object — the
-corner locus of a tropical polynomial.
+Tropical geometry replaces nonlinear algebraic objects by polyhedral ones while retaining surprisingly rich information. Under the max convention, ordinary multiplication becomes addition and ordinary addition degenerates into taking a maximum. A finite polynomial becomes a maximum of affine-linear functions, and its tropical hypersurface is the locus where the maximum is attained at least twice. The central question is why the zero set of a classical polynomial should be related to that corner locus.
 
-This paper formalizes the hypersurface case of that bridge and its
-one-dimensional Bézout corollary. Our contributions are:
+The essential local reason is non-Archimedean cancellation. A non-Archimedean valuation satisfies a strengthened triangle inequality: the valuation of a sum is bounded by the larger valuation of its summands. More strongly, a finite sum of terms all strictly smaller than a fixed nonzero term remains strictly smaller than that term. It follows that a uniquely dominant term cannot be cancelled by all remaining terms. Therefore, whenever a finite sum of nonzero terms vanishes, at least two terms share the maximal valuation.
 
-1. A clean min-plus setup over an additive valuation $v : K \to \mathbb{R} \cup
-   \{\infty\}$ (Section 2), with tropicalized monomials, the tropical polynomial
-   function, and the corner locus defined combinatorially.
-2. The **bridge identity** $v(c_a x^a) = \mathrm{tropMonomial}(a)$
-   (Theorem 3.1), the compatibility of tropicalization with the valuation.
-3. A sharpened ultrametric lemma: a strictly unique smallest term controls the
-   valuation of a sum (Theorem 3.2).
-4. The **forward inclusion** of the fundamental theorem, proved unconditionally
-   (Theorem 4.1), and the **full equality** under a lifting hypothesis
-   (Theorem 4.2).
-5. **Tropical Bézout** in one variable (Theorem 5.1) with multiplicities as
-   slope drops (Theorem 5.2) and the identification of tropical roots with
-   valuations of classical roots (Theorem 5.3).
-6. The **Maslov dequantization** limit (Section 6) realizing tropicalization as
-   $t \to \infty$.
+Once a polynomial is viewed as a finite sum of monomial terms, this cancellation principle immediately places every classical zero on the tropical corner locus. The argument is independent of coordinate choices and uses no limiting procedure. It is a finite statement about terms, valuations, and maxima.
 
----
+A second bridge concerns scale. Tropicalization is often motivated as a large-parameter limit. For an already tropical term family, multiplying every real-valued term by the same positive scalar preserves every order relation and therefore preserves the corner locus exactly. Thus the corner locus at scale $n+1$ is independent of $n$. This is a precise setwise stabilization statement. It should not be confused with stronger claims about Hausdorff convergence of classical logarithmic zero sets, which require further analytic arguments.
 
-## 2. Setup: valued fields, tropicalization, and the corner locus
+A third bridge concerns enumerative geometry. If finite classical and tropical intersection sets are related by a bijection preserving local multiplicities, then their weighted sums agree by reindexing. In particular, if the classical sum is $de$, the tropical sum is $de$. This identifies the combinatorial core of a tropical Bézout transfer while leaving the genuinely geometric task—constructing and proving multiplicity preservation of the correspondence—as an explicit hypothesis.
 
-Throughout, $K$ is a field equipped with an **additive valuation** valued in
-$\mathbb{R} \cup \{+\infty\} = \mathbb{R} \cup \{\top\}$, written
-$v : K \to \mathbb{R}\cup\{\infty\}$. By definition $v$ satisfies
+The organization is as follows. Section 2 fixes conventions and definitions. Section 3 proves non-Archimedean cancellation. Section 4 derives the valuation-to-corner theorem. Section 5 proves scale invariance and clarifies its limiting interpretation. Section 6 treats weighted correspondences and conditional tropical Bézout. Section 7 gives algorithms and numerical examples. Sections 8–10 discuss applications, scope, and future directions.
 
-- $v(0) = +\infty$ and $v(1) = 0$;
-- **multiplicativity**: $v(xy) = v(x) + v(y)$;
-- the **non-Archimedean (ultrametric) inequality**:
-  $\min(v(x), v(y)) \le v(x + y)$.
+## 2. Definitions and conventions
 
-We use the **min-plus** convention: tropical addition is $\min$, tropical
-multiplication is $+$, the tropical zero is $\top = +\infty$, and the tropical
-one is $0$.
+### 2.1. Non-Archimedean valuations
 
-We work with polynomials $f \in K[x_1, \dots, x_n]$ (formally $f \in
-\mathrm{MvPolynomial}(\mathrm{Fin}\,n,\,K)$), each a finite sum
-$f = \sum_{a \in \mathrm{supp}(f)} c_a\, x^a$ over exponent vectors
-$a = (a_1,\dots,a_n) \in \mathbb{N}^n$, with coefficient $c_a = f.\mathrm{coeff}(a)$
-and monomial $x^a = \prod_i x_i^{a_i}$.
+Let $K$ be a division field, possibly noncommutative, and let $\Gamma_0$ be a nontrivial linearly ordered commutative monoid with zero. A multiplicative valuation is a map
 
-**Definition 2.1 (linear form).** For an exponent $a \in \mathbb{N}^n$ and a
-tropical point $w \in \mathbb{R}^n$,
 $$
-\langle a, w\rangle \;=\; \mathrm{linForm}(a, w) \;=\; \sum_{i} a_i\, w_i .
+v:K\longrightarrow \Gamma_0
 $$
 
-**Definition 2.2 (tropicalized monomial).** For $f$, an exponent $a$, and a
-point $w$,
-$$
-\mathrm{tropMonomial}(f, a, w) \;=\; v(c_a) + \langle a, w\rangle \;\in\;
-\mathbb{R}\cup\{\infty\}.
-$$
-This is the min-plus value $v(c_a) \odot w^{\odot a}$ of the $a$-th term.
+such that
 
-**Definition 2.3 (tropical polynomial function).** The tropicalization of $f$,
-evaluated at $w$, is the minimum (infimum over the finite support) of the
-tropicalized monomials:
 $$
-\mathrm{tropPolyValue}(f, w) \;=\; \min_{a \in \mathrm{supp}(f)}
-\mathrm{tropMonomial}(f, a, w).
-$$
-As a function of $w$ this is a minimum of finitely many affine functions, hence
-**piecewise-linear and concave**.
-
-**Definition 2.4 (corner locus / tropical hypersurface).** A point $w \in
-\mathbb{R}^n$ is a **corner point** of $\mathrm{trop}(f)$ if the defining minimum
-is attained at (at least) two distinct exponents: there exist $a \ne b$ in
-$\mathrm{supp}(f)$ with
-$$
-\mathrm{tropMonomial}(f,a,w) = \mathrm{tropMonomial}(f,b,w)
-= \min_{c \in \mathrm{supp}(f)} \mathrm{tropMonomial}(f,c,w).
-$$
-The set of all corner points is the **tropical hypersurface**
-$\mathrm{cornerLocus}(\mathrm{trop}\,f) = \{ w : \mathrm{IsCornerPoint}(f, w)\}$.
-
-**Definition 2.5 (torus, tropicalization map, $\mathrm{Trop}(V(f))$).** A
-classical point $x \in K^n$ lies in the **torus** $(K^\times)^n$ if every
-coordinate is nonzero, $\mathrm{InTorus}(x) := \forall i,\, x_i \ne 0$. For such
-$x$ each $v(x_i)$ is finite, and the **tropicalization map** is
-$$
-\mathrm{tropicalize}(x) \;=\; \big(v(x_1), \dots, v(x_n)\big) \in \mathbb{R}^n .
-$$
-The **classical zero set in the torus** is
-$$
-\mathrm{classicalZeroSet}(f) = \{ x : \mathrm{InTorus}(x) \wedge f(x) = 0 \},
-$$
-and its tropical shadow is
-$$
-\mathrm{Trop}(V(f)) \;=\; \mathrm{tropicalize}\big(\mathrm{classicalZeroSet}(f)\big)
-\subseteq \mathbb{R}^n .
+v(0)=0, \qquad v(1)=1, \qquad v(ab)=v(a)v(b),
 $$
 
-**Lemma 2.6 (finiteness on the torus).** If $x \ne 0$ then $v(x) \ne \infty$;
-consequently for a torus point $x$ and each $i$, the real number
-$\mathrm{tropicalize}(x)_i$ coerces back to the valuation,
-$(\mathrm{tropicalize}(x)_i : \mathbb{R}\cup\{\infty\}) = v(x_i)$.
-*(In Lean: `valuation_ne_top`, `coe_untop_valuation`.)* This is what lets us pass
-freely between $v(x_i) \in \mathbb{R}\cup\{\infty\}$ and the real coordinates of
-the tropical point.
+and
 
----
-
-## 3. The bridge identity and the ultrametric core
-
-### 3.1 Compatibility of tropicalization with the valuation
-
-**Theorem 3.1 (bridge identity, `tropMonomial_eq_valuation_term`).**
-For any $f$, any exponent $a$, and any torus point $x$,
 $$
-v\!\left(c_a \cdot \prod_i x_i^{a_i}\right) \;=\;
-\mathrm{tropMonomial}\big(f, a, \mathrm{tropicalize}(x)\big)
-\;=\; v(c_a) + \sum_i a_i\, v(x_i).
+v(a+b)\leq \max\{v(a),v(b)\}.
 $$
 
-*Proof sketch.* If $c_a = 0$ both sides are $+\infty$. Otherwise, use Lemma 2.6
-to write $v(x_i) = \mathrm{tropicalize}(x)_i$ as a real number. By
-multiplicativity of $v$ applied across the finite product (a straightforward
-induction over the index set),
-$$
-v\Big(\prod_i x_i^{a_i}\Big) = \sum_i a_i\, v(x_i).
-$$
-Multiplying the coefficient back in and using $v(c_a x^a) = v(c_a) +
-v(x^a)$ gives $v(c_a) + \sum_i a_i v(x_i)$, which is exactly
-$\mathrm{tropMonomial}(f,a,\mathrm{tropicalize}(x))$ after unfolding $\langle a,
-\cdot\rangle$ and matching the natural-number scalar multiplication with real
-multiplication. $\square$
+We also use the standard separation property
 
-This identity is the literal bridge: the *classical* valuation of a term equals
-its *tropical* value. Everything else is a consequence of it plus the ultrametric
-inequality.
-
-### 3.2 The ultrametric "unique minimum wins" lemma
-
-**Theorem 3.2 (`addval_sum_eq_of_unique_min`).** Let $s$ be a finite index set,
-$g : s \to K$, and $j \in s$. If $v(g_j) < v(g_i)$ for every $i \in s \setminus
-\{j\}$, then
 $$
-v\!\left(\sum_{i \in s} g_i\right) \;=\; v(g_j).
+v(a)=0 \quad\Longleftrightarrow\quad a=0.
 $$
 
-*Proof sketch.* Strong induction on $|s|$. Split off $g_j$: $\sum_{i} g_i = g_j +
-\sum_{i \ne j} g_i$. By the inductive control on the remaining sum, $v(\sum_{i\ne
-j} g_i) \ge \min_{i \ne j} v(g_i) > v(g_j)$, where the first step is the
-ultrametric inequality applied repeatedly and the second is the strict-minimum
-hypothesis. When two summands have distinct valuations, the ultrametric
-inequality is an *equality* at the smaller one: $v(a + b) = \min(v(a),v(b))$
-whenever $v(a) \ne v(b)$. Applying this to $g_j$ and the tail yields $v(\sum_i
-g_i) = v(g_j)$. $\square$
+In particular, $v(-a)=v(a)$. The order on $\Gamma_0$ allows comparison of finitely many valuations. The nontriviality assumption prevents the value structure from collapsing.
 
-This is the additive-valuation analogue of the classical "domination" principle
-$v\big(\sum g_i\big) = \min_i v(g_i)$ when the minimum is uniquely attained — the
-*no cancellation* phenomenon that makes non-Archimedean analysis rigid.
+The common additive convention uses a map $w$ satisfying $w(ab)=w(a)+w(b)$ and $w(a+b)\geq \min\{w(a),w(b)\}$. The present multiplicative max convention is equivalent after a suitable monotone or order-reversing change of coordinates in standard examples. Our statements are expressed directly in the max convention.
 
----
+### 2.2. Maximal terms and corner loci
 
-## 4. The fundamental theorem of tropical geometry (hypersurface case)
+Let $I$ be a finite nonempty index set, $X$ a set, and $\Gamma$ a linearly ordered set. Consider a family of functions
 
-### 4.1 Forward inclusion (unconditional)
-
-**Theorem 4.1 (`TropV_subset_tropicalHypersurface`).** For every polynomial $f$,
 $$
-\mathrm{Trop}(V(f)) \;\subseteq\; \mathrm{cornerLocus}(\mathrm{trop}\,f).
-$$
-Equivalently: if $x$ is a torus point with $f(x) = 0$, then
-$\mathrm{tropicalize}(x)$ is a corner point of $\mathrm{trop}(f)$.
-
-*Proof sketch.* Write $w = \mathrm{tropicalize}(x)$ and let $a^\star \in
-\mathrm{supp}(f)$ attain the minimum $\mathrm{tropPolyValue}(f, w) = \min_a
-\mathrm{tropMonomial}(f, a, w)$ (the support is finite and nonempty since
-$f(x)=0$ presupposes $f \ne 0$ in the nontrivial case). By the bridge identity
-(Theorem 3.1), each term's valuation $v(c_a x^a)$ equals
-$\mathrm{tropMonomial}(f, a, w)$. Suppose, for contradiction, that the minimum
-were attained at the *single* exponent $a^\star$, i.e. $v(c_{a^\star}
-x^{a^\star}) < v(c_a x^a)$ for all other $a$ in the support. Then Theorem 3.2
-applies to the sum $f(x) = \sum_a c_a x^a$, giving
-$$
-v(f(x)) = v(c_{a^\star} x^{a^\star}) < \infty,
-$$
-so $f(x) \ne 0$ — contradicting $f(x) = 0$ (which forces $v(f(x)) = \infty$).
-Hence the minimum is attained at two distinct exponents, i.e. $w$ is a corner
-point. $\square$
-
-The argument uses *only* multiplicativity, the ultrametric inequality, and the
-fact that $v$ detects zero. No algebraic closure, no genericity, no lifting.
-
-### 4.2 The full equality (with lifting)
-
-The reverse inclusion requires lifting a corner of the tropical polynomial back
-to an honest classical solution. This is possible over a sufficiently rich valued
-field (e.g. algebraically closed with surjective valuation, such as the Puiseux
-series field $\mathbb{C}\{\{t\}\}$ or $\mathbb{C}_p$). We encapsulate exactly
-what is needed as a hypothesis.
-
-**Lifting hypothesis (H).** For every corner point $w \in
-\mathrm{cornerLocus}(\mathrm{trop}\,f)$ there exists a torus point $x$ with
-$f(x) = 0$ and $\mathrm{tropicalize}(x) = w$.
-
-**Theorem 4.2 (`kapranov_fundamental_theorem`).** Under hypothesis (H),
-$$
-\mathrm{Trop}(V(f)) \;=\; \mathrm{cornerLocus}(\mathrm{trop}\,f).
+F_i:X\longrightarrow \Gamma, \qquad i\in I.
 $$
 
-*Proof sketch.* The inclusion $\subseteq$ is Theorem 4.1. The inclusion
-$\supseteq$ is exactly hypothesis (H): each corner point is realized as the
-tropicalization of a classical solution. $\square$
+An index $i$ is **maximal at $x$** if
 
-The content of the genuine Kapranov theorem is precisely the verification of (H);
-isolating it as a hypothesis cleanly separates the soft, ultrametric direction
-(proved here in full generality) from the hard, field-theoretic direction.
-
----
-
-## 5. Tropical Bézout in one variable
-
-Specialize to $n = 1$. A degree-$d$ tropical polynomial is a minimum of $d+1$
-affine functions with integer slopes $0, 1, \dots, d$:
 $$
-T(w) \;=\; \min_{0 \le k \le d} \big( c_k + k\, w \big), \qquad w \in \mathbb{R},
-$$
-where $c_k = v(\text{coefficient of } x^k)$ (with $c_k = +\infty$ for absent
-terms; the leading and constant terms are assumed present so the extreme slopes
-$d$ and $0$ occur). The graph of $T$ is a **concave** piecewise-linear curve.
-
-**Definition 5.1 (tropical root and multiplicity).** A point $w_0$ is a
-**tropical root** of $T$ if it is a corner (the minimum is attained at $\ge 2$
-indices). Its **multiplicity** is the *slope drop*
-$$
-\mathrm{mult}(w_0) \;=\; \mathrm{slope}^-(w_0) - \mathrm{slope}^+(w_0),
-$$
-the difference between the slope of $T$ just left of $w_0$ and just right of
-$w_0$. Concavity guarantees $\mathrm{slope}^-(w_0) \ge \mathrm{slope}^+(w_0)$, so
-multiplicities are nonnegative integers.
-
-**Theorem 5.2 (slope drop = multiplicity, `slope_drop_eq_mult`).** At each
-tropical root, the local multiplicity defined combinatorially (number of "extra"
-indices achieving the minimum, in the sense of how the minimizing index set
-jumps) equals the slope drop $\mathrm{slope}^-(w_0) - \mathrm{slope}^+(w_0)$.
-
-*Proof sketch.* For a concave minimum of affine pieces, immediately to the left
-of $w_0$ the minimizing line has some slope $k^-$ and to the right slope $k^+$.
-Since lines are ordered by slope along a concave lower envelope, the indices
-achieving the minimum at $w_0$ are exactly those with slope in $[k^+, k^-]$, and
-the drop $k^- - k^+$ counts them with the correct multiplicity. $\square$
-
-**Theorem 5.3 (tropical Bézout, `tropical_bezout`, `tropical_bezout_sum_mult`).**
-A degree-$d$ tropical polynomial $T$ has exactly $d$ roots counted with
-multiplicity:
-$$
-\sum_{\text{tropical roots } w_0} \mathrm{mult}(w_0) \;=\; d .
+F_k(x)\leq F_i(x) \quad\text{for every }k\in I.
 $$
 
-*Proof sketch.* The slope of $T$ as $w \to -\infty$ is $d$ (the steepest line
-$c_d + d w$ dominates the minimum for very negative $w$), and as $w \to +\infty$
-it is $0$ (the line $c_0$ dominates). The slope is a nonincreasing step function
-of $w$ (concavity), changing only at corners, where it decreases by exactly
-$\mathrm{mult}(w_0)$ (Theorem 5.2). The total decrease equals the difference of
-the asymptotic slopes:
+The point $x$ is a **max-corner point** if two distinct indices are maximal there. Equivalently, there exist $i\ne j$ such that
+
 $$
-\sum_{w_0} \mathrm{mult}(w_0) = \mathrm{slope}(-\infty) - \mathrm{slope}(+\infty)
-= d - 0 = d. \qquad \square
+F_i(x)=F_j(x)=\max_{k\in I}F_k(x).
 $$
-This is a **conservation law**: the degree is a boundary quantity (difference of
-asymptotic slopes) fixed by the support alone, requiring no genericity.
 
-**Theorem 5.4 (roots are valuations of classical roots,
-`tropPolyValue_linearFactor`).** If $f \in K[x]$ factors over the torus as
-$f = c \prod_{j} (x - r_j)$ with $r_j \in K^\times$, then the tropical roots of
-$\mathrm{trop}(f)$ are exactly the valuations $v(r_j)$, with multiplicities
-matching. In particular the corner locus literally enumerates
-$\{v(r_j)\}_j$.
+The **max-corner locus** is the set of all max-corner points. When $X=\mathbb{R}^n$ and the $F_i$ are affine-linear, the function
 
-*Proof sketch.* For a single linear factor $x - r$, the tropical polynomial is
-$\min(v(1) + w,\ v(r)) = \min(w, v(r))$, whose unique corner is at $w = v(r)$
-with slope drop $1 - 0 = 1$. Tropical multiplication of factors corresponds to
-adding their tropical polynomials, whose corner sets (with multiplicity) are the
-union; hence the tropical roots of $\mathrm{trop}(f)$ are $\{v(r_j)\}$ with the
-right multiplicities. This matches Theorem 5.3 since $\deg f = d = $ number of
-factors. $\square$
-
----
-
-## 6. Tropicalization as a limit: Maslov dequantization
-
-The slogan "tropical geometry is a limit of classical geometry" is made precise
-by **Maslov dequantization**, a one-parameter family of semirings interpolating
-between the classical real semiring and the tropical one.
-
-**Definition 6.1 (dequantized addition).** For $t > 0$ define
 $$
-x \oplus_t y \;=\; \tfrac{1}{t}\,\log\!\big(e^{tx} + e^{ty}\big).
+F(x)=\max_{i\in I}F_i(x)
 $$
-Tropical multiplication $x \odot y = x + y$ is unchanged.
 
-**Theorem 6.2 (dequantization limit, `tendsto_logAddExp_max`).** For all
-$x, y \in \mathbb{R}$,
+is convex and piecewise linear. Its corner locus is the union of codimension-one and lower-dimensional cells on which more than one affine piece is active.
+
+For the min convention, a point is a corner if at least two distinct terms attain the minimum. The following elementary lemma reconciles the conventions.
+
+**Lemma 2.1 (Sign reversal).** Let $\Gamma$ be a linearly ordered additive commutative group whose order is compatible with addition. For every finite family $F_i:X\to\Gamma$ and every $x\in X$, the minimum of $-F_i(x)$ is attained at least twice if and only if the maximum of $F_i(x)$ is attained at least twice.
+
+**Proof sketch.** Order reversal under negation gives
+
 $$
-\lim_{t \to \infty} \big(x \oplus_t y\big) \;=\; \min(-(-x), -(-y))
-\;=\; \max(x, y),
+-F_i(x)\leq -F_k(x) \quad\Longleftrightarrow\quad F_k(x)\leq F_i(x).
 $$
-and in the min-convention (replacing $x \mapsto -x$) the limit is $\min(x,y)$.
 
-*Proof sketch.* Factor out the dominant exponential: with $M = \max(x,y)$,
+Thus an index minimizes the negated family exactly when it maximizes the original family. Distinct pairs of extremizers are preserved. $\square$
+
+### 2.3. Finite weighted intersection numbers
+
+Let $S$ be a finite set of intersection points and let
+
 $$
-x \oplus_t y = M + \tfrac{1}{t}\log\!\big(1 + e^{-t|x - y|}\big),
+m:S\longrightarrow \mathbb{N}
 $$
-and the correction term lies in $\big[0, \tfrac{\log 2}{t}\big]$, tending to $0$.
-$\square$
 
-**Theorem 6.3 (two-sided sandwich, `logAddExp_lower`, `logAddExp_upper`).** For
-all $x, y$ and $t > 0$,
+assign a nonnegative integral multiplicity to each point. The **weighted intersection number** is
+
 $$
-\max(x, y) \;\le\; x \oplus_t y \;\le\; \max(x, y) + \frac{\log 2}{t},
+I(S,m)=\sum_{p\in S}m(p).
 $$
-with monotonicity in each argument (`logAddExp_mono_left`).
 
-**Conjecture 6.4 (sharp logarithmic rate).** For $x \ne y$ and $t > 0$,
+This definition deliberately separates the formal act of weighted counting from the geometric origin of the multiplicity. Depending on context, $m(p)$ may be a local algebraic intersection multiplicity, a lattice determinant, or a stable tropical multiplicity.
+
+## 3. The non-Archimedean cancellation principle
+
+We begin with the key finite-sum result.
+
+**Theorem 3.1 (No unique maximal valuation in a vanishing sum).** Let $S$ be a finite index set and let $a_i\in K$ be nonzero for every $i\in S$. Suppose
+
 $$
-0 < (x \oplus_t y) - \max(x, y) \le \frac{\log 2}{t},
+\sum_{i\in S}a_i=0.
 $$
-the bound $\frac{\log 2}{t}$ attained only in the limit $x = y$, and the error is
-strictly monotone decreasing in $t$. The overshoot is governed by the single
-universal constant $\log 2$, so convergence is a sharp $\Theta(1/t)$ property of
-the **semiring deformation**, not of the geometry.
 
-Under this lens, tropicalization $f \mapsto \mathrm{trop}(f)$ is the $t \to
-\infty$ (zero-temperature) limit of the classical operations, and the corner
-locus is the limiting non-smooth locus of the smooth approximants.
+Then for every $i\in S$ there exists $j\in S$ with $j\ne i$ and
 
----
+$$
+v(a_i)\leq v(a_j).
+$$
 
-## 7. Algorithms
+Consequently, the maximum of the finite family $\{v(a_i):i\in S\}$ is attained by at least two distinct indices.
 
-Three computational primitives fall directly out of the theory; see `demo.py`
-and the `algorithms` field of the package for full implementations.
+**Proof sketch.** Fix $i\in S$ and suppose, for contradiction, that
 
-1. **Tropical polynomial evaluation.** Given coefficients $c_a$ and a point $w$,
-   compute $\min_a (c_a + \langle a, w\rangle)$ and report the minimizing
-   index set. Complexity $O(|\mathrm{supp}(f)| \cdot n)$.
+$$
+v(a_j)<v(a_i) \quad\text{for every }j\in S\setminus\{i\}.
+$$
 
-2. **Corner detection.** $w$ is a corner iff the minimizing index set has size
-   $\ge 2$. Combined with evaluation this decides membership in the tropical
-   hypersurface in $O(|\mathrm{supp}(f)| \cdot n)$.
+Because $a_i\ne 0$, its valuation is nonzero. Repeated use of the strict non-Archimedean sum property gives
 
-3. **Tropical Bézout root counting (1D).** Sort terms by slope, compute the lower
-   envelope of the lines $c_k + k w$, read off the breakpoints (roots) and slope
-   drops (multiplicities), and verify the total is $d$. Complexity
-   $O(d \log d)$ via an Andrew's-monotone-chain style lower-hull computation.
+$$
+v\!\left(\sum_{j\in S\setminus\{i\}}a_j\right)<v(a_i).
+$$
 
----
+On the other hand, the vanishing-sum hypothesis implies
 
-## 8. Applications
+$$
+\sum_{j\in S\setminus\{i\}}a_j=-a_i.
+$$
 
-- **Enumerative geometry.** Tropical curve counts (Mikhalkin's correspondence
-  theorem) compute Gromov–Witten invariants by counting lattice paths and
-  balanced graphs — a direct descendant of the corner-locus and Bézout pictures
-  developed here.
-- **Phylogenetics.** Spaces of evolutionary trees carry a natural tropical
-  (min-plus) structure; tropical convexity and tropical linear algebra organize
-  distance-based reconstruction.
-- **Optimization and operations research.** Min-plus algebra is the algebra of
-  shortest paths and scheduling; tropical polynomials model bottleneck and
-  critical-path phenomena, and corner loci are decision boundaries.
-- **Non-Archimedean / $p$-adic geometry.** Berkovich analytifications retract
-  onto tropical skeleta; the forward inclusion proved here is the soft half of
-  that retraction.
-- **Symbolic computation and elimination.** Because corner loci are defined by
-  finitely many linear comparisons, membership and intersection questions reduce
-  to linear programming and polyhedral combinatorics, replacing Gröbner-basis
-  computations over the base field by exact rational arithmetic on the Newton
-  data. This is what makes tropical methods attractive for large, structured
-  systems where classical elimination is infeasible.
+Taking valuations and using $v(-a_i)=v(a_i)$ yields
 
-A recurring theme across these applications is that the *combinatorial* shadow is
-not merely a heuristic but a faithful invariant: by Theorem 4.2 the corner locus
-remembers the variety up to the information visible to the valuation, and by
-Theorem 5.3 it remembers intersection data exactly in the one-dimensional case.
-The practical consequence is a transfer principle: prove a statement about the
-piecewise-linear shadow — often a finite, decidable computation — and lift it to
-a statement about the classical variety.
+$$
+v\!\left(\sum_{j\in S\setminus\{i\}}a_j\right)=v(a_i),
+$$
 
----
+contradicting the strict inequality. Therefore some distinct $j$ satisfies $v(a_i)\leq v(a_j)$. If $i$ is chosen to attain the overall maximum, this $j$ must also attain that maximum. $\square$
 
-## 9. Discussion and future work
+The theorem is stronger than the assertion that some maximal pair exists: it says that no individual term can dominate all the others in any vanishing nonzero sum. Its proof exposes the ultrametric obstruction to ordinary-style collective cancellation.
 
-The forward inclusion (Theorem 4.1) is striking in its economy: it needs only
-multiplicativity and the ultrametric inequality, and the entire proof reduces to
-"a vanishing sum cannot have a unique smallest term." Isolating the lifting
-hypothesis (H) cleanly factors the fundamental theorem into a universal soft
-direction and a field-dependent hard direction.
+**Remark 3.2.** The nonzero hypothesis on every $a_i$ ensures that each participating valuation is nonzero and that strict sum estimates apply cleanly. In polynomial applications, zero terms may be removed from the finite support before invoking the theorem. If one fixes a support in advance, the theorem applies at points where all supported term evaluations are nonzero, as is automatic for Laurent monomials evaluated on an algebraic torus with nonzero coefficients.
 
-Three concrete future directions, building directly on the machinery here:
+**Example 3.3.** For a prime $p$, use the $p$-adic norm $|\cdot|_p$. If $a+b+c=0$ and all terms are nonzero, it is impossible to have
 
-1. **Quantitative dequantization is exactly logarithmic** (Conjecture 6.4):
-   upgrade the two-sided sandwich and monotonicity to a sharp, strictly monotone
-   $\Theta(1/t)$ rate governed by $\log 2$.
+$$
+|a|_p>|b|_p \quad\text{and}\quad |a|_p>|c|_p.
+$$
 
-2. **Tropical Bézout as slope conservation in every dimension.** For a tropical
-   polynomial in $n$ variables of degree $d$, the local multiplicities over the
-   tropical hypersurface should sum to $d^n$, the classical Bézout number. The
-   one-dimensional proof uses asymptotic slope differences with no genericity;
-   the same $\inf'/\sup'$ asymptotic machinery should generalize over the
-   Newton-polytope support.
+Indeed, the ultrametric inequality would give $|b+c|_p<|a|_p$, whereas $b+c=-a$ gives equality. Thus at least two among $|a|_p,|b|_p,|c|_p$ share the maximum.
 
-3. **Corner locus = non-differentiability set.** For a univariate tropical
-   polynomial, a point lies on the tropical hypersurface (minimum attained twice)
-   iff $\mathrm{trop}(f)$ fails to be differentiable there, because a concave PL
-   function is differentiable exactly where its one-sided slopes agree.
+## 4. From classical zeros to tropical corners
 
----
+Let $I$ be a finite nonempty set, let $X$ be any parameter space, and let
 
-## 10. Summary of results
+$$
+T_i:X\longrightarrow K, \qquad i\in I,
+$$
 
-| Result | Statement | Status |
-|---|---|---|
-| `tropMonomial_eq_valuation_term` | $v(c_a x^a) = \mathrm{tropMonomial}(a, \mathrm{trop}\,x)$ | proved |
-| `addval_sum_eq_of_unique_min` | unique smallest term controls $v(\sum)$ | proved |
-| `TropV_subset_tropicalHypersurface` | $\mathrm{Trop}(V(f)) \subseteq \mathrm{cornerLocus}$ | proved (unconditional) |
-| `kapranov_fundamental_theorem` | $\mathrm{Trop}(V(f)) = \mathrm{cornerLocus}$ | proved (under lifting (H)) |
-| `tropical_bezout`, `tropical_bezout_sum_mult` | degree-$d$ poly has $d$ roots w/ mult. | proved |
-| `slope_drop_eq_mult` | local multiplicity = slope drop | proved |
-| `tropPolyValue_linearFactor` | tropical roots = valuations of classical roots | proved |
-| `tendsto_logAddExp_max` | Maslov dequantization limit | proved |
+be a finite family of term functions. Define their classical sum by
 
-These results jointly realize tropical geometry as a faithful, computable shadow
-of classical algebraic geometry over a non-Archimedean field, and as its
-zero-temperature limit.
+$$
+f(x)=\sum_{i\in I}T_i(x)
+$$
+
+and their valuation family by
+
+$$
+F_i(x)=v(T_i(x)).
+$$
+
+The associated max-tropical hypersurface is the max-corner locus of the family $\{F_i\}_{i\in I}$.
+
+**Theorem 4.1 (Valuation images of zeros lie in the tropical corner locus).** Fix $x\in X$. Assume
+
+$$
+f(x)=\sum_{i\in I}T_i(x)=0
+$$
+
+and
+
+$$
+T_i(x)\ne 0 \quad\text{for every }i\in I.
+$$
+
+Then $x$ is a max-corner point of the valuation family. Explicitly, there exist distinct $i,j\in I$ such that
+
+$$
+v(T_i(x))=v(T_j(x))=\max_{k\in I}v(T_k(x)).
+$$
+
+**Proof sketch.** Since $I$ is finite and nonempty, choose $i$ attaining the maximum valuation. Apply Theorem 3.1 to the vanishing family $a_k=T_k(x)$. It supplies $j\ne i$ with
+
+$$
+v(T_i(x))\leq v(T_j(x)).
+$$
+
+Maximality of $i$ gives the reverse inequality, so $i$ and $j$ both attain the maximum. This is exactly the max-corner condition. $\square$
+
+For a Laurent polynomial on an algebraic torus, one typically writes
+
+$$
+f(z)=\sum_{u\in A}c_u z^u,
+$$
+
+where $A\subset\mathbb{Z}^n$ is finite, $c_u\ne 0$, and $z\in(K^\times)^n$. Every term $c_u z^u$ is then nonzero. If $f(z)=0$, Theorem 4.1 says that at least two term valuations are maximal. After passing to additive logarithmic coordinates, these term valuations become affine functions of the valuation vector of $z$, so that vector lies on the tropical hypersurface.
+
+This is the forward hypersurface inclusion customarily associated with the tropical fundamental theorem:
+
+$$
+\operatorname{val}(V(f))\subseteq \operatorname{Trop}(f),
+$$
+
+under the stated termwise interpretation and convention. The theorem does not assert the reverse inclusion. Showing that every tropical corner lifts to a classical zero generally requires an algebraically closed and suitably complete valued field, together with a lifting theorem. The distinction is essential: cancellation proves necessity, while lifting proves sufficiency.
+
+**Example 4.2 (The tropical line).** Consider three tropical affine terms
+
+$$
+F_0(x,y)=0, \qquad F_1(x,y)=x, \qquad F_2(x,y)=y.
+$$
+
+The corner condition for $\max\{0,x,y\}$ holds on three rays:
+
+$$
+\{(x,0):x\leq 0\}, \qquad
+\{(0,y):y\leq 0\}, \qquad
+\{(t,t):t\geq 0\}.
+$$
+
+If a three-term classical Laurent polynomial has valuation terms represented by these affine functions, every zero in the torus has valuation vector on this graph.
+
+## 5. Positive scaling and exact setwise stabilization
+
+Let $F_i:X\to\mathbb{R}$ be any family of real-valued functions, with no assumption of affinity. For $c>0$, define the rescaled family
+
+$$
+(cF)_i(x)=cF_i(x).
+$$
+
+**Theorem 5.1 (Positive-scale invariance of corner loci).** For every $x\in X$ and every $c>0$, the point $x$ is a max-corner point of $\{cF_i\}$ if and only if it is a max-corner point of $\{F_i\}$. Hence
+
+$$
+\operatorname{Corner}(cF)=\operatorname{Corner}(F).
+$$
+
+**Proof sketch.** Positive multiplication is an order isomorphism of $\mathbb{R}$. Therefore, for every pair of indices $i,k$,
+
+$$
+cF_k(x)\leq cF_i(x)
+\quad\Longleftrightarrow\quad
+F_k(x)\leq F_i(x).
+$$
+
+The set of maximizing indices is unchanged. Having at least two distinct maximizers is consequently invariant. $\square$
+
+**Corollary 5.2 (Integral-scale stabilization).** For every nonnegative integer $n$,
+
+$$
+\operatorname{Corner}\bigl((n+1)F\bigr)
+=
+\operatorname{Corner}(F).
+$$
+
+Thus the sequence of corner loci indexed by positive integral scales is constant.
+
+The corollary gives an exact setwise interpretation of an infinite-scale limit: if $n\to\infty$, the corner set does not merely converge to a limiting set; it equals that set at every stage. This captures the scale-independent combinatorics of tropical dominance.
+
+Care is required in interpreting this statement. It concerns a common positive rescaling of already real-valued tropical terms. It does not alone establish convergence of a family of classical varieties, convergence in Hausdorff distance, or convergence of amoebas under logarithmic maps. Such statements involve a varying classical family and a topology on closed sets. The present theorem supplies a stable target skeleton once the order data have been extracted.
+
+**Example 5.3.** For
+
+$$
+F(x,y)=\max\{0,x,y\},
+$$
+
+rescaling gives
+
+$$
+F_c(x,y)=\max\{0,cx,cy\}=cF(x,y)
+$$
+
+for $c>0$. The three rays of the tropical line remain fixed, although all nonzero function values are stretched by $c$.
+
+## 6. Multiplicity-preserving correspondences and Bézout transfer
+
+We now turn from loci to counts. Let $S$ and $T$ be finite sets, interpreted respectively as classical and tropical intersection points. Let
+
+$$
+\phi:S\longrightarrow T
+$$
+
+be a bijection. Assign multiplicity functions
+
+$$
+m_S:S\to\mathbb{N}, \qquad m_T:T\to\mathbb{N}.
+$$
+
+**Theorem 6.1 (Weighted intersection number is invariant under multiplicity-preserving correspondence).** If
+
+$$
+m_S(p)=m_T(\phi(p)) \quad\text{for every }p\in S,
+$$
+
+then
+
+$$
+I(S,m_S)=I(T,m_T).
+$$
+
+**Proof sketch.** Reindex the finite sum over $T$ through the bijection $\phi$:
+
+$$
+\sum_{q\in T}m_T(q)
+=
+\sum_{p\in S}m_T(\phi(p))
+=
+\sum_{p\in S}m_S(p).
+$$
+
+No geometric assumptions beyond finiteness, bijectivity, and preservation of weights are used. $\square$
+
+This theorem also applies when $S$ and $T$ are finite subsets of larger ambient point spaces and $\phi$ is an ambient equivalence that restricts to a bijection between them. Membership preservation ensures that reindexing covers exactly the desired points.
+
+**Theorem 6.2 (Conditional tropical Bézout transfer).** Let two classical plane curves have degrees $d$ and $e$. Suppose their relevant classical intersection set $S$ is finite and has local multiplicities $m_S$ satisfying
+
+$$
+I(S,m_S)=de.
+$$
+
+Let $T$ be a finite tropical intersection set with multiplicities $m_T$. If there is a bijection $\phi:S\to T$ such that
+
+$$
+m_S(p)=m_T(\phi(p))
+$$
+
+for every $p\in S$, then
+
+$$
+I(T,m_T)=de.
+$$
+
+**Proof sketch.** Theorem 6.1 gives $I(T,m_T)=I(S,m_S)$. Substitute the classical Bézout count $I(S,m_S)=de$. $\square$
+
+The theorem is intentionally conditional. Classical Bézout itself requires an appropriate projective and proper intersection setting, with common components excluded or treated separately. Tropical Bézout requires balanced curves, stable intersections, and suitable local multiplicities. Establishing a pointwise or fiberwise correspondence is substantial geometry. The theorem isolates the final universal counting step: once a multiplicity-preserving correspondence is known, the global number transfers automatically.
+
+A fiberwise formulation can be more natural because several classical points may tropicalize to one tropical point. In that setting, one replaces pointwise equality by
+
+$$
+m_T(q)=\sum_{p\in \phi^{-1}(q)}m_S(p).
+$$
+
+Summing over $q\in T$ again gives equality of total weights. This broader formulation is a natural extension of the bijective result.
+
+## 7. Algorithms and numerical demonstrations
+
+The preceding theorems lead to finite algorithms that expose their combinatorial content.
+
+### 7.1. Corner detection
+
+Given numerical values $F_1(x),\ldots,F_m(x)$ at a point $x$, compute
+
+$$
+M=\max_{1\leq i\leq m}F_i(x)
+$$
+
+and collect all indices with value $M$. The point is a corner exactly when at least two indices are collected. For exact integer or rational inputs, equality is exact. For floating-point inputs, one may use a tolerance, but then the result is numerical evidence rather than an exact decision.
+
+The algorithm uses $O(m)$ time and $O(m)$ output space in the worst case. To test positive-scale invariance numerically, run the same procedure on $cF_i(x)$ for $c>0$ and compare the maximizing index sets. Exact arithmetic guarantees equality of those sets.
+
+For a grid of $N$ points and $m$ terms, evaluation and classification cost $O(Nm)$, excluding the cost of computing each term. Applied to affine terms in two variables, this produces a pixel approximation of a tropical curve.
+
+### 7.2. Detecting a unique maximal prime-adic norm
+
+For a nonzero integer $a$, define its $p$-adic order by
+
+$$
+\operatorname{ord}_p(a)=\max\{k\in\mathbb{N}:p^k\mid a\}
+$$
+
+and its norm by
+
+$$
+|a|_p=p^{-\operatorname{ord}_p(a)}.
+$$
+
+For a finite list of nonzero integers summing to zero, compute each order. Since larger norm means smaller order, the maximal norm occurs at the indices having minimal $p$-adic order. Theorem 3.1 predicts that the minimum order occurs at least twice. The computation needs $O(m\log_p A)$ elementary divisibility steps when $A$ bounds the absolute values of the inputs.
+
+For example, with $p=2$ and terms
+
+$$
+12,\quad 20,\quad -32,
+$$
+
+we have orders $2,2,5$ and norms $2^{-2},2^{-2},2^{-5}$. The maximum norm is attained twice, as required.
+
+### 7.3. Weighted correspondence checking
+
+Given paired records
+
+$$
+(p,\phi(p),m_S(p),m_T(\phi(p))),
+$$
+
+check that the source and target labels are each unique, that every desired point appears, and that paired weights agree. Then sum either side. With hashable labels, this takes expected $O(N)$ time and $O(N)$ memory for $N$ pairs. If the classical total equals $de$, the checked correspondence certifies that the tropical total computed from those records also equals $de$.
+
+As a numerical illustration, classical multiplicities $[1,2,1,2]$ and tropical multiplicities $[2,1,2,1]$ may be paired by a suitable permutation. Both totals are $6$, matching degrees $d=2$ and $e=3$.
+
+## 8. Applications and conceptual consequences
+
+### 8.1. Polyhedral localization of algebraic zeros
+
+Theorem 4.1 reduces the possible valuation vectors of zeros to a polyhedral corner locus. When term valuations become affine in logarithmic coordinates, regions with a unique dominant monomial contain no valuation image of a zero. This gives a powerful exclusion principle: one can study the much simpler arrangement of affine dominance regions instead of solving the original equations directly.
+
+### 8.2. Robustness under units of scale
+
+Theorem 5.1 shows that tropical hypersurfaces depend on order comparisons among term values, not on a common positive unit of measurement. This is valuable both conceptually and computationally. Normalizing all coefficients by a positive factor or changing a logarithmic base multiplies tropical values by a positive constant and therefore leaves the corner set unchanged.
+
+### 8.3. Separation of geometric and combinatorial tasks
+
+Theorem 6.2 separates tropical Bézout into two components. The geometric component constructs a proper correspondence and proves local multiplicity preservation. The combinatorial component transfers the weighted total. This division clarifies proof design: global counting introduces no additional mystery after local compatibility has been established.
+
+### 8.4. Sparse computation
+
+Only finitely many supported monomials participate in the cancellation theorem. For sparse polynomials, corner detection depends on the number of terms rather than the size of a dense degree box. This sparsity is one reason tropical methods can reveal structure in systems whose direct symbolic manipulation is expensive.
+
+## 9. Scope and limitations
+
+The results proved here are broad but carefully delimited.
+
+First, the valuation-to-corner theorem proves one inclusion. It says every suitable classical zero yields a tropical corner. It does not show every corner lifts to a zero. Reverse inclusion is a separate lifting problem.
+
+Second, exact invariance under common positive scaling is a theorem about tropical term families. It is not a substitute for an analytic convergence theorem involving a varying classical zero set. A claim of Hausdorff convergence must specify the family, normalization, topology, and compactness regime.
+
+Third, the Bézout result is conditional on a finite multiplicity-preserving bijection. In many natural degenerations, tropicalization is not injective on classical intersection points; a fiberwise multiplicity theorem is then required. The weighted-bijection theorem remains the exact special case where each tropical point receives one classical partner.
+
+Fourth, the finite-sum theorem assumes nonzero terms. For Laurent polynomials on a torus this is natural. For ordinary polynomials at points with zero coordinates, vanishing monomial terms should be removed or handled separately.
+
+These boundaries prevent stronger geometric claims from being inferred from purely order-theoretic or combinatorial arguments. They also identify precise targets for further work.
+
+## 10. Future directions
+
+A first objective is the reverse hypersurface inclusion for Laurent polynomials: over an algebraically closed, complete, nontrivially valued field, one seeks to lift every max-corner point to the valuation vector of a zero, possibly after passage to a completed algebraic closure.
+
+A second objective is analytic convergence. For a fixed complex Laurent polynomial and logarithmic maps
+
+$$
+\operatorname{Log}_t(z)=
+\left(\frac{\log|z_1|}{\log t},\ldots,
+\frac{\log|z_n|}{\log t}\right),
+$$
+
+one seeks Hausdorff convergence on compact polytopes of logarithmic zero sets to the tropical corner locus as $t\to\infty$.
+
+A third objective is stable tropical Bézout: for balanced tropical plane curves of degrees $d$ and $e$, with integral edge weights and no common component, the sum of stable local intersection multiplicities should be shown directly to equal $de$.
+
+A fourth objective is a fiberwise multiplicity theorem. For proper zero-dimensional intersections over an algebraically closed complete non-Archimedean field, the sum of classical local multiplicities over each tropical point should equal its stable tropical multiplicity. This would replace the bijective hypothesis by the more natural many-to-one tropicalization map.
+
+Finally, product rules for corner loci should be extended beyond ordered additive groups to cancellative ordered additive commutative monoids, assuming finite term families attain their extrema. Such an extension would clarify which tropical identities genuinely require additive inverses.
+
+## 11. Conclusion
+
+Three short principles explain a substantial part of the classical-to-tropical bridge. A uniquely dominant non-Archimedean term cannot disappear in a vanishing sum; therefore valuation images of classical zeros lie on tropical corners. A common positive rescaling preserves every dominance comparison; therefore tropical corner loci stabilize exactly at all positive scales. A multiplicity-preserving finite correspondence reindexes a weighted sum; therefore classical intersection counts transfer to tropical ones, including a conditional Bézout number $de$.
+
+These statements are elementary in form but structurally decisive. They locate the universal algebraic, order-theoretic, and combinatorial components of tropicalization, while cleanly exposing the remaining geometric work: lifting corners, proving convergence, and constructing multiplicity-preserving correspondences.
