@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e771e647",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n- Formalize primitive quadratic Dirichlet characters of arbitrary conductor and connect their periodic values to Mathlib's `DirichletCharacter` API.\n- Define generalized Bernoulli",
-      "quality_score": 0.73183,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-29T17:49:55",
-      "title": "ArXiv paper: On a character-twisted analogue of Schäffer's equation"
-    },
-    {
       "cycle_id": "8c9ac99e",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n1. **Integer-slope criterion.** For every compiled network whose affine weights and linear-combination weights are integers, both polynomials produced by `compile` can be represen",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-07-31T20:49:43",
       "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
+    },
+    {
+      "cycle_id": "61e33133",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass result into an explicit approximation operator on `[0,1]^n`, with error controlled by a modulus of",
+      "quality_score": 0.7666899999999999,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-31T22:24:57",
+      "title": "EML Universal Approximation: Density of EML Functions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ec11492d",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Orthogonal families over the coordinate framework\n\nThis cycle specialized the coordinate/incidence framework for generalized nets\nto the classical square case and established the",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-23T22:26:05",
-      "title": "This development formalizes the finite coordinate core of Curtin's *Generalizati"
-    },
     {
       "cycle_id": "6c18f01c",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 305,
       "timestamp": "2026-07-31T22:23:42",
       "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
+    },
+    {
+      "cycle_id": "61e33133",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass result into an explicit approximation operator on `[0,1]^n`, with error controlled by a modulus of",
+      "quality_score": 0.7666899999999999,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-31T22:24:57",
+      "title": "EML Universal Approximation: Density of EML Functions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "13e8a4d7",
-      "domain": "Cryptography",
-      "name": "pair_zero_left",
-      "quality": 0.8063100000000001
-    },
-    {
-      "cycle_id": "13e8a4d7",
-      "domain": "Cryptography",
-      "name": "pair_zero_right",
-      "quality": 0.8063100000000001
-    },
-    {
-      "cycle_id": "13e8a4d7",
-      "domain": "Cryptography",
-      "name": "pair_add_left",
-      "quality": 0.8063100000000001
-    },
     {
       "cycle_id": "02aa1402",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "forwardSecure_of_common_ideal",
       "quality": 0.7701199999999999
+    },
+    {
+      "cycle_id": "61e33133",
+      "domain": "Applications",
+      "name": "then",
+      "quality": 0.7666899999999999
+    },
+    {
+      "cycle_id": "61e33133",
+      "domain": "Applications",
+      "name": "expCoordinate_separates",
+      "quality": 0.7666899999999999
+    },
+    {
+      "cycle_id": "61e33133",
+      "domain": "Applications",
+      "name": "expCoordinateAlgebra_dense",
+      "quality": 0.7666899999999999
     }
   ],
-  "last_updated": "2026-07-31T22:23:42",
+  "last_updated": "2026-07-31T22:24:57",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5fcde7e0",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "EML Differential Algebra: Closure Properties"
-      },
-      {
         "cycle_id": "0d06265a",
         "quality": 0.75,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.7712399999999999,
         "theorems": 6,
         "title": "EML Quantum Activation Functions"
+      },
+      {
+        "cycle_id": "61e33133",
+        "quality": 0.7666899999999999,
+        "theorems": 12,
+        "title": "EML Universal Approximation: Density of EML Functions"
       }
     ],
     "Bridges": [

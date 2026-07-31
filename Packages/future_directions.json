@@ -1055,7 +1055,7 @@
       "depth_estimate": 3,
       "description": "Proves that a single EML exponential-logarithmic activation operator can uniformly approximate any continuous function on compact domains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -1095,7 +1095,7 @@
       "depth_estimate": 3,
       "description": "Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -1135,7 +1135,7 @@
       "depth_estimate": 3,
       "description": "Proves an explicit Lie algebra isomorphism between EML exponential-logarithmic state spaces and continuous scaling transformation groups.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -1175,7 +1175,7 @@
       "depth_estimate": 3,
       "description": "Calculates exact maximum Lyapunov exponents for recurrent EML systems, establishing non-exploding gradient guarantees.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -1215,7 +1215,7 @@
       "depth_estimate": 3,
       "description": "Derives upper bounds on the mutual information channel capacity for single EML neurons under Gaussian channel noise.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -30978,7 +30978,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H₂ = 0` produces zero.  They also\nshow that unitary output forces the logarithmic factor itself to be unitary.  This leaves\nthe raw-expression coverage question separate from the question whether the expression\ndefines an `SU(2)`-valued activation.\n\nConcrete, falsifiable next conjectures:\n\n1. **Scalar-log unit-circle intersection.** There exists a nonzero real `t` such that\n   `|Complex.log (1 + t * I)| = 1`.  Equivalently,\n   `(Real.log (Real.sqrt (1+t^2)))^2 + (Real.arctan t)^2 = 1` (with the principal\n   branches).  A certified interval containing such a `t` would give a scalar unitary\n   logarithmic factor.\n\n2. **Scalar second Hamiltonian suffices for `U(2)` coverage.** If `t` satisfies the first\n   conjecture and `H₂ = t I`, then every `2 × 2` unitary matrix is equal to\n   `exp(iH₁) * log(I+iH₂)` for some Hermitian `H₁`.  This reduces to proving global\n   surjectivity of the Hermitian exponential for finite-dimensional complex unitary\n   matrices and tracking the scalar phase.\n\n3. **Trace correction for `SU(2)`.** Under the same scalar choice of `H₂`, every element\n   of `SU(2)` has a representing Hermitian `H₁` whose trace lies in one explicitly\n   determined congruence class modulo `2π`; determine and prove that class.\n\n4. **Normalized activation is always unitary on its domain.** Define the polar-normalized\n   logarithmic factor `L (L⋆L)^{-1/2}` whenever `L = log(I+iH₂)` is invertible.  Conjecture:\n   multiplying this factor by `exp(iH₁)` yields a unitary, and every `SU(2)` matrix is\n   obtained with traceless Hermitian parameters after a determinant-one phase correction.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics",
         "NumberTheory"
@@ -31183,7 +31183,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass result into an explicit approximation operator on `[0,1]^n`, with error controlled by a modulus of continuity and expression size/depth controlled in terms of `n` and the tolerance.\n\n2. **Depth hierarchy.** Define a typed EML syntax carrying both depth and width, prove closure of its semantics under composition, and establish upper and lower approximation bounds for each fixed depth.\n\n3. **Shallow approximation beyond the square.** Extend the one-exponential Taylor construction from `x²` to monomials and multivariate polynomials, tracking constants uniformly on the cube.\n\n4. **Hölder and Sobolev classes.** Combine explicit polynomial approximation bounds with EML realizations of polynomials to derive rates for regularity classes, such as `C^k`, Hölder, and Sobolev functions.\n\n5. **Measure-theoretic corollary.** Instantiate the continuous-linear-observable connector using integration against finite regular Borel measures, yielding a moment-determination theorem: agreement on the EML coordinate algebra implies equality of measures.\n\n6. **Minimal generating fragments.** Compare the expressive and approximation power of exp-only, log-only on positive domains, and full exp-log-field grammars, including the role of constants and division.\n\n7. **Lower bounds.** Develop oscillation-count, zero-count, or metric-entropy tools that can prove genuine limitations for bounded-depth or bounded-width EML expressions.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Applications"
@@ -31209,6 +31209,46 @@
       "thread_id": "th_b0b3eccc",
       "timestamp": "2026-07-31T22:24:53.172149+00:00",
       "title": "1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the same vertex deck and `G` is regular, then `G ≃g H`.\n2. **Tree reconstruction.** If finite simple graphs `G` and `H` have the same vertex deck, at least three vertices, and `G` is a tree, then `G ≃g H`.\n3. **Degree-multiset reconstruction.** For finite simple graphs on at least three vertices with the same deck, the multisets of vertex degrees are equal.\n4. **Induced-pattern count reconstruction.** If a finite pattern `F` has fewer vertices than deck-equivalent finite graphs `G` and `H`, then `inducedCopyFamily G F` and `inducedCopyFamily H F` have equal cardinality.\n5. **Complement compatibility.** Finite graphs `G` and `H` have the same deck if and only if their complements have the same deck; consequently, any formally reconstructed graph class closed under complement yields a second reconstructed class.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0868",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "ff2a2247",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/ff2a2247",
+      "status": "available",
+      "thread_id": "th_5355ea2d",
+      "timestamp": "2026-07-31T22:26:08.353865+00:00",
+      "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
     },
     {
       "ambition_level": "extension",
@@ -31864,7 +31904,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3dce6722 (Q=0.770), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -32289,6 +32329,46 @@
       "thread_id": "",
       "timestamp": "2026-07-22T18:42:28.004149+00:00",
       "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 61e33133 (Q=0.767), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "github_issue": 0,
+      "id": "push_61e33133_5d721590",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8666899999999998,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "61e33133",
+      "source_path": "EML Universal Approximation: Density of EML Functions",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-31T22:24:57.334382+00:00",
+      "title": "Deepening: EML Universal Approximation: Density of EML Functions"
     },
     {
       "ambition_level": "extension",
@@ -32984,7 +33064,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 8fe295b2 (Q=0.771), which proved 6 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -33304,7 +33384,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ce71f394 (Q=0.770), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the d",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -33624,7 +33704,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ea214ad9 (Q=0.750), which proved 34 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -33946,7 +34026,7 @@
       "domain_bridges": [
         "Pythagorean <-> EML"
       ],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Applications"
@@ -34519,7 +34599,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the theoretical maximum information density limit for quadruple-stranded synthetic genetic storage systems.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -35079,7 +35159,7 @@
       "depth_estimate": 3,
       "description": "Formalizes visual pattern sequences that trigger specific optogenetic neuron activation patterns in biological retinas.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -35759,7 +35839,7 @@
       "depth_estimate": 3,
       "description": "Proves that a single EML exponential-logarithmic neuron can represent any multivariate polynomial up to degree D with zero approximation error.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -35799,7 +35879,7 @@
       "depth_estimate": 3,
       "description": "Proves that continuous EML activation manifolds exhibit non-trivial Betti numbers corresponding to complex cognitive states.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -35839,7 +35919,7 @@
       "depth_estimate": 3,
       "description": "Proves uniform convergence of transfinite-depth EML neural networks to well-defined transcendental limit functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -35879,7 +35959,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the behavior of EML networks near parameter values triggering essential mathematical singularities in exp-log space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -35919,7 +35999,7 @@
       "depth_estimate": 3,
       "description": "Constructs EML neural networks defined over p-adic number fields, proving convergence under p-adic non-Archimedean norms.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Applications"
       ],
@@ -41017,7 +41097,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7582199999999999,
       "parent_direction": "",
       "priority_score": 0.82,
       "proof_strategy": "",
@@ -41028,7 +41108,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Reconstruction Conjecture"
@@ -46882,12 +46962,12 @@
     "Algebra": 6,
     "Analysis": 1,
     "Bridges": 4,
-    "Combinatorics": 1,
+    "Combinatorics": 2,
     "Computation": 1,
     "Cryptography": 2,
     "EML": 2,
     "Geometry": 2,
-    "Logic": 1,
+    "Logic": 2,
     "MachineLearning": 1,
     "NumberTheory": 1,
     "Physics": 1,
@@ -46896,31 +46976,27 @@
   },
   "recent_theme_keywords": {
     "algebraic": 2,
-    "approximation": 1,
     "associated": 2,
-    "bounds": 1,
     "bridge": 3,
-    "c([0,1]^n": 1,
-    "composition": 1,
-    "compositions": 1,
-    "conjecture": 5,
+    "classes": 1,
+    "conjecture": 6,
     "connect": 2,
     "constant": 2,
     "corner": 2,
-    "density": 1,
-    "depends": 1,
-    "derive": 1,
     "determine": 2,
+    "determined": 1,
     "direct": 2,
     "equals": 3,
     "explicit": 2,
-    "formalize": 7,
+    "formalize": 8,
     "function": 3,
     "functions": 1,
     "fundamental": 2,
     "geometry": 3,
     "invariant": 2,
     "investigate": 3,
+    "isomorphism": 1,
+    "kelly's": 1,
     "manifold": 1,
     "manifolds": 1,
     "metric": 1,
@@ -46949,6 +47025,7 @@
     "quantum-classical": 1,
     "rather": 1,
     "rational": 1,
+    "reconstruction": 1,
     "recursion": 1,
     "reduction": 1,
     "replaced": 1,
@@ -46972,12 +47049,13 @@
     "shallow": 1,
     "single-qubit": 1,
     "solutions": 1,
-    "specific": 1,
+    "specific": 2,
     "specified": 1,
     "statistical": 1,
     "strictness": 1,
     "studying": 1,
     "su(2": 1,
+    "subgraphs": 1,
     "symmetry": 1,
     "systems": 1,
     "target": 1,
@@ -46991,6 +47069,8 @@
     "universe-sensitive": 1,
     "useful": 1,
     "verified": 1,
+    "vertex-deleted": 1,
+    "vertices": 1,
     "wagner": 1,
     "well-orders": 1,
     "without": 1,
