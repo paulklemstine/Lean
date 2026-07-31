@@ -66,27 +66,6 @@
     "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that proof checking is fundamentally different from proof search. Conjecture: There exists a proof system in which every true quantifier-free formula has a proof of polynomial size, and this proof can be verified in polynomial time. The barrier has been that existing proof systems (Frege, Extended Frege) have exponential lower bounds for specific formulas. But what if we construct a NEW proof system based on EML computations? Define EML-Frege where each proof step is an EML identity (exp-log composition) verified by numeric evaluation. Since EML identities can be checked in O(1) field operations, and every boolean circuit can be simulated by an EML network of depth O(log n), we get a quasi-polynomial proof system. Why now: recent breakthroughs in circuit lower bounds (Williams 2014, 2023) and the EML single-operator universality result suggest that EML-Frege could break the natural proofs barrier. Test: prove that EML-Frege polynomially simulates Extended Frege for CNF formulas, and show it has no exponential lower bounds under the EML independence assumption. Impact: if EML-Frege has short proofs for all tautologies, then NP = coNP in this proof system, which would be the most significant result in proof complexity since Cook's theorem.",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Computation",
-      "EML"
-    ],
-    "id": "seed_094",
-    "lineage_refs": [],
-    "priority_score": 0.97,
-    "proof_strategy": "Define EML-Frege proof system: axioms are EML identities, inference rules are substitution and modus ponens. Prove soundness (all provable formulas are true) and completeness (all true quantifier-free formulas have proofs). The key lemma: every boolean function on n variables has an EML representation of depth O(log n). This follows from EML universality. Prove that EML-Frege polynomially simulates Extended Frege by encoding each EF-rule as a constant-depth EML derivation.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Proof Complexity Collapse: P=NP via Proof Checking"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -109,27 +88,7 @@
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_005",
-    "lineage_refs": [],
-    "priority_score": 0.96,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "P vs NP Problem"
-  },
-  {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove the Langlands correspondence for GL₂ over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
@@ -149,7 +108,7 @@
     "title": "Langlands for GL₂ over Q"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
@@ -167,25 +126,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697712+00:00",
     "title": "Goldbach Verification Framework"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5ae7f8c1 (Q=0.850), which proved 19 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, comp",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_5ae7f8c1_18f2b361",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "5ae7f8c1",
-    "status": "available",
-    "timestamp": "2026-07-18T03:54:50.138087+00:00",
-    "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
     "ambition_level": "extension",
@@ -1079,107 +1019,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:07:59.281523+00:00",
     "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that every even integer greater than 2 is the sum of two primes. Formalize partial results such as Vinogradov's theorem for sufficiently large odd integers, or Chen's theorem that every sufficiently large even number is the sum of a prime and a semiprime. Explore connections to sieve methods and the circle method.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_001",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Goldbach Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that all non-trivial zeros of the Riemann zeta function lie on Re(s)=1/2. Formalize equivalent statements: the prime counting function error bound, the Mertens conjecture connection, or the spectral interpretation via random matrix theory. Explore connections to quantum chaos and the Hilbert-Polya conjecture.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "seed_002",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Riemann Hypothesis"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that for any compact simple gauge group, quantum Yang-Mills theory on R^4 exists and has a mass gap. Formalize the mathematical framework of gauge theory and connect to lattice gauge theory computations.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Analysis"
-    ],
-    "id": "seed_015",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Yang-Mills Mass Gap"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that persistent homology — the backbone of topological data analysis — provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Topology",
-      "Computation"
-    ],
-    "id": "seed_095",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "Define the barcode code B(K) for a simplicial complex K: qubits = vertices, stabilizers = boundary maps of 1-simplices, logical operators = persistent 1-cycles. Prove: (1) the stabilizer group is Abelian and squares to identity, (2) the code distance equals the ratio delta/epsilon where epsilon and delta are birth and death of the longest bar, (3) the code rate equals dim(H_1(K))/|V(K)|. Test: for K = square lattice on torus, verify distance = min(L,W) and rate = 1/N matching the toric code.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Topological Quantum Error Correction from Homological Persistence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The 3D Poincaré conjecture is proven, but the smooth 4D version remains open: does every smooth 4-manifold homotopy equivalent to S⁴ necessarily diffeomorphic to S⁴? Formalize Donaldson's invariants, Seiberg-Witten theory, and explore exotic smooth structures on 4-manifolds.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Topology"
-    ],
-    "id": "seed_202",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Poincaré Conjecture Revisited: 4D Smooth"
   },
   {
     "ambition_level": "extension",
