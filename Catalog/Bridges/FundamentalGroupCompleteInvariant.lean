@@ -155,23 +155,6 @@ theorem aut_mulEquiv_of_groupoid_equivalence
     simp [f, ha, he, he']
   exact ⟨(MulEquiv.ofBijective f ⟨hf_inj, hf_surj⟩)⟩
 
-/-- **Exact classification theorem for pointed connected homotopy 1-types.**
-For connected groupoids, equivalence of the underlying homotopy 1-types is
-logically equivalent to isomorphism of the fundamental groups at any selected
-basepoints.  The reverse implication uses connectedness to transport the
-basepoint selected by a categorical equivalence to the requested basepoint. -/
-theorem connectedGroupoids_equivalent_iff_aut_mulEquiv
-    {C : Type u} [Groupoid.{v} C] {D : Type u'} [Groupoid.{v'} D]
-    (c : C) (d : D) (hC : ConnectedAt C c) (hD : ConnectedAt D d) :
-    Nonempty (C ≌ D) ↔ Nonempty (Aut c ≃* Aut d) := by
-  constructor
-  · rintro ⟨E⟩
-    obtain ⟨e⟩ := aut_mulEquiv_of_groupoid_equivalence E c
-    obtain ⟨i⟩ := hD (E.functor.obj c)
-    exact ⟨e.trans (Aut.autMulEquivOfIso i).symm⟩
-  · rintro ⟨e⟩
-    exact connectedGroupoids_equivalent_of_aut_mulEquiv c d hC hD e
-
 section TopologicalConsequences
 
 variable {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
