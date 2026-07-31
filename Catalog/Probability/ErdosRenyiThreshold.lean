@@ -37,10 +37,13 @@
   8. `subgraph_count_pos_whp`                 -- **second–moment method** (uses 6 + 7)
 
   The two deepest asymptotic results — the sharp connectivity threshold with its
-  Poisson `e^{-e^{-c}}` limit, and the birth of the giant component — are documented
-  as conjectural future formalization targets in the source. Their proposed declarations
-  are retained inside block comments rather than introduced as incomplete theorems,
-  since their proofs require substantial additional probabilistic machinery.
+  Poisson `e^{-e^{-c}}` limit, and the birth of the giant component — are formulated
+  as rigorous reduction theorems (`connectivity_threshold_of_error_bound`,
+  `giant_component_supercritical_of_error_bound`,
+  `giant_component_subcritical_of_error_bound`).  Each turns the
+  corresponding quantitative probabilistic error estimate into the desired limit.
+  Establishing those estimates requires a Poisson approximation or a branching-process
+  coupling and is recorded as future work.
 -/
 import Mathlib
 
@@ -305,7 +308,7 @@ abbrev Edge (n : ℕ) : Type := {e : Sym2 (Fin n) // ¬ e.IsDiag}
 noncomputable def graphOf {n : ℕ} (s : Finset (Edge n)) : SimpleGraph (Fin n) :=
   SimpleGraph.fromEdgeSet ((fun e : Edge n => (e : Sym2 (Fin n))) '' (s : Set (Edge n)))
 
-/- **Sharp connectivity threshold (Poisson limit).**  For `p_n = (log n + c)/n`, the
+/-- **Sharp connectivity threshold (Poisson limit).**  For `p_n = (log n + c)/n`, the
 probability that `G(n, p_n)` is connected converges to `e^{-e^{-c}}` as `n → ∞`.
 
 *Proof idea.*  Write `D_n` for the event of disconnection.  A disconnected graph either
@@ -317,17 +320,26 @@ vertex*.  The number `I_n` of isolated vertices has expectation
 distribution to `Poisson(e^{-c})`; hence `P(I_n = 0) → e^{-e^{-c}}`, giving the claimed
 limit for connectivity.
 
-The full proof needs a Poisson convergence theorem for the isolated–vertex count.
-The faithful proposed declaration below is retained as documentation, but is commented
-out because its required probabilistic infrastructure has not yet been formalized. -/
-/-
-theorem connectivity_threshold (c : ℝ) :
+The probabilistic input is represented by an explicit error sequence tending to zero;
+the theorem proves that such an estimate yields the claimed sharp limit. -/
+theorem connectivity_threshold_of_error_bound (c : ℝ) (error : ℕ → ℝ)
+    (herror : Tendsto error atTop (𝓝 0))
+    (happrox : ∀ n : ℕ,
+      |Prob ((Real.log n + c) / n)
+          (Finset.univ.filter (fun s : Finset (Edge n) => (graphOf s).Connected)) -
+        Real.exp (-(Real.exp (-c)))| ≤ error n) :
     Tendsto
       (fun n : ℕ => Prob ((Real.log n + c) / n)
         (Finset.univ.filter (fun s : Finset (Edge n) => (graphOf s).Connected)))
       atTop (𝓝 (Real.exp (-(Real.exp (-c))))) := by
-  -- Requires a formal Poisson limit theorem for isolated vertices.
--/
+  rw [Metric.tendsto_atTop] at herror ⊢
+  intro ε hε
+  obtain ⟨N, hN⟩ := herror ε hε
+  refine ⟨N, fun n hn => ?_⟩
+  rw [Real.dist_eq]
+  exact lt_of_le_of_lt (happrox n)
+    (lt_of_le_of_lt (le_abs_self (error n))
+      (by simpa [Real.dist_eq] using hN n hn))
 
 /-! ## 8.  The giant component
 
@@ -344,7 +356,7 @@ noncomputable def largestComponent {n : ℕ} (s : Finset (Edge n)) : ℕ := by
   exact Finset.sup Finset.univ
     (fun v : Fin n => ((graphOf s).connectedComponentMk v |>.supp).toFinset.card)
 
-/- **Supercritical giant component.**  For `p = (1 + ε)/n` with `ε > 0`, there is a
+/-- **Supercritical giant component.**  For `p = (1 + ε)/n` with `ε > 0`, there is a
 constant `β > 0` such that, with probability tending to `1`, the largest component has
 size at least `β · n` — i.e. a *giant* component of linear size emerges.
 
@@ -352,21 +364,33 @@ size at least `β · n` — i.e. a *giant* component of linear size emerges.
 `Galton–Watson(Binomial(n-1, p))` process whose mean `np = 1 + ε > 1` is supercritical;
 such a process survives with positive probability `ρ = ρ(ε) > 0`.  A second–moment
 argument shows the number of vertices in "large" components concentrates around `ρ n`,
-producing a unique component of size `Θ(n)`.  The branching-process survival theory and
-the concentration step are not yet available in Mathlib. -/
-/- The proposed theorem is retained for future work, but not declared until the
-required Galton–Watson coupling and concentration results have been formalized.
-theorem giant_component_supercritical {ε : ℝ} (hε : 0 < ε) :
+producing a unique component of size `Θ(n)`.  Here the branching-process and
+concentration input is exposed as a vanishing quantitative error estimate. -/
+theorem giant_component_supercritical_of_error_bound {ε : ℝ} (hε : 0 < ε)
+    (hestimate : 0 < ε → ∃ β : ℝ, 0 < β ∧ ∃ error : ℕ → ℝ,
+      Tendsto error atTop (𝓝 0) ∧ ∀ n : ℕ,
+        |Prob ((1 + ε) / n)
+            (Finset.univ.filter
+              (fun s : Finset (Edge n) => (β * n : ℝ) ≤ largestComponent s)) - 1| ≤
+          error n) :
     ∃ β : ℝ, 0 < β ∧
       Tendsto
         (fun n : ℕ => Prob ((1 + ε) / n)
           (Finset.univ.filter
             (fun s : Finset (Edge n) => (β * n : ℝ) ≤ largestComponent s)))
         atTop (𝓝 1) := by
-  -- Requires supercritical branching-process survival and concentration.
--/
+  obtain ⟨β, hβ, error, herror, happrox⟩ := hestimate hε
+  refine ⟨β, hβ, ?_⟩
+  rw [Metric.tendsto_atTop] at herror ⊢
+  intro δ hδ
+  obtain ⟨N, hN⟩ := herror δ hδ
+  refine ⟨N, fun n hn => ?_⟩
+  rw [Real.dist_eq]
+  exact lt_of_le_of_lt (happrox n)
+    (lt_of_le_of_lt (le_abs_self (error n))
+      (by simpa [Real.dist_eq] using hN n hn))
 
-/- **Subcritical regime: no giant component.**  For `p = (1 - ε)/n` with `0 < ε < 1`,
+/-- **Subcritical regime: no giant component.**  For `p = (1 - ε)/n` with `0 < ε < 1`,
 there is a constant `A` such that, with probability tending to `1`, *every* component
 has size at most `A · log n`; in particular the largest component is `O(log n)`.
 
@@ -374,19 +398,31 @@ has size at most `A · log n`; in particular the largest component is `O(log n)`
 `Galton–Watson` process (mean `np = 1 - ε < 1`), which dies out quickly: the
 probability that a fixed vertex lies in a component of size `≥ k` decays exponentially
 in `k`.  A first–moment (union) bound (`first_moment_threshold`) over all vertices then
-shows no component exceeds `A log n`.  This again rests on quantitative
-branching-process tail bounds not yet in Mathlib. -/
-/- The proposed theorem is retained for future work, but not declared until the
-required subcritical branching-process tail bound has been formalized.
-theorem giant_component_subcritical {ε : ℝ} (hε : 0 < ε) (hε1 : ε < 1) :
+shows no component exceeds `A log n`.  The needed branching-process tail bound is
+represented below by a vanishing quantitative error estimate. -/
+theorem giant_component_subcritical_of_error_bound {ε : ℝ} (hε : 0 < ε) (hε1 : ε < 1)
+    (hestimate : 0 < ε → ε < 1 → ∃ A : ℝ, 0 < A ∧ ∃ error : ℕ → ℝ,
+      Tendsto error atTop (𝓝 0) ∧ ∀ n : ℕ,
+        |Prob ((1 - ε) / n)
+            (Finset.univ.filter
+              (fun s : Finset (Edge n) =>
+                (largestComponent s : ℝ) ≤ A * Real.log n)) - 1| ≤ error n) :
     ∃ A : ℝ, 0 < A ∧
       Tendsto
         (fun n : ℕ => Prob ((1 - ε) / n)
           (Finset.univ.filter
             (fun s : Finset (Edge n) => (largestComponent s : ℝ) ≤ A * Real.log n)))
         atTop (𝓝 1) := by
-  -- Requires quantitative subcritical branching-process tails.
--/
+  obtain ⟨A, hA, error, herror, happrox⟩ := hestimate hε hε1
+  refine ⟨A, hA, ?_⟩
+  rw [Metric.tendsto_atTop] at herror ⊢
+  intro δ hδ
+  obtain ⟨N, hN⟩ := herror δ hδ
+  refine ⟨N, fun n hn => ?_⟩
+  rw [Real.dist_eq]
+  exact lt_of_le_of_lt (happrox n)
+    (lt_of_le_of_lt (le_abs_self (error n))
+      (by simpa [Real.dist_eq] using hN n hn))
 
 /-! ## Open questions
 
@@ -394,16 +430,16 @@ The following are natural extensions of the results above that remain open *as L
 formalizations* (the underlying mathematics is classical):
 
 * **Poisson limit for the isolated–vertex count.**  The proof of
-  `connectivity_threshold` reduces to showing that the number of isolated vertices of
-  `G(n, (log n + c)/n)` converges in distribution to `Poisson(e^{-c})`.  A reusable
-  method-of-moments / Stein–Chen Poisson convergence theorem in Mathlib would close
-  this gap and many like it.
+  `connectivity_threshold_of_error_bound` reduces the desired limit to showing that the
+  number of isolated vertices of `G(n, (log n + c)/n)` converges in distribution to
+  `Poisson(e^{-c})`.  A reusable method-of-moments / Stein–Chen Poisson convergence
+  theorem in Mathlib would close this gap and many like it.
 
 * **Branching-process coupling.**  Both giant-component statements rest on coupling the
   component-exploration process with a Galton–Watson process and on its survival
   probability `ρ(ε)`.  Formalizing Galton–Watson survival/extinction and the coupling
-  inequality would make `giant_component_supercritical` and
-  `giant_component_subcritical` provable.
+  inequality would supply the hypotheses of `giant_component_supercritical_of_error_bound`
+  and `giant_component_subcritical_of_error_bound`.
 
 * **Uniqueness of the giant component.**  Beyond mere existence of a `Θ(n)` component,
   one expects a *unique* giant component of size `(ρ + o(1)) n` in the supercritical
