@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "42454fab",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Universe size four.** Extend the singleton/residual decomposition used for\n   `Fin 3`. A direct search has 65,536 candidate families, so useful structural\n   reductions (sing",
-      "quality_score": 0.7628999999999999,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-29T19:53:49",
-      "title": "Frankl's Union-Closed Conjecture: Partial Results"
-    },
-    {
       "cycle_id": "89e28e84",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n## Completed formal results\n\n`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic formalization of the one-component perturbative model in the chosen nor",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-31T22:26:12",
       "title": "Reconstruction Conjecture"
+    },
+    {
+      "cycle_id": "e86cdc26",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, an",
+      "quality_score": 0.8002199999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-31T23:26:34",
+      "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical Degree"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "abab9083",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Quantum Consciousness / Orch OR formalization\n\nThis project formalizes, in Lean 4 (Mathlib), the quantitative and logical core\nof the Penrose–Hameroff *Orchestrated Objective Red",
-      "quality_score": 0.53,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-23T23:21:41",
-      "title": "Moonshot: Quantum Consciousness — Penrose-Hameroff Orchestrated Reduction"
-    },
     {
       "cycle_id": "2c3f15cd",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-31T22:26:12",
       "title": "Reconstruction Conjecture"
+    },
+    {
+      "cycle_id": "e86cdc26",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, an",
+      "quality_score": 0.8002199999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-31T23:26:34",
+      "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical Degree"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "343eb494",
-      "domain": "Combinatorics",
-      "name": "properColoring_injective_on_edge",
-      "quality": 0.76494
-    },
-    {
-      "cycle_id": "343eb494",
-      "domain": "Combinatorics",
-      "name": "unique_intersection_on_edge",
-      "quality": 0.76494
-    },
-    {
-      "cycle_id": "343eb494",
-      "domain": "Combinatorics",
-      "name": "exists_unique_intersection_on_edge",
-      "quality": 0.76494
-    },
     {
       "cycle_id": "1fc64f82",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "inducedCopyFamily_uniform",
       "quality": 0.7582199999999999
+    },
+    {
+      "cycle_id": "e86cdc26",
+      "domain": "Computation",
+      "name": "below",
+      "quality": 0.8002199999999999
+    },
+    {
+      "cycle_id": "e86cdc26",
+      "domain": "Computation",
+      "name": "rho_halfCanonical_eq_genus_sub_square",
+      "quality": 0.8002199999999999
+    },
+    {
+      "cycle_id": "e86cdc26",
+      "domain": "Computation",
+      "name": "rho_halfCanonical_nonneg_iff_square_le",
+      "quality": 0.8002199999999999
     }
   ],
-  "last_updated": "2026-07-31T22:26:12",
+  "last_updated": "2026-07-31T23:26:34",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "a31e0b39",
-        "quality": 0.52,
-        "theorems": 22,
-        "title": "Game of Life Universality"
-      },
-      {
         "cycle_id": "25e8f86d",
         "quality": 0.76,
         "theorems": 0,
@@ -3327,6 +3321,12 @@
         "quality": 0.80603,
         "theorems": 21,
         "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
+      },
+      {
+        "cycle_id": "e86cdc26",
+        "quality": 0.8002199999999999,
+        "theorems": 9,
+        "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical D"
       }
     ],
     "Cryptography": [
