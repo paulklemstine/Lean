@@ -49,22 +49,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that proof checking is fundamentally different from proof search. Conjecture: There exists a proof system in which every true quantifier-free formula has a proof of polynomial size, and this proof can be verified in polynomial time. The barrier has been that existing proof systems (Frege, Extended Frege) have exponential lower bounds for specific formulas. But what if we construct a NEW proof system based on EML computations? Define EML-Frege where each proof step is an EML identity (exp-log composition) verified by numeric evaluation. Since EML identities can be checked in O(1) field operations, and every boolean circuit can be simulated by an EML network of depth O(log n), we get a quasi-polynomial proof system. Why now: recent breakthroughs in circuit lower bounds (Williams 2014, 2023) and the EML single-operator universality result suggest that EML-Frege could break the natural proofs barrier. Test: prove that EML-Frege polynomially simulates Extended Frege for CNF formulas, and show it has no exponential lower bounds under the EML independence assumption. Impact: if EML-Frege has short proofs for all tautologies, then NP = coNP in this proof system, which would be the most significant result in proof complexity since Cook's theorem.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "EML"
-    ],
-    "id": "seed_094",
-    "priority_score": 0.97,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Proof Complexity Collapse: P=NP via Proof Checking"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Constructs a single EML exponential-logarithmic activation neuron that evaluates the Berggren node energy spectrum in O(1) time per tree step.",
     "domains": [
       "Pythagorean",
@@ -77,21 +61,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_005",
-    "priority_score": 0.96,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "P vs NP Problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -122,20 +91,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697712+00:00",
     "title": "Goldbach Verification Framework"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5ae7f8c1 (Q=0.850), which proved 19 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, comp",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_5ae7f8c1_18f2b361",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "5ae7f8c1",
-    "status": "available",
-    "timestamp": "2026-07-18T03:54:50.138087+00:00",
-    "title": "Deepening: Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
     "consumed_by_exp_id": "",
@@ -797,82 +752,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that every even integer greater than 2 is the sum of two primes. Formalize partial results such as Vinogradov's theorem for sufficiently large odd integers, or Chen's theorem that every sufficiently large even number is the sum of a prime and a semiprime. Explore connections to sieve methods and the circle method.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_001",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Goldbach Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that all non-trivial zeros of the Riemann zeta function lie on Re(s)=1/2. Formalize equivalent statements: the prime counting function error bound, the Mertens conjecture connection, or the spectral interpretation via random matrix theory. Explore connections to quantum chaos and the Hilbert-Polya conjecture.",
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "seed_002",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Riemann Hypothesis"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that for any compact simple gauge group, quantum Yang-Mills theory on R^4 exists and has a mass gap. Formalize the mathematical framework of gauge theory and connect to lattice gauge theory computations.",
-    "domains": [
-      "Physics",
-      "Analysis"
-    ],
-    "id": "seed_015",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Yang-Mills Mass Gap"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
-    "domains": [
-      "Physics",
-      "Topology",
-      "Computation"
-    ],
-    "id": "seed_095",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Topological Quantum Error Correction from Homological Persistence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The 3D Poincar\u00e9 conjecture is proven, but the smooth 4D version remains open: does every smooth 4-manifold homotopy equivalent to S\u2074 necessarily diffeomorphic to S\u2074? Formalize Donaldson's invariants, Seiberg-Witten theory, and explore exotic smooth structures on 4-manifolds.",
-    "domains": [
-      "Geometry",
-      "Topology"
-    ],
-    "id": "seed_202",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Poincar\u00e9 Conjecture Revisited: 4D Smooth"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the classical zero-free region of the Riemann zeta function: \u03b6(s) \u2260 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2\u03c0) log(T/(2\u03c0e)). Formalize the connection between zero-free regions and prime counting error bounds.",
     "domains": [
       "NumberTheory",
@@ -914,38 +793,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Hodge Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
-    "domains": [
-      "MachineLearning",
-      "Physics",
-      "Analysis"
-    ],
-    "id": "seed_096",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Neural Network Training as Renormalization Group Flow"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that the AdS/CFT correspondence in physics says a gravitational theory in the bulk is equivalent to a conformal field theory on the boundary. Translate this to proof theory: a proof of length n in the bulk (the full proof) corresponds to a verified specification of length O(log n) on the boundary (a certificate). Conjecture: Every proof of a theorem T in Peano Arithmetic of length n has a holographic certificate of length O(log n) that can be verified in time O((log n)^2). The certificate is constructed by projecting each proof step onto the boundary of the proof space (the initial axioms and final conclusion) and keeping only the holographic data. Why now: the PCP theorem already shows that proofs have short probabilistic certificates, but holographic verification would give DETERMINISTIC short certificates \u2014 a much stronger result. Test: for a specific proof system (Frege), construct holographic certificates for proofs of the pigeonhole principle and verify that the certificate length is O(log n). Impact: proof verification becomes as fast as reading the theorem statement, enabling trustless proof checking at scale.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Physics"
-    ],
-    "id": "seed_101",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "AdS/CFT for Proof Theory: Holographic Verification"
   },
   {
     "consumed_by_exp_id": "",
@@ -1235,17 +1082,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aeb64258",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Bridges",
       "Geometry"
     ],
     "id": "seed_248",
+    "phase": "A",
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
@@ -3769,17 +3617,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "78bbd545",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
       "Tropical"
     ],
     "id": "seed_354",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -4795,7 +4644,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Intersection Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33456cc6",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Analysis",
@@ -4803,10 +4652,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_061",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -4991,17 +4841,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of Mathematical Constants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02f69ad4",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domains": [
       "Tropical",
       "Probability"
     ],
     "id": "seed_243",
+    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Idempotent Probability: Large Deviations"
   },
@@ -7790,6 +7641,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T03:41:12.598370+00:00",
     "title": "ArXiv paper: Triviality of promise polymorphisms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Deformation of the absolute Galois groups of number fields' and formalize its key results. Abstract: The technical goal of this paper is to construct and study profinite monoids DG_K for number fields K such that (1) the unit group of DG_K is isomorphic to the absolute Galois group G_K; (2) the maximal abelian quotient of DG_K is isomorphic to the Deligne-Ribet monoid DR_K; (3) the idempotents of DG_K bijectively correspond to subsets of the set P_K of (finite) primes of K; (4) the maximal Galois groups G_{K, S} with restricted ramifications S all appear as maximal closed subgroups of DG_K at idempotents; (5) all maximal closed subgroups of DG_K at idempotents are of this form. We also discuss the relationship between DG_K and the p-typical Witt vectors of Borger and de Smit, where we will describe the fundamental monoid of the semi-galois category of Lambda-rings of Borger and de Smit in terms of fields of norms of the local field K_p in particular.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0847",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.28465v1",
+    "status": "available",
+    "timestamp": "2026-07-31T05:11:27.466023+00:00",
+    "title": "ArXiv paper: Deformation of the absolute Galois groups of number fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$' and formalize its key results. Abstract: We study the standard nonuniform arithmetic quotient of the affine Bruhat--Tits building attached to $\\operatorname{PGL}_d(\\mathbb F_q(\\!(t^{-1})\\!))$, with Haar measure normalized so that a maximal compact subgroup has volume one. We first compute its vertex volume in closed product form. The proof is entirely building-theoretic: vertices are parametrized by a dominant sector, their stabilizers are counted exactly, and the resulting sum over block compositions is evaluated by a cut-set recursion. On the same quotient, we introduce a homothety-invariant normalized lattice-minima height $\u03b1$. We determine its exact integrability threshold, proving that $\u03b1$ belongs to $L^r$ precisely for $0<r<d$, and establish a sharp cusp-tail estimate of order $T^{-d}$. The associated positive-moment height zeta function, equivalently the Mellin transform of the cusp-height distribution, converges exactly in the half-plane $\\operatorname{Re}(s)<d$. It admits a meromorphic continuation as a rational func",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0848",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.28433v1",
+    "status": "available",
+    "timestamp": "2026-07-31T05:11:30.572810+00:00",
+    "title": "ArXiv paper: Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$"
   },
   {
     "consumed_by_exp_id": "",
@@ -11110,16 +10991,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c961538a",
     "description": "Cycle 95478b50 (Q=0.610) proved 794 theorems in Probability but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Probability"
     ],
     "id": "sorry_fill_95478b50_dd4f3c48",
+    "phase": "A",
     "priority_score": 0.66,
     "research_mode": "team",
     "source_exp_id": "95478b50",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-27T00:19:54.838542+00:00",
     "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
   },

@@ -26284,7 +26284,7 @@
       "title": "Goldbach Verification Framework"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -26324,7 +26324,7 @@
       "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -26855,7 +26855,7 @@
       "title": "Quaternion Algebras and Rotations"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -32312,14 +32312,14 @@
       "title": "Deepening: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "275a5749",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -32346,7 +32346,7 @@
       "source": "",
       "source_exp_id": "e24b36f0",
       "source_path": "Moonshot: Alien Number Systems — Mathematics Beyond Base-10",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-22T09:46:30.052991+00:00",
       "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
@@ -35497,7 +35497,7 @@
       "title": "Odd Perfect Numbers"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -38935,14 +38935,14 @@
       "parent_direction": "",
       "priority_score": 0.94,
       "proof_strategy": "Define the neural RG flow: for a network f_theta with parameters theta in R^N, the coarse-graining operator C_epsilon averages over parameters within epsilon-balls. Prove that the flow d(theta)/dt = -nabla L(theta) has fixed points that coincide with the RG fixed points of C_epsilon. For a 2-layer ReLU network f(x) = sum_j a_j * ReLU(w_j . x + b_j), prove that the NTK (neural tangent kernel) at the fixed point satisfies K*(x,y) = C * |x-y|^{-2+eta} for some critical exponent eta. Compare with the Wilson-Fisher fixed point in d=2.",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-07-31T05:48:58Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Neural Network Training as Renormalization Group Flow"
@@ -39145,14 +39145,14 @@
       "parent_direction": "",
       "priority_score": 0.94,
       "proof_strategy": "Define the holographic certificate of a proof pi as follows: (1) embed the proof as a graph in hyperbolic space H^n where each step is a vertex and edges connect dependent steps, (2) project the graph onto the boundary S^{n-1} via the Poincare disk model, (3) the certificate is the boundary data (vertices on S^{n-1} with their holographic data). Prove the holographic verification theorem: given a certificate of length O(log n), verification requires checking O((log n)^2) local consistency conditions, each checkable in O(1) time. The key is that the AdS geometry ensures that bulk errors propagate to detectable boundary inconsistencies. Test: construct holographic certificates for PHP proofs of length n=100, 1000, 10000 and verify the O(log n) length bound.",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-07-31T05:48:58Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "AdS/CFT for Proof Theory: Holographic Verification"
@@ -40231,7 +40231,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "70779ff4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40259,7 +40259,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "",
       "title": "Normality of Mathematical Constants"
@@ -40429,7 +40429,7 @@
       "title": "Isogeny-Based Cryptography: CSI-FiSh"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
