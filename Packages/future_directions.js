@@ -4334,7 +4334,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_361",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -6054,17 +6054,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Tur\u00e1n-Type Bounds for Graphs Containing Large $F$-Sparse Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5e9a5f6",
     "description": "Investigate the ArXiv paper 'Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields' and formalize its key results. Abstract: Let $K$ be a global function field of characteristic $p>0$ and $\\ell\\neq p$ be a prime number. We study Selmer groups over a $\\mathbb{Z}_\\ell$-extension $K_\\infty/K$. For a lisse $\\mathbb Z_\\ell$-sheaf we prove that the Pontryagin dual of the associated Selmer group is a finitely generated torsion module over the Iwasawa algebra and has $\u03bc$-invariant equal to zero. This gives a positive-characteristic, prime to $p$, analogue of Greenberg's $\u03bc=0$ conjecture. Our result applies in particular to abelian varieties, fine Selmer groups, and adjoint representations. We also prove an analogue of the weak Leopoldt conjecture in this context over $K_\\infty$, and deduce that the framed deformation ring of a residual representation is a formal power series ring. The same conclusion holds for the unframed deformation ring if the residual representation has no non-scalar endomorphisms.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0122",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10728v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:16:11.220023+00:00",
     "title": "ArXiv paper: Greenberg's $\u03bc=0$ conjecture for lisse sheaves over global function fields"
   },

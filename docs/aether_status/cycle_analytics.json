@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-31T07:31:01.136414+00:00",
+  "last_updated": "2026-07-31T07:20:58.412244+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -42331,8 +42331,8 @@
       "bridge_count": 0,
       "cycle_n": 5,
       "domain": "Probability",
-      "duration_seconds": 6112.668513774872,
-      "end_time": 1785483038.459478,
+      "duration_seconds": 5510.014609098434,
+      "end_time": 1785482435.8055732,
       "files_integrated": 3,
       "job_id": "02f69ad4",
       "outcome_quality": 0.0,
@@ -42364,7 +42364,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 31,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-07-31T07:31:01.018554+00:00",
+      "timestamp": "2026-07-31T07:20:58.315284+00:00",
       "title": "Idempotent Probability: Large Deviations"
     }
   ]
