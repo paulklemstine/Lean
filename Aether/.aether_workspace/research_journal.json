@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ddd2821f",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its ra",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-23T18:46:04",
-      "title": "Deepening: 1. **Repair the definition before studying asymptotics.** The literal rule exclu"
-    },
-    {
       "cycle_id": "2f329d75",
       "domain": "Bridges",
       "key_insight": "# Future directions\n\n## 1. Arithmetic truth as an unbounded limit of bounded truth tables\n\n**Conjecture.** For a concrete syntax of first-order arithmetic with a standard-model satisfaction relation,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 60,
       "timestamp": "2026-07-31T18:57:42",
       "title": "Hadwiger's Conjecture"
+    },
+    {
+      "cycle_id": "aeb64258",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the proved bridge.  Each is\nfalsifiable because it specifies an exact equality, involution, bound, or congruence.\n\n1. **Graded",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-31T20:48:28",
+      "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8116299999999999
     }
   ],
-  "last_updated": "2026-07-31T18:57:42",
+  "last_updated": "2026-07-31T20:48:28",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "41e2ee03",
-        "quality": 0.63,
-        "theorems": 0,
-        "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter p"
-      },
-      {
         "cycle_id": "f853fcd6",
         "quality": 0.73,
         "theorems": 14,
@@ -3203,6 +3197,12 @@
         "quality": 0.7559799999999999,
         "theorems": 14,
         "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+      },
+      {
+        "cycle_id": "aeb64258",
+        "quality": 0.686,
+        "theorems": 22,
+        "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
       }
     ],
     "Combinatorics": [
