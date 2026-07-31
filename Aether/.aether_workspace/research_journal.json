@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5843d50f",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT₀` and an interpretation in arithmetic such that PA proves `Con(QFT₀) → Con",
-      "quality_score": 0.7539499999999999,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-29T12:31:28",
-      "title": "Logic-Physics Bridge: Consistency of Physical Theories"
-    },
-    {
       "cycle_id": "687f4282",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register defici",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-31T10:09:57",
       "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "0fbfba35",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nThe following concrete conjectures isolate extensions not established by the present formalization.\n\n1. **Full analytic leading-pole theorem.** For every irreducible crystallograp",
+      "quality_score": 0.7781,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-31T10:11:09",
+      "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1efa5ae1",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Spectral Extremal Problems with Intersecting Forbidden Cycles\n\n## 1. Stability of the universal-vertex outerplanar construction\n\n**Conjecture.** For every fixed pair `l ≥ k ≥ 3`,",
-      "quality_score": 0.61,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-22T22:24:58",
-      "title": "ArXiv paper: Spectral extremal problems on planar and outerplanar graphs without $C_{k,l}"
-    },
     {
       "cycle_id": "6622cac1",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-31T10:09:57",
       "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "0fbfba35",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nThe following concrete conjectures isolate extensions not established by the present formalization.\n\n1. **Full analytic leading-pole theorem.** For every irreducible crystallograp",
+      "quality_score": 0.7781,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-31T10:11:09",
+      "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "513ffc93",
-      "domain": "Probability",
-      "name": "for",
-      "quality": 0.7676799999999999
-    },
-    {
-      "cycle_id": "513ffc93",
-      "domain": "Probability",
-      "name": "mass_nonneg",
-      "quality": 0.7676799999999999
-    },
-    {
-      "cycle_id": "513ffc93",
-      "domain": "Probability",
-      "name": "total_mass",
-      "quality": 0.7676799999999999
-    },
     {
       "cycle_id": "e3c425e4",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "vertexFunctor_essSurj",
       "quality": 0.7559799999999999
+    },
+    {
+      "cycle_id": "0fbfba35",
+      "domain": "Algebra",
+      "name": "proper_gamma_arguments_pos",
+      "quality": 0.7781
+    },
+    {
+      "cycle_id": "0fbfba35",
+      "domain": "Algebra",
+      "name": "coxeter_gamma_argument_pos",
+      "quality": 0.7781
+    },
+    {
+      "cycle_id": "0fbfba35",
+      "domain": "Algebra",
+      "name": "gammaQuotient_pos",
+      "quality": 0.7781
     }
   ],
-  "last_updated": "2026-07-31T10:09:57",
+  "last_updated": "2026-07-31T10:11:09",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "81b94eec",
-        "quality": 0.43,
-        "theorems": 11,
-        "title": "Birch and Swinnerton-Dyer Conjecture"
-      },
-      {
         "cycle_id": "6296b01e",
         "quality": 0.75,
         "theorems": 6,
@@ -3079,6 +3073,12 @@
         "quality": 0.73204,
         "theorems": 7,
         "title": "BSD Conjecture: Rank Computability"
+      },
+      {
+        "cycle_id": "0fbfba35",
+        "quality": 0.7781,
+        "theorems": 13,
+        "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
       }
     ],
     "Applications": [

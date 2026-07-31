@@ -841,38 +841,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The key insight is that Tononi's Phi (integrated information) may be a topological invariant, not just a measure. If neural states form a sheaf over the brain's connectome, then Phi equals the dimension of the first sheaf cohomology group H^1(C, F) where C is the connectome graph and F is the neural state sheaf. Conjecture: Phi is a topological invariant of the sheaf (C, F) \u2014 it is preserved under sheaf isomorphisms and changes continuously under continuous deformation of the connectome. A system with Phi = 0 has H^1 = 0 (acyclic sheaf, no information integration), while Phi > 0 means H^1 > 0 (cycles in the sheaf, integrated information). Why now: sheaf cohomology has been successfully applied to neural coding by Curry (2019), and the connection between Phi and cohomology was conjectured by Tegmark (2019) but never formalized. Test: compute Phi for small connectome topologies (chain, ring, complete graph) and show Phi = dim(H^1) in each case. Impact: consciousness becomes a mathematical invariant with the same status as the Euler characteristic \u2014 a topological quantity that can be computed, compared, and used to classify systems.",
-    "domains": [
-      "Speculative",
-      "Topology",
-      "Physics"
-    ],
-    "id": "seed_098",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Consciousness Complexity: Integrated Information as a Topological Invariant"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that every directed graph G has a zeta function zeta_G(s) = prod(1 - lambda^{-s})^{-1} where the product is over eigenvalues of the graph's adjacency matrix, and the Riemann Hypothesis for this function is equivalent to a purely combinatorial condition on G. Conjecture: For a directed graph G with n vertices, zeta_G(s) satisfies the Riemann Hypothesis (all non-trivial zeros lie on Re(s) = 1/2) if and only if G is a Ramanujan digraph: every eigenvalue lambda of the adjacency matrix satisfies |lambda| <= 2 sqrt(d-1) where d is the maximum out-degree. This is the directed graph analog of the Ramanujan graph theorem of Lubotzky-Phillips-Sarnak. Why now: the undirected case is settled (Ramanujan graphs exist and have optimal spectral gap), but the directed case is wide open. Recent work by Lubetzky and Peres (2016) on cutoff on directed Ramanujan graphs suggests the spectral gap characterization extends. Test: prove the conjecture for directed Cayley graphs of finite groups, then verify computationally for random directed d-regular graphs with n=20, 50, 100 vertices. Impact: a combinatorial Riemann Hypothesis \u2014 if true, it means the deepest mystery of number theory has a purely graph-theoretic characterization.",
-    "domains": [
-      "Algebra",
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "seed_104",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Zeta Functions of Directed Graphs and the Graph Riemann Hypothesis"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domains": [
       "Geometry",
@@ -1668,17 +1636,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1cf3185d",
     "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k \u2264 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
     "domains": [
       "Combinatorics",
       "Geometry"
     ],
     "id": "seed_211",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Hadwiger's Conjecture"
   },
@@ -1915,6 +1884,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T21:21:22.115983+00:00",
     "title": "Deepening: Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 78bbd545 (Q=0.787), which proved 10 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers eq",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_78bbd545_a8853678",
+    "priority_score": 0.8874099999999999,
+    "research_mode": "team",
+    "source_exp_id": "78bbd545",
+    "status": "available",
+    "timestamp": "2026-07-31T10:08:45.600616+00:00",
+    "title": "Deepening: Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -2259,6 +2242,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 0fbfba35 (Q=0.778), which proved 13 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A universal leading-residue formula for Witten zeta functions' and formalize its key results. Abstract: Let $\u03a6$ be an irreducible crystallographic root system of rank $r$, with Coxeter number $h$, Weyl group $W$, Cartan matrix $C_\u03a6$, and invariant degrees $2=d_1\\leq\\cdot",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_0fbfba35_1897667b",
+    "priority_score": 0.8781,
+    "research_mode": "team",
+    "source_exp_id": "0fbfba35",
+    "status": "available",
+    "timestamp": "2026-07-31T10:11:09.707032+00:00",
+    "title": "Deepening: ArXiv paper: A universal leading-residue formula for Witten zeta functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3140,6 +3137,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle fb6f9bc5 (Q=0.756), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_fb6f9bc5_27aef76f",
+    "priority_score": 0.8559799999999999,
+    "research_mode": "team",
+    "source_exp_id": "fb6f9bc5",
+    "status": "available",
+    "timestamp": "2026-07-31T10:09:57.508317+00:00",
+    "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 5843d50f (Q=0.754), which proved 7 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
       "Bridges"
@@ -3494,33 +3505,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
   },
   {
-    "consumed_by_exp_id": "78bbd545",
-    "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
-    "domains": [
-      "Bridges",
-      "Tropical"
-    ],
-    "id": "seed_354",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03b10997",
     "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
     "domains": [
       "Cryptography",
       "Computation"
     ],
     "id": "seed_356",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
   },
@@ -4069,7 +4065,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cram\u00e9r's Conjecture on Prime Gaps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8fe295b2",
     "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
       "EML",
@@ -4077,10 +4073,11 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "seed_072",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Quantum Activation Functions"
   },
@@ -4141,22 +4138,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Tropical Fermat's Last Theorem"
-  },
-  {
-    "consumed_by_exp_id": "fb6f9bc5",
-    "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "seed_298",
-    "phase": "A",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -4847,22 +4828,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T14:01:07.150782+00:00",
     "title": "ArXiv paper: A Proof of Sundaram's Bounded-Interval Higher Lie Positivity Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "0fbfba35",
-    "description": "Investigate the ArXiv paper 'A universal leading-residue formula for Witten zeta functions' and formalize its key results. Abstract: Let $\u03a6$ be an irreducible crystallographic root system of rank $r$, with Coxeter number $h$, Weyl group $W$, Cartan matrix $C_\u03a6$, and invariant degrees $2=d_1\\leq\\cdots\\leq d_r=h$. We prove that Au's normalized Witten zeta function $\u03be_\u03a6(s)$ has a simple pole at $s=2/h$, with residue $\\mathop{\\rm Res}_{s=2/h}\u03be_\u03a6(s)=\\frac{2(2\u03c0)^{r/2}\\sqrt{\\det C_\u03a6}}{h|W|}\\frac{\\prod_{i=1}^{r-1}\u0393(1-d_i/h)}{\u0393(1-1/h)^r}$. The proof identifies the leading lattice coefficient with a convergent spherical Coxeter-discriminant integral at the critical exponent and evaluates this integral using the boundary pole of the Macdonald--Mehta--Opdam identity. Proper parabolic strata are shown to be strictly subcritical. This establishes Au's gamma-product-shape conjecture and his prediction in type $A_4$. We also obtain a direct, non-Tauberian asymptotic, with an explicit constant for every simple type, for the number of irreducible representations of dimension at most $X$.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0026",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12728v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T14:18:27.228044+00:00",
-    "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -10728,6 +10693,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T09:24:17.583980+00:00",
     "title": "The current formalization establishes the foundational connector between tropica"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Kapranov reverse inclusion for Laurent hypersurfaces.** For an algebraically closed, complete, nontrivially valued field and every finite Laurent polynomial with nonzero coefficients, every point of the max-corner locus of its tropical polynomial is the valuation vector of a zero after passing to the completed algebraic closure.\n\n2. **Hausdorff convergence of logarithmic zero sets.** For a fixed complex Laurent polynomial and the standard dequantization family `Log_t(z) = (log |z_i| / log t)_i`, the images of its zero set converge on every compact polytope, in Hausdorff distance as `t \u2192 \u221e`, to the corner locus of the associated tropical polynomial.\n\n3. **Stable plane tropical B\u00e9zout.** For two balanced tropical plane curves of degrees `d` and `e` with integral edge weights and no common component, the sum of stable local intersection multiplicities is exactly `d * e`.\n\n4. **Multiplicity preservation under tropicalization.** For a proper zero-dimensional intersection of two plane curves over an algebraically closed complete non-Archimedean field, tropicalization induces a fiberwise correspondence in which the sum of classical local intersection multiplicities over each tropical point equals its stable tropical intersection multiplicity.\n\n5. **Product corner locus without group inverses.** The product/union theorem in `Tropical.CornerLocusProduct` remains valid when the ordered additive group is weakened to a cancellative ordered additive commutative monoid, provided both finite term families attain minima everywhere.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0858",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "78bbd545",
+    "status": "available",
+    "timestamp": "2026-07-31T10:08:41.126453+00:00",
+    "title": "1. **Kapranov reverse inclusion for Laurent hypersurfaces.** For an algebraicall"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Topological realization of the groupoid classification.** Formalize the following claim for connected CW complexes `X` and `Y`: if their universal covers are contractible, then every isomorphism `\u03c0\u2081(X,x) \u2243* \u03c0\u2081(Y,y)` is induced by a homotopy equivalence `X \u2243\u2095 Y` (after choosing the appropriate basepoint path).\n\n2. **Connected counterexample detected by second homology.** Prove that the two-sphere and a point have isomorphic trivial fundamental groups but are not homotopy equivalent, by formalizing `H\u2082(S\u00b2; \u2124) \u2245 \u2124` and `H\u2082(pt; \u2124) = 0`. This would strengthen the present disconnected `Unit`/`Bool` counterexample.\n\n3. **Unpointed self-equivalences of a `K(G,1)`.** For a connected groupoid with vertex group `G`, prove that natural-isomorphism classes of self-equivalences are in bijection with the outer automorphism group `Out(G)`. The claim is falsifiable by computing both sides for finite cyclic and symmetric groups.\n\n4. **Failure beyond 1-types via explicit 2-type data.** Construct connected homotopy 2-types with isomorphic fundamental groups but inequivalent second homotopy groups (as modules over `\u03c0\u2081`), and prove they are not equivalent. A first test case is the trivial `\u03c0\u2081` with `\u03c0\u2082 = \u2124` versus `\u03c0\u2082 = 0`.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0859",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fb6f9bc5",
+    "status": "available",
+    "timestamp": "2026-07-31T10:09:53.180047+00:00",
+    "title": "1. **Topological realization of the groupoid classification.** Formalize the fol"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe following concrete conjectures isolate extensions not established by the present formalization.\n\n1. **Full analytic leading-pole theorem.** For every irreducible crystallographic root system `\u03a6`, a Mathlib definition of Au's normalized Witten zeta function extends meromorphically to a neighborhood of `2 / h`, has no pole of order greater than one there, and its complex residue equals `RootInvariants.universalLeadingResidue` for the invariant data of `\u03a6`.\n\n2. **Formal spherical Macdonald\u2013Mehta boundary value.** For every finite irreducible crystallographic Coxeter group with invariant degrees `d\u2081, \u2026, d\u1d63`, the integral of the normalized Coxeter discriminant to exponent `-2/h` over the unit sphere is finite and equals the gamma quotient obtained by taking the first boundary pole of the Macdonald\u2013Mehta\u2013Opdam identity.\n\n3. **Uniform lattice-counting asymptotic.** For every irreducible crystallographic root system, the number of dominant weights whose Weyl dimension is at most `X`, divided by `X^(2/h)`, tends to `RootInvariants.countingConstant D K` as `X \u2192 \u221e`.\n\n4. **Semisimple pole-order law.** For a product of `q` simple simply connected compact groups all having the same maximal critical exponent `\u03b1`, the associated Witten zeta function has a pole of order exactly `q` at `\u03b1`; factors with smaller critical exponent do not change that order.\n\n5. **Finite-index quotient scaling.** If a central quotient selects a finite-index sublattice `L` of the dominant-weight lattice, then its leading residue and irreducible-representation counting constant are exactly the simply connected constants multiplied by the natural density of `L` in the full weight lattice.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0860",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0fbfba35",
+    "status": "available",
+    "timestamp": "2026-07-31T10:11:05.596428+00:00",
+    "title": "The following concrete conjectures isolate extensions not established by the pre"
   },
   {
     "consumed_by_exp_id": "",
