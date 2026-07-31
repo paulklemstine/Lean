@@ -1,200 +1,174 @@
-# The Two Secret Ingredients of Learning: How `exp` and `log` Tame the Universe of Functions
+# Exponentials as a Universal Language for Continuous Phenomena
 
-## A machine that can imitate anything
+## From a single curve to every continuous landscape
 
-Imagine you are handed a black box. You feed it numbers, it spits numbers back. You don't
-know what is inside — maybe it predicts tomorrow's temperature, maybe it grades photographs,
-maybe it models the price of electricity. You are told only one thing: the box implements
-some *continuous* rule, meaning small changes in the input produce small changes in the
-output. No sudden jumps, no teleportation.
+The exponential function is one of mathematics’ great shape-shifters. It describes population growth, radioactive decay, compound interest, thermal relaxation, chemical reaction rates, and the soft normalization at the heart of many statistical models. Yet its familiar graph—smooth, positive, always rising—looks far too rigid to imitate an arbitrary continuous function. How could exponentials reproduce a mountain range with several peaks, a response curve that bends downward, or a signal that changes direction many times?
 
-Now you are given a challenge. Using only a handful of very simple, fixed building blocks,
-build your *own* box that mimics the mysterious one so closely that no measurement could ever
-tell them apart. Not approximately-ish. As close as you like — name your tolerance, and your
-imitation will stay inside it everywhere at once.
+The answer is that one exponential is rigid, but an algebra of exponentials is not. Start with the coordinate functions on a compact region, exponentiate them, and permit ordinary field operations: constants, addition, subtraction, multiplication, and scalar multiplication. Finite expressions built this way can approximate every continuous real-valued function on a cube as accurately as desired. Logarithms may be admitted as well, but the striking point is that they are not needed for this universality result.
 
-This is the dream behind every neural network, every curve-fitter, every "universal
-approximator" in modern machine learning. And it turns out the dream is not just a hope; it is
-a theorem. The remarkable fact is that the building blocks can be astonishingly humble. In this
-article we follow one particularly elegant recipe, the **EML** recipe — short for
-**E**xponential, **M**ultiplicative, **L**ogarithmic — and we uncover two surprises hiding
-inside it. The first is *what* it can build (everything). The second is *how cheaply* it can
-build it (much more cheaply than you would guess), and that second surprise is where the real
-drama lives.
+This is an approximation theorem, but its proof rests on a geometric idea: different points must remain distinguishable. Once an algebra of continuous functions contains constants and can tell every pair of points apart, the Stone–Weierstrass theorem says that the algebra is uniformly dense in all continuous functions. Exponentials of coordinates pass this test because the exponential function is injective: if two points differ in one coordinate, exponentiating that coordinate does not erase the difference.
 
-## The playground: the unit cube
+The result comes with a second, functional-analytic consequence. Any continuous linear measurement of functions—an average, a weighted integral, or another stable linear observable—is determined completely by what it does to these finite exponential expressions. Agreement on the simple language forces agreement on every continuous function.
 
-Let us fix the stage. Our inputs are lists of $n$ numbers, each between $0$ and $1$. The set of
-all such lists is the **unit cube**,
+Finally, universality need not remain purely qualitative. A remarkably shallow expression containing only one exponential approximates the square function on $[0,1]$ with a concrete error bound. This example reveals both the power and the numerical delicacy of exponential approximation.
 
-$$[0,1]^n = \{\, x = (x_1, x_2, \ldots, x_n) : 0 \le x_i \le 1 \text{ for each } i \,\}.$$
+## The setting: continuous functions on a compact cube
 
-For $n=1$ this is just a line segment; for $n=2$ a square; for $n=3$ an ordinary cube; and for
-larger $n$ a higher-dimensional generalization that we still, comfortingly, call a cube. The
-unit cube is the canonical home of approximation theory because so many real problems live
-there after rescaling: pixel intensities, normalized sensor readings, probabilities, fractions.
-A pleasant first fact, almost too obvious to state but genuinely load-bearing, is that this
-cube is **compact** — it is closed and bounded, with no edges missing and nothing running off
-to infinity. Compactness is the technical glue that makes uniform approximation possible at
-all, and the cube has it because it is a product of the closed intervals $[0,1]$, each of which
-is itself compact.
+Fix a dimension $n$. The unit cube is
 
-## One nonlinearity to rule them all
+$$
+[0,1]^n=\{(x_1,\ldots,x_n):0\le x_i\le 1\text{ for every }i\}.
+$$
 
-Here is the building block. For each coordinate $x_i$ we form a single feature by exponentiating
-it:
+Let $C([0,1]^n)$ denote the real-valued continuous functions on this cube. Approximation is measured with the uniform norm
 
-$$x \longmapsto e^{x_i}.$$
+$$
+\|f\|_\infty=\max_{x\in[0,1]^n}|f(x)|.
+$$
 
-That's it. One exponential per input coordinate. We call these the **coordinate exponential
-features**. From them we are allowed to do only the most pedestrian algebra: add features,
-multiply features, and scale them by ordinary real numbers. The collection of *all* functions
-you can assemble this way — every sum of products of the $e^{x_i}$, with real coefficients — is
-called the *algebra generated* by the features. Concretely, because multiplying exponentials
-adds their exponents, every such function is a finite combination
+Uniform approximation is demanding: an approximant must be accurate at every point at once. A sequence $g_k$ converges uniformly to $f$ when $\|g_k-f\|_\infty\to0$.
 
-$$x \longmapsto \sum_k c_k \, e^{k_1 x_1 + k_2 x_2 + \cdots + k_n x_n},$$
+Now form the smallest real algebra containing the coordinate exponentials
 
-a so-called **exponential polynomial** in the coordinates. These are smooth, explicit, and
-trivial to evaluate.
+$$
+e^{x_1},\ e^{x_2},\ \ldots,\ e^{x_n}.
+$$
 
-The first headline result says these humble combinations are enough to imitate *anything*
-continuous on the cube.
+“Algebra” means that constants are included and that finitely many additions, subtractions, multiplications, and real scalar multiplications are allowed. Thus it contains expressions such as
 
-> **Density Theorem (informal).** Every continuous function on the unit cube $[0,1]^n$ can be
-> approximated, as accurately as you wish and uniformly across the entire cube, by an
-> exponential polynomial in the coordinate features $e^{x_1}, \ldots, e^{x_n}$.
+$$
+3e^{2x_1+x_3}-5e^{x_2}+7,
+$$
 
-Formally, the closure of the algebra generated by the coordinate exponential features is the
-*whole* space of continuous functions. In sharper, more usable language: given any continuous
-target $f$ and any error budget $\varepsilon > 0$, there exists an exponential polynomial $p$
-with
+because products of coordinate exponentials combine their exponents. It also contains polynomial expressions in $e^{x_1},\ldots,e^{x_n}$. Every such expression is continuous.
 
-$$\sup_{x \in [0,1]^n} \big| p(x) - f(x) \big| < \varepsilon.$$
+The central theorem is the following.
 
-## Why a single exponential is enough
+**Universal Approximation Theorem.** For every continuous function $f:[0,1]^n\to\mathbb R$ and every tolerance $\varepsilon>0$, there exists a finite algebraic expression $g$ generated by the functions $e^{x_1},\ldots,e^{x_n}$ and real constants such that
 
-The proof is a beautiful instance of one of analysis's greatest theorems, the **Stone–Weierstrass
-theorem**. Stone–Weierstrass gives a checklist: a family of continuous functions on a compact
-space generates a dense algebra provided (a) it contains the constant functions, and (b) it
-**separates points** — meaning that for any two distinct inputs, at least one function in the
-family assigns them different values. Condition (a) is automatic since we are allowed real
-coefficients. Everything therefore hinges on point separation.
+$$
+\max_{x\in[0,1]^n}|f(x)-g(x)|<\varepsilon.
+$$
 
-And here the magic of the exponential appears. Take two distinct points $x \ne y$ in the cube.
-Being different, they must disagree in *some* coordinate: there is an index $i$ with
-$x_i \ne y_i$. Because the exponential function is strictly increasing — and hence one-to-one —
-$e^{x_i} \ne e^{y_i}$. So the single feature $x \mapsto e^{x_i}$ already tells the two points
-apart. The family separates points, the checklist is satisfied, and density follows.
+This theorem does not claim that every continuous function equals one finite expression. Rather, it says the finite expressions can get arbitrarily close in the strongest standard topology on continuous functions over a compact domain.
 
-Notice the elegant division of labor that this argument reveals. The *width* of the network —
-how many features you need — is forced by the dimension: you need one exponential per
-coordinate, because in dimension two or higher no single combined feature
-$x \mapsto w_1 x_1 + \cdots + w_n x_n$ can ever be one-to-one (a line cannot faithfully record
-a plane's worth of information). But the *nonlinearity* — the ingredient that lets you bend
-straight lines into arbitrary shapes — is supplied entirely by one transcendental function,
-$\exp$. Width comes from dimension; expressive power comes from $\exp$.
+## Why point separation unlocks universality
 
-## A measuring tape for the shallow layer
+The proof can be understood without constructing an approximant. Consider two distinct points $x,y\in[0,1]^n$. Because they differ, some coordinate $i$ satisfies $x_i\ne y_i$. Since the exponential function is strictly increasing and therefore injective,
 
-Density is a *qualitative* statement: it promises that good approximations exist, but says
-nothing about how big or wild the pieces must be. The unit cube lets us add something the
-abstract theorem cannot see — *quantitative* control.
+$$
+e^{x_i}\ne e^{y_i}.
+$$
 
-> **Shallow-feature bounds.** For every input $x$ in the cube and every coordinate $i$,
-> $$1 \le e^{x_i} \le e.$$
+So the generating family separates points: for every distinct pair, at least one generator takes different values at the two points.
 
-The reasoning is a two-line calculation: since $0 \le x_i \le 1$ and $\exp$ is increasing,
-$e^0 \le e^{x_i} \le e^1$, and $e^0 = 1$ while $e^1 = e \approx 2.718$. So every single-layer
-feature lives in the snug interval $[1, e]$. This little fact matters more than it looks. It
-pins down the *modulus of continuity* of each shallow layer — how fast the features can change
-— and that is precisely the raw material from which explicit approximation rates and width
-counts are built. Density tells you a good imitation exists; bounds like these begin to tell
-you how large it has to be.
+The real Stone–Weierstrass theorem says that a subalgebra of continuous real-valued functions on a compact space is uniformly dense if it contains the constants and separates points. Both requirements are now visible. Constants are built into the algebra, and the exponential coordinates separate points. Density follows.
 
-## The second surprise: depth is a resource, and `exp`/`log` spend it wisely
+This argument works in greater generality. Suppose a compact space $X$ has a continuous injective coordinate map
 
-So far the exponential has played a supporting role — one nonlinearity among many possibilities.
-The second half of our story promotes it, together with its inverse the logarithm, to
-indispensable status. The setting shifts from *which* functions we can build to *how expensive*
-it is to build them, where the cost we track is **depth**: the number of nested operations
-stacked one inside another, the analog of how many layers a neural network has.
+$$
+\iota:X\longrightarrow\mathbb R^n.
+$$
 
-Consider the simplest interesting target, the monomial
+Write $\iota_i(x)$ for its $i$th coordinate. Then the algebra generated by
 
-$$x \longmapsto x^n,$$
+$$
+x\longmapsto e^{\iota_i(x)},\qquad i=1,\ldots,n,
+$$
 
-on the positive numbers. There are two honest ways to construct it from EML primitives.
+is dense in $C(X)$. Indeed, injectivity of $\iota$ guarantees that two different points differ in some coordinate, and injectivity of the exponential preserves that distinction. The cube theorem is the special case in which $\iota$ is the ordinary inclusion of $[0,1]^n$ into $\mathbb R^n$.
 
-**The naive way.** Just multiply $x$ by itself $n$ times:
+The broader lesson is that universality comes not from a mysterious flexibility hidden inside one curve, but from preserving the geometry of the domain. An algebra that never confuses two points can combine its basic observations into approximations of every continuous observable.
 
-$$x^n = \underbrace{x \cdot x \cdots x}_{n \text{ factors}}.$$
+## A bridge to measurements, moments, and inverse problems
 
-Each multiplication adds a layer. Written as a nested expression, this construction has depth
-exactly $n$. To represent $x^{100}$ this way you need a tower one hundred operations tall.
+Approximation has an important dual interpretation. Let $X$ be a compact space with an injective continuous map into $\mathbb R^n$, and let $A$ be the algebra generated by its exponential coordinates. Consider two continuous linear functionals
 
-**The clever way.** Use the identity that every student of logarithms knows,
-$x^n = e^{n \ln x}$:
+$$
+L_1,L_2:C(X)\longrightarrow\mathbb R.
+$$
 
-$$x^n = \exp\!\big(n \cdot \ln x\big).$$
+Linearity means $L(af+bg)=aL(f)+bL(g)$, while continuity means small uniform changes in a function cause small changes in the measurement.
 
-Read off the structure: take the logarithm of $x$, multiply by the constant $n$, then
-exponentiate. That is **three** operations, no matter how large $n$ is. The tower for
-$x^{100}$ and the tower for $x^{1{,}000{,}000}$ are the same height.
+**Observable Determination Theorem.** If $L_1(g)=L_2(g)$ for every $g\in A$, then $L_1=L_2$ on all of $C(X)$.
 
-Both expressions compute the identical function on the positive reals — this is a theorem, not
-a slogan — yet their depths could hardly be more different. This is the **depth-compression
-theorem**:
+Here is the proof in one paragraph. Given $f\in C(X)$, density supplies a sequence $g_k\in A$ with $\|g_k-f\|_\infty\to0$. Continuity gives $L_j(g_k)\to L_j(f)$ for $j=1,2$. Since $L_1(g_k)=L_2(g_k)$ for every $k$, their limits agree, so $L_1(f)=L_2(f)$. As $f$ was arbitrary, the functionals are equal.
 
-> **Depth Compression.** For every degree $n \ge 4$, the naive product $x \cdots x$ and the
-> exp/log form $\exp(n \ln x)$ define the same function on $(0, \infty)$, while the exp/log
-> form is *strictly shallower*: its depth is the constant $3$, versus depth $n$ for the
-> product.
+This principle is relevant whenever functions are observed only through stable linear summaries. Integration against a finite measure is the archetypal example:
 
-The gap between the two depths is $n - 3$, and as the degree climbs this gap grows without
-bound:
+$$
+L(f)=\int_X f\,d\mu.
+$$
 
-> **Unbounded Gap.** The depth savings $n - 3$ from using exp/log tends to infinity as the
-> degree $n$ does.
+Thus exponential-coordinate tests behave like a determining family of moments. If two such integration rules agree on every finite algebraic combination of coordinate exponentials, continuity and density force agreement on every continuous test function. This connects approximation to probability, statistical identification, tomography, and inverse problems: a sufficiently expressive family of probes can determine the entire observable.
 
-In plain terms: a *fixed, shallow* EML circuit of depth three can represent monomials of
-*arbitrarily high* degree exactly, while a multiplication-only circuit is forced to grow taller
-and taller. The exponential and logarithm act as a kind of mathematical lever — they convert a
-runaway multiplicative cost into a single cheap scalar multiplication tucked inside one
-exponential. This is the precise, provable sense in which "going deep" can be traded for
-"using the right nonlinearity," and it is the structural reason $\exp$ and $\log$ earn their
-place as primitive operations rather than conveniences.
+## One exponential already approximates a parabola
 
-## Why this matters beyond the blackboard
+The density theorem promises arbitrarily good approximations but does not state how complicated they must be. A concrete one-dimensional example provides an explicit shallow rate.
 
-The two results, taken together, tell a coherent story about expressive power that echoes
-through modern computation.
+For $h>0$, define
 
-The density theorem is the theoretical license behind the entire enterprise of function
-approximation. It says that a single smooth nonlinearity, replicated across input coordinates
-and combined with elementary algebra, is genuinely universal — there is no continuous behavior
-on the cube it cannot capture. This is the same promise that underwrites neural networks,
-kernel methods, and surrogate models in engineering, just delivered through a particularly
-transparent and explicit family of approximants where every piece can be written down in
-closed form.
+$$
+S_h(x)=\frac{2}{h^2}\bigl(e^{hx}-1-hx\bigr).
+$$
 
-The depth-compression theorem speaks to *efficiency*, the concern that actually decides which
-methods win in practice. Two architectures can have the same theoretical reach yet differ
-enormously in how compactly they express the same function. The monomial example is a clean,
-fully provable microcosm of a phenomenon that pervades deep learning lore — that depth and the
-choice of nonlinearity are tradeable resources, and that the transcendental functions $\exp$
-and $\log$ are extraordinarily efficient currency. They turn the linear cost of repeated
-multiplication into a constant. Anyone who has computed $a^b$ on a calculator as
-$e^{b \ln a}$, or who knows why slide rules worked, has felt this lever in their own hands;
-here it is sharpened into a theorem with an explicit, unbounded payoff.
+This expression uses one exponential, field operations, and the input $x$. Taylor’s formula suggests why it works:
 
-There is a final aesthetic lesson worth savoring. The work cleanly separates two things that
-are easy to conflate. *Density* — the ability to approximate everything — is a soft,
-qualitative property; it is inherited from a single fact (points can be told apart) and is
-indifferent to the shape of the domain, holding on any compact set. *Depth and quantitative
-cost*, by contrast, depend on the fine structure of the target and the geometry of the domain;
-that is where the cube's explicit $[1, e]$ bounds and the monomial's degree enter. Knowing
-which questions are soft and which are sharp is half the battle in mathematics. Here, with two
-short and complete arguments, both halves are won — and the humble exponential, the function
-that grows just fast enough to know itself as its own derivative, stands revealed as both the
-universal builder and the great compressor of computation.
+$$
+e^{hx}=1+hx+\frac{h^2x^2}{2}+\text{higher-order terms}.
+$$
+
+Subtracting $1+hx$ and multiplying by $2/h^2$ leaves $x^2$ as the leading term.
+
+The precise estimate begins with a remainder bound. For $0\le u\le1$,
+
+$$
+\left|e^u-\left(1+u+\frac{u^2}{2}\right)\right|\le\frac{2}{9}u^3.
+$$
+
+Set $u=hx$, where $0<h\le1$ and $0\le x\le1$. Then $0\le u\le1$, and algebra yields
+
+$$
+S_h(x)-x^2
+=\frac{2}{h^2}\left(e^{hx}-1-hx-\frac{h^2x^2}{2}\right).
+$$
+
+Applying the remainder estimate gives
+
+$$
+|S_h(x)-x^2|
+\le \frac{2}{h^2}\cdot\frac{2}{9}(hx)^3
+=\frac{4}{9}hx^3
+\le\frac{4}{9}h.
+$$
+
+Therefore
+
+$$
+\|S_h-x^2\|_\infty\le\frac{4}{9}h.
+$$
+
+Choosing $h=1/N$ for an integer $N\ge1$ gives the explicit rate
+
+$$
+\max_{0\le x\le1}\left|2N^2\left(e^{x/N}-1-\frac{x}{N}\right)-x^2\right|
+\le\frac{4}{9N}.
+$$
+
+The architecture remains shallow—only one exponential—while the error decays at least as fast as $1/N$.
+
+## What the bound does and does not say
+
+The explicit estimate is an upper bound, not an assertion that the true error equals $4/(9N)$. In fact, direct numerical evaluation usually reveals a smaller error. Its value is conceptual: it certifies performance uniformly across the interval using a simple formula.
+
+There is also a computational warning. When $h$ is tiny, $e^{hx}-1-hx$ subtracts nearly equal floating-point numbers and then multiplies the result by $h^{-2}$. A stable implementation should evaluate the numerator as $\operatorname{expm1}(hx)-hx$, where $\operatorname{expm1}(z)$ computes $e^z-1$ accurately for small $z$. This is a beautiful example of a mathematically sound approximation whose naive numerical evaluation can be unstable.
+
+The qualitative theorem and the shallow square estimate answer different questions. Density says the full algebra can approximate every continuous target, with no universal complexity rate asserted. The square construction says one especially simple target admits one especially simple approximation with a fully explicit rate. A general theory connecting expression depth, width, target smoothness, dimension, and error remains open.
+
+## The emerging research program
+
+Several directions now come into focus. A constructive multivariate theorem could turn the existence proof into an algorithm controlled by the target’s modulus of continuity. A typed notion of depth and width could reveal a hierarchy: which functions are efficiently approximable at each fixed compositional depth? Taylor constructions may extend from $x^2$ to monomials, polynomials, and then smooth or Hölder functions. Conversely, lower bounds based on oscillation, zero counts, or metric entropy could show what bounded-depth expressions cannot do.
+
+The practical promise is equally broad. A compact sensor range, a bounded collection of physical parameters, or a normalized data set often lives naturally in a cube. On such domains, exponential–field expressions can serve as interpretable surrogates: finite formulas that approximate complicated continuous response surfaces. The theorem does not choose the best surrogate, but it guarantees that the language itself is not the obstruction. Questions of training, sparsity, conditioning, and efficiency begin only after expressiveness has been secured.
+
+The foundational message is already clear. Exponentials of coordinates retain enough information to distinguish every point, and algebraic closure turns that local distinction into global expressive power. On compact finite-dimensional domains, this simple language is universal for continuous phenomena. Moreover, its dense family of functions is not merely useful for approximation: it determines every stable linear way of observing those phenomena. Between the geometry of point separation and the analysis of uniform limits lies a surprisingly broad language—one capable, in principle, of describing every continuous landscape.
