@@ -3068,7 +3068,7 @@ Be precise, be deep, be world-class.
               "interactive_demos": [
                 {"title": "Beautiful Math-Rich Interactive Widget Title", "description": "Detailed description of the interactive widget and what users can explore.", "html": "<!DOCTYPE html><html>...</html>"}
               ],
-              "interactive_layout": "Markdown representing a Jupyter-like narrative combining rich narrative text and interactive widgets. You have full freedom and space to design the order, explanation layout, and overall presentation flow of the page. Use placeholders like {{interactive_demo:0}} (or {{widget:0}}), {{visualization:0}}, {{algorithm:0}}, and {{demo:0}} to embed the generated widgets, visualizations, algorithms, and Python demos inline with your descriptive text. IMPORTANT: Use progressive disclosure! Complex proofs, dense mathematical definitions, and prerequisite background knowledge MUST be hidden behind beautifully styled HTML <details> and <summary> tags (e.g., <details><summary>Click to reveal the formal proof</summary>...</details>) to keep the main narrative focused and readable for beginners while offering depth for experts. Also, actively embed Markdown hyperlinks to external resources with more information inside your narrative. Make it an engaging, multimedia presentation.",
+              "interactive_layout": "Markdown representing a Jupyter-like narrative that TEACHES the material. You have full freedom and space to design the order, explanation layout, and overall presentation flow of the page. Use placeholders like {{interactive_demo:0}} (or {{widget:0}}), {{visualization:0}}, {{algorithm:0}}, and {{demo:0}} to embed the generated widgets, visualizations, algorithms, and Python demos inline with your descriptive text. Write a genuine guided tour: introduce the intuition, build up the formalism step by step, and use the interactive elements to let readers discover the ideas themselves. IMPORTANT: Use progressive disclosure! Complex proofs, dense mathematical definitions, and prerequisite background knowledge MUST be hidden behind beautifully styled HTML <details> and <summary> tags (e.g., <details><summary>Click to reveal the formal proof</summary>...</details>) to keep the main narrative focused and readable for beginners while offering depth for experts. Also, actively embed Markdown hyperlinks to external resources with more information inside your narrative. Make it an engaging, multimedia presentation — the kind of page that makes a reader feel they truly understand the mathematics by the end.",
               "lean_proofs": "FULL_LEAN_FILE_CONTENT_PASSED_THROUGH_FROM_PHASE_A",
               "future_directions": "FUTURE_DIRECTIONS_CONTENT",
               "modules": {"demo": "# full demo.py source..."},
@@ -3078,9 +3078,12 @@ Be precise, be deep, be world-class.
 
             **CRITICAL**: The `demos`, `algorithms`, `visualizations`, and
             `interactive_demos` fields MUST be arrays of objects with the
-            exact structure shown above. You MUST generate at least 3 of each interactive
-            element. This is a STRICT REQUIREMENT. Do NOT use placeholder 
-            strings like "MISSING" — either include real content or omit the field entirely.
+            exact structure shown above. Do NOT use placeholder strings like
+            "MISSING" — either include real content or omit the field entirely.
+            There is NO fixed quota: use your judgment to decide how many of each
+            element best serve the material. A single, deeply-crafted interactive
+            widget that truly illuminates the core idea is worth more than several
+            shallow ones. Quality and pedagogical value always beat quantity.
 
             ### PACKAGE.json Metadata Extraction (v1.1)
             Derive the following fields from the mathematical work above.
@@ -3121,7 +3124,8 @@ Be precise, be deep, be world-class.
             - [ ] `demos`, `algorithms`, `visualizations`, and `interactive_demos` are
                   arrays of objects with the required keys. Omit an array entirely if
                   you have no real entry for it rather than leaving it empty or filled
-                  with placeholders.
+                  with placeholders. Use your judgment on count — prioritize a few
+                  deeply-crafted, pedagogically-rich elements over many shallow ones.
             - [ ] `interactive_layout` is fully written as a Jupyter-notebook-like markdown narrative, 
                   referencing the generated elements inline via `{{interactive_demo:X}}`, `{{visualization:Y}}`,
                   `{{algorithm:Z}}`, and `{{demo:W}}` placeholders.
@@ -3198,6 +3202,15 @@ PACKAGE.json: bundle everything into a single JSON with ALL fields populated.
 - `domain` must be one of the allowed values exactly as listed.
 Make sure demos, algorithms, visualizations, and interactive_demos are arrays
 of objects (not placeholder strings). For each algorithm in the algorithms array, provide a clear, professional mathematical title in 'name' (do not use generic placeholders; this will be displayed as the header on the interactive site), a detailed explanation of its logic and complexity in 'description', formal step-by-step pseudocode in 'pseudocode', and clean type-hinted Python code in 'code'. For each Python demo in the demos array, provide a highly descriptive title in 'name', a comprehensive functional description in 'description', and the implementation code in 'code'. For each interactive HTML demo in interactive_demos, provide a beautiful title in 'title' and a detailed description in 'description'. Include future directions from Phase A in the future_directions field.
+
+Design the interactive page to TEACH the new material. Use your latitude to
+build a well-thought-out, interactive environment that demonstrates the key
+ideas and uncovered research: choose the mix and number of widgets, demos,
+visualizations, and algorithms that best illuminate the mathematics for a
+reader encountering it for the first time. Prioritize clarity, narrative
+flow, and genuine insight — a few rich, carefully-designed interactive
+elements that make the ideas click are far more valuable than a long list of
+shallow ones. Make it the page you wish you'd had when you first learned this.
 
 Be vivid, be precise, be world-class. The math has already been done — now
 make it beautiful to read.
