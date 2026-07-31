@@ -40819,14 +40819,14 @@
       "parent_direction": "",
       "priority_score": 0.91,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-07-31T12:24:37Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Standard Conjectures on Algebraic Cycles"
@@ -41283,7 +41283,7 @@
       "title": "Unique Games Conjecture"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,

@@ -1139,27 +1139,7 @@
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, Künneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_221",
-    "lineage_refs": [],
-    "priority_score": 0.91,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Standard Conjectures on Algebraic Cycles"
-  },
-  {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",

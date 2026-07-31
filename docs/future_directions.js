@@ -841,21 +841,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_221",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Standard Conjectures on Algebraic Cycles"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domains": [
       "Algebra",
