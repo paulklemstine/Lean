@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "edb35a0b",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Tropical Phase-Transition Models\n\nThe file `TropicalPhaseTransition.lean` proves a self-contained chain of results\nabout the tropical order parameter `order κ c x = max(κ·(x − c),",
-      "quality_score": 0.5,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-24T21:31:55",
-      "title": "Close Proofs: Speculative: Mathematics as a Phase Transition"
-    },
-    {
       "cycle_id": "1f866dac",
       "domain": "Bridges",
       "key_insight": "# Future directions: p-adic Langlands for GL₂(ℚ_p)\n\nThe Lean file `PadicLanglandsGL2.lean` establishes a self-contained chain of\nresults around the two sides of the p-adic Langlands correspondence for",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-08-01T23:25:42",
       "title": "**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
+    },
+    {
+      "cycle_id": "61f6b5cb",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nThe completed development isolates the exact obligations required for a\nconcrete Ring-LWE FHE instantiation.  Natural next steps are:\n\n1. **Concrete quotient polynomial ring.** In",
+      "quality_score": 0.683,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-08-01T23:25:47",
+      "title": "Homomorphic Encryption: Computing on Encrypted Data"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8021799999999999
     }
   ],
-  "last_updated": "2026-08-01T23:25:42",
+  "last_updated": "2026-08-01T23:25:47",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "c1a3ae41",
-        "quality": 0.69018,
-        "theorems": 14,
-        "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
-      },
-      {
         "cycle_id": "1443bb24",
         "quality": 0.7907,
         "theorems": 19,
@@ -3327,6 +3321,12 @@
         "quality": 0.80505,
         "theorems": 21,
         "title": "Bridge: Fourier Analysis as a Functor"
+      },
+      {
+        "cycle_id": "61f6b5cb",
+        "quality": 0.683,
+        "theorems": 33,
+        "title": "Homomorphic Encryption: Computing on Encrypted Data"
       }
     ],
     "Cryptography": [
