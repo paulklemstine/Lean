@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6ef427dd",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n- Internalize the construction in a general Cartesian closed category using a point-surjective morphism `A ⟶ B ^ A`, then recover the current theorem by specializing to `Type`.\n-",
-      "quality_score": 0.7636799999999999,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-30T03:37:45",
-      "title": "Consciousness as Emergent Fixed Point"
-    },
-    {
       "cycle_id": "c2653f80",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nThe Lean development proves that `78557` is a Sierpiński number by a complete covering-system certificate: every exponent class modulo `36` receives a proper prime divisor from `{",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-08-01T09:30:07",
       "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
+    },
+    {
+      "cycle_id": "cb10fc42",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone do",
+      "quality_score": 0.7388999999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-01T09:31:25",
+      "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "08b12f3b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Spine of the Supersingular 2-Isogeny Graph\n\nThe results in `SupersingularSpinePath.lean` pin down the distance, eccentricity, diameter\nand mean-diameter functions of the path",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-24T03:52:16",
-      "title": "ArXiv paper: The Spine: A Supersingular Highway"
-    },
     {
       "cycle_id": "0e007163",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-08-01T09:30:07",
       "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
+    },
+    {
+      "cycle_id": "cb10fc42",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone do",
+      "quality_score": 0.7388999999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-01T09:31:25",
+      "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0f63237d",
-      "domain": "Tropical",
-      "name": "identifies",
-      "quality": 0.7743899999999999
-    },
-    {
-      "cycle_id": "0f63237d",
-      "domain": "Tropical",
-      "name": "functionPresheaf_isSheaf",
-      "quality": 0.7743899999999999
-    },
-    {
-      "cycle_id": "78bbd545",
-      "domain": "Tropical",
-      "name": "of",
-      "quality": 0.7874099999999999
-    },
     {
       "cycle_id": "78bbd545",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "inducedCopyFamily_uniform",
       "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "cb10fc42",
+      "domain": "Logic",
+      "name": "stronglyComplete_complete",
+      "quality": 0.7388999999999999
+    },
+    {
+      "cycle_id": "cb10fc42",
+      "domain": "Logic",
+      "name": "stronglyComplete_diff_finite",
+      "quality": 0.7388999999999999
+    },
+    {
+      "cycle_id": "cb10fc42",
+      "domain": "Logic",
+      "name": "stronglyComplete_of_union_finite",
+      "quality": 0.7388999999999999
     }
   ],
-  "last_updated": "2026-08-01T09:30:07",
+  "last_updated": "2026-08-01T09:31:25",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "4ffa8161",
-        "quality": 0.6,
-        "theorems": 0,
-        "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
-      },
-      {
         "cycle_id": "5a7b49b0",
         "quality": 0.58,
         "theorems": 13,
@@ -3513,6 +3507,12 @@
         "quality": 0.74478,
         "theorems": 9,
         "title": "The exact proposed fixed-point equation was formalized in"
+      },
+      {
+        "cycle_id": "cb10fc42",
+        "quality": 0.7388999999999999,
+        "theorems": 10,
+        "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
       }
     ],
     "MachineLearning": [

@@ -281,7 +281,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "647e3d96",
     "description": "Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
     "domain_bridges": [],
     "domains": [
@@ -293,7 +293,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:57.346612+00:00",
     "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
   },
@@ -357,7 +357,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "20d659ed",
+    "consumed_by_exp_id": "",
     "description": "Formalizes conditions where two spatially separated identical agents undergo instant state-space synchronization upon observing identical environmental stimuli.",
     "domain_bridges": [],
     "domains": [
@@ -369,7 +369,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:07:57.541980+00:00",
     "title": "Doppelgänger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
   },
@@ -2134,7 +2134,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "66e718fe",
     "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
     "domain_bridges": [],
     "domains": [
@@ -2148,7 +2148,7 @@
     "proof_strategy": "Construct a Gentzen-style sequent calculus where the Cut rule is replaced by a consequence verification rule: if Gamma proves A and A has desirable consequences verified by a computational check, then A is accepted. Prove cut-elimination fails in general but holds for consequence-stable formulas. Test: show that Fermat's Last Theorem for n=4 is consequence-stable, enabling a retrocausal proof.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
@@ -3534,6 +3534,25 @@
     "status": "available",
     "timestamp": "2026-07-28T06:49:40.513188+00:00",
     "title": "Deepening: Lattice Cryptography: LWE Hardness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle ed94092b (Q=0.767), which proved 16 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_ed94092b_04a4eae4",
+    "lineage_refs": [],
+    "priority_score": 0.8667599999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ed94092b",
+    "status": "available",
+    "timestamp": "2026-08-01T09:30:07.467372+00:00",
+    "title": "Deepening: The general reconstruction conjecture remains open. The formal results in `Catal"
   },
   {
     "ambition_level": "extension",
@@ -7936,26 +7955,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cb10fc42",
-    "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erdős' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|aθ\\|=\\infty, \\quad\\forallθ\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erdős. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Logic"
-    ],
-    "id": "fd_0132",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-    "research_mode": "team",
-    "source_exp_id": "2607.14071v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:35:00.343163+00:00",
-    "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Edge-decomposition into Two Triangular Forests is NP-complete' and formalize its key results. Abstract: Let $\\mathcal F$ be a graph class that is closed under topological minors and 1-sums, has decidable membership, contains a triangle, and is not the class of all graphs. Recently, Lee, Liu, and Tsai [ICALP 2026] showed that the edge-decomposition problem into $k \\geq 3$ elements of $\\mathcal F$ is NP-hard. In particular, their general hardness reduction covers a long-standing problem on outerthickness (when $\\mathcal F$ is the class of outerplanar graphs). On the other hand, it is well known that decomposing a graph into forests is polynomial-time solvable, as implied by work of Edmonds [J. Res. Natl. Bur. Stand. B. 1965]. In this paper, we take a first step toward determining the complexity of edge-decomposition problems into just two graphs (the case $k=2$). We consider the simplest possible graph class $\\mathcal F$ satisfying the criteria above: the triangular forests, that is, graphs in which every 2-connected component is a triangle. We prove that determining whether a graph can be",
     "domain_bridges": [],
@@ -10238,7 +10237,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9cde2d61",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domain_bridges": [],
     "domains": [
@@ -10252,7 +10251,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
@@ -14455,25 +14454,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ed94092b",
-    "description": "# Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the same vertex deck and `G` is regular, then `G ≃g H`.\n2. **Tree reconstruction.** If finite simple graphs `G` and `H` have the same vertex deck, at least three vertices, and `G` is a tree, then `G ≃g H`.\n3. **Degree-multiset reconstruction.** For finite simple graphs on at least three vertices with the same deck, the multisets of vertex degrees are equal.\n4. **Induced-pattern count reconstruction.** If a finite pattern `F` has fewer vertices than deck-equivalent finite graphs `G` and `H`, then `inducedCopyFamily G F` and `inducedCopyFamily H F` have equal cardinality.\n5. **Complement compatibility.** Finite graphs `G` and `H` have the same deck if and only if their complements have the same deck; consequently, any formally reconstructed graph class closed under complement yields a second reconstructed class.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "fd_0868",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ff2a2247",
-    "status": "in_progress",
-    "timestamp": "2026-07-31T22:26:08.353865+00:00",
-    "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, and\n- `g ≤ (C_k rank(D)+1)^2`.\n\nOnce this square-root rank certificate is available, the Lean theorem\n`squareRootRankCertificate_implies_scaledExistence` supplies the requested\ndivisor for every half-canonical Brill–Noether-admissible rank simultaneously.\n\nNatural next steps are:\n\n1. Formalize finite connected simple regular graphs and prove\n   `2(g-1)=n(k-2)` from the handshaking lemma.\n2. Connect a graph's Laplacian energy pairing and covering radius to an\n   explicit chip-firing divisor rank lower bound.\n3. Derive the needed covering-radius estimate from a Cheeger or spectral-gap\n   hypothesis.\n4. Import a random-regular-graph expansion theorem and lift the pointwise\n   connector through the corresponding probability measure.\n5. Optimize the resulting constant `C_k`; the present connector intentionally\n   separates this analytic optimization from the Brill–Noether arithmetic.\n",
     "domain_bridges": [],
@@ -14570,6 +14550,45 @@
     "status": "available",
     "timestamp": "2026-08-01T06:48:07.282396+00:00",
     "title": "The formal development shows that the proposed endpoint-independent formula is f"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` reduces complement-closed reconstruction questions to either member of each complementary pair. Concrete next conjectures are:\n\n1. **Degree-multiset reconstruction.** If finite simple graphs `G` and `H` have at least three vertices and `SameDeck G H`, then the multisets of values `G.degree v` and `H.degree w` are equal (under the deck's vertex equivalence).\n\n2. **Induced-pattern count reconstruction.** For finite `F`, `G`, and `H`, if `Fintype.card F < Fintype.card G` and `SameDeck G H`, then `(inducedCopyFamily G F).card = (inducedCopyFamily H F).card`.\n\n3. **Regular-graph reconstruction.** If finite `G` and `H` have at least three vertices, `SameDeck G H`, and `G` is regular, then `Nonempty (G ≃g H)`.\n\n4. **Tree/connected-complement pair.** If finite `G` and `H` have at least three vertices, `SameDeck G H`, and either `G` or `Gᶜ` is a tree, then `Nonempty (G ≃g H)`.\n\n5. **Complement transfer for reconstructible predicates.** If a graph predicate is reconstructible from `SameDeck`, then the predicate obtained by applying it to graph complements is also reconstructible. This should be formalized as a general theorem and instantiated for every reconstructed class in the catalog.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_0875",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ed94092b",
+    "status": "available",
+    "timestamp": "2026-08-01T09:30:03.527041+00:00",
+    "title": "The complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` r"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone does not guarantee robustness under finite deletion.\n\n## 1. Ordered-block criterion from the paper\n\nFormalize the paper's more general criterion before specializing to dyadic blocks. A useful interface should include:\n\n- a sequence of finite, pairwise ordered blocks of natural numbers;\n- lower bounds on each block's cardinality;\n- hypotheses controlling gaps or overlap of attainable subset-sum intervals;\n- a conclusion phrased as `StronglyComplete`.\n\nThis is likely the most reusable route to the headline theorem.\n\n## 2. Dyadic specialization\n\nDefine\n\n`dyadicBlock A k = A ∩ Set.Ioc (2^k) (2^(k+1))`\n\nand formalize the eventual six-elements-per-block condition. Once the ordered-block theorem is available, prove the dyadic result by checking its structural hypotheses.\n\n## 3. Analytic divergence hypothesis\n\nIntroduce distance to the nearest integer using the existing circle/quotient or `Int.fract` infrastructure, and formalize the condition\n\n`∀ θ : ℝ, θ ∉ Set.range ((↑) : ℤ → ℝ) → ∑' a, ... = ∞`\n\nwith a nonnegative extended-real sum (`ℝ≥0∞`) if that gives the cleanest notion of divergence. Care is needed because the paper writes a sum indexed by a set rather than a sequence.\n\n## 4. Monotonicity and tails\n\nUseful intermediate results include:\n\n- every superset of a complete set is complete;\n- every superset of a strongly complete set is strongly complete;\n- finite changes preserve strong completeness (already proved here);\n- a set is strongly complete iff every finite initial segment can be deleted while retaining completeness.\n\nThe final equivalence turns arbitrary finite deletions into canonical initial-segment deletions and may simplify the paper's argument.\n\n## 5. Further contrarian tests\n\nInvestigate and either prove or refute:\n\n1. If `A` is complete and contains infinitely many odd elements, then `A` is strongly complete.\n2. If every residue class modulo every `m ≥ 2` contains infinitely many elements of `A`, then completeness implies strong completeness.\n3. Six elements in each sufficiently large dyadic block can be reduced to five if the analytic divergence hypothesis is strengthened quantitatively.\n\nThe first conjecture is especially suspect: parity is only one possible finite-deletion obstruction, and analogous obstructions modulo larger integers should be searched for.\n\n## 6. Exact correspondence with the source\n\nA later phase should pin the paper's bibliographic version and translate its named propositions in proof order, recording exactly which assumptions are used in each result. This file deliberately focuses on foundational consequences and a contrarian counterexample rather than claiming a complete formalization of the analytic headline theorem.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Bridges"
+    ],
+    "id": "fd_0876",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cb10fc42",
+    "status": "available",
+    "timestamp": "2026-08-01T09:31:22.032828+00:00",
+    "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
   },
   {
     "ambition_level": "extension",
