@@ -1,73 +1,173 @@
-# When Topology Guards a Neural Network: Certified Robustness Through the Shape of Decision Regions
+# When Topology Cannot Guarantee a Robust Neural Network
 
-## A small nudge, a big lie
+## A clean counterexample—and the analytic ingredient that actually produces a certificate
 
-Show a modern image classifier a photo of a panda and it will tell you, confidently, that it sees a panda. Now change a handful of pixels by an amount so small that no human eye could ever notice — and the very same network may announce, with even greater confidence, that it is looking at a gibbon. These tiny, maliciously chosen nudges are called *adversarial perturbations*, and they are one of the most unsettling discoveries in modern machine learning. A system that is right almost all of the time can be made reliably, surgically wrong by an attacker who is allowed to move each input feature by a whisper.
+A photograph classifier can be right and still be fragile. Change every pixel by an amount too small for a person to notice, and the label may flip from “panda” to “gibbon.” This phenomenon has inspired a search for *certificates*: mathematical guarantees that no allowed perturbation inside a specified neighborhood can alter a model’s decision.
 
-The dream of *certified robustness* is to replace confidence with proof. Instead of saying "I am pretty sure this is a panda," a certified classifier says: "I guarantee that no perturbation smaller than a radius $R$ — measured by how much any single pixel is allowed to change — can alter my answer." That guarantee is a mathematical certificate, not a hope. The question this article is about is deceptively simple to state and surprisingly deep to answer: **how do you stitch together many small local guarantees into one big global one?**
+One tempting route comes from topology. Modern neural networks are assembled from local pieces: parameter charts, activation regions, overlapping descriptions, and local computations that must agree where those descriptions meet. Sheaf theory was invented to organize exactly this kind of local-to-global information. Its first cohomology group, written $H^1$, measures a familiar kind of obstruction: local data may look compatible in pairs yet fail to arise from one coherent global object. If $H^1$ vanishes, that obstruction disappears.
 
-The answer turns out to live in an unexpected place — the same branch of mathematics that tells you whether a vector field has a potential, whether a loop integral depends on the path, and whether a surface has a hole. The shape of a network's decision regions, captured by a tool called *cohomology*, decides whether local promises can be glued into a global promise. When a certain invariant — the *first cohomology* of the region map — vanishes, all the local certificates fit together perfectly. When it does not, there is an irreducible obstruction: a loop of regions whose guarantees can never be reconciled, no matter how clever you are. That obstruction is, quite literally, the signature of an adversarial weakness.
+Could the disappearance of such a global obstruction force adversarial robustness?
 
-## The simplest classifier, and its exact safe radius
+The answer is no—not by itself. A tiny example exposes the missing ingredient. The failure is instructive rather than destructive: it tells us precisely what topology can organize, what it cannot quantify, and how a score margin plus a Lipschitz bound restores a rigorous robustness guarantee.
 
-Strip a classifier down to its essence. The input is a list of $d$ numbers, $x = (x_1, \dots, x_d)$ — think pixel intensities. A *linear score* combines them with a weight vector $w = (w_1, \dots, w_d)$:
-$$ s_w(x) = \sum_{i=1}^{d} w_i\, x_i. $$
-The prediction is just the sign of this number: positive means "class A," negative means "class B." The *margin* at a point $x_0$ is how far the score sits from the fence, namely $|s_w(x_0)|$. A large margin feels safe; a small one feels precarious.
+## What a robustness certificate says
 
-Now we must say what "small perturbation" means. We use the most stringent everyday notion: an attacker may change *every* coordinate, but no single coordinate by more than $r$. This is the $L^\infty$ (max-coordinate) ball of radius $r$. How much can such an attack move the score? Here a beautiful and exact duality appears. The worst the attacker can do is bounded by
-$$ |s_w(x) - s_w(y)| \le \|w\|_1 \cdot r \qquad \text{whenever } |x_i - y_i| \le r \text{ for every } i, $$
-where $\|w\|_1 = \sum_i |w_i|$ is the sum of the absolute values of the weights. This is no accident: the natural partner ("dual norm") of the max-norm is exactly the sum-norm. The proof is a one-line chain of inequalities — the size of a weighted sum of small wiggles is at most the sum of the weight sizes times the largest wiggle — but its consequence is sharp and quantitative.
+Let a classifier be determined by a real-valued score $f(x)$. It assigns the positive class when $f(x)>0$ and the negative class when $f(x)\le 0$. For finite-dimensional inputs, the natural adversarial distance considered here is the maximum coordinate change,
 
-From this single Lipschitz bound the certificate falls out immediately. If the margin beats the worst-case score swing,
-$$ \|w\|_1 \cdot r < |s_w(x_0)|, $$
-then *no* perturbation within radius $r$ can push the score across zero, so the predicted label is provably unchanged. Rearranging gives the exact **certified radius** of a linear score:
-$$ R = \frac{|s_w(x_0)|}{\|w\|_1} = \frac{\text{margin}}{\text{weight }L^1\text{ norm}}. $$
-This is clean, computable, and tight. It is the atom of our whole story. We will call it a *stalk certificate*: a guarantee that lives over one small patch of input space.
+$$
+\|x-y\|_\infty=\max_i |x_i-y_i|.
+$$
 
-## The trouble with patches
+The classifier is *certified at $x$ with strict radius $r$* if every $y$ satisfying
 
-Real classifiers are not single linear scores. A network built from rectified-linear units carves its input space into many *activation regions*, and inside each region the network behaves exactly like one linear score. So a global robustness guarantee is really a quilt: one stalk certificate per region, each promising stability on its own patch. The patches overlap, the way the panels of a map overlap, and an input near a boundary is covered by more than one patch at once.
+$$
+\|x-y\|_\infty<r
+$$
 
-Here is the catch that makes naive certification fail. On the overlaps, two neighboring regions must *agree*. Each region carries its own local reference and its own local notion of "how far we are from the fence." Where two patches meet, the difference between their two stories is an *overlap discrepancy*. To build a single global certificate, you must find one consistent global account — a single function over the whole space — whose local differences reproduce all the prescribed overlap discrepancies at once. In the language of geometry, you must find a *potential* whose changes match a given pattern.
+has the same decision as $x$. Strictness matters: the open ball excludes points exactly at distance $r$, avoiding irrelevant boundary conventions.
 
-Sometimes you can. Sometimes you provably cannot. Which case you are in is not decided by the individual patches at all — it is decided by *how the patches are arranged*, by the combinatorial shape of their overlap pattern. That shape is called the *nerve* of the cover, and the obstruction to gluing is measured by its **first cohomology**.
+There is a useful local object hidden in this definition. Define the *vulnerability stalk* at $(x,r)$ to be the set
 
-## Trees always glue; loops sometimes can't
+$$
+\mathcal V_f(x,r)=\{y:\|x-y\|_\infty<r\ \text{and the decisions at $x$ and $y$ differ}\}.
+$$
 
-Picture the regions laid out along a path, like beads on a string: region $0$ overlaps region $1$, which overlaps region $2$, and so on, with no overlap looping back. This is a *tree-shaped* cover. Suppose someone hands you any pattern of overlap discrepancies — one number $g_i$ for each consecutive overlap. Can you always find a global potential $f$, one value per region, whose successive differences $f_{i+1} - f_i$ reproduce the prescribed $g_i$?
+Despite the geometric name, this is simply the collection of all adversarial examples inside the chosen ball. It yields an exact criterion.
 
-Yes — always. Simply walk along the path accumulating the discrepancies: set $f_0 = 0$ and $f_{i+1} = f_i + g_i$. By construction the differences come out exactly right. Every discrepancy pattern is reconcilable; there is no obstruction whatsoever. In cohomological terms,
-$$ H^1(\text{path nerve}) = 0. $$
-This is the *vanishing first cohomology* that gives our story its punchline: **on a tree-shaped cover, local certificates always glue into a global one.** Nothing can go wrong in the stitching.
+**Vulnerability–certification equivalence.** The classifier is certified at $x$ with radius $r$ if and only if $\mathcal V_f(x,r)$ is empty.
 
-Now bend the string into a circle: region $n$ overlaps region $0$ again, closing a loop. The accumulate-as-you-walk trick still defines $f$ along the way, but when you return to your starting region you must arrive back where you began. Walking once around the loop, the total change of any potential is
-$$ \sum_{i} \big(f_{i+1} - f_i\big) = 0 $$
-— it telescopes to zero, because you end where you started. So a discrepancy pattern can be a coboundary *only if its total around the loop is zero*. That total is the **holonomy** of the loop.
+The reason is immediate but fundamental. If the set contains a point, that point violates certification. Conversely, if certification fails, the point witnessing failure belongs to the set. This equivalence converts robustness from a universal statement—“every nearby point preserves the label”—into the absence of a concrete local obstruction.
 
-Consider the simplest nontrivial pattern: a discrepancy of exactly $1$ on every overlap. Its holonomy is
-$$ \underbrace{1 + 1 + \cdots + 1}_{n+1 \text{ regions}} = n + 1 \neq 0. $$
-No global potential can reproduce it, because every potential's loop-sum is zero while this pattern's loop-sum is $n+1$. This unit pattern is therefore an *ineliminable obstruction*: a nonzero class in
-$$ H^1(\text{loop nerve}) \neq 0. $$
-**On a loop-shaped cover, some local certificates can never be glued.** The leftover, the holonomy, is a single scalar that measures exactly how badly the global story fails to close up.
+## The smallest possible sheaf calculation
 
-## The two faces of robustness
+Now consider two overlapping parameter charts. Forget every geometric complication and retain only the overlap pattern: two vertices joined by one edge. Put a copy of the real numbers on each chart and on their overlap. A degree-zero section is a pair $(a,b)$, one value on each chart. Its discrepancy on the oriented overlap is
 
-Putting the pieces together yields the central theorem of this work, which we can state plainly.
+$$
+\delta(a,b)=b-a.
+$$
 
-> **Global Certification Theorem.** Suppose a classifier's input space is covered by activation regions arranged in a tree, region $i$ governed by a linear score $s_{w_i}$ with reference point $x_0^{(i)}$. Fix a single radius $R \ge 0$. If *every* region clears the margin test $\|w_i\|_1 \cdot R < |s_{w_i}(x_0^{(i)})|$, then two things hold at once:
-> 1. **(Stalks.)** Every region's prediction is provably invariant under all $L^\infty$ perturbations of radius up to $R$.
-> 2. **(Gluing.)** Every prescribed overlap discrepancy admits a global potential — the first cohomology vanishes — so the local certificates fuse into one global certificate of radius $R$.
+Degree-one cohomology vanishes here exactly when every possible overlap value $c$ can be expressed as such a discrepancy. But this is always possible: choose $(a,b)=(0,c)$. Then
 
-And the shadow side:
+$$
+\delta(0,c)=c.
+$$
 
-> **Cyclic Obstruction Theorem.** On a loop-shaped cover of $n+1$ regions, the unit discrepancy pattern has holonomy $n+1 \neq 0$ and is therefore *not* the coboundary of any global potential. This nonzero first-cohomology class is the cohomological signature of an adversarial cycle: a ring of regions whose local guarantees cannot be reconciled globally, regardless of how strong each one is on its own.
+Thus the coboundary map is surjective and $H^1=0$. There is no degree-one gluing obstruction in this two-chart constant sheaf.
 
-The two theorems together reveal that certified robustness *factors into two independent ingredients*:
-$$ \text{global certificate} \;=\; \underbrace{\text{stalk margin}}_{\text{local, per-region}} \;\times\; \underbrace{\text{nerve acyclicity}}_{\text{global, topological}}. $$
-The margin — margin over weight norm — is a purely *local* quantity, blind to how the regions are arranged. The holonomy is a purely *global* quantity, blind to any single region's margin. Neither controls the other. A model can have generous margins everywhere and still be globally fragile because its regions close a vicious loop; conversely, a perfectly acyclic cover offers no protection if some single region's margin is razor-thin. **You are globally robust precisely when both vanish at the scale you care about.** It is also worth being honest about the logical direction that survives: vanishing cohomology *guarantees* gluing, but vulnerability does not force nonzero cohomology — a tree cover can still harbor a fragile point if its margin is too small. Cohomology governs the stitching, never the stalk.
+This calculation is not numerical evidence or a pattern seen in samples. It works uniformly for every real $c$. It gives an exact, complete proof of vanishing.
 
-## Why this matters now
+At first glance, that sounds promising. The local chart data glue perfectly. Yet nothing in the calculation mentions an input point, a class score, a distance to a decision boundary, or the sensitivity of the classifier. The gap becomes decisive in one dimension.
 
-This is not merely an elegant analogy. Today's strongest certified-defense pipelines already do half of the picture: they break a network into its linear regions and certify each one separately. What they have lacked is a principled law for *combining* those per-region certificates — and that is exactly what a single cohomology class provides. The framework suggests concrete engineering levers. If the regions of your network form vicious cycles, you can deliberately *refine the cover to remove them* — a spanning-tree sparsification of the region-adjacency graph is cheap to compute and, by the Global Certification Theorem, converts a quilt of local guarantees into one honest global guarantee equal to the worst local radius. And it explains a stubborn empirical puzzle: margin-maximizing training, which enlarges stalks, repeatedly leaves models vulnerable. The theory predicts where the residual weakness must hide — not in the margins, but in the topology of the cover.
+## A boundary that defeats every positive radius
 
-The deepest lesson is a change of vantage point. We are used to thinking of an adversarial example as a *point* — a single doctored image. The cohomological view says the real enemy is sometimes not a point at all but a *loop*: a closed chain of regions around which guarantees refuse to close, with all of the inconsistency squeezed into one stubborn number. To defend a network, then, is partly an act of geometry — reshaping the landscape of its decisions so that every path home brings you back to where you started.
+Take the score
+
+$$
+f(t)=t
+$$
+
+on the real line, with the positive class assigned when $t>0$ and the negative class assigned when $t\le 0$. Examine the input $t=0$. Its score is zero, so it receives the negative label.
+
+Suppose someone proposes any positive certified radius $r>0$. Choose the point
+
+$$
+y=\frac r2.
+$$
+
+Its distance from zero is $|y|=r/2<r$, so it lies strictly inside the proposed ball. But $f(y)=r/2>0$, hence its label is positive. The decision flips.
+
+Because this construction works for *every* $r>0$, the threshold classifier has no positive certified radius at the boundary point. Its vulnerability stalk $\mathcal V_f(0,r)$ is nonempty for every positive radius; indeed, $r/2$ is an explicit member.
+
+Put the two facts side by side:
+
+1. the constant sheaf on the two-chart overlap has vanishing $H^1$;
+2. the threshold classifier at zero has no positive robustness radius.
+
+This pair is a counterexample to any universal claim that vanishing first cohomology of the bare weight-chart sheaf alone guarantees a positive adversarial radius for every score. The topology and the classifier can simply be independent. Perfect gluing in parameter space does not create separation from a decision boundary in input space.
+
+## Qualitative structure versus quantitative safety
+
+The counterexample highlights a difference that appears across applied mathematics. Ordinary cohomology is qualitative. It can say that an obstruction exists or vanishes. A robustness radius is quantitative: it has units, a magnitude, and a dependence on both the score at the chosen input and the rate at which the score can change.
+
+Imagine a map with perfectly consistent street names but no scale bar. Consistency helps one navigate, yet it cannot tell whether the nearest cliff is one meter or one kilometer away. In the same way, a vanishing gluing obstruction may organize local descriptions without determining any numerical distance to a class boundary.
+
+Two analytic numbers supply the missing scale:
+
+- a positive *margin* $m$, giving a lower bound $m\le f(x)$ on the score at the point of interest;
+- a nonnegative local *Lipschitz constant* $L$, controlling score variation by distance.
+
+These quantities connect the geometry of the input ball to the classifier’s output.
+
+## The corrected robustness theorem
+
+Assume $f(x)\ge m>0$. Suppose that throughout the open $L^\infty$ ball of radius $r$ around $x$,
+
+$$
+|f(y)-f(x)|\le L\|x-y\|_\infty,
+$$
+
+where $L\ge 0$. If the strict budget inequality
+
+$$
+Lr<m
+$$
+
+holds, then the classifier is certified at $x$ with radius $r$.
+
+Here is the entire mechanism. For any $y$ in the ball,
+
+$$
+L\|x-y\|_\infty<Lr<m.
+$$
+
+The Lipschitz estimate gives
+
+$$
+f(y)\ge f(x)-L\|x-y\|_\infty>m-m=0.
+$$
+
+Thus both $f(x)$ and $f(y)$ are positive, so their decisions agree. Since $y$ was arbitrary, every point in the ball preserves the label.
+
+This theorem does not need cohomology. Its role is different: it identifies the numerical bridge any topological theory of certification must eventually carry. If topology is to produce a radius, it must organize data that contain margins, Lipschitz constants, or comparable quantitative controls—not merely constant values on weight charts.
+
+When $L>0$, the familiar ratio $m/L$ appears as a limiting radius: every strict radius $r<m/L$ is certified under the local estimate. If $L=0$, the score is locally constant under the stated bound, and any radius on which that bound holds satisfies the budget because $0<m$.
+
+## A concrete numerical picture
+
+Consider the affine score
+
+$$
+f(x_1,x_2)=1.2+0.4x_1-0.7x_2
+$$
+
+at the origin. Its margin is $m=1.2$. For the $L^\infty$ input norm, the exact Lipschitz constant of this linear part is the $L^1$ norm of its coefficients:
+
+$$
+L=|0.4|+|-0.7|=1.1.
+$$
+
+Hence any radius satisfying $1.1r<1.2$ is certified. For example, $r=1$ works. Every perturbation with $\max(|x_1|,|x_2|)<1$ changes the score by less than $1.1$, leaving it strictly positive.
+
+By contrast, for $f(t)=t$ at zero the margin is $m=0$. No inequality $Lr<m$ can hold with $r>0$ and $L\ge0$. The analytic theorem diagnoses exactly what the counterexample displays: at the boundary, there is no positive reserve to absorb perturbations.
+
+## What topology might still contribute
+
+The lesson is not that sheaf theory is irrelevant. Rather, the sheaf must be tied to the classifier and enriched with quantities that can survive gluing.
+
+A promising construction would place local margins and local sensitivity bounds on activation regions of a piecewise-linear network. Restriction maps would record how those bounds behave on shared faces. Cohomology could then detect whether local certificates fail to assemble, while operator norms or contracting estimates could preserve the constants needed for a global radius.
+
+Another direction begins with the vulnerability sets $\mathcal V_f(x,r)$. As $r$ grows, these sets form a nested family over input balls. Their support identifies where adversarial examples first appear. Near a decision boundary, local cohomological tools might describe how vulnerable regions connect or bifurcate. For multiclass networks, the scalar score is replaced by the gap between the winning logit and each competitor, and every gap must remain positive.
+
+There is also a crucial parameter-to-input question. Weight-space topology concerns how model descriptions vary with parameters; adversarial robustness concerns how decisions vary with inputs. Any theorem connecting them must explicitly bridge those domains. Without that bridge, even flawless topology on weight charts says nothing about the distance from a particular input to a decision boundary.
+
+## The sharper principle
+
+The central result is therefore a boundary marker for future theories:
+
+**Vanishing first cohomology of a bare weight-space cover does not imply a positive $L^\infty$ robustness radius.** A two-chart constant sheaf already has $H^1=0$, while the threshold score at its decision boundary fails certification at every positive radius.
+
+The constructive replacement is equally clear:
+
+**Positive margin plus controlled local sensitivity yields certification.** If $f(x)\ge m>0$, the score is locally $L$-Lipschitz in $L^\infty$, and $Lr<m$, then the radius $r$ is certified.
+
+Topology can reveal whether local information fits together. Robustness demands more: the information must carry a scale. The most fruitful future theory will not ask topology to manufacture that scale from nothing. It will use topology to transport, reconcile, and expose obstructions among quantitative local certificates already anchored to the classifier’s margins and sensitivities.

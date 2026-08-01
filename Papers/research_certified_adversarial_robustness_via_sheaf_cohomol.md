@@ -1,132 +1,379 @@
-# Certified Adversarial Robustness via Sheaf Cohomology
+# Cohomological Gluing Does Not Alone Certify Adversarial Robustness
+
+## A finite cellular counterexample and a quantitative margin–Lipschitz replacement
+
+**Author:** Aristotle  
+**Date:** 2026-08-01
 
 ## Abstract
 
-We develop a topological account of certified adversarial robustness for classifiers that are piecewise linear over their input space. Two ingredients are isolated and shown to be independent. The first is a *local* (stalk) certificate: for a linear score $s_w(x) = \sum_i w_i x_i$ measured against $L^\infty$ perturbations, the exact Lipschitz constant is the weight $L^1$ norm $\|w\|_1$, and a point $x_0$ whose margin satisfies $\|w\|_1 \cdot r < |s_w(x_0)|$ has its predicted sign invariant on the entire $L^\infty$ ball of radius $r$; the tight certified radius is $|s_w(x_0)|/\|w\|_1$. The second is a *global* gluing law governed by the first Čech cohomology of the nerve of the region cover. On a tree-shaped (path) nerve the first cohomology vanishes — every prescribed overlap discrepancy is the coboundary of a global potential — so local certificates always assemble into one global certificate. On a loop-shaped (cyclic) nerve the first cohomology is nontrivial: the unit discrepancy cochain has loop holonomy $n+1 \ne 0$ and is not a coboundary, an ineliminable obstruction we identify as the cohomological signature of an adversarial cycle. Our main theorem combines the two: on a tree cover with a uniform per-region margin, every region is $L^\infty$-stable within a common radius $R$ and every overlap discrepancy glues. We conclude that certification factors as *stalk margin* $\times$ *nerve acyclicity*, and that these two failure modes are logically independent.
+We examine the proposed principle that vanishing first sheaf cohomology on a cover of neural-network weight space should imply a positive certified adversarial radius. In its unrestricted form, the principle is false. We give an explicit finite cellular counterexample. For the constant real sheaf on two charts joined by one overlap, the degree-zero coboundary is $\delta(a,b)=b-a$ and is surjective, so first cohomology vanishes. Independently, the one-dimensional threshold score $f(t)=t$ at $t=0$ has no positive strict $L^\infty$ robustness radius: for every $r>0$, the point $r/2$ lies inside the radius-$r$ ball and has the opposite decision. Thus qualitative gluing on a bare weight-space cover cannot by itself determine a quantitative input-space margin.
+
+We then formulate two constructive replacements. First, the vulnerability stalk at an input and radius is the set of label-changing perturbations in the corresponding strict $L^\infty$ ball; its emptiness is equivalent to certification. Second, if a score has positive margin $m$, obeys a local $L$-Lipschitz estimate, and satisfies the strict budget $Lr<m$, then $r$ is a certified radius. We give proofs, algorithms for affine scores and sampled diagnostics, numerical examples, and a research program for classifier-dependent, quantitative sheaves. The results isolate the missing parameter-to-input and qualitative-to-quantitative bridges required by any cohomological robustness theory.
 
 ## 1. Introduction
 
-A binary classifier is *certifiably robust* at an input $x_0$ with radius $R$ if its output label is provably constant on the ball of radius $R$ about $x_0$. For high-stakes deployments, such certificates are far more valuable than empirical accuracy against known attacks, because they rule out *all* perturbations within the radius, including attacks not yet invented.
+Adversarial robustness asks whether a classifier’s prediction remains unchanged under a prescribed family of small input perturbations. For a norm-based threat model, a local certificate at an input $x$ supplies a radius $r$ such that every point in the open ball of radius $r$ receives the same label as $x$. Such certificates are quantitative: they depend on the classifier, the selected input, the metric, and numerical separation from the decision boundary.
 
-For a single linear score the certified radius is classical and exact. The difficulty is *globalization*. A piecewise-linear network (for instance, one built from rectified-linear units) partitions its input domain into activation regions; inside each region the network is exactly affine, hence governed by a local linear score and a local certificate. The regions overlap, and an honest global certificate requires the local certificates to be *mutually consistent on overlaps* and to *assemble into a single global section*. This is precisely the situation that sheaf theory and Čech cohomology were built to analyze: local data, restriction to overlaps, and the obstruction to gluing.
+Sheaf theory suggests a different but potentially complementary language. A sheaf records local data and the consistency conditions required to combine those data globally. First cohomology detects an obstruction to gluing local descriptions. Neural networks naturally admit local decompositions—parameter charts, activation regions, and overlapping affine pieces—so it is reasonable to ask whether vanishing cohomology can entail robustness.
 
-This paper makes the analogy exact and provable in the simplest faithful setting. We prove (i) the tight $L^\infty$ stalk certificate, (ii) vanishing of first cohomology on tree-shaped nerves with an explicit gluing primitive, and (iii) nonvanishing of first cohomology on loop-shaped nerves via an explicit non-coboundary. We then combine (i) and (ii) into a single global certification theorem and contrast it with the cyclic obstruction. The conceptual payoff is a clean factorization of robustness into an independent local axis (margin) and global axis (cover topology).
+There is, however, a type mismatch between the premise and the desired conclusion. Ordinary cohomological vanishing is qualitative, whereas a certified radius is quantitative. Moreover, cohomology on weight space concerns parameter organization, while an adversarial radius concerns input-space decisions. Unless the sheaf and its restriction maps encode the classifier’s margins, sensitivities, and parameter-to-input behavior, no logical mechanism links these two domains.
 
-## 2. Setup and definitions
+This paper resolves the unrestricted claim with the smallest nontrivial cellular model. A graph with two vertices and one edge supports a constant real sheaf whose first cohomology vanishes. The vanishing is witnessed explicitly, not inferred statistically. Yet a threshold classifier remains maximally vulnerable at its boundary. This establishes that vanishing $H^1$ on a bare cover cannot imply robustness for arbitrary scores.
 
-Throughout, the input space is $\mathbb{R}^d$ with the $L^\infty$ metric $\|x\|_\infty = \max_{i} |x_i|$.
+The negative result leads directly to a corrected positive theorem. A positive score margin gives distance in output space from the decision threshold. A local Lipschitz estimate converts input displacement into a bound on score displacement. Their ratio supplies a scale. The strict inequality $Lr<m$ then certifies the entire open ball.
 
-**Definition 2.1 (Linear score and classifier).** Given a weight vector $w \in \mathbb{R}^d$, the *linear score* is
-$$ s_w(x) = \sum_{i=1}^d w_i x_i. $$
-The associated binary classifier outputs the sign of $s_w(x)$; we encode the label by the predicate $[\,s_w(x) > 0\,]$.
+The contributions are:
 
-**Definition 2.2 (Weight $L^1$ norm).** $\|w\|_1 = \sum_{i=1}^d |w_i|$.
+1. an exact formulation of strict-radius binary certification in $L^\infty$;
+2. a vulnerability stalk whose emptiness is exactly equivalent to certification;
+3. an explicit computation of vanishing first cohomology for a two-chart constant cellular sheaf;
+4. a universal counterexample showing that this vanishing does not force any positive robustness radius;
+5. a margin–Lipschitz certificate with a direct proof and computable affine specialization;
+6. a framework for future classifier-dependent and quantitative sheaf constructions.
 
-**Definition 2.3 (Margin).** The *margin* of $w$ at a reference point $x_0$ is $|s_w(x_0)|$, the distance of the score from the decision threshold $0$.
+## 2. Decision rules, metrics, and certification
 
-**Definition 2.4 ($L^\infty$ ball / coordinate ball).** For radius $r \ge 0$, the closed $L^\infty$ ball about $x_0$ is $\{x : |x_i - x_0{}_{,i}| \le r \text{ for all } i\}$.
+### 2.1 Binary scores
 
-**Definition 2.5 (Cover and nerve).** A finite open cover $\{U_0, \dots, U_n\}$ of the input domain has a *nerve*, the abstract simplicial complex whose $k$-simplices are the $(k{+}1)$-fold nonempty intersections of cover elements. We work with two combinatorial shapes:
-- the *path nerve*, with vertices $0, \dots, n$ and edges $\{i, i{+}1\}$ for $0 \le i < n$ (a tree);
-- the *loop nerve* (cyclic nerve), with the same vertices and edges plus the closing edge $\{n, 0\}$ (a single cycle).
+Let $X$ be an input space and let $f:X\to\mathbb R$ be a score. Define the binary decision map $D_f:X\to\{-,+\}$ by
 
-**Definition 2.6 (Cochains and coboundaries).** A *$0$-cochain* assigns a real number to each vertex (region); a *$1$-cochain* assigns a real number to each edge (overlap). On the path nerve the coboundary operator $\delta^0$ sends a $0$-cochain $f$ to the $1$-cochain
-$$ (\delta^0 f)_i = f_{i+1} - f_i \qquad (0 \le i < n). $$
-On the loop nerve the cyclic coboundary $\delta^{\mathrm{cyc}}$ adds the closing edge:
-$$ (\delta^{\mathrm{cyc}} f)_i = f_{i+1 \bmod (n+1)} - f_i \qquad (0 \le i \le n). $$
-A $1$-cochain $g$ is a *coboundary* if $g = \delta f$ for some $0$-cochain $f$; the *first cohomology* $H^1$ is the quotient of $1$-cochains by coboundaries. (In these one-dimensional nerves all $1$-cochains are cocycles, so $H^1$ measures exactly the failure to be a coboundary.)
+$$
+D_f(x)=
+\begin{cases}
++, & f(x)>0,\\
+-, & f(x)\le 0.
+\end{cases}
+$$
 
-**Definition 2.7 (Holonomy).** On the loop nerve, the *holonomy* of a $1$-cochain $g$ is its total around the cycle, $\sum_{i=0}^{n} g_i$.
+The convention at zero is important in the boundary counterexample, although assigning zero to the positive class would lead to an analogous construction using a negative perturbation.
 
-**Interpretation.** A $0$-cochain is a candidate *global potential* — one consistent scalar reconciliation per region. A $1$-cochain is a prescribed pattern of *overlap discrepancies* between neighboring local certificates. Gluing the local certificates is exactly the problem of realizing a given $1$-cochain as a coboundary $\delta f$.
+### 2.2 Strict-radius certificates
 
-## 3. The stalk certificate: exact $L^\infty$ robustness of a linear score
+Let $d:X\times X\to\mathbb R$ be a distance model. We say that $f$ is **certified at $x$ with strict radius $r$** if
 
-**Lemma 3.1 ($L^\infty$ Lipschitz bound, tight).** For all $x, y \in \mathbb{R}^d$ and $r \ge 0$, if $|x_i - y_i| \le r$ for every $i$, then
-$$ |s_w(x) - s_w(y)| \le \|w\|_1 \cdot r. $$
+$$
+\forall y\in X,\qquad d(x,y)<r\implies D_f(y)=D_f(x).
+$$
 
-*Proof.* By linearity $s_w(x) - s_w(y) = \sum_i w_i (x_i - y_i)$. The triangle inequality for finite sums gives $|s_w(x) - s_w(y)| \le \sum_i |w_i|\,|x_i - y_i|$. Bounding each $|x_i - y_i| \le r$ and factoring yields $\sum_i |w_i| \, r = \|w\|_1 r$. $\quad\blacksquare$
+No positivity condition on $r$ is built into this definition; a meaningful positive certificate additionally requires $r>0$. Separating these notions makes the universal counterexample precise: it denies the existence of any $r>0$ satisfying the certificate.
 
-The constant is the dual-norm pairing: the dual of $\|\cdot\|_\infty$ is $\|\cdot\|_1$, and equality is attained by the perturbation $\Delta x_i = r \cdot \operatorname{sign}(w_i)$, so $\|w\|_1$ is the *exact* Lipschitz constant, not merely an upper bound.
+For $X=\mathbb R^n$, the adversarial metric used throughout is
 
-**Theorem 3.2 (Sign stability / stalk certificate).** Fix $w$, a reference $x_0$, and $r \ge 0$ with the strict margin condition
-$$ \|w\|_1 \cdot r < |s_w(x_0)|. $$
-Then for every $x$ in the $L^\infty$ ball of radius $r$ about $x_0$, $s_w(x)$ has the same sign as $s_w(x_0)$; in particular the predicate $[\,s_w(x) > 0\,]$ is constant on the ball.
+$$
+d_\infty(x,y)=\|x-y\|_\infty=\max_{1\le i\le n}|x_i-y_i|.
+$$
 
-*Proof.* By Lemma 3.1, $|s_w(x) - s_w(x_0)| \le \|w\|_1 r < |s_w(x_0)|$. If $s_w(x_0) > 0$ then $s_w(x) > s_w(x_0) - |s_w(x_0)| = 0$; if $s_w(x_0) < 0$ then $s_w(x) < s_w(x_0) + |s_w(x_0)| = 0$. Either way the sign is preserved, equivalently $[\,s_w(x) > 0\,] = [\,s_w(x_0) > 0\,]$. $\quad\blacksquare$
+In one dimension this reduces to $d_\infty(x,y)=|x-y|$.
 
-**Corollary 3.3 (Certified radius and positivity).** If $|s_w(x_0)| > 0$ and $\|w\|_1 > 0$, the largest radius certified by Theorem 3.2 is
-$$ R = \frac{|s_w(x_0)|}{\|w\|_1} > 0, $$
-and this radius is strictly positive. Any $r < R$ satisfies the margin condition and is therefore certified.
+### 2.3 Vulnerability stalks
 
-*Proof.* The condition $\|w\|_1 r < |s_w(x_0)|$ is equivalent to $r < |s_w(x_0)|/\|w\|_1$ since $\|w\|_1 > 0$. Positivity of the quotient follows from positivity of numerator and denominator. $\quad\blacksquare$
+The word “stalk” emphasizes that adversarial behavior is localized at a chosen center and scale.
 
-We call $R = |s_w(x_0)|/\|w\|_1$ the *stalk radius* of the region. The certificate is intrinsically *local*: it guarantees a ball about one reference point, with no claim about how neighboring regions' balls interact.
+**Definition 2.1 (Vulnerability stalk).** For a score $f:\mathbb R^n\to\mathbb R$, a center $x\in\mathbb R^n$, and a radius $r\in\mathbb R$, define
 
-## 4. The gluing law: first cohomology of the nerve
+$$
+\mathcal V_f(x,r)=
+\left\{y\in\mathbb R^n:
+\|x-y\|_\infty<r\ \text{and}\ D_f(y)\ne D_f(x)
+\right\}.
+$$
 
-We now analyze when local certificates, presented as a $1$-cochain of overlap discrepancies, assemble into a global potential.
+This set records all adversarial examples strictly inside the selected ball. It gives an exact obstruction rather than a sufficient proxy.
 
-**Theorem 4.1 (Vanishing $H^1$ on the path nerve).** On the path nerve with vertices $0, \dots, n$ and edges $\{i, i{+}1\}$, the coboundary $\delta^0$ is surjective: for every $1$-cochain $g$ there exists a $0$-cochain $f$ with $\delta^0 f = g$. Hence $H^1(\text{path nerve}) = 0$.
+**Theorem 2.2 (Emptiness–certification equivalence).** The vulnerability stalk $\mathcal V_f(x,r)$ is empty if and only if $f$ is certified at $x$ with strict radius $r$.
 
-*Proof (constructive).* Define $f$ by partial sums: $f_0 = 0$ and, for $1 \le k \le n$, $f_k = \sum_{i=0}^{k-1} g_i$. Then for each edge $i$, $(\delta^0 f)_i = f_{i+1} - f_i = g_i$ by telescoping. Thus $\delta^0 f = g$. Since every $1$-cochain is a coboundary, the quotient defining $H^1$ is trivial. $\quad\blacksquare$
+**Proof sketch.** If $\mathcal V_f(x,r)$ contains $y$, then $y$ lies inside the ball and changes the decision, contradicting certification. Conversely, if certification fails, there exists a $y$ inside the ball with a different decision; this $y$ belongs to $\mathcal V_f(x,r)$. $\square$
 
-The map $g \mapsto f$ is an explicit *gluing primitive*: it reconciles any prescribed overlap discrepancy on a tree-shaped cover. The surjectivity is genuine, not vacuous — a global potential is produced for every input.
+This theorem can be viewed as a specification for any adversarial search procedure. Finding one member refutes certification. Failure to find a member by finite sampling does not establish emptiness, which is why analytic bounds remain necessary.
 
-**Theorem 4.2 (Nonvanishing $H^1$ on the loop nerve).** On the loop nerve of $n+1$ regions, a $1$-cochain $g$ is a coboundary $\delta^{\mathrm{cyc}} f$ only if its holonomy $\sum_{i=0}^{n} g_i$ vanishes. Consequently the unit cochain $g \equiv 1$, whose holonomy equals $n + 1 \neq 0$, is *not* a coboundary, and $H^1(\text{loop nerve}) \neq 0$.
+### 2.4 Monotonicity with respect to radius
 
-*Proof.* For any $0$-cochain $f$, summing the cyclic coboundary around the loop telescopes:
-$$ \sum_{i=0}^{n} (\delta^{\mathrm{cyc}} f)_i = \sum_{i=0}^{n} \big(f_{i+1 \bmod (n+1)} - f_i\big) = 0, $$
-because each value $f_j$ appears once with a $+$ sign and once with a $-$ sign. Hence any coboundary has zero holonomy. The constant cochain $1$ has holonomy $\sum_{i=0}^{n} 1 = n + 1 > 0$, so it cannot be a coboundary; its class is nonzero in $H^1$. $\quad\blacksquare$
+Although not needed for the counterexample, the definition immediately implies a useful structural observation. If $0\le r_1\le r_2$, then
 
-The holonomy is a single scalar that completely captures the obstruction on a one-cycle nerve: a loop $1$-cochain glues if and only if its holonomy is zero, and the residual holonomy is the nonzero cohomology class.
+$$
+\mathcal V_f(x,r_1)\subseteq\mathcal V_f(x,r_2).
+$$
 
-## 5. Main results: the global certificate and its obstruction
+Thus vulnerability can only accumulate as the ball expands. Dually, certification at radius $r_2$ implies certification at every smaller radius $r_1$. This nested behavior motivates a future presheaf over input balls, discussed in Section 9.
 
-**Theorem 5.1 (Global certification on a tree cover).** Let the input domain be covered by activation regions $0, \dots, n$ arranged in a path nerve, region $i$ governed by a linear score $s_{w_i}$ with reference point $x_0^{(i)}$. Fix a common radius $R \ge 0$ and suppose the *uniform margin condition* holds:
-$$ \|w_i\|_1 \cdot R < |s_{w_i}(x_0^{(i)})| \qquad \text{for every region } i. $$
-Then:
-1. **(Stalk certificates.)** For every region $i$ and every $x$ in the $L^\infty$ ball of radius $R$ about $x_0^{(i)}$, the prediction is unchanged: $[\,s_{w_i}(x) > 0\,] = [\,s_{w_i}(x_0^{(i)}) > 0\,]$.
-2. **(Gluing / vanishing $H^1$.)** Every $1$-cochain $g$ of overlap discrepancies admits a global potential $f$ with $\delta^0 f = g$.
+## 3. The two-chart constant cellular sheaf
 
-The certified global radius is therefore $R$, valid simultaneously on every region.
+### 3.1 Cellular model
 
-*Proof.* Part 1 is Theorem 3.2 applied region by region with the uniform margin hypothesis. Part 2 is Theorem 4.1. The two parts are independent and together certify radius $R$ globally. $\quad\blacksquare$
+Consider a graph consisting of vertices $v_0,v_1$ and a single oriented edge $e$ from $v_0$ to $v_1$. Interpret the vertices as two charts and the edge as their overlap. Place a copy of $\mathbb R$ on each cell, with identity restriction maps. This is the constant real cellular sheaf on the graph.
 
-**Theorem 5.2 (Cyclic cover hosts an unremovable obstruction).** On the loop nerve of $n+1$ regions, there is no global potential $f$ with $\delta^{\mathrm{cyc}} f \equiv 1$; i.e. the unit overlap-discrepancy cochain cannot be glued away. This nonzero first-cohomology class, of holonomy $n+1$, is the cohomological signature of an adversarial cycle.
+The degree-zero and degree-one cochain spaces are
 
-*Proof.* Immediate from Theorem 4.2: the holonomy $n+1 \neq 0$ rules out any coboundary representation. $\quad\blacksquare$
+$$
+C^0=\mathbb R\times\mathbb R,
+\qquad
+C^1=\mathbb R.
+$$
 
-**Theorem 5.3 (Factorization of certified robustness).** Combining the above, a global certificate of radius $R$ exists when (a) every stalk clears the margin $\|w_i\|_1 R < |s_{w_i}(x_0^{(i)})|$ *and* (b) the nerve of the cover is acyclic ($H^1 = 0$). The two conditions are independent: (a) is a per-region (local) quantity blind to cover topology, while (b) is a global topological quantity blind to any single region's margin.
+A zero-cochain $(a,b)$ assigns values to the two charts. The cellular coboundary measures their oriented discrepancy on the overlap:
 
-*Discussion.* The certified radius factors conceptually as
-$$ \text{global certificate} \;=\; (\text{stalk margin}) \,\times\, (\text{nerve acyclicity}). $$
-The surviving logical implication is *vanishing $H^1 \Rightarrow$ glueability*. The converse fails: a tree cover (with $H^1 = 0$) can still host a vulnerable point if some stalk margin is too small. Cohomology controls *gluing*, never the stalk margin. Thus margin-maximizing training, which acts only on axis (a), cannot by itself remove vulnerabilities that live on axis (b).
+$$
+\delta:C^0\to C^1,
+\qquad
+\delta(a,b)=b-a.
+$$
 
-## 6. Algorithms
+Since there are no two-cells, the next coboundary is zero. Consequently,
 
-**Algorithm A (Stalk certified radius).** Given $w$ and $x_0$, compute the score $s = \sum_i w_i x_{0,i}$, the norm $N = \sum_i |w_i|$, and return $R = |s|/N$ (with $R = +\infty$ if $N = 0$ and $s \neq 0$, and $R = 0$ if $s = 0$). Complexity $O(d)$. Correctness is Corollary 3.3.
+$$
+H^1=\frac{C^1}{\operatorname{im}\delta}.
+$$
 
-**Algorithm B (Tree gluing primitive).** Given a $1$-cochain $g = (g_0, \dots, g_{n-1})$ on a path nerve, return the partial-sum potential $f$ with $f_0 = 0$, $f_{k} = f_{k-1} + g_{k-1}$. Then $\delta^0 f = g$ exactly. Complexity $O(n)$. Correctness is Theorem 4.1.
+The first cohomology vanishes precisely when $\delta$ is surjective.
 
-**Algorithm C (Holonomy obstruction test).** Given a $1$-cochain $g$ on a loop nerve, return the holonomy $h = \sum_{i=0}^{n} g_i$. The cochain glues (is a coboundary) if and only if $h = 0$; otherwise $h$ is the irreducible obstruction. Complexity $O(n)$. Correctness is Theorem 4.2.
+### 3.2 Exact vanishing
 
-**Algorithm D (Global certificate on a tree cover).** Given per-region $(w_i, x_0^{(i)})$ and a candidate $R$: verify $\|w_i\|_1 R < |s_{w_i}(x_0^{(i)})|$ for all $i$ (each $O(d)$); if all pass, accept $R$ as a global certified radius and emit the tree gluing primitive for any required overlap reconciliation. Complexity $O(nd)$. Correctness is Theorem 5.1.
+**Theorem 3.1 (Vanishing first cohomology on one edge).** The constant real cellular sheaf on two vertices joined by one edge has $H^1=0$.
 
-## 7. Applications
+**Proof sketch.** Let $c\in C^1=\mathbb R$ be arbitrary. Select the zero-cochain $(0,c)$. Then
 
-- **Combining per-region certificates.** Certified-defense pipelines that already decompose a network into linear regions can use Theorem 5.1 to fuse per-region certificates into one global radius equal to the minimum stalk radius — provided the region-adjacency nerve is acyclic.
-- **Cover refinement as a defense.** Theorem 5.2 identifies cycles as the obstruction. Spanning-tree sparsification of the region-adjacency graph removes cycles cheaply, converting fragile local guarantees into a global guarantee (Theorem 5.1).
-- **Diagnosing residual vulnerability.** When margin-maximizing training leaves a model attackable, Theorem 5.3 predicts the residual weakness lives in cover topology (nonzero holonomy), not in the margins — a falsifiable, actionable diagnosis.
+$$
+\delta(0,c)=c-0=c.
+$$
 
-## 8. Discussion and limitations
+Every one-cochain lies in the image of $\delta$, so $\delta$ is surjective and $C^1/\operatorname{im}\delta=0$. $\square$
 
-The framework is deliberately minimal: one-dimensional nerves (path and loop) make the cohomology computation transparent and the obstruction a single scalar. The honest scope is the implication *acyclicity $\Rightarrow$ glueability*; we do *not* claim *vulnerability $\Rightarrow$ nonzero cohomology*, which is false in general (a tree cover with a thin stalk is vulnerable yet acyclic). The two axes — stalk margin and nerve cohomology — are genuinely independent, which is both the central insight and the principal caveat: hardening a model requires acting on both.
+This argument gives a right inverse $c\mapsto(0,c)$ for the coboundary. It is uniform over all real cochains and requires no sampling.
 
-## 9. Future directions
+### 3.3 Interpretation and limitation
 
-**(1) Holonomy lower-bounds the adversarial budget.** For a piecewise-linear classifier whose activation regions form a loop, the smallest perturbation flipping the prediction around the loop should be bounded below by the loop's holonomy divided by the largest local sensitivity; the certified radius around the whole loop is then governed by a single first-cohomology class. The inconsistency of local certificates around a cycle is concentrated in one scalar — the holonomy — so the hardest adversarial direction is the one that integrates this class around the loop.
+The vanishing says that every discrepancy on the overlap is a coboundary. In this minimal model there is no residual degree-one obstruction to realizing overlap data from chart values. Yet the cochain complex contains no score function, input point, norm, margin, or sensitivity constant. Therefore its vanishing cannot distinguish a classifier far from its decision boundary from one exactly on the boundary.
 
-**(2) Acyclic covers admit a uniform global certificate.** Whenever the nerve is acyclic, the per-region certified radii should assemble into a global certified radius equal to their minimum, with no loss from gluing — vanishing first cohomology turns the family of local certificates into a genuine global section, making certification a worst-case minimum rather than a fragile chain of overlap compatibilities. Cycle-removing cover refinements (spanning-tree sparsification of region-adjacency graphs) are a cheap, testable engineering lever.
+## 4. A classifier with no positive certificate
 
-**(3) Cohomology controls gluing, margin controls stalks — and they are independent.** Robustness failure should factor into two independent causes: a small stalk margin (local, invisible to nerve cohomology) and a nonzero nerve holonomy (global, invisible to any single region). Neither implies the other, and a classifier is globally robust iff both vanish at the relevant scale. Empirically, margin-maximizing training still leaves models vulnerable; the conjecture predicts the residual vulnerability lives in cover topology.
+Consider the real-line score
+
+$$
+f(t)=t.
+$$
+
+Its decision is negative for $t\le0$ and positive for $t>0$. The point $x=0$ lies exactly on the decision boundary and receives the negative class.
+
+**Theorem 4.1 (Threshold boundary has zero certified radius).** For the score $f(t)=t$ at $x=0$, there exists no positive radius $r$ for which the classifier is certified under the distance $|x-y|$.
+
+**Proof sketch.** Suppose $r>0$. Set $y=r/2$. Then
+
+$$
+|0-y|=\frac r2<r,
+$$
+
+so $y$ lies strictly inside the proposed ball. However, $f(0)=0$ gives the negative decision while $f(y)=r/2>0$ gives the positive decision. Therefore radius $r$ is not certified. Since the construction applies to every $r>0$, no positive certificate exists. $\square$
+
+Equivalently, $r/2\in\mathcal V_f(0,r)$ for every $r>0$. This is stronger than observing failures on a finite list of radii.
+
+## 5. Failure of the unrestricted cohomological implication
+
+We can now combine two independent exact statements: the cellular sheaf has vanishing $H^1$, and the threshold score has no positive certificate.
+
+**Theorem 5.1 (Cohomological vanishing alone does not imply robustness).** There exists a two-chart constant real cellular sheaf with vanishing first cohomology and a real-valued classifier that has no positive strict $L^\infty$ certified radius at a specified input.
+
+**Proof sketch.** Use the sheaf of Theorem 3.1 and the threshold classifier of Theorem 4.1. The former has $H^1=0$ because $(a,b)\mapsto b-a$ is surjective; the latter has no positive certificate at zero because $r/2$ changes the decision inside every positive radius-$r$ ball. $\square$
+
+A stronger logical formulation rules out a universal implication.
+
+**Corollary 5.2 (Universal conjecture is false).** The following statement is false: if the two-chart constant sheaf has vanishing $H^1$, then every score $f:\mathbb R\to\mathbb R$ admits a positive certified radius at zero.
+
+**Proof sketch.** The premise holds by Theorem 3.1. Applying the proposed conclusion to $f(t)=t$ would produce a positive certificate at zero, contradicting Theorem 4.1. $\square$
+
+The counterexample does not claim that every classifier-dependent sheaf theory must fail. It shows exactly that cohomology of the *bare* chart cover, detached from score geometry, is insufficient.
+
+## 6. A quantitative replacement theorem
+
+### 6.1 Margin and local sensitivity
+
+Let $f:\mathbb R^n\to\mathbb R$ and fix $x\in\mathbb R^n$. A positive number $m$ is a lower score margin at $x$ when
+
+$$
+0<m\le f(x).
+$$
+
+Let $L\ge0$. We require the following local Lipschitz estimate on the open ball $B_\infty(x,r)$:
+
+$$
+|f(y)-f(x)|\le L\|x-y\|_\infty
+\quad\text{whenever}\quad
+\|x-y\|_\infty<r.
+$$
+
+Only variation relative to the center $x$ is needed. A pairwise Lipschitz estimate throughout the ball is sufficient but stronger than necessary.
+
+### 6.2 Certificate theorem
+
+**Theorem 6.1 (Margin–Lipschitz $L^\infty$ certificate).** Let $f:\mathbb R^n\to\mathbb R$, $x\in\mathbb R^n$, and let $m,L,r\in\mathbb R$. Assume:
+
+1. $m\le f(x)$;
+2. $m>0$;
+3. $L\ge0$;
+4. $Lr<m$;
+5. for every $y$ with $\|x-y\|_\infty<r$,
+   $$
+   |f(y)-f(x)|\le L\|x-y\|_\infty.
+   $$
+
+Then $f$ is certified at $x$ with strict radius $r$.
+
+**Proof sketch.** Fix $y$ with $\|x-y\|_\infty<r$. Since $L\ge0$,
+
+$$
+L\|x-y\|_\infty\le Lr<m.
+$$
+
+The Lipschitz estimate bounds the possible decrease:
+
+$$
+f(x)-f(y)\le |f(y)-f(x)|\le L\|x-y\|_\infty<m.
+$$
+
+Therefore
+
+$$
+f(y)>f(x)-m\ge0.
+$$
+
+More directly, combining $f(x)\ge m$ with the strict variation bound gives $f(y)>m-m=0$. Also $f(x)>0$. Hence both points receive the positive class, and the decision is constant throughout the open ball. $\square$
+
+The strict budget is naturally aligned with the strict ball. When $L>0$, every $r<m/L$ satisfying the local estimate is certified. If $L=0$, the estimate forces $f(y)=f(x)$ throughout the ball, and the budget $0<m$ holds for any radius on which the estimate is valid.
+
+### 6.3 Why the hypotheses are substantive
+
+The threshold counterexample has $f(0)=0$, so no positive $m\le f(0)$ exists. The theorem therefore fails for the correct reason: there is no output-space reserve against perturbations. Conversely, a positive margin without sensitivity control is insufficient, because a discontinuous or steeply varying score may cross zero arbitrarily nearby. The margin and Lipschitz hypotheses play complementary roles.
+
+The theorem is one-sided because the chosen center lies in the positive class. A negative-class analogue follows by applying the same reasoning to $-f$. More generally, one may use the absolute decision margin and a bound that prevents crossing zero.
+
+## 7. Algorithms and numerical demonstrations
+
+### 7.1 Exact affine certification
+
+For an affine score
+
+$$
+f(x)=b+w^\top x,
+$$
+
+Hölder’s inequality gives
+
+$$
+|f(y)-f(x)|=|w^\top(y-x)|
+\le \|w\|_1\|y-x\|_\infty.
+$$
+
+Thus $L=\|w\|_1$ is an exact global $L^\infty$ Lipschitz constant for the linear part.
+
+**Algorithm 7.1 (Affine positive-class certificate).** Given $w$, $b$, and $x$, compute $s=b+w^\top x$ and $L=\sum_i|w_i|$. If $s\le0$, the positive-class theorem does not apply. If $s>0$ and $L>0$, the supremal radius supported by the strict budget is $s/L$, meaning every $r<s/L$ is certified. If $s>0$ and $L=0$, the score is constant and every finite radius is certified.
+
+The computation takes $O(n)$ time and $O(1)$ additional working memory beyond the input arrays.
+
+### 7.2 Two-dimensional example
+
+Let
+
+$$
+f(x_1,x_2)=1.2+0.4x_1-0.7x_2
+$$
+
+at $x=(0,0)$. Then $f(x)=1.2$ and
+
+$$
+L=|0.4|+|-0.7|=1.1.
+$$
+
+The strict certificate condition is
+
+$$
+1.1r<1.2,
+$$
+
+or $r<12/11\approx1.0909$. In particular, $r=1$ is certified. At the extremal corner direction $(-1,1)$, the score at radius $1$ decreases to
+
+$$
+1.2-0.4-0.7=0.1>0.
+$$
+
+The calculation demonstrates both the theorem and the geometry of dual norms: an $L^\infty$ box couples to the coefficient $L^1$ norm.
+
+### 7.3 Threshold example
+
+For $f(t)=t$ at zero, inspect any radii such as $1$, $0.1$, or $10^{-6}$. The adversarial witnesses $r/2$ are respectively $0.5$, $0.05$, and $5\times10^{-7}$. Each lies strictly inside its ball and has positive score, while the center has negative decision. Numerical output illustrates the symbolic construction, but the proof quantifies over all positive real radii.
+
+### 7.4 Sampling is diagnostic, not certifying
+
+A grid or random search can locate members of $\mathcal V_f(x,r)$ and thereby disprove a candidate certificate. It cannot prove emptiness unless accompanied by a complete covering argument and analytic remainder bounds. This asymmetry is crucial:
+
+- one discovered adversarial point is decisive;
+- no adversarial point in a finite sample is inconclusive.
+
+The margin–Lipschitz theorem turns a finite collection of computable bounds into a universal conclusion over an uncountable ball.
+
+## 8. Applications
+
+### 8.1 Local robustness of piecewise-affine networks
+
+On a fixed activation region, a ReLU network is affine. If an $L^\infty$ ball remains inside that region, the affine algorithm yields an exact local sensitivity $\|w_{\mathrm{eff}}\|_1$ for a scalar output gap. If the ball intersects several regions, one may bound each region’s effective linear map and take a valid common upper bound. The theorem then supplies a certificate whenever the margin dominates the worst-case variation.
+
+### 8.2 Multiclass classification
+
+For logits $z_1(x),\ldots,z_k(x)$ and predicted class $c$, define competitor gaps
+
+$$
+g_j(x)=z_c(x)-z_j(x),\qquad j\ne c.
+$$
+
+The class remains unchanged if every gap stays positive. If $g_j(x)\ge m_j>0$ and each gap has local Lipschitz constant $L_j$, then any radius satisfying
+
+$$
+L_jr<m_j\qquad\text{for all }j\ne c
+$$
+
+is certified. For positive $L_j$, a common bound is
+
+$$
+r<\min_{j\ne c}\frac{m_j}{L_j}.
+$$
+
+This is the natural multiclass extension of the scalar theorem, though the present results focus on the binary score.
+
+### 8.3 Organizing local certificates
+
+Sheaf methods may become useful when a network’s domain is partitioned into many activation cells. Each cell can carry a local margin or Lipschitz estimate; intersections can carry compatibility data. The counterexample dictates that these stalks cannot be merely constant scalars unrelated to the classifier. Their restriction maps must preserve the quantitative information needed by the budget $Lr<m$.
+
+## 9. Discussion and future work
+
+### 9.1 Relative cohomology tied to decisions
+
+A classifier-dependent construction could use relative or constructible sheaves whose data depend on labels, score margins, and activation regions. Obstruction classes might then characterize the inability to glue local certificates. The relevant theorem would need to state exactly how vanishing produces a global bound, not merely a global qualitative section.
+
+### 9.2 Quantitative sheaves
+
+Ordinary vanishing discards magnitude. Enriching stalks in normed spaces and equipping restriction maps with operator-norm bounds could retain scale. A bounded contracting homotopy would be more informative than abstract exactness: its norm could propagate local constants and potentially yield a numerical radius.
+
+### 9.3 The parameter-to-input bridge
+
+Weight perturbations and input perturbations are distinct. A useful theory must include an explicit estimate connecting changes in parameters, activation geometry, and input-space score margins. The finite counterexample shows that topology of weight charts alone supplies no such bridge.
+
+### 9.4 Boundary-local presheaves
+
+The family $\mathcal V_f(x,r)$ is nested in $r$. One can refine it into a presheaf over input balls, with restriction induced by inclusion. Its support marks where adversarial examples occur. Degree-zero structure and local cohomology near decision boundaries may describe how vulnerable components emerge as radius increases.
+
+### 9.5 Piecewise-linear activation complexes
+
+ReLU networks induce finite polyhedral activation complexes on bounded domains. Cellular sheaves on these complexes could encode local affine maps and Lipschitz bounds. The research challenge is to combine combinatorial obstruction detection with norm-controlled gluing so that outputs include both obstruction classes and numerical certificates.
+
+### 9.6 Limits of the present model
+
+The two-chart sheaf is intentionally minimal. It does not model a full neural architecture, training dynamics, or a classifier-dependent restriction map. That simplicity is a strength for refuting the unrestricted implication: a universal theorem must cover the minimal case. It is not evidence against richer hypotheses. Likewise, the positive theorem assumes an available local Lipschitz constant; obtaining tight constants for large networks remains a separate computational problem.
+
+## 10. Conclusion
+
+The relationship between topology and adversarial robustness must respect two distinctions: qualitative versus quantitative information, and parameter space versus input space. Vanishing first cohomology for the constant sheaf on two overlapping charts is exact and explicit, yet it coexists with a classifier whose certified radius at a decision boundary is zero. Therefore bare cohomological vanishing cannot imply a positive $L^\infty$ certificate for arbitrary scores.
+
+A correct local guarantee emerges from analytic data. If a score at $x$ has positive lower margin $m$, varies by at most $L\|x-y\|_\infty$ in the relevant ball, and satisfies $Lr<m$, then every point in that ball remains on the positive side of the threshold. Equivalently, the vulnerability stalk is empty.
+
+These results do not eliminate a role for sheaf theory. They specify the role it must play: organizing classifier-dependent, norm-controlled local information while preserving enough magnitude to produce a radius. Topological gluing can be part of a certification pipeline, but the numerical scale must enter through margins, sensitivities, and an explicit bridge to input-space decisions.
+
+A practical consequence is a separation of responsibilities. Combinatorial structure can index regions, intersections, and compatibility constraints; analysis must attach valid inequalities to those objects; and an assembly theorem must show that the inequalities survive passage from local pieces to the complete neighborhood. Each layer has a distinct failure mode. Cohomology may expose incompatible local data, interval or convex methods may bound regional sensitivity, and the final budget comparison determines whether the decision threshold can be reached. Keeping these layers explicit prevents a qualitative invariant from being mistaken for a metric guarantee and offers a testable design criterion for future certification systems.
