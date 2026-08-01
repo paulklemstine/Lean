@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2996b72f",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## Result established\n\n`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector between\nanalytic number theory and information theory:\n\n\\[\n\\gamma=\\sum_{k=0}^{\\inf",
-      "quality_score": 0.77621,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-30T00:20:57",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "6ef427dd",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n- Internalize the construction in a general Cartesian closed category using a point-surjective morphism `A ⟶ B ^ A`, then recover the current theorem by specializing to `Type`.\n-",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-01T06:48:10",
       "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
+    },
+    {
+      "cycle_id": "ed94092b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThe complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` reduces complement-closed reconstruction questions to either member of each complementary pair. Conc",
+      "quality_score": 0.7667599999999999,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-08-01T09:30:07",
+      "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5a4bc860",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Novikov-Fixed-Point\n\n`Catalog/Novelty/NovikovFixedPoint.lean` formalises the **Novikov Self-Consistency\nPrinciple** for causally loop-closed spacetimes as a Banach fixed-point th",
-      "quality_score": 0.58,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-24T02:40:44",
-      "title": "Novikov-Fixed-Point: Existence of Unique Solutions for Causally Loop-Closed Spacetimes"
-    },
     {
       "cycle_id": "08b12f3b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-01T06:48:10",
       "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
+    },
+    {
+      "cycle_id": "ed94092b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThe complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` reduces complement-closed reconstruction questions to either member of each complementary pair. Conc",
+      "quality_score": 0.7667599999999999,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-08-01T09:30:07",
+      "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "972f5eac",
-      "domain": "NumberTheory",
-      "name": "cube_residue_mod_nine",
-      "quality": 0.77705
-    },
-    {
-      "cycle_id": "972f5eac",
-      "domain": "NumberTheory",
-      "name": "three_cube_residues_avoid_forbidden",
-      "quality": 0.77705
-    },
-    {
-      "cycle_id": "972f5eac",
-      "domain": "NumberTheory",
-      "name": "representable_not_forbidden",
-      "quality": 0.77705
-    },
     {
       "cycle_id": "0f63237d",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "geodesicWeightedDist_eq",
       "quality": 0.7725
+    },
+    {
+      "cycle_id": "ed94092b",
+      "domain": "Combinatorics",
+      "name": "The",
+      "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "ed94092b",
+      "domain": "Combinatorics",
+      "name": "kelly_double_count",
+      "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "ed94092b",
+      "domain": "Combinatorics",
+      "name": "inducedCopyFamily_uniform",
+      "quality": 0.7667599999999999
     }
   ],
-  "last_updated": "2026-08-01T06:48:10",
+  "last_updated": "2026-08-01T09:30:07",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "6c3aaf50",
-        "quality": 0.66,
-        "theorems": 24,
-        "title": "1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere "
-      },
-      {
         "cycle_id": "078d5371",
         "quality": 0.77,
         "theorems": 0,
@@ -3265,6 +3259,12 @@
         "quality": 0.7582199999999999,
         "theorems": 12,
         "title": "Reconstruction Conjecture"
+      },
+      {
+        "cycle_id": "ed94092b",
+        "quality": 0.7667599999999999,
+        "theorems": 16,
+        "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
       }
     ],
     "Computation": [
