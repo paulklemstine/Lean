@@ -1,17 +1,5 @@
 import Mathlib
 
-/-- A persistence interval with birth no later than death. -/
-structure PersistenceInterval where
-  birth : ℝ
-  death : ℝ
-  valid : birth ≤ death
-
-/-- The lifetime of a persistence interval. -/
-def PersistenceInterval.lifetime (I : PersistenceInterval) : ℝ := I.death - I.birth
-
-/-- Distance from an interval endpoint pair to the diagonal. -/
-noncomputable def diagonalDist (I : PersistenceInterval) : ℝ := I.lifetime / 2
-
 /-! # CatalogBuild.Bridges.PersistentTropicalBridge
 
 Auto-generated from theorem catalog database.
@@ -113,14 +101,10 @@ theorem diagonal_projection_trivial (I : PersistenceInterval) :
 
 theorem projection_distance (I : PersistenceInterval) :
     bottleneckPointDist I (diagonalProjection I) = diagonalDist I := by
-  unfold bottleneckPointDist diagonalDist PersistenceInterval.lifetime diagonalProjection
-  have hleft : I.birth - (I.birth + I.death) / 2 ≤ 0 := by linarith [I.valid]
-  have hright : 0 ≤ I.death - (I.birth + I.death) / 2 := by linarith [I.valid]
-  rw [abs_of_nonpos hleft, abs_of_nonneg hright]
-  have heq : -(I.birth - (I.birth + I.death) / 2) =
-      I.death - (I.birth + I.death) / 2 := by ring
-  rw [heq, max_self]
-  ring
+  unfold bottleneckPointDist diagonalDist;
+  rw [ max_eq_right ] <;> norm_num [ diagonalProjection ];
+  · rw [ abs_of_nonneg ] <;> linarith [ I.valid ];
+  · cases abs_cases ( I.birth - ( I.birth + I.death ) / 2 ) <;> cases abs_cases ( I.death - ( I.birth + I.death ) / 2 ) <;> linarith [ I.valid ]
 
 /-- Significance of a loss landscape feature = its persistence. -/
 def significance (f : PersistenceInterval) : ℝ := f.lifetime
@@ -134,9 +118,7 @@ theorem significance_monotone (I J : PersistenceInterval)
 theorem topological_simplification_bound (I : PersistenceInterval) (ε : ℝ)
     (hε : 0 < ε) (hsmall : I.lifetime < ε) :
     bottleneckPointDist I (diagonalProjection I) < ε := by
-  rw [projection_distance]
-  rw [diagonalDist_eq_half_lifetime]
-  have hlife : 0 ≤ I.lifetime := sub_nonneg.mpr I.valid
-  linarith
+  rw [PersistentTropicalBridge.projection_distance];
+  linarith [PersistentTropicalBridge.diagonalDist_eq_half_lifetime I]
 
 end

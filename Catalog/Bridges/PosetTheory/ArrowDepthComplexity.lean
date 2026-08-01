@@ -1,5 +1,5 @@
 import Pythagorean.GraphTheory.STLCDefs
-import Bridges.PosetTheory.BisimMinimization
+import Bridges.Catalog.Pythagorean.BisimMinimization
 import Mathlib
 
 /-!

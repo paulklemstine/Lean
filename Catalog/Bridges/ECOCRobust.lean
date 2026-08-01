@@ -117,7 +117,7 @@ theorem hammingDist_perturbed_le_bad
     hammingDist (predBits gap x') (code c) ≤ (badCoords code gap L c x r).card := by
   refine' Finset.card_le_card _;
   intro j hj; contrapose! hj; simp_all +decide [ Finset.ext_iff ] ;
-  exact coord_stable_of_not_bad hLip hr hxx' hclean hj
+  exact?
 
 /-! ## Main ECOC robustness theorem -/
 

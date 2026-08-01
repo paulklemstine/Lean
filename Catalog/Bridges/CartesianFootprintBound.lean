@@ -28,7 +28,7 @@ unequal symbol sets and restricted interpolation.
 - S. Ball, O. Serra, "Punctured combinatorial Nullstellensätze", Combinatorica 29 (2009)
 - H. López, C. Rentería-Márquez, R. Villarreal, "Affine Cartesian codes", Des. Codes Cryptogr. 71 (2014)
 -/
-import Bridges.FootprintHelpers
+import Bridges.Combinatorics.FootprintHelpers
 
 open MvPolynomial Polynomial Finset BigOperators Classical
 

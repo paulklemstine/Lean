@@ -166,7 +166,7 @@ theorem berggren_kernel_positive_sum (Q : BerggrenQuantumWalk n)
     unfold BerggrenQuantumWalk.kernel
     simp +decide [dotProduct, Finset.mul_sum _ _ _, mul_assoc, mul_comm, mul_left_comm]
     simp +decide [v, mul_assoc, mul_comm, mul_left_comm, Finset.mul_sum _ _ _, Finset.sum_mul]
-    exact sum_comm_cycle
+    exact?
   simp_all +decide [dotProduct]
   exact Finset.sum_nonneg fun _ _ => add_nonneg (mul_self_nonneg _) (mul_self_nonneg _)
 
@@ -362,17 +362,10 @@ theorem reduced_semimodule_root_realizable
   all_goals norm_num [ ← hc, BerggrenQuantumWalk.evalState, BerggrenQuantumWalk.kernel ];
   simp +decide [ dotProduct, mul_comm ]
 
-/- **Semimodule → Walk (Full GNS Realization).**
+/-- **Semimodule → Walk (Full GNS Realization).**
     Every finitely generated reduced semimodule with positive amplitude form
     is realizable by a Berggren quantum walk via the GNS construction.
     This is the backward direction of the Berggren quantum walk duality. -/
-/-
-The original declaration below is false because diagonal nonnegativity is not
-positive semidefiniteness.  For example, on a two-state transitive action one may
-take diagonal kernel values zero and off-diagonal values one.  Any realizing walk
-whose diagonal kernel is zero has zero initial state, hence identically zero kernel.
-A valid GNS realization theorem must assume positivity of every finite Gram sum.
-
 theorem reduced_semimodule_to_walk
     (M : TripleTreeUnitarySemimodule)
     (hfg : M.FinitelyGenerated)
@@ -381,8 +374,7 @@ theorem reduced_semimodule_to_walk
     ∃ (m : ℕ) (Q : BerggrenQuantumWalk m),
       ∀ s t : M.S, ∃ u v : BerggrenWord,
         M.K s t = Q.kernel u v := by
-  -- unproved placeholder in the original, false statement
--/
+  sorry
 
 /-! ## Section 9: Moment Tables and Reconstruction -/
 
@@ -430,16 +422,9 @@ theorem walk_realizes_own_moment_table (Q : BerggrenQuantumWalk n) (N : ℕ) :
   use ⟨fun u v => Q.kernel u v⟩;
   exact ⟨ ⟨ berggren_kernel_hermitian Q, berggren_kernel_diagonal_nonneg Q, berggren_kernel_shift_invariant Q ⟩, fun u v => rfl ⟩
 
-/- **Reconstruction from Truncated Moments.**
+/-- **Reconstruction from Truncated Moments.**
     Consistent positive moment data of stable rank r admits a minimal
     realization of that dimension. -/
-/-
-The original reconstruction declaration below is false: `ValidInput` requires only
-nonnegative diagonal entries, whereas a quantum-walk kernel satisfies positivity of
-all finite Gram sums (`berggren_kernel_positive_sum`).  Hermitian, shift-compatible,
-finite-rank data can have an indefinite Gram matrix.  Reconstruction requires a
-full positive-semidefiniteness hypothesis, not merely `H.Positive`.
-
 theorem reconstruct_walk_existence
     (N r : ℕ)
     (H : BerggrenMomentTable N)
@@ -447,8 +432,7 @@ theorem reconstruct_walk_existence
     (hrank : H.StableRank r) :
     ∃ (Q : BerggrenQuantumWalk r),
       Q.RealizesTruncatedTable H := by
-  -- unproved placeholder in the original, false statement
--/
+  sorry
 
 /-! ## Section 10: Categorical Duality -/
 

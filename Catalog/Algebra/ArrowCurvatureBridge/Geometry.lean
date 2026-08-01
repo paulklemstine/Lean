@@ -39,14 +39,6 @@ between Fisher-Rao geometry and spherical geometry. -/
 noncomputable def sqrtEmbedding {n : ℕ} (p : Fin n → ℝ) : Fin n → ℝ :=
   fun i => Real.sqrt (p i)
 
-/-- The Bhattacharyya coefficient of two finite nonnegative vectors. -/
-noncomputable def bhattacharyyaCoeff {n : ℕ} (p q : Fin n → ℝ) : ℝ :=
-  ∑ i, Real.sqrt (p i * q i)
-
-/-- Squared Hellinger distance in Bhattacharyya form. -/
-noncomputable def hellingerSqDist {n : ℕ} (p q : Fin n → ℝ) : ℝ :=
-  1 - bhattacharyyaCoeff p q
-
 /-
 The squared norm of the sqrt embedding equals the sum of probabilities.
     For a probability vector (summing to 1), this gives ‖√p‖² = 1,

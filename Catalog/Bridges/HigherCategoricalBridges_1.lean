@@ -1,7 +1,5 @@
 import Mathlib
 
-open CategoryTheory
-
 /-! # CatalogBuild.Bridges.HigherCategoricalBridges
 
 Auto-generated from theorem catalog database.
@@ -122,5 +120,11 @@ structure DerivedFunctor {C D : Type*} [Category C] [Category D]
   func : C ⥤ D
   preserves_triangles : ∀ t ∈ TC.distinguished,
     (func.obj t.1, func.obj t.2.1, func.obj t.2.2) ∈ TD.distinguished
+
+end
+
+end
+
+end
 
 end

@@ -56,8 +56,9 @@ Synthesis (Stage 5): together with `Model.lean` (first moment) and
 -/
 import Mathlib
 import Algebra.ErdosRenyi.Model
+import output-final_aristotle.Tropical.Multiverse.Concrete
 
-open Finset BigOperators Filter Topology ErdosRenyi
+open Finset BigOperators Filter Topology ErdosRenyi ErdosRenyiConcrete
 
 namespace ErdosRenyiThreshold
 
@@ -129,13 +130,6 @@ theorem isolated_blowup_below_connectivity (c : ℝ) :
   apply_rules [ Filter.Tendsto.atTop_mul_pos, tendsto_natCast_atTop_atTop ];
   positivity
 
-/-
-The following two transport theorems from the original source are retained for
-reference.  They depended on the unavailable generated module
-`output-final_aristotle.Tropical.Multiverse.Concrete` and its
-`ErdosRenyiConcrete.expected_triangles` / `expected_isolated` declarations, so
-keeping them active would make this otherwise self-contained file fail to compile.
-
 /-- **Triangle count in the genuine `G(n,p)` model, critical window.** Phrased
 directly in terms of the Erdős–Rényi expectation from `Concrete.lean`: at density
 `p = c/n` the expected number of triangles in `G(n, c/n)` tends to `c³/6`.
@@ -176,7 +170,5 @@ theorem tendsto_ER_expected_isolated (c : ℝ) :
       = (fun n : ℕ => (n : ℝ) * (1 - c / n) ^ (n - 1)) := by
     funext n; exact ErdosRenyiConcrete.expected_isolated (c / n)
   rw [hfun]; exact isolated_blowup_below_connectivity c
-
--/
 
 end ErdosRenyiThreshold

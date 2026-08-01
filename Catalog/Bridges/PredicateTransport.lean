@@ -42,7 +42,7 @@ becomes a one-line corollary.
 
 import Mathlib
 import Bridges.PosetTheory.TheoryMorphisms
-import Bridges.ComposableTransfer
+import Bridges.Bridges.ComposableTransfer
 
 /-! ## §1. Invariant-Determined Predicates -/
 

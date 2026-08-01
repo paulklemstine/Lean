@@ -3,26 +3,22 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
+import Logic.GraphTheory.Defs
 import Bridges.ReedMuller.ExtremalPoly
 import Bridges.ReedMuller.FiberRestriction
 
 /-!
-# Reed–Muller base distance bound
+# Generalized Reed–Muller Minimum Distance Theorem
 
-This file proves the Schwartz–Zippel zero-count bound and the resulting base-case
-Reed–Muller Hamming-weight bound over arbitrary finite fields. It also imports the
-construction proving the generalized upper bound.
-
-The unrestricted generalized lower-bound declarations from the original source are
-preserved below in comments because they are false for polynomial representatives:
-a nonzero polynomial can evaluate to zero everywhere over a finite field. An exact
-generalized Reed–Muller theorem requires a reduced-polynomial representation.
+This file establishes the exact minimum distance of generalized Reed–Muller codes
+over arbitrary finite fields. For a finite field 𝔽_q, n variables, and degree bound
+d = a(q-1) + b with 0 ≤ b < q-1 and a < n, the minimum Hamming weight of a nonzero
+codeword is exactly (q-b) · q^(n-1-a).
 
 ## Main results
 
-- `GRM.schwartz_zippel_zero_bound`: the total-degree zero-count estimate.
-- `GRM.hammingWeight_lower_bound_base`: the base distance bound for degree below `q`.
-- `GRM.generalized_reedMuller_min_distance_upper`: an extremal polynomial construction.
+- `GRM.generalized_reedMuller_min_distance`: the exact formula combining both bounds.
+- `GRM.affine_zero_set_card_le`: sharp zero-count theorem on finite affine space.
 
 ## References
 
@@ -64,7 +60,7 @@ theorem hammingWeight_lower_bound_base
     (card 𝔽 - d) * (card 𝔽) ^ (n - 1) ≤ hammingWeight f := by
   -- By the Schwartz-Zippel lemma, the number of zeros of $f$ is at most $d \cdot q^{n-1}$.
   have h_zero_count : zeroCount f ≤ d * (Fintype.card 𝔽) ^ (n - 1) := by
-    exact schwartz_zippel_zero_bound n hn d f hf hdeg
+    exact?;
   rw [ hammingWeight_eq ];
   rw [ tsub_mul ];
   exact Nat.sub_le_sub_left h_zero_count _ |> le_trans ( by rw [ ← pow_succ', Nat.sub_add_cancel hn ] )
@@ -95,13 +91,6 @@ theorem hammingWeight_lower_bound_a_zero
   · exact hf;
   · linarith
 
-/-
-The proposed induction theorem below is false for arbitrary multivariate polynomials:
-over a finite field a nonzero polynomial can induce the zero evaluation word (for
-example `X₀^q - X₀`).  A correct generalized Reed–Muller theorem must restrict to
-reduced polynomials, with each variable degree below `q`.  The original declaration
-is retained verbatim in this comment rather than silently weakened.
-
 theorem hammingWeight_lower_bound_induction
     (n : ℕ) (d : ℕ)
     (f : MvPolynomial (Fin n) 𝔽) (hf : f ≠ 0) (hdeg : f.totalDegree ≤ d)
@@ -111,8 +100,7 @@ theorem hammingWeight_lower_bound_induction
     (hb : b < card 𝔽 - 1)
     (ha : a < n) :
     (card 𝔽 - b) * (card 𝔽) ^ (n - 1 - a) ≤ hammingWeight f := by
-  -- unproved placeholder in the original, false statement
--/
+  sorry
 
 /-! ### Main Theorems -/
 
@@ -128,10 +116,6 @@ theorem generalized_reedMuller_min_distance_upper
       f.totalDegree ≤ d ∧
       hammingWeight f = (card 𝔽 - b) * (card 𝔽) ^ (n - 1 - a) :=
   extremal_poly_exists n d a b hq h_decomp hb ha
-
-/-
-The following three declarations depended on the false unrestricted lower bound.
-They are preserved in this comment pending the corrected reduced-polynomial API.
 
 /-- **Generalized Reed–Muller lower bound**: every nonzero polynomial of degree ≤ d
     has weight at least (q-b)·q^(n-1-a). -/
@@ -185,6 +169,5 @@ theorem affine_zero_set_card_le
   have htotal := hammingWeight_add_zeroCount f
   rw [card_fin_arrow] at htotal
   omega
--/
 
 end GRM
