@@ -1,413 +1,407 @@
-# A Finite Infinitesimal Probability Model: Non-Archimedean Measures with Positive Infinitesimal Atoms
+# Infinitesimal Point Masses on the Finite–Cofinite Algebra
 
-**Author:** Aristotle
-**Date:** 2026-06-19
-**Domain:** Novelty — Foundations of Probability / Non-Archimedean Analysis
-
----
+**Aristotle**  
+**1 August 2026**
 
 ## Abstract
 
-Classical (real-valued) probability theory forbids a fair lottery over
-infinitely many equally likely, individually possible outcomes: the Archimedean
-property of the real numbers makes any uniform positive probability sum past 1.
-We dissolve this obstruction by relocating probability values into a small,
-explicit **non-Archimedean ordered ring of infinitesimals**, and we construct a
-family of finitely additive probability measures in which every "visible" atom
-carries a *positive infinitesimal* probability ε while the total mass is exactly
-1. The value ring is `LexRat = ℚ × ℚ`, with componentwise addition and a
-*lexicographic* order under which ε = (0, 1) is positive yet strictly below
-every positive rational. For each parameter *n*, the sample space is
-`Option (Fin n)`: *n* visible atoms each of weight ε, and one reservoir atom of
-weight 1 − n·ε that absorbs the infinitesimal deficit while keeping a unit
-standard component. We establish: (i) ε is a genuine infinitesimal
-(`eps_infinitesimal`); (ii) a closed form for the probability of an arbitrary
-event (`prob_eq_closed_form`); (iii) nonnegativity (`prob_nonneg`); (iv) finite
-additivity for disjoint events (`prob_union_disjoint`); (v) normalization to 1
-(`prob_univ`); and (vi) that each visible atom has positive infinitesimal
-probability strictly below 1 (`visible_singleton_infinitesimal`). The model is a
-minimal, fully verified witness that the "impossible fair lottery" is impossible
-only over the reals, and it serves as a finite prototype for a probability
-theory valued in Conway's surreal numbers. We close with conjectures on
-inclusion–exclusion, non-Archimedean conditioning (a Bayes rule that divides
-infinitesimals), and a standard-part retraction recovering Lebesgue measure.
+We construct a normalized surreal-valued probability on the finite–cofinite algebra of any infinite sample space. The construction begins with the Conway cut
 
----
+$$
+\varepsilon=\left\{0\ \middle|\ 1,2^{-1},2^{-2},\ldots\right\},
+$$
+
+which is strictly positive and smaller than $2^{-n}$ for every $n\in\mathbb N$. In particular, every finite multiple $n\varepsilon$ is less than one. For an event $A$ that is finite or cofinite, define
+
+$$
+P(A)=|A|\varepsilon
+$$
+
+in the finite case and
+
+$$
+P(A)=1-|A^c|\varepsilon
+$$
+
+in the cofinite case. We prove that this definition is unambiguous on an infinite space, nonnegative, normalized, and additive on disjoint pairs. Every singleton consequently has the same strictly positive infinitesimal probability. Specializing the sample space to $[0,1]$ yields an explicit non-Archimedean probability model with positive point masses and total mass one. The result concerns finite additivity on the finite–cofinite algebra; it makes no claim of countable additivity on a power set or Borel $\sigma$-algebra. We also give an exact symbolic algorithm for calculations, discuss the classical shadow of the construction, and identify the additional summation and event-algebra structures required for extensions.
 
 ## 1. Introduction
 
-### 1.1 The impossible lottery
-
-A recurring foundational embarrassment in probability is the *fair infinite
-lottery*. Suppose we want a probability assignment on an infinite outcome set
-in which every outcome is equally likely and none is impossible. Over the real
-numbers this is provably unattainable. If each of countably many outcomes had a
-common positive probability *p* > 0, then by the Archimedean property there is
-an integer *m* with *m·p* > 1, contradicting normalization and monotonicity.
-The only uniform assignment compatible with the axioms gives every singleton
-probability 0, severing "probability 0" from "impossible": under the uniform
-measure on [0, 1], every point is individually a null event, yet the realized
-outcome is always *some* point.
-
-Measure theory accommodates this by restricting attention to a σ-algebra of
-"nice" sets (intervals and their countable combinations) and accepting that
-singletons are null. This is enormously successful, but it is a *concession*: it
-declares the original question — what is the probability of *this exact point*?
-— ill-posed rather than answering it.
-
-### 1.2 The diagnosis: Archimedeanness, not probability
+A familiar feature of continuous probability is that every singleton has probability zero. Under the uniform probability measure on $[0,1]$, one has $P(\{x\})=0$ for every $x$, while $P([0,1])=1$. There is no contradiction: countable additivity does not add an uncountable collection of singleton masses, and ordinary length assigns zero to points.
 
-The obstruction is a property of the *value field*, not of probability per se.
-The real line is **Archimedean**: for every ε > 0 there is *m ∈ ℕ* with
-*m·ε* > 1. There is no positive real that survives being added to itself
-finitely many times without exceeding any prescribed bound. Hence no positive
-real can serve as the common atomic weight of an infinite uniform lottery.
+Nevertheless, the question whether a point can receive a *positive infinitesimal* probability is mathematically natural. Such a value should be greater than zero but smaller than every ordinary positive scale relevant to the construction. The real numbers cannot provide it. Their Archimedean property says that for every real $r>0$, some natural multiple $nr$ exceeds one. A genuinely infinitesimal point mass therefore requires a non-Archimedean ordered field or ordered ring.
 
-The remedy is to take probability values in a **non-Archimedean ordered
-field** (or ordered ring) possessing positive *infinitesimals*: elements ε > 0
-such that *n·ε* < 1 for every *n ∈ ℕ*. Such fields include the hyperreals of
-nonstandard analysis, fields of formal Hahn/Laurent series, and — the conceptual
-target of this program — Conway's **surreal numbers**, the universal ordered
-field in which reals, ordinals, and infinitesimals coexist.
+Conway’s surreal numbers provide an especially direct setting. They contain the real numbers and admit numbers specified recursively by left and right options. We use the cut with left option zero and right options $1,1/2,1/4,\ldots$. This yields a positive surreal $\varepsilon$ below every reciprocal power of two.
 
-### 1.3 Contribution
+The second design choice is the event domain. Assigning a common infinitesimal to every point does not by itself determine the mass of arbitrary infinite subsets. We therefore work with the finite–cofinite algebra: events are exactly the finite sets and the sets with finite complement. Its geometry is simple enough that pointwise pricing determines every event, yet rich enough to include all singletons, their finite unions, complements, and the entire space.
 
-Rather than invoking heavy machinery, we exhibit the **smallest laboratory** in
-which the phenomenon is rigorous and the arithmetic is elementary. We work in
-`LexRat = ℚ × ℚ` with lexicographic order, one infinitesimal ε = (0, 1), and a
-*finite* family of measures (indexed by *n*) carried by `Option (Fin n)`. The
-central trick is the **reservoir atom**: a single outcome `none` of weight
-1 − n·ε whose negative infinitesimal coordinate balances the books, while its
-unit standard coordinate keeps it lexicographically positive. We prove, with no
-gaps, every axiom required of a finitely additive probability measure, plus a
-master closed-form formula from which they all follow.
+The resulting theory separates three issues that are sometimes conflated:
 
-The result is a faithful, finite shadow of the surreal program: every visible
-atom is positive yet infinitesimal, finitely many atoms always sum to less than
-1, and the whole space has mass exactly 1.
+- the **value domain**, here the surreal numbers;
+- the **event algebra**, here finite and cofinite subsets;
+- the **additivity principle**, here finite additivity.
 
----
+Our main theorem states that on every infinite set $X$, finite events receive mass $|A|\varepsilon$ and cofinite events receive mass $1-|A^c|\varepsilon$. This is a normalized, nonnegative, finitely additive probability, and each singleton has mass $\varepsilon$. The specialization $X=[0,1]$ answers the motivating existence question in a precise restricted sense.
 
-## 2. The value ring of infinitesimals
-
-### 2.1 Definition (LexRat)
-
-Let `LexRat := ℚ × ℚ`. We read a pair `x = (x.1, x.2)` as the formal expression
-`x.1 + x.2·ε`, where ε is a positive infinitesimal symbol. Addition,
-subtraction, and negation are the usual componentwise (ℤ-module / ring)
-operations inherited from the product `ℚ × ℚ`. We distinguish three constants:
-
-- **Unit:** `one := (1, 0)`.
-- **Infinitesimal:** `eps := (0, 1)`.
-- **Rational embedding:** `ofRat q := (q, 0)` for `q ∈ ℚ`.
-
-The simplification facts `one_fst = 1`, `one_snd = 0`, `eps_fst = 0`,
-`eps_snd = 1`, `ofRat_fst q = q`, `ofRat_snd q = 0` hold definitionally.
-
-### 2.2 Definition (lexicographic order)
-
-For `x, y ∈ LexRat` define
-
-- **`lexLe x y`** ⟺ `x.1 < y.1` ∨ (`x.1 = y.1` ∧ `x.2 ≤ y.2`);
-- **`lexLt x y`** ⟺ `x.1 < y.1` ∨ (`x.1 = y.1` ∧ `x.2 < y.2`);
-- **`Nonneg x`** ⟺ `lexLe (0, 0) x`.
-
-This is the dictionary order: the first coordinate (the *standard part*)
-dominates, and the second coordinate (the *infinitesimal part*) breaks ties.
-Componentwise addition is monotone for `lexLe`, so `(LexRat, +, lexLe)` is an
-ordered abelian group; multiplication (componentwise as a ring, or via the
-truncated polynomial law `(a,b)(c,d) = (ac, ad+bc)` in the field extension used
-in the broader program) is order-compatible on the relevant cone. For the
-finite probability model only the additive ordered-group structure and the
-order are needed.
-
-### 2.3 The infinitesimal is genuine
-
-> **Lemma (`eps_pos`).** `lexLt (0, 0) eps`.
->
-> *Proof.* The standard parts are equal (0 = 0), and the infinitesimal parts
-> satisfy 0 < 1; take the right disjunct. ∎
-
-> **Lemma (`eps_nonneg`).** `Nonneg eps`. *(Immediate from `eps_pos`.)*
-
-> **Theorem (`eps_infinitesimal`).** For every `q ∈ ℚ` with `0 < q`,
-> `lexLt eps (ofRat q)`.
->
-> *Proof.* We compare `eps = (0, 1)` and `ofRat q = (q, 0)`. The standard parts
-> are `0` and `q`; since `0 < q`, the left disjunct of `lexLt` holds
-> immediately. Hence `eps < ofRat q`. ∎
-
-Thus ε is positive yet strictly below every positive rational — the defining
-behavior of an infinitesimal. Equivalently, *n·ε* = (0, n) has standard part 0,
-so *n·ε* < 1 = (1, 0) for **every** `n ∈ ℕ`: the Archimedean property fails, by
-design.
-
----
-
-## 3. The finite infinitesimal probability model
-
-### 3.1 Sample space and atom weights
-
-Fix `n : ℕ`. The sample space is `Ω_n := Option (Fin n)`, with:
-
-- *n* **visible atoms** `some i` for `i ∈ Fin n`;
-- one **reservoir atom** `none`.
-
-> **Definition (`atomWeight`).**
-> `atomWeight n none := (1, −n)` and `atomWeight n (some i) := (0, 1) = eps`.
-
-Read as `a + b·ε`: each visible atom has weight ε, and the reservoir has weight
-`1 − n·ε`. The deficit −n·ε is parked in the reservoir's infinitesimal
-coordinate, while its standard coordinate is the unit 1.
-
-### 3.2 The measure
-
-> **Definition (`prob`).** For an event `A : Finset (Option (Fin n))`,
-> `prob n A := ∑_{x ∈ A} atomWeight n x`.
-
-Probability is the finite sum of atomic weights — the only sensible definition
-on a discrete space, and the one from which additivity is automatic.
-
-To analyze it we isolate the visible content of an event.
-
-> **Definition (`visiblePart`).**
-> `visiblePart n A := { i ∈ Fin n : some i ∈ A }` (as a `Finset (Fin n)`).
-
-Basic facts: `i ∈ visiblePart n A ↔ some i ∈ A` (`mem_visiblePart`);
-`(visiblePart n A).card ≤ n` (`visiblePart_card_le`);
-`visiblePart n univ = univ` (`visiblePart_univ`); and
-`(visiblePart n univ).card = n` (`visiblePart_univ_card`).
-
-### 3.3 The master formula
-
-> **Theorem (`prob_eq_closed_form`).** For every `A : Finset (Option (Fin n))`,
-> ```
-> prob n A = ( [none ∈ A] ,  |visiblePart n A| − [none ∈ A]·n )
-> ```
-> where `[P]` is 1 if `P` holds and 0 otherwise. Explicitly, the standard
-> (first) coordinate is 1 iff the reservoir lies in `A`; the infinitesimal
-> (second) coordinate is the number of visible atoms in `A`, less `n` when the
-> reservoir is present.
->
-> *Proof sketch.* Induction on the finite set `A` via `Finset.induction`. The
-> empty event gives `(0, 0)`, matching the formula (`visiblePart` is empty and
-> `none ∉ ∅`). For the inductive step, insert an atom `a ∉ s`:
-> - If `a = none`: the sum gains `(1, −n)`. The reservoir indicator flips from 0
->   to 1, raising the standard coordinate to 1 and subtracting `n` from the
->   infinitesimal coordinate; the visible cardinality is unchanged. The two
->   sides agree after `ring`.
-> - If `a = some i` with `i ∉ visiblePart n s`: the sum gains `(0, 1) = eps`.
->   The visible cardinality grows by 1 via
->   `visiblePart n (insert (some i) s) = visiblePart n s ∪ {i}` together with
->   `Finset.card_union` (disjointness from `i ∉ visiblePart n s`); the reservoir
->   indicator is unchanged. Both sides agree after `ring`. ∎
-
-Several specializations follow directly:
-
-> **Corollary (`prob_empty`).** `prob n ∅ = (0, 0)`.
-> **Corollary (`prob_singleton_none`).** `prob n {none} = (1, −n)`.
-> **Corollary (`prob_singleton_visible`).** `prob n {some i} = eps`.
-
-### 3.4 The probability axioms
-
-> **Lemma (`atomWeight_nonneg`).** Every atom weight is lexicographically
-> nonnegative: `Nonneg (atomWeight n x)` for all `x ∈ Ω_n`.
->
-> *Proof.* For `none`, the standard part is `1 > 0`, so the left disjunct of
-> `lexLe` holds (despite the negative infinitesimal coordinate −n). For
-> `some i`, the standard parts are equal (0 = 0) and the infinitesimal parts
-> satisfy 0 ≤ 1. ∎
-
-> **Theorem (Nonnegativity, `prob_nonneg`).** For every event `A`,
-> `Nonneg (prob n A)`.
->
-> *Proof.* Apply `prob_eq_closed_form`. If `none ∈ A`, the standard coordinate
-> is `1 > 0` and the left disjunct of `lexLe (0,0) (prob n A)` holds. If
-> `none ∉ A`, the standard coordinate is `0` (so standard parts are equal) and
-> the infinitesimal coordinate is `|visiblePart n A| ≥ 0`; the right disjunct
-> holds (`positivity`). ∎
-
-> **Theorem (Finite additivity, `prob_union_disjoint`).** If `A, B` are disjoint
-> events then `prob n (A ∪ B) = prob n A + prob n B`.
->
-> *Proof.* By definition `prob` is a `Finset.sum` of `atomWeight`, and
-> `Finset.sum_union` over a disjoint union splits the sum:
-> `∑_{A ∪ B} = ∑_A + ∑_B`. ∎
-
-> **Theorem (Normalization, `prob_univ`).** `prob n univ = one = (1, 0)`.
->
-> *Proof.* By `prob_eq_closed_form` with `A = univ`: `none ∈ univ` makes the
-> standard coordinate 1, and `|visiblePart n univ| = n`, so the infinitesimal
-> coordinate is `n − n = 0`. Hence `prob n univ = (1, 0) = one`. ∎
-
-> **Theorem (Infinitesimal atoms, `visible_singleton_infinitesimal`).** For each
-> `i ∈ Fin n`, `prob n {some i} = eps` and `lexLt (prob n {some i}) one`, i.e.
-> the probability of a single visible atom is the positive infinitesimal ε,
-> strictly below 1.
->
-> *Proof.* The equality is `prob_singleton_visible`. The strict inequality is a
-> direct instance of `eps_infinitesimal` at `q = 1` (since `eps = (0,1)` and
-> `one = (1,0)` have standard parts `0 < 1`). ∎
-
-### 3.5 Reading the model
-
-The model realizes precisely the configuration the reals forbid:
-
-| Object | Weight (as `a + b·ε`) | Standard part | Infinitesimal part |
-|---|---|---|---|
-| visible atom `some i` | ε | 0 | 1 |
-| all *n* visible atoms | n·ε | 0 | n |
-| reservoir `none` | 1 − n·ε | 1 | −n |
-| whole space `univ` | 1 | 1 | 0 |
-
-Every visible atom is **possible** (weight ε > 0) and **infinitely unlikely**
-(ε < q for every positive rational q). Finitely many atoms sum to `n·ε < 1`. The
-reservoir is lexicographically positive because its *standard* coordinate is 1,
-even though its infinitesimal coordinate is negative. Normalization is exact, not
-asymptotic.
-
----
-
-## 4. Why the classical no-go theorem is not contradicted
-
-The classical impossibility argument requires summing the probabilities of
-infinitely many atoms and observing divergence. Two features of our model block
-that argument without weakening probability:
-
-1. **Finite additivity only.** `prob_union_disjoint` is stated for (finite)
-   disjoint unions; the natural domain is the Boolean algebra of *finite*
-   subsets of `Ω_n`. We never form an infinite disjoint sum of singletons.
-
-2. **Genuine infinitesimals.** Because `eps_infinitesimal` gives `n·ε < 1` for
-   every *n*, no finite collection of visible atoms ever exhausts the budget.
-
-In the broader program this finitary discipline persists at the limit: the
-intended model takes the sample space to be the real interval [0, 1], the value
-field to be a non-Archimedean field `K = Lex(ℝ⟦ℚ⟧)` of formal series (a concrete
-surrogate for Conway's surreals), and assigns every point of [0, 1] a positive
-infinitesimal mass while the whole interval has mass exactly 1. The "paradox"
-dissolves because the honest domain is the *finite-union* Boolean algebra of
-elementary sets, on which [0, 1] is **not** a disjoint union of its points.
-
----
-
-## 5. Algorithms
-
-The model is fully computational over ℚ × ℚ. We record the core procedures.
-
-### 5.1 Lexicographic comparison
-
-```
-function lexCmp((a1, b1), (a2, b2)):
-    if a1 < a2: return LT
-    if a1 > a2: return GT
-    if b1 < b2: return LT
-    if b1 > b2: return GT
-    return EQ
-```
-Complexity O(1) (two rational comparisons). Correctness mirrors `lexLt`/`lexLe`.
-
-### 5.2 Event probability by direct summation
-
-```
-function probDirect(n, A):                 # A ⊆ Option(Fin n)
-    s := (0, 0)
-    for x in A:
-        s := s + atomWeight(n, x)          # componentwise add
-    return s
-```
-Complexity O(|A|). Correct by definition of `prob`.
-
-### 5.3 Event probability by the closed form
-
-```
-function probClosed(n, A):
-    res := 1 if (none ∈ A) else 0          # standard coordinate
-    vis := |{ i : some i ∈ A }|            # visible cardinality
-    inf := vis − (n if (none ∈ A) else 0)  # infinitesimal coordinate
-    return (res, inf)
-```
-Complexity O(|A|) to compute `vis`, O(1) thereafter. Equivalence with
-`probDirect` is the content of `prob_eq_closed_form`; this gives a verified
-fast path and an oracle for testing.
-
----
-
-## 6. Applications and significance
-
-- **Fair infinite lotteries.** The model is an explicit, axiom-checked witness
-  that uniform "every-outcome-possible" assignments exist once values are
-  non-Archimedean — a concrete answer to a long-standing foundational
-  discomfort.
-
-- **Separating null from impossible.** Visible atoms have positive
-  (infinitesimal) probability, restoring the distinction between
-  "probability 0" and "impossible" that real-valued measures collapse.
-
-- **A finite surreal prototype.** The construction is a finite, fully verified
-  shadow of surreal-valued probability, isolating the essential mechanism (a
-  reservoir balancing infinitesimal deficit under lexicographic order) from the
-  heavier analytic apparatus of Hahn series and surreals.
-
-- **Nonstandard analysis bridge.** The standard-part coordinate is precisely the
-  shadow map of nonstandard analysis, suggesting a clean reduction of the
-  infinitesimal theory to classical measure theory (Section 7).
-
----
-
-## 7. Discussion and future directions
-
-The development establishes the additive, finitely-additive core. The natural
-next steps lift it toward a full non-Archimedean measure theory. The following
-conjectures are precise and falsifiable.
-
-### C1. Inclusion–exclusion and Carathéodory-style extension
-
-**Conjecture.** The measure extends from disjoint joins to a finitely additive
-measure on the full Boolean algebra of elementary sets (finite
-unions/intersections/complements of intervals modified at finitely many points),
-satisfying two-set inclusion–exclusion
-`μ(E₁ ∪ E₂) + μ(E₁ ∩ E₂) = μ E₁ + μ E₂` and monotonicity. *Key insight:*
-disjoint additivity (`prob_union_disjoint`) upgrades to general unions once the
-continuous content (the ℚ standard part) and the atomic count (the infinitesimal
-part) obey inclusion–exclusion *separately*, because the two summands live in
-independent graded pieces of the value ring (order-0 reals vs. order-1
-infinitesimals).
-
-### C2. Non-Archimedean conditioning (a Bayes rule dividing infinitesimals)
-
-**Conjecture.** For elementary sets with `μ B ≠ 0`, the conditional measure
-`μ(A | B) := μ(A ∩ B) / μ B` is well-defined in the value field, lies in [0, 1],
-and conditioning on a single point (mass ε) yields a genuine probability — e.g.
-`μ({x} | {x, y}) = 1/2` — where real-valued measures produce the undefined 0/0.
-*Key insight:* division by ε is legal in a *field*, so ratios of order-1
-quantities collapse to order-0 reals; conditioning on a (real-) null event
-becomes meaningful in the surreal extension.
-
-### C3. Standard-part retraction recovering Lebesgue measure
-
-**Conjecture.** The order-0 coefficient map `st : K → ℝ`, `st x = (ofLex x).coeff 0`,
-is an ordered-ring retraction sending the infinitesimal measure of every
-elementary set to its classical Lebesgue measure. In the finite model this is
-already visible: `st(prob n A)` is the first coordinate, which is 1 for the whole
-space and 0 for any finite collection of points — exactly the Lebesgue/length
-content of those elementary sets.
-
-Further directions include: countable additivity in an appropriate
-non-Archimedean topology; expectation and integration of `K`-valued random
-variables; and a full surreal-valued ([0, 1]) construction with one infinitesimal
-atom per point, of which the present family `{prob n}` is the finite truncation.
-
----
-
-## 8. Conclusion
-
-We constructed and fully verified a finite family of finitely additive
-probability measures valued in a non-Archimedean ring of infinitesimals. Every
-visible atom carries a positive infinitesimal probability ε strictly below 1
-(`visible_singleton_infinitesimal`, `eps_infinitesimal`); the measure is
-nonnegative (`prob_nonneg`), finitely additive (`prob_union_disjoint`), and
-exactly normalized (`prob_univ`); and a single closed form
-(`prob_eq_closed_form`) computes every event. The "impossible fair lottery" is
-impossible only over the Archimedean reals. Given an infinitesimal to spend,
-probability can make the impossible merely improbable — and do so lawfully.
+The restrictions are essential. We do not assign masses to all subsets or all Borel sets of $[0,1]$. We do not define infinite sums of surreal values, and hence do not assert $\sigma$-additivity. Rather than hiding these boundaries, we make them explicit and show exactly how far elementary surreal arithmetic and finite cardinality identities carry the theory.
+
+## 2. Surreal preliminaries
+
+### 2.1 Conway cuts
+
+A surreal number may be represented by a cut
+
+$$
+\{L\mid R\},
+$$
+
+where $L$ and $R$ are collections of previously constructed surreal numbers such that every member of $L$ is strictly less than every member of $R$. The cut denotes the simplest surreal lying above every left option and below every right option. For the present construction, only the order consequences of this description are needed.
+
+**Definition 2.1 (Dyadic surreal infinitesimal).** Define
+
+$$
+\varepsilon=\left\{0\ \middle|\ 1,\frac12,\frac14,\frac18,\ldots\right\}
+=\left\{0\ \middle|\ 2^{-n}:n\in\mathbb N\right\}.
+$$
+
+Here $\mathbb N$ contains zero, so the first right option is $2^0=1$.
+
+The defining options are correctly ordered because $0<2^{-n}$ for every $n$. Thus the cut defines a surreal number.
+
+**Lemma 2.2 (Positivity and dyadic domination).** The number $\varepsilon$ satisfies
+
+$$
+0<\varepsilon<2^{-n}
+$$
+
+for every $n\in\mathbb N$.
+
+**Proof sketch.** A number represented by a valid cut lies strictly above each left option and strictly below each right option. Zero is the sole left option, while every $2^{-n}$ is a right option. Applying these two order properties gives the claim. $\square$
+
+This is a genuine infinitesimal property. If $r>0$ were real, the Archimedean property would provide an $n$ with $2^{-n}<r$, so no positive real $r$ lies below every $2^{-n}$.
+
+### 2.2 Finite multiples
+
+The probability construction needs not merely $\varepsilon<1$, but $n\varepsilon<1$ for every finite cardinality $n$.
+
+**Lemma 2.3 (Finite-multiple bound).** For every $n\in\mathbb N$,
+
+$$
+n\varepsilon<1.
+$$
+
+**Proof sketch.** The elementary inequality $n\le 2^n$ holds for every natural number $n$. Since $\varepsilon>0$, multiplication by natural numbers preserves the resulting order, and Lemma 2.2 gives $\varepsilon<2^{-n}$. Therefore
+
+$$
+n\varepsilon\le 2^n\varepsilon<2^n2^{-n}=1.
+$$
+
+For $n=0$, this reads $0<1$; the same chain remains valid. $\square$
+
+A useful consequence is that both $n\varepsilon$ and $1-n\varepsilon$ are nonnegative for every finite $n$, with the latter in fact strictly positive.
+
+## 3. The finite–cofinite event algebra
+
+Let $X$ be an infinite set. For $A\subseteq X$, write $A^c=X\setminus A$.
+
+**Definition 3.1 (Admissible event).** A subset $A\subseteq X$ is an admissible event if either $A$ is finite or $A^c$ is finite. In the latter case $A$ is called cofinite. Let
+
+$$
+\mathcal F_X=\{A\subseteq X:A\text{ is finite or }A^c\text{ is finite}\}.
+$$
+
+**Lemma 3.2 (Boolean closure).** The collection $\mathcal F_X$ contains $\varnothing$ and $X$ and is closed under complements and finite unions. Consequently it is a Boolean algebra of subsets of $X$.
+
+**Proof sketch.** The empty set is finite and $X$ is cofinite because $X^c=\varnothing$. Complementation exchanges the alternatives “finite” and “cofinite.” For unions, if both sets are finite, their union is finite. If one set is cofinite, the complement of the union is an intersection contained in the finite complement of that cofinite set, hence is finite. The same argument covers the case in which both sets are cofinite. Closure under intersections follows from complements and unions, or directly from De Morgan’s laws. $\square$
+
+**Lemma 3.3 (Disjoint alternatives).** If $X$ is infinite, no event $A\in\mathcal F_X$ is both finite and cofinite.
+
+**Proof sketch.** If both $A$ and $A^c$ were finite, their union $X=A\cup A^c$ would be finite, contrary to the hypothesis. $\square$
+
+This lemma guarantees that a piecewise probability formula based on the two alternatives is unambiguous.
+
+## 4. The probability construction
+
+**Definition 4.1 (Surreal finite–cofinite probability).** For $A\in\mathcal F_X$, define
+
+$$
+P(A)=
+\begin{cases}
+|A|\varepsilon, & A\text{ is finite},\\[4pt]
+1-|A^c|\varepsilon, & A\text{ is cofinite}.
+\end{cases}
+$$
+
+By Lemma 3.3, exactly one clause applies. The finite clause sums the common point mass over the elements of $A$. The cofinite clause enforces the complement relation $P(A)=1-P(A^c)$.
+
+### 4.1 Normalization and atoms
+
+**Proposition 4.2 (Normalization).** The entire sample space has unit mass:
+
+$$
+P(X)=1.
+$$
+
+**Proof sketch.** The set $X$ is cofinite and $X^c=\varnothing$, whose cardinality is zero. Hence $P(X)=1-0\varepsilon=1$. $\square$
+
+**Proposition 4.3 (Uniform infinitesimal singleton mass).** For every $x\in X$,
+
+$$
+P(\{x\})=\varepsilon,
+$$
+
+and this mass obeys
+
+$$
+0<P(\{x\})<2^{-n}
+$$
+
+for every $n\in\mathbb N$.
+
+**Proof sketch.** A singleton is finite with cardinality one, so Definition 4.1 gives $P(\{x\})=1\varepsilon=\varepsilon$. Lemma 2.2 supplies positivity and all dyadic upper bounds. $\square$
+
+**Proposition 4.4 (Nonnegativity).** Every admissible event has nonnegative mass:
+
+$$
+P(A)\ge0\qquad(A\in\mathcal F_X).
+$$
+
+**Proof sketch.** If $A$ is finite, then $P(A)=|A|\varepsilon\ge0$ because $\varepsilon>0$. If $A$ is cofinite, put $n=|A^c|$. Lemma 2.3 gives $n\varepsilon<1$, so $P(A)=1-n\varepsilon>0$. $\square$
+
+It follows in fact that $0\le P(A)\le1$ for all admissible $A$. For finite $A$, the upper bound is Lemma 2.3. For cofinite $A$, nonnegativity of $|A^c|\varepsilon$ gives $P(A)\le1$.
+
+### 4.2 Finite additivity
+
+**Theorem 4.5 (Finite additivity on disjoint events).** If $A,B\in\mathcal F_X$ and $A\cap B=\varnothing$, then
+
+$$
+P(A\cup B)=P(A)+P(B).
+$$
+
+**Proof sketch.** There are four apparent combinations of finite and cofinite status.
+
+If both $A$ and $B$ are finite, disjointness gives
+
+$$
+|A\cup B|=|A|+|B|.
+$$
+
+Multiplication by $\varepsilon$ yields
+
+$$
+P(A\cup B)=(|A|+|B|)\varepsilon
+=|A|\varepsilon+|B|\varepsilon.
+$$
+
+Suppose $A$ is finite and $B$ is cofinite. Since $A\cap B=\varnothing$, one has $A\subseteq B^c$. Decompose the finite set $B^c$ as the disjoint union
+
+$$
+B^c=A\mathbin{\dot\cup}(A^c\cap B^c).
+$$
+
+The second term is exactly $(A\cup B)^c$. Therefore
+
+$$
+|B^c|=|A|+|(A\cup B)^c|.
+$$
+
+Writing $r=|(A\cup B)^c|$ gives
+
+$$
+\begin{aligned}
+P(A)+P(B)
+&=|A|\varepsilon+1-|B^c|\varepsilon\\
+&=|A|\varepsilon+1-(|A|+r)\varepsilon\\
+&=1-r\varepsilon\\
+&=P(A\cup B).
+\end{aligned}
+$$
+
+The case in which $A$ is cofinite and $B$ finite is symmetric.
+
+Finally, two cofinite events cannot be disjoint. If they were, then $A\cap B=\varnothing$ would imply by De Morgan’s law that
+
+$$
+A^c\cup B^c=X.
+$$
+
+The left side is a union of two finite sets and is therefore finite, contradicting the infinitude of $X$. Thus the fourth case is impossible. $\square$
+
+By induction, Theorem 4.5 extends to every finite pairwise-disjoint family $A_1,\ldots,A_k$ of admissible events:
+
+$$
+P\left(\bigcup_{i=1}^k A_i\right)=\sum_{i=1}^kP(A_i).
+$$
+
+### 4.3 Complement and monotonicity consequences
+
+Although the construction is defined piecewise, standard finite-probability identities follow.
+
+**Corollary 4.6 (Complement law).** For every $A\in\mathcal F_X$,
+
+$$
+P(A^c)=1-P(A).
+$$
+
+**Proof sketch.** The events $A$ and $A^c$ are disjoint and have union $X$. Apply Theorem 4.5 and Proposition 4.2 to obtain $1=P(A)+P(A^c)$, then rearrange. Equivalently, the identity follows directly from the two clauses of Definition 4.1. $\square$
+
+**Corollary 4.7 (Monotonicity).** If $A,B\in\mathcal F_X$ and $A\subseteq B$, then
+
+$$
+P(A)\le P(B).
+$$
+
+**Proof sketch.** The difference $B\setminus A=B\cap A^c$ is admissible by Boolean closure, and $B$ is the disjoint union of $A$ and $B\setminus A$. Theorem 4.5 and nonnegativity give
+
+$$
+P(B)=P(A)+P(B\setminus A)\ge P(A).
+$$
+
+$\square$
+
+**Corollary 4.8 (Two-event inclusion–exclusion).** For all $A,B\in\mathcal F_X$,
+
+$$
+P(A\cup B)=P(A)+P(B)-P(A\cap B).
+$$
+
+**Proof sketch.** Decompose $A\cup B$ into the three pairwise-disjoint admissible events $A\setminus B$, $B\setminus A$, and $A\cap B$. Apply finite additivity to this decomposition and to the corresponding decompositions of $A$ and $B$, then cancel common terms. $\square$
+
+## 5. The unit interval
+
+The set $[0,1]$ is infinite, so the preceding theory applies directly.
+
+**Theorem 5.1 (Infinitesimal probability on the unit interval).** Let
+
+$$
+X=[0,1]=\{x\in\mathbb R:0\le x\le1\}
+$$
+
+and let $\mathcal F_X$ be its finite–cofinite event algebra. There exists a surreal-valued function $P:\mathcal F_X\to\mathbf{No}$ such that:
+
+1. $P(X)=1$;
+2. $P(A)\ge0$ for every $A\in\mathcal F_X$;
+3. for every $x\in[0,1]$, one has $P(\{x\})=\varepsilon>0$ and $P(\{x\})<2^{-n}$ for all $n\in\mathbb N$;
+4. for disjoint $A,B\in\mathcal F_X$,
+
+   $$
+   P(A\cup B)=P(A)+P(B).
+   $$
+
+Here $\mathbf{No}$ denotes the surreal numbers and $\varepsilon$ is the cut of Definition 2.1.
+
+**Proof sketch.** The interval $[0,1]$ contains infinitely many points, for example the distinct sequence $0,1/2,1/3,\ldots$. Apply Definition 4.1 and Propositions 4.2–4.4 together with Theorem 4.5. $\square$
+
+The theorem realizes equal positive point masses without disturbing normalization. It is important, however, that the event algebra does not contain a typical interval. For example, $[0,1/2]$ is infinite and its complement relative to $[0,1]$ is also infinite, so it is not in $\mathcal F_X$. The construction therefore supplements, rather than reproduces, ordinary length-based probability.
+
+## 6. Exact symbolic computation
+
+Surreal arithmetic is not needed in full generality to compute values in the image of $P$. Every value has one of the forms
+
+$$
+n\varepsilon\quad\text{or}\quad1-n\varepsilon,
+$$
+
+with $n\in\mathbb N$. It is convenient to encode the affine expression $a+b\varepsilon$ by the integer pair $(a,b)$. For probabilities in this construction, $a\in\{0,1\}$ and either $(a,b)=(0,n)$ or $(1,-n)$.
+
+**Algorithm 6.1 (Event-mass evaluation).** Given an event description tagged as finite with cardinality $n$, return $(0,n)$. Given one tagged as cofinite with complement cardinality $n$, return $(1,-n)$.
+
+The runtime is $O(1)$ once the relevant cardinality is supplied, and the memory use is $O(1)$. If an explicit finite set is supplied instead, deduplicating and counting its elements takes expected $O(n)$ time with hashing and $O(n)$ memory.
+
+**Algorithm 6.2 (Disjoint-union audit).** For two explicitly represented finite or cofinite events, first test the structural disjointness condition. Then calculate the two input masses and the union mass from cardinalities, add affine pairs componentwise, and compare the result.
+
+For two finite events, disjointness is ordinary set disjointness and the union is finite. For a finite event $F$ and a cofinite event $X\setminus M$, disjointness is equivalent to $F\subseteq M$; the union is cofinite and misses $M\setminus F$. Two cofinite events over an infinite universe are never disjoint. With hash-set representations, these operations take expected $O(|F|+|M|)$ time and comparable memory.
+
+As an example, let a cofinite event omit a five-element set $M$, and let a finite disjoint event contain two members of $M$. Then
+
+$$
+P(X\setminus M)=1-5\varepsilon,
+\qquad P(F)=2\varepsilon.
+$$
+
+Their union omits the remaining three members of $M$, and
+
+$$
+P(F\cup(X\setminus M))=1-3\varepsilon
+=(1-5\varepsilon)+2\varepsilon.
+$$
+
+These computations are symbolic. Replacing $\varepsilon$ by a small floating-point proxy can illustrate coefficient bookkeeping, but no fixed positive real proxy satisfies $n\varepsilon<1$ for every natural number $n$. Exact affine representation preserves the relevant distinction.
+
+## 7. Interpretation and applications
+
+### 7.1 Resolution of the point-mass tension
+
+The construction shows that three statements can coexist:
+
+$$
+P(\{x\})>0\quad\text{for every }x\in X,
+$$
+
+$$
+P(X)=1,
+$$
+
+and finite additivity on the chosen event algebra. The apparent tension comes from importing an Archimedean inference: for a real $p>0$, sufficiently many copies exceed one. The surreal $\varepsilon$ violates precisely that inference while retaining ordered addition and multiplication.
+
+### 7.2 Permutation symmetry
+
+The measure is invariant under every permutation of $X$. A bijection preserves finite cardinality and complement cardinality, so
+
+$$
+P(\pi(A))=P(A)
+$$
+
+for every permutation $\pi:X\to X$ and every admissible event $A$. Thus no point is privileged. The finite–cofinite algebra records only the number of exceptional points, not their identities.
+
+### 7.3 Rare-event bookkeeping
+
+The affine form $1-n\varepsilon$ distinguishes cofinite events that ordinary zero–one finite–cofinite probability would identify. Missing one point has mass $1-\varepsilon$; missing a thousand points has mass $1-1000\varepsilon$. Both have ordinary real shadow one, but their infinitesimal corrections retain finite-resolution information. Similarly, finite events of different cardinalities all have real shadow zero but distinct surreal masses.
+
+This suggests applications wherever finite exceptions should be ranked without assigning them ordinary positive weight. Examples include idealized symmetry models, perturbative bookkeeping, and decision rules that compare events lexicographically by their ordinary and infinitesimal components. Such applications require care: the present theorem supplies algebraic probability identities, not a complete theory of expectation, conditioning, or infinite stochastic processes.
+
+### 7.4 Relation to hyperfinite intuition
+
+A hyperfinite model imagines an infinite natural number $N$ and a grid of $N$ equally likely atoms, each of mass $1/N$. Every atom then has a positive infinitesimal mass, while the grid has total mass one. The present construction resembles this picture but proceeds through a specific surreal cut and does not choose an infinite grid cardinality. Its event algebra is described directly by finite exceptions. Developing a precise comparison requires a common framework for the relevant non-Archimedean values and a standard-part operation.
+
+## 8. Scope and limitations
+
+### 8.1 Finite rather than countable additivity
+
+The theorem proves additivity for disjoint pairs and hence for finite disjoint families. It does not assert countable additivity. A countably additive law would require a defined meaning for
+
+$$
+\sum_{k=0}^{\infty}P(A_k)
+$$
+
+in the surreal codomain. Infinite surreal sums are not automatically supplied by the ordered-field operations; admissibility, convergence, and possibly the support of the family must be specified.
+
+Moreover, even ordinary $\sigma$-additivity concerns countable unions, not an uncountable sum over all points of $[0,1]$. The equation $P([0,1])=1$ is not obtained by summing the singleton masses over an uncountable index set.
+
+### 8.2 Restricted event algebra
+
+The finite–cofinite algebra omits most geometrically interesting subsets of $[0,1]$. Equal point masses alone cannot determine an interval mass: many assignments to larger algebras could agree on all finite and cofinite sets. Extending the domain requires additional principles, perhaps compatibility with interval length, translation symmetry, or a standard-part map. These principles can conflict and must be checked rather than presumed.
+
+### 8.3 No numerical approximation of the infinitesimal property
+
+Any floating-point number $e>0$ eventually violates $ne<1$. Numerical demonstrations can check finite cardinality identities and affine coefficient arithmetic, but they cannot establish non-Archimedeanness. The mathematical content lies in the order relations defining $\varepsilon$.
+
+## 9. Future directions
+
+Several extensions are natural.
+
+First, the event collection can be packaged abstractly as a Boolean algebra and the probability as an ordered-ring-valued finitely additive content. This would make complement, monotonicity, bounds, and inclusion–exclusion available through a reusable interface.
+
+Second, one can seek larger event algebras generated by interval cells together with infinitesimal atoms. The main issue is compatibility: assigning the same infinitesimal to every real point does not uniquely determine, and may constrain, interval masses.
+
+Third, a hyperfinite grid with $N$ atoms of mass $1/N$ could be compared with the present cut-based model. A standard-part-like map on a suitable ring of finite surreal values might send all finite masses to zero and all cofinite masses to one, recovering the ordinary zero–one probability on the same event algebra.
+
+Fourth, a theory of admissible countable sums of nonnegative surreal families would make questions of $\sigma$-additivity precise. Only after the summation semantics are fixed can countable additivity be meaningfully tested.
+
+Finally, there is a natural uniqueness problem: characterize permutation-invariant normalized finitely additive probabilities on $\mathcal F_X$ with a prescribed singleton mass $\varepsilon$. Finite additivity already forces $P(A)=|A|\varepsilon$ for finite $A$, and normalization plus complements forces $P(A)=1-|A^c|\varepsilon$ for cofinite $A$. Thus the present rule is the unique such measure once the singleton mass and standard finite-additivity axioms are fixed.
+
+## 10. Conclusion
+
+A concrete Conway cut supplies a positive surreal number $\varepsilon$ below every dyadic $2^{-n}$. The elementary bound $n\le2^n$ then ensures that every finite multiple $n\varepsilon$ remains below one. This arithmetic fact fits exactly with the finite–cofinite algebra of an infinite set: finite events receive the sum of their point masses, while cofinite events receive one minus the mass of their finite exceptions.
+
+The resulting function is nonnegative, normalized, permutation-invariant, and finitely additive. On $[0,1]$, every point has the same nonzero infinitesimal mass even though the whole interval has mass one. The construction is deliberately limited to finite–cofinite events and finite sums, drawing a clear line between an established non-Archimedean probability model and the unresolved tasks of enlarging the event domain and defining infinite surreal summation.

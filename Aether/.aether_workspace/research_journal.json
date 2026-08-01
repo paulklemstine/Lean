@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4ffa8161",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Transfinite Computation with Cellular Automata on ω²\n\n## Current state\n\n`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`\ndevelops a two-layer semantics",
-      "quality_score": 0.6,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-24T17:59:57",
-      "title": "Close Proofs: Cellular Automata at the Ordinals: Transfinite Computation"
-    },
-    {
       "cycle_id": "06d71b6e",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n`Geometry/HilbertChessLines.lean` develops a self-contained theory of long-range\n(rook / bishop / queen / arbitrary-ray) attackers on the infinite Hilbert board\n`ℤ × ℤ`, modelled",
@@ -2501,6 +2491,16 @@
       "theorem_count": 38,
       "timestamp": "2026-08-01T23:21:37",
       "title": "Information Geometry: Fisher Metric on Statistical Models"
+    },
+    {
+      "cycle_id": "b58f013e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\n- Extend the exact finite classification to larger boxes and additional exponent pairs, especially `(2, 5)`, `(3, 4)`, and `(3, 5)`.\n- Develop valuation lemmas for `x^a - y^b`, in",
+      "quality_score": 0.6972499999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-01T23:21:41",
+      "title": "Catalan's Conjecture Generalizations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7496799999999999
     }
   ],
-  "last_updated": "2026-08-01T23:21:37",
+  "last_updated": "2026-08-01T23:21:41",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "7277c96e",
-        "quality": 0.75,
-        "theorems": 18,
-        "title": "Beal's Conjecture"
-      },
-      {
         "cycle_id": "1ba7b435",
         "quality": 0.6243783783783784,
         "theorems": 37,
@@ -3699,6 +3693,12 @@
         "quality": 0.686,
         "theorems": 15,
         "title": "1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b"
+      },
+      {
+        "cycle_id": "b58f013e",
+        "quality": 0.6972499999999999,
+        "theorems": 10,
+        "title": "Catalan's Conjecture Generalizations"
       }
     ],
     "Physics": [
