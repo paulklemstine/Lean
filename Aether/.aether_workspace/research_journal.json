@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cb7978a9",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: complex-weighted undirected random graphs\n\nThis cycle deepened the theory of the **fixed-amplitude model**, where every present\nedge of an undirected graph carries a single common",
-      "quality_score": 0.55,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-24T19:55:02",
-      "title": "This cycle deepened the theory of the fixed-amplitude model, where every present"
-    },
-    {
       "cycle_id": "edb35a0b",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Tropical Phase-Transition Models\n\nThe file `TropicalPhaseTransition.lean` proves a self-contained chain of results\nabout the tropical order parameter `order κ c x = max(κ·(x − c),",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-08-01T23:25:37",
       "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
+    },
+    {
+      "cycle_id": "8eaed4e7",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Clique-Incidence Codegrees\n\nThe formal results in `Catalog/Algebra/RamseyTheory/CliqueIncidenceCodegrees.lean`\nestablish that, for `0 < r ≤ k`, the clique-incidence construction h",
+      "quality_score": 0.692,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-08-01T23:25:42",
+      "title": "**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8021799999999999
     }
   ],
-  "last_updated": "2026-08-01T23:25:37",
+  "last_updated": "2026-08-01T23:25:42",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "6296b01e",
-        "quality": 0.75,
-        "theorems": 6,
-        "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
-      },
-      {
         "cycle_id": "f8a71afd",
         "quality": 0.75276,
         "theorems": 10,
@@ -3079,6 +3073,12 @@
         "quality": 0.7781,
         "theorems": 13,
         "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
+      },
+      {
+        "cycle_id": "8eaed4e7",
+        "quality": 0.692,
+        "theorems": 6,
+        "title": "**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
       }
     ],
     "Applications": [
