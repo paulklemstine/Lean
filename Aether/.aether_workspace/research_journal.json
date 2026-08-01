@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ec157a87",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Avoidance of t-fold sumsets in dense sets\n\nThe results established here pin down the *sharp linear* growth of iterated\nsumsets and the deterministic avoidance regime it induces.",
-      "quality_score": 0.57,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-24T13:46:59",
-      "title": "Avoidance of t-fold sumsets in dense subsets of [n]"
-    },
-    {
       "cycle_id": "b519e277",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe certified census of fundamental discriminants with `|D| ≤ 1000` — exactly `608`, split as\n`303` positive and `305` negative — turns a heuristic bounded test into a proven fini",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-08-01T18:22:53",
       "title": "Bridge: Fourier Analysis as a Functor"
+    },
+    {
+      "cycle_id": "74a8a74b",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n* Package `hypergeometricCoeff` as a `PowerSeries ℂ` and derive the displayed\n  coefficient operator from formal differentiation and multiplication by `X`.\n* Prove convergence for",
+      "quality_score": 0.69669,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-08-01T18:22:59",
+      "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.80505
     }
   ],
-  "last_updated": "2026-08-01T18:22:53",
+  "last_updated": "2026-08-01T18:22:59",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1f5ea34f",
-        "quality": 0.77698,
-        "theorems": 16,
-        "title": "EML Number Theory: Transcendence and Algebraic Independence"
-      },
-      {
         "cycle_id": "560cda23",
         "quality": 0.686,
         "theorems": 38,
@@ -3141,6 +3135,12 @@
         "quality": 0.7986800000000001,
         "theorems": 19,
         "title": "EML Number Theory: Transcendence and Algebraic Independence"
+      },
+      {
+        "cycle_id": "74a8a74b",
+        "quality": 0.69669,
+        "theorems": 6,
+        "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
       }
     ],
     "Bridges": [

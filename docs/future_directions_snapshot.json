@@ -1162,6 +1162,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6c98f572 (Q=0.805), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) i",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_6c98f572_c4dd1d3a",
+    "lineage_refs": [],
+    "priority_score": 0.90505,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6c98f572",
+    "status": "available",
+    "timestamp": "2026-08-01T18:22:53.127464+00:00",
+    "title": "Deepening: Bridge: Fourier Analysis as a Functor"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
     "domain_bridges": [],
     "domains": [
@@ -2288,25 +2307,6 @@
     "status": "available",
     "timestamp": "2026-07-29T17:48:52.827384+00:00",
     "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "a7f30302",
-    "description": "Building on cycle 67548200 (Q=0.792), which proved 34 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA ru",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_67548200_2df4faa1",
-    "lineage_refs": [],
-    "priority_score": 0.8916099999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "67548200",
-    "status": "in_progress",
-    "timestamp": "2026-07-30T14:40:38.463626+00:00",
-    "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
   {
     "ambition_level": "extension",
@@ -4897,7 +4897,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "645d6476",
     "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cramér-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
     "domain_bridges": [],
     "domains": [
@@ -4911,7 +4911,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697848+00:00",
     "title": "Information Geometry: Fisher Metric on Statistical Models"
   },
@@ -5137,26 +5137,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Beal's Conjecture: Computational Evidence and Special Cases"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "6c98f572",
-    "description": "Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) is contravariant.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges",
-      "Computation"
-    ],
-    "id": "seed_347",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Bridge: Fourier Analysis as a Functor"
   },
   {
     "ambition_level": "extension",
@@ -5640,26 +5620,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "74a8a74b",
-    "description": "Prove that the Gamma function Gamma(z) is a meromorphic EML function (it has no algebraic singularities). Show that the Riemann zeta function zeta(s) is not an EML function (it has essential singularities). Formalize the hypergeometric function _2F_1(a,b;c;z) and prove that it satisfies an EML differential equation (Gauss's hypergeometric equation).",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "seed_373",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that for overparameterized neural networks, almost all critical points are saddle points, not local minima. Formalize the Hessian spectrum at critical points. Show that the loss landscape satisfies the strict saddle property: the Hessian has a negative eigenvalue at non-minimum critical points. Prove that SGD escapes strict saddles in polynomial time.",
     "domain_bridges": [],
@@ -5902,7 +5862,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b912198",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domain_bridges": [],
     "domains": [
@@ -5916,7 +5876,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -10211,7 +10171,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d333f65d",
     "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
     "domain_bridges": [],
     "domains": [
@@ -10224,7 +10184,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Percolation Threshold"
   },
@@ -14681,6 +14641,66 @@
     "status": "available",
     "timestamp": "2026-08-01T17:25:22.274896+00:00",
     "title": "The formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Sharp obstruction period for elementary rules.** Determine whether cycle\n   length 4 is necessary in `reversible_small_cycles_iff`: specifically, test\n   and prove or refute that bijectivity on cycles of lengths 1, 2, and 3 already\n   forces the Wolfram rule to lie in `{15, 51, 85, 170, 204, 240}`.\n\n2. **Ternary radius-one finite-window classification.** For alphabet `Fin 3`,\n   classify all local rules `Fin 3 → Fin 3 → Fin 3 → Fin 3` whose global maps\n   are bijective on every nonempty finite cycle, and test the falsifiable claim\n   that every such rule is a single-coordinate rule followed by a permutation\n   of `Fin 3`.\n\n3. **Uniform finite obstruction bound for larger alphabets.** For each finite\n   alphabet size `q ≥ 2`, determine whether there is a number `B(q)` such that\n   any radius-one rule reversible on cycles `1,…,B(q)` is reversible on every\n   finite cycle. A first concrete target is to prove or refute `B(3) ≤ 8` by\n   exhaustive computation followed by a Lean certificate.\n\n4. **Faithfulness of the coordinate/alphabet action.** For `n ≥ 3` and an\n   alphabet with at least two elements, prove that\n   `coordinateAlphabetEquiv p e = coordinateAlphabetEquiv q d` implies\n   `p = q ∧ e = d`, or produce an explicit counterexample. This would identify\n   the exact direct-product subgroup represented by independent site and\n   alphabet permutations.\n\n5. **Infinite-configuration extension.** On configurations `ℤ → α`, formalize\n   radius-one global maps and prove that every single-coordinate permutative\n   rule has an inverse which is again a radius-one cellular automaton, with the\n   same explicit opposite-shift formula established here for finite cycles.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0885",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a7f30302",
+    "status": "available",
+    "timestamp": "2026-08-01T18:21:29.053501+00:00",
+    "title": "1. **Sharp obstruction period for elementary rules.** Determine whether cycle"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Fourier Analysis as a Functor\n\n## What this phase establishes\n\n`Catalog/Bridges/FourierAsFunctor.lean` proves a self-contained finite-coordinate model of the requested bridge.\n\n1. **Contravariant character duality.** For finite free coordinate modules, transpose defines a functor from the opposite matrix category. The composition law is proved explicitly. The file also proves the corresponding composition-reversal theorem for Mathlib's actual circle-valued `PontryaginDual.map`.\n2. **Bidual equivalence.** Transposition twice is naturally isomorphic to the identity, yielding an equivalence between the finite-free matrix category's opposite and itself. This is a finite-dimensional algebraic analogue of Pontryagin biduality.\n3. **Fourier inversion.** The two-point DFT over `ℚ` has an explicit inverse and therefore gives an isomorphism in the matrix category.\n4. **Contrarian disproof: unrestricted naturality.** The two-point DFT does not commute with every endomorphism (a coordinate projection is a certified counterexample). Therefore Fourier matrices are not a natural endomorphism of the identity functor on a category whose arrows are all linear maps.\n5. **Contrarian disproof: variance is not uncertainty.** Contravariant duality alone does not imply a support uncertainty bound. The identity transform and a delta vector give support product `1 < 2`. Orthogonality or a suitable nondegenerate Fourier pairing is additional essential structure.\n\n## Recommended next formalization steps\n\n### 1. The category of locally compact abelian groups\n\nPackage commutative topological groups with local compactness and Hausdorffness as bundled objects, with continuous homomorphisms as arrows. Lift `PontryaginDual.map` to a functor from the opposite category. The composition theorem in the present file is the arrow-level core.\n\n### 2. Full Pontryagin biduality\n\nConstruct the evaluation morphism\n\n`A → PontryaginDual (PontryaginDual A)`, `a ↦ (χ ↦ χ a)`,\n\nprove continuity, and then prove it is a topological group isomorphism for LCA groups. The finite-free transpose equivalence here provides the exact categorical shape but not the analytic LCA theorem.\n\n### 3. Correct naturality domain for Fourier transform\n\nRather than naturality for all linear maps, identify morphisms compatible with Haar measure and character pullback. Candidate settings include finite abelian groups with group isomorphisms, or an indexed/kernel formalism where pushforward and pullback are tracked separately. State Fourier naturality between the appropriate function-space functors, not as an endomorphism of one identity functor.\n\n### 4. Categorical uncertainty with substantive hypotheses\n\nFormalize finite-group support uncertainty from an invertible character table plus a nonvanishing-minor or orthogonality hypothesis. The counterexample proved here should remain as a regression theorem showing that mere contravariance cannot discharge those assumptions.\n\n### 5. Analytic Fourier transform\n\nAfter Haar integration infrastructure is fixed, define the Fourier transform on `L¹(A)` with values on `PontryaginDual A`, prove change-of-variables naturality for measure-compatible isomorphisms, and connect Fourier inversion to Pontryagin biduality.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0886",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6c98f572",
+    "status": "available",
+    "timestamp": "2026-08-01T18:22:48.999372+00:00",
+    "title": "`Catalog/Bridges/FourierAsFunctor.lean` proves a self-contained finite-coordinat"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n* Package `hypergeometricCoeff` as a `PowerSeries ℂ` and derive the displayed\n  coefficient operator from formal differentiation and multiplication by `X`.\n* Prove convergence for `|z| < 1` under the usual restriction on `c`, and identify\n  the sum with an analytic solution of Gauss's differential equation.\n* Develop the Pochhammer-symbol closed form and classical transformation formulas.\n* Connect terminating cases to Jacobi polynomials.\n* Formalize a precise differential-field notion of EML function before addressing\n  Gamma or zeta classification. In particular, the prompt's assertion that the\n  Riemann zeta function has essential singularities needs mathematical correction:\n  its standard meromorphic continuation has a simple pole at `s = 1`, not an\n  essential singularity.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0887",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "74a8a74b",
+    "status": "available",
+    "timestamp": "2026-08-01T18:22:56.267013+00:00",
+    "title": "* Package `hypergeometricCoeff` as a `PowerSeries ℂ` and derive the displayed"
   },
   {
     "ambition_level": "extension",
