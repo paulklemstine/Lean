@@ -1720,6 +1720,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 9fb19498 (Q=0.790), which proved 11 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_9fb19498_3f9eeeb2",
+    "priority_score": 0.89021,
+    "research_mode": "team",
+    "source_exp_id": "9fb19498",
+    "status": "available",
+    "timestamp": "2026-08-01T19:43:12.027506+00:00",
+    "title": "Deepening: Tropical Intersection Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
     "domains": [
       "NumberTheory",
@@ -2102,17 +2116,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Sheaf Theory: Gluing Data on Spheres"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b58f013e",
     "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "seed_205",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Catalan's Conjecture Generalizations"
   },
@@ -4347,22 +4362,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Pythagorean Triple Group Structure"
-  },
-  {
-    "consumed_by_exp_id": "9fb19498",
-    "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "seed_051",
-    "phase": "A",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Intersection Theory"
   },
   {
     "consumed_by_exp_id": "7b912198",
@@ -10914,6 +10913,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T18:22:56.267013+00:00",
     "title": "* Package `hypergeometricCoeff` as a `PowerSeries \u2102` and derive the displayed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton polygons are lattice polygons `P` and `Q`, the stable intersection number equals `area(P + Q) - area(P) - area(Q)` (with normalized lattice area).\n\n2. **Perturbation invariance.** Every finite balanced plane tropical intersection admits a sufficiently small generic translation for which the total local determinant multiplicity is unchanged.\n\n3. **Support bound with positive multiplicities.** If every supported local multiplicity is positive and the total intersection number is `d * e`, then the support has cardinality at most `d * e`, with equality exactly when every local multiplicity is one.\n\n4. **Realizability correspondence.** For transverse intersections of realizable plane tropical curves over a complete non-Archimedean field, valuation induces a support- and multiplicity-preserving finite correspondence with the classical intersection scheme.\n\n5. **Higher-dimensional multidegree formula.** For `n` transverse tropical hypersurfaces in tropical projective `n`-space of degrees `d\u2081, \u2026, d\u2099`, the weighted zero-dimensional stable intersection has total multiplicity `\u220f i, d\u1d62`.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0888",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9fb19498",
+    "status": "available",
+    "timestamp": "2026-08-01T19:43:07.771912+00:00",
+    "title": "1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton po"
   },
   {
     "consumed_by_exp_id": "",

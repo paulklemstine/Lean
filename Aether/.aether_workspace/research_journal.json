@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7edbd52d",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions for the union-closed sets formalization\n\nThe unrestricted statement requested in the mission is Frankl's union-closed sets conjecture and remains unresolved. The Lean development t",
-      "quality_score": 0.78958,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-30T14:41:47",
-      "title": "Frankl's Union-Closed Conjecture"
-    },
-    {
       "cycle_id": "bf94368f",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\n## Corrected mathematical status\n\nThe proposed powers-of-two family is a **strictly descending**, separated\nfiltration, not an ascending chain.  The formal development proves this",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-01T18:22:53",
       "title": "Bridge: Fourier Analysis as a Functor"
+    },
+    {
+      "cycle_id": "9fb19498",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton polygons are lattice polygons `P` and `Q`, the stable intersection number equals `area(P + Q) - area(",
+      "quality_score": 0.79021,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-01T19:43:11",
+      "title": "Tropical Intersection Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b519e277",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe certified census of fundamental discriminants with `|D| ≤ 1000` — exactly `608`, split as\n`303` positive and `305` negative — turns a heuristic bounded test into a proven fini",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-24T14:20:08",
-      "title": "The completed Lean development proves the local arithmetic dictionary for the qu"
-    },
     {
       "cycle_id": "b873ab80",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-01T18:22:59",
       "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
+    },
+    {
+      "cycle_id": "9fb19498",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton polygons are lattice polygons `P` and `Q`, the stable intersection number equals `area(P + Q) - area(",
+      "quality_score": 0.79021,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-01T19:43:11",
+      "title": "Tropical Intersection Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ff2a2247",
-      "domain": "Combinatorics",
-      "name": "The",
-      "quality": 0.7582199999999999
-    },
-    {
-      "cycle_id": "ff2a2247",
-      "domain": "Combinatorics",
-      "name": "kelly_double_count",
-      "quality": 0.7582199999999999
-    },
-    {
-      "cycle_id": "ff2a2247",
-      "domain": "Combinatorics",
-      "name": "inducedCopyFamily_uniform",
-      "quality": 0.7582199999999999
-    },
     {
       "cycle_id": "e86cdc26",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "pontryagin_hom_contravariant",
       "quality": 0.80505
+    },
+    {
+      "cycle_id": "9fb19498",
+      "domain": "Tropical",
+      "name": "support_card_le_number",
+      "quality": 0.79021
+    },
+    {
+      "cycle_id": "9fb19498",
+      "domain": "Tropical",
+      "name": "tropicalization_preserves_intersection_number",
+      "quality": 0.79021
+    },
+    {
+      "cycle_id": "9fb19498",
+      "domain": "Tropical",
+      "name": "in",
+      "quality": 0.79021
     }
   ],
-  "last_updated": "2026-08-01T18:22:59",
+  "last_updated": "2026-08-01T19:43:11",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "7b875dce",
-        "quality": 0.71,
-        "theorems": 13,
-        "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric M"
-      },
-      {
         "cycle_id": "92c4b5fc",
         "quality": 0.72,
         "theorems": 22,
@@ -4009,6 +4003,12 @@
         "quality": 0.80043,
         "theorems": 26,
         "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
+      },
+      {
+        "cycle_id": "9fb19498",
+        "quality": 0.79021,
+        "theorems": 11,
+        "title": "Tropical Intersection Theory"
       }
     ]
   }

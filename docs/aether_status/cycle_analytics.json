@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-01T18:23:00.249371+00:00",
+  "last_updated": "2026-08-01T19:43:12.311484+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -43878,6 +43878,7 @@
       "outcome_quality": 0.69669,
       "phase": "A_only",
       "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v28",
@@ -43906,6 +43907,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-01T18:23:00.137291+00:00",
       "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1206,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Tropical",
+      "duration_seconds": 4885.006953239441,
+      "end_time": 1785613298.7918541,
+      "files_integrated": 4,
+      "job_id": "9fb19498",
+      "outcome_quality": 0.79021,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19b",
+      "phase_a_quality_score": 0.7932899999999999,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7606,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.6943,
+        "novelty": 0.95,
+        "proof_depth": 0.5847,
+        "usefulness": 0.7924
+      },
+      "quality_score": 0.79021,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785608413.784901,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-01T19:43:12.198322+00:00",
+      "title": "Tropical Intersection Theory"
     }
   ]
 }
