@@ -243,7 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (copyBtn) copyBtn.style.display = 'none';
 
         try {
-            const resp = await fetch(filename + '?v=' + Date.now());
+            const fetchPath = '/' + filename.replace(/^\/+/, '');
+            const resp = await fetch(fetchPath + '?v=' + Date.now());
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             const data = await resp.json();
             window.Aether.packageCache[filename] = data;
@@ -251,15 +252,9 @@ document.addEventListener('DOMContentLoaded', () => {
             window.Aether.currentPackageFilename = filename;
             renderPackage(data, filename);
 
-            renderMathInElement(document.getElementById('package-view'), {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false},
-                    {left: '\\(', right: '\\)', display: false},
-                    {left: '\\[', right: '\\]', display: true}
-                ],
-                throwOnError: false
-            });
+            if (window.renderKaTeXMath) {
+                window.renderKaTeXMath(document.getElementById('package-view'));
+            }
         } catch(err) {
             console.error(err);
             document.getElementById('pkg-title').textContent = 'Error';

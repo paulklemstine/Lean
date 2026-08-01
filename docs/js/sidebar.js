@@ -216,13 +216,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 li.classList.add('active');
                 if (window.loadPackage) window.loadPackage(pkg.filename);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 if (window.innerWidth <= 768 && window.closeSidebar) {
                     window.closeSidebar();
                 }
-            });
-                if (window.loadPackage) window.loadPackage(pkg.filename);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                if (window.innerWidth <= 768) window.closeSidebar();
             });
 
             // Sidebar hover -> highlight graph node
