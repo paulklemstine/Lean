@@ -1,112 +1,117 @@
-# Retrocausal Proof Theory: Exact Limits of Confirmation by Consequences
+# Retrocausal Proof Theory: Logical Boundaries, Backward Certificates, and Consequence-Guided Search
 
 **Aristotle**  
-**July 31, 2026**
+**August 1, 2026**
 
 ## Abstract
 
-We study a propositional model of retrocausal proof theory, in which a candidate proposition is assessed through consequences that have been independently verified and found mutually coherent. The central result gives an exact boundary: for a fixed proposition $P$, the rule that infers $P$ from every verified consequence $Q$ satisfying $P\Rightarrow Q$ is valid if and only if $P$ is already true. An unrestricted version of the rule therefore collapses propositional reasoning by yielding every proposition, including falsehood. The one-element family containing the always-true proposition supplies a universal control: it is a verified, coherent consequence of every candidate, including falsehood, but cannot recover a false antecedent. We then characterize the additional information that makes backward reasoning sound. A backward certificate is an implication from the joint truth of the verified consequences to the candidate proposition. Such a certificate is sufficient for recovery; for a single consequence, two-way certification is exactly logical equivalence. Recovery also follows when one listed consequence is backward-complete, and it persists when further verified consequences are appended. These results separate proof validity from proof search. Consequences may productively guide search, but any validity or compression claim must account for the cost of the backward certificate. We describe algorithms for finite-model experiments, certificate checking, and consequence-guided search, and outline applications to arithmetic proof search, diagnosis, program synthesis, and information-theoretic analysis.
+We study the proposal that a proposition might be established by verifying its logical consequences rather than deriving it directly. At the propositional level, an exact boundary emerges. For a fixed proposition $P$, the rule asserting that $P$ follows from every verified consequence $Q$ of $P$ is valid if and only if $P$ is already true. An unrestricted rule of this form would prove every proposition and is therefore inconsistent. Joint verification guarantees coherence of a finite consequence family, but coherence does not recover the antecedent: the always-true proposition is a verified coherent consequence even of falsehood.
+
+A sound positive theory results from adding a **backward certificate**, an implication from the conjunction of the verified consequences to the candidate proposition. We define a consequence-stable family as one that is both implied by the proposition and jointly sufficient for it, and prove that consequence stability is exactly equivalence between the proposition and the conjunction of the family. We then separate logical recovery from computational guidance. For finite candidate spaces, semantic checks produce a survivor set contained in the original space; a failed candidate yields strict cardinality reduction, a passing target is retained, and unique isolation supplies a backward certificate for target equality. An arithmetic calibration uses positivity and divisibility by $2$ and $3$ to isolate $6$ among the natural numbers below $8$, reducing eight candidates to one. The results establish a disciplined foundation for consequence-guided proof search while clarifying that semantic search compression and syntactic proof compression are distinct questions.
 
 ## 1. Introduction
 
-Ordinary deduction moves from a proposition to its consequences. Given $P$ and an implication $P\Rightarrow Q$, one concludes $Q$. Retrocausal proof theory asks whether some useful traffic can move in the other direction. If a candidate proposition predicts consequences $Q_1,\ldots,Q_n$, and those consequences have all been verified, can their success establish the candidate?
+Mathematical proof is conventionally presented in the forward direction: axioms and hypotheses are transformed by valid inference rules until the desired conclusion is obtained. Mathematical discovery is less linear. A conjecture is often explored through its consequences. Those consequences may be easier to compute, compare, or test than the original statement, and their pattern may sharply constrain the form of a proof.
 
-The idea resembles scientific confirmation. A theory gains credibility when its predictions are observed, and a candidate program becomes plausible when it passes tests. In mathematical logic, however, credibility and deductive validity must be distinguished. Distinct antecedents may share the same consequences. The inference from $P\Rightarrow Q$ and $Q$ to $P$ is not generally valid.
+This motivates a proposed “retrocausal” perspective: infer a theorem from verified consequences that the theorem would entail. The terminology is metaphorical. No temporal or physical reversal is assumed; the question is whether logical information can be used in the reverse direction. At first sight, the proposal resembles scientific confirmation: a theory predicts observations, observations occur, and confidence in the theory rises. Deductive validity, however, is stricter than evidential support. From $P\Rightarrow Q$ and $Q$, one cannot generally infer $P$.
 
-The purpose of this paper is to locate the exact logical boundary and then formulate a sound positive replacement. The analysis is propositional and deliberately minimal. This makes the obstruction independent of any particular proof calculus: it appears before questions about arithmetic syntax, proof trees, or computational complexity arise.
+The purpose of this paper is to identify exactly what survives of the proposal under deductive standards. The answer has two parts.
 
-Our main conclusions are:
+First, forward consequence verification alone cannot recover an antecedent. This obstruction is absolute, not merely a defect of a particular test set. For each fixed $P$, a rule that recovers $P$ from every verified consequence is equivalent to $P$ itself. If such a rule were universal in both $P$ and $Q$, it would imply falsehood. Even requiring the observations to be jointly true and coherent does not help, because the always-true proposition passes these requirements for every candidate.
 
-1. A fixed proposition admits uniform confirmation from arbitrary verified consequences exactly when that proposition is already true.
-2. A rule providing such confirmation for every proposition yields every proposition and is therefore inconsistent.
-3. Verification implies coherence, but coherence does not identify an antecedent.
-4. The family $[\top]$ passes all forward, verification, and coherence checks for every candidate, including $\bot$.
-5. Sound backward inference is restored by a backward certificate from the joint truth of the consequences to the candidate.
-6. For one consequence, forward and backward certificates amount to logical equivalence.
-7. A single backward-complete member of a verified family suffices for recovery.
-8. Recovery remains valid after adding further verified consequences.
-
-These conclusions do not eliminate consequence-guided theorem proving. Rather, they force a distinction between two roles. Consequences may serve as search heuristics, ranking or pruning candidate derivations. A proof of the target, however, must still be supplied by an ordinary derivation or by an explicitly checked reconstruction certificate.
-
-## 2. Propositional framework
-
-We work in ordinary propositional logic. Let $P$ denote a candidate proposition and let
-
-$$
-\mathcal{Q}=[Q_1,\ldots,Q_n]
-$$
-
-be a finite list of propositions.
-
-### Definition 2.1 (Family of consequences)
-
-The list $\mathcal{Q}$ is a **family of consequences of $P$** if
-
-$$
-P\Rightarrow Q_i
-$$
-
-for every index $i$ with $1\le i\le n$.
-
-This condition is purely forward-looking. It says what would hold if $P$ held. It does not assert $P$, nor does it assert any $Q_i$.
-
-### Definition 2.2 (Joint verification)
-
-The list $\mathcal{Q}$ is **jointly verified** if every member is true, equivalently if
-
-$$
-Q_1\land\cdots\land Q_n
-$$
-
-holds. For the empty list, joint verification is the empty conjunction $\top$.
-
-### Definition 2.3 (Coherence)
-
-The list $\mathcal{Q}$ is **coherent** if its joint truth does not imply falsehood:
-
-$$
-\neg\bigl((Q_1\land\cdots\land Q_n)\Rightarrow\bot\bigr).
-$$
-
-In classical propositional semantics, this means that the listed propositions can be true together. The definition is phrased proof-theoretically to emphasize that coherence rules out a derivation of contradiction from their conjunction.
-
-### Definition 2.4 (Backward certificate)
-
-A **backward certificate** for $P$ relative to $\mathcal{Q}$ is a proof of
+Second, consequence-guided reasoning becomes sound when accompanied by a backward certificate. Given a finite family $Q_1,\ldots,Q_n$, the certificate is
 
 $$
 (Q_1\land\cdots\land Q_n)\Rightarrow P.
 $$
 
-A backward certificate is not merely evidence correlated with $P$. It is a reconstruction map: whenever all listed consequences hold, it returns the candidate proposition.
+When each $Q_i$ is verified, the certificate yields $P$. If $P$ also implies every $Q_i$, then $P$ is equivalent to their conjunction. This is the precise content of consequence stability.
 
-These four notions separate issues often conflated in informal discussions. Consequencehood concerns prediction, verification concerns observed truth, coherence concerns compatibility, and certification concerns recoverability.
+The logical and computational roles of consequences must then be distinguished. In finite search, tests can eliminate candidates whether or not they already constitute a proof of the target proposition. Filtering never enlarges the candidate set and strictly shrinks it when some candidate fails. If the tests isolate a unique target, the uniqueness argument itself provides a backward certificate. Thus consequences may guide discovery by reducing search, while a separate checked implication secures validity.
 
-## 3. The exact boundary
+The paper develops this framework from elementary propositional definitions, proves the boundary and recovery theorems, presents a generic filtering algorithm and its guarantees, and concludes with an arithmetic example and a falsifiable proof-complexity research program.
 
-We first analyze the strongest proposed form of backward confirmation: a fixed antecedent $P$ may be inferred from any true proposition $Q$ that follows from it.
+## 2. Logical framework
+
+We work in ordinary propositional logic. Let $P$ be a candidate proposition and let
+
+$$
+\mathcal Q=[Q_1,\ldots,Q_n]
+$$
+
+be a finite list of propositions.
+
+### Definition 2.1 (Consequence family)
+
+The list $\mathcal Q$ is a **family of consequences of $P$** if
+
+$$
+P\Rightarrow Q_i
+$$
+
+for every $i\in\{1,\ldots,n\}$.
+
+This is a pointwise forward condition. It says that truth of $P$ guarantees every listed observation.
+
+### Definition 2.2 (Joint verification)
+
+The list $\mathcal Q$ is **jointly verified** if every member is true, equivalently if
+
+$$
+Q_1\land\cdots\land Q_n
+$$
+
+holds. For the empty list, the empty conjunction is $\top$.
+
+### Definition 2.3 (Coherence)
+
+The list $\mathcal Q$ is **coherent** if its joint truth does not imply falsehood:
+
+$$
+\neg\bigl((Q_1\land\cdots\land Q_n)\Rightarrow\bot\bigr).
+$$
+
+In a classical setting this is equivalent to satisfiability of the conjunction. The implication-oriented definition emphasizes the distinction between possessing the verified conjunction and merely knowing that it is not absurd.
+
+### Definition 2.4 (Backward certificate)
+
+A **backward certificate** for $P$ relative to $\mathcal Q$ is an implication
+
+$$
+(Q_1\land\cdots\land Q_n)\Rightarrow P.
+$$
+
+The certificate is exactly the missing direction in an attempted reversal of consequence.
+
+### Definition 2.5 (Consequence stability)
+
+The family $\mathcal Q$ is **consequence-stable for $P$** if both of the following hold:
+
+1. $P\Rightarrow Q_i$ for every $i$;
+2. $(Q_1\land\cdots\land Q_n)\Rightarrow P$.
+
+The first condition ensures that the tests are necessary for $P$; the second ensures that they are jointly sufficient.
+
+## 3. The boundary of backward confirmation
+
+We begin with one proposed consequence and ask for a uniform reversal principle.
 
 ### Theorem 3.1 (Uniform Confirmation Boundary)
 
-For every proposition $P$, the following are equivalent:
-
-1. for every proposition $Q$, if $P\Rightarrow Q$ and $Q$, then $P$;
-2. $P$.
-
-In symbols,
+For every proposition $P$,
 
 $$
-\bigl[\forall Q,\,((P\Rightarrow Q)\Rightarrow Q\Rightarrow P)\bigr]
+\left[\forall Q,\;((P\Rightarrow Q)\Rightarrow(Q\Rightarrow P))\right]
 \Longleftrightarrow P.
 $$
 
-#### Proof sketch
+Equivalently, the rule “for every $Q$, if $P$ implies $Q$ and $Q$ is verified, then infer $P$” is available for a fixed $P$ exactly when $P$ already holds.
 
-Assume the uniform confirmation property. Choose $Q=\top$. The implication $P\Rightarrow\top$ always holds, and $\top$ is true. The property therefore yields $P$. Conversely, assume $P$. For any $Q$, the desired conclusion is already available, regardless of the premises $P\Rightarrow Q$ and $Q$. Hence the uniform property holds. $\square$
+**Proof sketch.** Assume the uniform rule and choose $Q=\top$. The implication $P\Rightarrow\top$ always holds, and $\top$ is verified, so the rule yields $P$. Conversely, if $P$ is known, then for arbitrary $Q$ the desired conclusion $P$ is immediate, independently of the premises. $\square$
 
-The theorem is an exact characterization, not only a counterexample. Uniform consequence-confirmation does not enlarge the class of established propositions: possessing the rule for $P$ is equivalent to possessing $P$ itself.
+This theorem is stronger than the observation that affirming the consequent can fail in some examples. It characterizes every fixed antecedent for which unrestricted confirmation by consequences would work.
 
-### Corollary 3.2 (Universal collapse)
+### Corollary 3.2 (Universal Collapse)
 
 Suppose a rule satisfies
 
@@ -116,81 +121,61 @@ $$
 
 Then every proposition is true.
 
-#### Proof sketch
+**Proof sketch.** Fix an arbitrary $P$ and apply the rule with $Q=\top$. Since $P\Rightarrow\top$ and $\top$, the rule yields $P$. Because $P$ was arbitrary, all propositions follow. $\square$
 
-Fix arbitrary $P$ and instantiate the rule with $Q=\top$. Since $P\Rightarrow\top$ and $\top$ both hold, the rule yields $P$. Because $P$ was arbitrary, it yields every proposition. $\square$
+### Corollary 3.3 (No Unrestricted Retrocausal Rule)
 
-### Corollary 3.3 (Nonexistence of an unrestricted rule)
-
-There is no sound unrestricted rule that infers an antecedent merely from one verified consequence. Formally,
+There is no valid universal rule of the form
 
 $$
-\neg\forall P\,\forall Q,\quad (P\Rightarrow Q)\Rightarrow Q\Rightarrow P.
+\forall P\,\forall Q,\quad (P\Rightarrow Q)\Rightarrow Q\Rightarrow P.
 $$
 
-#### Proof sketch
+**Proof sketch.** Apply the proposed rule to $P=\bot$ and $Q=\top$. Both $\bot\Rightarrow\top$ and $\top$ hold, so the rule would yield $\bot$. $\square$
 
-If such a rule existed, instantiate it with $P=\bot$ and $Q=\top$. Both $\bot\Rightarrow\top$ and $\top$ hold, so the rule would yield $\bot$. $\square$
+The failure persists under two natural strengthening attempts: requiring verification and requiring coherence.
 
-The use of $\top$ is decisive because it is maximally nondiscriminating. It is a consequence of every antecedent. A verified observation common to all candidates carries no information capable of selecting one candidate.
+### Proposition 3.4 (Verification Implies Coherence)
 
-## 4. Verification, coherence, and the universal control
+Every jointly verified finite family is coherent.
 
-Coherence sounds stronger than verification because it invokes global compatibility. At the propositional level considered here, however, actual joint verification immediately gives coherence.
+**Proof sketch.** Let $Q_1\land\cdots\land Q_n$ be verified. If its truth implied $\bot$, applying that implication to the verified conjunction would produce $\bot$. Hence the implication to falsehood cannot hold. $\square$
 
-### Proposition 4.1 (Verified families are coherent)
+### Proposition 3.5 (Universal True Control)
 
-Every jointly verified finite list of propositions is coherent.
+For every candidate proposition $P$, the singleton family $[\top]$ satisfies all three forward checks:
 
-#### Proof sketch
+1. $P\Rightarrow\top$;
+2. $\top$ is verified;
+3. $[\top]$ is coherent.
 
-Let $V=Q_1\land\cdots\land Q_n$ be the verified conjunction. If $V\Rightarrow\bot$, applying this implication to the available proof of $V$ yields contradiction. Therefore joint truth cannot imply falsehood. $\square$
+**Proof sketch.** Each clause follows from the defining property of $\top$. In particular, assuming $\top\Rightarrow\bot$ and applying it to $\top$ would yield falsehood, so the singleton is coherent. $\square$
 
-This proposition does not support backward recovery. It only says that genuinely verified facts do not jointly produce contradiction within the assumed consistent setting.
+### Proposition 3.6 (Explicit Failure of Recovery)
 
-### Theorem 4.2 (Always-true control)
+The false proposition $\bot$ implies the verified coherent family $[\top]$, but $[\top]$ has no backward certificate for $\bot$.
 
-For every candidate proposition $P$, the singleton list $[\top]$ satisfies all three conditions:
+**Proof sketch.** Falsehood implies every proposition, so $\bot\Rightarrow\top$. The family is verified and coherent by Proposition 3.5. A backward certificate would be $\top\Rightarrow\bot$, which is impossible. $\square$
 
-1. it is a family of consequences of $P$;
-2. it is jointly verified;
-3. it is coherent.
+Propositions 3.4–3.6 locate the precise gap. Coherence rules out internally contradictory observations, but it does not show that those observations identify their proposed source.
 
-#### Proof sketch
+## 4. Backward certificates and consequence stability
 
-Every proposition implies $\top$, so the first condition holds. The proposition $\top$ is true, giving joint verification. Its truth does not imply $\bot$, giving coherence. $\square$
+The negative boundary suggests the correct repair: retain forward consequences for guidance, but require a checked reverse implication for justification.
 
-### Theorem 4.3 (False antecedent counterexample)
+### Theorem 4.1 (Certified Recovery)
 
-For the candidate $P=\bot$, the singleton list $[\top]$ is a verified, coherent family of consequences, but it has no backward certificate.
+Let $\mathcal Q=[Q_1,\ldots,Q_n]$. If $\mathcal Q$ is jointly verified and there is a backward certificate
 
-#### Proof sketch
+$$
+(Q_1\land\cdots\land Q_n)\Rightarrow P,
+$$
 
-The forward implication $\bot\Rightarrow\top$ holds vacuously. The proposition $\top$ is verified and coherent. A backward certificate would be the implication $\top\Rightarrow\bot$, which would yield falsehood from truth and therefore cannot hold. $\square$
+then $P$ holds.
 
-The counterexample isolates the missing ingredient. Forward consequencehood, observed truth, and mutual consistency can all be present while recovery fails. Adding more nondiscriminating consequences does not repair the defect. What matters is not merely the quantity of observations but whether their conjunction excludes competing antecedents.
+**Proof sketch.** Joint verification supplies the antecedent of the backward certificate. Apply the certificate. The additional fact that each $Q_i$ follows from $P$ may establish the intended interpretation of the list, but is not logically needed in this final application. $\square$
 
-## 5. Sound backward reconstruction
-
-The negative results suggest a precise repair: require an implication in the reverse direction from the whole verified bundle.
-
-### Theorem 5.1 (Backward Recovery)
-
-Let $P$ be a proposition and let $\mathcal{Q}=[Q_1,\ldots,Q_n]$. Assume:
-
-1. $P\Rightarrow Q_i$ for every $i$;
-2. every $Q_i$ is true;
-3. $(Q_1\land\cdots\land Q_n)\Rightarrow P$.
-
-Then $P$ is true.
-
-#### Proof sketch
-
-Joint verification supplies $Q_1\land\cdots\land Q_n$. Apply the backward certificate in the third assumption to this conjunction to obtain $P$. $\square$
-
-The forward assumptions do not enter the final modus ponens. They certify that the list deserves to be called a family of consequences of $P$. The logically sufficient data are joint verification and backward reconstruction.
-
-### Theorem 5.2 (Singleton two-way certification)
+### Proposition 4.2 (Singleton Two-Way Certification)
 
 For propositions $P$ and $Q$, if $P\Rightarrow Q$ and $Q\Rightarrow P$, then
 
@@ -198,160 +183,251 @@ $$
 P\Longleftrightarrow Q.
 $$
 
-#### Proof sketch
+**Proof sketch.** The two supplied implications are exactly the two directions of the biconditional. $\square$
 
-The two given implications are exactly the two directions in the definition of logical equivalence. $\square$
+### Proposition 4.3 (Recovery from One Complete Consequence)
 
-Thus, with one consequence, sound backward confirmation is ordinary equivalence. The terminology of retrocausality does not change the logical requirement.
+Let $R$ be a member of a jointly verified family $\mathcal Q$. If $R\Rightarrow P$, then $P$.
 
-### Theorem 5.3 (Recovery from one complete consequence)
+**Proof sketch.** Joint verification yields $R$ because it is a member of $\mathcal Q$. Apply $R\Rightarrow P$. $\square$
 
-Let $\mathcal{Q}=[Q_1,\ldots,Q_n]$ be jointly verified. If a proposition $R$ occurs in $\mathcal{Q}$ and $R\Rightarrow P$, then $P$.
+### Proposition 4.4 (Monotonicity under Verified Extension)
 
-#### Proof sketch
+Suppose a base family $\mathcal B$ has a backward certificate for $P$. If every proposition in the concatenated family $\mathcal B\mathbin{+}\mathcal E$ is verified, then $P$ holds.
 
-Since the list is jointly verified and contains $R$, the proposition $R$ is true. Applying $R\Rightarrow P$ yields $P$. $\square$
+**Proof sketch.** Verification of the concatenation includes verification of every member of $\mathcal B$. Apply the base backward certificate. Additional verified consequences cannot invalidate the recovery already supported by the base. $\square$
 
-This theorem identifies a sparse certificate. The entire conjunction need not be used if one member already contains sufficient information. Other verified consequences may remain useful for search, redundancy, or independent checking.
+The central positive characterization is immediate from the definitions but conceptually important.
 
-### Theorem 5.4 (Monotonicity under verified extension)
+### Theorem 4.5 (Consequence Stability Characterization)
 
-Let $\mathcal{B}$ be a base list and $\mathcal{E}$ an additional list. If the joint truth of $\mathcal{B}$ implies $P$, and every proposition in the concatenated list $\mathcal{B}\mathbin{+}\mathcal{E}$ is verified, then $P$.
-
-#### Proof sketch
-
-Verification of the concatenated list includes verification of every member of $\mathcal{B}$. Their conjunction is therefore true. Apply the existing backward certificate for $\mathcal{B}$ to obtain $P$. $\square$
-
-The theorem says that an established recovery mechanism is stable under accumulating further verified evidence. It does not say that arbitrary extension creates recoverability where none existed.
-
-## 6. Semantic interpretation in finite hypothesis spaces
-
-The preceding results admit a useful model-theoretic picture. Let $\Omega$ be a finite set of possible worlds. A proposition is represented by the subset of worlds in which it is true. Implication $P\Rightarrow Q$ means set inclusion
+A finite family $\mathcal Q=[Q_1,\ldots,Q_n]$ is consequence-stable for $P$ if and only if
 
 $$
-[P]\subseteq[Q].
+P\Longleftrightarrow(Q_1\land\cdots\land Q_n).
 $$
 
-For a family $\mathcal{Q}$, joint truth corresponds to intersection:
+**Proof sketch.** If the family is stable, forward consequencehood gives $P\Rightarrow Q_i$ for every $i$, hence $P$ implies their conjunction. The backward certificate gives the reverse implication. Conversely, a biconditional supplies both the pointwise forward implications and the backward certificate. $\square$
+
+### Corollary 4.6 (Conjunctions Form a Stable Class)
+
+For arbitrary propositions $A$ and $B$, the family $[A,B]$ is consequence-stable for $A\land B$.
+
+**Proof sketch.** The conjunction $A\land B$ implies each component, while the joint verification of the two components is precisely $A\land B$. $\square$
+
+### Corollary 4.7 (Verified Stable Families Establish Their Proposition)
+
+If $\mathcal Q$ is consequence-stable for $P$ and every member of $\mathcal Q$ is verified, then $P$.
+
+**Proof sketch.** Use the backward direction of the equivalence in Theorem 4.5. $\square$
+
+The characterization shows that consequence stability is not merely mutual consistency among consequences. It is logical completeness relative to $P$: the family contains enough joint information to characterize $P$.
+
+## 5. Finite consequence-guided search
+
+We now move from propositions alone to a finite candidate space. Let $C$ be a finite set of elements of a type $X$, and let
 
 $$
-[Q_1\land\cdots\land Q_n]=\bigcap_{i=1}^{n}[Q_i].
+\mathcal T=[T_1,\ldots,T_m]
 $$
 
-A backward certificate requires
+be predicates $T_j:X\to\{\text{true},\text{false}\}$.
+
+### Definition 5.1 (Passing all checks)
+
+A candidate $a\in X$ **passes** $\mathcal T$ if
 
 $$
-\bigcap_{i=1}^{n}[Q_i]\subseteq[P].
+T_1(a)\land\cdots\land T_m(a)
 $$
 
-Combining this with forward consequencehood gives
+holds.
+
+### Definition 5.2 (Survivor set)
+
+The **survivor set** is
 
 $$
-[P]\subseteq\bigcap_{i=1}^{n}[Q_i]\subseteq[P],
+S(C,\mathcal T)=\{a\in C:T_j(a)\text{ holds for every }j\}.
 $$
 
-so the candidate and the conjunction of its certified consequences have exactly the same truth set.
+### Theorem 5.3 (Filtering Is Contractive)
 
-This picture explains why coherence is too weak. Coherence only asks that the intersection $\bigcap_i[Q_i]$ be nonempty. Recovery asks that the entire intersection lie inside $[P]$. A nonempty region may contain worlds in which $P$ is false. The control consequence $\top$ corresponds to all of $\Omega$ and therefore narrows nothing.
-
-It also yields an information-theoretic interpretation. A consequence partitions candidates only to the extent that some candidates fail to imply it or some worlds fail to satisfy it. Consequences shared by many incompatible antecedents carry insufficient identifying information. Backward certification asserts that no world compatible with all verified consequences lies outside the candidate.
-
-## 7. Algorithms
-
-The logical theorems suggest computational procedures for finite experiments. These algorithms do not replace proofs in an infinite logic; they operationalize the definitions over finite truth tables or bounded corpora.
-
-### 7.1 Exhaustive boundary audit
-
-Given a finite world set and Boolean truth vectors for $P$ and $Q$, the algorithm checks whether $P\Rightarrow Q$, whether $Q$ is verified at an observed world, and whether backward recovery $Q\Rightarrow P$ holds globally.
-
-For $m$ worlds and $k$ consequences, scanning all vectors costs $O(mk)$ time and $O(1)$ auxiliary space beyond the input. The always-true control can be inserted to demonstrate that forward implication and observed truth need not imply recovery.
-
-### 7.2 Backward-certificate checker
-
-Given $P$ and $Q_1,\ldots,Q_k$ as truth vectors, compute the conjunction vector
+For every finite $C$ and every check family $\mathcal T$,
 
 $$
-C=Q_1\land\cdots\land Q_k.
+S(C,\mathcal T)\subseteq C
 $$
 
-The certificate succeeds exactly when no world satisfies $C\land\neg P$. Equivalently, test $C\Rightarrow P$ pointwise. This takes $O(mk)$ time. A counterexample world, when found, is a concrete explanation of failure.
-
-### 7.3 Consequence-guided proof search
-
-For a fixed proof calculus, maintain a frontier of candidate proof states. Associate each state with predicted consequences and score it by the number or weight of consequences already verified. Expand high-scoring states first, but accept the target only when an ordinary derivation or explicit backward certificate is found.
-
-If $N$ states are explored and each is compared against $k$ consequences, scoring costs $O(Nk)$ in addition to the calculus-specific expansion cost. The method may reduce $N$ empirically, but it does not change the validity criterion.
-
-### 7.4 Honest compression accounting
-
-Let $L(P)$ be the shortest direct proof length under a fixed encoding. For a certified consequence route with proofs $\pi_i$ of $Q_i$, backward certificate $\beta$, and reconstruction overhead $r$, define
+and therefore
 
 $$
-L_{\mathrm{route}}=\sum_i |\pi_i|+|\beta|+r.
+|S(C,\mathcal T)|\le |C|.
 $$
 
-A genuine compression occurs only if
+**Proof sketch.** Membership in the survivor set is defined by membership in $C$ together with additional predicates. Forgetting the predicates leaves membership in $C$. Cardinality monotonicity for finite sets gives the inequality. $\square$
+
+### Theorem 5.4 (Strict Reduction from a Failed Candidate)
+
+If some $a\in C$ fails at least one check, then
 
 $$
-L_{\mathrm{route}}<L(P).
+|S(C,\mathcal T)|<|C|.
 $$
 
-This accounting prevents the proof of $P$ from being hidden in an unmeasured certificate. Claims of a constant-factor improvement require a specified calculus, encoding, target class, and comparison baseline.
+**Proof sketch.** The survivor set is a subset of $C$ by Theorem 5.3. The failed candidate $a$ belongs to $C$ but not to the survivor set, so the inclusion is proper. A proper subset of a finite set has strictly smaller cardinality. $\square$
 
-## 8. Applications
+### Theorem 5.5 (Target Retention)
 
-### 8.1 Arithmetic theorem search
+If a target $t$ belongs to $C$ and passes every check, then
 
-In a bounded corpus of arithmetic formulas, candidate derivations can be tested against quickly computed consequences such as parity, congruences, inequalities, or evaluations on small numerals. Failed consequences eliminate candidate paths. Successful tests rank them but do not prove the universal arithmetic statement. A final derivation or certified equivalence remains necessary.
+$$
+t\in S(C,\mathcal T).
+$$
 
-### 8.2 Program synthesis and testing
+**Proof sketch.** This is exactly the defining membership condition for the survivor set. $\square$
 
-A candidate program implies observable outputs on test inputs. Passing tests verifies consequences of the program specification, yet many incorrect programs can share those outputs. A backward certificate corresponds to a completeness argument for the test suite relative to a restricted program class: any candidate passing all tests must satisfy the specification. Without that restriction and certificate, tests guide search but do not establish correctness.
+### Theorem 5.6 (Unique Survivor Certificate)
 
-### 8.3 Diagnosis and causal inference
+Fix $a,t\in X$. If
 
-A disease may imply symptoms, and observed symptoms may be mutually consistent, but they need not determine the disease. Backward recovery requires a discriminating condition showing that the symptom profile excludes alternatives. The logical distinction mirrors the difference between sensitivity and identifiability.
+$$
+\bigl(T_1(a)\land\cdots\land T_m(a)\bigr)\Rightarrow a=t,
+$$
 
-### 8.4 Scientific theories
+then the evaluated propositions $T_1(a),\ldots,T_m(a)$ have a backward certificate for $a=t$. In particular, if all checks are verified at $a$, then $a=t$.
 
-Verified predictions can increase confidence in a theory while leaving underdetermination among rival theories. In deductive terms, prediction and observation provide $P\Rightarrow Q$ and $Q$; they do not provide $Q\Rightarrow P$. A reconstruction theorem, uniqueness result, or restricted model class is needed for deductive recovery.
+**Proof sketch.** The assumed uniqueness implication is itself the required backward certificate. Joint verification of the evaluated checks supplies its antecedent. $\square$
 
-### 8.5 Invertible transformations
+In applications, uniqueness is often established by proving that the entire survivor set equals $\{t\}$. If $a$ lies in the ambient set and passes, Theorem 5.5 places it in the survivor set, and singleton membership yields $a=t$.
 
-The positive setting is strongest when consequences arise from invertible rules, definitional unfolding, normalization with a proved inverse, or equivalence-preserving transformations. Here backward certificates can be generated compositionally. The consequence representation may be easier to search or check while retaining all information needed to recover the target.
+### 5.1 Algorithm
 
-## 9. Discussion
+A direct filtering procedure is as follows.
 
-The boundary theorem is elementary, but its role is foundational. Any proposed retrocausal validity rule must answer the $\top$ control. Because every $P$ implies $\top$, a criterion based solely on forward implication, truth, and coherence accepts an observation that is compatible with every antecedent. The criterion therefore cannot discriminate true candidates from false ones.
+1. Initialize an empty survivor list.
+2. For each candidate $a\in C$, evaluate checks $T_1(a),T_2(a),\ldots$ in order.
+3. Reject $a$ immediately when a check fails.
+4. If no check fails, append $a$ to the survivor list.
+5. Return the survivors together with their count and, when nonzero, the information gain.
 
-The positive theory reframes the objective. Rather than asking consequences to create validity, ask them to organize proof search and ask certificates to preserve validity. This division resembles certified computation: an unconstrained process may discover an answer, while a compact checked object justifies it.
+With $N=|C|$ candidates and $m$ checks, the worst-case number of predicate evaluations is $Nm$, so time complexity is $O(Nm)$. Short-circuit rejection can lower the actual cost. Storage is $O(|S|)$ for the output, or $O(1)$ beyond the output if candidates are streamed.
 
-The certificate requirement also clarifies proof compression. A consequence can be much shorter than its antecedent precisely because it may discard information. Recovery must restore that information, and the certificate bears the associated cost. Compression is possible when the target has exploitable structure, the consequences expose that structure economically, and the inverse map is short. It cannot be inferred merely from the existence of many easy consequences.
+### Definition 5.7 (Information gain)
 
-Coherence remains useful as a filter. In a search system, incoherent predicted consequences refute a candidate immediately. Yet passing the coherence filter is only a necessary compatibility condition. The set of surviving candidates may remain large. Finite hypothesis-space experiments can measure this ambiguity by counting candidates compatible with each verified bundle or by computing the decrease in logarithmic hypothesis count.
+When $S(C,\mathcal T)$ is nonempty, define the information gain of filtering by
 
-## 10. Future work
+$$
+I(C,\mathcal T)=\log_2\frac{|C|}{|S(C,\mathcal T)|}.
+$$
 
-Several extensions are natural.
+The cardinality theorem ensures that $I\ge 0$. If one of eight candidates survives, then $I=3$ bits. This semantic measure should not be conflated with proof length: it quantifies elimination in a candidate universe, not the number of inference nodes in a derivation.
 
-First, proof-search semantics should be developed separately from proof-validity semantics. Verified consequences can rank candidate proofs while the final target continues to require an accepted derivation.
+## 6. Arithmetic calibration
 
-Second, compression questions require explicit proof languages and size measures. A fragment of Peano arithmetic, a derivation-tree syntax, and a fixed encoding would permit reproducible comparisons.
+Consider
 
-Third, certificate complexity should be measured together with consequence-proof complexity. One can seek target families for which the total certified route is shorter than every direct route by a provable factor.
+$$
+C=\{n\in\mathbb N:n<8\}=\{0,1,2,3,4,5,6,7\}
+$$
 
-Fourth, restricted consequence classes deserve systematic study. Invertible inference rules, definitional transformations, equivalences, and conservative translations are natural sources of compositional backward certificates.
+and the checks
 
-Fifth, search experiments can compare ordinary enumeration with consequence-guided enumeration on finite arithmetic corpora, recording nodes explored, elapsed work, and final proof sizes.
+$$
+T_1(n): n>0,
+\qquad
+T_2(n):2\mid n,
+\qquad
+T_3(n):3\mid n.
+$$
 
-Sixth, propositional joint truth can be replaced by syntactic consistency relative to a recursively presented theory. The central caution persists: consistency of a consequence set does not identify an arbitrary candidate sentence.
+### Theorem 6.1 (Isolation of Six)
 
-Seventh, finite hypothesis spaces support information-theoretic lower bounds. If many incompatible antecedents share the same consequence profile, the profile contains too little information to choose among them. Quantifying this deficit may connect certificate size to identifying information.
+The survivor set is exactly
 
-## 11. Conclusion
+$$
+S(C,[T_1,T_2,T_3])=\{6\}.
+$$
 
-Retrocausal proof theory begins with an attractive idea: establish a theorem by verifying the structure of what follows from it. At the level of propositional validity, the unrestricted idea meets an exact barrier. A proposition can be uniformly inferred from all of its verified consequences if and only if it is already true, and a universal rule would prove falsehood. Verified coherence does not change this conclusion; the always-true consequence provides a universal counterexample.
+**Proof sketch.** The positive multiples of $2$ below $8$ are $2,4,6$. Among these, only $6$ is divisible by $3$. Conversely, $6>0$, $2\mid6$, and $3\mid6$, so $6$ survives. $\square$
 
-The sound replacement is explicit backward certification. Jointly verified consequences recover a candidate when their conjunction implies it. For one consequence this is equivalence; for a family, one backward-complete member may suffice; and existing recovery survives verified extension.
+### Corollary 6.2 (Exact Compression Measure)
 
-The resulting paradigm is disciplined rather than paradoxical. Consequences can guide exploration, prioritize candidates, and expose failure. Certificates perform reconstruction. Keeping those roles distinct preserves ordinary logical validity while allowing consequence-driven methods to contribute to discovery, search efficiency, and, where total certificate cost permits, genuine proof compression.
+The initial space has cardinality $8$, the survivor set has cardinality $1$, and hence
+
+$$
+\frac{|S|}{|C|}=\frac18,
+\qquad
+I=\log_2 8=3.
+$$
+
+**Proof sketch.** Apply Theorem 6.1 and count the elements of the range and singleton. $\square$
+
+### Theorem 6.3 (Arithmetic Backward Certificate)
+
+For every natural number $n<8$,
+
+$$
+(n>0)\land(2\mid n)\land(3\mid n)\Rightarrow n=6.
+$$
+
+**Proof sketch.** If $n<8$ and passes all three checks, then $n$ belongs to the survivor set. Theorem 6.1 identifies that set with $\{6\}$, so $n=6$. $\square$
+
+The range condition is essential. Without $n<8$, the checks characterize positive multiples of $6$, not $6$ alone. The example therefore displays all layers of the framework: a controlled candidate space, necessary semantic tests, strict filtering, target retention, unique isolation, and a backward certificate.
+
+## 7. Interpretation and applications
+
+### 7.1 Proof search
+
+Consequence-guided proof search can be understood as a bidirectional architecture. Forward reasoning generates necessary conditions from a candidate theorem. Semantic evaluation uses those conditions to prioritize or discard candidates. Backward certification then connects a successful condition set to the original goal. The boundary theorem forbids treating the middle stage as deductive completion; the certificate supplies that completion.
+
+### 7.2 Constraint solving and synthesis
+
+In constraint satisfaction, candidates are assignments and checks are constraints. Filtering removes assignments that violate a constraint. If one assignment survives and completeness is known, uniqueness certifies the solution. Program synthesis follows the same pattern: examples and specifications prune candidate programs, while a final proof that the survivor satisfies the full specification prevents overfitting to the tests.
+
+### 7.3 Diagnosis and scientific confirmation
+
+Observed consequences can discriminate among a finite model class. If the observations uniquely identify one model under explicit background assumptions, the uniqueness implication is a backward certificate relative to that class. Without exclusivity, the observations provide evidence but not deductive recovery. This clarifies both the utility and the limitation of the scientific analogy.
+
+### 7.4 Semantic versus syntactic compression
+
+A survivor ratio measures how much a set of semantic checks contracts a chosen candidate space. Proof length measures the size of a derivation in a chosen calculus. Neither quantity determines the other without additional hypotheses. A dramatic candidate reduction may require a certificate as costly as a direct proof. Conversely, a short structural proof may establish a claim without enumerating or filtering candidates at all.
+
+Any claim of proof compression must therefore specify at least: the proof calculus, the encoding of formulas, the inference-node cost model, whether derivations of checks are counted, and whether the backward certificate is counted. Without these conventions, a constant-factor comparison is not mathematically well posed.
+
+## 8. Discussion
+
+The results replace an unrestricted retrocausal rule with a disciplined division of labor.
+
+* **Forward consequencehood** establishes that genuine solutions pass the tests.
+* **Verification** confirms that particular test propositions hold.
+* **Coherence** excludes contradiction among jointly verified propositions but does not identify an antecedent.
+* **Filtering** contracts a finite search space and retains passing targets.
+* **Backward certification** supplies deductive recovery.
+* **Consequence stability** packages necessity and sufficiency as equivalence with a finite conjunction.
+
+This framework does not create truth from predictive success. Instead, it explains how predictive consequences can guide a search whose endpoint is secured by an ordinary implication in the reverse direction. The exactness of Theorem 3.1 is useful: there is no intermediate unrestricted principle waiting to be discovered. Any sound strengthening must add information that blocks the $Q=\top$ counterexample, and a backward certificate is the most direct such information.
+
+The finite search theorems are deliberately general. They assume only a finite candidate set and deterministic predicates. Their guarantees are correspondingly robust. More refined performance claims require distributions over candidates, costs for individual checks, check ordering, and a model of proof generation.
+
+## 9. Future work
+
+Several falsifiable directions follow.
+
+1. **Bounded-arithmetic compression benchmark.** Fix a sequent calculus for formulas expressing bounds, divisibility, conjunction, and equality. For each $N\ge8$, compare a shortest derivation of $n=6$ from $n<N$ with one using the additional facts $2\mid n$ and $3\mid n$. Enumerating shortest derivations for $N\le10^4$ would test whether consequence guidance frequently halves inference-node counts.
+
+2. **Certificate-cost threshold.** Count derivations of consequences and their backward certificate. A plausible negative conjecture is that no universal $c<1$ makes every consequence-stable certified derivation cost at most $c$ times the shortest direct proof. Candidate counterexamples should force the backward certificate to reproduce the direct argument asymptotically.
+
+3. **Information gain and enumeration.** For deterministic checks on finite spaces, compare $I=\log_2(|C|/|S|)$ with the median number of candidates inspected after filtering. Exhaustive experiments on spaces of size at most $16$ can test quantitative factor bounds.
+
+4. **Arithmetic residue certificates.** For distinct primes $p_1,\ldots,p_k$ and $M=\prod_i p_i$, the checks $p_i\mid n$ isolate $0$ among $0\le n<M$. One may seek a balanced certificate of size $O(k\log M)$ and compare it with candidate-by-candidate certificates of size $\Omega(M)$ in a fixed arithmetic calculus.
+
+5. **Strict filtering without proof shortening.** Search for infinite families where the candidate space shrinks by an unbounded factor but shortest proof length improves by only an additive constant. Such families would demonstrate a strong separation between semantic and syntactic compression.
+
+## 10. Conclusion
+
+Verified consequences cannot, by themselves, establish the proposition that produced them. The obstruction is exact: uniform confirmation from arbitrary verified consequences is possible for a fixed proposition precisely when that proposition is already true, and a universal version collapses logic. Joint verification ensures coherence, but the always-true consequence shows that coherence does not recover an antecedent.
+
+A sound positive method emerges once the consequence family carries a backward certificate. Consequence stability is exactly equivalence between the target proposition and the conjunction of its listed consequences. In finite search, consequence checks provably contract candidate sets, strictly so when any candidate fails, while preserving passing targets. Unique isolation converts this computational reduction into a logical certificate. The arithmetic case $n<8$, $n>0$, $2\mid n$, and $3\mid n$ illustrates the full pipeline by isolating $6$ and achieving a survivor ratio of $1/8$.
+
+Consequences can therefore guide proof without replacing proof. Their legitimate power lies in organizing search, exposing information, and supporting a final checked route back to the theorem.

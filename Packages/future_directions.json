@@ -375,7 +375,7 @@
       "depth_estimate": 3,
       "description": "Establishes a non-zero spectrum lower bound for the quantum Yang-Mills Hamiltonian on four-dimensional spherical manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -415,7 +415,7 @@
       "depth_estimate": 3,
       "description": "Formalizes boundary conditions under which trapped surfaces in spacetime guarantee geodesic incompleteness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -455,7 +455,7 @@
       "depth_estimate": 3,
       "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -495,7 +495,7 @@
       "depth_estimate": 3,
       "description": "Proves the Kolmogorov-Arnold-Moser (KAM) theorem on the persistence of quasi-periodic invariant tori under small Hamiltonian perturbations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -535,7 +535,7 @@
       "depth_estimate": 3,
       "description": "Constructs an explicit non-trivial Hilbert space operator model satisfying the Wightman axioms for self-interacting scalar quantum fields in two dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -1415,7 +1415,7 @@
       "depth_estimate": 3,
       "description": "Formally proves lower bounds on error thresholds for topological surface codes under depolarizing noise models.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -1455,7 +1455,7 @@
       "depth_estimate": 3,
       "description": "Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -1495,7 +1495,7 @@
       "depth_estimate": 3,
       "description": "Proves Hastings' theorem establishing efficient Matrix Product State (MPS) approximations for ground states of gapped 1D quantum spin chains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -1535,7 +1535,7 @@
       "depth_estimate": 3,
       "description": "Proves necessary and sufficient conditions for quantum EPR steering under uncharacterized local measurements.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -1575,7 +1575,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Lloyd-Shor-Devetak (LSD) theorem for quantum channel capacity defined by regularized coherent information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -2711,7 +2711,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=α(G)+1$, where $α(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Physics"
       ],
@@ -9104,7 +9104,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Spectral Shell Models of the Periodic Table\n\n## 1. Spin–orbit splitting recovers the nuclear magic sequence\n\nConstruct a finite-dimensional shell Hamiltonian whose oscillator term has multiplicity `(N+1)(N+2)` and whose angular spin–orbit perturbation is proportional to `L·S`. Conjecture that an explicit physically admissible ordering of the split levels has cumulative closures `2, 8, 20, 28, 50, 82, 126`.\n\nThe key insight is that the bare oscillator succeeds exactly through `20` and fails precisely where spin–orbit splitting becomes decisive, so the discrepancy identifies the missing operator rather than merely showing numerical error.\n\nWhy now? The exact oscillator filling polynomial and its first divergence from the empirical sequence provide a sharply delimited baseline against which every proposed perturbation can be tested.\n\n## 2. Madelung ordering as a spectral perturbation theorem\n\nLet orbitals `(n,l)` have unperturbed Coulomb energy depending only on `n`, and perturb them by a term that is strictly increasing in `n+l`, with ties broken by `n`. Conjecture that there is a quantitative open region of perturbation parameters for which the first 118 orbital occupations follow the Madelung order.\n\nThe key insight is that the false Coulomb closures `2,10,28,60,110` arise from exact degeneracy in `l`; lifting that degeneracy in a controlled order can convert a hydrogenic spectrum into the observed block structure.\n\nWhy now? The cumulative Coulomb theorem isolates the degeneracy that must be broken and supplies exact gap sizes for perturbative inequalities.\n\n## 3. Stability of closed-shell counts under symmetry-preserving perturbations\n\nFor a finite self-adjoint Hamiltonian decomposed into irreducible angular-momentum sectors, conjecture that sufficiently small perturbations commuting with the symmetry action preserve cumulative shell multiplicities whenever adjacent spectral clusters have a positive gap.\n\nThe key insight is that periodic structure depends on spectral projections and their ranks, not on exact numerical eigenvalues; ranks should remain constant until a gap closes.\n\nWhy now? The diagonal shell model gives explicit eigenvectors and multiplicities, making it possible to formulate a quantitative gap condition and then broaden from diagonal matrices to general Hermitian operators.\n\n## 4. Woods–Saxon spectral certification with interval bounds\n\nFor a radial Woods–Saxon potential with a standard spin–orbit term and parameter intervals calibrated to medium and heavy nuclei, conjecture that certified eigenvalue enclosures preserve the ordering needed for closures at `28`, `50`, and `82` throughout nontrivial parameter boxes.\n\nThe key insight is that a useful comparison with experiment requires robust eigenvalue inequalities over parameter ranges, not a single floating-point diagonalization.\n\nWhy now? The exact combinatorial shell counts identify the required multiplicities, while modern interval eigensolvers can test whether realistic potentials realize them stably.\n\n## 5. No universal energy-rounding scale recovers atomic number\n\nFor any fixed positive scale `E₀`, conjecture that nuclear binding energies across all stable isotopes cannot satisfy `round(E/E₀)=Z` consistently, even after choosing one representative isotope per element.\n\nThe key insight is that binding energy is controlled primarily by mass number and saturation, whereas atomic number is a charge count; a universal scalar rounding rule discards the independent neutron degree of freedom.\n\nWhy now? The shell-spectrum results clarify the valid role of multiplicity while separating it from the stronger and falsifiable claim that energy values themselves encode atomic numbers by uniform rounding.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics",
         "Algebra"
@@ -10702,7 +10702,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near the zero-frequency peak to remain near the cutoff `N`.\n- Study normalized transforms `F_N(ω) / N` on compact frequency sets bounded away from integers, and seek quantitative cancellation estimates uniform in `N`.\n- Separate the even and odd summands. For the stated phase `T(n)/n`, the even branch contributes the constant phase `1/2`, while the odd branch has phase `3 + 1/n`; this explicit decomposition should support sharper asymptotic estimates.\n- Formulate averaged statements, such as `L²` bounds over a period or bounds outside an exceptional set of small measure. Such claims are compatible with isolated resonant peaks in a way that a pointwise bound over all irrationals is not.\n- Compare the corrected normalized or averaged statistics for the `3n+1`, `5n+1`, and `7n+1` maps. Any useful discriminator must depend on more than continuity near frequency zero.\n- Investigate orbit-dependent transforms separately from the one-step cutoff sum. A rigorous implication between an orbit hitting-time estimate and a spectral estimate would require precise definitions and directional proofs; it should not be treated as an automatic equivalence.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Physics"
@@ -13158,7 +13158,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Thermodynamics of Mathematical Proof\n\n## 1. Fiber-entropy law for proof normalization\n\nFor every finite terminating normalization system equipped with a probability law on proof terms, the minimum expected irreversible work of normalization equals the expected logarithm of the normalization-fiber size precisely when the conditional law is uniform on each fiber; otherwise the fiber logarithm is a strict upper bound on the Shannon entropy destroyed.\n\nThe key insight is that normalization is a many-to-one map, so its thermodynamic cost should be controlled by conditional entropy rather than raw term count. **Why now?** Exact finite multiplicities and the one-bit Landauer unit are available, making the equality and strictness cases sharply testable on concrete rewrite systems.\n\n## 2. Bennett tradeoff for theorem verification\n\nThere exists a family of finite proof systems for which reversible verification using subexponential auxiliary space necessarily incurs superlinear recomputation time, while irreversible linear-time verification destroys a linear number of transcript bits.\n\nThe key insight is that preserving a verifier transcript avoids erasure but forces a pebbling tradeoff between retained checkpoints and recomputation. **Why now?** The adversarial coverage theorem isolates the information that a verifier must distinguish; adding reversible pebble games can turn this static obstruction into a time-space-energy tradeoff.\n\n## 3. Exponential normalization fibers with short conclusions\n\nThere exists a finitely presented, strongly normalizing proof calculus containing conclusions of length `O(n)` whose shortest normal proofs have `2^n` distinct bounded-length preimages under normalization.\n\nThe key insight is that exponentially many bureaucratic derivations may collapse to one canonical proof even when the theorem and its normal proof remain short. **Why now?** The present binary derivation family supplies the target multiplicity, while an explicit normalization calculus would replace the abstract selection model by a semantic proof transformation.\n\n## 4. Kolmogorov-incompressible proof families\n\nFor infinitely many lengths `n`, some valid proof object of length `n` has prefix-free description complexity at least `n - O(1)`, and every universal verifier that reconstructs such a proof from a shorter certificate must acquire the missing information through either its input transcript or irreversible state changes.\n\nThe key insight is that finite pigeonhole incompressibility should persist under universal prefix-free coding and constrain where verification information can enter. **Why now?** Strict finite compression has already been excluded at each fixed depth; the next test is to obtain a machine-invariant asymptotic formulation with explicit additive constants.\n\n## 5. Compositional Landauer accounting\n\nFor independent proof obligations, minimum erasure work is additive, whereas shared lemmas reduce total work by exactly the mutual information between the obligations' proof distributions.\n\nThe key insight is that lemma reuse acts as statistical dependence, converting the gap between separate and joint verification costs into mutual information. **Why now?** Candidate-space products already produce additive logarithmic counts, and the entropy-loss identity provides a direct route from that combinatorics to a quantitative thermodynamic prediction.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Physics"
@@ -13199,7 +13199,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Agreement Subtrees in Multiple Phylogenetic Trees\n\n## 1. Compatibility-sensitive state compression\n\n**Conjecture.** For each fixed leaf number `a`, the number of restrictions to an `a`-leaf set arising from unrooted binary phylogenetic trees is exponentially smaller, in the exponent, than the crude count of arbitrary families of subsets of those leaves. Moreover, this saving can be expressed through a canonical encoding by compatible quartet signatures.\n\nThe key insight is that edge splits of a tree are pairwise compatible, whereas the powerset bound treats them as independent bits. A canonical compatible encoding should expose the information discarded by that crude estimate.\n\n**Why now?** The restriction algebra and its universal powerset bound isolate compatibility as the only missing ingredient in the counting layer. This gives a precise benchmark against which a sharper state count can be measured.\n\n## 2. Connected-family gluing beyond chains\n\n**Conjecture.** Let a finite hypergraph index subfamilies of phylogenetic trees, with each hyperedge carrying a common induced subtree on the same leaf set. If the intersection graph of the hyperedges is connected, then the union of all indexed trees has that common induced subtree. Conversely, disconnectedness is the only obstruction valid for arbitrary split systems.\n\nThe key insight is that equality of restriction witnesses propagates along overlaps exactly as a locally constant function propagates on a connected space.\n\n**Why now?** Chain gluing establishes the path case. Recasting the result for arbitrary connected overlap graphs would create a reusable local-to-global principle and clarify its relation to sheaf-style consistency.\n\n## 3. Fourfold exponential bound from iterative signature refinement\n\n**Conjecture.** There is an explicit recurrence based on four rounds of compatible-signature refinement whose terminal value bounds the leaf number sufficient to force an `n`-leaf common agreement subtree among `k` unrooted binary phylogenetic trees.\n\nThe key insight is that each refinement round should remove one layer of dependence—leaf placement, split compatibility, tree identity, and family identity—so that four nested exponential losses suffice.\n\n**Why now?** The abstract quartet-transfer theorem already shows that any such MAST bound immediately bounds the common-quartet threshold. What remains is a quantitative compatible-tree argument, not additional threshold logic.\n\n## 4. Exponential lower bound via quartet codes\n\n**Conjecture.** Families of binary phylogenetic trees can be encoded as error-correcting codes in quartet-signature space so that large pairwise distance prevents a common quartet, yielding an exponential lower bound for the least leaf number forcing a common quartet. The optimal exponential rate equals a packing rate in a constrained ternary code.\n\nThe key insight is that each four-leaf set admits three resolved quartet types, while consistency among overlapping quartets imposes code constraints analogous to local parity checks.\n\n**Why now?** The common-agreement predicate supplies an exact equality notion for restrictions. This makes it possible to formulate avoidance as distance in a finite signature space and to compare probabilistic tree constructions with coding-theoretic bounds.\n\n## 5. Exact small-parameter thresholds\n\n**Conjecture.** For every fixed number of trees `k ≤ 4`, the least leaf number forcing a common quartet is attained by a family whose quartet signatures form a maximally distant code, and all extremal families are generated by finitely many relabelling orbits.\n\nThe key insight is that small instances combine hereditary restriction with finite group symmetry, so orbit reduction should replace exhaustive enumeration by a structured classification.\n\n**Why now?** The established heredity and pairwise-characterization results sharply reduce the predicates that a finite search must test, while the coding interpretation suggests which extremal configurations to classify.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Physics",
@@ -14349,7 +14349,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Spectral Extremal Problems with Intersecting Forbidden Cycles\n\n## 1. Stability of the universal-vertex outerplanar construction\n\n**Conjecture.** For every fixed pair `l ≥ k ≥ 3`, every sufficiently large outerplanar `C_{k,l}`-free graph whose spectral radius is within `o(n^{-1/2})` of the optimum can be transformed into the corresponding extremal universal-vertex construction by changing `o(n)` edges.\n\nThe key insight is that near equality in the adjacency-matrix energy estimate should force the Perron vector to concentrate around a bounded dominating core, while outerplanarity constrains the remaining vertices to path-like pieces.\n\n**Why now?** The edge-to-spectrum bridge isolates the analytic loss precisely, making it possible to separate quantitative eigenvector stability from the forbidden-cycle decomposition.\n\n## 2. A bounded-core theorem for planar forbidden-cycle extremizers\n\n**Conjecture.** For fixed `l ≥ k ≥ 3`, every sufficiently large planar `C_{k,l}`-free spectral extremizer has a dominating core of size at most two, and deletion of that core leaves a graph of uniformly bounded maximum degree whose nontrivial components belong to a finite family determined by `k` and `l`.\n\nThe key insight is that the two-vertex core in the classical planar join construction is not merely an example: concentration of spectral mass and exclusion of two cycles sharing a vertex should make every larger high-weight core combinatorially unstable.\n\n**Why now?** A bounded-core formulation converts an asymptotic spectral problem into a finite structural classification and directly suggests the finite list of local replacements needed for a proof.\n\n## 3. Spectral supersaturation for intersecting cycles\n\n**Conjecture.** For each fixed `l ≥ k ≥ 3`, there are positive constants `a_{k,l}` and `b_{k,l}` such that every sufficiently large planar graph with spectral radius exceeding the `C_{k,l}`-free optimum by `ε n^{-1/2}` contains at least `a_{k,l} ε n - b_{k,l}` copies of `C_{k,l}`.\n\nThe key insight is that excess Rayleigh mass should be convertible into many local augmentations around high-weight vertices, and each augmentation either improves the candidate extremizer or creates an intersecting pair of cycles.\n\n**Why now?** The baseline square-root estimate identifies the natural normalization for spectral excess, while recent structural extremal results indicate which local configurations should witness supersaturation.\n\n## 4. A minor-closed spectral compactness principle\n\n**Conjecture.** Let `𝒢` be a proper minor-closed graph class and let `F` be a fixed connected graph with a cut vertex lying on two cycles. If the `F`-free spectral extremizers in `𝒢` have unbounded order, then after deleting a bounded dominating set their component types converge to a finite periodic family under path concatenation.\n\nThe key insight is that separator structure in minor-closed classes should interact with Perron-vector localization to reduce global optimization to a finite-state transfer problem along bounded-width pieces.\n\n**Why now?** Intersecting-cycle exclusions provide the simplest nontrivial test case where separator topology, spectral concentration, and finite-state path structure all appear simultaneously.\n\n## 5. Sharpness criterion for the Frobenius edge bound\n\n**Conjecture.** Within any fixed proper minor-closed class, a sequence of connected graphs can asymptotically attain `ρ(G)^2 = 2|E(G)|` only if all but `o(|E(G)|)` edges are incident with a vertex set of bounded size.\n\nThe key insight is that near equality in rowwise Cauchy–Schwarz forces adjacency rows carrying Perron mass to become nearly parallel, which in a sparse simple graph should be possible only through concentration around a small core.\n\n**Why now?** This criterion would turn the elementary analytic inequality into a structural stability engine applicable beyond planar and outerplanar graphs.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Physics"
@@ -14594,7 +14594,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Universal pentagon theorem.** The concrete 5-cycle instance is now formalized in\n   `Core.lean` (`Pentagon.pentagon_mpf`, `Pentagon.pentagon_valency_restriction`), giving\n   an explicit nontrivial factorization `A₁ A₂ = J - I` with `2 * 2 = 5 - 1`. The\n   remaining step is the *converse*: extend `complement_valency_restriction` with the\n   loopless, symmetric, association-scheme intersection-number hypotheses and prove that\n   any nontrivial factorization of `J-I` forces five vertices and two valency-two factors.\n2. **Spectral criterion.** Develop the simultaneous diagonalization of the Bose–Mesner\n   algebra and prove the coordinatewise eigenvalue criterion\n   `theta_S(j) * theta_T(j) = theta_U(j)`.\n3. **Rank obstruction.** Combine the spectral criterion with rank inequalities for\n   matrix products. Formalize the extremal equality case in which every nonzero target\n   eigenvalue is `±k(U)`, and connect this to bipartiteness.\n4. **Two-class classification.** Encode strongly regular graph parameters and derive the\n   parameter equations imposed by an MPF, culminating in the `C₅` classification.\n5. **P-polynomial schemes.** Formalize the distance-regular three-term recurrence for\n   `A₁ Aᵢ` and classify when all coefficients are zero or one with loopless support.\n6. **Hamming schemes.** Define Hamming-distance relations on `Fin d → Fin q`, prove their\n   intersection-number formula, and formalize the binary identity\n   `A₁ A_d = A_{d-1}` together with the nonexistence result for `q > 2`.\n7. **Rectangular and directed extensions.** The unique-witness criterion in `Core.lean`\n   does not require symmetry. It can support analogous results for coherent\n   configurations, directed relations, and incidence matrices of finite geometries.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Physics"
@@ -14635,7 +14635,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Orthogonal families over the coordinate framework\n\nThis cycle specialized the coordinate/incidence framework for generalized nets\nto the classical square case and established the Euler–MacNeish ceiling: a\nfamily of pairwise-orthogonal reduced Latin squares of order `n` has at most\n`n − 1` members, with the ceiling attained at order three. The pivot argument at\nthe heart of the proof — inspecting only two grid cells — suggests several bold,\ntestable next steps.\n\n## Conjecture 1 — Reduction is a free normalization\n\n**Statement.** Every family of pairwise-orthogonal Latin squares of order `n` is\nequivalent, under independent symbol relabellings of each square, to a family of\n*reduced* squares of the same size, and the equivalence preserves orthogonality.\nConsequently the `n − 1` ceiling holds for *arbitrary* (not necessarily reduced)\nfamilies.\n\n**The key insight is** that orthogonality is invariant under relabelling the\nsymbol alphabet of each square separately, because it is a statement about the\n*fibres* of the coordinate maps rather than about the symbols attached to them;\nreduction is just the choice of relabelling that sends the first row to the\nidentity.\n\n**Why now?** The pivot proof already localizes the whole argument to two cells,\nso the only missing ingredient is a clean lemma that relabelling is a symmetry of\nthe incidence structure — a small, self-contained addition to the framework that\nimmediately upgrades the ceiling from reduced families to all families.\n\n## Conjecture 2 — The window bound generalizes to nets\n\n**Statement.** For a generalized net with `m` weft classes and `n` warp classes,\nthe maximum number of pairwise-orthogonal parallel classes that can be adjoined\nis controlled by the number of distinct symbols appearing in a *single bounded\nwindow* of the coordinate grid, generalizing the pivot count from a single cell\nto an `r × s` block.\n\n**The key insight is** that the pivot obstruction — distinct nonzero symbols in\none column — is the smallest instance of a general phenomenon: orthogonality\nforces injectivity of a \"local fingerprint\" map, and larger windows yield sharper\nceilings for higher-dimensional nets.\n\n**Why now?** The proof here demonstrates that a two-cell window already yields the\nsharp classical bound; extending the fingerprint to a block is a natural,\nmechanically checkable escalation that has not been isolated before at this level\nof generality.\n\n## Conjecture 3 — Tightness is exactly the prime-power spectrum\n\n**Statement.** Within the coordinate framework, a family attaining the full\n`n − 1` ceiling exists if and only if there is a coordinate system on the grid\ncarrying an affine-plane structure of order `n`; combined with the classical\ntheory this forces `n` to be a prime power (with the known exceptions `n = 6` and\nthe still-open `n = 10` on the impossibility side).\n\n**The key insight is** that a complete set of `n − 1` MOLS is interchangeable\nwith a finite affine plane, and the coordinate/reticulation language makes the\nplane's parallel classes literally the fibres of the coordinate maps, turning\n\"tightness\" into \"existence of a coordinatizing algebra\".\n\n**Why now?** With the ceiling and a concrete tight witness both in hand, the\nframework is ready to host the equivalence between complete MOLS families and\naffine planes, closing the loop between the incidence axioms and classical\ndesign theory.\n\n## Conjecture 4 — Parastrophy acts freely on saturated families\n\n**Statement.** The parastrophy (coordinate-permutation) action introduced for\nreticulations restricts to an action on the set of ceiling-saturating families,\nand this action is free whenever `n > 2`; in particular the number of saturated\nfamilies up to parastrophy is a divisor-controlled fraction of the total count.\n\n**The key insight is** that a saturated family pins down all six coordinate roles\nsimultaneously, leaving no nontrivial coordinate permutation that fixes it, so the\nsymmetry group acts without fixed points once the order exceeds the degenerate\ncase.\n\n**Why now?** The pivot proof exposes exactly which coordinate roles are forced by\nsaturation, giving a concrete handle on the stabilizer of a family — the first\nstep toward an orbit count for small orders.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Physics",
@@ -15047,7 +15047,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Optimal Hamilton Covers\n\nThe deterministic incidence-capacity obstruction — that any cover of a graph by\ntwo-regular spanning layers uses at least `⌈Δ/2⌉` layers, with a per-vertex\nparity defect of `Δ mod 2` at the optimum — pins down the exact local target\nthat every achievability result must hit. The following conjectures build on\nthat equality case.\n\n## 1. Optimal-cover hitting time in the random graph process\n\n**Conjecture.** In the random graph process, with probability tending to one,\nthe first graph whose minimum degree reaches two is simultaneously the first\ngraph whose edges admit a two-regular cover of size `⌈Δ/2⌉`.\n\nThe key insight is that the incidence-capacity obstruction is already sharp\nvertex by vertex, so the only remaining question is global: whether the process\nhas supplied enough connectivity to extend every controlled forest system at\nonce. Once minimum degree two removes the last local obstruction, the parity\ndefect that a completion must absorb is uniformly zero or one, leaving no room\nfor a second bottleneck.\n\n**Why now?** The parity law isolates the incidence defect as exactly `Δ mod 2`,\nreducing a delicate hitting-time statement to a single structured global\ncompletion problem with a known local budget.\n\n## 2. Punctured optimal covers realize linear arboricity\n\n**Conjecture.** Throughout the Hamiltonian range of the binomial random graph,\nevery minimum-size two-regular cover admits a choice of one edge per cycle such\nthat the resulting paths, together with at most one extra linear forest, form an\noptimal linear-forest decomposition.\n\nThe key insight is that puncturing a cycle removes coverage only along a chosen\ntransversal, and the optimal cover's parity-controlled slack — at most one unit\nper vertex — is exactly enough to reroute the transversal edges without adding a\nlayer beyond the asymptotically sharp count.\n\n**Why now?** The equality case shows precisely which edges carry the unit of\nslack, turning the decomposition question into a concrete transversal-selection\nand rerouting problem rather than an open-ended optimization.\n\n## 3. Spectral reserved-structure criterion\n\n**Conjecture.** There are absolute constants `c, C > 0` such that every\nsufficiently large graph with minimum degree at least `C log n`, normalized\nsecond eigenvalue at most `c`, and robust sparse-cut expansion admits a\ntwo-regular cover of size `⌈Δ/2⌉`.\n\nThe key insight is that a spectral reservoir can replace probabilistic edge\nexposure in the forest-extension argument: expansion guarantees the simultaneous\nglobal extensions that randomness usually provides, while the incidence bound\nsupplies the exact local completion target.\n\n**Why now?** Because the local target is now an exact equality with a `0/1`\nparity defect, a spectral criterion need only certify simultaneous global\nextension, converting a probabilistic completion into a deterministic one.\n\n## 4. Stability of near-optimal covers\n\n**Conjecture.** If a family of two-regular spanning layers covers a graph using\n`⌈Δ/2⌉ + k` layers, then at every maximum-degree vertex the total repeated\nincidence multiplicity is at most `2k + 1`; for pseudorandom graphs this local\nbound forces the cover to differ from an optimal one in only `O(kn)` edge-layer\nincidences.\n\nThe key insight is that excess layer count translates linearly into local coding\nslack: each extra layer buys exactly two additional incidences per vertex, so\nthe global edit distance to optimality is controlled by the total slack.\n\n**Why now?** The proved equality case fixes the zero-excess baseline and the\nexact `2` incidences contributed per layer, giving the precise linear error term\nexpected to govern the near-optimal regime.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Physics"
@@ -15947,7 +15947,7 @@
       "depth_estimate": 3,
       "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Analysis",
         "Physics"
@@ -17105,7 +17105,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Physics"
@@ -19477,7 +19477,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H₂ = 0` produces zero.  They also\nshow that unitary output forces the logarithmic factor itself to be unitary.  This leaves\nthe raw-expression coverage question separate from the question whether the expression\ndefines an `SU(2)`-valued activation.\n\nConcrete, falsifiable next conjectures:\n\n1. **Scalar-log unit-circle intersection.** There exists a nonzero real `t` such that\n   `|Complex.log (1 + t * I)| = 1`.  Equivalently,\n   `(Real.log (Real.sqrt (1+t^2)))^2 + (Real.arctan t)^2 = 1` (with the principal\n   branches).  A certified interval containing such a `t` would give a scalar unitary\n   logarithmic factor.\n\n2. **Scalar second Hamiltonian suffices for `U(2)` coverage.** If `t` satisfies the first\n   conjecture and `H₂ = t I`, then every `2 × 2` unitary matrix is equal to\n   `exp(iH₁) * log(I+iH₂)` for some Hermitian `H₁`.  This reduces to proving global\n   surjectivity of the Hermitian exponential for finite-dimensional complex unitary\n   matrices and tracking the scalar phase.\n\n3. **Trace correction for `SU(2)`.** Under the same scalar choice of `H₂`, every element\n   of `SU(2)` has a representing Hermitian `H₁` whose trace lies in one explicitly\n   determined congruence class modulo `2π`; determine and prove that class.\n\n4. **Normalized activation is always unitary on its domain.** Define the polar-normalized\n   logarithmic factor `L (L⋆L)^{-1/2}` whenever `L = log(I+iH₂)` is invertible.  Conjecture:\n   multiplying this factor by `exp(iH₁)` yields a unitary, and every `SU(2)` matrix is\n   obtained with traceless Hermitian parameters after a determinant-one phase correction.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics",
         "NumberTheory"
@@ -19763,7 +19763,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, and\n- `g ≤ (C_k rank(D)+1)^2`.\n\nOnce this square-root rank certificate is available, the Lean theorem\n`squareRootRankCertificate_implies_scaledExistence` supplies the requested\ndivisor for every half-canonical Brill–Noether-admissible rank simultaneously.\n\nNatural next steps are:\n\n1. Formalize finite connected simple regular graphs and prove\n   `2(g-1)=n(k-2)` from the handshaking lemma.\n2. Connect a graph's Laplacian energy pairing and covering radius to an\n   explicit chip-firing divisor rank lower bound.\n3. Derive the needed covering-radius estimate from a Cheeger or spectral-gap\n   hypothesis.\n4. Import a random-regular-graph expansion theorem and lift the pointwise\n   connector through the corresponding probability measure.\n5. Optimize the resulting constant `C_k`; the present connector intentionally\n   separates this analytic optimization from the Brill–Noether arithmetic.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Physics"
@@ -19804,7 +19804,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What has been established\n\n`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by three real-valued sequences: stored usable energy, externally injected energy, and harvested useful energy. A per-cycle balance equation and nonnegativity assumptions yield:\n\n- exact conservation over every finite horizon;\n- an absolute bound: harvested energy is at most initial reserve plus external input;\n- a net-export bound by the initial reserve alone;\n- exact equality of harvested energy and injected energy for a cyclic apparatus;\n- zero total and pointwise output from a ground-state, unpowered apparatus;\n- a finite-horizon average-power bound;\n- average net power eventually below every positive rate.\n\nThus the result does not assign a finite energy density to quantum vacuum fluctuations. Instead, it proves that fluctuations cannot act as an unaccounted thermodynamic source in any process satisfying the stated global energy balance.\n\n## Computational evidence\n\nComputational evidence was intentionally skipped. The result is a symbolic telescoping consequence of an assumed conservation equation, rather than a numerical or combinatorial conjecture. Testing selected numerical trajectories would merely instantiate the assumptions and would provide no independent support beyond the general Lean proof.\n\n## Natural extensions\n\n1. **Continuous time.** Replace discrete cycles by absolutely continuous energy trajectories and derive the integrated inequality from an almost-everywhere differential balance law.\n2. **Open quantum systems.** Connect `injected` and `harvested` to work and heat terms in completely positive trace-preserving dynamics, making passivity or complete passivity the source of the balance inequality.\n3. **Fluctuating outputs.** Model harvested energy as a random variable and prove expectation, tail-probability, and almost-sure long-time bounds.\n4. **Multiple reservoirs.** Separate work input, heat currents, measurement cost, feedback cost, and entropy production, then derive a Kelvin–Planck-style bound.\n5. **Lossy devices.** Add nonnegative dissipation to the balance equation. The existing extraction bounds should strengthen immediately.\n6. **Relativistic localization.** Index energy accounts by bounded spacetime regions and formalize compatibility between local negative-energy observations and global conservation bounds.\n7. **Tightness constructions.** Exhibit processes attaining the finite bound by converting all initial stored energy into output, and characterize equality conditions.\n8. **Rate units.** Add an explicit positive cycle duration, so average power is energy divided by physical elapsed time rather than cycle count.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics",
         "Computation"
@@ -20360,6 +20360,47 @@
       "thread_id": "th_eb17f0b9",
       "timestamp": "2026-08-01T17:24:04.468376+00:00",
       "title": "The Lean development proves statements inside a precise topological observer mod"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecedent, while consequences equipped with a backward certificate can both recover the proposition and reduce a finite candidate space. The following conjectures make the remaining proof-complexity questions falsifiable.\n\n1. **Bounded-arithmetic compression benchmark.** Fix a sequent calculus for the bounded arithmetic fragment containing formulas `n < N`, divisibility, conjunction, and equality. For every `N ≥ 8`, compare the shortest derivation of `n = 6` from `n < N` with the shortest derivation from `n < N`, `2 ∣ n`, and `3 ∣ n`. Conjecture: for at least 90% of `N ≤ 10^4`, the consequence-guided derivation has at most half as many inference nodes. A proof enumerator can decide this finite claim once the calculus and node-count convention are fixed.\n\n2. **Certificate-cost threshold.** In any fixed finitely branching proof calculus, count both the derivation of each consequence and the backward certificate. Conjecture: there is no universal constant `c < 1` such that every consequence-stable proposition has total certified cost at most `c` times its shortest direct proof. A counterexample family would consist of propositions whose shortest backward certificates asymptotically reproduce their shortest direct proofs.\n\n3. **Information gain predicts finite search reduction.** For finite candidate spaces with deterministic Boolean checks, define information gain as `log₂(|C| / |S|)`, where `C` is the initial space and `S` its nonempty survivor set. Conjecture: under uniform exhaustive enumeration, the median number of candidates inspected after filtering decreases by a factor between `2^(I-1)` and `2^(I+1)`, where `I` is the information gain. Exhaustive tests over all check families on spaces of size at most 16 can confirm or refute the finite instances.\n\n4. **Arithmetic residue certificates.** Let `p₁, …, pₖ` be distinct primes and `M = ∏ pᵢ`. Among candidates `0 ≤ n < M`, the checks `pᵢ ∣ n` isolate `0`. Conjecture: in a standard PA sequent calculus, a balanced conjunction of these checks yields a backward certificate of size `O(k log M)`, while any certificate restricted to testing candidates one by one has size `Ω(M)`. The claim is falsifiable by explicit proof-size upper and lower bounds in the selected calculus.\n\n5. **Strict filtering without proof shortening.** Conjecture: there exists an infinite family of PA propositions and verified consequence lists for which the formal candidate search space shrinks by an unbounded factor, but the shortest proof length decreases by at most an additive constant. This would show that semantic search compression and syntactic proof compression are independent measurements. Test by exhaustive shortest-proof enumeration in successively larger bounded fragments.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0884",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "66e718fe",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/66e718fe",
+      "status": "available",
+      "thread_id": "th_e4e5e7e1",
+      "timestamp": "2026-08-01T17:25:22.274896+00:00",
+      "title": "The formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two"
     },
     {
       "ambition_level": "extension",
@@ -21135,7 +21176,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 5843d50f (Q=0.754), which proved 7 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Bridges"
       ],
@@ -21280,6 +21321,46 @@
       "thread_id": "",
       "timestamp": "2026-07-28T18:57:10.096537+00:00",
       "title": "Deepening: Reflective Type Theory: Proving Things About Proving Things"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 647e3d96 (Q=0.775), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_647e3d96_b1c534e3",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8752299999999998,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "647e3d96",
+      "source_path": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-01T17:24:08.374001+00:00",
+      "title": "Deepening: Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
     },
     {
       "ambition_level": "extension",
@@ -22415,7 +22496,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -22455,7 +22536,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -23106,7 +23187,7 @@
       "domain_bridges": [
         "Pythagorean <-> Physics"
       ],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -23147,7 +23228,7 @@
       "depth_estimate": 3,
       "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -23187,7 +23268,7 @@
       "depth_estimate": 3,
       "description": "Derives non-signaling boundary conditions allowing superluminal tachyon pulses to modulate past quantum states without triggering fatal temporal paradoxes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -23227,7 +23308,7 @@
       "depth_estimate": 3,
       "description": "Proves that entropy strictly decreases along retro-geodesics within intense Kerr black hole ergospheres.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -23347,7 +23428,7 @@
       "depth_estimate": 3,
       "description": "Derives upper bound on thermodynamic energy extraction from mega-scale orbital solar collection swarms encircling main-sequence stars.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -23387,7 +23468,7 @@
       "depth_estimate": 3,
       "description": "Proves exact minimum exotic negative energy density requirements necessary to maintain a stable superluminal Alcubierre warp bubble without collapse.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -23707,7 +23788,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Giulio Tononi's Integrated Information Theory (Phi) as a continuous scalar field over spacetime manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -24027,7 +24108,7 @@
       "depth_estimate": 3,
       "description": "Formalizes theoretical probability bounds for macroscopic quantum tunneling between decohered Everett multiverse branches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -24067,7 +24148,7 @@
       "depth_estimate": 3,
       "description": "Calculates maximum divergence rate of macroscopic physical observables following a single quantum measurement event.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -24107,7 +24188,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Ekpyrotic universe model where big bang singularities are produced by periodic collisions of 4D branes in 5D bulk space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -24147,7 +24228,7 @@
       "depth_estimate": 3,
       "description": "Proves the mathematical signature of gravitational energy leaking from our universe into neighboring extra-dimensional branes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -24187,7 +24268,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Wheeler's spacetime foam as a stochastic non-Hausdorff topological space at the Planck scale.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Physics"
       ],
@@ -24227,7 +24308,7 @@
       "depth_estimate": 3,
       "description": "Proves the existence of a non-zero net directional force generated by asymmetric Casimir cavity geometry in quantum vacuum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -24307,7 +24388,7 @@
       "depth_estimate": 3,
       "description": "Formally proves that Hawking radiation carries complete quantum information out of an evaporating black hole via subtle page curve correlations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -25559,7 +25640,7 @@
       "depth_estimate": 3,
       "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Logic"
@@ -25885,7 +25966,7 @@
       "depth_estimate": 3,
       "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Probability",
         "Physics"
@@ -26446,48 +26527,6 @@
       "thread_id": "",
       "timestamp": "",
       "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "545fa377",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
-      "domains": [
-        "MachineLearning",
-        "Algebra",
-        "Geometry"
-      ],
-      "github_issue": 0,
-      "id": "seed_044",
-      "last_attempt_time": "2026-07-28T22:28:48.808926+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.7815999999999999,
-      "parent_direction": "",
-      "priority_score": 0.83,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "",
-      "title": "Spectral Graph Theory Meets Network Robustness"
     },
     {
       "ambition_level": "extension",
@@ -27644,7 +27683,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.8129599999999999,
       "parent_direction": "",
       "priority_score": 0.9,
       "proof_strategy": "Construct a Gentzen-style sequent calculus where the Cut rule is replaced by a consequence verification rule: if Gamma proves A and A has desirable consequences verified by a computational check, then A is accepted. Prove cut-elimination fails in general but holds for consequence-stable formulas. Test: show that Fermat's Last Theorem for n=4 is consequence-stable, enabling a retrocausal proof.",
@@ -27655,7 +27694,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
@@ -28094,7 +28133,7 @@
       "depth_estimate": 3,
       "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Analysis",
@@ -30111,7 +30150,7 @@
       "depth_estimate": 3,
       "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -30152,7 +30191,7 @@
       "depth_estimate": 3,
       "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -30849,7 +30888,7 @@
       "depth_estimate": 3,
       "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics",
         "Logic"
@@ -30972,7 +31011,7 @@
       "depth_estimate": 3,
       "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Geometry"
@@ -31464,7 +31503,7 @@
       "depth_estimate": 3,
       "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -32247,7 +32286,7 @@
       "depth_estimate": 3,
       "description": "Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categories.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Physics"
@@ -33716,7 +33755,7 @@
       "depth_estimate": 3,
       "description": "Cycle c6b3a18e (Q=0.629) proved 102 theorems in Physics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -33869,114 +33908,114 @@
     "Analysis": 1,
     "Bridges": 5,
     "Combinatorics": 3,
-    "Computation": 6,
+    "Computation": 7,
     "Cryptography": 2,
     "EML": 3,
     "Geometry": 4,
-    "Logic": 5,
+    "Logic": 6,
     "MachineLearning": 3,
     "Novelty": 1,
     "NumberTheory": 2,
     "Physics": 3,
     "Pythagorean": 5,
-    "Speculative": 1,
+    "Speculative": 2,
     "Topology": 1,
     "Tropical": 3
   },
   "recent_theme_keywords": {
     "algebraic": 3,
+    "analogous": 1,
+    "arithmetic": 1,
     "associated": 2,
+    "automated": 1,
+    "axioms": 1,
+    "before": 1,
     "bridge": 3,
+    "chaining": 1,
+    "coherent": 1,
     "cohomology": 2,
-    "collapse": 1,
-    "complexity": 1,
+    "compression": 1,
     "computation": 2,
     "compute": 2,
-    "conditioned": 1,
-    "conjecture": 10,
+    "confirm": 1,
+    "conjecture": 11,
     "connect": 4,
-    "constant": 3,
+    "consequence": 1,
+    "consequence-stable": 1,
+    "consequences": 1,
+    "consistent": 1,
+    "constant": 4,
     "continuous": 2,
     "corner": 2,
-    "cylinder": 1,
+    "deriving": 1,
     "determine": 2,
-    "direct": 3,
-    "directions": 1,
-    "dynamics": 1,
+    "develop": 1,
+    "direct": 4,
+    "enable": 1,
     "equals": 4,
-    "equidistribution": 1,
-    "ergodicity": 1,
-    "exp(2π": 1,
+    "established": 1,
+    "exists": 1,
     "explicit": 3,
-    "exponential": 1,
-    "exponential-sum": 1,
-    "familiar": 1,
-    "fields": 1,
+    "factor": 1,
     "formalize": 16,
-    "frequencies": 1,
-    "full-measure": 1,
+    "found": 1,
     "function": 6,
     "fundamental": 2,
     "future": 2,
     "general": 2,
-    "genuinely": 1,
-    "geometric": 1,
     "geometry": 3,
-    "integer": 1,
-    "intersect": 1,
-    "interval": 1,
-    "intervals": 1,
+    "guides": 1,
+    "identify": 1,
+    "impact": 1,
+    "implies": 1,
     "invariant": 3,
     "investigate": 4,
-    "irrationals": 1,
-    "itself": 1,
-    "needed": 1,
-    "network": 1,
-    "neural": 1,
-    "nonzero": 1,
-    "normal": 1,
-    "normality": 1,
-    "normality.**": 1,
+    "logical": 1,
+    "measure": 1,
+    "mechanism": 1,
+    "mutually": 1,
+    "narrows": 1,
     "number": 5,
-    "numbers": 1,
-    "observable": 1,
-    "observer-dependent-reality": 1,
-    "observing": 1,
     "original": 2,
     "paper": 3,
+    "paradigm": 1,
     "parameters": 2,
-    "perceptual": 1,
-    "physical": 1,
-    "pointwise": 1,
+    "physics": 1,
     "polynomial": 4,
-    "properties": 1,
-    "prove": 1,
-    "proves": 1,
-    "provide": 1,
-    "reality": 1,
+    "power": 1,
+    "predictive": 1,
+    "proof": 1,
+    "property": 1,
+    "proposition": 1,
+    "propositions": 1,
+    "proving": 1,
     "remains": 3,
     "representations": 2,
-    "require": 1,
     "required": 2,
     "results": 7,
+    "retrocausal": 1,
     "satisfies": 2,
     "scheme": 3,
+    "search": 1,
+    "self-consistent": 1,
+    "shorter": 1,
     "specific": 2,
-    "state": 1,
-    "statistics": 1,
-    "strictly": 1,
+    "structure": 1,
     "structures": 2,
-    "system's": 1,
-    "themselves": 1,
-    "theorem": 7,
-    "theory": 3,
+    "theorem": 8,
+    "theorems": 1,
+    "theory": 4,
     "topological": 1,
     "transcendence": 1,
     "tropical": 3,
     "twilight": 1,
     "uniform": 1,
     "unknown": 1,
+    "validity": 1,
     "vanishing": 3,
+    "verification": 1,
+    "verified": 1,
+    "verifying": 1,
     "vertices": 3,
     "weight": 2,
     "weyl's": 1,

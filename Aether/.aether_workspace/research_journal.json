@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1c628216",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal\n   machine, define `K_U(b)` as the least program length decoding to `b`, and derive\n   the Kraft-in",
-      "quality_score": 0.76172,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T09:52:06",
-      "title": "Borges' Library of Babel: Combinatorics of Everything"
-    },
-    {
       "cycle_id": "72d619d5",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe formal result establishes a tractable cubical recipe model: fixed-flavor recipes are optional ingredient assignments, and substitution methods are classified by their parity s",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-08-01T14:04:22",
       "title": "Certified Adversarial Robustness via Sheaf Cohomology"
+    },
+    {
+      "cycle_id": "647e3d96",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nThe Lean development proves statements inside a precise topological observer model. The following conjectures are concrete extensions of that model and do not assert an empirical",
+      "quality_score": 0.7752299999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-01T17:24:08",
+      "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3984694e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Gaussian binomial coefficients\n\nCompanion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration for\n*Adriano Garsia (1928–2024)*, whose lifelong subject was the com",
-      "quality_score": 0.618,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-24T09:42:09",
-      "title": "ArXiv paper: A memorial tribute: Adriano Garsia (1928--2024)"
-    },
     {
       "cycle_id": "73ec6b88",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-08-01T17:22:47",
       "title": "1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b"
+    },
+    {
+      "cycle_id": "647e3d96",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nThe Lean development proves statements inside a precise topological observer model. The following conjectures are concrete extensions of that model and do not assert an empirical",
+      "quality_score": 0.7752299999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-01T17:24:08",
+      "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8fe295b2",
-      "domain": "Applications",
-      "name": "neuron_not_always_unitary",
-      "quality": 0.7712399999999999
-    },
-    {
-      "cycle_id": "8fe295b2",
-      "domain": "Applications",
-      "name": "neuron_second_zero_ne_unitary",
-      "quality": 0.7712399999999999
-    },
-    {
-      "cycle_id": "1cf3185d",
-      "domain": "Geometry",
-      "name": "singleton_connected",
-      "quality": 0.8116299999999999
-    },
     {
       "cycle_id": "1cf3185d",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "threshold_has_no_positive_certificate",
       "quality": 0.7776099999999999
+    },
+    {
+      "cycle_id": "647e3d96",
+      "domain": "Physics",
+      "name": "about",
+      "quality": 0.7752299999999999
+    },
+    {
+      "cycle_id": "647e3d96",
+      "domain": "Physics",
+      "name": "oneChannel_observable",
+      "quality": 0.7752299999999999
+    },
+    {
+      "cycle_id": "647e3d96",
+      "domain": "Physics",
+      "name": "option_channel_isOpen_iff",
+      "quality": 0.7752299999999999
     }
   ],
-  "last_updated": "2026-08-01T17:22:47",
+  "last_updated": "2026-08-01T17:24:08",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "b59af725",
-        "quality": 0.73,
-        "theorems": 0,
-        "title": "Spectral Theory: Self-Adjoint Operators"
-      },
-      {
         "cycle_id": "901b537c",
         "quality": 0.77,
         "theorems": 12,
@@ -3761,6 +3755,12 @@
         "quality": 0.76844,
         "theorems": 7,
         "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
+      },
+      {
+        "cycle_id": "647e3d96",
+        "quality": 0.7752299999999999,
+        "theorems": 10,
+        "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
       }
     ],
     "Probability": [
