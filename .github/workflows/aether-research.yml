@@ -21,8 +21,6 @@ concurrency:
 env:
   AETHER_MAX_INFLIGHT: ${{ github.event.inputs.maxinflight || '9' }}
   PYTHONUNBUFFERED: '1'
-  # Force HuggingFace to download to the workspace so we can track its size, if you use it.
-  HF_HOME: ${{ github.workspace }}/.hf_cache
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -57,9 +55,6 @@ jobs:
       - name: Create workspace directories
         run: mkdir -p Aether/.aether_workspace/projects Aether/.aether_workspace/logs
 
-      - name: Write Pollinations key file
-        run: echo "${{ secrets.POLLINATIONS_API_KEY }}" > Aether/.aether_workspace/pollinations_api_key
-
       - name: Configure Git and install hooks
         run: |
           git config user.name "paul klemstine"
@@ -69,9 +64,6 @@ jobs:
       - name: Run Aether tick
         env:
           ARISTOTLE_API_KEY: ${{ secrets.ARISTOTLE_API_KEY }}
-          POLLINATIONS_API_KEY: ${{ secrets.POLLINATIONS_API_KEY }}
-          OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: cd Aether && python3 aether_tick.py --max-inflight ${{ env.AETHER_MAX_INFLIGHT }} --ollama-cloud
+        run: cd Aether && python3 aether_tick.py --max-inflight ${{ env.AETHER_MAX_INFLIGHT }}
