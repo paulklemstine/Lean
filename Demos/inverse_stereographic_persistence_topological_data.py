@@ -1,232 +1,158 @@
-"""Inverse Stereographic Persistence — numerical demonstration.
+#!/usr/bin/env python3
+"""Numerical demonstrations of exact inverse-stereographic distance transport.
 
-This script verifies, by direct computation, the core results of the paper
-"Inverse Stereographic Persistence: An Exact Conformal Isometry for Topological
-Data Analysis on Spheres".
-
-It is fully self-contained: only the Python standard library is used (``math``
-and ``random``).  Every helper function is inlined.
-
-Results demonstrated
---------------------
-1. Theorem 1  (invStereoN_on_sphere):  phi(x) lands on the unit sphere S^n.
-2. Theorem 2  (stereo_conformal_identity):
-       ||phi(x) - phi(y)||^2 * (1+||x||^2)(1+||y||^2) = 4 ||x - y||^2.
-3. Theorem 3  (chordal_eq_weighted):  chordal(x,y) = d_w(x,y).
-4. Corollary 5.1/5.3: the chordal distance matrix of the projected cloud equals
-   the weighted-Euclidean matrix of the flat cloud, hence single-linkage
-   (0-dimensional persistence) barcodes are identical (bottleneck distance 0).
+The script uses only Python's standard library.  It compares direct spherical
+chordal/geodesic distances with their weighted stereographic counterparts,
+exhibits the radial-formula counterexample, and checks Vietoris--Rips edge
+sets at several scales for random clouds of 50, 100, and 200 points.
 """
 
 from __future__ import annotations
 
 import math
 import random
-from typing import List, Tuple
+from typing import Iterable, List, Sequence, Tuple
 
-Vec = List[float]
-SpherePoint = Tuple[List[float], float]  # (horizontal coords in R^n, height)
-
-
-# --------------------------------------------------------------------------- #
-# Core definitions (mirror the Lean file Catalog/Geometry/ConformalPersistence)
-# --------------------------------------------------------------------------- #
-def nsq(x: Vec) -> float:
-    """Squared Euclidean norm  nsq(x) = sum_i x_i^2."""
-    return sum(xi * xi for xi in x)
+Vector = Tuple[float, ...]
+Edge = Tuple[int, int]
 
 
-def ip(x: Vec, y: Vec) -> float:
-    """Euclidean inner product  ip(x,y) = sum_i x_i y_i."""
-    return sum(xi * yi for xi, yi in zip(x, y))
+def dot(x: Sequence[float], y: Sequence[float]) -> float:
+    return sum(a * b for a, b in zip(x, y))
 
 
-def eucl_dist2(x: Vec, y: Vec) -> float:
-    """Squared Euclidean distance  sum_i (x_i - y_i)^2."""
-    return sum((xi - yi) ** 2 for xi, yi in zip(x, y))
+def norm(x: Sequence[float]) -> float:
+    return math.sqrt(dot(x, x))
 
 
-def inv_stereo(x: Vec) -> SpherePoint:
-    """Inverse stereographic projection phi : R^n -> S^n subset R^{n+1}.
-
-    phi(x) = ( 2x / (1+||x||^2),  (||x||^2 - 1)/(1+||x||^2) ).
-    """
-    d = 1.0 + nsq(x)
-    horiz = [2.0 * xi / d for xi in x]
-    height = (nsq(x) - 1.0) / d
-    return horiz, height
+def subtract(x: Sequence[float], y: Sequence[float]) -> Vector:
+    return tuple(a - b for a, b in zip(x, y))
 
 
-def sphere_nsq(p: SpherePoint) -> float:
-    """Squared ambient norm  nsq(p1) + p2^2."""
-    horiz, height = p
-    return nsq(horiz) + height * height
+def inverse_stereographic(x: Sequence[float]) -> Vector:
+    """Map R^n to the unit sphere S^n, omitting the north pole."""
+    r2 = dot(x, x)
+    denominator = 1.0 + r2
+    return tuple(2.0 * value / denominator for value in x) + (
+        (r2 - 1.0) / denominator,
+    )
 
 
-def sphere_dist2(p: SpherePoint, q: SpherePoint) -> float:
-    """Squared ambient (chordal) distance in R^{n+1}."""
-    ph, phh = p
-    qh, qhh = q
-    return eucl_dist2(ph, qh) + (phh - qhh) ** 2
+def stereographic(p: Sequence[float]) -> Vector:
+    """Map a unit spherical point other than the north pole to R^n."""
+    denominator = 1.0 - p[-1]
+    if denominator <= 1e-14:
+        raise ValueError("point is too close to the omitted north pole")
+    return tuple(value / denominator for value in p[:-1])
 
 
-def chordal(x: Vec, y: Vec) -> float:
-    """Chordal distance between phi(x) and phi(y)."""
-    return math.sqrt(sphere_dist2(inv_stereo(x), inv_stereo(y)))
+def chordal_on_sphere(p: Sequence[float], q: Sequence[float]) -> float:
+    return norm(subtract(p, q))
 
 
-def weighted_dist(x: Vec, y: Vec) -> float:
-    """Conformally weighted Euclidean distance
-    d_w(x,y) = 2||x-y|| / sqrt((1+||x||^2)(1+||y||^2))."""
-    return 2.0 * math.sqrt(eucl_dist2(x, y)) / math.sqrt((1.0 + nsq(x)) * (1.0 + nsq(y)))
+def geodesic_on_sphere(p: Sequence[float], q: Sequence[float]) -> float:
+    cosine = max(-1.0, min(1.0, dot(p, q)))
+    return math.acos(cosine)
 
 
-def geodesic(p: SpherePoint, q: SpherePoint) -> float:
-    """Great-circle (geodesic) distance on the unit sphere = arccos<p,q>."""
-    ph, phh = p
-    qh, qhh = q
-    dot = ip(ph, qh) + phh * qhh
-    dot = max(-1.0, min(1.0, dot))  # clamp for numerical safety
-    return math.acos(dot)
+def weighted_chordal(x: Sequence[float], y: Sequence[float]) -> float:
+    numerator = 2.0 * norm(subtract(x, y))
+    denominator = math.sqrt((1.0 + dot(x, x)) * (1.0 + dot(y, y)))
+    return numerator / denominator
 
 
-# --------------------------------------------------------------------------- #
-# Random samplers
-# --------------------------------------------------------------------------- #
-def random_vec(n: int, scale: float = 2.0) -> Vec:
-    return [random.uniform(-scale, scale) for _ in range(n)]
+def weighted_geodesic(x: Sequence[float], y: Sequence[float]) -> float:
+    half_chord = max(0.0, min(1.0, weighted_chordal(x, y) / 2.0))
+    return 2.0 * math.asin(half_chord)
 
 
-def random_cloud(num: int, n: int, scale: float = 2.0) -> List[Vec]:
-    return [random_vec(n, scale) for _ in range(num)]
+def proposed_radial_weight(distance: float) -> float:
+    return 2.0 * distance / (1.0 + distance * distance / 4.0)
 
 
-# --------------------------------------------------------------------------- #
-# 0-dimensional persistence via single linkage (minimum spanning tree)
-# --------------------------------------------------------------------------- #
-def single_linkage_deaths(matrix: List[List[float]]) -> List[float]:
-    """0-dim persistence death times = sorted MST edge weights (Prim's algo).
-
-    The connected-component (H_0) barcode of a Vietoris-Rips filtration is
-    exactly the multiset of minimum-spanning-tree edge weights.  Since the
-    barcode depends only on the distance matrix, two equal matrices yield
-    identical barcodes.
-    """
-    n = len(matrix)
-    if n == 0:
-        return []
-    in_tree = [False] * n
-    best = [math.inf] * n
-    best[0] = 0.0
-    deaths: List[float] = []
-    for _ in range(n):
-        u = min((i for i in range(n) if not in_tree[i]), key=lambda i: best[i])
-        in_tree[u] = True
-        if best[u] > 0.0:
-            deaths.append(best[u])
-        for v in range(n):
-            if not in_tree[v] and matrix[u][v] < best[v]:
-                best[v] = matrix[u][v]
-    return sorted(deaths)
+def random_sphere_point(dimension: int, rng: random.Random) -> Vector:
+    """Sample a point on S^dimension by normalizing Gaussian coordinates."""
+    while True:
+        values = tuple(rng.gauss(0.0, 1.0) for _ in range(dimension + 1))
+        length = norm(values)
+        if length > 1e-12:
+            point = tuple(value / length for value in values)
+            if 1.0 - point[-1] > 1e-10:
+                return point
 
 
-# --------------------------------------------------------------------------- #
-# Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_on_sphere() -> None:
-    print("=" * 70)
-    print("Theorem 1:  phi(x) lies on the unit sphere S^n  (sphereNsq = 1)")
-    print("=" * 70)
-    for n in (1, 2, 3, 5):
-        worst = max(abs(sphere_nsq(inv_stereo(random_vec(n))) - 1.0) for _ in range(2000))
-        print(f"  dim n={n}:  max |sphereNsq(phi(x)) - 1| = {worst:.3e}")
-    print()
+def pairwise_matrix(points: Sequence[Vector], metric) -> List[List[float]]:
+    size = len(points)
+    matrix = [[0.0] * size for _ in range(size)]
+    for i in range(size):
+        for j in range(i + 1, size):
+            value = metric(points[i], points[j])
+            matrix[i][j] = value
+            matrix[j][i] = value
+    return matrix
 
 
-def demo_conformal_identity() -> None:
-    print("=" * 70)
-    print("Theorem 2:  ||phi(x)-phi(y)||^2 (1+||x||^2)(1+||y||^2) = 4||x-y||^2")
-    print("=" * 70)
-    for n in (1, 2, 3, 5):
-        worst = 0.0
-        for _ in range(2000):
-            x, y = random_vec(n), random_vec(n)
-            lhs = sphere_dist2(inv_stereo(x), inv_stereo(y)) * (1 + nsq(x)) * (1 + nsq(y))
-            rhs = 4.0 * eucl_dist2(x, y)
-            worst = max(worst, abs(lhs - rhs))
-        print(f"  dim n={n}:  max |LHS - RHS| = {worst:.3e}")
-    print()
+def rips_edges(matrix: Sequence[Sequence[float]], epsilon: float) -> set[Edge]:
+    return {
+        (i, j)
+        for i in range(len(matrix))
+        for j in range(i + 1, len(matrix))
+        if matrix[i][j] <= epsilon
+    }
 
 
-def demo_isometry() -> None:
-    print("=" * 70)
-    print("Theorem 3:  chordal(x,y) = d_w(x,y)")
-    print("=" * 70)
-    for n in (1, 2, 3, 5):
-        worst = max(
-            abs(chordal(x := random_vec(n), y := random_vec(n)) - weighted_dist(x, y))
-            for _ in range(2000)
-        )
-        print(f"  dim n={n}:  max |chordal - d_w| = {worst:.3e}")
-    print()
+def maximum_matrix_error(
+    first: Sequence[Sequence[float]], second: Sequence[Sequence[float]]
+) -> float:
+    return max(
+        abs(first[i][j] - second[i][j])
+        for i in range(len(first))
+        for j in range(len(first))
+    )
 
 
-def demo_persistence_equality() -> None:
-    print("=" * 70)
-    print("Corollary 5.1/5.3:  matrices and H_0 barcodes coincide exactly")
-    print("=" * 70)
-    n = 2
-    for num in (50, 100, 200):
-        cloud = random_cloud(num, n)
-        proj = [inv_stereo(x) for x in cloud]
-        weighted_matrix = [[weighted_dist(a, b) for b in cloud] for a in cloud]
-        chordal_matrix = [[math.sqrt(sphere_dist2(p, q)) for q in proj] for p in proj]
-
-        max_diff = max(
-            abs(weighted_matrix[i][j] - chordal_matrix[i][j])
-            for i in range(num)
-            for j in range(num)
-        )
-        deaths_w = single_linkage_deaths(weighted_matrix)
-        deaths_c = single_linkage_deaths(chordal_matrix)
-        barcode_diff = max((abs(a - b) for a, b in zip(deaths_w, deaths_c)), default=0.0)
-        print(
-            f"  N={num:3d}:  max matrix diff = {max_diff:.3e},  "
-            f"max H_0 barcode diff = {barcode_diff:.3e}  (bottleneck = 0)"
-        )
-    print()
+def demonstrate_counterexample() -> None:
+    x, y = (0.0,), (2.0,)
+    euclidean = norm(subtract(x, y))
+    proposed = proposed_radial_weight(euclidean)
+    exact = weighted_chordal(x, y)
+    print("Counterexample in the one-dimensional chart")
+    print(f"  Euclidean separation:       {euclidean:.12f}")
+    print(f"  Proposed radial value:      {proposed:.12f}")
+    print(f"  Exact chordal value:        {exact:.12f}")
+    print(f"  Closed form exact value:    4/sqrt(5) = {4/math.sqrt(5):.12f}")
+    print(f"  Absolute discrepancy:       {abs(proposed - exact):.12f}\n")
 
 
-def demo_geodesic_monotone() -> None:
-    print("=" * 70)
-    print("Corollary 5.4:  geodesic is a strictly monotone function of chordal")
-    print("=" * 70)
-    n = 2
-    cloud = random_cloud(80, n)
-    proj = [inv_stereo(x) for x in cloud]
-    pairs = []
-    for i in range(len(cloud)):
-        for j in range(i + 1, len(cloud)):
-            pairs.append((chordal(cloud[i], cloud[j]), geodesic(proj[i], proj[j])))
-    pairs.sort()
-    monotone = all(pairs[k][1] <= pairs[k + 1][1] + 1e-12 for k in range(len(pairs) - 1))
-    print(f"  pairs sorted by chordal distance are also sorted by geodesic: {monotone}")
-    # verify the closed form chord = 2 sin(geodesic/2)
-    worst = max(abs(c - 2.0 * math.sin(g / 2.0)) for c, g in pairs)
-    print(f"  max |chord - 2 sin(geodesic/2)| = {worst:.3e}")
-    print()
+def validate_cloud(size: int, sphere_dimension: int, seed: int) -> None:
+    rng = random.Random(seed)
+    spherical = [random_sphere_point(sphere_dimension, rng) for _ in range(size)]
+    chart = [stereographic(point) for point in spherical]
+
+    direct_chordal = pairwise_matrix(spherical, chordal_on_sphere)
+    chart_chordal = pairwise_matrix(chart, weighted_chordal)
+    direct_geodesic = pairwise_matrix(spherical, geodesic_on_sphere)
+    chart_geodesic = pairwise_matrix(chart, weighted_geodesic)
+
+    chord_error = maximum_matrix_error(direct_chordal, chart_chordal)
+    geodesic_error = maximum_matrix_error(direct_geodesic, chart_geodesic)
+
+    thresholds = (0.25, 0.5, 1.0, 1.5)
+    edge_agreement = all(
+        rips_edges(direct_chordal, epsilon) == rips_edges(chart_chordal, epsilon)
+        for epsilon in thresholds
+    )
+
+    print(f"Random cloud: N={size}, sphere S^{sphere_dimension}")
+    print(f"  maximum chordal discrepancy: {chord_error:.3e}")
+    print(f"  maximum geodesic discrepancy: {geodesic_error:.3e}")
+    print(f"  Rips edge sets agree at {len(thresholds)} scales: {edge_agreement}")
 
 
 def main() -> None:
-    random.seed(20260613)
-    print("\nInverse Stereographic Persistence — numerical demonstration\n")
-    demo_on_sphere()
-    demo_conformal_identity()
-    demo_isometry()
-    demo_persistence_equality()
-    demo_geodesic_monotone()
-    print("All checks pass to machine precision: the sphere and its conformally")
-    print("weighted stereographic shadow yield identical persistence.")
+    demonstrate_counterexample()
+    for size in (50, 100, 200):
+        validate_cloud(size=size, sphere_dimension=2, seed=20260801 + size)
 
 
 if __name__ == "__main__":

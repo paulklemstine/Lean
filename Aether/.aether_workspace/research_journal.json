@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "82236c9f",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Convex Radiator Laws and Swarm Thermodynamics\n\nThis cycle established that the equal-area optimum of a finite radiating swarm is\nnot special to a quadratic cost, but follows from",
-      "quality_score": 0.65,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-24T02:19:34",
-      "title": "**Conjecture.** For every strictly convex radiator-cost function, every finite s"
-    },
-    {
       "cycle_id": "a9c9c0c1",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nResearch thread `th_0d5dcecd`, cycle 1 (root direction `fd_0391`).\n\n## What was proved this cycle\n\nThe file `Novelty/RamseyProbabilistic.lean` formalizes the classical **first-mom",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-08-01T04:21:45",
       "title": "EML Number Theory: Transcendence and Algebraic Independence"
+    },
+    {
+      "cycle_id": "04022a5b",
+      "domain": "Novelty",
+      "key_insight": "# Molecular Computing Limits v26 — Results and Future Directions\n\n## Formal results\n\n`MolecularComputingLimitsV26.lean` is self-contained and proves the following claims.\n\n### Proved\n\n1. **Exact compi",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-01T06:47:29",
+      "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7986800000000001
     }
   ],
-  "last_updated": "2026-08-01T04:21:45",
+  "last_updated": "2026-08-01T06:47:29",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "09a3e4f4",
-        "quality": 0.77355,
-        "theorems": 10,
-        "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-      },
-      {
         "cycle_id": "83a0d4e2",
         "quality": 0.75101,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.72637,
         "theorems": 14,
         "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+      },
+      {
+        "cycle_id": "04022a5b",
+        "quality": 0.686,
+        "theorems": 29,
+        "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
       }
     ],
     "NumberTheory": [

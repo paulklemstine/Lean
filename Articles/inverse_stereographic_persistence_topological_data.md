@@ -1,234 +1,180 @@
-# The Sphere in Disguise: How a 150-Year-Old Map Trick Makes Topology on Curved Spaces Fast
+# Measuring Shape on a Sphere Without Flattening It Away
 
-## A shape problem from the edge of the universe
+## A corrected route from stereographic maps to persistent topology
 
-Look up at the night sky and you are looking at data on a sphere. The cosmic
-microwave background — the faint afterglow of the Big Bang — is a temperature
-map painted across the celestial sphere. Earthquake epicenters, ozone
-concentrations, the directions of cosmic rays, even the surface of a folded
-protein: all of these are clouds of points living not on a flat sheet of paper
-but on a curved, closed surface.
+A telescope does not hand us a flat cloud of data. Directions in the sky live on a sphere. Nor is every molecular data set naturally planar: orientations, rotations, and directional features often occupy curved spaces. Yet many of the standard tools of topological data analysis begin with points in ordinary Euclidean space, where distance is measured by a ruler.
 
-Scientists who want to find *structure* in such data have a powerful modern
-tool: **persistent homology**. It is a way of asking, "As I zoom out and let
-nearby points merge into blobs, what loops, voids, and connected clusters
-appear, and how long do they survive?" The answer is a kind of barcode — a
-fingerprint of the shape of the data that is robust to noise and independent of
-how you happened to coordinatize things.
+This creates an enticing possibility. Stereographic projection turns a sphere with one point removed into a plane. Why not project spherical data, run familiar Euclidean algorithms, and translate the answer back?
 
-There is a catch. Almost every fast algorithm for persistent homology assumes
-your data lives in flat Euclidean space, where the distance between two points
-is the ordinary straight-line distance. On a sphere, the *correct* notion of
-distance is the **geodesic** distance — the length of the shortest great-circle
-arc between two points, the distance an airplane actually flies. Feed spherical
-data into a Euclidean algorithm and you measure the wrong distances. Compute the
-geodesic distances by hand and you are stuck doing an all-pairs computation that
-scales like the square of the number of points — painfully slow for the millions
-of pixels in a sky map.
+The broad idea is sound, but only if distance is translated exactly. Stereographic projection preserves angles, not lengths. Near the omitted pole it stretches the sphere dramatically. A formula depending only on the planar separation of two projected points therefore cannot, in general, recover their spherical separation. The location of each endpoint matters.
 
-This article tells the story of a clean mathematical idea that dissolves the
-problem: **inverse stereographic persistence**. The punchline is that a curved
-problem on the sphere is *exactly* the same as a flat problem in Euclidean
-space, provided you measure flat distance with one extra, completely explicit
-weight. Not "approximately the same." Not "the same up to a constant." Exactly,
-provably, the same — and the proof is short enough to fit on a postcard.
+The central result developed here identifies the correct endpoint-dependent weight, proves that it transports two standard topological filtrations exactly, and gives a simple counterexample to a tempting but incorrect radial shortcut.
 
-## Stereographic projection: the cartographer's oldest trick
+## Two ways to measure separation on a sphere
 
-Imagine a transparent globe sitting on a table, touching it at the South Pole. A
-tiny lamp glows at the North Pole. Every point on the globe casts a shadow onto
-the table below. This shadow map is **stereographic projection**, and
-cartographers have used it since antiquity to flatten the round Earth onto a flat
-chart.
+Let $S^n$ be the unit sphere in $\mathbb R^{n+1}$. There are two common spherical distances. The **chordal distance** between points $p,q\in S^n$ is the ordinary Euclidean length of the chord joining them:
 
-Run the lamp in reverse and you get **inverse stereographic projection**: take
-any point on the flat table and trace the ray back up to the lamp; wherever it
-pierces the globe is the point's home on the sphere. This gives a perfect
-one-to-one correspondence between the entire flat plane and the sphere (minus the
-single point at the North Pole).
+$$
+c(p,q)=\lVert p-q\rVert.
+$$
 
-In coordinates, if your flat point is a vector `x` in `n`-dimensional space, the
-inverse stereographic map sends it to the sphere `Sⁿ` sitting in
-`(n+1)`-dimensional space by the formula
+The **geodesic distance** is the length of the shorter great-circle arc between them. If that arc subtends an angle $\theta\in[0,\pi]$, then chord and arc satisfy
 
-```
-φ(x) = ( 2x / (1 + ‖x‖²) ,  (‖x‖² − 1) / (1 + ‖x‖²) ).
-```
+$$
+c=2\sin(\theta/2),
+\qquad
+\theta=2\arcsin(c/2).
+$$
 
-The first `n` coordinates are a shrunken copy of `x`; the last coordinate is the
-"height" on the sphere. Here `‖x‖²` is the squared length of `x`, i.e. the sum of
-the squares of its entries.
+Thus chordal and geodesic distance contain the same pairwise information, but use different scales.
 
-The first thing one must check is that this formula actually lands *on* the
-sphere — that the output always has length exactly 1. It does, in every
-dimension. Writing `sphereNsq(p)` for the squared length of a point `p` in the
-ambient space, the precise statement is:
+Now remove the north pole and identify the remainder of $S^n$ with $\mathbb R^n$ by stereographic projection. If $x,y\in\mathbb R^n$ are planar coordinates and $P(x),P(y)\in S^n$ their inverse stereographic images, direct calculation gives
 
-> **Theorem 1 (Lands on the sphere).** For every flat point `x` in `ℝⁿ`,
-> `sphereNsq(φ(x)) = 1`. The image always sits on the unit sphere `Sⁿ`.
+$$
+\lVert P(x)-P(y)\rVert
+=
+\frac{2\lVert x-y\rVert}
+{\sqrt{(1+\lVert x\rVert^2)(1+\lVert y\rVert^2)}}.
+$$
 
-This is the kind of fact that is obvious in two dimensions and easy to *believe*
-in all dimensions, but the honest thing is to prove it once and for all, for
-arbitrary `n`. That has now been done.
+Call the right-hand side $d_c(x,y)$. It is the exact pullback of spherical chordal distance. The corresponding geodesic distance is
 
-## The magic property: angles are preserved
+$$
+d_g(x,y)=2\arcsin\!\left(\frac{d_c(x,y)}{2}\right).
+$$
 
-Stereographic projection has a beautiful, almost magical property that has made
-it beloved by mathematicians and navigators alike: it is **conformal**. It
-preserves angles. Two roads crossing at a right angle on the globe still cross at
-a right angle on the flattened map. Circles on the sphere map to circles on the
-plane. The map distorts *sizes* — Greenland looks gigantic — but it never
-distorts the *local shape* of anything.
+These formulas expose the essential geometry. The numerator records ordinary planar separation. The denominator records where both endpoints sit relative to the origin. Equal planar gaps can represent different spherical gaps because stereographic magnification changes with position.
 
-Conformality is usually stated as a fact about infinitesimally small figures.
-The heart of inverse stereographic persistence is the discovery that, for the
-specific question persistence cares about — *distances between pairs of points* —
-the conformal distortion is not just controlled but **known exactly, in closed
-form**.
+## Why the radial shortcut fails
 
-Here is the gem. Take any two flat points `x` and `y`. Map them up to the sphere
-to get `φ(x)` and `φ(y)`. Measure the straight-line distance between them *through
-the sphere* — the so-called **chordal distance**, the length of the chord cutting
-through the ball. Then the following identity holds, with no error term whatsoever:
+A proposed alternative was to transform only the Euclidean separation $d=\lVert x-y\rVert$ by
 
-> **Theorem 2 (The exact conformal identity).** For all `x, y` in `ℝⁿ`,
-> ```
-> ‖φ(x) − φ(y)‖² · (1 + ‖x‖²)(1 + ‖y‖²) = 4 ‖x − y‖².
-> ```
+$$
+r(d)=\frac{2d}{1+d^2/4}.
+$$
 
-Read it slowly. On the left is the squared chordal distance on the sphere,
-multiplied by a "conformal factor" that is simply the product of the two
-denominators that appeared in the projection formula. On the right is four times
-the squared ordinary flat distance. The two sides are equal — always, in every
-dimension, on the nose.
+This expression looks plausible: it is bounded, smooth, and behaves like $2d$ for small $d$. But it ignores $\lVert x\rVert$ and $\lVert y\rVert$ separately. That omission is fatal.
 
-This single algebraic identity is the entire engine of the theory. Everything
-else is a corollary.
+Consider the one-dimensional stereographic chart and the points $x=0$ and $y=2$. Their Euclidean separation is $2$, so
 
-## From identity to isometry
+$$
+r(2)=\frac{4}{1+1}=2.
+$$
 
-Rearranging Theorem 2 and taking a square root turns it into a statement about
-distances directly. Define the **conformally weighted Euclidean distance**
-between two flat points by
+The true chordal distance is instead
 
-```
-d_w(x, y) = 2‖x − y‖ / √( (1 + ‖x‖²)(1 + ‖y‖²) ).
-```
+$$
+d_c(0,2)
+=
+\frac{2\cdot2}{\sqrt{(1+0^2)(1+2^2)}}
+=
+\frac{4}{\sqrt5}
+<2.
+$$
 
-This is just the ordinary flat distance `‖x − y‖`, rescaled by a weight that
-depends on how far `x` and `y` are from the origin. Points near the origin barely
-get rescaled; points far out get shrunk, exactly compensating for the way
-stereographic projection stretches the periphery.
+So the radial formula does not reproduce even chordal spherical distance. It also cannot reproduce geodesic distance, whose correct value is $2\arcsin(2/\sqrt5)$. This is not a minor numerical discrepancy; it shows that no location-blind use of this formula can give exact spherical persistence.
 
-Theorem 2 now says, after taking square roots:
+The deeper obstruction is translation. Compare two planar pairs having the same separation but lying at different distances from the origin. The numerator of $d_c$ stays fixed while its denominator changes. Therefore there is no single function of $\lVert x-y\rVert$ alone that equals inverse-stereographic chordal distance for every pair.
 
-> **Theorem 3 (Exact isometry).** The chordal distance on the sphere between
-> `φ(x)` and `φ(y)` equals the weighted distance `d_w(x, y)`, for every pair of
-> points.
+## From distances to evolving topological shapes
 
-In the language of geometry, inverse stereographic projection is an **isometry**
-— a perfect distance-preserving correspondence — between flat space carrying the
-weighted distance `d_w` and the sphere carrying its natural chordal distance.
-Nothing is lost, nothing is approximated. The two metric spaces are, for all
-measurement purposes, the same space wearing two different costumes.
+Persistent homology studies how topological features appear and disappear as a scale parameter grows. Two standard constructions are the Vietoris--Rips and Čech filtrations.
 
-## Why this is exactly what topological data analysis needs
+Given a finite labelled cloud $X=\{x_i\}$ and a distance $d$, a finite set of labels $\sigma$ is a **Vietoris--Rips face at scale $\varepsilon$** when every pair of its vertices lies within the threshold:
 
-Here is where geometry pays off for data science. The machinery of persistent
-homology — whether you build it with Vietoris–Rips complexes or Čech complexes —
-has a remarkable feature: **it only ever looks at the matrix of pairwise
-distances between your data points.** It never needs the coordinates, never needs
-to know whether the space is curved or flat. Give it the same distance matrix and
-it will hand you back the same barcode, every time.
+$$
+d(x_i,x_j)\le\varepsilon
+\quad\text{for all }i,j\in\sigma.
+$$
 
-Now combine that with Theorem 3. Suppose you have a cloud of `N` points sitting
-on a sphere. You want its persistence barcode under the spherical distance. Two
-routes are available:
+A finite set $\sigma$ is a **Čech face at radius $\varepsilon$** when the closed balls of radius $\varepsilon$ around all its vertices share a common center. Equivalently, there is a point $z$ such that
 
-1. **The hard way:** work directly on the sphere with the spherical distance.
-2. **The easy way:** stereographically project every point down to flat space,
-   and run a standard Euclidean persistence pipeline using the weighted distance
-   `d_w`.
+$$
+d(z,x_i)\le\varepsilon
+\quad\text{for every }i\in\sigma.
+$$
 
-Theorem 3 guarantees the *distance matrices produced by these two routes are
-identical, entry for entry.* Therefore the persistence diagrams they produce are
-identical too. Not close in the technical "bottleneck distance" sense that
-stability theorems usually promise — the bottleneck distance between them is
-exactly **zero**.
+As $\varepsilon$ increases, faces are added but never removed. The resulting nested complexes form a filtration. Homology tracks connected components, loops, voids, and higher-dimensional holes through this evolution; a persistence diagram summarizes their lifetimes.
 
-This is the conceptual heart of the matter: **a curved topological-data-analysis
-problem has been converted, with zero loss, into a flat one.** And flat
-persistence is exactly the regime where decades of engineering have produced fast
-algorithms. Instead of a brute-force `O(N²)` computation of all spherical
-distances followed by a generic solver, one can exploit Euclidean spatial data
-structures — k-d trees, cover trees, approximate nearest-neighbor indices — to
-build the filtration in roughly `O(N log N)` time. For a sky map with millions of
-pixels, that is the difference between a calculation that finishes over coffee and
-one that never finishes at all.
+## Exact transport of the filtrations
 
-## But the natural metric is the geodesic, not the chord
+The key preservation theorem is almost transparent once the correct metric is used.
 
-A careful reader will object. The chordal distance — the length of the chord
-*through* the sphere — is not quite the geodesic distance an airplane flies, which
-runs *along* the surface. Which one does the data scientist actually want?
+**Exact Vietoris--Rips Transport Theorem.** Let $X$ be a finite point cloud contained in a stereographic chart. For every scale $\varepsilon$ and every finite vertex set $\sigma$, $\sigma$ is a Vietoris--Rips face of the inverse images on the sphere under chordal distance if and only if it is a Vietoris--Rips face of the chart points under
 
-Happily, it does not matter. On a sphere the geodesic (great-circle) distance and
-the chordal distance are locked together by a fixed, strictly increasing
-relationship: the chord length is `2 sin(θ/2)` when the arc subtends angle `θ`.
-As one grows, so does the other; they rank every pair of points in the very same
-order. Persistent homology is built entirely on the *ordering* of distances — on
-which pairs merge before which — so feeding it the chordal distance or the
-geodesic distance produces barcodes that are reparametrizations of one another,
-carrying identical topological information. The features appear and disappear in
-the same order; only the numerical labels on the axis change, and even those
-change by a known, invertible function. The exact-isometry result for the chordal
-metric therefore transfers cleanly to the geodesic metric, which is the one
-spherical data analysts ultimately care about.
+$$
+d_c(x,y)=\frac{2\lVert x-y\rVert}{\sqrt{(1+\lVert x\rVert^2)(1+\lVert y\rVert^2)}}.
+$$
 
-## Why bother proving it exactly?
+Indeed, every pairwise spherical chord length is exactly equal to the weighted chart distance. Hence every threshold comparison is unchanged.
 
-One might ask why so much care is lavished on the word *exact*. Conformal maps
-distort distances; surely the right expectation is an approximation with error
-bars?
+**Exact Chart-Centered Čech Transport Theorem.** Under the same assumptions, and requiring the common center to lie in the stereographic chart, $\sigma$ is a spherical chordal Čech face at radius $\varepsilon$ if and only if it is a weighted Čech face in $\mathbb R^n$ at the same radius.
 
-The reason is that approximate guarantees compound and decay. If the bridge from
-sphere to plane introduced even a small distortion, that distortion would seep
-into the barcode, and you could never be fully certain whether a faint feature in
-your diagram was a real cosmological structure or an artifact of the coordinate
-change. An *exact* isometry removes the doubt entirely. Any feature the fast
-flat algorithm reports is, with mathematical certainty, a genuine feature of the
-spherical data — no caveats, no fudge factors. When you are hunting for subtle
-imprints of the early universe in a noisy sky map, that certainty is the whole
-ballgame.
+Here too the reason is equality of distances, now applied between a candidate center and each vertex. The qualification about centers matters: the omitted pole has no finite chart coordinate. A spherical family of balls whose only useful common center is that pole requires separate treatment.
 
-The proof itself is a small marvel of economy. Behind Theorem 2 lies a single
-workhorse identity about expanding a squared sum of the form `∑ (a·xᵢ + b·yᵢ)²`.
-Expanding it produces exactly three pieces: the squared length of `x`, the squared
-length of `y`, and their inner product. Once the chordal distance is written in
-those three quantities, the entire conformal computation collapses to ordinary
-high-school algebra in three scalar variables — `X = ‖x‖²`, `Y = ‖y‖²`, and
-`P = ⟨x, y⟩`. The "mysterious" conformal factor `(1 + X)(1 + Y)` turns out to be
-nothing more than the product of the two projection denominators. The whole
-edifice rests on one line of algebra, repeated in every dimension at once.
+Because the faces agree at every scale, the filtered simplicial complexes agree, not merely their numerical summaries. Consequently their homology groups, persistence modules, barcodes, and persistence diagrams agree exactly.
 
-## The bigger picture
+For geodesic Vietoris--Rips persistence, one may either use $d_g$ directly or reparameterize chordal scale. A geodesic threshold $\varepsilon\in[0,\pi]$ corresponds to the chordal threshold
 
-Inverse stereographic persistence is a small example of a recurring and powerful
-strategy in mathematics: when a problem is hard in one coordinate system, find a
-*change of coordinates* that makes it easy, and prove that the change loses
-nothing essential. Here the change of coordinates is a 2000-year-old cartographic
-trick, the thing that is preserved is the entire pairwise-distance structure, and
-the payoff is a fast, *certified-correct* algorithm for finding topological
-structure in data that lives on a sphere.
+$$
+2\sin(\varepsilon/2).
+$$
 
-The applications are concrete and waiting. Cosmologists can scan the cosmic
-microwave background for anomalous voids and loops at the scale of the whole sky.
-Structural biologists can compare the shapes of molecular surfaces, which are
-naturally sphere-like. Climate scientists can track the topology of pressure and
-temperature fields wrapped around the globe. In each case the same dictionary
-applies: project down, reweight, compute fast and flat, and trust the answer
-completely — because a single, exact, dimension-free identity guarantees that the
-sphere and its flattened shadow are telling you the very same story.
+This monotone change of scale preserves the order in which faces enter while relabelling their birth times.
 
-The sphere, it turns out, has been wearing a flat disguise all along. We just
-needed the right lamp to see it.
+## A practical algorithm
+
+The corrected computational pipeline is straightforward.
+
+First, represent each spherical point away from the omitted pole by its stereographic coordinate $x_i\in\mathbb R^n$. Next precompute $s_i=\sqrt{1+\lVert x_i\rVert^2}$. For every required pair, calculate
+
+$$
+d_c(x_i,x_j)=\frac{2\lVert x_i-x_j\rVert}{s_i s_j}.
+$$
+
+Use this matrix in a standard Vietoris--Rips persistence routine. For geodesic scales, transform each entry by $2\arcsin(d_c/2)$, with harmless numerical clipping of $d_c/2$ into $[0,1]$.
+
+This method is exact at the mathematical level, but exactness does not magically remove the cost of dense output. A full $N\times N$ distance matrix contains on the order of $N^2$ entries, so explicitly producing it requires quadratic work and storage. Claims of $O(N\log N)$ exact performance need additional structure: sparsity, bounded dimension, neighborhood truncation, an implicit distance oracle, or output-sensitive computation.
+
+That distinction is practically important. The geometry provides correctness; the data structure and output model determine complexity.
+
+## Where the correction matters
+
+Directional data arise throughout science. Cosmic microwave background measurements are indexed by directions on the celestial sphere. Atmospheric and geophysical observations cover a curved planet. Protein geometry includes orientations and angular conformations. In each setting, flattening can create false notions of proximity: points close to the omitted pole may fly far apart in the chart, while distant chart locations can represent moderate spherical separations.
+
+The endpoint-dependent denominator repairs that distortion exactly. It lets planar software operate on chart coordinates without pretending that the chart is metrically flat.
+
+The lesson reaches beyond stereographic projection. A coordinate transformation is not merely a change in how points are written; it changes how metric questions must be asked. Conformality preserves infinitesimal angles, but persistent homology is built from finite distances. The correct bridge is therefore not an appeal to conformal invariance. It is an explicit equality of the relevant distances.
+
+The result is both a warning and a constructive recipe. The warning is that a beautiful radial formula can still erase essential positional information. The recipe is to pull the spherical metric back to the chart, preserve every filtration inequality exactly, and then apply the full machinery of persistent topology with confidence.
+## What a persistence diagram sees
+
+Imagine increasing $\varepsilon$ as if turning a focus knob. At tiny scales, every sample is isolated. As the threshold grows, nearby samples connect, components merge, loops form, and eventually those loops fill. A persistence interval records the scale at which a feature is born and the scale at which it dies. Long intervals often signal structure that survives changes of resolution; short ones may reflect sampling variation.
+
+This picture also explains why an incorrect metric is consequential. If even one family of pairwise thresholds is shifted, edges can enter in a different order. Different triangles then appear, and a loop may be created too early or filled too late. A visually modest distance error can therefore alter a barcode qualitatively. Exact equality of all transported distances is much stronger than approximate visual agreement between two point plots.
+
+The weighted formula protects the entire chain of consequences. It preserves each edge threshold, hence each Vietoris--Rips simplex threshold, because a simplex enters when its longest edge does. For a chart-centered Čech complex it preserves every test for a common ball center. The agreement reaches all homological dimensions at once; it is not restricted to connected components or loops.
+
+## A small thought experiment
+
+Take two pairs of points on a line in the chart: $(0,1)$ and $(1,2)$. Both pairs are one unit apart in ordinary Euclidean distance. Yet their weighted chordal distances are
+
+$$
+d_c(0,1)=\sqrt2
+$$
+
+and
+
+$$
+d_c(1,2)=\frac{2}{\sqrt{10}}.
+$$
+
+The second pair lies farther from the chart origin, where the same planar step corresponds to a shorter chord on the sphere. Any correction that sees only the number $1$ must assign both pairs the same answer and therefore cannot be exact. This experiment makes the role of the two endpoint norms tangible without requiring a picture of the projection.
+
+A useful implementation test follows immediately. Generate points on a sphere, project them, and construct two distance matrices: one directly from spherical coordinates, the other from the weighted chart formula. Their entries should agree up to floating-point roundoff. At every chosen threshold, the sets of Vietoris--Rips edges should then coincide exactly. Testing clouds of $50$, $100$, and $200$ points exercises the identity over thousands of geometrically varied pairs.
+
+## The broader principle
+
+Coordinates are chosen for convenience; geometry determines meaning. Stereographic coordinates are exceptionally useful because they are smooth, global except for one point, and angle-preserving. None of those virtues makes ordinary planar distance the right metric. Pulling back the desired spherical metric does.
+
+That principle is portable. Whenever data are transformed before topology is computed, one should ask which metric on the transformed coordinates makes the transformation an isometry. If such a metric is available, filtration equivalence can often be proved face by face. If only inequalities are available, one may instead seek stability bounds. Here the fortunate outcome is exact equality, provided the weight depends on both endpoints and the omitted pole is treated honestly.
