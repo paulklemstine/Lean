@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "00b7234b",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n1. **Fibonacci `B₃` density.** Let `ρFib : BraidGrp 2 →* SU(2)` be obtained from the standard Fibonacci `F`- and `R`-matrices after removing their global phases. Conjecture: `Dens",
-      "quality_score": 0.7997299999999999,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-07-30T18:54:20",
-      "title": "Quantum Topological Phase Computation"
-    },
-    {
       "cycle_id": "15429b4a",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Turán extremizers.** For every integer",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-01T21:18:01",
       "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
+    },
+    {
+      "cycle_id": "0f65effc",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nThe following conjectures extend the finite-test Gröbner theory formalized in `Catalog/Tropical/GroebnerBases.lean`. Each is stated so that a finite counterexample or a formal pro",
+      "quality_score": 0.7809699999999999,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-08-01T22:20:25",
+      "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "86d1611f",
-      "domain": "Applications",
-      "key_insight": "# Future directions — Escher staircases, cycle 1\n\n## What this cycle adds\n\nThe previous cycle established, over a **field** `k`:\n\n* `k[x₀, x₁, …]` (countably many variables) has an Escher staircase",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-24T15:52:00",
-      "title": "The original proposal mixes two different notions. The files now separate them."
-    },
     {
       "cycle_id": "cc3b4f99",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-01T21:18:01",
       "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
+    },
+    {
+      "cycle_id": "0f65effc",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nThe following conjectures extend the finite-test Gröbner theory formalized in `Catalog/Tropical/GroebnerBases.lean`. Each is stated so that a finite counterexample or a formal pro",
+      "quality_score": 0.7809699999999999,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-08-01T22:20:25",
+      "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bb566a68",
-      "domain": "Applications",
-      "name": "two_mul_rank_ne_oddExponentialRank",
-      "quality": 0.7828599999999999
-    },
-    {
-      "cycle_id": "bb566a68",
-      "domain": "Applications",
-      "name": "order_sq_of_ne_zero",
-      "quality": 0.7828599999999999
-    },
-    {
-      "cycle_id": "bb566a68",
-      "domain": "Applications",
-      "name": "oddExponentialMonomial_not_isSquare",
-      "quality": 0.7828599999999999
-    },
     {
       "cycle_id": "150a94b2",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "open_count_recurrence",
       "quality": 0.7891599999999999
+    },
+    {
+      "cycle_id": "0f65effc",
+      "domain": "Tropical",
+      "name": "gives",
+      "quality": 0.7809699999999999
+    },
+    {
+      "cycle_id": "0f65effc",
+      "domain": "Tropical",
+      "name": "exists_isLeadingExponent",
+      "quality": 0.7809699999999999
+    },
+    {
+      "cycle_id": "0f65effc",
+      "domain": "Tropical",
+      "name": "TropicalIdeal",
+      "quality": 0.7809699999999999
     }
   ],
-  "last_updated": "2026-08-01T21:18:01",
+  "last_updated": "2026-08-01T22:20:25",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "92c4b5fc",
-        "quality": 0.72,
-        "theorems": 22,
-        "title": "Tropical Compactification of Moduli Spaces"
-      },
-      {
         "cycle_id": "b3ca6b38",
         "quality": 0.6900799999999998,
         "theorems": 8,
@@ -4009,6 +4003,12 @@
         "quality": 0.79021,
         "theorems": 11,
         "title": "Tropical Intersection Theory"
+      },
+      {
+        "cycle_id": "0f65effc",
+        "quality": 0.7809699999999999,
+        "theorems": 24,
+        "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
       }
     ]
   }
