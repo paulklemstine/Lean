@@ -43,9 +43,6 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
 
-      - name: "Check space before pip"
-        run: df -h
-
       - name: Install dependencies
         run: pip install -r Aether/requirements.txt
 
@@ -56,12 +53,6 @@ jobs:
           export PATH="$HOME/.elan/bin:$PATH"
           cd Catalog
           lake exe cache get
-
-      - name: "Check space after pip"
-        run: |
-          df -h
-          echo "Checking pip cache size:"
-          du -sh ~/.cache/pip || true
 
       - name: Create workspace directories
         run: mkdir -p Aether/.aether_workspace/projects Aether/.aether_workspace/logs
@@ -84,10 +75,3 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: cd Aether && python3 aether_tick.py --max-inflight ${{ env.AETHER_MAX_INFLIGHT }} --ollama-cloud
-
-      - name: "Check space after Aether tick"
-        # This will tell us if aether_tick.py downloaded massive files
-        run: |
-          df -h
-          echo "Finding largest directories in workspace:"
-          (du -ah --max-depth=2 | sort -rh 2>/dev/null | head -n 15) || true
