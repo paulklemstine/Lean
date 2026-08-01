@@ -1512,21 +1512,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Capacity: Quantum Channel Coherent Information Bound"
   },
   {
-    "consumed_by_exp_id": "d4159430",
-    "description": "Formalizes Campos-Griffiths-Morris-Sahasrabudhe exponential improvement on diagonal Ramsey bounds R(k,k) \u2264 (4-\u03b5)^k.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "dir_50_46_12f2dc1f",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:24.603417+00:00",
-    "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves the Alon-Boppana theorem establishing lower bounds \u03bb_2 \u2265 2\u221a(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
     "domains": [
@@ -1961,6 +1946,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T12:29:20.468595+00:00",
     "title": "Deepening: Spectral Graph Theory Meets Network Robustness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 0f65effc (Q=0.781), which proved 24 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_0f65effc_9500e21d",
+    "priority_score": 0.8809699999999999,
+    "research_mode": "team",
+    "source_exp_id": "0f65effc",
+    "status": "available",
+    "timestamp": "2026-08-01T22:20:25.477720+00:00",
+    "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
   {
     "consumed_by_exp_id": "",
@@ -2572,17 +2571,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61f6b5cb",
     "description": "Formalize fully homomorphic encryption (FHE) schemes based on the ring-LWE problem. Prove correctness: Dec(Enc(m) + Enc(m')) = m + m'. Prove security under ring-LWE. Show that the Gentry bootstrapping procedure converts a somewhat homomorphic scheme into an FHE scheme. Compute the multiplicative depth before bootstrapping is needed.",
     "domains": [
       "Cryptography",
       "Computation"
     ],
     "id": "seed_304",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Homomorphic Encryption: Computing on Encrypted Data"
   },
@@ -3803,22 +3803,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
-  },
-  {
-    "consumed_by_exp_id": "0f65effc",
-    "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "seed_319",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
   {
     "consumed_by_exp_id": "",
@@ -8638,17 +8622,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "For a depth-dependent derivation tree with branching sequence `b\u2081, b\u2082, \u2026`, the m"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8eaed4e7",
     "description": "# Future Directions: Hypergraph Ramsey Theory Beyond Graphs\n\n## 1. Exact Property-B incidence threshold\n\n**Conjecture.** For every fixed uniformity `r \u2265 3`, there are infinitely many pairs `(n,k)` for which the clique-incidence hypergraph has exactly `C(n,k)` distinct edges and its chromatic obstruction is asymptotically sharp at the first-moment threshold `2^(C(k,r)-1)`.\n\nThe key insight is that diagonal Ramsey avoidance is exactly Property B for a highly structured incidence hypergraph, so improvements should exploit collisions and codegrees among incidence edges rather than treating bad cliques independently. **Why now?** The exact bridge isolates the only place where the general sparse-hypergraph estimate loses information: the geometry of overlaps between families of `r`-subsets.\n\n## 2. Local-lemma improvement from clique codegrees\n\n**Conjecture.** For fixed `r \u2265 3`, a dependency-sensitive colouring argument applied to the clique-incidence hypergraph yields diagonal Ramsey lower bounds exponentially stronger than the raw Property-B edge-count criterion for an infinite range of `k`.\n\nThe key insight is that two bad-clique events are independent unless their candidate vertex sets overlap in at least `r` vertices, giving an explicit and unusually rigid dependency graph. **Why now?** The incidence formulation makes both edge sizes and pairwise intersections binomial quantities, providing the data needed for a quantitative local-lemma analysis.\n\n## 3. Spectral obstruction for Ramsey incidence hypergraphs\n\n**Conjecture.** The inclusion matrix between `r`-sets and `k`-sets has a spectral certificate that distinguishes Ramsey-forcing incidence hypergraphs from arbitrary non-two-colourable uniform hypergraphs and improves the known counting obstruction by a factor exponential in `k`.\n\nThe key insight is that the auxiliary hypergraph is governed by the Johnson association scheme, whose eigenspaces encode intersection statistics invisible to first-moment counting. **Why now?** The Property-B equivalence provides a direct target for importing algebraic information from inclusion matrices into two-colourability.\n\n## 4. Entropy-compressed stepping-up\n\n**Conjecture.** A stepping-up construction can be expressed as an entropy-preserving transformation between avoidance colourings whose loss is controlled by the incidence codegree profile, yielding a double-exponential lower bound for diagonal 3-uniform Ramsey numbers.\n\nThe key insight is that stepping-up and Property B both transform colourings into constraints on families of subsets, suggesting that the binary-string construction can be measured by entropy rather than only by cardinality. **Why now?** The exact incidence bridge supplies a common language in which lower-bound colourings and stepping-up transformations can be compared without conflating the graph and hypergraph levels.\n\n## 5. Small-case structural classification\n\n**Conjecture.** Every extremal colouring witnessing failure of the diagonal 3-uniform Ramsey property near the known `k=5` lower range has a bounded collection of recurring link-graph types, up to complementation and relabelling.\n\nThe key insight is that fixing a vertex converts a 3-uniform colouring into a graph colouring, so compatibility among link graphs may be substantially more rigid than arbitrary triple colourings. **Why now?** The incidence viewpoint predicts which clique constraints must be simultaneously split, while link graphs offer a tractable representation for a symmetry-reduced exhaustive classification.\n",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0434",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "8b838f97",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T09:49:23.776895+00:00",
     "title": "**Conjecture.** For every fixed uniformity `r \u2265 3`, there are infinitely many pa"
   },
@@ -10955,6 +10940,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T21:17:57.775064+00:00",
     "title": "Future directions from cycle b080b405"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following conjectures extend the finite-test Gr\u00f6bner theory formalized in `Catalog/Tropical/GroebnerBases.lean`. Each is stated so that a finite counterexample or a formal proof would settle it.\n\n1. **Degree-truncated stabilization.** For a finitely generated homogeneous tropical ideal over `Tropical (WithTop \u211a)` in finitely many variables, there is a degree `D` such that a finite family which is a Gr\u00f6bner basis on every polynomial of degree at most `D` is a Gr\u00f6bner basis in every degree.\n\n2. **Finite universal obstruction set.** For every finitely generated tropical ideal over `Tropical (WithTop \u211a)` and every monomial order, there is a finite test set `U` such that `IsGroebnerBasisOn m I U G` is equivalent to divisibility of the leading monomial of every nonzero member of `I` by a leading monomial from `G`.\n\n3. **Order independence of tropical Hilbert data.** For a homogeneous tropical ideal in finitely many variables, the number of degree-`d` monomials outside its initial monomial semimodule is independent of the chosen monomial order for every `d`.\n\n4. **Finite tropical S-pair criterion.** There is a tropical S-pair construction on finite polynomial families such that a family is a Gr\u00f6bner basis on a finite divisor-closed test set exactly when every S-pair whose support lies in that test set reduces to zero.\n\n5. **Bend congruence recovery.** For a finitely generated tropical ideal, the bend congruence generated by any tropical Gr\u00f6bner basis equals the bend congruence generated by the whole ideal.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_0891",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0f65effc",
+    "status": "available",
+    "timestamp": "2026-08-01T22:20:21.749084+00:00",
+    "title": "The following conjectures extend the finite-test Gr\u00f6bner theory formalized in `C"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : \u211d` and `k\u2080 : \u2115` with `0 < q`, `q < 1`, and\n   `\u2200 k \u2265 k\u2080, (R k : \u211d) \u2264 (4 * q)^k`.\n   This is falsified by any proof that no uniform `q < 1` satisfies the displayed estimate.\n\n2. **Explicit rational saving.** Strengthen the preceding statement by exhibiting a rational `q < 1` rather than an unspecified real witness. A concrete target is to prove the estimate for one explicitly stated rational and threshold `k\u2080`; exhaustive verification of all `k \u2265 k\u2080` is then a precise proof obligation.\n\n3. **Threshold elimination.** If `R` is the catalog diagonal Ramsey-number function and an eventual sub-four estimate is available, determine whether there is an explicit `\u03b5 > 0` for which `(R k : \u211d) \u2264 (4 - \u03b5)^k` holds for every `k \u2265 2`. This conjecture is falsified by a single computed value of `R k` violating the inequality.\n\n4. **Asymmetric normalization.** Define the corresponding eventual bound for two parameters and prove that a uniform proportional saving in bounds for `R(s,t)` is equivalent to an additive gap below the classical entropy-derived base throughout any fixed compact ratio interval `s/(s+t) \u2208 [a,b] \u2282 (0,1)`. A counterexample is a sequence of parameter pairs in the interval for which one formulation holds uniformly and the other does not.\n\n5. **Closure under subexponential losses.** Generalize the proved polynomial-loss theorem to any nonnegative real sequence `L` satisfying `\u2200 \u03b4 > 0, \u2203 k\u2080, \u2200 k \u2265 k\u2080, L k \u2264 exp (\u03b4 * k)`: if `r(k) \u2264 L(k) (4q)^k` eventually for fixed `0 < q < 1`, then `HasSubFourUpperBound r`. A counterexample is a specific `L`, `q`, and natural-valued `r` satisfying both premises but admitting no eventual exponential bound with base below four.\n",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_0892",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d4159430",
+    "status": "available",
+    "timestamp": "2026-08-01T22:21:40.093219+00:00",
+    "title": "1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-numb"
   },
   {
     "consumed_by_exp_id": "",

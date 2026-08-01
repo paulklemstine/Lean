@@ -1295,7 +1295,7 @@
       "depth_estimate": 3,
       "description": "Proves the tropical analogue of the Hahn-Banach separation theorem for disjoint tropical convex polyhedra in ℝ^n.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical"
       ],
@@ -1335,7 +1335,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Nishinou-Siebert correspondence theorem relating algebraic curves in toric varieties to tropical curves in Euclidean space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical"
       ],
@@ -1375,7 +1375,7 @@
       "depth_estimate": 3,
       "description": "Proves that the unique tropical eigenvalue of a square min-plus matrix equals the minimum cycle mean of its associated weighted directed graph.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical"
       ],
@@ -1605,46 +1605,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "famous_subtask",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d4159430",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Formalizes Campos-Griffiths-Morris-Sahasrabudhe exponential improvement on diagonal Ramsey bounds R(k,k) ≤ (4-ε)^k.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
-      "domains": [
-        "Combinatorics"
-      ],
-      "github_issue": 0,
-      "id": "dir_50_46_12f2dc1f",
-      "last_attempt_time": "2026-08-01T17:25:56.505787+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem diagonal_ramsey_exponential_bound (k : ℕ) : RamseyNumber k k ≤ (4 - RamseyEpsilon) ^ k",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.9,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "batch_50_injection",
-      "source_path": "50_new_research_directions.md",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-07-23T20:05:24.603417+00:00",
-      "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
@@ -1655,7 +1615,7 @@
       "depth_estimate": 3,
       "description": "Proves the Alon-Boppana theorem establishing lower bounds λ_2 ≥ 2√(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -11390,11 +11350,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8eaed4e7",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11407,7 +11367,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0434",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-01T22:22:00.761138+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11422,7 +11382,7 @@
       "source": "",
       "source_exp_id": "8b838f97",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8b838f97",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_23285878",
       "timestamp": "2026-07-19T09:49:23.776895+00:00",
       "title": "**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
@@ -13571,7 +13531,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-preserving map from a finite tropical projective space to the tropical line is a finite minimum of coordinate projections. Moreover, the irredundant set of coordinates occurring in this representation is unique.\n\nThe key insight is that preservation of tropical addition should convert the aggregator into a semimodule homomorphism, while projective normalization removes the common additive ambiguity.\n\n**Why now?** The binary minimum example proves that weak tropical axioms extend strictly beyond dictatorship, and a complete representation theorem would identify the entire surviving class rather than one isolated counterexample.\n\n## 2. Ultrafilter support as the exact Arrow threshold\n\n**Conjecture.** For every finite electorate, a normalized tropical aggregator has an ultrafilter of dependence sets if and only if its unique irredundant tropical support has cardinality one.\n\nThe key insight is that the dependence sets of a minimum of several coordinates form the principal filter generated by its support; this filter is an ultrafilter precisely when that support is a singleton.\n\n**Why now?** The current results establish both endpoints—singleton support gives dictatorship, while two-coordinate support gives a non-dictatorial weak aggregator—so the conjecture asks for the structural equivalence interpolating between them.\n\n## 3. Dequantization stability of decisive coalitions\n\n**Conjecture.** Let a family of positive linear aggregators be conjugated by logarithmic dequantization and converge locally uniformly to a tropical aggregator. If the classical dependence systems are eventually ultrafilters, then the limiting tropical support is a singleton; conversely, every tropical projection arises from such a stable family.\n\nThe key insight is that logarithmic sum-exp converges to tropical maximum, but ultrafilter-valued dependence should prevent two coefficients from surviving at the same exponential scale.\n\n**Why now?** This supplies a precise, testable meaning for a “classical limit,” which cannot be asserted until the deformation, topology of convergence, and dependence semantics are fixed.\n\n## 4. Polyhedral chambers of social decisiveness\n\n**Conjecture.** The projectivized domain of a finite min-plus aggregator admits a canonical polyhedral complex whose cells are labeled by decisive support coalitions, and adjacency of top-dimensional cells is governed by single-voter exchanges in the support matroid.\n\nThe key insight is that equality loci between tropical monomials are polyhedral walls, so changes in the coalition attaining the social score should be encoded by a normal fan with combinatorial exchange laws.\n\n**Why now?** Concavity of min-plus expressions is already available, and the next step is to connect this analytic structure to coalition combinatorics and matroid geometry.\n\n## 5. Quantitative anonymity–independence tradeoff\n\n**Conjecture.** For an electorate of size `n`, every anonymous normalized tropical aggregator whose irredundant support has size `k` must violate strong coalition independence on at least a proportion `1 - 1 / binomial(n,k)` of the orbit of its minimal dependence set; this bound is sharp for the minimum over all `k`-subsets averaged in tropical projective space.\n\nThe key insight is that anonymity spreads any minimal decisive support across its full permutation orbit, whereas an ultrafilter can select only one principal generator.\n\n**Why now?** The qualitative incompatibility between anonymity and singleton dictatorship suggests a measurable defect theory, and finite permutation orbits provide an explicit arena in which sharp bounds can be sought.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Tropical"
@@ -16235,7 +16195,7 @@
       "depth_estimate": 3,
       "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -16275,7 +16235,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics",
         "Probability"
@@ -19027,7 +18987,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n- The exact connective constant of the square lattice is not known. The proposed value `(2 + √2) / 2` is ruled out in `Catalog/Tropical/SAW/ConnectiveConstant.lean`, since it is strictly below the proved lower bound `2`.\n- The proved honeycomb-lattice algebraic results in `Catalog/EML/PosetTheory/SelfAvoidingWalk.lean` concern the exact value `√(2 + √2)`, not the square lattice.\n- A faithful formal statement of the Duminil-Copin–Smirnov honeycomb theorem should connect an independently defined honeycomb SAW counting sequence to `√(2 + √2)`; proving only algebraic properties of that real number is not yet that theorem.\n- A Hara–Slade development should define the lace-expansion coefficients and derive mean-field asymptotics in the dimensions covered by their theorem. It should not be presented as an exact evaluation of the square-lattice connective constant.\n- Computational evidence was not used to infer an exact square-lattice value: finite SAW counts cannot establish the unknown exact limit. The formal result added here instead gives a symbolic contradiction between the proposed candidate and a machine-checked lower bound.\n- `Catalog/Probability/NumberTheory/ErdosRenyiThreshold.lean` now contains complete reduction proofs for its connectivity and giant-component limits. The remaining mathematical work is to derive their explicit vanishing-error hypotheses from Poisson approximation and branching-process estimates; those deep inputs are no longer represented by incomplete Lean declarations.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -19232,7 +19192,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe current formalization establishes the foundational connector between tropical corner loci and scheme-theoretic bend equations, together with a semiring-valued sheaf and its full gluing theorem. Natural next steps are:\n\n1. **Local semiring spectra.** Replace the function-sheaf model by spectra of prime semiring congruences, define basic opens, localizations, stalks, and locally semiringed spaces.\n2. **Bend congruence quotients.** Generate a `RingCon` from all term-deletion equations and prove its functor-of-points vanishing set agrees with `bendVanishingSet`.\n3. **Polynomial syntax.** Connect finite term families to `MvPolynomial`-style tropical polynomials, including evaluation, multiplication, and the hypersurface union law.\n4. **Affine gluing.** Construct tropical schemes by gluing affine congruence spectra along localization isomorphisms, then compare this construction with the Grothendieck scheme gluing API.\n5. **Stalk locality.** Develop an appropriate notion of local idempotent semiring and prove that stalks of the localized structure sheaf are local.\n6. **Base change and tropicalization.** Formalize valued-field tropicalization as a morphism from classical affine schemes to tropical semiring schemes, and prove compatibility with products and principal hypersurfaces.\n7. **Polyhedral geometry.** Equip corner loci with rational polyhedral complexes and prove that scheme-theoretic bend support recovers their underlying topological spaces.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Tropical"
@@ -19478,7 +19438,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H → IsMinor H K → IsMinor G K`. This is falsifiable directly against the branch-set definition and would make the catalog relation a preorder.\n\n2. **The triangle case.** Prove `HadwigerCase 2`: every finite graph with no proper two-coloring has a `K₃` branch-set minor. A concrete route is to formalize the odd-cycle characterization of non-bipartite graphs and contract an odd cycle to three branch sets.\n\n3. **The four-clique case.** Prove `HadwigerCase 3`: every finite graph with no proper three-coloring has a `K₄` branch-set minor. This should be tested through a formal reduction to the classical low-order Hadwiger theorem rather than finite enumeration.\n\n4. **Wagner structural bridge.** Prove that every finite `K₅`-minor-free graph can be reduced, using clique-sums, to planar graphs and the Wagner graph, and derive `FourColorTheorem → HadwigerFive`. Together with `wagner_forward`, this yields the substantive Wagner equivalence rather than only the logical contrapositive formulation proved here.\n\n5. **Known cases through six colors.** Prove `∀ k ≤ 5, HadwigerCase k`. In the indexing used here, the endpoint `k = 5` asserts that every non-five-colorable finite graph contains a `K₆` minor; its formal proof should explicitly identify where the Four Color Theorem is used.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -19805,7 +19765,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: EML Transseries\n\n## Results established in this phase\n\nThe formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`\nseparates three claims that are often bundled together:\n\n1. **Formal asymptotic comparison survives and strengthens.** Every unequal pair\n   of Hahn transseries has a unique first rank where its coefficients disagree.\n2. **Real closedness fails for the current model.** The exponent group\n   `ℤ ×ₗ (ℤ ×ₗ ℤ)` is not divisible. The monomial at rank `(1, 0, 0)` cannot be a\n   square, because the order of a nonzero square is twice an order and therefore\n   has even first coordinate. Its negative is not a square either, contradicting\n   a necessary property of real closed fields.\n3. **Unrestricted EML semantic uniqueness fails.** Evaluation at one point is not\n   injective: the variable expression and constant zero are distinct syntax but\n   both evaluate to zero at `0`.\n\n## Corrected real-closedness program\n\nReplace the integer growth group by a divisible ordered abelian group, initially\n`ℚ ×ₗ (ℚ ×ₗ ℚ)`. The parity obstruction then disappears. A faithful\nreal-closedness theorem should be developed for Hahn series over a real closed\ncoefficient field and a divisible value group. This requires formalizing the\nrelevant Hahn-field real-closure theorem rather than asserting a typeclass for\nthis integer-ranked model.\n\nA later model should support arbitrarily many iterated exponential and logarithmic\nlevels. Candidate exponent structures include finitely supported maps from a\nwell-ordered level type into `ℚ`, with a reverse lexicographic order chosen to\nmatch asymptotic dominance.\n\n## Corrected EML expansion theorem\n\n“Uniquely determines it” needs a precise semantic quotient and domain. Point\nvalues are too weak, and raw syntax has identities such as commutativity,\nassociativity, and exp/log cancellation on suitable eventual domains. Promising\nformal statements are:\n\n- expansion uniqueness for **eventual germs at `+∞`**;\n- injectivity only after quotienting EML syntax by eventual equality;\n- a restricted positive-domain language where logarithms have controlled domains;\n- a normalization theorem assigning canonical transseries to a syntactic fragment.\n\nThe first substantial target is the polynomial–Laurent fragment, followed by a\nsingle logarithmic level, then one exponential level. At each stage, define an\nexpansion map, prove preservation of addition and multiplication, and prove that\nits kernel is exactly eventual semantic equality.\n\n## Asymptotic comparison beyond coefficient extensionality\n\nThe current theorem is an exact Hahn-series statement. To connect it to analysis,\nformalize an interpretation into germs of real functions and prove:\n\n1. the leading nonzero monomial controls eventual sign;\n2. smaller ranks are asymptotically negligible relative to larger ranks;\n3. the interpretation is injective on a normalized, summable fragment;\n4. formal agreement to all ranks implies equality of eventual germs.\n\nThis will distinguish the valid formal principle from the generally false claim\nthat arbitrary smooth functions with identical classical asymptotic power series\nmust coincide (flat functions provide counterexamples).\n\n## Computational work\n\nNo finite numerical search can decide the two structural claims tested here:\nnon-real-closedness follows from the parity of Hahn orders, while non-injectivity\nhas an explicit two-expression witness. Future computational work is useful after\na finite normalizer for bounded-depth EML expressions is defined; it can then\nenumerate collisions and test candidate rewrite systems before their correctness\nis proved.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -19968,7 +19928,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` reduces complement-closed reconstruction questions to either member of each complementary pair. Concrete next conjectures are:\n\n1. **Degree-multiset reconstruction.** If finite simple graphs `G` and `H` have at least three vertices and `SameDeck G H`, then the multisets of values `G.degree v` and `H.degree w` are equal (under the deck's vertex equivalence).\n\n2. **Induced-pattern count reconstruction.** For finite `F`, `G`, and `H`, if `Fintype.card F < Fintype.card G` and `SameDeck G H`, then `(inducedCopyFamily G F).card = (inducedCopyFamily H F).card`.\n\n3. **Regular-graph reconstruction.** If finite `G` and `H` have at least three vertices, `SameDeck G H`, and `G` is regular, then `Nonempty (G ≃g H)`.\n\n4. **Tree/connected-complement pair.** If finite `G` and `H` have at least three vertices, `SameDeck G H`, and either `G` or `Gᶜ` is a tree, then `Nonempty (G ≃g H)`.\n\n5. **Complement transfer for reconstructible predicates.** If a graph predicate is reconstructible from `SameDeck`, then the predicate obtained by applying it to graph complements is also reconstructible. This should be formalized as a general theorem and instantiated for every reconstructed class in the catalog.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -20008,7 +19968,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone does not guarantee robustness under finite deletion.\n\n## 1. Ordered-block criterion from the paper\n\nFormalize the paper's more general criterion before specializing to dyadic blocks. A useful interface should include:\n\n- a sequence of finite, pairwise ordered blocks of natural numbers;\n- lower bounds on each block's cardinality;\n- hypotheses controlling gaps or overlap of attainable subset-sum intervals;\n- a conclusion phrased as `StronglyComplete`.\n\nThis is likely the most reusable route to the headline theorem.\n\n## 2. Dyadic specialization\n\nDefine\n\n`dyadicBlock A k = A ∩ Set.Ioc (2^k) (2^(k+1))`\n\nand formalize the eventual six-elements-per-block condition. Once the ordered-block theorem is available, prove the dyadic result by checking its structural hypotheses.\n\n## 3. Analytic divergence hypothesis\n\nIntroduce distance to the nearest integer using the existing circle/quotient or `Int.fract` infrastructure, and formalize the condition\n\n`∀ θ : ℝ, θ ∉ Set.range ((↑) : ℤ → ℝ) → ∑' a, ... = ∞`\n\nwith a nonnegative extended-real sum (`ℝ≥0∞`) if that gives the cleanest notion of divergence. Care is needed because the paper writes a sum indexed by a set rather than a sequence.\n\n## 4. Monotonicity and tails\n\nUseful intermediate results include:\n\n- every superset of a complete set is complete;\n- every superset of a strongly complete set is strongly complete;\n- finite changes preserve strong completeness (already proved here);\n- a set is strongly complete iff every finite initial segment can be deleted while retaining completeness.\n\nThe final equivalence turns arbitrary finite deletions into canonical initial-segment deletions and may simplify the paper's argument.\n\n## 5. Further contrarian tests\n\nInvestigate and either prove or refute:\n\n1. If `A` is complete and contains infinitely many odd elements, then `A` is strongly complete.\n2. If every residue class modulo every `m ≥ 2` contains infinitely many elements of `A`, then completeness implies strong completeness.\n3. Six elements in each sufficiently large dyadic block can be reduced to five if the analytic divergence hypothesis is strengthened quantitatively.\n\nThe first conjecture is especially suspect: parity is only one possible finite-deletion obstruction, and analogous obstructions modulo larger integers should be searched for.\n\n## 6. Exact correspondence with the source\n\nA later phase should pin the paper's bibliographic version and translate its named propositions in proof order, recording exactly which assumptions are used in each result. This file deliberately focuses on foundational consequences and a contrarian counterexample rather than claiming a complete formalization of the analytic headline theorem.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -20049,7 +20009,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equivalence classes of `InSameComponent M`. This can be falsified by a finite matroid whose circuitwise-constant weights have a different dimension.\n\n2. **Connected projectivized fan conjecture.** For every finite circuit-connected matroid of positive rank, the quotient of `BergmanFan M` by constant translations is path connected. A finite connected matroid with a disconnected projectivized Bergman fan would refute it.\n\n3. **Nested fan convexity conjecture.** If a finite matroid is nested, then its Bergman fan modulo constant translations is an ordinary convex polyhedral cone. A nested matroid with two projective Bergman weights whose midpoint is not a Bergman weight would refute it.\n\n4. **Circuit-elimination closure conjecture.** For a finite matroid, imposing `MinAttainedTwice` only on a circuit generating family closed under circuit elimination cuts out the full `BergmanFan`. A generating family and a weight satisfying its constraints but violating another circuit constraint would refute it.\n\n5. **Direct-sum product conjecture.** The Bergman fan of a finite direct sum of matroids is naturally homeomorphic to the product of their Bergman fans, compatibly with circuit components and lineality spaces. Any finite pair for which the canonical restriction map fails to be a homeomorphism would refute it.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -20090,7 +20050,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe Lean development proves exact results for an explicit region-capacity model.  The following are concrete extensions that would connect those combinatorial bounds to analytic approximation and genuine network lower bounds.\n\n1. **Constructive width-`n+4` approximation.**  For every `n > 0`, continuous `f : (Fin n → ℝ) → ℝ`, and `ε > 0`, if `f` is restricted to the cube `[-1,1]^n`, there is a finite ReLU network with every hidden-layer width at most `n+4` whose uniform error is below `ε`.  This is falsified by a continuous function and positive tolerance for which no such bounded-width network exists.\n\n2. **Lipschitz shallow upper rate.**  There is a dimension-dependent constant `C_n` such that every `K`-Lipschitz function on `[-1,1]^n` has a one-hidden-layer ReLU approximation of uniform error at most `ε` and width at most `C_n * (K/ε)^n`.  A family of normalized Lipschitz functions violating this width bound falsifies the conjecture.\n\n3. **No function-independent rate for mere continuity.**  For every proposed width bound `W : ℕ → ℕ`, there are a continuous function on `[0,1]` and an integer `m > 0` such that every one-hidden-layer ReLU network of width at most `W m` has uniform error at least `1/m`.  A single bound working for all continuous functions falsifies this conjecture.\n\n4. **Tent-map linear-region separation.**  The `L`-fold iterate of the normalized tent map has exactly `2^L` maximal affine intervals, while every scalar depth-`D` ReLU network with widths `w₁,…,w_D` has at most `∏ i, (wᵢ+1)` maximal affine intervals.  Either an incorrect exact count or a network exceeding the product bound falsifies the statement.\n\n5. **Depth-`L` lower bound from oscillations.**  There are explicit functions represented by depth `L+1` networks of size polynomial in `L` such that any depth-`L` ReLU network approximating them within a fixed uniform tolerance has size exponential in `L`.  A polynomial-size depth-`L` approximating family for the explicit witnesses falsifies the conjecture.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -20294,7 +20254,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe Lean development proves statements inside a precise topological observer model. The following conjectures are concrete extensions of that model and do not assert an empirical law about biological perception without additional physical assumptions.\n\n1. **Finite observer-complexity monotonicity.** For every type `X`, every `N : Fin n → TopologicalSpace X`, and every extension `N' : Fin (n+1) → TopologicalSpace X` whose first `n` channels agree with `N`, prove `consensus N' ≤ consensus N`. This is falsified by any explicit extension violating the topology-lattice inequality.\n\n2. **Strictness criterion for channel addition.** Under the same setup, prove that `consensus N' < consensus N` if and only if there is a set open for every old channel but not open for the new channel. Either implication can be falsified by a finite topological-space counterexample.\n\n3. **Finite-space minimal observer complexity.** For a finite carrier `X` and target topology `t`, define the least `n` for which `t` is the consensus of `n` strict refinements, and prove that this number is bounded by the number of open sets of `t`. Exhaustive enumeration of topologies on carriers of size at most four can test the proposed bound.\n\n4. **Product compositionality.** Given observer families `N` on `X` and `M` on `Y` with a common finite index type, characterize when the consensus of the channelwise product topologies equals the product of `consensus N` and `consensus M`. A pair of finite spaces where these topologies differ would refute an unrestricted equality.\n\n5. **Empirical encoding conjecture.** For a specified finite neural-state transition graph, assign each readout channel a topology generated by its distinguishable state subsets. Test whether adding a readout node strictly coarsens consensus exactly when that node excludes an open set shared by all previous readouts. A measured transition graph and readout table make this directly falsifiable by finite computation.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -20499,7 +20459,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton polygons are lattice polygons `P` and `Q`, the stable intersection number equals `area(P + Q) - area(P) - area(Q)` (with normalized lattice area).\n\n2. **Perturbation invariance.** Every finite balanced plane tropical intersection admits a sufficiently small generic translation for which the total local determinant multiplicity is unchanged.\n\n3. **Support bound with positive multiplicities.** If every supported local multiplicity is positive and the total intersection number is `d * e`, then the support has cardinality at most `d * e`, with equality exactly when every local multiplicity is one.\n\n4. **Realizability correspondence.** For transverse intersections of realizable plane tropical curves over a complete non-Archimedean field, valuation induces a support- and multiplicity-preserving finite correspondence with the classical intersection scheme.\n\n5. **Higher-dimensional multidegree formula.** For `n` transverse tropical hypersurfaces in tropical projective `n`-space of degrees `d₁, …, dₙ`, the weighted zero-dimensional stable intersection has total multiplicity `∏ i, dᵢ`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Algebra"
@@ -20540,7 +20500,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L¹` empirical loss reaches the unique sample median after at most `⌈|x₀-m|/η⌉` iterations when `η > 0`.\n\n2. **Vector tropical monomials.** For a separable `d`-parameter tropical affine model with coordinatewise three-point losses, simultaneous clipped descent terminates after at most the maximum of the `d` coordinatewise termination times.\n\n3. **Perturbed tropical limit.** If each tropical update is perturbed by an error of magnitude at most `ε < η`, then its parameter distance after `n` steps is at most `max 0 (|x₀-m|-n(η-ε))` until it enters the closed `ε`-neighborhood of the minimizer.\n\n4. **ReLU lower bound.** A single ordinary ReLU unit cannot represent the two-sided clipped update `x ↦ tropicalFlow m t x` for `t > 0`, while two shifted ReLU units suffice, as proved in `Catalog/Applications/EML/TropicalGDConvergence.lean`.\n\n5. **Even-sample minimizer interval.** For `2k` ordered scalar residual targets, the tropical `L¹` minimizers are exactly the interval between the two central order statistics, and clipped subgradient descent reaches that interval in finite time for every positive step size.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Tropical"
@@ -20606,6 +20566,88 @@
       "thread_id": "th_9538d1f3",
       "timestamp": "2026-08-01T21:17:57.775064+00:00",
       "title": "Future directions from cycle b080b405"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\nThe following conjectures extend the finite-test Gröbner theory formalized in `Catalog/Tropical/GroebnerBases.lean`. Each is stated so that a finite counterexample or a formal proof would settle it.\n\n1. **Degree-truncated stabilization.** For a finitely generated homogeneous tropical ideal over `Tropical (WithTop ℚ)` in finitely many variables, there is a degree `D` such that a finite family which is a Gröbner basis on every polynomial of degree at most `D` is a Gröbner basis in every degree.\n\n2. **Finite universal obstruction set.** For every finitely generated tropical ideal over `Tropical (WithTop ℚ)` and every monomial order, there is a finite test set `U` such that `IsGroebnerBasisOn m I U G` is equivalent to divisibility of the leading monomial of every nonzero member of `I` by a leading monomial from `G`.\n\n3. **Order independence of tropical Hilbert data.** For a homogeneous tropical ideal in finitely many variables, the number of degree-`d` monomials outside its initial monomial semimodule is independent of the chosen monomial order for every `d`.\n\n4. **Finite tropical S-pair criterion.** There is a tropical S-pair construction on finite polynomial families such that a family is a Gröbner basis on a finite divisor-closed test set exactly when every S-pair whose support lies in that test set reduces to zero.\n\n5. **Bend congruence recovery.** For a finitely generated tropical ideal, the bend congruence generated by any tropical Gröbner basis equals the bend congruence generated by the whole ideal.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0891",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "0f65effc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/0f65effc",
+      "status": "available",
+      "thread_id": "th_426a1448",
+      "timestamp": "2026-08-01T22:20:21.749084+00:00",
+      "title": "The following conjectures extend the finite-test Gröbner theory formalized in `C"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and\n   `∀ k ≥ k₀, (R k : ℝ) ≤ (4 * q)^k`.\n   This is falsified by any proof that no uniform `q < 1` satisfies the displayed estimate.\n\n2. **Explicit rational saving.** Strengthen the preceding statement by exhibiting a rational `q < 1` rather than an unspecified real witness. A concrete target is to prove the estimate for one explicitly stated rational and threshold `k₀`; exhaustive verification of all `k ≥ k₀` is then a precise proof obligation.\n\n3. **Threshold elimination.** If `R` is the catalog diagonal Ramsey-number function and an eventual sub-four estimate is available, determine whether there is an explicit `ε > 0` for which `(R k : ℝ) ≤ (4 - ε)^k` holds for every `k ≥ 2`. This conjecture is falsified by a single computed value of `R k` violating the inequality.\n\n4. **Asymmetric normalization.** Define the corresponding eventual bound for two parameters and prove that a uniform proportional saving in bounds for `R(s,t)` is equivalent to an additive gap below the classical entropy-derived base throughout any fixed compact ratio interval `s/(s+t) ∈ [a,b] ⊂ (0,1)`. A counterexample is a sequence of parameter pairs in the interval for which one formulation holds uniformly and the other does not.\n\n5. **Closure under subexponential losses.** Generalize the proved polynomial-loss theorem to any nonnegative real sequence `L` satisfying `∀ δ > 0, ∃ k₀, ∀ k ≥ k₀, L k ≤ exp (δ * k)`: if `r(k) ≤ L(k) (4q)^k` eventually for fixed `0 < q < 1`, then `HasSubFourUpperBound r`. A counterexample is a specific `L`, `q`, and natural-valued `r` satisfying both premises but admitting no eventual exponential bound with base below four.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Combinatorics",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0892",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "d4159430",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/d4159430",
+      "status": "available",
+      "thread_id": "th_c5fef088",
+      "timestamp": "2026-08-01T22:21:40.093219+00:00",
+      "title": "1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-numb"
     },
     {
       "ambition_level": "extension",
@@ -20701,7 +20743,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical"
       ],
@@ -20741,7 +20783,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0f63237d (Q=0.774), which proved 22 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approac",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Tropical"
       ],
@@ -20766,6 +20808,46 @@
       "thread_id": "",
       "timestamp": "2026-07-31T09:24:21.203115+00:00",
       "title": "Deepening: Tropical Schemes: Foundations of Tropical Algebraic Geometry"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 0f65effc (Q=0.781), which proved 24 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Tropical"
+      ],
+      "github_issue": 0,
+      "id": "push_0f65effc_9500e21d",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8809699999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "0f65effc",
+      "source_path": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-01T22:20:25.477720+00:00",
+      "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
     },
     {
       "ambition_level": "extension",
@@ -20901,7 +20983,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1c628216 (Q=0.762), which proved 15 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressib",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -21141,7 +21223,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3cce8c08 (Q=0.766), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],
@@ -21701,7 +21783,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Novelty"
       ],
@@ -21901,7 +21983,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 78bbd545 (Q=0.787), which proved 10 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers eq",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical"
       ],
@@ -21981,7 +22063,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7edbd52d (Q=0.790), which proved 19 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -22261,7 +22343,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 9fb19498 (Q=0.790), which proved 11 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical Bézout theorem with explicit bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical"
       ],
@@ -23101,7 +23183,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ed94092b (Q=0.767), which proved 16 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -23381,7 +23463,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ff2a2247 (Q=0.758), which proved 12 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -25515,7 +25597,7 @@
       "depth_estimate": 3,
       "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -29408,7 +29490,7 @@
       "depth_estimate": 3,
       "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -30348,7 +30430,7 @@
       "depth_estimate": 3,
       "description": "Characterize solutions to x⊕y = z in the tropical semiring. Formalize tropical varieties and prove a Kapranov-type theorem for tropical Fermat curves.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical",
         "Algebra"
@@ -30830,47 +30912,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "famous_subtask",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "97183f28",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Prove the quantum de Finetti theorem: symmetric quantum states on infinite tensor products are mixtures of i.i.d. states. Formalize the connection between exchangeability and independence in the quantum setting. Bridge quantum foundations to classical probability.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
-      "domains": [
-        "Bridges",
-        "Physics"
-      ],
-      "github_issue": 0,
-      "id": "seed_300",
-      "last_attempt_time": "2026-07-29T17:50:25.354595+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.686,
-      "parent_direction": "",
-      "priority_score": 0.87,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "",
-      "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "",
@@ -30912,11 +30953,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "61f6b5cb",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30929,7 +30970,7 @@
       ],
       "github_issue": 0,
       "id": "seed_304",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-01T22:22:08.599273+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -30944,7 +30985,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Homomorphic Encryption: Computing on Encrypted Data"
@@ -31373,7 +31414,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Tropical",
         "Geometry"
@@ -31414,7 +31455,7 @@
       "depth_estimate": 3,
       "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical",
         "Algebra"
@@ -31466,7 +31507,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7809699999999999,
       "parent_direction": "",
       "priority_score": 0.84,
       "proof_strategy": "",
@@ -31477,7 +31518,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
@@ -32976,7 +33017,7 @@
       "depth_estimate": 3,
       "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical",
         "Algebra"
@@ -33713,7 +33754,7 @@
       "depth_estimate": 3,
       "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -34033,7 +34074,7 @@
       "depth_estimate": 3,
       "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -34105,8 +34146,8 @@
     "Algebra": 11,
     "Analysis": 1,
     "Bridges": 6,
-    "Combinatorics": 3,
-    "Computation": 8,
+    "Combinatorics": 4,
+    "Computation": 9,
     "Cryptography": 3,
     "EML": 5,
     "Geometry": 5,
@@ -34118,43 +34159,30 @@
     "Pythagorean": 5,
     "Speculative": 2,
     "Topology": 1,
-    "Tropical": 5
+    "Tropical": 6
   },
   "recent_theme_keywords": {
-    "$s+1$": 1,
-    "'alternating": 1,
-    "abstract": 1,
-    "adding": 1,
-    "adjacent-sum": 1,
-    "admits": 1,
+    "4-ε)^k": 1,
     "algebraic": 4,
-    "alternate": 1,
-    "alternating": 1,
-    "arctangent": 1,
-    "arxiv": 1,
     "associated": 2,
-    "becomes": 1,
+    "bounds": 1,
     "bridge": 4,
-    "classes": 1,
-    "classical": 1,
-    "closed": 1,
+    "campos-griffiths-morris-sahasrabudhe": 1,
+    "closed": 2,
     "cohomology": 2,
-    "common": 1,
     "computation": 2,
     "compute": 2,
     "conjecture": 12,
     "connect": 4,
-    "consecutive-coordinate": 1,
     "constant": 4,
-    "constraint": 1,
     "continuous": 2,
-    "coordinates": 1,
     "corner": 2,
-    "counts": 1,
     "coupled": 1,
     "deformation": 1,
     "denominator": 1,
     "determine": 2,
+    "develop": 1,
+    "diagonal": 1,
     "direct": 4,
     "distinct": 1,
     "dominant": 1,
@@ -34162,10 +34190,12 @@
     "equals": 4,
     "even-dimensional": 1,
     "exhibit": 1,
+    "exists": 1,
     "explicit": 5,
-    "exponential": 1,
+    "exponential": 2,
     "family": 1,
     "formalize": 20,
+    "formalizes": 1,
     "function": 9,
     "functions": 2,
     "fundamental": 2,
@@ -34173,14 +34203,19 @@
     "general": 3,
     "generating": 1,
     "geometry": 3,
+    "groebner": 1,
     "growth": 1,
+    "ideals": 1,
+    "improvement": 1,
     "invariant": 3,
     "investigate": 5,
     "jacobi-derivative": 1,
     "lattice-point": 1,
+    "linear": 1,
     "matrix": 1,
     "non-uniform": 1,
     "number": 5,
+    "numbers": 1,
     "numerator": 1,
     "obtained": 1,
     "odd-dimensional": 1,
@@ -34188,18 +34223,23 @@
     "paper": 4,
     "parameters": 2,
     "parity": 1,
-    "polynomial": 4,
+    "polynomial": 5,
     "polytopes": 1,
     "provides": 1,
+    "r(k,k": 1,
+    "ramsey": 1,
+    "ramsey-bounds": 1,
     "rational": 2,
     "recurrence": 1,
     "remains": 3,
+    "replaced": 1,
     "representations": 2,
     "required": 2,
     "results": 8,
     "retaining": 1,
     "satisfies": 4,
-    "scheme": 3,
+    "scheme": 4,
+    "semiring": 1,
     "sequences": 1,
     "series": 1,
     "series'": 1,
@@ -34208,12 +34248,13 @@
     "split": 1,
     "structure": 2,
     "structures": 2,
+    "subsemimodules": 1,
     "theorem": 10,
     "theorems": 2,
-    "theory": 7,
+    "theory": 8,
     "trace": 1,
     "transfer-matrix": 1,
-    "tropical": 5,
+    "tropical": 6,
     "uniform": 2,
     "vanishing": 3,
     "vertices": 3,
@@ -34241,6 +34282,7 @@
     "famous_subtask",
     "famous_subtask",
     "cross_domain_bridge",
-    "famous_subtask"
+    "famous_subtask",
+    "abduction_followup"
   ]
 }

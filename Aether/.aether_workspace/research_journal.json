@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "15429b4a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Turán extremizers.** For every integer",
-      "quality_score": 0.73393,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-30T18:55:31",
-      "title": "Extremal Graph Theory: Turán and Szemerédi"
-    },
-    {
       "cycle_id": "726a20a7",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nThe Lean development proves an abstract energy estimate, the final measure-theoretic reduction behind an ε-regularity argument, and exact finite-mode energy exchange. It does **no",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-08-01T22:20:25",
       "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
+    },
+    {
+      "cycle_id": "d4159430",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and",
+      "quality_score": 0.7496799999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-08-01T22:21:43",
+      "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cc3b4f99",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Holographic Primes / Tropical Dequantization\n\n## What this cycle added\n\nThe finite prime hologram in `Catalog/Tropical/HolographicPrimes.lean` already\nproved the exact boundary/b",
-      "quality_score": 0.52,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-24T15:52:08",
-      "title": "Close Proofs: Holographic Primes: The Prime Number AdS/CFT Correspondence"
-    },
     {
       "cycle_id": "2a754509",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 24,
       "timestamp": "2026-08-01T22:20:25",
       "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
+    },
+    {
+      "cycle_id": "d4159430",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and",
+      "quality_score": 0.7496799999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-08-01T22:21:43",
+      "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "150a94b2",
-      "domain": "Applications",
-      "name": "displays",
-      "quality": 0.73519
-    },
-    {
-      "cycle_id": "150a94b2",
-      "domain": "Applications",
-      "name": "emlQuadApprox_depth_two_realization",
-      "quality": 0.73519
-    },
-    {
-      "cycle_id": "150a94b2",
-      "domain": "Applications",
-      "name": "emlQuadApprox_hasDerivAt",
-      "quality": 0.73519
-    },
     {
       "cycle_id": "788947d7",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "TropicalIdeal",
       "quality": 0.7809699999999999
+    },
+    {
+      "cycle_id": "d4159430",
+      "domain": "Combinatorics",
+      "name": "four_mul_eq_four_sub_saving",
+      "quality": 0.7496799999999999
+    },
+    {
+      "cycle_id": "d4159430",
+      "domain": "Combinatorics",
+      "name": "hasSubFourUpperBound_of_proportionalSaving",
+      "quality": 0.7496799999999999
+    },
+    {
+      "cycle_id": "d4159430",
+      "domain": "Combinatorics",
+      "name": "hasProportionalSaving_of_hasSubFourUpperBound",
+      "quality": 0.7496799999999999
     }
   ],
-  "last_updated": "2026-08-01T22:20:25",
+  "last_updated": "2026-08-01T22:21:43",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "078d5371",
-        "quality": 0.77,
-        "theorems": 0,
-        "title": "Graph Coloring: Chromatic Polynomial Theory"
-      },
-      {
         "cycle_id": "8a9b8560",
         "quality": 0.7322500000000001,
         "theorems": 7,
@@ -3265,6 +3259,12 @@
         "quality": 0.7667599999999999,
         "theorems": 16,
         "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
+      },
+      {
+        "cycle_id": "d4159430",
+        "quality": 0.7496799999999999,
+        "theorems": 9,
+        "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
       }
     ],
     "Computation": [
