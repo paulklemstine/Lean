@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e722c646",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n1. **Continuous beta function.** Introduce a continuous scale parameter and an\n   RG semigroup, then define its beta function as the infinitesimal generator.\n   This would cleanly",
-      "quality_score": 0.7708899999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-29T22:22:57",
-      "title": "Inverse Stereographic Renormalization Group"
-    },
-    {
       "cycle_id": "d4d2267f",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\nThe unrestricted Rota basis conjecture remains open. The following five statements\nare concrete, falsifiable extensions of the definitions and small-rank results in\n`Catalog/Combi",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-08-01T03:58:55",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "150a94b2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Multivariate EML rate.** For every `n ≥ 1`, every `L`-Lipschitz function on `[0,1]^n`, and all positive `w,d`, there is an EML network of width at most `w` and depth at most",
+      "quality_score": 0.73519,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-08-01T04:20:29",
+      "title": "EML Neural Network Expressiveness: Depth vs Width"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6c3aaf50",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nDerived from the approximation-theoretic study of emergent fixed points, in\nwhich the stable self-image of a monotone self-observation operator on a\ncomplete lattice is shown to b",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-23T23:52:14",
-      "title": "1. **Internal Cartesian-closed formulation.** Generalize the type-level Lawvere "
-    },
     {
       "cycle_id": "2f76a8a3",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-08-01T03:58:55",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "150a94b2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Multivariate EML rate.** For every `n ≥ 1`, every `L`-Lipschitz function on `[0,1]^n`, and all positive `w,d`, there is an EML network of width at most `w` and depth at most",
+      "quality_score": 0.73519,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-08-01T04:20:29",
+      "title": "EML Neural Network Expressiveness: Depth vs Width"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7c352e1f",
-      "domain": "Computation",
-      "name": "equal_cochain_dimensions",
-      "quality": 0.80603
-    },
-    {
-      "cycle_id": "7c352e1f",
-      "domain": "Computation",
-      "name": "disconnected_h1_finrank",
-      "quality": 0.80603
-    },
-    {
-      "cycle_id": "7c352e1f",
-      "domain": "Computation",
-      "name": "patchable_h1_finrank",
-      "quality": 0.80603
-    },
     {
       "cycle_id": "275a5749",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "oddExponentialMonomial_not_isSquare",
       "quality": 0.7828599999999999
+    },
+    {
+      "cycle_id": "150a94b2",
+      "domain": "Applications",
+      "name": "displays",
+      "quality": 0.73519
+    },
+    {
+      "cycle_id": "150a94b2",
+      "domain": "Applications",
+      "name": "emlQuadApprox_depth_two_realization",
+      "quality": 0.73519
+    },
+    {
+      "cycle_id": "150a94b2",
+      "domain": "Applications",
+      "name": "emlQuadApprox_hasDerivAt",
+      "quality": 0.73519
     }
   ],
-  "last_updated": "2026-08-01T03:58:55",
+  "last_updated": "2026-08-01T04:20:29",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ce71f394",
-        "quality": 0.77,
-        "theorems": 14,
-        "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
-      },
-      {
         "cycle_id": "538b51f9",
         "quality": 0.63,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.7828599999999999,
         "theorems": 11,
         "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+      },
+      {
+        "cycle_id": "150a94b2",
+        "quality": 0.73519,
+        "theorems": 6,
+        "title": "EML Neural Network Expressiveness: Depth vs Width"
       }
     ],
     "Bridges": [

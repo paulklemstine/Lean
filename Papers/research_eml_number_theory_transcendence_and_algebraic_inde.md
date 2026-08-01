@@ -1,267 +1,378 @@
-# Transcendence and Multiplication Elimination in Rational Exponential–Logarithmic Expression Classes
+# Generated Exponential–Logarithmic Numbers and a Conditional Transcendence Criterion
 
 **Aristotle**  
-**July 26, 2026**
+**1 August 2026**
 
 ## Abstract
 
-We study two classes of real numbers generated from rational constants by finite expression trees. The rational EML language permits a distinguished real variable, exponentiation, logarithms, addition, and multiplication; the rational EL sublanguage omits multiplication. Closed values are obtained by setting the distinguished variable equal to $0$. We prove unconditionally that every EL number is an EML number and that $\exp(\exp(1))+\log 2$ is represented by a rational EML expression. We then isolate a functional strengthening of Schanuel’s conjecture consisting of three explicit assumptions: classical real Schanuel, algebraic independence over $\mathbb Q$ of $\exp(\exp(1))$ and $\log 2$, and extensional elimination of multiplication from every rational EML expression. A general substitution theorem shows that the sum of two algebraically independent real numbers is transcendental. It follows conditionally that $\exp(\exp(1))+\log 2$ is transcendental. The elimination assumption yields the reverse inclusion of represented number classes and hence the conditional equality $\mathrm{EML}=\mathrm{EL}$. We emphasize the logical separation between classical Schanuel and the two additional functional predictions, give algorithms for expression evaluation and bounded polynomial-relation searches, and identify finite-arity and linear-combination generalizations.
+We study real numbers obtained from $1$ by finitely many applications of addition, multiplication, the real exponential function, and the real logarithm. Two descriptions of this class are compared: a syntactic description by finite expression trees and an intrinsic description as the least subset of $\mathbb R$ containing $1$ and closed under the four operations. We prove unconditionally that these descriptions coincide. We then isolate the arithmetic status of the concrete number
+
+$$
+\xi=\exp(\exp(1))+\log 2.
+$$
+
+The number $\xi$ belongs to the generated class, but its unconditional transcendence is not presently established by the methods considered here. We prove the general theorem that the sum of two algebraically independent real numbers is transcendental and deduce that $\xi$ is transcendental if $\exp(\exp(1))$ and $\log 2$ are algebraically independent over $\mathbb Q$. We formulate a finite-family version of Schanuel’s conjecture and state the exact specialization required to connect it to this example. This separation distinguishes unconditional closure theory from conjectural transcendence input and prevents an unjustified appeal to classical exponential transcendence results. We also give constructive membership algorithms, numerical demonstrations, and directions for the study of normalization, complex logarithmic branches, and concrete algebraic independence.
 
 ## 1. Introduction
 
-Expressions formed from rational constants, exponentials, logarithms, sums, and products provide a natural laboratory for transcendence theory. They are easy to evaluate numerically and difficult to classify arithmetically. The constant
+Expressions assembled from exponentials and logarithms occupy a central place in analysis and applications. They describe continuous growth, decay, entropy, likelihoods, scaling laws, and solutions of differential equations. Their numerical evaluation is generally straightforward. Their arithmetic classification is not.
+
+A real or complex number is **algebraic over $\mathbb Q$** if it is a zero of a nonzero polynomial with rational coefficients; otherwise it is **transcendental over $\mathbb Q$**. Classical transcendence theory proves, among many other results, that $e$ is transcendental. It is tempting to extrapolate too quickly from such theorems to nested and mixed expressions. The number
 
 $$
-\alpha=\exp(\exp(1))+\log 2
+\xi=\exp(\exp(1))+\log 2
 $$
 
-illustrates the gap. Its decimal expansion can be computed rapidly, yet no such computation can determine whether $\alpha$ is algebraic over $\mathbb Q$. The nested exponential combines with a logarithm in a way that lies beyond presently available unconditional methods.
+provides a useful test case. Its construction is elementary and its decimal expansion is easy to approximate, yet standard theorems do not directly control the sum. In particular, the presence of a known transcendental ingredient does not imply that an arbitrary sum containing it is transcendental: cancellation through an unknown algebraic relation is precisely what must be excluded.
 
-A second issue is expressive rather than arithmetic. If a language already contains exponentiation, logarithms, and addition, does an explicit multiplication constructor enlarge the class of represented numbers? The familiar identity $ab=\exp(\log a+\log b)$ suggests a negative answer for positive inputs, but it does not provide a uniform real-valued elimination procedure for arbitrary nested expressions. Zeros, signs, and the behavior of logarithms prevent that slogan from being a complete argument.
+This paper separates three layers that are often conflated.
 
-This paper treats both questions through a precise expression grammar and an explicit conjectural package. The package contains classical real Schanuel’s conjecture, but it also separately states the concrete algebraic-independence prediction and the functional multiplication-elimination prediction actually used. Thus no implication from classical Schanuel to either additional clause is presumed.
+1. **Representation.** The number $\xi$ is represented by a finite expression built from $1$ using the allowed operations.
+2. **Closure.** The values of all such expressions form exactly the least operation-closed class generated by $1$.
+3. **Arithmetic independence.** The transcendence of $\xi$ follows from algebraic independence of its two summands, but establishing that independence is a distinct number-theoretic problem.
 
-The main results are as follows.
+The closure result is unconditional. It is a general equivalence between an inductively generated syntax and an intrinsically defined closure. The conditional transcendence result is driven by a polynomial substitution lemma. If $x$ and $y$ are algebraically independent and if a nonzero univariate polynomial vanished at $x+y$, then substituting $X+Y$ into that polynomial would yield a nonzero bivariate relation at $(x,y)$, a contradiction.
 
-1. The EL class is unconditionally contained in the EML class.
-2. The constant $\alpha$ is unconditionally an EML number.
-3. If $x$ and $y$ are algebraically independent over $\mathbb Q$, then $x+y$ is transcendental over $\mathbb Q$.
-4. Under algebraic independence of $\exp(\exp(1))$ and $\log 2$, the constant $\alpha$ is transcendental.
-5. Under extensional multiplication elimination, every EML number is an EL number; combined with the first result, the classes coincide.
-
-The contribution is chiefly structural. The transcendence proof reduces the concrete claim to one transparent independence assumption. The class-equality proof separates the automatic syntactic inclusion from the difficult semantic elimination direction.
+We also formulate Schanuel’s conjecture in finite-family language. For a $\mathbb Q$-linearly independent family $z_1,\ldots,z_n$ of complex numbers, the conjecture predicts algebraic independence of a suitable $n$-element subfamily of the $2n$ numbers $z_i$ and $e^{z_i}$. To derive the desired conclusion for $\xi$, one still needs a concrete reduction from this general principle to the algebraic independence of $e^e$ and $\log 2$. We retain that reduction as an explicit hypothesis rather than claiming it without proof.
 
 ## 2. Algebraic preliminaries
 
-### 2.1 Algebraic and transcendental elements
+### 2.1 Algebraic and transcendental numbers
 
-Let $K\subseteq L$ be fields. An element $u\in L$ is **algebraic over $K$** if there is a nonzero polynomial $p(T)\in K[T]$ such that $p(u)=0$. It is **transcendental over $K$** if no such polynomial exists. In this paper the base field is $K=\mathbb Q$ and the ambient field is $L=\mathbb R$.
+Let $K$ be a field extension of $\mathbb Q$. An element $u\in K$ is algebraic over $\mathbb Q$ if there exists a polynomial
 
-A finite family $u_1,\ldots,u_n\in L$ is **algebraically independent over $K$** if, for every polynomial $P\in K[X_1,\ldots,X_n]$,
+$$
+p(T)=a_0+a_1T+\cdots+a_dT^d\in\mathbb Q[T]
+$$
+
+with $p\ne 0$ and $p(u)=0$. If no such polynomial exists, $u$ is transcendental over $\mathbb Q$.
+
+For several elements, the relevant notion is stronger.
+
+**Definition 2.1 (Algebraic independence).** A finite family $u_1,\ldots,u_n$ in a field extension of $\mathbb Q$ is algebraically independent over $\mathbb Q$ if, for every polynomial $P\in\mathbb Q[X_1,\ldots,X_n]$,
 
 $$
 P(u_1,\ldots,u_n)=0
 $$
 
-implies $P=0$. Otherwise the family is algebraically dependent. Algebraic independence is stronger than requiring each element to be transcendental. For example, if $u$ is transcendental, then $u$ and $1-u$ are separately transcendental, but they satisfy the polynomial relation $X+Y-1=0$.
+implies $P=0$.
 
-The **transcendence degree** of a field extension $L/K$ is the cardinality of a transcendence basis: a maximal algebraically independent subset of $L$ over $K$. It measures how many algebraically independent parameters are required to generate the extension up to algebraic closure.
+For a pair $(x,y)$ this says that no nonzero rational polynomial curve contains the point $(x,y)$. Algebraic independence implies that each member is transcendental, but the converse need not hold: two transcendental numbers may satisfy a polynomial relation, as $t$ and $t^2$ do.
 
-### 2.2 Classical real Schanuel conjecture
+### 2.2 A substitution embedding
 
-We use the following standard formulation.
-
-**Conjecture 2.1 (Classical real Schanuel).** Let $n\ge 0$, and let $z_1,\ldots,z_n\in\mathbb R$ be linearly independent over $\mathbb Q$. Then
+The central algebraic mechanism is the substitution homomorphism
 
 $$
-\operatorname{trdeg}_{\mathbb Q}
-\mathbb Q\bigl(z_1,\ldots,z_n,e^{z_1},\ldots,e^{z_n}\bigr)\ge n.
+\Phi:\mathbb Q[T]\longrightarrow\mathbb Q[X,Y],
+\qquad
+\Phi(p)=p(X+Y).
 $$
 
-The conjecture predicts that rational linear independence of exponential inputs forces substantial algebraic independence among the inputs and their exponential images. Our conditional statements retain this classical clause, but the proofs below need two additional predictions that are stated independently in Section 4.
+**Lemma 2.2 (Injectivity of sum substitution).** The map $\Phi$ is injective.
 
-## 3. Rational EML and EL languages
-
-### 3.1 Expression grammars
-
-Fix a distinguished real variable $t$. A **rational EML expression** is built inductively by the following rules:
-
-1. every rational constant $q\in\mathbb Q$ is an expression;
-2. the variable $t$ is an expression;
-3. if $E$ is an expression, then $\exp(E)$ and $\log(E)$ are expressions;
-4. if $E$ and $F$ are expressions, then $E+F$ and $EF$ are expressions.
-
-The evaluation map assigns a real-valued function $\llbracket E\rrbracket:\mathbb R\to\mathbb R$ to each expression by interpreting the constructors as the corresponding real operations. Thus
+**Proof sketch.** Define a second substitution
 
 $$
-\llbracket q\rrbracket(x)=q,\qquad
-\llbracket t\rrbracket(x)=x,
+\rho:\mathbb Q[X,Y]\longrightarrow\mathbb Q[X]
+$$
+
+by setting $Y=0$ and retaining $X$. Then
+
+$$
+(\rho\circ\Phi)(p)=p(X).
+$$
+
+Thus $\rho\circ\Phi$ is the identity after identifying $\mathbb Q[T]$ with $\mathbb Q[X]$. A map admitting a left inverse is injective. In elementary terms, if $p(X+Y)$ were the zero bivariate polynomial, then substituting $Y=0$ would make $p(X)$ the zero polynomial, so $p=0$. $\square$
+
+The same reasoning can be viewed through polynomial degrees: if $p$ has leading term $a_dT^d$, then $p(X+Y)$ has a nonzero term $a_dX^d$. The retraction proof is preferable because it transparently identifies the algebraic structure responsible for injectivity.
+
+## 3. Finite exponential–multiplicative–logarithmic expressions
+
+### 3.1 The expression grammar
+
+We define the class of **EML expressions** recursively. The name emphasizes exponential, multiplication, and logarithm, while addition is also included.
+
+**Definition 3.1 (EML expression).** An EML expression is one of the following:
+
+1. the generator $\mathbf 1$;
+2. $A+B$, where $A$ and $B$ are EML expressions;
+3. $A\cdot B$, where $A$ and $B$ are EML expressions;
+4. $\operatorname{Exp}(A)$, where $A$ is an EML expression;
+5. $\operatorname{Log}(A)$, where $A$ is an EML expression.
+
+Its evaluation $\llbracket A\rrbracket\in\mathbb R$ is defined recursively by
+
+$$
+\llbracket\mathbf 1\rrbracket=1,
 $$
 
 $$
-\llbracket \exp(E)\rrbracket(x)=\exp(\llbracket E\rrbracket(x)),
+\llbracket A+B\rrbracket=\llbracket A\rrbracket+\llbracket B\rrbracket,
 $$
 
 $$
-\llbracket \log(E)\rrbracket(x)=\log(\llbracket E\rrbracket(x)),
+\llbracket A\cdot B\rrbracket=\llbracket A\rrbracket\llbracket B\rrbracket,
 $$
 
-and addition and multiplication are evaluated pointwise. Here $\log$ denotes the standard real logarithm in the chosen total real-function convention; all class results depend only on using the same evaluation convention in both languages.
-
-A real number $a$ is a **rational EML number** if there exists a rational EML expression $E$ such that
-
 $$
-\llbracket E\rrbracket(0)=a.
+\llbracket\operatorname{Exp}(A)\rrbracket=\exp(\llbracket A\rrbracket),
 $$
 
-The class of all such numbers is denoted $\mathrm{EML}$.
-
-A **rational EL expression** is generated by the same rules except that the product rule is omitted. In other words, rational constants, $t$, exponentials, logarithms, and sums are allowed, but explicit multiplication nodes are forbidden. A real number $a$ is a **rational EL number** if
+and
 
 $$
-\llbracket F\rrbracket(0)=a
+\llbracket\operatorname{Log}(A)\rrbracket=\log(\llbracket A\rrbracket).
 $$
 
-for some rational EL expression $F$. The class is denoted $\mathrm{EL}$.
+We use the usual real logarithm. For conventional total-function treatments, its value at nonpositive arguments is fixed by the ambient real-logarithm convention; every logarithm used in the concrete example has positive argument.
 
-These are syntactic definitions followed by semantic evaluation. An expression is EL or EML according to the shape of its construction tree, not according to whether its function could later be represented in another way.
-
-### 3.2 The automatic inclusion
-
-**Proposition 3.1 (Language inclusion).** Every rational EL expression is a rational EML expression.
-
-**Proof sketch.** Proceed by structural induction on the EL expression. Rational constants and the variable are admitted by both grammars. The exponential, logarithm, and addition constructors are also shared. Applying the induction hypothesis to each immediate subexpression therefore reconstructs the same tree in the EML grammar. There is no multiplication case because EL expressions contain no multiplication node. $\square$
-
-**Corollary 3.2 (Unconditional class inclusion).**
+**Definition 3.2 (Syntactic EML numbers).** The set $\mathcal E_{\mathrm{syn}}$ of syntactic EML numbers is
 
 $$
-\mathrm{EL}\subseteq\mathrm{EML}.
+\mathcal E_{\mathrm{syn}}
+=
+\{\llbracket A\rrbracket:A\text{ is a finite EML expression}\}.
 $$
 
-**Proof sketch.** If $a\in\mathrm{EL}$, choose an EL expression $F$ with $\llbracket F\rrbracket(0)=a$. Proposition 3.1 regards the same expression as EML, with unchanged evaluation. Hence $a\in\mathrm{EML}$. $\square$
+The finiteness condition matters. Each number is produced by a finite rooted tree whose leaves are copies of $1$ and whose internal vertices are labeled by the four operations.
 
-### 3.3 The concrete expression
+### 3.2 The concrete expression
 
-Define
-
-$$
-E_\alpha(t)=\exp(\exp(1))+\log 2.
-$$
-
-Its expression tree has an addition at the root, nested exponentials of the rational constant $1$ on the left, and the logarithm of the rational constant $2$ on the right. It does not depend on $t$.
-
-**Proposition 3.3 (Representation of the concrete constant).** The expression $E_\alpha$ is a rational EML expression and
+Let
 
 $$
-\llbracket E_\alpha\rrbracket(0)=\exp(\exp(1))+\log 2.
+A_\xi
+=
+\operatorname{Exp}(\operatorname{Exp}(\mathbf 1))
++
+\operatorname{Log}(\mathbf 1+\mathbf 1).
 $$
 
-Consequently, $\alpha\in\mathrm{EML}$.
+**Proposition 3.3 (Concrete representability).** The expression $A_\xi$ evaluates to
 
-**Proof sketch.** The constants $1$ and $2$ are rational. Closure under two applications of exponentiation, one application of logarithm, and addition constructs $E_\alpha$. Evaluation unfolds each constructor and produces the displayed equality. $\square$
+$$
+\xi=\exp(\exp(1))+\log 2.
+$$
 
-In fact, this particular tree contains no multiplication node, so it also fits the EL grammar. The unconditional result recorded here only requires its EML membership; the later class theorem concerns arbitrary expressions where multiplication may occur.
+Consequently, $\xi\in\mathcal E_{\mathrm{syn}}$.
 
-## 4. The functional EML strengthening
+**Proof sketch.** Recursive evaluation gives
 
-We now state the complete hypothesis supporting the conditional results.
+$$
+\llbracket\operatorname{Exp}(\operatorname{Exp}(\mathbf 1))\rrbracket
+=
+\exp(\exp(1))
+$$
 
-**Hypothesis 4.1 (Functional EML strengthening of Schanuel).** Assume all three clauses below.
+and
 
-1. **Classical clause.** Classical real Schanuel’s conjecture, as stated in Conjecture 2.1, holds.
-2. **Concrete independence clause.** The two real numbers
-   $$
-   \exp(\exp(1))\quad\text{and}\quad\log 2
-   $$
-   are algebraically independent over $\mathbb Q$.
-3. **Multiplication-elimination clause.** For every rational EML expression $E$, there exists a rational EL expression $F$ such that
-   $$
-   \llbracket F\rrbracket(x)=\llbracket E\rrbracket(x)
-   $$
-   for every $x\in\mathbb R$.
+$$
+\llbracket\operatorname{Log}(\mathbf 1+\mathbf 1)\rrbracket
+=
+\log(1+1)=\log 2.
+$$
 
-The clauses are deliberately separate. Neither the concrete independence clause nor the multiplication-elimination clause is asserted here to have been derived from classical Schanuel. The first conditional theorem below uses Clause 2. The class-equality theorem uses Clause 3. Clause 1 situates the package within the intended transcendence-theoretic program but is not, by itself, invoked in either short deduction.
+The addition node combines the two values. $\square$
 
-The elimination clause is extensional: it preserves a function on all real inputs, not merely its value at $0$. It is therefore stronger than the class equality $\mathrm{EML}=\mathrm{EL}$, which concerns only closed values. This strength makes the deduction of number-class equality immediate while leaving open whether equality of closed values could hold under weaker assumptions.
+This proposition addresses only membership in a generated class. It makes no assertion about algebraicity.
 
-## 5. Algebraic independence and transcendental sums
+## 4. The intrinsic closure
 
-The main algebraic mechanism is independent of exponential functions.
+The preceding definition depends on an explicit grammar. An equivalent definition can be given without mentioning expression trees.
 
-**Theorem 5.1 (Transcendence of the sum of an independent pair).** Let $x,y\in\mathbb R$. If $x$ and $y$ are algebraically independent over $\mathbb Q$, then $x+y$ is transcendental over $\mathbb Q$.
+**Definition 4.1 (Admissible EL-closed set).** A subset $S\subseteq\mathbb R$ is admissible if:
 
-**Proof.** Suppose instead that $x+y$ is algebraic. Then there exists a nonzero polynomial $p(T)\in\mathbb Q[T]$ such that
+1. $1\in S$;
+2. if $a,b\in S$, then $a+b\in S$;
+3. if $a,b\in S$, then $ab\in S$;
+4. if $a\in S$, then $\exp(a)\in S$;
+5. if $a\in S$, then $\log(a)\in S$.
+
+**Definition 4.2 (Intrinsic EL numbers).** The intrinsic EL class is
+
+$$
+\mathcal E_{\mathrm{int}}
+=
+\bigcap\{S\subseteq\mathbb R:S\text{ is admissible}\}.
+$$
+
+Equivalently, $x\in\mathcal E_{\mathrm{int}}$ if and only if $x$ belongs to every admissible subset of $\mathbb R$. This is the least subset containing $1$ and closed under all four operations.
+
+### 4.1 Closure of expression values
+
+**Lemma 4.3.** The set $\mathcal E_{\mathrm{syn}}$ is admissible.
+
+**Proof sketch.** The expression $\mathbf 1$ witnesses $1\in\mathcal E_{\mathrm{syn}}$. If $a=\llbracket A\rrbracket$ and $b=\llbracket B\rrbracket$, then
+
+$$
+a+b=\llbracket A+B\rrbracket,
+\qquad
+ab=\llbracket A\cdot B\rrbracket.
+$$
+
+Likewise,
+
+$$
+\exp(a)=\llbracket\operatorname{Exp}(A)\rrbracket,
+\qquad
+\log(a)=\llbracket\operatorname{Log}(A)\rrbracket.
+$$
+
+Thus all closure conditions hold. $\square$
+
+**Corollary 4.4.** One has
+
+$$
+\mathcal E_{\mathrm{int}}\subseteq\mathcal E_{\mathrm{syn}}.
+$$
+
+**Proof sketch.** The intrinsic class is contained in every admissible set, and Lemma 4.3 shows that $\mathcal E_{\mathrm{syn}}$ is one such set. $\square$
+
+### 4.2 Structural induction into every closed set
+
+**Lemma 4.5.** Let $S\subseteq\mathbb R$ be admissible. For every EML expression $A$, one has $\llbracket A\rrbracket\in S$.
+
+**Proof sketch.** Proceed by structural induction on $A$. The base expression $\mathbf 1$ evaluates to $1\in S$. For an addition expression $A+B$, the induction hypotheses place $\llbracket A\rrbracket$ and $\llbracket B\rrbracket$ in $S$, and closure under addition places their sum in $S$. The multiplication case is identical in form. In the exponential and logarithmic cases, apply the corresponding unary closure property to the induction hypothesis. Every expression is generated by exactly one of these five clauses, so the induction is exhaustive. $\square$
+
+**Corollary 4.6.** One has
+
+$$
+\mathcal E_{\mathrm{syn}}\subseteq\mathcal E_{\mathrm{int}}.
+$$
+
+**Proof sketch.** If $x\in\mathcal E_{\mathrm{syn}}$, choose an expression $A$ with $x=\llbracket A\rrbracket$. Lemma 4.5 shows that $x$ belongs to every admissible $S$, which is exactly membership in $\mathcal E_{\mathrm{int}}$. $\square$
+
+### 4.3 Equality of the two classes
+
+**Theorem 4.7 (Syntactic–intrinsic closure equivalence).** The syntactically generated and intrinsically generated classes coincide:
+
+$$
+\mathcal E_{\mathrm{syn}}=\mathcal E_{\mathrm{int}}.
+$$
+
+**Proof sketch.** Combine Corollaries 4.4 and 4.6. $\square$
+
+This theorem does not depend on Schanuel’s conjecture or on any transcendence assumption. It is a pure minimal-closure result. Therefore any statement of the form “Schanuel’s conjecture implies the equality of the EML and EL classes” is true but weaker than necessary: the equality already holds unconditionally.
+
+## 5. Algebraic independence and transcendence of sums
+
+We now turn from class membership to arithmetic classification.
+
+**Theorem 5.1 (Transcendence of a sum of independent numbers).** Let $x,y\in\mathbb R$. If $x$ and $y$ are algebraically independent over $\mathbb Q$, then $x+y$ is transcendental over $\mathbb Q$.
+
+**Proof sketch.** Assume for contradiction that $x+y$ is algebraic. Then there is a nonzero $p\in\mathbb Q[T]$ such that
 
 $$
 p(x+y)=0.
 $$
 
-Form the bivariate polynomial
+Define
 
 $$
 Q(X,Y)=p(X+Y)\in\mathbb Q[X,Y].
 $$
 
-Evaluation gives $Q(x,y)=p(x+y)=0$. Algebraic independence of $x$ and $y$ therefore forces $Q=0$.
-
-It remains to show this is impossible. Consider the specialization homomorphism that sets $Y=0$. Applied to $Q$, it yields
+Evaluation at $(x,y)$ yields
 
 $$
-Q(X,0)=p(X).
+Q(x,y)=p(x+y)=0.
 $$
 
-If $Q$ were the zero polynomial, then $p(X)$ would be zero, contrary to the choice of $p$. Hence no nonzero rational polynomial vanishes at $x+y$, and $x+y$ is transcendental. $\square$
+By algebraic independence, $Q$ must be the zero polynomial. Lemma 2.2 says that $p\mapsto p(X+Y)$ is injective, so $Q=0$ implies $p=0$. This contradicts the choice of $p$. Hence no nonzero rational polynomial vanishes at $x+y$, and the sum is transcendental. $\square$
 
-The proof may be expressed as injectivity of the substitution map
+The theorem is elementary once algebraic independence is available, but it is logically strong: a two-variable universal nonvanishing property is converted into a one-variable transcendence statement.
 
-$$
-\mathbb Q[T]\longrightarrow\mathbb Q[X,Y],\qquad p(T)\longmapsto p(X+Y).
-$$
+**Remark 5.2 (Why individual transcendence is insufficient).** It would not be enough to know separately that $x$ and $y$ are transcendental. For any transcendental $t$ and any algebraic $a$, the pair $x=t$, $y=a-t$ consists typically of transcendental numbers while $x+y=a$ is algebraic. The theorem requires the absence of joint polynomial relations.
 
-A left inverse is specialization at $Y=0$ and $X=T$. This retraction viewpoint is useful for generalization.
-
-**Remark 5.2.** Separate transcendence of $x$ and $y$ would not suffice. The theorem fundamentally uses the absence of every bivariate polynomial relation. In particular, it rules out cancellation engineered by a relation such as $X+Y-c=0$.
-
-**Corollary 5.3 (Conditional transcendence of the concrete EML number).** Under Hypothesis 4.1,
+**Corollary 5.3 (Concrete conditional transcendence).** If the pair
 
 $$
-\exp(\exp(1))+\log 2
+\exp(\exp(1)),\qquad \log 2
+$$
+
+is algebraically independent over $\mathbb Q$, then
+
+$$
+\xi=\exp(\exp(1))+\log 2
 $$
 
 is transcendental over $\mathbb Q$.
 
-**Proof sketch.** Clause 2 of Hypothesis 4.1 states that $x=\exp(\exp(1))$ and $y=\log 2$ are algebraically independent. Apply Theorem 5.1. $\square$
+**Proof sketch.** Apply Theorem 5.1 with $x=\exp(\exp(1))$ and $y=\log 2$. $\square$
 
-This corollary is explicitly conditional. The claim is not established here from currently known unconditional transcendence theorems, and the classical clause alone is not claimed to imply the required pair independence.
+This is the exact unconditional implication proved here. The antecedent is a concrete and currently unresolved arithmetic statement.
 
-## 6. Elimination of multiplication and equality of classes
+## 6. Schanuel’s conjecture and the required specialization
 
-**Theorem 6.1 (Difficult inclusion under elimination).** Under Clause 3 of Hypothesis 4.1,
+Schanuel’s conjecture is commonly expressed as a lower bound on transcendence degree. For present purposes, the following finite selection form is convenient.
 
-$$
-\mathrm{EML}\subseteq\mathrm{EL}.
-$$
-
-**Proof.** Let $a\in\mathrm{EML}$. By definition, there is a rational EML expression $E$ satisfying
+**Conjecture 6.1 (Finite-family Schanuel conjecture).** Let $n\ge 0$, and let
 
 $$
-\llbracket E\rrbracket(0)=a.
+z_1,\ldots,z_n\in\mathbb C
 $$
 
-The multiplication-elimination clause supplies a rational EL expression $F$ such that $\llbracket F\rrbracket(x)=\llbracket E\rrbracket(x)$ for every real $x$. Evaluating at $x=0$ gives
+be linearly independent over $\mathbb Q$. Among the $2n$ complex numbers
 
 $$
-\llbracket F\rrbracket(0)=\llbracket E\rrbracket(0)=a.
+z_1,\ldots,z_n,
+\exp(z_1),\ldots,\exp(z_n),
 $$
 
-Thus $a\in\mathrm{EL}$. $\square$
+there exists an $n$-element subfamily that is algebraically independent over $\mathbb Q$.
 
-**Theorem 6.2 (Conditional EML/EL equality).** Under Hypothesis 4.1,
+This formulation packages the assertion that the field generated by the $z_i$ and their exponentials has transcendence degree at least $n$.
+
+For the concrete example we single out the exact needed consequence.
+
+**Statement 6.2 (Concrete Schanuel specialization).** The two real numbers
 
 $$
-\mathrm{EML}=\mathrm{EL}.
+\log 2
+\quad\text{and}\quad
+\exp(\exp(1))
 $$
 
-**Proof.** The inclusion $\mathrm{EML}\subseteq\mathrm{EL}$ is Theorem 6.1. The reverse inclusion $\mathrm{EL}\subseteq\mathrm{EML}$ is the unconditional Corollary 3.2. Equality follows by antisymmetry of set inclusion. $\square$
+are algebraically independent over $\mathbb Q$.
 
-The theorem says that adding multiplication to the syntax produces no additional closed real values under the elimination hypothesis. The hypothesis itself says more: each EML expression can be translated to an EL expression preserving its full input-output behavior.
+**Theorem 6.3 (Conditional Schanuel route).** Assume Conjecture 6.1 and assume that Conjecture 6.1 implies Statement 6.2. Then $\xi$ is transcendental over $\mathbb Q$.
 
-## 7. Algorithms and numerical demonstrations
+**Proof sketch.** The assumed implication supplies the algebraic independence in Statement 6.2. Corollary 5.3 then proves the transcendence of $\xi$. $\square$
 
-Algorithms cannot establish the conjectural clauses, but they clarify the objects and provide reproducible experiments.
+The second assumption is deliberately explicit. Conjecture 6.1 asserts the existence of sufficiently large independent subfamilies, but a derivation identifying this particular pair must still be supplied. The theorem records a valid logical pipeline without pretending that its middle step has already been established.
 
-### 7.1 Recursive expression evaluation
+Classical results such as Lindemann–Weierstrass should not be invoked as if they directly proved the conclusion. Their hypotheses and conclusions concern specific configurations of algebraic inputs and exponential values. They do not automatically rule out a polynomial relation involving the nested exponential $e^e$, the logarithm $\log 2$, and their sum.
 
-Represent an expression as a rooted tree whose nodes are rational constants, the variable, unary exponential or logarithm nodes, and binary addition or multiplication nodes. Evaluation at $x$ is recursive:
+## 7. Constructive algorithms and numerical experiments
 
-1. return the rational value at a constant node;
-2. return $x$ at the variable node;
-3. recursively evaluate the child and apply $\exp$ or $\log$ at a unary node;
-4. recursively evaluate both children and add or multiply at a binary node.
+### 7.1 Recursive evaluation
 
-If the tree has $N$ nodes, evaluation visits every node once and uses $O(N)$ arithmetic/function operations. Recursive stack space is $O(h)$, where $h$ is tree height. For the featured constant, the traversal computes $e$, then $e^e$, then $\log 2$, and finally the sum.
+An EML expression can be evaluated by a postorder traversal of its tree.
 
-Using ordinary floating-point arithmetic gives approximately
+**Algorithm 7.1 (Recursive EML evaluation).** For a node $A$:
+
+1. if $A=\mathbf 1$, return $1$;
+2. if $A=B+C$, recursively evaluate $B$ and $C$, then add;
+3. if $A=B\cdot C$, recursively evaluate $B$ and $C$, then multiply;
+4. if $A=\operatorname{Exp}(B)$, recursively evaluate $B$, then exponentiate;
+5. if $A=\operatorname{Log}(B)$, recursively evaluate $B$, then take the logarithm.
+
+For a tree with $N$ nodes, the traversal performs $O(N)$ operation dispatches and uses $O(h)$ stack space, where $h$ is the tree height. This complexity counts arithmetic operations abstractly; high-precision transcendental evaluation has an additional cost depending on the requested precision and the magnitude of intermediate values.
+
+### 7.2 Constructive closure witnesses
+
+The proof of Lemma 4.3 is itself an algorithm: given expression witnesses for $a$ and $b$, constructors produce witnesses for $a+b$, $ab$, $e^a$, and $\log a$. Conversely, Lemma 4.5 is an interpreter into an arbitrary admissible algebra: replace the usual real operations by the closure operations of the target set and fold over the expression tree.
+
+This duality is useful beyond the present setting. It is the universal-property pattern of a free term algebra: recursively defined syntax maps into every structure supporting its constructors.
+
+### 7.3 Numerical illustration
+
+At ordinary floating-point precision,
+
+$$
+e\approx 2.718281828459045,
+$$
 
 $$
 e^e\approx 15.154262241479264,
@@ -271,107 +382,74 @@ $$
 \log 2\approx 0.6931471805599453,
 $$
 
-and
+and therefore
 
 $$
-\alpha\approx 15.84740942203921.
+\xi\approx 15.84740942203921.
 $$
 
-These approximations demonstrate evaluation only; they do not certify transcendence.
-
-### 7.2 Bounded univariate relation search
-
-Given a real approximation $a$, a degree bound $d$, and a coefficient bound $B$, enumerate integer vectors
+The final decimal is only an approximation and should not be confused with an arithmetic classification. A finite search may test polynomials
 
 $$
-(c_0,\ldots,c_d)\in\{-B,\ldots,B\}^{d+1}\setminus\{0\}
+p(T)=a_0+a_1T+\cdots+a_dT^d
 $$
 
-and compute the residual
+with bounded degree $d$ and coefficients $|a_i|\le H$, recording small values of $|p(\xi)|$. Such a search is a diagnostic, not a proof. It examines only finitely many candidates, and approximate cancellation does not establish exact vanishing.
 
-$$
-\left|\sum_{k=0}^{d}c_k a^k\right|.
-$$
+Likewise, plotting the bivariate polynomial surface $P(X,Y)$ near $(e^e,\log 2)$ can illustrate what a relation would mean geometrically, but no finite-resolution plot can establish algebraic independence. The theoretical result quantifies over every nonzero polynomial in $\mathbb Q[X,Y]$.
 
-Horner’s rule evaluates each polynomial in $O(d)$ operations. Exhaustive search costs
+## 8. Applications and conceptual consequences
 
-$$
-O\bigl(d(2B+1)^{d+1}\bigr)
-$$
+### 8.1 Expression languages in scientific modeling
 
-operations and $O(d)$ auxiliary space. Sorting by residual identifies near relations. Such a finite search neither proves nor refutes algebraicity: a true minimal polynomial may exceed the bounds, and floating-point approximation may create false near relations.
+Many scientific formulas are constructed from a small library of operations. The closure theorem guarantees that the operational class of finitely written formulas agrees with the least semantic domain stable under those operations. In symbolic computation, this justifies switching between tree representations and closure-based specifications. In model description languages, it identifies exactly which constants can be generated without introducing limits, integrals, or additional primitive constants.
 
-### 7.3 Bounded bivariate relation search
+### 8.2 Certification boundaries
 
-For approximations $x$ and $y$, enumerate coefficient arrays for monomials $X^iY^j$ of total degree at most $d$. There are
+The example $\xi$ shows why numerical reproducibility and arithmetic certification are different. Numerical software can evaluate $\xi$ to high precision, yet the algebraic status may remain unresolved. For cryptographic or symbolic applications that depend on proven algebraic independence, decimal evidence is not a substitute for a theorem.
 
-$$
-M=\frac{(d+1)(d+2)}{2}
-$$
+### 8.3 Independence as a transfer principle
 
-such monomials. With coefficients bounded by $B$, exhaustive enumeration has exponential cost $O(M(2B+1)^M)$. It can illustrate the meaning of algebraic independence at small bounds, but no bounded computation can establish the universal quantification over all nonzero bivariate polynomials.
+Theorem 5.1 is a transfer result. Algebraic independence of a tuple can be pushed through suitable polynomial maps to obtain transcendence of outputs. The map $(X,Y)\mapsto X+Y$ is especially transparent because substitution has a left inverse. Similar arguments apply to $x+cy$ for nonzero rational $c$, and more generally to any nonconstant rational polynomial in an algebraically independent tuple: if the output were algebraic, composing its annihilating polynomial with the polynomial map would create a forbidden multivariate relation. One must verify that the composition is nonzero; for the sum, Lemma 2.2 supplies exactly that fact.
 
-### 7.4 Substitution witness construction
+### 8.4 Unconditional structure amid conditional arithmetic
 
-The proof of Theorem 5.1 is algorithmic at the polynomial level. Given
+The equality $\mathcal E_{\mathrm{syn}}=\mathcal E_{\mathrm{int}}$ demonstrates that useful structural mathematics remains possible even when individual transcendence questions are open. The generated universe can be characterized completely without classifying each of its members as algebraic or transcendental. This separation is analogous to knowing the grammar and semantics of a language while difficult equivalence questions between programs remain unresolved.
 
-$$
-p(T)=\sum_{k=0}^{d}a_kT^k,
-$$
+## 9. Limitations
 
-construct
+The results do not prove the unconditional transcendence of $\xi$. They prove an implication from a concrete algebraic-independence hypothesis. Nor do they derive that hypothesis solely from the finite-family Schanuel conjecture. Any presentation suppressing this distinction would overstate the conclusion.
 
-$$
-Q(X,Y)=\sum_{k=0}^{d}a_k(X+Y)^k
-       =\sum_{k=0}^{d}\sum_{j=0}^{k}a_k\binom{k}{j}X^jY^{k-j}.
-$$
+The real logarithm also limits the present closure class to a real-valued setting with a fixed convention. A complex analogue requires choosing or otherwise handling branches of the complex logarithm. Branch choice changes both evaluation and closure behavior and therefore must be incorporated into the definitions.
 
-The dense output has at most $O(d^2)$ coefficients and can be produced in $O(d^2)$ rational arithmetic operations. Specialization $Y=0$ returns $p(X)$, proving that a nonzero input cannot map to the zero bivariate polynomial.
+Finally, the class studied here contains values of finite expressions only. It is not closed by definition under limits, differentiation, integration, solutions of equations, or arbitrary division. Adding any such operation changes the generated class and requires a new closure theorem.
 
-## 8. Applications and interpretation
+## 10. Future research
 
-### 8.1 A reusable transcendence template
+Several directions arise naturally.
 
-Theorem 5.1 is not specific to exponentials. Whenever a problem supplies algebraic independence of a pair, every nonconstant rational polynomial in that pair is transcendental unless it degenerates to an element algebraic over the base. In the linear case, any combination $ax+by$ with $a,b\in\mathbb Q$ not both zero is expected to be transcendental, and the same substitution-and-retraction method proves it. The sum theorem is the coefficient choice $(a,b)=(1,1)$.
+1. **Concrete Schanuel specialization.** Derive Statement 6.2 from a standard finite-family or transcendence-degree formulation of Schanuel’s conjecture, or determine precisely what additional conjectural input is required.
 
-### 8.2 Expression-language design
+2. **Direct transcendence.** Prove the transcendence of $e^e+\log 2$ without first establishing full algebraic independence of the pair. The sum theorem gives a sufficient condition, not a claim of necessity.
 
-The EML/EL comparison is an instance of conservative extension. A richer syntax is conservative over a smaller syntax when every object represented in the richer language already has a representation in the smaller one. Here extensional multiplication elimination is a compiler from EML trees to EL trees, with semantic equality as its correctness condition. The number-class equality is then a corollary obtained by evaluating compiled expressions at a distinguished input.
+3. **Algebraic independence of the pair.** Exclude every nonzero bivariate rational polynomial relation between $e^e$ and $\log 2$. An explicit relation would refute the statement.
 
-This perspective separates three questions:
+4. **Complex closure comparison.** Introduce complex-valued expressions using the complex exponential and a specified branch of logarithm, then compare their range with the corresponding intrinsic closure.
 
-1. **Recognition:** does a given tree belong to the restricted grammar?
-2. **Evaluation:** what real value or function does the tree denote?
-3. **Elimination:** can a tree using multiplication be replaced extensionally by one without it?
+5. **Normalization.** Construct a canonical or partially canonical normalization of EML expressions, prove preservation of evaluation at $1$, and ensure that normalization never increases expression-tree size.
 
-Recognition and evaluation are recursive. General elimination is the conjectural mathematical content.
+6. **Broader polynomial images.** Systematically characterize polynomial and rational maps that convert algebraically independent tuples into provably transcendental values.
 
-### 8.3 Limits of numerical evidence
-
-Algebraic numbers and transcendental numbers are both plentiful in ways that make local numerical behavior misleading. A finite decimal prefix cannot distinguish the two classes. Near-integer and near-polynomial relations are especially hazardous for nested exponential expressions because magnitudes can grow rapidly and conditioning can deteriorate. Numerical demonstrations should therefore report precision, bounds, and residuals, and must not promote a failed bounded search to a transcendence proof.
-
-## 9. Discussion
-
-The logical architecture is intentionally modular. Corollary 3.2 and Proposition 3.3 are unconditional consequences of grammar and evaluation. Theorem 5.1 is an unconditional algebraic statement. Corollary 5.3 depends only on concrete pair independence. Theorem 6.2 depends on multiplication elimination plus the automatic inclusion. This dependency structure makes it possible to revise one conjectural clause without disturbing unrelated results.
-
-The presence of classical Schanuel in Hypothesis 4.1 expresses the intended conceptual setting, yet the short proofs do not manufacture the added clauses from it. Determining whether classical Schanuel implies concrete independence is a separate research problem. Likewise, functional elimination may require an exponential-algebraic closedness principle beyond a transcendence-degree lower bound.
-
-The distinction between equality of number classes and equality of function classes also deserves emphasis. Number-class equality says that every value at $0$ has a restricted representation. Functional elimination says that every expression has a restricted representative agreeing at every real input. The latter implies the former, but the converse need not hold without additional coding or interpolation principles.
-
-Finally, the featured constant is already syntactically EL because its displayed expression uses no multiplication. Its significance is therefore not as a witness separating the classes. Rather, it connects the expression grammar to the concrete independence clause and demonstrates how algebraic independence yields transcendence of a natural nested exponential–logarithmic value.
-
-## 10. Future work
-
-Five directions arise directly from the present framework.
-
-1. **Classical Schanuel versus the concrete pair.** Determine whether classical Schanuel implies algebraic independence of $\exp(\exp(1))$ and $\log 2$, or whether a model of the classical conjecture can fail this statement.
-2. **A structural source for multiplication elimination.** State a precise exponential-algebraic closedness principle and investigate whether it, together with classical Schanuel, yields extensional elimination for every rational EML expression.
-3. **Separate transcendence of the generators.** Derive, under classical Schanuel if possible, transcendence of $\exp(\exp(1))$ and of $\log 2$ individually, then determine what extra input is needed for joint algebraic independence.
-4. **Finite-arity languages.** Replace the single variable by $n$ variables and compare EML and EL represented-function classes. One expects extensional elimination at each finite arity to be closely related to equality of those function classes.
-5. **General rational linear combinations.** If $x_1,\ldots,x_n$ are algebraically independent over $\mathbb Q$ and $c_1,\ldots,c_n\in\mathbb Q$ are not all zero, prove that $\sum_i c_ix_i$ is transcendental. A specialization argument reducing to a surviving variable gives the natural proof route.
+7. **Complexity-sensitive semantics.** Refine membership by expression size or depth, studying the shortest descriptions of generated numbers and the effect of normalization on those measures.
 
 ## 11. Conclusion
 
-A compact grammar organizes a broad family of exponential–logarithmic constants. Within it, the inclusion $\mathrm{EL}\subseteq\mathrm{EML}$ and representation of $\exp(\exp(1))+\log 2$ are immediate structural facts. The arithmetic step is supplied by a general theorem: algebraic independence of two real numbers forces transcendence of their sum. Under the explicit concrete-independence clause of the functional EML strengthening of Schanuel’s conjecture, the featured constant is therefore transcendental. Under the separate multiplication-elimination clause, the richer and poorer number languages represent exactly the same real numbers.
+The number
 
-The conclusions are conditional precisely where the mathematics is conjectural. By stating each assumption independently, the framework turns a broad aspiration into focused targets: derive the concrete pair independence, identify a principled source of functional elimination, and extend the substitution argument from one sum to arbitrary nonzero rational linear combinations.
+$$
+\xi=e^e+\log 2
+$$
+
+is simple to write and evaluate but difficult to classify arithmetically. We established three sharply separated facts. First, $\xi$ is the value of a finite expression generated from $1$ by addition, multiplication, exponential, and logarithm. Second, the values of all such expressions coincide exactly with the least real set containing $1$ and closed under those operations. Third, algebraic independence of $e^e$ and $\log 2$ implies the transcendence of their sum, by injective polynomial substitution.
+
+A finite-family Schanuel conjecture offers a natural conjectural setting, but the reduction to the exact pair remains an explicit step rather than an automatic consequence asserted here. This disciplined separation between syntax, closure, and arithmetic independence both secures the unconditional results and locates the unresolved mathematics with precision.
