@@ -8,17 +8,9 @@ Establishes the **overspill principle** for ultrafilters on ℕ and
 proves transfer theorems illuminating which arithmetic results
 survive in non-Archimedean settings.
 
-## Main Results
+## Main Result
 
-* `free_ultrafilter_contains_cofinite` — free ultrafilters contain all cofinite sets
-* `free_ultrafilter_Ici` — {i | i ≥ n} is U-large for free U
-* `free_ultrafilter_large_sets_infinite` — U-large sets are infinite for free U
 * `overspill_diagonal` — diagonal overspill: existence of overflow functions
-* `ultrafilter_transfer_imp` — implication transfer
-* `ultrafilter_transfer_iff` — biconditional transfer
-* `ultrafilter_transfer_neg` — negation transfer
-* `ultraproduct_has_infinite_element` — ultraproducts contain infinite elements
-* `ultrafilter_composite_transfer` — compositeness transfers
 
 ## Catalog References
 - `Bridges/DependentUltraproduct.lean`: `ultrafilter_transfer_and`,
@@ -34,16 +26,16 @@ open Set Filter
 
 namespace NonstandardArithmetic
 
-/-! ## Part I: Free Ultrafilter Properties -/
+/-! ## Diagonal overspill -/
 
-section FreeUltrafilter
+section Overspill
 
 variable (U : Ultrafilter ℕ)
 
-/-- A free ultrafilter on ℕ contains complements of all finite sets. -/
+/-- For a decreasing sequence of large sets that eventually omits every index,
+there is an unbounded index-dependent stage that remains large pointwise. -/
 
 theorem overspill_diagonal
-    (hfree : ∀ n : ℕ, {n}ᶜ ∈ U)
     (S : ℕ → Set ℕ)
     (hS_mem : ∀ n, S n ∈ U)
     (hS_dec : ∀ n, S (n + 1) ⊆ S n)
@@ -69,18 +61,5 @@ theorem overspill_diagonal
   exact ⟨ f, hf.1, Filter.mem_of_superset ( hS_mem 0 ) hf.2 ⟩
 
 end Overspill
-
-/-! ## Part III: Logical Transfer -/
-
-section LogicalTransfer
-
-variable {I : Type*} (U : Ultrafilter I)
-
-/-
-**Implication Transfer**: P U-large and (P → Q) U-large imply Q U-large.
--/
-end LogicalTransfer
-
-end FreeUltrafilter
 
 end NonstandardArithmetic
