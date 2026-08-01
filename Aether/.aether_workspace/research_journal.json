@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b853373a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThis cycle proved a cross-domain bridge in\n`Catalog/Bridges/CopwinKnasterTarski.lean`:\n\n> The kernel produced by finite cop-win pruning (a contracting, monotone update\n> `F : Fins",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-24T06:48:03",
-      "title": "Close Proofs: ArXiv paper: Reproducing the k-copwin Algorithm: Theory vs. Implementa"
-    },
-    {
       "cycle_id": "3984694e",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Gaussian binomial coefficients\n\nCompanion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration for\n*Adriano Garsia (1928–2024)*, whose lifelong subject was the com",
@@ -2501,6 +2491,16 @@
       "theorem_count": 34,
       "timestamp": "2026-08-01T15:28:10",
       "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "7726ff6e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nThe formal development now proves the converse criterion beginning with the usual individual-cylinder hypothesis. For every integer base `b ≥ 2`, uniform limiting frequencies for",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-01T17:22:47",
+      "title": "1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7776099999999999
     }
   ],
-  "last_updated": "2026-08-01T15:28:10",
+  "last_updated": "2026-08-01T17:22:47",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "872b26ee",
-        "quality": 0.79,
-        "theorems": 15,
-        "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-      },
-      {
         "cycle_id": "7277c96e",
         "quality": 0.75,
         "theorems": 18,
@@ -3699,6 +3693,12 @@
         "quality": 0.77705,
         "theorems": 17,
         "title": "Sums of Three Cubes"
+      },
+      {
+        "cycle_id": "7726ff6e",
+        "quality": 0.686,
+        "theorems": 15,
+        "title": "1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b"
       }
     ],
     "Physics": [
