@@ -6439,16 +6439,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b080b405",
     "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a M\u00f6bius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
     "domains": [
       "Cryptography"
     ],
     "id": "fd_0184",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14887v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T06:45:30.630076+00:00",
     "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
   },
@@ -7559,23 +7560,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Percolation Threshold"
-  },
-  {
-    "consumed_by_exp_id": "9cde2d61",
-    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
-    "domains": [
-      "Speculative",
-      "Logic",
-      "Algebra"
-    ],
-    "id": "seed_058",
-    "phase": "A",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
@@ -10873,6 +10857,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T14:04:17.923155+00:00",
     "title": "The unrestricted conjecture is false. `CertifiedRobustness.lean` gives a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following conjectures are concrete continuations of `Catalog/Novelty/NonstandardArithmetic.lean`.\nEach can be falsified by exhibiting an ultrafilter, formula, or hypernatural violating the stated property.\n\n1. **Polynomial transfer over the natural ultrapower.** For every multivariate polynomial `p : MvPolynomial (Fin k) \u2115` and representatives `f : Fin k \u2192 \u2115 \u2192 \u2115`, evaluating `p` after embedding into `HyperNat` equals the germ of the pointwise evaluations of `p`.\n\n2. **Transferred bounded minimization.** If an internal predicate on `HyperNat` is represented by `P : \u2115 \u2192 \u2115 \u2192 Prop`, is nonempty on an ultrafilter-large set of indices, and every fiber `{n | P i n}` has a least element, then the germ of the pointwise least witnesses is least among all internal witnesses.\n\n3. **Hyperfinite prime divisor existence.** Every `H : HyperNat` with `standard 2 \u2264 H` has an internal prime divisor, where primality and divisibility are represented using `Filter.Germ.LiftPred` and `Filter.Germ.LiftRel`.\n\n4. **Externality of standardness.** There is no unary first-order formula in the language of arithmetic whose realization in the natural ultrapower is exactly the range of `standard : \u2115 \u2192 HyperNat`.\n\n5. **Overspill for internal unary predicates.** If an internal predicate on `HyperNat` holds for every standard natural, then it holds for some `H` satisfying `\u2200 n, standard n < H`.\n",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_0881",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9cde2d61",
+    "status": "available",
+    "timestamp": "2026-08-01T15:28:07.227092+00:00",
+    "title": "The following conjectures are concrete continuations of `Catalog/Novelty/Nonstan"
   },
   {
     "consumed_by_exp_id": "",

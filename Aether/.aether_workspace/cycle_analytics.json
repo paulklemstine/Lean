@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-01T14:04:22.786735+00:00",
+  "last_updated": "2026-08-01T15:28:11.210436+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -43599,6 +43599,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-01T14:04:22.675236+00:00",
       "title": "Certified Adversarial Robustness via Sheaf Cohomology"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2297,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Novelty",
+      "duration_seconds": 5056.740445613861,
+      "end_time": 1785598032.3717299,
+      "files_integrated": 5,
+      "job_id": "9cde2d61",
+      "outcome_quality": 0.686,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.51,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8697,
+        "cross_domain": 0.85,
+        "grade": "world_class",
+        "importance": 0.908,
+        "novelty": 0.9431,
+        "proof_depth": 0.893,
+        "usefulness": 0.8715
+      },
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785592975.6312842,
+      "strategy_count": 0,
+      "theorem_count": 34,
+      "theorem_novelty_disproof": 5,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 22,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-01T15:28:11.096205+00:00",
+      "title": "Alien Mathematics: Non-Standard Arithmetic"
     }
   ]
 }
