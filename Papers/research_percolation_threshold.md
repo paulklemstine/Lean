@@ -1,299 +1,478 @@
-# Formal Percolation Threshold Theory in Lean 4: Exact Algebraic Thresholds and Monotonicity Foundations
+# Local Self-Duality and Moment Methods for Percolation Thresholds
+
+**Aristotle**  
+**August 1, 2026**
 
 ## Abstract
 
-We present the first formally verified framework for percolation threshold theory, implemented in Lean 4 with the Mathlib library. Our main results are: (1) a complete proof that the critical polynomial $p^3 - 3p + 1 = 0$ for triangular lattice bond percolation has a unique root in $(0,1)$, equal to $2\sin(\pi/18)$; (2) the dual honeycomb threshold $1 - 2\sin(\pi/18)$ as an immediate corollary; (3) a general monotonicity theorem for Bernoulli probability of increasing events on finite Boolean spaces; and (4) formal definitions of site and bond percolation with verified increasing-event properties for connectivity and crossing predicates. All proofs are machine-checked and depend only on the standard axioms (propext, Classical.choice, Quot.sound). We discuss the architecture that enables future formalization of sharp-threshold theory, RSW inequalities, and the Kesten bond-percolation theorem.
+We give a self-contained analysis of the elementary threshold calculation on a triangular face and place it within the general probabilistic machinery used to study random discrete structures. For three independent Bernoulli sites of density $p$, the probability that at least two are open is
+
+$$
+C(p)=p^3+3p^2(1-p)=3p^2-2p^3.
+$$
+
+We prove complement duality $C(1-p)=1-C(p)$, bounds $0\le C(p)\le1$ on the Bernoulli interval, and the sharp trichotomy $C(p)<1/2$, $C(p)=1/2$, or $C(p)>1/2$ according as $p<1/2$, $p=1/2$, or $p>1/2$. Hence $p=1/2$ is the unique local self-dual parameter. The probability that three vertices of a triangular face are connected by independent open bonds is the identical polynomial, although this local identity does not equate the infinite site and bond models. We then develop a finite independent-edge probability space, prove normalization, fixed-pattern independence, the union bound, expected-count identities, a first-moment criterion, and a second-moment criterion for appearance with high probability. We explain exactly which additional planar, sharp-threshold, and limiting arguments are needed to turn local self-duality into an infinite-volume theorem. In particular, the exact triangular-site threshold and square-bond threshold are distinguished from the square-site threshold, for which no accepted closed analytic form is known. We conclude with an algorithmic treatment and a roadmap toward conformal invariance and $\mathrm{SLE}_6$.
 
 ## 1. Introduction
 
-### 1.1 Background and Motivation
+Percolation studies connectivity in a random medium. Given a lattice or finite graph, one independently declares elementary objects open with probability $p$ and closed with probability $1-p$. In **site percolation** the randomized objects are vertices; in **bond percolation** they are edges. The principal global observable is whether open objects support a path across a large region or an infinite connected cluster.
 
-Percolation theory, introduced by Broadbent and Hammersley [1], studies connectivity properties of random subgraphs. The central quantity is the **critical probability** $p_c$, below which almost surely no infinite connected component exists, and above which one exists with positive probability. Exact determination of $p_c$ is known only for a few lattices:
+For an infinite transitive lattice, the critical parameter is informally the boundary between a subcritical regime without an infinite open cluster and a supercritical regime with one. A standard definition is
 
-- **Square lattice, bond percolation:** $p_c = 1/2$ (Kesten, 1980 [2])
-- **Triangular lattice, bond percolation:** $p_c = 2\sin(\pi/18)$ (Wierman, 1981 [3])
-- **Honeycomb lattice, bond percolation:** $p_c = 1 - 2\sin(\pi/18)$ (by duality)
+$$
+p_c=\inf\{p\in[0,1]:\Pr_p(\text{an infinite open cluster exists})>0\}.
+$$
 
-The square lattice site percolation threshold remains unknown; the best numerical estimate is $p_c \approx 0.592746$ [4].
+Exact critical probabilities are exceptional. They usually require a local symmetry to nominate a candidate, planar topology to relate complementary crossing events, and probabilistic estimates to prove that the candidate is the actual infinite-volume threshold. Confusing the first step with the entire argument is a persistent source of incorrect threshold claims.
 
-### 1.2 Contributions
+This paper isolates the exact finite calculation supplied by one triangular face. The result is complete at that scale: the crossing polynomial has an exact complement symmetry and a unique fair parameter. It is also the local algebra associated with the exact triangular-lattice site threshold $p_c=1/2$. We emphasize, however, that the finite calculation is not by itself a proof of that infinite-lattice theorem.
 
-This work provides:
+The motivating square-site question illustrates the importance of this boundary. Bond percolation on the square lattice has exact threshold $1/2$, whereas site percolation on the square lattice has a numerically established critical value near $0.592746$ and no accepted closed exact expression. Site and bond models must retain distinct sample spaces, even when a small motif gives coincident formulas.
 
-1. **Exact threshold formalization:** The first machine-verified proof that $2\sin(\pi/18)$ is the unique root of $p^3 - 3p + 1$ in $(0,1)$, establishing the triangular lattice bond threshold algebraically.
+The second part of the paper develops finite first- and second-moment methods. These results are not specific to one lattice. They provide the reusable probabilistic engine behind many threshold arguments: the first moment proves nonappearance when expected counts vanish, and the second moment proves appearance when the mean diverges while variance remains controlled.
 
-2. **Monotonicity foundation:** A general theorem that Bernoulli probability of increasing events is monotone on $[0,1]$, applicable to any finite Boolean product space.
+## 2. Bernoulli configurations and local events
 
-3. **Percolation infrastructure:** Formal definitions of site and bond percolation, connectivity predicates, grid graphs, and crossing events, with verified monotonicity properties.
+### 2.1 Site and bond percolation
 
-4. **Duality interface:** The square bond duality fixed-point theorem $1 - p = p \iff p = 1/2$ and the triangular-honeycomb duality.
+Let $G=(V,E)$ be a finite or locally finite graph. In site percolation with parameter $p\in[0,1]$, each $v\in V$ receives an independent Bernoulli state: open with probability $p$ and closed otherwise. An open site path is a graph path all of whose vertices are open.
 
-### 1.3 Related Work
+In bond percolation, each $e\in E$ is independently open with probability $p$. An open bond path is a path all of whose edges are open. The vertex and edge configuration spaces differ, and no general equality between their critical parameters follows from planar duality or local counting alone.
 
-Prior formalization of probability theory in Lean includes measure-theoretic foundations in Mathlib. However, no percolation-specific formalization existed. Our work builds on Mathlib's real analysis (for polynomial roots), topology (for IVT), and combinatorics (for finite sums and products).
+### 2.2 The triangular site event
 
-## 2. Definitions and Notation
+Consider three independent sites placed at the vertices of a triangular face. Define the **local site-crossing event** to occur when at least two of the three sites are open. This majority event is the smallest odd Bernoulli system with a nontrivial complement symmetry.
 
-### 2.1 Boolean Configurations
+**Definition 2.1 (Triangular site-crossing polynomial).** For $p\in\mathbb R$, define
 
-Let $\alpha$ be a finite type. A **Boolean configuration** is a function $\eta : \alpha \to \{0, 1\}$ (equivalently $\alpha \to \text{Bool}$).
+$$
+C(p)=p^3+3p^2(1-p).
+$$
 
-**Definition 2.1** (Bernoulli Weight). For $p \in \mathbb{R}$ and $\eta : \alpha \to \text{Bool}$:
-$$w_p(\eta) = \prod_{a \in \alpha} \begin{cases} p & \text{if } \eta(a) = \text{true} \\ 1-p & \text{if } \eta(a) = \text{false} \end{cases}$$
+For $p\in[0,1]$, this is the probability that at least two among three independent Bernoulli sites are open.
 
-**Definition 2.2** (Boolean Dominance). $\eta \preceq \xi$ iff $\forall a, \eta(a) = \text{true} \implies \xi(a) = \text{true}$.
+**Proposition 2.2 (Cubic form).** For every real $p$,
 
-**Definition 2.3** (Increasing Event). A set $A \subseteq (\alpha \to \text{Bool})$ is **increasing** if $\eta \in A$ and $\eta \preceq \xi$ implies $\xi \in A$.
+$$
+C(p)=3p^2-2p^3.
+$$
 
-**Definition 2.4** (Bernoulli Probability). For a finite set of configurations $A$:
-$$\mathbb{P}_p(A) = \sum_{\eta \in A} w_p(\eta)$$
+**Proof sketch.** Expand the second term:
 
-### 2.2 Percolation Models
+$$
+p^3+3p^2(1-p)=p^3+3p^2-3p^3=3p^2-2p^3.
+$$
 
-**Definition 2.5** (Site Percolation). Given a simple graph $G = (V, E)$ and a site configuration $\eta : V \to \text{Bool}$, vertices $u, v$ are **site-connected** if there exists a walk $u = w_0, w_1, \ldots, w_k = v$ in $G$ with $\eta(w_i) = \text{true}$ for all $i$.
+The probabilistic derivation separates the four successful configurations. One has three open sites and mass $p^3$. The other three have exactly two open sites, each with mass $p^2(1-p)$.
 
-**Definition 2.6** (Bond Percolation). Given a simple graph $G$ and a bond configuration $\omega : \text{Sym}_2(V) \to \text{Bool}$, vertices $u, v$ are **bond-connected** if there exists a walk from $u$ to $v$ using only edges $e$ with $\omega(e) = \text{true}$.
+**Proposition 2.3 (Probability bounds).** If $0\le p\le1$, then
 
-**Definition 2.7** (Grid Graph). The grid graph $\text{Grid}(n)$ has vertex set $\text{Fin}(n) \times \text{Fin}(n)$ with nearest-neighbor adjacency (horizontal and vertical).
+$$
+0\le C(p)\le1.
+$$
 
-**Definition 2.8** (Horizontal Crossing). A site configuration $\eta$ on $\text{Grid}(n)$ has a **horizontal crossing** if there exist $a, b \in \text{Fin}(n)$ such that $(0, a)$ and $(n-1, b)$ are site-connected.
+**Proof sketch.** Both $p^3$ and $3p^2(1-p)$ are nonnegative, proving the lower bound. For the upper bound one may either sum the four complementary configuration masses directly or use complement duality from the next theorem: $C(p)=1-C(1-p)$, while $C(1-p)\ge0$.
 
-### 2.3 Critical Polynomial
+## 3. Complement duality and uniqueness of the fair point
 
-**Definition 2.9**. The **triangular critical polynomial** is $T(p) = p^3 - 3p + 1$.
+**Theorem 3.1 (Exact complement duality).** For every real $p$,
 
-## 3. Main Results
+$$
+C(1-p)=1-C(p).
+$$
 
-### 3.1 Triangular Lattice Exact Threshold
+**Proof sketch.** Complementing each of three site states transforms parameter $p$ into $1-p$. Because three is odd, a configuration with at least two open sites becomes one with at most one open site, exactly the complementary event. Algebraically, substitute $1-p$ into $3p^2-2p^3$ and expand.
 
-**Theorem 3.1** (Unique Root). There exists a unique $p^* \in (0,1)$ such that $T(p^*) = 0$.
+**Corollary 3.2 (Fairness at one half).**
 
-*Proof sketch.* We establish three facts:
-1. $T(0) = 1 > 0$ and $T(1) = -1 < 0$ (direct computation).
-2. $T$ is continuous (polynomial).
-3. $T'(p) = 3p^2 - 3 < 0$ for $p \in (0,1)$, so $T$ is strictly decreasing on $[0,1]$.
+$$
+C\left(\frac12\right)=\frac12.
+$$
 
-Existence follows from the intermediate value theorem applied to the continuous function $T$ on $[0,1]$, which changes sign. Uniqueness follows from strict monotonicity: if $p_1 < p_2$ were both roots, then $T(p_1) > T(p_2)$, contradicting both being zero. $\square$
+**Proof sketch.** The complement map fixes $p=1/2$, so Theorem 3.1 yields $C(1/2)=1-C(1/2)$. Alternatively, direct substitution gives $3/4-1/4=1/2$.
 
-**Theorem 3.2** (Closed Form). $T(2\sin(\pi/18)) = 0$ and $2\sin(\pi/18) \in (0,1)$.
+Fairness at a self-complementary point does not by itself prove uniqueness. Here uniqueness follows from an exact sign factorization.
 
-*Proof sketch.* Let $s = \sin(\pi/18)$. Then:
-$$T(2s) = 8s^3 - 6s + 1 = -2(3s - 4s^3) + 1$$
+**Lemma 3.3 (Sign factorization).** For every real $p$,
 
-By the triple-angle formula, $\sin(3\theta) = 3\sin\theta - 4\sin^3\theta$. Setting $\theta = \pi/18$:
-$$3s - 4s^3 = \sin(3 \cdot \pi/18) = \sin(\pi/6) = 1/2$$
+$$
+C(p)-\frac12=(2p-1)\left(p(1-p)+\frac12\right).
+$$
 
-Therefore $T(2s) = -2 \cdot (1/2) + 1 = 0$.
+**Proof sketch.** Expand the right-hand side to obtain $3p^2-2p^3-1/2$. If $0\le p\le1$, then $p(1-p)\ge0$, so the second factor is at least $1/2$ and therefore strictly positive.
 
-For the interval membership: $\sin(\pi/18) > 0$ since $\pi/18 \in (0, \pi)$, giving $2s > 0$. And $\sin(\pi/18) < \sin(\pi/6) = 1/2$ by monotonicity of sine on $[0, \pi/2]$, giving $2s < 1$. $\square$
+**Theorem 3.4 (Local threshold trichotomy).** Let $0\le p\le1$. Then
 
-**Corollary 3.3** (Honeycomb Threshold). $1 - 2\sin(\pi/18) \in (0,1)$ and $T(2\sin(\pi/18)) = 0$ (i.e., $T(1 - p_{\text{honey}}) = 0$).
+$$
+C(p)<\frac12 \quad\Longleftrightarrow\quad p<\frac12,
+$$
 
-### 3.2 Monotonicity of Increasing Events
+$$
+C(p)=\frac12 \quad\Longleftrightarrow\quad p=\frac12,
+$$
 
-**Theorem 3.4** (Monotonicity). Let $\alpha$ be a finite type and $A \subseteq (\alpha \to \text{Bool})$ be an increasing event. Then $p \mapsto \mathbb{P}_p(A)$ is monotone on $[0,1]$.
+and
 
-*Proof sketch.* By induction on $|\alpha|$. 
+$$
+C(p)>\frac12 \quad\Longleftrightarrow\quad p>\frac12.
+$$
 
-**Base case** ($|\alpha| = 0$): The function is constant.
+**Proof sketch.** On $[0,1]$, the second factor in Lemma 3.3 is positive. Hence $C(p)-1/2$ and $2p-1$ have the same sign.
 
-**Inductive step:** Fix a coordinate $a_0 \in \alpha$ and decompose:
-$$\mathbb{P}_p(A) = p \cdot S_1(p) + (1-p) \cdot S_0(p)$$
-where $S_b(p) = \sum_{\eta \in A : \eta(a_0) = b} \prod_{a \neq a_0} (\text{if } \eta(a) \text{ then } p \text{ else } 1-p)$.
+**Definition 3.5 (Local triangular criticality).** A parameter $p$ is locally critical for the triangular site event if
 
-By induction, both $S_1$ and $S_0$ are monotone on $[0,1]$. The key inequality is $S_1(p) \geq S_0(p)$, which follows from the increasing property: every configuration in $A$ with $a_0 = \text{false}$ yields a configuration in $A$ with $a_0 = \text{true}$ (by flipping $a_0$), and this map preserves the product weights of the remaining coordinates.
+$$
+0\le p\le1
+$$
 
-For $p \leq q$:
-$$\mathbb{P}_q(A) - \mathbb{P}_p(A) = (q - p)(S_1 - S_0) + \text{(monotone increments from } S_1, S_0\text{)}$$
+and
 
-Both terms are non-negative, establishing monotonicity. $\square$
+$$
+C(p)=\frac12.
+$$
 
-**Theorem 3.5** (Normalization). $\sum_{\eta : \alpha \to \text{Bool}} w_p(\eta) = 1$.
+**Theorem 3.6 (Unique local self-dual parameter).** A real parameter is locally critical for the triangular site event if and only if
 
-*Proof.* Exchanging sum and product: $\sum_\eta \prod_a (\ldots) = \prod_a \sum_{b \in \text{Bool}} (\ldots) = \prod_a 1 = 1$. $\square$
+$$
+p=\frac12.
+$$
 
-### 3.3 Percolation Connectivity Properties
+This theorem concerns the fairness of one face. The adjective “local” is essential: it does not define or determine an infinite-lattice critical probability without additional results.
 
-**Theorem 3.6** (Site Connectivity is Increasing). If $\eta \preceq \xi$ and $u, v$ are site-connected in $\eta$, then they are site-connected in $\xi$.
+A derivative gives a complementary view. Since
 
-*Proof.* The same walk witnesses connectivity; all support vertices open in $\eta$ remain open in $\xi$. $\square$
+$$
+C'(p)=6p(1-p),
+$$
 
-**Theorem 3.7** (Bond Connectivity is Increasing). Analogous to Theorem 3.6 for bond percolation.
+$C$ is strictly increasing on $(0,1)$. The factorization proof is stronger for present purposes because it simultaneously identifies the exact sign relative to $1/2$.
 
-**Theorem 3.8** (Horizontal Crossing is Increasing). If $\eta \preceq \xi$ and $\eta$ has a horizontal crossing of $\text{Grid}(n)$, then so does $\xi$.
+## 4. Bond spanning on a triangular face
 
-*Proof.* Follows immediately from Theorem 3.6. $\square$
+Place independent Bernoulli bonds on the three edges of a triangle. Define the **bond-spanning event** to occur when all three vertices lie in one connected component. This happens precisely when at least two edges are open.
 
-### 3.4 Square Bond Duality
+**Definition 4.1 (Triangular bond-spanning polynomial).**
 
-**Theorem 3.9** (Duality Fixed Point). $1 - p = p \iff p = 1/2$.
+$$
+B(p)=3p^2(1-p)+p^3.
+$$
 
-This is the algebraic core of the Kesten theorem $p_c(\text{bond}, \mathbb{Z}^2) = 1/2$: the duality map $p \mapsto 1 - p$ for the square lattice has a unique fixed point.
+**Theorem 4.2 (One-face site–bond identity).** For every real $p$,
 
-## 4. Algorithms
+$$
+B(p)=C(p)=3p^2-2p^3.
+$$
 
-### 4.1 Exact Crossing Probability Computation
+**Proof sketch.** In the bond experiment there are three successful configurations with exactly two open edges and one with all three open. Their total mass is identical to the site majority count.
 
-**Algorithm 1: ExactCrossingProbability**
+**Corollary 4.3 (Unique fair bond parameter).** If $0\le p\le1$, then
 
-```
-Input: Grid dimensions n × m, parameter p, type ∈ {site, bond}
-Output: P_p(horizontal crossing)
+$$
+B(p)=\frac12 \quad\Longleftrightarrow\quad p=\frac12.
+$$
 
-if type = site:
-    total_configs = 2^(n·m)
-    prob = 0
-    for bits = 0 to total_configs - 1:
-        config = bit_decomposition(bits)
-        if HasHorizontalCrossing(n, m, config):
-            weight = ∏_{k} (p if config[k] else 1-p)
-            prob += weight
-    return prob
-```
+Theorem 4.2 is local and combinatorial. It does not identify site and bond measures on an extended lattice. Adjacent triangular faces share sites and edges in different ways, so gluing faces produces different global dependency and connectivity structures.
 
-**Complexity:** $O(2^{nm} \cdot nm)$ time, $O(nm)$ space. Feasible for grids up to approximately $4 \times 5$.
+## 5. A finite independent-edge probability space
 
-### 4.2 Root Isolation for Critical Polynomials
+Moment methods are most transparent in an elementary finite model. Let $A$ be a finite set of $N$ potential edges. A configuration is a subset $S\subseteq A$. Under independent inclusion with probability $p$, assign mass
 
-**Algorithm 2: PolynomialRootIsolation**
+$$
+\mu_p(S)=p^{|S|}(1-p)^{N-|S|}.
+$$
 
-```
-Input: Polynomial coefficients c₀,...,cₙ, interval [a,b], tolerance ε
-Output: Root r with |f(r)| < ε, or NONE
+For an event $\mathcal E\subseteq 2^A$, define
 
-Require: f(a) · f(b) ≤ 0 and f' has constant sign on [a,b]
-while b - a > ε:
-    mid = (a + b) / 2
-    if f(a) · f(mid) < 0:
-        b = mid
-    else:
-        a = mid
-return (a + b) / 2
-```
+$$
+\Pr_p(\mathcal E)=\sum_{S\in\mathcal E}\mu_p(S).
+$$
 
-**Complexity:** $O(n \cdot \log((b-a)/\varepsilon))$ polynomial evaluations.
+**Proposition 5.1 (Nonnegativity and normalization).** If $0\le p\le1$, then $\mu_p(S)\ge0$ for every configuration $S$, and
 
-### 4.3 Finite-Volume Threshold Extraction
+$$
+\sum_{S\subseteq A}\mu_p(S)=1.
+$$
 
-**Algorithm 3: FiniteVolumeThreshold**
+**Proof sketch.** Nonnegativity follows from the signs of $p$ and $1-p$. Group configurations by cardinality and apply the binomial theorem:
 
-```
-Input: Grid size n, target probability t (default 1/2)
-Output: Threshold p_n such that P_{p_n}(crossing) = t
+$$
+\sum_{k=0}^N\binom Nk p^k(1-p)^{N-k}=(p+1-p)^N=1.
+$$
 
-Define f(p) = ExactCrossingProbability(n, n, p) - t
-Apply PolynomialRootIsolation to f on [0, 1]
-return root
-```
+**Theorem 5.2 (Fixed-pattern independence).** For any fixed $T\subseteq A$,
 
-## 5. Computational Experiments
+$$
+\Pr_p(T\subseteq S)=p^{|T|}.
+$$
 
-### 5.1 Triangular Threshold Verification
+**Proof sketch.** Every edge of $T$ must be present, contributing $p^{|T|}$. The edges in $A\setminus T$ are unconstrained. Summing over their configurations gives
 
-| Quantity | Value |
-|----------|-------|
-| Numerical root of $p^3 - 3p + 1$ | 0.347296355333861 |
-| $2\sin(\pi/18)$ | 0.347296355333861 |
-| Difference | < $10^{-15}$ |
-| $T(2\sin(\pi/18))$ | < $10^{-16}$ |
-| $T'(p_c) = 3p_c^2 - 3$ | −2.638... (negative ✓) |
+$$
+\sum_{R\subseteq A\setminus T}p^{|R|}(1-p)^{N-|T|-|R|}=1.
+$$
 
-### 5.2 Crossing Probability Tables
+Multiplication by $p^{|T|}$ gives the result.
 
-**2×2 Grid (Site Percolation):**
+## 6. Union bounds and the first moment
 
-| p | P(crossing) |
-|---|------------|
-| 0.0 | 0.000000 |
-| 0.2 | 0.027200 |
-| 0.4 | 0.179200 |
-| 0.5 | 0.312500 |
-| 0.6 | 0.475200 |
-| 0.8 | 0.793600 |
-| 1.0 | 1.000000 |
+**Theorem 6.1 (Finite union bound).** For a finite family of events $\mathcal E_i$,
 
-**3×3 Grid (Site Percolation):**
+$$
+\Pr_p\left(\bigcup_i\mathcal E_i\right)\le\sum_i\Pr_p(\mathcal E_i).
+$$
 
-| p | P(crossing) |
-|---|------------|
-| 0.0 | 0.000000 |
-| 0.2 | 0.003399 |
-| 0.4 | 0.084498 |
-| 0.5 | 0.208862 |
-| 0.6 | 0.399166 |
-| 0.8 | 0.812498 |
-| 1.0 | 1.000000 |
+**Proof sketch.** Every configuration in the union contributes its nonnegative mass at least once to the right-hand side. Configurations lying in several events are counted repeatedly, explaining why the relation is an inequality.
 
-Monotonicity is verified in all cases.
+Let $\mathcal T$ be a finite family of target edge sets. For a configuration $S$, define the pattern count
 
-### 5.3 Finite-Volume Thresholds
+$$
+X_{\mathcal T}(S)=|\{T\in\mathcal T:T\subseteq S\}|.
+$$
 
-| Grid | $p_n$ (site) | $p_n$ (bond) |
-|------|-------------|-------------|
-| 2×2 | 0.618 | 0.500 |
-| 3×3 | 0.623 | 0.536 |
+For any real random variable $X$ on configurations, define
 
-The site thresholds are consistent with convergence toward $\approx 0.593$.
+$$
+\mathbb E_p[X]=\sum_{S\subseteq A}\mu_p(S)X(S).
+$$
 
-## 6. Discussion
+**Theorem 6.2 (Expected pattern count).**
 
-### 6.1 Significance
+$$
+\mathbb E_p[X_{\mathcal T}]=\sum_{T\in\mathcal T}p^{|T|}.
+$$
 
-This work establishes the first formally verified percolation threshold results. The key achievements are:
+**Proof sketch.** Write the count as a sum of indicators:
 
-1. **Exact algebraic threshold with trigonometric closed form** — connecting probability, algebra, and trigonometry in a single verified chain.
+$$
+X_{\mathcal T}(S)=\sum_{T\in\mathcal T}\mathbf 1_{\{T\subseteq S\}}.
+$$
 
-2. **General monotonicity theorem** — the foundational result enabling all threshold definitions, proved for arbitrary finite Boolean spaces.
+Interchange the two finite sums, use linearity of expectation, and apply Theorem 5.2 to each indicator.
 
-3. **Reusable infrastructure** — definitions compatible with future formalization of sharp-threshold theory, RSW inequalities, and conformal invariance.
+**Theorem 6.3 (First-moment appearance bound).**
 
-### 6.2 Limitations
+$$
+\Pr_p(X_{\mathcal T}>0)\le\sum_{T\in\mathcal T}p^{|T|}
+=\mathbb E_p[X_{\mathcal T}].
+$$
 
-- The monotonicity theorem requires the event to be specified as a `Finset`, limiting applicability to finite settings. Extension to infinite-volume percolation requires measure-theoretic foundations.
-- The exact threshold is established as the root of a polynomial, not as the infinite-volume critical probability. Connecting these requires the full Wierman (1981) argument involving star-triangle transformations.
-- The crossing probability definition is not yet connected to an executable computation in Lean (though Python implementations verify the definitions).
+**Proof sketch.** The event $X_{\mathcal T}>0$ is the union, over $T\in\mathcal T$, of the events $T\subseteq S$. Apply Theorems 6.1 and 5.2.
 
-### 6.3 Architecture for Extensions
+**Corollary 6.4 (First-moment vanishing criterion).** For a sequence of finite systems and target families, if
 
-The formalization is structured to enable:
+$$
+\mathbb E[X_n]\longrightarrow0,
+$$
 
-- **Russo's formula:** Differentiation of `bernoulliProb` with respect to $p$, expressed as a sum of influences. Requires defining pivotal sites and formalizing the polynomial derivative.
-- **FKG inequality:** The monotonicity proof strategy generalizes to correlation inequalities between increasing events.
-- **Planar duality:** The grid graph definition supports dual-graph construction; the crossing dichotomy theorem is the next major target.
-- **Sharp thresholds:** Combining Russo's formula with influence bounds (KKL theorem) gives quantitative bounds on phase-transition width.
+then
 
-## 7. Future Work
+$$
+\Pr(X_n>0)\longrightarrow0.
+$$
 
-1. **Dual crossing dichotomy** for rectangular grids, enabling the full Kesten theorem.
-2. **Russo's formula** as a polynomial identity.
-3. **Irreducibility** of $X^3 - 3X + 1$ over $\mathbb{Q}$.
-4. **RSW-type crossing estimates** for aspect-ratio control.
-5. **Infinite-volume formalization** using Mathlib's measure theory.
+Thus a pattern disappears with high probability whenever its expected count vanishes.
 
-## 8. References
+## 7. Variance and the second moment
 
-[1] S. R. Broadbent and J. M. Hammersley. Percolation processes: I. Crystals and mazes. *Mathematical Proceedings of the Cambridge Philosophical Society*, 53(3):629–641, 1957.
+For a real random variable $X$, define
 
-[2] H. Kesten. The critical probability of bond percolation on the square lattice equals 1/2. *Communications in Mathematical Physics*, 74(1):41–59, 1980.
+$$
+\operatorname{Var}_p(X)=\mathbb E_p\left[(X-\mathbb E_p[X])^2\right].
+$$
 
-[3] J. C. Wierman. Bond percolation on honeycomb and triangular lattices. *Advances in Applied Probability*, 13(2):298–313, 1981.
+**Theorem 7.1 (Zero-event second-moment inequality).** If $0\le p\le1$ and $\mathbb E_p[X]\ne0$, then
 
-[4] M. E. J. Newman and R. M. Ziff. Efficient Monte Carlo algorithm and high-precision results for percolation. *Physical Review Letters*, 85(19):4104, 2000.
+$$
+\Pr_p(X=0)\le
+\frac{\operatorname{Var}_p(X)}{\mathbb E_p[X]^2}.
+$$
 
-[5] G. Grimmett. *Percolation*. Springer, 2nd edition, 1999.
+**Proof sketch.** On the event $X=0$,
 
-[6] B. Bollobás and O. Riordan. *Percolation*. Cambridge University Press, 2006.
+$$
+(X-\mathbb E_p[X])^2=\mathbb E_p[X]^2.
+$$
 
-[7] H. Duminil-Copin. Sixty years of percolation. *Proceedings of the International Congress of Mathematicians*, 2018.
+The variance is a sum of nonnegative terms, so retaining only configurations where $X=0$ yields
 
-## Appendix: Lean 4 Code Structure
+$$
+\operatorname{Var}_p(X)
+\ge \mathbb E_p[X]^2\Pr_p(X=0).
+$$
 
-The formalization consists of three files:
+Divide by the positive square of the mean.
 
-- **`TriangularThreshold.lean`** (≈120 lines): Critical polynomial definition, derivative computation, strict anti-monotonicity, IVT-based existence, uniqueness, trigonometric closed form, honeycomb duality, square bond fixed point.
+**Lemma 7.2 (Analytic squeeze).** Let $E_n$, $V_n$, and $q_n$ be real sequences satisfying
 
-- **`BernoulliMeasure.lean`** (≈150 lines): Bernoulli weight and probability definitions, normalization theorem, non-negativity, single-variable reduction, and the main monotonicity theorem for increasing events.
+$$
+0\le q_n\le\frac{V_n}{E_n^2},
+$$
 
-- **`Percolation.lean`** (≈80 lines): Site/bond configuration types, connectivity predicates, grid graph construction, horizontal crossing definition, and increasing-event properties.
+$$
+E_n\longrightarrow+\infty,
+$$
 
-All proofs compile without `sorry` and use only standard axioms.
+and, for a fixed constant $K$,
+
+$$
+V_n\le K E_n.
+$$
+
+Then $q_n\to0$.
+
+**Proof sketch.** The assumptions imply
+
+$$
+0\le q_n\le\frac{K}{E_n},
+$$
+
+and the upper bound tends to zero.
+
+**Theorem 7.3 (Second-moment appearance criterion).** Let $X_n$ be random variables on a sequence of finite independent-edge spaces. Suppose their means $E_n$ are nonzero and satisfy
+
+$$
+E_n=\mathbb E[X_n]\longrightarrow+\infty.
+$$
+
+Suppose also that their variances $V_n$ satisfy
+
+$$
+V_n=\operatorname{Var}(X_n)\le K E_n
+$$
+
+for one constant $K$. Then
+
+$$
+\Pr(X_n=0)\longrightarrow0.
+$$
+
+Equivalently, $X_n\ne0$ with probability tending to one.
+
+**Proof sketch.** Apply Theorem 7.1 to each $X_n$ and then Lemma 7.2. The result captures the standard second-moment strategy for subgraph counts: a diverging expected count forces actual appearance provided overlaps do not make the variance too large.
+
+The first and second moments address opposite sides of a threshold. When the expected count tends to zero, no witness appears with high probability. When it diverges and fluctuations are sufficiently controlled, at least one witness appears with high probability. Establishing a sharp threshold often consists of choosing the correct witnesses and proving matching estimates around one scale.
+
+## 8. Algorithms and numerical experiments
+
+### 8.1 Exact evaluation of the local polynomial
+
+The local algorithm evaluates
+
+$$
+C(p)=3p^2-2p^3
+$$
+
+using a constant number of arithmetic operations. Its time and auxiliary-space complexity are both $O(1)$. It can also enumerate all $2^3=8$ configurations, summing $p^k(1-p)^{3-k}$ over those with $k\ge2$. Enumeration is useful as an audit of the combinatorial interpretation, though unnecessary for efficiency.
+
+A useful computational checklist for sampled values $p\in[0,1]$ is
+
+$$
+C(p)=B(p),
+$$
+
+$$
+C(1-p)=1-C(p),
+$$
+
+and
+
+$$
+\operatorname{sign}(C(p)-1/2)=\operatorname{sign}(p-1/2).
+$$
+
+### 8.2 Exact finite pattern enumeration
+
+For $N$ possible edges, exact enumeration visits all $2^N$ configurations. For each configuration it computes the number of target patterns contained in it, then accumulates total mass, mean, variance, and zero-event probability. If there are $m$ patterns and subset checks cost $O(N)$ in a direct representation, the worst-case time is $O(2^N mN)$ and storage can remain $O(mN)$ by streaming configurations.
+
+This exponential method is intended for small examples and validation. In structured families, expectation should instead be computed through
+
+$$
+\sum_{T\in\mathcal T}p^{|T|},
+$$
+
+and variance through overlap classes of pairs $(T,U)$. Grouping by $|T\cap U|$ often converts exponential enumeration into a polynomial or closed-form calculation.
+
+### 8.3 Monte Carlo
+
+For larger finite regions, simulation estimates crossing probabilities. Generate independent Bernoulli states, test the crossing event with breadth-first search or union–find, and average its indicator over $M$ trials. The standard error of a Bernoulli estimate is at most $1/(2\sqrt M)$. Simulation can locate a transition numerically but cannot establish a closed exact threshold.
+
+## 9. From local symmetry to infinite-volume criticality
+
+The local theorem supplies a candidate parameter and exact finite identities. To prove the infinite triangular-site threshold, one needs a chain of additional results.
+
+First, define finite triangular and hexagonal patches with marked boundary arcs, together with primal open paths and appropriate closed dual or matching paths. Establish a deterministic planar alternative: an open crossing excludes, and is complemented by, the corresponding closed crossing.
+
+Second, put Bernoulli product measures on these finite configurations and prove monotonicity of increasing crossing events. Couplings using shared uniform random variables provide a standard route: if $p\le q$, every site open at level $p$ is also open at level $q$.
+
+Third, derive scale-uniform crossing estimates. Local self-duality gives balance in symmetric domains, but transferring that balance across aspect ratios requires gluing and correlation inequalities.
+
+Fourth, prove sharpness. Russo-type differentiation relates the derivative of an increasing-event probability to the expected number of pivotal sites. Sharp-threshold estimates then show that crossing probabilities move rapidly away from criticality.
+
+Fifth, pass to infinite volume through increasing exhaustion and compactness. Subcritical decay rules out infinite clusters below the candidate; supercritical crossings and gluing produce an infinite cluster above it.
+
+Only after these steps does local self-duality become an exact infinite-volume threshold theorem.
+
+The model distinctions are decisive:
+
+1. For triangular-lattice site percolation, the exact critical probability is $1/2$.
+2. For square-lattice bond percolation, planar bond duality yields the exact critical probability $1/2$.
+3. For square-lattice site percolation, the accepted threshold is numerical, approximately $0.592746$, and no closed analytic form is known.
+
+Therefore the triangular polynomial cannot be transplanted to square-site percolation. Doing so would conflate different geometries and different randomized objects.
+
+## 10. Conformal invariance
+
+At criticality in two dimensions, macroscopic crossing laws can become insensitive to lattice scale and transform naturally under conformal maps. The conjectural and, in central settings, established picture is that when mesh size tends to zero, discrete interfaces converge to random continuous curves. For critical triangular-site percolation, the relevant interface law is $\mathrm{SLE}_6$.
+
+A complete mathematical connection requires substantially more than local duality. One must define discrete exploration paths, prove tightness of their laws, identify every subsequential limit, establish the domain Markov property and conformal covariance, and control boundary behavior. Crossing events must be transported between domains in a measurable way, and convergence must be strong enough to pass probabilities to the limit.
+
+The local identity at $p=1/2$ remains conceptually important: it selects the parameter where open and closed states are balanced. Conformal invariance describes the geometry that emerges after this balance is propagated across arbitrarily many scales.
+
+## 11. Discussion and future work
+
+The exact achievement is deliberately finite but structurally informative. The cubic $3p^2-2p^3$ is simultaneously a majority probability, a complement-symmetric map of the unit interval, and the one-face spanning probability for triangular bonds. Its unique fair point is fixed by complementation and certified by a positive-factor argument.
+
+The moment framework broadens the perspective. In a finite independent-edge system, normalization is a binomial identity; fixed-pattern probabilities are powers of $p$; expected counts are sums of those powers; union bounds turn small expectations into absence; and variance bounds turn robustly large expectations into presence. These tools are elementary enough to be stated without measure-theoretic machinery yet general enough to underlie random-graph and percolation thresholds.
+
+Several directions follow naturally:
+
+- Construct finite planar patches and prove primal/dual crossing alternatives.
+- Develop monotone couplings and correlation inequalities for site and bond product measures.
+- Formalize matching-lattice transformations without identifying distinct sample spaces.
+- Establish pivotal-site differentiation and sharp-threshold estimates.
+- Complete an increasing-exhaustion argument for the triangular-site threshold.
+- Treat square-bond duality independently.
+- Define and rigorously bound the square-site threshold rather than postulating an unsupported exact formula.
+- Build scaling-limit and $\mathrm{SLE}_6$ machinery to connect critical crossings with conformal invariance.
+
+## 12. Scope and interpretive safeguards
+
+The word “threshold” is used at several levels, and these should not be conflated. The equation $C(p)=1/2$ defines a fairness point for one specified finite event. A finite-size crossing threshold may instead be the value at which a rectangle-crossing probability reaches a chosen quantile. An infinite-volume critical probability is defined through the existence of an infinite cluster. These quantities can be related by theorems, but they are not synonymous by definition.
+
+Likewise, polynomial equality does not imply model equivalence. The equality $B(p)=C(p)$ follows because both one-face events count successful subsets of size two or three among three Bernoulli objects. It supplies no measure-preserving correspondence between site configurations and bond configurations on an extended lattice. Any global comparison must explicitly describe how paths, boundaries, and probabilities are transported.
+
+Finally, numerical evidence and exact proof serve different roles. Exact enumeration can certify a finite formula once all configurations are included. Monte Carlo can explore larger systems and estimate transition locations with quantified sampling error. Neither a plotted crossing nor a high-precision decimal alone supplies an analytic expression. For square-site percolation, the responsible conclusion is therefore a numerical threshold estimate together with rigorous bounds—not a conjectural closed form presented as established fact.
+
+These safeguards are mathematically productive. They isolate the precise missing lemmas and prevent a local symmetry from being asked to carry global conclusions that require topology, correlation estimates, and limits.
+
+## 13. Conclusion
+
+For a triangular face, the local crossing law is exact:
+
+$$
+C(p)=3p^2-2p^3,
+$$
+
+$$
+C(1-p)=1-C(p),
+$$
+
+and
+
+$$
+C(p)=\frac12\quad\Longleftrightarrow\quad p=\frac12
+$$
+
+for $p\in[0,1]$. The analogous one-face bond-spanning probability is identical. These statements completely settle the local self-duality calculation.
+
+They also clarify what remains. Infinite-volume criticality requires planar topology, probabilistic sharpness, and limiting arguments; conformal invariance requires a further scaling-limit theory. The square-site threshold cannot be assigned a closed expression by analogy. The correct conclusion is both exact and restrained: local triangular symmetry identifies a unique fair parameter, while global threshold theorems demand the full architecture of percolation theory.

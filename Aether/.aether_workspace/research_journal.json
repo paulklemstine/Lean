@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "726a20a7",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nThe Lean development proves an abstract energy estimate, the final measure-theoretic reduction behind an ε-regularity argument, and exact finite-mode energy exchange. It does **no",
-      "quality_score": 0.73786,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-30T18:56:43",
-      "title": "Navier-Stokes Existence and Smoothness"
-    },
-    {
       "cycle_id": "6d7202c5",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\nThe following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. Each is stated so that a counterexample consists of a concrete finite family and parameters violatin",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-08-01T22:21:43",
       "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
+    },
+    {
+      "cycle_id": "7b912198",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What the formal result establishes\n\n`Catalog/Novelty/SurrealFiniteCofiniteProbability.lean` constructs a concrete Conway surreal\n\n\\[\n\\varepsilon=\\{0\\mid 1,1/2,1/4,\\ldots\\}\n\\]",
+      "quality_score": 0.7734099999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-01T23:23:00",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "06d71b6e",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n`Geometry/HilbertChessLines.lean` develops a self-contained theory of long-range\n(rook / bishop / queen / arbitrary-ray) attackers on the infinite Hilbert board\n`ℤ × ℤ`, modelled",
-      "quality_score": 0.57,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-24T19:01:52",
-      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-    },
     {
       "cycle_id": "68dd266b",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-01T23:21:41",
       "title": "Catalan's Conjecture Generalizations"
+    },
+    {
+      "cycle_id": "7b912198",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## What the formal result establishes\n\n`Catalog/Novelty/SurrealFiniteCofiniteProbability.lean` constructs a concrete Conway surreal\n\n\\[\n\\varepsilon=\\{0\\mid 1,1/2,1/4,\\ldots\\}\n\\]",
+      "quality_score": 0.7734099999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-01T23:23:00",
+      "title": "Non-Archimedean Probability via Surreal Numbers"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "788947d7",
-      "domain": "Applications",
-      "name": "does",
-      "quality": 0.7986800000000001
-    },
-    {
-      "cycle_id": "788947d7",
-      "domain": "Applications",
-      "name": "uses",
-      "quality": 0.7986800000000001
-    },
-    {
-      "cycle_id": "788947d7",
-      "domain": "Applications",
-      "name": "concreteTerm_eval",
-      "quality": 0.7986800000000001
-    },
     {
       "cycle_id": "d58932ad",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "hasProportionalSaving_of_hasSubFourUpperBound",
       "quality": 0.7496799999999999
+    },
+    {
+      "cycle_id": "7b912198",
+      "domain": "Novelty",
+      "name": "infinitesimalGame_numeric",
+      "quality": 0.7734099999999999
+    },
+    {
+      "cycle_id": "7b912198",
+      "domain": "Novelty",
+      "name": "epsilon_pos",
+      "quality": 0.7734099999999999
+    },
+    {
+      "cycle_id": "7b912198",
+      "domain": "Novelty",
+      "name": "epsilon_lt_powHalf",
+      "quality": 0.7734099999999999
     }
   ],
-  "last_updated": "2026-08-01T23:21:41",
+  "last_updated": "2026-08-01T23:23:00",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "687f4282",
-        "quality": 0.8022499999999999,
-        "theorems": 14,
-        "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
-      },
-      {
         "cycle_id": "a1225aa5",
         "quality": 0.7423299999999999,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.78251,
         "theorems": 35,
         "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynam"
+      },
+      {
+        "cycle_id": "7b912198",
+        "quality": 0.7734099999999999,
+        "theorems": 21,
+        "title": "Non-Archimedean Probability via Surreal Numbers"
       }
     ],
     "NumberTheory": [

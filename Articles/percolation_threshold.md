@@ -1,93 +1,167 @@
-# The Hidden Mathematics of When Things Connect
+# The Halfway Point: How a Tiny Triangle Reveals a Percolation Threshold
 
-## A story about coffee, pandemics, and the exact moment a network comes alive
+Imagine rain falling on an enormous mosaic. Each tile independently becomes wet with probability $p$ and stays dry with probability $1-p$. At first, wet islands are small and isolated. As $p$ rises, they grow, merge, and eventually form routes across the mosaic. Somewhere between almost surely dry and almost surely wet, local accidents become global connectivity.
 
-Imagine you're building a stone wall, but you're lazy. Instead of carefully mortaring every stone into place, you randomly slap mortar between some stones and skip others. At first, with very little mortar, you have a pile of loose rocks. Add a bit more, and small clusters form — three stones here, five there. But at some precise fraction of joints mortared, something dramatic happens: suddenly, a connected path runs from one end of the wall to the other. The structure holds.
+This is **percolation**, the mathematics of connectedness emerging from randomness. It models liquid moving through porous rock, current passing through disordered composites, disease spreading through contact networks, and fire finding paths through a landscape. Its central number is a critical probability $p_c$: below it, long-range connection is absent; above it, a macroscopic or infinite connected cluster appears.
 
-This isn't just a parable about masonry. It's the central mystery of **percolation theory**, a branch of mathematics that governs everything from how coffee filters work to whether a pandemic becomes global. And after decades of partial answers, mathematicians have finally placed some of its deepest results on absolutely unshakable foundations.
+The seductive question is whether $p_c$ has a simple exact form. Sometimes symmetry answers beautifully. Sometimes it does not. A single triangular face gives a compact lesson in both the power and the limits of that symmetry.
 
-## The Question That Haunted Probability Theory
+## Two ways to randomize a network
 
-The fundamental question is deceptively simple: given a network where each connection works with probability *p*, at what critical value of *p* does large-scale connectivity first emerge?
+There are two standard percolation models. In **site percolation**, the vertices of a lattice are independently open or closed. A path may travel through open vertices. In **bond percolation**, all vertices remain available but the edges between them are independently open or closed. A path may use open edges.
 
-Below the threshold, the network is fragmented — isolated islands of connection floating in a sea of disconnection. Above it, a single giant connected component spans the entire system. The transition is sharp, not gradual. It's a phase transition, mathematically identical to the moment water turns to ice or iron becomes magnetic.
+These models are related, but they are not interchangeable. They have different random objects and generally different critical probabilities. Even if two tiny motifs happen to produce the same polynomial, that does not identify their behavior on an infinite lattice.
 
-The concept was born in 1957, when Simon Broadbent and John Hammersley were trying to understand how gas flows through a porous rock — how fluid *percolates* through stone. They realized the problem was really about randomness and connectivity, and that a single number, the **critical probability** *p*_c, determined everything.
+Now focus on one triangle. For the site model, call the face locally crossing when at least two of its three sites are open. This event has four successful configurations: all three sites open, or exactly one of the three closed.
 
-But finding that number turned out to be extraordinarily difficult.
+The all-open configuration has probability $p^3$. Each configuration with exactly two open sites has probability $p^2(1-p)$, and there are three choices for the closed site. Therefore the local crossing probability is
 
-## Two Flavors of Randomness
+$$
+C(p)=p^3+3p^2(1-p)=3p^2-2p^3.
+$$
 
-There are two natural ways to add randomness to a network. In **bond percolation**, you keep all the intersections (nodes) and randomly open or close the connections (edges) between them. In **site percolation**, you randomly activate or deactivate the intersections themselves — if a node is "closed," all its connections die with it.
+This cubic is the protagonist of our story.
 
-The distinction matters enormously. For the most natural network — the square grid, like graph paper — bond percolation was solved in 1980 by Harry Kesten, who proved that *p*_c = 1/2 exactly. The proof is beautiful: the square grid is *self-dual*, meaning its bond percolation at probability *p* is equivalent to percolation on the dual grid at probability 1 − *p*. The only value where the system equals its own mirror image is *p* = 1/2.
+## A perfect complement
 
-But site percolation on the square grid? After more than sixty years of effort by some of the world's best mathematicians, the exact threshold remains unknown. The best numerical estimate is *p*_c ≈ 0.592746, but no one has a proof that it equals any closed-form expression. It might be irrational. It might be transcendental. No one knows.
+Replace every open site by a closed site and every closed site by an open one. The parameter $p$ becomes $1-p$. On three sites, “at least two are open” becomes the complement of “at least two are open” before the swap: a strict majority cannot be tied. Algebra records this exact duality:
 
-## Triangles Change Everything
+$$
+C(1-p)=1-C(p).
+$$
 
-Here is where the story takes a surprising turn. While the square grid keeps its site-percolation secret, other geometries yield exact answers — and the answers are unexpectedly beautiful.
+The identity is more than a pleasing graph symmetry. At the midpoint $p=1/2$, complementation changes nothing, so
 
-Consider the **triangular lattice**: a grid of equilateral triangles, like the pattern on a geodesic dome. For bond percolation on this lattice, the critical threshold satisfies a remarkable cubic equation:
+$$
+C(1/2)=1-C(1/2),
+$$
 
-*p*³ − 3*p* + 1 = 0
+and hence
 
-This polynomial has exactly one root between 0 and 1, and that root has a closed form: *p*_c = 2 sin(π/18). That's two times the sine of ten degrees.
+$$
+C(1/2)=1/2.
+$$
 
-Why π/18? The answer traces back to one of the oldest identities in trigonometry. The triple-angle formula tells us that sin(3θ) = 3 sin θ − 4 sin³ θ. Set θ = π/18, so 3θ = π/6 — and sin(π/6) = 1/2. Then a short calculation shows that 2 sin(π/18) exactly zeroes out the cubic. The percolation threshold, a statement about random connectivity on an infinite lattice, is pinned down by elementary trigonometry.
+At density one half, the local crossing event is exactly fair.
 
-The result has been rigorously verified to a degree of certainty that exceeds anything in experimental science. Every logical step, from the definition of the polynomial through the uniqueness of the root to the trigonometric closed form, has been checked by a computer against the axioms of mathematics. There are no gaps, no appeals to intuition, no "it's obvious that..." — just an unbroken chain of logical deductions from first principles.
+Could another value of $p$ also make it fair? On the physical interval $0\le p\le1$, the answer is no. Subtracting one half and factoring gives
 
-## The Honeycomb Surprise
+$$
+C(p)-\frac12=(2p-1)\left(p(1-p)+\frac12\right).
+$$
 
-The triangular lattice has a dual: the **honeycomb lattice**, the pattern of a beehive. A beautiful duality principle connects them: if the triangular threshold is *p*_c, then the honeycomb threshold is 1 − *p*_c. So the honeycomb bond percolation threshold is exactly 1 − 2 sin(π/18) ≈ 0.6527.
+The second factor is strictly positive throughout $[0,1]$. Thus the sign of $C(p)-1/2$ is exactly the sign of $2p-1$. Consequently,
 
-This duality isn't a coincidence. It reflects a deep structural symmetry: every bond configuration on the triangular lattice corresponds to a complementary configuration on the honeycomb lattice, and horizontal crossings on one correspond to the *absence* of vertical crossings on the other. The threshold is the unique point where this self-referential symmetry balances perfectly.
+$$
+C(p)<\frac12 \quad\text{if }p<\frac12,
+$$
 
-## Why Monotonicity Matters More Than You Think
+$$
+C(p)=\frac12 \quad\text{if }p=\frac12,
+$$
 
-Before you can even *define* a percolation threshold, you need to know that the underlying quantity behaves sensibly. If you increase the probability that connections work, connectivity should only get better, never worse. This is the **monotonicity principle**, and while it sounds obvious, proving it rigorously for arbitrary networks requires genuine mathematical work.
+and
 
-The key concept is an **increasing event**: any property of a network that, if true for some configuration, remains true when you open additional connections. "There exists a path from A to B" is increasing. "The network has exactly seven components" is not.
+$$
+C(p)>\frac12 \quad\text{if }p>\frac12.
+$$
 
-The theorem, now fully verified, states: for any increasing event on any finite network, the probability of that event is a monotone (non-decreasing) function of the connection parameter *p*. This isn't just a technicality — it's the engine that makes threshold definitions meaningful. Without it, the entire theory of phase transitions in random networks collapses.
+This is the **Local Triangular Self-Duality Theorem**: among Bernoulli parameters in $[0,1]$, the unique parameter at which a three-site triangular face crosses with probability one half is $p=1/2$. The same formulas also show $0\le C(p)\le1$, as a probability should.
 
-The proof works by induction on the number of network components. At each step, you condition on one component being open or closed, exploit the fact that the event is increasing to show the conditional probabilities have the right ordering, and combine them with coefficients that track the Bernoulli weights. It's an elegant piece of combinatorial probability, and it's now been verified down to the axioms.
+## The surprising bond coincidence
 
-## The Frontier: What We Know We Don't Know
+Take the same triangular shape but randomize its three edges instead of its vertices. Ask whether all three vertices belong to one connected component. Two open edges suffice, and three open edges also suffice. The probability is therefore
 
-The square-site threshold remains the great unsolved problem of percolation theory. But the new rigorous framework makes the open problem *precise* rather than vague. Here's what we can now say formally:
+$$
+B(p)=3p^2(1-p)+p^3.
+$$
 
-1. **Finite-volume surrogates exist.** For any finite box, there is a well-defined threshold where the crossing probability equals 1/2. This is a consequence of monotonicity plus the intermediate value theorem.
+Term by term, this is the same expression as $C(p)$, so
 
-2. **The obstruction is identified.** The square grid lacks the self-duality that makes the triangular and square-bond problems solvable. Any proof of the exact site threshold would need either a new symmetry principle or a fundamentally different technique.
+$$
+B(p)=C(p)=3p^2-2p^3.
+$$
 
-3. **Comparison inequalities are possible.** Site percolation can be formally related to bond percolation through monotone couplings, giving rigorous bounds.
+It follows that the one-face bond-spanning event is fair exactly at $p=1/2$ as well.
 
-The numerical value 0.592746... has been computed to high precision, but no one knows if it equals a nice expression — a root of a polynomial, a combination of trigonometric values, or something else entirely. It could be that the square-site threshold is *genuinely* more complex than its triangular cousin, resisting closed-form expression for a deep mathematical reason.
+The equality has a simple combinatorial origin. In either experiment, success means choosing at least two objects from a set of three: sites in one case, bonds in the other. But this local equality must not be stretched into a global equivalence. Site configurations live on vertices; bond configurations live on edges. When triangular faces are glued into an infinite lattice, the overlaps and dependencies induced by geometry differ.
 
-## Coffee, Concrete, and Contagion
+## What the triangle does—and does not—prove
 
-Why should anyone outside mathematics care?
+The local theorem is one ingredient behind the exact critical probability $1/2$ for site percolation on the infinite triangular lattice. Yet the local calculation alone is not an infinite-volume theorem.
 
-Because percolation thresholds show up everywhere in the physical world. The moment a coffee filter starts letting liquid through is a percolation transition. The strength of concrete depends on whether micro-cracks percolate across the material. The spread of a forest fire, the conductivity of a composite material, the outbreak of an epidemic — all are governed by the same mathematics.
+To pass from one face to an endless lattice, several bridges are required. One must define crossing events in large finite regions, relate open crossings to closed crossings in a dual or matching lattice, prove that crossing probabilities increase with $p$, control their behavior uniformly as regions grow, and connect finite crossings to the existence or absence of an infinite cluster. Sharp-threshold arguments explain why a narrow transition window becomes decisive. Compactness and limiting arguments then carry finite information to infinite volume.
 
-When you mix a conductor with an insulator — silver particles in plastic, say — there's a critical volume fraction where the composite suddenly starts conducting electricity. Below the threshold: insulator. Above it: conductor. The transition is sharp, and the critical fraction depends on the geometry of the particles in exactly the way percolation theory predicts.
+This distinction matters because self-duality can identify a compelling candidate without proving it is the true critical point. A local equation says where two complementary events balance. A global threshold theorem says where connectivity changes phase. The two coincide only after geometry and probability supply the missing argument.
 
-In epidemiology, the basic reproduction number R₀ is intimately related to a percolation threshold on the contact network. When R₀ crosses its critical value, the disease goes from burning out locally to sweeping across the network. Understanding this threshold — and how it depends on the network structure — is literally a matter of life and death.
+The warning becomes especially important for the square lattice. Square-lattice **bond** percolation has an exact critical probability of $1/2$, supported by planar duality. Square-lattice **site** percolation is a different model. Its critical probability is known accurately by numerical methods, near $0.592746$, but no accepted closed exact expression is known. An “analytic derivation” of a simple square-site constant would therefore solve an open mathematical problem, not merely repeat the triangular calculation.
 
-## The Art of Absolute Certainty
+The honest mathematical outcome is sharper than a fabricated formula: the triangle yields an exact local theorem, while the square-site question remains open.
 
-What makes these results remarkable isn't just the mathematics — it's the *certainty*. In an era of retracted papers, irreproducible experiments, and statistical controversies, these theorems stand on foundations that cannot be shaken. Every step has been independently verified by machine, following nothing but the rules of logic.
+## Threshold tools beyond geometry
 
-The triangular threshold theorem is particularly striking. It says that a number arising from random processes on an infinite lattice equals a trigonometric expression involving π — a number from geometry. The bridge between randomness and geometry, between probability and trigonometry, is not a conjecture or a numerical observation. It is a *theorem*, in the strongest possible sense of the word.
+Percolation belongs to a wider family of random-structure thresholds. The same logic appears in random graphs. Suppose there are $N$ possible edges, each included independently with probability $p$. A configuration containing $k$ edges has probability
 
-This kind of certainty was once reserved for simple arithmetic facts. Now it extends to deep results about random networks, phase transitions, and the geometry of lattices. The frontier of what can be known with absolute confidence is expanding, and percolation theory is one of its most exciting frontiers.
+$$
+p^k(1-p)^{N-k}.
+$$
 
-## What Comes Next
+Summing over all configurations gives $1$ by the binomial theorem. If $T$ is any fixed set of edges, independence gives
 
-The immediate targets are clear: formalize the sharp-threshold phenomena that govern how quickly the phase transition occurs, prove the Russo formula that links derivatives of crossing probabilities to the "influence" of individual sites, and extend the duality framework to more general planar graphs.
+$$
+\Pr(T\text{ is present})=p^{|T|}.
+$$
 
-Further out, the holy grail is Smirnov's proof of conformal invariance for critical percolation on the triangular lattice — the result that earned him the Fields Medal in 2010. That proof shows that the random geometry of percolation at its critical point has a hidden symmetry: it looks the same under angle-preserving transformations, connecting probability theory to the deepest structures in complex analysis and theoretical physics.
+This tiny identity powers two general methods.
 
-The tools are being built. The foundations are in place. And the exact moment when a random network comes alive — that magical transition from fragmentation to connection — is becoming one of the most precisely understood phenomena in all of mathematics.
+First is the **union bound**. For any finite family of events $E_i$,
+
+$$
+\Pr\left(\bigcup_i E_i\right)\le\sum_i\Pr(E_i).
+$$
+
+If $\mathcal T$ is a family of target edge patterns, the chance that at least one appears is at most
+
+$$
+\sum_{T\in\mathcal T}p^{|T|}.
+$$
+
+Equivalently, if $X$ counts the number of appearing patterns, then linearity of expectation gives
+
+$$
+\mathbb E[X]=\sum_{T\in\mathcal T}p^{|T|}.
+$$
+
+When this expectation tends to zero in a growing sequence of systems, the probability that any pattern appears also tends to zero. This is the **first-moment method**: scarcity in expectation forces absence with high probability.
+
+The **second-moment method** works in the opposite direction. For a random variable $X$ with nonzero mean,
+
+$$
+\Pr(X=0)\le \frac{\operatorname{Var}(X)}{\mathbb E[X]^2}.
+$$
+
+If $\mathbb E[X]\to\infty$ while $\operatorname{Var}(X)\le K\mathbb E[X]$ for a fixed constant $K$, then
+
+$$
+\Pr(X=0)\le\frac{K}{\mathbb E[X]}\longrightarrow0.
+$$
+
+Thus the counted structure appears with high probability. The first moment proves that an object is too rare to exist; the second moment proves that a plentiful expected count is not destroyed by excessive fluctuation.
+
+These methods illuminate why threshold phenomena are so widespread. Below a critical scale, a union bound can eliminate all possible witnesses. Above it, expectation grows and variance control forces witnesses to exist. Geometry determines what the witnesses mean; probability determines when they become unavoidable.
+
+## From porous stone to conformal shapes
+
+At criticality, two-dimensional percolation displays another remarkable feature: large patterns forget microscopic details. Crossing probabilities in finely meshed domains are expected, and in central cases known, to approach laws invariant under conformal maps—angle-preserving deformations. A disk may be bent into another simply connected shape without changing the limiting law once the marked boundary points are transported appropriately.
+
+For critical triangular-lattice site percolation, the scaling interfaces are associated with the random curves called $\mathrm{SLE}_6$. This is far beyond the three-site cubic. A complete route requires constructing random interfaces, proving tightness and convergence as mesh size vanishes, identifying the limit, and establishing conformal covariance. Still, the local half-density symmetry is where the critical story begins.
+
+The broader lesson is methodological. Exact answers in probability often arise from a three-part alliance: a local combinatorial identity, a global geometric duality, and an analytic limiting argument. The triangle supplies the first part with unusual clarity. Its polynomial is elementary enough to derive on a napkin, yet rich enough to mark the boundary between what symmetry gives for free and what infinite randomness demands.
+
+## A practical way to read threshold claims
+
+The triangle suggests a useful checklist whenever an exact threshold is proposed. First ask what has been randomized: sites, bonds, faces, or some other objects. Next ask whether the calculation concerns one motif, a finite region, or an infinite system. Then identify the symmetry: does complementation truly exchange the relevant global events, or only resemble them locally? Finally, look for the bridge from finite balance to infinite connectivity—typically a combination of planar separation, monotonicity, sharpness, and limits.
+
+This checklist matters outside pure mathematics. In epidemiology, a household-level transmission balance need not equal a population epidemic threshold. In materials science, a conducting microcell does not guarantee a sample-spanning current. In ecology, local habitat connectivity does not by itself produce a migration corridor across a continent. Across these examples, scale is part of the theorem, not a detail to be filled in later.
+
+At $p=1/2$, a single triangular face is balanced perfectly between crossing and not crossing. Turning that local balance into a statement about an infinite world requires much more. Knowing precisely where the easy argument ends is not a weakness. It is the map of the mathematics still to be built.
