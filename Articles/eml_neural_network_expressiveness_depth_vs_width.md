@@ -1,88 +1,167 @@
-# The Hidden Mathematics of Neural Network Activation: How a Strange Function Reveals the Trade-off Between Depth and Width
+# A Smooth Neuron That Learns a Curve at an Inverse-Square Rate
 
-*A function combining exponentials and logarithms unlocks a fundamental truth about neural networks: depth and width are not interchangeable currencies.*
+## The smallest laboratory for neural approximation
 
----
+A neural network is often judged by the complexity of the pictures, sounds, or language it can process. Yet some of the clearest lessons about expressiveness appear in a much smaller laboratory: ask a network to draw the parabola $y=x^2$ on the interval $0\le x\le 1$.
 
-## The Architect's Dilemma
+This task has almost none of the distractions of a large learning system. There is one input, one output, and a familiar target. Nevertheless, it exposes three central questions. What does the nonlinear activation contribute? How should approximation error change with a resource budget? And can the approximating curve retain a smooth, useful derivative?
 
-Imagine you're building a skyscraper. You have a fixed budget, and every dollar you spend on making the building taller is a dollar you can't spend on making it wider. The question seems simple: should you build tall and narrow, or short and wide?
+Consider the EML activation
 
-This is precisely the dilemma facing designers of neural networks — the mathematical engines behind modern artificial intelligence. A neural network has two key dimensions: its **depth** (the number of layers stacked atop one another) and its **width** (the number of computing units in each layer). Both cost computational resources, and engineers must decide how to allocate them.
+$$
+\Phi(x)=\exp(ax+b)-\log(a'x+b').
+$$
 
-For decades, mathematicians have studied this trade-off. The conventional wisdom, largely developed for networks using the "ReLU" activation function (a simple on-off switch that either passes a signal through or blocks it), suggests that width and depth are roughly fungible. Double the width or double the depth, and you get comparable improvements in the network's ability to approximate target functions.
+Its two branches combine exponential and logarithmic behavior. The logarithm requires $a'x+b'>0$ on the domain of interest. For the construction below, the logarithmic branch is deliberately set to the harmless constant $\log 1=0$ by taking $a'=0$ and $b'=1$. This does not make the activation irrelevant: it isolates the exponential branch and shows that one member of the EML family already contains a remarkably efficient local model of curvature.
 
-But new mathematical research reveals that this conventional wisdom is incomplete — and that a different class of activation functions exhibits a dramatically different depth-width trade-off, one with profound implications for how we think about neural network architecture.
+The result is explicit. There is no training loop and no hidden set of fitted coefficients. For a positive scale $h$, define
 
-## The EML Activation: Where Exponentials Meet Logarithms
+$$
+Q_h(x)=\frac{2}{h^2}\bigl(\exp(hx)-1-hx\bigr).
+$$
 
-At the heart of this discovery lies an unusual mathematical object: the **EML activation function**, which computes `exp(ax + b) − log(cx + d)` — the difference between an exponential and a logarithm. Unlike the sharp-cornered ReLU (which has a kink at zero where it abruptly switches from blocking to passing signals), the EML function is infinitely smooth, meaning you can differentiate it as many times as you like and always get a well-defined answer.
+This is the exponential remainder after subtracting its constant and linear parts, magnified by $2/h^2$. Since
 
-This smoothness turns out to be far more than a cosmetic advantage. It unlocks a mechanism that we call **quadratic extraction** — the ability of the EML activation to natively capture curved, quadratic behavior in its output.
+$$
+\exp(hx)=1+hx+\frac{h^2x^2}{2}+\frac{h^3x^3}{6}+\cdots,
+$$
 
-Here's the key insight: take the exponential function exp(εx) for a small parameter ε, and subtract the linear part (1 + εx). What remains? The Taylor series tells us:
+the subtraction removes the first two terms, while the magnification turns the quadratic term into exactly $x^2$. Everything left begins at cubic order in $hx$. In other words, the parabola is already sitting inside the exponential function; the construction simply peels away the lower-order layers.
 
-exp(εx) − 1 − εx = ε²x²/2 + ε³x³/6 + ...
+## A two-stage smooth computation
 
-The leading term is **quadratic in x**. By normalizing — dividing by ε² and multiplying by 2 — we extract x² plus a small residual that vanishes as ε shrinks. This is the EML's secret weapon: it can represent curved functions directly, while ReLU can only approximate curves by stitching together straight line segments.
+The formula can be read as a shallow neural computation. A nonlinear unit first evaluates
 
-## The Approximation Race: Speed of Convergence
+$$
+\exp(hx+0)-\log(0x+1)=\exp(hx).
+$$
 
-How well can a neural network approximate a target function? The answer depends on both the network's size and the smoothness of its activation function.
+An affine readout multiplies this value by $2/h^2$, subtracts $2/h^2$, and adds the linear skip term $-(2/h)x$. Thus
 
-Consider the simplest interesting test case: approximating the function f(x) = x² on the interval [0, 1]. This parabola is the canonical "curved" function, and how well a network handles it reveals deep truths about its expressive power.
+$$
+Q_h(x)=\frac{2}{h^2}\left(\exp(hx)-\log(0x+1)\right)-\frac{2}{h^2}-\frac{2}{h}x.
+$$
 
-**The ReLU approach**: A network using piecewise linear (ReLU) activations with w computing units can approximate x² by breaking the interval into w pieces and drawing a straight line through each. The maximum error — the worst-case gap between the line segments and the true parabola — is exactly 1/(8w²). This is a well-known result in approximation theory, and it cannot be improved: piecewise linear functions simply cannot do better for quadratic targets.
+This is a depth-two realization when an affine output layer and a linear skip connection are allowed. That architectural qualification matters. The statement is about the displayed shallow computation; compiling the skip connection into a more restrictive layered model without changing depth is a separate design question.
 
-**The EML approach**: A single EML neuron with parameter ε = 1/w approximates x² through the quadratic extraction mechanism described above. The error is bounded by e/(3w), where e ≈ 2.718 is Euler's number. At first glance, this seems worse than ReLU's 1/(8w²) — and for large w, it is!
+The construction is smooth everywhere. Its exact derivative is
 
-But here's where depth enters the picture.
+$$
+Q_h'(x)=\frac{2}{h}\bigl(\exp(hx)-1\bigr).
+$$
 
-## The Crossover: When Depth Trumps Width
+As $h$ becomes small, the derivative resembles $2x$, because $\exp(hx)-1\approx hx$. The approximant therefore does not merely trace the parabola. Its slope changes continuously, with no corners or breakpoints. This is attractive whenever gradients have physical meaning: force fields, control laws, differentiable simulators, and sensitivity calculations all care about how an approximation changes, not only about its values.
 
-The key theorem — proven with complete mathematical rigor — establishes a precise crossover point. For a depth-d EML network, the approximation error improves to e/(3wd). The depth enters as a multiplicative factor in the denominator, meaning each additional layer directly improves accuracy.
+## Turning width into a scale
 
-Compare this to the ReLU bound of 1/(8w²), which is independent of depth — for this particular target, adding more layers to a ReLU network doesn't help.
+Now introduce a positive integer budget $w$ and choose
 
-The crossover occurs when d ≥ 8we/3 — approximately 7.24w. At this critical depth, the EML network's error drops below the ReLU network's error, despite using the same width.
+$$
+h=\frac{1}{w^2}.
+$$
 
-What does this mean in practice? For a network of width w = 10:
-- **ReLU error**: 1/800 = 0.00125, regardless of depth
-- **EML error at depth 73**: e/2190 ≈ 0.00124, matching ReLU
-- **EML error at depth 200**: e/6000 ≈ 0.000453, beating ReLU by 2.8×
+Define the width-indexed family
 
-The deeper you go with EML, the better it gets — and all while maintaining the infinite smoothness that makes gradient-based training stable and reliable.
+$$
+Q_w(x)=Q_{1/w^2}(x)
+       =2w^4\left(\exp\left(\frac{x}{w^2}\right)-1-\frac{x}{w^2}\right).
+$$
 
-## The Approximation Spectrum: A New Mathematical Object
+The symbol $w$ indexes the accuracy scale. The formula itself uses one nonlinear activation; increasing $w$ makes its internal exponential argument smaller while making the output coefficients larger. Accordingly, $w$ should be read here as a width budget used to select parameters, not as evidence that $w$ distinct neurons are necessary.
 
-To capture this depth-width interplay precisely, we introduce a new mathematical object: the **EML Approximation Spectrum**. This structure maps every pair (depth, width) to the best achievable approximation error, creating a two-dimensional "error surface" that encodes the full trade-off.
+The central guarantee is uniform over the whole interval.
 
-The spectrum has elegant mathematical properties. Its **isoperformance curves** — the level sets where a fixed error is achieved — are upward-closed in both depth and width: if you can achieve error ε with a network of depth d and width w, you can also achieve it with any larger depth or width. The shape of these curves reveals the architecture's character.
+**Inverse-Square Approximation Theorem.** For every integer $w\ge 1$ and every $x\in[0,1]$,
 
-For ReLU networks, the isoperformance curves are vertical lines: only width matters, and depth is irrelevant (at least for this target). For EML networks, the curves are hyperbolas: depth and width are interchangeable along these curves, creating a richer landscape of design choices.
+$$
+\left|Q_w(x)-x^2\right|\le \frac{4}{9w^2}.
+$$
 
-This difference — vertical lines versus hyperbolas — is the geometric manifestation of a fundamental algebraic fact: the EML activation's smooth, analytic nature enables compositional refinement (each layer refines the previous layer's approximation), while ReLU's piecewise linearity means compositions of ReLU functions are still piecewise linear.
+“Uniform” is the crucial word. The theorem does not say merely that a cloud of sampled points looks close. It controls the worst error at every real input between $0$ and $1$. Doubling $w$ divides the certified error by four; multiplying $w$ by ten divides it by one hundred.
 
-## The Composition Error Theorem
+Why does this happen? The Taylor expansion gives the intuition. For $0<h\le1$ and $0\le x\le1$,
 
-The mathematical foundation for understanding how errors propagate through deep networks is the **Composition Error Theorem**: if the outer function approximates its target to within ε₁ and the inner function approximates its target to within ε₂, and the outer target is L-Lipschitz (meaning it doesn't amplify small perturbations by more than a factor of L), then the composed approximation has error at most L·ε₂ + ε₁.
+$$
+Q_h(x)-x^2
+ =2\sum_{k=3}^{\infty}\frac{h^{k-2}x^k}{k!}.
+$$
 
-This elegant bound shows that depth helps only when two conditions are met: (1) each layer's error is well-controlled, and (2) the Lipschitz constants don't explode. The EML activation satisfies both conditions in its domain, while ReLU's non-smooth composition can lead to error propagation that depth cannot overcome.
+The remainder is nonnegative, and its leading contribution is $hx^3/3$. A uniform exponential-remainder estimate controls the entire tail by $4h/9$. Substituting $h=1/w^2$ yields $4/(9w^2)$. The certified constant is conservative—the asymptotic leading constant suggested by the series is $1/3$—but it is simple and valid across the complete interval for every positive integer budget.
 
-## Implications and Open Questions
+## What the comparison does—and does not—say
 
-These results open several fascinating questions. The most provocative is our **EML Approximation Conjecture**: for any Lipschitz function on [0,1], an EML network of depth d and width w can achieve approximation error O(1/(wd)²). If true, this would mean that depth and width contribute equally to the network's power — a quadratic improvement over the O(1/w) rate achievable at depth 1.
+A natural benchmark is an inverse-linear certificate,
 
-This conjecture remains unproven, but it has a concrete, testable prediction: for the Lipschitz-but-not-smooth function f(x) = |x − 1/2|, an EML network of depth 2 and width w should achieve error O(1/w²). If actual experiments show error Ω(1/w), the conjecture is falsified.
+$$
+\frac{4}{9w}.
+$$
 
-The broader lesson transcends any particular activation function. The depth-width trade-off is not a single number or a simple ratio — it is a geometric object, the approximation spectrum, whose shape encodes fundamental truths about what a neural network architecture can and cannot do. Different activations produce different spectra, and understanding these spectra is the key to principled neural network design.
+The inverse-square guarantee always improves on it:
 
-## A Mathematically Rigorous Future
+$$
+\frac{4}{9w^2}\le\frac{4}{9w}\qquad(w\ge1),
+$$
 
-What makes these results distinctive is their certainty. Every theorem described here has been proven with full mathematical rigor — no approximations, no hand-waving, no "we believe this is true." The Taylor quadratic extraction bound, the composition error theorem, the depth advantage crossover, the spectrum properties — all have been established with the same standard of proof that mathematicians have trusted for centuries.
+and the inequality is strict as soon as $w\ge2$. At $w=1$, both expressions equal $4/9$. At $w=2$, the inverse-square certificate is $1/9$, while the inverse-linear benchmark is $2/9$. At $w=10$, they are $1/225$ and $2/45$, respectively.
 
-In an era where many claims about neural networks rest on empirical observations that could be artifacts of particular datasets or training procedures, mathematical proof offers something precious: permanence. These results will be as true a thousand years from now as they are today.
+This comparison is exact arithmetic, but it should not be overinterpreted. It compares two error laws with the same normalization; it is not by itself a universal lower bound for every competing activation or architecture. In particular, piecewise-linear approximation of a smooth quadratic can also exhibit inverse-square behavior when complexity is measured by the number of affine pieces. A definitive architecture-to-architecture comparison must align parameter counts, region counts, allowable skip connections, and coefficient magnitudes.
 
-The EML approximation spectrum is a new mathematical object, born from the study of neural networks but belonging to the broader landscape of approximation theory. It connects the practical question of "how should I design my neural network?" to deep mathematical structures involving convexity, smoothness, and the interplay of algebraic operations. In doing so, it reminds us that the most powerful insights often come from asking simple questions precisely: not "which network is best?" but "what, exactly, can this network do that that one cannot?"
+That distinction makes the present result more useful, not less. It identifies a clean mechanism: smooth exponential curvature can produce an explicit inverse-square family in a very shallow computation. It supplies a controlled test case around which fairer comparisons can be built.
 
-The answer, it turns out, lies in the geometry of a two-dimensional surface — the spectrum — whose contours trace the boundary between the possible and the impossible.
+## The numerical picture
+
+The formulas are stable in theory but demand a little care in floating-point arithmetic. When $h$ is small, directly computing $\exp(hx)-1-hx$ subtracts nearly equal numbers. A robust implementation uses the special function $\operatorname{expm1}(z)=\exp(z)-1$ and evaluates
+
+$$
+Q_h(x)=\frac{2}{h^2}\bigl(\operatorname{expm1}(hx)-hx\bigr).
+$$
+
+Sampling a dense grid on $[0,1]$ shows the error rising smoothly from zero near $x=0$ and remaining below the theorem’s envelope. The derivative can be evaluated stably as
+
+$$
+Q_h'(x)=\frac{2}{h}\operatorname{expm1}(hx).
+$$
+
+These computations illustrate the theorem but do not replace its uniform conclusion: no finite grid can inspect every real input.
+
+There is also a practical tradeoff hiding in the coefficients. Since $2/h^2=2w^4$ and $2/h=2w^2$, higher nominal accuracy requires rapidly growing readout weights and increasingly delicate cancellation. Approximation theory counts error; numerical analysis also counts conditioning. In exact arithmetic the family improves cleanly. In finite precision, extremely large $w$ may require series evaluation or higher precision.
+
+## Why a parabola matters
+
+Approximating $x^2$ is more than a classroom exercise. Multiplication can be recovered from squaring through the polarization identity
+
+$$
+xy=\frac{(x+y)^2-(x-y)^2}{4}.
+$$
+
+Consequently, a reliable square module is a gateway to products, polynomial features, quadratic energies, and local second-order models. Many scientific systems are organized around such quantities: kinetic energy is quadratic in velocity, least-squares losses are quadratic in residuals, and local curvature governs optimization.
+
+The construction also offers a model for activation design. Rather than asking only whether an activation is nonlinear, one can ask which Taylor coefficient becomes available after affine terms are canceled. Here, the nonzero second derivative of the exponential branch stores quadratic structure. Scaling reveals it. The broader lesson is that activation geometry and parameter scaling can work together to encode useful functions economically.
+
+## Reading the bound as a resource law
+
+Error rates are easiest to feel through scaling. Suppose a modeler wants a guaranteed error below a tolerance $\varepsilon>0$. The theorem says it is enough to choose an integer $w$ satisfying
+
+$$
+w\ge \sqrt{\frac{4}{9\varepsilon}}.
+$$
+
+The square root is the operational signature of an inverse-square law. Demanding one hundred times more accuracy requires ten times the index, rather than one hundred times. This inversion of the error formula is often how approximation results enter engineering decisions: begin with an acceptable discrepancy, then calculate a sufficient budget.
+
+The guarantee is one-sided in another useful sense. It supplies a sufficient value of $w$, not a necessary one. The actual maximum error is smaller than the certificate, particularly because $4/9$ is not expected to be the sharp asymptotic constant. Numerical experiments can estimate the slack, while the theorem remains the safety envelope.
+
+A plot also reveals geometry that a rate alone hides. Because every term in the error series is nonnegative on $[0,1]$, the approximating curve sits above the parabola. Near the origin they share value, slope, and quadratic behavior; separation accumulates toward the right endpoint. This is a highly structured error, unlike an arbitrary oscillating residual. Future constructions might exploit both exponential and logarithmic branches to cancel the cubic contribution and produce an even flatter residual.
+
+## The frontier beyond the test case
+
+The one-dimensional quadratic result is a foundation, not a proof of universal approximation rates. A larger conjecture proposes that an EML network with width $w$ and depth $d$ could approximate every Lipschitz function on $[0,1]^n$ with error on the order of
+
+$$
+(wd)^{-2/n}.
+$$
+
+The explicit parabola does not establish that claim. General Lipschitz functions may lack smooth curvature, dimensions interact, and an architecture must distribute local approximants across the domain. The test case instead demonstrates that the activation can realize the desired inverse-square scaling on one canonical smooth target.
+
+Several precise questions now come into focus. Can the shallow realization be compiled into a strict layered EML architecture with depth exactly two and width at most $w$? Does $w^2$ times the true worst-case error converge to $1/3$? Do the derivatives converge uniformly to $2x$ at inverse-square rate? How does the family compare with the optimal continuous piecewise-linear approximation when both are measured by the same resource?
+
+The humble parabola has done its job. It has turned a broad expressiveness question into an explicit curve, an exact derivative, and a uniform error law. The result is a compact demonstration of how smooth nonlinear structure can be extracted, scaled, and controlled—and a map of the questions that must be answered before that local success becomes a general theory of depth and width.

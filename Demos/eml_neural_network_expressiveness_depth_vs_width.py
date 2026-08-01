@@ -1,297 +1,223 @@
 #!/usr/bin/env python3
-"""
-EML Neural Network Depth-Width Tradeoff Demonstration
+"""Numerical exploration of a smooth inverse-square quadratic approximant.
 
-Demonstrates the key results from the formalized theory:
-1. EML quadratic extraction: exp(εx) - 1 - εx ≈ ε²x²/2
-2. Width-w approximation of x² with O(1/w) error
-3. Depth-width crossover point where EML beats piecewise linear
-"""
+The script uses only Python's standard library.  It evaluates
 
-import numpy as np
+    Q_w(x) = 2 / h**2 * (exp(h*x) - 1 - h*x),  h = 1 / w**2,
 
-def eml_quad_extract(eps: float, x: float) -> float:
-    """The EML quadratic extractor: exp(εx) - 1 - εx"""
-    return np.exp(eps * x) - 1 - eps * x
-
-def eml_norm_extract(eps: float, x: float) -> float:
-    """Normalized extractor: 2(exp(εx) - 1 - εx)/ε² ≈ x²"""
-    return 2 * (np.exp(eps * x) - 1 - eps * x) / eps**2
-
-def eml_approx_sq(w: int, x: float) -> float:
-    """EML approximation of x² using parameter ε = 1/w"""
-    eps = 1.0 / w
-    return eml_norm_extract(eps, x)
-
-def pwl_approx_sq_error(w: int) -> float:
-    """Best piecewise linear approximation error for x² with w pieces"""
-    return 1.0 / (8 * w**2)
-
-def eml_approx_sq_error_bound(w: int) -> float:
-    """Theoretical EML error bound: exp(1)/(3w)"""
-    return np.exp(1) / (3 * w)
-
-def crossover_depth(w: int) -> float:
-    """Minimum depth d where EML beats PWL: d ≥ 8w·exp(1)/3"""
-    return 8 * w * np.exp(1) / 3
-
-# ===== DEMO 1: Quadratic Extraction =====
-print("=" * 60)
-print("DEMO 1: EML Quadratic Extraction")
-print("=" * 60)
-print("\nFor small ε, 2(exp(εx) - 1 - εx)/ε² ≈ x²")
-print(f"{'ε':>8} {'x':>6} {'Approx':>12} {'x²':>12} {'Error':>12}")
-print("-" * 56)
-
-for eps in [1.0, 0.5, 0.1, 0.01, 0.001]:
-    for x in [0.25, 0.5, 0.75, 1.0]:
-        approx = eml_norm_extract(eps, x)
-        true_val = x**2
-        error = abs(approx - true_val)
-        print(f"{eps:8.3f} {x:6.2f} {approx:12.8f} {true_val:12.8f} {error:12.2e}")
-    print()
-
-# ===== DEMO 2: Width-w Approximation =====
-print("=" * 60)
-print("DEMO 2: Width-w EML Approximation of x²")
-print("=" * 60)
-print(f"\n{'w':>6} {'Max Error (obs)':>15} {'Bound (e/3w)':>15} {'PWL (1/8w²)':>15}")
-print("-" * 55)
-
-for w in [1, 2, 5, 10, 20, 50, 100]:
-    xs = np.linspace(0, 1, 1000)
-    errors = [abs(eml_approx_sq(w, x) - x**2) for x in xs]
-    max_err = max(errors)
-    bound = eml_approx_sq_error_bound(w)
-    pwl = pwl_approx_sq_error(w)
-    print(f"{w:6d} {max_err:15.8f} {bound:15.8f} {pwl:15.8f}")
-
-# ===== DEMO 3: Depth-Width Crossover =====
-print("\n" + "=" * 60)
-print("DEMO 3: Depth-Width Crossover Point")
-print("=" * 60)
-print(f"\n{'w':>6} {'Min d (crossover)':>20} {'EML err (d=d_min)':>20} {'PWL err':>15}")
-print("-" * 65)
-
-for w in [1, 2, 5, 10, 20, 50]:
-    d_min = int(np.ceil(crossover_depth(w)))
-    eml_err = np.exp(1) / (3 * w * d_min)
-    pwl_err = pwl_approx_sq_error(w)
-    print(f"{w:6d} {d_min:20d} {eml_err:20.8f} {pwl_err:15.8f}")
-
-# ===== DEMO 4: Taylor Remainder Verification =====
-print("\n" + "=" * 60)
-print("DEMO 4: Taylor Remainder Bound Verification")
-print("=" * 60)
-print(f"\n{'t':>8} {'|R₂(t)|':>15} {'|t|³/6·exp(|t|)':>18} {'Ratio':>10}")
-print("-" * 55)
-
-for t in [-2, -1, -0.5, 0.1, 0.5, 1.0, 2.0]:
-    remainder = abs(np.exp(t) - 1 - t - t**2/2)
-    bound = abs(t)**3 / 6 * np.exp(abs(t))
-    ratio = remainder / bound if bound > 0 else 0
-    print(f"{t:8.2f} {remainder:15.8e} {bound:18.8e} {ratio:10.4f}")
-
-print("\nAll ratios ≤ 1 confirms the Taylor remainder bound (Theorem 1).")
-
-# ===== DEMO 5: Smoothness Comparison =====
-print("\n" + "=" * 60)
-print("DEMO 5: Smoothness Comparison (EML vs ReLU)")
-print("=" * 60)
-
-def relu(x): return max(0, x)
-def eml_unit(x, a=1, b=0, c=1, d=1):
-    return np.exp(a*x + b) - np.log(c*x + d)
-
-h = 1e-8
-x0 = 0.0  # ReLU is non-differentiable here
-
-# Numerical derivatives at x=0
-relu_left = (relu(x0) - relu(x0 - h)) / h
-relu_right = (relu(x0 + h) - relu(x0)) / h
-
-eml_left = (eml_unit(x0) - eml_unit(x0 - h)) / h
-eml_right = (eml_unit(x0 + h) - eml_unit(x0)) / h
-
-print(f"\nAt x = 0:")
-print(f"  ReLU left derivative:  {relu_left:.6f}")
-print(f"  ReLU right derivative: {relu_right:.6f}")
-print(f"  ReLU differentiable?   {'Yes' if abs(relu_left - relu_right) < 1e-4 else 'No'}")
-print(f"\n  EML left derivative:   {eml_left:.6f}")
-print(f"  EML right derivative:  {eml_right:.6f}")
-print(f"  EML differentiable?    {'Yes' if abs(eml_left - eml_right) < 1e-4 else 'No'}")
-
-print("\n\nAll demos completed successfully.")
-
-
-#!/usr/bin/env python3
-"""
-Visualization: EML vs PWL Approximation Spectrum
-
-Generates a heatmap comparing EML and piecewise linear approximation
-error surfaces for x² on [0,1].
+with cancellation-aware series formulas, compares sampled errors with the
+uniform certificate 4/(9*w**2), reports derivative errors, and optionally
+writes an SVG visualization.
 """
 
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.colors import LogNorm
+from __future__ import annotations
 
-def eml_error(d, w):
-    """EML spectrum error bound."""
-    if w == 0 or d == 0:
-        return 1.0
-    return np.exp(1) / (3 * w * d)
-
-def pwl_error(d, w):
-    """Piecewise linear spectrum error bound."""
-    if w == 0:
-        return 1.0
-    return 1.0 / (8 * w**2)
-
-# Create grid
-depths = np.arange(1, 51)
-widths = np.arange(1, 51)
-D, W = np.meshgrid(depths, widths)
-
-# Compute error surfaces
-EML_err = np.vectorize(eml_error)(D, W)
-PWL_err = np.vectorize(pwl_error)(D, W)
-
-# Ratio: EML/PWL (< 1 means EML is better)
-ratio = EML_err / PWL_err
-
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-# Plot 1: EML error surface
-im1 = axes[0].pcolormesh(depths, widths, EML_err, norm=LogNorm(), cmap='viridis')
-axes[0].set_xlabel('Depth d')
-axes[0].set_ylabel('Width w')
-axes[0].set_title('EML Error: exp(1)/(3wd)')
-plt.colorbar(im1, ax=axes[0], label='Error bound')
-
-# Isoperformance contours
-for eps in [0.1, 0.01, 0.001]:
-    contour_d = np.linspace(1, 50, 200)
-    contour_w = np.exp(1) / (3 * eps * contour_d)
-    mask = (contour_w >= 1) & (contour_w <= 50)
-    axes[0].plot(contour_d[mask], contour_w[mask], 'w--', alpha=0.7,
-                 label=f'ε={eps}')
-axes[0].legend(fontsize=8)
-
-# Plot 2: PWL error surface
-im2 = axes[1].pcolormesh(depths, widths, PWL_err, norm=LogNorm(), cmap='viridis')
-axes[1].set_xlabel('Depth d')
-axes[1].set_ylabel('Width w')
-axes[1].set_title('PWL Error: 1/(8w²)')
-plt.colorbar(im2, ax=axes[1], label='Error bound')
-
-# Plot 3: Ratio (EML advantage region)
-im3 = axes[2].pcolormesh(depths, widths, ratio, norm=LogNorm(vmin=0.01, vmax=100),
-                          cmap='RdBu_r')
-axes[2].set_xlabel('Depth d')
-axes[2].set_ylabel('Width w')
-axes[2].set_title('EML/PWL Ratio (blue = EML better)')
-plt.colorbar(im3, ax=axes[2], label='Error ratio')
-
-# Crossover curve: 8w·exp(1)/3 = d
-crossover_w = np.linspace(1, 50, 200)
-crossover_d = 8 * crossover_w * np.exp(1) / 3
-mask = crossover_d <= 50
-axes[2].plot(crossover_d[mask], crossover_w[mask], 'k-', linewidth=2,
-             label='Crossover: d = 8we/3')
-axes[2].legend(fontsize=8)
-
-plt.tight_layout()
-plt.savefig('spectrum_comparison.png', dpi=150, bbox_inches='tight')
-print("Saved spectrum_comparison.png")
+import argparse
+import math
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, Sequence
 
 
-#!/usr/bin/env python3
-"""
-Visualization: EML Taylor Quadratic Extraction
+@dataclass(frozen=True)
+class WidthReport:
+    """Sampled diagnostics for one positive width index."""
 
-Shows how exp(εx) extracts the quadratic term x² as ε → 0,
-and compares EML approximation quality vs piecewise linear.
-"""
+    width: int
+    max_value_error: float
+    maximizing_x: float
+    certified_bound: float
+    inverse_linear_benchmark: float
+    max_derivative_error: float
+    scaled_value_error: float
 
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
-x = np.linspace(0, 1, 1000)
+def _second_exponential_remainder(z: float) -> float:
+    """Return exp(z) - 1 - z accurately for the small nonnegative z used here."""
+    if abs(z) >= 1.0e-4:
+        return math.expm1(z) - z
+    # Direct subtraction from expm1 eventually loses the z**2 signal.
+    term = 0.5 * z * z
+    total = term
+    k = 2
+    while k < 80:
+        k += 1
+        term *= z / k
+        updated = total + term
+        if updated == total:
+            break
+        total = updated
+    return total
 
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 
-# Plot 1: EML quadratic extraction for various ε
-ax = axes[0, 0]
-ax.plot(x, x**2, 'k-', linewidth=2, label='x²')
-for eps in [1.0, 0.5, 0.2, 0.1, 0.05]:
-    approx = 2 * (np.exp(eps * x) - 1 - eps * x) / eps**2
-    ax.plot(x, approx, '--', label=f'ε = {eps}', alpha=0.8)
-ax.set_xlabel('x')
-ax.set_ylabel('y')
-ax.set_title('EML Quadratic Extraction: 2(exp(εx)-1-εx)/ε² → x²')
-ax.legend()
-ax.set_ylim(-0.1, 1.5)
+def quadratic_approximant(width: int, x: float) -> float:
+    """Evaluate the width-indexed smooth approximant Q_w(x)."""
+    if width < 1:
+        raise ValueError("width must be a positive integer")
+    h = 1.0 / (width * width)
+    z = h * x
+    return 2.0 * _second_exponential_remainder(z) / (h * h)
 
-# Plot 2: Error vs width
-ax = axes[0, 1]
-widths = range(1, 101)
-eml_errors = []
-pwl_errors = []
-eml_bounds = []
 
-for w in widths:
-    eps = 1.0 / w
-    approx_vals = 2 * (np.exp(eps * x) - 1 - eps * x) / eps**2
-    max_err = np.max(np.abs(approx_vals - x**2))
-    eml_errors.append(max_err)
-    pwl_errors.append(1.0 / (8 * w**2))
-    eml_bounds.append(np.exp(1) / (3 * w))
+def quadratic_approximant_derivative(width: int, x: float) -> float:
+    """Evaluate Q_w'(x) = 2 expm1(h*x) / h stably."""
+    if width < 1:
+        raise ValueError("width must be a positive integer")
+    h = 1.0 / (width * width)
+    return 2.0 * math.expm1(h * x) / h
 
-ax.semilogy(widths, eml_errors, 'b-', label='EML actual error')
-ax.semilogy(widths, eml_bounds, 'b--', label='EML bound: e/(3w)')
-ax.semilogy(widths, pwl_errors, 'r-', label='PWL error: 1/(8w²)')
-ax.set_xlabel('Width w')
-ax.set_ylabel('Max error on [0,1]')
-ax.set_title('Error vs Width for x² Approximation')
-ax.legend()
-ax.grid(True, alpha=0.3)
 
-# Plot 3: Taylor remainder verification
-ax = axes[1, 0]
-t_vals = np.linspace(-3, 3, 1000)
-remainder = np.abs(np.exp(t_vals) - 1 - t_vals - t_vals**2/2)
-bound = np.abs(t_vals)**3 / 6 * np.exp(np.abs(t_vals))
+def certified_bound(width: int) -> float:
+    """Return the proved uniform value-error certificate 4/(9 w^2)."""
+    if width < 1:
+        raise ValueError("width must be a positive integer")
+    return 4.0 / (9.0 * width * width)
 
-ax.semilogy(t_vals, remainder, 'b-', label='|exp(t) - 1 - t - t²/2|')
-ax.semilogy(t_vals, bound, 'r--', label='|t|³/6 · exp(|t|)')
-ax.set_xlabel('t')
-ax.set_ylabel('Value')
-ax.set_title('Taylor Remainder Bound (Theorem 1)')
-ax.legend()
-ax.grid(True, alpha=0.3)
 
-# Plot 4: Crossover depth
-ax = axes[1, 1]
-widths_arr = np.arange(1, 51)
-crossover_d = 8 * widths_arr * np.exp(1) / 3
+def inverse_linear_benchmark(width: int) -> float:
+    """Return the matched inverse-linear comparison value 4/(9 w)."""
+    if width < 1:
+        raise ValueError("width must be a positive integer")
+    return 4.0 / (9.0 * width)
 
-ax.plot(widths_arr, crossover_d, 'b-', linewidth=2)
-ax.fill_between(widths_arr, crossover_d, 500, alpha=0.2, color='blue',
-                label='EML dominates PWL')
-ax.fill_between(widths_arr, 0, crossover_d, alpha=0.2, color='red',
-                label='PWL dominates EML')
-ax.set_xlabel('Width w')
-ax.set_ylabel('Depth d')
-ax.set_title('Depth-Width Crossover: d ≥ 8we/3')
-ax.set_ylim(0, 400)
-ax.legend()
-ax.grid(True, alpha=0.3)
 
-plt.tight_layout()
-plt.savefig('taylor_extraction.png', dpi=150, bbox_inches='tight')
-print("Saved taylor_extraction.png")
+def sample_report(width: int, samples: int = 4001) -> WidthReport:
+    """Sample value and derivative errors on an equally spaced grid in [0, 1]."""
+    if samples < 2:
+        raise ValueError("samples must be at least 2")
+    max_value_error = -1.0
+    maximizing_x = 0.0
+    max_derivative_error = -1.0
+    for index in range(samples):
+        x = index / (samples - 1)
+        value_error = abs(quadratic_approximant(width, x) - x * x)
+        derivative_error = abs(quadratic_approximant_derivative(width, x) - 2.0 * x)
+        if value_error > max_value_error:
+            max_value_error = value_error
+            maximizing_x = x
+        max_derivative_error = max(max_derivative_error, derivative_error)
+    return WidthReport(
+        width=width,
+        max_value_error=max_value_error,
+        maximizing_x=maximizing_x,
+        certified_bound=certified_bound(width),
+        inverse_linear_benchmark=inverse_linear_benchmark(width),
+        max_derivative_error=max_derivative_error,
+        scaled_value_error=width * width * max_value_error,
+    )
+
+
+def print_reports(widths: Iterable[int], samples: int) -> None:
+    """Print a compact table of sampled diagnostics."""
+    header = (
+        " width | sampled max error | at x   | certificate  | inverse-linear | "
+        "w^2*error | max slope error"
+    )
+    print(header)
+    print("-" * len(header))
+    for width in widths:
+        report = sample_report(width, samples)
+        print(
+            f"{report.width:6d} | {report.max_value_error:17.10e} | "
+            f"{report.maximizing_x:6.3f} | {report.certified_bound:12.5e} | "
+            f"{report.inverse_linear_benchmark:14.5e} | "
+            f"{report.scaled_value_error:9.6f} | "
+            f"{report.max_derivative_error:15.8e}"
+        )
+        # This assertion checks the sampled implementation against the certificate.
+        assert report.max_value_error <= report.certified_bound * (1.0 + 1.0e-10)
+
+
+def write_svg(widths: Sequence[int], output: Path, points: int = 401) -> None:
+    """Write a dependency-free SVG showing curves and absolute-error profiles."""
+    if not widths:
+        raise ValueError("at least one width is required")
+    colors = ["#0ea5e9", "#8b5cf6", "#f97316", "#10b981", "#e11d48"]
+    canvas_w, canvas_h = 1000, 640
+    left, right, top, bottom = 75, 35, 55, 65
+    plot_w = canvas_w - left - right
+    panel_h = 220
+
+    def px(x: float) -> float:
+        return left + x * plot_w
+
+    def py_curve(y: float) -> float:
+        return top + panel_h * (1.05 - y) / 1.05
+
+    max_bound = max(certified_bound(w) for w in widths)
+    error_top = top + panel_h + 90
+
+    def py_error(error: float) -> float:
+        return error_top + panel_h * (1.0 - error / max_bound)
+
+    def polyline(coords: list[tuple[float, float]], color: str, width: float = 2.2) -> str:
+        points_text = " ".join(f"{x:.2f},{y:.2f}" for x, y in coords)
+        return f'<polyline points="{points_text}" fill="none" stroke="{color}" stroke-width="{width}"/>'
+
+    xs = [i / (points - 1) for i in range(points)]
+    elements = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{canvas_w}" height="{canvas_h}" viewBox="0 0 {canvas_w} {canvas_h}">',
+        '<rect width="100%" height="100%" fill="#f8fafc"/>',
+        '<style>text{font-family:system-ui,sans-serif;fill:#0f172a}.small{font-size:13px}.title{font-size:22px;font-weight:700}</style>',
+        '<text x="75" y="32" class="title">Smooth quadratic approximation and certified errors</text>',
+        f'<line x1="{left}" y1="{py_curve(0)}" x2="{canvas_w-right}" y2="{py_curve(0)}" stroke="#94a3b8"/>',
+        f'<line x1="{left}" y1="{top}" x2="{left}" y2="{top+panel_h}" stroke="#94a3b8"/>',
+        '<text x="16" y="72" class="small">value</text>',
+    ]
+    target = [(px(x), py_curve(x * x)) for x in xs]
+    elements.append(polyline(target, "#0f172a", 3.0))
+    legend_y = 64
+    elements.append(f'<text x="{canvas_w-210}" y="{legend_y}" class="small">target x²</text>')
+    for idx, width in enumerate(widths):
+        color = colors[idx % len(colors)]
+        curve = [(px(x), py_curve(quadratic_approximant(width, x))) for x in xs]
+        elements.append(polyline(curve, color))
+        legend_y += 20
+        elements.append(f'<text x="{canvas_w-210}" y="{legend_y}" class="small" fill="{color}">Q, w={width}</text>')
+
+    elements.extend([
+        f'<line x1="{left}" y1="{error_top+panel_h}" x2="{canvas_w-right}" y2="{error_top+panel_h}" stroke="#94a3b8"/>',
+        f'<line x1="{left}" y1="{error_top}" x2="{left}" y2="{error_top+panel_h}" stroke="#94a3b8"/>',
+        f'<text x="16" y="{error_top+15}" class="small">absolute</text>',
+        f'<text x="16" y="{error_top+31}" class="small">error</text>',
+    ])
+    for idx, width in enumerate(widths):
+        color = colors[idx % len(colors)]
+        errors = [(px(x), py_error(abs(quadratic_approximant(width, x) - x * x))) for x in xs]
+        elements.append(polyline(errors, color))
+        bound_y = py_error(certified_bound(width))
+        elements.append(
+            f'<line x1="{left}" y1="{bound_y:.2f}" x2="{canvas_w-right}" y2="{bound_y:.2f}" '
+            f'stroke="{color}" stroke-width="1" stroke-dasharray="6 5" opacity="0.65"/>'
+        )
+    elements.extend([
+        f'<text x="{canvas_w/2-15}" y="{canvas_h-20}" class="small">x</text>',
+        f'<text x="{left}" y="{canvas_h-20}" class="small">0</text>',
+        f'<text x="{canvas_w-right-8}" y="{canvas_h-20}" class="small">1</text>',
+        '</svg>',
+    ])
+    output.write_text("\n".join(elements), encoding="utf-8")
+
+
+def parse_widths(raw: str) -> list[int]:
+    """Parse a comma-separated list of positive widths."""
+    widths = [int(item.strip()) for item in raw.split(",") if item.strip()]
+    if not widths or any(width < 1 for width in widths):
+        raise argparse.ArgumentTypeError("widths must be positive comma-separated integers")
+    return widths
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--widths", type=parse_widths, default=[1, 2, 4, 8, 16, 32])
+    parser.add_argument("--samples", type=int, default=4001)
+    parser.add_argument("--svg", type=Path, default=None, help="optional SVG output path")
+    args = parser.parse_args()
+    print_reports(args.widths, args.samples)
+    if args.svg is not None:
+        write_svg(args.widths[:5], args.svg)
+        print(f"\nWrote visualization to {args.svg}")
+
+
+if __name__ == "__main__":
+    main()
