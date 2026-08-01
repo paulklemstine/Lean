@@ -1,0 +1,3 @@
+# Computational Evidence Justification
+
+The formal result developed here is a generic finite-termination and fixed-point theorem for a completion procedure, parameterized by an arbitrary finite polynomial test set, tropical ideal, and monomial order. It does not assert a numerical sequence or a fixed collection of concrete instances, so OEIS searches, plots, and sampled calculations would not provide meaningful evidence for the universally quantified claim. The proof instead verifies the exact finite-set invariants: containment, ideal membership, strict cardinality growth when an obstruction exists, and stabilization within the cardinality of the test universe.

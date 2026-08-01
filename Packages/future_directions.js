@@ -1838,6 +1838,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b080b405 (Q=0.789), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple n",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_b080b405_eeb26716",
+    "priority_score": 0.8891599999999998,
+    "research_mode": "team",
+    "source_exp_id": "b080b405",
+    "status": "available",
+    "timestamp": "2026-08-01T21:18:01.345323+00:00",
+    "title": "Deepening: ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart s"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 72d619d5 (Q=0.789), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n",
     "domains": [
       "Novelty"
@@ -2718,6 +2732,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 3cce8c08 (Q=0.766), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_3cce8c08_da84e3cc",
+    "priority_score": 0.86564,
+    "research_mode": "team",
+    "source_exp_id": "3cce8c08",
+    "status": "available",
+    "timestamp": "2026-08-01T21:16:58.258932+00:00",
+    "title": "Deepening: EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 1c628216 (Q=0.762), which proved 15 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressib",
     "domains": [
       "Combinatorics"
@@ -2731,16 +2759,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Borges' Library of Babel: Combinatorics of Everything"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "316f6446",
     "description": "Building on cycle a7ba7617 (Q=0.762), which proved 10 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
     "domains": [
       "Shared"
     ],
     "id": "push_a7ba7617_f32b69e1",
+    "phase": "A",
     "priority_score": 0.8617199999999999,
     "research_mode": "team",
     "source_exp_id": "a7ba7617",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T23:27:51.323431+00:00",
     "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
   },
@@ -4118,23 +4147,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
-  },
-  {
-    "consumed_by_exp_id": "3cce8c08",
-    "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
-    "domains": [
-      "EML",
-      "Tropical",
-      "MachineLearning"
-    ],
-    "id": "seed_338",
-    "phase": "A",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
   },
   {
     "consumed_by_exp_id": "",
@@ -6406,21 +6418,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Heilbronn's Problem in the Unit Triangle: Certified Optimal Configurations for up to $n\\le 8$"
   },
   {
-    "consumed_by_exp_id": "b080b405",
-    "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a M\u00f6bius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "fd_0184",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14887v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T06:45:30.630076+00:00",
-    "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algorithms and Hardness' and formalize its key results. Abstract: Roman domination and its variants form an important family of domination-type graph parameters motivated by protection, fault tolerance, and resource allocation. A Roman dominating function of a graph \\(G\\) is a function \\(f:V(G)\\rightarrow\\{0,1,2\\}\\) such that every vertex \\(v\\) with \\(f(v)=0\\) has a neighbour \\(u\\) with \\(f(u)=2\\). The weight of \\(f\\) is \\(w(f)=\\sum_{v\\in V(G)}f(v)\\), and the minimum weight of a Roman dominating function of \\(G\\) is the Roman domination number, denoted by \\(\u03b3_R(G)\\). In this paper, we study four variants of Roman domination on two natural subclasses of bipartite graphs, namely convex bipartite graphs and chordal bipartite graphs. On the positive side, we develop a unified left-to-right dynamic programming framework for Roman-\\(\\{2\\}\\) domination, double Roman domination, perfect Roman domination, and unique response Roman domination on convex bipartite graphs. The algorithms exploit the interval structure of one bipartition class and represent all un",
     "domains": [
@@ -7394,7 +7391,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grokking: Phase Transitions in Learning"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e0a0c8a",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
     "domains": [
       "Computation",
@@ -7402,10 +7399,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_334",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
@@ -10928,6 +10926,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T19:43:07.771912+00:00",
     "title": "1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton po"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L\u00b9` empirical loss reaches the unique sample median after at most `\u2308|x\u2080-m|/\u03b7\u2309` iterations when `\u03b7 > 0`.\n\n2. **Vector tropical monomials.** For a separable `d`-parameter tropical affine model with coordinatewise three-point losses, simultaneous clipped descent terminates after at most the maximum of the `d` coordinatewise termination times.\n\n3. **Perturbed tropical limit.** If each tropical update is perturbed by an error of magnitude at most `\u03b5 < \u03b7`, then its parameter distance after `n` steps is at most `max 0 (|x\u2080-m|-n(\u03b7-\u03b5))` until it enters the closed `\u03b5`-neighborhood of the minimizer.\n\n4. **ReLU lower bound.** A single ordinary ReLU unit cannot represent the two-sided clipped update `x \u21a6 tropicalFlow m t x` for `t > 0`, while two shifted ReLU units suffice, as proved in `Catalog/Applications/EML/TropicalGDConvergence.lean`.\n\n5. **Even-sample minimizer interval.** For `2k` ordered scalar residual targets, the tropical `L\u00b9` minimizers are exactly the interval between the two central order statistics, and clipped subgradient descent reaches that interval in finite time for every positive step size.\n",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_0889",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3cce8c08",
+    "status": "available",
+    "timestamp": "2026-08-01T21:16:53.946133+00:00",
+    "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Extend the two-state Cayley\u2013Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point sets and prove bijections between their elements and the corresponding matrix products and traces.\n- Derive formal-power-series identities from the proved recurrences, including the shared characteristic denominator for both parity classes.\n- Formalize the M\u00f6bius recurrence and arctangent closed form for the odd-dimensional series.\n- Identify the dominant real pole under positivity and irreducibility hypotheses and prove the resulting exponential-growth statements.\n- Develop the Jacobi derivative identity for the even cyclic numerator and the corresponding odd cyclic numerator formula.\n",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_0890",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b080b405",
+    "status": "available",
+    "timestamp": "2026-08-01T21:17:57.775064+00:00",
+    "title": "Future directions from cycle b080b405"
   },
   {
     "consumed_by_exp_id": "",

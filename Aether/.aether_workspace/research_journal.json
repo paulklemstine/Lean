@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e1e4ff02",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n1. **Derive the tropical model from finite-temperature EML training.** Define a\n   log-sum-exp-smoothed neuron with scale parameter and prove convergence of its\n   losses and grad",
-      "quality_score": 0.76074,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T17:59:48",
-      "title": "EML Training Dynamics as Tropical Gradient Flow"
-    },
-    {
       "cycle_id": "00b7234b",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\n1. **Fibonacci `B₃` density.** Let `ρFib : BraidGrp 2 →* SU(2)` be obtained from the standard Fibonacci `F`- and `R`-matrices after removing their global phases. Conjecture: `Dens",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-08-01T21:16:58",
       "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+    },
+    {
+      "cycle_id": "b080b405",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n- Extend the two-state Cayley–Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point",
+      "quality_score": 0.7891599999999999,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-01T21:18:01",
+      "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2153ae5a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Counting, Pigeonhole, and the Tower behind Multiple-Tree Agreement Subtrees\n\nThis cycle isolated the *quantitative core* of the many-tree Maximum Agreement Subtree\nproblem for unr",
-      "quality_score": 0.64,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-24T14:54:57",
-      "title": "ArXiv paper: On Agreement Subtrees in Multiple Pylogenetic Trees"
-    },
     {
       "cycle_id": "86d1611f",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-08-01T21:16:58",
       "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+    },
+    {
+      "cycle_id": "b080b405",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n- Extend the two-state Cayley–Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point",
+      "quality_score": 0.7891599999999999,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-01T21:18:01",
+      "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a7ba7617",
-      "domain": "Shared",
-      "name": "finite_horizon_conservation",
-      "quality": 0.76172
-    },
-    {
-      "cycle_id": "a7ba7617",
-      "domain": "Shared",
-      "name": "harvested_le_initial_add_injected",
-      "quality": 0.76172
-    },
-    {
-      "cycle_id": "a7ba7617",
-      "domain": "Shared",
-      "name": "netExport_le_initial",
-      "quality": 0.76172
-    },
     {
       "cycle_id": "bb566a68",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "gdIter_eq_median_of_distance_le",
       "quality": 0.76564
+    },
+    {
+      "cycle_id": "b080b405",
+      "domain": "Cryptography",
+      "name": "two_state_cayley_hamilton",
+      "quality": 0.7891599999999999
+    },
+    {
+      "cycle_id": "b080b405",
+      "domain": "Cryptography",
+      "name": "matrix_power_recurrence",
+      "quality": 0.7891599999999999
+    },
+    {
+      "cycle_id": "b080b405",
+      "domain": "Cryptography",
+      "name": "open_count_recurrence",
+      "quality": 0.7891599999999999
     }
   ],
-  "last_updated": "2026-08-01T21:16:58",
+  "last_updated": "2026-08-01T21:18:01",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "c3aad27b",
-        "quality": 0.6256666666666666,
-        "theorems": 18,
-        "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
-      },
-      {
         "cycle_id": "a68d3b50",
         "quality": 0.7667599999999999,
         "theorems": 11,
@@ -3389,6 +3383,12 @@
         "quality": 0.7701199999999999,
         "theorems": 17,
         "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
+      },
+      {
+        "cycle_id": "b080b405",
+        "quality": 0.7891599999999999,
+        "theorems": 13,
+        "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart s"
       }
     ],
     "Geometry": [
