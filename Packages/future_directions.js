@@ -2027,7 +2027,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Odd Perfect Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0a515f0",
     "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
     "domains": [
       "MachineLearning",
@@ -2035,10 +2035,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_043",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
@@ -2250,6 +2251,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T12:21:06.834733+00:00",
     "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d58932ad (Q=0.772), which proved 13 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_d58932ad_bbcab10f",
+    "priority_score": 0.8724999999999999,
+    "research_mode": "team",
+    "source_exp_id": "d58932ad",
+    "status": "available",
+    "timestamp": "2026-08-01T06:48:10.452584+00:00",
+    "title": "Deepening: Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
   },
   {
     "consumed_by_exp_id": "",
@@ -3344,23 +3359,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Schanuel's Conjecture"
   },
   {
-    "consumed_by_exp_id": "d58932ad",
-    "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
-    "domains": [
-      "Geometry",
-      "Computation",
-      "Topology"
-    ],
-    "id": "seed_092",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Resolve Kaplansky's conjectures on group rings: no zero divisors, no idempotents other than 0/1, and no nontrivial units in K[G] for torsion-free G.",
     "domains": [
@@ -3921,22 +3919,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "04022a5b",
-    "description": "Formalize molecular computing: a 'nanocomputer' is a system of molecules that performs computation via chemical reactions. Prove: chemical reaction networks (CRNs) with mass-action kinetics are Turing-complete (they can simulate any Turing machine). Show: the minimum volume for a CRN computing a function f is proportional to the Kolmogorov complexity of f. Conjecture: a single cubic micrometer of DNA can store 10^18 bits and compute at 10^15 operations/second. Explore: formalize the 'DNA computer' \u2014 can we solve NP-complete problems faster with molecular parallelism? Prove: molecular parallelism gives a constant-factor speedup, not exponential (the molecules still need to be prepared).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "seed_412",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Moonshot: Nanotechnology Computation \u2014 Molecular Computing Limits"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Dru\u017ckowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
     "domains": [
@@ -4131,7 +4113,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3cce8c08",
     "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
     "domains": [
       "EML",
@@ -4139,10 +4121,11 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "seed_338",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
   },
@@ -10805,6 +10788,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T03:58:51.115806+00:00",
     "title": "The formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Molecular Computing Limits v26 \u2014 Results and Future Directions\n\n## Formal results\n\n`MolecularComputingLimitsV26.lean` is self-contained and proves the following claims.\n\n### Proved\n\n1. **Exact compiled CRN traces.** For any deterministic transition map, the unary reaction\n   `q \u2192 next(q)` takes the one-hot molecular encoding of `q` exactly to that of `next(q)`.\n   By induction, every finite execution trace is simulated exactly.\n2. **Mass-action compatibility.** At its one-hot source state, a compiled unary reaction's\n   falling-factorial mass-action propensity is exactly its assigned rate.\n3. **No hidden molecular replication.** Every state in a compiled one-hot trace has total\n   molecular mass one.\n4. **Exact volume law in the stated capacity model.** At positive density `b`, a description\n   of length `k` fits volume `v` exactly when `ceil(k/b) \u2264 v`. At unit density, minimum\n   volume equals description length.\n5. **Asymptotic volume bounds.** The exact minimum satisfies\n   `k \u2264 b * minimumVolume b k` and `minimumVolume b k \u2264 k + 1`.\n6. **Charged preparation eliminates exponential end-to-end advantage.** If preparing each\n   candidate costs at least one time unit, sequential exhaustive search costs at most twice\n   the molecular search time, including on a Boolean search space of size `2^n`.\n7. **Storage/throughput independence.** In an abstract device specification, fixing storage\n   at `10^18` bits imposes no throughput value. Thus the proposed `10^15` operations/second\n   requires a separate empirical kinetic premise.\n\n### Disproved or delimited\n\n1. **Exact integral proportionality at arbitrary density is false.** At density two,\n   `minimumVolume 2 1 = minimumVolume 2 2 = 1`; therefore no natural constant `c` can make\n   `minimumVolume 2 k = c*k` for every `k`. Ceiling division, rather than exact integral\n   proportionality, is the correct law.\n2. **The factor-two speed bound fails with free preparation.** For preparation cost zero and\n   three candidates, molecular time is one and sequential time is three, so twice molecular\n   time is still strictly smaller than sequential time.\n3. **Storage density does not establish throughput.** The formal countermodel contains two\n   devices with identical `10^18`-bit storage but throughputs zero and `10^15` respectively.\n4. **Scope of \u201cTuring-complete.\u201d** The compiler theorem gives exact finite traces using a\n   species indexed by each machine configuration and an externally scheduled source\n   reaction. It does **not** prove that one finite autonomous laboratory CRN with ordinary\n   mass-action ODE semantics simulates an unbounded Turing tape. Calling that stronger claim\n   proved would require a finite encoding, autonomous reaction selection, and an output/\n   halting correctness theorem.\n\n## Computational evidence\n\nA separate evidence file was not produced because the requested output is restricted to\nLean files and this document. Instead, the evidence is machine-checked in theorem\n`preparation_small_cases`. For one unit of preparation cost and candidate counts `2^k`,\n`k = 0,\u2026,7`, the molecular/sequential time pairs are:\n\n| `k` | candidates | molecular | sequential | sequential / molecular |\n|---:|---:|---:|---:|---:|\n| 0 | 1 | 2 | 2 | 1.000 |\n| 1 | 2 | 3 | 4 | 1.333 |\n| 2 | 4 | 5 | 8 | 1.600 |\n| 3 | 8 | 9 | 16 | 1.778 |\n| 4 | 16 | 17 | 32 | 1.882 |\n| 5 | 32 | 33 | 64 | 1.939 |\n| 6 | 64 | 65 | 128 | 1.969 |\n| 7 | 128 | 129 | 256 | 1.984 |\n\nThe ratio approaches two from below, matching the general theorem. The counterexample hunt\nalso found the free-preparation witness `(p,n) = (0,3)`. No OEIS search is relevant: these\nare direct geometric and affine sequences (`2^k`, `2^k+1`, and `2^(k+1)`) rather than a new\nenumerative sequence.\n\n## Future directions\n\n1. Define a finite-species autonomous CRN semantics and encode unbounded tape data in molecule\n   counts rather than species names.\n2. Prove fair stochastic simulation: desired reactions occur with probability one and decoded\n   outputs stabilize after machine halting.\n3. Relate stochastic mass-action chains to deterministic mass-action ODEs, with explicit error\n   probabilities and concentration/volume scaling.\n4. Introduce a universal prefix machine and a genuine Kolmogorov-complexity definition. Prove\n   lower bounds only after specifying how CRN descriptions are encoded and accounting for the\n   usual additive machine constant.\n5. Replace the linear preparation model by a work\u2013depth\u2013volume model that charges synthesis,\n   copying, mixing, readout, error correction, and disposal. Determine which constant-factor\n   conclusions survive.\n6. Formalize SAT solution enumeration and prove conditional lower bounds under an explicit\n   preparation model; avoid unconditional complexity claims that would imply unresolved\n   complexity-class separations.\n7. Add experimentally sourced premises for DNA packing density, reaction rates, thermal noise,\n   and readout bandwidth before attempting to certify the `10^18` bits or `10^15` operations/\n   second figures as physical claims.\n",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0873",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "04022a5b",
+    "status": "available",
+    "timestamp": "2026-08-01T06:47:25.710395+00:00",
+    "title": "`MolecularComputingLimitsV26.lean` is self-contained and proves the following cl"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal development shows that the proposed endpoint-independent formula is false, while the catalog's endpoint-dependent conformal weight exactly transports chordal Vietoris\u2013Rips and chart-centered \u010cech filtrations. The following are concrete, falsifiable next claims.\n\n1. **Geodesic filtration reparameterization.** For every finite stereographic point cloud and every `\u03b5 \u2208 [0, \u03c0]`, its spherical-geodesic Vietoris\u2013Rips complex at `\u03b5` equals its weighted-chordal Vietoris\u2013Rips complex at `2 * sin (\u03b5 / 2)`.\n\n2. **Full spherical \u010cech transport including the omitted pole.** If \u010cech centers are allowed on the entire sphere, then exact transport to the stereographic chart holds precisely for those simplices admitting a common-ball center distinct from the omitted pole. A finite counterexample should exist when this condition is dropped.\n\n3. **Metric property of the exact conformal weight.** The function\n   `2 * \u2016x-y\u2016 / sqrt ((1+\u2016x\u2016\u00b2)(1+\u2016y\u2016\u00b2))`\n   satisfies the triangle inequality on every finite-dimensional real Euclidean space, because it is the pullback of chordal distance under inverse stereographic projection.\n\n4. **No endpoint-independent radial replacement.** There is no function `f : \u211d \u2192 \u211d` such that the inverse-stereographic chordal distance equals `f (\u2016x-y\u2016)` for every pair `x,y : \u211d\u207f` when `n \u2265 1`. This can be falsified by exhibiting such a function, or proved using two translated pairs with equal Euclidean separation and unequal chordal distance.\n\n5. **Complexity claim requires a sparse model.** For arbitrary dense point clouds, explicitly producing all pairwise filtration values requires `\u03a9(N\u00b2)` output operations; an `O(N log N)` exact algorithm can therefore exist only under an implicit, sparse, bounded-dimensional, or output-sensitive representation. A precise lower bound should be proved in a comparison or algebraic decision-tree model.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0874",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d58932ad",
+    "status": "available",
+    "timestamp": "2026-08-01T06:48:07.282396+00:00",
+    "title": "The formal development shows that the proposed endpoint-independent formula is f"
   },
   {
     "consumed_by_exp_id": "",

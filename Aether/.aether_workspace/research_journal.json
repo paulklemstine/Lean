@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8aec96a6",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\nThe formal result identifies a structural obstruction in the proposed single-neuron model: after normalization, the factor `exp(a)` cancels, so `a` is unidentifiable and the two-p",
-      "quality_score": 0.76977,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-29T23:23:20",
-      "title": "EML Information Geometry: Fisher Information of exp-log Models"
-    },
-    {
       "cycle_id": "2996b72f",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n## Result established\n\n`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector between\nanalytic number theory and information theory:\n\n\\[\n\\gamma=\\sum_{k=0}^{\\inf",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-08-01T04:21:45",
       "title": "EML Number Theory: Transcendence and Algebraic Independence"
+    },
+    {
+      "cycle_id": "d58932ad",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nThe formal development shows that the proposed endpoint-independent formula is false, while the catalog's endpoint-dependent conformal weight exactly transports chordal Vietoris–R",
+      "quality_score": 0.7725,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-01T06:48:10",
+      "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a9c9c0c1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nResearch thread `th_0d5dcecd`, cycle 1 (root direction `fd_0391`).\n\n## What was proved this cycle\n\nThe file `Novelty/RamseyProbabilistic.lean` formalizes the classical **first-mom",
-      "quality_score": 0.67,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-24T02:40:38",
-      "title": "**Conjecture.** For a finite family of bad events with dependency degree at most"
-    },
     {
       "cycle_id": "5a4bc860",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-01T06:47:29",
       "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
+    },
+    {
+      "cycle_id": "d58932ad",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nThe formal development shows that the proposed endpoint-independent formula is false, while the catalog's endpoint-dependent conformal weight exactly transports chordal Vietoris–R",
+      "quality_score": 0.7725,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-01T06:48:10",
+      "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "50db037d",
-      "domain": "Cryptography",
-      "name": "verify_eq_sum_commitments",
-      "quality": 0.7722199999999999
-    },
-    {
-      "cycle_id": "50db037d",
-      "domain": "Cryptography",
-      "name": "honest_share_verifies",
-      "quality": 0.7722199999999999
-    },
-    {
-      "cycle_id": "50db037d",
-      "domain": "Cryptography",
-      "name": "cheating_dealer_caught",
-      "quality": 0.7722199999999999
-    },
     {
       "cycle_id": "972f5eac",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "concreteTerm_eval",
       "quality": 0.7986800000000001
+    },
+    {
+      "cycle_id": "d58932ad",
+      "domain": "Computation",
+      "name": "ripsFace_chordal_iff_weighted",
+      "quality": 0.7725
+    },
+    {
+      "cycle_id": "d58932ad",
+      "domain": "Computation",
+      "name": "cechFace_chordal_iff_weighted",
+      "quality": 0.7725
+    },
+    {
+      "cycle_id": "d58932ad",
+      "domain": "Computation",
+      "name": "geodesicWeightedDist_eq",
+      "quality": 0.7725
     }
   ],
-  "last_updated": "2026-08-01T06:47:29",
+  "last_updated": "2026-08-01T06:48:10",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "25e8f86d",
-        "quality": 0.76,
-        "theorems": 0,
-        "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
-      },
-      {
         "cycle_id": "830d234a",
         "quality": 0.72,
         "theorems": 8,
@@ -3327,6 +3321,12 @@
         "quality": 0.8002199999999999,
         "theorems": 9,
         "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical D"
+      },
+      {
+        "cycle_id": "d58932ad",
+        "quality": 0.7725,
+        "theorems": 13,
+        "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
       }
     ],
     "Cryptography": [
