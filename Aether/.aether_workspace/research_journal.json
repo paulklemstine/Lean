@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bf94368f",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\n## Corrected mathematical status\n\nThe proposed powers-of-two family is a **strictly descending**, separated\nfiltration, not an ascending chain.  The formal development proves this",
-      "quality_score": 0.80162,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-30T14:42:57",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
-    {
       "cycle_id": "e1e4ff02",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n1. **Derive the tropical model from finite-temperature EML training.** Define a\n   log-sum-exp-smoothed neuron with scale parameter and prove convergence of its\n   losses and grad",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-08-01T19:43:11",
       "title": "Tropical Intersection Theory"
+    },
+    {
+      "cycle_id": "3cce8c08",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L¹` empirical loss reaches the unique sample median af",
+      "quality_score": 0.76564,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-08-01T21:16:58",
+      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b873ab80",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Metric and Thermodynamic Limits of Physical Oracles\n\nThis cycle turned the qualitative capacity obstruction for exact oracle loading\ninto quantitative resource inequalities, by tr",
-      "quality_score": 0.62,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-24T14:41:20",
-      "title": "**Conjecture.** For every family of devices that exactly resolves the first `n` "
-    },
     {
       "cycle_id": "2153ae5a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-08-01T19:43:11",
       "title": "Tropical Intersection Theory"
+    },
+    {
+      "cycle_id": "3cce8c08",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L¹` empirical loss reaches the unique sample median af",
+      "quality_score": 0.76564,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-08-01T21:16:58",
+      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e86cdc26",
-      "domain": "Computation",
-      "name": "below",
-      "quality": 0.8002199999999999
-    },
-    {
-      "cycle_id": "e86cdc26",
-      "domain": "Computation",
-      "name": "rho_halfCanonical_eq_genus_sub_square",
-      "quality": 0.8002199999999999
-    },
-    {
-      "cycle_id": "e86cdc26",
-      "domain": "Computation",
-      "name": "rho_halfCanonical_nonneg_iff_square_le",
-      "quality": 0.8002199999999999
-    },
     {
       "cycle_id": "a7ba7617",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "in",
       "quality": 0.79021
+    },
+    {
+      "cycle_id": "3cce8c08",
+      "domain": "Applications",
+      "name": "tropicalFlow_distance",
+      "quality": 0.76564
+    },
+    {
+      "cycle_id": "3cce8c08",
+      "domain": "Applications",
+      "name": "gdIter_distance",
+      "quality": 0.76564
+    },
+    {
+      "cycle_id": "3cce8c08",
+      "domain": "Applications",
+      "name": "gdIter_eq_median_of_distance_le",
+      "quality": 0.76564
     }
   ],
-  "last_updated": "2026-08-01T19:43:11",
+  "last_updated": "2026-08-01T21:16:58",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "560cda23",
-        "quality": 0.686,
-        "theorems": 38,
-        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-      },
-      {
         "cycle_id": "e1e4ff02",
         "quality": 0.76074,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.69669,
         "theorems": 6,
         "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
+      },
+      {
+        "cycle_id": "3cce8c08",
+        "quality": 0.76564,
+        "theorems": 19,
+        "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
       }
     ],
     "Bridges": [
