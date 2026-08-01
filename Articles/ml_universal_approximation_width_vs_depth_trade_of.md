@@ -1,120 +1,171 @@
-# The Folded Ruler: Why Deep Networks Beat Wide Ones
+# Why Depth Multiplies the Expressive Power of ReLU Networks
 
-Imagine you are handed a strip of paper and asked to draw a zig-zag line that climbs and falls a thousand times — a thousand sharp peaks marching across the page. You have two ways to do it.
+A neural network is often pictured as a web of artificial neurons, but for a mathematician it can also be viewed as a machine for folding space. Each rectified linear unit, or ReLU, applies the simple rule
 
-The first way is to draw every peak by hand, one after another. A thousand peaks means a thousand strokes. This is the *wide* strategy: brute force, one piece of machinery per feature.
+$$
+\operatorname{ReLU}(x)=\max\{x,0\}.
+$$
 
-The second way is sneakier. Fold the paper in half, then in half again, and again — ten times. A single zig-zag drawn across the folded stack, when unfolded, becomes more than a thousand zig-zags. Ten folds, one drawing. This is the *deep* strategy: each fold doubles the complexity for free.
+Nothing about this formula looks dramatic. To the left of zero it is flat; to the right it is a straight line. Yet when many such units are combined and, crucially, composed across layers, they can divide an input space into a rapidly growing collection of regions. On each region the network behaves like an affine function. The number of available regions is therefore a useful measure of how much geometric detail an architecture can potentially express.
 
-This little parable is, almost literally, the central drama of modern deep learning. The "folds" are the layers of a neural network. The question of whether folding really beats hand-drawing — whether **depth** is fundamentally more powerful than **width** — is one of the most important theoretical questions about why deep learning works at all. This article is about a clean, complete, two-sided answer to that question, built around one of the most elegant objects in mathematics: the *tent map*.
+This viewpoint makes the trade-off between width and depth unusually transparent. Width supplies alternatives side by side. Depth repeatedly recombines and refines what earlier layers have made. In a simple region-capacity model, a network of width $w$ and depth $L$ is assigned the capacity
 
-## The tent and the fold
+$$
+C(w,L)=(w+1)^L.
+$$
 
-Start with a single triangular bump. On the interval from $0$ to $1$, define the **tent map**:
+The formula is not, by itself, a universal approximation theorem or an exact count of regions for every possible network. It is a deliberately clean combinatorial model of available piecewise-affine cells. Within that model, however, the comparison between wide and deep architectures is exact: width changes the base of a power, while depth changes its exponent.
 
-$$\mathrm{tent}(x) = 1 - |2x - 1|.$$
+## The smallest useful ReLU constructions
 
-Read it slowly. At $x = 0$ the value is $1 - |{-1}| = 0$. At $x = \tfrac12$ it is $1 - 0 = 1$. At $x = 1$ it is $1 - |1| = 0$. In between it rises in a straight line to a peak and falls in a straight line back down. It is a perfect symmetric tent, one peak, base from $0$ to $1$.
+Before counting regions, it helps to see how elementary ReLU pieces cooperate. Two ReLU units recover the identity function exactly:
 
-Now do something playful: feed the tent map into itself. Compute $\mathrm{tent}(\mathrm{tent}(x))$. The output of the inner tent sweeps from $0$ up to $1$ and back down to $0$ as $x$ goes from $0$ to $1$. The outer tent turns *that* single sweep into a full up-and-down. The result is a function with **two** peaks. Compose three times and you get four peaks. Compose $k$ times — written $\mathrm{tent}^{[k]}$ — and you get exactly $2^k$ peaks.
+$$
+\operatorname{ReLU}(x)-\operatorname{ReLU}(-x)=x.
+$$
 
-This is the mathematics of folding. Each composition is a fold. One application gives $1$ peak's worth of oscillation, $k$ applications give $2^k$. The number of wiggles explodes *geometrically* in the number of compositions, even though each composition is the same simple tent.
+For $x\ge 0$, the first term equals $x$ and the second vanishes. For $x\le 0$, the first vanishes and the second equals $-x$, so subtracting it again yields $x$. Thus even though one ReLU discards the negative half-line, two oppositely oriented units preserve the entire signal.
 
-There is a beautifully precise way to see the explosion. Lay down a grid of dyadic points across $[0,1]$: the points $0, \tfrac{1}{2^k}, \tfrac{2}{2^k}, \ldots, 1$, of which there are $2^k + 1$. On this grid, the $k$-fold tent takes the values
+Three shifted ReLU terms create a tent:
 
-$$\mathrm{tent}^{[k]}\!\left(\frac{i}{2^k}\right) = i \bmod 2,$$
+$$
+T(x)=\operatorname{ReLU}(x)-2\operatorname{ReLU}(x-1)+\operatorname{ReLU}(x-2).
+$$
 
-that is, $0, 1, 0, 1, 0, 1, \ldots$ — a perfect alternation. The function jumps up by $1$, then down by $1$, then up by $1$, all the way across, $2^k$ times. It is a maximally jagged sawtooth.
+This function passes through the key values
 
-## Measuring jaggedness: total variation
+$$
+T(0)=0,\qquad T(1)=1,\qquad T(2)=0.
+$$
 
-To compare "how wiggly" two functions are, we need a number. The right one is **discrete total variation**: walk across the grid and add up the absolute sizes of every step,
+Indeed, it rises linearly from zero to one on $[0,1]$, falls linearly from one to zero on $[1,2]$, and is zero outside $[0,2]$. The tent is a miniature example of the geometry behind depth. Define its iterates by $T^{\circ 0}(x)=x$ and
 
-$$\mathrm{TV}_k(g) = \sum_{i=0}^{2^k - 1} \left| g\!\left(\frac{i+1}{2^k}\right) - g\!\left(\frac{i}{2^k}\right)\right|.$$
+$$
+T^{\circ(L+1)}(x)=T\bigl(T^{\circ L}(x)\bigr).
+$$
 
-For the $k$-fold tent, every one of the $2^k$ steps has size exactly $1$, so its total variation is exactly $2^k$. Jaggedness, quantified.
+Each extra composition feeds an already folded signal through another fold. This recurring motif is central to stronger depth-separation results, because repeated composition can generate oscillatory structure economically. Here it also provides an intuitive companion to the capacity formula: layering means composition, not merely addition.
 
-Total variation is the hero of this story because it is *conserved* in a useful sense. It cannot be faked, and it cannot be hidden. If you want to build a function that wiggles $2^k$ times, you must pay for $2^k$ units of total variation somewhere in your machinery. The whole depth-versus-width theorem is, at heart, an accounting argument about who can afford that bill.
+A scalar network with one hidden layer and $w$ neurons has the form
 
-## What a neuron can buy
+$$
+F(x)=b_0+\sum_{i=1}^{w}a_i\operatorname{ReLU}(c_i x+b_i).
+$$
 
-Both wide and deep networks are built from the same atom: the **rectified linear unit**, or ReLU,
+Every such function is continuous. Each affine map $c_i x+b_i$ is continuous, ReLU is continuous, and finite sums and products preserve continuity. The pieces may meet at corners, but they do not tear apart. This is why ReLU networks naturally approximate continuous shapes by connected piecewise-linear patches.
 
-$$\mathrm{relu}(y) = \max(y, 0).$$
+## A capacity law with exact consequences
 
-It is the simplest possible nonlinearity: pass the signal through if positive, otherwise output zero. A single hidden layer — a **shallow** network of width $w$ — combines $w$ of these ramps:
+The model $C(w,L)=(w+1)^L$ immediately gives two monotonicity principles. If $w_1\le w_2$, then
 
-$$\text{shallow}(x) = c + \sum_{j=1}^{w} a_j \,\mathrm{relu}(x - t_j).$$
+$$
+C(w_1,L)\le C(w_2,L),
+$$
 
-Each term is a ramp that switches on at threshold $t_j$ and then climbs with slope $a_j$. This is the "draw every peak by hand" machine. How much total variation can $w$ such ramps produce? Here is the elementary but decisive fact: across any single cell of the grid, one ramp can change by at most the cell's width times its slope, and the absolute changes can never exceed the weight $|a_j|$ summed across the whole interval. Adding up,
+and if $L_1\le L_2$, then
 
-$$\mathrm{TV}_k(\text{shallow}) \le \sum_{j=1}^{w} |a_j|.$$
+$$
+C(w,L_1)\le C(w,L_2).
+$$
 
-A shallow network's jaggedness is bounded by the total magnitude of its weights. To buy $2^k$ units of wiggle, it must spend $2^k$ units of weight. And if no single neuron's weight may exceed a cap $A$ — a wholly realistic constraint, since real networks cannot use astronomically large numbers — then the number of neurons itself must satisfy
+More neurons do not reduce capacity, and more layers do not reduce it either. The second statement uses the fact that the base $w+1$ is positive. These observations sound obvious, but their exact form lets us turn architectural comparisons into arithmetic.
 
-$$w \ge \frac{2^k}{A}.$$
+Suppose an approximation task demands $m^n$ cells, where $n$ may be interpreted as an input dimension and $m$ as a resolution parameter along each coordinate. A regular grid with $m$ subdivisions in each of $n$ directions has precisely this scaling. At depth $n$, width $m-1$ meets the demand exactly:
 
-The width must be **exponential** in the number of folds.
+$$
+C(m-1,n)=m^n.
+$$
 
-There is one subtlety worth honoring. Real networks rarely match a target *exactly*; they approximate it to some tolerance $\varepsilon$. Does approximation let a shallow network cheat? No — and the reason is a gentle one. If a shallow network stays within $\varepsilon$ of the alternating tent at every grid point, then at each step it must still travel almost the full distance of $1$, losing at most $2\varepsilon$ to the wiggle room at the two endpoints. So its total variation is still at least $2^k(1 - 2\varepsilon)$, and the width bound sharpens only slightly to
+When $m>0$ and $n>0$, this width is also minimal in the following sense: if
 
-$$w \ge \frac{2^k(1 - 2\varepsilon)}{A}.$$
+$$
+m^n\le C(w,n),
+$$
 
-As long as $\varepsilon < \tfrac12$ — that is, as long as the approximation is good enough to be worth anything — the exponential wall stands. (At $\varepsilon = \tfrac12$ the wall vanishes, and rightly so: a flat line at height $\tfrac12$ is within $\tfrac12$ of *everything*, so it "approximates" the tent in a vacuous, useless sense.)
+then necessarily $m-1\le w$. The proof is a one-line comparison of bases. If $w+1<m$, raising both positive integers to the positive power $n$ would give $(w+1)^n<m^n$, contradicting the assumed capacity.
 
-This is the **shallow lower bound**, and it is half the story. It says: hand-drawing $2^k$ peaks costs exponentially many strokes.
+This exact threshold can be translated into an error-resolution story. Define the cell demand
 
-## What folding buys
+$$
+Q(n,m)=m^n.
+$$
 
-Now the other half — and the part that makes the separation real rather than a one-sided complaint. We must show that the deep, folding machine genuinely does the job cheaply.
+If the error scale is encoded as $\varepsilon=1/m^n$, then $m=\varepsilon^{-1/n}$. The required shallow width $m-1$ therefore exhibits the familiar inverse-root scaling
 
-Begin with a small miracle of bookkeeping. The absolute value, which looks like it needs special hardware, is secretly built from two ReLUs:
+$$
+w\asymp \varepsilon^{-1/n}.
+$$
 
-$$|y| = \mathrm{relu}(y) + \mathrm{relu}(-y).$$
+This statement is about the encoded cell demand, not about every continuous function. Continuity alone does not specify how rapidly a function varies, so it cannot supply a universal function-independent rate. A Lipschitz constant, modulus of continuity, or similar regularity information is needed to connect a resolution parameter to actual approximation error.
 
-If $y > 0$, the first term gives $y$ and the second gives $0$. If $y < 0$, the first gives $0$ and the second gives $-y = |y|$. Either way, the sum is $|y|$. So the entire tent map collapses into a **two-neuron block**:
+The same demand looks very different when width is fixed and depth is allowed to grow. For an integer base $b\ge 2$, let $\lceil\log_b q\rceil$ denote the least nonnegative integer $d$ for which $q\le b^d$. Then any positive width $w$ satisfies
 
-$$\mathrm{tent}(x) = 1 - \mathrm{relu}(2x - 1) - \mathrm{relu}(1 - 2x).$$
+$$
+q\le C\bigl(w,\lceil\log_{w+1}q\rceil\bigr).
+$$
 
-Two ReLUs, exactly — not approximately — reproduce the tent. This identity is purely algebraic; there is no limiting process, no error term, no continuity argument hiding in the basement. It is an *equation*.
+In particular, choosing the dimension-dependent width $w=n+4$ gives
 
-The consequence cascades immediately. Since one fold is two neurons, $k$ folds are $k$ stacked copies of the same two-neuron block. We can describe a deep network as a list of such blocks, evaluated by composition — the output of one block feeds the input of the next — and define its total size as the sum of the neuron counts. Then the $k$-fold tent is realized **exactly** by a network of
+$$
+Q(n,m)\le C\bigl(n+4,\lceil\log_{n+5}Q(n,m)\rceil\bigr).
+$$
 
-$$\text{total size} = 2k.$$
+Thus a fixed width of $n+4$ reaches any finite cell demand at a ceiling-logarithmic depth. Since $Q(n,m)=m^n$, the required depth is
 
-Pause on the contrast. The target $\mathrm{tent}^{[k]}$ has $2^k$ oscillations. The deep network that produces it, exactly, uses $2k$ neurons. The deep size is the *logarithm* of the oscillation count:
+$$
+\left\lceil\log_{n+5}(m^n)\right\rceil.
+$$
 
-$$2k = 2\log_2\!\left(2^k\right).$$
+Under the encoding $\varepsilon=1/m^n$, this is proportional to $\log(1/\varepsilon)$. The contrast is the heart of the story: one architecture pays through an expanding width of order $\varepsilon^{-1/n}$, while another holds width fixed and pays through logarithmic depth.
 
-This is the **logarithmic-size law**. Depth converts a linear budget of neurons into an exponential budget of complexity. Where the shallow machine needs $2^k/A$ neurons, the deep machine needs $2k$. For $k = 20$ — a million oscillations — the shallow network needs on the order of a million neurons; the deep one needs forty.
+## One more layer has a measurable price
 
-## The two sides meet
+Depth does more than eventually reach large demands. At every positive width it strictly increases capacity:
 
-Put the halves together and you get a genuine, two-sided **depth–width separation**. There is a single concrete target, $\mathrm{tent}^{[k]}$, such that:
+$$
+C(w,L)<C(w,L+1)\qquad\text{for }w>0.
+$$
 
-- a **deep** network of constant width $2$ and total size $2k$ realizes it *exactly*; yet
-- **any** shallow network that merely approximates it to accuracy $\varepsilon < \tfrac12$, with weights capped at $A$, is forced to width at least $2^k(1 - 2\varepsilon)/A$.
+The reason is multiplication. The new layer multiplies the old capacity by $w+1$, a factor of at least two.
 
-Linear cost on one side, exponential cost on the other, for the very same function. This is not a statement that deep networks *can sometimes* be smaller. It is a statement that for an explicit family of targets they are *unavoidably, exponentially* smaller — and the proof carries the exact constants.
+Now ask a depth-one competitor of width $v$ to match a width-$w$, depth-$(L+1)$ architecture. The matching condition is
 
-How big can the gap get? Take the ratio of the forced shallow width to the actual deep size,
+$$
+C(w,L+1)\le C(v,1).
+$$
 
-$$\frac{2^k(1 - 2\varepsilon)/A}{2k}.$$
+Because $C(v,1)=v+1$, this forces
 
-The numerator grows like $2^k$; the denominator grows like $k$. Exponential beats linear, always and eventually. For any target ratio $R$ you care to name — a thousandfold, a millionfold — there is a depth $k$ beyond which the shallow network is at least $R$ times larger than the deep one. The advantage of depth is not bounded by any constant; it is **unbounded**.
+$$
+v\ge (w+1)^{L+1}-1.
+$$
 
-## Why this matters beyond the tent
+The bound is sharp: choosing exactly
 
-It is fair to ask whether a story about triangular bumps tells us anything about real networks that recognize faces or translate languages. It does, in two ways.
+$$
+v=(w+1)^{L+1}-1
+$$
 
-First, the tent is not a contrived curiosity; it is the cleanest possible instance of a universal phenomenon. Composition multiplies complexity. Every deep architecture — convolutional, residual, transformer — is in the business of composing simple transformations so that complexity compounds. The tent map is the hydrogen atom of that physics: simple enough to analyze completely, rich enough to exhibit the exponential payoff in full. The lesson it teaches — *depth manufactures oscillation for free, and width must buy it linearly* — is the mechanism, stripped to its bones.
+makes the two capacities equal. In this model, flattening a deep architecture into one layer therefore costs exponentially many neurons as $L$ grows.
 
-Second, the argument exposes *why* the trade-off holds, not merely *that* it holds. The currency is total variation: a conserved, additive measure of complexity that depth mints geometrically and width can only purchase in proportion to its weight budget. This is a transferable idea. Whenever a learning problem has a complexity measure that compounds under composition, depth will tend to win, and one can hope to prove it by the same accounting.
+There is also a comparison between neighboring depths. If a depth-$L$ network of width $v$ matches the capacity of a positive-width network with width $w$ and depth $L+1$, then it must satisfy
 
-A few honest caveats keep the picture sharp. The clean statements here are one-dimensional, a single input and a single output per fold; extending the exact realization to functions on $[-1,1]^n$ requires vector-valued blocks and is the natural next step. The strict numerical gap $2k < 2^k$ kicks in at $k = 3$ — for the first few folds the two budgets are comparable — which is exactly why the dramatic separation is an *asymptotic* statement about deep stacks. And the shallow bound needs the weight cap $A$; without it, a network could in principle smuggle complexity into infinitely precise numbers, which is the correct boundary of the theorem rather than a flaw in it.
+$$
+w<v.
+$$
 
-## The shape of the answer
+Keeping the same width, or making it smaller, cannot compensate for the missing layer. Monotonicity in width would cap the competitor at $C(w,L)$, but strict growth in depth places the target above that value.
 
-Strip away the formalism and what remains is a single, vivid image. To make a thousand peaks, you can carve each one — and pay a thousand times — or you can fold the paper ten times and draw once. The folds are layers. The peaks are the patterns a network can represent. And the theorem says, with the full force of proof and exact constants, that the folder always wins, and wins by a margin that grows without bound.
+## What the capacity model says—and what it does not
 
-Depth is not a convenience. It is leverage. A tent, folded $k$ times, oscillates $2^k$ ways while costing only $2k$ — and no flat-stacked, hand-drawn machine, however wide, can keep up. That is the mathematical heart of why the deepest revolution in artificial intelligence was, quite literally, a matter of depth.
+The arithmetic establishes a precise architectural principle: repeated composition converts modest width into exponential combinatorial capacity. It also gives exact resource thresholds for a prescribed number of cells. These conclusions are valuable for design. If a task naturally demands a hierarchy of refinements, depth can represent that hierarchy without placing every alternative in one enormous layer. This is relevant wherever piecewise-linear models appear: image partitions, control laws, surrogate models for physical systems, and decision surfaces in classification.
+
+But capacity is opportunity, not a guarantee. A network with enough potential cells may fail to place them where a particular function needs them. Nor does a cell count alone prove that every continuous function on $[-1,1]^n$ is approximated to a given tolerance by a prescribed architecture. The rigorous bridge to such a claim must construct the network, control its uniform error, and relate the function’s regularity to the necessary spatial resolution.
+
+That distinction clarifies the research frontier. One direction is constructive: turn a fine partition of $[-1,1]^n$ into a ReLU network whose hidden layers never exceed width $n+4$. Another is quantitative: for $K$-Lipschitz functions, derive a shallow width bound proportional to $(K/\varepsilon)^n$. A third is adversarial: prove that mere continuity admits no common rate by building functions whose fine-scale behavior defeats every proposed width schedule. Finally, the tent map suggests a route from abstract capacity to realizable separation—count its affine intervals under iteration and prove that shallower networks cannot reproduce so many oscillations without exponential size.
+
+There is a useful practical analogy. Imagine drawing a complicated landscape with straight-edged tiles. A wider workshop hires more tile-makers for a single shift; a deeper workshop lets the product of one shift become the raw material for the next. The first strategy increases what can be laid down in parallel. The second creates a production chain, so each stage can transform all distinctions made before it. The capacity law measures precisely this compounding effect.
+
+That perspective also warns against treating parameter count as the only architectural statistic. Two networks with comparable numbers of neurons can organize them differently and therefore have very different model capacities. Training cost, numerical stability, and data efficiency still matter, and the largest-capacity architecture is not automatically the best predictor. Capacity says what an architecture could express, not what an optimization procedure will find from finite, noisy observations. Generalization remains a separate statistical question. Yet when representational scarcity is the bottleneck, the arrangement of neurons across layers can matter as much as their total number.
+
+The central lesson survives all these refinements. Width and depth are not interchangeable currencies. Width buys parallel pieces; depth compounds structure. In the simple law $C(w,L)=(w+1)^L$, that distinction becomes visible at a glance—and exact enough to calculate the price of flattening a hierarchy.

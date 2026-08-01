@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c2653f80",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nThe Lean development proves that `78557` is a Sierpiński number by a complete covering-system certificate: every exponent class modulo `36` receives a proper prime divisor from `{",
-      "quality_score": 0.7720099999999999,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-30T03:38:51",
-      "title": "Sierpiński Numbers: Covering Systems"
-    },
-    {
       "cycle_id": "3c125e46",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions: EML Algebraic Independence\n\nThe formal development isolates the open input rather than treating transcendence of two factors as sufficient for transcendence of their product. The",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-01T09:31:25",
       "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
+    },
+    {
+      "cycle_id": "0e1eb0cb",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equival",
+      "quality_score": 0.80043,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-08-01T11:44:09",
+      "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0e007163",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: the fine structure of the transfinite cardinal hierarchy\n\nThis cycle pinned the Continuum Hypothesis to a single successor step, gave it\nthree equivalent faces (the successor form",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-24T03:52:25",
-      "title": "Future directions from cycle 279ae676"
-    },
     {
       "cycle_id": "b648d8e5",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-01T09:31:25",
       "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
+    },
+    {
+      "cycle_id": "0e1eb0cb",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equival",
+      "quality_score": 0.80043,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-08-01T11:44:09",
+      "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "78bbd545",
-      "domain": "Tropical",
-      "name": "isCorner_neg_iff_isMaxCorner",
-      "quality": 0.7874099999999999
-    },
-    {
-      "cycle_id": "78bbd545",
-      "domain": "Tropical",
-      "name": "valuation_max_not_unique",
-      "quality": 0.7874099999999999
-    },
-    {
-      "cycle_id": "fb6f9bc5",
-      "domain": "Bridges",
-      "name": "vertexFunctor_faithful",
-      "quality": 0.7559799999999999
-    },
     {
       "cycle_id": "fb6f9bc5",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "stronglyComplete_of_union_finite",
       "quality": 0.7388999999999999
+    },
+    {
+      "cycle_id": "0e1eb0cb",
+      "domain": "Tropical",
+      "name": "bergmanFan_eq_tropicalLinearSpace_circuitIdeal",
+      "quality": 0.80043
+    },
+    {
+      "cycle_id": "0e1eb0cb",
+      "domain": "Tropical",
+      "name": "minAttainedTwice_add_const",
+      "quality": 0.80043
+    },
+    {
+      "cycle_id": "0e1eb0cb",
+      "domain": "Tropical",
+      "name": "minAttainedTwice_nonneg_smul",
+      "quality": 0.80043
     }
   ],
-  "last_updated": "2026-08-01T09:31:25",
+  "last_updated": "2026-08-01T11:44:09",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "ee9035cd",
-        "quality": 0.68,
-        "theorems": 13,
-        "title": "Tropical Hodge Theory"
-      },
-      {
         "cycle_id": "7b875dce",
         "quality": 0.71,
         "theorems": 13,
@@ -4009,6 +4003,12 @@
         "quality": 0.7874099999999999,
         "theorems": 10,
         "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+      },
+      {
+        "cycle_id": "0e1eb0cb",
+        "quality": 0.80043,
+        "theorems": 26,
+        "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
       }
     ]
   }
