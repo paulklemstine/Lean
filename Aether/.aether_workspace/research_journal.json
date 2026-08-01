@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "593a0386",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **Sharp two-sided summand asymptotics.** For every `k : ℕ`, prove\n   `1 / (2 * (k + 2 : ℝ)^2) ≤ gammaTerm k` in addition to the formalized upper\n   bound `gammaTerm k ≤ 1 / (2",
-      "quality_score": 0.7903499999999999,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-30T12:14:19",
-      "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "67548200",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe completed development classifies elementary Boolean cellular automata by\n**universal finite-cycle reversibility**: exactly Wolfram rules\n`15, 51, 85, 170, 204, 240` are revers",
@@ -499,19 +489,19 @@
       "theorem_count": 28,
       "timestamp": "2026-08-01T17:25:26",
       "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+    },
+    {
+      "cycle_id": "a7f30302",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Sharp obstruction period for elementary rules.** Determine whether cycle\n   length 4 is necessary in `reversible_small_cycles_iff`: specifically, test\n   and prove or refute",
+      "quality_score": 0.78251,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-08-01T18:21:33",
+      "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "30631f2b",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Wigner Semicircle Law\n\nThis development establishes the two pillars of the moment-method proof of the\nWigner semicircle law and bridges them:\n\n1. **Combinatorial side** (`Moments.",
-      "quality_score": 0.57,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-24T12:04:05",
-      "title": "Random-Matrix: Wigner Semicircle Law Convergence for Wigner Ensembles"
-    },
     {
       "cycle_id": "b4f06498",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 28,
       "timestamp": "2026-08-01T17:25:26",
       "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+    },
+    {
+      "cycle_id": "a7f30302",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Sharp obstruction period for elementary rules.** Determine whether cycle\n   length 4 is necessary in `reversible_small_cycles_iff`: specifically, test\n   and prove or refute",
+      "quality_score": 0.78251,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-08-01T18:21:33",
+      "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "03b10997",
-      "domain": "Cryptography",
-      "name": "l1Gap_triangle",
-      "quality": 0.7701199999999999
-    },
-    {
-      "cycle_id": "03b10997",
-      "domain": "Cryptography",
-      "name": "forwardSecure_of_common_ideal",
-      "quality": 0.7701199999999999
-    },
     {
       "cycle_id": "61e33133",
       "domain": "Applications",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "universal_retrocausal_rule_collapses",
       "quality": 0.8129599999999999
+    },
+    {
+      "cycle_id": "a7f30302",
+      "domain": "Novelty",
+      "name": "overspill_diagonal",
+      "quality": 0.78251
+    },
+    {
+      "cycle_id": "a7f30302",
+      "domain": "Novelty",
+      "name": "from",
+      "quality": 0.78251
     }
   ],
-  "last_updated": "2026-08-01T17:25:26",
+  "last_updated": "2026-08-01T18:21:33",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "dff51e05",
-        "quality": 0.78321,
-        "theorems": 12,
-        "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-      },
-      {
         "cycle_id": "687f4282",
         "quality": 0.8022499999999999,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.8129599999999999,
         "theorems": 28,
         "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+      },
+      {
+        "cycle_id": "a7f30302",
+        "quality": 0.78251,
+        "theorems": 35,
+        "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynam"
       }
     ],
     "NumberTheory": [
