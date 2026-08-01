@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6d7202c5",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nThe following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. Each is stated so that a counterexample consists of a concrete finite family and parameters violatin",
-      "quality_score": 0.73827,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-30T18:57:54",
-      "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
-    },
-    {
       "cycle_id": "177b02a7",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\n- Specify a complete finite-horizon Werewolf stochastic game: hidden role assignments, public histories, night actions, day ballots, behavioural strategies, and terminal win event",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-01T23:23:00",
       "title": "Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "cycle_id": "d333f65d",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n## What is established\n\n`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,\nself-contained results for a triangular face:\n\n1. the three-site crossing probabi",
+      "quality_score": 0.76111,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-01T23:24:18",
+      "title": "Percolation Threshold"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "68dd266b",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Cybernetic-Symbiosis co-adaptation bounds\n\nThe file `Catalog/Physics/CyberneticSymbiosis.lean` proves a complete, sharp convergence theory\nfor a scalar two-party mutual-adaptatio",
-      "quality_score": 0.55,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-24T19:54:32",
-      "title": "Cybernetic-Symbiosis: Optimal Co-Evolution Bounds of Human-AI Neural Interfaces"
-    },
     {
       "cycle_id": "6bb52b3a",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-01T23:23:00",
       "title": "Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "cycle_id": "d333f65d",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n## What is established\n\n`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,\nself-contained results for a triangular face:\n\n1. the three-site crossing probabi",
+      "quality_score": 0.76111,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-01T23:24:18",
+      "title": "Percolation Threshold"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d58932ad",
-      "domain": "Computation",
-      "name": "ripsFace_chordal_iff_weighted",
-      "quality": 0.7725
-    },
-    {
-      "cycle_id": "d58932ad",
-      "domain": "Computation",
-      "name": "cechFace_chordal_iff_weighted",
-      "quality": 0.7725
-    },
-    {
-      "cycle_id": "d58932ad",
-      "domain": "Computation",
-      "name": "geodesicWeightedDist_eq",
-      "quality": 0.7725
-    },
     {
       "cycle_id": "ed94092b",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "epsilon_lt_powHalf",
       "quality": 0.7734099999999999
+    },
+    {
+      "cycle_id": "d333f65d",
+      "domain": "Probability",
+      "name": "for",
+      "quality": 0.76111
+    },
+    {
+      "cycle_id": "d333f65d",
+      "domain": "Probability",
+      "name": "mass_nonneg",
+      "quality": 0.76111
+    },
+    {
+      "cycle_id": "d333f65d",
+      "domain": "Probability",
+      "name": "total_mass",
+      "quality": 0.76111
     }
   ],
-  "last_updated": "2026-08-01T23:23:00",
+  "last_updated": "2026-08-01T23:24:18",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "92e6405b",
-        "quality": 0.75773,
-        "theorems": 8,
-        "title": "Statistical Mechanics: Ising Model Phase Transition"
-      },
-      {
         "cycle_id": "8aec96a6",
         "quality": 0.76977,
         "theorems": 24,
@@ -3823,6 +3817,12 @@
         "quality": 0.686,
         "theorems": 38,
         "title": "Information Geometry: Fisher Metric on Statistical Models"
+      },
+      {
+        "cycle_id": "d333f65d",
+        "quality": 0.76111,
+        "theorems": 13,
+        "title": "Percolation Threshold"
       }
     ],
     "Pythagorean": [
