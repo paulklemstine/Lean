@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "177b02a7",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n- Specify a complete finite-horizon Werewolf stochastic game: hidden role assignments, public histories, night actions, day ballots, behavioural strategies, and terminal win event",
-      "quality_score": 0.73659,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-30T19:18:48",
-      "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-    },
-    {
       "cycle_id": "46cb7ee6",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n- Extend `GrowthRank` from three lexicographic levels to recursively generated exponential–logarithmic monomial groups.\n- Construct composition, logarithm, and exponential on suit",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-01T23:24:18",
       "title": "Percolation Threshold"
+    },
+    {
+      "cycle_id": "316f6446",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n1. **Continuous time.** Replace finite sums by interval integrals and derive the same\n   information-adjusted extraction bound from an almost-everywhere differential energy\n   bal",
+      "quality_score": 0.8021799999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-01T23:25:37",
+      "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6bb52b3a",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Reticulations, Cooperative Systems, and the Geometry of Orthogonality\n\nThe results in `ReticulationMOLS.lean` establish, in full generality, the sharp bound that a\nset of mutually",
-      "quality_score": 0.6,
-      "sorry_count": 1,
-      "theorem_count": 12,
-      "timestamp": "2026-07-24T19:54:45",
-      "title": "ArXiv paper: Generalizations of nets and Latin squares"
-    },
     {
       "cycle_id": "cb7978a9",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-01T23:24:18",
       "title": "Percolation Threshold"
+    },
+    {
+      "cycle_id": "316f6446",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n1. **Continuous time.** Replace finite sums by interval integrals and derive the same\n   information-adjusted extraction bound from an almost-everywhere differential energy\n   bal",
+      "quality_score": 0.8021799999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-01T23:25:37",
+      "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ed94092b",
-      "domain": "Combinatorics",
-      "name": "The",
-      "quality": 0.7667599999999999
-    },
-    {
-      "cycle_id": "ed94092b",
-      "domain": "Combinatorics",
-      "name": "kelly_double_count",
-      "quality": 0.7667599999999999
-    },
-    {
-      "cycle_id": "ed94092b",
-      "domain": "Combinatorics",
-      "name": "inducedCopyFamily_uniform",
-      "quality": 0.7667599999999999
-    },
     {
       "cycle_id": "cb10fc42",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "total_mass",
       "quality": 0.76111
+    },
+    {
+      "cycle_id": "316f6446",
+      "domain": "Shared",
+      "name": "erasedBits_lower_bound",
+      "quality": 0.8021799999999999
+    },
+    {
+      "cycle_id": "316f6446",
+      "domain": "Shared",
+      "name": "erasedBits_eq_zero_iff_injective",
+      "quality": 0.8021799999999999
+    },
+    {
+      "cycle_id": "316f6446",
+      "domain": "Shared",
+      "name": "finite_horizon_information_conservation",
+      "quality": 0.8021799999999999
     }
   ],
-  "last_updated": "2026-08-01T23:24:18",
+  "last_updated": "2026-08-01T23:25:37",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "905765f9",
-        "quality": 0.76,
-        "theorems": 4,
-        "title": "[Reset] Fresh approach in Shared"
-      },
-      {
         "cycle_id": "346c1c9a",
         "quality": 0.6043828571428571,
         "theorems": 7,
@@ -3947,6 +3941,12 @@
         "quality": 0.76172,
         "theorems": 10,
         "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
+      },
+      {
+        "cycle_id": "316f6446",
+        "quality": 0.8021799999999999,
+        "theorems": 8,
+        "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Ex"
       }
     ],
     "Tropical": [
