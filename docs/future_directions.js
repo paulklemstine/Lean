@@ -204,21 +204,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Xeno-Genome-Encoding: Universal High-Density DNA Quad-Helix Information Storage"
   },
   {
-    "consumed_by_exp_id": "647e3d96",
-    "description": "Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
-    "domains": [
-      "Physics"
-    ],
-    "id": "scifi_50_11_4ed708d9",
-    "phase": "A",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:07:57.346612+00:00",
-    "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves how a 3D interior volume can measure strictly greater than its exterior boundary surface when connected through a 5D spatial fold (House of Leaves / Twilight Zone effect).",
     "domains": [
@@ -780,6 +765,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Riemann Hypothesis: Zero-Free Regions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 66e718fe (Q=0.813), which proved 28 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 an",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_66e718fe_de040f40",
+    "priority_score": 0.9129599999999999,
+    "research_mode": "team",
+    "source_exp_id": "66e718fe",
+    "status": "available",
+    "timestamp": "2026-08-01T17:25:26.405776+00:00",
+    "title": "Deepening: Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
   {
     "consumed_by_exp_id": "",
@@ -1499,16 +1498,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Capacity: Quantum Channel Coherent Information Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4159430",
     "description": "Formalizes Campos-Griffiths-Morris-Sahasrabudhe exponential improvement on diagonal Ramsey bounds R(k,k) \u2264 (4-\u03b5)^k.",
     "domains": [
       "Combinatorics"
     ],
     "id": "dir_50_46_12f2dc1f",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.603417+00:00",
     "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
   },
@@ -1599,23 +1599,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Proof Strategy Mining from Deep Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "66e718fe",
-    "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
-    "domains": [
-      "Logic",
-      "Speculative",
-      "Computation"
-    ],
-    "id": "seed_079",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
   },
   {
     "consumed_by_exp_id": "",
@@ -2250,6 +2233,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T09:23:08.565029+00:00",
     "title": "Deepening: Sums of Three Cubes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 647e3d96 (Q=0.775), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_647e3d96_b1c534e3",
+    "priority_score": 0.8752299999999998,
+    "research_mode": "team",
+    "source_exp_id": "647e3d96",
+    "status": "available",
+    "timestamp": "2026-08-01T17:24:08.374001+00:00",
+    "title": "Deepening: Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -3764,17 +3761,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f65effc",
     "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
     "domains": [
       "Tropical",
       "Computation"
     ],
     "id": "seed_319",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
@@ -4200,17 +4198,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "74a8a74b",
     "description": "Prove that the Gamma function Gamma(z) is a meromorphic EML function (it has no algebraic singularities). Show that the Riemann zeta function zeta(s) is not an EML function (it has essential singularities). Formalize the hypergeometric function _2F_1(a,b;c;z) and prove that it satisfies an EML differential equation (Gauss's hypergeometric equation).",
     "domains": [
       "EML",
       "Algebra"
     ],
     "id": "seed_373",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
   },
@@ -10439,22 +10438,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal results show that a scalar missing rate and feature count do not dete"
   },
   {
-    "consumed_by_exp_id": "7726ff6e",
-    "description": "# Future Directions\n\n1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b`\n   cylinder intervals imply interval equidistribution of `fract (b^n x)`, first for\n   `b`-adic intervals and then for arbitrary intervals by approximation.\n2. **Weyl criterion.** Connect interval equidistribution to vanishing exponential\n   sums `N\u207b\u00b9 \u2211_{n<N} exp(2\u03c0 i m b^n x)` for every nonzero integer `m`.\n3. **Measure-theoretic normality.** Use ergodicity of the map `x \u21a6 fract (b*x)` and\n   a pointwise ergodic theorem to prove that almost every real is base-`b` normal.\n4. **Absolute normality.** Intersect the full-measure normality sets over all integer\n   bases to show that almost every real is absolutely normal.\n5. **Specific constants.** A proof for `\u03c0`, `e`, or `\u221a2` would require genuinely new\n   number theory: normality of each in every familiar base remains open. Their known\n   transcendence or algebraicity does not by itself supply the exponential-sum bounds\n   needed by Weyl's criterion.\n6. **Algebraic independence boundary.** Formalize the limited implications currently\n   available between digit statistics and algebraic properties. Rational numbers are\n   not normal in any base, but it is unknown whether familiar algebraic irrationals\n   such as `\u221a2` are normal. Transcendence, and even algebraic independence results,\n   do not by themselves provide the orbit estimates needed for normality of familiar\n   constants such as `\u03c0` and `e`.\n",
-    "domains": [
-      "Algebra",
-      "NumberTheory"
-    ],
-    "id": "fd_0850",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "70779ff4",
-    "status": "in_progress",
-    "timestamp": "2026-07-31T06:06:55.586907+00:00",
-    "title": "1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. **Executable encoder.** Package the well-founded existence proof as a computable `encode : \u2124 \u2192 List Bool`, then prove both round trips and derive certified addition and multiplication by decoding ordinary integer operations.\n2. **General negative radix.** Replace `-2` by an arbitrary radix `-b`, `b \u2265 2`, with digits `0,\u2026,b-1`, and prove a canonical equivalence with `\u2124`.\n3. **Representation-length bounds.** Prove sharp logarithmic bounds on the length of the canonical expansion in terms of `Int.natAbs z`, including the exact intervals represented by strings of bounded length.\n4. **Normalization as rewriting.** Develop local carry rules such as replacing non-binary coefficients while preserving value, and prove termination and confluence toward the canonical representation.\n5. **Phinary arithmetic.** Formalize finite base-golden-ratio expressions with binary digits. Because `\u03c6\u00b2 = \u03c6 + 1`, unrestricted expansions are not unique; impose the standard no-consecutive-ones normalization and connect coefficients to Zeckendorf representations.\n6. **Gaussian negative/complex radices.** Relate the existing base-`i-1` Gaussian-integer result to a common Euclidean-radix framework encompassing negabinary, identifying a reusable norm-decrease criterion plus finitely many exceptional states.\n",
     "domains": [
@@ -10871,6 +10854,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T15:28:07.227092+00:00",
     "title": "The following conjectures are concrete continuations of `Catalog/Novelty/Nonstan"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal development now proves the converse criterion beginning with the usual individual-cylinder hypothesis. For every integer base `b \u2265 2`, uniform limiting frequencies for all aligned base-`b` cylinder cells imply the expected frequencies for finite unions of adjacent cells, hence for every interval with endpoints on a common base-`b` grid. Explicit floor/ceiling approximations then squeeze an arbitrary subinterval of `[0,1]`, proving interval equidistribution. The result is also specialized to the orbit `fract (b^n x)`.\n\nNatural next steps are:\n\n1. Reconcile and share the definitions in `NormalityConverse.lean` and `NormalityConnector.lean`, obtaining a single theorem that packages both directions between base-`b` normality and interval equidistribution of `fract (b^n x)`.\n2. Formalize the Weyl-criterion bridge between interval equidistribution and vanishing exponential sums for every nonzero integer frequency.\n3. Develop the measure-theoretic route to almost-everywhere base normality using ergodicity of multiplication modulo one and an appropriate pointwise ergodic theorem, then intersect over the countable set of integer bases for absolute normality.\n4. Keep claims about particular constants separate: the structural criteria proved here do not establish normality of familiar constants such as `\u03c0`, `e`, or `\u221a2`.\n",
+    "domains": [
+      "Computation",
+      "Bridges"
+    ],
+    "id": "fd_0882",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7726ff6e",
+    "status": "available",
+    "timestamp": "2026-08-01T17:22:43.402050+00:00",
+    "title": "The formal development now proves the converse criterion beginning with the usua"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe Lean development proves statements inside a precise topological observer model. The following conjectures are concrete extensions of that model and do not assert an empirical law about biological perception without additional physical assumptions.\n\n1. **Finite observer-complexity monotonicity.** For every type `X`, every `N : Fin n \u2192 TopologicalSpace X`, and every extension `N' : Fin (n+1) \u2192 TopologicalSpace X` whose first `n` channels agree with `N`, prove `consensus N' \u2264 consensus N`. This is falsified by any explicit extension violating the topology-lattice inequality.\n\n2. **Strictness criterion for channel addition.** Under the same setup, prove that `consensus N' < consensus N` if and only if there is a set open for every old channel but not open for the new channel. Either implication can be falsified by a finite topological-space counterexample.\n\n3. **Finite-space minimal observer complexity.** For a finite carrier `X` and target topology `t`, define the least `n` for which `t` is the consensus of `n` strict refinements, and prove that this number is bounded by the number of open sets of `t`. Exhaustive enumeration of topologies on carriers of size at most four can test the proposed bound.\n\n4. **Product compositionality.** Given observer families `N` on `X` and `M` on `Y` with a common finite index type, characterize when the consensus of the channelwise product topologies equals the product of `consensus N` and `consensus M`. A pair of finite spaces where these topologies differ would refute an unrestricted equality.\n\n5. **Empirical encoding conjecture.** For a specified finite neural-state transition graph, assign each readout channel a topology generated by its distinguishable state subsets. Test whether adding a readout node strictly coarsens consensus exactly when that node excludes an open set shared by all previous readouts. A measured transition graph and readout table make this directly falsifiable by finite computation.\n",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_0883",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "647e3d96",
+    "status": "available",
+    "timestamp": "2026-08-01T17:24:04.468376+00:00",
+    "title": "The Lean development proves statements inside a precise topological observer mod"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecedent, while consequences equipped with a backward certificate can both recover the proposition and reduce a finite candidate space. The following conjectures make the remaining proof-complexity questions falsifiable.\n\n1. **Bounded-arithmetic compression benchmark.** Fix a sequent calculus for the bounded arithmetic fragment containing formulas `n < N`, divisibility, conjunction, and equality. For every `N \u2265 8`, compare the shortest derivation of `n = 6` from `n < N` with the shortest derivation from `n < N`, `2 \u2223 n`, and `3 \u2223 n`. Conjecture: for at least 90% of `N \u2264 10^4`, the consequence-guided derivation has at most half as many inference nodes. A proof enumerator can decide this finite claim once the calculus and node-count convention are fixed.\n\n2. **Certificate-cost threshold.** In any fixed finitely branching proof calculus, count both the derivation of each consequence and the backward certificate. Conjecture: there is no universal constant `c < 1` such that every consequence-stable proposition has total certified cost at most `c` times its shortest direct proof. A counterexample family would consist of propositions whose shortest backward certificates asymptotically reproduce their shortest direct proofs.\n\n3. **Information gain predicts finite search reduction.** For finite candidate spaces with deterministic Boolean checks, define information gain as `log\u2082(|C| / |S|)`, where `C` is the initial space and `S` its nonempty survivor set. Conjecture: under uniform exhaustive enumeration, the median number of candidates inspected after filtering decreases by a factor between `2^(I-1)` and `2^(I+1)`, where `I` is the information gain. Exhaustive tests over all check families on spaces of size at most 16 can confirm or refute the finite instances.\n\n4. **Arithmetic residue certificates.** Let `p\u2081, \u2026, p\u2096` be distinct primes and `M = \u220f p\u1d62`. Among candidates `0 \u2264 n < M`, the checks `p\u1d62 \u2223 n` isolate `0`. Conjecture: in a standard PA sequent calculus, a balanced conjunction of these checks yields a backward certificate of size `O(k log M)`, while any certificate restricted to testing candidates one by one has size `\u03a9(M)`. The claim is falsifiable by explicit proof-size upper and lower bounds in the selected calculus.\n\n5. **Strict filtering without proof shortening.** Conjecture: there exists an infinite family of PA propositions and verified consequence lists for which the formal candidate search space shrinks by an unbounded factor, but the shortest proof length decreases by at most an additive constant. This would show that semantic search compression and syntactic proof compression are independent measurements. Test by exhaustive shortest-proof enumeration in successively larger bounded fragments.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_0884",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "66e718fe",
+    "status": "available",
+    "timestamp": "2026-08-01T17:25:22.274896+00:00",
+    "title": "The formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two"
   },
   {
     "consumed_by_exp_id": "",

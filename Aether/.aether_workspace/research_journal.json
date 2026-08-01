@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "72d619d5",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe formal result establishes a tractable cubical recipe model: fixed-flavor recipes are optional ingredient assignments, and substitution methods are classified by their parity s",
-      "quality_score": 0.78874,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-30T12:13:11",
-      "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
-    },
-    {
       "cycle_id": "593a0386",
       "domain": "Shared",
       "key_insight": "# Future directions\n\n1. **Sharp two-sided summand asymptotics.** For every `k : ℕ`, prove\n   `1 / (2 * (k + 2 : ℝ)^2) ≤ gammaTerm k` in addition to the formalized upper\n   bound `gammaTerm k ≤ 1 / (2",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-01T17:24:08",
       "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
+    },
+    {
+      "cycle_id": "66e718fe",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecede",
+      "quality_score": 0.8129599999999999,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-08-01T17:25:26",
+      "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "73ec6b88",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Gödel's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nth",
-      "quality_score": 0.58,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-24T09:42:17",
-      "title": "The completed development has two complementary formalizations. `Catalog/NumberT"
-    },
     {
       "cycle_id": "30631f2b",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-01T17:24:08",
       "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
+    },
+    {
+      "cycle_id": "66e718fe",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecede",
+      "quality_score": 0.8129599999999999,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-08-01T17:25:26",
+      "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1cf3185d",
-      "domain": "Geometry",
-      "name": "singleton_pairwise_disjoint",
-      "quality": 0.8116299999999999
-    },
-    {
-      "cycle_id": "1cf3185d",
-      "domain": "Geometry",
-      "name": "isMinor_refl",
-      "quality": 0.8116299999999999
-    },
-    {
-      "cycle_id": "03b10997",
-      "domain": "Cryptography",
-      "name": "is",
-      "quality": 0.7701199999999999
-    },
     {
       "cycle_id": "03b10997",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "option_channel_isOpen_iff",
       "quality": 0.7752299999999999
+    },
+    {
+      "cycle_id": "66e718fe",
+      "domain": "Novelty",
+      "name": "This",
+      "quality": 0.8129599999999999
+    },
+    {
+      "cycle_id": "66e718fe",
+      "domain": "Novelty",
+      "name": "uniform_retrocausal_confirmation_iff",
+      "quality": 0.8129599999999999
+    },
+    {
+      "cycle_id": "66e718fe",
+      "domain": "Novelty",
+      "name": "universal_retrocausal_rule_collapses",
+      "quality": 0.8129599999999999
     }
   ],
-  "last_updated": "2026-08-01T17:24:08",
+  "last_updated": "2026-08-01T17:25:26",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f1303b99",
-        "quality": 0.81107,
-        "theorems": 21,
-        "title": "Game of Life Universality"
-      },
-      {
         "cycle_id": "dff51e05",
         "quality": 0.78321,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.686,
         "theorems": 34,
         "title": "Alien Mathematics: Non-Standard Arithmetic"
+      },
+      {
+        "cycle_id": "66e718fe",
+        "quality": 0.8129599999999999,
+        "theorems": 28,
+        "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
       }
     ],
     "NumberTheory": [

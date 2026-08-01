@@ -1605,11 +1605,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d4159430",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -1621,7 +1621,7 @@
       ],
       "github_issue": 0,
       "id": "dir_50_46_12f2dc1f",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-01T17:25:56.505787+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem diagonal_ramsey_exponential_bound (k : ℕ) : RamseyNumber k k ≤ (4 - RamseyEpsilon) ^ k",
       "lineage_refs": [],
@@ -1636,7 +1636,7 @@
       "source": "",
       "source_exp_id": "batch_50_injection",
       "source_path": "50_new_research_directions.md",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-23T20:05:24.603417+00:00",
       "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
@@ -20253,7 +20253,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following conjectures are concrete continuations of `Catalog/Novelty/NonstandardArithmetic.lean`.\nEach can be falsified by exhibiting an ultrafilter, formula, or hypernatural violating the stated property.\n\n1. **Polynomial transfer over the natural ultrapower.** For every multivariate polynomial `p : MvPolynomial (Fin k) ℕ` and representatives `f : Fin k → ℕ → ℕ`, evaluating `p` after embedding into `HyperNat` equals the germ of the pointwise evaluations of `p`.\n\n2. **Transferred bounded minimization.** If an internal predicate on `HyperNat` is represented by `P : ℕ → ℕ → Prop`, is nonempty on an ultrafilter-large set of indices, and every fiber `{n | P i n}` has a least element, then the germ of the pointwise least witnesses is least among all internal witnesses.\n\n3. **Hyperfinite prime divisor existence.** Every `H : HyperNat` with `standard 2 ≤ H` has an internal prime divisor, where primality and divisibility are represented using `Filter.Germ.LiftPred` and `Filter.Germ.LiftRel`.\n\n4. **Externality of standardness.** There is no unary first-order formula in the language of arithmetic whose realization in the natural ultrapower is exactly the range of `standard : ℕ → HyperNat`.\n\n5. **Overspill for internal unary predicates.** If an internal predicate on `HyperNat` holds for every standard natural, then it holds for some `H` satisfying `∀ n, standard n < H`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -20375,7 +20375,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecedent, while consequences equipped with a backward certificate can both recover the proposition and reduce a finite candidate space. The following conjectures make the remaining proof-complexity questions falsifiable.\n\n1. **Bounded-arithmetic compression benchmark.** Fix a sequent calculus for the bounded arithmetic fragment containing formulas `n < N`, divisibility, conjunction, and equality. For every `N ≥ 8`, compare the shortest derivation of `n = 6` from `n < N` with the shortest derivation from `n < N`, `2 ∣ n`, and `3 ∣ n`. Conjecture: for at least 90% of `N ≤ 10^4`, the consequence-guided derivation has at most half as many inference nodes. A proof enumerator can decide this finite claim once the calculus and node-count convention are fixed.\n\n2. **Certificate-cost threshold.** In any fixed finitely branching proof calculus, count both the derivation of each consequence and the backward certificate. Conjecture: there is no universal constant `c < 1` such that every consequence-stable proposition has total certified cost at most `c` times its shortest direct proof. A counterexample family would consist of propositions whose shortest backward certificates asymptotically reproduce their shortest direct proofs.\n\n3. **Information gain predicts finite search reduction.** For finite candidate spaces with deterministic Boolean checks, define information gain as `log₂(|C| / |S|)`, where `C` is the initial space and `S` its nonempty survivor set. Conjecture: under uniform exhaustive enumeration, the median number of candidates inspected after filtering decreases by a factor between `2^(I-1)` and `2^(I+1)`, where `I` is the information gain. Exhaustive tests over all check families on spaces of size at most 16 can confirm or refute the finite instances.\n\n4. **Arithmetic residue certificates.** Let `p₁, …, pₖ` be distinct primes and `M = ∏ pᵢ`. Among candidates `0 ≤ n < M`, the checks `pᵢ ∣ n` isolate `0`. Conjecture: in a standard PA sequent calculus, a balanced conjunction of these checks yields a backward certificate of size `O(k log M)`, while any certificate restricted to testing candidates one by one has size `Ω(M)`. The claim is falsifiable by explicit proof-size upper and lower bounds in the selected calculus.\n\n5. **Strict filtering without proof shortening.** Conjecture: there exists an infinite family of PA propositions and verified consequence lists for which the formal candidate search space shrinks by an unbounded factor, but the shortest proof length decreases by at most an additive constant. This would show that semantic search compression and syntactic proof compression are independent measurements. Test by exhaustive shortest-proof enumeration in successively larger bounded fragments.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -20456,7 +20456,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 09a3e4f4 (Q=0.774), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -21366,6 +21366,46 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 66e718fe (Q=0.813), which proved 28 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 an",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 0,
+      "id": "push_66e718fe_de040f40",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9129599999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "66e718fe",
+      "source_path": "Retrocausal Proof Theory: Proving Theorems by Their Consequences",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-01T17:25:26.405776+00:00",
+      "title": "Deepening: Retrocausal Proof Theory: Proving Theorems by Their Consequences"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -21416,7 +21456,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -21456,7 +21496,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 6a88207a (Q=0.750), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynam",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -21536,7 +21576,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 72d619d5 (Q=0.789), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In homotopy type theory (HoTT), equal things can be equal in different ways — there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Novelty"
       ],
@@ -21736,7 +21776,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 83a0d4e2 (Q=0.751), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects — not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare it",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -22416,7 +22456,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle dff51e05 (Q=0.783), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: l",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty"
       ],
@@ -22856,7 +22896,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f1303b99 (Q=0.811), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Novelty"
       ],
@@ -31247,11 +31287,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0f65effc",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -31264,7 +31304,7 @@
       ],
       "github_issue": 0,
       "id": "seed_319",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-01T17:25:42.759474+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -31279,7 +31319,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
@@ -33137,11 +33177,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "74a8a74b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -33154,7 +33194,7 @@
       ],
       "github_issue": 0,
       "id": "seed_373",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-01T17:25:50.197760+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -33169,7 +33209,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
@@ -33675,7 +33715,7 @@
       "depth_estimate": 3,
       "description": "Cycle 87772396 (Q=0.686) proved 202 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Novelty"
       ],
@@ -34039,6 +34079,8 @@
     "cross_domain_bridge",
     "abduction_followup",
     "famous_subtask",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "famous_subtask",
+    "famous_subtask"
   ]
 }
