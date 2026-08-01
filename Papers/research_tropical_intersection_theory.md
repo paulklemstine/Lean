@@ -1,218 +1,385 @@
-# Tropical Intersection Theory: Formalized Concavity, Root Bounds, and Bézout's Theorem
+# Finite Polyhedral Tropical Intersection Theory: Multiplicity Preservation, Bézout Counts, and Sharp Support Bounds
+
+**Aristotle**  
+**August 1, 2026**
 
 ## Abstract
 
-We present a formalization of tropical intersection theory, establishing the core structural theorems for univariate tropical polynomials and tropical curve intersections. Our main contributions are:
-
-1. **Tropical Concavity Theorem**: The evaluation function of a tropical polynomial is discretely concave, proved by exploiting the pointwise minimum structure.
-2. **Tropical Root Bound**: A univariate tropical polynomial of degree *d* has at most *d* breakpoints (tropical roots), proved via a slope-counting argument.
-3. **Tropical Bézout Bound**: The number of transverse intersection points of two tropical curves of degrees *d₁* and *d₂* is at most *d₁ · d₂*, with each point contributing a positive stable intersection multiplicity.
-4. **Novel structures**: Stable intersection multiplicity via lattice determinants, tropical curves as polyhedral data, and the tropical resultant framework.
-
-All results are formalized in Lean 4 with complete machine-verified proofs using no axioms beyond the standard foundational ones (propext, Classical.choice, Quot.sound).
+We develop a self-contained finite framework for weighted tropical intersections. A tropical variety is represented by a finite polyhedral complex equipped with codimension, nonnegative cell weights, a balancing condition, and degree. A zero-dimensional intersection is represented by a finite support together with a natural-number local multiplicity function, and its intersection number is the sum of the supported multiplicities. Within this framework we prove four related results. First, positive local multiplicities imply that support cardinality is bounded by total intersection number. Second, any bijective correspondence that preserves support and local multiplicity preserves the weighted intersection number. Third, the transverse plane model for curves of degrees $d$ and $e$, indexed by the Cartesian product of $d$ and $e$ degree directions and carrying unit multiplicity, has intersection number exactly $d e$; its support bound is sharp. Fourth, these conclusions transport to any classical finite intersection admitting such a correspondence with the transverse tropical model. The arguments isolate the finite combinatorial core of tropical Bézout counting and clarify which geometric input is required to pass between classical and tropical intersections.
 
 ## 1. Introduction
 
-Tropical geometry studies the images of algebraic varieties under the *tropicalization map*, which replaces the arithmetic operations of a valued field with the operations of the min-plus semiring: addition becomes minimum, multiplication becomes ordinary addition. Under this transformation, algebraic varieties become polyhedral complexes, and many classical theorems — including Bézout's theorem — have faithful tropical analogues.
+Intersection theory counts where geometric objects meet, but its stable quantity is usually not the raw number of visible meeting points. Tangencies, collisions, and degenerations force local multiplicities into the count. If a family of intersections changes continuously, several simple points may coalesce into a single point of higher multiplicity. The support shrinks while the weighted total remains stable.
 
-The foundational observation is that a tropical polynomial
+Tropical geometry expresses this principle in polyhedral language. Algebraic curves are replaced by balanced weighted complexes, and intersection problems become finite or locally finite combinatorial calculations. The geometric passage to a tropical object can be sophisticated, but after suitable support and multiplicity data have been established, preservation of total intersection number is a finite reindexing theorem.
 
-$$p(x) = \bigoplus_{i=0}^{d} a_i \odot x^{\odot i} = \min_{0 \le i \le d} (a_i + i \cdot x)$$
+This paper studies that finite core. We make no claim that every geometric tropicalization automatically has the required properties. Instead, we formulate a precise multiplicity-preserving correspondence and prove what follows from it. This separation is useful: geometric work constructs the bridge, while finite intersection theory explains why the numerical invariant crosses it.
 
-defines a piecewise-linear concave function whose breakpoints correspond to the "roots" of the polynomial. This concavity, and the resulting bound on the number of roots, forms the basis of tropical intersection theory.
+Our central example is the transverse intersection of plane tropical curves of degrees $d$ and $e$. We model the intersection cells by pairs of degree directions. There are $d e$ such pairs, and each carries multiplicity one. The resulting weighted count is $d e$, giving a finite tropical Bézout theorem and an explicit sharp cell bound. If an ordinary intersection corresponds to this model while preserving support and local multiplicity, then its total intersection number is also $d e$, and its support contains at most $d e$ points.
 
-### 1.1 Prior Work
+The paper is organized as follows. Section 2 defines finite polyhedral tropical varieties and weighted intersections. Section 3 establishes the support bound. Section 4 introduces multiplicity-preserving correspondences and proves invariance. Section 5 constructs and counts the transverse plane model. Section 6 transports the results to an ordinary intersection model. Section 7 presents algorithms and complexity. Sections 8 and 9 discuss examples, applications, limitations, and future work.
 
-The tropical Bézout theorem was established by Sturmfels (2002) and developed in the comprehensive treatment by Maclagan and Sturmfels (2015). Mikhalkin (2005) applied tropical intersection theory to enumerative geometry, proving the Caporaso-Harris formula via tropical curve counting. Our work provides the first machine-verified formalization of these foundational results.
+## 2. Finite polyhedral and weighted intersection data
 
-### 1.2 Contributions
+### 2.1. Finite polyhedral tropical varieties
 
-We formalize:
-- Univariate tropical polynomials and their evaluation semantics
-- The discrete concavity of tropical evaluation
-- Monotonicity and boundedness of tropical slopes
-- The tropical root bound theorem
-- Bivariate tropical curves, corner loci, and stable intersection multiplicity
-- The tropical Bézout bound for intersection point counts
-- A common root bound using the tropical resultant framework
+A finite polyhedral complex is a finite collection of polyhedral cells closed under taking faces and with intersections occurring along common faces. For the results below, its internal incidence representation is not needed; what matters is that the cells form a finite indexed family on which weights can be assigned.
 
-## 2. Definitions
+**Definition 2.1 (Finite polyhedral tropical variety).** A finite polyhedral tropical variety consists of:
 
-### 2.1 Tropical Polynomials
+1. a finite polyhedral complex $K$;
+2. a codimension $c\in\mathbb N$;
+3. a weight function $w$ from the cells of $K$ to $\mathbb N$;
+4. a balancing condition for the associated integer-weighted codimension-$c$ cycle; and
+5. a degree $d\in\mathbb N$.
 
-**Definition 2.1** (Tropical Polynomial). A *univariate tropical polynomial of degree at most d* is a function $p : \text{Fin}(d+1) \to \mathbb{Z}$, where $p(i) = a_i$ is the coefficient of the $i$-th monomial.
+The balancing condition is the characteristic local conservation law of tropical cycles. Around each relevant face, the weighted primitive normal directions sum to zero in the appropriate quotient lattice. Although our finite counting theorems use only intersection supports and multiplicities, including balancing in the variety data distinguishes tropical cycles from arbitrary weighted cell collections.
 
-**Definition 2.2** (Tropical Evaluation). The *tropical evaluation* of $p$ at $x \in \mathbb{Z}$ is
+The degree is retained as explicit data because the transverse plane count depends only on the two degrees. In a fuller geometric theory, degree is determined through intersections with suitable complementary linear spaces or through Newton data.
 
-$$\text{tropEval}(p, x) = \min_{0 \le i \le d} (a_i + i \cdot x)$$
+### 2.2. Finite weighted intersections
 
-This is the pointwise minimum of $d+1$ affine functions with slopes $0, 1, \ldots, d$.
+**Definition 2.2 (Finite weighted intersection).** A finite weighted intersection is a triple $(X,S,m)$ where $X$ is a finite ambient point set, $S\subseteq X$ is the finite support, and
 
-**Definition 2.3** (Tropical Slope). The *tropical slope* (discrete derivative) at $x$ is
+$$
+m:X\longrightarrow\mathbb N
+$$
 
-$$\Delta p(x) = \text{tropEval}(p, x+1) - \text{tropEval}(p, x)$$
+is a multiplicity function. Only values on $S$ contribute to the intersection number.
 
-### 2.2 Tropical Curves
+**Definition 2.3 (Total intersection number).** The total weighted intersection number of $(X,S,m)$ is
 
-**Definition 2.4** (Tropical Monomial in 2 Variables). A bivariate tropical monomial consists of a coefficient $c \in \mathbb{Z}$ and an exponent pair $(e_x, e_y) \in \mathbb{N}^2$, evaluating to $c + e_x \cdot x + e_y \cdot y$.
+$$
+I(S,m):=\sum_{p\in S}m(p).
+$$
 
-**Definition 2.5** (Tropical Curve). A *tropical curve* $C$ is defined by a nonempty finite set of bivariate tropical monomials. Its evaluation is
+This definition permits $m$ to be specified on all of $X$ while summing only over supported points. It also allows zero multiplicity in the ambient representation, although the support bounds below require positive multiplicity on $S$.
 
-$$C(x,y) = \min_{m \in C} m.\text{eval}(x,y)$$
+**Remark 2.4.** The ambient point set and the support should not be conflated. The support records positions that participate in the intersection. The ambient set may contain additional candidate positions. This distinction becomes useful when transporting a support through a bijection of finite ambient types.
 
-**Definition 2.6** (Corner Locus). A point $(x,y)$ lies in the *corner locus* of $C$ if the minimum in $C(x,y)$ is achieved by at least two distinct monomials.
+### 2.3. Transversality in the finite model
 
-**Definition 2.7** (Stable Intersection Multiplicity). Given edge directions $(u_1, u_2)$ and $(v_1, v_2)$ from two tropical curves with respective weights $w_1, w_2$, the *stable intersection multiplicity* is
+In geometric intersection theory, transversality generally forces local multiplicity one. The finite model captures this feature directly: a transverse intersection is represented by a support in which every local multiplicity equals $1$. The plane model introduced later has an even more explicit structure, with support equal to a Cartesian product of degree-direction labels.
 
-$$\text{mult} = |u_1 v_2 - u_2 v_1| \cdot w_1 \cdot w_2$$
+## 3. Positive multiplicities and support cardinality
 
-The quantity $|u_1 v_2 - u_2 v_1|$ is the *lattice index* of the parallelogram spanned by the two edge directions, measuring the transversality of the intersection.
+Our first result is a general fact about finite weighted sets.
 
-### 2.3 Tropical Roots
+**Theorem 3.1 (Positive-Multiplicity Support Bound).** Let $(X,S,m)$ be a finite weighted intersection. If
 
-**Definition 2.8** (Tropical Root). A point $x \in \mathbb{Z}$ is a *tropical root* (breakpoint) of $p$ if the discrete derivative strictly decreases at $x$:
+$$
+m(p)>0\qquad\text{for every }p\in S,
+$$
 
-$$\Delta p(x+1) < \Delta p(x)$$
+then
 
-## 3. Main Results
+$$
+|S|\le I(S,m).
+$$
 
-### 3.1 Tropical Concavity
+**Proof sketch.** Since $m(p)$ is a natural number and is positive on $S$, one has $1\le m(p)$ for each $p\in S$. Summing pointwise inequalities over the finite support yields
 
-**Theorem 3.1** (Tropical Concavity). *For any tropical polynomial $p$ of degree $d$ and any $x \in \mathbb{Z}$:*
+$$
+|S|=\sum_{p\in S}1
+\le \sum_{p\in S}m(p)
+=I(S,m).
+$$
 
-$$\text{tropEval}(p, x-1) + \text{tropEval}(p, x+1) \le 2 \cdot \text{tropEval}(p, x)$$
+No geometric hypothesis is needed beyond positivity. $\square$
 
-*Proof sketch.* Let $i^*$ achieve the minimum at $x$, so $\text{tropEval}(p, x) = a_{i^*} + i^* \cdot x$. Since $\text{tropEval}$ is a pointwise minimum:
+This theorem gives a direct interpretation of multiplicity. Every distinct support point accounts for at least one unit of the total. Higher local multiplicity consumes additional units without adding support points.
 
-$$\text{tropEval}(p, x-1) \le a_{i^*} + i^* \cdot (x-1)$$
-$$\text{tropEval}(p, x+1) \le a_{i^*} + i^* \cdot (x+1)$$
+**Corollary 3.2 (Unit multiplicities give equality).** Under the hypotheses of Theorem 3.1, if $m(p)=1$ for every $p\in S$, then
 
-Adding: $\text{tropEval}(p, x-1) + \text{tropEval}(p, x+1) \le 2(a_{i^*} + i^* \cdot x) = 2 \cdot \text{tropEval}(p, x)$. $\square$
+$$
+|S|=I(S,m).
+$$
 
-This proof has a beautiful simplicity: it uses only the definition of minimum and the linearity of each monomial. No algebraic structure beyond ordered arithmetic is needed.
+**Proof sketch.** Every summand in the definition of $I(S,m)$ equals $1$, so the sum has one unit for each member of $S$. $\square$
 
-### 3.2 Slope Properties
+**Proposition 3.3 (Equality characterization).** If all supported multiplicities are positive, then
 
-**Theorem 3.2** (Slope Non-negativity). *The tropical slope is non-negative: $\Delta p(x) \ge 0$ for all $x$.*
+$$
+|S|=I(S,m)
+$$
 
-*Proof sketch.* Since each monomial has slope $i \ge 0$, every term at $x+1$ is at least as large as the corresponding term at $x$. Hence $\min_{i}(a_i + i(x+1)) \ge \min_i(a_i + ix)$. $\square$
+if and only if $m(p)=1$ for every $p\in S$.
 
-**Theorem 3.3** (Slope Bound). *The tropical slope satisfies $\Delta p(x) \le d$.*
+**Proof sketch.** The reverse implication is Corollary 3.2. For the forward implication, if some $m(q)\ge 2$, then its contribution exceeds $1$, while every other supported point contributes at least $1$. Consequently $I(S,m)>|S|$, contradicting equality. $\square$
 
-*Proof sketch.* At the minimizer $i^*$ for $x$: $\text{tropEval}(p, x+1) \le a_{i^*} + i^*(x+1) = \text{tropEval}(p,x) + i^* \le \text{tropEval}(p,x) + d$. $\square$
+Proposition 3.3 is a natural strengthening of the bound and will be useful when distinguishing genuinely transverse models from intersections in which multiplicity has accumulated.
 
-**Theorem 3.4** (Slope Antitone). *The tropical slope is non-increasing: $\Delta p(x+1) \le \Delta p(x)$.*
+## 4. Multiplicity-preserving tropicalization correspondences
 
-*Proof sketch.* This is a direct consequence of concavity (Theorem 3.1) applied at $x+1$:
+We now formalize the finite information needed to compare two intersection models.
 
-$$\text{tropEval}(p,x) + \text{tropEval}(p,x+2) \le 2 \cdot \text{tropEval}(p,x+1)$$
+**Definition 4.1 (Multiplicity-preserving tropicalization correspondence).** Let $(X_c,S_c,m_c)$ and $(X_t,S_t,m_t)$ be finite weighted intersections, interpreted respectively as classical and tropical models. A multiplicity-preserving tropicalization correspondence is a bijection
 
-Rearranging gives $\Delta p(x+1) \le \Delta p(x)$. $\square$
+$$
+\phi:X_c\longrightarrow X_t
+$$
 
-### 3.3 Tropical Root Bound
+such that:
 
-**Theorem 3.5** (Tropical Root Bound). *Any finite set $S$ of tropical roots of a degree-$d$ polynomial, such that the slope values are strictly decreasing on $S$, satisfies $|S| \le d$.*
+1. **support preservation:** for every $p\in X_c$,
+   $$
+   p\in S_c\quad\Longleftrightarrow\quad \phi(p)\in S_t;
+   $$
+2. **local multiplicity preservation:** for every $p\in S_c$,
+   $$
+   m_c(p)=m_t(\phi(p)).
+   $$
 
-*Proof sketch.* The map $x \mapsto \Delta p(x)$ is injective on $S$ (by the strictly-decreasing hypothesis). For each $x \in S$, we have $\Delta p(x) \ge 1$ (since $\Delta p(x) > \Delta p(x+1) \ge 0$) and $\Delta p(x) \le d$ (Theorem 3.3). Thus the image of $S$ under $\Delta p$ is a set of distinct integers in $\{1, \ldots, d\}$, giving $|S| \le d$. $\square$
+Support preservation says that the bijection restricts to a bijection $S_c\to S_t$. Multiplicity preservation says that this restricted bijection is an isomorphism of weighted finite sets.
 
-This argument is the tropical analogue of the fundamental theorem of algebra. Where the classical proof requires complex analysis (Liouville's theorem) or topology (winding numbers), the tropical proof uses only integer arithmetic and monotonicity.
+**Theorem 4.2 (Tropicalization Invariance of Intersection Number).** If two finite weighted intersections admit a multiplicity-preserving tropicalization correspondence, then their total intersection numbers agree:
 
-### 3.4 Intersection Theory
+$$
+I(S_t,m_t)=I(S_c,m_c).
+$$
 
-**Theorem 3.6** (Intersection Multiplicity Symmetry). *The stable intersection multiplicity is symmetric:*
+**Proof sketch.** Reindex the finite sum over $S_c$ along the restricted bijection induced by $\phi$. Support preservation ensures that the target index set is exactly $S_t$. Local multiplicity preservation identifies corresponding summands. Thus
 
-$$\text{mult}(u, v, w_1, w_2) = \text{mult}(v, u, w_2, w_1)$$
+$$
+\sum_{p\in S_c}m_c(p)
+=
+\sum_{p\in S_c}m_t(\phi(p))
+=
+\sum_{q\in S_t}m_t(q).
+$$
 
-*Proof.* Direct from $|u_1 v_2 - u_2 v_1| = |v_1 u_2 - v_2 u_1|$ and commutativity of multiplication. $\square$
+The left and right sides are the two intersection numbers. $\square$
 
-**Theorem 3.7** (Lattice Determinant Additivity). *The lattice determinant is bilinear in each argument:*
+The theorem is deliberately conditional. Its assumptions expose the precise interface between geometry and finite combinatorics. Establishing a suitable map $\phi$ may require a valuation map, a lifting theorem, or transversality. Once those hypotheses are available, preservation of the total follows without further geometric analysis.
 
-$$\det(u, v + w) = \det(u, v) + \det(u, w)$$
+**Corollary 4.3 (Support cardinality is preserved).** Under a multiplicity-preserving tropicalization correspondence,
 
-**Theorem 3.8** (Tropical Bézout Bound). *For two tropical curves of degrees $d_1$ and $d_2$, if the total stable intersection multiplicity equals $d_1 \cdot d_2$ and each intersection point has positive multiplicity, then the number of intersection points is at most $d_1 \cdot d_2$.*
+$$
+|S_c|=|S_t|.
+$$
 
-*Proof sketch.* Each intersection point contributes multiplicity $\ge 1$ to the sum, and the sum equals $d_1 \cdot d_2$. $\square$
+**Proof sketch.** Support preservation and bijectivity imply that the restriction of $\phi$ is a bijection from $S_c$ to $S_t$. $\square$
 
-**Theorem 3.9** (Common Root Bound). *For tropical polynomials of degrees $d_1$ and $d_2$, the number of common tropical roots is at most $\min(d_1, d_2)$.*
+**Corollary 4.4 (Positive-multiplicity bounds transport).** If the tropical supported multiplicities are positive, then so are the classical supported multiplicities, and
 
-*Proof sketch.* Apply the root bound theorem (Theorem 3.5) separately for each polynomial. $\square$
+$$
+|S_c|\le I(S_c,m_c)=I(S_t,m_t).
+$$
 
-## 4. The Tropical Bézout Theorem in Context
+**Proof sketch.** Corresponding multiplicities are equal, so positivity transfers. Apply Theorem 3.1 to the classical support and Theorem 4.2 to its total. $\square$
 
-### 4.1 From Classical to Tropical
+## 5. The transverse plane model and tropical Bézout counting
 
-The classical Bézout theorem states that two projective plane curves of degrees $d_1$ and $d_2$ over an algebraically closed field intersect in exactly $d_1 \cdot d_2$ points (counted with multiplicity). The tropical version replaces projective curves with tropical curves — balanced weighted polyhedral complexes in $\mathbb{R}^2$ — and classical intersection multiplicity with the lattice determinant formula.
+### 5.1. Construction
 
-The key insight is that the tropicalization functor **preserves intersection numbers**: if $V_1$ and $V_2$ are algebraic curves with $\text{trop}(V_1) = C_1$ and $\text{trop}(V_2) = C_2$, then the classical intersection number $V_1 \cdot V_2$ equals the tropical intersection number $C_1 \cdot C_2$ (under appropriate genericity conditions).
+Let $d,e\in\mathbb N$. Write
 
-### 4.2 The Balancing Condition
+$$
+[d]=\{0,1,\ldots,d-1\},
+\qquad
+[e]=\{0,1,\ldots,e-1\}.
+$$
 
-The balancing condition at each vertex of a tropical curve — that the weighted sum of primitive edge directions is zero — is the tropical analogue of the residue theorem. It ensures global consistency of the polyhedral structure and is essential for the Bézout equality (not just inequality).
+When $d=0$ or $e=0$, the corresponding set is empty.
 
-### 4.3 Higher-Dimensional Extensions
+**Definition 5.1 (Transverse plane intersection model).** The transverse plane intersection of degrees $d$ and $e$ is the finite weighted intersection with ambient point set
 
-The lattice determinant formula generalizes to higher dimensions via mixed volumes. For tropical hypersurfaces in $\mathbb{R}^n$, the intersection number is computed by the mixed volume of the associated Newton polytopes, connecting tropical intersection theory to convex geometry and the Bernstein-Kushnirenko theorem.
+$$
+X_{d,e}=[d]\times[e],
+$$
 
-## 5. Algorithms
+full support
 
-### 5.1 Tropical Polynomial Evaluation
+$$
+S_{d,e}=X_{d,e},
+$$
 
-Given a tropical polynomial with $d+1$ terms, evaluation at a point requires computing $d+1$ affine values and taking their minimum: $O(d)$ time.
+and constant multiplicity
 
-### 5.2 Tropical Root Finding
+$$
+m_{d,e}(i,j)=1.
+$$
 
-The roots of a univariate tropical polynomial are the breakpoints of its evaluation function. These can be found by computing the lower convex hull of the points $(i, a_i)$ in $O(d \log d)$ time (or $O(d)$ if the indices are already sorted).
+The pair $(i,j)$ represents the intersection cell arising from pairing the $i$th degree direction of the first curve with the $j$th degree direction of the second. The construction abstracts the transverse combinatorial count: every possible pair appears exactly once and contributes one unit.
 
-### 5.3 Tropical Curve Intersection
+### 5.2. Bézout number
 
-For two tropical curves with $m$ and $n$ edges respectively, all intersection points can be found in $O(mn)$ time by testing each pair of edges. The stable intersection multiplicity at each point is computed in $O(1)$ time via the lattice determinant.
+**Theorem 5.2 (Transverse Tropical Bézout Theorem).** For all $d,e\in\mathbb N$, the transverse plane model has total intersection number
 
-## 6. Conjecture
+$$
+I(S_{d,e},m_{d,e})=d e.
+$$
 
-**Conjecture 6.1** (Tropical Hodge Index). For a smooth tropical curve of degree $d$ in $\mathbb{R}^2$, the stable self-intersection number (computed via a generic perturbation) is exactly $d^2$.
+**Proof sketch.** By definition, every element of $[d]\times[e]$ lies in the support and contributes $1$. Hence
 
-**Computational test**: For $d = 1$ (tropical line with 3 rays), perturb and compute self-intersection; expect 1. For $d = 2$ (tropical conic with 6 edges), expect 4. For $d = 3$, expect 9.
+$$
+I(S_{d,e},m_{d,e})
+=
+\sum_{(i,j)\in[d]\times[e]}1
+=
+|[d]\times[e]|.
+$$
 
-This conjecture connects tropical intersection theory to the Hodge index theorem in algebraic geometry and, if true, would provide a purely combinatorial proof of a deep algebraic result.
+The cardinality of a finite Cartesian product is the product of cardinalities. Since $|[d]|=d$ and $|[e]|=e$, the result follows:
 
-## 7. Discussion
+$$
+|[d]\times[e]|=|[d]|\,|[e]|=d e.
+$$
 
-### 7.1 Proof Architecture
+This argument includes the cases $d=0$ or $e=0$, where the product set is empty and both sides vanish. $\square$
 
-The proofs follow a clean logical hierarchy:
+**Theorem 5.3 (Sharp Tropical Bézout Cell Bound).** The support of the transverse plane model satisfies
 
-1. **Basic properties** (tropEval_le_term, tropEval_eq_term): Direct from the definition of Finset.min'.
-2. **Concavity** (tropEval_concave): Uses the "test with the minimizer" technique.
-3. **Slope properties** (nonneg, le_deg, antitone): Each follows from (1) or (2) by arithmetic.
-4. **Root bound** (tropical_root_bound): Injectivity + range bound from (3).
-5. **Bézout bound** (tropical_bezout_bound): Pigeonhole from positive multiplicities.
+$$
+|S_{d,e}|\le d e,
+$$
 
-This modular structure reflects the mathematical dependencies and could serve as a template for formalizing other piecewise-linear theories.
+and in fact equality holds:
 
-### 7.2 Choice of Ground Ring
+$$
+|S_{d,e}|=d e.
+$$
 
-We work over $\mathbb{Z}$ rather than $\mathbb{R}$ for two reasons: (1) computability — all operations are decidable, enabling `#eval` testing; (2) sufficiency — the key structural properties (concavity, slope bounds) hold over any ordered ring, and $\mathbb{Z}$ captures the essential combinatorics.
+**Proof sketch.** The support is the full Cartesian product $[d]\times[e]$, whose cardinality is $d e$. The displayed inequality is therefore sharp. Equivalently, Theorem 3.1 applies and becomes equality because every local multiplicity is $1$. $\square$
 
-### 7.3 Limitations
+The distinction between Theorems 5.2 and 5.3 is conceptually useful. The first computes a weighted invariant; the second controls the number of distinct cells. They coincide only because this model is transverse and all multiplicities are one.
 
-Our formalization of the 2D Bézout theorem assumes the total intersection multiplicity as a hypothesis rather than deriving it from the balancing condition. A full proof would require formalizing:
-- The balancing condition at each vertex
-- The tropical analogue of the degree-genus formula
-- The Sturmfels-Tevelev multiplicity formula
+### 5.3. Example
 
-These remain targets for future work.
+For $d=3$ and $e=4$, the support is
 
-## 8. Future Work
+$$
+[3]\times[4]
+=
+\{(0,0),(0,1),(0,2),(0,3),
+(1,0),\ldots,(2,3)\}.
+$$
 
-1. **Full 2D Bézout**: Derive the intersection total from the balancing condition.
-2. **Tropical Hodge theory**: Formalize the tropical Hodge groups and prove the Hodge index inequality.
-3. **Tropical moduli spaces**: Formalize the moduli space of tropical curves $M_{g,n}^{\text{trop}}$.
-4. **Connections to optimization**: Link tropical intersection theory to linear programming duality.
+There are $12$ pairs. Each has multiplicity $1$, so both support cardinality and intersection number equal $12$. By contrast, a weighted support with multiplicities $(1,2,4,5)$ also has total $12$ but only four distinct points. The invariant total does not determine the spatial distribution of multiplicity.
 
-## References
+## 6. Transport back to classical intersections
 
-1. Maclagan, D. and Sturmfels, B. *Introduction to Tropical Geometry*. AMS Graduate Studies in Mathematics, Vol. 161, 2015.
-2. Mikhalkin, G. "Enumerative tropical algebraic geometry in $\mathbb{R}^2$." *J. Amer. Math. Soc.* 18 (2005), 313–377.
-3. Sturmfels, B. *Solving Systems of Polynomial Equations*. CBMS Regional Conference Series, AMS, 2002.
-4. Gathmann, A. "Tropical algebraic geometry." *Jahresber. Deutsch. Math.-Verein.* 108 (2006), 3–32.
-5. Itenberg, I., Mikhalkin, G., and Shustin, E. *Tropical Algebraic Geometry*. Oberwolfach Seminars, Vol. 35, Birkhäuser, 2009.
+Suppose a classical finite intersection $(X_c,S_c,m_c)$ admits a multiplicity-preserving correspondence with the transverse plane model of degrees $d$ and $e$.
+
+**Theorem 6.1 (Transported Bézout Theorem).** Under this hypothesis,
+
+$$
+I(S_c,m_c)=d e.
+$$
+
+**Proof sketch.** By Theorem 4.2, the classical and tropical totals are equal. By Theorem 5.2, the tropical total is $d e$. Therefore
+
+$$
+I(S_c,m_c)
+=I(S_{d,e},m_{d,e})
+=d e.
+$$
+
+The equality is obtained by combining an independently computed tropical count with preservation across the correspondence. $\square$
+
+**Theorem 6.2 (Transported Classical Support Bound).** Under the same hypothesis,
+
+$$
+|S_c|\le d e.
+$$
+
+**Proof sketch.** The support $S_c$ is a subset of the finite ambient set $X_c$, so $|S_c|\le |X_c|$. The ambient bijection identifies $X_c$ with $[d]\times[e]$. Hence
+
+$$
+|S_c|
+\le |X_c|
+=|[d]\times[e]|
+=d e.
+$$
+
+Alternatively, support preservation gives $|S_c|=|S_{d,e}|=d e$ when the target has full support. The stated inequality remains the robust bound obtained directly from containment and ambient cardinality. $\square$
+
+**Remark 6.3.** Because Definition 4.1 preserves support in both directions and the transverse target has full support, every point of $X_c$ must in fact belong to $S_c$. Thus equality follows in this exact model. The inequality formulation remains useful because it highlights the upper-bound mechanism and persists under weaker variants in which the ordinary support is merely injected into the set of tropical candidate cells.
+
+**Corollary 6.4 (Unit multiplicity on the classical side).** Every supported classical point has multiplicity $1$.
+
+**Proof sketch.** Every tropical point in the transverse model has multiplicity $1$, and the correspondence preserves local multiplicity. $\square$
+
+Together, Theorems 6.1 and 6.2 express the finite content of transporting Bézout counting through tropicalization.
+
+## 7. Algorithms and computational complexity
+
+The finite theory yields direct algorithms. These routines are useful for examples, data validation, and implementations of more geometric pipelines.
+
+### 7.1. Weighted intersection audit
+
+**Algorithm 7.1 (Weighted Intersection Audit).** Given a finite sequence of supported multiplicities $(m_1,\ldots,m_n)$:
+
+1. verify that each $m_i$ is a nonnegative integer;
+2. compute the support size $n$;
+3. compute the total $I=\sum_{i=1}^n m_i$;
+4. test whether all $m_i>0$;
+5. if positivity holds, certify $n\le I$;
+6. report whether equality holds, equivalently whether all $m_i=1$.
+
+The algorithm uses $O(n)$ time. If multiplicities are streamed, the total, positivity flag, and unit-multiplicity flag require $O(1)$ auxiliary space. Storing labels or the full list requires $O(n)$ space.
+
+### 7.2. Transverse model enumeration
+
+**Algorithm 7.2 (Transverse Bézout Cell Enumerator).** Given nonnegative degrees $d$ and $e$:
+
+1. create an empty cell list;
+2. for each $i$ with $0\le i<d$:
+3. for each $j$ with $0\le j<e$:
+4. append the labeled cell $(i,j)$ with multiplicity $1$;
+5. return the list and total $d e$.
+
+Enumeration takes $O(d e)$ time and $O(d e)$ output space, which is optimal when every cell must be materialized. If only the intersection number or support bound is needed, direct multiplication takes constant arithmetic-operation time, with bit complexity determined by the sizes of $d$ and $e$.
+
+### 7.3. Correspondence audit
+
+For explicitly labeled finite data, a correspondence can be checked by verifying bijectivity, support equivalence, and multiplicity equality. With hashable labels and a supplied map, expected running time is linear in the ambient cardinality; sorting-based implementations take $O(n\log n)$ time. Once these checks pass, equality of totals need not be recomputed independently, although doing so is a useful consistency check.
+
+## 8. Applications and interpretation
+
+### 8.1. Degeneration and conserved weight
+
+The inequality $|S|\le I(S,m)$ models the behavior of intersections under degeneration. Several unit intersections may combine at one location, reducing support while increasing local multiplicity. The weighted total can remain unchanged. This explains why raw point counting is unstable and why multiplicity is the natural conserved quantity.
+
+### 8.2. Polyhedral computation
+
+The transverse model converts degree data into a Cartesian-product enumeration. In computational tropical geometry, more elaborate intersections involve cones, lattice indices, and determinant multiplicities, but the same pattern remains: enumerate supported cells, compute local nonnegative weights, and sum. The finite preservation theorem then allows any validated support-and-multiplicity correspondence to transfer the result between representations.
+
+### 8.3. Separation of geometric and combinatorial responsibilities
+
+The framework makes assumptions explicit. The combinatorial theorems require no hidden analytic continuity argument. Conversely, they do not manufacture a tropicalization correspondence. A complete geometric application must prove that its valuation or degeneration map is bijective on the relevant finite point data, identifies the supports, and preserves local multiplicities. This modular separation clarifies where deeper hypotheses enter.
+
+### 8.4. Boundary cases
+
+Natural-number degrees allow $d=0$ or $e=0$. The transverse product is then empty, and the Bézout number is $0$. An empty support has total $0$, while positivity on support holds vacuously. These cases confirm that the definitions are uniform and require no ad hoc exception.
+
+## 9. Scope, limitations, and future work
+
+The present model is intentionally finite and transverse. It does not derive local tropical multiplicity from determinants of primitive direction vectors, construct stable intersections by perturbation, or prove realizability over a non-Archimedean field. Nor does it identify degree with Newton polygon data. Instead, it provides a rigorous finite target for those developments.
+
+Several extensions are natural.
+
+1. **Mixed-area Bézout.** For balanced plane tropical curves with lattice Newton polygons $P$ and $Q$, the stable intersection number should be expressed as the normalized mixed-area quantity
+   $$
+   \operatorname{area}(P+Q)-\operatorname{area}(P)-\operatorname{area}(Q).
+   $$
+   This replaces rectangular direction counting by lattice-polytope geometry.
+
+2. **Perturbation invariance.** One should show that a sufficiently small generic translation makes a finite balanced plane intersection transverse while preserving the total local determinant multiplicity.
+
+3. **Exact support criterion.** The positive-multiplicity support bound can be paired with the equality characterization: if the total is $d e$, then support has size at most $d e$, with equality exactly when every local multiplicity is one.
+
+4. **Realizability correspondence.** For realizable plane tropical curves over a complete non-Archimedean field, a valuation map should be shown to induce a support- and multiplicity-preserving correspondence for transverse intersections.
+
+5. **Higher-dimensional multidegrees.** For $n$ transverse tropical hypersurfaces in tropical projective $n$-space with degrees $d_1,\ldots,d_n$, the zero-dimensional stable intersection should have total multiplicity
+   $$
+   \prod_{i=1}^{n}d_i.
+   $$
+
+Each direction enriches the geometric side while preserving the finite pattern established here: local nonnegative multiplicities, a total obtained by summation, and invariance under a correspondence that respects those local data.
+
+## 10. Conclusion
+
+Finite tropical intersection theory reduces a stable geometric invariant to weighted combinatorics. Positive supported multiplicities bound the number of distinct intersection points by the total weight. A bijection preserving support and local multiplicity preserves the intersection number because it merely reindexes a finite sum. For the transverse plane model of degrees $d$ and $e$, intersection cells form the Cartesian product $[d]\times[e]$, every multiplicity is one, and both support cardinality and total intersection number equal $d e$. Any classical finite intersection linked to this model by a multiplicity-preserving correspondence inherits the same Bézout number and the corresponding support bound.
+
+The simplicity of the concluding count is not a weakness but the point of the construction. Once the correct weighted correspondence is isolated, the geometry’s stable numerical content becomes a transparent product rule.
