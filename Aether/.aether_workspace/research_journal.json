@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4d2267f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nThe unrestricted Rota basis conjecture remains open. The following five statements\nare concrete, falsifiable extensions of the definitions and small-rank results in\n`Catalog/Combi",
-      "quality_score": 0.73176,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-29T23:22:26",
-      "title": "Rota's Basis Conjecture"
-    },
-    {
       "cycle_id": "8aec96a6",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\nThe formal result identifies a structural obstruction in the proposed single-neuron model: after normalization, the factor `exp(a)` cancels, so `a` is unidentifiable and the two-p",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-01T04:20:29",
       "title": "EML Neural Network Expressiveness: Depth vs Width"
+    },
+    {
+      "cycle_id": "788947d7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Concrete Schanuel specialization.** Prove that the finite-family formulation `EMLTranscendence.SchanuelConjecture` implies `EMLTranscendence.ConcreteSchanuelSpecialization`.",
+      "quality_score": 0.7986800000000001,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-08-01T04:21:45",
+      "title": "EML Number Theory: Transcendence and Algebraic Independence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2f76a8a3",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: complex-weighted undirected random graphs\n\nThis cycle deepened the theory of the fixed-amplitude model, where every present edge\nof an undirected graph carries a single common com",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-24T01:27:37",
-      "title": "Deepening: Erdos-Renyi on Acid: Random Graphs That Hallucinate"
-    },
     {
       "cycle_id": "82236c9f",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-01T04:20:29",
       "title": "EML Neural Network Expressiveness: Depth vs Width"
+    },
+    {
+      "cycle_id": "788947d7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n1. **Concrete Schanuel specialization.** Prove that the finite-family formulation `EMLTranscendence.SchanuelConjecture` implies `EMLTranscendence.ConcreteSchanuelSpecialization`.",
+      "quality_score": 0.7986800000000001,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-08-01T04:21:45",
+      "title": "EML Number Theory: Transcendence and Algebraic Independence"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "275a5749",
-      "domain": "Shared",
-      "name": "value_nil",
-      "quality": 0.75115
-    },
-    {
-      "cycle_id": "275a5749",
-      "domain": "Shared",
-      "name": "value_cons",
-      "quality": 0.75115
-    },
-    {
-      "cycle_id": "275a5749",
-      "domain": "Shared",
-      "name": "canonical_nil",
-      "quality": 0.75115
-    },
     {
       "cycle_id": "50db037d",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "emlQuadApprox_hasDerivAt",
       "quality": 0.73519
+    },
+    {
+      "cycle_id": "788947d7",
+      "domain": "Applications",
+      "name": "does",
+      "quality": 0.7986800000000001
+    },
+    {
+      "cycle_id": "788947d7",
+      "domain": "Applications",
+      "name": "uses",
+      "quality": 0.7986800000000001
+    },
+    {
+      "cycle_id": "788947d7",
+      "domain": "Applications",
+      "name": "concreteTerm_eval",
+      "quality": 0.7986800000000001
     }
   ],
-  "last_updated": "2026-08-01T04:20:29",
+  "last_updated": "2026-08-01T04:21:45",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "538b51f9",
-        "quality": 0.63,
-        "theorems": 14,
-        "title": "EML Kolmogorov-Arnold Representation"
-      },
-      {
         "cycle_id": "1f5ea34f",
         "quality": 0.77698,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.73519,
         "theorems": 6,
         "title": "EML Neural Network Expressiveness: Depth vs Width"
+      },
+      {
+        "cycle_id": "788947d7",
+        "quality": 0.7986800000000001,
+        "theorems": 19,
+        "title": "EML Number Theory: Transcendence and Algebraic Independence"
       }
     ],
     "Bridges": [

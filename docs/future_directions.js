@@ -2196,22 +2196,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
-    "consumed_by_exp_id": "788947d7",
-    "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "seed_339",
-    "phase": "A",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Number Theory: Transcendence and Algebraic Independence"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0fbfba35 (Q=0.778), which proved 13 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A universal leading-residue formula for Witten zeta functions' and formalize its key results. Abstract: Let $\u03a6$ be an irreducible crystallographic root system of rank $r$, with Coxeter number $h$, Weyl group $W$, Cartan matrix $C_\u03a6$, and invariant degrees $2=d_1\\leq\\cdot",
     "domains": [
@@ -2917,23 +2901,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Riemann-Roch Theorem"
   },
   {
-    "consumed_by_exp_id": "150a94b2",
-    "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) \u2014 matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
-    "domains": [
-      "EML",
-      "MachineLearning",
-      "Analysis"
-    ],
-    "id": "seed_069",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Neural Network Expressiveness: Depth vs Width"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
@@ -3544,17 +3511,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Integration in Finite Terms: The Risch Algorithm"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee0c99e7",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
       "Computation"
     ],
     "id": "seed_374",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -5963,17 +5931,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Cyclic Sieving for Staircase Plane Partitions via Crystals and Electrical Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb10fc42",
     "description": "Investigate the ArXiv paper 'Strongly complete sets and a conjecture of Erd\u0151s' and formalize its key results. Abstract: A set $A\\subseteq\\mathbb{N}$ is called $\\textit{complete}$ if every sufficiently large integer can be written as a sum of distinct elements of $A$. It is $\\textit{strongly complete}$ if it remains complete after one deletes finitely many elements from it. We show that $A\\subseteq\\mathbb{N}$ is strongly complete whenever \\[ \\big|A\\cap(2^k,2^{k+1}]\\big|\\ge6 \\] for every sufficiently large $k\\in\\mathbb{N}$, and \\[ \\sum_{a\\in A}\\|a\u03b8\\|=\\infty, \\quad\\forall\u03b8\\in\\mathbb{R}\\setminus\\mathbb{Z}. \\] In particular, this resolves a 1961 conjecture of Erd\u0151s. The proof builds on previous work of Bergelson and Simmons. Our approach also allows us to establish a more general strong-completeness criterion with suitable ordered blocks in place of dyadic intervals.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
     "id": "fd_0132",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14071v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:35:00.343163+00:00",
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
@@ -8349,17 +8318,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** An elementary binary cellular automaton is reversible on every f"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ffa9af78",
     "description": "# Future directions\n\n1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to an equality characterizing the entire fiber `{x \u2208 (0,1) | f^[n] x = y}`. This requires proving every preimage chooses a unique lower or upper inverse branch.\n2. **Closed trigonometric indexing.** Identify each recursively decoded seed with `sin\u00b2((\u00b1\u03b8 + k\u03c0)/2^n)` when `y=sin\u00b2 \u03b8`, connecting the inverse tree directly to angle halving.\n3. **Finite-precision collapse.** Instantiate the construction for fixed-point arithmetic and quantify which exact-real branches merge after rounding. This would separate mathematical `2^n` ambiguity from implementation-level cycle structure.\n4. **Keystream indistinguishability obstruction.** Formalize a stream-cipher interface and show that observing an orbit suffix beginning at time `n` leaves at least `2^n` candidate exact-real seeds for every interior observed state.\n5. **Boundary fiber classification.** Give exact formulas at targets `0` and `1`, where critical-point collisions cause the complete binary count to fail.\n6. **Measure-theoretic consequences.** Combine the inverse branches with their Jacobians to derive the invariant arcsine density and the Lyapunov exponent `log 2`.\n",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0367",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "bcb31ca6",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T23:29:17.614598+00:00",
     "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
   },
@@ -10964,6 +10934,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T23:29:28.534256+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0872",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:80035",
+    "status": "available",
+    "timestamp": "2026-08-01T04:21:53.479845+00:00",
+    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
     "consumed_by_exp_id": "",
