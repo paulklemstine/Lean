@@ -1113,21 +1113,21 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             print(f"[Retry] {stats['retried_directions']} retried directions, "
                   f"rate={stats.get('retry_rate',0):.1%}, avg_attempts={stats.get('avg_attempts',0):.2f}")
         
-        # Trigger Option B Direction Tournament when total directions > 1000
-        total_dirs = stats.get("total", 0)
-        if total_dirs > 1000:
+        # Trigger Option B Direction Tournament when available directions > 1000
+        avail_dirs = stats.get("available", 0)
+        if avail_dirs > 1000:
             # Skip if a tournament job is already inflight
             tournament_already_inflight = any(
                 getattr(j, 'direction_id', '') == '__direction_tournament__'
                 for j in extractor.inflight.values()
             )
             if tournament_already_inflight:
-                print(f"[Tournament] Total directions={total_dirs} > 1000 but tournament job already inflight — skipping.")
+                print(f"[Tournament] Available directions={avail_dirs} > 1000 but tournament job already inflight — skipping.")
             else:
                 dt = DirectionTournament(workspace=extractor.workspace)
                 batch = dt.get_candidate_batch(batch_size=10)
                 if batch and len(batch) >= 5:
-                    print(f"[Tournament] Total directions={total_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
+                    print(f"[Tournament] Available directions={avail_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
                     prompt = dt.build_tournament_prompt(batch, target_winners=2)
                     # Tournament is allowed to exceed max_inflight by 1 — it's a maintenance job
                     if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):

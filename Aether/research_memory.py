@@ -7,6 +7,7 @@ and guide future research toward novel ground.
 
 import json
 import re
+import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -383,7 +384,15 @@ class FutureDirectionsManager:
         # The workspace copy was eliminated to avoid duplication — docs/ rsyncs
         # straight from Packages/, so this is the only file that matters.
         repo_root = self.workspace.parent.parent
-        self._file = repo_root / "Packages" / "future_directions.json"
+        pkg_file = repo_root / "Packages" / "future_directions.json"
+        ws_pkg_file = self.workspace / "Packages" / "future_directions.json"
+        ws_file = self.workspace / "future_directions.json"
+        if ws_pkg_file.exists():
+            self._file = ws_pkg_file
+        elif ws_file.exists():
+            self._file = ws_file
+        else:
+            self._file = pkg_file
         self._directions: List[FutureDirection] = []
         self._pruned: List[FutureDirection] = []
         self._cycle_syntheses: Dict[str, str] = {}  # exp_id -> synthesis text
@@ -563,6 +572,11 @@ class FutureDirectionsManager:
 
     def _save(self) -> None:
         self.workspace.mkdir(parents=True, exist_ok=True)
+        # Auto-archive completed directions if they exceed retention limit (50)
+        completed_count = len([d for d in self._directions if d.status == "completed"])
+        if completed_count > 50:
+            self.archive_completed_directions(keep_recent=50, max_per_file=200)
+
         self._file.write_text(
             json.dumps({
                 "directions": sorted([d.to_dict() for d in self._directions], key=lambda d: d.get("id", "")),
@@ -1255,10 +1269,21 @@ class FutureDirectionsManager:
         self._save()
 
     def get_direction_by_id(self, direction_id: str) -> Optional[FutureDirection]:
-        """Look up a direction by its ID."""
+        """Look up a direction by its ID (checking active memory first, then completed archives)."""
         for d in self._directions:
             if d.id == direction_id:
                 return d
+        # Search completed directions archives
+        archive_dir = self._file.parent / "completed_directions_archive"
+        if archive_dir.exists():
+            for af in sorted(archive_dir.glob("archive_part_*.json"), reverse=True):
+                try:
+                    adata = json.loads(af.read_text(encoding="utf-8"))
+                    for item in adata.get("directions", []):
+                        if item.get("id") == direction_id:
+                            return FutureDirection.from_dict(item)
+                except Exception:
+                    pass
         return None
 
     def mark_direction_available(self, direction_id: str) -> None:
@@ -1499,6 +1524,21 @@ class FutureDirectionsManager:
         retried = [d for d in self._directions if d.attempt_count > 1]
         retry_rate = len(retried) / max(len([d for d in self._directions if d.attempt_count > 0]), 1)
         avg_attempts = sum(d.attempt_count for d in self._directions) / max(len([d for d in self._directions if d.attempt_count > 0]), 1)
+        
+        # Calculate archived completed stats
+        archive_dir = self._file.parent / "completed_directions_archive"
+        archived_completed_count = 0
+        archive_files_count = 0
+        if archive_dir.exists():
+            archive_files = list(archive_dir.glob("archive_part_*.json"))
+            archive_files_count = len(archive_files)
+            for af in archive_files:
+                try:
+                    adata = json.loads(af.read_text(encoding="utf-8"))
+                    archived_completed_count += len(adata.get("directions", []))
+                except Exception:
+                    pass
+
         return {
             "total": len(self._directions),
             "available": statuses.get("available", 0),
@@ -1506,9 +1546,99 @@ class FutureDirectionsManager:
             "completed": statuses.get("completed", 0),
             "failed": statuses.get("failed", 0),
             "pruned": len(self._pruned),
+            "archived_completed": archived_completed_count,
+            "archived_files_count": archive_files_count,
             "retried_directions": len(retried),
             "retry_rate": round(retry_rate, 3),
             "avg_attempts": round(avg_attempts, 2),
+        }
+
+    def archive_completed_directions(
+        self,
+        keep_recent: int = 50,
+        max_per_file: int = 200,
+    ) -> Dict[str, int]:
+        """Archive completed directions exceeding keep_recent threshold into chunked files.
+
+        Archived directions are removed from future_directions.json and saved in
+        Packages/completed_directions_archive/archive_part_NNNN.json files, each
+        capped at max_per_file items.
+
+        Returns a dictionary summary of archived count and archive files count.
+        """
+        completed_dirs = [d for d in self._directions if d.status == "completed"]
+        if len(completed_dirs) <= keep_recent:
+            return {"archived": 0, "kept": len(completed_dirs), "archive_files": 0}
+
+        # Sort completed directions by timestamp/attempt/id, keeping the newest keep_recent in memory
+        completed_sorted = sorted(
+            completed_dirs,
+            key=lambda d: getattr(d, 'timestamp', '') or getattr(d, 'last_attempt_time', '') or getattr(d, 'id', '')
+        )
+        to_archive = completed_sorted[:-keep_recent]
+        to_archive_ids = set(d.id for d in to_archive)
+
+        # Filter out archived directions from active memory list
+        self._directions = [d for d in self._directions if d.id not in to_archive_ids]
+
+        # Directory for completed direction archives
+        archive_dir = self._file.parent / "completed_directions_archive"
+        archive_dir.mkdir(parents=True, exist_ok=True)
+
+        # Load existing archive files to find current max part and check if last file has capacity
+        existing_files = sorted(archive_dir.glob("archive_part_*.json"))
+        parts_data = []
+
+        for f in existing_files:
+            try:
+                data = json.loads(f.read_text(encoding="utf-8"))
+                parts_data.append((f, data))
+            except Exception:
+                pass
+
+        archived_count = 0
+        items_to_write = [d.to_dict() for d in to_archive]
+        space = 0
+
+        # Fill capacity in last existing archive file if space available
+        if parts_data:
+            last_file, last_data = parts_data[-1]
+            existing_items = last_data.get("directions", [])
+            space = max_per_file - len(existing_items)
+            if space > 0:
+                chunk = items_to_write[:space]
+                items_to_write = items_to_write[space:]
+                existing_items.extend(chunk)
+                last_data["directions"] = existing_items
+                last_data["count"] = len(existing_items)
+                last_data["archived_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ")
+                last_file.write_text(json.dumps(last_data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                archived_count += len(chunk)
+
+        # Create new part files for remaining items
+        part_num = len(parts_data)
+        if parts_data and space > 0 and not items_to_write:
+            pass
+        else:
+            while items_to_write:
+                part_num += 1
+                chunk = items_to_write[:max_per_file]
+                items_to_write = items_to_write[max_per_file:]
+                new_file = archive_dir / f"archive_part_{part_num:04d}.json"
+                part_payload = {
+                    "part": part_num,
+                    "archived_at": time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "count": len(chunk),
+                    "directions": chunk,
+                }
+                new_file.write_text(json.dumps(part_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                archived_count += len(chunk)
+
+        all_archive_files = list(archive_dir.glob("archive_part_*.json"))
+        return {
+            "archived": archived_count,
+            "kept": len([d for d in self._directions if d.status == "completed"]),
+            "archive_files": len(all_archive_files),
         }
 
     def reset_directions(self, new_directions: Optional[List["FutureDirection"]] = None) -> dict:
