@@ -1,139 +1,137 @@
-"""Numerical demonstrations for finite three-level Hahn series.
+#!/usr/bin/env python3
+"""Numerical demonstrations for integer-ranked finite Hahn transseries.
 
-A rank (e, p, l) is ordered lexicographically and may be read as an
-exponential, polynomial, and logarithmic growth level.  Sparse dictionaries
-store only nonzero coefficients.  The examples illustrate first disagreement,
-monomial separation, and compatibility with addition and multiplication.
+The examples model finite truncations as sparse coefficient dictionaries.  They
+illustrate unique first disagreement, the parity obstruction for square orders,
+and failure of injectivity of evaluation at a single point.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Iterable, Optional, Tuple
+from fractions import Fraction
+from typing import Callable, Iterable, Mapping, Optional, Sequence, TypeAlias
 
-Rank = Tuple[int, int, int]
-
-
-@dataclass(frozen=True)
-class Disagreement:
-    """The least rank where two finite sparse series differ."""
-
-    rank: Rank
-    left: float
-    right: float
+Rank: TypeAlias = tuple[int, int, int]
+Coefficient: TypeAlias = Fraction
+Series: TypeAlias = Mapping[Rank, Coefficient]
 
 
-Series = Dict[Rank, float]
+def coefficient(series: Series, rank: Rank) -> Coefficient:
+    """Return the coefficient at ``rank``, interpreting missing entries as zero."""
+    return series.get(rank, Fraction(0))
 
 
-def normalize(series: Series, tolerance: float = 1e-12) -> Series:
-    """Remove coefficients numerically indistinguishable from zero."""
-    return {rank: value for rank, value in series.items()
-            if abs(value) > tolerance}
+def first_disagreement(left: Series, right: Series) -> Optional[Rank]:
+    """Return the lexicographically least rank with unequal coefficients.
 
-
-def coefficient(series: Series, rank: Rank) -> float:
-    """Return a coefficient, using zero outside the sparse support."""
-    return series.get(rank, 0.0)
-
-
-def add(left: Series, right: Series, tolerance: float = 1e-12) -> Series:
-    """Add two finite sparse series coefficientwise."""
-    result = dict(left)
-    for rank, value in right.items():
-        result[rank] = result.get(rank, 0.0) + value
-    return normalize(result, tolerance)
-
-
-def subtract(left: Series, right: Series, tolerance: float = 1e-12) -> Series:
-    """Subtract two finite sparse series coefficientwise."""
-    return add(left, {rank: -value for rank, value in right.items()}, tolerance)
-
-
-def add_ranks(left: Rank, right: Rank) -> Rank:
-    """Apply the additive group law on growth ranks."""
-    return tuple(a + b for a, b in zip(left, right))  # type: ignore[return-value]
-
-
-def multiply(left: Series, right: Series, tolerance: float = 1e-12) -> Series:
-    """Multiply finite sparse series by Hahn convolution."""
-    result: Series = {}
-    for left_rank, left_value in left.items():
-        for right_rank, right_value in right.items():
-            rank = add_ranks(left_rank, right_rank)
-            result[rank] = result.get(rank, 0.0) + left_value * right_value
-    return normalize(result, tolerance)
-
-
-def first_disagreement(
-    left: Series, right: Series, tolerance: float = 1e-12
-) -> Optional[Disagreement]:
-    """Return the lexicographically first unequal coefficient, if one exists."""
+    For finite sparse series this is the constructive version of the unique
+    first-disagreement theorem.  ``None`` means that the finite series agree.
+    """
     ranks = sorted(set(left) | set(right))
-    for rank in ranks:
-        left_value = coefficient(left, rank)
-        right_value = coefficient(right, rank)
-        if abs(left_value - right_value) > tolerance:
-            return Disagreement(rank, left_value, right_value)
-    return None
-
-
-def order(series: Series, tolerance: float = 1e-12) -> Optional[Rank]:
-    """Return the least nonzero rank, or None for the zero series."""
-    support = normalize(series, tolerance)
-    return min(support) if support else None
-
-
-def format_series(series: Series) -> str:
-    """Render a finite sparse series in increasing-rank order."""
-    if not series:
-        return "0"
-    return " + ".join(
-        f"{value:g}*m^{rank}" for rank, value in sorted(series.items())
+    return next(
+        (rank for rank in ranks if coefficient(left, rank) != coefficient(right, rank)),
+        None,
     )
 
 
-def assert_agree_below(left: Series, right: Series, cut: Rank) -> None:
-    """Check agreement at every represented rank strictly below a cut."""
-    ranks: Iterable[Rank] = set(left) | set(right)
-    assert all(coefficient(left, rank) == coefficient(right, rank)
-               for rank in ranks if rank < cut)
+def agreement_certificate(left: Series, right: Series) -> str:
+    """Build a readable certificate for equality or first disagreement."""
+    rank = first_disagreement(left, right)
+    if rank is None:
+        return "The two finite series agree at every represented rank."
+    earlier = sorted(r for r in set(left) | set(right) if r < rank)
+    assert all(coefficient(left, r) == coefficient(right, r) for r in earlier)
+    return (
+        f"First disagreement rank: {rank}; "
+        f"left coefficient = {coefficient(left, rank)}, "
+        f"right coefficient = {coefficient(right, rank)}."
+    )
+
+
+def doubled_rank(rank: Rank) -> Rank:
+    """Return twice a growth rank, coordinate by coordinate."""
+    return tuple(2 * coordinate for coordinate in rank)  # type: ignore[return-value]
+
+
+def candidate_square_root_order(rank: Rank) -> Optional[Rank]:
+    """Return the possible order of a square root, or reject odd coordinates.
+
+    This checks the necessary equation ``2 * root_order = rank``.  Passing this
+    test is not sufficient for a whole series to be a square; failing it is a
+    conclusive obstruction.
+    """
+    if any(coordinate % 2 != 0 for coordinate in rank):
+        return None
+    return tuple(coordinate // 2 for coordinate in rank)  # type: ignore[return-value]
+
+
+@dataclass(frozen=True)
+class NamedExpression:
+    """A named real expression used to exhibit point-evaluation collisions."""
+
+    name: str
+    evaluate: Callable[[float], float]
+
+
+def evaluation_collisions(
+    expressions: Sequence[NamedExpression], point: float
+) -> dict[float, list[str]]:
+    """Group distinct expression names that share a value at ``point``."""
+    buckets: dict[float, list[str]] = {}
+    for expression in expressions:
+        value = expression.evaluate(point)
+        buckets.setdefault(value, []).append(expression.name)
+    return {value: names for value, names in buckets.items() if len(names) > 1}
+
+
+def format_series(series: Series) -> str:
+    """Format a finite sparse transseries in increasing rank order."""
+    if not series:
+        return "0"
+    return " + ".join(f"({coefficient(series, rank)}) t^{rank}" for rank in sorted(series))
 
 
 def run_demo() -> None:
-    """Run three deterministic demonstrations and print their witnesses."""
-    print("DEMO 1 — First formal disagreement")
-    f: Series = {(0, 0, 0): 2.0, (0, 1, -1): -3.0, (1, -2, 0): 5.0}
-    g: Series = {(0, 0, 0): 2.0, (0, 1, -1): -3.0, (1, -2, 0): 7.0}
-    witness = first_disagreement(f, g)
-    assert witness is not None
-    difference_order = order(subtract(f, g))
-    assert witness.rank == difference_order
-    assert_agree_below(f, g, witness.rank)
-    print("F =", format_series(f))
-    print("G =", format_series(g))
-    print("first disagreement:", witness)
-    print("order(F-G):", difference_order)
+    """Run deterministic examples of all three principal results."""
+    left: dict[Rank, Coefficient] = {
+        (0, 0, 0): Fraction(3),
+        (1, 0, 0): Fraction(2),
+        (1, 1, 0): Fraction(-1),
+    }
+    right: dict[Rank, Coefficient] = {
+        (0, 0, 0): Fraction(3),
+        (1, 0, 0): Fraction(5),
+        (1, 1, 0): Fraction(-1),
+    }
 
-    print("\nDEMO 2 — Distinct monomial ranks")
-    r, s = (0, 2, 0), (1, -5, 3)
-    monomial_r: Series = {r: 4.0}
-    monomial_s: Series = {s: 9.0}
-    separation = first_disagreement(monomial_r, monomial_s)
-    assert separation == Disagreement(r, 4.0, 0.0)
-    print("coefficient witness:", separation)
+    print("=== Unique first disagreement ===")
+    print("F =", format_series(left))
+    print("G =", format_series(right))
+    print(agreement_certificate(left, right))
+    print()
 
-    print("\nDEMO 3 — Arithmetic compatibility")
-    f1: Series = {(-1, 0, 2): 1.5, (0, 0, 0): 2.0}
-    g1 = dict(f1)
-    f2: Series = {(0, 1, 0): -4.0, (1, 0, 0): 3.0}
-    g2 = dict(f2)
-    sum_gap = first_disagreement(add(f1, f2), add(g1, g2))
-    product_gap = first_disagreement(multiply(f1, f2), multiply(g1, g2))
-    assert sum_gap is None and product_gap is None
-    print("sum agreement:", sum_gap is None)
-    print("product agreement:", product_gap is None)
-    print("product =", format_series(multiply(f1, f2)))
+    print("=== Square-order parity obstruction ===")
+    test_ranks: Iterable[Rank] = ((1, 0, 0), (2, -4, 6), (0, 3, 0))
+    for rank in test_ranks:
+        candidate = candidate_square_root_order(rank)
+        if candidate is None:
+            print(f"Rank {rank} cannot equal twice an integer rank.")
+        else:
+            assert doubled_rank(candidate) == rank
+            print(f"Rank {rank} passes the order test with half-rank {candidate}.")
+    print()
+
+    print("=== Point-evaluation collisions ===")
+    expressions = [
+        NamedExpression("x", lambda x: x),
+        NamedExpression("0", lambda x: 0.0),
+        NamedExpression("x^2", lambda x: x * x),
+    ]
+    for point in (0.0, 2.0):
+        values = {expression.name: expression.evaluate(point) for expression in expressions}
+        print(f"At x = {point:g}: values = {values}")
+        print(f"Collisions: {evaluation_collisions(expressions, point) or 'none'}")
 
 
 if __name__ == "__main__":

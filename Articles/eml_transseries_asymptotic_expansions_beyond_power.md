@@ -1,146 +1,151 @@
-# The First Place Two Infinite Expansions Disagree
+# The First Place Infinity Disagrees
 
-## A map for scales beyond power series
+## A sharper map of transseries—and the fault lines it reveals
 
-Power series are among mathematics’ most successful compression devices. Near a point, a complicated function can be replaced by a list of coefficients attached to $1,x,x^2,x^3,\ldots$. That list can turn differentiation into bookkeeping and approximation into truncation. Yet many functions arising in asymptotic analysis refuse to live on a single power scale. Exponentials outrun powers, logarithms trail behind them, and nested expressions such as $\exp(\exp x)$ create still more distant levels of growth.
+Power series are among mathematics’ most familiar microscopes. Near a point, a complicated function can often be resolved into layers such as $1$, $x$, $x^2$, and $x^3$. Each successive layer is smaller than the one before it, and the first coefficient at which two series differ tells us how their functions initially separate.
 
-To compare such expressions, it is not enough to ask for the coefficient of $x^n$. We need an organized atlas of scales: exponential, polynomial, and logarithmic. The framework developed here supplies a rigorous finite-level model of that atlas. Its central message is strikingly simple:
+But many functions outrun this microscope. The logarithm grows more slowly than every positive power of $x$. The exponential grows faster than every power. An iterated exponential such as $\exp(\exp x)$ makes even $\exp x$ look negligible. To compare such objects near infinity, one needs an asymptotic language with a much larger vocabulary.
 
-> An expansion is completely determined by all of its coefficients, and two unequal expansions have a first rank at which they disagree.
-
-That statement sounds inevitable until one remembers that the expansions may have infinitely many terms and their exponents need not march along the ordinary integers. The decisive ingredient is not finiteness but a well-ordered support condition, which prevents the nonzero terms from descending forever without a first one.
-
-## Three coordinates of growth
-
-A **growth rank** is a triple of integers
+That language is supplied by **transseries**: generalized series whose monomials can represent several levels of growth. A schematic example might look like
 
 $$
-r=(e,p,\ell)\in\mathbb Z^3,
+3\exp(x)-7x^2\log x+\frac{4}{x}+\cdots.
 $$
 
-ordered lexicographically. Thus $(e,p,\ell)<(e',p',\ell')$ if the first coordinate at which the two triples differ is smaller. The coordinates may be read as exponential, polynomial, and logarithmic levels. This interpretation is schematic rather than a claim that every possible exponential–logarithmic expression has already been encoded. It gives a clean three-level laboratory in which the essential order theory can be seen.
+The dots are not merely decorative. They encode a well-ordered succession of smaller terms, so that every nonzero difference has a first significant contribution. This simple principle—there is a first place where two unequal expansions disagree—is the durable heart of the theory developed here.
 
-A **three-level transseries** is a formal sum
+The same investigation also uncovers two limits. First, a natural model indexed by integer growth ranks is not real closed: one explicit monomial has neither itself nor its negative equal to a square. Second, the value of an expression at one point cannot identify the expression uniquely. These are not failures of transseries. They are diagnostic results: they tell us exactly which hypotheses a stronger theory must possess.
 
-$$
-F=\sum_{r\in\mathbb Z^3} a_r\,\mathfrak m^r,
-$$
+## A ladder of growth
 
-with real coefficients $a_r$, subject to the condition that the set of ranks with $a_r\ne0$ is well ordered. The symbol $\mathfrak m^r$ denotes a formal transmonomial of rank $r$; one can picture it heuristically as carrying exponential, power, and logarithmic information. Formal means that identity is determined by coefficients rather than by evaluating at a numerical value of $x$.
-
-Well ordering is the quiet engine of the theory. Every nonempty collection of occupied ranks has a least element. Consequently, every nonzero transseries has an **order**: the least rank carrying a nonzero coefficient. This resembles the lowest exponent in a polynomial, the order of vanishing of an analytic function, or the valuation of a Laurent series.
-
-The simplest object is a **transmonomial** $M_{r,c}$, which has coefficient $c$ at rank $r$ and coefficient $0$ everywhere else. Its coefficient at its own rank is exactly $c$. If $c\ne0$, then $M_{r,c}$ is nonzero. Moreover, if $r\ne s$ and $a\ne0$, then $M_{r,a}$ cannot equal $M_{s,b}$ for any $b$: inspecting the coefficient at $r$ distinguishes them.
-
-## Listening below the leading order
-
-Suppose $F$ has order $q$. No coefficient below $q$ can be nonzero; otherwise $q$ would not be least. In symbols,
+Consider ranks built from integer triples,
 
 $$
-r<\operatorname{ord}(F)\quad\Longrightarrow\quad [\mathfrak m^r]F=0,
+\Gamma=\mathbb Z\times_{\mathrm{lex}}(\mathbb Z\times_{\mathrm{lex}}\mathbb Z),
 $$
 
-where $[\mathfrak m^r]F$ denotes the coefficient of $F$ at rank $r$.
+ordered lexicographically. The first coordinate is compared first; only if it ties do we inspect the second, and then the third. One may imagine these coordinates as recording three successive growth levels—say exponential, polynomial, and logarithmic scales—without committing to a particular analytic interpretation.
 
-This elementary observation becomes powerful when applied to a difference. Given two transseries $F$ and $G$, set
-
-$$
-D=F-G.
-$$
-
-At every rank below $\operatorname{ord}(D)$, the coefficient of $D$ vanishes. Since coefficients subtract term by term, this says
+A generalized series over this rank group is a formal sum
 
 $$
-r<\operatorname{ord}(F-G)
-\quad\Longrightarrow\quad
-[\mathfrak m^r]F=[\mathfrak m^r]G.
+F=\sum_{\gamma\in\Gamma} a_\gamma t^\gamma,
 $$
 
-Thus the two expansions agree completely below the order of their difference.
-
-If $F\ne G$, then $D\ne0$. Its coefficient at its own order is nonzero. Therefore
+where each $a_\gamma$ is real and the nonzero coefficients occur on a well-ordered set of ranks. The symbol $t^\gamma$ is a monomial of rank $\gamma$. Well-ordering guarantees that every nonzero series has a least occupied rank. We call it the **order**:
 
 $$
-[\mathfrak m^{\operatorname{ord}(F-G)}]F
-\ne
-[\mathfrak m^{\operatorname{ord}(F-G)}]G.
+\operatorname{ord}(F)=\min\{\gamma:a_\gamma\ne0\}.
 $$
 
-These two statements combine into the **First Disagreement Theorem**:
-
-> For any unequal three-level transseries $F$ and $G$, there is a rank $q$ such that their coefficients agree at every rank below $q$ and differ at $q$. One may take $q=\operatorname{ord}(F-G)$.
-
-Imagine comparing two infinitely long musical scores from the quietest note upward. Well ordering guarantees that, if the scores differ at all, there is a first audible discrepancy. No endless search through ever-lower ranks is possible.
-
-## Agreement to every order
-
-Say that $F$ and $G$ **agree below a cut** $q$ if their coefficients coincide at every rank $r<q$. Say that they **agree to all orders** if
+This order is the first visible scale of the series. Multiplication adds ranks, and for nonzero series it satisfies
 
 $$
-[\mathfrak m^r]F=[\mathfrak m^r]G
-\qquad\text{for every }r\in\mathbb Z^3.
+\operatorname{ord}(FG)=\operatorname{ord}(F)+\operatorname{ord}(G).
 $$
 
-The **Asymptotic Comparison Theorem** states:
-
-> Two three-level transseries agree to all orders if and only if they are equal.
-
-The forward direction follows because a formal series is determined by its coefficient function. The reverse direction is immediate: equal objects have equal coefficients. The theorem also follows conceptually from first disagreement. If two series were unequal, there would be a first coefficient at which they differ, contradicting agreement to all orders.
-
-A useful corollary is the **No-Flatness Theorem**:
-
-> If every coefficient of a three-level transseries $F$ is zero, then $F=0$.
-
-In ordinary smooth analysis, a nonzero function can be “flat” at a point: for example, the function equal to $e^{-1/x^2}$ for $x>0$ and $0$ for $x\le0$ has every derivative zero at the origin. Its Taylor series cannot detect it. In the present formal setting, that pathology is absent by construction. There is no nonzero series whose entire coefficient data vanish.
-
-This distinction matters. The theorem concerns equality inside the formal series model; it does not by itself prove that every analytic or exponential–logarithmic function possesses such an expansion. Existence of expansions is a separate and deeper question. But once an expansion belongs to this model, uniqueness is absolute.
-
-## Arithmetic respects complete agreement
-
-A useful language of asymptotics must survive calculation. Suppose $F_1$ agrees to all orders with $G_1$, and $F_2$ agrees to all orders with $G_2$. Then coefficientwise addition gives
+In particular,
 
 $$
-F_1+F_2\quad\text{agreeing to all orders with}\quad G_1+G_2.
+\operatorname{ord}(F^2)=2\operatorname{ord}(F).
 $$
 
-For multiplication, complete agreement first yields $F_1=G_1$ and $F_2=G_2$ by the comparison theorem. Substitution then gives $F_1F_2=G_1G_2$, so the products also agree to all orders. Thus complete asymptotic identity is compatible with both addition and multiplication.
+That small equation drives one of the central negative results.
 
-This is more than a tidiness condition. It means that coefficient data can act as a reliable computational interface. Once two inputs are known coefficient by coefficient, ordinary algebra cannot make their representatives diverge.
+## Every disagreement has an address
 
-## A finite window onto an infinite structure
-
-A computer demonstration can only store finitely many terms, but it can reproduce the logic exactly within that window. Represent a rank by an integer triple and a sparse transseries by a dictionary from ranks to nonzero real coefficients. Sort ranks lexicographically. To compare two inputs, subtract matching coefficients and choose the least rank with nonzero difference. Every lower listed coefficient agrees, while the chosen coefficient differs.
-
-For example, consider
+Say that two series $F$ and $G$ **agree below** a rank $\rho$ if
 
 $$
-F=2\mathfrak m^{(0,0,0)}-3\mathfrak m^{(0,1,-1)}
-   +5\mathfrak m^{(1,-2,0)}
+a_\gamma=b_\gamma\qquad\text{for every }\gamma<\rho,
 $$
 
-and
+where $a_\gamma$ and $b_\gamma$ are their coefficients. If they agree below $\rho$ but have different coefficients at $\rho$, then $\rho$ is their first disagreement rank.
+
+The key comparison theorem says:
+
+> **Unique First-Disagreement Theorem.** If $F\ne G$, then there exists exactly one rank $\rho$ such that $F$ and $G$ agree at every rank below $\rho$ and disagree at $\rho$.
+
+Existence comes from applying well-ordering to the support of $F-G$. Since $F-G$ is nonzero, the set of ranks carrying nonzero coefficients has a least element. At all smaller ranks the difference vanishes, while at that least rank it does not.
+
+Uniqueness is just as revealing. Suppose $\rho$ and $\sigma$ were both first disagreement ranks. The total order gives three possibilities. If $\rho<\sigma$, agreement below $\sigma$ forces agreement at $\rho$, contradicting the choice of $\rho$. If $\sigma<\rho$, the symmetric contradiction occurs. Therefore $\rho=\sigma$.
+
+This theorem turns an infinite object into a finite certificate of inequality: a single rank and two unequal coefficients. It is the transseries analogue of lexicographically comparing two words by scanning to the first unequal letter. The alphabet here is not arranged along a finite line but across a hierarchy of asymptotic scales.
+
+A useful consequence is an all-orders identity principle. If two series have equal coefficients at every rank, they are equal. Equivalently, unequal series cannot hide their difference indefinitely: the well-ordered support forces a first witness.
+
+## The odd rank that cannot be halved
+
+The rank group $\Gamma$ uses integer coordinates. That makes it discrete and computationally transparent, but it also introduces a parity obstruction.
+
+Take the rank
 
 $$
-G=2\mathfrak m^{(0,0,0)}-3\mathfrak m^{(0,1,-1)}
-   +7\mathfrak m^{(1,-2,0)}.
+\omega=(1,0,0)
 $$
 
-The first two occupied ranks match. At $(1,-2,0)$, the coefficients are $5$ and $7$. Their difference has coefficient $-2$ there, so that rank is the order of $F-G$ and the first disagreement.
+and its monomial $M=t^\omega$. Could $M$ be a square? If $M=F^2$ for a nonzero $F$, then
 
-If instead every stored coefficient agrees, the finite representations are equal. The exact infinite theorem says the same thing without a storage boundary, because the coefficient function itself is the object.
+$$
+\omega=\operatorname{ord}(M)=\operatorname{ord}(F^2)=2\operatorname{ord}(F).
+$$
 
-## What has—and has not—been reached
+Yet the first coordinate of $2\operatorname{ord}(F)$ is even, while the first coordinate of $\omega$ is $1$. No integer rank doubles to $\omega$. Therefore $M$ is not a square.
 
-The three-level theory establishes a dependable Hahn-series foundation: coefficient extensionality, nonzero and distinct monomials, vanishing below order, first disagreement, absence of nonzero flat series, and compatibility of complete agreement with addition and multiplication.
+Changing the sign does not help. The series $-M$ has the same order $\omega$, because multiplying a nonzero coefficient by $-1$ does not alter the location of its leading term. If $-M=F^2$, the identical order argument would again demand $2\operatorname{ord}(F)=\omega$. Thus $-M$ is not a square either.
 
-It does not yet establish the much broader vision sometimes associated with full exponential–logarithmic transseries. A complete theory would require recursively generated towers of monomials rather than only three integer coordinates. It would need well-defined composition, logarithm, and exponential on appropriate classes; a syntax and semantics for exponential–logarithmic expressions with domain conditions; an existence theorem assigning expansions to those expressions; and substantial ordered-field theory, potentially culminating in real closedness. Those are future constructions, not consequences of coefficient uniqueness alone.
+Now recall a basic property of a real closed field: for every element $a$, at least one of $a$ and $-a$ is a square. Positive elements are squares, while the ordering decides which sign is positive. Our element $M$ violates this necessary condition because neither sign is a square.
 
-Still, the foundation isolates the key logical hinge. Existence asks whether a function can be translated into a transseries. Uniqueness asks whether two translations could conflict. Here uniqueness is settled for the model: all-order agreement forces equality, and inequality always reveals a first witness.
+> **Non-Real-Closedness Theorem.** The generalized-series field with real coefficients and integer lexicographic rank group $\mathbb Z\times_{\mathrm{lex}}(\mathbb Z\times_{\mathrm{lex}}\mathbb Z)$ is not real closed.
 
-## Why first disagreement matters
+This theorem does not say that transseries can never form a real closed field. It identifies the precise defect of this model: the value group is not divisible. A divisible group allows every rank $\gamma$ to be halved, whereas the integer rank $(1,0,0)$ has no half. Replacing the integer coordinates by rational coordinates,
 
-The same pattern appears across mathematics and applications. In perturbation theory, one seeks the first order at which two models predict different behavior. In symbolic computation, sparse leading terms guide simplification. In non-Archimedean geometry, valuations measure the earliest nonzero contribution. In algorithm design, lexicographic keys separate objects efficiently. In multiscale modeling, locating the first disagreement tells us which scale carries new information.
+$$
+\mathbb Q\times_{\mathrm{lex}}(\mathbb Q\times_{\mathrm{lex}}\mathbb Q),
+$$
 
-The philosophical lesson is equally useful. Infinity need not erase distinguishability. With the right order on scales, an infinite expansion can be inspected from its leading edge. Equality is global, but inequality has a local certificate: one rank and two unequal coefficients.
+removes this particular parity obstruction. Establishing real closedness then requires a genuine Hahn-field theorem with a real closed coefficient field and divisible value group, but at least the first barrier has disappeared.
 
-Beyond ordinary power series lies a landscape of exponentials, powers, and logarithms. The present three-level model does not map the whole territory. It does, however, provide a trustworthy compass. Every occupied expansion has a first term; every unequal pair has a first disagreement; and complete coefficient data leave no room for ambiguity. That principle is modest enough to state in one sentence, yet strong enough to organize comparison, computation, and future expansion theories around a single canonical witness.
+## Why one value cannot name an expression
+
+There is a second temptation to resist: believing that evaluating an expression at one input uniquely identifies it.
+
+Suppose our expression language contains a variable $x$ and real constants. The expression $x$ and the constant expression $0$ are syntactically different. Nevertheless, at the input $x=0$ they have the same value:
+
+$$
+x\big|_{x=0}=0=0\big|_{x=0}.
+$$
+
+Therefore the map sending an expression to its value at zero is not injective.
+
+> **Point-Evaluation Counterexample.** Evaluation at $0$ does not uniquely determine an expression: the variable expression and the constant-zero expression are distinct but have equal value there.
+
+The lesson extends far beyond this tiny example. Even agreement at many points may not capture the intended notion of identity when logarithms, exponentials, restricted domains, or symbolic rearrangements are involved. Commutativity makes $f+g$ and $g+f$ different pieces of raw syntax with the same meaning. On suitable domains, exponential and logarithm can cancel. A useful uniqueness theorem must say what counts as the same object.
+
+For asymptotic mathematics, the natural object is often an **eventual germ at $+\infty$**: two functions represent the same germ if they agree for every sufficiently large input. Raw expressions should then be quotiented by eventual equality, and any expansion theorem should be stated on that quotient or on a canonical normalized language.
+
+## An algorithm hidden in the theorem
+
+For finitely represented series, the first-disagreement theorem becomes a direct comparison algorithm. Store each series as a dictionary from integer triples to nonzero coefficients. Sort the union of occupied ranks lexicographically. Scan from least to greatest and return the first rank at which the coefficients differ. If no such rank occurs, the finite series are equal.
+
+For $n$ occupied ranks in total, sorting costs $O(n\log n)$ comparisons and scanning costs $O(n)$. If the data are already stored in ordered maps, the comparison can be performed in $O(n)$ time by merging the two ordered streams.
+
+The square obstruction is even cheaper. To ask whether a monomial rank can be twice an integer rank, inspect each coordinate. Any odd coordinate blocks divisibility by $2$; for $(1,0,0)$ the first coordinate settles the question immediately.
+
+These algorithms are modest, but they expose the architecture of the mathematics. Well-ordering creates the first-difference scan. Group divisibility controls which monomial orders can occur as squares.
+
+## What survives, and what must change
+
+Three conclusions now stand clearly apart.
+
+First, exact asymptotic comparison survives intact and becomes sharper: every unequal pair has one and only one first disagreement rank. This provides a canonical witness of inequality.
+
+Second, real closedness fails for the integer-ranked field. The failure is structural, not mysterious: integer ranks contain elements that cannot be halved. Rational or more general divisible ranks are the natural next setting.
+
+Third, unrestricted uniqueness of expressions from point values fails. The remedy is not to collect slogans about “unique expansions,” but to specify the semantic domain, quotient expressions by the right equivalence relation, and normalize the fragment under study.
+
+A practical research program follows. Begin with polynomial and Laurent expressions, where eventual behavior is controlled. Add one logarithmic level, then one exponential level. At each stage define an expansion map, prove that it respects addition and multiplication, and identify its kernel with eventual equality. In parallel, connect formal ranks to genuine functions by proving that a leading nonzero monomial controls eventual sign and that lower-ranked terms are asymptotically negligible.
+
+The broad dream of transseries remains compelling: a calculus in which powers, logarithms, exponentials, and their iterations can be compared in one ordered universe. The strongest progress often comes not from asserting the dream whole, but from locating its exact load-bearing beams. Here one beam is well-ordering, which guarantees a first disagreement. Another is divisibility, which a real-closed model cannot do without. A third is semantic quotienting, without which “uniqueness” confuses expressions with the functions or germs they represent.
+
+Infinity is complicated, but it is not shapeless. When two asymptotic worlds differ, their disagreement has an address. And when an ambitious model fails, the obstruction can have an address too—as simple, and as decisive, as the odd coordinate $1$.
