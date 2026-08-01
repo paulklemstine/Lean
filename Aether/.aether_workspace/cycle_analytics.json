@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-01T11:46:40.471241+00:00",
+  "last_updated": "2026-08-01T14:04:22.786735+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -43555,6 +43555,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-01T11:46:40.362244+00:00",
       "title": "Future directions from cycle a5e9a5f6"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0846,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 8401.55888557434,
+      "end_time": 1785592975.9220536,
+      "files_integrated": 4,
+      "job_id": "c0a515f0",
+      "outcome_quality": 0.7776099999999999,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.78328,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.64,
+        "applications": 0.62,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7246,
+        "cross_domain": 0.5,
+        "grade": "world_class",
+        "importance": 0.8205,
+        "novelty": 0.95,
+        "proof_depth": 0.765,
+        "usefulness": 0.6325
+      },
+      "quality_score": 0.7776099999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785584574.363168,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-01T14:04:22.675236+00:00",
+      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
     }
   ]
 }

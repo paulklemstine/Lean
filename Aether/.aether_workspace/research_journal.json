@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a1225aa5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe formal results refute the proposed connectedness, local compactness, and contractibility claims for the interval topology. They suggest the following concrete conjectures.\n\n1.",
-      "quality_score": 0.7423299999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T09:50:58",
-      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-    },
-    {
       "cycle_id": "1c628216",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal\n   machine, define `K_U(b)` as the least program length decoding to `b`, and derive\n   the Kraft-in",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-01T11:46:40",
       "title": "Future directions from cycle a5e9a5f6"
+    },
+    {
+      "cycle_id": "c0a515f0",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## Outcome\n\nThe unrestricted conjecture is false. `CertifiedRobustness.lean` gives a\nkernel-checked counterexample: the degree-one cellular cohomology of the\nconstant real sheaf o",
+      "quality_score": 0.7776099999999999,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-01T14:04:22",
+      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "29ba074c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Pythagorean Energy Spectrum\n\nThe file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no\n`sorry` and only the standard axioms (`propext`, `Classical.choice`, `Q",
-      "quality_score": 0.6,
-      "sorry_count": 1,
-      "theorem_count": 24,
-      "timestamp": "2026-07-24T06:47:46",
-      "title": "Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggren Tree"
-    },
     {
       "cycle_id": "c760f6fc",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-01T11:46:40",
       "title": "Future directions from cycle a5e9a5f6"
+    },
+    {
+      "cycle_id": "c0a515f0",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## Outcome\n\nThe unrestricted conjecture is false. `CertifiedRobustness.lean` gives a\nkernel-checked counterexample: the degree-one cellular cohomology of the\nconstant real sheaf o",
+      "quality_score": 0.7776099999999999,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-01T14:04:22",
+      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9d058f1b",
-      "domain": "Logic",
-      "name": "boolFiber_not_equiv",
-      "quality": 0.74478
-    },
-    {
-      "cycle_id": "9d058f1b",
-      "domain": "Logic",
-      "name": "bool_sections_not_subsingleton",
-      "quality": 0.74478
-    },
-    {
-      "cycle_id": "8fe295b2",
-      "domain": "Applications",
-      "name": "neuron_second_zero",
-      "quality": 0.7712399999999999
-    },
     {
       "cycle_id": "8fe295b2",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "counterexample_to_unconditional_averaging",
       "quality": 0.74513
+    },
+    {
+      "cycle_id": "c0a515f0",
+      "domain": "MachineLearning",
+      "name": "vulnerabilityStalk_empty_iff_certified",
+      "quality": 0.7776099999999999
+    },
+    {
+      "cycle_id": "c0a515f0",
+      "domain": "MachineLearning",
+      "name": "edge_constant_sheaf_H1_vanishes",
+      "quality": 0.7776099999999999
+    },
+    {
+      "cycle_id": "c0a515f0",
+      "domain": "MachineLearning",
+      "name": "threshold_has_no_positive_certificate",
+      "quality": 0.7776099999999999
     }
   ],
-  "last_updated": "2026-08-01T11:46:40",
+  "last_updated": "2026-08-01T14:04:22",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "4d85ad7f",
-        "quality": 0.74,
-        "theorems": 31,
-        "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
-      },
-      {
         "cycle_id": "4bc3344b",
         "quality": 0.72,
         "theorems": 22,
@@ -3575,6 +3569,12 @@
         "quality": 0.80029,
         "theorems": 21,
         "title": "ML Universal Approximation: Width vs Depth Trade-offs"
+      },
+      {
+        "cycle_id": "c0a515f0",
+        "quality": 0.7776099999999999,
+        "theorems": 11,
+        "title": "Certified Adversarial Robustness via Sheaf Cohomology"
       }
     ],
     "Novelty": [

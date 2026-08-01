@@ -2057,23 +2057,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Odd Perfect Numbers"
   },
   {
-    "consumed_by_exp_id": "c0a515f0",
-    "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "seed_043",
-    "phase": "A",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research. Construct a formalization that computes the proof-theoretic ordinal of research output.",
     "domains": [
@@ -2239,6 +2222,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T10:11:09.707032+00:00",
     "title": "Deepening: ArXiv paper: A universal leading-residue formula for Witten zeta functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c0a515f0 (Q=0.778), which proved 11 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_c0a515f0_6ebf44ca",
+    "priority_score": 0.8776099999999999,
+    "research_mode": "team",
+    "source_exp_id": "c0a515f0",
+    "status": "available",
+    "timestamp": "2026-08-01T14:04:22.483605+00:00",
+    "title": "Deepening: Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
     "consumed_by_exp_id": "",
@@ -4385,17 +4382,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Triple Group Structure"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9fb19498",
     "description": "Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "seed_051",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Intersection Theory"
   },
@@ -10860,6 +10858,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T11:46:36.774684+00:00",
     "title": "A tempting strengthening of the finite-group averaging theorem is:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Outcome\n\nThe unrestricted conjecture is false. `CertifiedRobustness.lean` gives a\nkernel-checked counterexample: the degree-one cellular cohomology of the\nconstant real sheaf on two weight charts joined by one overlap vanishes because\nthe coboundary `(a,b) \u21a6 b-a` is surjective. Nevertheless, the threshold score\n`x \u21a6 x` at `x = 0` has no positive strict `L\u221e` certified radius. Thus vanishing\n`H\u00b9` on a weight-space cover cannot, by itself, imply an input-space robustness\ncertificate.\n\nThe file also proves two constructive replacements:\n\n1. A **vulnerability stalk** is defined as the subtype of adversarial examples\n   in a strict `L\u221e` ball. Its emptiness is equivalent to certification on that\n   ball.\n2. A positive score margin, a local Lipschitz bound, and the numerical budget\n   `L * radius < margin` imply a certified `L\u221e` radius.\n\n## Why a separate computational-evidence file was not used\n\nComputational sampling is unnecessary for the decisive claim here. The\ncounterexample quantifies over every positive real radius and is proved\nsymbolically by choosing the adversarial point `radius / 2`; no finite sample\ncould establish that statement. Likewise, surjectivity of the cellular\ncoboundary is witnessed uniformly by the section `(0,c)` for every cochain\n`c`. These exact witnesses are stronger and more directly relevant than a\nnumerical table. This justification is included here rather than in a third\nfile to respect the requested output restriction to `.lean` files and\n`FUTURE_DIRECTIONS.md` only.\n\n## Research directions\n\n- **Relative cohomology tied to the classifier.** Replace cohomology of the\n  bare weight space by a relative or constructible sheaf whose restriction\n  maps depend on class labels, margins, and activation regions. Investigate\n  whether its obstruction classes characterize failure to glue local\n  certificates.\n- **Quantitative sheaves.** Ordinary vanishing is qualitative. Enrich stalks in\n  normed spaces and restriction maps with operator-norm bounds, so that a\n  contracting homotopy carries constants capable of producing a numerical\n  radius.\n- **Parameter-to-input bridge.** Add an explicit theorem connecting changes in\n  weights to changes in input-space decision margins. The counterexample shows\n  that topology of weight charts alone does not provide this missing bridge.\n- **Boundary-local stalks.** Refine `VulnerabilityStalk` into a genuine\n  presheaf over nested input balls, with restriction maps induced by inclusion.\n  Study degree-zero support and local cohomology near the decision boundary.\n- **Piecewise-linear networks.** For ReLU networks, use the finite polyhedral\n  activation complex. Cellular sheaves on this complex may encode local affine\n  Lipschitz constants and permit computable obstruction/certificate pairs.\n- **Multiclass margins.** Generalize the scalar positive/negative score to the\n  gap between the winning logit and every competing logit. A certificate then\n  follows from lower bounds on all gaps and upper bounds on their local\n  Lipschitz constants.\n- **Converse questions.** Determine which classes of covers and coefficient\n  systems make robust local certificates glue globally, and whether failure of\n  gluing produces a nonzero cohomology class. Such a result would concern a\n  certificate sheaf specifically, rather than arbitrary sheaf cohomology.\n",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_0880",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c0a515f0",
+    "status": "available",
+    "timestamp": "2026-08-01T14:04:17.923155+00:00",
+    "title": "The unrestricted conjecture is false. `CertifiedRobustness.lean` gives a"
   },
   {
     "consumed_by_exp_id": "",
