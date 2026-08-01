@@ -1200,6 +1200,44 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_0e1eb0cb_989cd146",
+    "lineage_refs": [],
+    "priority_score": 0.90043,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0e1eb0cb",
+    "status": "available",
+    "timestamp": "2026-08-01T11:44:09.232762+00:00",
+    "title": "Deepening: Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle ee0c99e7 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist func",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_ee0c99e7_d4623ef9",
+    "lineage_refs": [],
+    "priority_score": 0.9002899999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ee0c99e7",
+    "status": "available",
+    "timestamp": "2026-08-01T11:45:24.562037+00:00",
+    "title": "Deepening: ML Universal Approximation: Width vs Depth Trade-offs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b7ae8967 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
     "domain_bridges": [],
     "domains": [
@@ -2275,7 +2313,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a7f30302",
     "description": "Building on cycle 67548200 (Q=0.792), which proved 34 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA ru",
     "domain_bridges": [],
     "domains": [
@@ -2287,7 +2325,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "67548200",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-30T14:40:38.463626+00:00",
     "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
@@ -4743,26 +4781,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ee0c99e7",
-    "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "seed_374",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Arrow's impossibility theorem states no ranked voting system is fair. Reformulate in tropical mathematics: a social welfare function is a tropical linear map f: T^n → T satisfying the tropical analog of Arrow's axioms. Prove: the tropical dictator function f(x_1,...,x_n) = x_1 is the unique tropical social welfare function. Show: this reduces to Arrow's theorem in the classical limit. Conjecture: tropical voting allows non-dictatorial functions that satisfy weaker axioms (tropical IIA + tropical Pareto).",
     "domain_bridges": [],
@@ -5127,7 +5145,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c98f572",
     "description": "Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) is contravariant.",
     "domain_bridges": [],
     "domains": [
@@ -5140,7 +5158,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bridge: Fourier Analysis as a Functor"
   },
@@ -5501,26 +5519,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Secure Multi-Party Computation: Theoretical Foundations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "0e1eb0cb",
-    "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "seed_320",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
   {
     "ambition_level": "extension",
@@ -14094,7 +14092,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7726ff6e",
     "description": "# Future Directions\n\n1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b`\n   cylinder intervals imply interval equidistribution of `fract (b^n x)`, first for\n   `b`-adic intervals and then for arbitrary intervals by approximation.\n2. **Weyl criterion.** Connect interval equidistribution to vanishing exponential\n   sums `N⁻¹ ∑_{n<N} exp(2π i m b^n x)` for every nonzero integer `m`.\n3. **Measure-theoretic normality.** Use ergodicity of the map `x ↦ fract (b*x)` and\n   a pointwise ergodic theorem to prove that almost every real is base-`b` normal.\n4. **Absolute normality.** Intersect the full-measure normality sets over all integer\n   bases to show that almost every real is absolutely normal.\n5. **Specific constants.** A proof for `π`, `e`, or `√2` would require genuinely new\n   number theory: normality of each in every familiar base remains open. Their known\n   transcendence or algebraicity does not by itself supply the exponential-sum bounds\n   needed by Weyl's criterion.\n6. **Algebraic independence boundary.** Formalize the limited implications currently\n   available between digit statistics and algebraic properties. Rational numbers are\n   not normal in any base, but it is unknown whether familiar algebraic irrationals\n   such as `√2` are normal. Transcendence, and even algebraic independence results,\n   do not by themselves provide the orbit estimates needed for normality of familiar\n   constants such as `π` and `e`.\n",
     "domain_bridges": [],
     "domains": [
@@ -14107,7 +14105,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "70779ff4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T06:06:55.586907+00:00",
     "title": "1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b"
   },
@@ -14190,26 +14188,6 @@
     "status": "available",
     "timestamp": "2026-07-31T08:23:15.991566+00:00",
     "title": "1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "febd9c83",
-    "description": "# Future Directions\n\n- Formalize continuous cohomology of profinite groups with finite discrete modules and lift the finite-group averaging theorem to the paper's vanishing result for pro-prime-to-`ℓ` groups.\n- Connect étale cohomology of affine curves to the required cohomological-dimension and finiteness statements.\n- Develop completed group algebras and compact Nakayama theory for `ℤ_ℓ[[Γ]]`, then formalize the equivalence between finite reduction modulo `ℓ` and torsion with vanishing `μ`-invariant.\n- Define cartesian Selmer structures and Pontryagin duals, allowing the finite-cohomology and Iwasawa-module results to assemble into the paper's main Selmer theorem.\n- Formalize obstruction theory for framed and unframed deformation functors so that degree-two cohomology vanishing yields formal smoothness and power-series deformation rings.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0855",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a5e9a5f6",
-    "status": "in_progress",
-    "timestamp": "2026-07-31T08:23:23.802419+00:00",
-    "title": "Future directions from cycle a5e9a5f6"
   },
   {
     "ambition_level": "extension",
@@ -14589,6 +14567,66 @@
     "status": "available",
     "timestamp": "2026-08-01T09:31:22.032828+00:00",
     "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equivalence classes of `InSameComponent M`. This can be falsified by a finite matroid whose circuitwise-constant weights have a different dimension.\n\n2. **Connected projectivized fan conjecture.** For every finite circuit-connected matroid of positive rank, the quotient of `BergmanFan M` by constant translations is path connected. A finite connected matroid with a disconnected projectivized Bergman fan would refute it.\n\n3. **Nested fan convexity conjecture.** If a finite matroid is nested, then its Bergman fan modulo constant translations is an ordinary convex polyhedral cone. A nested matroid with two projective Bergman weights whose midpoint is not a Bergman weight would refute it.\n\n4. **Circuit-elimination closure conjecture.** For a finite matroid, imposing `MinAttainedTwice` only on a circuit generating family closed under circuit elimination cuts out the full `BergmanFan`. A generating family and a weight satisfying its constraints but violating another circuit constraint would refute it.\n\n5. **Direct-sum product conjecture.** The Bergman fan of a finite direct sum of matroids is naturally homeomorphic to the product of their Bergman fans, compatibly with circuit components and lineality spaces. Any finite pair for which the canonical restriction map fails to be a homeomorphism would refute it.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_0877",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0e1eb0cb",
+    "status": "available",
+    "timestamp": "2026-08-01T11:44:05.694762+00:00",
+    "title": "1. **Component-count lineality conjecture.** For every finite loopless matroid `"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe Lean development proves exact results for an explicit region-capacity model.  The following are concrete extensions that would connect those combinatorial bounds to analytic approximation and genuine network lower bounds.\n\n1. **Constructive width-`n+4` approximation.**  For every `n > 0`, continuous `f : (Fin n → ℝ) → ℝ`, and `ε > 0`, if `f` is restricted to the cube `[-1,1]^n`, there is a finite ReLU network with every hidden-layer width at most `n+4` whose uniform error is below `ε`.  This is falsified by a continuous function and positive tolerance for which no such bounded-width network exists.\n\n2. **Lipschitz shallow upper rate.**  There is a dimension-dependent constant `C_n` such that every `K`-Lipschitz function on `[-1,1]^n` has a one-hidden-layer ReLU approximation of uniform error at most `ε` and width at most `C_n * (K/ε)^n`.  A family of normalized Lipschitz functions violating this width bound falsifies the conjecture.\n\n3. **No function-independent rate for mere continuity.**  For every proposed width bound `W : ℕ → ℕ`, there are a continuous function on `[0,1]` and an integer `m > 0` such that every one-hidden-layer ReLU network of width at most `W m` has uniform error at least `1/m`.  A single bound working for all continuous functions falsifies this conjecture.\n\n4. **Tent-map linear-region separation.**  The `L`-fold iterate of the normalized tent map has exactly `2^L` maximal affine intervals, while every scalar depth-`D` ReLU network with widths `w₁,…,w_D` has at most `∏ i, (wᵢ+1)` maximal affine intervals.  Either an incorrect exact count or a network exceeding the product bound falsifies the statement.\n\n5. **Depth-`L` lower bound from oscillations.**  There are explicit functions represented by depth `L+1` networks of size polynomial in `L` such that any depth-`L` ReLU network approximating them within a fixed uniform tolerance has size exponential in `L`.  A polynomial-size depth-`L` approximating family for the explicit witnesses falsifies the conjecture.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_0878",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ee0c99e7",
+    "status": "available",
+    "timestamp": "2026-08-01T11:45:21.272567+00:00",
+    "title": "The Lean development proves exact results for an explicit region-capacity model."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Sharpness of Prime-to-Characteristic Averaging\n\n## Contrarian conjecture tested\n\nA tempting strengthening of the finite-group averaging theorem is:\n\n> **Unconditional averaging conjecture.** Every degree-one cocycle of a finite\n> group acting linearly on a field-vector space is a coboundary, even when the\n> group order is zero in the coefficient field.\n\nThis conjecture is **disproved uniformly in every prime characteristic** in\n`Catalog/Pythagorean/GreenbergMuZeroSharpness.lean`.\n\nFor a prime `p`, let\n\n- `G = Multiplicative (ZMod p)`, the additive cyclic group of order `p` written\n  multiplicatively;\n- `V = ZMod p`;\n- every element of `G` act trivially on `V`; and\n- `c(g)` be the underlying additive coordinate of `g`.\n\nThen `c(gh) = c(g) + g · c(h)`, so `c` is a degree-one cocycle. Every coboundary\nfor the trivial action is identically zero, whereas `c(1) = 1 ≠ 0`. Thus `c` is\nnot a coboundary. Moreover, the cardinality of `G`, cast into `ZMod p`, is zero.\nThis proves that the invertibility hypothesis in finite averaging marks a real\nboundary, rather than an artifact of the usual proof.\n\n## Machine-checked results\n\nThe Lean file proves:\n\n1. `identityCocycle_cocycle`: the additive coordinate satisfies the cocycle law\n   for the trivial action.\n2. `identityCocycle_not_coboundary`: for every prime `p`, this cocycle is not a\n   coboundary.\n3. `counterexample_to_unconditional_averaging`: the group order vanishes in the\n   coefficient field while both preceding properties hold.\n\nAll three theorems compile independently without `sorry` or additional axioms.\n\n## Evidence-stage justification\n\nA separate computational-evidence artifact was not produced because the Lean\nresult is a symbolic theorem for every prime, not an inference from sampled\ninstances or a conjectured integer sequence. The familiar small cases `p = 2,\n3, 5, 7` are direct specializations of the proved theorem; there is no associated\nOEIS sequence or numerical plot that would add evidence beyond the proof itself.\nKeeping this justification here respects the requested output restriction to\nLean files and `FUTURE_DIRECTIONS.md`.\n\n## Next formal steps\n\nThe counterexample identifies the exact obstruction that a profinite theorem\nmust exclude. Productive next steps are:\n\n- define continuous crossed homomorphisms into finite discrete modules and prove\n  that each factors through a finite quotient;\n- transfer finite averaging across that quotient when every quotient order is\n  prime to the coefficient characteristic;\n- contrast this with pro-`p` quotients, where the family above supplies finite\n  nonvanishing classes;\n- formulate the resulting degree-one vanishing theorem as the first continuous\n  cohomology input to the Selmer and deformation-theoretic developments.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0879",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "febd9c83",
+    "status": "available",
+    "timestamp": "2026-08-01T11:46:36.774684+00:00",
+    "title": "A tempting strengthening of the finite-group averaging theorem is:"
   },
   {
     "ambition_level": "extension",
