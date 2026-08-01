@@ -1896,6 +1896,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle bb566a68 (Q=0.783), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, th",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_bb566a68_c03a6dd2",
+    "priority_score": 0.8828599999999999,
+    "research_mode": "team",
+    "source_exp_id": "bb566a68",
+    "status": "available",
+    "timestamp": "2026-08-01T03:58:55.405414+00:00",
+    "title": "Deepening: EML Transseries: Asymptotic Expansions Beyond Power Series"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 545fa377 (Q=0.782), which proved 10 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
     "domains": [
       "Geometry"
@@ -3088,22 +3102,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "bb566a68",
-    "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "id": "seed_371",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prove that multi-head attention increases the rank of the attention matrix.",
     "domains": [
@@ -4134,17 +4132,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secure Multi-Party Computation: Theoretical Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e1eb0cb",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
       "Computation"
     ],
     "id": "seed_320",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -4437,7 +4436,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Intersection Theory"
   },
   {
-    "consumed_by_exp_id": "33456cc6",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Analysis",
@@ -4445,11 +4444,10 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_061",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -10779,16 +10777,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "1. **Constructive multivariate rates.** Refine the qualitative Stone\u2013Weierstrass"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed94092b",
     "description": "# Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the same vertex deck and `G` is regular, then `G \u2243g H`.\n2. **Tree reconstruction.** If finite simple graphs `G` and `H` have the same vertex deck, at least three vertices, and `G` is a tree, then `G \u2243g H`.\n3. **Degree-multiset reconstruction.** For finite simple graphs on at least three vertices with the same deck, the multisets of vertex degrees are equal.\n4. **Induced-pattern count reconstruction.** If a finite pattern `F` has fewer vertices than deck-equivalent finite graphs `G` and `H`, then `inducedCopyFamily G F` and `inducedCopyFamily H F` have equal cardinality.\n5. **Complement compatibility.** Finite graphs `G` and `H` have the same deck if and only if their complements have the same deck; consequently, any formally reconstructed graph class closed under complement yields a second reconstructed class.\n",
     "domains": [
       "Combinatorics"
     ],
     "id": "fd_0868",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ff2a2247",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T22:26:08.353865+00:00",
     "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
   },
@@ -10821,6 +10820,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T23:27:47.395510+00:00",
     "title": "`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by t"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: EML Transseries\n\n## Results established in this phase\n\nThe formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`\nseparates three claims that are often bundled together:\n\n1. **Formal asymptotic comparison survives and strengthens.** Every unequal pair\n   of Hahn transseries has a unique first rank where its coefficients disagree.\n2. **Real closedness fails for the current model.** The exponent group\n   `\u2124 \u00d7\u2097 (\u2124 \u00d7\u2097 \u2124)` is not divisible. The monomial at rank `(1, 0, 0)` cannot be a\n   square, because the order of a nonzero square is twice an order and therefore\n   has even first coordinate. Its negative is not a square either, contradicting\n   a necessary property of real closed fields.\n3. **Unrestricted EML semantic uniqueness fails.** Evaluation at one point is not\n   injective: the variable expression and constant zero are distinct syntax but\n   both evaluate to zero at `0`.\n\n## Corrected real-closedness program\n\nReplace the integer growth group by a divisible ordered abelian group, initially\n`\u211a \u00d7\u2097 (\u211a \u00d7\u2097 \u211a)`. The parity obstruction then disappears. A faithful\nreal-closedness theorem should be developed for Hahn series over a real closed\ncoefficient field and a divisible value group. This requires formalizing the\nrelevant Hahn-field real-closure theorem rather than asserting a typeclass for\nthis integer-ranked model.\n\nA later model should support arbitrarily many iterated exponential and logarithmic\nlevels. Candidate exponent structures include finitely supported maps from a\nwell-ordered level type into `\u211a`, with a reverse lexicographic order chosen to\nmatch asymptotic dominance.\n\n## Corrected EML expansion theorem\n\n\u201cUniquely determines it\u201d needs a precise semantic quotient and domain. Point\nvalues are too weak, and raw syntax has identities such as commutativity,\nassociativity, and exp/log cancellation on suitable eventual domains. Promising\nformal statements are:\n\n- expansion uniqueness for **eventual germs at `+\u221e`**;\n- injectivity only after quotienting EML syntax by eventual equality;\n- a restricted positive-domain language where logarithms have controlled domains;\n- a normalization theorem assigning canonical transseries to a syntactic fragment.\n\nThe first substantial target is the polynomial\u2013Laurent fragment, followed by a\nsingle logarithmic level, then one exponential level. At each stage, define an\nexpansion map, prove preservation of addition and multiplication, and prove that\nits kernel is exactly eventual semantic equality.\n\n## Asymptotic comparison beyond coefficient extensionality\n\nThe current theorem is an exact Hahn-series statement. To connect it to analysis,\nformalize an interpretation into germs of real functions and prove:\n\n1. the leading nonzero monomial controls eventual sign;\n2. smaller ranks are asymptotically negligible relative to larger ranks;\n3. the interpretation is injective on a normalized, summable fragment;\n4. formal agreement to all ranks implies equality of eventual germs.\n\nThis will distinguish the valid formal principle from the generally false claim\nthat arbitrary smooth functions with identical classical asymptotic power series\nmust coincide (flat functions provide counterexamples).\n\n## Computational work\n\nNo finite numerical search can decide the two structural claims tested here:\nnon-real-closedness follows from the parity of Hahn orders, while non-injectivity\nhas an explicit two-expression witness. Future computational work is useful after\na finite normalizer for bounded-depth EML expressions is defined; it can then\nenumerate collisions and test candidate rewrite systems before their correctness\nis proved.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0871",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bb566a68",
+    "status": "available",
+    "timestamp": "2026-08-01T03:58:51.115806+00:00",
+    "title": "The formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`"
   },
   {
     "consumed_by_exp_id": "",

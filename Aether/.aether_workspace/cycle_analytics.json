@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-31T23:27:55.249097+00:00",
+  "last_updated": "2026-08-01T03:58:59.265396+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -43115,6 +43115,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-31T23:27:55.119783+00:00",
       "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0995,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Applications",
+      "duration_seconds": 16176.776313781738,
+      "end_time": 1785556651.0996697,
+      "files_integrated": 4,
+      "job_id": "bb566a68",
+      "outcome_quality": 0.7828599999999999,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.7742499999999999,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.76,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7395,
+        "cross_domain": 0.85,
+        "grade": "world_class",
+        "importance": 0.6939,
+        "novelty": 0.71,
+        "proof_depth": 0.6871,
+        "usefulness": 0.7685
+      },
+      "quality_score": 0.7828599999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785540474.323356,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 3,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 7,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-01T03:58:59.142848+00:00",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ]
 }

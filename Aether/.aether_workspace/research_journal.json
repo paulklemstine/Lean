@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "576be6d2",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\n1. **Well-founded rank generalization.** Replace the natural-valued quality rank by an arbitrary partial order satisfying the ascending-chain condition. This would isolate precise",
-      "quality_score": 0.75955,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-29T22:22:15",
-      "title": "Self-Modifying Research via Reflective Type Theory"
-    },
-    {
       "cycle_id": "e722c646",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\n1. **Continuous beta function.** Introduce a continuous scale parameter and an\n   RG semigroup, then define its beta function as the infinitesimal generator.\n   This would cleanly",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-31T23:27:51",
       "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
+    },
+    {
+      "cycle_id": "bb566a68",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: EML Transseries\n\n## Results established in this phase\n\nThe formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`\nseparates three claims that are often bundle",
+      "quality_score": 0.7828599999999999,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-01T03:58:55",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "274c401c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions: Clique-Localized Spilling and Structural Register Allocation\n\nThis cycle established the *local* theory of register spilling: on any interference\ngraph a clique of size `q` forces",
-      "quality_score": 0.55,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-23T23:52:09",
-      "title": "**Conjecture.** For a chordal interference graph with nonnegative vertex spill c"
-    },
     {
       "cycle_id": "6c3aaf50",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-31T23:27:51",
       "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
+    },
+    {
+      "cycle_id": "bb566a68",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: EML Transseries\n\n## Results established in this phase\n\nThe formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`\nseparates three claims that are often bundle",
+      "quality_score": 0.7828599999999999,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-01T03:58:55",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "77d39a70",
-      "domain": "Physics",
-      "name": "adjacencyDegreeMoment_eq_sum_rowSum_cube",
-      "quality": 0.76844
-    },
-    {
-      "cycle_id": "77d39a70",
-      "domain": "Physics",
-      "name": "adjMatrix_rowSum_eq_degree",
-      "quality": 0.76844
-    },
-    {
-      "cycle_id": "77d39a70",
-      "domain": "Physics",
-      "name": "graph_adjacencyDegreeMoment_eq_sum_degree_cube",
-      "quality": 0.76844
-    },
     {
       "cycle_id": "7c352e1f",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "netExport_le_initial",
       "quality": 0.76172
+    },
+    {
+      "cycle_id": "bb566a68",
+      "domain": "Applications",
+      "name": "two_mul_rank_ne_oddExponentialRank",
+      "quality": 0.7828599999999999
+    },
+    {
+      "cycle_id": "bb566a68",
+      "domain": "Applications",
+      "name": "order_sq_of_ne_zero",
+      "quality": 0.7828599999999999
+    },
+    {
+      "cycle_id": "bb566a68",
+      "domain": "Applications",
+      "name": "oddExponentialMonomial_not_isSquare",
+      "quality": 0.7828599999999999
     }
   ],
-  "last_updated": "2026-07-31T23:27:51",
+  "last_updated": "2026-08-01T03:58:55",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0d06265a",
-        "quality": 0.75,
-        "theorems": 20,
-        "title": "EML Category: The Category of EML-Computable Maps"
-      },
-      {
         "cycle_id": "ce71f394",
         "quality": 0.77,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.7666899999999999,
         "theorems": 12,
         "title": "EML Universal Approximation: Density of EML Functions"
+      },
+      {
+        "cycle_id": "bb566a68",
+        "quality": 0.7828599999999999,
+        "theorems": 11,
+        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
       }
     ],
     "Bridges": [
