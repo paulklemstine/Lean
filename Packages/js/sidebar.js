@@ -195,9 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 else scoreColor = '#991b1b';                   // dark red - low
             }
 
+            const slug = pkg.filename.replace(/\.json$/i, '');
             const pkgNum = pkg.pkg_num || '';
             li.innerHTML = `
-                <a class="nav-item-link" href="#pkg=${encodeURIComponent(pkg.filename)}" data-filename="${pkg.filename}">
+                <a class="nav-item-link" href="/${encodeURIComponent(slug)}" data-filename="${pkg.filename}">
                     <div class="nav-item-title">${pkgNum ? pkgNum + '. ' : ''}${pkg.title || 'Untitled Research'}</div>
                     ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">
                         <div class="score-bar"><div class="score-bar-fill" style="width:${scorePct}%;background:${scoreColor}"></div></div>
@@ -211,13 +212,14 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
 
             li.addEventListener('click', (e) => {
+                e.preventDefault();
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 li.classList.add('active');
-                // The <a> inside the <li> has href="#pkg=...", so the browser
-                // will update the hash automatically. The hashchange listener
-                // in packages.js will call loadPackage. We still need to call
-                // it directly to handle the case where the hash doesn't change
-                // (clicking the same package twice, or after replaceState).
+                if (window.loadPackage) window.loadPackage(pkg.filename);
+                if (window.innerWidth <= 768 && window.closeSidebar) {
+                    window.closeSidebar();
+                }
+            });
                 if (window.loadPackage) window.loadPackage(pkg.filename);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 if (window.innerWidth <= 768) window.closeSidebar();

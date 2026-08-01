@@ -1,4 +1,33 @@
-// Aether — Package Loading & Rendering
+// Common KaTeX macros for math operators missing in base KaTeX
+const KATEX_MACROS = {
+    "\\Log": "\\operatorname{Log}",
+    "\\Arg": "\\operatorname{Arg}",
+    "\\Tr": "\\operatorname{Tr}",
+    "\\diag": "\\operatorname{diag}",
+    "\\rank": "\\operatorname{rank}",
+    "\\erf": "\\operatorname{erf}",
+    "\\argmax": "\\operatorname*{argmax}",
+    "\\argmin": "\\operatorname*{argmin}",
+    "\\spec": "\\operatorname{spec}",
+    "\\Spec": "\\operatorname{Spec}",
+    "\\supp": "\\operatorname{supp}",
+    "\\Re": "\\operatorname{Re}",
+    "\\Im": "\\operatorname{Im}"
+};
+
+window.renderKaTeXMath = function(element) {
+    if (!element || typeof renderMathInElement !== 'function') return;
+    renderMathInElement(element, {
+        delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "\\[", right: "\\]", display: true },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "$", right: "$", display: false }
+        ],
+        macros: KATEX_MACROS,
+        throwOnError: false
+    });
+};
 
 window.renderMarkdownWithMath = function(markdown) {
     if (!markdown) return '';
@@ -13,6 +42,7 @@ window.renderMarkdownWithMath = function(markdown) {
     text = text.replace(/\x09heta/g, '\\theta');
     text = text.replace(/\x09au/g, '\\tau');
     text = text.replace(/\x0dho/g, '\\rho');
+    text = text.replace(/\x0cog/gi, '\\Log');
 
     text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
         const cleanMatch = match.replace(/^([ \t]*>[ \t]?)+/gm, '');
@@ -74,43 +104,79 @@ document.addEventListener('DOMContentLoaded', () => {
     // Package data cache: filename -> data
     if (!window.Aether.packageCache) window.Aether.packageCache = {};
 
-    // URL hash routing: #pkg=filename, #catalog/path, #directions
-    // Listen for back/forward navigation
-    window.addEventListener('hashchange', () => {
-        const hash = window.location.hash;
-        const m = hash.match(/^#pkg=(.+)$/);
-        const catMatch = hash.match(/^#catalog(?:[\/=\?](.+))?$/i);
-        if (m) {
-            const filename = decodeURIComponent(m[1]);
-            // Only reload if it's a different package
-            if (!window.Aether.currentPackage || window.Aether.currentPackageFilename !== filename) {
-                if (window.loadPackage) window.loadPackage(filename);
-            }
-        } else if (catMatch || hash.toLowerCase().startsWith('#catalog') || hash.toLowerCase().startsWith('#lean-catalog')) {
-            const relPath = catMatch && catMatch[1] ? decodeURIComponent(catMatch[1]).replace(/^file=/, '') : null;
-            if (window.showLeanCatalog) window.showLeanCatalog(relPath);
-        } else if (hash === '#directions' || hash.startsWith('#directions')) {
-            if (window.showDirectionsView) window.showDirectionsView();
-        } else if (!hash || hash === '#') {
-            // No hash: return to welcome screen so back/forward works like normal page navigation
-            if (window.showWelcome) window.showWelcome();
-        }
-    });
+    // Helper: Parse current route from path or hash
+    function parseCurrentRoute() {
+        const hash = window.location.hash || '';
+        const pathname = window.location.pathname || '/';
+        const cleanPath = decodeURIComponent(pathname.replace(/^\/+|\/+$/g, ''));
 
-    // On page load: if hash contains #pkg=..., load it
-    const initialMatch = window.location.hash.match(/^#pkg=(.+)$/);
-    if (initialMatch) {
-        const filename = decodeURIComponent(initialMatch[1]);
-        // Wait for the script to be fully loaded, then load
-        const tryLoad = () => {
-            if (window.loadPackage) {
-                window.loadPackage(filename);
-            } else {
-                setTimeout(tryLoad, 50);
-            }
-        };
-        tryLoad();
+        // 1. Old-style hash: #pkg=filename.json or #pkg=slug
+        const hashPkgMatch = hash.match(/^#pkg=(.+)$/i);
+        if (hashPkgMatch) {
+            let file = decodeURIComponent(hashPkgMatch[1]);
+            if (!file.endsWith('.json')) file += '.json';
+            return { type: 'package', filename: file };
+        }
+
+        // 2. Catalog hash: #catalog...
+        const hashCatMatch = hash.match(/^#catalog(?:[\/=\?](.+))?$/i);
+        if (hashCatMatch || hash.toLowerCase().startsWith('#catalog') || hash.toLowerCase().startsWith('#lean-catalog')) {
+            const relPath = hashCatMatch && hashCatMatch[1] ? decodeURIComponent(hashCatMatch[1]).replace(/^file=/, '') : null;
+            return { type: 'catalog', path: relPath };
+        }
+
+        // 3. Directions hash: #directions...
+        if (hash === '#directions' || hash.startsWith('#directions')) {
+            return { type: 'directions' };
+        }
+
+        // 4. Clean path routing: /directions, /catalog, or /<package_slug>
+        if (cleanPath === 'directions') {
+            return { type: 'directions' };
+        }
+        if (cleanPath === 'catalog' || cleanPath === 'lean-catalog') {
+            return { type: 'catalog' };
+        }
+        if (cleanPath.startsWith('catalog/')) {
+            return { type: 'catalog', path: cleanPath.substring(8) };
+        }
+
+        if (cleanPath && cleanPath !== 'index.html' && cleanPath !== '404.html') {
+            let filename = cleanPath;
+            if (!filename.endsWith('.json')) filename += '.json';
+            return { type: 'package', filename: filename };
+        }
+
+        return { type: 'welcome' };
     }
+
+    function handleRoute() {
+        const route = parseCurrentRoute();
+        if (route.type === 'package') {
+            if (!window.Aether.currentPackage || window.Aether.currentPackageFilename !== route.filename) {
+                if (window.loadPackage) window.loadPackage(route.filename, false);
+            }
+        } else if (route.type === 'catalog') {
+            if (window.showLeanCatalog) window.showLeanCatalog(route.path);
+        } else if (route.type === 'directions') {
+            if (window.showDirectionsView) window.showDirectionsView();
+        } else {
+            if (window.showWelcome) window.showWelcome(false);
+        }
+    }
+
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('popstate', handleRoute);
+
+    // Initial route handling
+    const tryInitialLoad = () => {
+        if (window.loadPackage && window.showWelcome) {
+            handleRoute();
+        } else {
+            setTimeout(tryInitialLoad, 50);
+        }
+    };
+    tryInitialLoad();
 
     // Tab switching
     tabs.forEach(tab => {
@@ -123,21 +189,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Show the welcome screen and clear the package hash.
-    window.showWelcome = function() {
+    // Show the welcome screen and update URL
+    window.showWelcome = function(updateUrl = true) {
         welcomeScreen.classList.remove('hidden');
         packageView.classList.add('hidden');
         const titleEl = document.getElementById('pkg-title');
         if (titleEl) titleEl.textContent = '';
         window.Aether.currentPackage = null;
         window.Aether.currentPackageFilename = null;
+        if (updateUrl !== false) {
+            if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+                history.pushState(null, '', '/');
+            } else if (window.location.hash) {
+                history.pushState(null, '', window.location.pathname);
+            }
+        }
     };
 
-    window.loadPackage = async function(filename) {
-        // Update URL hash via pushState so each package is a real history entry.
-        const newHash = '#pkg=' + encodeURIComponent(filename);
-        if (window.location.hash !== newHash) {
-            history.pushState(null, '', newHash);
+    window.loadPackage = async function(filename, updateUrl = true) {
+        const slug = filename.replace(/\.json$/i, '');
+        if (updateUrl !== false) {
+            const targetPath = '/' + encodeURIComponent(slug);
+            if (window.location.pathname !== targetPath) {
+                history.pushState(null, '', targetPath);
+            }
         }
 
         // Check cache first
@@ -148,15 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
             renderPackage(data, filename);
             welcomeScreen.classList.add('hidden');
             packageView.classList.remove('hidden');
-            renderMathInElement(document.getElementById('package-view'), {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false},
-                    {left: '\\(', right: '\\)', display: false},
-                    {left: '\\[', right: '\\]', display: true}
-                ],
-                throwOnError: false
-            });
+            if (window.renderKaTeXMath) {
+                window.renderKaTeXMath(document.getElementById('package-view'));
+            }
             return;
         }
 
