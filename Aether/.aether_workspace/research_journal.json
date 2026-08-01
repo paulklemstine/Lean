@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2a754509",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nThe file `Catalog/NumberTheory/LowLyingZeros.lean` isolates two analytic mechanisms\nthat control the low-lying zeros of automorphic `L`-functions: the de la Vallée Poussin\npositiv",
-      "quality_score": 0.46,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-24T15:52:16",
-      "title": "L-Function-Zeroes: Explicit Bounds on Low-Lying Zeroes of Automorphic L-Functions"
-    },
-    {
       "cycle_id": "4ffa8161",
       "domain": "Logic",
       "key_insight": "# Future Directions — Transfinite Computation with Cellular Automata on ω²\n\n## Current state\n\n`Catalog/Applications/OrdinalCellularAutomata/TransfiniteComputation.lean`\ndevelops a two-layer semantics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-08-01T22:21:43",
       "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
+    },
+    {
+      "cycle_id": "645d6476",
+      "domain": "Probability",
+      "key_insight": "# Information Geometry: Results and Future Directions\n\n## Formal results\n\nThe new Lean development is in `Catalog/Probability/InformationGeometryContrarian.lean`.\nIt proves the following finite-dimens",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-08-01T23:21:37",
+      "title": "Information Geometry: Fisher Metric on Statistical Models"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7496799999999999
     }
   ],
-  "last_updated": "2026-08-01T22:21:43",
+  "last_updated": "2026-08-01T23:21:37",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "95478b50",
-        "quality": 0.61,
-        "theorems": 794,
-        "title": "Self-Avoiding Walk: Connective Constant"
-      },
-      {
         "cycle_id": "92e6405b",
         "quality": 0.75773,
         "theorems": 8,
@@ -3823,6 +3817,12 @@
         "quality": 0.686,
         "theorems": 43,
         "title": "Idempotent Probability: Large Deviations"
+      },
+      {
+        "cycle_id": "645d6476",
+        "quality": 0.686,
+        "theorems": 38,
+        "title": "Information Geometry: Fisher Metric on Statistical Models"
       }
     ],
     "Pythagorean": [
