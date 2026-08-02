@@ -1,409 +1,435 @@
-# A Dimension-Free Isotropy Model for Bourgain's Slicing Problem: The Discrete Cube
+# Coordinate Hyperplane Slicing of Unit-Volume Boxes
 
-**Author:** Aristotle
-**Date:** 2026-06-26
-**Domain:** Pythagorean / High-dimensional convex geometry
+## A finite multiplicative model for Bourgain’s slicing problem
+
+**Author:** Aristotle  
+**Date:** August 2, 2026
 
 ## Abstract
 
-Bourgain's slicing problem (the hyperplane conjecture) asks whether there exists a
-universal constant $c > 0$, independent of dimension, such that every convex body
-$K \subseteq \mathbb{R}^n$ of volume $1$ admits a hyperplane section of
-$(n-1)$-dimensional volume at least $c$. The problem is equivalent to a uniform
-upper bound on the isotropic constant $L_K$, and its decisive structural notion is
-*isotropic position*: a body whose covariance matrix is a scalar multiple of the
-identity. We isolate and rigorously verify the load-bearing structural phenomenon
-— identity covariance forcing dimension-free isotropy — on a fully discrete model
-that requires no measure theory: the uniform probability measure on the discrete
-cube $\{-1,1\}^n$. We prove that this measure is centered, that its covariance
-kernel $T(k,l) = \sum_x x_k x_l$ equals $2^n\,\delta_{kl}$ in every dimension,
-and consequently that every unit linear functional has variance exactly $1$,
-independently of $n$. The entire argument reduces to a single sign-flip
-involution on the index set, which simultaneously kills the first moment
-(centering) and the off-diagonal second moments (de-correlation). The resulting
-identity $\mathbb{E}[\langle\theta,x\rangle^2] = \lVert\theta\rVert^2$ is a
-Pythagorean/Parseval identity for an orthonormal coordinate system, exhibiting the
-discrete cube as an exactly isotropic body with isotropic constant $1$, uniformly
-in the dimension. We discuss why this discrete second-moment model captures the
-same structural content as the slicing conjecture, present numerical
-demonstrations, and outline conjectural extensions to products, boxes, and
-anti-concentration.
+Bourgain’s slicing problem asks whether every convex body of volume $1$ in $\mathbb{R}^n$ admits a hyperplane section whose $(n-1)$-dimensional volume is bounded below by a positive universal constant independent of $n$. This paper establishes an exact special case for positive axis-aligned boxes and identifies the finite multiplicative mechanism behind it. If a box has side lengths $a_1,\ldots,a_n>0$, its volume is $V=\prod_i a_i$, while the central coordinate section perpendicular to direction $i$ has volume $S_i=\prod_{j\ne i}a_j$. Hence $S_i a_i=V$. For $V=1$, a multiplicative pigeonhole principle implies that some $a_i\le 1$, and therefore $S_i\ge 1$. We prove the sharper equivalence $a_i\le 1$ if and only if $S_i\ge 1$, show that the universal constant $1$ is optimal for this class, derive further identities among all coordinate sections, and present a linear-time algorithm for locating a guaranteed large section. Logarithmic coordinates convert the argument into a zero-sum principle and provide a numerically stable implementation. The result is a complete box model of slicing, while remaining distinct from the unresolved dimension-free assertion for arbitrary convex bodies.
 
 ## 1. Introduction
 
-### 1.1 The slicing problem
-
-Let $K \subseteq \mathbb{R}^n$ be a convex body of Lebesgue volume $1$. A
-*hyperplane section* of $K$ is its intersection with an affine hyperplane
-$H = \{x : \langle\theta,x\rangle = t\}$, a set of dimension $n-1$. Bourgain's
-slicing problem asks:
-
-> **(Slicing conjecture).** There is a universal constant $c > 0$ such that for
-> every $n$ and every convex body $K \subseteq \mathbb{R}^n$ with
-> $\operatorname{vol}_n(K) = 1$, there exists a hyperplane $H$ with
-> $\operatorname{vol}_{n-1}(K \cap H) \geq c$.
-
-The qualifier "universal" — one constant for all dimensions at once — is the
-source of all difficulty. In any fixed dimension the existence of a large section
-is elementary; the challenge is dimension-freeness. The problem was raised by
-Bourgain in the 1980s and became a central question of asymptotic convex
-geometry; it is now known to hold, after a long sequence of improvements
-culminating in recent work establishing a bounded isotropic constant.
-
-### 1.2 Isotropic position and the isotropic constant
-
-The slicing conjecture is equivalent to a statement about *isotropic position*.
-Center $K$ at its barycenter and let $x$ be uniformly distributed on $K$. The
-covariance matrix of $x$ is $\Sigma_K = \mathbb{E}[x x^\top]$. After an affine
-volume-preserving map, one may assume $\Sigma_K = L_K^2\, I_n$ for a scalar
-$L_K > 0$, the **isotropic constant**. In this position every unit functional has
-the same variance, $\mathbb{E}[\langle\theta,x\rangle^2] = L_K^2$. The slicing
-conjecture is equivalent to the assertion $\sup_n \sup_K L_K < \infty$. Thus the
-crux is: *identity-shaped covariance, with a scalar that does not blow up as
-$n \to \infty$.*
-
-### 1.3 Contribution
-
-Genuine $(n-1)$-volumes of hyperplane sections of convex bodies lie beyond
-current formalized mathematics (the Pólya / Hensley–Vaaler Fourier-analytic
-section-volume formula is unavailable). We instead formalize the *structural*
-content of isotropic position on a discrete model where every quantity is a finite
-sum. Our object is the uniform probability measure on the discrete cube
-$\{-1,1\}^n$. We prove, with no measure theory:
-
-- the measure is **centered** (Theorem A);
-- its covariance kernel is the **identity** scaled by $2^n$ (Theorem B);
-- every linear functional is **centered** and its second moment equals the squared
-  Euclidean norm of its coefficient vector (Theorem C);
-- hence every **unit** functional has variance exactly $1$, **dimension-free**
-  (Theorem D).
-
-The proof method is a single sign-flip involution that, applied to two different
-summands, yields both centering and de-correlation. The final identity is
-Pythagorean: variance equals sum of squares.
-
-### 1.4 Historical and conceptual context
-
-The slicing problem sits at the confluence of convex geometry, probability, and
-harmonic analysis. Bourgain's original motivation came from the study of maximal
-functions associated to convex bodies, where the size of central sections controls
-the boundedness constants. Milman and Pajor recast the question in terms of the
-*isotropic position* and the isotropic constant $L_K$, making explicit the
-equivalence between "every body has a large section" and "$L_K$ is uniformly
-bounded." Their reformulation is the lens through which essentially all subsequent
-progress was made: rather than chasing sections directly, one studies the
-covariance structure of the uniform measure on $K$.
-
-The quantity $L_K$ has a clean probabilistic meaning. In isotropic position the
-uniform measure on $K$ behaves, to second order, like an isotropic random vector:
-its coordinates are uncorrelated and identically scaled. The conjecture asserts
-that this second-order roundness is achievable with a scale that is bounded
-independently of dimension. The phenomenon is subtle precisely because
-high-dimensional convex bodies can be extremely anisotropic before normalization;
-the content is that the *normalized* picture is always tame.
-
-It is instructive to separate two layers of the problem. The first is purely
-*structural*: the existence of a position in which the covariance is a scalar
-multiple of the identity, and the identification of that scalar with the
-section-size constant. This layer is linear-algebraic and holds in complete
-generality. The second layer is *quantitative*: bounding the scalar uniformly in
-$n$, which requires genuine high-dimensional analysis. Our discrete model makes
-the first layer not only transparent but *exact* — the covariance is the identity
-on the nose, and the scalar is exactly $1$ — thereby exhibiting the cleanest
-possible instance of the structural premise, while honestly delimiting which layer
-is being addressed.
-
-## 2. Definitions
-
-Throughout, $n \in \mathbb{N}$ and a point of the discrete cube is a function
-$x : \{1,\dots,n\} \to \{\text{true},\text{false}\}$ (a bit-string), modeled in
-Lean as `Fin n → Bool`.
-
-**Definition 1 (Sign value, `sgn`).** For a bit $b$,
-$$\operatorname{sgn}(b) = \begin{cases} 1 & b = \text{true} \\ -1 & b = \text{false}. \end{cases}$$
-
-**Definition 2 (Coordinate, `coord`).** For a cube point $x$ and index $i$, the
-$i$-th coordinate value is $\operatorname{coord}(x, i) = \operatorname{sgn}(x_i) \in \{-1,+1\}$.
-
-**Definition 3 (Uniform expectation, `E`).** For $f : \{-1,1\}^n \to \mathbb{R}$,
-$$\mathbb{E}[f] = \frac{1}{2^n}\sum_{x \in \{-1,1\}^n} f(x).$$
-
-**Definition 4 (Coordinate flip, `flip` / `flipPerm`).** For an index $i$, the map
-$\operatorname{flip}_i(x)$ toggles the $i$-th bit and fixes the rest:
-$\operatorname{flip}_i(x) = \mathrm{update}(x, i, \lnot x_i)$. Since it is an
-involution it induces a permutation `flipPerm i` of the $2^n$ cube points.
-
-**Definition 5 (Covariance kernel, `T`).** For indices $k, l$,
-$$T(k, l) = \sum_{x \in \{-1,1\}^n} \operatorname{coord}(x, k)\,\operatorname{coord}(x, l).$$
-Dividing by $2^n$ gives the entries of the covariance matrix $\Sigma$ of a
-uniformly random cube point.
+Let $K\subset\mathbb{R}^n$ be a convex body, meaning a compact convex set with nonempty interior. The broad slicing question asks whether volume normalization forces a substantial codimension-one section. More precisely, the dimension-free slicing conjecture seeks a constant $c>0$, independent of $n$ and of $K$, such that whenever
 
-## 3. Elementary lemmas
+$$
+\operatorname{vol}_n(K)=1,
+$$
 
-**Lemma 1 (`sgn_not`).** $\operatorname{sgn}(\lnot b) = -\operatorname{sgn}(b)$.
-*Proof.* Case analysis on $b$. $\square$
+there exists an affine hyperplane $H$ for which
 
-**Lemma 2 (`sgn_mul_self`).** $\operatorname{sgn}(b)\cdot\operatorname{sgn}(b) = 1$.
-*Proof.* Both $(+1)^2$ and $(-1)^2$ equal $1$. $\square$
+$$
+\operatorname{vol}_{n-1}(K\cap H)\ge c.
+$$
 
-**Lemma 3 (`card_cube`).** The discrete cube has $2^n$ points:
-$\lvert\{-1,1\}^n\rvert = 2^n$.
-*Proof.* The number of functions $\{1,\dots,n\}\to\{\text{true},\text{false}\}$
-is $2^n$. $\square$
+The significance of the conjecture lies in its uniformity across dimensions. Bounds that decay with $n$ do not answer the question. The geometry of a general body can be highly anisotropic, and its cross-sectional profile can vary continuously along every direction.
 
-**Lemma 4 (`flip_involutive`).** $\operatorname{flip}_i \circ \operatorname{flip}_i = \mathrm{id}$.
-*Proof.* On coordinate $i$, toggling twice is the identity; other coordinates are
-untouched. Hence $\operatorname{flip}_i$ is a bijection, and `flipPerm i` is a
-genuine permutation of the cube. $\square$
+This paper studies the exact statement for axis-aligned boxes. Although boxes form a restricted class of convex bodies, they expose a structural bridge that is useful in thinking about the general problem. Their volume factors into finitely many positive widths, and every coordinate section is obtained by omitting one factor. Consequently, slicing becomes a finite multiplicative selection problem.
 
-**Lemma 5 (`coord_flip_self`).** $\operatorname{coord}(\operatorname{flip}_i(x), i) = -\operatorname{coord}(x, i)$.
-*Proof.* The $i$-th bit becomes $\lnot x_i$; apply Lemma 1. $\square$
-
-**Lemma 6 (`coord_flip_ne`).** If $j \neq i$ then
-$\operatorname{coord}(\operatorname{flip}_i(x), j) = \operatorname{coord}(x, j)$.
-*Proof.* $\operatorname{flip}_i$ does not change the $j$-th bit. $\square$
-
-The two key consequences of Lemma 4 used repeatedly: because
-$\operatorname{flip}_i$ is a permutation of the summation index set, for any
-$g$ we have the reindexing identity
-$$\sum_{x} g(x) = \sum_{x} g(\operatorname{flip}_i(x)). \tag{$\ast$}$$
-
-## 4. Main results
-
-### 4.1 Centering
-
-**Theorem A (`sum_coord_eq_zero`).** For every index $i$,
-$$\sum_{x \in \{-1,1\}^n} \operatorname{coord}(x, i) = 0.$$
-
-*Proof sketch.* Apply the reindexing identity $(\ast)$ with the flip on
-coordinate $i$ and $g(x) = \operatorname{coord}(x,i)$:
-$$\sum_x \operatorname{coord}(x,i) = \sum_x \operatorname{coord}(\operatorname{flip}_i(x), i)
-= \sum_x \big(-\operatorname{coord}(x,i)\big) = -\sum_x \operatorname{coord}(x,i),$$
-using Lemma 5 in the middle equality. A real number equal to its own negative is
-zero. $\square$
-
-Dividing by $2^n$ yields that the barycenter of the discrete cube is the origin.
-
-**Theorem A' (`E_inner`).** Every linear functional is centered:
-$\mathbb{E}[\langle\theta,x\rangle] = 0$ for all $\theta$.
-*Proof sketch.* Linearity of expectation reduces this to Theorem A coordinatewise:
-$\mathbb{E}[\sum_k \theta_k \operatorname{coord}(\cdot,k)] = \sum_k \theta_k\,\mathbb{E}[\operatorname{coord}(\cdot,k)] = 0$. $\square$
-
-### 4.2 Identity covariance
-
-**Theorem B (`covariance`).** For all $k, l$,
-$$T(k, l) = \begin{cases} 2^n & k = l, \\ 0 & k \neq l. \end{cases}$$
-
-This combines two lemmas.
-
-**Off-diagonal (`T_off_diag`).** If $k \neq l$ then $T(k,l) = 0$.
-*Proof sketch.* Apply $(\ast)$ with the flip on coordinate $k$ and
-$g(x) = \operatorname{coord}(x,k)\operatorname{coord}(x,l)$. By Lemma 5 the
-$k$-factor negates, and by Lemma 6 the $l$-factor is unchanged (since $l \neq k$),
-so $g(\operatorname{flip}_k(x)) = -g(x)$. Hence $T(k,l) = -T(k,l) = 0$. $\square$
-
-**Diagonal (`T_diag`).** $T(k,k) = 2^n$.
-*Proof sketch.* By Lemma 2 the summand $\operatorname{coord}(x,k)^2 = 1$ for every
-$x$; summing the constant $1$ over the $2^n$ points (Lemma 3) gives $2^n$. $\square$
-
-Combining the two cases gives Theorem B: the covariance kernel is $2^n$ times the
-identity matrix, with **no dependence on $n$** beyond the global scale $2^n$ that
-the expectation normalization removes.
-
-### 4.3 Isotropy: a Pythagorean second-moment identity
-
-**Theorem C (`sum_inner_sq` / `E_inner_sq`).** For every coefficient vector
-$\theta = (\theta_1,\dots,\theta_n)$,
-$$\sum_{x \in \{-1,1\}^n} \Big(\sum_k \theta_k\,\operatorname{coord}(x,k)\Big)^2 = 2^n \sum_k \theta_k^2,
-\qquad\text{equivalently}\qquad
-\mathbb{E}\big[\langle\theta,x\rangle^2\big] = \sum_k \theta_k^2 = \lVert\theta\rVert^2.$$
-
-*Proof sketch.* Expand the square pointwise into a double sum,
-$$\Big(\sum_k \theta_k \operatorname{coord}(x,k)\Big)^2
-= \sum_k\sum_l \theta_k\theta_l\,\operatorname{coord}(x,k)\operatorname{coord}(x,l).$$
-Sum over $x$ and exchange the order of summation (`Finset.sum_comm`) so the
-$x$-sum is innermost; it equals $T(k,l)$ by Definition 5:
-$$\sum_x \Big(\sum_k \theta_k \operatorname{coord}(x,k)\Big)^2 = \sum_k\sum_l \theta_k\theta_l\,T(k,l).$$
-Substitute Theorem B: every off-diagonal term vanishes and each diagonal term
-contributes $\theta_k^2\cdot 2^n$, collapsing the double sum to
-$2^n\sum_k \theta_k^2$. Dividing by $2^n$ gives the expectation form. $\square$
-
-This is a Parseval/Pythagorean identity: the coordinate functions
-$\operatorname{coord}(\cdot,k)$ form an orthonormal system for the uniform
-inner product $\langle f, g\rangle = \mathbb{E}[fg]$, and the squared norm of a
-linear combination is the sum of squared coefficients — the $n$-dimensional
-Pythagorean theorem.
-
-### 4.4 Dimension-free isotropy
-
-**Theorem D (`discreteCube_isotropic`).** For every unit vector $\theta$
-(i.e. $\sum_k \theta_k^2 = 1$),
-$$\mathbb{E}\big[\langle\theta,x\rangle^2\big] = 1,$$
-independently of the dimension $n$.
-
-*Proof sketch.* Immediate from Theorem C with $\lVert\theta\rVert^2 = 1$. $\square$
-
-**Interpretation.** The covariance matrix of the uniform measure on $\{-1,1\}^n$
-is the identity $I_n$ in every dimension. Hence the discrete cube is exactly in
-isotropic position with isotropic constant $L = 1$, uniformly in $n$. Every unit
-functional sees the same variance $1$; there is no thin direction. This is the
-discrete realization of the structural premise of the slicing conjecture: a
-bounded — indeed constant — dimension-free isotropic constant.
-
-## 4.5 A worked example in dimension two
-
-To make the mechanism concrete, take $n = 2$. The cube has $2^2 = 4$ corners,
-$$(+1,+1),\quad (+1,-1),\quad (-1,+1),\quad (-1,-1).$$
-The first coordinate takes values $+1,+1,-1,-1$ across these corners, summing to
-$0$ (Theorem A); likewise the second. The covariance kernel entries are
-$$T(1,1) = (+1)^2+(+1)^2+(-1)^2+(-1)^2 = 4 = 2^2,$$
-$$T(2,2) = (+1)^2+(-1)^2+(+1)^2+(-1)^2 = 4 = 2^2,$$
-$$T(1,2) = (+1)(+1)+(+1)(-1)+(-1)(+1)+(-1)(-1) = 1-1-1+1 = 0,$$
-so $T = 4 I_2$ (Theorem B). For $\theta = (\cos\alpha, \sin\alpha)$, a unit vector,
-the four values of $\langle\theta,x\rangle$ are
-$\pm(\cos\alpha+\sin\alpha)$ and $\pm(\cos\alpha-\sin\alpha)$, whose squares
-average to
-$$\tfrac{1}{4}\big[2(\cos\alpha+\sin\alpha)^2 + 2(\cos\alpha-\sin\alpha)^2\big]
-= \cos^2\alpha + \sin^2\alpha = 1,$$
-by the Pythagorean identity (Theorem D). The cross-term $2\cos\alpha\sin\alpha$
-appears with opposite signs in the two squared groups and cancels — exactly the
-off-diagonal vanishing of Theorem B, seen in miniature. This single trigonometric
-cancellation is the $n=2$ shadow of the general sign-flip involution.
-
-## 5. Algorithmic content
-
-Although the theorems are exact identities, they suggest two natural finite
-algorithms, both verifiable against the closed forms.
-
-**Algorithm 1 (Exact covariance kernel by full enumeration).** Enumerate all
-$2^n$ corners, accumulate the outer products $\operatorname{coord}(x,\cdot)
-\operatorname{coord}(x,\cdot)^\top$, and confirm the result equals $2^n I_n$. This
-directly checks Theorem B. Complexity $\Theta(2^n n^2)$ time, $\Theta(n^2)$ space;
-feasible for $n \lesssim 20$.
-
-**Algorithm 2 (Directional second-moment estimator).** For a fixed unit $\theta$,
-compute $\mathbb{E}[\langle\theta,x\rangle^2]$ either exactly (enumeration,
-$\Theta(2^n n)$) or by Monte Carlo over random corners ($\Theta(Sn)$ for $S$
-samples), and compare against the predicted value $\lVert\theta\rVert^2 = 1$ from
-Theorem D. The estimator concentrates around $1$ independently of $n$, the
-empirical signature of dimension-free isotropy.
-
-## 6. Discussion
-
-### 6.1 Why a discrete model is faithful
-
-The dimension-fragile heart of the slicing problem is the uniform control of the
-isotropic constant. All routes to the conjecture pass through isotropic position
-and the covariance matrix; the geometry of any individual body is secondary to the
-behavior of $\Sigma_K$ as $n$ grows. The discrete cube isolates exactly this
-mechanism — identity covariance $\Rightarrow$ dimension-free isotropy — while
-removing the measure-theoretic apparatus (Lebesgue section volumes, Fourier
-section-area formulas) that obscures it. The second-moment content is identical to
-that of a smooth isotropic body; only the ambient volume geometry is abstracted
-away.
-
-### 6.2 The role of the involution
-
-The proofs of Theorems A and B are the *same* one-line argument applied to
-different summands: a sign-reversing involution forces the sum to equal its
-negative, hence zero. This is a robust template — Gaussian odd-moment vanishing,
-parity cancellation, reflection arguments — and here it carries the entire
-structural payload of the model. Its robustness is precisely what makes the
-conclusion dimension-free: the symmetry exists in every dimension and does not
-weaken.
-
-### 6.3 What the model does and does not claim
-
-We are careful to state the scope precisely. The theorems establish that the
-uniform measure on $\{-1,1\}^n$ is exactly isotropic with isotropic constant $1$,
-dimension-free. They do *not* compute Lebesgue volumes of $(n-1)$-dimensional
-sections of a convex body, nor do they prove the slicing conjecture for general
-convex bodies. What they capture is the structural premise — identity covariance
-and the consequent equalization of directional second moments — that every
-approach to the conjecture relies upon, isolated in a setting where it can be
-verified completely and elementarily. The discrete cube is the extremal good case:
-the place where the structural layer is not merely bounded but optimal.
-
-This honesty is itself valuable. Many heuristic discussions of slicing blur the
-structural and quantitative layers; by formalizing only the structural one, we
-pin down exactly which part of the intuition is elementary (uncorrelatedness and
-equal scaling, via symmetry) and which part is genuinely hard (uniform control
-for arbitrary bodies, requiring high-dimensional analysis).
-
-### 6.4 Relation to anti-concentration
-
-Isotropy controls the second moment of marginals $\langle\theta,x\rangle$;
-slicing additionally requires *anti-concentration* (bounded marginal density).
-For the discrete cube the marginal of a unit functional is a signed sum
-$\sum_k \theta_k \varepsilon_k$ with $\varepsilon_k = \pm 1$ uniform, whose
-maximal atom is governed by the classical Littlewood–Offord–Erdős bound. Pairing
-the exact second moment proved here with such anti-concentration is the discrete
-analogue of pairing isotropy with section-density bounds in the continuous theory.
-
-### 6.5 Comparison with the solid cube and optimality of $L = 1$
-
-The discrete cube is the vertex set of the solid cube $[-1,1]^n$, and the two share
-their second-order structure after normalization. For the uniform measure on the
-solid cube $[-c,c]^n$, the coordinates are independent with $\mathbb{E}[x_k^2] =
-c^2/3$, so the covariance is $(c^2/3) I_n$; choosing $c$ to fix the variance gives
-a constant isotropic body in every dimension, with the same identity-shaped
-covariance we proved exactly for the discrete model. The discrete cube reaches the
-limiting two-point marginal (mass $1/2$ at each of $\pm 1$) and thereby attains the
-cleanest constant, $L = 1$, with no integration at all. In this sense the discrete
-model is not an approximation to the solid cube but its second-moment skeleton:
-the same orthonormal coordinate structure, stripped to a finite sum.
-
-The value $L = 1$ is optimal for the structural premise in the following sense.
-The identity $\mathbb{E}[\langle\theta,x\rangle^2] = \lVert\theta\rVert^2$ says the
-coordinate functions are not merely uncorrelated but *orthonormal* for the uniform
-inner product. Any isotropic constant strictly below $1$ would force the
-coordinate functions to have norm less than $1$, contradicting
-$\mathbb{E}[\operatorname{coord}(\cdot,k)^2] = 1$, which holds because each
-coordinate is a genuine $\pm 1$ sign. Thus the discrete cube realizes the smallest
-constant compatible with $\pm 1$ coordinates, and does so uniformly in $n$.
-
-## 7. Future work
-
-- **Tensorization.** The covariance of a product measure is block-diagonal, so
-  products of isotropic models remain isotropic; the unit second moment splits as
-  a convex combination $\mathbb{E}_\mu[\langle\theta,\cdot\rangle^2] =
-  \mathbb{E}_{\mu_1}[\langle\theta_1,\cdot\rangle^2] +
-  \mathbb{E}_{\mu_2}[\langle\theta_2,\cdot\rangle^2]$ with
-  $\lvert\theta_1\rvert^2 + \lvert\theta_2\rvert^2 = 1$. This is the discrete
-  shadow of slicing tensorizing over products.
-- **Affine invariance.** A box (weighted cube with nonzero weights $a_k$) has, after
-  volume normalization by $(\prod_k a_k^2)^{-1/n}$, determinant-one covariance and
-  the same normalized second-moment functional as the unit cube — formalizing
-  affine invariance of the discrete isotropic constant.
-- **Lower bound (the hard direction).** For products of symmetric two-point
-  measures, conjecture $\min_{\lvert\theta\rvert=1} \mathbb{E}[\langle\theta,x\rangle^2]
-  \geq c\,(\det\Sigma)^{1/n}$ with universal $c > 0$, provable in the $c=1$ case
-  via AM–GM on the eigenvalues $a_k^2$.
-- **Anti-concentration / marginal flatness.** Formalize a uniform bound
-  $\max_t \Pr[\langle\theta,x\rangle = t] \leq C/\sqrt{n}$ for spread $\theta$
-  (Littlewood–Offord / Erdős).
-
-## 8. Conclusion
-
-On the corners of a cube, the structural miracle behind Bourgain's slicing problem
-becomes visible and fully verifiable: a single sign-flip involution forces the
-covariance matrix of the uniform measure on $\{-1,1\}^n$ to be the identity in
-every dimension, so every unit functional has variance exactly $1$, dimension-free.
-The resulting identity $\mathbb{E}[\langle\theta,x\rangle^2] = \lVert\theta\rVert^2$
-is Pythagorean — orthonormal coordinates, sum of squares — and exhibits the
-discrete cube as an exactly isotropic body with isotropic constant $1$. This clean
-discrete model captures the load-bearing content of the conjecture while remaining
-entirely elementary.
-
-The broader lesson is methodological. By reducing the entire structural argument
-to a single involution, the model demonstrates that the second-order roundness
-underlying the slicing problem is not an analytic accident but a symmetry
-phenomenon — one that persists verbatim across all dimensions. Every result above
-is an exact identity, not an asymptotic estimate, so the model leaves no error
-term to control and no dimension-dependent constant to track. The extensions
-sketched in Section 7 — tensorization, affine invariance, the lower-bound
-direction, and anti-concentration — each preserve this exactness while moving
-closer to the full geometric statement, and each is phrased as a precise,
-finitely checkable claim. Taken together they chart a concrete path from the
-extremal good case studied here toward the quantitative heart of Bourgain's
-question.
+The principal theorem is as follows.
+
+> **Coordinate-Box Slicing Theorem.** Let $n\ge 1$, and let $B\subset\mathbb{R}^n$ be an axis-aligned box with positive side lengths $a_1,\ldots,a_n$ and volume $1$. Then some central coordinate hyperplane section of $B$ has $(n-1)$-dimensional volume at least $1$.
+
+The constant $1$ is independent of dimension and optimal for this class: the unit cube has all coordinate section volumes equal to $1$.
+
+The proof has three ingredients. First, the section perpendicular to direction $i$ has volume $S_i=\prod_{j\ne i}a_j$. Second, $S_i a_i=1$. Third, not every positive factor in a finite product equal to $1$ can exceed $1$. Choosing a width $a_i\le 1$ yields $S_i=1/a_i\ge 1$.
+
+The exact reciprocal relation also produces a pointwise classification:
+
+$$
+a_i\le 1\quad\Longleftrightarrow\quad S_i\ge 1.
+$$
+
+This paper develops these statements self-containedly, gives algorithms and examples, and explains both the value and the limitation of the box model. In particular, no claim is made that the argument proves the dimension-free conjecture for arbitrary convex bodies.
+
+## 2. Geometric setting and definitions
+
+### 2.1 Axis-aligned boxes
+
+Fix an integer $n\ge 1$. Let $a_1,\ldots,a_n$ be positive real numbers. An axis-aligned box with these side lengths may be written as
+
+$$
+B=\prod_{i=1}^n\left[-\frac{a_i}{2},\frac{a_i}{2}\right].
+$$
+
+Centering at the origin is convenient but inessential: translations preserve all volumes under discussion. Positivity ensures that $B$ has nonempty interior and full dimension $n$.
+
+> **Definition 2.1 (Box volume).** The $n$-dimensional volume of $B$ is
+>
+> $$
+> V(B)=\prod_{i=1}^n a_i.
+> $$
+
+The product formula follows from the standard volume of a Cartesian product of intervals.
+
+### 2.2 Central coordinate hyperplane sections
+
+For each $i\in\{1,\ldots,n\}$, let
+
+$$
+H_i=\{x\in\mathbb{R}^n:x_i=0\}
+$$
+
+be the central coordinate hyperplane perpendicular to the $i$th coordinate axis. The section $B\cap H_i$ is naturally an $(n-1)$-dimensional box with all side lengths except $a_i$.
+
+> **Definition 2.2 (Coordinate section volume).** The $(n-1)$-dimensional volume of the central coordinate section perpendicular to direction $i$ is
+>
+> $$
+> S_i(B)=\prod_{\substack{1\le j\le n\\j\ne i}}a_j.
+> $$
+
+When $n=1$, the section is zero-dimensional. The empty product is $1$, in agreement with the convention that a point has zero-dimensional volume $1$. Thus all statements below include the one-dimensional case.
+
+### 2.3 Normalization
+
+The slicing problem is sensitive to scale. If all coordinates are multiplied by $t>0$, full volume scales by $t^n$ and section volume by $t^{n-1}$. We therefore impose the normalization
+
+$$
+V(B)=1.
+$$
+
+For a general box of volume $V>0$, rescaling by $V^{-1/n}$ produces a unit-volume box. Section bounds can then be translated back to the original scale; this is discussed in Section 6.
+
+## 3. The multiplicative bridge
+
+The key geometric identity is a factorization of full volume into a perpendicular width and its complementary section.
+
+> **Lemma 3.1 (Section–width product identity).** For every positive axis-aligned box $B$ and every coordinate direction $i$,
+>
+> $$
+> S_i(B)a_i=V(B).
+> $$
+
+**Proof sketch.** By definition,
+
+$$
+S_i(B)a_i=\left(\prod_{j\ne i}a_j\right)a_i.
+$$
+
+The right-hand side contains every factor $a_j$ exactly once, so it equals $\prod_{j=1}^n a_j=V(B)$.
+
+Under unit-volume normalization, Lemma 3.1 becomes the reciprocal formula
+
+$$
+S_i(B)=\frac{1}{a_i}.
+$$
+
+This formula is the complete geometric–arithmetic dictionary for coordinate sections of boxes.
+
+The required selection principle is finite and elementary.
+
+> **Lemma 3.2 (Finite multiplicative pigeonhole principle).** Let $n\ge 1$ and let $a_1,\ldots,a_n>0$. If
+>
+> $$
+> \prod_{i=1}^n a_i=1,
+> $$
+>
+> then there exists $i$ such that $a_i\le 1$.
+
+**Proof sketch.** Suppose instead that $a_i>1$ for every $i$. The product of two positive numbers greater than $1$ is greater than $1$, and induction gives $\prod_i a_i>1$. This contradicts the product normalization.
+
+A logarithmic proof is equally informative. Set $x_i=\log a_i$. The product condition is equivalent to $\sum_i x_i=0$. If every $a_i>1$, then every $x_i>0$, making their sum positive, again a contradiction.
+
+The positivity assumption guarantees that logarithms and reciprocal inequalities are valid. Positive dimension guarantees that an index exists.
+
+## 4. Main slicing results
+
+### 4.1 Existence of a large coordinate section
+
+> **Theorem 4.1 (Coordinate-Box Slicing Theorem).** Let $n\ge 1$. If $B\subset\mathbb{R}^n$ is an axis-aligned box with positive side lengths and $V(B)=1$, then there exists an index $i$ such that
+>
+> $$
+> S_i(B)\ge 1.
+> $$
+
+**Proof sketch.** By Lemma 3.2, some side length satisfies $a_i\le 1$. Lemma 3.1 and $V(B)=1$ give $S_i(B)a_i=1$. Since $a_i>0$,
+
+$$
+S_i(B)=\frac{1}{a_i}\ge 1.
+$$
+
+Thus the central coordinate hyperplane $H_i$ provides the required section.
+
+The theorem gives more than the existence of an arbitrary hyperplane. It finds a section among the fixed family of $n$ central coordinate hyperplanes. In this class no optimization over translations or directions is necessary.
+
+### 4.2 Pointwise width–section equivalence
+
+> **Theorem 4.2 (Width–Section Equivalence).** Let $B$ be a positive axis-aligned box of volume $1$. For every coordinate direction $i$,
+>
+> $$
+> a_i\le 1\quad\Longleftrightarrow\quad S_i(B)\ge 1.
+> $$
+
+**Proof sketch.** The reciprocal formula gives $S_i(B)=1/a_i$. For $a_i>0$, the inequality $a_i\le 1$ is equivalent to $1/a_i\ge 1$.
+
+This theorem classifies all guaranteed large coordinate sections, not just one of them. The number of coordinate sections with volume at least $1$ is exactly the number of widths at most $1$.
+
+### 4.3 Optimality
+
+> **Proposition 4.3 (Sharpness of the constant).** The lower bound $1$ in Theorem 4.1 is optimal among all positive unit-volume axis-aligned boxes.
+
+**Proof sketch.** Take the unit cube, for which $a_i=1$ for every $i$. Its volume is $1$, and each coordinate section has volume
+
+$$
+S_i(B)=\prod_{j\ne i}1=1.
+$$
+
+Therefore no constant strictly larger than $1$ can be guaranteed for every box.
+
+### 4.4 Extremal characterization
+
+The sharpness example has a useful converse.
+
+> **Proposition 4.4 (Equality characterization for the maximal coordinate section).** Let $B$ be a positive unit-volume axis-aligned box. Then
+>
+> $$
+> \max_i S_i(B)=1
+> $$
+>
+> if and only if $a_i=1$ for every $i$.
+
+**Proof sketch.** If every width equals $1$, every section equals $1$. Conversely, suppose the maximum section volume is $1$. Theorem 4.1 implies the maximum is at least $1$, so every $S_i\le 1$. By Theorem 4.2, no width can be below $1$; hence every $a_i\ge 1$. Their product is $1$, so every factor must equal $1$.
+
+Thus the cube is the unique unit-volume box, up to translation, whose largest central coordinate section is as small as possible.
+
+## 5. Consequences for the full family of sections
+
+The reciprocal relation yields identities involving all $n$ coordinate sections.
+
+> **Proposition 5.1 (Product of coordinate section volumes).** For a positive box of volume $V$,
+>
+> $$
+> \prod_{i=1}^n S_i(B)=V^{n-1}.
+> $$
+
+**Proof sketch.** In the product $\prod_i S_i$, each width $a_j$ appears in every section except $S_j$, hence exactly $n-1$ times. Therefore
+
+$$
+\prod_{i=1}^nS_i(B)=\prod_{j=1}^n a_j^{n-1}=V^{n-1}.
+$$
+
+For $V=1$, this gives
+
+$$
+\prod_{i=1}^n S_i(B)=1.
+$$
+
+Consequently, the geometric mean of the section volumes equals $1$.
+
+> **Corollary 5.2 (Two-sided section balance).** For a positive unit-volume box, at least one coordinate section has volume at least $1$, and at least one coordinate section has volume at most $1$.
+
+**Proof sketch.** A positive finite family with product $1$ cannot have every member below $1$, nor can it have every member above $1$.
+
+The first half recovers Theorem 4.1. The second half shows that volume normalization also prevents all coordinate sections from being uniformly large.
+
+> **Corollary 5.3 (Best section and narrowest width).** For a positive unit-volume box,
+>
+> $$
+> \max_i S_i(B)=\frac{1}{\min_i a_i}.
+> $$
+
+**Proof sketch.** Since $S_i=1/a_i$ and reciprocal order reverses on positive numbers, maximizing $S_i$ is equivalent to minimizing $a_i$.
+
+This identity turns the geometric optimization problem into a simple scan through the widths.
+
+## 6. Scaling beyond unit volume
+
+Although unit volume is the natural slicing normalization, the box theorem has an equivalent scale-covariant form.
+
+> **Theorem 6.1 (Geometric-mean slicing bound).** Let $B$ be a positive axis-aligned box in $\mathbb{R}^n$ with volume $V>0$. Then some central coordinate section satisfies
+>
+> $$
+> S_i(B)\ge V^{(n-1)/n}.
+> $$
+
+**Proof sketch.** The geometric mean of the widths is $V^{1/n}$. Some width therefore satisfies $a_i\le V^{1/n}$; otherwise their product would exceed $V$. Using $S_i=V/a_i$ gives
+
+$$
+S_i(B)\ge \frac{V}{V^{1/n}}=V^{(n-1)/n}.
+$$
+
+The bound is sharp for cubes with side length $V^{1/n}$. Setting $V=1$ recovers Theorem 4.1.
+
+This form clarifies dimensions: an $n$-volume raised to the power $(n-1)/n$ has the units of an $(n-1)$-volume.
+
+## 7. Algorithms
+
+### 7.1 Direct selection algorithm
+
+The proof of Theorem 4.1 is constructive.
+
+> **Algorithm 7.1 (Narrowest-width section selection).** Given positive widths $a_1,\ldots,a_n$ with product $1$, choose an index minimizing $a_i$ and return the central coordinate section perpendicular to that direction.
+
+**Correctness.** Since the geometric mean is $1$, the minimum width is at most $1$. Corollary 5.3 shows that its perpendicular section is the largest coordinate section, with volume $1/\min_i a_i\ge 1$.
+
+**Complexity.** A single scan finds the minimum in $O(n)$ time and $O(1)$ auxiliary space. If the product normalization must also be checked directly, multiplication requires another $O(n)$ operations, or it can be folded into the same scan.
+
+### 7.2 Numerically stable logarithmic algorithm
+
+Products can overflow or underflow when $n$ is large or the widths have extreme scales. Define $x_i=\log a_i$. Then
+
+$$
+\log V=\sum_i x_i,
+\qquad
+\log S_i=\log V-x_i.
+$$
+
+For a unit-volume box, the normalization becomes $\sum_i x_i=0$ and $\log S_i=-x_i$.
+
+> **Algorithm 7.2 (Log-domain section evaluation).** Compute $x_i=\log a_i$, form $L=\sum_i x_i$, select an index minimizing $x_i$, and report the logarithmic section volume $L-x_i$.
+
+**Correctness.** The logarithm is strictly increasing, so minimizing $x_i$ is equivalent to minimizing $a_i$. The product identity becomes additive, giving the exact logarithmic section volume.
+
+**Complexity.** The algorithm uses $O(n)$ logarithm evaluations, $O(n)$ arithmetic operations, and $O(1)$ auxiliary space if section values are not all stored. For floating-point data, one may regard $|L|$ as a normalization residual instead of requiring exact equality.
+
+### 7.3 Verification diagnostics
+
+For numerical examples, three residuals are useful:
+
+$$
+r_V=\left|\prod_i a_i-1\right|,
+$$
+
+$$
+r_i=|S_i a_i-1|,
+$$
+
+and, in the log domain,
+
+$$
+r_{\log}=\left|\sum_i\log a_i\right|.
+$$
+
+The first checks normalization, the second checks every section–width identity, and the third remains reliable for extreme scales. These are computational diagnostics rather than substitutes for the exact hypotheses of the theorems.
+
+## 8. Examples
+
+### 8.1 A balanced rectangular box
+
+Let
+
+$$
+(a_1,a_2,a_3)=\left(2,\frac12,1\right).
+$$
+
+The volume is $1$. The section volumes are
+
+$$
+S_1=\frac12,
+\qquad
+S_2=2,
+\qquad
+S_3=1.
+$$
+
+The unique width below $1$ yields the unique section above $1$, while the width equal to $1$ yields a section equal to $1$.
+
+### 8.2 Strong anisotropy
+
+Consider the four-dimensional widths
+
+$$
+(10,10,10,10^{-3}).
+$$
+
+Their product is $1$. The sections perpendicular to the first three coordinates have volume $0.1$, while the section perpendicular to the last coordinate has volume $1000$. A very thin direction forces a very large complementary section.
+
+### 8.3 Several large sections
+
+Take
+
+$$
+\left(4,\frac12,\frac12,1\right).
+$$
+
+The product is $1$. The section volumes are
+
+$$
+\left(\frac14,2,2,1\right).
+$$
+
+There are two widths below $1$ and exactly two sections above $1$, illustrating the pointwise equivalence of Theorem 4.2.
+
+### 8.4 The extremal cube
+
+For $a_i=1$ in every dimension, all coordinate sections equal $1$. This simultaneously attains the lower bound and demonstrates its sharpness.
+
+## 9. Relation to general slicing
+
+For a coordinate box, the cross-sectional area perpendicular to a fixed coordinate direction is constant throughout the interior. If $A_i(t)$ denotes the $(n-1)$-dimensional volume of the slice at coordinate $x_i=t$, then
+
+$$
+A_i(t)=S_i
+$$
+
+for $|t|<a_i/2$, and it vanishes outside the box. Consequently,
+
+$$
+V(B)=\int_{-a_i/2}^{a_i/2}A_i(t)\,dt=S_i a_i.
+$$
+
+For an arbitrary convex body $K$, the analogous sectional profile $A_u(t)$ in a unit direction $u$ generally varies with $t$. A Fubini or coarea principle still gives
+
+$$
+\operatorname{vol}_n(K)=\int_{\mathbb{R}}A_u(t)\,dt,
+$$
+
+but there is no finite list of independent widths and no reason for $A_u$ to be constant. One must control both the effective support of the profile and the concentration of its mass. This is where the finite product argument ceases to suffice.
+
+The box theorem should therefore be interpreted as a structural model. It isolates a successful pattern:
+
+1. normalize total volume;
+2. express volume through a directional section profile and a transverse scale;
+3. select a direction whose transverse scale is controlled;
+4. deduce a lower bound for a section.
+
+For boxes, each step is exact and elementary. For general convex bodies, establishing dimension-independent substitutes is the substantive challenge.
+
+## 10. Applications and interpretations
+
+### 10.1 Product probability models
+
+A uniform distribution on a box is a product distribution. Fixing coordinate $i$ leaves a uniform measure on the complementary product domain. The section volume $S_i$ records the unnormalized mass of that fiber. Under unit-volume normalization, the identity $S_i=1/a_i$ expresses a reciprocal relationship between marginal support width and fiber size.
+
+### 10.2 Rectangular uncertainty sets
+
+In robust optimization, a box may represent independent parameter ranges. Conditioning on one parameter produces a feasible cross-section in the remaining parameters. If total rectangular volume is normalized, at least one parameter range is no larger than the reference scale, and conditioning along that parameter leaves a complementary feasible region of volume at least $1$.
+
+### 10.3 Feature scaling and anisotropy
+
+Axis-aligned bounding boxes are basic summaries of multivariate data. The logarithmic widths $x_i=\log a_i$ decompose anisotropy additively. Unit volume imposes zero total log-scale, while the associated log-section sizes are $-x_i$. Thus the feature with smallest scale has the largest complementary footprint.
+
+### 10.4 Tensor-product computation
+
+Quadrature, grids, and separable partial differential equation discretizations often use product domains. Omitting one coordinate creates a face or central slice whose measure is exactly the complementary product. The section–width identity supplies a direct consistency relation among full-domain and reduced-domain measures.
+
+## 11. Limitations
+
+The assumptions define the scope precisely.
+
+First, axis alignment provides the distinguished coordinate sections. Rotated boxes can be handled by rotating coordinates, but a general parallelotope requires tracking how hyperplane measure transforms under a linear map.
+
+Second, strict positivity of the widths is essential for a full-dimensional body and for reciprocal reasoning. Degenerate boxes have zero full volume and lie outside the normalized setting.
+
+Third, the theorem considers central coordinate sections. For boxes, parallel translates through the interior have the same section volume, so centrality costs nothing. That constancy fails for general convex bodies.
+
+Fourth, the result does not prove the universal slicing conjecture for arbitrary convex bodies. The exact product factorization is a special property of Cartesian products.
+
+## 12. Future directions
+
+A first extension is to invertible linear images of boxes, or parallelotopes. Full volume transforms by the absolute determinant, while hyperplane measure transforms through the restriction of the linear map to the section. Formulating the resulting directional factors would generalize the multiplicative bridge beyond orthogonal axes.
+
+Ellipsoids provide a second natural class. Representing an ellipsoid as the image of a Euclidean ball under a positive-definite linear map connects section volumes to eigenvalues and determinant normalization.
+
+A broader development requires a precise measure-theoretic account of affine hyperplane volume, using either Hausdorff measure or isometric parametrizations. This supports the integral identity for variable section profiles.
+
+For general convex bodies, affine normalization is central. Barycenters, covariance operators, and isotropic position translate geometry into probabilistic information. A coarea or Fubini bridge can then relate hyperplane sections to densities of one-dimensional marginals.
+
+Before a universal bound, dimension-dependent lower bounds offer an intermediate target. They test the complete geometric framework without assuming the unresolved dimension-free step.
+
+## 13. Conclusion
+
+For positive axis-aligned boxes, the slicing question has an exact answer. Full volume factors as a coordinate section volume times the omitted width. A unit product cannot have every factor greater than $1$, so some width is at most $1$; its reciprocal section volume is at least $1$. The same identity yields an if-and-only-if classification of large sections, a sharpness theorem, a product law for all coordinate sections, and a linear-time selection algorithm.
+
+The cube shows that the constant $1$ is optimal. Logarithmic coordinates reveal the theorem as a zero-sum balance law and make its computation stable across extreme scales. These conclusions form a complete theory for coordinate slicing of boxes and a transparent finite multiplicative model for the broader slicing problem. The remaining leap—from constant section profiles and factored widths to arbitrary convex bodies—is precisely where the deeper geometry begins.

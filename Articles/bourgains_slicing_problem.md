@@ -1,257 +1,175 @@
-# The Shape That Refuses to Hide: A Dimension-Free Window into Bourgain's Slicing Problem
+# The Slice Hidden Inside a Box
 
-## A simple question that took forty years to settle
+## A geometric riddle with a multiplicative answer
 
-Imagine a lump of clay. You knead it into some convex shape — a ball, a cube, a
-flattened lens, a long needle — but you are careful to use exactly one liter of
-clay every time. Now take an infinitely thin, perfectly flat knife and slice
-straight through the lump. The cut you expose is a two-dimensional cross-section.
-Question: no matter how you sculpted the clay, can you always find *some* angle
-of cut whose area is at least, say, half a square decimeter?
+Imagine a loaf of bread that lives not merely in three dimensions but in $n$ dimensions. Its volume is exactly $1$. How large a slice can we guarantee by cutting it with a hyperplane?
 
-In three dimensions the answer is intuitively yes, and not hard to believe. The
-trouble starts when the clay lives in a space of four, ten, or a thousand
-dimensions. In high dimensions convex bodies become wild and counterintuitive:
-volume concentrates in strange places, "thin" directions multiply, and our
-three-dimensional instincts collapse. The natural worry is that as the number of
-dimensions $n$ grows, the *thinnest unavoidable slice* might shrink toward zero —
-that some clever high-dimensional shape could be arranged so every flat cut
-through it is vanishingly small.
+This innocent question points toward **Bourgain’s slicing problem**, one of the central organizing questions of high-dimensional convex geometry. In its broad form, it asks whether there is a universal number $c>0$, independent of the dimension, such that every convex body of volume $1$ in $\mathbb{R}^n$ has some hyperplane section whose $(n-1)$-dimensional volume is at least $c$. The word “universal” is the source of the difficulty: the same lower bound must survive as the number of dimensions grows without limit.
 
-This is **Bourgain's slicing problem**, posed by Jean Bourgain in the
-mid-1980s. In its cleanest form it asks:
+For arbitrary convex bodies, that dimension-free assertion remains a conjectural frontier. But for one fundamental family—positive axis-aligned boxes—the complete story is both exact and unexpectedly simple. Every such box has a central coordinate slice of volume at least $1$. No deterioration with dimension occurs, and the constant $1$ is best possible.
 
-> Is there a single universal constant $c > 0$ — one number that works in
-> *every* dimension at once — such that every convex body $K \subseteq \mathbb{R}^n$
-> of volume $1$ has a hyperplane section of $(n-1)$-dimensional volume at least
-> $c$?
+The proof is a miniature model of a recurring phenomenon in modern mathematics: geometry becomes transparent after it is translated into multiplication.
 
-A "hyperplane section" is exactly our flat knife cut: the intersection of $K$
-with an $(n-1)$-dimensional flat slab passing through it. The phrase "universal"
-is the whole story. Finding a good slice in any *fixed* dimension is routine.
-Finding a constant that does not degrade as the dimension climbs to infinity is
-what makes the problem deep. For decades the best known bounds drifted slowly
-downward with $n$, and the conjecture became one of the central open questions in
-high-dimensional geometry, finally resolved affirmatively only in recent years
-through a long chain of work by many mathematicians.
+## Boxes as lists of widths
 
-This article is not about that final resolution. It is about a small, crystalline
-piece of mathematics that captures *why* the conjecture is even plausible — a
-model so clean we can verify every step by hand, and which exhibits the
-"dimension-free" miracle in its purest form. The model lives not on a smooth
-lump of clay but on the **corners of a cube**.
+An axis-aligned box in $\mathbb{R}^n$ is determined by positive side lengths
 
-## Reframing slicing as a question about balance
+$$
+a_1,a_2,\ldots,a_n>0.
+$$
 
-To get traction on slicing, geometers discovered a change of perspective that
-turns a geometric question into a statistical one. The key is the notion of
-**isotropic position**.
+Its volume is
 
-Place your convex body so its center of mass sits at the origin. Now scatter
-points uniformly at random inside it, and ask a statistical question: in a given
-direction $\theta$ (a unit vector), how spread out is the body? Concretely, pick a
-random point $x$ inside $K$ and measure $\langle \theta, x\rangle$, the
-coordinate of $x$ along $\theta$. This is a random number; its variance,
-$\mathbb{E}\big[\langle\theta,x\rangle^2\big]$, measures how far the body
-"reaches" along $\theta$.
+$$
+V=\prod_{j=1}^n a_j.
+$$
 
-A body is in **isotropic position** when this variance is the *same in every
-direction*: $\mathbb{E}\big[\langle\theta,x\rangle^2\big] = L_K^2$ for all unit
-$\theta$, where the single number $L_K$ is called the **isotropic constant**.
-Geometrically, an isotropic body is as round as an affine transformation can make
-it; statistically, it looks the same no matter which way you face. The slicing
-problem turns out to be *exactly equivalent* to the statement that $L_K$ is
-bounded above by a universal constant, independent of dimension. Big slices
-everywhere are the geometric shadow of a controlled, dimension-free variance.
+The location of the box does not matter for the argument, so we may picture it as centered at the origin. A central coordinate hyperplane perpendicular to the $i$th axis cuts through the box while deleting the $i$th direction. The resulting section is itself a box of dimension $n-1$, with every side length except $a_i$. Its section volume is therefore
 
-So the whole drama compresses to one matrix. Form the **covariance matrix** of
-the uniformly-random point $x$, whose $(k,l)$ entry is
-$\mathbb{E}[x_k x_l]$. Isotropy says this matrix is a *scalar multiple of the
-identity*. When it is, every direction has the same variance, the body is in its
-roundest position, and slices cannot hide. The slicing conjecture is the claim
-that this scalar cannot blow up as the dimension grows.
+$$
+S_i=\prod_{j\ne i}a_j.
+$$
 
-## The cleanest isotropic body in the world
+The crucial identity is immediate but powerful:
 
-Smooth convex bodies in $\mathbb{R}^n$ require heavy measure-theoretic
-machinery — Lebesgue volumes of $(n-1)$-dimensional sections, Fourier-analytic
-formulas, and more. But the *structural heart* of isotropy — covariance equal to
-the identity, the same in every dimension — can be exhibited on a discrete object
-that needs no calculus at all: the **discrete cube**.
+$$
+S_i a_i=V.
+$$
 
-The discrete cube $\{-1, 1\}^n$ is the set of $2^n$ corners of an
-$n$-dimensional cube, each coordinate being either $+1$ or $-1$. Put the uniform
-probability measure on it: every corner is equally likely, with probability
-$1/2^n$. This is the discrete twin of "pick a random point in a convex body." We
-will show that this twin is *perfectly isotropic in every dimension* — its
-covariance matrix is the identity, exactly, for all $n$ — and we will do it with
-a single, almost magical, symmetry argument.
+In words, **section volume multiplied by perpendicular width equals full volume**. This is the bridge between the geometric cut and the arithmetic of the side lengths.
 
-Let me set up the few definitions we need. A point of the cube is a string of
-bits $x = (x_1, \dots, x_n)$, each bit either "true" or "false." Translate each
-bit into a number with the **sign function**
-$$\operatorname{sgn}(\text{true}) = 1, \qquad \operatorname{sgn}(\text{false}) = -1,$$
-and write the $i$-th coordinate value as
-$\operatorname{coord}(x, i) = \operatorname{sgn}(x_i) \in \{-1, +1\}$. The
-**uniform expectation** of any function $f$ on the cube is the plain average over
-all $2^n$ corners,
-$$\mathbb{E}[f] = \frac{1}{2^n}\sum_{x \in \{-1,1\}^n} f(x).$$
+Under the normalization $V=1$, the identity becomes
 
-Two facts about a single $\pm 1$ value are worth stating because they do all the
-arithmetic later. First, a sign squared is always one:
-$\operatorname{sgn}(b)\cdot\operatorname{sgn}(b) = 1$. Second, negating the
-underlying bit negates the value: $\operatorname{sgn}(\lnot b) = -\operatorname{sgn}(b)$.
-And the cube genuinely has $2^n$ points — the number of bit-strings of length
-$n$ — a fact we use to turn averages into clean powers of two.
+$$
+S_i=\frac{1}{a_i}.
+$$
 
-## One symmetry to rule them all
+A narrow direction produces a large perpendicular slice; a wide direction produces a small one. The geometry of every coordinate section is encoded in a reciprocal.
 
-Here is the idea that makes everything collapse. Consider the operation that
-**flips a single coordinate**: pick an index $i$, and toggle the $i$-th bit of a
-corner while leaving all the other bits untouched. Call it $\operatorname{flip}_i$.
+## The multiplicative pigeonhole principle
 
-Three things are true of this flip, and they are the entire engine of the proof:
+The ordinary pigeonhole principle says that if too many objects are forced into too few boxes, some box receives more than one object. Its multiplicative cousin says something equally elementary:
 
-1. **It is an involution.** Flipping coordinate $i$ twice returns you to where you
-   started. So $\operatorname{flip}_i$ is a perfect pairing of the cube's corners
-   with itself — a bijection (a permutation of the $2^n$ corners).
+> **Multiplicative Pigeonhole Principle.** If $n\ge 1$, the positive numbers $a_1,\ldots,a_n$ have product $1$, then at least one of them is at most $1$.
 
-2. **It negates the flipped coordinate.** After the flip, the $i$-th coordinate
-   value becomes its own negative:
-   $\operatorname{coord}(\operatorname{flip}_i(x), i) = -\operatorname{coord}(x, i)$.
+Why? If every $a_i$ were strictly greater than $1$, multiplying them would give
 
-3. **It leaves the others alone.** For any other index $j \neq i$,
-   $\operatorname{coord}(\operatorname{flip}_i(x), j) = \operatorname{coord}(x, j)$.
+$$
+\prod_{i=1}^n a_i>1,
+$$
 
-Now watch how much falls out of this single observation.
+contradicting the assumed product. The statement needs positivity and at least one factor. Neither condition is cosmetic: positivity lets inequalities behave predictably under multiplication, while positive dimension ensures that there is a width to choose.
 
-**The cube is centered.** Take the sum of the $i$-th coordinate over all corners,
-$\sum_x \operatorname{coord}(x, i)$. Because $\operatorname{flip}_i$ just permutes
-the corners, we may relabel the sum by the flip without changing its value. But
-relabeling sends each coordinate value to its negative. So the sum equals its own
-negative, which forces it to be **zero**:
-$$\sum_{x} \operatorname{coord}(x, i) = 0 \quad\text{for every } i.$$
-The center of mass of the discrete cube sits exactly at the origin — in every
-dimension.
+This small observation identifies a direction $i$ with $a_i\le 1$. Since $S_i=1/a_i$, positivity gives
 
-**Off-diagonal correlations vanish.** Define the **covariance kernel**
-$$T(k, l) = \sum_{x} \operatorname{coord}(x, k)\,\operatorname{coord}(x, l).$$
-Suppose $k \neq l$. Flip coordinate $k$. The product
-$\operatorname{coord}(x,k)\operatorname{coord}(x,l)$ becomes
-$\big(-\operatorname{coord}(x,k)\big)\operatorname{coord}(x,l)$ — the $k$-factor
-flips sign, the $l$-factor is untouched because $l \neq k$. Again the sum equals
-its own negative, so it vanishes:
-$$T(k, l) = 0 \quad\text{whenever } k \neq l.$$
-Different coordinates of a random cube corner are uncorrelated.
+$$
+S_i\ge 1.
+$$
 
-**Diagonal entries are exactly $2^n$.** When $k = l$, the product is
-$\operatorname{coord}(x,k)^2 = 1$ at every single corner, because a $\pm 1$ value
-squared is $1$. Summing the constant $1$ over all $2^n$ corners gives
-$$T(k, k) = 2^n.$$
+That is the entire slicing argument.
 
-Putting the two cases together, the covariance kernel is the identity matrix
-scaled by the number of points:
-$$T(k, l) = \begin{cases} 2^n & k = l \\ 0 & k \neq l. \end{cases}$$
-Dividing by $2^n$ to turn sums into expectations, the covariance *matrix* of a
-uniformly random corner is the identity, exactly, with no dependence on $n$
-whatsoever. That single sign-flip symmetry handled centering and
-de-correlation in one stroke — the same one-line argument, applied twice.
+## The coordinate-box slicing theorem
 
-## Every direction looks the same
+The result can now be stated without any hidden machinery.
 
-The identity covariance is the structural prize, and from it isotropy is pure
-bookkeeping. Take any direction $\theta = (\theta_1, \dots, \theta_n)$ and form the
-linear functional $\langle \theta, x\rangle = \sum_k \theta_k\,\operatorname{coord}(x,k)$.
-Its average over the cube is zero — a direct consequence of centering, since each
-coordinate averages to zero. So **every linear functional is centered**:
-$\mathbb{E}\big[\langle\theta,x\rangle\big] = 0$.
+> **Coordinate-Box Slicing Theorem.** Let $n\ge 1$, and let an axis-aligned box in $\mathbb{R}^n$ have positive side lengths $a_1,\ldots,a_n$ and volume $\prod_i a_i=1$. Then there is an index $i$ such that the central coordinate hyperplane perpendicular to the $i$th axis cuts out an $(n-1)$-dimensional box of volume at least $1$.
 
-Now the second moment, the variance. Expand the square:
-$$\langle\theta,x\rangle^2
-= \sum_{k}\sum_{l} \theta_k\theta_l \,\operatorname{coord}(x,k)\operatorname{coord}(x,l).$$
-Sum over all corners and swap the order of summation so the corner-sum lands on
-the coordinate product, which is exactly the kernel $T(k,l)$:
-$$\sum_{x} \langle\theta,x\rangle^2 = \sum_k\sum_l \theta_k\theta_l\,T(k,l).$$
-But $T(k,l)$ is $2^n$ on the diagonal and $0$ off it, so the double sum collapses
-to its diagonal:
-$$\sum_{x} \langle\theta,x\rangle^2 = 2^n \sum_k \theta_k^2.$$
-Divide by $2^n$ to get the expectation:
-$$\boxed{\;\mathbb{E}\big[\langle\theta,x\rangle^2\big] = \sum_k \theta_k^2 = \lVert\theta\rVert^2.\;}$$
+**Proof sketch.** The product of the widths is $1$, so some width satisfies $a_i\le 1$. The perpendicular section has volume $S_i=\prod_{j\ne i}a_j$, and $S_i a_i=1$. Hence $S_i=1/a_i\ge 1$.
 
-This is the punchline, and it is a Pythagorean identity in disguise. The variance
-of the cube in direction $\theta$ is just the squared length of $\theta$ — the sum
-of squares of its components, exactly the Pythagorean theorem in $n$ dimensions.
-The coordinates behave like a perfect orthonormal system: their "lengths" add in
-quadrature with no cross-terms, because the cross-terms are precisely the
-off-diagonal covariances that the sign-flip symmetry annihilated.
+The constant cannot be improved. For the unit cube, every side length equals $1$, and every central coordinate section also has volume exactly $1$. Thus no theorem valid for all unit-volume axis-aligned boxes can guarantee a coordinate section larger than $1$.
 
-Specialize to a **unit** direction, $\lVert\theta\rVert = 1$. Then
-$$\mathbb{E}\big[\langle\theta,x\rangle^2\big] = 1,$$
-**independently of the dimension $n$.** Every unit functional sees variance
-exactly $1$. The discrete cube is in isotropic position with isotropic constant
-equal to $1$, in dimension two, in dimension two hundred, in dimension two
-million — a clean, dimension-free verification of the structural premise behind
-Bourgain's conjecture. The thinnest direction is no thinner than the fattest;
-there is nowhere for a slice to hide.
+There is also an exact local equivalence:
 
-## Why a discrete model earns its keep
+> **Width–Section Equivalence.** In a positive unit-volume axis-aligned box, a coordinate width satisfies $a_i\le 1$ if and only if its perpendicular coordinate section has volume $S_i\ge 1$.
 
-A skeptic might object: the slicing problem is about smooth convex bodies and
-genuine $(n-1)$-dimensional volumes, while the discrete cube is a finite scatter
-of points and we only computed second moments. Fair. But the objection misreads
-where the difficulty lives.
+This follows directly from $S_i=1/a_i$. It says more than existence: it completely classifies which coordinate directions yield large sections.
 
-The hard, dimension-fragile part of slicing is not the geometry of any one body;
-it is controlling the *isotropic constant uniformly in $n$*. Every proof strategy
-routes through isotropic position and the covariance matrix. The discrete cube
-isolates precisely that mechanism — identity covariance forcing dimension-free
-isotropy — and strips away the measure-theoretic scaffolding (Lebesgue section
-volumes, Fourier section-area formulas) that would otherwise bury the idea.
-What remains is the load-bearing wall: a symmetry that makes correlations vanish
-and second moments equalize, robustly across all dimensions.
+## A three-dimensional picture
 
-There is also a lesson in *method*. The whole edifice rests on one involution.
-Mathematicians prize such arguments because they are simultaneously elementary
-and unbreakable: a quantity invariant under a transformation that negates it has
-no choice but to be zero. The same template — find a sign-reversing symmetry,
-conclude vanishing — recurs throughout analysis, probability, and physics, from
-Gaussian integrals to the cancellation of odd moments to parity arguments in
-quantum field theory. Seeing it carry the entire structural content of a famous
-conjecture is a reminder that depth and simplicity are not opposites.
+Take a box with side lengths
 
-## Where this points next
+$$
+2,\quad \frac12,\quad 1.
+$$
 
-The discrete cube is the seed, not the tree. Several natural extensions keep the
-dimension-free flavor while reaching toward the full conjecture.
+Its volume is $2\cdot \frac12\cdot 1=1$. The three central coordinate sections have areas
 
-One direction is **products**: gluing two isotropic models together. The
-covariance of a product is block-diagonal, so products of isotropic bodies stay
-isotropic, and the variance of a unit functional splits as a convex combination
-across the blocks — the discrete shadow of "slicing tensorizes over products."
+$$
+\frac12\cdot 1=\frac12,\qquad 2\cdot 1=2,\qquad 2\cdot\frac12=1.
+$$
 
-Another is **affine invariance**: stretching the cube into a box with different
-side lengths. After renormalizing to keep the volume fixed, the box has the same
-normalized isotropic behavior as the cube. This formalizes the principle that the
-isotropic constant cares about shape, not scale — exactly the affine invariance
-built into Bourgain's question.
+The width $2$ corresponds to the small section $1/2$; the width $1/2$ corresponds to the large section $2$; and the width $1$ corresponds to a section of area $1$. Each width–section pair multiplies to $1$.
 
-A third, and the truly hard direction, is the **lower bound on the thinnest
-section**: showing that across a whole class of measures the minimum variance
-over all unit directions cannot collapse. For products of symmetric two-point
-measures, this reduces to a clean inequality between the arithmetic and geometric
-means of the coordinate variances — a finite, fully checkable analogue of the
-conjecture's deepest content.
+The effect becomes more dramatic in high dimensions. Suppose one side has length $10^{-6}$ while the remaining widths compensate so that the total volume stays $1$. The section perpendicular to that tiny direction has volume $10^6$. Volume normalization does not prevent extreme anisotropy; rather, it forces anisotropy in one direction to reappear as a large cross-section in the complementary directions.
 
-And finally there is the bridge to **anti-concentration**: the slicing problem is
-intimately tied to the fact that the projection $\langle\theta,x\rangle$ cannot
-pile up too much mass at any single value. For the discrete cube this is the
-classical Littlewood–Offord–Erdős phenomenon, bounding the largest point mass of
-a $\pm 1$ sum by something like $C/\sqrt{n}$ for spread-out directions — flatness
-of marginals as the dual face of fat slices.
+## Logarithms reveal the balancing law
 
-Each of these is a precise, attackable statement, and each keeps the same moral
-that the discrete cube taught us: in the right position, a convex body has no
-thin directions to exploit, and the constant that guarantees it does not care how
-many dimensions you throw at it. That is the quiet miracle at the heart of
-Bourgain's slicing problem — and on the corners of a cube, you can see it with
-your own eyes.
+There is another way to see the principle. Write
+
+$$
+x_i=\log a_i.
+$$
+
+The unit-volume condition becomes
+
+$$
+\sum_{i=1}^n x_i=0.
+$$
+
+A finite list of real numbers summing to zero cannot consist entirely of positive numbers. Thus some $x_i\le 0$, which means $a_i\le 1$. Meanwhile,
+
+$$
+\log S_i=-x_i.
+$$
+
+So the theorem is an additive balancing statement in logarithmic coordinates: a nonpositive log-width becomes a nonnegative log-section. This viewpoint is numerically useful as well. In large dimensions, multiplying many very large and very small numbers can overflow or underflow on a computer, while adding logarithms remains stable.
+
+The log picture also exposes a stronger identity. Since $S_i=1/a_i$,
+
+$$
+\prod_{i=1}^n S_i=\frac{1}{\prod_i a_i}=1.
+$$
+
+Thus the coordinate section volumes themselves form another positive unit-product family. Their geometric mean equals $1$, so at least one is at least $1$ and at least one is at most $1$. A box cannot make every coordinate section simultaneously small while retaining volume $1$.
+
+## Why this is a model, not the whole slicing problem
+
+Boxes are special because their volume factors perfectly into independent coordinate widths. An arbitrary convex body may be curved, tilted, or tapered. It has no canonical finite list of side lengths, and a section generally does not satisfy an exact relation of the form “section times width equals volume.”
+
+For a general body, one studies a continuum of parallel slices. If a direction is fixed and $A(t)$ denotes the $(n-1)$-dimensional volume of the slice at position $t$, then a Fubini-type principle expresses total volume schematically as
+
+$$
+\operatorname{vol}_n(K)=\int A(t)\,dt.
+$$
+
+This is an integral analogue of multiplying a constant cross-sectional area by a width. For a box cut perpendicular to a coordinate axis, $A(t)$ is constant across the interior, and the integral collapses exactly to $S_i a_i$. For a general convex body, $A(t)$ varies, and controlling its maximum uniformly in dimension becomes much subtler.
+
+That distinction is essential. The theorem for boxes does not settle the universal slicing conjecture for arbitrary convex bodies. Instead, it isolates the mechanism one would like to recover in a more flexible form: normalize total volume, find a direction that cannot be too wide in the relevant sense, and turn that directional control into a large section.
+
+## Where the idea travels
+
+The same product structure appears in several applied settings.
+
+In **uncertainty quantification**, a rectangular parameter region has side lengths representing admissible ranges. Fixing one parameter leaves a lower-dimensional feasible region whose volume is the product of the remaining ranges. Under normalized total uncertainty, any parameter with range at most $1$ leaves a conditional region of volume at least $1$.
+
+In **data geometry**, axis-aligned bounding boxes summarize feature scales. A narrow feature direction corresponds to a large complementary coordinate footprint after volume normalization. The theorem gives an exact diagnostic for this elementary model of anisotropy.
+
+In **numerical integration and sampling**, product domains are ubiquitous. Conditioning on one coordinate produces a section, and the identity $S_i a_i=V$ provides a consistency check for domain decompositions and tensor-product grids.
+
+In **optimization**, logarithmic side lengths turn multiplicative volume constraints into linear equations. Selecting a width no larger than the geometric mean becomes a one-pass operation, illustrating why geometric programming often prefers log coordinates.
+
+## The algorithm inside the proof
+
+The argument is constructive. Given positive widths with product $1$:
+
+1. inspect the widths and choose an index $i$ minimizing $a_i$;
+2. compute the complementary section volume as $S_i=1/a_i$;
+3. report the coordinate hyperplane perpendicular to direction $i$.
+
+Because the geometric mean of the widths is $1$, the minimum width is at most $1$. Therefore the returned section has volume at least $1$. The scan takes time proportional to $n$ and uses constant additional memory. When numerical scales are extreme, the same procedure can compare $\log a_i$ and evaluate section sizes in logarithmic form.
+
+## A small theorem with a large silhouette
+
+The coordinate-box theorem is elementary enough to explain on a blackboard in minutes, yet it captures the silhouette of a major geometric question. The normalization $V=1$ creates a conservation law. The factorization $S_i a_i=1$ turns that law into reciprocity. The multiplicative pigeonhole principle guarantees a narrow direction. Together, these ingredients force a large slice.
+
+The broader slicing problem asks whether some analogue of this conclusion survives after the clean edges and independent widths of a box disappear. Boxes answer yes with the exact constant $1$. Their lesson is not that every convex body secretly factors, but that volume normalization demands compensation: thinness somewhere must be paid for somewhere else. In a box, the payment is visible as a reciprocal section. In general convex geometry, finding the right currency for that compensation is the heart of the problem.

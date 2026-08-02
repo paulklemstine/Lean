@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "70779ff4",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b`\n   cylinder intervals imply interval equidistribution of `fract (b^n x)`, first for\n   `b`-adic i",
-      "quality_score": 0.7678799999999999,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-31T06:06:59",
-      "title": "Normality of Mathematical Constants"
-    },
-    {
       "cycle_id": "275a5749",
       "domain": "Shared",
       "key_insight": "# Future directions\n\n1. **Executable encoder.** Package the well-founded existence proof as a computable `encode : ℤ → List Bool`, then prove both round trips and derive certified addition and multipl",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-02T17:26:14",
       "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+    },
+    {
+      "cycle_id": "4ae649eb",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe present development establishes a finite, discrete chain:\n\n1. a pointwise code-length bound on information density;\n2. mutual information bounded by expected description lengt",
+      "quality_score": 0.79196,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-08-02T18:22:37",
+      "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "872b26ee",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n## 1. Length-preserving Collatz inversion under a truncated domain\n\nConjecture: Fix a bit length `b`, sample `n` uniformly from `[2^{b-1},2^b)`, and reveal an encoded value of `T^",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-25T09:21:01",
-      "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-    },
     {
       "cycle_id": "928798aa",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-02T17:26:14",
       "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+    },
+    {
+      "cycle_id": "4ae649eb",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe present development establishes a finite, discrete chain:\n\n1. a pointwise code-length bound on information density;\n2. mutual information bounded by expected description lengt",
+      "quality_score": 0.79196,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-08-02T18:22:37",
+      "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0f65effc",
-      "domain": "Tropical",
-      "name": "exists_isLeadingExponent",
-      "quality": 0.7809699999999999
-    },
-    {
-      "cycle_id": "0f65effc",
-      "domain": "Tropical",
-      "name": "TropicalIdeal",
-      "quality": 0.7809699999999999
-    },
-    {
-      "cycle_id": "d4159430",
-      "domain": "Combinatorics",
-      "name": "four_mul_eq_four_sub_saving",
-      "quality": 0.7496799999999999
-    },
     {
       "cycle_id": "d4159430",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "tree_leaf_singleton_not_dominant",
       "quality": 0.7679199999999999
+    },
+    {
+      "cycle_id": "4ae649eb",
+      "domain": "MachineLearning",
+      "name": "mutualInformation_le_expectedDescriptionLength",
+      "quality": 0.79196
+    },
+    {
+      "cycle_id": "4ae649eb",
+      "domain": "MachineLearning",
+      "name": "informationRadius_le_descriptionRadius",
+      "quality": 0.79196
+    },
+    {
+      "cycle_id": "4ae649eb",
+      "domain": "MachineLearning",
+      "name": "generalization_from_expected_description",
+      "quality": 0.79196
     }
   ],
-  "last_updated": "2026-08-02T17:26:14",
+  "last_updated": "2026-08-02T18:22:37",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "4bc3344b",
-        "quality": 0.72,
-        "theorems": 22,
-        "title": "Hofstadter: I Am a Strange Loop — Consciousness as Self-Reference"
-      },
-      {
         "cycle_id": "6c18f01c",
         "quality": 0.77,
         "theorems": 0,
@@ -3575,6 +3569,12 @@
         "quality": 0.7776099999999999,
         "theorems": 11,
         "title": "Certified Adversarial Robustness via Sheaf Cohomology"
+      },
+      {
+        "cycle_id": "4ae649eb",
+        "quality": 0.79196,
+        "theorems": 35,
+        "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
       }
     ],
     "Novelty": [
