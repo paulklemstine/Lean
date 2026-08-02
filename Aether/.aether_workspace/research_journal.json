@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7c352e1f",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nThe formal results show that a scalar missing rate and feature count do not determine first cohomology: restriction-map ranks and overlap incidence are essential. The following co",
-      "quality_score": 0.80603,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-31T06:05:27",
-      "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
-    },
-    {
       "cycle_id": "70779ff4",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\n1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b`\n   cylinder intervals imply interval equidistribution of `fract (b^n x)`, first for\n   `b`-adic i",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-02T17:24:52",
       "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "cycle_id": "b0710fef",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) ≤ N^k` is robust and directly yields the\n`log₂ N` bits-per-spike ceiling. A sharper next theorem is\n\n`b",
+      "quality_score": 0.7679199999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-02T17:26:14",
+      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6296b01e",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: Recurrence under Observation\n\n## Established bridge\n\n`Bridges/ObservationPeriodDivisibility.lean` connects discrete dynamical\nrecurrence with elementary number theory.  A semiconj",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-25T09:20:56",
-      "title": "**Conjecture.** For compact metric cognitive systems related by a topological co"
-    },
     {
       "cycle_id": "872b26ee",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-02T17:24:52",
       "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
+    },
+    {
+      "cycle_id": "b0710fef",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) ≤ N^k` is robust and directly yields the\n`log₂ N` bits-per-spike ceiling. A sharper next theorem is\n\n`b",
+      "quality_score": 0.7679199999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-02T17:26:14",
+      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b080b405",
-      "domain": "Cryptography",
-      "name": "matrix_power_recurrence",
-      "quality": 0.7891599999999999
-    },
-    {
-      "cycle_id": "b080b405",
-      "domain": "Cryptography",
-      "name": "open_count_recurrence",
-      "quality": 0.7891599999999999
-    },
-    {
-      "cycle_id": "0f65effc",
-      "domain": "Tropical",
-      "name": "gives",
-      "quality": 0.7809699999999999
-    },
     {
       "cycle_id": "0f65effc",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "epsilon_lt_powHalf",
       "quality": 0.77894
+    },
+    {
+      "cycle_id": "b0710fef",
+      "domain": "Novelty",
+      "name": "tree_sum_degrees",
+      "quality": 0.7679199999999999
+    },
+    {
+      "cycle_id": "b0710fef",
+      "domain": "Novelty",
+      "name": "tree_has_leaf",
+      "quality": 0.7679199999999999
+    },
+    {
+      "cycle_id": "b0710fef",
+      "domain": "Novelty",
+      "name": "tree_leaf_singleton_not_dominant",
+      "quality": 0.7679199999999999
     }
   ],
-  "last_updated": "2026-08-02T17:24:52",
+  "last_updated": "2026-08-02T17:26:14",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "67548200",
-        "quality": 0.7916099999999999,
-        "theorems": 34,
-        "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-      },
-      {
         "cycle_id": "63b75a93",
         "quality": 0.76935,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.77894,
         "theorems": 29,
         "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
+      },
+      {
+        "cycle_id": "b0710fef",
+        "quality": 0.7679199999999999,
+        "theorems": 21,
+        "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
       }
     ],
     "NumberTheory": [

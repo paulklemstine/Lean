@@ -120,10 +120,8 @@ def tvDist {α : Type*} [Fintype α] (Q P : FinDist α) : ℝ :=
   (∑ a : α, |Q.prob a - P.prob a|) / 2
 
 /-- Pinsker's inequality: TV(Q, P)² ≤ KL(Q ‖ P) / 2.
-    This converts KL control into uniform probability control.
-    NOTE: This deep inequality is stated here for completeness;
-    the full proof requires the tensorization technique or the
-    Csiszár-Kullback method, which we leave as future work. -/
+    This converts KL control into uniform probability control. The proof uses the
+    finite general Pinsker theorem imported above. -/
 theorem pinsker_inequality {α : Type*} [Fintype α] (Q P : FinDist α)
     (hac : ∀ a, P.prob a = 0 → Q.prob a = 0) :
     tvDist Q P ^ 2 ≤ klFinDist Q P / 2 := by
