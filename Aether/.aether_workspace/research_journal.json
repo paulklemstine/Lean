@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3811f14c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nThe following conjectures use the energy from\n`Catalog/NumberTheory/PythagoreanEnergySpectrum.lean`. Each is concrete and\nfalsifiable by finite computation at any fixed bound.\n\n1.",
-      "quality_score": 0.7326499999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-31T00:07:36",
-      "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
-    },
-    {
       "cycle_id": "13e8a4d7",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n1. **Miller-function realization.** Construct the divisor-theoretic Miller function for every nonsingular Mathlib Weierstrass curve over a finite field of characteristic coprime t",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-02T09:32:15",
       "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
+    },
+    {
+      "cycle_id": "01a8c97a",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThe formal development proves the algebraic Gauss–Bonnet invariant for a\nconstant-curvature hyperbolic triangle and its extremal consequences. The next\nsteps toward a geometric, r",
+      "quality_score": 0.72854,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-02T09:33:21",
+      "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "920a890c",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThis cycle established a sharp dichotomy for one-object codiscrete bicategories: the codiscrete\nbicategory attached to a unital magma is strict exactly when the magma is associati",
-      "quality_score": 0.6,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-25T00:24:53",
-      "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
-    },
     {
       "cycle_id": "41e2ee03",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-02T09:32:15",
       "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
+    },
+    {
+      "cycle_id": "01a8c97a",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThe formal development proves the algebraic Gauss–Bonnet invariant for a\nconstant-curvature hyperbolic triangle and its extremal consequences. The next\nsteps toward a geometric, r",
+      "quality_score": 0.72854,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-02T09:33:21",
+      "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "647e3d96",
-      "domain": "Physics",
-      "name": "about",
-      "quality": 0.7752299999999999
-    },
-    {
-      "cycle_id": "647e3d96",
-      "domain": "Physics",
-      "name": "oneChannel_observable",
-      "quality": 0.7752299999999999
-    },
-    {
-      "cycle_id": "647e3d96",
-      "domain": "Physics",
-      "name": "option_channel_isOpen_iff",
-      "quality": 0.7752299999999999
-    },
     {
       "cycle_id": "66e718fe",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "product_leftZero",
       "quality": 0.76179
+    },
+    {
+      "cycle_id": "01a8c97a",
+      "domain": "Geometry",
+      "name": "angle_sum_eq_zero_iff",
+      "quality": 0.72854
+    },
+    {
+      "cycle_id": "01a8c97a",
+      "domain": "Geometry",
+      "name": "hyperbolicArea_nonneg",
+      "quality": 0.72854
+    },
+    {
+      "cycle_id": "01a8c97a",
+      "domain": "Geometry",
+      "name": "hyperbolicArea_le_max",
+      "quality": 0.72854
     }
   ],
-  "last_updated": "2026-08-02T09:32:15",
+  "last_updated": "2026-08-02T09:33:21",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "06d71b6e",
-        "quality": 0.57,
-        "theorems": 30,
-        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-      },
-      {
         "cycle_id": "a4e412f3",
         "quality": 0.75,
         "theorems": 43,
@@ -3451,6 +3445,12 @@
         "quality": 0.74513,
         "theorems": 6,
         "title": "Future directions from cycle a5e9a5f6"
+      },
+      {
+        "cycle_id": "01a8c97a",
+        "quality": 0.72854,
+        "theorems": 15,
+        "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
       }
     ],
     "Logic": [

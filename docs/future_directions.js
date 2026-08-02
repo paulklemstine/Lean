@@ -666,21 +666,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goedel-Incompleteness-Exploit: Constructing Unprovable Statements in Mathlib"
   },
   {
-    "consumed_by_exp_id": "01a8c97a",
-    "description": "Formalizes Lovecraftian 'non-Euclidean angles' where local interior angles of a planar triangle sum to 0 degrees on hyperbolic metric surfaces.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "scifi_50_48_b39cea2b",
-    "phase": "A",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:07:59.179568+00:00",
-    "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves existence of stable Nash equilibria in infinite-player games where every player receives negative infinity utility (Roko's Basilisk / Cosmic Horror).",
     "domains": [
@@ -853,6 +838,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Whitehead Problem: Independence from ZFC"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle be8c4b71 (Q=0.808), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rat",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_be8c4b71_70184c1e",
+    "priority_score": 0.9084800000000001,
+    "research_mode": "team",
+    "source_exp_id": "be8c4b71",
+    "status": "available",
+    "timestamp": "2026-08-02T09:31:08.650268+00:00",
+    "title": "Deepening: EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 2bc344f1 (Q=0.807), which proved 20 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_2bc344f1_66f48407",
+    "priority_score": 0.90715,
+    "research_mode": "team",
+    "source_exp_id": "2bc344f1",
+    "status": "available",
+    "timestamp": "2026-08-02T09:28:58.045276+00:00",
+    "title": "Deepening: Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
   },
   {
     "consumed_by_exp_id": "",
@@ -1373,21 +1386,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FHE-Noise-Growth: Exact Noise Accumulation Bounds in Bootstrapped FHE"
   },
   {
-    "consumed_by_exp_id": "2bc344f1",
-    "description": "Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "dir_50_34_bced152c",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:24.008667+00:00",
-    "title": "Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Derives proven soundness error upper bounds for the Fast Reed-Solomon Interactive Oracle Proof of Proximity (FRI) protocol in zk-STARKs.",
     "domains": [
@@ -1690,6 +1688,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T17:48:52.827384+00:00",
     "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle dd55976d (Q=0.791), which proved 15 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_dd55976d_9862dd5d",
+    "priority_score": 0.8913999999999999,
+    "research_mode": "team",
+    "source_exp_id": "dd55976d",
+    "status": "available",
+    "timestamp": "2026-08-02T09:30:03.262439+00:00",
+    "title": "Deepening: Category-Theoretic Neural Architectures"
   },
   {
     "consumed_by_exp_id": "",
@@ -2288,16 +2300,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c945ec38",
     "description": "Building on cycle 7b912198 (Q=0.773), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and",
     "domains": [
       "Novelty"
     ],
     "id": "push_7b912198_9b6139d5",
+    "phase": "A",
     "priority_score": 0.8734099999999999,
     "research_mode": "team",
     "source_exp_id": "7b912198",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T23:23:00.077083+00:00",
     "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
   },
@@ -2507,23 +2520,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
   },
   {
-    "consumed_by_exp_id": "be8c4b71",
-    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
-    "domains": [
-      "EML",
-      "Analysis",
-      "MachineLearning"
-    ],
-    "id": "seed_086",
-    "phase": "A",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domains": [
@@ -2726,6 +2722,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T21:16:58.258932+00:00",
     "title": "Deepening: EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e801d98f (Q=0.762), which proved 29 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Transformation Semigroup Perspective on the Magma Monoid' and formalize its key results. Abstract: The monoid of all binary operations was first introduced by H. S. Kim and J. Neggers in 2008. Since then, different aspects and applications of this monoid were studied, wh",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_e801d98f_56fb5850",
+    "priority_score": 0.86179,
+    "research_mode": "team",
+    "source_exp_id": "e801d98f",
+    "status": "available",
+    "timestamp": "2026-08-02T09:32:15.674311+00:00",
+    "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
   },
   {
     "consumed_by_exp_id": "",
@@ -3587,17 +3597,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Tropical Mathematics of Social Choice"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0710fef",
     "description": "Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent continuous values with precision ~sqrt(N). Conjecture: the brain uses sparse coding (only ~1% of neurons active) for energy efficiency \u2014 prove this achieves O(N log N) concepts per unit energy. Explore: formalize the 'neural manifold hypothesis' \u2014 neural activity lives on a low-dimensional manifold. Prove: the manifold dimension is bounded by the number of behavioral DOF.",
     "domains": [
       "Novelty",
       "MachineLearning"
     ],
     "id": "seed_413",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
@@ -3690,23 +3701,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Kakeya Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "dd55976d",
-    "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "seed_042",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Category-Theoretic Neural Architectures"
   },
   {
     "consumed_by_exp_id": "17b35eaf",
@@ -4026,17 +4020,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2acb9b42",
     "description": "Prove that every convex body K in R\u207f of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
     "domains": [
       "Geometry",
       "Analysis"
     ],
     "id": "seed_219",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bourgain's Slicing Problem"
   },
@@ -5969,22 +5964,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T17:10:28.704063+00:00",
     "title": "ArXiv paper: Local and global average degree in bipartite graphs"
-  },
-  {
-    "consumed_by_exp_id": "e801d98f",
-    "description": "Investigate the ArXiv paper 'Transformation Semigroup Perspective on the Magma Monoid' and formalize its key results. Abstract: The monoid of all binary operations was first introduced by H. S. Kim and J. Neggers in 2008. Since then, different aspects and applications of this monoid were studied, while several questions about its semigroup-theoretic properties remain unanswered. We employ a transformation semigroup perspective to fully characterize principal left and right ideals, idempotent and regular elements of this monoid, as well as provide precise combinatorial enumerations of them. This approach gives a general framework for most of the existing results on ideals in the magma monoid. We also answer several open questions posed in the 2023 PhD dissertation of A. Rafieipour. Finally, we correct an error regarding the description of the center of the magma monoid from the 2011 paper of H. F. Fayomi.",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0146",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13746v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T17:45:08.868122+00:00",
-    "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
   },
   {
     "consumed_by_exp_id": "",
@@ -8167,18 +8146,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** An elementary binary cellular automaton is reversible on every f"
   },
   {
-    "consumed_by_exp_id": "ffa9af78",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to an equality characterizing the entire fiber `{x \u2208 (0,1) | f^[n] x = y}`. This requires proving every preimage chooses a unique lower or upper inverse branch.\n2. **Closed trigonometric indexing.** Identify each recursively decoded seed with `sin\u00b2((\u00b1\u03b8 + k\u03c0)/2^n)` when `y=sin\u00b2 \u03b8`, connecting the inverse tree directly to angle halving.\n3. **Finite-precision collapse.** Instantiate the construction for fixed-point arithmetic and quantify which exact-real branches merge after rounding. This would separate mathematical `2^n` ambiguity from implementation-level cycle structure.\n4. **Keystream indistinguishability obstruction.** Formalize a stream-cipher interface and show that observing an orbit suffix beginning at time `n` leaves at least `2^n` candidate exact-real seeds for every interior observed state.\n5. **Boundary fiber classification.** Give exact formulas at targets `0` and `1`, where critical-point collisions cause the complete binary count to fail.\n6. **Measure-theoretic consequences.** Combine the inverse branches with their Jacobians to derive the invariant arcsine density and the Lyapunov exponent `log 2`.\n",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0367",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "bcb31ca6",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-18T23:29:17.614598+00:00",
     "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
   },
@@ -9714,17 +9692,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Companion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration fo"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "405d388b",
     "description": "# Future Directions \u2014 G\u00f6del's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nthe payoff (no unconditional winning strategy), and expected profit is positive\nexactly when aggregate accuracy exceeds `1/2`. This cycle formalizes the next\nitem on the \"Further formalization\" list \u2014 **randomized strategies** \u2014 and\nproves the accompanying **minimax / no-free-lunch** theorem, together with the\nsharp information-theoretic profitability threshold.\n\nThe new development is `Catalog/Probability/GodelCasinoRandomized.lean`\n(self-contained, `import Mathlib`, no `sorry`, no extra axioms). A statement is a\nBoolean function `s` on a finite world space `W`; a randomized strategy is the\nprobability `r \u2208 [0,1]` of betting `true`; a prior over worlds is `\u03bc : W \u2192 \u211a`.\n\n### Main theorems\n\n1. `randPayoff_eq` \u2014 per-world expected payoff is `2r-1` (true) / `1-2r` (false).\n2. `randPayoff_half` \u2014 the **fair coin** `r = 1/2` pays exactly `0` in every\n   world: a strategy that never loses and never wins.\n3. `expRand_eq` \u2014 the exact **bilinear closed form**\n   `expRand \u03bc s r = (2r-1)\u00b7(trueMass \u2212 falseMass)`; and `expRand_normalized`\n   rewrites this as `(2r-1)\u00b7(2\u03c0-1)` for a probability prior with true-probability\n   `\u03c0`.\n4. `symmetric_prior_zero` \u2014 **randomized no-free-lunch.** A prior admitting a\n   truth-flipping, mass-preserving involution (a complement-symmetric prior)\n   forces expected profit `0` for *every* strategy. Incompleteness modelled this\n   way yields no edge, even with randomization.\n5. `no_benefit_randomization` + `optimal_pure_value` + `expRand_le_optimal` \u2014\n   **pure play is optimal**; the optimal value is `|trueMass \u2212 falseMass|`.\n   Randomizing never helps a player who knows the prior.\n6. `edge_iff_asymmetric` \u2014 **edge iff information.** A positive-expectation\n   strategy exists *iff* the prior is asymmetric between truth and falsehood.\n7. `deckValue_nonneg`, `deckValue_card_le` \u2014 the optimal value of a deck is the\n   sum of per-card imbalances: nonnegative and dominated card by card.\n8. `two_world_no_edge` \u2014 the balanced two-world casino (`W = Bool`, `s = id`,\n   uniform prior) admits no positive-expectation strategy at all, recovering the\n   contrarian verdict of the earlier possible-world file for randomized play.\n\n### Interpretation\n\nThe randomized analysis sharpens the earlier conclusion. The value of the game\nis governed entirely by the prior's **truth\u2013falsehood imbalance** `trueMass \u2212\nfalseMass`. Randomization changes nothing: an informed player should bet the more\nlikely value deterministically, and a symmetric prior (the natural betting model\nof \"pure logical independence, no distributional information\") drives every\nstrategy to exactly zero. This is the minimax value: the player can always secure\n`0` with the fair coin, and an adversary who keeps the prior symmetric can hold\nthe player to `0`.\n\n## Directions not yet formalized (open for the next cycle)\n\n- **Full measure-theoretic lift.** Replace the finite rational prior by a\n  Mathlib `PMF`/`Measure` on an infinite world space and re-derive\n  `expRand_eq` as a genuine expectation, connecting to `MeasureTheory.integral`.\n- **Sequential / adaptive play and calibration.** Model a player who updates a\n  posterior across rounds; state and prove a regret or calibration bound. The\n  present static bilinear form is the per-round building block.\n- **Asymmetric odds and transaction costs.** With payoff `+a` for a correct bet\n  and `-b` for an incorrect one, the closed form becomes affine with a shifted\n  break-even threshold `\u03c0* = b/(a+b)`; formalize the resulting sharp threshold\n  and re-prove `edge_iff_asymmetric` in that generality.\n- **Abstention.** Add a third action \"pass\" (payoff `0`); characterize when\n  abstention strictly dominates and compute the optimal value.\n- **Minimax as a theorem, not a pair of facts.** State the game explicitly as a\n  two-player zero-sum game and prove `value = 0` via a genuine minimax equality\n  (e.g. from Mathlib's convexity/`sInf`\u2013`sSup` interchange), rather than the\n  matched upper/lower bounds provided here.\n- **Concrete G\u00f6del coding.** The unresolved density question (\"one third of\n  arithmetic statements\") still requires a fixed encoding, a size measure, a\n  sampling distribution, and a proved density theorem; the arithmetic hierarchy\n  alone supplies none of these. The present framework shows precisely what such a\n  distribution would have to violate (symmetry) to produce a positive edge.\n",
     "domains": [
       "Logic",
       "Algebra"
     ],
     "id": "fd_0640",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "73ec6b88",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T09:42:12.917260+00:00",
     "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
   },
@@ -9849,17 +9828,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The present development supplies two self-contained Lean modules for the request"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56208626",
     "description": "# Future directions\n\nLet `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n < W\u2096`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-log position bound.** If `L\u2082(n)` is the least number of repeated applications of `x \u21a6 \u2308log\u2082(x + 1)\u2309` needed to reach a value at most `2`, then for every `n \u2265 2`, `|K(n) - L\u2082(n)| \u2264 2`.\n\n2. **No worst-case binary compression.** For every `k`, any injective, prefix-free binary encoding of all valid length-`k` tower representations has a codeword of length at least `\u2308log\u2082 W\u2096\u2309`.  Moreover, concatenating each digit in exactly `W\u1d62` bits attains total length `\u2211_{i<k} W\u1d62 = log\u2082 W\u2096`.\n\n3. **A radix-growth threshold.** For generalized weights `V\u2080 = 1` and `V\u2096\u208a\u2081 = r(V\u2096)V\u2096`, assume `r` is monotone and `r(x) \u2265 2`.  The least `k` with `n < V\u2096` is `O(log* n)` if `r(x) \u2265 2^x` for all sufficiently large `x`; it is not `O(log* n)` when `r(x) \u2264 x^C` for some fixed `C` and all sufficiently large `x`.\n\n4. **Balanced recursive digits.** With odd radix `r\u2096 = 2^(W\u2096+1) + 1` and weights `U\u2080 = 1`, `U\u2096\u208a\u2081 = r\u2096U\u2096`, every integer in `[-(U\u2096-1)/2, (U\u2096-1)/2]` has a unique length-`k` expansion whose `i`th digit lies in `[-(r\u1d62-1)/2, (r\u1d62-1)/2]`.\n\n5. **Zeckendorf comparison.** Let `Z(n)` be the largest Fibonacci index occurring in the canonical Zeckendorf expansion of `n`.  There are explicit constants `a,b > 0` such that `a log\u2082(n+1) \u2264 Z(n) \u2264 b log\u2082(n+1)` for every `n \u2265 1`, whereas `K(n) = o(Z(n))`; nevertheless, every injective binary encoding of either representation family has worst-case length at least `\u2308log\u2082(n+1)\u2309` on the interval `[0,n]`.\n",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0781",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e3956c60",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-27T00:20:03.090672+00:00",
     "title": "Let `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n <"
   },
@@ -11009,6 +10989,81 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-02T06:55:51.094203+00:00",
     "title": "The exact compiler in `Catalog/Applications/EML/SingleOperatorCompilation.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following conjectures are concrete extensions of the formal reduction layer.\nEach can be falsified by a finite counterexample to its stated bound.\n\n1. **Randomized-distinguisher lifting.** For every finite transcript type, replacing\n   deterministic Boolean distinguishers by Markov kernels to `Bool` preserves the\n   exact-advantage theorem for every `PerfectReduction`.\n\n2. **Tight statistical loss.** For any two finite decision games on one transcript\n   space and any deterministic distinguisher, the additive loss in\n   `advantage_le_of_world_gaps` can be sharpened from the sum of the two `\u2113\u00b9` gaps\n   to half that sum when both challenge distributions have total mass one.\n\n3. **Composable perfect reductions.** The identity transcript equivalence forms a\n   perfect reduction, perfect reductions compose, and the induced `reduce`\n   operation is functorial; in particular, exact advantage preservation remains\n   exact after any finite chain of reductions.\n\n4. **Hybrid-chain bound.** Given `n + 1` finite games on a common transcript space\n   whose adjacent corresponding-world `\u2113\u00b9` gaps are bounded by `\u03b4 i b`, every\n   Boolean distinguisher's endpoint advantage differs by at most\n   `\u2211 i : Fin n, (\u03b4 i false + \u03b4 i true)`.\n\n5. **Canonical graded evaluation coherence.** For every `System` and every binary\n   parenthesization of a list of canonical level-one encodings, graded\n   multiplication yields the canonical encoding of the plaintext product at the\n   total level (after transporting along the induced equality of natural-number\n   level expressions).\n",
+    "domains": [
+      "Computation",
+      "Bridges"
+    ],
+    "id": "fd_0901",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2bc344f1",
+    "status": "available",
+    "timestamp": "2026-08-02T09:28:52.824670+00:00",
+    "title": "The following conjectures are concrete extensions of the formal reduction layer."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Softmax attention naturality under equivariant logits.** For every finite group `G`, every pair of finite-dimensional real `G`-representations `V,W`, and every `G`-equivariant query, key, and value map, scaled dot-product softmax attention is a natural transformation between the corresponding representation functors. This is falsified by an explicit equivariant triple and group element for which the naturality square fails.\n\n2. **Residual-product stability bound is sharp.** For every `K \u2265 0`, the categorical residual construction on real normed spaces has worst-case Lipschitz constant exactly `1 + K` among residual branches with Lipschitz constant at most `K`. This is falsified by a uniform upper bound strictly below `1 + K` for some `K`, or by a branch exceeding `1 + K`.\n\n3. **Finite architecture search is invariant under natural isomorphism.** If loss is constant on natural-isomorphism classes, minimizing it over any finite candidate set in a functor category gives the same minimum after replacing every candidate by a naturally isomorphic one. This is falsified by finite categories, candidate sets, an isomorphism-invariant loss, and replacements producing different minima.\n\n4. **Parallel residual blocks obey a tensor-product certificate.** In the cartesian monoidal category of real normed spaces and Lipschitz maps, parallel residual blocks with residual constants `K\u2081` and `K\u2082` have Lipschitz constant at most `max (1 + K\u2081) (1 + K\u2082)` for the max product norm, and this bound is attained for every `K\u2081,K\u2082 \u2265 0`. A counterexample to either the upper bound or attainability falsifies the conjecture.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0902",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dd55976d",
+    "status": "available",
+    "timestamp": "2026-08-02T09:29:59.509639+00:00",
+    "title": "1. **Softmax attention naturality under equivariant logits.** For every finite g"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone\u2013Weierstrass: on a compact subset of `\u211d\u207f`, the algebra generated by coordinate\nexponentials is dense in the continuous real-valued functions.  This theorem does\n**not** imply the proposed Jackson width bound.  Establishing a rate of order\n`O(\u03b5\u207b\u207f/\u03b1)` requires additional quantitative ingredients:\n\n1. formalize H\u00f6lder classes on compact subsets of `\u211d\u207f`;\n2. construct a grid or partition-of-unity interpolant with mesh size comparable to\n   `(\u03b5/C)^(1/\u03b1)`;\n3. realize each local basis function by the selected EML architecture while tracking\n   both uniform error and width;\n4. distinguish expression-tree width, number of hidden units, number of parameters,\n   and depth, since rates for one notion do not automatically transfer to another;\n5. combine the local errors without losing the desired dimensional exponent.\n\nMathlib contains qualitative Bernstein and Stone\u2013Weierstrass approximation results,\nbut the needed multivariate H\u00f6lder-to-network width estimate is not an immediate\ncorollary of those results.\n\n## Architecture-sensitive lower and upper bounds\n\nBecause the expression language allows multiplication and the input variable, `x\u00b2`\nhas an exact width-two realization.  The file also proves an explicit shifted\nexp\u2013log realization whose error is at most `2\u03b4 + \u03b4\u00b2` on `[0,1]`.  Future work should\nfix a narrower neural architecture (for example, a single hidden layer of features\n`exp(a) log(bx+c)`) before claiming nontrivial width bounds.  Otherwise algebraic\noperations can make polynomial test cases exact at constant width.\n\nUseful next targets are:\n\n- a normal-form theorem translating generated-algebra terms into a specified network;\n- continuity and positivity invariants ensuring every logarithm receives a positive\n  input on the approximation domain;\n- matching lower bounds for restricted depth or restricted coefficients;\n- a multivariate exact representation theorem for quadratic forms;\n- quantitative stability bounds under composition of `exp` and `log`.\n\n## Computational evidence\n\nNo separate numerical evidence file is included.  The primary claims proved here are\nsymbolic identities, inequalities, and topological density statements rather than a\nfinite conjectural sequence.  Small floating-point tests would not validate the\nStone\u2013Weierstrass conclusion, while the square error formula is established exactly\nin Lean for every point of the interval.  Computational experiments would become\nuseful after choosing a restricted architecture and an optimization procedure for the\nunproved Jackson-rate program.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0903",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "be8c4b71",
+    "status": "available",
+    "timestamp": "2026-08-02T09:31:04.937729+00:00",
+    "title": "`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supp"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Prove the converse regularity criterion, completing Proposition 24: an operation is regular when its commutative image equals its diagonal image. A useful route is to construct an inner inverse of the pairmorph transformation that remains equivariant under pair reversal.\n- Characterize principal left ideals by pairmorph image and diagonal image, and principal right ideals by pairmorph kernel.\n- Bundle binary operations with the magma product as a `Monoid`, and express pairmorph as an equivalence with reversal-equivariant transformations under composition.\n- Complete the classification of the center, including the hypothesis on the cardinality of the underlying type and the exceptional small cases.\n- For finite types, formalize the paper's exact enumerations of idempotent and regular elements and verify initial values inside Lean.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_0904",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e801d98f",
+    "status": "available",
+    "timestamp": "2026-08-02T09:32:10.774782+00:00",
+    "title": "Future directions from cycle e801d98f"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formal development proves the algebraic Gauss\u2013Bonnet invariant for a\nconstant-curvature hyperbolic triangle and its extremal consequences. The next\nsteps toward a geometric, rather than angle-data, account are:\n\n1. **A concrete hyperbolic model.** Define the Poincar\u00e9 disk or upper half-plane,\ngeodesics, boundary points, and interior angles. Prove that three distinct\nboundary points determine an ideal triangle.\n2. **Derive the area formula.** Connect the present `hyperbolicArea` definition\nto a Riemannian area integral and formally derive\n`\u03ba \u00b7 area = \u03c0 - (\u03b1 + \u03b2 + \u03b3)` from Gauss\u2013Bonnet.\n3. **Finite vertices versus ideal vertices.** Prove geometrically that every\nfinite nondegenerate hyperbolic triangle has three strictly positive angles,\nso angle sum zero occurs only after adjoining the ideal boundary.\n4. **Degeneration.** Construct a sequence of finite triangles whose vertices\nconverge to three boundary points, with each angle tending to zero and area\ntending to `\u03c0 / \u03ba`.\n5. **Ideal polygons.** Generalize the rigidity theorem to an ideal `n`-gon,\nwhose area at curvature `-\u03ba` is `(n - 2)\u03c0 / \u03ba`, and study triangulation\ninvariance.\n6. **Variable curvature.** Replace constant curvature by curvature bounded\nabove by a negative constant and investigate comparison inequalities for angle\ndefect and area.\n7. **Holonomy interpretation.** Express angular defect as rotational holonomy\naround the triangle and prove that ideal maximality is invariant under\nhyperbolic isometries.\n\nThe two exact sample theorems at the end of `Geometry/CosmicHorror/IdealTriangle.lean`\nserve as symbolic computational evidence. An OEIS search is not applicable:\nthe result concerns a continuous real-valued invariant rather than an integer\nsequence. Counterexamples to the maximality claim are excluded by the proved\ninequality and rigidity equivalence, while dropping nonnegativity would make\nthe rigidity statement false (negative angles can cancel positive ones).\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0905",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "01a8c97a",
+    "status": "available",
+    "timestamp": "2026-08-02T09:33:18.063959+00:00",
+    "title": "The formal development proves the algebraic Gauss\u2013Bonnet invariant for a"
   },
   {
     "consumed_by_exp_id": "",
