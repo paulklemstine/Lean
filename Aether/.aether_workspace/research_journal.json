@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "513ffc93",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n1. **Poisson connectivity window.** For every fixed real `c`, if `pₙ = (log n + c)/n`, then the number of isolated vertices in `G(n,pₙ)` converges in distribution to `Poisson(exp(",
-      "quality_score": 0.7676799999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-30T22:28:51",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
-    {
       "cycle_id": "e3c425e4",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `r : ℕ`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if ther",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-08-02T06:55:55",
       "title": "EML Single Operator Church-Turing Thesis"
+    },
+    {
+      "cycle_id": "2bc344f1",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the formal reduction layer.\nEach can be falsified by a finite counterexample to its stated bound.\n\n1. **Randomized-distinguish",
+      "quality_score": 0.80715,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-08-02T09:28:57",
+      "title": "Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "78cd863a",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy–Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for a",
-      "quality_score": 0.63498,
-      "sorry_count": 1,
-      "theorem_count": 9,
-      "timestamp": "2026-07-24T21:32:33",
-      "title": "Taxicab Number Generalizations: Hardy-Ramanujan Numbers"
-    },
     {
       "cycle_id": "e8a20d63",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-08-02T06:55:55",
       "title": "EML Single Operator Church-Turing Thesis"
+    },
+    {
+      "cycle_id": "2bc344f1",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the formal reduction layer.\nEach can be falsified by a finite counterexample to its stated bound.\n\n1. **Randomized-distinguish",
+      "quality_score": 0.80715,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-08-02T09:28:57",
+      "title": "Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0e1eb0cb",
-      "domain": "Tropical",
-      "name": "bergmanFan_eq_tropicalLinearSpace_circuitIdeal",
-      "quality": 0.80043
-    },
-    {
-      "cycle_id": "0e1eb0cb",
-      "domain": "Tropical",
-      "name": "minAttainedTwice_add_const",
-      "quality": 0.80043
-    },
-    {
-      "cycle_id": "0e1eb0cb",
-      "domain": "Tropical",
-      "name": "minAttainedTwice_nonneg_smul",
-      "quality": 0.80043
-    },
     {
       "cycle_id": "ee0c99e7",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "expand_eval",
       "quality": 0.77537
+    },
+    {
+      "cycle_id": "2bc344f1",
+      "domain": "Cryptography",
+      "name": "multilinearEval_step",
+      "quality": 0.80715
+    },
+    {
+      "cycle_id": "2bc344f1",
+      "domain": "Cryptography",
+      "name": "encodeChallenge_target",
+      "quality": 0.80715
+    },
+    {
+      "cycle_id": "2bc344f1",
+      "domain": "Cryptography",
+      "name": "proves",
+      "quality": 0.80715
     }
   ],
-  "last_updated": "2026-08-02T06:55:55",
+  "last_updated": "2026-08-02T09:28:57",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "a68d3b50",
-        "quality": 0.7667599999999999,
-        "theorems": 11,
-        "title": "Lattice Cryptography: LWE Hardness"
-      },
-      {
         "cycle_id": "3e30c45d",
         "quality": 0.7689999999999999,
         "theorems": 23,
@@ -3389,6 +3383,12 @@
         "quality": 0.7891599999999999,
         "theorems": 13,
         "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart s"
+      },
+      {
+        "cycle_id": "2bc344f1",
+        "quality": 0.80715,
+        "theorems": 20,
+        "title": "Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
       }
     ],
     "Geometry": [
