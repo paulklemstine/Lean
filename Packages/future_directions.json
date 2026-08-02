@@ -775,7 +775,7 @@
       "depth_estimate": 3,
       "description": "Computes exact maximum region count formulas for depth-L ReLU neural network input space partitioning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -815,7 +815,7 @@
       "depth_estimate": 3,
       "description": "Proves exponential decay rate bounds on the singular values of Softmax self-attention matrices in deep Transformer layers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -855,7 +855,7 @@
       "depth_estimate": 3,
       "description": "Proves global 1-Lipschitz continuity for Eikonal-regularized neural network implicit surface representations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -895,7 +895,7 @@
       "depth_estimate": 3,
       "description": "Proves exponential convergence of gradient descent optimization on infinite-width neural networks matching NTK dynamic regime.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -935,7 +935,7 @@
       "depth_estimate": 3,
       "description": "Derives tight uniform generalization error bounds for Vision Transformers via empirical Rademacher complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -16197,7 +16197,7 @@
       "depth_estimate": 3,
       "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning",
         "Analysis"
@@ -16238,7 +16238,7 @@
       "depth_estimate": 3,
       "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "MachineLearning",
         "Algebra",
@@ -17391,7 +17391,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe current development proves an exact finite-domain universality result for a clearly delimited linear-attention lookup architecture. Natural extensions are:\n\n1. **Softmax attention.** Relate the bilinear score to scaled dot-product softmax attention and prove quantitative convergence of high-temperature lookup heads to the exact finite selector.\n2. **Approximation bounds.** Turn exact finite lookup into an epsilon-approximation theorem and derive explicit bounds on score scale, head count, and output error.\n3. **Continuous universality.** Formalize compact sequence domains, continuous sequence-to-sequence maps, and a genuine uniform universal-approximation theorem using an available neural-network or Stone–Weierstrass development.\n4. **Full layer normalization.** Add mean subtraction and variance normalization, prove invariance under shifts and positive rescaling, and then compose this nonlinear normalization with the learned affine stage already formalized.\n5. **Standard multi-head plumbing.** Add query/key/value projections, concatenation, output projection, residual connections, and feed-forward blocks, with dimension-safe matrix types.\n6. **Permutation and positional structure.** Prove equivariance without positional encodings and characterize how additive positional encodings break that symmetry.\n7. **Efficiency.** Replace one head per possible sequence by constructive architectures with fewer heads/layers and prove upper and lower resource bounds.\n\nThe most important qualification to preserve is that exact finite lookup is not by itself the usual continuous universal-approximation theorem for standard softmax transformers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning",
         "Algebra"
@@ -19804,7 +19804,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Outcome\n\nThe unrestricted conjecture is false. `CertifiedRobustness.lean` gives a\nkernel-checked counterexample: the degree-one cellular cohomology of the\nconstant real sheaf on two weight charts joined by one overlap vanishes because\nthe coboundary `(a,b) ↦ b-a` is surjective. Nevertheless, the threshold score\n`x ↦ x` at `x = 0` has no positive strict `L∞` certified radius. Thus vanishing\n`H¹` on a weight-space cover cannot, by itself, imply an input-space robustness\ncertificate.\n\nThe file also proves two constructive replacements:\n\n1. A **vulnerability stalk** is defined as the subtype of adversarial examples\n   in a strict `L∞` ball. Its emptiness is equivalent to certification on that\n   ball.\n2. A positive score margin, a local Lipschitz bound, and the numerical budget\n   `L * radius < margin` imply a certified `L∞` radius.\n\n## Why a separate computational-evidence file was not used\n\nComputational sampling is unnecessary for the decisive claim here. The\ncounterexample quantifies over every positive real radius and is proved\nsymbolically by choosing the adversarial point `radius / 2`; no finite sample\ncould establish that statement. Likewise, surjectivity of the cellular\ncoboundary is witnessed uniformly by the section `(0,c)` for every cochain\n`c`. These exact witnesses are stronger and more directly relevant than a\nnumerical table. This justification is included here rather than in a third\nfile to respect the requested output restriction to `.lean` files and\n`FUTURE_DIRECTIONS.md` only.\n\n## Research directions\n\n- **Relative cohomology tied to the classifier.** Replace cohomology of the\n  bare weight space by a relative or constructible sheaf whose restriction\n  maps depend on class labels, margins, and activation regions. Investigate\n  whether its obstruction classes characterize failure to glue local\n  certificates.\n- **Quantitative sheaves.** Ordinary vanishing is qualitative. Enrich stalks in\n  normed spaces and restriction maps with operator-norm bounds, so that a\n  contracting homotopy carries constants capable of producing a numerical\n  radius.\n- **Parameter-to-input bridge.** Add an explicit theorem connecting changes in\n  weights to changes in input-space decision margins. The counterexample shows\n  that topology of weight charts alone does not provide this missing bridge.\n- **Boundary-local stalks.** Refine `VulnerabilityStalk` into a genuine\n  presheaf over nested input balls, with restriction maps induced by inclusion.\n  Study degree-zero support and local cohomology near the decision boundary.\n- **Piecewise-linear networks.** For ReLU networks, use the finite polyhedral\n  activation complex. Cellular sheaves on this complex may encode local affine\n  Lipschitz constants and permit computable obstruction/certificate pairs.\n- **Multiclass margins.** Generalize the scalar positive/negative score to the\n  gap between the winning logit and every competing logit. A certificate then\n  follows from lower bounds on all gaps and upper bounds on their local\n  Lipschitz constants.\n- **Converse questions.** Determine which classes of covers and coefficient\n  systems make robust local certificates glue globally, and whether failure of\n  gluing produces a nonzero cohomology class. Such a result would concern a\n  certificate sheaf specifically, rather than arbitrary sheaf cohomology.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -20744,7 +20744,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the algebra generated by coordinate\nexponentials is dense in the continuous real-valued functions.  This theorem does\n**not** imply the proposed Jackson width bound.  Establishing a rate of order\n`O(ε⁻ⁿ/α)` requires additional quantitative ingredients:\n\n1. formalize Hölder classes on compact subsets of `ℝⁿ`;\n2. construct a grid or partition-of-unity interpolant with mesh size comparable to\n   `(ε/C)^(1/α)`;\n3. realize each local basis function by the selected EML architecture while tracking\n   both uniform error and width;\n4. distinguish expression-tree width, number of hidden units, number of parameters,\n   and depth, since rates for one notion do not automatically transfer to another;\n5. combine the local errors without losing the desired dimensional exponent.\n\nMathlib contains qualitative Bernstein and Stone–Weierstrass approximation results,\nbut the needed multivariate Hölder-to-network width estimate is not an immediate\ncorollary of those results.\n\n## Architecture-sensitive lower and upper bounds\n\nBecause the expression language allows multiplication and the input variable, `x²`\nhas an exact width-two realization.  The file also proves an explicit shifted\nexp–log realization whose error is at most `2δ + δ²` on `[0,1]`.  Future work should\nfix a narrower neural architecture (for example, a single hidden layer of features\n`exp(a) log(bx+c)`) before claiming nontrivial width bounds.  Otherwise algebraic\noperations can make polynomial test cases exact at constant width.\n\nUseful next targets are:\n\n- a normal-form theorem translating generated-algebra terms into a specified network;\n- continuity and positivity invariants ensuring every logarithm receives a positive\n  input on the approximation domain;\n- matching lower bounds for restricted depth or restricted coefficients;\n- a multivariate exact representation theorem for quadratic forms;\n- quantitative stability bounds under composition of `exp` and `log`.\n\n## Computational evidence\n\nNo separate numerical evidence file is included.  The primary claims proved here are\nsymbolic identities, inequalities, and topological density statements rather than a\nfinite conjectural sequence.  Small floating-point tests would not validate the\nStone–Weierstrass conclusion, while the square error formula is established exactly\nin Lean for every point of the interval.  Computational experiments would become\nuseful after choosing a restricted architecture and an optimization procedure for the\nunproved Jackson-rate program.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -21154,7 +21154,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe present development establishes a finite, discrete chain:\n\n1. a pointwise code-length bound on information density;\n2. mutual information bounded by expected description length;\n3. monotonicity of the square-root PAC-Bayes radius;\n4. transfer of an information-theoretic generalization guarantee to expected and uniform description-length bounds;\n5. monotonic improvement of the resulting guarantee as descriptions become shorter.\n\nNatural next steps are:\n\n- **Derive the PAC-Bayes premise probabilistically.** Formalize the exponential-moment and change-of-measure argument that produces the assumed mutual-information gap bound with a confidence penalty.\n- **Allow zero-probability events.** Replace strict positivity by absolute continuity and use an extended-real-valued KL divergence, including the standard endpoint conventions.\n- **Connect to Mathlib probability spaces.** Express the joint law as the distribution of random variables `S` and `H`, and prove equivalence with measure-theoretic mutual information.\n- **Formalize prefix-free compression.** Introduce binary codewords, prove Kraft's inequality, and derive suitable pointwise or expected information-density bounds from code lengths.\n- **Treat randomized and deterministic learners explicitly.** Build a joint law from a data distribution and a Markov kernel, then specialize to deterministic algorithms.\n- **Prove expectation and high-probability variants.** Relate expected generalization bounds involving `I(S;H)` to PAC-Bayes bounds holding with probability at least `1 - δ`.\n- **Obtain strict improvement criteria.** Under positivity and nondegeneracy assumptions, strengthen no-worse monotonicity to a strictly smaller radius when description length strictly decreases.\n- **Extend beyond finite spaces.** Develop countable and standard Borel versions using Radon–Nikodym derivatives and measure-theoretic relative entropy.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -21344,6 +21344,47 @@
       "thread_id": "th_5fea9590",
       "timestamp": "2026-08-02T22:18:42.398299+00:00",
       "title": "The formalized uniqueness theorem isolates the combinatorial core of error-corre"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions\n\n- Extend the real coefficient-matrix model to complex amplitudes and prove the same reduced-density and concurrence results.\n- Define von Neumann entropy for finite density matrices and derive the Bell-pair entropy values from the spectrum of the reduced states rather than recording entropy data directly.\n- Generalize the two-boundary cut reconstruction theorem to weighted trees, where all edge weights are recovered from a sufficiently rich family of boundary cut entropies.\n- Formalize tensor-network isometries for a finite holographic code and prove reconstruction of bulk operators from complementary boundary regions.\n- Relate positive mutual information to connectivity in a larger graph model and characterize which entropy vectors arise from nonnegative weighted cuts.\n- Add dynamical operations such as entanglement swapping and prove the corresponding composition law for reconstructed throats.\n- The present result is a finite algebraic toy model: it does not assert the physical ER=EPR conjecture for general quantum field theories or dynamical spacetimes. A fuller treatment would require operator algebras, continuum limits, Lorentzian geometry, and gravitational dynamics.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0918",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5907c59d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/5907c59d",
+      "status": "available",
+      "thread_id": "th_4765b748",
+      "timestamp": "2026-08-02T22:19:32.660373+00:00",
+      "title": "Future directions from cycle 5907c59d"
     },
     {
       "ambition_level": "extension",
@@ -22159,7 +22200,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -22199,7 +22240,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 4c2c71e5 (Q=0.800), which proved 46 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -23519,7 +23560,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b7ae8967 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "MachineLearning"
       ],
@@ -23679,7 +23720,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle c0a515f0 (Q=0.778), which proved 11 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "MachineLearning"
       ],
@@ -24279,7 +24320,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ee0c99e7 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist func",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "MachineLearning"
       ],
@@ -25211,7 +25252,7 @@
       "depth_estimate": 3,
       "description": "Proves that neural network agents operating in self-referential training loops inevitably replace original memory traces with synthesized hallucinations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -25331,7 +25372,7 @@
       "depth_estimate": 3,
       "description": "Proves the exact critical agent density threshold at which individual autonomous agents undergo a phase transition into a unified high-order consciousness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -25411,7 +25452,7 @@
       "depth_estimate": 3,
       "description": "Proves that a neural agent's identity vector remains invariant under continuous substrate migration (mind uploading).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -25451,7 +25492,7 @@
       "depth_estimate": 3,
       "description": "Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -25491,7 +25532,7 @@
       "depth_estimate": 3,
       "description": "Proves that offline memory consolidation during neural 'sleep' cycles corresponds to traversing strange attractors in weight space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -28614,48 +28655,6 @@
       "thread_id": "",
       "timestamp": "",
       "title": "EML Neural Network Expressiveness: Depth vs Width"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "e1e4ff02",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Model EML network training in the tropical limit (large weights) as a gradient flow on the tropical projective torus. Conjecture: In the tropical limit, the EML training dynamics converge to a piecewise-linear gradient flow whose fixed points correspond to tropical rational functions that minimize the tropical loss. Test: prove convergence for a single EML neuron trained on 3 data points in the tropical limit. Impact: bridges neural network optimization and tropical geometry.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
-      "domains": [
-        "EML",
-        "Tropical",
-        "MachineLearning"
-      ],
-      "github_issue": 0,
-      "id": "seed_071",
-      "last_attempt_time": "2026-07-30T14:43:20.737648+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.84,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "",
-      "title": "EML Training Dynamics as Tropical Gradient Flow"
     },
     {
       "ambition_level": "extension",
@@ -32559,7 +32558,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.78678,
       "parent_direction": "",
       "priority_score": 0.82,
       "proof_strategy": "",
@@ -32570,7 +32569,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "Emergent Spacetime from Quantum Entanglement"
@@ -34025,7 +34024,7 @@
       "depth_estimate": 3,
       "description": "Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prove that multi-head attention increases the rank of the attention matrix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "MachineLearning",
         "Algebra"
@@ -34663,7 +34662,7 @@
     "Analysis": 4,
     "Bridges": 10,
     "Combinatorics": 4,
-    "Computation": 14,
+    "Computation": 15,
     "Cryptography": 5,
     "EML": 7,
     "Geometry": 10,
@@ -34671,66 +34670,60 @@
     "MachineLearning": 9,
     "Novelty": 4,
     "NumberTheory": 3,
-    "Physics": 5,
+    "Physics": 6,
     "Probability": 2,
     "Pythagorean": 7,
     "Shared": 1,
-    "Speculative": 4,
+    "Speculative": 5,
     "Topology": 1,
     "Tropical": 7
   },
   "recent_theme_keywords": {
-    "**pedersen": 1,
-    "adversarial": 1,
+    "ads/cft": 1,
     "algebraic": 7,
-    "allowed": 1,
     "associated": 2,
     "bounds": 7,
     "bridge": 6,
+    "bridges": 1,
     "closed": 3,
-    "coefficient": 1,
     "cohomology": 2,
-    "commitment": 1,
-    "commitments": 1,
     "computation": 3,
     "compute": 5,
-    "conditioning": 1,
-    "conjecture": 21,
+    "conjecture": 22,
     "connect": 5,
     "constant": 5,
     "continuous": 6,
     "corner": 2,
     "corresponding": 2,
-    "degree-at-most-`d`": 1,
     "density": 2,
     "determine": 2,
     "direct": 5,
     "directions": 4,
+    "einstein-rosen": 1,
+    "emergent": 1,
+    "entangled": 1,
+    "entanglement": 1,
     "equals": 5,
-    "exactly": 1,
+    "er=epr": 1,
     "explicit": 9,
     "exponential": 5,
     "forces": 2,
-    "formalize": 33,
+    "formalize": 34,
     "framework": 2,
     "function": 12,
     "functions": 5,
     "fundamental": 2,
-    "further": 1,
     "future": 8,
     "general": 7,
-    "geometry": 7,
-    "homomorphism": 1,
-    "inconsistent": 1,
-    "independently": 1,
+    "geometry": 8,
     "information": 2,
-    "injective": 1,
     "interior": 3,
-    "interpolating": 1,
     "invariant": 5,
     "investigate": 6,
     "leaves": 1,
     "mathematical": 2,
+    "microscopic": 1,
+    "model": 1,
     "needed": 3,
     "network": 2,
     "number": 7,
@@ -34742,8 +34735,11 @@
     "points": 1,
     "polynomial": 6,
     "presence": 1,
+    "properties": 1,
     "proved": 6,
+    "quantum": 1,
     "rational": 3,
+    "reconstructed": 1,
     "remaining": 2,
     "remains": 3,
     "representations": 3,
@@ -34753,16 +34749,19 @@
     "results": 9,
     "sampled": 1,
     "satisfies": 4,
+    "satisfy": 1,
     "scheme": 6,
     "schemes": 2,
     "secret": 1,
     "security": 2,
     "shamir": 1,
     "sharp": 1,
+    "spacetime": 1,
     "specific": 2,
     "split": 2,
+    "state": 1,
     "statement": 2,
-    "structure": 4,
+    "structure": 5,
     "structures": 2,
     "theorem": 12,
     "theorems": 7,
