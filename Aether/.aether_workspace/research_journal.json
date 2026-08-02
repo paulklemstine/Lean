@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fb6f9bc5",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n1. **Topological realization of the groupoid classification.** Formalize the following claim for connected CW complexes `X` and `Y`: if their universal covers are contractible, th",
-      "quality_score": 0.7559799999999999,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-31T10:09:57",
-      "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-    },
-    {
       "cycle_id": "0fbfba35",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\nThe following concrete conjectures isolate extensions not established by the present formalization.\n\n1. **Full analytic leading-pole theorem.** For every irreducible crystallograp",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-08-02T22:19:35",
       "title": "Emergent Spacetime from Quantum Entanglement"
+    },
+    {
+      "cycle_id": "f15cd85a",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\n## What is formalized\n\n`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained\nformal development with no assumption that a perfect cuboid exists:\n\n1. def",
+      "quality_score": 0.76837,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-02T22:20:26",
+      "title": "Perfect Cuboid (Euler Brick)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9f0b015d",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\n1. **Tropical normal forms.** Replace the current theorem-driven simplifier with a reflected syntax for finite min-plus polynomials, prove evaluation preservation for normalizatio",
-      "quality_score": 0.74,
-      "sorry_count": 1,
-      "theorem_count": 19,
-      "timestamp": "2026-07-25T15:27:37",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
     {
       "cycle_id": "ee9035cd",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-08-02T22:19:35",
       "title": "Emergent Spacetime from Quantum Entanglement"
+    },
+    {
+      "cycle_id": "f15cd85a",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\n## What is formalized\n\n`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained\nformal development with no assumption that a perfect cuboid exists:\n\n1. def",
+      "quality_score": 0.76837,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-02T22:20:26",
+      "title": "Perfect Cuboid (Euler Brick)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "316f6446",
-      "domain": "Shared",
-      "name": "finite_horizon_information_conservation",
-      "quality": 0.8021799999999999
-    },
-    {
-      "cycle_id": "18622a4a",
-      "domain": "Applications",
-      "name": "compile_eval",
-      "quality": 0.77537
-    },
-    {
-      "cycle_id": "18622a4a",
-      "domain": "Applications",
-      "name": "representable_to_single_operator",
-      "quality": 0.77537
-    },
     {
       "cycle_id": "18622a4a",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "bell_concurrence",
       "quality": 0.78678
+    },
+    {
+      "cycle_id": "f15cd85a",
+      "domain": "Geometry",
+      "name": "brick_44_117_240",
+      "quality": 0.76837
+    },
+    {
+      "cycle_id": "f15cd85a",
+      "domain": "Geometry",
+      "name": "not_square_73225",
+      "quality": 0.76837
+    },
+    {
+      "cycle_id": "f15cd85a",
+      "domain": "Geometry",
+      "name": "brick_44_117_240_not_perfect",
+      "quality": 0.76837
     }
   ],
-  "last_updated": "2026-08-02T22:19:35",
+  "last_updated": "2026-08-02T22:20:26",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "8110b227",
-        "quality": 0.66,
-        "theorems": 12,
-        "title": "Topological Data Analysis: Persistent Homology Stability"
-      },
-      {
         "cycle_id": "64006a56",
         "quality": 0.74,
         "theorems": 0,
@@ -3451,6 +3445,12 @@
         "quality": 0.75976,
         "theorems": 12,
         "title": "There exists a canonically normalized real-valued functional on the quaternionic"
+      },
+      {
+        "cycle_id": "f15cd85a",
+        "quality": 0.76837,
+        "theorems": 14,
+        "title": "Perfect Cuboid (Euler Brick)"
       }
     ],
     "Logic": [

@@ -1935,6 +1935,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5907c59d (Q=0.787), which proved 22 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_5907c59d_51326e24",
+    "priority_score": 0.88678,
+    "research_mode": "team",
+    "source_exp_id": "5907c59d",
+    "status": "available",
+    "timestamp": "2026-08-02T22:19:35.900197+00:00",
+    "title": "Deepening: Emergent Spacetime from Quantum Entanglement"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "NumberTheory"
@@ -2668,6 +2682,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f15cd85a (Q=0.768), which proved 14 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_f15cd85a_094e72fd",
+    "priority_score": 0.86837,
+    "research_mode": "team",
+    "source_exp_id": "f15cd85a",
+    "status": "available",
+    "timestamp": "2026-08-02T22:20:26.804499+00:00",
+    "title": "Deepening: Perfect Cuboid (Euler Brick)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b0710fef (Q=0.768), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent co",
     "domains": [
       "Novelty"
@@ -3228,6 +3256,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 064bb153 (Q=0.760), which proved 12 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf geometry of a two-qubit state that is continuous, vanishes exactly on product states, and equals one ",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_064bb153_37f2aaa6",
+    "priority_score": 0.85976,
+    "research_mode": "team",
+    "source_exp_id": "064bb153",
+    "status": "available",
+    "timestamp": "2026-08-02T22:17:55.338543+00:00",
+    "title": "Deepening: There exists a canonically normalized real-valued functional on the quaternionic"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 576be6d2 (Q=0.760), which proved 6 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic"
@@ -3759,7 +3801,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7c83314",
     "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
     "domains": [
       "Geometry",
@@ -3767,25 +3809,27 @@ window.FUTURE_DIRECTIONS = [
       "NumberTheory"
     ],
     "id": "seed_093",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bb368e2",
     "description": "Prove that Wall-Sun-Sun primes exist (primes p where p\u00b2 divides F_{p-(p|5)}). Formalize the connection to Fermat's Last Theorem and establish search bounds for the first such prime.",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "seed_207",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Wall-Sun-Sun Primes"
   },
@@ -4402,23 +4446,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
-  },
-  {
-    "consumed_by_exp_id": "5907c59d",
-    "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Speculative"
-    ],
-    "id": "seed_335",
-    "phase": "A",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Emergent Spacetime from Quantum Entanglement"
   },
   {
     "consumed_by_exp_id": "",
@@ -7179,22 +7206,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$"
   },
   {
-    "consumed_by_exp_id": "f15cd85a",
-    "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
-    "domains": [
-      "NumberTheory",
-      "Geometry"
-    ],
-    "id": "seed_011",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Perfect Cuboid (Euler Brick)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Provide rigorous foundations for Schubert's enumerative geometry. Formalize intersection theory on Grassmannians and flag varieties, proving Schubert calculus results via modern algebraic geometry.",
     "domains": [
@@ -7210,7 +7221,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 15: Schubert Calculus Rigorization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab554343",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
       "Speculative",
@@ -7218,10 +7229,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_057",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Consciousness as Integrated Information"
   },
@@ -7793,22 +7805,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T12:48:42.770410+00:00",
     "title": "Conjecture: deciding whether a finite multiset of non-rotatable square pieces wi"
-  },
-  {
-    "consumed_by_exp_id": "064bb153",
-    "description": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf geometry of a two-qubit state that is continuous, vanishes exactly on product states, and equals one exactly on maximally entangled states.\n\n**The key insight is...** ordinary linking numbers are too discrete, but differential-geometric quantities such as calibrated volume, holonomy, or an averaged linking integral can vary continuously with the determinant coordinate.\n\n**Why now?** The integer-valued proposal is obstructed by an explicit normalized state of concurrence one half, sharply specifying the properties a replacement invariant must satisfy.\n\n## 2. Exterior-algebra characterization of multipartite entanglement\n\nFor each bipartition of a pure multipartite state, the complete family of Pl\u00fccker coordinates of the corresponding coefficient flattening determines a hierarchy of entanglement monotones, with the two-qubit concurrence as its first nontrivial member.\n\n**The key insight is...** two-qubit concurrence is the norm of a determinant, and determinants are the coordinates of exterior powers rather than linking numbers.\n\n**Why now?** The determinant bound and its exact zero locus provide a tractable base case from which higher minors and their norm inequalities can be developed.\n\n## 3. Classification of all sharp determinant maximizers\n\nEvery normalized two-qubit state with concurrence one lies in the local-unitary orbit of a Bell state, and equality in the determinant norm bound is equivalent to orthogonality and equal norm of the two coefficient rows.\n\n**The key insight is...** equality must hold simultaneously in the triangle inequality and both quadratic product bounds, forcing rigid phase and norm relations.\n\n**Why now?** The sharp upper bound is established, and its proof exposes the exact inequalities whose equality cases must be classified.\n\n## 4. Quantitative distance from the product-state variety\n\nThere are optimal universal constants relating concurrence to the metric distance from a normalized state to the Segre variety of product states, for both Euclidean and Fubini\u2013Study metrics.\n\n**The key insight is...** concurrence is the norm of the defining quadratic equation of the Segre variety, so it should control transverse distance while degenerating predictably along tangent directions.\n\n**Why now?** The exact determinant criterion identifies the algebraic zero set, while the unit-interval bound supplies the global normalization needed for sharp estimates.\n\n## 5. Topological stratification of fixed-concurrence level sets\n\nFor each `c` strictly between zero and one, the normalized two-qubit states of concurrence `c`, modulo global phase, have a uniform diffeomorphism type, with topology changing only at the product and maximally entangled strata.\n\n**The key insight is...** although concurrence itself cannot be an integer linking number, its critical level sets may still carry meaningful and computable topology.\n\n**Why now?** Explicit interior values and the two boundary values are available, making the conjecture falsifiable through a combination of singular-value coordinates and level-set analysis.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0321",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b596d3d1",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T13:21:29.822356+00:00",
-    "title": "There exists a canonically normalized real-valued functional on the quaternionic"
   },
   {
     "consumed_by_exp_id": "",
@@ -10253,22 +10249,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
   },
   {
-    "consumed_by_exp_id": "3c45e0b1",
-    "description": "# Future Directions\n\n1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > 0`, and any `t - 1` distinct nonzero evaluation points, conditioning a uniformly sampled degree-`< t` Shamir polynomial on its constant coefficient leaves the induced share vector uniformly distributed on `F^(t-1)`, independently of the secret.\n\n2. **Feldman batch soundness.** If the commitment homomorphism is injective and a vector of claimed shares passes Feldman verification at `d + 1` distinct locations, then interpolating those claims yields exactly the committed degree-at-most-`d` polynomial.\n\n3. **Error-correcting reconstruction.** Given `n` distinct Shamir shares of a polynomial of degree at most `d`, the secret is uniquely recoverable in the presence of at most `e` adversarial shares whenever `n \u2265 d + 2e + 1`; this bound is sharp.\n\n4. **Pedersen hiding and binding separation.** In a two-generator Pedersen verifiable secret-sharing formalization, coefficient commitments are perfectly hiding without further assumptions, while acceptance of inconsistent shares is impossible assuming injectivity of the corresponding two-base exponent map on the allowed coefficient domain.\n\n5. **Proactive refresh invariance.** Adding an independently sampled degree-`< t` polynomial with zero constant coefficient preserves the reconstructed Shamir secret and makes every collection of at most `t - 1` refreshed shares statistically independent of its previous values.\n",
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_0854",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "50db037d",
-    "status": "in_progress",
-    "timestamp": "2026-07-31T08:23:15.991566+00:00",
-    "title": "1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > "
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThe formal development proves the complete local classification modulo nine:\n`x\u00b3+y\u00b3+z\u00b3=k` is soluble over `Z/9Z` exactly when `k` is not congruent to `4`\nor `5`. It deliberately does **not** assert the conjectural converse over the\nintegers.\n\n1. **Prime-power local theory.** Classify fibers over `Z/p^r Z`, count their\n   cardinalities, and prove compatibility of solutions under reduction. This\n   would turn the qualitative local statements into finite local-density\n   factors.\n\n2. **Local solvability at every modulus.** Investigate whether modulo-nine\n   admissibility implies solvability modulo every positive integer. A formal\n   proof would naturally proceed by prime powers and the Chinese remainder\n   theorem.\n\n3. **Bounded certified searches.** Define a height-bounded representation\n   predicate and prove search certificates for historically difficult targets.\n   Keep the certificate-generating computation separate from the small kernel-\n   checked theorem that validates each displayed identity.\n\n4. **Density conjectures.** Formalize counting functions for admissible and\n   represented integers in symmetric intervals. The established `7/9` local\n   proportion is a natural baseline, but any assertion that all admissible\n   integers are globally represented must remain explicitly conjectural.\n\n5. **Cubic-surface geometry.** Extend `CubicSurface` from its set of affine\n   points to a polynomial zero locus, study smoothness as the target varies,\n   and define integral, rational, real, and finite-ring points uniformly.\n\n6. **Hasse-principle interface.** The current theorem formalizes the easy map\n   from integral points to local points. A useful next layer would distinguish\n   integral, rational, real, and all-prime local solvability, so failures or\n   limitations of converses cannot be conflated.\n\n7. **Parametric families.** Develop injective subfamilies of the Vieta identity\n   `a\u00b3+b\u00b3+(-a-b)\u00b3=-3ab(a+b)` and derive quantitative lower bounds for the\n   number of represented integers, preferably without padded zero cubes.\n",
     "domains": [
@@ -10836,17 +10816,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Catalog/Novelty/SurrealFiniteCofiniteProbability.lean` constructs a concrete Co"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "76a9f834",
     "description": "# Future directions\n\n## What is established\n\n`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,\nself-contained results for a triangular face:\n\n1. the three-site crossing probability is `3p\u00b2 - 2p\u00b3`;\n2. it obeys exact complement duality `C(1-p)=1-C(p)`;\n3. it is below, equal to, or above `1/2` according as `p` is below, equal to, or\n   above `1/2` on the Bernoulli interval;\n4. its unique local self-dual parameter is `p=1/2`;\n5. the corresponding one-face bond-spanning polynomial is identical.\n\nThese are local ingredients, not an infinite-volume percolation theorem. In\nparticular, the proved predicate `IsTriangularSiteLocalCritical` records fairness\nof one three-site face; it is not being used as a definition of the infinite\nlattice critical probability.\n\nAll theorem declarations currently retained in the project have complete Lean\nproofs. The proposed infinite-volume declarations described below remain prose\nresearch targets rather than unproved Lean signatures.\n\n## Next formal steps\n\n1. **Finite planar lattice combinatorics.** Define finite triangular and hexagonal\n   patches, primal/dual paths, boundary arcs, and crossing events. Prove the\n   deterministic alternative that an open primal crossing excludes and is\n   complemented by an appropriate closed dual crossing.\n2. **Product measures.** Put Bernoulli product measures on finite site and bond\n   configurations. Lift the existing pointwise monotonicity results in\n   `Catalog/Combinatorics/Percolation.lean` to monotonicity of crossing\n   probabilities.\n3. **Site versus bond models.** Formalize the matching-lattice transformation for\n   site percolation and planar duality for bond percolation. Keep their sample\n   spaces distinct; the equality of the one-face polynomials does not identify\n   the infinite models.\n4. **Sharpness and infinite volume.** Develop increasing exhaustion, compactness,\n   Russo-type differentiation, pivotal sites, and enough sharp-threshold theory\n   to pass from finite crossings to an infinite cluster criterion.\n5. **Exact triangular-site theorem.** Combine self-duality with the preceding\n   planar and sharpness machinery to prove the infinite triangular-lattice site\n   critical probability `p_c=1/2`.\n6. **Square bond percolation.** Develop square-lattice planar bond duality, whose\n   exact threshold is also `1/2`, separately from square *site* percolation.\n7. **Square site threshold.** The requested analytic form is an open mathematical\n   problem; the accepted threshold is known numerically rather than by a closed\n   exact expression. A faithful formal project should therefore define and bound\n   this threshold, not assert an unsupported formula.\n8. **Conformal invariance.** Connect critical crossing laws to the measurable\n   transport framework in `Catalog/Probability/ConformalInvariance.lean`. A full\n   result requires formal constructions of scaling limits and SLE (for critical\n   percolation, SLE\u2086), plus proofs of convergence and conformal covariance; chart\n   transport alone does not establish those analytic facts.\n",
     "domains": [
       "Computation",
       "Cryptography"
     ],
     "id": "fd_0896",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "d333f65d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T23:24:15.206538+00:00",
     "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
   },
@@ -11134,6 +11115,66 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-02T21:19:56.656175+00:00",
     "title": "The accompanying Lean development settles the operator-algebraic core used by"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Quaternionic Hopf Concurrence\n\n## Result of this cycle\n\nThe new Lean development `Catalog/Geometry/QuaternionicConcurrence.lean` defines\n\n\\[\nH(\\psi)=\\begin{cases}\n0,&\\|\\psi\\|^2=0,\\\\\n\\dfrac{2|ad-bc|}{\\|\\psi\\|^2},&\\|\\psi\\|^2\\ne0,\n\\end{cases}\n\\]\n\nfor a two-qubit coefficient matrix with rows `(a,b)` and `(c,d)`.\nThis is the normalized modulus of the exterior-square coordinate and is the\nreal coordinate naturally singled out by the quaternionic Hopf description.\n\nThe following statements are formally proved:\n\n1. **Complex Lagrange identity**\n   \\[\n   |ad-bc|^2+|\\bar a c+\\bar b d|^2\n   =( |a|^2+|b|^2)(|c|^2+|d|^2).\n   \\]\n2. **Projective scale invariance:** `H(z\u03c8)=H(\u03c8)` for every nonzero complex\n   scalar `z`.\n3. **Sharp range:** every normalized state satisfies `0 \u2264 H(\u03c8) \u2264 1`.\n4. **Exact zero locus:** `H(\u03c8)=0` iff `ad-bc=0`.\n5. **Complete sharp-maximizer classification:** for a normalized state,\n   `H(\u03c8)=1` iff the coefficient rows are Hermitian-orthogonal and each has\n   squared norm `1/2`.\n\nThus the proposed continuous replacement for an integer linking invariant is\nnot merely bounded and correctly normalized: its top stratum is rigidly\nclassified by equality in Lagrange plus AM\u2013GM. This gives the algebraic core of\nthe Bell-state local-unitary-orbit claim without presupposing a formal theory\nof local unitary actions.\n\n## Computational-evidence decision\n\nA separate numerical evidence stage was skipped because the result proved here\nis a universal symbolic identity and exact equality classification over\narbitrary complex amplitudes, not a finite or sequence-based conjecture.\nSmall floating-point samples would be strictly weaker than the kernel-checked\nalgebraic proof, and no integer sequence arises, so an OEIS search is\ninapplicable. The proof itself performs the relevant counterexample test:\nany alleged non-orthogonal or unequal-row-norm maximizer contradicts the\nnonnegative terms in the Lagrange and AM\u2013GM identities.\n\n## Bold conjectures for the next cycle\n\n### 1. Local-unitary normal form\nFormalize the left and right `U(2)` actions and prove that every normalized\nsharp maximizer lies in the local-unitary orbit of `diag(1/\u221a2,1/\u221a2)`. The row\nclassification proved here should reduce this to constructing a unitary matrix\nfrom an orthonormal basis.\n\n### 2. Exact distance formula to the Segre variety\nFor normalized pure two-qubit states, conjecture that the minimal Euclidean\ndistance to normalized product states is\n\\[\n\\sqrt{2-2\\sqrt{(1+\\sqrt{1-H(\\psi)^2})/2}}.\n\\]\nA singular-value decomposition would prove this and simultaneously yield the\nFubini\u2013Study distance formula.\n\n### 3. Interior level-set topology\nAfter quotienting global phase, conjecture that each level `0<c<1` is a smooth\nhomogeneous space of fixed diffeomorphism type. The endpoint `c=1` has a larger\nstabilizer, while `c=0` is the Segre stratum; the exact maximizer theorem now\nidentifies one of the two singular endpoints algebraically.\n\n### 4. Exterior-power hierarchy\nFor a bipartite coefficient matrix of arbitrary finite dimensions, normalize\nthe Hilbert norm of its second exterior power. Conjecture that its zero locus\nis exactly rank one and that its sharp maximizers are precisely matrices with\nequal nonzero singular values on their support. The two-row Lagrange identity\nproved in this cycle is the first nontrivial case.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0916",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "064bb153",
+    "status": "available",
+    "timestamp": "2026-08-02T22:17:51.574610+00:00",
+    "title": "The new Lean development `Catalog/Geometry/QuaternionicConcurrence.lean` defines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formalized uniqueness theorem isolates the combinatorial core of error-correcting Shamir reconstruction. The following are concrete next conjectures.\n\n1. **Sharpness of the decoding radius.** For every finite field with at least `n` elements and natural numbers satisfying `n \u2264 d + 2e`, there exist `n` distinct locations, two distinct degree-at-most-`d` polynomials, and one received vector whose disagreement count with each polynomial is at most `e` (subject to the necessary feasibility conditions `d < n` and `e \u2264 n`).\n\n2. **Berlekamp\u2013Welch existence.** Over every finite field, if a received vector at `n \u2265 d + 2e + 1` distinct locations differs from some degree-at-most-`d` polynomial in at most `e` positions, then a Berlekamp\u2013Welch linear system has a solution `(E,Q)` with `E \u2260 0`, `degree E \u2264 e`, `degree Q \u2264 d+e`, and `Q(x\u1d62)=received(x\u1d62)E(x\u1d62)` at every location; polynomial division recovers the unique polynomial from `ShamirErrorCorrection.unique_reconstruction_with_errors`.\n\n3. **Erasures-and-errors tradeoff.** If `s` locations are marked erased and the remaining received shares contain at most `e` errors, then degree-at-most-`d` reconstruction is unique whenever `n \u2265 d + s + 2e + 1`; the bound is sharp under the same field-size feasibility conditions.\n\n4. **List-decoding failure beyond half distance.** For some finite fields and parameters with `2e > n-d-1`, there is a received vector admitting at least two distinct degree-at-most-`d` candidate polynomials within `e` disagreements, so unique reconstruction cannot be extended beyond half the Reed\u2013Solomon minimum distance.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0917",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3c45e0b1",
+    "status": "available",
+    "timestamp": "2026-08-02T22:18:42.398299+00:00",
+    "title": "The formalized uniqueness theorem isolates the combinatorial core of error-corre"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Extend the real coefficient-matrix model to complex amplitudes and prove the same reduced-density and concurrence results.\n- Define von Neumann entropy for finite density matrices and derive the Bell-pair entropy values from the spectrum of the reduced states rather than recording entropy data directly.\n- Generalize the two-boundary cut reconstruction theorem to weighted trees, where all edge weights are recovered from a sufficiently rich family of boundary cut entropies.\n- Formalize tensor-network isometries for a finite holographic code and prove reconstruction of bulk operators from complementary boundary regions.\n- Relate positive mutual information to connectivity in a larger graph model and characterize which entropy vectors arise from nonnegative weighted cuts.\n- Add dynamical operations such as entanglement swapping and prove the corresponding composition law for reconstructed throats.\n- The present result is a finite algebraic toy model: it does not assert the physical ER=EPR conjecture for general quantum field theories or dynamical spacetimes. A fuller treatment would require operator algebras, continuum limits, Lorentzian geometry, and gravitational dynamics.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0918",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5907c59d",
+    "status": "available",
+    "timestamp": "2026-08-02T22:19:32.660373+00:00",
+    "title": "Future directions from cycle 5907c59d"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is formalized\n\n`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained\nformal development with no assumption that a perfect cuboid exists:\n\n1. definitions of natural perfect squares, Euler bricks, and perfect cuboids;\n2. verification of the `(44,117,240)` Euler brick and a proof that its squared\n   space diagonal `73225` is not a square;\n3. scaling theorems for Euler bricks and hypothetical perfect cuboids;\n4. the exact diagonal-cone reduction\n   `a\u00b2 + b\u00b2 + c\u00b2 = 2d\u00b2`, together with its converse under the three face\n   equations;\n5. normalization to the affine quadric `w\u00b2 = u\u00b2 + v\u00b2 - 1`;\n6. a two-parameter rational parametrization of that quadric and a completeness\n   theorem away from the base point `(1,0,0)`.\n\nThe last item sharpens the surface connection: the ambient quadric itself is\nrational, so the hard arithmetic is not finding rational points on the\nquadric, but imposing the additional simultaneous-square constraints that\nrecover three rational edges and the omitted face diagonal.\n\n## Next formal targets\n\n### 1. Encode all square constraints in parameter space\n\nSubstitute the proved formulas\n\n`u = (p\u00b2-q\u00b2-1)/(1+p\u00b2-q\u00b2)`,\n`v = -2p/(1+p\u00b2-q\u00b2)`, and\n`w = -2q/(1+p\u00b2-q\u00b2)`\n\ninto `u\u00b2-1`, `v\u00b2-1`, and `u\u00b2+v\u00b2-2`.  A perfect cuboid requires each relevant\nexpression to be a rational square.  Clearing denominators should produce an\nexplicit intersection of quartic equations in `(p,q)` and auxiliary square\nroots.  Formalizing this equivalence would give a concrete Diophantine model\nsuitable for descent or congruence arguments.\n\n### 2. Primitive reduction\n\nProve that any positive perfect cuboid can be divided by the gcd of its edges\nto obtain a primitive one, while retaining integral face and space diagonals.\nThis needs a careful divisibility result showing that the common edge gcd also\ndivides every diagonal.  Once established, searches and modular obstructions\ncan be restricted to primitive tuples.\n\n### 3. Congruence obstructions\n\nDevelop reusable square-residue lemmas modulo `4`, `8`, `16`, `3`, and `5`, then\nprove classical necessary conditions on primitive Euler bricks and perfect\ncuboids.  Promising goals include parity restrictions on edges and forced prime\ndivisors of products of edges.  These results narrow computational searches\nwithout pretending to settle existence.\n\n### 4. Certified bounded search\n\nDefine a Boolean square test and enumerate ordered positive triples up to a\nmoderate bound.  Prove the search correct by reflection, then state a Lean\ntheorem that no perfect cuboid occurs in the checked box.  Separate the\nmathematical correctness proof of the checker from the evaluated bound so the\nresult remains maintainable.\n\n### 5. Other near-miss families\n\nFormalize parametric Euler-brick constructions rather than only scaling a\nsingle example.  For each family, derive the polynomial governing the space\ndiagonal and investigate when it can be a square.  A useful endpoint is a map\nfrom a family to a curve (often quartic, potentially transformed to an elliptic\ncurve) whose rational points correspond exactly to perfect members of that\nfamily.\n\n## Scope warning\n\nThe existence of a perfect cuboid remains unresolved here.  The proved results\nsupply exact reductions, certified examples, and a complete parametrization of\none ambient algebraic surface; they do not assert existence or nonexistence of\na perfect cuboid.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0919",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f15cd85a",
+    "status": "available",
+    "timestamp": "2026-08-02T22:20:23.526453+00:00",
+    "title": "`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained"
   },
   {
     "consumed_by_exp_id": "",
