@@ -15,7 +15,7 @@
       "depth_estimate": 3,
       "description": "Establishes spectral gap bounds for integer solutions to non-homogeneous quadratic forms using lattice reduction and theta series expansion.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -55,7 +55,7 @@
       "depth_estimate": 3,
       "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -95,7 +95,7 @@
       "depth_estimate": 3,
       "description": "Constructs the fundamental curve of p-adic Hodge theory and proves its topological properties as a Noetherian scheme of dimension 1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -1615,7 +1615,7 @@
       "depth_estimate": 3,
       "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -15050,7 +15050,7 @@
       "depth_estimate": 3,
       "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -15091,7 +15091,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -15131,7 +15131,7 @@
       "depth_estimate": 3,
       "description": "Formalize the classical zero-free region of the Riemann zeta function: ζ(s) ≠ 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2π) log(T/(2πe)). Formalize the connection between zero-free regions and prime counting error bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -15213,7 +15213,7 @@
       "depth_estimate": 3,
       "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -15254,7 +15254,7 @@
       "depth_estimate": 3,
       "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -15336,7 +15336,7 @@
       "depth_estimate": 3,
       "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -15939,11 +15939,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f7f562cc",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15956,7 +15956,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0673",
-      "last_attempt_time": "2026-07-26T22:24:32.986282+00:00",
+      "last_attempt_time": "2026-08-02T23:24:11.268460+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -15971,7 +15971,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-24T14:34:16.697801+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
@@ -18454,7 +18454,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Deformation of the absolute Galois groups of number fields' and formalize its key results. Abstract: The technical goal of this paper is to construct and study profinite monoids DG_K for number fields K such that (1) the unit group of DG_K is isomorphic to the absolute Galois group G_K; (2) the maximal abelian quotient of DG_K is isomorphic to the Deligne-Ribet monoid DR_K; (3) the idempotents of DG_K bijectively correspond to subsets of the set P_K of (finite) primes of K; (4) the maximal Galois groups G_{K, S} with restricted ramifications S all appear as maximal closed subgroups of DG_K at idempotents; (5) all maximal closed subgroups of DG_K at idempotents are of this form. We also discuss the relationship between DG_K and the p-typical Witt vectors of Borger and de Smit, where we will describe the fundamental monoid of the semi-galois category of Lambda-rings of Borger and de Smit in terms of fields of norms of the local field K_p in particular.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -18659,7 +18659,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Exact finite-event bound for exposed velocities.** For every finite max-plus law `μ` and every velocity `x` exposed by a unique tilt `θ`, there is an integer `N` such that, whenever `n ≥ N` and some `n`-step path has empirical velocity `x`, the maximum normalized score among all such paths is exactly `-μ.rate x`. A finite law, exposed velocity, and arbitrarily large accessible `n` violating this equality would refute the conjecture.\n\n2. **Tensorization of the rate.** For finite max-plus laws `μ₁` and `μ₂`, give the product law value `(i,j) ↦ μ₁.value i + μ₂.value j` and weight `(i,j) ↦ μ₁.weight i + μ₂.weight j`. Whenever the three real-valued Legendre suprema are bounded above, its rate satisfies `rateProd (x₁ + x₂) = inf_y (μ₁.rate y + μ₂.rate (x₁ + x₂ - y))`. A finite pair of laws and a point where this infimal-convolution identity fails would refute the conjecture.\n\n3. **Convex-hull domain characterization.** For every finite max-plus law, the affine set defining its real-valued Legendre–Fenchel rate is bounded above at `x` if and only if `x` belongs to the convex hull of the finite set `Set.range μ.value`. Either an exterior point with bounded defining set or an interior point with unbounded defining set would be a counterexample.\n\n4. **Full closed-set upper bound.** For every finite max-plus law and closed set `C ⊆ ℝ`, let `Wₙ(C)` be the maximum normalized score of length-`n` paths whose empirical velocity lies in `C` (with empty events assigned `-∞` in an extended-real formulation). Then `limsup (n → ∞) Wₙ(C) ≤ - inf x ∈ C, μ.rate x`. Any finite law and closed set with a strictly larger limsup would refute the conjecture.\n\n5. **Open-set lower bound under accessibility.** If a finite max-plus law has rational increment values and every increment has finite real weight, then for every open set `G` meeting the convex hull of the increments, the corresponding extended-real event weights satisfy `liminf (n → ∞) Wₙ(G) ≥ - inf x ∈ G, μ.rate x`. A rational finite law and open interval violating this inequality would refute the conjecture.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "NumberTheory"
@@ -18987,7 +18987,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe explicit `Bool` witness shows that moving from `Prop`-valued to data-valued\nfibers avoids collapse, but it also raises the question of how restrictive the\nnew equation really is.  The following conjectures are concrete and\nfalsifiable.\n\n1. **Finite existence for every positive cardinality.** For every natural number\n   `n > 0`, there are a finite type `T` with `Fintype.card T = n` and a family\n   `F : T → Type` such that `T ≃ ((x : T) → F x)`, with all fibers finite.\n   A proposed witness puts an `n`-element fiber at one chosen point and singleton\n   fibers elsewhere.\n\n2. **Genuinely dependent solutions at every nontrivial finite cardinality.** For\n   every `n ≥ 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.\n\n3. **Prime-cardinality classification.** If `T` is finite of prime cardinality\n   `p`, every finite family `F` satisfying `T ≃ ((x : T) → F x)` has exactly one\n   fiber of cardinality `p` and every other fiber has cardinality `1`.\n   This should follow from the proved product-cardinality equation and prime\n   factorization.\n\n4. **Constant finite fibers are trivial.** If finite nonempty `T` and finite `A`\n   satisfy `T ≃ (T → A)`, then either `T` is a singleton or `A` is a singleton.\n   Equivalently, the finite cardinal equation `n = a^n` has no solution with\n   `n ≥ 2` and `a ≥ 2`.\n\n5. **Decidable inhabited types admit a concentrated solution.** Every inhabited\n   type with decidable equality is `DataConscious`, witnessed by concentrating\n   all data in the fiber over one distinguished point and assigning `Unit` to\n   every other fiber.  Proving this uniformly requires a dependent equivalence\n   that transports along equality tests.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Logic"
@@ -19804,7 +19804,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following conjectures are concrete continuations of `Catalog/Novelty/NonstandardArithmetic.lean`.\nEach can be falsified by exhibiting an ultrafilter, formula, or hypernatural violating the stated property.\n\n1. **Polynomial transfer over the natural ultrapower.** For every multivariate polynomial `p : MvPolynomial (Fin k) ℕ` and representatives `f : Fin k → ℕ → ℕ`, evaluating `p` after embedding into `HyperNat` equals the germ of the pointwise evaluations of `p`.\n\n2. **Transferred bounded minimization.** If an internal predicate on `HyperNat` is represented by `P : ℕ → ℕ → Prop`, is nonempty on an ultrafilter-large set of indices, and every fiber `{n | P i n}` has a least element, then the germ of the pointwise least witnesses is least among all internal witnesses.\n\n3. **Hyperfinite prime divisor existence.** Every `H : HyperNat` with `standard 2 ≤ H` has an internal prime divisor, where primality and divisibility are represented using `Filter.Germ.LiftPred` and `Filter.Germ.LiftRel`.\n\n4. **Externality of standardness.** There is no unary first-order formula in the language of arithmetic whose realization in the natural ultrapower is exactly the range of `standard : ℕ → HyperNat`.\n\n5. **Overspill for internal unary predicates.** If an internal predicate on `HyperNat` holds for every standard natural, then it holds for some `H` satisfying `∀ n, standard n < H`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory"
       ],
@@ -19926,7 +19926,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecedent, while consequences equipped with a backward certificate can both recover the proposition and reduce a finite candidate space. The following conjectures make the remaining proof-complexity questions falsifiable.\n\n1. **Bounded-arithmetic compression benchmark.** Fix a sequent calculus for the bounded arithmetic fragment containing formulas `n < N`, divisibility, conjunction, and equality. For every `N ≥ 8`, compare the shortest derivation of `n = 6` from `n < N` with the shortest derivation from `n < N`, `2 ∣ n`, and `3 ∣ n`. Conjecture: for at least 90% of `N ≤ 10^4`, the consequence-guided derivation has at most half as many inference nodes. A proof enumerator can decide this finite claim once the calculus and node-count convention are fixed.\n\n2. **Certificate-cost threshold.** In any fixed finitely branching proof calculus, count both the derivation of each consequence and the backward certificate. Conjecture: there is no universal constant `c < 1` such that every consequence-stable proposition has total certified cost at most `c` times its shortest direct proof. A counterexample family would consist of propositions whose shortest backward certificates asymptotically reproduce their shortest direct proofs.\n\n3. **Information gain predicts finite search reduction.** For finite candidate spaces with deterministic Boolean checks, define information gain as `log₂(|C| / |S|)`, where `C` is the initial space and `S` its nonempty survivor set. Conjecture: under uniform exhaustive enumeration, the median number of candidates inspected after filtering decreases by a factor between `2^(I-1)` and `2^(I+1)`, where `I` is the information gain. Exhaustive tests over all check families on spaces of size at most 16 can confirm or refute the finite instances.\n\n4. **Arithmetic residue certificates.** Let `p₁, …, pₖ` be distinct primes and `M = ∏ pᵢ`. Among candidates `0 ≤ n < M`, the checks `pᵢ ∣ n` isolate `0`. Conjecture: in a standard PA sequent calculus, a balanced conjunction of these checks yields a backward certificate of size `O(k log M)`, while any certificate restricted to testing candidates one by one has size `Ω(M)`. The claim is falsifiable by explicit proof-size upper and lower bounds in the selected calculus.\n\n5. **Strict filtering without proof shortening.** Conjecture: there exists an infinite family of PA propositions and verified consequence lists for which the formal candidate search space shrinks by an unbounded factor, but the shortest proof length decreases by at most an additive constant. This would show that semantic search compression and syntactic proof compression are independent measurements. Test by exhaustive shortest-proof enumeration in successively larger bounded fragments.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -20212,7 +20212,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following conjectures extend the finite-test Gröbner theory formalized in `Catalog/Tropical/GroebnerBases.lean`. Each is stated so that a finite counterexample or a formal proof would settle it.\n\n1. **Degree-truncated stabilization.** For a finitely generated homogeneous tropical ideal over `Tropical (WithTop ℚ)` in finitely many variables, there is a degree `D` such that a finite family which is a Gröbner basis on every polynomial of degree at most `D` is a Gröbner basis in every degree.\n\n2. **Finite universal obstruction set.** For every finitely generated tropical ideal over `Tropical (WithTop ℚ)` and every monomial order, there is a finite test set `U` such that `IsGroebnerBasisOn m I U G` is equivalent to divisibility of the leading monomial of every nonzero member of `I` by a leading monomial from `G`.\n\n3. **Order independence of tropical Hilbert data.** For a homogeneous tropical ideal in finitely many variables, the number of degree-`d` monomials outside its initial monomial semimodule is independent of the chosen monomial order for every `d`.\n\n4. **Finite tropical S-pair criterion.** There is a tropical S-pair construction on finite polynomial families such that a family is a Gröbner basis on a finite divisor-closed test set exactly when every S-pair whose support lies in that test set reduces to zero.\n\n5. **Bend congruence recovery.** For a finitely generated tropical ideal, the bend congruence generated by any tropical Gröbner basis equals the bend congruence generated by the whole ideal.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -20335,7 +20335,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n- Extend the exact finite classification to larger boxes and additional exponent pairs, especially `(2, 5)`, `(3, 4)`, and `(3, 5)`.\n- Develop valuation lemmas for `x^a - y^b`, including parity and prime-adic restrictions on possible gaps.\n- Formalize reduction to coprime bases and primitive exponent pairs using gcd decompositions of the exponents.\n- Connect the elementary framework to linear forms in logarithms and explicit height bounds, enabling unconditional finiteness results for each fixed nonzero gap.\n- Formalize the full consecutive-perfect-powers theorem once the required deep number-theoretic infrastructure is available.\n- Study uniform formulations of Pillai's conjecture: for each fixed nonzero `k`, prove finiteness of nontrivial solutions and derive effective search bounds.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -20949,7 +20949,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Canonical versus merely available topologies.** The upper Alexandrov topology makes every monotone map continuous, hence both adjoints of every Galois connection. A sharper classification should characterize the finest and coarsest pairs of topologies for which both adjoints are continuous.\n\n2. **When is the induced order closure topological?** The finite counterexample proves that an arbitrary Galois-induced closure need not preserve binary unions. Characterize Galois connections whose composite closure is a Kuratowski closure; preservation of bottom and binary joins is the expected criterion.\n\n3. **Fixed-point duality.** Formalize the order isomorphism between the fixed points of `u ∘ l` and those of `l ∘ u`, and prove that it transports arbitrary meets and joins.\n\n4. **Radical ideals versus Zariski closed sets.** Upgrade the pointwise Galois law to an explicit order anti-isomorphism between radical ideals and Zariski-closed subsets of `Spec(R)`, including formulas for arbitrary meets and joins on both sides.\n\n5. **Functoriality.** For a ring homomorphism, connect ideal extension/contraction Galois connections with continuity of the induced map on prime spectra and composition of the corresponding closure operators.\n\n6. **Spectral refinements.** Compare the Alexandrov topology of the specialization order with the Zariski topology. They agree for finite spectra but differ in general; formal examples and exact finiteness hypotheses would clarify how much topology the order alone remembers.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -21481,7 +21481,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe scalar-log unit-circle conjecture is now proved with a certified parameter\ninterval `[1/2, 3]`. The proof also establishes symmetry: every positive\nsolution has a negative solution, and the resulting complex logarithm is a\nunitary scalar.\n\nNatural next steps are:\n\n1. Tighten the certified interval, for example to `[6/5, 5/4]`, using explicit\n   bounds for the complex logarithm.\n2. Prove strict monotonicity of `t ↦ |log(1 + t i)|` on `(0, ∞)`. This would\n   establish uniqueness of the positive solution rather than existence alone.\n3. Lift the scalar unitary logarithmic factor to scalar multiples of the\n   identity in matrix C⋆-algebras and prove the corresponding matrix factor is\n   unitary.\n4. Formalize surjectivity of the exponential from Hermitian matrices onto\n   finite-dimensional complex unitary matrices. Combined with the scalar\n   factor theorem, this is the main missing step toward `U(2)` coverage.\n5. Track determinants and traces through that representation to identify the\n   exact trace congruence class required for `SU(2)`.\n6. Develop the polar-normalized logarithmic factor and prove its unitarity for\n   invertible logarithmic inputs.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -22002,7 +22002,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -23362,7 +23362,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 972f5eac (Q=0.777), which proved 17 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -23907,6 +23907,46 @@
       "thread_id": "",
       "timestamp": "2026-08-01T14:04:22.483605+00:00",
       "title": "Deepening: Certified Adversarial Robustness via Sheaf Cohomology"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle c7c1ec6d (Q=0.767), which proved 8 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H₂ = 0` produces zero.  They also\nshow that unitary output forc",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "push_c7c1ec6d_44e7b8d0",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8667599999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "c7c1ec6d",
+      "source_path": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-02T23:23:50.647036+00:00",
+      "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
     },
     {
       "ambition_level": "extension",
@@ -24522,7 +24562,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -27059,7 +27099,7 @@
       "depth_estimate": 3,
       "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -27099,7 +27139,7 @@
       "depth_estimate": 3,
       "description": "Prove that 10 is a solitary number — no other integer shares its abundancy index σ(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -27180,7 +27220,7 @@
       "depth_estimate": 3,
       "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -27466,7 +27506,7 @@
       "depth_estimate": 3,
       "description": "Prove that for every positive integer n, there exists a prime between n² and (n+1)². Formalize known partial results on prime gaps and connect to the Cramér model of primes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -27506,7 +27546,7 @@
       "depth_estimate": 3,
       "description": "Prove that there are infinitely many primes of the form n²+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a²+b⁴.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -27546,7 +27586,7 @@
       "depth_estimate": 3,
       "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -27587,7 +27627,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Euler-Mascheroni constant γ ≈ 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Analysis",
         "NumberTheory"
@@ -27669,7 +27709,7 @@
       "depth_estimate": 3,
       "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -27751,7 +27791,7 @@
       "depth_estimate": 3,
       "description": "Prove that for every integer n ≥ 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -27791,7 +27831,7 @@
       "depth_estimate": 3,
       "description": "Prove Schanuel's conjecture: if z₁,...,zₙ are Q-linearly independent complex numbers, then the transcendence degree of {z₁,...,zₙ,e^z₁,...,e^zₙ} over Q is at least n. Formalize implications for the Lindemann-Weierstrass theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -27873,7 +27913,7 @@
       "depth_estimate": 3,
       "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -27913,7 +27953,7 @@
       "depth_estimate": 3,
       "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)²). Formalize probabilistic models of primes and known unconditional bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -28162,7 +28202,7 @@
       "depth_estimate": 3,
       "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Pythagorean",
         "Algebra",
@@ -28653,11 +28693,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "feb53e35",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -28671,7 +28711,7 @@
       ],
       "github_issue": 0,
       "id": "seed_065",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-02T23:24:18.099040+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -28686,7 +28726,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Integrated Information via Tensor Networks"
@@ -29283,11 +29323,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "06b881ae",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29301,7 +29341,7 @@
       ],
       "github_issue": 0,
       "id": "seed_090",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-02T23:24:23.982061+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -29316,7 +29356,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Inverse Stereographic Neural Field Theory"
@@ -29922,7 +29962,7 @@
       "depth_estimate": 3,
       "description": "Prove that a positive proportion of zeros of the Riemann zeta function lie on the critical line. Formalize Selberg's result (positive proportion on), Conrey's 2/5 result, and explore connections to random matrix theory and the moment problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory",
         "Analysis"
@@ -30045,7 +30085,7 @@
       "depth_estimate": 3,
       "description": "Determine all integer solutions to n! + 1 = m². Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -30126,7 +30166,7 @@
       "depth_estimate": 3,
       "description": "Characterize numbers representable as a sum of three squares of primes. Formalize the circle method approach to ternary Goldbach-type problems for squares.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -30166,7 +30206,7 @@
       "depth_estimate": 3,
       "description": "Prove that any integer a ≠ -1,□ that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -34467,7 +34507,7 @@
       "depth_estimate": 3,
       "description": "Cycle 29ba074c (Q=0.600) proved 24 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formally proves existence and strict convexity of an energy spectrum functional E(a,b,c; N) over Berggren tree paths that guides a deterministic path to a non-trivial factor of N.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -34787,7 +34827,7 @@
       "depth_estimate": 3,
       "description": "Cycle e4773f49 (Q=0.640) proved 7 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Ni",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -34939,7 +34979,6 @@
     "yields": 6
   },
   "selection_log": [
-    "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
     "famous_subtask",
@@ -34958,6 +34997,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "famous_subtask"
   ]
 }

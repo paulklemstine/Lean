@@ -2724,6 +2724,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c7c1ec6d (Q=0.767), which proved 8 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H\u2082 = 0` produces zero.  They also\nshow that unitary output forc",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_c7c1ec6d_44e7b8d0",
+    "priority_score": 0.8667599999999999,
+    "research_mode": "team",
+    "source_exp_id": "c7c1ec6d",
+    "status": "available",
+    "timestamp": "2026-08-02T23:23:50.647036+00:00",
+    "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle ed94092b (Q=0.767), which proved 16 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the",
     "domains": [
       "Combinatorics"
@@ -3090,7 +3104,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06b881ae",
     "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
     "domains": [
       "Geometry",
@@ -3098,10 +3112,11 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "id": "seed_090",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Inverse Stereographic Neural Field Theory"
   },
@@ -3784,23 +3799,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture"
   },
   {
-    "consumed_by_exp_id": "17b35eaf",
-    "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Speculative"
-    ],
-    "id": "seed_083",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Temporal Logic of Proofs: When You Prove Something Matters"
-  },
-  {
     "consumed_by_exp_id": "d7c83314",
     "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
     "domains": [
@@ -4238,17 +4236,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f7f562cc",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
       "Probability"
     ],
     "id": "fd_0673",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697801+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -7372,7 +7371,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Convexity and Helly Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "feb53e35",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
     "domains": [
       "Physics",
@@ -7380,10 +7379,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_065",
+    "phase": "A",
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Integrated Information via Tensor Networks"
   },
@@ -10339,22 +10339,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The explicit `Bool` witness shows that moving from `Prop`-valued to data-valued"
   },
   {
-    "consumed_by_exp_id": "c7c1ec6d",
-    "description": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H\u2082 = 0` produces zero.  They also\nshow that unitary output forces the logarithmic factor itself to be unitary.  This leaves\nthe raw-expression coverage question separate from the question whether the expression\ndefines an `SU(2)`-valued activation.\n\nConcrete, falsifiable next conjectures:\n\n1. **Scalar-log unit-circle intersection.** There exists a nonzero real `t` such that\n   `|Complex.log (1 + t * I)| = 1`.  Equivalently,\n   `(Real.log (Real.sqrt (1+t^2)))^2 + (Real.arctan t)^2 = 1` (with the principal\n   branches).  A certified interval containing such a `t` would give a scalar unitary\n   logarithmic factor.\n\n2. **Scalar second Hamiltonian suffices for `U(2)` coverage.** If `t` satisfies the first\n   conjecture and `H\u2082 = t I`, then every `2 \u00d7 2` unitary matrix is equal to\n   `exp(iH\u2081) * log(I+iH\u2082)` for some Hermitian `H\u2081`.  This reduces to proving global\n   surjectivity of the Hermitian exponential for finite-dimensional complex unitary\n   matrices and tracking the scalar phase.\n\n3. **Trace correction for `SU(2)`.** Under the same scalar choice of `H\u2082`, every element\n   of `SU(2)` has a representing Hermitian `H\u2081` whose trace lies in one explicitly\n   determined congruence class modulo `2\u03c0`; determine and prove that class.\n\n4. **Normalized activation is always unitary on its domain.** Define the polar-normalized\n   logarithmic factor `L (L\u22c6L)^{-1/2}` whenever `L = log(I+iH\u2082)` is invertible.  Conjecture:\n   multiplying this factor by `exp(iH\u2081)` yields a unitary, and every `SU(2)` matrix is\n   obtained with traceless Hermitian parameters after a determinant-one phase correction.\n",
-    "domains": [
-      "Physics",
-      "NumberTheory"
-    ],
-    "id": "fd_0862",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8fe295b2",
-    "status": "in_progress",
-    "timestamp": "2026-07-31T18:56:23.876742+00:00",
-    "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H \u2192 IsMinor H K \u2192 IsMinor G K`. This is falsifiable directly against the branch-set definition and would make the catalog relation a preorder.\n\n2. **The triangle case.** Prove `HadwigerCase 2`: every finite graph with no proper two-coloring has a `K\u2083` branch-set minor. A concrete route is to formalize the odd-cycle characterization of non-bipartite graphs and contract an odd cycle to three branch sets.\n\n3. **The four-clique case.** Prove `HadwigerCase 3`: every finite graph with no proper three-coloring has a `K\u2084` branch-set minor. This should be tested through a formal reduction to the classical low-order Hadwiger theorem rather than finite enumeration.\n\n4. **Wagner structural bridge.** Prove that every finite `K\u2085`-minor-free graph can be reduced, using clique-sums, to planar graphs and the Wagner graph, and derive `FourColorTheorem \u2192 HadwigerFive`. Together with `wagner_forward`, this yields the substantive Wagner equivalence rather than only the logical contrapositive formulation proved here.\n\n5. **Known cases through six colors.** Prove `\u2200 k \u2264 5, HadwigerCase k`. In the indexing used here, the endpoint `k = 5` asserts that every non-five-colorable finite graph contains a `K\u2086` minor; its formal proof should explicitly identify where the Four Color Theorem is used.\n",
     "domains": [
@@ -11178,6 +11162,50 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal results delimit what remains conjectural. In particular,\n`\u25a1A \u2192 \u25a1\u25a1\u25c7\u209cA` follows from ordinary transitivity (`4`) plus reflexive time, so it does\nnot by itself prove a strict extension of GL. The following are concrete, falsifiable\nnext claims.\n\n1. **Finite-frame completeness for a specified TGL calculus.** Define a Hilbert\n   calculus with GL, temporal S4, persistence `\u25a1A \u2192 G\u25a1A`, and explicit interaction\n   axioms. Conjecture: every formula valid on all finite `TempFrame`s is derivable in\n   that calculus. A finite counterframe to any derivable formula, or a valid\n   underivable formula, refutes the claim.\n\n2. **Finite model property with an explicit bound.** Conjecture: every\n   non-derivable formula `A` of the calculus above has a `TempFrame` countermodel with\n   at most `2^(2 * subformulaCount A)` worlds. This can be tested by filtration and\n   exhaustive bounded model search.\n\n3. **Decidability via bounded countermodel search.** Conjecture: derivability in the\n   specified calculus is decidable by searching the bound in Conjecture 2 with an\n   executable finite-frame model checker. Termination plus verified soundness and\n   completeness of this algorithm would prove the claim.\n\n4. **Non-refutability of proof gain.** Conjecture: no sound calculus for all\n   `TempFrame`s proves the negation of \u201cnot provable now and provable at some later\n   stage.\u201d The two-world model underlying `proof_gain_is_satisfiable` is a concrete\n   countermodel to any such proposed refutation.\n\n5. **Arithmetical completeness requires a precise clock.** Fix a recursively\n   axiomatized increasing sequence of PA fragments `(PA_t)` and interpret `\u25a1_t A` as\n   `Prov_{PA_t}(\u231cA\u231d)`. Conjecture: after specifying a recursively enumerable modal\n   calculus for these indexed operators, its theorems are exactly the formulas valid\n   under every arithmetical substitution. A single modal formula separating the two\n   sets refutes this conjecture for that clock and calculus.\n",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0920",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "17b35eaf",
+    "status": "available",
+    "timestamp": "2026-08-02T23:20:56.712551+00:00",
+    "title": "The formal results delimit what remains conjectural. In particular,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Diatonic-state quotient conjecture.** Extend each canonical state by a scale degree in `Fin 7`, use the C-major step pattern, and quotient generated reachability by mutual reachability. The resulting partial order has exactly 12 equivalence classes. This is falsified by an exhaustive quotient computation yielding any other cardinality.\n\n2. **Boundary-rule thinness conjecture.** Add the usual first-species opening and closing constraints (begin and end on perfect consonances, with contrary or oblique approach to the final). For every fixed cantus firmus of length at most 8 over a finite two-octave diatonic register, the category of complete admissible counterpoints is thin when morphisms are pointwise generated reachability. Two distinct morphisms between the same pair would refute it.\n\n3. **Seven-state strong-connectivity conjecture.** For the seven canonical interval representatives formalized in `SonicCounterpointCategory.lean`, the reflexive-transitive closure of `CanonicalMotion` is total: every interval reaches every other interval. A single unreachable ordered pair refutes this claim.\n\n4. **Register sensitivity conjecture.** If the dyad model is restricted to a finite register of width at least 12 semitones while retaining the present stepwise rule, the quotient of legal dyads by translation has the same generated reachability relation as the seven canonical interval model. A boundary-sensitive pair with different reachability refutes this claim.\n\n5. **Parallel-perfect repair conjecture.** Strengthening `SimilarMotion` to count repeated perfect consonances under nonzero equal-direction motion changes the canonical one-step table cardinality from 15 to 13. An exhaustive enumeration with a different cardinality refutes this claim.\n",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0921",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5c8fc610",
+    "status": "available",
+    "timestamp": "2026-08-02T23:22:21.938335+00:00",
+    "title": "1. **Diatonic-state quotient conjecture.** Extend each canonical state by a scal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe scalar-log unit-circle conjecture is now proved with a certified parameter\ninterval `[1/2, 3]`. The proof also establishes symmetry: every positive\nsolution has a negative solution, and the resulting complex logarithm is a\nunitary scalar.\n\nNatural next steps are:\n\n1. Tighten the certified interval, for example to `[6/5, 5/4]`, using explicit\n   bounds for the complex logarithm.\n2. Prove strict monotonicity of `t \u21a6 |log(1 + t i)|` on `(0, \u221e)`. This would\n   establish uniqueness of the positive solution rather than existence alone.\n3. Lift the scalar unitary logarithmic factor to scalar multiples of the\n   identity in matrix C\u22c6-algebras and prove the corresponding matrix factor is\n   unitary.\n4. Formalize surjectivity of the exponential from Hermitian matrices onto\n   finite-dimensional complex unitary matrices. Combined with the scalar\n   factor theorem, this is the main missing step toward `U(2)` coverage.\n5. Track determinants and traces through that representation to identify the\n   exact trace congruence class required for `SU(2)`.\n6. Develop the polar-normalized logarithmic factor and prove its unitarity for\n   invertible logarithmic inputs.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0922",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c7c1ec6d",
+    "status": "available",
+    "timestamp": "2026-08-02T23:23:46.812195+00:00",
+    "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
@@ -11219,23 +11247,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Theorems as Phase Transitions in Proof Space"
   },
   {
-    "consumed_by_exp_id": "5c8fc610",
-    "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
-    "domains": [
-      "Algebra",
-      "Speculative",
-      "Bridges"
-    ],
-    "id": "seed_067",
-    "phase": "A",
-    "priority_score": 0.74,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Sonic Mathematics: Counterpoint as Category Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 87772396 (Q=0.686) proved 202 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that",
     "domains": [
@@ -11251,6 +11262,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 17b35eaf (Q=0.680) proved 3 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_17b35eaf_0ca3803e",
+    "priority_score": 0.73012,
+    "research_mode": "team",
+    "source_exp_id": "17b35eaf",
+    "status": "available",
+    "timestamp": "2026-08-02T23:21:01.004895+00:00",
+    "title": "Close Proofs: Temporal Logic of Proofs: When You Prove Something Matters"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 50f62832 (Q=0.680) proved 11 theorems in Bridges but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmoni",
     "domains": [
       "Bridges"
@@ -11262,6 +11287,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-20T09:41:43.432388+00:00",
     "title": "Close Proofs: Speculative: Number Theory as Music Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 5c8fc610 (Q=0.672) proved 3 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-spec",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_5c8fc610_5f4b5f2e",
+    "priority_score": 0.72235,
+    "research_mode": "team",
+    "source_exp_id": "5c8fc610",
+    "status": "available",
+    "timestamp": "2026-08-02T23:22:25.788530+00:00",
+    "title": "Close Proofs: Sonic Mathematics: Counterpoint as Category Theory"
   },
   {
     "consumed_by_exp_id": "",

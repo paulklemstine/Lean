@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0fbfba35",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nThe following concrete conjectures isolate extensions not established by the present formalization.\n\n1. **Full analytic leading-pole theorem.** For every irreducible crystallograp",
-      "quality_score": 0.7781,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-31T10:11:09",
-      "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
-    },
-    {
       "cycle_id": "9d058f1b",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\nThe explicit `Bool` witness shows that moving from `Prop`-valued to data-valued\nfibers avoids collapse, but it also raises the question of how restrictive the\nnew equation really",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-02T22:20:26",
       "title": "Perfect Cuboid (Euler Brick)"
+    },
+    {
+      "cycle_id": "c7c1ec6d",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\nThe scalar-log unit-circle conjecture is now proved with a certified parameter\ninterval `[1/2, 3]`. The proof also establishes symmetry: every positive\nsolution has a negative sol",
+      "quality_score": 0.7667599999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-02T23:23:50",
+      "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5fcde7e0",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential–logarithmic expressions and proves its main algebraic closure chain. The next useful",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-25T16:28:20",
-      "title": "EML Differential Algebra: Closure Properties"
-    },
     {
       "cycle_id": "bb3a8583",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 3,
       "timestamp": "2026-08-02T23:22:25",
       "title": "Sonic Mathematics: Counterpoint as Category Theory"
+    },
+    {
+      "cycle_id": "c7c1ec6d",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\nThe scalar-log unit-circle conjecture is now proved with a certified parameter\ninterval `[1/2, 3]`. The proof also establishes symmetry: every positive\nsolution has a negative sol",
+      "quality_score": 0.7667599999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-02T23:23:50",
+      "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "18622a4a",
-      "domain": "Applications",
-      "name": "expand_eval",
-      "quality": 0.77537
-    },
-    {
-      "cycle_id": "2bc344f1",
-      "domain": "Cryptography",
-      "name": "multilinearEval_step",
-      "quality": 0.80715
-    },
-    {
-      "cycle_id": "2bc344f1",
-      "domain": "Cryptography",
-      "name": "encodeChallenge_target",
-      "quality": 0.80715
-    },
     {
       "cycle_id": "2bc344f1",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "brick_44_117_240_not_perfect",
       "quality": 0.76837
+    },
+    {
+      "cycle_id": "c7c1ec6d",
+      "domain": "NumberTheory",
+      "name": "continuous_scalarLogNorm",
+      "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "c7c1ec6d",
+      "domain": "NumberTheory",
+      "name": "scalarLogNorm_half_lt_one",
+      "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "c7c1ec6d",
+      "domain": "NumberTheory",
+      "name": "one_lt_scalarLogNorm_three",
+      "quality": 0.7667599999999999
     }
   ],
-  "last_updated": "2026-08-02T23:22:25",
+  "last_updated": "2026-08-02T23:23:50",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "1ba7b435",
-        "quality": 0.6243783783783784,
-        "theorems": 37,
-        "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-      },
-      {
         "cycle_id": "e4773f49",
         "quality": 0.6398028571428571,
         "theorems": 7,
@@ -3699,6 +3693,12 @@
         "quality": 0.6972499999999999,
         "theorems": 10,
         "title": "Catalan's Conjecture Generalizations"
+      },
+      {
+        "cycle_id": "c7c1ec6d",
+        "quality": 0.7667599999999999,
+        "theorems": 8,
+        "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
       }
     ],
     "Physics": [
