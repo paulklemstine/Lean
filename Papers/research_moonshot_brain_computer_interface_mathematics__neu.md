@@ -1,308 +1,433 @@
-# Neural Coding Theorems: Capacity, Energy, Precision, and Dimension of Binary Population Codes
+# Sparse Binary Neural Codes: Capacity, Energy Efficiency, Population Precision, and Intrinsic Dimension
 
-**Author:** Aristotle
-**Date:** 2026-07-12
+**Aristotle**  
+**August 2, 2026**
 
 ## Abstract
 
-We develop a self-contained mathematical theory of neural coding built
-on a single primitive: a *neural code* on $N$ neurons is a binary
-pattern in $\{0,1\}^N$, one coordinate per neuron, recording which cells
-are active. From this definition we prove a connected chain of results
-that quantify what such codes can and cannot do. First, the
-representational **capacity** of $N$ binary neurons is exactly $2^N$, and
-this bound is tight; each additional neuron doubles capacity (a *doubling
-law*). Second, under the uniform distribution over codes the expected
-number of active neurons is $N/2$, exposing the metabolic cost of *dense*
-coding. Third, the number of codes with exactly $k$ active neurons is
-$\binom{N}{k}$, and the resulting **information per spike**,
-$\log_2\binom{N}{k}/k$, grows like $\log_2 N$ in the one-hot regime,
-giving sparse coding a $\Theta(\log N)$ efficiency advantage over dense
-coding. Fourth, **population coding** by $N$ independent neurons of noise
-variance $v$ yields a pooled estimate of variance $v/N$, so precision
-improves as $1/\sqrt N$. Fifth, a **neural manifold** generated from $d$
-behavioral variables has dimension at most $d$, formalizing the neural
-manifold hypothesis as a rank bound. Together these results give a
-rigorous account of why brains are exponentially capacious, energetically
-forced toward sparsity, statistically precise through pooling, and
-geometrically low-dimensional. We include algorithms, numerical
-demonstrations, and a discussion of extensions to error-correcting
-codes, entropy bounds, Fisher-information optimality, and nonlinear
-manifolds.
+A binary population code represents a neural state by an element of $\{0,1\}^N$, with Hamming weight interpreted as spike energy. This paper develops a self-contained mathematical account of the resulting capacity–energy tradeoff. The unrestricted population has exactly $2^N$ patterns. The codebook of patterns with exactly $k$ spikes has cardinality $\binom{N}{k}$, while the codebook under an at-most-$k$ budget has exact cardinality $\sum_{j=0}^{k}\binom{N}{j}$. We prove the robust bound $\binom{N}{k}\le N^k$, which applies to every constant-weight subcode. Consequently, for $N\ge2$ and $1\le k\le N$, the information per spike of the full exact-$k$ layer is at most $\log_2N$ bits, and one-hot coding attains this ceiling. A one-percent activity rule follows by taking $k=\lfloor N/100\rfloor$. We place these discrete results beside two complementary principles for distributed representation: independent averaging improves inverse-standard-deviation precision as $\sqrt N$, and an affine neural representation generated from $d$ behavioral coordinates has intrinsic dimension at most $d$. Algorithms for exact enumeration, logarithmic capacity evaluation, and numerical exploration are given, together with limitations and directions involving entropy asymptotics, noise-robust constant-weight codes, probabilistic decoding, and nonlinear neural manifolds.
 
 ## 1. Introduction
 
-How does a population of neurons represent information? We adopt the
-most austere model that still captures the essential combinatorics: each
-neuron is a binary unit — active or silent — and the *state* of a
-population is the binary string recording those states. We call such a
-string a neural code. Concepts, percepts, and memories are identified
-with codes, so the representational questions become counting and
-estimation questions about $\{0,1\}^N$.
+Population coding asks how a collection of neurons can represent discrete or continuous information. A minimal abstraction assigns each neuron one of two states during a fixed observation window: silent or active. An $N$-neuron response is then a binary vector. Although this model suppresses spike timing, firing-rate variation, synaptic structure, and dynamics, it isolates three fundamental questions.
 
-This paper assembles the elementary but foundational theorems of that
-model into one coherent development. Each theorem answers a concrete
-neuroscientific question: How many things can be represented (capacity)?
-How does capacity scale with neuron count (doubling)? What does a
-representation cost in spikes (energy)? How is that cost minimized
-(sparsity)? How is continuous precision achieved from noisy units
-(population coding)? And why does high-dimensional neural activity
-collapse onto low-dimensional structure (the neural manifold)? The
-proofs are short; the value lies in the precise statements, their
-tightness, and the way they interlock into an argument for the design
-principles of biological codes.
+First, what is the raw representational capacity of a binary population? Second, how does capacity change when activity is metabolically constrained? Third, how should the combinatorics of discrete patterns be related to the precision and geometry of continuous population representations?
 
-## 2. Definitions
+The first question has the familiar answer $2^N$. The second requires finer counting. If every spike has unit cost and exactly $k$ neurons may be active, codewords correspond to $k$-element subsets and hence number $\binom{N}{k}$. If up to $k$ neurons may be active, the answer is a lower binomial sum. These identities distinguish *exact energy* from *budgeted energy*, which are sometimes conflated.
 
-**Definition 2.1 (Neural code).** Fix $N \in \mathbb{N}$. A *neural code*
-on $N$ neurons is a function $c : \{1,\ldots,N\} \to \{0,1\}$,
-equivalently an element $c \in \{0,1\}^N$. We write $c_i = 1$ to mean
-neuron $i$ is active. The set of all neural codes on $N$ neurons is
-denoted $\mathcal{C}_N = \{0,1\}^N$.
+The central inequality of this paper is deliberately robust:
 
-**Definition 2.2 (Weight / activity / energy).** The *weight* (or
-*activity*, or *energy*) of a code $c$ is the number of active neurons,
-$$w(c) = \sum_{i=1}^{N} c_i = \#\{ i : c_i = 1\}.$$
-We take spike count $w(c)$ as the metabolic cost of the code.
+$$
+\binom{N}{k}\le N^k.
+$$
 
-**Definition 2.3 (Sparse family).** For $0 \le k \le N$, the *weight-$k$
-family* is
-$$\mathcal{C}_{N,k} = \{\, c \in \{0,1\}^N : w(c) = k \,\}.$$
-A code is *one-hot* if $k = 1$.
+It gives a polynomial ceiling when $k$ is fixed and implies a logarithmic information-per-spike bound. This clarifies the proper interpretation of sparse efficiency. The number of possible concepts is not $O(N\log N)$ per spike. Rather, after converting cardinality to information with a logarithm, the rate is at most $\log_2N$ bits per spike. One-hot coding reaches that upper bound.
 
-**Definition 2.4 (Population estimator).** Let $X_1,\ldots,X_N$ be
-independent real-valued neuron estimates of a common scalar quantity,
-each with mean $\mu$ and variance $v > 0$. The *population estimate* is
-the sample mean $\bar X = \frac1N \sum_{i=1}^N X_i$.
+Two continuous principles complete the picture. If independent neurons provide equally noisy measurements, averaging reduces standard deviation by a factor of $\sqrt N$. If an affine neural state is generated by $d$ behavioral variables, its intrinsic affine dimension is at most $d$. These are conditional model theorems, not universal claims about biological tissue, but they identify transparent baselines against which richer models can be compared.
 
-**Definition 2.5 (Linear neural manifold).** Let $B \subseteq
-\mathbb{R}^{d}$ be a set of behavioral states with $d$ *behavioral
-degrees of freedom*, and let $F : \mathbb{R}^{d} \to \mathbb{R}^{N}$ be a
-(linear) *encoding map* producing population activity $F(b)$ for
-behavior $b$. The *neural manifold* is the image $\mathcal{M} = F(B)
-\subseteq \mathbb{R}^{N}$, and its *dimension* is $\dim \operatorname{span}
-\mathcal{M} = \operatorname{rank} F$ in the linear case.
+## 2. Binary neural codes and information
 
-## 3. Capacity and the doubling law
+### 2.1 Neural patterns
 
-**Theorem 3.1 (Capacity).** The number of distinct neural codes on $N$
-neurons is
-$$|\mathcal{C}_N| = 2^N,$$
-and no representation scheme using $N$ binary neurons can distinguish
-more than $2^N$ states.
+**Definition 2.1 (Binary neural code).** For a positive integer $N$, a binary neural pattern on $N$ neurons is a vector
 
-*Proof sketch.* $\mathcal{C}_N = \{0,1\}^N$ is the set of functions from
-an $N$-element set to a $2$-element set, so $|\mathcal{C}_N| = 2^N$ by the
-multiplication principle. Any state that a population of $N$ binary
-neurons can be *in* is by definition an element of $\mathcal{C}_N$;
-distinct external situations that produce identical codes are
-indistinguishable to any downstream reader, so the number of
-distinguishable situations is bounded by $|\mathcal{C}_N| = 2^N$. $\square$
+$$
+c=(c_1,\ldots,c_N)\in\{0,1\}^N.
+$$
 
-**Theorem 3.2 (Doubling law).** For every $N$,
-$$|\mathcal{C}_{N+1}| = 2\,|\mathcal{C}_N|.$$
-Equivalently, capacity satisfies the recurrence $a_{N+1} = 2a_N$ with
-$a_0 = 1$, so each added neuron doubles capacity and $m$ added neurons
-multiply it by $2^m$.
+The coordinate $c_i=1$ denotes activity of neuron $i$ during the chosen time window, and $c_i=0$ denotes silence. A codebook is any finite subset $C\subseteq\{0,1\}^N$.
 
-*Proof sketch.* $2^{N+1} = 2 \cdot 2^N$. Combinatorially, every code on
-$N+1$ neurons is a code on the first $N$ neurons together with an
-independent binary choice for neuron $N+1$; the map $c \mapsto (c\restriction
-N,\ c_{N+1})$ is a bijection $\mathcal{C}_{N+1} \to \mathcal{C}_N \times
-\{0,1\}$. $\square$
+The model treats patterns as distinct messages. It says nothing by itself about whether a downstream circuit can decode them, whether they are separated under a noise metric, or whether they occur with equal probability.
 
-**Remark 3.3.** The doubling law is the quantitative statement that
-binary population capacity is *exponential* in neuron count. It is the
-reason biologically small populations already have astronomically large
-capacities: $2^{300}$ exceeds the number of atoms in the observable
-universe.
+**Definition 2.2 (Capacity and information).** The raw capacity of a finite codebook $C$ is its cardinality $|C|$. Its equiprobable information capacity is
 
-## 4. The energy of dense coding
+$$
+I(C)=\log_2|C|
+$$
 
-**Theorem 4.1 (Dense energy law).** Let $c$ be drawn uniformly at random
-from $\mathcal{C}_N$. Then the expected number of active neurons is
-$$\mathbb{E}[w(c)] = \frac{N}{2}.$$
-Equivalently, $\sum_{c \in \mathcal{C}_N} w(c) = N\,2^{N-1}$.
+bits, provided $C$ is nonempty.
 
-*Proof sketch.* Write $w(c) = \sum_{i=1}^N c_i$ and use linearity of
-expectation. Under the uniform distribution each coordinate $c_i$ is an
-independent fair bit, so $\mathbb{E}[c_i] = \tfrac12$ and $\mathbb{E}[w(c)]
-= \sum_i \tfrac12 = N/2$. Summing weights over all codes: each neuron is
-active in exactly half of the $2^N$ codes, i.e. in $2^{N-1}$ of them, so
-the total weight is $N \cdot 2^{N-1}$. $\square$
+**Theorem 2.3 (Unrestricted binary capacity).** The complete binary population on $N$ neurons contains exactly $2^N$ patterns. Therefore every binary codebook satisfies $|C|\le2^N$, and the full codebook carries $N$ bits.
 
-**Interpretation.** If the brain used all $2^N$ codes with equal
-probability, a typical thought would activate half of its neurons — a
-metabolically ruinous regime. The dense energy law is the negative
-result that motivates sparsity.
+**Proof sketch.** Each of the $N$ coordinates has two choices, independently. The multiplication principle gives $2\cdot2\cdots2=2^N$. Any codebook is a subset of the complete population. Taking $\log_2$ yields $N$ bits for the complete codebook. $\square$
 
-## 5. Sparse coding and information per spike
+### 2.2 Spike energy and sparsity
 
-**Theorem 5.1 (Sparse counting).** For $0 \le k \le N$,
-$$|\mathcal{C}_{N,k}| = \binom{N}{k}.$$
-Consequently $\sum_{k=0}^N \binom{N}{k} = 2^N$, recovering the capacity
-theorem by summing over weights.
+**Definition 2.4 (Hamming weight).** The spike energy of a pattern $c$ is its Hamming weight
 
-*Proof sketch.* A weight-$k$ code is determined by the $k$-element subset
-of active neurons; there are $\binom{N}{k}$ such subsets. The sum
-identity is the binomial theorem at $x = 1$. $\square$
+$$
+w(c)=\sum_{i=1}^{N}c_i.
+$$
 
-**Definition 5.2 (Information per spike).** A code family of size $M$
-selects up to $\log_2 M$ bits. The *information per spike* of the
-weight-$k$ family is
-$$\rho(N,k) = \frac{\log_2 \binom{N}{k}}{k} \qquad (k \ge 1).$$
+Thus $w(c)$ is the number of active neurons.
 
-**Theorem 5.3 (Sparse efficiency; $\Theta(\log N)$ advantage).**
-In the one-hot regime $k = 1$,
-$$\rho(N,1) = \log_2 N.$$
-Hence sparse (one-hot) coding attains $\Theta(\log N)$ bits per spike,
-whereas dense coding is bounded by a constant: a dense code carrying its
-maximal $N$ bits spends on average $N/2$ spikes (Theorem 4.1), giving
-$\rho_{\text{dense}} = N / (N/2) = 2$ bits per spike, independent of $N$.
-Therefore
-$$\frac{\rho_{\text{sparse}}(N,1)}{\rho_{\text{dense}}} = \frac{\log_2
-N}{2} = \Theta(\log N).$$
+**Definition 2.5 (Exact-energy and budget codebooks).** For integers $N,k\ge0$, define
 
-*Proof sketch.* For $k=1$, $\binom{N}{1} = N$, so $\rho(N,1) = \log_2 N$.
-The dense efficiency follows from Theorem 4.1: $N$ bits at cost $N/2$
-spikes. The ratio grows without bound as $N \to \infty$. $\square$
+$$
+E_{N,k}=\{c\in\{0,1\}^N:w(c)=k\}
+$$
 
-**Remark 5.4 (Concepts per unit energy).** Measuring energy by spike
-count, a one-hot population represents $N$ distinct concepts using a
-single spike, i.e. $N$ concepts per unit energy, versus the $2$ concepts
-per unit energy floor of dense coding. More generally the bits/energy
-frontier is the curve $k \mapsto \rho(N,k) = \log_2\binom{N}{k}/k$, which
-is maximized toward the sparse end. This is the mathematical statement of
-the empirically observed $\sim 1\%$ activity of cortical populations:
-sparsity is the energy-optimal code.
+and
 
-## 6. Population coding and $1/\sqrt N$ precision
+$$
+B_{N,k}=\{c\in\{0,1\}^N:w(c)\le k\}.
+$$
 
-**Theorem 6.1 (Population precision).** Let $X_1,\ldots,X_N$ be
-independent with common variance $v$, and let $\bar X = \frac1N \sum_i
-X_i$. Then
-$$\operatorname{Var}(\bar X) = \frac{v}{N}, \qquad \operatorname{sd}(\bar
-X) = \frac{\sqrt v}{\sqrt N}.$$
-The precision (inverse standard deviation) therefore scales as
-$\sqrt{N}$.
+The first is a constant-weight layer. The second is the binary Hamming ball of radius $k$ centered at the all-zero pattern. If $k>N$, the usual convention $\binom Nj=0$ for $j>N$ keeps the formulas below valid.
 
-*Proof sketch.* By independence, variance is additive:
-$\operatorname{Var}\!\big(\sum_i X_i\big) = \sum_i \operatorname{Var}(X_i)
-= Nv$. Scaling by $1/N$ multiplies variance by $1/N^2$, giving
-$\operatorname{Var}(\bar X) = Nv/N^2 = v/N$. Taking square roots yields
-the standard deviation. $\square$
+## 3. Exact sparse capacity
 
-**Interpretation.** A population of noisy, independently jittering
-neurons encodes a continuous quantity with error decreasing as $1/\sqrt
-N$. Continuous, high-precision representation emerges from pooling
-imprecise units — the same law that governs sample means throughout
-statistics. Halving the error requires quadrupling the population.
+**Theorem 3.1 (Exact-Energy Capacity Theorem).** For all $N,k\ge0$,
 
-**Remark 6.2 (Optimality).** The $1/\sqrt N$ rate is not merely
-achievable but optimal: by the Cramér–Rao bound, no unbiased estimator
-built from $N$ independent observations of variance $v$ can have standard
-deviation below $\sqrt{v}/\sqrt N$. The sample-mean population code
-attains this bound.
+$$
+|E_{N,k}|=\binom Nk.
+$$
 
-## 7. The neural manifold hypothesis
+**Proof sketch.** Map a pattern to the subset of indices at which it equals one. A weight-$k$ pattern maps to a $k$-element subset of $\{1,\ldots,N\}$. Conversely, every $k$-element subset determines a unique pattern by placing ones exactly at those indices. These constructions are inverse bijections. $\square$
 
-**Theorem 7.1 (Neural manifold dimension bound).** Let $F :
-\mathbb{R}^{d} \to \mathbb{R}^{N}$ be linear and let $\mathcal{M} = F(B)$
-for some $B \subseteq \mathbb{R}^{d}$. Then
-$$\dim \operatorname{span} \mathcal{M} \le \operatorname{rank} F \le d.$$
-In words: population activity generated from $d$ behavioral degrees of
-freedom lives on a manifold of dimension at most $d$.
+**Theorem 3.2 (Budget Capacity Theorem).** For all $N,k\ge0$,
 
-*Proof sketch.* The span of $F(B)$ is contained in the image
-$\operatorname{im} F$, whose dimension is $\operatorname{rank} F$. By the
-rank–nullity theorem $\operatorname{rank} F = d - \dim \ker F \le d$. A
-linear map cannot increase dimension: it maps a $d$-dimensional source
-into an image of dimension at most $d$. $\square$
+$$
+|B_{N,k}|=\sum_{j=0}^{k}\binom Nj.
+$$
 
-**Interpretation.** However large the neuron count $N$, if activity is
-driven by $d$ behavioral variables the *intrinsic* dimensionality is
-capped by $d$. This is precisely the neural manifold hypothesis: recorded
-activity, though ambient in $\mathbb{R}^N$, is confined to a
-low-dimensional sheet whose dimension reflects the task, not the neuron
-count. It explains why dimensionality-reduction of neural recordings
-routinely uncovers a handful of interpretable axes.
+**Proof sketch.** Partition $B_{N,k}$ by Hamming weight. The fibers are the disjoint layers $E_{N,0},E_{N,1},\ldots,E_{N,k}$. Theorem 3.1 gives the cardinality of each fiber, and cardinalities add over a disjoint union. $\square$
 
-## 8. Algorithms
+For $N=4$, the exact layers have sizes $1,4,6,4,1$. Therefore
 
-We summarize the constructive content of the theory.
+$$
+|B_{4,0}|=1,
+\qquad
+|B_{4,1}|=1+4=5,
+\qquad
+|B_{4,2}|=1+4+6=11.
+$$
 
-**Algorithm A (Capacity and doubling).** Given $N$, return $2^N$ and
-verify $2^{N+1} = 2 \cdot 2^N$. Complexity: $O(1)$ arithmetic on
-big integers; $O(N)$ bit operations for the exact value.
+The distinction between the two codebooks is operational. A circuit with a hard requirement of exactly $k$ spikes uses one layer. A circuit tolerating any cost up to $k$ uses a union of layers, including silence.
 
-**Algorithm B (Sparse efficiency frontier).** Given $N$, compute
-$\rho(N,k) = \log_2 \binom{N}{k} / k$ for $k = 1,\ldots,N$ and return the
-maximizing $k^\star$ and the frontier curve. Complexity: $O(N)$ binomial
-updates using the recurrence $\binom{N}{k+1} = \binom{N}{k}(N-k)/(k+1)$.
+## 4. A polynomial sparse-capacity bound
 
-**Algorithm C (Population precision simulator).** Given single-neuron
-variance $v$ and population size $N$, draw independent samples, form the
-sample mean, and estimate $\operatorname{Var}(\bar X)$; compare against
-the theoretical $v/N$. Complexity: $O(NT)$ for $T$ trials.
+**Lemma 4.1 (Binomial power bound).** For all $N,k\ge0$,
 
-**Algorithm D (Manifold dimension estimate).** Given a matrix of neural
-activity (rows = time, columns = neurons) generated from $d$ behavioral
-variables, compute the singular values and report the numerical rank; the
-theorem guarantees it is at most $d$. Complexity: $O(\min(T,N)\,TN)$ for
-the singular value decomposition.
+$$
+\binom Nk\le N^k.
+$$
 
-## 9. Applications
+**Proof sketch.** A $k$-element subset of an $N$-element set may be converted into an ordered $k$-tuple by listing its elements in increasing order. This is an injection into the set of all ordered $k$-tuples, whose cardinality is $N^k$. Equivalently, $N^k$ counts choices with order and repetition, so it overcounts choices without order and without repetition. $\square$
 
-- **Neuroprosthetics / brain–computer interfaces.** The capacity and
-  sparse-efficiency theorems bound how many commands a decoder can
-  reliably read from a fixed electrode count, and the manifold bound
-  justifies decoding from a few latent dimensions rather than raw
-  channels.
-- **Energy-aware neuromorphic hardware.** The dense energy law and
-  bits-per-spike frontier give a design target: operate near the sparse
-  optimum $k^\star$ to maximize information per unit energy.
-- **Systems neuroscience analysis.** The manifold theorem underwrites
-  the standard practice of summarizing high-dimensional recordings by
-  low-dimensional trajectories whose dimension tracks behavioral
-  complexity.
+The bound is intentionally simple. For $k>0$, the sharper elementary relation
 
-## 10. Discussion and future work
+$$
+\binom Nk\le\frac{N^k}{k!}
+$$
 
-The theorems form a tight logical unit: capacity ($2^N$) is the ceiling;
-the doubling law is its scaling; the dense energy law is the cost of
-using it naively; sparse counting and efficiency are the escape; the
-population and manifold theorems govern precision and geometry. Several
-extensions are natural.
+follows from the falling-factorial formula, and asymptotic analysis can improve it further. The virtue of $N^k$ is that it immediately yields a clean rate theorem.
 
-**Capacity and codes.**
-- *Error-correcting neural codes.* Introduce a Hamming metric on
-  $\mathcal{C}_N$ and prove Singleton / sphere-packing bounds relating
-  minimum distance, redundancy, and the number of reliably
-  distinguishable concepts under noise.
-- *Robust capacity.* Quantify how capacity $2^N$ degrades to $2^{N-r}$
-  when codewords must be pairwise distance $\ge 2r+1$ apart.
+**Theorem 4.2 (Sparse Codebook Capacity).** Let $C\subseteq\{0,1\}^N$ be a codebook such that every $c\in C$ has weight exactly $k$. Then
 
-**Sparse coding.**
-- *Optimal sparsity.* Maximize $\log_2\binom{N}{k}/k$ over $k$; prove the
-  optimum is at $k=1$ for the one-hot regime and characterize the
-  bits/energy frontier as a function of sparsity $k/N$.
-- *Entropy formulation.* Replace $\log_2\binom{N}{k}$ by the
-  binary-entropy approximation $N\,H(k/N)$ and prove the standard
-  $\binom{N}{k} \ge 2^{N H(k/N)}/(N+1)$ bound.
+$$
+|C|\le N^k.
+$$
 
-**Population coding.**
-- *Probabilistic grounding.* Re-derive $\operatorname{Var}(\bar X) = v/N$
-  from the variance of i.i.d. random variables, turning the algebraic
-  model into a theorem about random variables.
-- *Fisher information / Cramér–Rao.* Show the $1/\sqrt N$ precision is
-  optimal via a Cramér–Rao bound.
+**Proof sketch.** Since $C\subseteq E_{N,k}$, monotonicity of cardinality gives $|C|\le|E_{N,k}|$. Apply Theorem 3.1 and Lemma 4.1. $\square$
 
-**Neural manifold.**
-- *Nonlinear manifolds.* Upgrade the dimension bound from linear maps to
-  smooth immersions/submersions via the constant-rank theorem.
-- *Intrinsic dimension.* Relate manifold dimension to the covariance
-  (PCA) rank of recorded activity.
+For fixed $k$, Theorem 4.2 says that exact-energy capacity grows at most polynomially in $N$. If instead $k$ scales linearly with $N$, the right side $N^k$ is not polynomial as a function of $N$. Thus “polynomial sparse capacity” must be understood as a fixed-$k$ statement, while fractional sparsity calls for entropy estimates.
 
-Taken together, these results and their extensions sketch a mathematical
-foundation for neural representation: exact where exactness is possible,
-and pointing to sharp, testable bounds where the biology becomes noisy.
+### 4.1 Information per unit energy
+
+**Theorem 4.3 (Information-Per-Spike Bound).** If $N\ge2$ and $1\le k\le N$, then the complete exact-$k$ layer satisfies
+
+$$
+\frac{I(E_{N,k})}{k}
+=
+\frac{\log_2\binom Nk}{k}
+\le
+\log_2N.
+$$
+
+**Proof sketch.** Lemma 4.1 and monotonicity of the logarithm give
+
+$$
+\log_2\binom Nk\le\log_2(N^k)=k\log_2N.
+$$
+
+The hypothesis $k\ge1$ permits division by $k$. $\square$
+
+The assumptions are substantive. The restriction $k\le N$ ensures the exact-energy layer is nonempty, so its logarithmic information is defined without assigning a meaning to $\log_2 0$. The condition $N\ge2$ places the base-two rate in its ordinary nonnegative regime.
+
+**Theorem 4.4 (One-Hot Optimality for the General Rate Ceiling).** For $k=1$,
+
+$$
+|E_{N,1}|=N
+$$
+
+and, for $N\ge1$,
+
+$$
+\frac{I(E_{N,1})}{1}=\log_2N.
+$$
+
+Thus one-hot coding attains the upper bound in Theorem 4.3 whenever $N\ge2$.
+
+**Proof sketch.** A one-hot pattern is determined by its unique active coordinate, giving $\binom N1=N$ choices. The information identity follows directly. $\square$
+
+Attainment at $k=1$ does not imply that one-hot coding maximizes total information. It maximizes the rate identified by this broad upper bound while offering only $N$ messages. Larger $k$ may produce vastly larger codebooks but generally at a lower number of bits per spike.
+
+### 4.2 One-percent activity
+
+**Corollary 4.5 (One-Percent Capacity Bound).** Let
+
+$$
+k_N=\left\lfloor\frac{N}{100}\right\rfloor.
+$$
+
+Then
+
+$$
+|E_{N,k_N}|=\binom{N}{k_N}
+\le
+N^{k_N}.
+$$
+
+**Proof sketch.** Substitute $k=k_N$ into Theorem 3.1 and Lemma 4.1. $\square$
+
+When $N<100$, this integer rule gives $k_N=0$, so it describes the silent pattern rather than an active one-percent layer. For populations of at least $100$, the information-per-spike theorem applies whenever $k_N\le N$, which is automatic.
+
+For example, with $N=1000$ and $k=10$,
+
+$$
+|E_{1000,10}|=\binom{1000}{10}=263409560461970212832400,
+$$
+
+approximately $2.63\times10^{23}$. Its information is approximately $77.8$ bits, or $7.78$ bits per spike, while $\log_2(1000)\approx9.97$ gives the general ceiling.
+
+## 5. Continuous population precision
+
+The preceding theorems count discrete patterns. Neural populations also estimate continuous quantities. The following result states the assumptions behind the common square-root precision law.
+
+**Definition 5.1 (Unbiased homogeneous population model).** Let $X_1,\ldots,X_N$ be independent real-valued observations of a scalar parameter $\theta$, with
+
+$$
+\mathbb E[X_i]=\theta,
+\qquad
+\operatorname{Var}(X_i)=\sigma^2
+$$
+
+for every $i$. Define the population mean
+
+$$
+\bar X_N=\frac1N\sum_{i=1}^{N}X_i.
+$$
+
+**Theorem 5.2 (Square-Root Population Precision).** Under Definition 5.1,
+
+$$
+\mathbb E[\bar X_N]=\theta,
+\qquad
+\operatorname{Var}(\bar X_N)=\frac{\sigma^2}{N},
+$$
+
+and therefore
+
+$$
+\operatorname{sd}(\bar X_N)=\frac{\sigma}{\sqrt N}.
+$$
+
+If precision is defined as inverse standard deviation, it grows as $\sqrt N/\sigma$.
+
+**Proof sketch.** Linearity of expectation gives unbiasedness. Independence makes the variance of the sum equal to the sum of variances:
+
+$$
+\operatorname{Var}\left(\sum_iX_i\right)=N\sigma^2.
+$$
+
+Scaling by $1/N$ multiplies variance by $1/N^2$, yielding $\sigma^2/N$. Taking square roots gives the standard deviation. $\square$
+
+The theorem does not claim that every neural population achieves this law. With common pairwise covariance $\tau$, for example,
+
+$$
+\operatorname{Var}(\bar X_N)
+=
+\frac{\sigma^2}{N}+rac{N-1}{N}\tau,
+$$
+
+so positive shared noise creates a floor. Heterogeneous neurons may benefit from weighted rather than uniform averaging. The square-root law is best viewed as an independent-noise benchmark.
+
+## 6. A linear neural manifold theorem
+
+A population of $N$ neurons naturally lives in an ambient space such as $\mathbb R^N$. Ambient dimension, however, need not equal intrinsic dimension.
+
+**Definition 6.1 (Affine behavioral encoding).** Let $x\in\mathbb R^d$ denote $d$ behavioral coordinates. An affine neural encoding is a map
+
+$$
+f:\mathbb R^d\to\mathbb R^N,
+\qquad
+f(x)=Ax+b,
+$$
+
+where $A$ is an $N\times d$ matrix and $b\in\mathbb R^N$.
+
+The activity set is
+
+$$
+\mathcal M=f(\mathbb R^d)=b+\operatorname{im}(A).
+$$
+
+**Theorem 6.2 (Linear Neural Manifold Dimension Bound).** For the affine encoding in Definition 6.1,
+
+$$
+\dim_{\mathrm{aff}}(\mathcal M)=\operatorname{rank}(A)\le d.
+$$
+
+**Proof sketch.** Translation by $b$ does not change affine dimension. The translated set $\mathcal M-b$ is the image of the linear map $A$. Its dimension equals the rank of $A$. Since the rank of a linear map cannot exceed the dimension $d$ of its domain, the result follows. $\square$
+
+This theorem states a precise version of a neural-manifold principle: if all variation is driven by $d$ independent linear behavioral coordinates, recording more than $d$ neurons may enlarge the ambient embedding but cannot raise intrinsic affine dimension above $d$. The claim is model-dependent. Latent cognitive variables, internal dynamics, noise, or nonlinear mappings can require a different domain or a nonlinear notion of dimension.
+
+## 7. Algorithms and numerical methods
+
+### 7.1 Exact capacity evaluation
+
+The exact formulas can be evaluated without enumerating all $2^N$ patterns. To calculate $\binom Nk$, use the symmetry
+
+$$
+\binom Nk=\binom N{N-k}
+$$
+
+and set $r=\min(k,N-k)$. The multiplicative recurrence
+
+$$
+q_i=q_{i-1}\frac{N-r+i}{i},
+\qquad q_0=1,
+$$
+
+produces $q_r=\binom Nr$ using exact integer division at each step. This requires $O(r)$ arithmetic operations and constant auxiliary storage, although bit complexity grows with the output size.
+
+For the budget capacity, initialize $t_0=1$ and update
+
+$$
+t_{j+1}=t_j\frac{N-j}{j+1}.
+$$
+
+Summing $t_0$ through $t_k$ computes $B(N,k)$ in $O(\min(k,N))$ recurrence steps. If $k\ge N$, the answer is simply $2^N$.
+
+### 7.2 Logarithmic evaluation
+
+Exact integers become enormous. The stable identity
+
+$$
+\log_2\binom Nk
+=
+\frac{\log\Gamma(N+1)-\log\Gamma(k+1)-\log\Gamma(N-k+1)}{\log2}
+$$
+
+computes information directly in floating point. Dividing by $k$ gives bits per spike. This method runs in constant many library calls and avoids constructing the full coefficient, although its accuracy depends on the numerical implementation of $\log\Gamma$.
+
+### 7.3 Validation by enumeration
+
+For small $N$, direct enumeration is valuable. Iterate over integers from $0$ to $2^N-1$, interpret each integer’s binary expansion as a pattern, and count its set bits. Grouping by weight reproduces the binomial layers and verifies the budget sum experimentally. The procedure costs $O(N2^N)$ bit inspections in a straightforward implementation, so it is pedagogical rather than scalable.
+
+## 8. Applications and interpretation
+
+Sparse distributed codes provide a large address space with limited simultaneous activity. Exact-$k$ coding also normalizes energy across messages, preventing codewords from differing merely because some spend more spikes. In associative memory, sensory representation, or communication, one may additionally demand large Hamming distance between codewords. The capacity theorems here are ceilings before such robustness constraints are imposed.
+
+One-hot coding illustrates the tension sharply. It is trivially decoded and achieves $\log_2N$ bits per spike, but it uses only $N$ of the $2^N$ possible patterns. A weight-$k$ layer increases total repertoire to $\binom Nk$ while retaining a fixed energy cost. Whether this is advantageous depends on decoder complexity, noise, and wiring.
+
+The square-root precision law describes a different gain: redundancy across noisy measurements. It concerns estimation error rather than the number of discrete messages. The manifold theorem concerns still another property: the intrinsic geometry of the set of possible activity states. Capacity, precision, and dimension should therefore not be collapsed into a single notion of representational power.
+
+## 9. Worked regimes and design consequences
+
+The formulas become easier to interpret when several scaling regimes are separated.
+
+### 9.1 One spike: maximal rate, linear repertoire
+
+With $k=1$, the codebook consists of $N$ one-hot words. It carries $\log_2N$ bits and spends one spike, exactly meeting the general rate ceiling. Its minimum Hamming distance is $2$: changing one valid one-hot word into another requires turning one neuron off and another on. A single bit flip, however, produces either silence or a two-spike word rather than another valid codeword. Thus an ideal decoder that knows the constant-weight constraint can detect, though not necessarily correct, one flip.
+
+### 9.2 Two spikes: quadratic repertoire
+
+With $k=2$,
+
+$$
+|E_{N,2}|=\binom N2=\frac{N(N-1)}2.
+$$
+
+This is asymptotically half of $N^2$, so the polynomial ceiling captures the correct degree but not the leading constant. The information per spike is
+
+$$
+\frac12\log_2\left(\frac{N(N-1)}2\right)
+=
+\log_2N+\frac12\log_2\left(\frac{1-1/N}{2}\right),
+$$
+
+which approaches $\log_2N-1/2$ as $N$ grows. Two-spike coding therefore comes within one-half bit per spike of the ceiling for large populations while providing roughly $N/2$ times as many messages as one-hot coding.
+
+### 9.3 Fixed spike count
+
+For fixed $k$ and growing $N$, the falling-factorial identity gives
+
+$$
+\binom Nk
+=
+\frac{N(N-1)\cdots(N-k+1)}{k!}.
+$$
+
+Dividing by $N^k$ yields a product whose factors tend to $1$, followed by $1/k!$. Hence
+
+$$
+\binom Nk\sim\frac{N^k}{k!}.
+$$
+
+The information per spike consequently has the expansion
+
+$$
+\frac1k\log_2\binom Nk
+=
+\log_2N-\frac1k\log_2(k!)+o(1).
+$$
+
+This explains both the usefulness and looseness of the universal ceiling. It identifies the leading $\log_2N$ growth but suppresses the rate penalty caused by unordered selection.
+
+### 9.4 Fractional sparsity
+
+If $k$ grows proportionally to $N$, fixed-$k$ language is inappropriate. Writing $k\approx\rho N$ with $0<\rho<1$, the exact capacity remains $\binom Nk$, but its logarithm grows linearly rather than logarithmically with $N$. The natural asymptotic scale is the binary entropy function
+
+$$
+H_2(\rho)=-\rho\log_2\rho-(1-\rho)\log_2(1-\rho).
+$$
+
+Stirling analysis suggests $\log_2\binom N{\rho N}\approx NH_2(\rho)$. This approximation is not needed for the exact theorems above, but it explains why a one-percent layer can still contain exponentially many patterns as $N$ grows, even though its active fraction is small.
+
+### 9.5 Distance and decoding
+
+For patterns $c$ and $c'$, define their Hamming distance by
+
+$$
+d_H(c,c')=|\{i:c_i\ne c'_i\}|.
+$$
+
+Capacity alone allows neighboring codewords and therefore supplies no correction guarantee. If a selected subcode has minimum distance $\delta$, then nearest-neighbor decoding corrects every corruption of fewer than $\delta/2$ coordinates: two distinct codewords cannot both lie within that radius of the received pattern, by the triangle inequality. Imposing distance removes codewords, so Theorem 4.2 remains a valid outer ceiling for every robust constant-weight subcode. Determining how close a distance-constrained construction can come to that ceiling is a separate coding problem.
+
+These regimes show why no single sparsity level is universally optimal. One-hot patterns maximize the guaranteed information rate and simplify decoding. Larger fixed weights enlarge the repertoire while retaining polynomial scaling. Fractional weights produce exponential repertoires but consume energy proportional to population size. A biological or engineered system must choose among them according to message demand, acceptable metabolic cost, and noise tolerance.
+
+## 10. Limitations
+
+The binary model fixes a time window and ignores spike timing. Hamming weight is a proxy for energy, not a complete metabolic model. It assigns equal cost to all neurons and omits baseline maintenance, synaptic transmission, axonal distance, and temporal firing history.
+
+Equiprobable information $\log_2|C|$ is a maximal codebook quantity. If patterns occur with unequal probabilities, Shannon entropy is the relevant average information and may be smaller. Capacity also does not imply learnability or efficient decoding.
+
+The inequality $\binom Nk\le N^k$ is robust but loose. For fractional sparsity $k\approx\rho N$, binary entropy gives the correct exponential scale. The precision theorem assumes independent homogeneous noise. The dimension theorem assumes an affine map and includes no stochastic fluctuations. These limitations define a program of refinements rather than defects in the elementary results.
+
+## 11. Future work
+
+Sharper sparse asymptotics should establish
+
+$$
+\binom Nk\le\left(\frac{eN}{k}\right)^k
+$$
+
+and connect $\log_2\binom N{\rho N}$ to $NH_2(\rho)$ through Stirling estimates. Cumulative budgets call for practical upper bounds on $\sum_{j\le k}\binom Nj$. Noise robustness leads naturally to constant-weight error-correcting codes, Johnson-type bounds, and sphere packing.
+
+A probabilistic account should derive population precision from explicit random response models, then incorporate heterogeneous variances and correlations. The affine manifold theorem should be extended to smooth maps from $d$-dimensional behavioral manifolds, where derivative rank controls local image dimension. Finally, explicit encoders and decoders are needed to compare representational capacity with computational complexity.
+
+## 12. Conclusion
+
+Binary populations offer $2^N$ unrestricted states, but energy constraints reveal a more informative structure. Exactly $k$ spikes provide $\binom Nk$ patterns; at most $k$ spikes provide $\sum_{j=0}^{k}\binom Nj$. Every exact-$k$ codebook has size at most $N^k$, yielding a ceiling of $\log_2N$ bits per spike that one-hot coding attains. Alongside these discrete laws, independent averaging supplies a $\sqrt N$ precision benchmark, and affine behavioral encoding bounds intrinsic neural dimension by the number of behavioral coordinates. Together, these results separate three fundamental resources—codebook size, energetic rate, and geometric dimension—and provide a rigorous baseline for richer theories of neural representation.

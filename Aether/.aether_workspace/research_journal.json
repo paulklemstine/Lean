@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "77d39a70",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\nThe completed connector identifies the matrix word `A D A` with both the third\nraw moment of the degree distribution and the number of homomorphisms from the\nthree-leaf star. The",
-      "quality_score": 0.76844,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-31T05:11:22",
-      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-    },
-    {
       "cycle_id": "7c352e1f",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nThe formal results show that a scalar missing rate and feature count do not determine first cohomology: restriction-map ranks and overlap incidence are essential. The following co",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-08-02T15:29:38",
       "title": "Bridge: Galois Connections Between Order Theory and Topology"
+    },
+    {
+      "cycle_id": "c945ec38",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Finite partition formula.** For every finite pairwise-disjoint family of finite--cofinite\n   events, the probability of its union equals the finite sum of its probabilities.",
+      "quality_score": 0.77894,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-02T17:24:52",
+      "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f853fcd6",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Matroid Correspondences\n\n## 1. Representability transfer through linear correspondences\n\nLet a matroid correspondence be induced by a linear relation between two finite-dimensiona",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-25T09:20:47",
-      "title": "ArXiv paper: Matroid correspondence"
-    },
     {
       "cycle_id": "6296b01e",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-02T17:23:30",
       "title": "The deterministic incidence-capacity obstruction — that any cover of a graph by"
+    },
+    {
+      "cycle_id": "c945ec38",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\n1. **Finite partition formula.** For every finite pairwise-disjoint family of finite--cofinite\n   events, the probability of its union equals the finite sum of its probabilities.",
+      "quality_score": 0.77894,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-02T17:24:52",
+      "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3cce8c08",
-      "domain": "Applications",
-      "name": "gdIter_distance",
-      "quality": 0.76564
-    },
-    {
-      "cycle_id": "3cce8c08",
-      "domain": "Applications",
-      "name": "gdIter_eq_median_of_distance_le",
-      "quality": 0.76564
-    },
-    {
-      "cycle_id": "b080b405",
-      "domain": "Cryptography",
-      "name": "two_state_cayley_hamilton",
-      "quality": 0.7891599999999999
-    },
     {
       "cycle_id": "b080b405",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "galois_closed_elements_completeLattice",
       "quality": 0.78888
+    },
+    {
+      "cycle_id": "c945ec38",
+      "domain": "Novelty",
+      "name": "infinitesimalGame_numeric",
+      "quality": 0.77894
+    },
+    {
+      "cycle_id": "c945ec38",
+      "domain": "Novelty",
+      "name": "epsilon_pos",
+      "quality": 0.77894
+    },
+    {
+      "cycle_id": "c945ec38",
+      "domain": "Novelty",
+      "name": "epsilon_lt_powHalf",
+      "quality": 0.77894
     }
   ],
-  "last_updated": "2026-08-02T17:23:30",
+  "last_updated": "2026-08-02T17:24:52",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "72d619d5",
-        "quality": 0.78874,
-        "theorems": 21,
-        "title": "Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
-      },
-      {
         "cycle_id": "67548200",
         "quality": 0.7916099999999999,
         "theorems": 34,
@@ -3637,6 +3631,12 @@
         "quality": 0.75983,
         "theorems": 12,
         "title": "Consciousness as Integrated Information: Mathematical Foundations"
+      },
+      {
+        "cycle_id": "c945ec38",
+        "quality": 0.77894,
+        "theorems": 29,
+        "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
       }
     ],
     "NumberTheory": [

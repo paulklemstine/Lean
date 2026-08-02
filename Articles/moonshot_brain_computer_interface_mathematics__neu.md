@@ -1,201 +1,147 @@
-# The Arithmetic of Thought: How Many Ideas Can a Brain Hold?
+# The Quiet Power of Sparse Neural Codes
 
-Somewhere behind your eyes, roughly eighty-six billion neurons are
-flickering on and off, and out of that shimmering static comes
-*everything* — the memory of your first bicycle, the taste of coffee,
-the face of someone you love. It is one of the oldest and strangest
-questions in science: how does a lump of electrified tissue *represent*
-the world? How does a pattern of firing cells become a thought?
+## How a few spikes can name a world
 
-For a long time this felt like a question only biology could answer.
-But hidden underneath the wetware is something surprisingly clean and
-countable — a mathematics of representation. If we are willing to
-strip a neuron down to its barest cartoon, treating it as a switch that
-is either *on* (firing) or *off* (silent), then the brain's coding
-scheme becomes an object we can measure, bound, and prove theorems
-about. This article is about those theorems. They are simple enough to
-state on a napkin and deep enough to explain why your brain is wired the
-way it is.
+Every moment, the brain faces an extravagant communication problem. A retina must report a shifting field of light; a motor system must specify the position and force of many muscles; memory must distinguish one face, place, or episode from countless alternatives. Yet neurons do not transmit elegant paragraphs. In a simplified but useful picture, each neuron contributes a binary answer during a short time window: active or silent.
 
-## A neuron is a bit, a thought is a pattern
+That austere alphabet creates a striking combinatorial universe. With $N$ binary neurons, an activity pattern is a string of $N$ zeros and ones. There are exactly
 
-Let us make the cartoon precise. Suppose we have $N$ neurons, and at any
-instant each one is either active or silent. Then the state of the whole
-population is a string of $N$ ones and zeros — a **neural code**. The
-string $10110\ldots$ says "neuron 1 fires, neuron 2 is silent, neuron 3
-fires," and so on. Every distinct thought, percept, or memory the brain
-wants to represent must correspond to some such pattern.
+$$
+2^N
+$$
 
-Immediately a counting question presents itself. How many *different*
-patterns are there? This is the first theorem, and it is the bedrock of
-everything else.
+such strings, because each position offers two independent choices. This is the elementary capacity theorem for binary population codes: no code using one binary state per neuron can contain more than $2^N$ distinct patterns, and the full collection attains that limit. Equivalently, the population carries at most $N$ bits when every pattern is available.
 
-> **Capacity Theorem.** A population of $N$ binary neurons can represent
-> exactly $2^N$ distinct codes, and no more.
+The number is enormous. A population of $100$ neurons has $2^{100}$ possible patterns, far beyond the number of seconds in the age of the universe. But this abundance hides a biological bill. A pattern full of ones asks many cells to fire at once. Spikes consume energy, and neural tissue must continually restore ion gradients, recycle transmitter, and maintain the machinery that makes signaling possible. Capacity alone is therefore the wrong currency. The better question is: how much distinguishable information can a population buy with a limited number of spikes?
 
-The proof is the proof every schoolchild rediscovers: the first neuron
-has two choices, the second has two choices, and the choices multiply,
-giving $2 \times 2 \times \cdots \times 2 = 2^N$. What makes it worth
-stating formally is the little word *exactly*. There is no clever
-encoding, no trick of biology or chemistry, that lets $N$ on/off units
-distinguish more than $2^N$ situations. The number $2^N$ is not an
-estimate; it is a ceiling welded to the sky.
+## Energy as Hamming weight
 
-And that ceiling rises with breathtaking speed. This is the second
-result, the engine of the brain's power:
+Represent a neural pattern by $c=(c_1,\ldots,c_N)$ with each $c_i\in\{0,1\}$. Its spike cost, or Hamming weight, is
 
-> **Doubling Law.** Adding a single neuron doubles the representational
-> capacity: a population of $N+1$ neurons has capacity $2^{N+1} = 2
-> \cdot 2^N$.
+$$
+w(c)=\sum_{i=1}^{N}c_i.
+$$
 
-One extra cell doubles the number of representable ideas. Ten extra
-cells multiply it by a thousand. Just **300** binary neurons — a
-laughably tiny cluster by biological standards — can in principle label
-more distinct states than there are atoms in the observable universe.
-The brain's vault is not merely large; it is exponentially, absurdly
-large. Storage is not the brain's problem. As we will see, its real
-problem is *energy*.
+A pattern of weight $k$ uses exactly $k$ active neurons. A sparse code restricts attention to low-weight patterns. This simple constraint transforms the capacity calculation.
 
-## The price of a thought
+To count patterns with exactly $k$ spikes, choose which $k$ of the $N$ neurons are active. The answer is the binomial coefficient
 
-Every spike costs metabolic fuel. A firing neuron burns glucose and
-oxygen; the brain, though only about two percent of your body weight,
-devours something like a fifth of your resting energy budget. So it is
-not enough to ask *how many* thoughts a code can hold — we must ask how
-*expensive* each pattern is, measuring cost by the number of neurons a
-pattern switches on.
+$$
+\binom{N}{k}.
+$$
 
-Here the naive scheme looks alarming. If the brain used its patterns
-democratically — every one of the $2^N$ codes equally likely — how many
-neurons would be lit up in a typical thought?
+This is the Exact-Energy Capacity Theorem: the complete layer of patterns costing exactly $k$ spikes contains precisely $\binom{N}{k}$ codewords. The proof is a direct bijection. Each pattern corresponds to its set of active neuron indices, and each $k$-element subset of the population determines one pattern.
 
-> **Dense Energy Law.** Averaged uniformly over all $2^N$ codes, the
-> expected number of active neurons is exactly $N/2$.
+If the energy rule allows at most $k$ spikes rather than exactly $k$, all layers from zero through $k$ become available. The Budget Capacity Theorem states that the number of admissible patterns is
 
-The reasoning is elegant: by symmetry each individual neuron is active
-in precisely half of all possible patterns, so on average half the
-population — $N/2$ cells — is blazing away at any moment. For the human
-brain that would mean tens of billions of neurons firing at once, a
-metabolic catastrophe that would cook the skull. Real brains do nothing
-of the sort. Recordings show that at any instant only a tiny
-fraction — often around **one percent** — of neurons are active. The
-brain has quietly refused the democratic code. Why? And what does it use
-instead?
+$$
+B(N,k)=\sum_{j=0}^{k}\binom{N}{j}.
+$$
 
-## Sparse coding: saying more with less
+The layers are disjoint because a pattern cannot have two different weights. For four neurons, the successive budgets contain $1$, $5$, and $11$ patterns: with no spikes there is only silence; with at most one spike there are silence and four one-hot patterns; with at most two spikes, six two-spike patterns join them.
 
-The answer is **sparse coding**: represent each concept with only a
-*handful* of active neurons, keeping the vast majority silent. To study
-it we count the patterns of a fixed weight.
+These exact formulas expose the central tradeoff. The unrestricted code grows exponentially with $N$, while a fixed-spike layer grows only polynomially. Yet sparse coding can still be remarkably efficient.
 
-> **Sparse Counting Theorem.** The number of neural codes on $N$ neurons
-> that have exactly $k$ active cells is the binomial coefficient
-> $$\binom{N}{k} = \frac{N!}{k!\,(N-k)!}.$$
+## The polynomial ceiling
 
-This is the number of ways to choose *which* $k$ of the $N$ neurons
-fire. And here the magic of combinatorics enters. Even a severe sparsity
-budget leaves an enormous menu of patterns. With $N = 10{,}000$ neurons
-and only $k = 100$ of them allowed to fire — a one-percent code — the
-count $\binom{10000}{100}$ is a number with more than two hundred digits.
-Sparsity barely dents capacity while slashing the energy bill.
+The key bound is
 
-The right way to see the win is to measure **information per spike**. A
-population firing $k$ neurons can select among $\binom{N}{k}$ patterns,
-carrying up to $\log_2 \binom{N}{k}$ bits of information at a cost of $k$
-spikes. The efficiency is the ratio
-$$\frac{\log_2 \binom{N}{k}}{k} \quad\text{bits per spike}.$$
-Push sparsity to its extreme — the **one-hot code**, where a single
-neuron fires ($k = 1$) — and each spike carries $\log_2 N$ bits.
+$$
+\binom{N}{k}\le N^k.
+$$
 
-> **Sparse Efficiency Theorem.** In the one-hot regime the information
-> per spike grows like $\log_2 N$; sparse coding therefore enjoys a
-> $\Theta(\log N)$ advantage in bits per spike over dense coding, whose
-> efficiency stays bounded by a constant.
+One way to see it is to count ordered lists. A $k$-element active set can be listed in at least one order, and every such list is among the $N^k$ ordered $k$-tuples drawn from $N$ neurons. Ordered tuples overcount subsets—often dramatically—but overcounting is exactly what an upper bound permits.
 
-This is the theorem that explains the one-percent brain. A dense code
-squanders energy: it fires $N/2$ neurons to carry $N$ bits, a fixed two
-bits per spike no matter how large the brain grows. A sparse code gets
-*better* with scale — the bigger the brain, the more each precious spike
-is worth. Evolution, facing a metabolic ceiling, chose the code whose
-efficiency rises without bound. Sparsity is not a bug or a limitation;
-it is the optimal answer to the question "how do I think the most
-thoughts on the least fuel?"
+The Sparse Capacity Theorem follows immediately: every collection whose codewords all use exactly $k$ spikes has at most $N^k$ members. It need not contain every pattern at that weight. Since it is a subset of the full weight-$k$ layer, its size is bounded first by $\binom{N}{k}$ and then by $N^k$.
 
-## Precision from the crowd
+This result corrects a tempting slogan. Sparse coding does not literally create $O(N\log N)$ distinct concepts per unit energy. Rather, its *information*, measured in bits, is logarithmic per spike. If a codebook has $M$ equally distinguishable entries, its information capacity is
 
-There is a puzzle lurking here. If only a few noisy, unreliable neurons
-are firing, how does the brain represent smooth, *continuous*
-quantities — the exact angle of your wrist, the precise pitch of a note,
-the fine gradation of a color — with such accuracy? A single neuron is a
-sloppy instrument, its firing rate jittering from moment to moment. The
-resolution is **population coding**: let many neurons vote, and average
-their opinions.
+$$
+I(M)=\log_2 M.
+$$
 
-Suppose each of $N$ neurons offers an independent, noisy estimate of the
-same underlying quantity, each with the same error variance $v$.
-Averaging them yields a population estimate, and the mathematics of
-averaging independent noise is exact.
+For the full exact-$k$ layer, provided $N\ge2$ and $1\le k\le N$,
 
-> **Population Precision Theorem.** The variance of the pooled estimate
-> from $N$ independent neurons is $v/N$; equivalently, the error (the
-> standard deviation) shrinks like $\sqrt{v}/\sqrt{N}$.
+$$
+\frac{\log_2\binom{N}{k}}{k}\le\log_2 N.
+$$
 
-Precision scales as $\sqrt{N}$. To halve your uncertainty you need four
-times as many neurons; to gain a decimal place, a hundredfold. This is
-the same law that makes political polls of a few thousand people
-predict a nation of millions, the same $1/\sqrt{N}$ that governs every
-average in science. The brain, it turns out, is running an internal poll
-of its own neurons, and by pooling their scattered guesses it
-manufactures a precision no single cell could ever deliver. Continuous
-experience is a democracy of imprecise voters.
+The proof takes base-two logarithms of $\binom{N}{k}\le N^k$ and divides by the positive cost $k$. Thus the population offers at most $\log_2 N$ bits per spike under this model. The phrase “per unit energy” becomes precise: the numerator is information, not the raw number of concepts.
 
-## The shape of activity: the neural manifold
+The upper bound is not merely an artifact of a loose estimate. One-hot coding attains it exactly. Set $k=1$. There are $\binom{N}{1}=N$ possible patterns, one for each choice of the active neuron, so
 
-Our final theorem answers the most modern question of the four. When
-neuroscientists record hundreds of neurons at once, they get a point
-wandering through a very high-dimensional space — one axis per neuron. In
-principle that point could roam anywhere in the $N$-dimensional cube of
-possible activity. In practice it does not. Instead, the activity is
-found clinging to a thin, low-dimensional sheet — a **neural manifold** —
-buried inside the enormous ambient space. Why should billions of degrees
-of freedom collapse onto so few?
+$$
+\frac{\log_2 N}{1}=\log_2 N
+$$
 
-The answer is that neural activity does not exist for its own sake; it
-exists to *drive behavior*, and behavior has only so many independent
-knobs. A reaching arm, a moving eye, a walking gait — each is described
-by a modest number of **behavioral degrees of freedom**. If the neural
-population is producing activity in the service of $d$ behavioral
-variables, then the activity can vary in at most $d$ independent ways.
+bits are carried per spike. One-hot coding sacrifices total capacity to achieve the maximum rate guaranteed by this general ceiling.
 
-> **Neural Manifold Theorem.** If the population activity is generated
-> from $d$ underlying behavioral variables, the dimension of the neural
-> manifold is at most $d$ — the number of behavioral degrees of freedom.
+## What one percent means
 
-The proof, in its cleanest form, is a fact about linear maps: the image
-of a $d$-dimensional space of behavioral commands can span no more than
-$d$ dimensions of neural activity, because a map cannot manufacture
-dimensions out of nothing — its rank is bounded by the dimension of its
-source. However tangled the wiring, the *shape* of what the brain does
-is corseted by the shape of what the body can do. This is why the
-seemingly hopeless high-dimensional tangle of neural recordings so often
-flattens, under analysis, into a few interpretable axes: the manifold
-was never allowed to be big in the first place.
+Sparse activity is often described through a fraction of the population. Under a one-percent exact activity rule, set
 
-## The moral of the arithmetic
+$$
+k=\left\lfloor\frac{N}{100}\right\rfloor.
+$$
 
-Step back and the four theorems tell a single story. The brain is handed
-an exponential gift — $2^N$ possible thoughts — but also an exponential
-temptation to squander energy. It resolves the tension with sparsity,
-firing few neurons and reaping $\log N$ bits from every spike. It buys
-precision not from perfect cells but from the crowd, extracting
-$\sqrt{N}$ accuracy from noisy voters. And the tangle of its activity
-stays organized, pinned to a low-dimensional manifold by the limited
-repertoire of the body it must move.
+The number of patterns is exactly $\binom{N}{\lfloor N/100\rfloor}$ and obeys
 
-None of this required knowing the chemistry of a synapse or the biology
-of an ion channel. It followed from treating a neuron as a bit and a
-thought as a pattern, and then counting carefully. That is the quiet
-promise of a mathematics of the mind: that beneath the wet, warm chaos
-of the brain lie laws as sharp and as certain as any in physics — laws
-that say, in the end, how many ideas a fistful of neurons can hold, how
-much they cost, how sharp they can be, and what shape they must take.
+$$
+\binom{N}{\lfloor N/100\rfloor}
+\le
+N^{\lfloor N/100\rfloor}.
+$$
+
+For $N=1000$, exactly ten active neurons produce $\binom{1000}{10}$ possible patterns, approximately $2.63\times10^{23}$. The coarse ceiling $1000^{10}=10^{30}$ is much larger, but it makes the scaling transparent. The exact code carries about $77.8$ bits in ten spikes, or about $7.78$ bits per spike, below the ceiling $\log_2 1000\approx9.97$.
+
+This distinction matters biologically. Sparsity can retain an astronomical repertoire while sharply reducing simultaneous activity, but there is no free lunch. Restricting energy removes most binary patterns. The design question is whether the remaining repertoire is large enough and sufficiently separated to resist noise.
+
+## From codebooks to precision
+
+Neural populations need not merely label discrete concepts. They also estimate continuous quantities: orientation, sound direction, limb angle, elapsed time. Suppose $N$ neurons provide independent, equally noisy measurements of a scalar signal, each with variance $\sigma^2$. The arithmetic mean has variance
+
+$$
+\operatorname{Var}(\bar X)=\frac{\sigma^2}{N},
+$$
+
+so its standard deviation is
+
+$$
+\frac{\sigma}{\sqrt N}.
+$$
+
+This is the familiar square-root law for population coding. If “precision” means inverse standard deviation, precision improves proportionally to $\sqrt N$. Quadrupling the population halves the typical estimation scale; obtaining ten times finer precision requires roughly one hundred times as many independent neurons. The law is powerful but conditional: correlations, unequal noise, nonlinear responses, and suboptimal decoding can change the effective gain.
+
+Discrete sparse capacity and continuous population precision illuminate different tasks. The first asks how many codewords fit under an energy constraint. The second asks how accurately repeated noisy signals can be combined. Both show why distributed representations are attractive: adding neurons can increase representational resources even when no single neuron becomes more sophisticated.
+
+## The geometry behind activity
+
+Large populations create another puzzle. If a recording contains activity from thousands of neurons, does the brain’s state truly wander through a thousand-dimensional space? Often behavior has far fewer degrees of freedom. A reaching hand may be described by a modest collection of joint angles, velocities, and task variables.
+
+A clean linear model captures the resulting dimension bound. Let behavioral state be $x\in\mathbb R^d$, and let neural activity be generated by
+
+$$
+y=Ax+b,
+$$
+
+where $A$ maps $d$ behavioral coordinates into $N$ neural coordinates. The set of possible activity vectors lies in the affine image $b+\operatorname{im}(A)$. Its dimension is the rank of $A$, and therefore
+
+$$
+\dim\bigl(b+\operatorname{im}(A)\bigr)=\operatorname{rank}(A)\le d.
+$$
+
+This is the Linear Neural Manifold Dimension Theorem: when neural states are generated from $d$ behavioral degrees of freedom by an affine map, their intrinsic affine dimension cannot exceed $d$, regardless of how large $N$ is. More recorded neurons provide a richer embedding and potentially better noise averaging, but they do not create new intrinsic coordinates in this model.
+
+The nonlinear version is subtler. A curved image can bend through a high-dimensional neural space while remaining locally low-dimensional. Derivative rank, smoothness, and self-intersections then become central. The linear theorem should be read as a baseline, not as proof that biological activity is globally flat.
+
+## A design triangle
+
+Three quantities now frame the engineering of a neural code.
+
+* **Capacity:** unrestricted binary populations offer $2^N$ patterns; exact-$k$ sparse populations offer $\binom{N}{k}$.
+* **Energy:** Hamming weight counts simultaneous spikes, and fixed-$k$ information is bounded by $k\log_2N$ bits.
+* **Geometry and precision:** averaging can improve scalar precision like $\sqrt N$, while a representation driven by $d$ linear behavioral coordinates remains at most $d$-dimensional.
+
+No single theorem chooses the brain’s code. Real neural systems must also contend with timing, correlations, synaptic costs, noise, learning, and decoding speed. But these counting laws establish a disciplined starting point. They tell us what binary populations can represent, what sparse activity costs, and which claims need refinement.
+
+The deepest lesson is not that silence limits the brain. It is that silence can be organized. A sparse pattern uses absence as part of its alphabet; the inactive majority helps identify the active minority. Combinatorics turns a handful of spikes into a vast address space, probability turns many noisy neurons into a more precise estimate, and geometry explains how a high-dimensional recording can express a low-dimensional act. The mathematics does not reduce thought to bits. It reveals how much structure can live between a spike and a silence.
