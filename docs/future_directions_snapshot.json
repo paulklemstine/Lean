@@ -2293,6 +2293,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_4ae649eb_c81b44fe",
+    "lineage_refs": [],
+    "priority_score": 0.89196,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4ae649eb",
+    "status": "available",
+    "timestamp": "2026-08-02T18:22:37.383512+00:00",
+    "title": "Deepening: PAC-Bayes Bounds: Information-Theoretic Generalization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
     "domain_bridges": [],
     "domains": [
@@ -5446,26 +5465,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2acb9b42",
-    "description": "Prove that every convex body K in Rⁿ of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "seed_219",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Bourgain's Slicing Problem"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that for any countable first-order theory, the number of countable models is either countable or 2^ℵ₀. Formalize Morley's theorem and the topological version.",
     "domain_bridges": [],
@@ -5521,26 +5520,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Secure Multi-Party Computation: Theoretical Foundations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "4ae649eb",
-    "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "id": "seed_331",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
   {
     "ambition_level": "extension",
@@ -14011,7 +13990,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7c1ec6d",
     "description": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H₂ = 0` produces zero.  They also\nshow that unitary output forces the logarithmic factor itself to be unitary.  This leaves\nthe raw-expression coverage question separate from the question whether the expression\ndefines an `SU(2)`-valued activation.\n\nConcrete, falsifiable next conjectures:\n\n1. **Scalar-log unit-circle intersection.** There exists a nonzero real `t` such that\n   `|Complex.log (1 + t * I)| = 1`.  Equivalently,\n   `(Real.log (Real.sqrt (1+t^2)))^2 + (Real.arctan t)^2 = 1` (with the principal\n   branches).  A certified interval containing such a `t` would give a scalar unitary\n   logarithmic factor.\n\n2. **Scalar second Hamiltonian suffices for `U(2)` coverage.** If `t` satisfies the first\n   conjecture and `H₂ = t I`, then every `2 × 2` unitary matrix is equal to\n   `exp(iH₁) * log(I+iH₂)` for some Hermitian `H₁`.  This reduces to proving global\n   surjectivity of the Hermitian exponential for finite-dimensional complex unitary\n   matrices and tracking the scalar phase.\n\n3. **Trace correction for `SU(2)`.** Under the same scalar choice of `H₂`, every element\n   of `SU(2)` has a representing Hermitian `H₁` whose trace lies in one explicitly\n   determined congruence class modulo `2π`; determine and prove that class.\n\n4. **Normalized activation is always unitary on its domain.** Define the polar-normalized\n   logarithmic factor `L (L⋆L)^{-1/2}` whenever `L = log(I+iH₂)` is invertible.  Conjecture:\n   multiplying this factor by `exp(iH₁)` yields a unitary, and every `SU(2)` matrix is\n   obtained with traceless Hermitian parameters after a determinant-one phase correction.\n",
     "domain_bridges": [],
     "domains": [
@@ -14024,7 +14003,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "8fe295b2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T18:56:23.876742+00:00",
     "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
   },
@@ -14988,6 +14967,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe present development establishes a finite, discrete chain:\n\n1. a pointwise code-length bound on information density;\n2. mutual information bounded by expected description length;\n3. monotonicity of the square-root PAC-Bayes radius;\n4. transfer of an information-theoretic generalization guarantee to expected and uniform description-length bounds;\n5. monotonic improvement of the resulting guarantee as descriptions become shorter.\n\nNatural next steps are:\n\n- **Derive the PAC-Bayes premise probabilistically.** Formalize the exponential-moment and change-of-measure argument that produces the assumed mutual-information gap bound with a confidence penalty.\n- **Allow zero-probability events.** Replace strict positivity by absolute continuity and use an extended-real-valued KL divergence, including the standard endpoint conventions.\n- **Connect to Mathlib probability spaces.** Express the joint law as the distribution of random variables `S` and `H`, and prove equivalence with measure-theoretic mutual information.\n- **Formalize prefix-free compression.** Introduce binary codewords, prove Kraft's inequality, and derive suitable pointwise or expected information-density bounds from code lengths.\n- **Treat randomized and deterministic learners explicitly.** Build a joint law from a data distribution and a Markov kernel, then specialize to deterministic algorithms.\n- **Prove expectation and high-probability variants.** Relate expected generalization bounds involving `I(S;H)` to PAC-Bayes bounds holding with probability at least `1 - δ`.\n- **Obtain strict improvement criteria.** Under positivity and nondegeneracy assumptions, strengthen no-worse monotonicity to a strictly smaller radius when description length strictly decreases.\n- **Extend beyond finite spaces.** Develop countable and standard Borel versions using Radon–Nikodym derivatives and measure-theoretic relative entropy.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_0913",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4ae649eb",
+    "status": "available",
+    "timestamp": "2026-08-02T18:22:33.550210+00:00",
+    "title": "The present development establishes a finite, discrete chain:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Scope of the proved connector\n\n`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive axis-aligned boxes of volume one. It connects convex geometry to a finite multiplicative pigeonhole principle: the full volume factors as\n\n`(coordinate section volume) × (perpendicular width)`.\n\nSince a finite product equal to one cannot have every factor strictly greater than one, some width is at most one; positivity and the factorization then force the corresponding section volume to be at least one.\n\nThis is a special case and structural model, not a proof of the requested dimension-free assertion for arbitrary convex bodies.\n\n## Natural extensions\n\n1. **Linear images (parallelotopes).** Define volume and hyperplane section measures for invertible linear images of boxes, then transport the product identity through determinants and restrictions of linear maps.\n2. **Ellipsoids.** Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.\n3. **General measurable sections.** Develop the measure-theoretic definition of `(n-1)`-dimensional hyperplane volume using Hausdorff measure or an isometric parametrization of affine hyperplanes.\n4. **Convex-body infrastructure.** Package compactness, convexity, nonempty interior, volume normalization, affine transformations, and central sections into reusable Lean definitions.\n5. **Isotropic normalization.** Formalize barycenters, covariance operators, and isotropic position. This is the standard bridge from geometric sections to analytic information about a normalized measure.\n6. **Analytic bridge.** Relate maximal hyperplane-section density to one-dimensional marginals (via an appropriate coarea/Fubini statement), making precise the connection between convex geometry and probability density bounds.\n7. **Dimension-dependent bounds.** Before attempting a universal constant for arbitrary convex bodies, formalize an available dimension-dependent lower bound. This would validate the full geometric interface without presupposing the unresolved dimension-free step.\n\nAny extension to arbitrary convex bodies must retain an honest distinction between established intermediate bounds and the universal-constant slicing conjecture itself.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_0914",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2acb9b42",
+    "status": "available",
+    "timestamp": "2026-08-02T18:23:55.680051+00:00",
+    "title": "`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domain_bridges": [],
     "domains": [
@@ -15044,7 +15063,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c8fc610",
     "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
     "domain_bridges": [],
     "domains": [
@@ -15058,7 +15077,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },

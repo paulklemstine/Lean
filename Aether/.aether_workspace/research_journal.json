@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "275a5749",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **Executable encoder.** Package the well-founded existence proof as a computable `encode : ℤ → List Bool`, then prove both round trips and derive certified addition and multipl",
-      "quality_score": 0.75115,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-31T06:08:11",
-      "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-    },
-    {
       "cycle_id": "50db037d",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > 0`, and any `t - 1` distinct nonzero evaluation points, conditioning a uniformly sampled degree-`<",
@@ -499,19 +489,19 @@
       "theorem_count": 35,
       "timestamp": "2026-08-02T18:22:37",
       "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
+    },
+    {
+      "cycle_id": "2acb9b42",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## Scope of the proved connector\n\n`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive axis-aligned boxes of volume one. It connects convex geometry to a",
+      "quality_score": 0.7411399999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-08-02T18:23:58",
+      "title": "Bourgain's Slicing Problem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "928798aa",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n1. **Coulomb Hamiltonian as an unbounded self-adjoint operator.** Define\n   `H = -Δ - 2/r` on `L²(ℝ³)` from a closed semibounded quadratic form, establish\n   self-adjointness, and",
-      "quality_score": 0.7,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-25T10:53:04",
-      "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
-    },
     {
       "cycle_id": "905765f9",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 35,
       "timestamp": "2026-08-02T18:22:37",
       "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
+    },
+    {
+      "cycle_id": "2acb9b42",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n## Scope of the proved connector\n\n`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive axis-aligned boxes of volume one. It connects convex geometry to a",
+      "quality_score": 0.7411399999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-08-02T18:23:58",
+      "title": "Bourgain's Slicing Problem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d4159430",
-      "domain": "Combinatorics",
-      "name": "hasSubFourUpperBound_of_proportionalSaving",
-      "quality": 0.7496799999999999
-    },
-    {
-      "cycle_id": "d4159430",
-      "domain": "Combinatorics",
-      "name": "hasProportionalSaving_of_hasSubFourUpperBound",
-      "quality": 0.7496799999999999
-    },
-    {
-      "cycle_id": "7b912198",
-      "domain": "Novelty",
-      "name": "infinitesimalGame_numeric",
-      "quality": 0.7734099999999999
-    },
     {
       "cycle_id": "7b912198",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "generalization_from_expected_description",
       "quality": 0.79196
+    },
+    {
+      "cycle_id": "2acb9b42",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.7411399999999999
+    },
+    {
+      "cycle_id": "2acb9b42",
+      "domain": "Shared",
+      "name": "coordinateSectionVolume_mul_width",
+      "quality": 0.7411399999999999
+    },
+    {
+      "cycle_id": "2acb9b42",
+      "domain": "Shared",
+      "name": "exists_width_le_one",
+      "quality": 0.7411399999999999
     }
   ],
-  "last_updated": "2026-08-02T18:22:37",
+  "last_updated": "2026-08-02T18:23:58",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "346c1c9a",
-        "quality": 0.6043828571428571,
-        "theorems": 7,
-        "title": "Deepening: Speculative: Theorems as Phase Transitions in Proof Space"
-      },
-      {
         "cycle_id": "27c8e30f",
         "quality": 0.686,
         "theorems": 224,
@@ -3947,6 +3941,12 @@
         "quality": 0.8021799999999999,
         "theorems": 8,
         "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Ex"
+      },
+      {
+        "cycle_id": "2acb9b42",
+        "quality": 0.7411399999999999,
+        "theorems": 6,
+        "title": "Bourgain's Slicing Problem"
       }
     ],
     "Tropical": [
