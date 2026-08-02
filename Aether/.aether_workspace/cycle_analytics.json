@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-02T14:03:42.771016+00:00",
+  "last_updated": "2026-08-02T15:29:38.527679+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -44831,6 +44831,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-02T14:03:42.645624+00:00",
       "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1168,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Bridges",
+      "duration_seconds": 5140.288237333298,
+      "end_time": 1785684478.8005052,
+      "files_integrated": 4,
+      "job_id": "ef4982e9",
+      "outcome_quality": 0.78888,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.78986,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7568,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.7136,
+        "novelty": 0.83,
+        "proof_depth": 0.6637,
+        "usefulness": 0.8068
+      },
+      "quality_score": 0.78888,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785679338.5122678,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-02T15:29:38.399500+00:00",
+      "title": "Bridge: Galois Connections Between Order Theory and Topology"
     }
   ]
 }

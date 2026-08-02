@@ -1,25 +1,59 @@
-# Computational Evidence
+# Computational evidence: sparse neural coding
 
-## Small cases
+The formal target is the capacity of binary neural patterns under an energy
+(spike-count) constraint.
 
-For `N` binary neurons, exhaustive counting gives the following values. The dense mean energy uses one unit per active neuron, and the last column is the relative population error for unit per-neuron variance.
+## Small-case calculations
 
-| `N` | all patterns `2^N` | one-hot patterns | dense mean energy `N/2` | error `1/√N` |
-|---:|---:|---:|---:|---:|
-| 1 | 2 | 1 | 0.5 | 1.0000 |
-| 2 | 4 | 2 | 1 | 0.7071 |
-| 4 | 16 | 4 | 2 | 0.5000 |
-| 8 | 256 | 8 | 4 | 0.3536 |
-| 16 | 65536 | 16 | 8 | 0.2500 |
+For `N` neurons and budget `k`, the predicted count is
 
-For ten neurons, the exact-weight counts at weights `0,1,2,3` are `1,10,45,120`, agreeing with `10.choose k`.
+`B(N,k) = ∑_{j=0}^k binom(N,j)`.
 
-## Sequence identification
+| `N` | `k` | weight-layer sizes | `B(N,k)` |
+|---:|---:|---|---:|
+| 4 | 0 | 1 | 1 |
+| 4 | 1 | 1, 4 | 5 |
+| 4 | 2 | 1, 4, 6 | 11 |
+| 5 | 2 | 1, 5, 10 | 16 |
+| 8 | 2 | 1, 8, 28 | 37 |
+| 10 | 1 | 1, 10 | 11 |
+| 10 | 2 | 1, 10, 45 | 56 |
+| 10 | 3 | 1, 10, 45, 120 | 176 |
 
-The total pattern counts are the powers of two, OEIS A000079: `1, 2, 4, 8, 16, 32, ...` when indexed from `N = 0`. The one-hot counts are the positive integers, OEIS A000027. Fixed-weight counts are binomial-coefficient diagonals in Pascal's triangle.
+The cases `B(4,0)=1`, `B(4,1)=5`, and `B(4,2)=11` are also checked inside
+`Catalog/Novelty/NeuralCoding/SparseEnergyTradeoff.lean` after rewriting by the
+general exact-count theorem.
 
-## Counterexample and formulation check
+For exact energy `k`, the count is `binom(N,k)`. Representative checks of the
+polynomial ceiling `binom(N,k) ≤ N^k` are:
 
-The literal phrase “`O(N log N)` concepts per unit energy” does not match the natural one-hot model: it represents exactly `N` concepts at one spike each, while its information per spike is `log₂ N` bits. For exactly `k` active neurons, the raw concept count per spike is `N.choose k / k`, which is not generally `O(N log N)` when `k` grows proportionally to `N`. The formal development therefore proves the coherent information-theoretic statement: one-hot sparse coding has `log₂ N` bits per spike, versus two bits per average spike for the full dense codebook, and this sparse rate tends to infinity.
+| `(N,k)` | `binom(N,k)` | `N^k` |
+|---|---:|---:|
+| (5,2) | 10 | 25 |
+| (10,3) | 120 | 1000 |
+| (20,4) | 4845 | 160000 |
 
-No counterexample was found to the finite identities formalized in Lean; they are established symbolically for every natural `N` (and every weight `k` where applicable), rather than inferred from this table.
+## OEIS search result
+
+For fixed budget `k=2`, the sequence is
+
+`B(N,2) = 1 + N + binom(N,2) = 1, 2, 4, 7, 11, 16, 22, ...`,
+
+the centered polygonal numbers (OEIS A000124, with indexing beginning at
+`N=0`). This identification is evidence only; no OEIS fact is used by the Lean
+proof.
+
+## Counterexample hunt
+
+The exact-energy universal claim `binom(N,k) ≤ N^k` was checked conceptually at
+the edge cases `k=0`, `N=0`, and `k>N`, as well as the representative table
+above. No counterexample was found. The final Lean theorem proves the claim for
+all natural `N,k`, so the result does not depend on this finite search.
+
+## Shape of the capacity curve
+
+At fixed `N`, exact weight-layer capacities follow the symmetric binomial row,
+peaking near `N/2`. At fixed small `k`, exact sparse capacity is polynomial in
+`N` (degree `k`), while unrestricted binary capacity is exponential (`2^N`).
+This motivates the proved energy–information statement: the full exact-`k`
+layer carries at most `log₂ N` bits per spike.

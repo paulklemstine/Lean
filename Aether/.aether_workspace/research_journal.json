@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1fc64f82",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Higher-dimensional finite projective spaces.** Define `TP^n_fin` as the\n   quotient of `ℝ^(n+1)` by diagonal translation, choose a normalization, and\n   test whether analogou",
-      "quality_score": 0.79392,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-31T04:25:29",
-      "title": "Inverse Stereographic Tropical Lift"
-    },
-    {
       "cycle_id": "77d39a70",
       "domain": "Physics",
       "key_insight": "# Future directions\n\nThe completed connector identifies the matrix word `A D A` with both the third\nraw moment of the degree distribution and the number of homomorphisms from the\nthree-leaf star. The",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-08-02T14:03:42",
       "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
+    },
+    {
+      "cycle_id": "ef4982e9",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n1. **Canonical versus merely available topologies.** The upper Alexandrov topology makes every monotone map continuous, hence both adjoints of every Galois connection. A sharper c",
+      "quality_score": 0.78888,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-02T15:29:38",
+      "title": "Bridge: Galois Connections Between Order Theory and Topology"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d6b505de",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: Cross-Reality Entropy\n\n## 1. Entropy production with evolving branch weights\n\nLet branch weights evolve under a stochastic transport kernel while each branch undergoes internal dy",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-25T06:37:20",
-      "title": "Cross-Reality-Entropy: Second Law of Thermodynamics for Multiversal Ensembles"
-    },
     {
       "cycle_id": "f90ec3a1",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-08-02T14:03:42",
       "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
+    },
+    {
+      "cycle_id": "ef4982e9",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n1. **Canonical versus merely available topologies.** The upper Alexandrov topology makes every monotone map continuous, hence both adjoints of every Galois connection. A sharper c",
+      "quality_score": 0.78888,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-02T15:29:38",
+      "title": "Bridge: Galois Connections Between Order Theory and Topology"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9fb19498",
-      "domain": "Tropical",
-      "name": "tropicalization_preserves_intersection_number",
-      "quality": 0.79021
-    },
-    {
-      "cycle_id": "9fb19498",
-      "domain": "Tropical",
-      "name": "in",
-      "quality": 0.79021
-    },
-    {
-      "cycle_id": "3cce8c08",
-      "domain": "Applications",
-      "name": "tropicalFlow_distance",
-      "quality": 0.76564
-    },
     {
       "cycle_id": "3cce8c08",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "expOdds_eq",
       "quality": 0.8013399999999999
+    },
+    {
+      "cycle_id": "ef4982e9",
+      "domain": "Bridges",
+      "name": "continuous_upperAlexandrov_iff_monotone",
+      "quality": 0.78888
+    },
+    {
+      "cycle_id": "ef4982e9",
+      "domain": "Bridges",
+      "name": "galoisConnection_continuous",
+      "quality": 0.78888
+    },
+    {
+      "cycle_id": "ef4982e9",
+      "domain": "Bridges",
+      "name": "galois_closed_elements_completeLattice",
+      "quality": 0.78888
     }
   ],
-  "last_updated": "2026-08-02T14:03:42",
+  "last_updated": "2026-08-02T15:29:38",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "060e882c",
-        "quality": 0.79231,
-        "theorems": 13,
-        "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-      },
-      {
         "cycle_id": "1a03af4c",
         "quality": 0.78657,
         "theorems": 14,
@@ -3203,6 +3197,12 @@
         "quality": 0.7913999999999999,
         "theorems": 15,
         "title": "Category-Theoretic Neural Architectures"
+      },
+      {
+        "cycle_id": "ef4982e9",
+        "quality": 0.78888,
+        "theorems": 11,
+        "title": "Bridge: Galois Connections Between Order Theory and Topology"
       }
     ],
     "Combinatorics": [

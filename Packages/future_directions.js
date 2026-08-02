@@ -1865,6 +1865,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ef4982e9 (Q=0.789), which proved 11 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_ef4982e9_dd54d0f2",
+    "priority_score": 0.88888,
+    "research_mode": "team",
+    "source_exp_id": "ef4982e9",
+    "status": "available",
+    "timestamp": "2026-08-02T15:29:38.200404+00:00",
+    "title": "Deepening: Bridge: Galois Connections Between Order Theory and Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 72d619d5 (Q=0.789), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n",
     "domains": [
       "Novelty"
@@ -4139,22 +4153,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "ef4982e9",
-    "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "id": "seed_346",
-    "phase": "A",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Bridge: Galois Connections Between Order Theory and Topology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Lob's theorem as a fixed-point result: if PA proves \u25a1A \u2192 A then PA proves A. Bridge this to category theory: the modal logic GL (Godel-Lob) is the internal logic of the category of provability predicates. Prove that Solovay's completeness theorem for GL follows from the diagonal lemma.",
     "domains": [
@@ -4487,17 +4485,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5814a7d4",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domains": [
       "Computation",
       "Algebra"
     ],
     "id": "seed_213",
+    "phase": "A",
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sensitivity Conjecture Extensions"
   },
@@ -11092,6 +11091,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-02T14:03:37.561864+00:00",
     "title": "`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Canonical versus merely available topologies.** The upper Alexandrov topology makes every monotone map continuous, hence both adjoints of every Galois connection. A sharper classification should characterize the finest and coarsest pairs of topologies for which both adjoints are continuous.\n\n2. **When is the induced order closure topological?** The finite counterexample proves that an arbitrary Galois-induced closure need not preserve binary unions. Characterize Galois connections whose composite closure is a Kuratowski closure; preservation of bottom and binary joins is the expected criterion.\n\n3. **Fixed-point duality.** Formalize the order isomorphism between the fixed points of `u \u2218 l` and those of `l \u2218 u`, and prove that it transports arbitrary meets and joins.\n\n4. **Radical ideals versus Zariski closed sets.** Upgrade the pointwise Galois law to an explicit order anti-isomorphism between radical ideals and Zariski-closed subsets of `Spec(R)`, including formulas for arbitrary meets and joins on both sides.\n\n5. **Functoriality.** For a ring homomorphism, connect ideal extension/contraction Galois connections with continuity of the induced map on prime spectra and composition of the corresponding closure operators.\n\n6. **Spectral refinements.** Compare the Alexandrov topology of the specialization order with the Zariski topology. They agree for finite spectra but differ in general; formal examples and exact finiteness hypotheses would clarify how much topology the order alone remembers.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0909",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ef4982e9",
+    "status": "available",
+    "timestamp": "2026-08-02T15:29:33.297464+00:00",
+    "title": "1. **Canonical versus merely available topologies.** The upper Alexandrov topolo"
   },
   {
     "consumed_by_exp_id": "",
