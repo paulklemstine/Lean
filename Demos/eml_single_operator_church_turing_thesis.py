@@ -1,240 +1,244 @@
-"""
-demo.py -- Numerical demonstrations for the EML Single-Operator Church-Turing Thesis.
+#!/usr/bin/env python3
+"""Numerical demonstrations of exact single-operator compilation.
 
-The single binary primitive
-
-    eml(x, y) = exp(x) - log(y)
-
-together with the field operations (+, *, neg, inv) and real constants, generates
-a class of real functions that:
-
-  * re-derives exp and log on demand (fusion identities),
-  * is closed under finite sums and products,
-  * contains every multivariate polynomial,
-  * contains every standard smooth neural activation
-    (sigmoid, softplus, tanh, SiLU/swish).
-
-This file demonstrates each of these facts numerically and self-containedly.
-Run with:  python3 demo.py
+The script builds finite expression trees, compiles them to either
+D(a,b) = exp(a) - log(b) or P(a,b) = exp(a) * log(b), and compares source
+and target evaluations on deterministic sample grids. Python floating-point
+arithmetic is used only to illustrate the exact real identities.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import math
-from typing import Callable, List, Sequence, Tuple
+from typing import Callable, Mapping, Sequence, Union
 
 
-# ---------------------------------------------------------------------------
-# 0. The single primitive and the totalization conventions.
-# ---------------------------------------------------------------------------
-
-def safe_log(y: float) -> float:
-    """Totalized natural logarithm: log(y) = 0 for y <= 0 (junk value)."""
-    return math.log(y) if y > 0.0 else 0.0
+@dataclass(frozen=True)
+class Const:
+    value: float
 
 
-def safe_inv(x: float) -> float:
-    """Totalized reciprocal: inv(0) = 0 (junk value)."""
-    return 1.0 / x if x != 0.0 else 0.0
+@dataclass(frozen=True)
+class Var:
+    name: str
 
 
-def eml(x: float, y: float) -> float:
-    """The single fused primitive  eml(x, y) = exp(x) - log(y)."""
-    return math.exp(x) - safe_log(y)
+@dataclass(frozen=True)
+class Unary:
+    op: str
+    child: "Expr"
 
 
-# ---------------------------------------------------------------------------
-# 1. Fusion identities: exp and log are recovered from eml plus constants.
-# ---------------------------------------------------------------------------
-
-def exp_via_eml(x: float) -> float:
-    """exp(x) = eml(x, 1)   since  log(1) = 0."""
-    return eml(x, 1.0)
+@dataclass(frozen=True)
+class Binary:
+    op: str
+    left: "Expr"
+    right: "Expr"
 
 
-def log_via_eml(y: float) -> float:
-    """log(y) = 1 - eml(0, y)   since  eml(0, y) = 1 - log(y)."""
-    return 1.0 - eml(0.0, y)
+Expr = Union[Const, Var, Unary, Binary]
+Environment = Mapping[str, float]
 
 
-def subtraction_via_eml(a: float, b: float) -> float:
-    """For a > 0:  a - b = eml(log a, exp b)   (subtraction routed through eml)."""
-    return eml(math.log(a), math.exp(b))
+def total_log(x: float) -> float:
+    """Total real logarithm: log(0)=0 and log(x)=log(abs(x)) otherwise."""
+    return 0.0 if x == 0.0 else math.log(abs(x))
 
 
-def demo_fusion() -> None:
-    print("=" * 72)
-    print("1. FUSION IDENTITIES  (exp, log, subtraction recovered from eml)")
-    print("=" * 72)
-    print(f"{'x':>8} | {'exp(x)':>14} | {'eml(x,1)':>14} | {'abs error':>12}")
-    for x in (-2.0, -0.5, 0.0, 1.0, 2.5):
-        print(f"{x:8.3f} | {math.exp(x):14.9f} | {exp_via_eml(x):14.9f} "
-              f"| {abs(math.exp(x) - exp_via_eml(x)):12.2e}")
-    print()
-    print(f"{'y':>8} | {'log(y)':>14} | {'1-eml(0,y)':>14} | {'abs error':>12}")
-    for y in (0.25, 0.5, 1.0, 2.0, 7.5):
-        print(f"{y:8.3f} | {math.log(y):14.9f} | {log_via_eml(y):14.9f} "
-              f"| {abs(math.log(y) - log_via_eml(y)):12.2e}")
-    print()
-    print("Subtraction via eml(log a, exp b) = a - b  (a > 0):")
-    for a, b in ((3.0, 1.0), (10.0, 4.0), (0.5, 2.0)):
-        got = subtraction_via_eml(a, b)
-        print(f"  a={a:5.2f}, b={b:5.2f}:  a-b={a-b:8.4f}   eml(...)={got:8.4f}"
-              f"   err={abs((a - b) - got):.2e}")
-    print()
+def total_inv(x: float) -> float:
+    """Total reciprocal with 0 inverse defined as 0."""
+    return 0.0 if x == 0.0 else 1.0 / x
 
 
-# ---------------------------------------------------------------------------
-# 2. Closure under finite sums and products  ->  polynomial completeness.
-#
-# A polynomial in n variables is represented as a list of monomials, each a
-# (coefficient, exponent-tuple) pair.  We evaluate it using ONLY:
-#   - constants, variables,
-#   - addition and multiplication (closure),
-#   - integer powers (repeated multiplication),
-# which is precisely the single-operator-representable toolkit (no exp/log
-# is even needed -- it comes "for free" from the closure machinery).
-# ---------------------------------------------------------------------------
-
-Monomial = Tuple[float, Tuple[int, ...]]
-
-
-def eval_power(base: float, k: int) -> float:
-    """x^k as a finite product of copies of x (closure under products)."""
-    acc = 1.0
-    for _ in range(k):
-        acc = acc * base
-    return acc
-
-
-def eval_polynomial(monomials: Sequence[Monomial], x: Sequence[float]) -> float:
-    """Evaluate sum_d coeff_d * prod_i x_i^{d_i}  via finite sum/product closure."""
-    total = 0.0  # empty-sum base case
-    for coeff, exps in monomials:
-        term = 1.0  # empty-product base case
-        for i, di in enumerate(exps):
-            term = term * eval_power(x[i], di)
-        total = total + coeff * term
-    return total
+def evaluate(expr: Expr, env: Environment) -> float:
+    """Evaluate a source or compiled expression tree."""
+    if isinstance(expr, Const):
+        return expr.value
+    if isinstance(expr, Var):
+        return env[expr.name]
+    if isinstance(expr, Unary):
+        value = evaluate(expr.child, env)
+        operations: dict[str, Callable[[float], float]] = {
+            "neg": lambda z: -z,
+            "inv": total_inv,
+            "exp": math.exp,
+            "log": total_log,
+        }
+        return operations[expr.op](value)
+    left = evaluate(expr.left, env)
+    right = evaluate(expr.right, env)
+    if expr.op == "add":
+        return left + right
+    if expr.op == "mul":
+        return left * right
+    if expr.op == "D":
+        return math.exp(left) - total_log(right)
+    if expr.op == "P":
+        return math.exp(left) * total_log(right)
+    raise ValueError(f"unknown binary operation: {expr.op}")
 
 
-def demo_polynomial() -> None:
-    print("=" * 72)
-    print("2. ALGEBRAIC COMPLETENESS  (every polynomial is representable)")
-    print("=" * 72)
-    # p(x, y) = 3 x^2 y - 7 x y^4 + 5
-    poly: List[Monomial] = [(3.0, (2, 1)), (-7.0, (1, 4)), (5.0, (0, 0))]
-    print("p(x, y) = 3 x^2 y - 7 x y^4 + 5")
-    print(f"{'(x, y)':>16} | {'closure eval':>16} | {'direct eval':>16} | {'err':>10}")
-    for x, y in ((1.0, 1.0), (2.0, -1.0), (-1.5, 0.5), (0.0, 3.0)):
-        got = eval_polynomial(poly, (x, y))
-        direct = 3.0 * x**2 * y - 7.0 * x * y**4 + 5.0
-        print(f"  ({x:5.2f},{y:5.2f})   | {got:16.6f} | {direct:16.6f} "
-              f"| {abs(got - direct):10.2e}")
-    print()
+def add(left: Expr, right: Expr) -> Expr:
+    return Binary("add", left, right)
 
 
-# ---------------------------------------------------------------------------
-# 3. Applications completeness: neural activations as eml composites.
-#
-# Each activation is built ONLY from eml (for exp/log) plus field operations.
-# ---------------------------------------------------------------------------
-
-def sigmoid_eml(x: float) -> float:
-    """sigma(x) = (1 + exp(-x))^{-1}  = inv(1 + eml(-x, 1))."""
-    return safe_inv(1.0 + exp_via_eml(-x))
+def mul(left: Expr, right: Expr) -> Expr:
+    return Binary("mul", left, right)
 
 
-def softplus_eml(x: float) -> float:
-    """softplus(x) = log(1 + exp(x))  = 1 - eml(0, 1 + eml(x, 1))."""
-    return log_via_eml(1.0 + exp_via_eml(x))
+def neg(child: Expr) -> Expr:
+    return Unary("neg", child)
 
 
-def tanh_eml(x: float) -> float:
-    """tanh(x) = sinh(x) * cosh(x)^{-1}, with sinh/cosh built from eml."""
-    sinh = (exp_via_eml(x) - exp_via_eml(-x)) * 0.5
-    cosh = (exp_via_eml(x) + exp_via_eml(-x)) * 0.5
-    return sinh * safe_inv(cosh)
+def inv(child: Expr) -> Expr:
+    return Unary("inv", child)
 
 
-def silu_eml(x: float) -> float:
-    """SiLU / swish:  x * sigma(x)  = proj_0 * sigmoid."""
-    return x * sigmoid_eml(x)
+def exp(child: Expr) -> Expr:
+    return Unary("exp", child)
 
 
-def demo_activations() -> None:
-    print("=" * 72)
-    print("3. APPLICATIONS COMPLETENESS  (neural activations via eml only)")
-    print("=" * 72)
-    activations: List[Tuple[str, Callable[[float], float], Callable[[float], float]]] = [
-        ("sigmoid", sigmoid_eml, lambda x: 1.0 / (1.0 + math.exp(-x))),
-        ("softplus", softplus_eml, lambda x: math.log1p(math.exp(x))),
-        ("tanh", tanh_eml, math.tanh),
-        ("silu", silu_eml, lambda x: x / (1.0 + math.exp(-x))),
-    ]
-    xs = (-3.0, -1.0, 0.0, 1.0, 3.0)
-    for name, f_eml, f_ref in activations:
-        print(f"\n  {name}:")
-        print(f"{'x':>8} | {'eml-built':>16} | {'reference':>16} | {'abs error':>12}")
-        max_err = 0.0
-        for x in xs:
-            a, b = f_eml(x), f_ref(x)
-            max_err = max(max_err, abs(a - b))
-            print(f"{x:8.3f} | {a:16.9f} | {b:16.9f} | {abs(a - b):12.2e}")
-        print(f"    max abs error over sample: {max_err:.2e}")
-    print()
+def log(child: Expr) -> Expr:
+    return Unary("log", child)
 
 
-# ---------------------------------------------------------------------------
-# 4. A tiny feed-forward network: affine pre-activation (polynomial) + eml
-#    activation -- every piece lives in the single-operator class.
-# ---------------------------------------------------------------------------
-
-def mlp_layer_eml(
-    weights: Sequence[Sequence[float]],
-    biases: Sequence[float],
-    activation: Callable[[float], float],
-    x: Sequence[float],
-) -> List[float]:
-    """One feed-forward layer: y_j = activation( sum_i W_ji x_i + b_j ).
-
-    The affine pre-activation is a degree-one polynomial (representable),
-    and the activation is eml-representable; hence the whole layer is.
-    """
-    outputs: List[float] = []
-    for w_row, b in zip(weights, biases):
-        pre = b
-        for wij, xi in zip(w_row, x):
-            pre = pre + wij * xi
-        outputs.append(activation(pre))
-    return outputs
+def compile_difference(expr: Expr) -> Expr:
+    """Compile exp/log nodes to D(a,b)=exp(a)-log(b)."""
+    if isinstance(expr, (Const, Var)):
+        return expr
+    if isinstance(expr, Binary):
+        if expr.op not in {"add", "mul"}:
+            raise ValueError("source tree must use only source operations")
+        return Binary(
+            expr.op,
+            compile_difference(expr.left),
+            compile_difference(expr.right),
+        )
+    child = compile_difference(expr.child)
+    if expr.op in {"neg", "inv"}:
+        return Unary(expr.op, child)
+    if expr.op == "exp":
+        return Binary("D", child, Const(1.0))
+    if expr.op == "log":
+        # 1 - D(0, child), represented using addition and negation.
+        return add(Const(1.0), neg(Binary("D", Const(0.0), child)))
+    raise ValueError(f"unknown source operation: {expr.op}")
 
 
-def demo_network() -> None:
-    print("=" * 72)
-    print("4. A FEED-FORWARD NETWORK ENTIRELY IN THE SINGLE-OPERATOR CLASS")
-    print("=" * 72)
-    W1 = [[1.0, -2.0], [0.5, 0.5], [-1.0, 1.0]]
-    b1 = [0.1, -0.2, 0.3]
-    W2 = [[1.0, -1.0, 2.0]]
-    b2 = [0.0]
-    x = [0.7, -0.4]
-    h = mlp_layer_eml(W1, b1, silu_eml, x)         # hidden layer with SiLU
-    y = mlp_layer_eml(W2, b2, sigmoid_eml, h)      # output layer with sigmoid
-    print(f"  input    x = {x}")
-    print(f"  hidden   h = {[round(v, 6) for v in h]}   (SiLU activation)")
-    print(f"  output   y = {[round(v, 6) for v in y]}   (sigmoid activation)")
-    print("  Every linear map is a polynomial; every activation is an eml")
-    print("  composite -- so the whole network is single-operator representable.")
-    print()
+def compile_product(expr: Expr) -> Expr:
+    """Compile exp/log nodes to P(a,b)=exp(a)*log(b)."""
+    if isinstance(expr, (Const, Var)):
+        return expr
+    if isinstance(expr, Binary):
+        if expr.op not in {"add", "mul"}:
+            raise ValueError("source tree must use only source operations")
+        return Binary(expr.op, compile_product(expr.left), compile_product(expr.right))
+    child = compile_product(expr.child)
+    if expr.op in {"neg", "inv"}:
+        return Unary(expr.op, child)
+    if expr.op == "exp":
+        return Binary("P", child, Const(math.e))
+    if expr.op == "log":
+        return Binary("P", Const(0.0), child)
+    raise ValueError(f"unknown source operation: {expr.op}")
+
+
+def expand_difference(expr: Expr) -> Expr:
+    """Expand every D node back to exp(left)-log(right)."""
+    if isinstance(expr, (Const, Var)):
+        return expr
+    if isinstance(expr, Unary):
+        return Unary(expr.op, expand_difference(expr.child))
+    left = expand_difference(expr.left)
+    right = expand_difference(expr.right)
+    if expr.op == "D":
+        return add(exp(left), neg(log(right)))
+    return Binary(expr.op, left, right)
+
+
+def horner(coefficients: Sequence[float], x: float) -> float:
+    """Evaluate ascending-order coefficients by Horner's method."""
+    accumulator = 0.0
+    for coefficient in reversed(coefficients):
+        accumulator = coefficient + x * accumulator
+    return accumulator
+
+
+def polynomial_expr(coefficients: Sequence[float], variable: str = "x") -> Expr:
+    """Build the Horner expression for ascending-order coefficients."""
+    result: Expr = Const(0.0)
+    x = Var(variable)
+    for coefficient in reversed(coefficients):
+        result = add(Const(coefficient), mul(x, result))
+    return result
+
+
+def node_count(expr: Expr) -> int:
+    """Count syntax-tree nodes."""
+    if isinstance(expr, (Const, Var)):
+        return 1
+    if isinstance(expr, Unary):
+        return 1 + node_count(expr.child)
+    return 1 + node_count(expr.left) + node_count(expr.right)
+
+
+def close(left: float, right: float) -> bool:
+    return math.isclose(left, right, rel_tol=1e-12, abs_tol=1e-12)
+
+
+def demonstrate_compilers() -> None:
+    """Compare source, difference-target, product-target, and expansion."""
+    x, y = Var("x"), Var("y")
+    source = add(exp(add(x, y)), inv(add(Const(3.0), neg(log(y)))))
+    difference = compile_difference(source)
+    product = compile_product(source)
+    expanded = expand_difference(difference)
+
+    print("Nested exp-log expression")
+    print(f"  source nodes: {node_count(source)}")
+    print(f"  difference-target nodes: {node_count(difference)}")
+    print(f"  product-target nodes: {node_count(product)}")
+    print("  x       y        source              D target            P target")
+    for xv in (-1.25, -0.2, 0.75, 1.4):
+        for yv in (0.0, 0.4, 1.0, 2.5):
+            env = {"x": xv, "y": yv}
+            values = [
+                evaluate(source, env),
+                evaluate(difference, env),
+                evaluate(product, env),
+                evaluate(expanded, env),
+            ]
+            assert all(close(values[0], value) for value in values[1:])
+            print(f"  {xv:5.2f}  {yv:5.2f}  {values[0]:18.12g}  "
+                  f"{values[1]:18.12g}  {values[2]:18.12g}")
+
+
+def demonstrate_polynomial() -> None:
+    """Show exact Horner representation of 2-3x+5x^3."""
+    coefficients = [2.0, -3.0, 0.0, 5.0]
+    expression = polynomial_expr(coefficients)
+    difference = compile_difference(expression)
+    product = compile_product(expression)
+    print("\nHorner polynomial 2 - 3x + 5x^3")
+    print("  x       direct              Horner/tree         D target            P target")
+    for x in (-2.0, -0.5, 0.0, 0.75, 1.5):
+        direct = 2.0 - 3.0 * x + 5.0 * x**3
+        values = (
+            horner(coefficients, x),
+            evaluate(expression, {"x": x}),
+            evaluate(difference, {"x": x}),
+            evaluate(product, {"x": x}),
+        )
+        assert all(close(direct, value) for value in values)
+        print(f"  {x:5.2f}  {direct:18.12g}  {values[1]:18.12g}  "
+              f"{values[2]:18.12g}  {values[3]:18.12g}")
 
 
 def main() -> None:
-    demo_fusion()
-    demo_polynomial()
-    demo_activations()
-    demo_network()
-    print("All demonstrations completed: one operator computes them all.")
+    demonstrate_compilers()
+    demonstrate_polynomial()
+    print("\nAll numerical comparisons agree within floating-point tolerance.")
 
 
 if __name__ == "__main__":

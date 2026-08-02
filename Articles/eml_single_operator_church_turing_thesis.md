@@ -1,262 +1,182 @@
-# One Operator to Compute Them All
+# One Transcendental Gate, an Entire Exp–Log Language
 
-## The dream of a universal building block
+## How a two-input operation can serve as an exact instruction set for a broad family of real formulas
 
-Every grand machine, when you take it apart, turns out to be made of small,
-repeated pieces. The vast logic of a modern computer chip is built from a single
-humble gate — NAND — wired together billions of times. The genetic library of all
-life on Earth is written in an alphabet of four letters. Mathematicians and
-engineers have a name for this recurring phenomenon: *functional completeness*.
-Find one primitive flexible enough, copy it, connect copies together, and you can
-build anything in the universe of interest.
+Modern computing is built on a startling kind of compression. A processor may run a weather model, decode a photograph, or simulate a molecule, yet beneath these varied tasks lies a small instruction set. This raises a mathematical version of the same question: how few primitive operations are needed to express a useful language of real-valued functions?
 
-This article is about a question of exactly that flavor, but asked in the world of
-**continuous mathematics** — the world of smooth curves, exponential growth, and
-the calculus that underlies physics and machine learning. The question is
-deceptively simple:
+Consider the two-input operation
 
-> Is there a *single* mathematical operation that, used over and over, can
-> reproduce every "elementary" function we care about?
+$$
+D(a,b)=e^a-\log b.
+$$
 
-The surprising answer explored here is **yes**, and the operation is shockingly
-modest. It is a two-input gadget we will call **EML**:
+Allow it to coexist with real constants, variables, addition, multiplication, negation, and reciprocal. At first sight, $D$ looks oddly specific: an exponential on its first input, a logarithm on its second, and subtraction between them. Yet this single gate contains enough structure to reproduce every finite formula assembled from exponentials, logarithms, constants, variables, and the ordinary field operations. The conversion is exact, not approximate.
 
-$$\mathrm{eml}(x, y) \;=\; e^{x} - \ln(y).$$
+There is a parallel result for the product gate
 
-That is the whole thing. Take the exponential of your first input, take the
-natural logarithm of your second input, and subtract. We will see that this one
-binary operation — together with the basic arithmetic of adding, multiplying,
-negating, and taking reciprocals — is enough to express exponentials, logarithms,
-all polynomials, and the entire smooth activation-function toolkit that powers
-deep learning: the sigmoid, softplus, hyperbolic tangent, and the swish/SiLU
-function. One operator to compute them all.
+$$
+P(a,b)=e^a\log b.
+$$
 
-## Why exp and log are the right atoms
+It, too, can serve as the sole transcendental primitive for the same formula language. These statements concern finite symbolic expressions; they do not imply that every computable real function can be written in this language. In particular, they do not establish exact formulas for sine or cosine. That boundary is as important as the theorem itself.
 
-Before meeting EML, it helps to appreciate why the exponential $e^x$ and the
-logarithm $\ln(x)$ are such natural "atoms" for continuous computation.
+## A language made of trees
 
-The exponential is the function that *is its own rate of change*: it grows in
-proportion to its current size. Compound interest, radioactive decay, population
-booms, the discharge of a capacitor, the cooling of coffee — all of them are
-governed by $e^x$. The logarithm is its mirror image, the function that turns
-multiplication into addition. It is the reason slide rules worked, the scale on
-which we measure earthquakes (Richter), sound (decibels), and acidity (pH), and
-the quantity an information theorist calls the number of *bits* in a message.
+A mathematical formula can be viewed as a tree. Leaves contain constants such as $2$ or variables such as $x_0$. Internal nodes perform operations. Our source language permits
 
-Between them, $e^x$ and $\ln(x)$ form a matched pair: each undoes the other.
-And almost every "named" function from a calculus course can be assembled out of
-these two together with arithmetic. The sine and cosine hide inside the complex
-exponential. Powers $x^a$ are really $e^{a \ln x}$. The bell curve of statistics
-is $e^{-x^2/2}$. If you had to pick two transcendental functions to be stranded
-on a desert island with, exp and log would be the rational choice.
+$$
++,\quad \times,\quad -,\quad (\cdot)^{-1},\quad \exp,\quad \log.
+$$
 
-The bold step taken here is to notice that you do not even need *two* atoms. You
-need one — provided you choose it cleverly.
+Thus
 
-## Fusing two atoms into one
+$$
+F(x,y)=e^{x+y}+\frac{1}{3-\log y}
+$$
 
-Here is the trick. We bundle exp and log into a single binary operation,
-$\mathrm{eml}(x, y) = e^{x} - \ln(y)$, and then show that this fused operator can
-*re-derive each half on demand*.
+is a source expression. It is finite because its syntax tree has finitely many nodes.
 
-**Recovering the exponential.** Feed EML your value $x$ in the first slot and the
-constant $1$ in the second slot. Because $\ln(1) = 0$, the log half vanishes:
+To avoid hidden domain qualifications, take reciprocal and logarithm as total real operations: $0^{-1}=0$, $\log 0=0$, and for nonzero real $x$, $\log x$ means $\log |x|$. On positive inputs this is the usual logarithm. This convention is not essential to the central identities, but it lets every expression denote a real number at every real input.
 
-$$\mathrm{eml}(x, 1) = e^{x} - \ln(1) = e^{x} - 0 = e^{x}.$$
+A target language keeps the constants, variables, and field operations but removes separate exponential and logarithm nodes. Its only transcendental node is $D$. The Exact Compilation Theorem says that every source tree can be translated into such a target tree without changing its value at any input.
 
-So the exponential is just EML with a $1$ plugged into its logarithm input.
+## The two identities that power the compiler
 
-**Recovering the logarithm.** Now feed EML the constant $0$ in the first slot and
-your value $y$ in the second. Because $e^{0} = 1$:
+The heart of the result fits in two lines. Because $\log 1=0$,
 
-$$\mathrm{eml}(0, y) = e^{0} - \ln(y) = 1 - \ln(y), \qquad\text{hence}\qquad
-\ln(y) = 1 - \mathrm{eml}(0, y).$$
+$$
+D(a,1)=e^a-\log 1=e^a.
+$$
 
-So the logarithm is recovered by a single EML call and one subtraction.
+Because $e^0=1$,
 
-This is the keystone. Anything you could have done with separate exp and log
-boxes, you can now do with EML boxes alone, by feeding them the right constants.
-The two transcendental atoms have collapsed into one, with **no loss of power**.
+$$
+1-D(0,b)=1-\bigl(e^0-\log b\bigr)=\log b.
+$$
 
-## What "representable" means
+So an exponential node can be replaced by $D(a,1)$, while a logarithm node can be replaced by $1-D(0,b)$. Everything else is copied recursively.
 
-To make the claim precise we fix a small, honest grammar of allowed moves. A
-function of several real variables is called **single-operator representable** if
-it can be written using only:
+For the example above, the translation is
 
-- **real constants** (any number you like, such as $1$, $0$, $-\tfrac12$, $\pi$);
-- **input variables** (the coordinates $x_1, \dots, x_n$ you feed in);
-- the **field operations**: addition $a + b$, multiplication $a \times b$,
-  negation $-a$, and reciprocal $a^{-1}$;
-- and the single transcendental primitive $\mathrm{eml}(x, y) = e^{x} - \ln(y)$.
+$$
+D(x+y,1)+\frac{1}{3-\bigl(1-D(0,y)\bigr)}.
+$$
 
-Nothing else is permitted. No sine button, no power button, no separate
-exponential or logarithm key — only EML and arithmetic.
+No numerical approximation has entered. The translated expression agrees with the original for every $x$ and $y$, including exceptional inputs under the total conventions.
 
-(One technical footnote keeps everything totally defined: when a logarithm or a
-reciprocal is fed an illegal input — $\ln$ of a non-positive number, or the
-reciprocal of zero — we assign the conventional "junk" value $0$ rather than
-leaving it undefined. This keeps every expression evaluating to an honest real
-number, which is what we want when reasoning about *total* functions.)
+Why does a local replacement prove a global statement? Because formulas are trees. At a leaf, translation changes nothing. If translated children preserve their values, then addition, multiplication, negation, and reciprocal preserve the equality of the parent values. At an exponential or logarithm node, the two identities above finish the step. Induction over the finite tree therefore proves the following.
 
-The central organizing fact is a clean equivalence: the class of functions you can
-build from the *two* separate primitives exp and log is **exactly** the class you
-can build from the *one* primitive EML. Neither is more powerful than the other.
-Compiling from two operators down to one costs at most a constant factor in size —
-a logarithm node expands to about five EML-language nodes, and translating back
-costs at most a factor of four. The fusion is not just possible in principle; it
-is *cheap*.
+**Exact Compilation Theorem.** Every finite real expression formed from constants, variables, addition, multiplication, negation, reciprocal, exponential, and total logarithm has a finite expression with the same value at every real input, formed from constants, variables, field operations, and the single transcendental gate $D(a,b)=e^a-\log b$.
 
-## First payoff: every polynomial
+## This is an equivalence, not merely a one-way trick
 
-The first concrete dividend is **algebraic completeness**. A polynomial — a sum of
-terms like $3x^2y - 7xz^4 + 5$ — seems to have nothing to do with exponentials or
-logarithms. It is built purely from addition and multiplication. So why should EML
-care about polynomials at all?
+Every $D$-expression can plainly be expanded back, because
 
-The answer is structural. The single-operator class is *closed under arithmetic*:
-if two functions are representable, so are their sum and their product. Once you
-know that, polynomials fall out by bookkeeping. A power $x^k$ is a finite product
-of copies of $x$, so it is representable. A monomial $c\,x_1^{d_1}\cdots
-x_n^{d_n}$ is a constant times a product of powers, so it is representable. And a
-polynomial is a finite sum of monomials, so — by closure under sums — it is
-representable too. Formally:
+$$
+D(a,b)=e^a-\log b.
+$$
 
-> **Polynomial completeness.** Every multivariate real polynomial function
-> $p(x_1, \dots, x_n)$ is single-operator representable. The single primitive EML,
-> together with arithmetic and constants, captures the entire polynomial algebra
-> $\mathbb{R}[x_1, \dots, x_n]$ as evaluated functions.
+Replace each $D$ node by its defining exponential-minus-logarithm expression and recurse through the tree. This gives the converse preservation theorem.
 
-The proof lifts the two-at-a-time closure under $+$ and $\times$ to *finite*
-sums and products by induction, then walks across the terms of an arbitrary
-polynomial. It is a satisfying demonstration that a transcendental operator,
-properly fused, subsumes the purely algebraic world for free.
+**Expressive Equivalence Theorem.** A real function of finitely many variables has a finite expression using constants, field operations, exponential, and total logarithm if and only if it has a finite expression using constants, field operations, and $D$ as its only transcendental primitive.
 
-## Second payoff: the deep-learning toolkit
+Compiling an expanded $D$-expression may produce a different-looking syntax tree, but its value remains unchanged at every input. This is an extensional retraction: expand, then compile, and the observable function is the same.
 
-The headline application lives in artificial intelligence. A neural network is, at
-heart, a tower of two alternating ingredients: **linear maps** (weighted sums of
-inputs — pure polynomials of degree one) and **activation functions** (a fixed
-nonlinear squashing applied coordinate-wise). The activation is what gives a
-network its expressive power; without it, stacking linear maps would only ever
-produce another linear map.
+The distinction between syntax and meaning matters. Two circuits can be shaped differently and still compute identical functions. The theorem promises semantic equality, not identical typography.
 
-Over the decades, practitioners have converged on a small handful of smooth
-activation functions. Each one, it turns out, is single-operator representable.
-Here they are, stated exactly, each followed by its EML recipe.
+## The product gate works too
 
-**The logistic sigmoid.** The classic S-shaped curve that squashes any real number
-into the open interval $(0, 1)$, long used to model probabilities and firing
-neurons:
+The operation originally motivating the single-gate question is often written as a product:
 
-$$\sigma(x) = \frac{1}{1 + e^{-x}} = \bigl(1 + e^{-x}\bigr)^{-1}.$$
+$$
+P(a,b)=e^a\log b.
+$$
 
-Recipe: take the input $x$, negate it, exponentiate (one EML call with second
-input $1$), add the constant $1$, and take the reciprocal. Every step is a legal
-move, so the sigmoid is representable.
+It contains logarithm immediately, since
 
-**Softplus.** A smooth, everywhere-differentiable approximation to the popular
-ReLU "ramp" function:
+$$
+P(0,b)=e^0\log b=\log b.
+$$
 
-$$\zeta(x) = \ln\bigl(1 + e^{x}\bigr).$$
+It also contains exponential. Choose the constant $e=e^1$. Since $\log(e)=1$,
 
-Recipe: exponentiate $x$, add $1$, take the logarithm. This is the one activation
-that genuinely uses the *log* half of EML — a reminder that both halves of the
-fused operator earn their keep.
+$$
+P(a,e)=e^a\log(e)=e^a.
+$$
 
-**Hyperbolic tangent.** The zero-centered cousin of the sigmoid, mapping the reals
-into $(-1, 1)$:
+These identities yield another recursive compiler: replace $\log b$ by $P(0,b)$ and $e^a$ by $P(a,e)$. Again, field-operation nodes are copied.
 
-$$\tanh(x) = \frac{\sinh x}{\cosh x} = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}.$$
+**Product-Primitive Compilation Theorem.** Every finite exp–log–field expression can be translated exactly into a finite expression whose only transcendental operation is $P(a,b)=e^a\log b$.
 
-Recipe: both $\sinh$ and $\cosh$ are sums of exponentials (hence representable),
-and a quotient is a product with a reciprocal, so $\tanh$ is representable.
+The difference and product gates achieve the same source-language coverage through different algebraic mechanisms. The difference gate extracts exponential by neutralizing logarithm at $1$ and extracts logarithm by subtracting from $1$. The product gate extracts logarithm by setting the exponential factor to $1$, and extracts exponential by setting the logarithmic factor to $1$.
 
-**SiLU / swish.** A modern favorite in large networks, the input gated by its own
-sigmoid:
+## Polynomials as a transparent test case
 
-$$\mathrm{swish}(x) = x \cdot \sigma(x) = x \cdot \bigl(1 + e^{-x}\bigr)^{-1}.$$
+Polynomials need no transcendental operation at all, but they provide an ideal test of the recursive machinery. Given coefficients $a_0,a_1,\ldots,a_m$ in ascending order, define the Horner value
 
-Recipe: multiply the input by the sigmoid we just built. A product of two
-representable functions is representable, so swish joins the club.
+$$
+H_x([a_0,a_1,\ldots,a_m])
+=a_0+x\bigl(a_1+x(\cdots+xa_m)\cdots\bigr).
+$$
 
-Put together, this is **applications completeness**:
+Recursively, the empty coefficient list has value $0$, and
 
-> Every standard smooth neural-network activation function — logistic sigmoid,
-> softplus, hyperbolic tangent, and SiLU/swish — is single-operator representable.
-> A single binary primitive therefore suffices to express the entire feed-forward
-> activation toolkit.
+$$
+H_x(a::A)=a+xH_x(A).
+$$
 
-There is a quietly beautiful observation buried in these recipes. Most of the
-activations never touch the logarithm at all — only softplus does. And yet *none*
-of them could exist without EML, because the exponential they all rely on is only
-available *through* EML, via the trick $e^x = \mathrm{eml}(x, 1)$. Even the
-"log-free-looking" activations are secretly exercising the single fused primitive.
-That is the cleanest evidence that one binary operator is the true generator of
-the whole family.
+Induction on the coefficient list proves that this is precisely
 
-## Why this is more than a curiosity
+$$
+a_0+a_1x+\cdots+a_mx^m.
+$$
 
-It is tempting to file all this under "cute reductions." But the result speaks to
-something deeper, a continuous analogue of the **Church–Turing thesis**.
+Likewise, the recursively built monomial expression computes $x^m$: start with $1$ at exponent $0$, then multiply by $x$ at each successor step.
 
-In the discrete world, Church and Turing taught us that wildly different notions of
-"computation" — Turing machines, lambda calculus, recursive functions — all
-capture exactly the same class of computable functions. There is a single robust
-notion of *what is computable*, independent of the gadget you use to compute it.
+**Polynomial Representation Theorem.** Every univariate real polynomial presented by a finite coefficient list has an exact finite representation in both the difference-gate and product-gate languages.
 
-The continuous world is murkier. What does it even mean to "compute" a real
-function with infinitely fine resolution? One influential answer is the analog
-computer, or General Purpose Analog Computer, whose primitive operations are
-adders, multipliers, and integrators. The line of work behind EML asks a sharp
-companion question: *what is the minimal transcendental primitive needed?* And the
-answer offered here is striking in its economy — a single binary operator,
-$\mathrm{eml}(x, y) = e^x - \ln y$, generates a class that is closed under all the
-elementary constructions, including exp, log, and EML itself, and that coincides
-exactly with the two-operator elementary class. The thesis has *teeth* in the
-applications domain: any function a feed-forward network computes, from polynomial
-pre-activations and a fixed smooth activation, already lives in the
-single-operator class.
+This result may sound modest, since field operations already express polynomials. Its role is illustrative: it gives a concrete family whose source syntax, numerical evaluation, and target compilation can all be watched step by step. Horner form also evaluates a degree-$m$ polynomial using $m$ multiplications and $m$ additions, rather than separately computing every power.
 
-For hardware, the lesson echoes the NAND gate. If you were designing an analog or
-neuromorphic chip and wanted one reconfigurable nonlinear cell to rule them all,
-EML is a compelling candidate: a single $\exp$–$\ln$–subtract unit, wired up with
-ordinary arithmetic, can be coaxed into being any activation you please — flip it
-into a sigmoid for one layer, a swish for the next, a softplus for a third — all
-without changing the silicon, only the constants you feed it.
+## Why “one operator” does not mean one physical neuron
 
-For theory, it sharpens our sense of what is truly *primitive*. We are used to
-thinking of exp and log as two separate pillars of analysis. EML shows they are
-better thought of as two faces of one object. Subtraction, of all things, is the
-glue: the identity $\mathrm{eml}(\ln a, e^b) = a - b$ reveals that even ordinary
-subtraction can be routed through the transcendental primitive on positive inputs.
+The phrase “single operator” can mislead. A compiled expression may contain many occurrences of $D$ or $P$, arranged in a finite tree and combined with field operations. The theorem says there is one *type* of transcendental gate, not that every function is computed by one gate occurrence.
 
-## The horizon
+Nor is the statement a numerical-stability theorem. Algebraically equal formulas can behave differently in floating-point arithmetic: subtraction can amplify cancellation, exponentials can overflow, and logarithms near zero are sensitive. Exact expressibility is a prerequisite for compilation, but efficient and stable implementation is a separate engineering problem.
 
-A good result opens more doors than it closes. Three questions stand out.
+Still, the instruction-set viewpoint has practical resonance. Specialized hardware often supports a small menu of nonlinear operations. Symbolic regression seeks compact formulas from data. Neural architectures ask which nonlinearities generate rich classes under composition. In each setting, a semantics-preserving compiler can separate two questions: what can be expressed in principle, and how well can it be evaluated in practice?
 
-First, **necessity**: is the transcendental operator genuinely irreplaceable?
-Arithmetic alone — adding, multiplying, negating, inverting — produces precisely
-the *rational functions*, ratios of polynomials. The exponential grows faster than
-any rational function ever could, so it provably escapes that fragment. EML is not
-a luxury; without it you are trapped among the rationals.
+## The frontier: sine, computability, and approximation
 
-Second, **tightness**: are the compilation overheads — the factor of five going one
-way, four coming back — the best achievable? The conjecture is that they are
-optimal, with explicit families of expressions that saturate the bounds.
+The boldest possible thesis would claim that every computable real function has an exact finite expression of this kind. The results above do not establish that thesis. They establish a precise equivalence between two finite expression languages.
 
-Third, **universality of approximation**: every result here is about *exact*
-representation of elementary functions. The natural next summit is a
-Stone–Weierstrass-style theorem showing the single-operator class is dense among
-*all* continuous functions on a bounded region — that EML expressions can
-approximate anything continuous to any desired accuracy. If that holds, the slogan
-becomes literally true: with one operator and enough copies, you really can compute
-them all.
+The gap appears immediately with trigonometry. Sine and cosine were not part of the source grammar, and familiar complex identities such as
 
-For now, the moral is already clear and a little wondrous. Hidden inside the two
-most important functions in all of analysis is a single fused operation, and that
-one operation — copied, wired, and fed the right constants — is enough to write
-down every polynomial and every activation function that modern artificial
-intelligence runs on. Sometimes the universe really is built from one small,
-endlessly repeated piece.
+$$
+\sin x=\frac{e^{ix}-e^{-ix}}{2i}
+$$
+
+use complex constants and complex exponentials. They do not automatically produce a finite formula over the real exp–log field.
+
+There is good structural reason to suspect exact global non-representability. The zeros of sine form the infinite discrete set
+
+$$
+\{k\pi:k\in\mathbb Z\}.
+$$
+
+By contrast, one expects one-variable functions definable using the ordered real field and real exponential to have tame zero sets, built from finitely many points and intervals. Turning that expectation into a theorem requires substantial theory beyond the elementary compiler, but it suggests a falsifiable dividing line.
+
+Approximation is a different story. On a compact interval, polynomials approximate continuous functions, so the polynomial representation result points toward approximating sine and cosine arbitrarily closely with single-gate expressions. That does not supply one exact finite expression valid on all real numbers; it supplies a family of expressions whose accuracy improves as their size grows.
+
+## A small theorem with a large lesson
+
+The deepest lesson is not that exponential and logarithm mysteriously vanish. They remain present, fused inside a gate. The lesson is that the boundary between a language with two named transcendental operations and one with a single combined operation can be erased by exact, recursive translation.
+
+The final picture is sharp:
+
+1. The difference gate $D(a,b)=e^a-\log b$ exactly generates every finite exp–log–field expression.
+2. The resulting single-gate language is expressively equivalent to the original language.
+3. The product gate $P(a,b)=e^a\log b$ also exactly generates the same source language.
+4. Monomials and coefficient-list polynomials receive explicit representations, with Horner evaluation providing a concrete algorithm.
+5. None of these results proves an exact expression for sine, cosine, or every computable real function.
+
+That combination of power and restraint is what makes the result useful. It gives a complete compiler theorem for a clearly defined language, while marking the next frontier rather than pretending it has already been crossed.
