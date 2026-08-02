@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "63b75a93",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Molecular Computing Limits\n\n1. **Bimolecular finite-control compilation.** For every finite deterministic transition system, there is a CRN using only reactions with at most two r",
-      "quality_score": 0.76935,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T23:42:04",
-      "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-    },
-    {
       "cycle_id": "3811f14c",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nThe following conjectures use the energy from\n`Catalog/NumberTheory/PythagoreanEnergySpectrum.lean`. Each is concrete and\nfalsifiable by finite computation at any fixed bound.\n\n1.",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-02T09:31:08",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+    },
+    {
+      "cycle_id": "e801d98f",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n- Prove the converse regularity criterion, completing Proposition 24: an operation is regular when its commutative image equals its diagonal image. A useful route is to construct",
+      "quality_score": 0.76179,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-02T09:32:15",
+      "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a4e412f3",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Happy-End / Erdős–Szekeres\n\n`Geometry/ErdosSzekeresCupCap.lean` gives a complete, self-contained proof of the\nErdős–Szekeres **cup–cap theorem** with the sharp bound `C(k+l-4,k-2",
-      "quality_score": 0.75,
-      "sorry_count": 1,
-      "theorem_count": 43,
-      "timestamp": "2026-07-24T23:24:45",
-      "title": "Happy End Problem"
-    },
     {
       "cycle_id": "920a890c",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-02T09:31:08",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+    },
+    {
+      "cycle_id": "e801d98f",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\n- Prove the converse regularity criterion, completing Proposition 24: an operation is regular when its commutative image equals its diagonal image. A useful route is to construct",
+      "quality_score": 0.76179,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-02T09:32:15",
+      "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c0a515f0",
-      "domain": "MachineLearning",
-      "name": "vulnerabilityStalk_empty_iff_certified",
-      "quality": 0.7776099999999999
-    },
-    {
-      "cycle_id": "c0a515f0",
-      "domain": "MachineLearning",
-      "name": "edge_constant_sheaf_H1_vanishes",
-      "quality": 0.7776099999999999
-    },
-    {
-      "cycle_id": "c0a515f0",
-      "domain": "MachineLearning",
-      "name": "threshold_has_no_positive_certificate",
-      "quality": 0.7776099999999999
-    },
     {
       "cycle_id": "647e3d96",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "coordinateExp_adjoin_separates",
       "quality": 0.8084800000000001
+    },
+    {
+      "cycle_id": "e801d98f",
+      "domain": "Tropical",
+      "name": "product_assoc",
+      "quality": 0.76179
+    },
+    {
+      "cycle_id": "e801d98f",
+      "domain": "Tropical",
+      "name": "leftZero_product",
+      "quality": 0.76179
+    },
+    {
+      "cycle_id": "e801d98f",
+      "domain": "Tropical",
+      "name": "product_leftZero",
+      "quality": 0.76179
     }
   ],
-  "last_updated": "2026-08-02T09:31:08",
+  "last_updated": "2026-08-02T09:32:15",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "b3ca6b38",
-        "quality": 0.6900799999999998,
-        "theorems": 8,
-        "title": "Tropical-Rank: Kapranov Rank vs Tropical Rank Equivalence Bounds"
-      },
-      {
         "cycle_id": "8c9ac99e",
         "quality": 0.7311099999999999,
         "theorems": 19,
@@ -4009,6 +4003,12 @@
         "quality": 0.7809699999999999,
         "theorems": 24,
         "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
+      },
+      {
+        "cycle_id": "e801d98f",
+        "quality": 0.76179,
+        "theorems": 29,
+        "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
       }
     ]
   }
