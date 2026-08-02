@@ -3173,6 +3173,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8e0a0c8a (Q=0.760), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_8e0a0c8a_349033d0",
+    "priority_score": 0.85983,
+    "research_mode": "team",
+    "source_exp_id": "8e0a0c8a",
+    "status": "available",
+    "timestamp": "2026-08-02T11:45:37.914205+00:00",
+    "title": "Deepening: Consciousness as Integrated Information: Mathematical Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 576be6d2 (Q=0.760), which proved 6 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic"
@@ -4080,17 +4094,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secure Multi-Party Computation: Theoretical Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ae649eb",
     "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
     "domains": [
       "MachineLearning",
       "Logic"
     ],
     "id": "seed_331",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
@@ -7306,23 +7321,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grokking: Phase Transitions in Learning"
   },
   {
-    "consumed_by_exp_id": "8e0a0c8a",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
-    "domains": [
-      "Computation",
-      "Logic",
-      "Speculative"
-    ],
-    "id": "seed_334",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Consciousness as Integrated Information: Mathematical Foundations"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
@@ -8144,21 +8142,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T23:29:06.702461+00:00",
     "title": "**Conjecture.** An elementary binary cellular automaton is reversible on every f"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future directions\n\n1. **Exact fiber cardinality.** Upgrade the explicit injection of `2^n` seeds to an equality characterizing the entire fiber `{x \u2208 (0,1) | f^[n] x = y}`. This requires proving every preimage chooses a unique lower or upper inverse branch.\n2. **Closed trigonometric indexing.** Identify each recursively decoded seed with `sin\u00b2((\u00b1\u03b8 + k\u03c0)/2^n)` when `y=sin\u00b2 \u03b8`, connecting the inverse tree directly to angle halving.\n3. **Finite-precision collapse.** Instantiate the construction for fixed-point arithmetic and quantify which exact-real branches merge after rounding. This would separate mathematical `2^n` ambiguity from implementation-level cycle structure.\n4. **Keystream indistinguishability obstruction.** Formalize a stream-cipher interface and show that observing an orbit suffix beginning at time `n` leaves at least `2^n` candidate exact-real seeds for every interior observed state.\n5. **Boundary fiber classification.** Give exact formulas at targets `0` and `1`, where critical-point collisions cause the complete binary count to fail.\n6. **Measure-theoretic consequences.** Combine the inverse branches with their Jacobians to derive the invariant arcsine density and the Lyapunov exponent `log 2`.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0367",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "bcb31ca6",
-    "status": "available",
-    "timestamp": "2026-07-18T23:29:17.614598+00:00",
-    "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
   },
   {
     "consumed_by_exp_id": "",
@@ -9632,17 +9615,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Research thread `th_0d5dcecd`, cycle 1 (root direction `fd_0391`)."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "111aa6d2",
     "description": "# Future Directions \u2014 Optimal Hamilton Covers\n\nThe deterministic incidence-capacity obstruction \u2014 that any cover of a graph by\ntwo-regular spanning layers uses at least `\u2308\u0394/2\u2309` layers, with a per-vertex\nparity defect of `\u0394 mod 2` at the optimum \u2014 pins down the exact local target\nthat every achievability result must hit. The following conjectures build on\nthat equality case.\n\n## 1. Optimal-cover hitting time in the random graph process\n\n**Conjecture.** In the random graph process, with probability tending to one,\nthe first graph whose minimum degree reaches two is simultaneously the first\ngraph whose edges admit a two-regular cover of size `\u2308\u0394/2\u2309`.\n\nThe key insight is that the incidence-capacity obstruction is already sharp\nvertex by vertex, so the only remaining question is global: whether the process\nhas supplied enough connectivity to extend every controlled forest system at\nonce. Once minimum degree two removes the last local obstruction, the parity\ndefect that a completion must absorb is uniformly zero or one, leaving no room\nfor a second bottleneck.\n\n**Why now?** The parity law isolates the incidence defect as exactly `\u0394 mod 2`,\nreducing a delicate hitting-time statement to a single structured global\ncompletion problem with a known local budget.\n\n## 2. Punctured optimal covers realize linear arboricity\n\n**Conjecture.** Throughout the Hamiltonian range of the binomial random graph,\nevery minimum-size two-regular cover admits a choice of one edge per cycle such\nthat the resulting paths, together with at most one extra linear forest, form an\noptimal linear-forest decomposition.\n\nThe key insight is that puncturing a cycle removes coverage only along a chosen\ntransversal, and the optimal cover's parity-controlled slack \u2014 at most one unit\nper vertex \u2014 is exactly enough to reroute the transversal edges without adding a\nlayer beyond the asymptotically sharp count.\n\n**Why now?** The equality case shows precisely which edges carry the unit of\nslack, turning the decomposition question into a concrete transversal-selection\nand rerouting problem rather than an open-ended optimization.\n\n## 3. Spectral reserved-structure criterion\n\n**Conjecture.** There are absolute constants `c, C > 0` such that every\nsufficiently large graph with minimum degree at least `C log n`, normalized\nsecond eigenvalue at most `c`, and robust sparse-cut expansion admits a\ntwo-regular cover of size `\u2308\u0394/2\u2309`.\n\nThe key insight is that a spectral reservoir can replace probabilistic edge\nexposure in the forest-extension argument: expansion guarantees the simultaneous\nglobal extensions that randomness usually provides, while the incidence bound\nsupplies the exact local completion target.\n\n**Why now?** Because the local target is now an exact equality with a `0/1`\nparity defect, a spectral criterion need only certify simultaneous global\nextension, converting a probabilistic completion into a deterministic one.\n\n## 4. Stability of near-optimal covers\n\n**Conjecture.** If a family of two-regular spanning layers covers a graph using\n`\u2308\u0394/2\u2309 + k` layers, then at every maximum-degree vertex the total repeated\nincidence multiplicity is at most `2k + 1`; for pseudorandom graphs this local\nbound forces the cover to differ from an optimal one in only `O(kn)` edge-layer\nincidences.\n\nThe key insight is that excess layer count translates linearly into local coding\nslack: each extra layer buys exactly two additional incidences per vertex, so\nthe global edit distance to optimality is controlled by the total slack.\n\n**Why now?** The proved equality case fixes the zero-excess baseline and the\nexact `2` incidences contributed per layer, giving the precise linear error term\nexpected to govern the near-optimal regime.\n",
     "domains": [
       "Computation",
       "Physics"
     ],
     "id": "fd_0635",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "66a73fad",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T04:50:30.431766+00:00",
     "title": "The deterministic incidence-capacity obstruction \u2014 that any cover of a graph by"
   },
@@ -11064,6 +11048,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-02T09:33:18.063959+00:00",
     "title": "The formal development proves the algebraic Gauss\u2013Bonnet invariant for a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe exact interior-fiber theorem reduces several follow-up questions to explicit properties of the two inverse branches. The following are concrete, falsifiable conjectures.\n\n1. **Closed trigonometric indexing.** For `0 < \u03b8 < \u03c0/2`, every value `decodeSeed bits (sin \u03b8)^2` is equal to\n   `sin\u00b2 ((s * \u03b8 + k * \u03c0) / 2^n)` for a uniquely determined sign `s \u2208 {-1,1}` and an explicitly bit-decoded residue `k`; conversely, the resulting `2^n` values give the complete interior fiber.\n\n2. **Boundary fiber cardinalities.** For every `n > 0`, the interior fiber of `0` under the `n`-fold logistic iterate is empty, while the interior fiber of `1` has exactly `2^(n-1)` elements. (The second formula records the collision of the two branches at the critical value.)\n\n3. **Fixed-point rounding collapse.** For rounding to the nearest point of the grid `{k / 2^p | 0 \u2264 k \u2264 2^p}`, there is a computable equivalence relation on `Fin n \u2192 Bool` such that two decoded seeds round to the same grid point exactly when their real distance is at most the appropriate pair of adjacent half-cell thresholds. The number of distinct rounded seeds is therefore the number of equivalence classes and is at most `min (2^n) (2^p + 1)`.\n\n4. **Orbit-suffix ambiguity.** In a stream interface exposing an exact logistic-map state after `n` transitions, every observed interior state is compatible with exactly `2^n` interior initial states. Consequently, any deterministic observer whose output depends only on that suffix has the same output on all members of this fiber.\n\n5. **Arcsine invariance.** The probability measure on `(0,1)` with density `1 / (\u03c0 * sqrt (x * (1-x)))` is invariant under the full-strength logistic map. Equivalently, integrating an integrable test function after `logistic` against this density gives the same integral as before composition.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0906",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ffa9af78",
+    "status": "available",
+    "timestamp": "2026-08-02T11:44:09.524335+00:00",
+    "title": "The exact interior-fiber theorem reduces several follow-up questions to explicit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Current formal boundary\n\nThe completed Lean development establishes the finite minimum-information-partition\nsemantics, existence of a minimizing partition, nonnegativity, the exact bridge\n`\u03a6 > 0 \u2194 CutConnected` for nonnegative weighted directed networks, and transfer of\npointwise multiplicative cut approximations to `\u03a6`. These results are structural;\nthey do not assert an NP-hardness classification or a runtime bound for a concrete\nalgorithm. The items below identify the additional definitions and proofs required\nfor those claims.\n\n## Complexity layer\n\nThe current formalization identifies weighted integrated information exactly with a\nfinite minimum-cut functional. A faithful NP-hardness theorem for a richer IIT model\nrequires first fixing an input encoding, a decision problem, and a polynomial-time\nreduction notion. Future work should define Boolean transition systems and probability\ndistributions with bit-size-aware encodings, then reduce a standard NP-hard partition\nproblem to the resulting normalized information partition problem. No complexity claim\nis made without that infrastructure.\n\n## Approximation algorithms\n\nThe theorem `phi_multiplicative_approximation` isolates a reusable correctness interface:\nif a tractable surrogate approximates every cut between factors `1` and `c`, then its\nminimum approximates `\u03a6` by the same factor. A next step is to implement a concrete\nsurrogate and prove both its runtime and its pointwise bounds. For symmetric nonnegative\nweights, exact polynomial-time minimum-cut algorithms are another natural target.\n\n## Probabilistic IIT semantics\n\nReplace abstract effective information by divergence between repertoires of finite\nMarkov kernels. This requires formalizing interventions, subsystem marginalization,\nand a chosen divergence (for example total variation or KL divergence), followed by\nproofs of nonnegativity and data-processing properties.\n\n## Partition conventions\n\nThe present directed cut uses the weight leaving a subset. Alternatives include\nsymmetric crossing weight, unordered bipartitions (quotienting by complements), and\nmultipartitions. Their induced minima can be compared formally, including conditions\nunder which all conventions coincide.\n\n## Connectivity refinements\n\nFor symmetric weights, connect `CutConnected` to ordinary connectivity of the support\nsimple graph. Quantitative refinements can relate `\u03a6` to edge connectivity, conductance,\nspectral gaps, and robustness under perturbations of interaction weights.\n",
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_0907",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8e0a0c8a",
+    "status": "available",
+    "timestamp": "2026-08-02T11:45:33.670875+00:00",
+    "title": "The completed Lean development establishes the finite minimum-information-partit"
   },
   {
     "consumed_by_exp_id": "",
