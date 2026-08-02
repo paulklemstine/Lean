@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "13e8a4d7",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n1. **Miller-function realization.** Construct the divisor-theoretic Miller function for every nonsingular Mathlib Weierstrass curve over a finite field of characteristic coprime t",
-      "quality_score": 0.8063100000000001,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-07-31T00:21:58",
-      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-    },
-    {
       "cycle_id": "02aa1402",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe formal results locate a sharp logical boundary: forward implication plus verified, coherent consequences does not establish an antecedent. A sound system must add information",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-08-02T09:33:21",
       "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
+    },
+    {
+      "cycle_id": "ffa9af78",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThe exact interior-fiber theorem reduces several follow-up questions to explicit properties of the two inverse branches. The following are concrete, falsifiable conjectures.\n\n1. *",
+      "quality_score": 0.74086,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-08-02T11:44:14",
+      "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "41e2ee03",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Commensurability Invariants and Volume Growth\n\nThese conjectures arise from the separation-and-counting principle developed here:\na commensurability invariant turns distinct geom",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-25T02:35:09",
-      "title": "ArXiv paper: Several families of incommensurable noncompact hyperbolic Coxeter polytopes"
-    },
     {
       "cycle_id": "d05d57b6",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-08-02T09:33:21",
       "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
+    },
+    {
+      "cycle_id": "ffa9af78",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThe exact interior-fiber theorem reduces several follow-up questions to explicit properties of the two inverse branches. The following are concrete, falsifiable conjectures.\n\n1. *",
+      "quality_score": 0.74086,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-08-02T11:44:14",
+      "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "66e718fe",
-      "domain": "Novelty",
-      "name": "This",
-      "quality": 0.8129599999999999
-    },
-    {
-      "cycle_id": "66e718fe",
-      "domain": "Novelty",
-      "name": "uniform_retrocausal_confirmation_iff",
-      "quality": 0.8129599999999999
-    },
-    {
-      "cycle_id": "66e718fe",
-      "domain": "Novelty",
-      "name": "universal_retrocausal_rule_collapses",
-      "quality": 0.8129599999999999
-    },
     {
       "cycle_id": "a7f30302",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "hyperbolicArea_le_max",
       "quality": 0.72854
+    },
+    {
+      "cycle_id": "ffa9af78",
+      "domain": "Algebra",
+      "name": "inverseBranch_logistic",
+      "quality": 0.74086
+    },
+    {
+      "cycle_id": "ffa9af78",
+      "domain": "Algebra",
+      "name": "inverseBranch_mem_Ioo",
+      "quality": 0.74086
+    },
+    {
+      "cycle_id": "ffa9af78",
+      "domain": "Algebra",
+      "name": "inverseBranch_side",
+      "quality": 0.74086
     }
   ],
-  "last_updated": "2026-08-02T09:33:21",
+  "last_updated": "2026-08-02T11:44:14",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "f8a71afd",
-        "quality": 0.75276,
-        "theorems": 10,
-        "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
-      },
-      {
         "cycle_id": "eae986b3",
         "quality": 0.6380299999999999,
         "theorems": 6,
@@ -3079,6 +3073,12 @@
         "quality": 0.692,
         "theorems": 6,
         "title": "**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
+      },
+      {
+        "cycle_id": "ffa9af78",
+        "quality": 0.74086,
+        "theorems": 12,
+        "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
       }
     ],
     "Applications": [
