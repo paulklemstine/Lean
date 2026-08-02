@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "46cb7ee6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n- Extend `GrowthRank` from three lexicographic levels to recursively generated exponential–logarithmic monomial groups.\n- Construct composition, logarithm, and exponential on suit",
-      "quality_score": 0.7732699999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-30T20:38:20",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
-    {
       "cycle_id": "513ffc93",
       "domain": "Probability",
       "key_insight": "# Future directions\n\n1. **Poisson connectivity window.** For every fixed real `c`, if `pₙ = (log n + c)/n`, then the number of isolated vertices in `G(n,pₙ)` converges in distribution to `Poisson(exp(",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-01T23:25:37",
       "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
+    },
+    {
+      "cycle_id": "18622a4a",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe exact compiler in `Catalog/Applications/EML/SingleOperatorCompilation.lean`\nsettles the equivalence of the catalog's finite `{exp, log, field operations}`\ngrammar and its sing",
+      "quality_score": 0.77537,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-08-02T06:55:55",
+      "title": "EML Single Operator Church-Turing Thesis"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1f866dac",
-      "domain": "Bridges",
-      "key_insight": "# Future directions: p-adic Langlands for GL₂(ℚ_p)\n\nThe Lean file `PadicLanglandsGL2.lean` establishes a self-contained chain of\nresults around the two sides of the p-adic Langlands correspondence for",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-24T21:32:13",
-      "title": "p-adic Langlands for GL₂(Q_p)"
-    },
     {
       "cycle_id": "78cd863a",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 33,
       "timestamp": "2026-08-01T23:25:47",
       "title": "Homomorphic Encryption: Computing on Encrypted Data"
+    },
+    {
+      "cycle_id": "18622a4a",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe exact compiler in `Catalog/Applications/EML/SingleOperatorCompilation.lean`\nsettles the equivalence of the catalog's finite `{exp, log, field operations}`\ngrammar and its sing",
+      "quality_score": 0.77537,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-08-02T06:55:55",
+      "title": "EML Single Operator Church-Turing Thesis"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cb10fc42",
-      "domain": "Logic",
-      "name": "stronglyComplete_complete",
-      "quality": 0.7388999999999999
-    },
-    {
-      "cycle_id": "cb10fc42",
-      "domain": "Logic",
-      "name": "stronglyComplete_diff_finite",
-      "quality": 0.7388999999999999
-    },
-    {
-      "cycle_id": "cb10fc42",
-      "domain": "Logic",
-      "name": "stronglyComplete_of_union_finite",
-      "quality": 0.7388999999999999
-    },
     {
       "cycle_id": "0e1eb0cb",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "finite_horizon_information_conservation",
       "quality": 0.8021799999999999
+    },
+    {
+      "cycle_id": "18622a4a",
+      "domain": "Applications",
+      "name": "compile_eval",
+      "quality": 0.77537
+    },
+    {
+      "cycle_id": "18622a4a",
+      "domain": "Applications",
+      "name": "representable_to_single_operator",
+      "quality": 0.77537
+    },
+    {
+      "cycle_id": "18622a4a",
+      "domain": "Applications",
+      "name": "expand_eval",
+      "quality": 0.77537
     }
   ],
-  "last_updated": "2026-08-01T23:25:47",
+  "last_updated": "2026-08-02T06:55:55",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e1e4ff02",
-        "quality": 0.76074,
-        "theorems": 15,
-        "title": "EML Training Dynamics as Tropical Gradient Flow"
-      },
-      {
         "cycle_id": "46cb7ee6",
         "quality": 0.7732699999999999,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.76564,
         "theorems": 19,
         "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+      },
+      {
+        "cycle_id": "18622a4a",
+        "quality": 0.77537,
+        "theorems": 22,
+        "title": "EML Single Operator Church-Turing Thesis"
       }
     ],
     "Bridges": [

@@ -2083,23 +2083,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Research Depth via Proof-Theoretic Ordinal Analysis"
   },
   {
-    "consumed_by_exp_id": "18622a4a",
-    "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
-    "domains": [
-      "EML",
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_068",
-    "phase": "A",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Single Operator Church-Turing Thesis"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
     "domains": [
@@ -2247,6 +2230,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T09:23:08.565029+00:00",
     "title": "Deepening: Sums of Three Cubes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 18622a4a (Q=0.775), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos,",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_18622a4a_221fd965",
+    "priority_score": 0.87537,
+    "research_mode": "team",
+    "source_exp_id": "18622a4a",
+    "status": "available",
+    "timestamp": "2026-08-02T06:55:55.345245+00:00",
+    "title": "Deepening: EML Single Operator Church-Turing Thesis"
   },
   {
     "consumed_by_exp_id": "",
@@ -4118,17 +4115,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef4982e9",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
       "Geometry"
     ],
     "id": "seed_346",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
@@ -10996,6 +10994,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T23:25:43.901879+00:00",
     "title": "The completed development isolates the exact obligations required for a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe exact compiler in `Catalog/Applications/EML/SingleOperatorCompilation.lean`\nsettles the equivalence of the catalog's finite `{exp, log, field operations}`\ngrammar and its single `eml(a,b) = exp(a) - log(b)` grammar.  It does **not**\nsettle the much stronger claim about every computable real function.  The\nfollowing are concrete, falsifiable next questions.\n\n1. **Trigonometric non-representability.** No `EMLExpr` denotes `Real.sin` on\n   all of `\u211d` (and likewise for `Real.cos`).  A proof route is to formalize the\n   one-variable consequence of o-minimality of the real exponential field:\n   the zero set of an exp-log term is a finite union of points and intervals,\n   whereas the zeros of sine form an infinite discrete set.  A single explicit\n   expression whose evaluation equals sine everywhere would falsify this.\n\n2. **Restricted-interval trigonometric non-representability.** On every\n   nonempty open interval, no finite real exp-log-field term agrees exactly\n   with sine.  This is stronger than the global zero-set obstruction and can be\n   tested by formalizing analytic continuation/differential-algebraic\n   invariants.  An exact term on one specified open interval falsifies it.\n\n3. **Approximation version for sine and cosine.** For every compact interval\n   `[a,b]` and every positive `\u03b5`, there is an `EMLOnlyExpr` whose evaluation is\n   uniformly within `\u03b5` of sine (respectively cosine) on that interval.\n   Explicit bounds on expression size as a function of `b-a` and `\u03b5` would\n   make this quantitative; failure at one concrete interval and tolerance\n   falsifies it.\n\n4. **Linear compiler-size bound.** For both compilers in the Lean development,\n   there are explicit constants `A,B` such that the target syntax-tree size is\n   at most `A` times the source size plus `B`; moreover, the optimal leading\n   constant for the difference primitive is `3`.  A family of source terms\n   whose compiled size exceeds the proposed bound, or a compiler with a\n   strictly smaller asymptotic constant, falsifies the corresponding part.\n\n5. **Computability thesis counterexample.** Under any standard representation\n   of computable real functions that includes sine, the claim that every\n   computable real function has an exact finite EML expression is false.  This\n   follows from Conjecture 1; conversely, either a finite EML expression for\n   sine or a chosen computability model excluding sine would falsify the stated\n   formulation.\n",
+    "domains": [
+      "Algebra",
+      "Applications"
+    ],
+    "id": "fd_0900",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "18622a4a",
+    "status": "available",
+    "timestamp": "2026-08-02T06:55:51.094203+00:00",
+    "title": "The exact compiler in `Catalog/Applications/EML/SingleOperatorCompilation.lean`"
   },
   {
     "consumed_by_exp_id": "",
