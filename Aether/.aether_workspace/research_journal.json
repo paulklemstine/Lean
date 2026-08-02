@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "85fa434c",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions: BSD Rank Computability\n\n## What is formalized\n\n`Catalog/Applications/BSD/RankComputability.lean` proves a complete finite linear-algebra chain for a certified descent presentation",
-      "quality_score": 0.73204,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-30T23:28:09",
-      "title": "BSD Conjecture: Rank Computability"
-    },
-    {
       "cycle_id": "63b75a93",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Molecular Computing Limits\n\n1. **Bimolecular finite-control compilation.** For every finite deterministic transition system, there is a CRN using only reactions with at most two r",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-08-02T09:30:03",
       "title": "Category-Theoretic Neural Architectures"
+    },
+    {
+      "cycle_id": "be8c4b71",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the al",
+      "quality_score": 0.8084800000000001,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-02T09:31:08",
+      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5a7b49b0",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Spectral Bridge for Quantum Walks on Cayley Graphs\n\n## What was proved\n\n`QuantumWalkSpectralBridge.lean` establishes a concrete, machine-checked bridge between\n**harmonic analysi",
-      "quality_score": 0.58,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-24T23:24:26",
-      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-    },
     {
       "cycle_id": "a4e412f3",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-08-02T09:30:03",
       "title": "Category-Theoretic Neural Architectures"
+    },
+    {
+      "cycle_id": "be8c4b71",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the al",
+      "quality_score": 0.8084800000000001,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-02T09:31:08",
+      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "febd9c83",
-      "domain": "Geometry",
-      "name": "identityCocycle_cocycle",
-      "quality": 0.74513
-    },
-    {
-      "cycle_id": "febd9c83",
-      "domain": "Geometry",
-      "name": "identityCocycle_not_coboundary",
-      "quality": 0.74513
-    },
-    {
-      "cycle_id": "febd9c83",
-      "domain": "Geometry",
-      "name": "counterexample_to_unconditional_averaging",
-      "quality": 0.74513
-    },
     {
       "cycle_id": "c0a515f0",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "resNetSkip_snd",
       "quality": 0.7913999999999999
+    },
+    {
+      "cycle_id": "be8c4b71",
+      "domain": "Applications",
+      "name": "logFeature_separates",
+      "quality": 0.8084800000000001
+    },
+    {
+      "cycle_id": "be8c4b71",
+      "domain": "Applications",
+      "name": "logFeature_separates_vectors",
+      "quality": 0.8084800000000001
+    },
+    {
+      "cycle_id": "be8c4b71",
+      "domain": "Applications",
+      "name": "coordinateExp_adjoin_separates",
+      "quality": 0.8084800000000001
     }
   ],
-  "last_updated": "2026-08-02T09:30:03",
+  "last_updated": "2026-08-02T09:31:08",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "46cb7ee6",
-        "quality": 0.7732699999999999,
-        "theorems": 16,
-        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-      },
-      {
         "cycle_id": "ae875fd7",
         "quality": 0.686,
         "theorems": 26,
@@ -3141,6 +3135,12 @@
         "quality": 0.77537,
         "theorems": 22,
         "title": "EML Single Operator Church-Turing Thesis"
+      },
+      {
+        "cycle_id": "be8c4b71",
+        "quality": 0.8084800000000001,
+        "theorems": 14,
+        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
       }
     ],
     "Bridges": [
