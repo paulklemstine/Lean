@@ -1,75 +1,45 @@
-# Computational Evidence — Huang's signed adjacency matrices `Aₙ`
+# Computational evidence: signed hypercube adjacency
 
-Recursive definition (Huang 2019):
+## Small cases
 
-```
-A₀ = (0)              (the 1×1 zero matrix)
-A_{n+1} = ⎡ Aₙ   I ⎤
-          ⎣ I   -Aₙ⎦
-```
+For the recursive signed operator
 
-`Aₙ` is a `2ⁿ × 2ⁿ` matrix whose nonzero entries are `±1`, supported exactly on the
-edges of the `n`-cube `Qₙ` (it is a *signed* hypercube adjacency matrix).
+\[
+A_{n+1}=\begin{pmatrix}A_n&I\\I&-A_n\end{pmatrix},\qquad A_0=(0),
+\]
 
-## 1. Small cases of the spectral identity `Aₙ² = n·I`
+direct block multiplication gives the following table.
 
-**n = 1.**
-```
-A₁ = ⎡0 1⎤     A₁² = ⎡1 0⎤ = 1·I   ✓
-     ⎣1 0⎦           ⎣0 1⎦
-```
+| dimension `n` | matrix size | observed square | possible real eigenvalues |
+|---:|---:|---:|---:|
+| 0 | 1 | `0` | `0` |
+| 1 | 2 | `I` | `±1` |
+| 2 | 4 | `2 I` | `±√2` |
+| 3 | 8 | `3 I` | `±√3` |
+| 4 | 16 | `4 I` | `±2` |
 
-**n = 2.**
-```
-     ⎡ 0  1 | 1  0⎤
-     ⎢ 1  0 | 0  1⎥
-A₂ = ⎢-----+-----⎥
-     ⎢ 1  0 | 0 -1⎥
-     ⎣ 0  1 |-1  0⎦
-```
-Direct multiplication gives `A₂² = 2·I` (each diagonal entry `= 0²+1²+1²+0² = 2`,
-off-diagonal entries cancel).  ✓
+The Lean theorem `signedAdj_sq` proves the pattern for every `n`, rather than
+relying on these finite calculations. The theorem
+`eigenvalue_sq_eq_dimension` proves the corresponding eigenvalue statement.
 
-**n = 3.** `A₃` is `8×8`; `A₃² = 3·I` (checked by the block recursion:
-top-left block `= A₂² + I = 2I + I = 3I`, etc.).  ✓
+## OEIS search
 
-These confirm the induction step used in `Asign_sq`: the diagonal blocks become
-`nI + I = (n+1)I` and the off-diagonal blocks are `Aₙ − Aₙ = 0`.
+The scalar sequence in the squares is simply `0, 1, 2, 3, 4, ...`; no OEIS
+identification is mathematically informative here. Matrix sizes are the
+standard powers of two `1, 2, 4, 8, 16, ...`.
 
-## 2. Trace and eigenvalue balance
+## Counterexample hunt
 
-`trace Aₙ = 0` for all `n` (verified: `trace A₁ = 0`, `trace A₂ = 0`).  Combined with
-`Aₙ² = nI`, the eigenvalues are `±√n`, and zero trace forces them to occur with **equal
-multiplicity** `2^{n-1}`.
+The first dimension where the all-positive (unsigned) operator can have a
+non-cancelling two-step walk to a distinct vertex is `n = 2`. For the delta
+function at vertex `(true,true)`, evaluating the square at `(false,false)`
+gives `2`, whereas `2 I` gives `0`. Thus the conjecture that *every* signing
+squares to dimension times identity already fails on the four-vertex square.
+The Lean theorem `not_every_signing_has_scalar_square` certifies this
+counterexample.
 
-| n | eigenvalues | multiplicities |
-|---|-------------|----------------|
-| 1 | ±1         | 1, 1           |
-| 2 | ±√2        | 2, 2           |
-| 3 | ±√3        | 4, 4           |
+## Conclusion
 
-## 3. Determinant check `(det Aₙ)² = n^(2ⁿ)`
-
-| n | 2ⁿ | (det Aₙ)² = n^(2ⁿ) | det Aₙ |
-|---|----|--------------------|--------|
-| 1 | 2  | 1² = 1             | −1     |
-| 2 | 4  | 2⁴ = 16            | ±4     |
-| 3 | 8  | 3⁸ = 6561          | ±81    |
-
-Matches `Asign_det_sq`.
-
-## 4. Row support = degree (n-regularity)
-
-Row `v` of `Aₙ` has exactly `n` nonzero (`±1`) entries, so `∑_w (Aₙ v w)² = n`.  This is
-the `n`-regularity of `Qₙ`: each vertex has `n` neighbours (toggling one of `n`
-coordinates).  Cross-checked combinatorially in `HypercubeRegularity.lean` against the
-catalog `DaisyCube` model, where neighbours of `A` are `{A ∆ {i} : i ∈ Fin n}`.
-
-## 5. Counterexample hunt
-
-- Is `Aₙ² = nI` ever violated?  No, for `n ≤ 3` (exhaustive), and the induction proves all `n`.
-- Are entries ever outside `{−1,0,1}`?  No — the recursion only ever places `Aₙ`, `I`,
-  `−Aₙ` blocks.
-- Could a vertex have degree ≠ n?  No — every row has exactly `n` nonzero entries.
-
-No counterexamples found; all universal claims survived and are formalized with 0 sorries.
+The experiments support the canonical alternating signing and reject the
+arbitrary-signing extension. They also indicate that the spectral magnitude
+`√n` is exact, not merely a lower bound.
