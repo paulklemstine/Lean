@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "50db037d",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > 0`, and any `t - 1` distinct nonzero evaluation points, conditioning a uniformly sampled degree-`<",
-      "quality_score": 0.7722199999999999,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-31T08:23:20",
-      "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-    },
-    {
       "cycle_id": "972f5eac",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nThe formal development proves the complete local classification modulo nine:\n`x³+y³+z³=k` is soluble over `Z/9Z` exactly when `k` is not congruent to `4`\nor `5`. It deliberately d",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-02T18:23:58",
       "title": "Bourgain's Slicing Problem"
+    },
+    {
+      "cycle_id": "5814a7d4",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `Aₙ² = n",
+      "quality_score": 0.74072,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-08-02T21:20:01",
+      "title": "Sensitivity Conjecture Extensions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "905765f9",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## 1. Composite-index synchronization through cyclotomic primitive parts\n\nFor every nonexceptional composite index, the primitive part of the corresponding Fibonacci number should",
-      "quality_score": 0.76,
-      "sorry_count": 1,
-      "theorem_count": 4,
-      "timestamp": "2026-07-25T10:53:08",
-      "title": "[Reset] Fresh approach in Shared"
-    },
     {
       "cycle_id": "aa1e249d",
       "domain": "Cryptography",
@@ -2501,15 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-02T18:23:58",
       "title": "Bourgain's Slicing Problem"
+    },
+    {
+      "cycle_id": "5814a7d4",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `Aₙ² = n",
+      "quality_score": 0.74072,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-08-02T21:20:01",
+      "title": "Sensitivity Conjecture Extensions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7b912198",
-      "domain": "Novelty",
-      "name": "epsilon_pos",
-      "quality": 0.7734099999999999
-    },
     {
       "cycle_id": "7b912198",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Shared",
       "name": "exists_width_le_one",
       "quality": 0.7411399999999999
+    },
+    {
+      "cycle_id": "5814a7d4",
+      "domain": "Computation",
+      "name": "signedAdj_sq",
+      "quality": 0.74072
     }
   ],
-  "last_updated": "2026-08-02T18:23:58",
+  "last_updated": "2026-08-02T21:20:01",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "1443bb24",
-        "quality": 0.7907,
-        "theorems": 19,
-        "title": "Causal Inference: Do-Calculus as Formal Logic"
-      },
-      {
         "cycle_id": "627f5167",
         "quality": 0.7662,
         "theorems": 8,
@@ -3327,6 +3321,12 @@
         "quality": 0.683,
         "theorems": 33,
         "title": "Homomorphic Encryption: Computing on Encrypted Data"
+      },
+      {
+        "cycle_id": "5814a7d4",
+        "quality": 0.74072,
+        "theorems": 7,
+        "title": "Sensitivity Conjecture Extensions"
       }
     ],
     "Cryptography": [

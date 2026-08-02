@@ -4451,22 +4451,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "5814a7d4",
-    "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "seed_213",
-    "phase": "A",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Sensitivity Conjecture Extensions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
     "domains": [
@@ -6649,17 +6633,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bffb7591",
     "description": "For every fixed density\u00a0\u03b4\u2208(0,1) and every integer t\u22652 there is a constant C(t,\u03b4)>0 such that for all sufficiently large n one can find a subset S\u2282[n] of size at least \u03b4n that contains no t\u2011fold sumset A\u2081+\u22ef+A_t with each |A_i|\u2265C(t,\u03b4)\u00b7(log n)/(log(1/\u03b4))^{1/(t\u22121)}.  This conjecture generalises the extremal result of Serra\u2011Szegedy and the recent construction for t=2, and it is compatible with the lower\u2011bound phenomenon proved by Hern\u00e1ndez\u2011and\u2011Hetzel.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0214",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T12:35:07.930478+00:00",
     "title": "Existence of Dense Sets without Large t\u2011Fold Sumsets"
   },
@@ -11134,6 +11119,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-02T18:23:55.680051+00:00",
     "title": "`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `A\u2099\u00b2 = nI` in every dimension;\n- every real eigenvalue with a nonzero eigenvector therefore satisfies\n  `\u03bb\u00b2 = n`;\n- an eigenvalue bound `|\u03bb| \u2264 s` implies the numerical inequality `n \u2264 s\u00b2`;\n- the stronger conjecture that every signing has scalar square is false, with\n  the unsigned two-dimensional cube as a formally verified counterexample.\n\nThe following are genuine extensions beyond that completed baseline.\n\n## Prioritized extensions\n\n1. **Connect the spectral certificate to Boolean functions.** Define Boolean\n   functions on `Cube n`, pointwise and maximum sensitivity, and multilinear\n   real degree. Formalize the induced-subgraph reduction in Huang's argument so\n   that the operator theorem yields the full degree\u2013sensitivity inequality.\n\n2. **Classify scalar-square signings.** Replace the disproved arbitrary-signing\n   conjecture by the face condition that every two-dimensional face has\n   negative sign product. Prove both directions of the expected equivalence\n   with `A\u00b2 = nI`, then classify such signings up to switching equivalence.\n\n3. **Multiplicity and characteristic polynomial.** For positive dimension,\n   prove that `\u221an` and `-\u221an` each have multiplicity `2^(n-1)`, and derive the\n   characteristic polynomial `(X\u00b2 - n)^(2^(n-1))`. A trace-zero argument\n   combined with the scalar-square identity should determine the\n   multiplicities.\n\n4. **Restriction and interlacing.** Represent the recursive operator as a\n   finite real symmetric matrix, define principal restrictions, and formalize\n   eigenvalue interlacing. This is the main bridge from density of a vertex\n   subset to a high-degree vertex in the induced subgraph.\n\n5. **Test tighter degree\u2013sensitivity proposals.** After the Boolean-function\n   definitions are in place, exhaustively enumerate small dimensions and\n   record extremal pairs `(degree, sensitivity)`. Use these certified finite\n   cases to reject false constants or lower-order improvements before pursuing\n   general bounds.\n\n6. **Beyond the binary cube.** Study signed operators on products of larger\n   alphabets and on other Cayley graphs. Determine which anticommutation or\n   face-cancellation relations force exact scalar-square identities and which\n   corresponding local-degree bounds survive.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0915",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5814a7d4",
+    "status": "available",
+    "timestamp": "2026-08-02T21:19:56.656175+00:00",
+    "title": "The accompanying Lean development settles the operator-algebraic core used by"
   },
   {
     "consumed_by_exp_id": "",

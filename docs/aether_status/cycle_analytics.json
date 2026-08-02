@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-02T18:23:59.239062+00:00",
+  "last_updated": "2026-08-02T21:20:01.354495+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -45095,6 +45095,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-02T18:23:59.125582+00:00",
       "title": "Bourgain's Slicing Problem"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0208,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Computation",
+      "duration_seconds": 5544.153933286667,
+      "end_time": 1785705505.9231336,
+      "files_integrated": 4,
+      "job_id": "5814a7d4",
+      "outcome_quality": 0.74072,
+      "phase": "complete",
+      "phase_a_prompt_version": "v26",
+      "phase_a_quality_score": 0.72259,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v26",
+      "quality_breakdown": {
+        "actionability": 0.68,
+        "applications": 0.74,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6192,
+        "cross_domain": 0.7,
+        "grade": "substantial",
+        "importance": 0.4996,
+        "novelty": 0.77,
+        "proof_depth": 0.3837,
+        "usefulness": 0.5418
+      },
+      "quality_score": 0.74072,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785699961.7692003,
+      "strategy_count": 0,
+      "theorem_count": 7,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 3,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-02T21:20:01.230218+00:00",
+      "title": "Sensitivity Conjecture Extensions"
     }
   ]
 }
