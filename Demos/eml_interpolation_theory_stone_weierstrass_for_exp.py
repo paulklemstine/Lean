@@ -1,174 +1,160 @@
-"""
-EML Interpolation Theory — Numerical demonstrations.
+#!/usr/bin/env python3
+"""Numerical demonstrations for exponential--logarithmic interpolation theory.
 
-Self-contained Python demonstrating the main theorems of the package:
-
-  * Separation: g(t) = exp(a) * log(b*t + c) is strictly monotone (b > 0),
-    hence point-separating  (emlSep_strictMonoOn / emlSep_separates).
-  * Jackson rate (Lipschitz): the width-n piecewise-linear EML interpolant
-    approximates an L-Lipschitz f on [0,1] with error <= L/n
-    (pwLinInterp_error).
-  * Jackson rate (Holder): error <= 2L / n**alpha  (pwLinInterp_holder_error).
-  * Smooth rate for x^2: Q_h(x) = (2/h^2)*(exp(h*x) - 1 - h*x) approximates
-    x^2 with error <= (4/9)*h, i.e. <= 4/(9n) at h = 1/n
-    (emlQuadApprox_error / emlQuadApprox_rate), and the rate is tight Theta(1/n)
-    (emlQuadApprox_error_Theta).
-  * Two witnesses for x^2: the smooth network (constant 4/9) vs. the
-    piecewise-linear interpolant (constant 2)  (eml_two_witnesses_sq).
-
-Only the standard library is required.
+The script uses only the Python standard library.  It demonstrates:
+1. constructive separation of distinct scalars and vectors;
+2. exact width accounting for the square expression with zero padding;
+3. the shifted exp--log square and its certified uniform error bound.
 """
 
 from __future__ import annotations
 
-import math
-from typing import Callable, List, Tuple
+from dataclasses import dataclass
+from math import exp, log
+from typing import Callable, Sequence
 
 
-# ----------------------------------------------------------------------------
-# Separation primitive:  g(t) = exp(a) * log(b*t + c)
-# ----------------------------------------------------------------------------
-def eml_sep(a: float, b: float, c: float, t: float) -> float:
-    """The EML separating primitive g(t) = exp(a) * log(b*t + c)."""
-    return math.exp(a) * math.log(b * t + c)
+@dataclass(frozen=True)
+class SeparationResult:
+    """Parameters and outputs for a scalar exp--log separator."""
+
+    a: float
+    b: float
+    c: float
+    value_x: float
+    value_y: float
 
 
-def demo_separation(lo: float = 0.0, hi: float = 1.0, samples: int = 11) -> None:
-    """Show that g(t) = log(t + 1 - lo) is strictly increasing on [lo, hi],
-    hence injective, hence separates points (Corollary 3.3)."""
-    print("=" * 70)
-    print("SEPARATION:  g(t) = log(t + 1 - lo) is strictly increasing on [lo,hi]")
-    print("=" * 70)
-    a, b, c = 0.0, 1.0, 1.0 - lo
-    xs: List[float] = [lo + (hi - lo) * i / (samples - 1) for i in range(samples)]
-    vals: List[float] = [eml_sep(a, b, c, x) for x in xs]
-    strictly_increasing = all(vals[i] < vals[i + 1] for i in range(len(vals) - 1))
-    for x, v in zip(xs, vals):
-        print(f"  t = {x:6.3f}   g(t) = {v: .6f}")
-    print(f"  strictly increasing on the grid: {strictly_increasing}")
-    # Distinct points -> distinct values (separation):
-    x, y = 0.25, 0.75
-    print(f"  g({x}) = {eml_sep(a, b, c, x):.6f}  !=  "
-          f"g({y}) = {eml_sep(a, b, c, y):.6f}  ->  separates {x} from {y}")
-    print()
+def log_feature(a: float, b: float, c: float, t: float) -> float:
+    """Evaluate exp(a) * log(b*t+c), requiring a positive log argument."""
+    argument = b * t + c
+    if argument <= 0.0:
+        raise ValueError("The logarithm argument must be positive.")
+    return exp(a) * log(argument)
 
 
-# ----------------------------------------------------------------------------
-# Piecewise-linear EML interpolant on a uniform n-cell grid of [0,1]
-# ----------------------------------------------------------------------------
-def pw_lin_interp(f: Callable[[float], float], n: int, x: float) -> float:
-    """Width-n continuous piecewise-linear interpolant of f on [0,1].
-
-    Selects the cell index k = min(n-1, floor(n*x)) so that x in [k/n,(k+1)/n],
-    with x = 1 assigned to the last cell, then returns the affine interpolant
-    through the cell endpoints."""
-    k: int = min(n - 1, math.floor(n * x))
-    a: float = k / n
-    b: float = (k + 1) / n
-    return f(a) + (f(b) - f(a)) / (b - a) * (x - a)
-
-
-def sup_error(approx: Callable[[float], float],
-              target: Callable[[float], float],
-              grid: int = 2001) -> float:
-    """Empirical sup-norm error over a fine grid of [0,1]."""
-    return max(abs(approx(i / (grid - 1)) - target(i / (grid - 1)))
-               for i in range(grid))
+def separate_scalars(x: float, y: float) -> SeparationResult:
+    """Construct parameters that separate two distinct real numbers."""
+    if x == y:
+        raise ValueError("Separation requires distinct inputs.")
+    a, b, c = 0.0, 1.0, abs(x) + abs(y) + 1.0
+    return SeparationResult(
+        a=a,
+        b=b,
+        c=c,
+        value_x=log_feature(a, b, c, x),
+        value_y=log_feature(a, b, c, y),
+    )
 
 
-def demo_lipschitz_rate() -> None:
-    """Verify pwLinInterp_error: |f - f_hat_n| <= L/n for an L-Lipschitz f.
-
-    Target: f(x) = |x - 1/3|, which is exactly 1-Lipschitz."""
-    print("=" * 70)
-    print("LIPSCHITZ JACKSON RATE:  |f - pwLinInterp(f,n)| <= L/n   (L = 1)")
-    print("=" * 70)
-    f: Callable[[float], float] = lambda x: abs(x - 1.0 / 3.0)
-    L: float = 1.0
-    print(f"  {'n':>5} {'measured error':>16} {'bound L/n':>14} {'holds':>7}")
-    for n in (1, 2, 4, 8, 16, 32, 64, 128):
-        err: float = sup_error(lambda x: pw_lin_interp(f, n, x), f)
-        bound: float = L / n
-        print(f"  {n:>5} {err:>16.6e} {bound:>14.6e} {str(err <= bound + 1e-12):>7}")
-    print()
+def separate_vectors(
+    x: Sequence[float], y: Sequence[float]
+) -> tuple[int, SeparationResult]:
+    """Find a differing coordinate and construct a scalar separator there."""
+    if len(x) != len(y):
+        raise ValueError("Vectors must have the same dimension.")
+    for index, (x_i, y_i) in enumerate(zip(x, y)):
+        if x_i != y_i:
+            return index, separate_scalars(x_i, y_i)
+    raise ValueError("Separation requires distinct vectors.")
 
 
-def demo_holder_rate(alpha: float = 0.5) -> None:
-    """Verify pwLinInterp_holder_error: |f - f_hat_n| <= 2L/n^alpha.
-
-    Target: f(x) = x^alpha, which is alpha-Holder with constant L = 1 on [0,1]."""
-    print("=" * 70)
-    print(f"HOLDER JACKSON RATE:  |f - pwLinInterp(f,n)| <= 2L/n^alpha "
-          f"(alpha = {alpha}, L = 1)")
-    print("=" * 70)
-    f: Callable[[float], float] = lambda x: x ** alpha
-    L: float = 1.0
-    print(f"  {'n':>5} {'measured error':>16} {'bound 2L/n^a':>14} {'holds':>7}")
-    for n in (1, 2, 4, 8, 16, 32, 64, 128):
-        err: float = sup_error(lambda x: pw_lin_interp(f, n, x), f)
-        bound: float = 2.0 * L / (n ** alpha)
-        print(f"  {n:>5} {err:>16.6e} {bound:>14.6e} {str(err <= bound + 1e-9):>7}")
-    print()
+def shifted_exp_log_square(x: float, delta: float) -> float:
+    """Evaluate exp(2*log(x+delta)) on its positive domain."""
+    if delta <= 0.0:
+        raise ValueError("delta must be positive.")
+    if x + delta <= 0.0:
+        raise ValueError("x + delta must be positive.")
+    return exp(2.0 * log(x + delta))
 
 
-# ----------------------------------------------------------------------------
-# Single-exponential network for x^2:  Q_h(x) = (2/h^2)(exp(h x) - 1 - h x)
-# ----------------------------------------------------------------------------
-def eml_quad_approx(h: float, x: float) -> float:
-    """The single-exponential EML network Q_h(x) approximating x^2."""
-    return (2.0 / h ** 2) * (math.exp(h * x) - 1.0 - h * x)
+def square_error_bound(delta: float) -> float:
+    """Return the certified [0,1] uniform error bound 2*delta+delta^2."""
+    if delta <= 0.0:
+        raise ValueError("delta must be positive.")
+    return 2.0 * delta + delta * delta
 
 
-def demo_quadratic_rate() -> None:
-    """Verify emlQuadApprox_error/rate: |Q_h(x) - x^2| <= (4/9)h <= 4/(9n),
-    and exhibit the matching lower bound (Theta(1/n) sharpness)."""
-    print("=" * 70)
-    print("SMOOTH RATE FOR x^2:  |Q_h(x) - x^2| <= (4/9)h,  h = 1/n  ->  4/(9n)")
-    print("=" * 70)
-    target: Callable[[float], float] = lambda x: x ** 2
-    print(f"  {'n':>5} {'measured error':>16} {'upper 4/(9n)':>14} "
-          f"{'@x=1 (lower)':>14} {'holds':>7}")
-    for n in (1, 2, 4, 8, 16, 32, 64, 128):
-        h: float = 1.0 / n
-        err: float = sup_error(lambda x: eml_quad_approx(h, x), target)
-        upper: float = 4.0 / (9.0 * n)
-        # The error at x = 1 is a positive multiple of h, witnessing the lower bound.
-        lower_witness: float = abs(eml_quad_approx(h, 1.0) - 1.0)
-        ok: bool = err <= upper + 1e-12
-        print(f"  {n:>5} {err:>16.6e} {upper:>14.6e} "
-              f"{lower_witness:>14.6e} {str(ok):>7}")
-    print("  (the @x=1 column stays a fixed fraction of 1/n: the rate is Theta(1/n))")
-    print()
+def choose_delta(epsilon: float) -> float:
+    """Choose delta with 0 < delta <= 1 and 3*delta <= epsilon."""
+    if epsilon <= 0.0:
+        raise ValueError("epsilon must be positive.")
+    return min(0.5, epsilon / 3.0)
 
 
-def demo_two_witnesses() -> None:
-    """eml_two_witnesses_sq: two structurally distinct width-n EML networks
-    approximate x^2 at rate O(1/n); the smooth one (const 4/9) beats the
-    piecewise-linear one (const 2)."""
-    print("=" * 70)
-    print("TWO WITNESSES FOR x^2:  smooth network (4/9) vs. pw-linear (2)")
-    print("=" * 70)
-    sq: Callable[[float], float] = lambda x: x ** 2
-    print(f"  {'n':>5} {'smooth err':>14} {'<=4/(9n)':>12} "
-          f"{'pwlin err':>14} {'<=2/n':>12}")
-    for n in (1, 2, 4, 8, 16, 32, 64):
-        h: float = 1.0 / n
-        smooth: float = sup_error(lambda x: eml_quad_approx(h, x), sq)
-        pwl: float = sup_error(lambda x: pw_lin_interp(sq, n, x), sq)
-        print(f"  {n:>5} {smooth:>14.6e} {4.0/(9*n):>12.4e} "
-              f"{pwl:>14.6e} {2.0/n:>12.4e}")
-    print()
+def max_sampled_error(
+    approximation: Callable[[float], float], samples: int = 10_001
+) -> tuple[float, float]:
+    """Return (maximum sampled error, its location) against x^2 on [0,1]."""
+    if samples < 2:
+        raise ValueError("At least two samples are required.")
+    maximum, argmax = -1.0, 0.0
+    for k in range(samples):
+        x = k / (samples - 1)
+        error = abs(approximation(x) - x * x)
+        if error > maximum:
+            maximum, argmax = error, x
+    return maximum, argmax
 
 
-def main() -> None:
-    demo_separation()
-    demo_lipschitz_rate()
-    demo_holder_rate(alpha=0.5)
-    demo_quadratic_rate()
-    demo_two_witnesses()
-    print("All demonstrations completed: every measured error respects its "
-          "certified theoretical bound.")
+def padded_square_width(requested_width: int) -> int:
+    """Model zero padding: x*x has width 2 and each added zero adds one leaf."""
+    if requested_width < 2:
+        raise ValueError("An exact square requires requested width at least 2.")
+    base_width = 2
+    zero_leaves = requested_width - base_width
+    return base_width + zero_leaves
+
+
+def run_demo() -> None:
+    """Print reproducible numerical examples and compare them with exact bounds."""
+    print("EML INTERPOLATION THEORY: NUMERICAL DEMONSTRATIONS")
+    print("=" * 62)
+
+    x, y = -2.75, 1.5
+    scalar = separate_scalars(x, y)
+    print("\n1. Constructive scalar separation")
+    print(f"   inputs: x={x}, y={y}")
+    print(f"   parameters: a={scalar.a}, b={scalar.b}, c={scalar.c}")
+    print(f"   positive arguments: {x + scalar.c:.6f}, {y + scalar.c:.6f}")
+    print(f"   feature values: {scalar.value_x:.12f}, {scalar.value_y:.12f}")
+    print(f"   separated: {scalar.value_x != scalar.value_y}")
+
+    vector_x = (0.25, -3.0, 7.0)
+    vector_y = (0.25, -3.0, 8.5)
+    index, vector_result = separate_vectors(vector_x, vector_y)
+    print("\n2. Coordinatewise vector separation")
+    print(f"   vectors: {vector_x} and {vector_y}")
+    print(f"   first differing coordinate: {index}")
+    print(
+        "   feature values on that coordinate: "
+        f"{vector_result.value_x:.12f}, {vector_result.value_y:.12f}"
+    )
+
+    epsilon = 0.03
+    delta = choose_delta(epsilon)
+    bound = square_error_bound(delta)
+    sampled, location = max_sampled_error(
+        lambda t: shifted_exp_log_square(t, delta)
+    )
+    exact_supremum = bound  # attained at x=1
+    print("\n3. Shifted exp--log approximation of x^2")
+    print(f"   requested tolerance epsilon={epsilon}")
+    print(f"   selected delta={delta}")
+    print(f"   conservative certificate 3*delta={3.0 * delta:.12f}")
+    print(f"   exact uniform error 2*delta+delta^2={exact_supremum:.12f}")
+    print(f"   sampled maximum error={sampled:.12f} at x={location:.6f}")
+    print(f"   certified below epsilon: {bound <= epsilon}")
+
+    print("\n4. Exact square at any requested width N >= 2")
+    for width in (2, 3, 8):
+        realized_width = padded_square_width(width)
+        sample_error = max(abs(t * t - t**2) for t in (0.0, 0.2, 0.7, 1.0))
+        print(
+            f"   requested={width}, realized={realized_width}, "
+            f"sample error={sample_error:.1f}"
+        )
 
 
 if __name__ == "__main__":
-    main()
+    run_demo()

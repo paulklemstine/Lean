@@ -1,185 +1,156 @@
-# The Two-Letter Alphabet That Can Spell Any Curve
+# Exponentials, Logarithms, and the Art of Approximating Anything Continuous
 
-Imagine you are handed a machine with only a handful of buttons: one that
-exponentiates a number, one that takes its logarithm, one that adds, and one that
-multiplies. With nothing but these operations, chained together in whatever order
-you like, you are asked to reproduce *any* continuous shape — a heartbeat trace, a
-stock-price curve, the silhouette of a mountain range — to any accuracy you
-demand. Can it be done? And if it can, how much machinery do you actually need?
+## A small vocabulary with a surprisingly large reach
 
-This is the story of **EML functions** — the family of functions you can build
-from **E**xponentials, **M**ultiplication (with its companion, addition), and
-**L**ogarithms — and of a surprisingly complete answer to both questions. The
-answer is *yes, always*, and we can say with precision how the cost grows as you
-ask for more accuracy. The result turns a famous but purely *existential*
-guarantee — "an approximation exists" — into a *constructive* one — "here is the
-approximation, here is its size, and here is exactly how wrong it can be."
+A smooth curve on a screen, a temperature profile across a metal plate, and the response surface of a scientific model can all be viewed in the same way: each assigns a real number to every point in some bounded region. The central question of approximation theory is whether a manageable collection of formulas can imitate every such continuous assignment, as accurately as we wish.
 
-## A theorem about separation
+Polynomials are the classical answer. On a closed interval, sufficiently elaborate polynomials approximate every continuous function uniformly. But modern models often use other primitives. Exponentials describe growth, decay, probabilities, and partition functions. Logarithms turn products into sums and reveal scale. This raises a natural question: how expressive are formulas assembled from constants, variables, addition, multiplication, exponentiation, and logarithms?
 
-The mathematical engine behind universal approximation is a classical gem called
-the **Stone–Weierstrass theorem**. Stripped of jargon, it says something almost
-magical. Suppose you have a collection of functions on some bounded region that is
-closed under addition and multiplication (an *algebra*), that includes the
-constant functions, and that has one modest talent: for any two distinct points
-$x \neq y$ in your region, *some* function in the collection assigns them
-different values. That last property is called **separating points**. The theorem
-then promises that your collection can approximate *every* continuous function on
-that region, as closely as you wish, measured in the strictest "worst-case"
-(uniform) sense.
+There are two distinct answers, and keeping them separate is crucial. The first is qualitative: a particular algebra of exponential features is dense among continuous functions on every compact finite-dimensional domain. In plain language, these features can approximate any continuous target arbitrarily well. The second is quantitative: certain targets can be represented or approximated with explicit small formulas and explicit errors. A broad rate law for all Hölder or Lipschitz functions, however, requires more than the qualitative theorem alone.
 
-Think of separating points as the ability to *tell points apart*. If your toolkit
-can never distinguish $x$ from $y$, it is doomed to assign them the same value
-forever, and so it can never reproduce a function that treats them differently. But
-Stone–Weierstrass says this is the *only* obstruction. Once you can tell every pair
-of points apart, and you can add and multiply, you can build anything.
+This distinction—between being able to approximate eventually and knowing the resources needed—is the thread running through the story.
 
-So the whole question of whether EML functions are universal collapses to a single,
-concrete puzzle: **can a single exp-log function tell points apart?**
+## How one feature tells two points apart
 
-## One function that does the job
+Begin in one dimension. For real parameters $a$, $b$, and $c$, define the exp–log feature
 
-Consider the candidate
-$$g(t) = e^{a}\,\log(b\,t + c).$$
-This is an EML function in the purest sense: an exponential constant $e^a$
-multiplying the logarithm of an affine expression $b t + c$. The claim is that with
-the right choice of parameters, this one function separates every pair of points.
+$$
+g(t)=e^a\log(bt+c),
+$$
 
-Why should it? Because it is **strictly increasing**. Walk through its anatomy.
-The inside, $b t + c$, is a straight line; if $b > 0$ it climbs as $t$ climbs. The
-logarithm is itself strictly increasing wherever its input is positive — bigger
-inputs give bigger logs. And multiplying by the positive number $e^a$ never flips
-an increase into a decrease. Stack three "increasing" steps and the whole
-composition increases. A strictly increasing function can never revisit a value:
-if $x \neq y$ then $g(x) \neq g(y)$. It separates points automatically.
+where the logarithm is used only when $bt+c>0$. This feature can distinguish any two different real numbers.
 
-The formalized result makes the one delicate condition explicit. The logarithm
-only behaves on positive numbers, so we need $b t + c > 0$ across the region. On an
-interval $[\mathrm{lo}, \mathrm{hi}]$ there is a clean universal fix: take
-$a = 0$, $b = 1$, and $c = 1 - \mathrm{lo}$, giving
-$$g(t) = \log(t + 1 - \mathrm{lo}).$$
-Now the argument $t + 1 - \mathrm{lo}$ is at least $1$ everywhere on the interval,
-comfortably positive, and the function is strictly increasing throughout. One EML
-primitive, one explicit recipe, and the separation property is secured. The exact
-statement proved is:
+**Point-Separation Theorem.** If $x\ne y$ are real numbers, then there are real parameters $a,b,c$ with $b>0$, $bx+c>0$, and $by+c>0$ such that $g(x)\ne g(y)$.
 
-> **Separation.** For $b > 0$ and points $x \neq y$ with $b x + c > 0$ and
-> $b y + c > 0$, we have $g(x) \neq g(y)$.
+The proof is constructive. Choose
 
-Feed this into Stone–Weierstrass and a striking corollary drops out:
+$$
+a=0,\qquad b=1,\qquad c=|x|+|y|+1.
+$$
 
-> **Density on an interval.** The algebra generated by the single function
-> $t \mapsto \log(t + 1 - \mathrm{lo})$ — that is, all polynomials in this one
-> log-function — is uniformly dense in the space of continuous functions on
-> $[\mathrm{lo}, \mathrm{hi}]$.
+Both $x+c$ and $y+c$ are positive. Since the logarithm is strictly increasing on the positive real axis, $\log(x+c)\ne\log(y+c)$ whenever $x\ne y$. Multiplication by $e^a=1$ changes nothing.
 
-In plain terms: *every* continuous function on an interval is a limit of
-polynomials built from a single logarithm. That is the universality of EML
-functions, reduced to its essence.
+This may look modest, but point separation is the ignition key for Stone–Weierstrass approximation. An approximating family must be able to notice the difference between distinct inputs. If every candidate formula gave the same value at two points, no combination of those formulas could approximate a continuous target that assigns different values there.
 
-## From "exists" to "how much"
+The argument extends immediately to vectors. Suppose $x$ and $y$ are distinct points of $\mathbb{R}^n$. At least one coordinate differs, say $x_i\ne y_i$. Applying the one-dimensional construction to that coordinate produces a single exp–log feature that separates the two vectors. Thus one neuron looking at one well-chosen coordinate is enough to witness any geometric distinction.
 
-Universality alone is a little unsatisfying. It tells you a good approximation is
-out there but says nothing about its price. The deeper contribution here is a
-**Jackson-type rate**: a quantitative law relating the *accuracy* you want to the
-*size* of the network you must build. (The name honors Dunham Jackson, who in 1911
-proved the first such rates for trigonometric and polynomial approximation.)
+## The algebra that fills every compact domain
 
-To state a rate we need to measure smoothness. A function $f$ is
-**$L$-Lipschitz** if it never changes too fast:
-$$|f(x) - f(y)| \le L\,|x - y|$$
-for all $x, y$. The constant $L$ caps the steepness. More generally, $f$ is
-**$\alpha$-Hölder** with constant $L$ (for $0 < \alpha \le 1$) if
-$$|f(x) - f(y)| \le L\,|x - y|^{\alpha},$$
-a gentler condition that allows mild corners. Lipschitz is the case $\alpha = 1$.
+Now let $K$ be a compact subset of $\mathbb{R}^n$. Compactness means, roughly, that the domain is closed and bounded enough to prevent values from escaping to infinity and to make uniform approximation meaningful. Let $C(K)$ denote the real-valued continuous functions on $K$, equipped with the uniform norm
 
-The construction that achieves the rate is the most natural one imaginable: the
-**piecewise-linear interpolant**. Chop the interval $[0,1]$ into $n$ equal cells.
-On each cell, draw the straight line connecting the true values of $f$ at the two
-endpoints. Glue the lines together and you have a continuous, kinked approximation
-$\widehat{f}_n$. Each straight piece is an *affine* function — the humblest EML
-building block of all, needing neither exponential nor logarithm — so the whole
-thing is an EML network of "width" $n$.
+$$
+\|f\|_\infty=\sup_{x\in K}|f(x)|.
+$$
 
-How good is it? The heart of the argument is a sharp one-cell estimate. On a cell
-$[a,b]$, the linear interpolant $\ell$ of an $L$-Lipschitz $f$ obeys
-$$|f(x) - \ell(x)| \le 2L \cdot \min(x - a,\, b - x).$$
-The error is largest in the middle of the cell and vanishes exactly at the
-endpoints (the *nodes*), where interpolation is perfect by construction. Because
-each cell has width $1/n$, the middle is at most $1/(2n)$ from either node, and the
-bound collapses to a clean global law:
+For each coordinate $i$, consider the continuous feature
 
-> **Jackson rate (Lipschitz).** For any $L$-Lipschitz $f$, the width-$n$
-> piecewise-linear EML interpolant satisfies, uniformly on $[0,1]$,
-> $$\bigl|f(x) - \widehat{f}_n(x)\bigr| \le \frac{L}{n}.$$
+$$
+\phi_i(x)=e^{x_i}.
+$$
 
-The constant is exactly $1$ — there is no hidden fudge factor. Want accuracy
-$\varepsilon$? Take $n = \lceil L/\varepsilon \rceil$ cells. The cost grows like
-$\varepsilon^{-1}$, and the same construction extends seamlessly to the Hölder
-class, where it yields
-$$\bigl|f(x) - \widehat{f}_n(x)\bigr| \le \frac{2L}{n^{\alpha}},$$
-so accuracy $\varepsilon$ needs width about $\varepsilon^{-1/\alpha}$. Rougher
-targets (smaller $\alpha$) cost more, in a perfectly quantified way.
+Let $A$ be the smallest real algebra of functions on $K$ containing all the $\phi_i$. Thus $A$ contains constants and is closed under finite addition, scalar multiplication, and multiplication. Its elements are finite algebraic combinations of coordinate exponentials.
 
-## A smooth surprise: approximating $x^2$ with a single exponential
+Why should this restricted-looking family be universal? First, it contains constants because it is a unital real algebra. Second, it separates points. If $x\ne y$, then $x_i\ne y_i$ for some coordinate $i$. The exponential function is injective, so
 
-The piecewise-linear approach is robust but a little crude — all those corners.
-For a smooth target you can often do better with a single smooth EML gadget, and
-the square function $x \mapsto x^2$ is the perfect showcase.
+$$
+e^{x_i}\ne e^{y_i}.
+$$
 
-Recall the Taylor expansion $e^u = 1 + u + \tfrac{u^2}{2} + \cdots$. The quadratic
-term $u^2/2$ is hiding inside the exponential; we just need to *extract* it. Define
-$$\mathrm{Q}_h(x) = \frac{2}{h^2}\bigl(e^{hx} - 1 - hx\bigr).$$
-This is the rescaled "second difference" of the exponential — built purely from
-$\exp$, multiplication, and constants, with no logarithm at all. Substituting the
-Taylor series and simplifying, the leading term is exactly $x^2$, and everything
-else is a small remainder controlled by Taylor's theorem. The formalized bound is
-beautifully explicit:
+The real Stone–Weierstrass theorem now applies.
 
-> **Smooth rate for $x^2$.** For $0 < h \le 1$ and $x \in [0,1]$,
-> $$\bigl|\mathrm{Q}_h(x) - x^2\bigr| \le \frac{4}{9}\,h.$$
-> Choosing $h = 1/n$ gives error at most $4/(9n)$.
+**Exponential Stone–Weierstrass Theorem.** For every compact $K\subseteq\mathbb{R}^n$, the algebra generated by the coordinate functions $x\mapsto e^{x_i}$ is dense in $C(K)$ under the uniform norm. Equivalently, for every continuous $f:K\to\mathbb{R}$ and every $\varepsilon>0$, there is a finite algebraic combination $p$ of coordinate exponentials such that
 
-So a *single exponential*, suitably rescaled, tracks $x^2$ with error shrinking
-like $1/n$ — and with a smaller constant ($4/9 \approx 0.44$) than the
-piecewise-linear interpolant's bound ($2$) for the same target. Two completely
-different EML constructions, one jagged and one smooth, both certified to hit the
-same $O(1/n)$ rate. And a companion analysis shows this rate is **sharp**: the
-error is genuinely of order $1/n$, never secretly faster, so no cleverness with
-this construction can beat it. The $\Theta(1/n)$ behavior is the honest truth, not
-a loose estimate.
+$$
+\sup_{x\in K}|p(x)-f(x)|<\varepsilon.
+$$
 
-## Why this matters
+The theorem is more striking than it first appears. There is no need to include each raw coordinate $x_i$ as a generator. The coordinate exponential already preserves all coordinate information because it never identifies two different real inputs. Algebraic combinations then provide enough flexibility to approximate every continuous landscape on the compact set.
 
-Modern machine learning rests on *universal approximation theorems* — assurances
-that neural networks can represent essentially any function. But the classical
-versions are existential: they promise a network exists without telling you how
-wide it must be or how close it will get. That gap between "exists" and "costs
-this much" is exactly where engineering lives.
+This is a genuine universality result, but it is existential. It promises a suitable expression for each tolerance; it does not say how wide or deep that expression must be. Stone–Weierstrass is a map showing that the destination is reachable, not a travel-time estimate.
 
-The EML story closes the gap for a concrete, transparent function class. The
-ingredients — exponential, logarithm, addition, multiplication — are precisely the
-operations a network mixing additive layers and multiplicative gates can perform,
-and they appear throughout scientific computing, from log-likelihoods to
-log-domain signal processing. What we gain is a *menu with prices*:
+## What “width” means when formulas are trees
 
-- **Universality is real and minimal.** A single strictly monotone log-function
-  separates points, and that alone forces density. Telling points apart is the
-  whole game.
-- **Accuracy has an explicit address.** For Lipschitz targets, width
-  $n = \lceil L/\varepsilon\rceil$ buys uniform error $\varepsilon$. For Hölder
-  targets, width scales as $\varepsilon^{-1/\alpha}$. No mystery constants.
-- **Smoothness pays a dividend.** When the target is smooth, a lone rescaled
-  exponential beats the generic construction, with a provably tight rate.
+To discuss exact resource counts, we need a concrete language. Consider finite expression trees built from:
 
-There is one sobering caveat that the same framework makes precise. In a single
-dimension, width grows like $\varepsilon^{-1}$. In $d$ dimensions, the natural grid
-construction needs width about $\varepsilon^{-d}$ — an exponential explosion known
-as the **curse of dimensionality**. The very explicitness that makes these bounds
-useful also lays bare where the difficulty lives, and points toward the structured
-targets (like maxima of a few simple features) where the curse can be dodged.
+- a real constant;
+- the input variable $x$;
+- $\exp(E)$ and $\log(E)$;
+- $E_1+E_2$ and $E_1E_2$.
 
-From two letters of an alphabet — $E$ and $L$, with $M$ for glue — we can spell any
-continuous curve, and now we know the spelling rules: how long the word must be, and
-exactly how close it comes. That is the difference between knowing a thing is
-possible and knowing how to do it.
+The value of an expression is obtained by the usual recursive evaluation. Define its width to be the number of leaves: each constant and each occurrence of the variable contributes one; exponentiation and logarithm do not change the count; addition and multiplication add the widths of their two children.
+
+This definition exposes an important architectural fact. If multiplication and the raw variable are allowed, some targets that appear nonlinear are tiny formulas.
+
+**Exact Square Theorem.** The expression $x\cdot x$ has width $2$ and equals $x^2$ for every real $x$. Moreover, for every integer $n\ge2$, there is an expression of width exactly $n$ that equals $x^2$ on all of $\mathbb{R}$, and hence has zero uniform error on $[0,1]$.
+
+The second statement simply pads the formula with $n-2$ harmless zero leaves. Repeatedly replace an expression $E$ by $0+E$. Its value is unchanged while its width increases by one. Consequently,
+
+$$
+\sup_{0\le x\le1}|E(x)-x^2|=0.
+$$
+
+This is not a trick to hide complexity; it is a warning that complexity claims depend on architecture. A lower bound for a single hidden layer of restricted exp–log features says something different from a lower bound for arbitrary expression trees with multiplication.
+
+## A square made genuinely from exp and log
+
+There is also a representation that visibly uses the exp–log mechanism. For a positive shift $\delta$, define
+
+$$
+S_\delta(x)=\exp\bigl(2\log(x+\delta)\bigr).
+$$
+
+On $[0,1]$, the input $x+\delta$ is positive, so the logarithm is always valid. The inverse relationship between exponential and logarithm gives
+
+$$
+S_\delta(x)=(x+\delta)^2.
+$$
+
+This leads to an exact, uniform error estimate.
+
+**Shifted Exp–Log Square Theorem.** If $\delta>0$, then for every $x\in[0,1]$,
+
+$$
+|S_\delta(x)-x^2|\le 2\delta+\delta^2.
+$$
+
+Indeed,
+
+$$
+S_\delta(x)-x^2=(x+\delta)^2-x^2=2x\delta+\delta^2.
+$$
+
+All terms are nonnegative, and $x\le1$, so the difference is at most $2\delta+\delta^2$.
+
+A convenient tolerance rule follows. If $0<\delta\le1$ and $3\delta\le\varepsilon$, then $\delta^2\le\delta$, hence
+
+$$
+|S_\delta(x)-x^2|\le2\delta+\delta^2\le3\delta\le\varepsilon
+$$
+
+throughout $[0,1]$. Choosing, for example, $\delta=\min(1,\varepsilon/3)$ works when the strict positivity requirement is respected. For ordinary positive tolerances, a slightly smaller positive shift can always be chosen if needed.
+
+The estimate is not merely asymptotic. It tells us exactly how domain safety and approximation error trade against one another. A larger shift keeps the logarithm farther from its singular boundary at zero, while a smaller shift improves fidelity to $x^2$.
+
+## Why universality does not automatically give a rate
+
+Suppose a target is Hölder continuous with exponent $\alpha$, meaning that for some constant $L$,
+
+$$
+|f(x)-f(y)|\le L\|x-y\|^\alpha.
+$$
+
+A tempting conjecture is that accuracy $\varepsilon$ in dimension $n$ should require width on the order of $\varepsilon^{-n/\alpha}$. The exponent has a familiar geometric origin: a grid with mesh size about $\varepsilon^{1/\alpha}$ contains about $\varepsilon^{-n/\alpha}$ cells.
+
+But the density theorem does not establish this rate. To do so, one would need a quantitative construction: choose a mesh, build local basis functions, realize those basis functions inside a precisely fixed architecture, control every logarithm’s positive domain, combine local errors, and count the relevant resource. “Width” might mean leaves, hidden units, parameters, or maximum layer size; these counts need not agree.
+
+The exact square formula makes the issue vivid. In the broad expression-tree language, $x^2$ costs only two leaves. In a narrower architecture built only from sums of features $e^a\log(bx+c)$, the same function may require approximation and a nontrivial number of units. A meaningful rate theorem must therefore begin by freezing the architecture.
+
+## From universal possibility to quantitative design
+
+The resulting picture is both powerful and disciplined.
+
+First, exp–log features can separate any two real points while remaining in the logarithm’s positive domain. Second, coordinate exponentials generate an algebra dense in all continuous functions on compact subsets of finite-dimensional Euclidean space. Third, the square function illustrates two complementary kinds of control: exact width-two realization when multiplication is available, and a shifted exp–log realization with the explicit error $2\delta+\delta^2$.
+
+These results connect classical topology with modern function design. Stone–Weierstrass supplies the qualitative backbone: constants plus point separation plus algebraic closure yield universality. Explicit formulas supply engineering information: safe domains, exact identities, and tunable errors. Between them lies the open quantitative frontier—turning universal expressiveness into architecture-sensitive rates.
+
+That frontier matters wherever models must be more than expressive in principle. Scientific surrogates need predictable accuracy. Embedded systems need resource counts. Interpretable models benefit from formulas whose errors can be read directly from their parameters. Exponentials and logarithms are not just familiar buttons on a calculator; organized algebraically, they form a language capable of tracing every continuous shape on a compact world.

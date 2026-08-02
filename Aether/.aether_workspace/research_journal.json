@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e3c425e4",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `r : ℕ`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if ther",
-      "quality_score": 0.7868499999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-30T22:30:03",
-      "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
-    },
-    {
       "cycle_id": "85fa434c",
       "domain": "Algebra",
       "key_insight": "# Future Directions: BSD Rank Computability\n\n## What is formalized\n\n`Catalog/Applications/BSD/RankComputability.lean` proves a complete finite linear-algebra chain for a certified descent presentation",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-08-02T09:28:57",
       "title": "Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
+    },
+    {
+      "cycle_id": "dd55976d",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n1. **Softmax attention naturality under equivariant logits.** For every finite group `G`, every pair of finite-dimensional real `G`-representations `V,W`, and every `G`-equivarian",
+      "quality_score": 0.7913999999999999,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-02T09:30:03",
+      "title": "Category-Theoretic Neural Architectures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e8a20d63",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — the structural core of Euler's prime-rich polynomial\n\nThis cycle recast the isolated \"prime run\" facts behind discriminants 43, 67, 163\nas uniform consequences of a single hypoth",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-07-24T23:24:22",
-      "title": "`Heegner163.lean` gives a kernel-checked elementary chain connecting Euler's"
-    },
     {
       "cycle_id": "5a7b49b0",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-08-02T09:28:57",
       "title": "Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
+    },
+    {
+      "cycle_id": "dd55976d",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\n1. **Softmax attention naturality under equivariant logits.** For every finite group `G`, every pair of finite-dimensional real `G`-representations `V,W`, and every `G`-equivarian",
+      "quality_score": 0.7913999999999999,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-02T09:30:03",
+      "title": "Category-Theoretic Neural Architectures"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ee0c99e7",
-      "domain": "MachineLearning",
-      "name": "continuous_shallowEval",
-      "quality": 0.80029
-    },
-    {
-      "cycle_id": "ee0c99e7",
-      "domain": "MachineLearning",
-      "name": "two_relu_identity",
-      "quality": 0.80029
-    },
-    {
-      "cycle_id": "ee0c99e7",
-      "domain": "MachineLearning",
-      "name": "tent_key_values",
-      "quality": 0.80029
-    },
     {
       "cycle_id": "febd9c83",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "proves",
       "quality": 0.80715
+    },
+    {
+      "cycle_id": "dd55976d",
+      "domain": "Bridges",
+      "name": "reuses",
+      "quality": 0.7913999999999999
+    },
+    {
+      "cycle_id": "dd55976d",
+      "domain": "Bridges",
+      "name": "resNetSkip_fst",
+      "quality": 0.7913999999999999
+    },
+    {
+      "cycle_id": "dd55976d",
+      "domain": "Bridges",
+      "name": "resNetSkip_snd",
+      "quality": 0.7913999999999999
     }
   ],
-  "last_updated": "2026-08-02T09:28:57",
+  "last_updated": "2026-08-02T09:30:03",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "55a94506",
-        "quality": 0.63,
-        "theorems": 38205,
-        "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
-      },
-      {
         "cycle_id": "060e882c",
         "quality": 0.79231,
         "theorems": 13,
@@ -3203,6 +3197,12 @@
         "quality": 0.686,
         "theorems": 305,
         "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifol"
+      },
+      {
+        "cycle_id": "dd55976d",
+        "quality": 0.7913999999999999,
+        "theorems": 15,
+        "title": "Category-Theoretic Neural Architectures"
       }
     ],
     "Combinatorics": [

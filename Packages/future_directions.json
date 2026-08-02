@@ -1615,7 +1615,7 @@
       "depth_estimate": 3,
       "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges"
       ],
@@ -1776,7 +1776,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $ι:P\\rightarrow \\mathcal{G}$ with $ι(p)\\subset ι(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $ι(p)\\subset ι(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -2387,7 +2387,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Odd Parts of Derivative Period Polynomials and a Logarithmic Transition Scale' and formalize its key results. Abstract: Let $f$ be a normalized level-one Hecke eigenform of even weight $k$, and let $Q_{f,m}$ be the period polynomial formed from the critical values of the $m$-th derivative of its completed $L$-function. We study the odd part $Q^-_{f,m}(z)=(Q_{f,m}(z)-Q_{f,m}(-z))/2$, retaining the zero at the origin forced by oddness. A unit-circle theorem for the full polynomial does not settle this problem: taking an odd part can create off-circle zeros even when the original polynomial has all of its zeros on the unit circle. We prove that there is an absolute $K_0$ such that, for every even $k\\ge K_0$, every normalized level-one Hecke eigenform $f$ of weight $k$, and every integer $m\\ge0$, the nonzero zeros of $Q^-_{f,m}$ off the unit circle, if any, form a single real reciprocal quartet $\\{\\pm b,\\pm b^{-1}\\}$ with $0<b<1$. For each fixed weight, all nonzero zeros are simple and lie on the unit circle once $m$ is sufficiently large. Hence any failure of the real-or-unit-circle containment is confined",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -2427,7 +2427,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Cover numbers by graph families bounded by certain graph parameters' and formalize its key results. Abstract: The cover number of a graph by a graph class $\\mathcal P$ is the least number of $\\mathcal P$-graphs necessary to cover its edges. A classical theorem of Harary, Hsu and Miller gives an exact formula for the cover number by the class of graphs with chromatic number at most $k$. We investigate analogous questions for the case of the fractional chromatic number $χ_f$ and the local chromatic number $ψ$. We prove that an analogous formula cannot hold in the case of the cover number by graphs of fractional chromatic number at most $β$, and find a lower and an upper bound, that gives rise to interesting asymptotic questions. We also investigate this cover number for small specific graphs. In the case of the cover number by graphs with local chromatic number at most $k$, we find an upper bound in terms of $ψ$, and a lower bound in terms of $ω$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -2955,7 +2955,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Curious identities involving Legendre polynomials and Apéry-like numbers' and formalize its key results. Abstract: In this paper, we establish some curious identities involving Legendre polynomials and the first kind of Apéry-like numbers. As applications, many new supercongruences are deduced.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -3117,7 +3117,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $γ(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $ρ(G)$ is the maximum number of pairwise vertex-disjoint radius-$1$ balls. We prove that $\\frac{γ(G)}{ρ(G)}\\le 5$ for every planar graph and $\\frac{γ(G)}{ρ(G)} \\le \\frac{18\\sqrt3}π\\approx 9.924$ for every unit disk graph, thus yielding Erdős-Pósa-type bounds for the hypergraph of radius-$1$ balls in the two graph classes. This improves upon results of Gutiérrez and Paul, and Dúcz and Gujgiczer, who in turn lowered bounds of Bonamy, Csikós, Gujgiczer and Yuditsky, and Böhme and Mohar. For both graph classes, the best known lower bound on the optimal constant remains $3$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -3686,7 +3686,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected' and formalize its key results. Abstract: The toughness of a non-complete graph $G$, denoted $τ(G)$, is defined as \\[ τ(G) = \\min\\left\\{ \\frac{|S|}{ω(G-S)} : S \\subseteq V(G),\\ ω(G-S) \\geq 2 \\right\\}, \\] where $ω(G-S)$ is the number of components of $G - S$. For a complete graph $G$, we define $τ(G) = \\infty$. A graph $G$ is $t$-tough if $τ(G) \\geq t$. For a positive integer $k$, a graph $G$ is $(K_2 \\cup kK_1)$-free if it contains no induced subgraph isomorphic to $K_2 \\cup kK_1$. Recently, Liu \\cite{liu} showed that every $2k$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $τ(G) > 1$ is Hamilton-connected. In this paper, we strengthen this result by proving that every $(k+1)$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $τ(G) > 1$ and minimum degree $δ(G) \\geq 2k$ is Hamilton-connected. Moreover, by imposing restrictions to the independence number $α(G)$, we prove that every $k$-connected $(K_2 \\cup kK_1)$-free graph $G$ of order $n$ with $2k+1 \\leq α(G) < \\frac{n}{2}$ and $δ(G) \\geq 2k$ is Hamilton-connected, and that t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -4052,7 +4052,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Positivity and tails of Jacobi theta series' and formalize its key results. Abstract: Using elementary $q$-series manipulations, we establish a positivity property for the tails of the Jacobi theta series. Specifically, for integers $k\\ge 1$ and $n\\ge 0$, define \\[ \\sum_{n\\ge0}\\sum_{m\\in\\mathbb{Z}}J_{k,n}(m)z^m q^{n} = \\frac{(-1)^k q^{-\\binom{k+1}{2}}}{(z)_{\\infty}(q/z)_\\infty} \\sum_{j\\ge k}(-1)^jq^{\\binom{j+1}{2}}z^{-j}(1-z^{2j+1}), \\] where $(a)_\\infty:=\\prod_{n\\ge0}(1-aq^n)$ denotes the $q$-shifted factorial. We prove that for all integers $k\\ge 1$ and $n\\ge 0$, the coefficients $J_{k,n}(m)$ are positive for all integers $-(k+n)\\le m\\le k+n$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -5760,7 +5760,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Local and global average degree in bipartite graphs' and formalize its key results. Abstract: Let $F_{\\mathrm{bip}}(n)$ denote the maximum, over all $n$-vertex bipartite graphs without isolated vertices, of the ratio of the minimum local average degree to the global average degree. We prove that $F_{\\mathrm{bip}}(n)=\\frac14\\sqrt n+\\frac38+o(1)$. This answers a problem posed by Tuza.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -6291,7 +6291,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond' and formalize its key results. Abstract: Vertex splitting replaces a vertex (v) by two nonadjacent vertices whose neighborhoods together equal (N(v)). A split is \\emph{exclusive} if these neighborhoods are disjoint and \\emph{shallow} if no newly created vertex is split again. For a graph property (Π), \\textsc{(Π)-Vertex Splitting} asks whether at most (k) splits can transform a graph (G) into one satisfying (Π). We continue the systematic study of this operation and settle several open problems. First, we prove that \\textsc{Cograph Vertex Splitting} is \\textsf{NP}-complete, even on graphs of girth at least 5, resolving a question of Firbas and Sorge (ISAAC 2024). More generally, \\textsc{(P_t)-free Vertex Splitting} is \\textsf{NP}-complete for every fixed (t\\geq 4). We also prove that \\textsc{Chordal Vertex Splitting} and \\textsc{Unit-Interval Vertex Splitting} are \\textsf{NP}-complete, resolving two questions of Abu-Khzam, Chakraborty, Isenmann, and Oijid (IWOCA 2026). Our hardness results extend to the exclusive and shallow ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -7022,7 +7022,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Discrete Einstein metrics on unicyclic graphs' and formalize its key results. Abstract: In earlier work with Cheng and Hua we showed that on a finite tree the discrete Einstein metrics of the Lin--Lu--Yau curvature are the Perron eigenvector of an edge-indexed Ricci matrix. We extend this theory to unicyclic graphs. We determine exactly when the tree picture persists -- the balanced regime, where the spectrum becomes periodic rather than Dirichlet-type -- and compute it in closed form for bare cycles and for regular suns (cycles with pendant leaves); for a single decorated vertex on a long cycle it persists up to an explicit golden-ratio threshold. Beyond this regime the problem is piecewise-linear, and phenomena impossible on a tree appear: the Einstein metric can be non-unique, or absent -- a triangle with a pendant leaf carries none. For the regular suns we prove that it exists and is unique.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -7144,7 +7144,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The optimal $χ$-bound for $\\{P_6, \\text{dart}, K_4\\}$-free graphs' and formalize its key results. Abstract: A \\textit{diamond} is a graph obtained from \\(K_4\\) by removing an edge, and a \\textit{dart} is a graph obtained from a diamond by adding a pendant edge to a vertex of degree 3. We prove that every $\\{P_6, \\text{dart}, K_4\\}$-free graph is 6-colorable. This improves the previous bound of 7 due to Hong and Xu \\cite{HongXu2025} and resolves their open question on the optimality of the bound. Our result also extends a theorem of Karthick and Mishra~\\cite{KarthickMishra2018}, who proved 6-colorability for the class of \\(\\{P_6, \\text{diamond}, K_4\\}\\)-free graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -7468,7 +7468,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On the Log-Concavity of the D'Arcais Polynomials for Normalised Functions' and formalize its key results. Abstract: A sequence $(a_n)_{n \\in \\mathbb{N}}$ of non-negative real numbers is called log-concave at $n$ if $a_n^2 \\geq a_{n+1}a_{n-1}$. This property has been generalised in various ways to families of polynomials. We introduce a new variant and show that certain types of D'Arcais polynomials have the respective properties at certain points.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -7671,7 +7671,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Several families of incommensurable noncompact hyperbolic Coxeter polytopes' and formalize its key results. Abstract: We classify all 141 finite-volume hyperbolic Coxeter five-dimensional polytopes with eight facets, of which 125 are noncompact. Using maximal-cusp density and a noncompact analog of Bogachev-Douba-Raimbault's argument, we construct infinitely many pairwise incommensurable noncompact Coxeter polytopes in dimensions 4, 5, 6, 7, and 9, with the number of commensurability classes growing at least exponentially in volume.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -7816,7 +7816,7 @@
         "probabilistic method",
         "Ramsey theory"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -7864,7 +7864,7 @@
         "Probabilistic Methods",
         "Erdős-type Problems"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -8133,7 +8133,7 @@
         "Ergodic theory results for positive density sets",
         "Probabilistic combinatorics techniques"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -8277,7 +8277,7 @@
         "Ramsey theory",
         "probabilistic method in number theory"
       ],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -10500,7 +10500,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n- Formalize matrix representability of finite matroids over `ZMod 3` and prove that it is preserved by deletion and contraction.\n- Connect the abstract theorem `matroid_wqo_gives_finite_excluded_minors` to a precisely defined class of finite, ternary-representable matroids. The well-quasi-order premise itself is not proved here.\n- Formalize standard concrete matroids by rank functions or matrices and verify representability or non-representability over `ZMod 3` by kernel-checked finite arguments.\n- Develop finite enumeration up to matroid isomorphism before attempting rank-three, nine-element searches; the present project contains no such enumeration.\n- Extend the binary intersection theorem to finite indexed intersections, yielding a finite excluded-minor set from finitely many constituent finite bases without assuming a global well-quasi-order.\n- Distinguish graphic matroids from all binary matroids in future graph-minor bridges: the graphic matroids form a proper subclass of the binary-representable matroids.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -11607,7 +11607,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Infinite-Dimensional Chess\n\n## 1. Countable-Ordinal Realization by Finite Material\n\n**Conjecture.** Every countable ordinal is the game value of a winning position on an infinite board using only finitely many pieces.\n\nThe key insight is that delaying gadgets can encode countable suprema, while forced corridors encode successor and ordinal addition. The central difficulty is realizing arbitrary countable limit constructions without introducing infinitely many pieces.\n\n**Why now?** Explicit game trees already realize the hierarchy through `ω^ω`, isolating the exact operations that a geometric construction must simulate.\n\n## 2. Strategy-Tree Rank Correspondence\n\n**Conjecture.** For every position from which the attacker forces mate, the accessibility rank of its legal-play relation equals its minimax ordinal game value after the standard winner/loser normalization.\n\nThe key insight is that accessibility recursion and ordinal minimax recursion are two presentations of the same well-founded strategy tree, but alternating choices require a carefully polarized rank transformation.\n\n**Why now?** The present escape theorem identifies the complementary non-well-founded case by an explicit infinite chain, while the abstract hierarchy supplies nontrivial well-founded test cases.\n\n## 3. Finite-Rook Local Escape Threshold\n\n**Conjecture.** In every dimension at least two, any finite rook army that does not already checkmate the king permits an infinite sequence of legal king moves avoiding capture.\n\nThe key insight is that global safe squares are plentiful, yet converting global sparsity of attacked lines into a locally reachable infinite path is a compactness problem rather than a counting problem.\n\n**Why now?** Finite rook armies are known to leave infinitely many unattacked squares, and a single rook admits an explicit local escape map; the missing step is the local-to-global bridge for several rooks.\n\n## 4. Dimension–Material Mate Classification\n\n**Conjecture.** For each fixed dimension, there is an explicit finite classification of minimal axis-moving piece configurations that force mate, and the minimum required material is monotone nondecreasing with dimension.\n\nThe key insight is that each additional axis creates new escape directions that must be blocked independently, turning mate into a finite covering problem for the Chebyshev neighborhood.\n\n**Why now?** The sharp contrast between two-rook mate in dimension one and lone-rook escape in every higher dimension provides the first exact boundary case and a testable base for the classification.\n\n## 5. Cofinality Bound from Finite Branching\n\n**Conjecture.** A winning position whose defender has uniformly finite legal branching cannot have a game value of countable cofinality greater than `ω`, and stronger uniform branching constraints impose corresponding restrictions on its Cantor normal form.\n\nThe key insight is that limit values arise from suprema of defender choices, so geometric bounds on legal branching should translate into ordinal cofinality bounds.\n\n**Why now?** The explicit `ω^n` and `ω^ω` constructions use countable branching at precisely the limit-forming nodes, making branching the natural structural invariant to test.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Bridges",
         "Pythagorean"
@@ -14968,7 +14968,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis cycle proved a cross-domain bridge in\n`Catalog/Bridges/CopwinKnasterTarski.lean`:\n\n> The kernel produced by finite cop-win pruning (a contracting, monotone update\n> `F : Finset α → Finset α`) equals — after coercion — the Knaster–Tarski\n> greatest fixed point `OrderHom.gfp (G F S)` of an associated monotone\n> endomorphism of the complete lattice `Set α`. Moreover this abstract greatest\n> fixed point is *computed* by the concrete pruning loop within `|S|` rounds\n> (`gfp_computed_by_finite_iteration`).\n\nThis connects **finite combinatorics / algorithm termination** with\n**order-theoretic fixed-point theory (Knaster–Tarski)**.\n\n## Natural extensions\n\n1. **Least fixed points and the dual game.** Mirror the development with\n   *expanding* monotone updates and `OrderHom.lfp`, modeling saturation-style\n   algorithms (adding candidates until closure). The dual bridge\n   `lfp = ↑(closure kernel)` should follow the same pattern.\n\n2. **Well-founded infinite candidate spaces.** Replace `Finset α` by a\n   candidate space with a well-founded strict-subset relation. The termination\n   argument uses only strict cardinality descent; a well-founded ranking should\n   recover a transfinite stabilization ordinal and a bridge to `gfp` on the\n   ambient complete lattice.\n\n3. **Quantitative round complexity.** The `|S|` bound is sharp for one-deletion\n   updates but loose for realistic cop-win pruning. Bounding the number of\n   *effective* rounds by structural graph parameters (treewidth, cop number)\n   would sharpen the algorithmic side.\n\n4. **Product / multi-cop games.** Extend to product state spaces modeling the\n   `k`-cop game directly, and show the kernel corresponds to the set of\n   `k`-cop-win positions, connecting the fixed-point bridge to pursuit-evasion\n   semantics.\n\n5. **Effectivity of `gfp`.** `OrderHom.gfp` is noncomputable; the bridge already\n   supplies an explicit finite computation. Packaging this as a verified\n   executable decision procedure for membership in `gfp` is a concrete\n   software-verification target.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation",
         "Bridges"
@@ -16695,7 +16695,7 @@
       "depth_estimate": 3,
       "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "NumberTheory",
@@ -16737,7 +16737,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Logic",
@@ -17310,7 +17310,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ancestral graphs returns `true` if and only if the corresponding mutilated graph satisfies Pearl's d-separation condition. This is falsifiable by exhaustive comparison on all DAGs with at most five vertices.\n\n2. **Polynomial-space reachability.** The equivalence class accepted by `DoCalculus.identify` can be decided by a work-list algorithm using space polynomial in the number of well-formed queries, while returning the same Boolean result. This is falsifiable by implementing both procedures and proving pointwise equality.\n\n3. **Structural-equation soundness bridge.** For finite-valued acyclic non-parametric structural equation models with mutually independent exogenous variables, each of the three primitive graphical steps preserves the induced interventional kernel. A counterexample would be a finite acyclic model and a side-condition-certified step whose two kernels differ.\n\n4. **Concrete ID-algorithm completeness.** A recursive implementation of the Shpitser–Pearl ID algorithm succeeds on a finite semi-Markovian graph exactly when the source and target queries are related by `DoCalculus.Derivable` after adding the probability-calculus normalization rules. This is falsifiable by exhaustive testing over small acyclic directed mixed graphs before formal proof.\n\n5. **Certificate extraction.** Every positive result of an optimized identifiability work-list can be accompanied by a `DoCalculus.Derivable` proof whose number of primitive steps is no greater than the number of discovered query states. This is falsifiable by constructing the predecessor map and checking the bound on every finite oracle.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -19683,7 +19683,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -19845,7 +19845,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone does not guarantee robustness under finite deletion.\n\n## 1. Ordered-block criterion from the paper\n\nFormalize the paper's more general criterion before specializing to dyadic blocks. A useful interface should include:\n\n- a sequence of finite, pairwise ordered blocks of natural numbers;\n- lower bounds on each block's cardinality;\n- hypotheses controlling gaps or overlap of attainable subset-sum intervals;\n- a conclusion phrased as `StronglyComplete`.\n\nThis is likely the most reusable route to the headline theorem.\n\n## 2. Dyadic specialization\n\nDefine\n\n`dyadicBlock A k = A ∩ Set.Ioc (2^k) (2^(k+1))`\n\nand formalize the eventual six-elements-per-block condition. Once the ordered-block theorem is available, prove the dyadic result by checking its structural hypotheses.\n\n## 3. Analytic divergence hypothesis\n\nIntroduce distance to the nearest integer using the existing circle/quotient or `Int.fract` infrastructure, and formalize the condition\n\n`∀ θ : ℝ, θ ∉ Set.range ((↑) : ℤ → ℝ) → ∑' a, ... = ∞`\n\nwith a nonnegative extended-real sum (`ℝ≥0∞`) if that gives the cleanest notion of divergence. Care is needed because the paper writes a sum indexed by a set rather than a sequence.\n\n## 4. Monotonicity and tails\n\nUseful intermediate results include:\n\n- every superset of a complete set is complete;\n- every superset of a strongly complete set is strongly complete;\n- finite changes preserve strong completeness (already proved here);\n- a set is strongly complete iff every finite initial segment can be deleted while retaining completeness.\n\nThe final equivalence turns arbitrary finite deletions into canonical initial-segment deletions and may simplify the paper's argument.\n\n## 5. Further contrarian tests\n\nInvestigate and either prove or refute:\n\n1. If `A` is complete and contains infinitely many odd elements, then `A` is strongly complete.\n2. If every residue class modulo every `m ≥ 2` contains infinitely many elements of `A`, then completeness implies strong completeness.\n3. Six elements in each sufficiently large dyadic block can be reduced to five if the analytic divergence hypothesis is strengthened quantitatively.\n\nThe first conjecture is especially suspect: parity is only one possible finite-deletion obstruction, and analogous obstructions modulo larger integers should be searched for.\n\n## 6. Exact correspondence with the source\n\nA later phase should pin the paper's bibliographic version and translate its named propositions in proof order, recording exactly which assumptions are used in each result. This file deliberately focuses on foundational consequences and a contrarian counterexample rather than claiming a complete formalization of the analytic headline theorem.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -20090,7 +20090,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe formal development now proves the converse criterion beginning with the usual individual-cylinder hypothesis. For every integer base `b ≥ 2`, uniform limiting frequencies for all aligned base-`b` cylinder cells imply the expected frequencies for finite unions of adjacent cells, hence for every interval with endpoints on a common base-`b` grid. Explicit floor/ceiling approximations then squeeze an arbitrary subinterval of `[0,1]`, proving interval equidistribution. The result is also specialized to the orbit `fract (b^n x)`.\n\nNatural next steps are:\n\n1. Reconcile and share the definitions in `NormalityConverse.lean` and `NormalityConnector.lean`, obtaining a single theorem that packages both directions between base-`b` normality and interval equidistribution of `fract (b^n x)`.\n2. Formalize the Weyl-criterion bridge between interval equidistribution and vanishing exponential sums for every nonzero integer frequency.\n3. Develop the measure-theoretic route to almost-everywhere base normality using ergodicity of multiplication modulo one and an appropriate pointwise ergodic theorem, then intersect over the countable set of integer bases for absolute normality.\n4. Keep claims about particular constants separate: the structural criteria proved here do not establish normality of familiar constants such as `π`, `e`, or `√2`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Bridges"
@@ -20254,7 +20254,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Fourier Analysis as a Functor\n\n## What this phase establishes\n\n`Catalog/Bridges/FourierAsFunctor.lean` proves a self-contained finite-coordinate model of the requested bridge.\n\n1. **Contravariant character duality.** For finite free coordinate modules, transpose defines a functor from the opposite matrix category. The composition law is proved explicitly. The file also proves the corresponding composition-reversal theorem for Mathlib's actual circle-valued `PontryaginDual.map`.\n2. **Bidual equivalence.** Transposition twice is naturally isomorphic to the identity, yielding an equivalence between the finite-free matrix category's opposite and itself. This is a finite-dimensional algebraic analogue of Pontryagin biduality.\n3. **Fourier inversion.** The two-point DFT over `ℚ` has an explicit inverse and therefore gives an isomorphism in the matrix category.\n4. **Contrarian disproof: unrestricted naturality.** The two-point DFT does not commute with every endomorphism (a coordinate projection is a certified counterexample). Therefore Fourier matrices are not a natural endomorphism of the identity functor on a category whose arrows are all linear maps.\n5. **Contrarian disproof: variance is not uncertainty.** Contravariant duality alone does not imply a support uncertainty bound. The identity transform and a delta vector give support product `1 < 2`. Orthogonality or a suitable nondegenerate Fourier pairing is additional essential structure.\n\n## Recommended next formalization steps\n\n### 1. The category of locally compact abelian groups\n\nPackage commutative topological groups with local compactness and Hausdorffness as bundled objects, with continuous homomorphisms as arrows. Lift `PontryaginDual.map` to a functor from the opposite category. The composition theorem in the present file is the arrow-level core.\n\n### 2. Full Pontryagin biduality\n\nConstruct the evaluation morphism\n\n`A → PontryaginDual (PontryaginDual A)`, `a ↦ (χ ↦ χ a)`,\n\nprove continuity, and then prove it is a topological group isomorphism for LCA groups. The finite-free transpose equivalence here provides the exact categorical shape but not the analytic LCA theorem.\n\n### 3. Correct naturality domain for Fourier transform\n\nRather than naturality for all linear maps, identify morphisms compatible with Haar measure and character pullback. Candidate settings include finite abelian groups with group isomorphisms, or an indexed/kernel formalism where pushforward and pullback are tracked separately. State Fourier naturality between the appropriate function-space functors, not as an endomorphism of one identity functor.\n\n### 4. Categorical uncertainty with substantive hypotheses\n\nFormalize finite-group support uncertainty from an invertible character table plus a nonvanishing-minor or orthogonality hypothesis. The counterexample proved here should remain as a regression theorem showing that mere contravariance cannot discharge those assumptions.\n\n### 5. Analytic Fourier transform\n\nAfter Haar integration infrastructure is fixed, define the Fourier transform on `L¹(A)` with values on `PontryaginDual A`, prove change-of-variables naturality for measure-compatible isomorphisms, and connect Fourier inversion to Pontryagin biduality.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -20867,7 +20867,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following conjectures are concrete extensions of the formal reduction layer.\nEach can be falsified by a finite counterexample to its stated bound.\n\n1. **Randomized-distinguisher lifting.** For every finite transcript type, replacing\n   deterministic Boolean distinguishers by Markov kernels to `Bool` preserves the\n   exact-advantage theorem for every `PerfectReduction`.\n\n2. **Tight statistical loss.** For any two finite decision games on one transcript\n   space and any deterministic distinguisher, the additive loss in\n   `advantage_le_of_world_gaps` can be sharpened from the sum of the two `ℓ¹` gaps\n   to half that sum when both challenge distributions have total mass one.\n\n3. **Composable perfect reductions.** The identity transcript equivalence forms a\n   perfect reduction, perfect reductions compose, and the induced `reduce`\n   operation is functorial; in particular, exact advantage preservation remains\n   exact after any finite chain of reductions.\n\n4. **Hybrid-chain bound.** Given `n + 1` finite games on a common transcript space\n   whose adjacent corresponding-world `ℓ¹` gaps are bounded by `δ i b`, every\n   Boolean distinguisher's endpoint advantage differs by at most\n   `∑ i : Fin n, (δ i false + δ i true)`.\n\n5. **Canonical graded evaluation coherence.** For every `System` and every binary\n   parenthesization of a list of canonical level-one encodings, graded\n   multiplication yields the canonical encoding of the plaintext product at the\n   total level (after transporting along the induced equality of natural-number\n   level expressions).\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Bridges"
@@ -20908,7 +20908,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Softmax attention naturality under equivariant logits.** For every finite group `G`, every pair of finite-dimensional real `G`-representations `V,W`, and every `G`-equivariant query, key, and value map, scaled dot-product softmax attention is a natural transformation between the corresponding representation functors. This is falsified by an explicit equivariant triple and group element for which the naturality square fails.\n\n2. **Residual-product stability bound is sharp.** For every `K ≥ 0`, the categorical residual construction on real normed spaces has worst-case Lipschitz constant exactly `1 + K` among residual branches with Lipschitz constant at most `K`. This is falsified by a uniform upper bound strictly below `1 + K` for some `K`, or by a branch exceeding `1 + K`.\n\n3. **Finite architecture search is invariant under natural isomorphism.** If loss is constant on natural-isomorphism classes, minimizing it over any finite candidate set in a functor category gives the same minimum after replacing every candidate by a naturally isomorphic one. This is falsified by finite categories, candidate sets, an isomorphism-invariant loss, and replacements producing different minima.\n\n4. **Parallel residual blocks obey a tensor-product certificate.** In the cartesian monoidal category of real normed spaces and Lipschitz maps, parallel residual blocks with residual constants `K₁` and `K₂` have Lipschitz constant at most `max (1 + K₁) (1 + K₂)` for the max product norm, and this bound is attained for every `K₁,K₂ ≥ 0`. A counterexample to either the upper bound or attainability falsifies the conjecture.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -20934,6 +20934,47 @@
       "thread_id": "th_1069e171",
       "timestamp": "2026-08-02T09:29:59.509639+00:00",
       "title": "1. **Softmax attention naturality under equivariant logits.** For every finite g"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the algebra generated by coordinate\nexponentials is dense in the continuous real-valued functions.  This theorem does\n**not** imply the proposed Jackson width bound.  Establishing a rate of order\n`O(ε⁻ⁿ/α)` requires additional quantitative ingredients:\n\n1. formalize Hölder classes on compact subsets of `ℝⁿ`;\n2. construct a grid or partition-of-unity interpolant with mesh size comparable to\n   `(ε/C)^(1/α)`;\n3. realize each local basis function by the selected EML architecture while tracking\n   both uniform error and width;\n4. distinguish expression-tree width, number of hidden units, number of parameters,\n   and depth, since rates for one notion do not automatically transfer to another;\n5. combine the local errors without losing the desired dimensional exponent.\n\nMathlib contains qualitative Bernstein and Stone–Weierstrass approximation results,\nbut the needed multivariate Hölder-to-network width estimate is not an immediate\ncorollary of those results.\n\n## Architecture-sensitive lower and upper bounds\n\nBecause the expression language allows multiplication and the input variable, `x²`\nhas an exact width-two realization.  The file also proves an explicit shifted\nexp–log realization whose error is at most `2δ + δ²` on `[0,1]`.  Future work should\nfix a narrower neural architecture (for example, a single hidden layer of features\n`exp(a) log(bx+c)`) before claiming nontrivial width bounds.  Otherwise algebraic\noperations can make polynomial test cases exact at constant width.\n\nUseful next targets are:\n\n- a normal-form theorem translating generated-algebra terms into a specified network;\n- continuity and positivity invariants ensuring every logarithm receives a positive\n  input on the approximation domain;\n- matching lower bounds for restricted depth or restricted coefficients;\n- a multivariate exact representation theorem for quadratic forms;\n- quantitative stability bounds under composition of `exp` and `log`.\n\n## Computational evidence\n\nNo separate numerical evidence file is included.  The primary claims proved here are\nsymbolic identities, inequalities, and topological density statements rather than a\nfinite conjectural sequence.  Small floating-point tests would not validate the\nStone–Weierstrass conclusion, while the square error formula is established exactly\nin Lean for every point of the interval.  Computational experiments would become\nuseful after choosing a restricted architecture and an optimization procedure for the\nunproved Jackson-rate program.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "MachineLearning"
+      ],
+      "github_issue": 0,
+      "id": "fd_0903",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "be8c4b71",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/be8c4b71",
+      "status": "available",
+      "thread_id": "th_1bb344e0",
+      "timestamp": "2026-08-02T09:31:04.937729+00:00",
+      "title": "`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supp"
     },
     {
       "ambition_level": "extension",
@@ -21269,7 +21310,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1a03af4c (Q=0.787), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -21869,7 +21910,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 5843d50f (Q=0.754), which proved 7 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -23307,6 +23348,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle dd55976d (Q=0.791), which proved 15 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "push_dd55976d_9862dd5d",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8913999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "dd55976d",
+      "source_path": "Category-Theoretic Neural Architectures",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-02T09:30:03.262439+00:00",
+      "title": "Deepening: Category-Theoretic Neural Architectures"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle dff51e05 (Q=0.783), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: l",
       "domain_bridges": [],
       "domain_quality_penalty": 0.7,
@@ -23829,7 +23910,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle fb6f9bc5 (Q=0.756), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -25481,7 +25562,7 @@
       "depth_estimate": 3,
       "description": "Proves symplectic invariants governing exotic-matter-stabilized Einstein-Rosen bridges connecting distant spatial regions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry"
       ],
@@ -27685,7 +27766,7 @@
       "depth_estimate": 3,
       "description": "Reverse-engineer proof strategies from deep results (FLT, Poincaré, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Logic",
         "Algebra",
@@ -27852,7 +27933,7 @@
       "depth_estimate": 3,
       "description": "Formalize the rules of species counterpoint as a constraint satisfaction problem. Prove that optimal voice leading minimizes a well-defined cost function and connect to lattice theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Bridges",
         "Algebra"
@@ -28019,7 +28100,7 @@
       "depth_estimate": 3,
       "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Speculative",
@@ -28577,7 +28658,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.8084800000000001,
       "parent_direction": "",
       "priority_score": 0.87,
       "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
@@ -28588,7 +28669,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
@@ -29509,47 +29590,6 @@
       "thread_id": "",
       "timestamp": "",
       "title": "Wall-Sun-Sun Primes"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c2653f80",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
-      "domains": [
-        "NumberTheory",
-        "Computation"
-      ],
-      "github_issue": 0,
-      "id": "seed_208",
-      "last_attempt_time": "2026-07-29T23:23:46.075312+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.86,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "",
-      "title": "Sierpiński Numbers: Covering Systems"
     },
     {
       "ambition_level": "extension",
@@ -30914,7 +30954,7 @@
       "depth_estimate": 3,
       "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -30955,7 +30995,7 @@
       "depth_estimate": 3,
       "description": "Prove that the univalence axiom enables automated proof transfer between isomorphic structures. Construct a formal pipeline: given an isomorphism f: A ≅ B and a theorem about A, mechanically produce the corresponding theorem about B. Quantify the proof compression ratio.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -31078,7 +31118,7 @@
       "depth_estimate": 3,
       "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -32476,7 +32516,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics). Prove that every Grothendieck topos is a bounded lattice with a universal property.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Bridges",
         "Algebra"
@@ -32640,7 +32680,7 @@
       "depth_estimate": 3,
       "description": "Formalize Stone duality: the category of Boolean algebras is dual to the category of Stone spaces. Prove that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space. Bridge this to logic: a theory T in propositional logic corresponds to the Boolean algebra of sentences modulo T-provability, whose Stone space is the space of models.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -32681,7 +32721,7 @@
       "depth_estimate": 3,
       "description": "Prove that the category of chain complexes is equivalent to the derived category modulo homotopy. Show that Ext and Tor are universal delta-functors. Bridge: singular homology of a space X equals Ext^*(Z, C_*(X)) in the derived category. Prove the universal coefficient theorem as a consequence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges",
         "Algebra"
@@ -32722,7 +32762,7 @@
       "depth_estimate": 3,
       "description": "Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categories.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Bridges",
         "Physics"
@@ -32763,7 +32803,7 @@
       "depth_estimate": 3,
       "description": "Prove that Gelfand duality (commutative C*-algebras ≅ locally compact Hausdorff spaces) fails for noncommutative C*-algebras, and that this failure defines 'noncommutative topology'. Bridge: the K-theory of a C*-algebra A equals the topological K-theory of its Gelfand spectrum when A is commutative. Prove the Bott periodicity theorem for K_0 and K_1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Bridges",
         "Geometry"
@@ -32804,7 +32844,7 @@
       "depth_estimate": 3,
       "description": "Formalize Lob's theorem as a fixed-point result: if PA proves □A → A then PA proves A. Bridge this to category theory: the modal logic GL (Godel-Lob) is the internal logic of the category of provability predicates. Prove that Solovay's completeness theorem for GL follows from the diagonal lemma.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges",
         "Logic"
@@ -32886,7 +32926,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Bridges",
         "Algebra"
@@ -34030,7 +34070,7 @@
       "depth_estimate": 3,
       "description": "Cycle 50f62832 (Q=0.680) proved 11 theorems in Bridges but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/ρ for each zero ρ with |Im(ρ)| ≤ n. Prove: the harmoni",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -34300,15 +34340,15 @@
   "pruned": [],
   "recent_domain_counts": {
     "Algebra": 14,
-    "Analysis": 2,
+    "Analysis": 3,
     "Bridges": 9,
     "Combinatorics": 4,
     "Computation": 11,
     "Cryptography": 5,
-    "EML": 6,
+    "EML": 7,
     "Geometry": 6,
     "Logic": 7,
-    "MachineLearning": 5,
+    "MachineLearning": 6,
     "Novelty": 2,
     "NumberTheory": 3,
     "Physics": 4,
@@ -34320,105 +34360,105 @@
     "Tropical": 6
   },
   "recent_theme_keywords": {
+    "algebra": 1,
     "algebraic": 5,
-    "architecture": 1,
-    "architectures": 1,
+    "appropriate": 1,
+    "approximated": 1,
+    "approximation": 1,
     "associated": 2,
-    "attention": 1,
-    "bounds": 2,
+    "because": 1,
+    "beyond": 1,
+    "bounds": 3,
     "bridge": 5,
-    "categorical": 1,
-    "category": 1,
-    "category-theoretic": 1,
     "closed": 2,
     "cohomology": 2,
+    "compact": 1,
+    "compositions": 1,
     "computation": 3,
     "compute": 3,
-    "conjecture": 16,
+    "conjecture": 17,
     "connect": 5,
-    "connections": 1,
     "constant": 4,
-    "continuous": 2,
+    "constants": 1,
+    "construct": 1,
+    "contains": 1,
+    "continuous": 3,
     "corner": 2,
     "determine": 2,
     "direct": 5,
+    "epsilon": 1,
     "equals": 4,
-    "explicit": 6,
+    "existential": 1,
+    "exists": 1,
+    "exp(a)*log(b*t": 1,
+    "exp(a)*log(c": 1,
+    "explicit": 7,
     "exponential": 5,
+    "finite": 1,
     "formalize": 26,
-    "function": 10,
-    "functions": 3,
-    "functor": 1,
+    "function": 11,
+    "functions": 4,
     "fundamental": 2,
     "future": 3,
     "general": 5,
     "geometry": 5,
+    "given": 1,
+    "guarantees": 1,
+    "impact": 1,
+    "included": 1,
+    "interpolation": 1,
     "invariant": 3,
     "investigate": 5,
-    "monoidal": 1,
-    "morphisms": 1,
-    "natural": 1,
+    "jackson-type": 1,
+    "lip_alpha(k": 1,
+    "lipschitz": 1,
+    "monotone": 1,
     "needed": 2,
-    "network": 1,
-    "neural": 1,
+    "network": 2,
+    "networks": 1,
     "number": 5,
     "numbers": 3,
-    "optimization": 1,
+    "o(epsilon^{-n/alpha}": 1,
     "original": 4,
-    "pairwise": 1,
     "paper": 4,
-    "parameters": 2,
+    "parameters": 3,
+    "points": 1,
     "polynomial": 5,
-    "polynomials": 1,
-    "primitive": 1,
-    "problem": 1,
-    "procedure": 1,
-    "products": 1,
+    "property": 1,
+    "provable": 1,
     "proved": 2,
-    "quantitative": 1,
-    "ramsey-forcing": 1,
     "rational": 2,
-    "reduces": 1,
-    "reduction": 1,
     "remains": 3,
     "representations": 2,
     "required": 2,
-    "resnet": 1,
     "results": 8,
-    "ring-lwe": 1,
     "satisfies": 4,
     "scheme": 6,
     "schemes": 2,
-    "search": 1,
     "security": 2,
-    "showing": 1,
-    "simultaneously": 1,
-    "single": 1,
-    "somewhat": 1,
+    "separate": 1,
+    "separates": 1,
+    "separation": 1,
     "specific": 2,
-    "spectral": 1,
     "split": 2,
+    "stone-weierstrass": 1,
+    "strictly": 1,
     "structure": 3,
     "structures": 2,
-    "systems": 1,
-    "theorem": 10,
-    "theorems": 3,
-    "theory": 11,
-    "thesis": 1,
+    "subset": 1,
+    "surpassing": 1,
+    "theorem": 11,
+    "theorems": 4,
+    "theory": 12,
     "threshold": 2,
-    "transformation": 1,
     "tropical": 6,
     "uniform": 3,
-    "universal": 1,
-    "unless": 1,
+    "universal": 2,
     "vanishing": 3,
-    "vertex": 1,
     "vertices": 4,
-    "viewpoint": 1,
     "weight": 2,
+    "within": 1,
     "without": 4,
-    "witnessing": 1,
-    "yielding": 1,
     "yields": 3
   },
   "selection_log": [
