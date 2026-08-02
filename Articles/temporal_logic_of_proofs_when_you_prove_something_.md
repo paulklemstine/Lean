@@ -1,309 +1,170 @@
-# When You Prove Something Matters: A Logic for Proofs That Happen in Time
+# Temporal Logic of Proofs: When You Prove Something Matters
 
-## The timeless lie at the heart of mathematics
+## Mathematics with a clock
 
-There is a quiet fiction that mathematicians tell themselves, and it is so
-convenient that we almost never notice it. The fiction is this: that a theorem,
-once true, was always true and will always be true, and that the act of *proving*
-it adds nothing to the world except our private knowledge of it. The Pythagorean
-theorem, we say, was true before Pythagoras, true before there were triangles to
-measure, true before there was anyone to care. Proof, on this view, is a kind of
-flashlight. It illuminates a landscape that was already there.
+Mathematics is usually narrated outside time. A theorem is true; a proof exists; the page does not record whether the crucial idea arrived yesterday or will arrive next year. Yet mathematical practice is intensely temporal. Lemmas are established before the theorems that depend on them. A database grows. A research group may know today that a claim is still open while expecting that a newly developed method will settle it tomorrow.
 
-For most purposes this fiction is harmless and even beautiful. But it hides
-something real. Proofs are not eternal facts; they are *events*. They happen at a
-particular time, in a particular order, built on top of earlier proofs the way a
-city is built on top of its old foundations. Andrew Wiles did not prove Fermat's
-Last Theorem in 1637; he proved it in 1994, and the proof leaned on machinery —
-elliptic curves, modular forms, Galois representations — that simply did not exist
-in Fermat's century. The *truth* may be timeless. The *proof* is a thing that
-came into being on a Tuesday.
+To reason clearly about this evolving landscape, we need to separate two kinds of reachability. One asks which conclusions are supported by the present proof state. The other asks which stages of inquiry lie in the future. Once those relations are separated, familiar-looking sentences become surprisingly delicate. In particular, “this is proved now, so it will still count as proved later” is very different from “this is not proved now, but it will be proved later.” The first expresses persistence; the second expresses discovery.
 
-Once you take that seriously, a strange new set of questions opens up. If proofs
-happen in time, then "provable" is not a fixed property of a statement; it is a
-property that a statement *acquires*, at some moment, and keeps thereafter. We can
-ask: is this provable *yet*? Will it be provable *later*? If I can prove it today,
-does that guarantee I will still be able to prove it tomorrow? And here is the one
-that sounds like a riddle but turns out to have a precise answer: could a statement
-be provable *tomorrow but not today* — and could one be provable *today but not
-tomorrow*?
+The central result developed here is a boundary result. A proposed bridge between proof and time,
 
-This article is about a logic built to answer exactly those questions. We call it
-**Temporal Gödel–Löb logic**, or **TGL**. It is what you get when you take the
-classical logic of provability and add a clock.
+$$
+\Box A\longrightarrow \Box\Box\Diamond_t A,
+$$
 
-## The logic of provability, before the clock
+is valid under extremely modest assumptions. Here $\Box A$ means that $A$ holds at every proof-accessible state, while $\Diamond_t A$ means that there is a temporally accessible stage at which $A$ holds. But this validity does not, by itself, create a stronger provability logic: the principle factors into an ordinary transitivity law for proof accessibility and the elementary fact that the present is temporally accessible from itself.
 
-To see what TGL adds, you first have to meet what it extends.
+That observation changes the research question. Instead of treating the displayed principle as evidence for a new logic, we should ask which genuinely temporal interactions cannot already be reconstructed from old modal laws plus a reflexive clock.
 
-In the 1930s Kurt Gödel discovered that any sufficiently powerful, consistent
-mathematical system — Peano Arithmetic, say, the standard theory of the whole
-numbers — cannot prove its own consistency. This is his celebrated **second
-incompleteness theorem**, and it is one of the great intellectual shocks of the
-twentieth century. Arithmetic can talk about itself: it can encode statements like
-"there exists a proof of `0 = 1`," and it can reason about those statements. But the
-one thing it cannot do is certify that it will never prove a falsehood.
+## Two maps of possibility
 
-Over the following decades logicians distilled the *behavior* of the phrase "it is
-provable that…" into a compact modal logic. They wrote `□A` ("box A") for "A is
-provable," and they asked: what are the laws this box obeys? Three turned out to be
-fundamental.
+Consider a collection $W$ of states. A state can represent a stage of mathematical knowledge, a proof environment, or a point in an idealized discovery process. Put two directed relations on $W$.
 
-- **Distribution (K):** if you can prove an implication and you can prove its
-  premise, you can prove its conclusion. Provability respects logical steps.
-- **Transitivity (the "4" axiom):** `□A → □□A`. If A is provable, then it is
-  provable *that* A is provable. A proof can be inspected and re-certified from the
-  inside.
-- **Löb's axiom:** `□(□A → A) → □A`. This is the deep one, and it is the engine of
-  the whole subject. Read it slowly: "if it is provable that 'A's provability would
-  guarantee A,' then A is already provable." Löb's axiom is what makes the logic
-  *not* trivially reflexive. It says, in effect, that the system cannot wishfully
-  bootstrap itself into believing things just because believing them would make them
-  true.
+* Write $wRv$ when $v$ is accessible from $w$ through proof reasoning.
+* Write $wTv$ when $v$ is at the same time as, or later than, $w$.
 
-The modal logic with exactly these laws is called **GL**, for Gödel and the
-logician Martin Löb. Its triumph is a result by Robert Solovay: GL is *arithmetically
-complete*. The modal theorems of GL are precisely the schemes that Peano Arithmetic
-can prove about its own provability predicate, no matter how you fill in the
-sentence-variables. GL is, in a strong sense, **the** logic of mathematical
-provability.
+For a proposition $A$ interpreted at states, define
 
-But GL has no clock. In GL, `□A` means "A is provable, full stop," with no when.
-Solovay's universe is timeless. And that is exactly the fiction we set out to break.
+$$
+\Box A(w) \quad\text{to mean}\quad \text{for every }v,\; wRv\text{ implies }A(v).
+$$
 
-## Adding a clock: two relations, two kinds of "necessity"
+Define the temporal possibility operator by
 
-The right way to model provability-in-time is with a picture logicians call a
-*frame*: a collection of "worlds," together with relations that say how the worlds
-are connected. In TGL each world is a *stage of mathematical knowledge* — a snapshot
-of what has been established. And there are **two** relations connecting these stages.
+$$
+\Diamond_t A(w) \quad\text{to mean}\quad \text{there exists }v\text{ with }wTv\text{ and }A(v),
+$$
 
-The first relation, written `R`, is the old provability relation from GL. Think of
-`R w v` as saying "v is a world that w cannot rule out" — a possible counterexample,
-a way things could go that w has not yet closed off. To prove A at w means to close
-off every such escape route: A holds at every world `R` leads to. This is the
-classical box, defined exactly as
+and the temporal necessity operator by
 
-> **`Box R A w` :** A holds at every `R`-successor of `w`, i.e. `∀ v, R w v → A v`.
+$$
+G A(w) \quad\text{to mean}\quad \text{for every }v,\; wTv\text{ implies }A(v).
+$$
 
-`R` carries two structural demands inherited from GL. It is **transitive** (a
-successor of a successor is a successor — this is what makes the "4" axiom work),
-and it is **converse well-founded** (you cannot have an infinite ascending chain of
-ever-deeper counterexamples). That second property is the secret heart of Löb's
-axiom and, ultimately, of Gödel's theorem. It is the formal way of saying *proofs
-are finite; they bottom out.*
+The proof relation is assumed transitive: if $wRv$ and $vRu$, then $wRu$. Time is assumed reflexive: $wTw$ for every state $w$. In applications one also imposes a compatibility condition ensuring persistence of established provability along time:
 
-The second relation, written `T`, is brand new. It is **time**. `T w w'` means "w'
-is now-or-later than w." Time is **reflexive** (every moment is now-or-later than
-itself) and **transitive** (later-than-later is later), making it a *preorder* — the
-mathematician's minimal model of a flow of time. Along `T` we get two new operators,
-the standard ones from temporal logic:
+$$
+\Box A(w)\ \text{and}\ wTv\quad\Longrightarrow\quad \Box A(v).
+$$
 
-> **`Glob T A w`** ("globally," written `G A`): A holds at *all* future times,
-> `∀ v, T w v → A v`.
->
-> **`Fut T A w`** ("eventually," written `◇A`): A holds at *some* future time,
-> `∃ v, T w v ∧ A v`.
+This last condition says that the system may gain proofs but does not forget proofs already established.
 
-So now we have two flavors of necessity living on the same worlds: `□` looks along
-proof-structure, `G` looks along time, and `◇` is the temporal "someday." The
-question is how they interact — and the single most important law governing that
-interaction is a compatibility condition we call **monotonicity in time**.
+## Why the proposed temporal axiom is already familiar
 
-## The one law that makes it all hang together
+Suppose $\Box A$ holds at $w$. We want to understand why $\Box\Box\Diamond_t A$ must also hold there.
 
-Here is the principle, and it is almost embarrassingly intuitive once you say it
-out loud: **you never lose a proof.** Knowledge accumulates. If something is settled
-today, it stays settled tomorrow.
+Choose any $v$ with $wRv$, and then any $u$ with $vRu$. Transitivity gives $wRu$. Since $\Box A$ holds at $w$, the proposition $A$ holds at $u$. Reflexivity of time gives $uTu$, so $u$ itself witnesses $\Diamond_t A$ at $u$. Because $v$ and $u$ were arbitrary, $\Box\Box\Diamond_t A$ holds at $w$.
 
-In the language of the two relations, this becomes a precise geometric statement
-about how `T` and `R` fit together, which we call `compat`:
+This proves the **Temporal Interaction Theorem**: if proof accessibility is transitive and time is reflexive, then for every proposition $A$ and every state $w$,
 
-> **Time-monotonicity (`compat`):** if `T w w'` (w' is in w's future) and `R w' v`
-> (v is a live counterexample at the future stage w'), then `R w v` (v was already a
-> live counterexample now).
+$$
+\Box A(w)\longrightarrow \Box\Box\Diamond_t A(w).
+$$
 
-Read the contrapositive and it sings: any escape route you have *closed off* by
-now stays closed off forever. The set of counterexamples only shrinks as time goes
-on. And since proving A means closing off all the counterexamples to A, that means:
-**provability only grows.** A frame carrying all of this structure — the GL relation
-`R`, the time preorder `T`, and the bridge `compat` between them — is what we call a
-**temporal GL frame**.
+Notice what was not used. We did not need time to be linear. We did not need every inquiry to terminate. We did not need a special causal law connecting proof steps to future stages. Transitivity and reflexivity did all the work.
 
-From this single picture, a cascade of results follows. Let me walk you through the
-ones that matter, in plain words, with their exact statements.
+The proof also exposes a factorization. Transitivity validates the ordinary modal principle often called axiom $4$:
 
-## What survives, what's new, and what's impossible
+$$
+\Box A\longrightarrow \Box\Box A.
+$$
 
-**The old laws still hold.** First, the reassuring news: adding a clock breaks
-none of the classical machinery. On every temporal GL frame:
+Temporal reflexivity validates
 
-- **The "4" axiom is sound:** `□A → □□A`. If A is provable now, then it is provable
-  that A is provable. The proof is pure transitivity of `R`: a successor of a
-  successor is a successor.
-- **Löb's axiom is sound:** `□(□A → A) → □A`. The proof is a beautiful induction
-  that runs *backwards* along the well-founded relation `R`. Because there are no
-  infinite descending chains of counterexamples, you can prove A holds at every
-  counterexample world by assuming it already holds at all the *deeper* ones — and
-  Löb's hypothesis is exactly the lever that turns "A holds deeper down" into "A
-  holds here." This single argument is, in miniature, the reason arithmetic cannot
-  lie about itself.
+$$
+A\longrightarrow \Diamond_t A,
+$$
 
-**The new temporal law.** Now the genuinely new axiom, the one that justifies the
-name "temporal." It reads `□A → □□◇A`, and unpacked it says:
+because “now” is one of the temporally accessible times. Applying the second implication inside the double box gives the proposed interaction principle. Thus the principle is a useful consistency check, but it is not by itself evidence that the temporal system strictly extends ordinary transitive provability logic.
 
-> **If A is provable now, then it is provable that it is provable that A will
-> someday be provable.**
+## The tomorrow sentence splits in two
 
-This is the formal echo of a deeply human intuition about discovery. Once you have
-nailed something down, not only is it nailed down — the fact that it *stays*
-available into the future is itself something you can certify, and certify from the
-inside, and certify that you can certify. The proof combines `R`-transitivity with
-the reflexivity of time: A is provable two `R`-steps out, and "now" itself
-witnesses the "someday." It is the axiom by which TGL strictly extends GL.
+Now consider the sentence “provable tomorrow but not today.” Its apparent paradox comes from sliding between two readings.
 
-**Proofs persist.** The cleanest payoff of the monotonicity law is the statement
-that gives the whole project its slogan:
+The first reading describes **proof loss**:
 
-> **Persistence of provability (`□A → G□A`):** if A is provable now, then at every
-> future time A is *still* provable.
+$$
+\Box A(\text{today})\ \wedge\ \neg\Box A(\text{tomorrow}).
+$$
 
-Knowledge, once gained, is not lost. We also state it in mirror form as
-*provability monotonicity* — proofs are never un-proved. This is the formal license
-for the way mathematics actually works: nobody re-derives the fundamental theorem of
-calculus every morning. It was proved; it stays proved.
+If today precedes tomorrow and established provability persists, this conjunction is impossible. The **No-Proof-Loss Theorem** states that whenever $today\,T\,tomorrow$,
 
-**The paradox that isn't.** Now we reach the riddle from the opening. Consider the
-unsettling sentence:
+$$
+\neg\bigl(\Box A(\text{today})\wedge\neg\Box A(\text{tomorrow})\bigr).
+$$
 
-> *"A is provable today, but A will not be provable tomorrow."*
+The reason is immediate but important: persistence carries $\Box A$ from today to tomorrow, contradicting its alleged failure there.
 
-If proofs could evaporate, this would be a genuine possibility, and it would be a
-nightmare — it would mean that the ground under mathematics could shift, that a
-theorem could be true-and-proved on Monday and unprovable on Tuesday. TGL settles
-the matter cleanly:
+The second reading describes **proof gain**:
 
-> **The paradox is refutable.** In TGL, "provable today but not tomorrow" cannot
-> happen. It is not merely unlikely; it is logically impossible on any temporal GL
-> frame.
+$$
+\neg\Box A(\text{today})\ \wedge\ \Box A(\text{tomorrow}).
+$$
 
-The proof is immediate from persistence: if A is provable today, persistence forces
-A to be provable at every future time, including tomorrow — flatly contradicting the
-second half of the sentence. The nightmare is ruled out by the structure of time
-itself.
+This is not paradoxical. It is exactly what discovery looks like.
 
-**But the asymmetry is real.** Here is where it gets subtle and, I think, genuinely
-beautiful. Reverse the sentence:
+A two-state example makes the distinction vivid. Let the states be $0$ and $1$, with $0$ today and $1$ tomorrow. Let time relate each state to itself and relate $0$ to $1$. Let the only proof edge run from $0$ to $1$. Choose $A$ to be false at state $1$. Then $\Box A$ is false at state $0$, because its proof-accessible successor fails $A$. At state $1$ there are no proof successors, so $\Box A$ is true there. Consequently,
 
-> *"A is provable tomorrow, but A is not provable today."*
+$$
+\neg\Box A(0)\ \wedge\ \Box A(1)
+$$
 
-This one is **satisfiable**. There is a perfectly consistent temporal GL frame — an
-explicit little two-world model — in which exactly this happens. And of course there
-is, because *this is just what mathematical discovery looks like.* Fermat's Last
-Theorem was provable in 1995 and not in 1994. New proofs appear; old proofs never
-vanish. TGL captures both halves of that asymmetry at once: the future can bring you
-things you did not have (satisfiable), but it can never take away things you had
-(the paradox is refuted). Time, for proofs, is a one-way ratchet.
+holds. The **Proof-Gain Satisfiability Theorem** therefore says that there is a temporal proof model in which a proposition is not provable today and is provable tomorrow.
 
-That asymmetry is not an accident of one model — it is forced by the converse
-well-foundedness of `R`. To see that the structure is *load-bearing*, TGL also pins
-down the boundary case: if you throw away converse well-foundedness and allow even a
-single world that is its own counterexample (a "reflexive" world), **Löb's axiom
-fails.** The whole edifice depends on proofs being finite, on the chains bottoming
-out. Remove that, and the logic collapses.
+The asymmetry is the heart of the matter: forgetting is forbidden, discovery is allowed. Any temporal logic of mathematical growth that refuted both would erase the very phenomenon it was intended to describe.
 
-## Gödel, now with a timestamp
+## A second lesson from trees: local scarcity controls global structure
 
-The crown jewels of the development are two new faces of Gödel's second
-incompleteness theorem.
+A seemingly distant result about tree-shaped diagrams reinforces the same methodological theme: global claims should be tested against the smallest structural constraints.
 
-The first is **semantic**. Strip away the arithmetic and look purely at the frame:
+A finite tree is a connected graph with no cycles. If it has $n$ vertices, it has exactly $n-1$ edges. Every edge contributes $1$ to the degree of each endpoint, so the total degree is
 
-> **Kripke second incompleteness:** on any GL frame, if a world is *consistent*
-> (it has at least one possible future it cannot rule out — it does not prove
-> outright falsehood), then its own consistency is *not provable* there.
+$$
+\sum_{v}\deg(v)=2(n-1).
+$$
 
-The proof is a gem of well-founded reasoning: climb to a deepest accessible world,
-and show that if consistency were provable, that maximal world would have to
-contradict its own maximality. Gödel's theorem, in other words, is not really about
-numbers at all. It is about the geometry of well-founded structures. The numbers are
-just one place that geometry shows up.
+This is the **Tree Degree-Sum Theorem**.
 
-The second face is **temporal**, and it is the punchline the whole logic was built
-to deliver:
+If every vertex had degree at least $2$, the same sum would be at least $2n$. But $2(n-1)<2n$. Therefore every nonempty finite tree has a vertex of degree at most $1$. Such a vertex is a leaf, with the one-vertex tree included by allowing degree $0$. This is the **Leaf Existence Theorem**.
 
-> **Time-stamped second incompleteness:** if a system is consistent at stage `t`,
-> then the statement "the system is consistent at stage `t`" cannot itself be proved
-> by stage `t`.
+The graph fact becomes a representation-theoretic obstruction in a simply-laced tree diagram. Let the vertices index simple roots $\alpha_v$, let $\rho$ be the usual half-sum of positive roots, and let $\beta_I$ denote the diagram correction associated with the full vertex set $I$. For a singleton marking $\{v\}$, consider
 
-You cannot certify your own consistency *on your own clock*. The proof is a direct
-application of Löb's axiom to the time-indexed provability predicate. This is
-Gödel's ancient limitation, now wearing a wristwatch — and it tells us something the
-timeless version could not. Incompleteness is not just a fact about what arithmetic
-*can* prove; it is a fact about what it can prove *in time*, about the order of
-discovery.
+$$
+\lambda_{\{v\},I}=2\rho-\beta_I-\alpha_v.
+$$
 
-## Proofs that vouch for themselves, later
+The relevant dominance criterion says that this singleton correction is $\rho$-dominant exactly when
 
-Underneath the picture-logic sits a second, more concrete layer: an abstract
-*time-stamped provability predicate*, written `prov t A`, meaning "there is a proof
-of A established by stage `t`." This predicate is asked to obey exactly the laws a
-real, honest, bounded provability predicate obeys: persistence (a proof by time `t`
-is a proof by any later time), modus ponens (proofs combine), positive
-introspection — the **Σ₁-completeness** that says if you have a proof you can prove
-that you have it — and Löb.
+$$
+\deg(v)\ge 2.
+$$
 
-From these, one gets a small but striking theorem about how proofs certify
-themselves across time:
+Combining the criterion with leaf existence yields the **Leaf Obstruction Theorem**: every nonempty simply-laced tree diagram contains a vertex $v$ for which the singleton correction $\lambda_{\{v\},I}$ is not $\rho$-dominant.
 
-> **Future self-certification (`prov t A → prov s (prov t A)` for `t ≤ s`):** a
-> proof established by time `t` is, at every later time `s`, *provably* established.
+The proof is only two steps. A tree contains a vertex with $\deg(v)\le 1$; the singleton criterion requires $\deg(v)\ge 2$. The inequalities are incompatible. A global classification indexed by marked diagrams must therefore exclude at least one singleton marking in every tree component. The allowed marks must be anchored at vertices with enough local connectivity.
 
-A proof does not merely persist; its very existence becomes a certifiable historical
-fact. Yesterday's theorem is not just still true today — today we can prove that it
-was proved. This is the formal backbone of how mathematics cites its own past: a
-modern paper invokes a nineteenth-century lemma not by re-deriving it, but by
-certifying that it was, in fact, established. The citation graph of mathematics is
-`prov t A → prov s (prov t A)` made social.
+## What computation can and cannot settle
 
-And to be sure none of this is empty talk about nothing, the development includes a
-consistency check: there is an actual model satisfying all the axioms of the
-time-stamped predicate. The Gödel results above are not vacuous truths about an
-impossible system; they bite on something real.
+Both stories suggest efficient finite tests.
 
-## Why a logic of *when* matters
+For a temporal model with $N$ states, represent $R$ and $T$ by Boolean $N\times N$ matrices. Transitivity and reflexivity can be checked directly. Given the truth set of $A$, compute $\Box A$ by inspecting every proof successor and compute $\Diamond_t A$ by searching temporal successors. Exhausting all $2^N$ truth assignments then tests the interaction formula on that fixed frame. This does not establish completeness of a deductive system, but it quickly finds small countermodels to overambitious axioms.
 
-It is tempting to file all of this under "elegant but academic." I want to argue the
-opposite. The order in which things get proved is becoming one of the most practical
-questions in modern mathematics, for a very twenty-first-century reason: more and
-more mathematics is being done, checked, and *managed* by machines.
+For a finite graph, the tree results are even cheaper. Count vertices and edges, test connectedness, and verify acyclicity. Degrees are obtained in linear time in the size of the graph. Any vertex of degree at most $1$ witnesses both leaf existence and, in the simply-laced setting, failure of singleton dominance.
 
-When a computer assembles a large proof, it is doing exactly what TGL describes:
-establishing lemmas in some order, each one unlocking the next, building a temporal
-dependency graph where some facts must be proved before others can even be stated.
-"Proof mining" — the art of extracting better, more explicit information from
-existing proofs — is fundamentally about *reorganizing* this temporal order.
-Automated theorem provers schedule their work; they decide what to attempt now and
-what to defer, and the value of a partial result depends entirely on *when* it
-arrives and what it unlocks. A logic in which "provable by time `t`" is a first-class
-citizen is precisely the right language for reasoning about these systems — for
-proving that a proof-search strategy will *eventually* succeed (`◇`), that an
-established lemma will *remain* available (`G□A`), or that the absence of a result
-*now* does not doom it *later* (the satisfiable mirror).
+These computations embody a broader discipline: separate theorem from conjecture. The temporal interaction principle is sound, proof loss is impossible under persistence, and proof gain is satisfiable. By contrast, decidability, a finite-model bound, and arithmetical completeness for a time-indexed theory remain open until a specific calculus and a precise clock are fixed.
 
-But the deeper reason to care is conceptual. For ninety years, Gödel's theorems have
-been told as a story about limits — about the things mathematics can never do. TGL
-retells that story as one about *process*. Yes, a system cannot certify its own
-consistency. But now we can say something sharper: it cannot do so *on its own
-clock*, in its own present moment. The limitation has a temporal shape. And on the
-other side of the ledger, the very thing that makes incompleteness inescapable — the
-finiteness of proofs, the well-foundedness that forbids infinite regress — is the
-*same* structure that guarantees the good news: that knowledge accumulates, that
-proofs persist, that the nightmare of "provable today, gone tomorrow" can never
-occur.
+## A research program after the boundary
 
-That is the quiet moral of Temporal Gödel–Löb logic. Time, for mathematical truth,
-runs only one way. The future can hand you new theorems. It can never take the old
-ones back. And the proof that this is so turns out to be the very same argument that
-Gödel used to show us the edge of what we can know. The flashlight, it turns out,
-remembers everywhere it has shone.
+The next step is not to add more suggestive notation, but to specify the system sharply. One promising calculus would combine ordinary provability logic, a reflexive-transitive temporal logic, the persistence law $\Box A\to G\Box A$, and explicit interaction axioms. One can then ask whether validity on finite temporal proof frames coincides with derivability.
+
+A finite-model theorem would turn that question into an algorithm. If every non-derivable formula $A$ had a countermodel with at most
+
+$$
+2^{2s(A)}
+$$
+
+states, where $s(A)$ counts subformulas, bounded model search would decide derivability. The bound is a conjectural target, not an established theorem.
+
+Arithmetic demands another choice: a clock. Let $(PA_t)$ be an increasing sequence of recursively axiomatized fragments of Peano arithmetic, and interpret $\Box_t A$ as “$PA_t$ proves $A$.” Only after fixing this sequence and a recursively enumerable modal calculus does an arithmetical completeness claim become precise.
+
+The resulting picture is more measured, and more useful, than the original slogan. Time can be added to provability semantics. Some temporal principles then follow almost for free; others encode genuine discovery. The decisive question is not merely whether a formula mentions tomorrow. It is whether tomorrow contributes mathematical content that cannot already be supplied by transitivity and the fact that the present counts as a possible future.

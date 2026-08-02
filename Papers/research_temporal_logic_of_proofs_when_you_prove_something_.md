@@ -1,474 +1,426 @@
-# Temporal Gödel–Löb Logic (TGL): A Provability Logic with a Clock
+# Temporal Provability, Persistence, and Structural Obstructions in Tree Diagrams
+
+**Aristotle**  
+**August 2, 2026**
 
 ## Abstract
 
-Classical provability logic GL treats provability as timeless: the modal operator
-`□A` ("A is provable") carries no information about *when* a proof was, or will be,
-established. Yet proofs are discovered in time, their dependencies form a causal
-order, and the value of a result in practice often turns on *when* it becomes
-available. We introduce **Temporal Gödel–Löb logic (TGL)**, a conservative temporal
-extension of GL in which provability is indexed by discrete time. Semantically, TGL
-is interpreted on **temporal GL frames**: structures carrying a Gödel–Löb
-accessibility relation `R` (transitive and converse well-founded) together with a
-temporal preorder `T`, linked by a *time-monotonicity* condition `compat` expressing
-that provability only grows as time passes. On these frames we prove soundness of the
-GL axioms (the `4` axiom and Löb's axiom), soundness of a new **temporal interaction
-axiom** `□A → □□◇A`, and the **persistence of provability** `□A → G□A`. We then
-resolve the two "temporal paradoxes" of proof discovery: the sentence *"provable
-today but not tomorrow"* is **refutable** in TGL, while its mirror *"provable
-tomorrow but not today"* is **satisfiable**, exhibiting the fundamental one-way
-asymmetry of mathematical discovery. We give two new forms of Gödel's second
-incompleteness theorem: a purely **semantic** form on GL frames, and a
-**time-stamped** form via Löb. A companion algebraic layer axiomatises a time-stamped
-provability predicate `prov t A` ("provable by stage `t`") satisfying persistence,
-modus ponens, Σ₁-completeness, and Löb, yielding a **future self-certification**
-theorem `prov t A → prov s (prov t A)` for `t ≤ s`; we verify the axiom set is
-consistent by exhibiting a model. A boundary result shows that dropping converse
-well-foundedness — even at a single reflexive world — invalidates Löb's axiom,
-demonstrating that the well-founded structure is load-bearing. All results are
-formally verified.
+We study a bimodal semantics that distinguishes proof accessibility from temporal accessibility. The proof modality $\Box$ is interpreted universally along a transitive relation $R$, while the future modality $\Diamond_t$ is interpreted existentially along a reflexive temporal relation $T$. The proposed interaction scheme
 
-**Keywords:** provability logic, Gödel–Löb logic, temporal logic, modal logic,
-Gödel's incompleteness theorems, Löb's theorem, Kripke semantics, proof discovery.
+$$
+\Box A\to\Box\Box\Diamond_t A
+$$
 
----
+is shown to be valid under only transitivity of $R$ and reflexivity of $T$. More precisely, it factors through the ordinary transitivity principle $\Box A\to\Box\Box A$ and the temporal reflexivity principle $A\to\Diamond_t A$. Consequently, this interaction scheme alone does not demonstrate a strict increase over ordinary transitive provability logic. Under a persistence condition, established provability cannot be lost at a later stage. In contrast, a concrete two-state model shows that proof gain—failure of $\Box A$ today followed by $\Box A$ tomorrow—is satisfiable. This separates two readings of “provable tomorrow but not today” that are often conflated.
+
+We also present an independent structural application of the same scarcity-based method. For a finite tree on $n$ vertices, the degree sum is $2(n-1)$, so a nonempty tree has a vertex of degree at most $1$. In a simply-laced tree diagram where singleton $\rho$-dominance is equivalent to degree at least $2$, such a leaf necessarily obstructs singleton dominance. We give finite algorithms for checking the temporal principles and detecting the tree obstruction, discuss applications to evolving proof databases and diagram classifications, and delineate the unproved steps required for finite-frame completeness, decidability, and arithmetic interpretations with a precise clock.
 
 ## 1. Introduction
 
-### 1.1 Motivation: proofs are events
-
-Standard proof theory operates under a convenient idealization: a sentence, once
-provable, is provable timelessly. This idealization is built into the modal logic of
-provability, GL, where `□A` means simply "A is provable," with no temporal index.
-Solovay's celebrated arithmetical completeness theorem certifies that GL captures
-*exactly* the schemata Peano Arithmetic (PA) proves about its own provability
-predicate, making GL the canonical logic of provability.
-
-But proofs are discovered in time. A proof of a theorem `A` is built on a stock of
-previously established lemmas; the dependency relation among proofs imposes a partial
-temporal order; and in computational practice — automated theorem proving, proof
-mining, interactive proof assistants — the *order* in which results are obtained is a
-first-class object of concern. The natural question is whether the elegant machinery
-of GL can be extended to reason about *temporal* provability without losing its
-characteristic theorems, and what genuinely new principles emerge.
-
-### 1.2 Contributions
-
-We introduce TGL, isolate its semantics, and prove the following (all formally
-verified):
-
-1. **Soundness of GL on temporal frames.** Löb's axiom and the `4` axiom are sound
-   on every temporal GL frame (Theorems 3.1, 3.2).
-2. **A new temporal interaction axiom.** `□A → □□◇A` is sound (Theorem 3.3); it is
-   the principle by which TGL strictly extends GL.
-3. **Persistence.** `□A → G□A`: provability established now persists to all future
-   times (Theorem 4.1), with a monotonicity restatement (Theorem 4.2).
-4. **Resolution of the temporal paradoxes.** "Provable today but not tomorrow" is
-   refutable (Theorem 4.3); "provable tomorrow but not today" is satisfiable
-   (Theorem 4.4).
-5. **Two new forms of Gödel II.** A semantic form on GL frames (Theorem 5.1) and a
-   time-stamped algebraic form via Löb (Theorem 5.2).
-6. **Future self-certification.** In the algebraic layer, `prov t A → prov s (prov t
-   A)` for `t ≤ s` (Theorem 6.1), with a consistency model (Theorem 6.2).
-7. **A boundary result.** Dropping converse well-foundedness invalidates Löb
-   (Theorem 7.1), confirming the structural necessity of well-foundedness.
-
-### 1.3 Relation to prior provability and temporal logic
-
-TGL sits at the intersection of two mature traditions. From provability logic it
-inherits the GL frame skeleton: transitive, converse-well-founded accessibility,
-which is the exact frame condition validating Löb's axiom (the Segerberg–Solovay
-characterization). From linear/branching temporal logic it inherits the `G`
-("globally") and `F`/`◇` ("eventually") operators interpreted over a temporal
-preorder. The novel content is their *interaction*, governed by the monotonicity
-bridge `compat`, and the resulting temporal sharpenings of the incompleteness
-phenomena.
-
----
-
-## 2. Semantics: temporal GL frames
-
-We work with a *shallow* (predicate) semantics: over a fixed set of worlds `W`, a
-formula is modelled by a predicate `A : W → Prop`, where `A w` reads "A holds at world
-`w`." This suffices for soundness and (counter)model constructions and keeps the
-development free of syntactic bureaucracy.
-
-### 2.1 Operators
-
-**Definition 2.1 (Provability box).** For an accessibility relation `R : W → W →
-Prop`,
-```
-Box R A w  :=  ∀ v, R w v → A v.
-```
-`Box R A w` ("`□A` at `w`") asserts that `A` holds at every `R`-successor of `w`.
-Intuitively, `R w v` means `v` is a world that `w` cannot rule out (a potential
-counterexample), and proving `A` means eliminating all such counterexamples.
-
-**Definition 2.2 (Temporal globally).** For a temporal relation `T : W → W → Prop`,
-```
-Glob T A w  :=  ∀ v, T w v → A v.
-```
-`Glob T A w` ("`GA`" / "`□ₜA`") asserts `A` holds at all now-or-later times.
-
-**Definition 2.3 (Temporal eventually / diamond).**
-```
-Fut T A w  :=  ∃ v, T w v ∧ A v.
-```
-`Fut T A w` ("`FA`" / "`◇A`") asserts `A` holds at some now-or-later time. This is
-the temporal diamond of the concept.
-
-### 2.2 Frames
-
-**Definition 2.4 (Temporal GL frame).** A *temporal GL frame* `F` consists of:
-
-- a type `W` of **worlds** (consistent stages / partial completions of knowledge);
-- a **proof-accessibility relation** `R : W → W → Prop` (`R w v`: `v` is a
-  counterexample world reachable from `w`);
-- a **temporal preorder** `T : W → W → Prop` (`T w w'`: `w'` is now-or-later than
-  `w`);
-
-subject to:
-
-- **`R_trans`:** `R` is transitive — `R w v → R v u → R w u`;
-- **`R_wf`:** `R` is *converse well-founded* — the relation `λ a b, R b a` is
-  well-founded (no infinite `R`-ascending chains);
-- **`T_refl`:** `T` is reflexive;
-- **`T_trans`:** `T` is transitive;
-- **`compat` (time-monotonicity):** `T w w' → R w' v → R w v`.
-
-The two structural conditions on `R` are exactly the GL frame conditions:
-transitivity validates the `4` axiom, converse well-foundedness validates Löb. The
-preorder conditions on `T` make time a minimal flow. The bridge `compat` is the
-conceptual core of TGL: it says the `R`-successor set can only *shrink* as time
-advances along `T`, hence (since `□` quantifies universally over successors)
-provability can only *grow*.
+Classical provability logic abstracts from the time at which proofs are found. This abstraction is appropriate when the only issue is whether a formal theory proves a sentence, but it suppresses information central to mathematical practice and proof search. Results are established in an order; proof repositories grow; later arguments depend on earlier lemmas; and a statement may move from open to settled without any previously established theorem becoming unsettled.
 
-**Remark 2.5 (Reading `compat`).** Contrapositively, `compat` says: any
-counterexample eliminated by the present stage stays eliminated at every future
-stage. Equivalently, future successors are present successors. This is the
-formalization of "knowledge accumulates; proofs are never lost."
-
----
-
-## 3. Soundness of the GL axioms
-
-### 3.1 Löb's axiom
-
-**Theorem 3.1 (`loeb_box_sound`).** On every temporal GL frame `F`, for every
-predicate `A` and world `w`,
-```
-Box R (λ v, Box R A v → A v) w  →  Box R A w.
-```
-That is, `□(□A → A) → □A` is valid.
-
-*Proof sketch.* We must show `A v` for every `R`-successor `v` of `w`. Argue by
-well-founded induction on `v` using `R_wf` (induction along the converse of `R`). For
-the inductive world `x` with `R w x`: the induction hypothesis gives, for every `u`
-with `R x u`, that `A u` holds (using `R_trans` to know `R w u`, so the IH applies);
-hence `Box R A x`. The Löb hypothesis `h x` (instantiated at the successor `x` of
-`w`) is precisely `Box R A x → A x`, which now yields `A x`. Converse
-well-foundedness is exactly what licenses the induction; it is the formal content of
-"proofs are finite." ∎
-
-This is the heart of GL: the same well-founded induction that produces Löb's theorem
-underlies Gödel's second incompleteness theorem.
-
-### 3.2 The `4` axiom
-
-**Theorem 3.2 (`four_box_sound`).** On every temporal GL frame,
-```
-Box R A w  →  Box R (Box R A) w,
-```
-i.e. `□A → □□A` is valid.
-
-*Proof sketch.* Pure transitivity. Suppose `Box R A w`. Given `R w v` and `R v u`,
-transitivity gives `R w u`, so `A u` follows from `Box R A w`. Hence `Box R A v` for
-each successor `v`, i.e. `Box R (Box R A) w`. ∎
-
-### 3.3 The temporal interaction axiom
-
-**Theorem 3.3 (`tgl_axiom_sound`).** On every temporal GL frame,
-```
-Box R A w  →  Box R (Box R (Fut T A)) w,
-```
-i.e. the **temporal Gödel–Löb axiom** `□A → □□◇A` is valid.
-
-*Proof sketch.* Suppose `Box R A w`. Fix successors with `R w v` and `R v u`; we must
-show `Fut T A u`, i.e. `∃ x, T u x ∧ A x`. Take `x := u`: `T u u` by reflexivity of
-time (`T_refl`), and `A u` follows because `R w u` (by transitivity of `R` from `R w
-v`, `R v u`) and `Box R A w`. ∎
-
-**Interpretation.** `□A → □□◇A` reads: *if `A` is provable now, then it is
-provably-provable that `A` will (still) be provable at some future time.* It is the
-axiom by which TGL strictly extends GL, encoding the certifiable persistence of
-discovery. (Strictness over GL: the temporal vocabulary `◇` is inexpressible in pure
-GL, and the axiom links the two modalities; on any frame where `T` is non-trivial the
-principle is not a GL-theorem.)
-
----
+A temporal treatment therefore needs at least two relations. One relation describes proof accessibility: which states must satisfy a proposition if it is presently provable. A second describes temporal accessibility: which states count as present or future stages. The distinction permits precise formulations of persistence, discovery, and interaction between proof and time.
 
-## 4. Persistence and the temporal paradoxes
-
-### 4.1 Persistence of provability
+A natural proposed interaction law is
 
-**Theorem 4.1 (`provability_persists`).** On every temporal GL frame,
-```
-Box R A w  →  Glob T (Box R A) w,
-```
-i.e. `□A → G□A`: what is provable now is provable at all future times.
-
-*Proof sketch.* Suppose `Box R A w` and let `v` be a future time, `T w v`. To show
-`Box R A v`, take any `R v u`. By `compat` applied to `T w v` and `R v u` we get `R w
-u`, whence `A u` from `Box R A w`. Thus `Box R A v`. The bridge `compat` is exactly
-the hypothesis consumed here. ∎
-
-**Theorem 4.2 (`provability_monotone`).** Equivalent restatement of Theorem 4.1:
-provability is monotone along `T`; if `Box R A w` and `T w v` then `Box R A v`.
-Proofs are never lost.
-
-### 4.2 "Provable today but not tomorrow" is refutable
-
-**Theorem 4.3 (`today_not_tomorrow_refuted`).** On every temporal GL frame there is
-no world `w` and future time `v` (`T w v`) with `Box R A w` and `¬ Box R A v`. The
-"temporal paradox" *provable today but not tomorrow* is refutable in TGL.
-
-*Proof sketch.* Immediate from persistence (Theorem 4.1): `Box R A w` and `T w v`
-force `Box R A v`, contradicting `¬ Box R A v`. ∎
-
-### 4.3 "Provable tomorrow but not today" is satisfiable
-
-**Theorem 4.4 (`tomorrow_not_today_satisfiable`).** There is a temporal GL frame, a
-predicate `A`, a world `w` and a future time `v` (`T w v`) with `¬ Box R A w` and
-`Box R A v`. The mirror sentence *provable tomorrow but not today* is satisfiable.
-
-*Proof sketch.* Exhibit an explicit two-world frame. Let `W = {w, v}` with `T` the
-reflexive-transitive order making `w ≤ v` (and both reflexive), and choose `R` so
-that `w` has a successor falsifying `A` while `v`'s successor set has shrunk
-(consistently with `compat`, since the successor set may only shrink toward the
-future) so that `A` holds at all of `v`'s successors. Then `¬ Box R A w` and `Box R A
-v`. One checks `R_trans`, `R_wf`, the preorder laws, and `compat` directly on the
-finite frame. ∎
-
-**Discussion (the one-way ratchet).** Theorems 4.3 and 4.4 together pin down the
-*asymmetry of proof discovery*. The future can supply provability one did not have
-(4.4 satisfiable) but can never revoke provability one had (4.3 refutable). This is
-the formal signature of mathematical progress: new theorems appear, old theorems
-endure. The asymmetry is not accidental — it is enforced by `compat` together with
-converse well-foundedness (cf. Theorem 7.1).
+$$
+\Box A\to\Box\Box\Diamond_t A.
+$$
 
----
-
-## 5. Two faces of Gödel's second incompleteness theorem
+Informally, if $A$ is provably established now, then it is provable that it is provable that $A$ holds at some temporally accessible stage. Its nested modalities make the formula appear stronger than the standard modal transitivity law. The first aim of this paper is to identify its exact structural content. We show that transitivity of proof accessibility and reflexivity of time suffice. Indeed, ordinary axiom $4$ produces $\Box\Box A$, and temporal reflexivity changes the innermost $A$ into $\Diamond_t A$. No stronger temporal-probabilistic or arithmetic machinery is required.
 
-### 5.1 Semantic incompleteness on GL frames
-
-Say a world `w` is **consistent** when it has at least one `R`-successor it cannot
-rule out — equivalently, it does not falsify everything, i.e. `¬ Box R (λ _, False)
-w` (there is some `v` with `R w v`). "Consistency is provable at `w`" then means `Box
-R (consistency) w`.
-
-**Theorem 5.1 (`kripke_second_incompleteness`).** On any GL frame, if a world is
-consistent then its consistency is not provable there.
-
-*Proof sketch.* A well-founded maximal-world argument. By converse well-foundedness
-of `R`, from a consistent `w` one obtains an `R`-maximal accessible world `m` (a
-world with `R w m` having no proper `R`-successor, or whose successors collapse).
-Provability of consistency at `w` would, propagated to `m`, assert that `m` itself has
-a live successor, contradicting maximality. Hence consistency is unprovable. This is
-the frame-theoretic skeleton of Gödel II: it is a statement about well-founded
-structures, with arithmetic merely one instance. ∎
+The second aim is to resolve an ambiguity in the phrase “provable tomorrow but not today.” One reading says that a proof present today disappears tomorrow. A persistence condition refutes this. The opposite reading says that a proof absent today appears tomorrow. That is satisfiable in a two-state model. A logic intended to describe discovery should preserve this asymmetry rather than refute both readings.
 
-### 5.2 Time-stamped incompleteness
+The final aim is to place these temporal results beside a finite graph obstruction arising in simply-laced tree diagrams. The connection is methodological rather than a claim that the two semantics are identical. In both settings, an apparently global restriction is controlled by a small structural fact. For temporal interaction, the fact is reflexivity at the innermost world. For tree diagrams, the fact is that average degree is below $2$, forcing a leaf. Once singleton dominance is characterized by degree at least $2$, the leaf becomes an unavoidable obstruction.
 
-**Theorem 5.2 (`godel_second_at_time`).** In the algebraic layer (Section 6), if a
-system is consistent at stage `t`, then the proposition "the system is consistent at
-stage `t`" is not provable at stage `t`:
-```
-Con(t)  →  ¬ prov t (Con(t)),
-```
-where `Con(t)` abbreviates `¬ prov t ⊥`.
-
-*Proof sketch.* A direct application of Löb's principle (an axiom of `TempProv`,
-Section 6) to the time-indexed predicate `prov t`. If `prov t (Con(t))` held, Löb's
-machinery would derive `prov t ⊥`, contradicting `Con(t)`. ∎
-
-**Interpretation.** A system cannot certify its own consistency *on its own clock*.
-The classical Gödel II is the timeless shadow of this sharper statement: the
-limitation has a definite temporal locus, "at stage `t`, by stage `t`."
+The established results are deliberately separated from open claims. We do not assert completeness or decidability for an unspecified temporal calculus, nor arithmetic completeness for an unspecified sequence of theories. Instead, we formulate the semantic core needed to ask those questions precisely and describe bounded algorithms that can test candidate principles on finite frames.
 
----
+## 2. Temporal proof frames
 
-## 6. The algebraic layer: a time-stamped provability predicate
+### 2.1 Syntax
 
-### 6.1 The structure `TempProv`
-
-To target arithmetical interpretations directly, we axiomatise an abstract
-time-stamped provability predicate.
-
-**Definition 6.1 (`TempProv`).** A `TempProv` structure consists of a type of
-sentences with logical connectives, a relation `prov : ℕ → Sentence → Prop` (`prov t
-A`: "there is a proof of `A` established by stage `t`"), and the axioms:
-
-- **Persistence:** `t ≤ s → prov t A → prov s A` (a proof by time `t` is a proof by
-  any later time);
-- **Modus ponens (internal):** `prov t (A → B) → prov t A → prov t B`;
-- **Σ₁-completeness (positive introspection):** `prov t A → prov t (prov t A)` —
-  having a proof, one can prove that one has it (the formal reflex of bounded
-  provability being Σ₁);
-- **Löb:** `prov t (prov t A → A) → prov t A`.
-
-These are exactly the principles an honest bounded provability predicate satisfies.
-The Σ₁-completeness axiom is the abstract counterpart of the arithmetical fact that
-"there is a proof of `A` of size ≤ `t`" is a Σ₁ formula, hence provably true in PA
-whenever true.
-
-### 6.2 Future self-certification
-
-**Theorem 6.1 (`future_self_certification`).** In any `TempProv`, for `t ≤ s`,
-```
-prov t A  →  prov s (prov t A).
-```
-A proof established by time `t` is, at every later time `s`, provably established.
-
-*Proof sketch.* From `prov t A`, Σ₁-completeness gives `prov t (prov t A)`.
-Persistence (with `t ≤ s`) lifts this to `prov s (prov t A)`. ∎
-
-**Interpretation.** Proofs do not merely persist (Theorem 4.1, semantic side); their
-existence becomes a *certifiable historical fact*. This is the formal backbone of
-mathematical citation: a later result certifies an earlier one was established without
-re-deriving it.
-
-### 6.3 Consistency of the axioms
-
-**Theorem 6.2 (`trivialTempProv_consistent`).** The axioms of `TempProv` are
-consistent: there exists a model (e.g. the degenerate "proves only the logically
-trivial" interpretation) satisfying persistence, modus ponens, Σ₁-completeness and
-Löb.
-
-*Proof sketch.* Take `prov t A` to be a uniformly valid predicate (e.g. always true
-on a one-point sentence algebra, or "A is a tautology"); verify each axiom directly.
-The point is non-vacuity: the Gödel results of Section 5 hold of a genuinely
-inhabited axiom class. ∎
-
----
-
-## 7. A boundary result: well-foundedness is load-bearing
-
-**Theorem 7.1 (`loeb_fails_with_reflexive`).** There is a frame with a single
-reflexive world (`R w w`) — hence *not* converse well-founded — on which Löb's axiom
-fails: there is a predicate `A` with `Box R (λ v, Box R A v → A v) w` but `¬ Box R A
-w`.
-
-*Proof sketch.* On the one-point reflexive frame, take `A` false at `w`. Then `Box R
-A w` is false (the single successor `w` falsifies `A`), so `¬ Box R A w`. But `Box R
-(λ v, Box R A v → A v) w` reduces to `Box R A w → A w`, which is `False → False`,
-i.e. true. Thus the Löb hypothesis holds while the conclusion fails. ∎
-
-**Significance.** Converse well-foundedness of `R` is not a technical convenience but
-the structural fact that makes Löb's axiom — and with it the entire incompleteness
-phenomenon and the one-way ratchet of Section 4 — possible. A single reflexive point
-(an "infinite proof," a self-justifying world) destroys it.
-
----
-
-## 8. Algorithms
-
-The semantics is finitely checkable, which makes TGL amenable to direct computation.
-We describe three core algorithms, with full pseudocode and reference implementations
-in the companion `demo.py` / `PACKAGE.json`.
-
-**(A) Box / temporal-operator evaluation.** Given a finite frame (worlds, `R`, `T`)
-and a valuation of atoms, evaluate `Box`, `Glob`, `Fut`, and compound formulas at a
-world by direct quantification over successors. Complexity `O(|W|)` per modal node,
-`O(|formula| · |W|)` overall for a fixed valuation; nesting multiplies by depth.
-
-**(B) Frame validation.** Verify a candidate finite frame is a genuine temporal GL
-frame: check transitivity of `R` (`O(|W|³)`), converse well-foundedness (no
-`R`-cycle, via DFS / topological sort, `O(|W|²)`), reflexivity and transitivity of
-`T`, and `compat` (`O(|W|³)`). This certifies the satisfiability witnesses
-(Theorem 4.4) and the boundary counterexample (Theorem 7.1).
-
-**(C) Löb fixed-point evaluation.** Compute, by well-founded induction along reverse
-`R`, the set of worlds where `Box R A` holds given the Löb hypothesis, reproducing
-the proof of Theorem 3.1 computationally; this doubles as a checker that converse
-well-foundedness holds (the induction terminates iff there is no `R`-cycle).
-
----
-
-## 9. Applications
-
-- **Automated theorem proving / proof search scheduling.** Proof search establishes
-  lemmas in an order; TGL's `◇` ("eventually provable") and `G□A` ("remains
-  provable") are the natural correctness specifications for "this strategy will
-  succeed" and "this lemma stays available." Theorem 4.4 (satisfiability of
-  "tomorrow not today") formalizes that absence of a result now does not preclude it
-  later.
-- **Proof mining.** Extracting sharper data from existing proofs is a *reorganization*
-  of temporal dependency order; future self-certification (Theorem 6.1) underwrites
-  citing established results without re-derivation.
-- **Interactive proof assistants / dependency management.** The dependency graph of a
-  library is precisely a temporal GL structure; persistence (Theorem 4.1) is the
-  formal guarantee that established lemmas remain usable, and the time-stamped Gödel
-  result (Theorem 5.2) bounds what a system can certify about its own soundness at a
-  given build stage.
-- **Foundations.** TGL recasts incompleteness from a story of static limits to one of
-  *process*: a system cannot certify its consistency on its own clock, but the very
-  well-foundedness that forces this (Theorem 7.1) is what guarantees knowledge
-  accumulates monotonically (Theorems 4.1–4.3).
-
----
-
-## 10. Discussion
-
-The recurring theme is that **converse well-foundedness of `R`** does double duty. On
-the negative side it forces incompleteness (Theorems 3.1, 5.1, 5.2): no infinite
-regress of self-justification, hence no internal consistency proof. On the positive
-side, combined with the monotonicity bridge `compat`, it underwrites the *good* news
-of accumulation (Theorems 4.1–4.3): the future cannot revoke what is proved.
-Theorem 7.1 makes the dependence explicit by showing the whole structure collapses
-when well-foundedness is removed at even one point. The two modalities `□` (proof
-structure) and `G`/`◇` (time), kept cleanly separate and linked only through
-`compat`, interact exactly as the new axiom `□A → □□◇A` predicts.
-
-A subtle conceptual payoff is the asymmetry pair (Theorems 4.3 vs 4.4). It explains,
-in a single formal stroke, why mathematics *feels* cumulative: provability is a
-monotone, one-way function of time. The "paradoxes" of temporal provability are not
-paradoxes at all once the frame conditions are made explicit; one is impossible, its
-mirror is routine, and the difference is precisely the direction of time.
-
----
-
-## 11. Future work
-
-The development opens two concrete, falsifiable research programs.
-
-**(1) Arithmetical completeness over PA.** Replace the toy `TempProv` model (Theorem
-6.2) by the *faithful* interpretation `prov t A := "there is a PA-proof of A of Gödel
-number / length ≤ t"`. Because bounded provability is Σ₁, persistence and positive
-introspection hold of the honest predicate, not just toy models. Conjecture: a
-Solovay-style theorem holds — a temporal modal sentence is a TGL-theorem iff its
-arithmetical interpretation is a PA-theorem under every time-stamped substitution.
-*Falsification:* a TGL-valid sentence whose interpretation is PA-independent.
-
-**(2) Decidability via a temporal finite model property.** GL has the finite model
-property and is decidable. Conjecture: TGL has a *temporal* FMP — every non-theorem is
-refuted on a frame finite in both the `R` and `T` dimensions — and is decidable with
-an explicit complexity bound (PSPACE-or-better). The key is that `compat` lets a
-temporal model be unravelled into a product of a converse-well-founded `R`-tree with a
-finite linear time order, so the two well-foundedness phenomena (proof depth, bounded
-time) compose rather than interfere. A filtration argument over temporal GL frames is
-the natural route.
-
----
-
-## 12. Conclusion
-
-TGL extends the canonical logic of provability with a clock, conservatively retaining
-Löb's axiom and the `4` axiom while adding the temporal interaction principle `□A →
-□□◇A`. The framework cleanly resolves the temporal paradoxes of proof discovery —
-"provable today but not tomorrow" is impossible, "provable tomorrow but not today" is
-routine — and delivers both semantic and time-stamped sharpenings of Gödel's second
-incompleteness theorem, together with a future self-certification theorem for a
-time-stamped provability predicate. The unifying insight is that converse
-well-foundedness simultaneously forces incompleteness and guarantees the monotone
-accumulation of mathematical knowledge: time, for proofs, runs only one way.
+Fix a set $P$ of atomic propositions. Formulas are generated from atoms, falsity $\bot$, implication $\to$, a proof modality $\Box$, a temporal universal modality $G$, and a temporal existential modality $\Diamond_t$. Thus, if $A$ and $B$ are formulas, then so are
+
+$$
+A\to B,\qquad \Box A,\qquad GA,\qquad \Diamond_t A.
+$$
+
+Negation is defined by $\neg A:=A\to\bot$. Other Boolean connectives may be introduced in the usual way. The modality $\Box$ quantifies over proof-accessible states; $G$ means “at every temporally accessible stage”; and $\Diamond_t$ means “at some temporally accessible stage.”
+
+### 2.2 Frames and valuations
+
+A **temporal proof frame** is a triple
+
+$$
+\mathcal F=(W,R,T),
+$$
+
+where $W$ is a nonempty set of states, $R\subseteq W\times W$ is proof accessibility, and $T\subseteq W\times W$ is temporal accessibility. For the core interaction theorem we require:
+
+1. **Proof transitivity:** if $wRv$ and $vRu$, then $wRu$.
+2. **Temporal reflexivity:** $wTw$ for every $w\in W$.
+
+Additional applications may assume that $R$ is conversely well-founded or that $T$ is transitive, but neither property is needed for the principal interaction theorem.
+
+A valuation $V$ assigns to each atom $p\in P$ a subset $V(p)\subseteq W$. Satisfaction, written $\mathcal F,V,w\vDash A$, is defined recursively. Atoms obey the valuation, falsity is never satisfied, and implication has its classical truth condition. The modal clauses are
+
+$$
+\mathcal F,V,w\vDash\Box A
+\quad\Longleftrightarrow\quad
+\forall v\in W\,(wRv\Rightarrow \mathcal F,V,v\vDash A),
+$$
+
+$$
+\mathcal F,V,w\vDash GA
+\quad\Longleftrightarrow\quad
+\forall v\in W\,(wTv\Rightarrow \mathcal F,V,v\vDash A),
+$$
+
+and
+
+$$
+\mathcal F,V,w\vDash\Diamond_t A
+\quad\Longleftrightarrow\quad
+\exists v\in W\,(wTv\wedge \mathcal F,V,v\vDash A).
+$$
+
+These clauses also make sense for an arbitrary predicate $A:W\to\{\mathrm{false},\mathrm{true}\}$. We freely use that predicate-level notation when the internal syntax is irrelevant.
+
+### 2.3 Persistence
+
+To model a growing body of established results, we impose the following semantic property when needed.
+
+**Definition 2.1 (Persistence of provability).** A temporal proof frame is persistent if, for every predicate $A$ and states $w,v$,
+
+$$
+wTv\ \text{and}\ \Box A(w)\quad\Longrightarrow\quad\Box A(v).
+$$
+
+Equivalently, the frame validates the scheme
+
+$$
+\Box A\to G\Box A.
+$$
+
+Persistence is monotonicity of established provability along time. It allows a later state to acquire new proofs; it only forbids the loss of proofs already available.
+
+## 3. The temporal interaction principle
+
+We now determine the exact assumptions behind the formula
+
+$$
+\Box A\to\Box\Box\Diamond_t A.
+$$
+
+### 3.1 Soundness under minimal relational assumptions
+
+**Theorem 3.1 (Temporal Interaction Theorem).** Let $(W,R,T)$ be a frame in which $R$ is transitive and $T$ is reflexive. For every predicate $A$ on $W$ and every $w\in W$,
+
+$$
+\Box A(w)\quad\Longrightarrow\quad\Box\Box\Diamond_t A(w).
+$$
+
+Consequently, every formula instance $\Box A\to\Box\Box\Diamond_t A$ is valid on every such frame.
+
+**Proof sketch.** Assume $\Box A(w)$. To prove $\Box\Box\Diamond_t A(w)$, choose $v$ with $wRv$ and then choose $u$ with $vRu$. By transitivity, $wRu$. The initial assumption gives $A(u)$. By reflexivity, $uTu$, so the state $u$ itself witnesses $\Diamond_t A(u)$. Since $u$ and $v$ were arbitrary, the two universal proof quantifiers are satisfied. $\square$
+
+The proof uses neither temporal transitivity nor a compatibility law between $R$ and $T$. It also uses no well-foundedness assumption on $R$. This minimality matters because it reveals that the temporal content of the theorem occurs only in the final reflexive witness.
+
+### 3.2 Factorization through axiom $4$
+
+**Lemma 3.2 (Proof-transitivity principle).** If $R$ is transitive, then for every predicate $A$,
+
+$$
+\Box A\to\Box\Box A
+$$
+
+is valid.
+
+**Proof sketch.** If $\Box A(w)$, $wRv$, and $vRu$, transitivity gives $wRu$, hence $A(u)$. Therefore $\Box A(v)$ for every $R$-successor $v$ of $w$. $\square$
+
+**Lemma 3.3 (Reflexive-time principle).** If $T$ is reflexive, then for every predicate $A$,
+
+$$
+A\to\Diamond_t A
+$$
+
+is valid.
+
+**Proof sketch.** If $A(w)$, temporal reflexivity gives $wTw$, so $w$ witnesses $\Diamond_t A(w)$. $\square$
+
+**Theorem 3.4 (Factorization Theorem).** On any frame with transitive $R$ and reflexive $T$, an assumption $\Box A(w)$ yields both
+
+$$
+\Box\Box A(w)
+$$
+
+and
+
+$$
+\Box\Box\Diamond_t A(w).
+$$
+
+The second conclusion is obtained from the first by applying $A\to\Diamond_t A$ at each innermost proof-accessible state.
+
+**Proof sketch.** The first conjunct is Lemma 3.2. For the second, expand $\Box\Box A(w)$. At every state $u$ reached by two $R$-steps, $A(u)$ holds. Lemma 3.3 changes this to $\Diamond_t A(u)$, preserving both outer universal quantifiers. $\square$
+
+**Corollary 3.5.** The formula $\Box A\to\Box\Box\Diamond_t A$ does not, by itself, witness a strict extension of any modal logic that already validates $\Box A\to\Box\Box A$ and is combined with reflexive temporal semantics.
+
+This is a statement about the evidential role of the formula, not a claim that every temporal provability calculus collapses to ordinary modal logic. A richer calculus may be strictly stronger for other reasons. The corollary only says that strictness cannot be inferred from this interaction scheme alone.
+
+## 4. Proof persistence and proof gain
+
+### 4.1 Loss of an established proof
+
+**Theorem 4.1 (No-Proof-Loss Theorem).** Let $(W,R,T)$ be a persistent temporal proof frame. For every predicate $A$ and states $today,tomorrow\in W$ satisfying $today\,T\,tomorrow$,
+
+$$
+\neg\bigl(\Box A(today)\wedge\neg\Box A(tomorrow)\bigr).
+$$
+
+**Proof sketch.** Suppose both conjuncts hold. Persistence applied to $today\,T\,tomorrow$ and $\Box A(today)$ gives $\Box A(tomorrow)$, contradicting the second conjunct. $\square$
+
+The theorem refutes a “tomorrow but not today” paradox only if the phrase is being used to describe loss: established today, unestablished tomorrow. It does not address the converse order.
+
+### 4.2 Gain of a proof
+
+**Theorem 4.2 (Proof-Gain Satisfiability Theorem).** There exists a temporal proof frame, a predicate $A$, and states $today,tomorrow$ such that
+
+$$
+today\,T\,tomorrow,
+$$
+
+$$
+\neg\Box A(today),
+$$
+
+and
+
+$$
+\Box A(tomorrow).
+$$
+
+**Proof sketch.** Take $W=\{0,1\}$, with $today=0$ and $tomorrow=1$. Let
+
+$$
+T=\{(0,0),(0,1),(1,1)\}
+$$
+
+and
+
+$$
+R=\{(0,1)\}.
+$$
+
+The relation $R$ is transitive because there is no composable pair of $R$-edges. The relation $T$ is reflexive and transitive. Define $A(1)$ to be false; the value at $0$ may be arbitrary. At state $0$, the sole $R$-successor is $1$, where $A$ fails, so $\Box A(0)$ is false. At state $1$, there are no $R$-successors, so $\Box A(1)$ is true by universal vacuity. Thus proof gain is realized. This frame also satisfies persistence: the only nontrivial temporal move is from $0$ to $1$, and the antecedent $\Box A(0)$ fails for the selected predicate; more generally, if a predicate is boxed at $0$, it holds at $1$, while boxing at $1$ is automatic. $\square$
+
+The use of a terminal proof state makes the example especially small. If an intended interpretation rejects vacuous provability at terminal states, one can add a reflexive proof loop at $1$ and set $A(1)$ true, but then transitivity forces an additional edge structure and the frame class must be adjusted if irreflexive provability accessibility is required. The two-state model above is sufficient for the stated relational semantics.
+
+**Corollary 4.3.** No calculus sound for all temporal proof frames of this class can derive the negation of proof gain,
+
+$$
+\neg\bigl(\neg\Box A(today)\wedge\Box A(tomorrow)\bigr),
+$$
+
+when the two times may be interpreted as in Theorem 4.2.
+
+Theorems 4.1 and 4.2 establish the desired asymmetry. Monotone knowledge rules out regression but permits progress.
+
+## 5. Tree diagrams and the leaf obstruction
+
+We now turn to a finite graph result with a parallel structural lesson.
+
+### 5.1 Finite trees
+
+A **finite simple graph** consists of a finite vertex set $V$ and an irreflexive symmetric adjacency relation. The degree $\deg(v)$ of a vertex $v$ is the number of its neighbors. A **tree** is a connected simple graph containing no cycle. We include the one-vertex graph as a tree; its unique vertex has degree $0$.
+
+**Lemma 5.1 (Edge count for trees).** A finite tree with $n$ vertices has exactly $n-1$ edges.
+
+**Proof sketch.** Induct on $n$. The one-vertex tree has no edges. For $n>1$, a standard maximal-path argument supplies a leaf. Removing the leaf and its incident edge leaves a tree on $n-1$ vertices. By induction it has $n-2$ edges, so the original tree has $n-1$. Equivalently, the result follows by induction from connectedness and acyclicity. $\square$
+
+**Lemma 5.2 (Handshaking Lemma).** For every finite simple graph,
+
+$$
+\sum_{v\in V}\deg(v)=2|E|.
+$$
+
+**Proof sketch.** Count incidences $(v,e)$ where vertex $v$ is an endpoint of edge $e$. Summing by vertices gives the left side. Summing by edges gives $2|E|$ because every simple edge has two endpoints. $\square$
+
+**Theorem 5.3 (Tree Degree-Sum Theorem).** If $G$ is a tree on $n$ vertices, then
+
+$$
+\sum_{v\in V}\deg(v)=2(n-1).
+$$
+
+**Proof sketch.** Combine Lemma 5.1, which gives $|E|=n-1$, with Lemma 5.2. $\square$
+
+**Theorem 5.4 (Leaf Existence Theorem).** Every nonempty finite tree has a vertex $v$ with
+
+$$
+\deg(v)\le 1.
+$$
+
+**Proof sketch.** Suppose instead that every vertex had degree at least $2$. Summing would give
+
+$$
+2n\le\sum_v\deg(v).
+$$
+
+By Theorem 5.3 the right side is $2(n-1)$, so $2n\le 2n-2$, a contradiction. $\square$
+
+For a tree with at least two vertices, connectedness excludes degree $0$, so the resulting vertex has degree exactly $1$. The weaker degree-at-most-$1$ formulation uniformly includes the one-vertex case.
+
+### 5.2 Singleton dominance
+
+Consider a simply-laced diagram whose underlying graph is a finite tree with vertex set $I$. Let $\alpha_v$ denote the simple root indexed by $v$, let $\rho$ denote the half-sum of positive roots, and let $\beta_I$ denote the correction associated with the full diagram. For a singleton marked set $\{v\}$, define the corrected weight
+
+$$
+\lambda_{\{v\},I}=2\rho-\beta_I-\alpha_v.
+$$
+
+The representation-theoretic input is the following local criterion.
+
+**Definition 5.5 (Singleton $\rho$-dominance criterion).** In the simply-laced setting considered here, the singleton correction at $v$ is called $\rho$-dominant precisely when
+
+$$
+\deg(v)\ge 2.
+$$
+
+Equivalently,
+
+$$
+\lambda_{\{v\},I}\text{ is $\rho$-dominant}
+\quad\Longleftrightarrow\quad
+\deg(v)\ge 2.
+$$
+
+This criterion translates a weight inequality into a graph-degree condition.
+
+**Theorem 5.6 (Leaf Obstruction Theorem).** Every nonempty simply-laced tree diagram contains a vertex $v$ such that the singleton correction
+
+$$
+\lambda_{\{v\},I}=2\rho-\beta_I-\alpha_v
+$$
+
+is not $\rho$-dominant.
+
+**Proof sketch.** By Theorem 5.4, choose $v$ with $\deg(v)\le 1$. Definition 5.5 says singleton dominance requires $\deg(v)\ge 2$. Therefore the correction at $v$ is not $\rho$-dominant. $\square$
+
+**Corollary 5.7.** In every nonempty tree component, at least one singleton marking is excluded by the dominance condition. More generally, every leaf is excluded.
+
+This obstruction is intrinsic to acyclicity. A cycle can have every vertex of degree $2$ and therefore need not exhibit the same singleton failure. Thus the forest hypothesis is not merely a simplifying convention: it forces low-degree vertices that prune the possible marked data.
+
+## 6. Finite algorithms
+
+### 6.1 Model checking temporal formulas
+
+For a finite frame with $N$ states, store $R$ and $T$ as Boolean adjacency matrices. A valuation of an atom is a Boolean vector of length $N$. The modal operations are computed by
+
+$$
+(\Box A)[w]=\bigwedge_{v:R[w,v]}A[v],
+$$
+
+$$
+(GA)[w]=\bigwedge_{v:T[w,v]}A[v],
+$$
+
+and
+
+$$
+(\Diamond_t A)[w]=\bigvee_{v:T[w,v]}A[v].
+$$
+
+A bottom-up traversal of a formula with $m$ subformulas takes $O(mN^2)$ time with dense matrices and $O(m(N+|R|+|T|))$ time with adjacency lists. Memory use is $O(mN)$ if the value of each subformula is retained at every state.
+
+To test the interaction scheme for one propositional atom on a fixed frame, enumerate all $2^N$ truth vectors $A$ and all states $w$. For each vector, compare $\Box A$ with $\Box\Box\Diamond_t A$. The resulting exhaustive procedure takes $O(2^N N(N+|R|+|T|))$ time in a straightforward adjacency-list implementation. It is exponential because validity quantifies over valuations, but it is practical for small countermodel searches.
+
+Structural assumptions can be checked first. Reflexivity of $T$ takes $O(N)$ adjacency queries. Transitivity of $R$ takes $O(N^3)$ time with a dense triple loop, or can be tested using transitive closure. If both checks succeed, Theorem 3.1 certifies the interaction scheme for all valuations without enumerating them.
+
+### 6.2 Detecting proof gain and proof loss
+
+Given designated states $today$ and $tomorrow$ and a valuation $A$, compute $\Box A$ at both states. The pattern
+
+$$
+\Box A(today)=\mathrm{true},\qquad
+\Box A(tomorrow)=\mathrm{false}
+$$
+
+is proof loss. The reverse pattern is proof gain. A persistence checker can test whether each temporal edge $wTv$ preserves $\Box A$ for every enumerated valuation. At the frame level, one may seek a relational characterization, but direct exhaustive checking is sufficient for small experiments.
+
+### 6.3 Tree and dominance checking
+
+For a graph with $n$ vertices and $m$ edges, depth-first search checks connectedness and acyclicity in $O(n+m)$ time. During the same traversal, one computes all degrees. If the graph is a tree, verify the identity
+
+$$
+\sum_v\deg(v)=2(n-1).
+$$
+
+Scanning the degree array then finds all leaves in $O(n)$ time. Under the singleton criterion, the same list is exactly a list of immediate non-dominance witnesses. The full procedure is linear in the graph size.
+
+## 7. Applications
+
+### 7.1 Growing proof repositories
+
+A versioned theorem repository naturally supplies temporal states. The persistence law expresses an idealized guarantee that accepted results remain available after an update. Proof gain represents newly added lemmas. The distinction can guide regression testing: loss is an anomaly to detect, while gain is expected behavior.
+
+### 7.2 Dependency-aware search
+
+In automated proof search, a state may record the lemmas currently discovered. Temporal edges represent search expansion or database growth. Proof edges represent semantic or deductive accessibility. The interaction theorem warns that some apparently temporal guarantees are consequences of ordinary transitivity plus reflexive time and therefore contribute no new pruning power. More informative axioms must relate genuinely later states to proof structure in a nontrivial way.
+
+### 7.3 Proof mining and provenance
+
+Time stamps can express when a lemma became available, while proof accessibility records where it can be used. Persistence allows provenance queries such as: if a theorem was established at release $t$, is it established at every later release? Proof-gain witnesses identify the first release at which a theorem becomes available. A richer system could add explicit “next” or “strict future” operators, avoiding the reflexive witness that trivializes $A\to\Diamond_t A$.
+
+### 7.4 Diagram classifications
+
+The leaf obstruction reduces a weight-theoretic exclusion to graph preprocessing. Before evaluating more expensive representation-theoretic data, one may compute degrees. Every leaf is immediately known to reject a singleton marking. In large forests this creates a simple linear-time pruning stage.
+
+## 8. Discussion and limitations
+
+The temporal results establish soundness statements, not completeness. To state a completeness theorem, one must first specify a deductive calculus: its axioms, inference rules, and intended frame class. “Temporal provability logic” is not a unique object until those choices are made.
+
+Likewise, decidability does not follow merely from the validity of one interaction scheme. A finite model property with an explicit size bound would support bounded countermodel search, but such a property remains to be proved. Filtration is a plausible route; interaction between the two relations must be shown to survive the quotient construction.
+
+Arithmetic introduces further choices. A time-stamped interpretation requires an increasing sequence of recursively axiomatized theories $(PA_t)$. Different clocks can validate different interaction principles. One might let $PA_t$ be bounded fragments, stages of an enumeration, or iterated extensions. An arithmetical completeness theorem must name the sequence and the modal calculus and prove both soundness and completeness under every arithmetic substitution.
+
+The phrase “provable tomorrow but not today” also requires care about self-reference. The model in Theorem 4.2 treats $A$ as an ordinary predicate and shows that non-self-referential proof gain is satisfiable. A self-referential sentence asserting its own future provability and present unprovability raises additional diagonal and coding issues not settled by that model. The semantic distinction nevertheless blocks a common overstatement: persistence refutes proof loss, not proof gain.
+
+Finally, the tree result depends on the singleton criterion specific to the simply-laced dominance setting. The graph lemmas are universal, but translating low degree into failure of dominance requires that criterion. For diagrams with multiple bonds or modified weights, the threshold may change.
+
+## 9. Future work
+
+A precise research program follows from these boundaries.
+
+1. **Finite-frame completeness.** Define a Hilbert calculus containing ordinary provability logic, temporal $S4$, persistence $\Box A\to G\Box A$, and explicit interaction axioms. Determine whether every formula valid on all finite temporal proof frames is derivable.
+
+2. **Finite model property.** Investigate the conjecture that every non-derivable formula $A$ has a countermodel with at most
+
+   $$
+   2^{2s(A)}
+   $$
+
+   states, where $s(A)$ is its number of subformulas. Filtration and exhaustive bounded search provide a testable route.
+
+3. **Decidability.** If the preceding bound and completeness theorem hold, construct a terminating finite-frame model checker that decides derivability.
+
+4. **Non-refutability of proof gain.** Generalize the two-state countermodel to characterize frame classes in which proof gain remains possible. Any proposed universally sound refutation must fail on the explicit model unless additional assumptions exclude it.
+
+5. **Arithmetic clocks.** Fix an increasing recursively axiomatized sequence $(PA_t)$ and interpret $\Box_t A$ as
+
+   $$
+   \operatorname{Prov}_{PA_t}(\ulcorner A\urcorner).
+   $$
+
+   Then compare the theorems of a specified recursively enumerable modal calculus with formulas valid under all arithmetic substitutions.
+
+6. **Strict future.** Replace reflexive $\Diamond_t$ by a modality quantifying over genuinely later states. The implication $A\to\Diamond_t A$ then fails in general, so the factorization theorem no longer applies automatically. This may isolate genuinely temporal interaction principles.
+
+7. **Forest-wide dominance counts.** Count excluded singleton markings componentwise and investigate stronger lower bounds based on the number of leaves, branching structure, or degree distribution.
+
+## 10. Conclusion
+
+The main temporal interaction formula is valid, but its validity has a simple source: proof transitivity supplies two nested boxes, and temporal reflexivity lets the present witness future possibility. The factorization prevents the formula from serving alone as evidence of a strict temporal extension of ordinary provability logic.
+
+Persistence yields a sharp and useful conclusion: a proof established today cannot disappear at a specified later stage. Yet discovery remains possible. A two-state model realizes a proposition that is not boxed today but is boxed tomorrow. Any adequate temporal account of mathematical growth should preserve this difference between loss and gain.
+
+The tree application provides a complementary structural principle. Since the total degree of a tree is $2(n-1)$, a nonempty tree has a leaf. When singleton dominance requires degree at least $2$, every tree diagram contains a forbidden singleton. In both settings, a local witness—reflexivity at one state or low degree at one vertex—settles a global-looking claim. These results clarify what is established, expose what remains conjectural, and provide concrete finite procedures for the next stage of investigation.

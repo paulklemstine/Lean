@@ -1,331 +1,190 @@
-"""
-Temporal Gödel–Löb Logic (TGL) — numerical / computational demonstrations.
+#!/usr/bin/env python3
+"""Finite demonstrations for temporal provability and tree leaf obstructions.
 
-This self-contained script reproduces, on finite Kripke models, the central
-results of TGL:
-
-  * Box / Glob / Fut operator evaluation                 (Definitions 2.1-2.3)
-  * Validation that a finite frame is a temporal GL frame (Definition 2.4)
-  * Soundness of Löb's axiom  □(□A → A) → □A             (Theorem 3.1)
-  * Soundness of the 4 axiom  □A → □□A                    (Theorem 3.2)
-  * Soundness of the temporal axiom  □A → □□◇A            (Theorem 3.3)
-  * Persistence  □A → G□A                                 (Theorem 4.1)
-  * "Provable today but not tomorrow" is refutable        (Theorem 4.3)
-  * "Provable tomorrow but not today" is satisfiable      (Theorem 4.4)
-  * Löb fails on a reflexive (non-well-founded) frame     (Theorem 7.1)
-  * Future self-certification (algebraic TempProv layer)  (Theorem 6.1)
-
-No external dependencies. Run:  python demo.py
+The script uses only the Python standard library. It exhaustively checks the
+interaction Box A -> Box Box Future A on selected finite frames, displays a
+proof-gain model, and verifies the degree-sum and leaf facts on sample trees.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from itertools import product
-from typing import Callable, Dict, List, Set, Tuple
+from typing import Iterable, Sequence
 
-# A world is just an int label. A relation is a set of ordered pairs.
-World = int
-Relation = Set[Tuple[World, World]]
-# A "predicate" A is a map world -> bool, modelling a formula's truth set.
-Pred = Callable[[World], bool]
+BoolVector = tuple[bool, ...]
+Relation = tuple[tuple[bool, ...], ...]
+Edge = tuple[int, int]
 
 
-# --------------------------------------------------------------------------
-# Modal and temporal operators (shallow semantics, Definitions 2.1-2.3)
-# --------------------------------------------------------------------------
-def box(worlds: List[World], R: Relation, A: Pred) -> Pred:
-    """Box R A:  (□A)(w)  ==  for all v with R w v, A v.  (Definition 2.1)"""
-    return lambda w: all(A(v) for v in worlds if (w, v) in R)
+@dataclass(frozen=True)
+class TemporalFrame:
+    """A finite frame with proof relation r and temporal relation t."""
+
+    r: Relation
+    t: Relation
+
+    def __post_init__(self) -> None:
+        n = len(self.r)
+        if n == 0 or len(self.t) != n:
+            raise ValueError("relations must have the same positive size")
+        if any(len(row) != n for row in self.r + self.t):
+            raise ValueError("relations must be square")
+
+    @property
+    def size(self) -> int:
+        return len(self.r)
 
 
-def glob(worlds: List[World], T: Relation, A: Pred) -> Pred:
-    """Glob T A:  (G A)(w)  ==  for all v with T w v, A v.  (Definition 2.2)"""
-    return lambda w: all(A(v) for v in worlds if (w, v) in T)
+def relation_from_edges(n: int, edges: Iterable[Edge]) -> Relation:
+    """Build an n-by-n Boolean relation from directed edges."""
+    matrix = [[False] * n for _ in range(n)]
+    for source, target in edges:
+        if not (0 <= source < n and 0 <= target < n):
+            raise ValueError("edge endpoint out of range")
+        matrix[source][target] = True
+    return tuple(tuple(row) for row in matrix)
 
 
-def fut(worlds: List[World], T: Relation, A: Pred) -> Pred:
-    """Fut T A:  (◇A)(w)  ==  exists v with T w v and A v.  (Definition 2.3)"""
-    return lambda w: any(A(v) for v in worlds if (w, v) in T)
+def is_reflexive(relation: Relation) -> bool:
+    return all(relation[i][i] for i in range(len(relation)))
 
 
-# --------------------------------------------------------------------------
-# Frame validation (Algorithm B; Definition 2.4)
-# --------------------------------------------------------------------------
-def is_transitive(worlds: List[World], R: Relation) -> bool:
+def is_transitive(relation: Relation) -> bool:
+    n = len(relation)
     return all(
-        (x, z) in R
-        for x in worlds
-        for y in worlds
-        for z in worlds
-        if (x, y) in R and (y, z) in R
+        not (relation[i][j] and relation[j][k]) or relation[i][k]
+        for i in range(n)
+        for j in range(n)
+        for k in range(n)
     )
 
 
-def is_reflexive(worlds: List[World], R: Relation) -> bool:
-    return all((w, w) in R for w in worlds)
-
-
-def is_converse_well_founded(worlds: List[World], R: Relation) -> bool:
-    """Converse well-founded == no infinite ascending R-chain == R is acyclic
-    on a finite frame.  Detect cycles by DFS over the R-graph."""
-    color: Dict[World, int] = {w: 0 for w in worlds}  # 0=white,1=grey,2=black
-
-    def dfs(u: World) -> bool:
-        color[u] = 1
-        for v in worlds:
-            if (u, v) in R:
-                if color[v] == 1:        # back-edge -> cycle
-                    return False
-                if color[v] == 0 and not dfs(v):
-                    return False
-        color[u] = 2
-        return True
-
-    return all(color[w] != 0 or dfs(w) for w in worlds)
-
-
-def satisfies_compat(worlds: List[World], R: Relation, T: Relation) -> bool:
-    """compat:  T w w'  and  R w' v   imply   R w v.  (time-monotonicity)"""
-    return all(
-        (w, v) in R
-        for w in worlds
-        for wp in worlds
-        for v in worlds
-        if (w, wp) in T and (wp, v) in R
+def box(relation: Relation, values: Sequence[bool]) -> BoolVector:
+    """Universal modal image; an empty successor set gives True."""
+    return tuple(
+        all(not relation[w][v] or values[v] for v in range(len(values)))
+        for w in range(len(values))
     )
 
 
-def validate_temp_gl_frame(
-    worlds: List[World], R: Relation, T: Relation
-) -> Dict[str, bool]:
-    """Check all conditions of Definition 2.4 and return a report."""
-    return {
-        "R_transitive": is_transitive(worlds, R),
-        "R_converse_well_founded": is_converse_well_founded(worlds, R),
-        "T_reflexive": is_reflexive(worlds, T),
-        "T_transitive": is_transitive(worlds, T),
-        "compat": satisfies_compat(worlds, R, T),
-    }
+def future(relation: Relation, values: Sequence[bool]) -> BoolVector:
+    """Existential temporal image."""
+    return tuple(
+        any(relation[w][v] and values[v] for v in range(len(values)))
+        for w in range(len(values))
+    )
 
 
-def is_temp_gl_frame(worlds: List[World], R: Relation, T: Relation) -> bool:
-    return all(validate_temp_gl_frame(worlds, R, T).values())
+def interaction_holds(frame: TemporalFrame, values: Sequence[bool]) -> bool:
+    """Check Box A -> Box Box Future A at every state."""
+    boxed = box(frame.r, values)
+    conclusion = box(frame.r, box(frame.r, future(frame.t, values)))
+    return all(not boxed[w] or conclusion[w] for w in range(frame.size))
 
 
-# --------------------------------------------------------------------------
-# Enumerate all predicates on a finite frame (for exhaustive soundness checks)
-# --------------------------------------------------------------------------
-def all_predicates(worlds: List[World]) -> List[Pred]:
-    preds: List[Pred] = []
-    for bits in product([False, True], repeat=len(worlds)):
-        table = dict(zip(worlds, bits))
-        preds.append(lambda w, table=table: table[w])
-    return preds
+def exhaustive_interaction_check(frame: TemporalFrame) -> tuple[bool, BoolVector | None]:
+    """Test every Boolean valuation and return the first counterexample, if any."""
+    for values in product((False, True), repeat=frame.size):
+        if not interaction_holds(frame, values):
+            return False, values
+    return True, None
 
 
-# --------------------------------------------------------------------------
-# Soundness checks (Theorems 3.1, 3.2, 3.3, 4.1)
-# --------------------------------------------------------------------------
-def check_loeb(worlds: List[World], R: Relation) -> bool:
-    """Theorem 3.1: □(□A → A) → □A holds at every world for every predicate."""
-    for A in all_predicates(worlds):
-        bA = box(worlds, R, A)
-        loeb_hyp = box(worlds, R, lambda v, bA=bA, A=A: (not bA(v)) or A(v))
-        if not all((not loeb_hyp(w)) or bA(w) for w in worlds):
-            return False
-    return True
+def proof_status(frame: TemporalFrame, values: Sequence[bool], state: int) -> bool:
+    return box(frame.r, values)[state]
 
 
-def check_four(worlds: List[World], R: Relation) -> bool:
-    """Theorem 3.2: □A → □□A."""
-    for A in all_predicates(worlds):
-        bA = box(worlds, R, A)
-        bbA = box(worlds, R, bA)
-        if not all((not bA(w)) or bbA(w) for w in worlds):
-            return False
-    return True
+def persistence_holds_for_valuation(frame: TemporalFrame, values: Sequence[bool]) -> bool:
+    boxed = box(frame.r, values)
+    return all(
+        not (frame.t[w][v] and boxed[w]) or boxed[v]
+        for w in range(frame.size)
+        for v in range(frame.size)
+    )
 
 
-def check_temporal_axiom(worlds: List[World], R: Relation, T: Relation) -> bool:
-    """Theorem 3.3: □A → □□◇A."""
-    for A in all_predicates(worlds):
-        bA = box(worlds, R, A)
-        fA = fut(worlds, T, A)
-        bbfA = box(worlds, R, box(worlds, R, fA))
-        if not all((not bA(w)) or bbfA(w) for w in worlds):
-            return False
-    return True
+def tree_degrees(n: int, edges: Sequence[Edge]) -> list[int]:
+    """Compute degrees after validating a loop-free undirected edge list."""
+    degrees = [0] * n
+    seen: set[tuple[int, int]] = set()
+    for a, b in edges:
+        if not (0 <= a < n and 0 <= b < n) or a == b:
+            raise ValueError("invalid simple-graph edge")
+        edge = (min(a, b), max(a, b))
+        if edge in seen:
+            raise ValueError("duplicate edge")
+        seen.add(edge)
+        degrees[a] += 1
+        degrees[b] += 1
+    return degrees
 
 
-def check_persistence(worlds: List[World], R: Relation, T: Relation) -> bool:
-    """Theorem 4.1: □A → G□A (and equivalently 4.3 has no counterexample)."""
-    for A in all_predicates(worlds):
-        bA = box(worlds, R, A)
-        gbA = glob(worlds, T, bA)
-        if not all((not bA(w)) or gbA(w) for w in worlds):
-            return False
-    return True
+def is_tree(n: int, edges: Sequence[Edge]) -> bool:
+    """Test the finite tree condition by edge count and graph traversal."""
+    if n < 1 or len(edges) != n - 1:
+        return False
+    adjacency: list[list[int]] = [[] for _ in range(n)]
+    try:
+        tree_degrees(n, edges)
+    except ValueError:
+        return False
+    for a, b in edges:
+        adjacency[a].append(b)
+        adjacency[b].append(a)
+    visited = {0}
+    stack = [0]
+    while stack:
+        vertex = stack.pop()
+        for neighbor in adjacency[vertex]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                stack.append(neighbor)
+    return len(visited) == n
 
 
-def find_today_not_tomorrow(
-    worlds: List[World], R: Relation, T: Relation
-) -> bool:
-    """Theorem 4.3: search for a witness of "provable today, not tomorrow".
-    Returns True iff a witness EXISTS (we expect False on every valid frame)."""
-    for A in all_predicates(worlds):
-        bA = box(worlds, R, A)
-        for w in worlds:
-            for v in worlds:
-                if (w, v) in T and bA(w) and not bA(v):
-                    return True
-    return False
+def leaf_obstruction_witnesses(n: int, edges: Sequence[Edge]) -> list[int]:
+    """Return vertices of degree <= 1, hence singleton non-dominance witnesses."""
+    if not is_tree(n, edges):
+        raise ValueError("the graph must be a nonempty tree")
+    return [v for v, degree in enumerate(tree_degrees(n, edges)) if degree <= 1]
 
 
-def find_tomorrow_not_today(
-    worlds: List[World], R: Relation, T: Relation
-) -> Tuple[bool, str]:
-    """Theorem 4.4: search for a witness of "provable tomorrow, not today"."""
-    for idx, A in enumerate(all_predicates(worlds)):
-        bA = box(worlds, R, A)
-        for w in worlds:
-            for v in worlds:
-                if (w, v) in T and (not bA(w)) and bA(v):
-                    return True, f"predicate #{idx}: ¬□A at {w}, □A at {v}"
-    return False, "no witness"
+def demonstrate_temporal_results() -> None:
+    print("TEMPORAL PROVABILITY")
+    r = relation_from_edges(2, [(0, 1)])
+    t = relation_from_edges(2, [(0, 0), (0, 1), (1, 1)])
+    frame = TemporalFrame(r=r, t=t)
+    valuation = (True, False)
+    boxed = box(frame.r, valuation)
+    valid, counterexample = exhaustive_interaction_check(frame)
+    print(f"R transitive: {is_transitive(r)}; T reflexive: {is_reflexive(t)}")
+    print(f"A truth vector: {valuation}; Box A: {boxed}")
+    print(f"Proof gain from state 0 to 1: {not boxed[0] and boxed[1]}")
+    print(f"Persistence for this valuation: {persistence_holds_for_valuation(frame, valuation)}")
+    print(f"Interaction valid for all {2 ** frame.size} valuations: {valid}")
+    print(f"Counterexample: {counterexample}\n")
 
 
-# --------------------------------------------------------------------------
-# Algebraic layer: future self-certification (Theorem 6.1)
-# --------------------------------------------------------------------------
-def future_self_certification_demo() -> List[Tuple[int, int, bool]]:
-    """A faithful, honest time-stamped provability predicate:
-        prov(t, A)  ==  "A has a proof of length <= t".
-    For each sentence we store the length of its shortest proof (or None).
-    We verify  prov t A  ->  prov s (prov t A)  for t <= s, where the
-    statement "prov t A" is itself a sentence whose shortest proof length we
-    model as t (recording a bounded proof witness has cost ~ t).
-    Returns a table of (t, s, holds)."""
-    shortest_proof_len = 3      # A is first provable at stage 3
-    results: List[Tuple[int, int, bool]] = []
-    for t in range(shortest_proof_len, 7):
-        prov_t_A = t >= shortest_proof_len                 # prov t A
-        for s in range(t, t + 4):                          # t <= s
-            # "prov t A" is Σ₁; once true it is provable, and persists to s.
-            prov_s_provtA = prov_t_A and s >= t            # prov s (prov t A)
-            holds = (not prov_t_A) or prov_s_provtA
-            results.append((t, s, holds))
-    return results
+def demonstrate_tree_results() -> None:
+    print("TREE DEGREE SUM AND LEAF OBSTRUCTION")
+    examples: list[tuple[str, int, list[Edge]]] = [
+        ("single vertex", 1, []),
+        ("path on six vertices", 6, [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)]),
+        ("star on six vertices", 6, [(0, 1), (0, 2), (0, 3), (0, 4), (0, 5)]),
+        ("branched tree", 7, [(0, 1), (1, 2), (1, 3), (3, 4), (3, 5), (5, 6)]),
+    ]
+    for name, n, edges in examples:
+        degrees = tree_degrees(n, edges)
+        leaves = leaf_obstruction_witnesses(n, edges)
+        print(f"{name}: n={n}, degrees={degrees}")
+        print(f"  sum(deg)={sum(degrees)} = 2(n-1)={2 * (n - 1)}")
+        print(f"  degree <= 1 vertices / singleton obstructions: {leaves}")
 
 
-# --------------------------------------------------------------------------
-# Concrete frames
-# --------------------------------------------------------------------------
-def gl_chain(n: int) -> Tuple[List[World], Relation, Relation]:
-    """A transitive, acyclic (converse-well-founded) descending chain
-    0 R 1 R 2 ... with T the diagonal-plus-forward reflexive order.
-    Worlds double as both proof-stages and time-stages here."""
-    worlds = list(range(n))
-    R: Relation = {(i, j) for i in worlds for j in worlds if i < j}
-    T: Relation = {(i, j) for i in worlds for j in worlds if i <= j}
-    return worlds, R, T
-
-
-def tomorrow_not_today_frame() -> Tuple[List[World], Relation, Relation, Pred]:
-    """Explicit two-world witness for Theorem 4.4.
-    Worlds: 0 = "today", 1 = "tomorrow".
-    Time:   0 T 1 (and reflexive).
-    Proof:  today (0) has a successor 2 (a 'counterexample stage') falsifying A;
-            tomorrow (1) has shed that successor (compat lets successors shrink
-            toward the future), so □A holds at 1 but not at 0.
-    """
-    worlds = [0, 1, 2]
-    # R: today sees the bad stage 2; tomorrow sees nothing live.
-    R: Relation = {(0, 2)}
-    # T: reflexive on {0,1,2}, plus 0 -> 1 (today precedes tomorrow).
-    T: Relation = {(w, w) for w in worlds} | {(0, 1)}
-    A: Pred = lambda w: w != 2          # A holds everywhere except the bad stage
-    return worlds, R, T, A
-
-
-def reflexive_frame() -> Tuple[List[World], Relation, Relation]:
-    """One reflexive world: NOT converse well-founded (Theorem 7.1)."""
-    worlds = [0]
-    R: Relation = {(0, 0)}
-    T: Relation = {(0, 0)}
-    return worlds, R, T
-
-
-# --------------------------------------------------------------------------
-# Driver
-# --------------------------------------------------------------------------
 def main() -> None:
-    print("=" * 70)
-    print("Temporal Gödel–Löb Logic (TGL) — computational demonstrations")
-    print("=" * 70)
-
-    # ---- 1. A genuine temporal GL frame: the descending chain -------------
-    worlds, R, T = gl_chain(4)
-    print("\n[1] Frame validation on a 4-world GL chain (Definition 2.4)")
-    for k, v in validate_temp_gl_frame(worlds, R, T).items():
-        print(f"      {k:28s}: {v}")
-    assert is_temp_gl_frame(worlds, R, T)
-
-    # ---- 2. Soundness of the axioms (exhaustive over all predicates) ------
-    print("\n[2] Axiom soundness, checked over ALL 2^|W| predicates:")
-    print(f"      Löb   □(□A→A)→□A   (Thm 3.1): {check_loeb(worlds, R)}")
-    print(f"      4     □A→□□A       (Thm 3.2): {check_four(worlds, R)}")
-    print(f"      TGL   □A→□□◇A      (Thm 3.3): "
-          f"{check_temporal_axiom(worlds, R, T)}")
-    print(f"      Pers. □A→G□A       (Thm 4.1): "
-          f"{check_persistence(worlds, R, T)}")
-    assert check_loeb(worlds, R)
-    assert check_four(worlds, R)
-    assert check_temporal_axiom(worlds, R, T)
-    assert check_persistence(worlds, R, T)
-
-    # ---- 3. The temporal paradoxes ----------------------------------------
-    print("\n[3] The two temporal paradoxes:")
-    tnt = find_today_not_tomorrow(worlds, R, T)
-    print(f"      'provable today but not tomorrow' witness found? {tnt}")
-    print("        -> Theorem 4.3: REFUTABLE (no witness exists). OK" 
-          if not tnt else "        -> UNEXPECTED")
-    assert not tnt
-
-    w2, R2, T2, A2 = tomorrow_not_today_frame()
-    print("\n      explicit 'tomorrow-not-today' frame (Thm 4.4):")
-    for k, v in validate_temp_gl_frame(w2, R2, T2).items():
-        print(f"        {k:28s}: {v}")
-    bA2 = box(w2, R2, A2)
-    print(f"        □A at world 0 (today)   : {bA2(0)}   (expected False)")
-    print(f"        □A at world 1 (tomorrow): {bA2(1)}   (expected True)")
-    assert is_temp_gl_frame(w2, R2, T2)
-    assert (not bA2(0)) and bA2(1)
-    print("        -> Theorem 4.4: SATISFIABLE. OK")
-
-    # ---- 4. Löb fails without well-foundedness ----------------------------
-    print("\n[4] Boundary case: one reflexive world (Theorem 7.1)")
-    wr, Rr, Tr = reflexive_frame()
-    print(f"      converse well-founded? "
-          f"{is_converse_well_founded(wr, Rr)}  (expected False)")
-    print(f"      Löb sound here?        "
-          f"{check_loeb(wr, Rr)}  (expected False)")
-    assert not is_converse_well_founded(wr, Rr)
-    assert not check_loeb(wr, Rr)
-    print("      -> Löb's axiom FAILS once well-foundedness is dropped. OK")
-
-    # ---- 5. Future self-certification -------------------------------------
-    print("\n[5] Future self-certification  prov t A → prov s (prov t A)"
-          "  (Thm 6.1)")
-    table = future_self_certification_demo()
-    print("      t   s   holds")
-    for (t, s, holds) in table[:8]:
-        print(f"      {t}   {s}   {holds}")
-    assert all(holds for (_, _, holds) in table)
-    print("      -> holds for every t <= s. OK")
-
-    print("\n" + "=" * 70)
-    print("All TGL demonstrations passed.")
-    print("=" * 70)
+    demonstrate_temporal_results()
+    demonstrate_tree_results()
 
 
 if __name__ == "__main__":
