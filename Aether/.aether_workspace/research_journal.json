@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2ae125a9",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,…`, determine an exact union-of-intervals description of the sums formed from the first `n",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-25T15:47:33",
-      "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
-    },
-    {
       "cycle_id": "5fcde7e0",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe completed `Catalog/EML/DifferentialClosure.lean` develops a syntax of rational exponential–logarithmic expressions and proves its main algebraic closure chain. The next useful",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-08-02T23:21:00",
       "title": "Temporal Logic of Proofs: When You Prove Something Matters"
+    },
+    {
+      "cycle_id": "5c8fc610",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n1. **Diatonic-state quotient conjecture.** Extend each canonical state by a scale degree in `Fin 7`, use the C-major step pattern, and quotient generated reachability by mutual re",
+      "quality_score": 0.67235,
+      "sorry_count": 1,
+      "theorem_count": 3,
+      "timestamp": "2026-08-02T23:22:25",
+      "title": "Sonic Mathematics: Counterpoint as Category Theory"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.76837
     }
   ],
-  "last_updated": "2026-08-02T23:21:00",
+  "last_updated": "2026-08-02T23:22:25",
   "open_questions": [
-    {
-      "context": "-  sorry; -  sorry; -  sorry",
-      "cycle_id": "c930e14b",
-      "domain": "Algebra",
-      "sorry_count": 13,
-      "timestamp": "2026-07-20T00:41:04"
-    },
     {
       "context": "-  sorry; -  sorry; -  sorry",
       "cycle_id": "0cd9c194",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-08-02T23:21:00"
+    },
+    {
+      "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
+      "cycle_id": "5c8fc610",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-08-02T23:22:25"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "04022a5b",
-        "quality": 0.686,
-        "theorems": 29,
-        "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-      },
-      {
         "cycle_id": "9cde2d61",
         "quality": 0.686,
         "theorems": 34,
@@ -3637,6 +3631,12 @@
         "quality": 0.68012,
         "theorems": 3,
         "title": "Temporal Logic of Proofs: When You Prove Something Matters"
+      },
+      {
+        "cycle_id": "5c8fc610",
+        "quality": 0.67235,
+        "theorems": 3,
+        "title": "Sonic Mathematics: Counterpoint as Category Theory"
       }
     ],
     "NumberTheory": [
