@@ -1,282 +1,421 @@
-# Sonic Mathematics: Counterpoint as Category Theory
+# Sonic Mathematics: Local Counterpoint Rules and Their Generated Thin Category
 
-## The Voice-Leading Quiver of First-Species Counterpoint and Its Structural Invariants
+**Aristotle**  
+**2 August 2026**
 
----
+## Abstract
 
-**Abstract.** We formalize the rules of first-species counterpoint (following Fux's *Gradus ad Parnassum*) as a directed graph — the *Counterpoint Quiver* — whose vertices are consonant intervals modulo 12 semitones and whose edges are voice leadings permitted by the parallel-motion prohibition. We introduce a parameterized algebraic structure, the *Counterpoint System* over ℤₙ, which generalizes the classical 12-TET constraints to arbitrary equal temperaments. Within this framework, we prove five main results: (1) the quiver is strongly connected; (2) permitted voice leadings are not closed under composition, hence do not form a subcategory of the free category on the quiver; (3) perfect consonances admit exactly 1 self-loop versus 12 for imperfect consonances; (4) the consonance set is not preserved under the voice-exchange involution *i* ↦ −*i*; and (5) perfect consonances admit exactly 61 incoming voice leadings versus 72 for imperfect consonances. These results formalize the structural asymmetry between perfect and imperfect consonances, quantify the compositional bottleneck imposed by the parallel-fifths prohibition, and establish that the voice-leading graph, while connected, lacks the algebraic closure required for categorical composition.
+We study a precise categorical model of two-voice, first-species counterpoint. A dyad is an ordered pair of integer pitches, and its vertical interval is the upper pitch minus the lower pitch. The allowed simple consonances are the absolute semitone distances $0,3,4,7,8,9,12$; the perfect consonances are $0,7,12$. A one-step motion is permitted when both endpoint dyads are consonant, each voice moves by at most two semitones, and similar motion does not connect two perfect consonances. We prove that every consonant dyad admits a stationary permitted motion, but that the permitted-motion relation is not transitive. An explicit chain of parallel minor thirds gives two legal steps whose composite displacement is not stepwise. Therefore raw one-step motions cannot be exactly the morphisms of a thin category or the comparisons of a preorder.
 
-**Keywords:** mathematical music theory, counterpoint, category theory, directed graphs, voice leading, modular arithmetic, consonance, ZMod
-
-**MSC 2020:** 00A65 (Mathematics and music), 05C20 (Directed graphs), 18B35 (Preorders, orders, and lattices viewed as categories)
-
----
+We repair this failure by passing to finite-path reachability. The reflexive-transitive closure of permitted motion is a preorder and hence defines a thin category whose morphisms record the existence of legal motion paths. We then restrict to seven canonical interval representatives with stationary bass. Their semitone realizations are injective, so the model has exactly seven objects rather than twelve, and exhaustive analysis gives exactly fifteen directed one-step motions, including identities. The minor and major thirds are mutually connected, as are the perfect fifth and both sixths, showing that generated reachability is generally a preorder rather than a partial order until mutual reachability is quotiented. We give enumeration and closure algorithms, discuss their complexity, and identify the additional musical structure required for a meaningful twelve-state conjecture.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Counterpoint organizes simultaneous melodic lines through local constraints and global musical goals. In first species, one note is placed against one note, making the relationship between adjacent dyads particularly transparent. This setting invites a graph-theoretic description: consonant sonorities are vertices and permitted transitions are directed edges. It also invites a categorical description: sonorities are objects, voice leadings are morphisms, and concatenation is composition.
 
-The rules of species counterpoint, codified by Fux (1725) and refined by subsequent theorists, constitute one of the oldest formal systems in Western intellectual history. Despite three centuries of pedagogical use, these rules have resisted systematic mathematical formalization. While Mazzola (2002) introduced topos-theoretic methods and Tymoczko (2011) developed geometric models of voice leading, neither framework yields decidable, computationally verifiable characterizations of the voice-leading constraint structure.
+The second description is stronger than the first. A directed graph places no requirement on two consecutive edges. A category requires their composite to exist. If morphisms are declared to be precisely legal single-step motions, the local relation must therefore be reflexive and transitive in the thin case. Reflexivity is musically natural, since a stationary consonance violates neither step-size nor parallel-motion restrictions. Transitivity is not natural: two small steps can accumulate into a leap that is too large to count as one step.
 
-We address this gap by modeling first-species counterpoint as a finite directed graph — the *Counterpoint Quiver* — and proving structural theorems about its connectivity, composability, and symmetry properties. Our approach is elementary (relying only on modular arithmetic and finite combinatorics) but yields precise quantitative results that have not previously appeared in the literature.
+This paper makes that distinction explicit. It addresses the conjectural idea that first-species counterpoint over a diatonic scale should be equivalent to a thin category generated by a poset of twelve elements. For the precise pitch-class-independent encoding studied here, the direct claim separates into two questions:
 
-### 1.2 Overview of Results
+1. Do legal one-step motions already form the comparison relation of a preorder?
+2. How many interval objects does the chosen state space actually contain?
 
-We establish five main theorems about the standard 12-TET counterpoint quiver:
+The answer to the first is no. The answer to the second is seven, not twelve. These negative conclusions do not defeat the categorical program. They identify the correct categorical construction: take the free finite-path reachability relation generated by local motions. They also show that any twelve-state statement must enrich the state beyond the seven standard simple consonance names.
 
-1. **Strong Connectivity** (Theorem 3.1): Between any two consonant intervals, at least one permitted voice leading exists.
+The main results are as follows.
 
-2. **Non-Composability** (Theorem 4.1): The set of permitted one-step voice leadings is not closed under composition. Hence the permitted voice leadings do not form a subcategory of the free category generated by the quiver.
+- Stationary motion is permitted at every consonant dyad.
+- Permitted one-step motion is not transitive.
+- No preorder on all dyads can have exactly the permitted one-step motions as its comparison relation.
+- Finite-path reachability is a preorder and determines a thin category.
+- The standard simple-consonance state type has exactly seven distinct semitone realizations and is therefore not a twelve-element set.
+- The canonical seven-object motion table contains exactly fifteen directed legal motions, including the seven identities.
+- Minor third and major third are connected in both directions, so the generated relation need not be antisymmetric.
 
-3. **Perfect Consonance Bottleneck** (Theorem 5.1–5.2): A perfect consonance admits exactly 1 self-loop (the identity voice leading), while an imperfect consonance admits 12 self-loops (all voice leadings of the form (*b*, *b*)).
+## 2. Musical and mathematical preliminaries
 
-4. **Voice-Swap Asymmetry** (Theorem 6.1): The involution *i* ↦ −*i* on ℤ₁₂ does not preserve the set of consonant intervals.
+### 2.1. Pitches, dyads, and intervals
 
-5. **Hom-Set Cardinalities** (Theorem 7.1–7.2): Summing over all consonant sources, a perfect consonance target admits exactly 61 incoming permitted voice leadings, while an imperfect consonance target admits 72.
+Pitches are represented by integers measured in semitones. Absolute pitch origin is irrelevant to the local definitions, but retaining integer pitches allows register and motion direction to be expressed. A **dyad** is an ordered pair
 
-### 1.3 Related Work
+$$
+x=(x_0,x_1)\in\mathbb Z^2,
+$$
 
-Mazzola's *The Topos of Music* (2002) formulates counterpoint in terms of strong dichotomies and symmetry groups acting on ℤ₁₂, focusing on the classification of consonance/dissonance pairs. Tymoczko's *A Geometry of Music* (2011) models voice-leading spaces as quotients of ℝⁿ by the symmetric group, emphasizing continuous geometric structure. Our approach is complementary: we work in the discrete setting of ℤ₁₂, focus on the *directed graph* structure of permitted transitions rather than the underlying voice-leading space, and obtain exact combinatorial invariants.
+where $x_0$ is the lower-voice coordinate and $x_1$ is the upper-voice coordinate. The adjective “lower” names the voice rather than imposing $x_0\le x_1$; the definitions use the directed interval and remain meaningful under crossing.
 
-The closest precedent is Agmon's (1997) formalization of Fux's rules in terms of interval functions, though Agmon does not adopt the quiver/category-theoretic perspective or prove composability results.
+**Definition 2.1 (Vertical interval).** The directed vertical interval of $x$ is
 
----
+$$
+\nu(x)=x_1-x_0.
+$$
 
-## 2. Definitions
+The model judges consonance by absolute semitone size. Let
 
-### 2.1 The Counterpoint System
+$$
+C=\{0,3,4,7,8,9,12\}
+$$
 
-**Definition 2.1 (Counterpoint System).** Let *n* ≥ 1 be a positive integer. A *Counterpoint System* over ℤₙ is a triple (*C*, *P*, ρ) where:
+and
 
-- *C* ⊆ ℤₙ is a nonempty finite set of *consonant intervals*;
-- *P* ⊆ *C* is a nonempty subset of *perfect consonances*;
-- *C* \ *P* ≠ ∅ (there exists at least one imperfect consonance);
-- ρ is the *parallel-motion prohibition rule*: a voice leading into an element of *P* by parallel motion is forbidden.
+$$
+P=\{0,7,12\}.
+$$
 
-This definition abstracts the essential structure shared by all counterpoint-like constraint systems. It generalizes beyond 12-TET to any *n*-tone equal temperament, and the structural theorems of Sections 3–7 can be investigated for each value of *n*.
+**Definition 2.2 (Consonance and perfection).** A directed interval $k\in\mathbb Z$ is consonant when $|k|\in C$. It is perfect when $|k|\in P$.
 
-**Definition 2.2 (Voice Leading).** A *voice leading* in ℤₙ is a pair *v* = (*b*, *s*) ∈ ℤₙ × ℤₙ, where *b* is the bass motion and *s* is the soprano motion, both measured in pitch classes modulo *n*. The set of all voice leadings is ℤₙ × ℤₙ, which has cardinality *n*².
+Thus the simple consonances are unison, minor third, major third, perfect fifth, minor sixth, major sixth, and octave. Unison, fifth, and octave are perfect; thirds and sixths are imperfect. The model is chromatic in its pitch coordinates but selects the conventional simple consonance sizes. Diatonic spelling is not represented, so enharmonically equal semitone spans are not distinguished.
 
-**Definition 2.3 (Target Interval).** Given a source interval *i* ∈ ℤₙ and a voice leading *v* = (*b*, *s*), the *target interval* is:
+### 2.2. Local melodic motion
 
-$$\tau(i, v) = i + s - b \pmod{n}$$
+**Definition 2.3 (Stepwise motion).** A motion from $x$ to $y$ is stepwise when
 
-This follows from the observation that if two voices are separated by interval *i*, and the bass moves by *b* while the soprano moves by *s*, the new separation is *i* + *s* − *b*.
+$$
+|y_0-x_0|\le 2
+\quad\text{and}\quad
+|y_1-x_1|\le 2.
+$$
 
-**Definition 2.4 (Parallel Motion).** A voice leading *v* = (*b*, *s*) exhibits *parallel motion* if *b* = *s* and *b* ≠ 0.
+This permits stationary voices, semitone motion, and whole-tone motion.
 
-Note that the identity voice leading (0, 0) is *not* considered parallel motion, even though both voices move by the same amount (zero). This reflects the musical convention that holding a perfect consonance is permitted; it is only *motion* into one that is restricted.
+**Definition 2.4 (Similar motion).** The motion from $x$ to $y$ is similar when both voices move strictly in the same direction, meaning either
 
-**Definition 2.5 (Permitted Voice Leading).** In a Counterpoint System (*C*, *P*, ρ), a voice leading *v* from source *i* to target *j* is *permitted* if:
+$$
+x_0<y_0\ \text{and}\ x_1<y_1,
+$$
 
-1. *i* ∈ *C* (source is consonant);
-2. *j* ∈ *C* (target is consonant);
-3. τ(*i*, *v*) = *j* (the arithmetic is correct);
-4. ¬(*j* ∈ *P* ∧ *v* is parallel) (the parallel-motion prohibition is not violated).
+or
 
-### 2.2 The Standard 12-TET System
+$$
+y_0<x_0\ \text{and}\ y_1<x_1.
+$$
 
-**Definition 2.6 (Standard 12-TET Counterpoint System).** The *standard system* is the Counterpoint System over ℤ₁₂ with:
+Oblique motion, in which one voice is stationary, is not similar under this definition.
 
-- *C* = {0, 3, 4, 7, 8, 9} (unison, minor third, major third, perfect fifth, minor sixth, major sixth);
-- *P* = {0, 7} (unison/octave and perfect fifth).
+**Definition 2.5 (Permitted one-step motion).** A motion from $x$ to $y$ is permitted, written $M(x,y)$, when:
 
-These are the six consonant intervals and two perfect consonances of traditional first-species counterpoint. The remaining consonances {3, 4, 8, 9} are *imperfect*.
+1. $\nu(x)$ is consonant;
+2. $\nu(y)$ is consonant;
+3. the motion from $x$ to $y$ is stepwise; and
+4. it is not the case that both $\nu(x)$ and $\nu(y)$ are perfect while the voices move similarly.
 
-### 2.3 The Counterpoint Quiver
+Equivalently,
 
-**Definition 2.7 (Counterpoint Quiver).** The *Counterpoint Quiver* Q = (V, E) is the directed multigraph with:
+$$
+M(x,y)\iff
+\bigl(|\nu(x)|\in C\bigr)
+\land\bigl(|\nu(y)|\in C\bigr)
+\land |y_0-x_0|\le2
+\land |y_1-x_1|\le2
+$$
 
-- *V* = *C* (the consonant intervals);
-- For each *i*, *j* ∈ *C*, the edge set *E*(*i*, *j*) consists of all permitted voice leadings from *i* to *j*.
+$$
+\land\neg\Bigl(|\nu(x)|\in P
+\land |\nu(y)|\in P
+\land \operatorname{Similar}(x,y)\Bigr).
+$$
 
-This is a *quiver* in the sense of category theory: a directed graph that may have multiple edges between the same pair of vertices. The free category generated by Q has objects *C* and morphisms given by finite paths in Q.
+This is a deliberately explicit local model. It captures consonant endpoints, bounded melodic motion, and a ban on similar motion between perfect consonances. It does not encode duration, dissonance treatment, scale-degree spelling, a fixed cantus firmus, melodic climax, or opening and closing formulas. Conclusions below apply to this stated model.
 
-### 2.4 Composition of Voice Leadings
+### 2.3. Thin categories and preorders
 
-**Definition 2.8 (Composition).** Given voice leadings *v*₁ = (*b*₁, *s*₁) and *v*₂ = (*b*₂, *s*₂), their *composition* is *v*₂ ∘ *v*₁ = (*b*₁ + *b*₂, *s*₁ + *s*₂), corresponding to performing *v*₁ followed by *v*₂.
+A category is **thin** when there is at most one morphism from any object $x$ to any object $y$. Every preorder $(X,\preceq)$ defines a thin category: its objects are elements of $X$, and a unique morphism $x\to y$ exists exactly when $x\preceq y$. Reflexivity supplies identity morphisms, while transitivity supplies composition. Conversely, the existence relation of morphisms in any thin category is a preorder.
 
----
+A partial order additionally requires antisymmetry:
 
-## 3. Strong Connectivity
+$$
+x\preceq y\ \land\ y\preceq x\implies x=y.
+$$
 
-**Theorem 3.1 (Strong Connectivity).** *For any consonant intervals i, j ∈ C in the standard 12-TET system, there exists a permitted voice leading from i to j.*
+A preorder can be converted into a partial order by quotienting $X$ by mutual comparability, with
 
-*Proof sketch.* We construct an explicit voice leading for each case. The *canonical voice leading* from *i* to *j* is defined as *v*(*i*, *j*) = (0, *j* − *i*) — the bass holds while the soprano adjusts.
+$$
+x\sim y\iff x\preceq y\land y\preceq x.
+$$
 
-**Claim.** τ(*i*, *v*(*i*, *j*)) = *j* for all *i*, *j* ∈ ℤₙ.
+These distinctions are essential. A directed local transition graph is not automatically a category; a reachability relation is automatically a preorder; and a preorder is not automatically a poset.
 
-*Proof.* τ(*i*, (0, *j* − *i*)) = *i* + (*j* − *i*) − 0 = *j*. □
+## 3. The local obstruction to categorical composition
 
-**Claim.** If *i* ≠ *j*, then *v*(*i*, *j*) is not parallel.
+### 3.1. Identities exist locally
 
-*Proof.* The bass component is 0. For *v* to be parallel, we need *b* = *s* and *b* ≠ 0. Since *b* = 0, either *s* = 0 (hence *i* = *j*, contradiction) or *b* ≠ *s*. In either case, *v* is not parallel. □
+**Theorem 3.1 (Stationary-motion theorem).** If $x$ is a consonant dyad, then $M(x,x)$.
 
-For *i* = *j*, the identity voice leading (0, 0) is always permitted (it is not parallel since *b* = 0). Combining these two cases covers all pairs (*i*, *j*) ∈ *C* × *C*. □
+**Proof sketch.** Both endpoints are the same consonant dyad. Each voice moves by $0$, which is at most $2$. Similar motion requires strict movement of both voices in one direction, so a stationary motion is not similar. The forbidden conjunction is therefore false, even if the dyad is perfect. Hence the motion is permitted. $\square$
 
-**Corollary 3.2.** *The counterpoint quiver is strongly connected as a directed graph (forgetting multiplicities).*
+The theorem gives each consonant state a local identity candidate. The failure of category structure, if any, must concern composition.
 
-**Remark 3.3.** Strong connectivity means the composer is never "trapped" — from any consonant interval, every other consonant interval is reachable in a single step. This is a musically important property: it ensures that counterpoint constraints do not create harmonic dead ends.
+### 3.2. Two legal steps need not be one legal step
 
----
+**Theorem 3.2 (Nontransitivity of permitted motion).** The relation $M$ is not transitive. More precisely, there exist dyads $x,y,z$ such that $M(x,y)$ and $M(y,z)$ hold while $M(x,z)$ fails.
 
-## 4. Non-Composability
+**Proof sketch.** Set
 
-**Theorem 4.1 (Non-Composability).** *The set of permitted voice leadings in the standard 12-TET system is not closed under composition. That is, there exist consonant intervals i, j, k and permitted voice leadings v₁ : i → j and v₂ : j → k such that v₂ ∘ v₁ is not a permitted voice leading from i to k.*
+$$
+x=(0,3),\qquad y=(2,5),\qquad z=(4,7).
+$$
 
-*Proof sketch.* Consider the perfect fifth *j* = 7 ∈ *P*. The voice leading *v*₁ = (1, 1) from *i* = 7 to itself is forbidden (parallel motion into a perfect consonance). However, we can decompose this forbidden motion as a composition of two permitted steps via an imperfect consonance: first move from 7 to an imperfect consonance (say 3), then from 3 back to 7, where the composed motion equals (1, 1).
+Each dyad has vertical interval $3$, a minor third, so every endpoint is consonant and imperfect. From $x$ to $y$, each voice rises by $2$ semitones. From $y$ to $z$, each voice again rises by $2$ semitones. Both motions are stepwise. Although they are similar, the endpoints are not perfect consonances, so the final prohibition does not apply. Thus $M(x,y)$ and $M(y,z)$.
 
-More precisely, one constructs voice leadings *v*₁ : *i* → *j* and *v*₂ : *j* → *k* where:
-- *v*₁ is permitted (it targets an imperfect consonance, so no parallel-motion restriction applies, or it targets a perfect consonance by non-parallel motion);
-- *v*₂ is permitted (same reasoning);
-- *v*₂ ∘ *v*₁ = (*b*₁ + *b*₂, *s*₁ + *s*₂) is parallel (*b*₁ + *b*₂ = *s*₁ + *s*₂ ≠ 0) and targets a perfect consonance *k* ∈ *P*.
+From $x$ directly to $z$, however, each voice rises by $4$ semitones. The motion is not stepwise, so $M(x,z)$ fails. $\square$
 
-Such triples exist and can be found by exhaustive enumeration over the finite graph. □
+The example isolates the issue: bounded displacement is not transitive. If every local bound is $2$, then a two-edge path can have net displacement $4$.
 
-**Corollary 4.2.** *The permitted voice leadings do not form a subcategory of the free category on the counterpoint quiver. Equivalently, there is no faithful functor from a category to the quiver that restricts to exactly the permitted edges.*
+**Corollary 3.3 (No exact local preorder).** There is no preorder $\preceq$ on the set of dyads satisfying
 
-**Remark 4.3.** This is a significant negative result for the categorical formalization of counterpoint. The original conjecture — that first-species counterpoint forms a category equivalent to a thin category on a 12-element poset — is *false*. The counterpoint rules define a quiver with rich edge structure, but the permitted edges fail the most basic categorical axiom: closure under composition. This means counterpoint constraints are *inherently local*: each voice leading must be judged in isolation, and the validity of a sequence cannot be reduced to the validity of its parts.
+$$
+x\preceq y\iff M(x,y)
+$$
 
----
+for all dyads $x,y$.
 
-## 5. The Perfect Consonance Bottleneck
+**Proof sketch.** If such a preorder existed, Theorem 3.2 would give $x\preceq y$ and $y\preceq z$. Transitivity would imply $x\preceq z$, hence $M(x,z)$, contradicting the same theorem. $\square$
 
-**Theorem 5.1 (Perfect Self-Loop Uniqueness).** *Let j ∈ P be a perfect consonance. Then the only permitted self-loop at j is the identity voice leading (0, 0).*
+**Corollary 3.4 (No exact thin category of one-step motions).** There is no thin category on the dyads whose morphism-existence relation is exactly $M$.
 
-*Proof sketch.* A self-loop at *j* is a voice leading *v* = (*b*, *s*) with τ(*j*, *v*) = *j*, i.e., *s* = *b*. If *b* ≠ 0, then *v* is parallel and targets *j* ∈ *P*, hence is forbidden. The only remaining option is *b* = *s* = 0. □
+**Proof sketch.** Morphism existence in a thin category is transitive under composition, whereas $M$ is not. $\square$
 
-**Theorem 5.2 (Imperfect Self-Loops).** *Let j ∈ C \ P be an imperfect consonance. Then j admits exactly 12 permitted self-loops: the voice leadings (b, b) for each b ∈ ℤ₁₂.*
+These results refute only the identification of morphisms with immediate legal moves. They do not refute a category generated by those moves.
 
-*Proof sketch.* A self-loop at *j* requires *s* = *b*. Every such voice leading has *b* = *s*, but since *j* ∉ *P*, the parallel-motion prohibition does not apply regardless of whether *b* = 0 or *b* ≠ 0. All 12 voice leadings of the form (*b*, *b*) are permitted. □
+## 4. The generated counterpoint category
 
-**Corollary 5.3 (Bottleneck Ratio).** *The ratio of self-loops at a perfect consonance to self-loops at an imperfect consonance is 1:12.*
+### 4.1. Finite-path reachability
 
-This 12:1 asymmetry is the categorical manifestation of why parallel fifths and octaves are forbidden. At an imperfect consonance, both voices can move freely in parallel — sliding the interval up or down the keyboard without constraint. At a perfect consonance, only stasis is permitted. This creates a dramatic qualitative difference in the "mobility" available at perfect versus imperfect consonances.
+**Definition 4.1 (Generated reachability).** A dyad $y$ is reachable from a dyad $x$, written $x\leadsto y$, when there exist an integer $r\ge0$ and dyads
 
----
+$$
+x=x^{(0)},x^{(1)},\ldots,x^{(r)}=y
+$$
 
-## 6. Voice-Swap Asymmetry
+such that
 
-**Theorem 6.1 (Voice-Swap Breaks Consonance).** *The involution σ : ℤ₁₂ → ℤ₁₂ defined by σ(i) = −i does not preserve the consonance set C = {0, 3, 4, 7, 8, 9}. Specifically, σ(7) = 5 ∉ C.*
+$$
+M\bigl(x^{(i)},x^{(i+1)}\bigr)
+$$
 
-*Proof sketch.* In ℤ₁₂, −7 = 5. The value 5 (the perfect fourth) is not an element of *C*. □
+for every $0\le i<r$. The case $r=0$ is the empty path.
 
-**Remark 6.2.** This theorem formalizes a long-debated point in music theory: the asymmetric status of the perfect fourth. When the perfect fifth (7 semitones above the bass) is inverted — placing the lower note on top — it becomes a perfect fourth (5 semitones). But the perfect fourth against the bass is treated as a *dissonance* in first-species counterpoint, even though it is the same frequency ratio (4:3 vs. 3:2) heard in the opposite register.
+This is the reflexive-transitive closure of $M$.
 
-The mathematical explanation is that the consonance set is not closed under the negation involution in ℤ₁₂. The bass voice occupies a structurally privileged position, and voice exchange is not a symmetry of the system.
+**Theorem 4.2 (Reachability preorder).** The relation $\leadsto$ is reflexive and transitive.
 
-**Remark 6.3.** We can verify the full image: σ(0) = 0 ∈ *C*, σ(3) = 9 ∈ *C*, σ(4) = 8 ∈ *C*, σ(7) = 5 ∉ *C*, σ(8) = 4 ∈ *C*, σ(9) = 3 ∈ *C*. The involution preserves five of the six consonances; only the perfect fifth is disrupted.
+**Proof sketch.** Reflexivity follows from the empty path at $x$. For transitivity, concatenate a finite permitted path from $x$ to $y$ with one from $y$ to $z$, identifying the repeated endpoint $y$. Every adjacent pair in the concatenated sequence remains permitted, so $x\leadsto z$. $\square$
 
----
+**Definition 4.3 (Generated thin category).** The generated counterpoint category has dyads as objects. A morphism from $x$ to $y$ exists exactly when $x\leadsto y$. Because the category is thin, all paths with the same endpoints determine the same morphism.
 
-## 7. Hom-Set Cardinalities
+**Theorem 4.4 (Thinness and exact path semantics).** Between any fixed dyads $x$ and $y$, the generated counterpoint category has at most one morphism. It has a morphism precisely when a finite path of permitted motions connects $x$ to $y$.
 
-**Theorem 7.1 (Incoming Voice Leadings to Perfect Consonances).** *For each perfect consonance j ∈ P, the total number of permitted voice leadings from all consonant sources to j is 61:*
+**Proof sketch.** The existence statement is the definition. Reflexivity and transitivity from Theorem 4.2 provide identities and composition. Declaring at most one arrow for each reachable ordered pair makes every hom-set empty or a singleton. $\square$
 
-$$\sum_{i \in C} |E(i, j)| = 61 \quad \text{for each } j \in P$$
+Every direct permitted motion is a path of length one, hence gives a morphism. The converse need not hold: Theorem 3.2 gives a morphism from $x$ to $z$ represented by a two-step path even though the direct one-step motion is prohibited.
 
-**Theorem 7.2 (Incoming Voice Leadings to Imperfect Consonances).** *For each imperfect consonance j ∈ C \setminus P, the total number of permitted voice leadings from all consonant sources to j is 72:*
+This construction deliberately forgets path identity. If distinct contrapuntal routes should remain distinguishable, one would instead use the free path category of the directed graph, in which morphisms are paths and composition is literal concatenation. The thin generated category is the quotient retaining only endpoint reachability.
 
-$$\sum_{i \in C} |E(i, j)| = 72 \quad \text{for each } j \in C \setminus P$$
+## 5. The canonical seven-consonance model
 
-*Proof sketch.* Both results follow from exhaustive enumeration over the finite sets involved. For a fixed target *j* and source *i*, the number of voice leadings *v* = (*b*, *s*) with τ(*i*, *v*) = *j* is the number of pairs (*b*, *s*) with *i* + *s* − *b* = *j*, i.e., *s* = *j* − *i* + *b*. This gives exactly 12 voice leadings (one for each *b* ∈ ℤ₁₂). From 6 sources, this yields 72 total.
+### 5.1. Objects and their count
 
-For an imperfect target, none are excluded, giving 72. For a perfect target, the parallel voice leadings (*b* = *s* and *b* ≠ 0) must be subtracted. For each source *i*, the parallel voice leading (*b*, *b*) maps *i* to *i* (since *s* − *b* = 0). This is a self-loop, so it contributes to the (*i*, *j*) edge set only when *i* = *j*. Thus the 11 forbidden parallel self-loops (for *b* = 1, ..., 11) are subtracted from the self-loop count of *j*, yielding 72 − 11 = 61. □
+Let $S$ consist of the seven named simple consonances
 
-**Corollary 7.3 (Constraint Ratio).** *The parallel-motion prohibition reduces incoming voice leadings to perfect consonances by a factor of 61/72 ≈ 0.847, or approximately 15%.*
+$$
+S=\{\text{unison},\text{minor third},\text{major third},\text{perfect fifth},
+\text{minor sixth},\text{major sixth},\text{octave}\}.
+$$
 
----
+Define the semitone realization $s:S\to\mathbb N$ by
 
-## 8. The Categorical Perspective
+$$
+0,3,4,7,8,9,12
+$$
 
-### 8.1 Why Not a Category?
+in the displayed order.
 
-The original conjecture motivating this work was that first-species counterpoint over the diatonic scale forms a category equivalent to a thin category (i.e., a category where each hom-set has at most one element, equivalently a preorder). Theorem 4.1 decisively refutes this: the permitted voice leadings are not even closed under composition, the most fundamental requirement for a category.
+**Theorem 5.1 (Seven-object theorem).** The set $S$ has cardinality $7$, and the realization map $s$ is injective. In particular, $S$ does not have cardinality $12$.
 
-However, the quiver structure is mathematically rich. We can consider:
+**Proof sketch.** The seven constructors listed above are distinct. Their images $0,3,4,7,8,9,12$ are pairwise distinct, so $s$ is injective. Therefore $|S|=7\ne12$. $\square$
 
-- The **free category** on the counterpoint quiver, whose morphisms are all finite paths of permitted voice leadings. This category *does* capture the sequential structure of counterpoint, but it is vastly larger than the one-step constraint structure.
+**Theorem 5.2 (Consonant realization).** For every $i\in S$, the integer $s(i)$ is consonant.
 
-- The **path relation**: define *i* ≤ *j* if there exists a permitted voice leading from *i* to *j*. By Theorem 3.1, this relation is total (and trivially reflexive), so it defines a *complete preorder* — but not a partial order, since *i* ≤ *j* and *j* ≤ *i* for all *i*, *j* ∈ *C*.
+**Proof sketch.** Each of the seven displayed images belongs to $C$ by inspection. $\square$
 
-- The **weighted quiver**: assign to each edge its "quality" (oblique motion, contrary motion, similar motion) and study the resulting enriched structure.
+Theorem 5.1 directly tests the proposed twelve-object identification. Under this standard interval-only encoding, it is false. A twelve-object model could still arise after adding state variables; it is not the same model.
 
-### 8.2 The Quiver as the Right Level of Abstraction
+### 5.2. Canonical dyads and the complete motion table
 
-We propose that the *quiver* — not the category — is the correct level of mathematical abstraction for first-species counterpoint. The counterpoint rules define constraints on *individual transitions*, not on *composable sequences*. The quiver captures exactly this local constraint structure, while the failure of composability (Theorem 4.1) shows that any categorical formalization must either relax the constraints or introduce additional structure (such as a 2-categorical framework with "coherence conditions" on consecutive voice leadings).
+**Definition 5.3 (Canonical realization).** The canonical dyad associated with $i\in S$ is
 
----
+$$
+d(i)=(0,s(i)).
+$$
 
-## 9. Generalization to n-TET Systems
+The lower voice is fixed at pitch $0$ and the upper voice realizes the interval.
 
-### 9.1 The Parameterized Framework
+**Definition 5.4 (Canonical motion).** A canonical motion from $i$ to $j$ is permitted when $M(d(i),d(j))$ holds.
 
-The Counterpoint System structure (Definition 2.1) parameterizes all results by the temperament size *n*. For each *n*, one specifies the consonant set *C* ⊆ ℤₙ and perfect subset *P* ⊆ *C*, and the entire theory applies.
+For canonical dyads, the bass displacement is $0$. Therefore the motion is never similar, because similar motion requires strict movement in both voices. The endpoints are consonant by Theorem 5.2. The only remaining restriction is upper-voice displacement.
 
-**Open Question 9.1.** For which values of *n* and consonance sets *C* does the counterpoint quiver exhibit strong connectivity?
+**Lemma 5.5 (Canonical adjacency criterion).** For $i,j\in S$, canonical motion from $i$ to $j$ is permitted if and only if
 
-**Open Question 9.2.** Is there a Counterpoint System where the permitted voice leadings *are* closed under composition?
+$$
+|s(j)-s(i)|\le2.
+$$
 
-**Open Question 9.3.** How does the bottleneck ratio (self-loops at perfect vs. imperfect consonances) vary with *n*?
+**Proof sketch.** Bass displacement is $0\le2$. Upper-voice displacement is $|s(j)-s(i)|$. Both endpoints are consonant. Since the bass is stationary, the motion is not similar, so the perfect-consonance prohibition is irrelevant. Thus precisely the displayed inequality remains. $\square$
 
-### 9.2 Microtonal Applications
+**Theorem 5.6 (Fifteen-motion theorem).** Exactly fifteen ordered canonical one-step motions are permitted, including stationary motions.
 
-For *n* = 19 (19-TET), the consonant intervals approximating just intonation ratios differ from the 12-TET set. Similarly for *n* = 31, *n* = 53, and other historically proposed temperaments. The framework developed here provides a systematic way to study voice-leading constraints in these alternative systems.
+**Proof sketch.** Apply Lemma 5.5 to the ordered pairs in $C\times C$. Every value contributes an identity, giving seven motions. Distinct values within distance $2$ are
 
----
+$$
+\{3,4\},\quad \{7,8\},\quad \{7,9\},\quad \{8,9\}.
+$$
 
-## 10. Discussion
+Each unordered pair contributes both directions, giving eight more motions. No other pair has distance at most $2$. Hence the total is
 
-### 10.1 Music-Theoretic Significance
+$$
+7+2\cdot4=15.
+$$
 
-Our results formalize and quantify several phenomena that have been discussed informally in music theory:
+$\square$
 
-- The **prohibition against parallel fifths** is not merely aesthetic but reflects a measurable combinatorial bottleneck (Theorems 5.1, 7.1).
-- The **privileged role of the bass** is a consequence of the consonance set's asymmetry under negation (Theorem 6.1).
-- The **locality of counterpoint rules** — the impossibility of reducing multi-step validity to single-step validity — is captured by non-composability (Theorem 4.1).
+The full outgoing table is:
 
-### 10.2 Mathematical Significance
+| Source interval | Permitted canonical targets |
+|---|---|
+| $0$ | $0$ |
+| $3$ | $3,4$ |
+| $4$ | $3,4$ |
+| $7$ | $7,8,9$ |
+| $8$ | $7,8,9$ |
+| $9$ | $7,8,9$ |
+| $12$ | $12$ |
 
-The counterpoint quiver provides a natural example of a finite directed multigraph with rich algebraic structure that arises from a well-motivated application domain. The non-composability result demonstrates that not all natural constraint systems admit categorical formalization, contributing to the growing literature on "almost-categories" and constraint satisfaction in combinatorial settings.
+**Theorem 5.7 (Reversible thirds).** Canonical motion is permitted from minor third to major third and from major third to minor third.
 
-### 10.3 Computational Significance
+**Proof sketch.** Their semitone realizations are $3$ and $4$, whose distance is $1$. Apply Lemma 5.5 in each direction. $\square$
 
-All results are computationally verifiable by finite enumeration over ℤ₁₂ × ℤ₁₂. The Counterpoint System framework naturally lends itself to algorithmic exploration: given a temperament size *n* and consonance specification, all structural invariants (connectivity, composability, bottleneck ratios, hom-set sizes) can be computed in O(*n*³) time.
+**Corollary 5.8 (Failure of antisymmetry).** Generated reachability on $S$ is not a partial order.
 
----
+**Proof sketch.** The two distinct objects minor third and major third reach one another by Theorem 5.7. Antisymmetry would identify them, a contradiction. $\square$
 
-## 11. Future Work
+**Proposition 5.9 (Mutual-reachability quotient).** The equivalence classes under mutual canonical reachability are
 
-1. **Higher species**: Extend the framework to second-species (two notes against one), third-species (four notes against one), and florid counterpoint.
+$$
+\{0\},\qquad \{3,4\},\qquad \{7,8,9\},\qquad \{12\}.
+$$
 
-2. **Multi-voice counterpoint**: Generalize from two voices to *k* voices, where voice leadings live in (ℤₙ)^*k* and the constraint structure becomes richer.
+The quotient relation is a partial order; in this canonical graph, the four classes are pairwise incomparable except for equality.
 
-3. **Continuous voice leading**: Connect the discrete quiver to Tymoczko's continuous voice-leading spaces by studying the quiver as a discretization of the quotient orbifold *T*² / *S*₂.
+**Proof sketch.** The table shows that $3$ and $4$ form one strongly connected component and that $7,8,9$ form another. The vertices $0$ and $12$ have only loops. There are no edges between the four displayed components, so no path crosses between them. Quotienting any preorder by mutual reachability yields an antisymmetric relation. $\square$
 
-4. **Enriched categorical structure**: Investigate whether the counterpoint quiver admits a meaningful 2-categorical or ∞-categorical structure that captures multi-step constraints.
+This proposition is a derived structural reading of the complete table. It emphasizes that object count, edge count, and quotient count are distinct invariants.
 
-5. **Microtonal enumeration**: Systematically compute the structural invariants for all Counterpoint Systems with *n* ≤ 100 and classify the resulting quivers.
+## 6. Algorithms
 
-6. **Algorithmic composition**: Use the quiver structure to design voice-leading algorithms that respect counterpoint constraints while optimizing for musical qualities (e.g., smoothness, variety).
+### 6.1. Enumerating permitted motions
 
----
+For a finite state list $V$ of dyads, the local motion graph can be computed by testing every ordered pair.
 
-## References
+**Algorithm 6.1 (Local motion enumeration).** For each $(x,y)\in V\times V$, compute the endpoint intervals, test membership in $C$, test both displacement bounds, determine whether both endpoints are perfect, and determine whether motion is similar. Include $(x,y)$ exactly when all permitted-motion conditions hold.
 
-1. Agmon, E. (1997). Musical durations as mathematical intervals. *Music Theory Online*, 3(6).
+With constant-time integer and finite-set operations, this requires $O(|V|^2)$ predicate evaluations and $O(|E|)$ output space, where $E$ is the resulting edge set. For the canonical interval model, $|V|=7$.
 
-2. Fux, J.J. (1725). *Gradus ad Parnassum*. Vienna.
+### 6.2. Computing generated reachability
 
-3. Mazzola, G. (2002). *The Topos of Music: Geometric Logic of Concepts, Theory, and Performance*. Birkhäuser.
+Given the Boolean adjacency matrix $A$ of permitted motions, initialize the reachability matrix $R$ by adding the identity relation. Then apply the standard transitive-closure update
 
-4. Tymoczko, D. (2011). *A Geometry of Music: Harmony and Counterpoint in the Extended Common Practice*. Oxford University Press.
+$$
+R_{ij}\leftarrow R_{ij}\lor(R_{ik}\land R_{kj})
+$$
 
-5. Tymoczko, D. (2006). The geometry of musical chords. *Science*, 313(5783), 72–74.
+for every intermediate state $k$ and every ordered pair $(i,j)$.
 
-6. Cohn, R. (1997). Neo-Riemannian operations, parsimonious trichords, and their Tonnetz representations. *Journal of Music Theory*, 41(1), 1–66.
+**Theorem 6.2 (Closure-algorithm correctness).** After all intermediate vertices have been processed, $R_{ij}$ is true if and only if there is a finite permitted path from state $i$ to state $j$.
 
-7. Lewin, D. (1987). *Generalized Musical Intervals and Transformations*. Yale University Press.
+**Proof sketch.** Induct on the number of allowed intermediate vertices. Before processing any, $R$ records paths of length zero or one. At stage $k$, a path using intermediates among the first $k$ vertices either avoids vertex $k$ or decomposes into a path from $i$ to $k$ and a path from $k$ to $j$ using earlier intermediates. The update records exactly these alternatives. $\square$
 
----
+The algorithm runs in $O(|V|^3)$ time and $O(|V|^2)$ space. For sparse larger graphs, repeated breadth-first or depth-first searches give $O(|V|(|V|+|E|))$ time.
 
-*Appendix: The full formal proofs of all results stated in this paper have been machine-verified. The consonance set, perfect consonance set, voice-leading definitions, and all five main theorems are established rigorously using modular arithmetic over ℤ₁₂ with decidable equality and finite enumeration.*
+### 6.3. Quotienting by mutual reachability
+
+Strongly connected components identify states $i,j$ satisfying both $i\leadsto j$ and $j\leadsto i$. Tarjan’s or Kosaraju’s algorithm computes these components in $O(|V|+|E|)$ time. Collapsing each component produces the condensation graph, which is acyclic and realizes the partial-order quotient of the reachability preorder.
+
+## 7. Interpretation and applications
+
+The results separate immediate legality from compositional legality. A local rule defines a directed graph. Category structure appears only after selecting what arrows mean.
+
+If arrows mean single transitions, closure under composition fails. If arrows mean finite paths, the free path category preserves every itinerary. If arrows mean mere existence of a path, the thin generated category preserves accessibility while forgetting route multiplicity. All three constructions are mathematically legitimate, but they answer different musical questions.
+
+The thin model is useful for endpoint planning: can one consonant state be transformed into another through legal intermediate sonorities? The path category is more appropriate for comparing realizations, counting alternatives, or assigning costs such as total melodic displacement. A weighted extension could minimize leaps, penalize repeated directions, or model stylistic preferences.
+
+The canonical seven-state experiment also shows how quotienting changes interpretation. Minor and major thirds are distinct acoustical and theoretical intervals, yet each can reach the other in one canonical step. A poset quotient merges them because it remembers accessibility rather than musical identity. Such a quotient may be valuable for coarse dynamics but unsuitable when interval quality itself matters.
+
+The framework has analogues beyond music. In motion planning, controls generate trajectories; in rewriting systems, rules generate derivability; in reaction networks, elementary reactions generate chemical reachability. In each case, local transition is generally nontransitive, while finite-path reachability is transitive. Counterpoint makes this abstract distinction perceptible in sound.
+
+## 8. A complementary tree obstruction
+
+The cycle also yields a separate local-to-global result for finite tree diagrams. We state it self-containedly because it illustrates how a sparse global shape can force a forbidden local marking.
+
+Let $G=(V,E)$ be a finite simple graph. The degree $\deg(v)$ of $v$ is the number of incident edges. A **tree** is a connected acyclic graph. Suppose further that a singleton marking at a vertex $v$ is called $\rho$-dominant precisely when
+
+$$
+\deg(v)\ge2.
+$$
+
+In the motivating weight notation, the singleton correction is $\lambda_{\{v\},I}=2\rho-\beta_I-\alpha_v$, and $\rho$-dominance means that this weight lies in the dominant cone $P^+$.
+
+**Theorem 8.1 (Tree degree sum).** If $G$ is a tree on $n$ vertices, then
+
+$$
+\sum_{v\in V}\deg(v)=2(n-1).
+$$
+
+**Proof sketch.** A finite tree on $n$ vertices has exactly $n-1$ edges. The handshaking identity counts every edge once at each endpoint, so the degree sum is twice the edge count. $\square$
+
+**Theorem 8.2 (Leaf existence).** Every nonempty finite tree contains a vertex $v$ with $\deg(v)\le1$.
+
+**Proof sketch.** If every vertex had degree at least $2$, then the degree sum would be at least $2n$. Theorem 8.1 gives the smaller value $2(n-1)$, a contradiction. $\square$
+
+**Theorem 8.3 (Leaf obstruction to dominant singletons).** In every nonempty tree diagram satisfying the singleton criterion above, there is a vertex $v$ for which the singleton correction $\lambda_{\{v\},I}$ is not $\rho$-dominant.
+
+**Proof sketch.** Choose a leaf from Theorem 8.2. Its degree is at most $1$, whereas singleton dominance is equivalent to degree at least $2$. Hence its singleton marking is not dominant. $\square$
+
+This obstruction says that a forest hypothesis is not merely decorative: tree-shaped diagrams necessarily contain positions at which isolated marking fails. Marked data must be anchored away from at least one low-degree site. The argument also echoes the counterpoint analysis: a global structure—tree sparsity in one case, path composition in the other—places constraints that are invisible if one inspects only a desired local label.
+
+## 9. Limitations
+
+The present rule set is intentionally narrow. It uses semitone magnitude rather than diatonic interval spelling. It allows voice crossing in principle. It does not fix a cantus firmus or a finite register. It omits melodic constraints over longer windows and special rules for opening, penultimate, and final sonorities. Its similar-motion predicate excludes oblique motion and prohibits every similar transition between perfect consonances, whether or not historical terminology would distinguish parallel, direct, or repeated perfect intervals more finely.
+
+The canonical model further freezes the bass at $0$. This makes the motion table a study of interval adjacency, not a complete composition exercise. Because the bass is stationary, its canonical edges never trigger the similar-perfect prohibition. The fifteen-edge result is exact for the stated canonical representatives and should not be generalized to all registered dyads without enumeration.
+
+Finally, a twelve-element conjecture is underdetermined until the twelve states are defined. Scale degree, interval quality, register, boundary role, or directed approach could each enlarge or alter the state space. A valid equivalence claim must specify both objects and morphisms before cardinality can be tested.
+
+## 10. Future research
+
+Five concrete questions follow from the analysis.
+
+1. **Diatonic-state quotient.** Extend each canonical state by one of seven scale degrees, use the C-major step pattern, compute generated reachability, and quotient by mutual reachability. Test whether exactly twelve classes result.
+
+2. **Boundary-rule thinness.** Add opening and closing constraints: begin and end on perfect consonances and approach the final by contrary or oblique motion. For fixed cantus firmi of bounded length and finite register, compare complete admissible counterpoints under pointwise generated reachability.
+
+3. **Connectivity of canonical states.** Determine whether a richer canonical motion rule makes all seven interval representatives mutually reachable. Under the present frozen-bass table they are not: $0$ and $12$ are isolated, while the thirds and the $7$–$9$ cluster form separate components.
+
+4. **Register sensitivity.** Restrict dyads to finite registers of width at least an octave, quotient by translation when possible, and compare generated reachability with the canonical interval model. Boundary effects may distinguish otherwise equivalent states.
+
+5. **Parallel-perfect repair.** Refine similar motion so that repeated perfect consonances under nonzero equal-direction motion are treated explicitly, then recompute the canonical table and compare its edge count.
+
+Further work should also compare the thin reachability category with the non-thin path category. Counting paths, imposing maximum length, or assigning weights can recover musical distinctions that thinness erases.
+
+## 11. Conclusion
+
+The local counterpoint relation studied here has identities but not composition. The explicit chain
+
+$$
+(0,3)\longrightarrow(2,5)\longrightarrow(4,7)
+$$
+
+consists of two permitted motions, while its direct displacement is prohibited by the stepwise bound. Therefore immediate motions cannot be exactly the arrows of a thin category.
+
+Finite-path reachability supplies the canonical repair. It is reflexive and transitive, defines a thin category, and contains every direct permitted motion. In the standard interval-only restriction, there are exactly seven objects and fifteen canonical one-step motions. Reversible edges show that reachability is a preorder rather than a partial order until strongly connected states are quotiented.
+
+The broader methodological conclusion is simple: local musical rules generate categorical structure; they are not themselves automatically categorical. Once one distinguishes a step from a journey, counterpoint, graph reachability, order theory, and category theory align cleanly.

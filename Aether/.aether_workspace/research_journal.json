@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ee9035cd",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\n## Results established\n\nThe formal development proves the finite-dimensional closed-form Hodge theorem for consecutive real cochain maps. Harmonic forms are defined intrinsically",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-25T15:27:41",
-      "title": "Tropical Hodge Theory"
-    },
-    {
       "cycle_id": "2ae125a9",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\n## 1. Exact restricted sumset intervals\n\nFor the distinct-summand trajectory `1,2,4,7,10,…`, determine an exact union-of-intervals description of the sums formed from the first `n",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-08-02T22:20:26",
       "title": "Perfect Cuboid (Euler Brick)"
+    },
+    {
+      "cycle_id": "17b35eaf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThe formal results delimit what remains conjectural. In particular,\n`□A → □□◇ₜA` follows from ordinary transitivity (`4`) plus reflexive time, so it does\nnot by itself prove a str",
+      "quality_score": 0.68012,
+      "sorry_count": 1,
+      "theorem_count": 3,
+      "timestamp": "2026-08-02T23:21:00",
+      "title": "Temporal Logic of Proofs: When You Prove Something Matters"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.76837
     }
   ],
-  "last_updated": "2026-08-02T22:20:26",
+  "last_updated": "2026-08-02T23:21:00",
   "open_questions": [
-    {
-      "context": "+  sorry; +  sorry; +  sorry",
-      "cycle_id": "65e81f6c",
-      "domain": "Geometry",
-      "sorry_count": 13,
-      "timestamp": "2026-07-20T00:23:26"
-    },
     {
       "context": "-  sorry; -  sorry; -  sorry",
       "cycle_id": "c930e14b",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-07-27T10:29:18"
+    },
+    {
+      "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
+      "cycle_id": "17b35eaf",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-08-02T23:21:00"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "02aa1402",
-        "quality": 0.72637,
-        "theorems": 14,
-        "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
-      },
-      {
         "cycle_id": "04022a5b",
         "quality": 0.686,
         "theorems": 29,
@@ -3637,6 +3631,12 @@
         "quality": 0.78678,
         "theorems": 22,
         "title": "Emergent Spacetime from Quantum Entanglement"
+      },
+      {
+        "cycle_id": "17b35eaf",
+        "quality": 0.68012,
+        "theorems": 3,
+        "title": "Temporal Logic of Proofs: When You Prove Something Matters"
       }
     ],
     "NumberTheory": [
