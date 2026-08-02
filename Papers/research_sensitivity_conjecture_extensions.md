@@ -1,454 +1,404 @@
-# The Spectral Core of the Sensitivity Conjecture: Signed Adjacency Matrices of the Hypercube
+# Scalar-Square Signings of the Boolean Cube: Spectral Rigidity and a Sharp Counterexample
 
-**Author:** Aristotle
-**Date:** 2026-07-01
+**Aristotle**  
+**2 August 2026**
 
 ## Abstract
 
-The Sensitivity Conjecture, posed by Nisan and Szegedy in 1992, asserted that
-the sensitivity of a Boolean function is polynomially related to its other
-standard complexity measures — block sensitivity, decision-tree depth,
-certificate complexity, and polynomial degree. It resisted proof for nearly
-three decades until Huang's 2019 argument reduced it to a single spectral fact
-about a signed adjacency matrix of the Boolean hypercube. In this paper we
-isolate and rigorously develop that spectral core. We study the family of signed
-adjacency matrices $A_n$ of the $n$-dimensional hypercube $Q_n$, defined by the
-block recursion $A_0 = (0)$ and $A_{n+1} = \left(\begin{smallmatrix} A_n & I \\
-I & -A_n\end{smallmatrix}\right)$. Our central result is the *spectral identity*
-$A_n^2 = n\,I$, from which we derive a complete package of structural
-consequences: $A_n$ is symmetric with zero trace; every entry lies in
-$\{-1,0,1\}$; the matrix is $n$-regular (each row has exactly $n$ nonzero
-entries and squared row-norm $n$); every eigenvalue $\mu$ satisfies $\mu^2 = n$,
-hence $|\mu| = \sqrt{n}$; the squared determinant equals $n^{\,2^n}$; and for
-$n \ge 1$ the matrix is invertible with $A_n^{-1} = n^{-1} A_n$. We complement
-the algebraic development with a purely combinatorial proof of $n$-regularity in
-the symmetric-difference model of $Q_n$, establishing that the two encodings
-agree. Together these facts constitute exactly the hypotheses that Cauchy
-interlacing consumes to yield the $\sqrt{n}$ maximum-degree bound underlying the
-resolution of the conjecture. We discuss the outstanding interlacing step,
-sharpness, local face conditions on admissible sign patterns, and extremal
-determinant questions.
+We study a recursively signed adjacency operator on the $n$-dimensional Boolean cube. Writing a signal on the $(n+1)$-cube as a pair of signals $(u,w)$ on two copies of the $n$-cube, the operator is defined by $A_0=0$ and
 
-**Keywords:** sensitivity conjecture, Boolean functions, hypercube, signed
-adjacency matrix, spectral graph theory, Cauchy interlacing, eigenvalues,
-block recursion.
+$$
+A_{n+1}(u,w)=(A_nu+w,\;u-A_nw).
+$$
 
----
+Our central result is the exact scalar-square identity $A_n^2=nI$. It follows that every real eigenvalue associated with a nonzero eigenvector satisfies $\lambda^2=n$, so for positive dimension the spectrum is confined to $\{ -\sqrt n,\sqrt n\}$. Consequently, whenever a combinatorial parameter $s$ bounds the magnitude of such a certified eigenvalue, one obtains $n\le s^2$. This isolates the operator-algebraic step underlying the spectral approach to sensitivity bounds on Boolean functions. We also disprove the stronger claim that arbitrary signings have scalar square: the ordinary unsigned adjacency operator on the two-cube sends the constant signal to twice itself and therefore has square $4$ on that signal, not $2$. The proof is elementary and recursive, while its combinatorial content is cancellation of paired length-two walks across every square face. We give direct algorithms, numerical examples, implications, limitations, and a program for classifying all scalar-square signings.
 
 ## 1. Introduction
 
-### 1.1 Boolean functions and sensitivity
+The Boolean cube $Q_n$ is the graph with vertex set $\{0,1\}^n$ in which two vertices are adjacent when they differ in exactly one coordinate. It simultaneously models binary inputs, subsets of an $n$-element set, and states of an $n$-switch system. A real signal on the cube is a function $v:\{0,1\}^n\to\mathbb R$.
 
-A **Boolean function** on $n$ variables is a map $f\colon \{0,1\}^n \to
-\{0,1\}$. Boolean functions are the fundamental objects of computational
-complexity: circuits, formulas, and decision procedures all compute Boolean
-functions, and their difficulty is quantified by a family of *complexity
-measures*.
+For a Boolean function $f:\{0,1\}^n\to\{0,1\}$, sensitivity and polynomial degree measure two different kinds of complexity. The sensitivity at $x$ is the number of coordinates whose individual reversal changes $f(x)$, and the maximum sensitivity $s(f)$ is the maximum of this count over all inputs. The real degree $\deg(f)$ is the degree of the unique multilinear real polynomial agreeing with $f$ at all vertices. Sensitivity is local, while degree records global interaction.
 
-Fix an input $x \in \{0,1\}^n$. The **sensitivity** of $f$ at $x$, written
-$s(f,x)$, is the number of coordinates $i$ such that flipping the $i$-th bit
-changes the output:
+A spectral strategy for relating these quantities uses a signed adjacency matrix rather than the ordinary adjacency matrix. The signs are selected so that two-step routes through distinct coordinates cancel. The resulting matrix has an exceptionally rigid square, and therefore an exceptionally rigid spectrum. The present paper develops precisely this algebraic core.
+
+The main conclusions are as follows.
+
+1. The canonical recursively signed operator satisfies $A_n^2=nI$ in every dimension.
+2. Every eigenvalue with a nonzero real eigenvector satisfies $\lambda^2=n$.
+3. If $|\lambda|\le s$ for a nonnegative integer $s$, then $n\le s^2$.
+4. The corresponding statement for arbitrary edge signs is false; the all-positive signing of $Q_2$ is already a counterexample.
+
+The third conclusion explains the relevance to sensitivity arguments. If an application constructs a spectral certificate whose eigenvalue has mandatory magnitude $\sqrt n$, but local combinatorics bounds that magnitude by $s$, then $s$ cannot be smaller than $\sqrt n$. The results here establish that numerical implication without claiming the additional induced-subgraph and polynomial arguments needed to obtain a complete theorem for every Boolean function.
+
+## 2. The Boolean cube and signed adjacency
+
+### 2.1. Recursive presentation of the cube
+
+Let $Q_0$ contain one vertex. Recursively, identify
+
 $$
-s(f,x) \;=\; \#\{\, i \in \{1,\dots,n\} : f(x) \neq f(x^{\oplus i}) \,\},
-$$
-where $x^{\oplus i}$ denotes $x$ with its $i$-th bit toggled. The
-**sensitivity** of $f$ is $s(f) = \max_x s(f,x)$.
-
-A more permissive notion allows flipping disjoint *blocks* of coordinates. The
-**block sensitivity** $bs(f)$ is the maximum, over inputs $x$, of the largest
-number of pairwise disjoint blocks $B_1,\dots,B_k \subseteq \{1,\dots,n\}$ such
-that flipping all coordinates in $B_j$ changes $f(x)$ for each $j$. Because a
-single coordinate is a block, $s(f) \le bs(f)$ always.
-
-### 1.2 The conjecture
-
-By the early 1990s a web of polynomial equivalences had been established among
-$bs(f)$, decision-tree depth $D(f)$, certificate complexity $C(f)$, and the real
-polynomial degree $\deg(f)$: any one of these bounds every other by a fixed
-polynomial. Sensitivity was the conspicuous exception. The **Sensitivity
-Conjecture** (Nisan–Szegedy, 1992) asserted that sensitivity also belongs to
-this equivalence class: there is an absolute constant $c$ with
-$$
-bs(f) \;\le\; s(f)^{\,c}
-$$
-for all Boolean functions $f$. Since $s(f) \le bs(f)$ is trivial, the content is
-the reverse polynomial bound.
-
-### 1.3 The Gotsman–Linial reduction
-
-Gotsman and Linial (1992) recast the conjecture as a statement about the
-geometry of the hypercube. Model the input space $\{0,1\}^n$ as the vertex set of
-the **$n$-dimensional hypercube** $Q_n$, in which two vertices are adjacent iff
-they differ in exactly one coordinate. Their theorem states that the Sensitivity
-Conjecture is equivalent to the following: every induced subgraph of $Q_n$ on
-more than half the vertices — that is, on at least $2^{n-1}+1$ vertices —
-contains a vertex of degree at least $\sqrt{n}$. Equivalently, writing
-$\Delta(H)$ for the maximum degree of an induced subgraph $H$, one has
-$$
-\max\bigl(\Delta(H),\ \Delta(Q_n \setminus H)\bigr) \;\ge\; \sqrt{n}
-$$
-for every vertex subset. This purely combinatorial statement, once proved, yields
-$bs(f) \le s(f)^4$.
-
-### 1.4 Huang's spectral method and the goal of this paper
-
-Huang (2019) proved the induced-subgraph statement by exhibiting a **signed
-adjacency matrix** $A_n$ of $Q_n$ — a matrix with the same support as the
-ordinary adjacency matrix but with signs attached to the nonzero entries — such
-that $A_n^2 = nI$. This pins the spectrum of $A_n$ to $\{\pm\sqrt{n}\}$, and
-Cauchy interlacing then delivers the degree bound.
-
-This paper isolates the **spectral core** of that method and develops it with
-full rigor. Our contributions are:
-
-1. A clean recursive construction of $A_n$ over a $2^n$-element index type built
-   so that the block recursion is literal, enabling transparent inductions
-   (Section 2).
-2. A complete, self-contained proof of the spectral identity $A_n^2 = nI$
-   (Section 3, Theorem 3.1).
-3. A structural package derived from the identity: symmetry, zero trace,
-   $\{-1,0,1\}$-entries, $n$-regularity, the $\pm\sqrt{n}$ spectral gap, the
-   determinant formula $(\det A_n)^2 = n^{2^n}$, and invertibility with
-   $A_n^{-1} = n^{-1}A_n$ for $n \ge 1$ (Sections 3–4).
-4. An independent combinatorial proof that $Q_n$ is $n$-regular in the
-   symmetric-difference model, confirming the two encodings agree (Section 5).
-
-We then explain precisely how these facts feed the interlacing step (Section 6)
-and outline the open questions they sharpen (Section 8).
-
----
-
-## 2. The signed adjacency matrix
-
-### 2.1 An index type matched to the recursion
-
-To make the block recursion definitional rather than a manipulation of
-$\{0,1\}^n$ index arithmetic, we index the $2^n$ vertices of $Q_n$ by a type
-$H_n$ defined recursively:
-$$
-H_0 = \{\ast\}, \qquad H_{n+1} = H_n \sqcup H_n,
-$$
-where $\sqcup$ denotes disjoint union. Then $|H_n| = 2^n$, and a $2^{n+1} \times
-2^{n+1}$ matrix indexed by $H_{n+1}$ decomposes canonically into four
-$2^n \times 2^n$ blocks indexed by the two copies of $H_n$.
-
-### 2.2 Definition
-
-Let $I$ denote the identity matrix of the appropriate size, and let $\left(
-\begin{smallmatrix} P & Q \\ R & S \end{smallmatrix}\right)$ denote the block
-matrix over $H_n \sqcup H_n$ with the indicated blocks.
-
-**Definition 2.1 (Signed adjacency matrix).** The signed adjacency matrices
-$A_n$ of $Q_n$ are the real matrices indexed by $H_n$ defined by
-$$
-A_0 = (0), \qquad
-A_{n+1} = \begin{pmatrix} A_n & I \\ I & -A_n \end{pmatrix}.
+Q_{n+1}=\{0\}\times Q_n\;\sqcup\;\{1\}\times Q_n.
 $$
 
-Unfolding the recursion, $A_1 = \left(\begin{smallmatrix} 0 & 1 \\ 1 &
-0\end{smallmatrix}\right)$ and
+Thus $Q_{n+1}$ consists of two layers, each isomorphic to $Q_n$, with corresponding vertices connected by the edges in the new coordinate. Let $V_n=\mathbb R^{Q_n}$ be the vector space of real signals on $Q_n$. Under the layered decomposition, every element of $V_{n+1}$ is uniquely a pair $(u,w)\in V_n\oplus V_n$.
+
+An edge signing assigns $+1$ or $-1$ to every edge. Its signed adjacency operator sends a signal to the signed sum of neighboring values. The operator considered here is specified recursively, which simultaneously defines its signs.
+
+**Definition 2.1 (Canonical signed cube operator).** Set $A_0=0$ on $V_0$. Given $A_n$, define $A_{n+1}:V_n\oplus V_n\to V_n\oplus V_n$ by
+
 $$
-A_2 = \begin{pmatrix} 0 & 1 & 1 & 0 \\ 1 & 0 & 0 & -1 \\ 1 & 0 & 0 & 1 \\ 0 &
--1 & 1 & 0 \end{pmatrix}.
-$$
-One checks directly that $A_1^2 = I$ and $A_2^2 = 2I$, illustrating the identity
-proved in general below. The support of $A_n$ (its pattern of nonzero entries)
-coincides with the ordinary adjacency matrix of $Q_n$; only the signs differ.
-
----
-
-## 3. The spectral identity and its immediate corollaries
-
-### 3.1 The squaring identity
-
-**Theorem 3.1 (Spectral identity).** For every $n \ge 0$,
-$$
-A_n^2 = n\,I.
+A_{n+1}(u,w)=(A_nu+w,\;u-A_nw).
 $$
 
-*Proof.* By induction on $n$. For $n = 0$, $A_0 = (0)$ and $A_0^2 = (0) = 0\cdot
-I$. Assume $A_n^2 = nI$. Using block multiplication,
+In block notation,
+
 $$
-A_{n+1}^2 =
-\begin{pmatrix} A_n & I \\ I & -A_n \end{pmatrix}
-\begin{pmatrix} A_n & I \\ I & -A_n \end{pmatrix}
+A_{n+1}=
+\begin{pmatrix}
+A_n&I\\
+I&-A_n
+\end{pmatrix}.
+$$
+
+The identity blocks encode the new matching edges between layers. The lower layer uses $A_n$ and the upper layer uses its negative. The matrices are real and symmetric because $A_0$ is symmetric and the recursion preserves symmetry.
+
+**Lemma 2.2 (Linearity).** For every $n$, signals $u,v\in V_n$, and scalar $c\in\mathbb R$,
+
+$$
+A_n(u+v)=A_nu+A_nv,
+\qquad
+A_n(cu)=cA_nu.
+$$
+
+**Proof sketch.** Both identities are immediate at dimension zero. At dimension $n+1$, split the signals into their two layers and substitute into the recursive definition. Addition and scalar multiplication distribute through each component. Induction supplies linearity of the occurrences of $A_n$. $\square$
+
+### 2.2. A path interpretation
+
+For a signed adjacency matrix $A$, the entry $(A^2)_{xy}$ is the sum, over all length-two walks $x\to z\to y$, of the product of the signs on the two traversed edges. This observation gives a geometric interpretation of the scalar-square identity.
+
+If $x=y$ in $Q_n$, there is one two-step backtrack for each coordinate, and each sign is squared, so the total contribution is $n$. If $x$ and $y$ differ in exactly two coordinates, precisely two length-two walks connect them; they traverse opposite sides of the unique square face determined by those coordinates. The canonical signing makes their sign products opposite. If the Hamming distance between $x$ and $y$ is neither zero nor two, no two-step walk connects them. Hence cancellation on square faces is exactly what is required for $A^2$ to be diagonal.
+
+## 3. The scalar-square identity
+
+**Theorem 3.1 (Scalar-Square Theorem).** For every integer $n\ge 0$ and every signal $v\in V_n$,
+
+$$
+A_n(A_nv)=nv.
+$$
+
+Equivalently,
+
+$$
+A_n^2=nI_{V_n}.
+$$
+
+**Proof.** We argue by induction on $n$. For $n=0$, $A_0=0$, so $A_0^2=0=0I$.
+
+Assume $A_n^2=nI$. For $(u,w)\in V_n\oplus V_n$, the recursive definition and linearity give
+
+$$
+\begin{aligned}
+A_{n+1}^2(u,w)
+&=A_{n+1}(A_nu+w,\;u-A_nw)\\
+&=\bigl(A_n(A_nu+w)+u-A_nw,\\
+&\qquad A_nu+w-A_n(u-A_nw)\bigr)\\
+&=\bigl(A_n^2u+A_nw+u-A_nw,\\
+&\qquad A_nu+w-A_nu+A_n^2w\bigr)\\
+&=(A_n^2u+u,\;w+A_n^2w)\\
+&=((n+1)u,(n+1)w).
+\end{aligned}
+$$
+
+Thus $A_{n+1}^2=(n+1)I$, completing the induction. $\square$
+
+The same calculation can be expressed by block multiplication:
+
+$$
+\begin{pmatrix}
+A_n&I\\ I&-A_n
+\end{pmatrix}^2
 =
-\begin{pmatrix} A_n^2 + I & A_n - A_n \\ A_n - A_n & I + A_n^2 \end{pmatrix}.
+\begin{pmatrix}
+A_n^2+I&A_n-A_n\\
+A_n-A_n&I+A_n^2
+\end{pmatrix}
+=(n+1)I.
 $$
-The off-diagonal blocks are $A_n - A_n = 0$. By the induction hypothesis each
-diagonal block equals $A_n^2 + I = nI + I = (n+1)I$. Hence $A_{n+1}^2 = (n+1)I$,
-completing the induction. $\qquad\blacksquare$
 
-The identity is the load-bearing fact of the entire theory; the results below are
-its consequences (sometimes together with symmetry and the entry
-classification).
+The off-diagonal zero blocks are the algebraic record of the cancellation of two routes around each square face.
 
-### 3.2 Symmetry
+**Corollary 3.2 (Norm scaling).** For every $v\in V_n$,
 
-**Proposition 3.2 (Symmetry).** For every $n$, $A_n^{\mathsf T} = A_n$.
-
-*Proof.* Induction on $n$. The base case is trivial. For the step, transposing a
-block matrix transposes each block and swaps the off-diagonal positions:
 $$
-A_{n+1}^{\mathsf T} =
-\begin{pmatrix} A_n^{\mathsf T} & I^{\mathsf T} \\ I^{\mathsf T} & -A_n^{\mathsf
-T} \end{pmatrix}
+\|A_nv\|_2^2=n\|v\|_2^2.
+$$
+
+For $n>0$, the normalized operator $A_n/\sqrt n$ is an orthogonal involution.
+
+**Proof sketch.** Symmetry gives
+
+$$
+\|A_nv\|_2^2=\langle A_nv,A_nv\rangle
+=\langle v,A_n^2v\rangle=n\langle v,v\rangle.
+$$
+
+Dividing the identity $A_n^2=nI$ by $n$ proves that the normalized operator squares to $I$; symmetry then makes it orthogonal. $\square$
+
+The norm statement is a direct consequence of the central theorem and clarifies that the operator amplifies every Euclidean signal by exactly $\sqrt n$. It does not privilege a special eigendirection.
+
+## 4. Spectral rigidity
+
+**Theorem 4.1 (Spectral Rigidity Theorem).** Let $v\in V_n$ be nonzero and suppose
+
+$$
+A_nv=\lambda v
+$$
+
+for some real number $\lambda$. Then
+
+$$
+\lambda^2=n.
+$$
+
+In particular, when $n>0$, $\lambda\in\{-\sqrt n,\sqrt n\}$; when $n=0$, $\lambda=0$.
+
+**Proof.** Apply $A_n$ to the eigenvalue equation. By linearity and Theorem 3.1,
+
+$$
+nv=A_n^2v=A_n(\lambda v)=\lambda A_nv=\lambda^2v.
+$$
+
+Choose a vertex $x$ with $v(x)\ne0$. Evaluating there and canceling $v(x)$ gives $\lambda^2=n$. $\square$
+
+This theorem is stronger than a mere bound on the spectral radius. It excludes every other eigenvalue. Since $A_n$ is a real symmetric matrix, it admits an orthonormal eigenbasis, so the complete spectrum lies at the two roots of $X^2-n$. The identity alone does not determine the multiplicities of those roots; a trace argument is a natural next step.
+
+**Theorem 4.2 (Spectral-to-Local Bound).** Let $n,s$ be nonnegative integers. Suppose $v\in V_n$ is nonzero, $A_nv=\lambda v$, and
+
+$$
+|\lambda|\le s.
+$$
+
+Then
+
+$$
+n\le s^2.
+$$
+
+**Proof.** Theorem 4.1 gives $n=\lambda^2=|\lambda|^2$. Squaring the nonnegative inequality $|\lambda|\le s$ yields $|\lambda|^2\le s^2$, and the claim follows. $\square$
+
+The word “local” in the title anticipates the principal application: for adjacency matrices of graphs, maximum degree can bound eigenvalue magnitude, and in sensitivity problems that degree can encode the number of locally influential coordinates. The theorem itself is deliberately stated with only the required spectral hypotheses. It applies to any source of an upper bound $s$.
+
+## 5. The all-positive signing is a counterexample
+
+The ordinary adjacency operator has the same layered construction but no sign reversal.
+
+**Definition 5.1 (Unsigned cube operator).** Set $B_0=0$ and define
+
+$$
+B_{n+1}(u,w)=(B_nu+w,\;u+B_nw),
+$$
+
+or equivalently
+
+$$
+B_{n+1}=
+\begin{pmatrix}
+B_n&I\\
+I&B_n
+\end{pmatrix}.
+$$
+
+**Theorem 5.2 (Unsigned Counterexample Theorem).** It is false that every edge signing of $Q_n$ has square $nI$. In particular, for the all-positive signing of $Q_2$,
+
+$$
+B_2^2\ne2I.
+$$
+
+**Proof.** Let $\mathbf1$ be the constant signal on the four vertices of $Q_2$. Every vertex has two neighbors, so
+
+$$
+B_2\mathbf1=2\mathbf1.
+$$
+
+Applying $B_2$ once more gives
+
+$$
+B_2^2\mathbf1=4\mathbf1,
+$$
+
+which differs from $2\mathbf1$. Therefore $B_2^2\ne2I$. Since the all-positive signing is one possible signing, the universal claim fails. $\square$
+
+A point-mass example gives the same geometric diagnosis. Let $e_x$ have value $1$ at one corner $x$ and $0$ elsewhere. In $B_2^2e_x$, the opposite corner receives contribution $2$, one from each path around the square. Thus the square has a nonzero off-diagonal entry. Under the canonical signing, those two contributions have opposite signs and sum to zero.
+
+**Proposition 5.3 (Necessary face cancellation).** If a signed adjacency operator $C$ on $Q_n$ satisfies $C^2=nI$, then on every square face the product of its four edge signs is $-1$.
+
+**Proof sketch.** Let $x$ and $y$ be opposite vertices of a square face. The $(x,y)$ entry of $C^2$ is the sum of the sign products along the two length-two paths between them. Because $C^2=nI$, this off-diagonal entry is zero. Each path product is $+1$ or $-1$, so they must be opposite. Their product is the product of all four edge signs around the face, which is therefore $-1$. $\square$
+
+This proposition extracts a necessary condition from the proved scalar-square identity. Establishing the converse for arbitrary cube signings and classifying all solutions up to switching equivalence remain natural extensions.
+
+## 6. Algorithms and numerical experiments
+
+### 6.1. Dense recursive construction
+
+The block recursion is a direct matrix algorithm.
+
+**Algorithm 6.1 (Canonical signed adjacency construction).** Begin with the $1\times1$ zero matrix. At stage $k$, if $A_k$ has order $2^k$, form
+
+$$
+A_{k+1}=
+\begin{pmatrix}
+A_k&I_{2^k}\\
+I_{2^k}&-A_k
+\end{pmatrix}.
+$$
+
+After $n$ stages, return $A_n$.
+
+The output contains $4^n$ entries, so dense storage costs $\Theta(4^n)$ memory. Filling the block matrix also costs $\Theta(4^n)$ time over the complete run. Dense multiplication to test $A_n^2=nI$ costs $O(8^n)$ with the classical cubic algorithm, though the identity should normally be checked through the recursion rather than brute force.
+
+The unsigned matrix can be built by replacing $-A_k$ with $A_k$. For $n=2$, direct calculation gives
+
+$$
+A_2=
+\begin{pmatrix}
+0&1&1&0\\
+1&0&0&1\\
+1&0&0&-1\\
+0&1&-1&0
+\end{pmatrix},
+\qquad
+A_2^2=2I_4,
+$$
+
+up to the chosen ordering of vertices. In contrast, the ordinary square adjacency matrix is
+
+$$
+B_2=
+\begin{pmatrix}
+0&1&1&0\\
+1&0&0&1\\
+1&0&0&1\\
+0&1&1&0
+\end{pmatrix},
+$$
+
+and its square has entries $2$ both on the diagonal and between opposite corners.
+
+### 6.2. Matrix-free application
+
+For larger dimensions it is preferable to apply the operator recursively without materializing a dense matrix. Split a vector of length $2^{n+1}$ into halves $u$ and $w$, recursively compute $A_nu$ and $A_nw$, and return $(A_nu+w,u-A_nw)$.
+
+Let $T(n)$ denote the arithmetic cost. Then
+
+$$
+T(n+1)=2T(n)+O(2^n),
+$$
+
+so $T(n)=O(n2^n)$. Storage is $O(2^n)$, apart from recursion overhead. This complexity matches the sparsity scale of the cube, which has $n2^{n-1}$ edges.
+
+### 6.3. Experimental protocol
+
+For dimensions small enough for dense arithmetic, the following checks illustrate the results:
+
+1. construct $A_n$ recursively;
+2. compute the maximum absolute entry of $A_n^2-nI$;
+3. compute the numerical eigenvalues and compare them with $\pm\sqrt n$;
+4. construct $B_2$, apply $B_2^2$ to the constant vector, and compare with $2$ times that vector;
+5. inspect the off-diagonal entry of $B_2^2$ between opposite corners.
+
+Floating-point calculations introduce roundoff in eigensolvers, whereas the entries of $A_n^2$ are integers and can also be checked with exact integer arithmetic. The experiments demonstrate the theorem; the inductive proof explains it in every dimension.
+
+## 7. Relation to Boolean-function sensitivity
+
+For completeness, we state the relevant Boolean-function definitions while carefully separating them from the operator result.
+
+**Definition 7.1 (Pointwise and maximum sensitivity).** For $f:\{0,1\}^n\to\{0,1\}$ and $x\in\{0,1\}^n$, let $x^{\oplus i}$ denote $x$ with coordinate $i$ reversed. The pointwise sensitivity is
+
+$$
+s(f,x)=\bigl|\{i\in\{1,\ldots,n\}:f(x)\ne f(x^{\oplus i})\}\bigr|,
+$$
+
+and the maximum sensitivity is $s(f)=\max_x s(f,x)$.
+
+**Definition 7.2 (Multilinear degree).** Every Boolean function has a unique multilinear polynomial $p\in\mathbb R[x_1,\ldots,x_n]$ satisfying $p(x)=f(x)$ on $\{0,1\}^n$. Its degree is denoted $\deg(f)$.
+
+The signed-cube theorem supplies a general numerical template. If a reduction from a Boolean function produces a cube dimension $d$, a nonzero eigenvector of the canonical operator with eigenvalue $\lambda$, and a combinatorial estimate $|\lambda|\le s(f)$, then Theorem 4.2 yields
+
+$$
+d\le s(f)^2.
+$$
+
+To identify $d$ with, or bound it in terms of, $\deg(f)$ requires further work: one must construct an appropriate induced subgraph or restriction, obtain a spectral certificate there, and relate graph degree to sensitivity. Those steps are not consequences of $A_n^2=nI$ alone. The contribution developed here is the exact signed-operator identity and its spectral-to-numerical implication, which are reusable once such a bridge is available.
+
+## 8. Discussion
+
+The canonical signing turns the cube into a discrete anticommuting system. Each coordinate direction contributes an involutive move, while distinct directions cancel in the symmetrized product. Informally, if $\Gamma_i$ denotes the signed move in coordinate $i$, then one expects
+
+$$
+\Gamma_i^2=I,
+\qquad
+\Gamma_i\Gamma_j+\Gamma_j\Gamma_i=0\quad(i\ne j).
+$$
+
+Consequently,
+
+$$
+\left(\sum_{i=1}^n\Gamma_i\right)^2
 =
-\begin{pmatrix} A_n & I \\ I & -A_n \end{pmatrix}
-= A_{n+1},
-$$
-using $I^{\mathsf T} = I$ and the induction hypothesis $A_n^{\mathsf T} = A_n$.
-$\qquad\blacksquare$
-
-Because $A_n$ is a real symmetric matrix, the spectral theorem guarantees its
-eigenvalues are real and it is orthogonally diagonalizable. This legitimizes all
-subsequent talk of a real spectrum.
-
-### 3.3 Zero trace
-
-**Proposition 3.3 (Zero trace).** For every $n$, $\operatorname{tr} A_n = 0$.
-
-*Proof.* Induction on $n$. The base case has $\operatorname{tr} A_0 = 0$. The
-trace of a block matrix is the sum of the traces of its diagonal blocks, so
-$\operatorname{tr} A_{n+1} = \operatorname{tr} A_n + \operatorname{tr}(-A_n) =
-\operatorname{tr} A_n - \operatorname{tr} A_n = 0$. $\qquad\blacksquare$
-
-Since $\operatorname{tr} A_n$ equals the sum of the eigenvalues, and (by Section
-4) every eigenvalue is $\pm\sqrt{n}$, the zero trace forces the multiplicities of
-$+\sqrt{n}$ and $-\sqrt{n}$ to be equal — each $2^{n-1}$ when $n \ge 1$. This
-perfect balance is what makes the interlacing bound tight.
-
-### 3.4 Entry classification
-
-**Proposition 3.4 (Signed adjacency entries).** Every entry of $A_n$ lies in
-$\{-1, 0, 1\}$.
-
-*Proof.* Induction on $n$. The single entry of $A_0$ is $0$. Each entry of
-$A_{n+1}$ is either an entry of $A_n$, an entry of $-A_n$, or an entry of $\pm
-I$ (namely $0$ or $1$). By the induction hypothesis entries of $A_n$ lie in
-$\{-1,0,1\}$, and negation preserves this set. $\qquad\blacksquare$
-
-This confirms that $A_n$ is a *genuine* signed adjacency matrix — its absolute
-value entrywise is the ordinary $\{0,1\}$ adjacency matrix of $Q_n$ — so the
-spectral phenomena are properties of the cube with signs, not artifacts of the
-encoding.
-
----
-
-## 4. The spectrum, determinant, and inverse
-
-### 4.1 Row norms and regularity
-
-**Proposition 4.1 (Squared row-norm).** For every vertex $v$,
-$\sum_{w} A_n(v,w)^2 = n$.
-
-*Proof.* The $(v,v)$ entry of $A_n^2$ equals $\sum_w A_n(v,w) A_n(w,v)$. By
-symmetry (Proposition 3.2) this is $\sum_w A_n(v,w)^2$. By the spectral identity
-(Theorem 3.1) the $(v,v)$ entry of $A_n^2 = nI$ is $n$. $\qquad\blacksquare$
-
-**Corollary 4.2 ($n$-regularity).** Each row of $A_n$ has exactly $n$ nonzero
-entries.
-
-*Proof.* By Proposition 3.4 every entry $A_n(v,w) \in \{-1,0,1\}$, so
-$A_n(v,w)^2 \in \{0,1\}$ and equals $1$ exactly when the entry is nonzero. Thus
-$\sum_w A_n(v,w)^2$ counts the nonzero entries in row $v$, and by Proposition
-4.1 this count is $n$. $\qquad\blacksquare$
-
-Since the support of $A_n$ is the adjacency matrix of $Q_n$, Corollary 4.2 is the
-statement that $Q_n$ is $n$-regular: every vertex has exactly $n$ neighbors.
-
-### 4.2 The spectral gap
-
-**Theorem 4.3 (Spectral gap).** Let $\mu$ be any (real) eigenvalue of $A_n$ with
-eigenvector $v \neq 0$. Then $\mu^2 = n$, and consequently $|\mu| = \sqrt{n}$.
-
-*Proof.* Apply $A_n$ twice: $A_n^2 v = A_n(\mu v) = \mu^2 v$. By the spectral
-identity $A_n^2 v = nIv = n v$. Hence $\mu^2 v = n v$, and since $v \neq 0$ we
-conclude $\mu^2 = n$, so $|\mu| = \sqrt{n}$. $\qquad\blacksquare$
-
-Combined with symmetry (real spectrum) and zero trace (balanced multiplicities),
-Theorem 4.3 shows the spectrum of $A_n$ is contained in $\{-\sqrt{n},
-+\sqrt{n}\}$ with equal multiplicities for $n \ge 1$.
-
-### 4.3 Determinant
-
-**Proposition 4.4 (Squared determinant).** For every $n$,
-$(\det A_n)^2 = n^{\,2^n}$.
-
-*Proof.* Taking determinants in $A_n^2 = nI$ and using multiplicativity,
-$(\det A_n)^2 = \det(A_n^2) = \det(nI) = n^{\dim} = n^{\,2^n}$, since $A_n$ is a
-$2^n \times 2^n$ matrix. $\qquad\blacksquare$
-
-### 4.4 Invertibility
-
-**Proposition 4.5 (Inverse).** For every $n \ge 1$, $A_n$ is invertible with
-$$
-A_n^{-1} = \tfrac{1}{n}\, A_n.
+\sum_{i=1}^n\Gamma_i^2
++
+\sum_{i<j}(\Gamma_i\Gamma_j+\Gamma_j\Gamma_i)
+=nI.
 $$
 
-*Proof.* By Theorem 3.1, $A_n \cdot \bigl(\tfrac1n A_n\bigr) = \tfrac1n A_n^2 =
-\tfrac1n (nI) = I$, and likewise on the other side. For $n \ge 1$ the scalar
-$\tfrac1n$ is defined, so $\tfrac1n A_n$ is a genuine two-sided inverse.
-$\qquad\blacksquare$
+The recursive block construction realizes this cancellation without requiring separate coordinate operators in the statement. This viewpoint connects the cube signing to Clifford-type algebra: many degrees of freedom combine into an operator whose square is scalar because cross terms anticommute.
 
-That a matrix is a scalar multiple of its own inverse is a signature of a
-two-eigenvalue spectrum symmetric about $0$ — precisely the situation here.
+The counterexample is equally structural. For unsigned coordinate moves, distinct directions commute rather than anticommute. Their cross terms double instead of vanish. Thus the contrast is not between two superficially different matrices; it is between constructive interference and destructive interference among two-step paths.
 
----
+The exact identity has practical advantages. It determines the minimal polynomial up to a divisor of $X^2-n$, gives perfect norm scaling, and eliminates numerical uncertainty about the spectral radius. It also suggests diagnostics for proposed generalizations: inspect length-two walks, identify elementary faces, and ask whether paired routes cancel.
 
-## 5. The combinatorial model and agreement of encodings
+There is also a useful distinction between sparsity and spectral simplicity. Each vertex has only $n$ neighbors, so the operator has merely $n2^n$ nonzero matrix entries even though its ambient dimension is $2^n$. Sparsity alone does not explain the two-point spectrum: the unsigned cube is equally sparse and has many eigenvalues. What creates rigidity is the coherent global arrangement of local signs. Conversely, the scalar-square law does not make the underlying state space small; algorithms must still represent $2^n$ signal values in general. The result simplifies algebraic behavior, not the exponential cardinality of the cube. Keeping these two facts separate prevents the spectral identity from being mistaken for a general cure for high-dimensional computational cost.
 
-The spectral development encodes $Q_n$ via the recursive index type $H_n$ and the
-matrix $A_n$. It is important to confirm that this algebraic picture matches the
-standard combinatorial model of the hypercube.
+## 9. Boundary cases and structural checks
 
-**The symmetric-difference model.** Represent a vertex of $Q_n$ as a subset $S
-\subseteq \{1,\dots,n\}$ (the set of coordinates equal to $1$). Two vertices $A$
-and $B$ are adjacent iff their symmetric difference $A \triangle B$ has exactly
-one element — i.e. they differ in a single coordinate, Hamming distance $1$.
+Several elementary checks clarify the scope of the results. At dimension $0$, the signal space is one-dimensional but the adjacency operator is zero; both $A_0^2=0I$ and the eigenvalue conclusion $\lambda=0$ remain valid. At dimension $1$,
 
-**Theorem 5.1 ($n$-regularity, combinatorially).** In the symmetric-difference
-model, every vertex $A$ of $Q_n$ has exactly $n$ neighbors.
-
-*Proof.* The neighbors of $A$ are precisely the sets $B$ with $|A \triangle B| =
-1$. Now $|A \triangle B| = 1$ iff $A \triangle B = \{i\}$ for a unique $i \in
-\{1,\dots,n\}$, and in that case $B = A \triangle \{i\}$ because symmetric
-difference is an involution: $A \triangle (A \triangle B) = B$. Hence the
-neighbor set of $A$ is exactly the image of the map
 $$
-\varphi\colon \{1,\dots,n\} \to \text{vertices}, \qquad \varphi(i) = A
-\triangle \{i\}.
+A_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},
 $$
-The map $\varphi$ is injective: if $A \triangle \{i\} = A \triangle \{j\}$, then
-left-cancellation of $A$ (again by the involution property) gives $\{i\} =
-\{j\}$, so $i = j$. An injection from an $n$-element set has an $n$-element
-image, so $A$ has exactly $n$ neighbors. $\qquad\blacksquare$
 
-The map $\varphi$ is precisely "toggle coordinate $i$", establishing a bijection
-between the $n$ coordinate directions and the $n$ neighbors of $A$. These are
-exactly the $n$ off-diagonal $\pm 1$ entries in row $A$ of the signed matrix, so
-Theorem 5.1 and Corollary 4.2 are two proofs — one geometric, one spectral — of
-the same regularity fact. The two encodings of $Q_n$ therefore agree on the
-degree of every vertex, confirming that $A_n$ really is a signed version of the
-hypercube adjacency matrix.
+so $A_1^2=I$ and the two eigenvalues are $+1$ and $-1$. The first genuine cancellation appears at dimension $2$, because square faces first occur there. Thus the two-cube is simultaneously the smallest nontrivial success for the canonical signing and the smallest counterexample for the all-positive signing.
 
----
+The nonzero-eigenvector hypothesis in Theorem 4.1 is indispensable. The equation $A_n0=\lambda0$ holds for every real $\lambda$, so no spectral conclusion can follow from the zero vector. By contrast, the integrality of $s$ in Theorem 4.2 is not conceptually essential: for any real $s\ge0$, the same proof yields $n\le s^2$. The integer formulation matches applications in which $s$ counts neighbors or sensitive coordinates.
 
-## 6. From the spectral core to the sensitivity bound
+The use of real signals is likewise natural but not uniquely necessary. The scalar-square identity is algebraic and remains meaningful over any coefficient system in which the recursion and the scalar $n$ are defined. The statement about eigenvalue magnitudes, square roots, and absolute values specifically uses the ordered real field. Over complex numbers the same equation $\lambda^2=n$ still restricts eigenvalues to the two real roots when $n>0$.
 
-We now record how the established facts drive Huang's degree bound; this is the
-one step that additionally requires the classical interlacing theorem.
+Finally, the theorem concerns the canonical operator on the whole cube. A principal restriction to a subset of vertices does not generally retain the exact square identity, because some length-two paths leave the subset. Such restrictions are nevertheless central to applications: interlacing can transfer information from the full operator to a principal submatrix even when exact cancellation is lost. This distinction explains why the full-cube identity is a foundation rather than the entire induced-subgraph argument.
 
-**Cauchy interlacing.** Let $M$ be a real symmetric $N \times N$ matrix with
-eigenvalues $\lambda_1 \ge \dots \ge \lambda_N$, and let $B$ be a principal
-$m \times m$ submatrix (obtained by deleting rows and the corresponding columns)
-with eigenvalues $\beta_1 \ge \dots \ge \beta_m$. Then for each $i$,
+## 10. Future research
+
+Several extensions are particularly natural.
+
+First, the spectral certificate should be connected explicitly to Boolean functions. One should define the relevant induced subgraph, relate its maximum degree to pointwise sensitivity, and show how multilinear degree controls the size or density needed for the spectral argument.
+
+Second, scalar-square signings should be classified. Proposition 5.3 identifies negative sign product around every square face as necessary. Proving sufficiency would reduce the operator identity to a local face rule. One can then ask whether all such signings are equivalent under switching, where switching at a vertex reverses the signs of all incident edges.
+
+Third, multiplicities deserve a direct treatment. In positive dimension, symmetry and the scalar-square identity restrict eigenvalues to $\pm\sqrt n$. A trace-zero calculation is expected to show equal multiplicities $2^{n-1}$ and hence characteristic polynomial
+
 $$
-\lambda_{i} \;\ge\; \beta_i \;\ge\; \lambda_{i + N - m}.
+(X^2-n)^{2^{n-1}}.
 $$
-In particular $\beta_1 \ge \lambda_{1 + N - m}$: the largest eigenvalue of the
-submatrix is at least the $(N-m+1)$-th largest eigenvalue of the whole matrix.
 
-**The degree bound.** Take $M = A_n$, so $N = 2^n$. By Theorem 4.3 and the
-symmetry and zero-trace balance (Propositions 3.2, 3.3), $A_n$ has eigenvalue
-$+\sqrt{n}$ with multiplicity $2^{n-1}$. Let $H$ be any set of $m = 2^{n-1}+1$
-vertices and let $B = A_n[H]$ be the corresponding principal submatrix. Since
-$m > 2^{n-1}$, the index $N - m + 1 = 2^{n-1} \le$ the multiplicity range of
-$+\sqrt{n}$, so interlacing gives $\beta_1 \ge \lambda_{2^{n-1}} = \sqrt{n}$.
-Thus the largest eigenvalue of $B$ is at least $\sqrt{n}$.
+Fourth, principal restrictions of $A_n$ should be studied through eigenvalue interlacing. This is the main spectral mechanism for translating density of a vertex subset into a large local degree in its induced subgraph.
 
-Finally, $B$ is a symmetric matrix all of whose entries lie in $\{-1,0,1\}$
-(Proposition 3.4). For such a matrix the largest eigenvalue is at most the
-maximum row-sum of absolute values, i.e. at most the maximum number of nonzero
-entries in a row. Hence some row of $B$ has at least $\sqrt{n}$ nonzero entries,
-meaning some vertex of $H$ has at least $\sqrt{n}$ neighbors inside $H$. This is
-exactly the Gotsman–Linial statement, and it yields the Sensitivity Conjecture
-with $bs(f) \le s(f)^4$.
+Fifth, exhaustive computations in small dimensions can test proposed refinements of degree–sensitivity inequalities. Recording extremal pairs $(\deg(f),s(f))$ can eliminate false constants or lower-order corrections before attempting general proofs.
 
-The present work establishes every ingredient of this deduction except the
-interlacing inequality and the exact multiplicity $2^{n-1}$ of $+\sqrt{n}$; these
-are the natural next targets (Section 8).
+Finally, the construction invites generalization beyond binary alphabets. For products of larger state spaces and other Cayley graphs, one may search for local phase rules or anticommutation relations that force a scalar square and retain useful local-degree consequences.
 
----
+## 11. Conclusion
 
-## 7. Algorithms
+The recursively signed Boolean-cube adjacency operator obeys the exact identity $A_n^2=nI$. The proof is a one-step block calculation repeated across dimensions, but its content is geometric: the two length-two paths across every square face carry opposite signed products and cancel. This forces every nonzero eigenvalue certificate to satisfy $\lambda^2=n$, and any bound $|\lambda|\le s$ therefore implies $n\le s^2$.
 
-The construction is fully explicit and lends itself to direct computation. We
-describe the two core procedures.
+The ordinary unsigned two-cube shows that this rigidity is not automatic. Its parallel two-step paths reinforce, and its adjacency square is not scalar. The successful signing is therefore essential rather than cosmetic.
 
-**Algorithm A (Recursive assembly of $A_n$).** Build $A_n$ by the block
-recursion. Starting from the $1\times 1$ zero matrix, repeatedly assemble the
-$2^{k+1}\times 2^{k+1}$ matrix from four $2^k\times 2^k$ blocks $A_k$, $I$, $I$,
-$-A_k$. The cost is dominated by the final assembly, $\Theta(4^n) = \Theta(N^2)$
-entries where $N = 2^n$.
-
-**Algorithm B (Certified verification of the structural package).** Given $A_n$,
-verify each theorem numerically: compute $A_n^2$ and check equality with $nI$;
-check $A_n^{\mathsf T} = A_n$; sum the diagonal for the trace; scan entries for
-membership in $\{-1,0,1\}$; count nonzero entries per row for regularity; compute
-eigenvalues and confirm $\mu^2 = n$; compute the determinant and compare its
-square with $n^{2^n}$; and check $A_n \cdot (\tfrac1n A_n) = I$. Each check is
-$O(N^2)$ except eigenvalue and determinant computation, which are $O(N^3)$.
-
-These procedures are implemented in the accompanying numerical demonstrations.
-
----
-
-## 8. Discussion and future directions
-
-The results above establish the spectral core of Huang's method as a
-self-contained package: a symmetric $\{-1,0,1\}$-matrix, $n$-regular, squaring to
-$nI$, with zero trace, determinant square $n^{2^n}$, and inverse $n^{-1}A_n$.
-Every eigenvalue is pinned to $\pm\sqrt{n}$. The following directions build on
-this foundation.
-
-**1. Exact eigenvalue multiplicities and the interlacing bound.** We conjecture
-the signed hypercube operator has precisely two eigenvalues, $+\sqrt{n}$ and
-$-\sqrt{n}$, each of multiplicity exactly $2^{n-1}$; consequently every induced
-subgraph on strictly more than half the vertices contains a vertex of degree at
-least $\sqrt{n}$. A symmetric operator squaring to $nI$ with vanishing trace is
-forced into a perfectly balanced two-eigenvalue spectrum, and Cauchy interlacing
-converts that balance directly into a maximum-degree lower bound. The squaring
-identity, symmetry, zero trace, and $n$-regularity — exactly the hypotheses
-interlacing needs — are now all established; only the interlacing step itself
-remains to complete a fully self-contained degree–sensitivity theorem.
-
-**2. Sharpness of the $\sqrt{n}$ gap.** We conjecture the $\sqrt{n}$
-maximum-degree bound is asymptotically tight: there exist induced subgraphs on
-just over half the vertices whose maximum degree is $(1+o(1))\sqrt{n}$, so no
-signed-adjacency argument can improve the exponent beyond $1/2$. The extremal
-configurations are governed by the same eigenvectors that realize the
-$\pm\sqrt{n}$ eigenvalues, so the spectral bound and the extremal combinatorial
-construction are two views of a single eigenspace. With the spectrum provably
-confined to $\pm\sqrt{n}$, the extremal question becomes a concrete search for
-near-optimal vertex subsets.
-
-**3. Weighted and biased hypercubes.** We conjecture that replacing each $\pm1$
-edge weight by an independent sign pattern that is *consistent around every
-square face* still yields an operator squaring to $nI$; conversely, any
-face-inconsistent pattern strictly lowers the spectral radius. The squaring
-identity is equivalent to a local face condition — each two-dimensional face must
-carry an odd number of $-1$ edges — so the global spectral gap is a purely local,
-checkable property. The block recursion makes the face condition explicit at
-every step.
-
-**4. Determinant growth and lattice volume.** We conjecture the squared
-determinant $n^{2^n}$ is the extremal value among all $\{-1,0,1\}$ symmetric
-matrices supported on the hypercube edge set; any such matrix with a different
-support has strictly smaller $|\det|$.
-
----
-
-## 9. Conclusion
-
-Huang's resolution of the Sensitivity Conjecture rests on a single spectral
-miracle — a signed adjacency matrix of the hypercube whose square is a scalar.
-By isolating that miracle and its structural consequences, we have exhibited the
-complete algebraic engine of the argument: the identity $A_n^2 = nI$, symmetry,
-zero trace, $\{-1,0,1\}$ entries, $n$-regularity (proved both spectrally and
-combinatorially), the $\pm\sqrt{n}$ spectral gap, the determinant formula, and
-the explicit inverse. These are exactly the hypotheses that the interlacing step
-consumes, so the path to a fully self-contained degree–sensitivity theorem is now
-clearly marked. The signs that Huang added to the cube are not a technical
-convenience but the whole point: they enforce, through a local face condition, a
-global two-valued spectrum on an object of exponential size.
+Together, the identity, spectral consequence, numerical bound, and counterexample isolate a compact algebraic core for spectral sensitivity arguments. They also point toward a broader classification problem: determine which local cancellation laws make a large combinatorial operator behave like a square root of dimension.
