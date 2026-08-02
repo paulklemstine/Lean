@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "343eb494",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n- Formalize the full Erdős–Faber–Lovász theorem for finite linear hypergraphs with `k` edges of size `k`, using the rainbow-edge formulation in `Combinatorics/ErdosFaberLovasz.lea",
-      "quality_score": 0.76494,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-31T04:01:28",
-      "title": "Erdős-Faber-Lovász Conjecture"
-    },
-    {
       "cycle_id": "1fc64f82",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n1. **Higher-dimensional finite projective spaces.** Define `TP^n_fin` as the\n   quotient of `ℝ^(n+1)` by diagonal translation, choose a normalization, and\n   test whether analogou",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-08-02T11:45:37",
       "title": "Consciousness as Integrated Information: Mathematical Foundations"
+    },
+    {
+      "cycle_id": "405d388b",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Gödel's Casino, Cycle 2\n\n## Completed in this cycle\n\n`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational\ncasino to asymmetric odds: a correct bet ear",
+      "quality_score": 0.8013399999999999,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-08-02T14:03:42",
+      "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "81b94eec",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\n## Completed foundation\n\n`Algebra/BSD/LeadingCoefficient.lean` is a complete, independently compiling formal\nfoundation for consequences of the Birch--Swinnerton-Dyer leading-coef",
-      "quality_score": 0.43,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-25T06:37:04",
-      "title": "Birch and Swinnerton-Dyer Conjecture"
-    },
     {
       "cycle_id": "d6b505de",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-08-02T11:45:37",
       "title": "Consciousness as Integrated Information: Mathematical Foundations"
+    },
+    {
+      "cycle_id": "405d388b",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Gödel's Casino, Cycle 2\n\n## Completed in this cycle\n\n`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational\ncasino to asymmetric odds: a correct bet ear",
+      "quality_score": 0.8013399999999999,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-08-02T14:03:42",
+      "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6c98f572",
-      "domain": "Computation",
-      "name": "hom_contravariant",
-      "quality": 0.80505
-    },
-    {
-      "cycle_id": "6c98f572",
-      "domain": "Computation",
-      "name": "pontryagin_hom_contravariant",
-      "quality": 0.80505
-    },
-    {
-      "cycle_id": "9fb19498",
-      "domain": "Tropical",
-      "name": "support_card_le_number",
-      "quality": 0.79021
-    },
     {
       "cycle_id": "9fb19498",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "phi_le_ei",
       "quality": 0.75983
+    },
+    {
+      "cycle_id": "405d388b",
+      "domain": "Logic",
+      "name": "randOddsPayoff_eq",
+      "quality": 0.8013399999999999
+    },
+    {
+      "cycle_id": "405d388b",
+      "domain": "Logic",
+      "name": "mass_split",
+      "quality": 0.8013399999999999
+    },
+    {
+      "cycle_id": "405d388b",
+      "domain": "Logic",
+      "name": "expOdds_eq",
+      "quality": 0.8013399999999999
     }
   ],
-  "last_updated": "2026-08-02T11:45:37",
+  "last_updated": "2026-08-02T14:03:42",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "5a7b49b0",
-        "quality": 0.58,
-        "theorems": 13,
-        "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-      },
-      {
         "cycle_id": "920a890c",
         "quality": 0.6,
         "theorems": 18,
@@ -3513,6 +3507,12 @@
         "quality": 0.7388999999999999,
         "theorems": 10,
         "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
+      },
+      {
+        "cycle_id": "405d388b",
+        "quality": 0.8013399999999999,
+        "theorems": 20,
+        "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
       }
     ],
     "MachineLearning": [

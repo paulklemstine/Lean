@@ -911,6 +911,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 405d388b (Q=0.801), which proved 20 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 G\u00f6del's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nthe payoff (no unconditional winning strategy), and expected profit is positive\nexactly when aggregate",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_405d388b_5b3a8117",
+    "priority_score": 0.9013399999999999,
+    "research_mode": "team",
+    "source_exp_id": "405d388b",
+    "status": "available",
+    "timestamp": "2026-08-02T14:03:42.148104+00:00",
+    "title": "Deepening: Earlier cycles settled the **deterministic** game: complementing a world negates"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical"
@@ -7830,17 +7844,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: deciding whether a finite multiset of non-rotatable square pieces wi"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "064bb153",
     "description": "# Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf geometry of a two-qubit state that is continuous, vanishes exactly on product states, and equals one exactly on maximally entangled states.\n\n**The key insight is...** ordinary linking numbers are too discrete, but differential-geometric quantities such as calibrated volume, holonomy, or an averaged linking integral can vary continuously with the determinant coordinate.\n\n**Why now?** The integer-valued proposal is obstructed by an explicit normalized state of concurrence one half, sharply specifying the properties a replacement invariant must satisfy.\n\n## 2. Exterior-algebra characterization of multipartite entanglement\n\nFor each bipartition of a pure multipartite state, the complete family of Pl\u00fccker coordinates of the corresponding coefficient flattening determines a hierarchy of entanglement monotones, with the two-qubit concurrence as its first nontrivial member.\n\n**The key insight is...** two-qubit concurrence is the norm of a determinant, and determinants are the coordinates of exterior powers rather than linking numbers.\n\n**Why now?** The determinant bound and its exact zero locus provide a tractable base case from which higher minors and their norm inequalities can be developed.\n\n## 3. Classification of all sharp determinant maximizers\n\nEvery normalized two-qubit state with concurrence one lies in the local-unitary orbit of a Bell state, and equality in the determinant norm bound is equivalent to orthogonality and equal norm of the two coefficient rows.\n\n**The key insight is...** equality must hold simultaneously in the triangle inequality and both quadratic product bounds, forcing rigid phase and norm relations.\n\n**Why now?** The sharp upper bound is established, and its proof exposes the exact inequalities whose equality cases must be classified.\n\n## 4. Quantitative distance from the product-state variety\n\nThere are optimal universal constants relating concurrence to the metric distance from a normalized state to the Segre variety of product states, for both Euclidean and Fubini\u2013Study metrics.\n\n**The key insight is...** concurrence is the norm of the defining quadratic equation of the Segre variety, so it should control transverse distance while degenerating predictably along tangent directions.\n\n**Why now?** The exact determinant criterion identifies the algebraic zero set, while the unit-interval bound supplies the global normalization needed for sharp estimates.\n\n## 5. Topological stratification of fixed-concurrence level sets\n\nFor each `c` strictly between zero and one, the normalized two-qubit states of concurrence `c`, modulo global phase, have a uniform diffeomorphism type, with topology changing only at the product and maximally entangled strata.\n\n**The key insight is...** although concurrence itself cannot be an integer linking number, its critical level sets may still carry meaningful and computable topology.\n\n**Why now?** Explicit interior values and the two boundary values are available, making the conjecture falsifiable through a combination of singular-value coordinates and level-set analysis.\n",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_0321",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b596d3d1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T13:21:29.822356+00:00",
     "title": "There exists a canonically normalized real-valued functional on the quaternionic"
   },
@@ -9676,22 +9691,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Companion to `GarsiaQBinomial.lean`, part of the memorial-tribute exploration fo"
   },
   {
-    "consumed_by_exp_id": "405d388b",
-    "description": "# Future Directions \u2014 G\u00f6del's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nthe payoff (no unconditional winning strategy), and expected profit is positive\nexactly when aggregate accuracy exceeds `1/2`. This cycle formalizes the next\nitem on the \"Further formalization\" list \u2014 **randomized strategies** \u2014 and\nproves the accompanying **minimax / no-free-lunch** theorem, together with the\nsharp information-theoretic profitability threshold.\n\nThe new development is `Catalog/Probability/GodelCasinoRandomized.lean`\n(self-contained, `import Mathlib`, no `sorry`, no extra axioms). A statement is a\nBoolean function `s` on a finite world space `W`; a randomized strategy is the\nprobability `r \u2208 [0,1]` of betting `true`; a prior over worlds is `\u03bc : W \u2192 \u211a`.\n\n### Main theorems\n\n1. `randPayoff_eq` \u2014 per-world expected payoff is `2r-1` (true) / `1-2r` (false).\n2. `randPayoff_half` \u2014 the **fair coin** `r = 1/2` pays exactly `0` in every\n   world: a strategy that never loses and never wins.\n3. `expRand_eq` \u2014 the exact **bilinear closed form**\n   `expRand \u03bc s r = (2r-1)\u00b7(trueMass \u2212 falseMass)`; and `expRand_normalized`\n   rewrites this as `(2r-1)\u00b7(2\u03c0-1)` for a probability prior with true-probability\n   `\u03c0`.\n4. `symmetric_prior_zero` \u2014 **randomized no-free-lunch.** A prior admitting a\n   truth-flipping, mass-preserving involution (a complement-symmetric prior)\n   forces expected profit `0` for *every* strategy. Incompleteness modelled this\n   way yields no edge, even with randomization.\n5. `no_benefit_randomization` + `optimal_pure_value` + `expRand_le_optimal` \u2014\n   **pure play is optimal**; the optimal value is `|trueMass \u2212 falseMass|`.\n   Randomizing never helps a player who knows the prior.\n6. `edge_iff_asymmetric` \u2014 **edge iff information.** A positive-expectation\n   strategy exists *iff* the prior is asymmetric between truth and falsehood.\n7. `deckValue_nonneg`, `deckValue_card_le` \u2014 the optimal value of a deck is the\n   sum of per-card imbalances: nonnegative and dominated card by card.\n8. `two_world_no_edge` \u2014 the balanced two-world casino (`W = Bool`, `s = id`,\n   uniform prior) admits no positive-expectation strategy at all, recovering the\n   contrarian verdict of the earlier possible-world file for randomized play.\n\n### Interpretation\n\nThe randomized analysis sharpens the earlier conclusion. The value of the game\nis governed entirely by the prior's **truth\u2013falsehood imbalance** `trueMass \u2212\nfalseMass`. Randomization changes nothing: an informed player should bet the more\nlikely value deterministically, and a symmetric prior (the natural betting model\nof \"pure logical independence, no distributional information\") drives every\nstrategy to exactly zero. This is the minimax value: the player can always secure\n`0` with the fair coin, and an adversary who keeps the prior symmetric can hold\nthe player to `0`.\n\n## Directions not yet formalized (open for the next cycle)\n\n- **Full measure-theoretic lift.** Replace the finite rational prior by a\n  Mathlib `PMF`/`Measure` on an infinite world space and re-derive\n  `expRand_eq` as a genuine expectation, connecting to `MeasureTheory.integral`.\n- **Sequential / adaptive play and calibration.** Model a player who updates a\n  posterior across rounds; state and prove a regret or calibration bound. The\n  present static bilinear form is the per-round building block.\n- **Asymmetric odds and transaction costs.** With payoff `+a` for a correct bet\n  and `-b` for an incorrect one, the closed form becomes affine with a shifted\n  break-even threshold `\u03c0* = b/(a+b)`; formalize the resulting sharp threshold\n  and re-prove `edge_iff_asymmetric` in that generality.\n- **Abstention.** Add a third action \"pass\" (payoff `0`); characterize when\n  abstention strictly dominates and compute the optimal value.\n- **Minimax as a theorem, not a pair of facts.** State the game explicitly as a\n  two-player zero-sum game and prove `value = 0` via a genuine minimax equality\n  (e.g. from Mathlib's convexity/`sInf`\u2013`sSup` interchange), rather than the\n  matched upper/lower bounds provided here.\n- **Concrete G\u00f6del coding.** The unresolved density question (\"one third of\n  arithmetic statements\") still requires a fixed encoding, a size measure, a\n  sampling distribution, and a proved density theorem; the arithmetic hierarchy\n  alone supplies none of these. The present framework shows precisely what such a\n  distribution would have to violate (symmetry) to produce a positive edge.\n",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_0640",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "73ec6b88",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T09:42:12.917260+00:00",
-    "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Wigner Semicircle Law\n\nThis development establishes the two pillars of the moment-method proof of the\nWigner semicircle law and bridges them:\n\n1. **Combinatorial side** (`Moments.lean`): the moments of the standard\n   semicircle distribution are the Catalan numbers, satisfying the Catalan/Wigner\n   moment recurrence, the central-binomial closed form, and the `4^k` growth\n   bound (Carleman determinacy).\n2. **Analytic side** (`Density.lean`): the radius-1 semicircle density is a\n   genuine probability density (nonnegative, symmetric, integrates to 1) with\n   mean 0 and variance 1/4.\n3. **Bridge** (`Bridge.lean`): the rescaled Catalan moments match the directly\n   computed integrals of the density (0th, 1st, 2nd moments).\n\n## Natural next steps\n\n- **General even moment integral.** Prove\n  `\u222b_{-1}^{1} x^{2k} \u221a(1-x\u00b2) dx = \u03c0 \u00b7 C_k / 4^{k+1}` for all `k` (currently only\n  `k = 0, 1` are done via `integral_sqrt_one_sub_sq` and the sin-substitution).\n  A reduction/recurrence via integration by parts or the Beta function\n  (`Real.Gamma`/`betaIntegral` in Mathlib) would give the full moment sequence of\n  the density, closing the loop with `scaledMoment` for every `k`.\n\n- **Uniqueness via moments (Carleman).** Formalize that a probability measure on\n  a bounded interval is determined by its moments, then combine with\n  `scMoment_le_four_pow` to conclude the semicircle law is the unique measure\n  with these moments.\n\n- **Empirical spectral distribution.** Define the empirical spectral measure\n  `\u03bc_N = (1/N) \u03a3 \u03b4_{\u03bb_i}` of an `N\u00d7N` symmetric matrix from its eigenvalues, and\n  its moments `(1/N) tr(M^k)`.\n\n- **Expected traces \u2192 Catalan.** For a Wigner ensemble, prove\n  `lim_{N\u2192\u221e} E[(1/N) tr(W_N^{2k})] = C_k` and the odd traces `\u2192 0` by the\n  non-crossing pair-partition enumeration; the recurrence `scMoment_recurrence`\n  is the target identity.\n\n- **Weak convergence.** Assemble the moment convergence plus determinacy into\n  weak convergence `\u03bc_N \u21d2 semicircle`, the full statement of Wigner's theorem.\n\n- **Concentration.** Strengthen convergence in expectation to almost-sure /\n  in-probability convergence via variance bounds on the traces.\n",
     "domains": [
@@ -11078,6 +11077,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-02T11:45:33.670875+00:00",
     "title": "The completed Lean development establishes the finite minimum-information-partit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 G\u00f6del's Casino, Cycle 2\n\n## Completed in this cycle\n\n`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational\ncasino to asymmetric odds: a correct bet earns `a`, while an incorrect bet loses\n`b`.  The development proves:\n\n- the affine per-world and expected-payoff formulas;\n- randomized play is an affine combination of the two pure strategies;\n- randomization cannot beat the better pure strategy;\n- a positive randomized edge exists exactly when a pure strategy has one;\n- for a normalized prior and `a + b > 0`, positive profit exists exactly outside\n  the no-bet interval\n  `b/(a+b) \u2264 trueMass \u2264 a/(a+b)`;\n- adding abstention gives value\n  `max 0 (max pureFalseValue pureTrueValue)`, hence a nonnegative value, value\n  zero when both bets are nonpositive, and an upper bound on every randomized\n  strategy.\n\n## Computational evidence\n\nThe result is affine, so finite sampling is not needed to infer its universal\nshape: the formal identity reduces every randomized strategy to the segment\nbetween its endpoint values.  As a small sanity table, with normalized true\nmass `\u03c0`:\n\n| `(a,b)` | `\u03c0` | false value `a-(a+b)\u03c0` | true value `(a+b)\u03c0-b` | best with abstention |\n|---|---:|---:|---:|---:|\n| `(1,1)` | `1/2` | `0` | `0` | `0` |\n| `(2,1)` | `1/3` | `1` | `0` | `1` |\n| `(2,1)` | `2/3` | `0` | `1` | `1` |\n| `(1,2)` | `1/2` | `-1/2` | `-1/2` | `0` |\n\nNo integer sequence arises, so an OEIS search is inapplicable.  The exact affine\nformula also supplies the counterexample hunt: an interior randomized strategy\ncannot exceed both endpoint values, and the formal Lean theorem proves this for\nall rational parameters rather than only sampled cases.\n\n## Next steps\n\n1. Replace rational finite priors with `PMF` or `Measure` and prove the same\n   affine expectation formulas on infinite world spaces.\n2. Model sequential Bayesian updating and characterize cumulative regret under\n   asymmetric odds.\n3. Add explicit transaction fees or bid\u2013ask spreads, producing distinct entry\n   thresholds for true and false bets.\n4. Formulate the player/prior interaction as a two-player zero-sum game and\n   derive an explicit `sInf`/`sSup` minimax equality.\n5. Study proper scoring rules, where reported probabilities replace a single\n   randomized Boolean action.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0908",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "405d388b",
+    "status": "available",
+    "timestamp": "2026-08-02T14:03:37.561864+00:00",
+    "title": "`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational"
   },
   {
     "consumed_by_exp_id": "",

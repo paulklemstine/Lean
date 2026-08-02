@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-02T11:45:40.566324+00:00",
+  "last_updated": "2026-08-02T14:03:42.771016+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -44787,6 +44787,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-02T11:45:40.445353+00:00",
       "title": "Consciousness as Integrated Information: Mathematical Foundations"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1523,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Logic",
+      "duration_seconds": 8185.819538116455,
+      "end_time": 1785679326.030693,
+      "files_integrated": 4,
+      "job_id": "405d388b",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.8086199999999999,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v25",
+      "quality_breakdown": {
+        "actionability": 0.54,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7923,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.782,
+        "novelty": 0.95,
+        "proof_depth": 0.71,
+        "usefulness": 0.83
+      },
+      "quality_score": 0.8013399999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785671140.211155,
+      "strategy_count": 0,
+      "theorem_count": 20,
+      "theorem_novelty_disproof": 8,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-02T14:03:42.645624+00:00",
+      "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
     }
   ]
 }

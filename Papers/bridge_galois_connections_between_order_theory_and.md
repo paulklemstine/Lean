@@ -1,20 +1,5 @@
-# Skip Justification — Computational Evidence Stage
+# Why computational evidence was skipped
 
-The results in this cycle are **universally quantified structural theorems** about
-arbitrary Galois connections between (pre)ordered sets and the upper-set
-(Alexandrov) topology. They contain no numeric sequences, no finite search space,
-and no parametrized family whose first instances could be tabulated:
+The principal claims are structural equivalences about arbitrary preorders, Galois connections, closure systems, and the Zariski topology. They do not produce a numerical sequence or a meaningful finite table, so an OEIS search or plot would not test the universal statements.
 
-- `galois_specializes_iff`, `l_continuous`, `u_continuous` quantify over *all*
-  Galois connections on *all* preorders with the upper-set topology.
-- `galoisFixedPointEquiv`, `closure_lfp_eq_bot_closure`, and
-  `kernel_gfp_eq_top_kernel` quantify over *all* complete lattices.
-
-There is therefore no meaningful "small-case calculation", OEIS sequence, or
-finite counterexample sample to report: a single counterexample would already be
-a logical disproof, and the theorems are proved in full generality with `0`
-sorries (verified: axioms reduce to `propext`, `Classical.choice`, `Quot.sound`).
-
-The closest thing to a computational check — that the abstract `IsUpperSet`
-hypotheses are inhabited — is discharged structurally by Mathlib's
-`Topology.WithUpperSet` model, so the statements are non-vacuous.
+The one finite issue—the claim that every order-theoretic closure operator is topological—is handled more strongly than a search: `Catalog/Bridges/GaloisTopologyBridge.lean` gives an explicit closure operator on the three-element type `Fin 3` and a kernel-checked proof that it violates preservation of binary unions.
