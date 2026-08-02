@@ -1,440 +1,401 @@
-# Galois Connections as a Bridge Between Order Theory and Topology: Fixed Points, Closure Systems, and the Zariski Spectrum
+# Galois Connections Between Order Theory and Topology
 
-**Author:** Aristotle
-**Date:** 2026-06-24
+**Aristotle — August 2, 2026**
 
 ## Abstract
 
-A Galois connection between two complete lattices is a pair of monotone maps
-$l : \alpha \to \beta$, $u : \beta \to \alpha$ satisfying the defining
-adjunction $l(a) \le b \iff a \le u(b)$. We develop, from this single
-bi-implication and *without invoking the Knaster–Tarski fixed-point
-theorem*, the complete fixed-point theory attached to such a connection. We
-introduce the closure operator $\operatorname{cl} = u \circ l$ on $\alpha$
-and the kernel operator $\operatorname{ker} = l \circ u$ on $\beta$, prove
-that they are genuine closure and interior operators, and establish the
-**fundamental fixed-point correspondence**: an order isomorphism between the
-closed elements $\{a : u(l(a)) = a\}$ of $\alpha$ and the coclosed elements
-$\{b : l(u(b)) = b\}$ of $\beta$. We then show that the closed elements form
-a complete lattice (and dually for the coclosed elements), constructing all
-infima and suprema explicitly from the closure-system structure rather than
-from an external fixed-point principle. As a corollary we recover the
-Knaster–Tarski conclusion for the closure operator, with closed-form extreme
-fixed points $u(l(\bot))$ and $l(u(\top))$. Finally we explain how the
-construction bridges order theory and topology: the closed elements of any
-Galois connection satisfy the closed-set axioms, and in the canonical
-example of ideals versus zero sets this recovers the Zariski topology on
-$\operatorname{Spec}(R)$. All results have been formalized and machine-checked.
-
-**Keywords:** Galois connection, closure operator, kernel operator, complete
-lattice, fixed point, Knaster–Tarski, order isomorphism, Zariski topology,
-formal concept analysis, abstract interpretation.
-
----
+We develop a direct bridge between order theory and topology through Galois connections. Every preorder carries an upper Alexandrov topology whose open sets are the upward-closed subsets. A map between preorders is continuous for these topologies if and only if it is monotone. Since both adjoints in a Galois connection are monotone, every Galois connection canonically yields topologies on its two underlying preorders for which both adjoints are continuous. When the domain is a complete lattice, the composite of the adjoints is an extensive, monotone, idempotent closure operator, and its fixed points form a complete lattice; meets are inherited from the ambient lattice, while joins are obtained by closing ambient joins. We specialize the construction to the ideal–zero-locus correspondence for the prime spectrum of a commutative ring. The resulting Galois law characterizes Zariski closed sets, and the ideal-side closure is radicalization. Finally, we isolate a necessary caution: a general order-theoretic closure need not be topological. An explicit closure on a three-point set fails preservation of binary unions. This separates the universally available Alexandrov topology from the stronger claim that a Galois-induced closure is a Kuratowski closure.
 
 ## 1. Introduction
 
-The notion of a Galois connection abstracts the relationship discovered by
-Évariste Galois between subfields of a field extension and subgroups of its
-automorphism group. Stripped to its order-theoretic core, a Galois
-connection is an adjunction between two partially ordered sets, and it
-captures with surprising economy the recurring mathematical pattern of a
-*best two-sided approximation* between two structures. Galois connections
-appear, often unrecognized as the same object, in logic (syntax vs.
-semantics), in data analysis (formal concept analysis), in static program
-analysis (abstract interpretation), and in algebraic geometry (ideals vs.
-varieties).
-
-This paper has two goals. First, to give a clean, self-contained
-development of the fixed-point theory of a Galois connection between
-complete lattices that is *deliberately independent* of the Knaster–Tarski
-theorem, deriving completeness of the lattice of closed elements purely from
-closure-system structure. Second, to make explicit the bridge from this
-order-theoretic core to topology, culminating in the observation that the
-Zariski topology on the prime spectrum of a commutative ring is an instance
-of the construction.
-
-The development is fully formal. Every theorem stated below corresponds to a
-machine-checked result; we give mathematical proof sketches here and name the
-corresponding formal statements where helpful.
-
-### 1.1 Contributions
-
-1. Direct proofs, from the defining bi-implication alone, of monotonicity of
-   both adjoints, the unit/counit inequalities, and the triangle identities
-   (`le_u_l`, `l_u_le`, `monotone_l`, `monotone_u`, `u_l_u`, `l_u_l`).
-2. A verification that $\operatorname{cl} = u\circ l$ is a closure operator
-   and $\operatorname{ker} = l \circ u$ an interior operator
-   (`cl_extensive`, `cl_monotone`, `cl_idem`, `ker_contracting`,
-   `ker_monotone`, `ker_idem`).
-3. The fundamental fixed-point correspondence as an explicit order
-   isomorphism (`fixedPointOrderIso`).
-4. Completeness of the lattice of closed elements via closure-system
-   structure, with explicit greatest lower bounds and least upper bounds
-   (`closed_sInf_closed`, `closed_isGreatestLB`, `closed_isLeastUB`,
-   `Closed.completeLattice`), avoiding Knaster–Tarski.
-5. The topological bridge: closed elements satisfy the closed-set axioms,
-   recovering the Zariski topology as the canonical example.
-
----
-
-## 2. Preliminaries
-
-### 2.1 Partial orders and complete lattices
-
-A **partial order** on a set $\alpha$ is a relation $\le$ that is reflexive,
-transitive, and antisymmetric. A **complete lattice** is a partial order in
-which every subset $S \subseteq \alpha$ has a least upper bound $\bigvee S$
-(supremum, denoted `sSup` in the formalization) and a greatest lower bound
-$\bigwedge S$ (infimum, `sInf`). In particular it has a top element
-$\top = \bigvee \alpha$ and a bottom element $\bot = \bigwedge \alpha$.
-
-Throughout, $\alpha$ and $\beta$ are complete lattices.
-
-### 2.2 Galois connections
-
-**Definition 2.1 (Galois connection).** Maps $l : \alpha \to \beta$ and
-$u : \beta \to \alpha$ form a *Galois connection*, written $l \dashv u$, if
-for all $a \in \alpha$ and $b \in \beta$,
-$$l(a) \le b \quad\Longleftrightarrow\quad a \le u(b). \tag{GC}$$
-We call $l$ the **lower adjoint** and $u$ the **upper adjoint**. (This is the
-monotone form of a Galois connection; the antitone "Galois correspondence"
-of classical Galois theory is recovered by reversing the order on one side.)
-
-The single equivalence (GC) is the only hypothesis used in Sections 3–5.
-
----
-
-## 3. Consequences of the adjunction
-
-We collect the standard properties, each proved *directly* from (GC).
-
-**Lemma 3.1 (Unit, `le_u_l`).** For all $a$, $\;a \le u(l(a))$.
-
-*Proof.* Apply (GC) with $b = l(a)$ to the tautology $l(a) \le l(a)$. ∎
-
-**Lemma 3.2 (Counit, `l_u_le`).** For all $b$, $\;l(u(b)) \le b$.
-
-*Proof.* Apply (GC) with $a = u(b)$ to the tautology $u(b) \le u(b)$. ∎
-
-**Lemma 3.3 (Monotonicity, `monotone_l`, `monotone_u`).** Both $l$ and $u$
-are monotone.
-
-*Proof.* If $a \le a'$ then $a \le a' \le u(l(a'))$ by Lemma 3.1, so by (GC)
-$l(a) \le l(a')$. Dually, if $b \le b'$ then $l(u(b)) \le b \le b'$ by
-Lemma 3.2, so by (GC) $u(b) \le u(b')$. ∎
-
-**Lemma 3.4 (Triangle identities, `u_l_u`, `l_u_l`).** For all $a, b$,
-$$u(l(u(b))) = u(b), \qquad l(u(l(a))) = l(a).$$
-
-*Proof.* For the first: $u(l(u(b))) \le u(b)$ by monotonicity of $u$ applied
-to Lemma 3.2, and $u(b) \le u(l(u(b)))$ by Lemma 3.1; antisymmetry concludes.
-The second is dual. ∎
-
-### 3.1 Closure and kernel operators
-
-**Definition 3.5.** Define $\operatorname{cl} : \alpha \to \alpha$ by
-$\operatorname{cl}(a) = u(l(a))$ and $\operatorname{ker} : \beta \to \beta$
-by $\operatorname{ker}(b) = l(u(b))$. (Formal names: `cl`, `ker`, with
-defining `simp` lemmas `cl_apply`, `ker_apply`.)
-
-**Theorem 3.6 (Closure operator, `cl_extensive`, `cl_monotone`, `cl_idem`).**
-The map $\operatorname{cl}$ is a closure operator:
-$$a \le \operatorname{cl}(a), \qquad a \le a' \Rightarrow
-\operatorname{cl}(a) \le \operatorname{cl}(a'), \qquad
-\operatorname{cl}(\operatorname{cl}(a)) = \operatorname{cl}(a).$$
-
-*Proof.* Extensivity is Lemma 3.1. Monotonicity is the composite of
-Lemma 3.3 applied twice. Idempotence is the first triangle identity
-(Lemma 3.4) at $b = l(a)$: $\operatorname{cl}(\operatorname{cl}(a)) =
-u(l(u(l(a)))) = u(l(a)) = \operatorname{cl}(a)$. ∎
-
-**Theorem 3.7 (Interior operator, `ker_contracting`, `ker_monotone`,
-`ker_idem`).** The map $\operatorname{ker}$ is an interior (kernel) operator:
-$$\operatorname{ker}(b) \le b, \qquad b \le b' \Rightarrow
-\operatorname{ker}(b) \le \operatorname{ker}(b'), \qquad
-\operatorname{ker}(\operatorname{ker}(b)) = \operatorname{ker}(b).$$
-
-*Proof.* Dual to Theorem 3.6, using Lemma 3.2 and the second triangle
-identity. ∎
-
----
-
-## 4. The fundamental fixed-point correspondence
-
-**Definition 4.1 (Closed and coclosed elements).** An element $a \in \alpha$
-is **closed** if $u(l(a)) = a$. An element $b \in \beta$ is **coclosed** if
-$l(u(b)) = b$. Write
-$$\mathrm{Closed}(l,u) = \{a \in \alpha : u(l(a)) = a\}, \qquad
-\mathrm{Coclosed}(l,u) = \{b \in \beta : l(u(b)) = b\},$$
-each carrying the order inherited from $\alpha$, resp. $\beta$. (Formal
-names: `Closed`, `Coclosed`.)
-
-By extensivity/idempotence the closed elements are exactly the image
-$u(\beta) = \{u(b) : b \in \beta\}$, and the coclosed elements are exactly
-$l(\alpha)$.
-
-**Theorem 4.2 (Fixed-point correspondence, `fixedPointOrderIso`).** The
-assignments $a \mapsto l(a)$ and $b \mapsto u(b)$ are mutually inverse,
-order-preserving and order-reflecting bijections between $\mathrm{Closed}(l,u)$
-and $\mathrm{Coclosed}(l,u)$. Hence
-$$\mathrm{Closed}(l,u) \;\cong\; \mathrm{Coclosed}(l,u)$$
-as ordered sets (an order isomorphism).
-
-*Proof.* If $a$ is closed then $l(a)$ is coclosed: $l(u(l(a))) = l(a)$ by the
-second triangle identity. Symmetrically $u$ maps coclosed elements to closed
-elements. The round trips are the defining equalities: for closed $a$,
-$u(l(a)) = a$; for coclosed $b$, $l(u(b)) = b$. So the maps are mutually
-inverse bijections. They preserve order by Lemma 3.3. They reflect order:
-if $l(a) \le l(a')$ for closed $a, a'$ then applying $u$ and using closedness
-gives $a = u(l(a)) \le u(l(a')) = a'$. Thus the bijection and its inverse are
-both monotone, i.e. it is an order isomorphism. ∎
-
-Theorem 4.2 is the abstract form of several classical "fundamental theorems
-of Galois-type dualities," including the basic theorem of formal concept
-analysis (Section 6.2) and the fundamental theorem of Galois theory in its
-order-theoretic guise.
-
----
-
-## 5. The lattice of closed elements
-
-We now show that $\mathrm{Closed}(l,u)$ is a complete lattice, building all
-operations explicitly and *without* the Knaster–Tarski theorem. The dual
-statements hold for $\mathrm{Coclosed}(l,u)$.
-
-**Lemma 5.1 (Infima of closed elements are closed, `closed_sInf_closed`).**
-If $S \subseteq \alpha$ consists of closed elements, then $\bigwedge S$ is
-closed: $u(l(\bigwedge S)) = \bigwedge S$.
-
-*Proof.* By extensivity, $\bigwedge S \le u(l(\bigwedge S))$. For the reverse
-inequality it suffices to show $u(l(\bigwedge S)) \le x$ for every $x \in S$.
-Indeed, since $\bigwedge S \le x$ and $u, l$ are monotone,
-$u(l(\bigwedge S)) \le u(l(x)) = x$, the last equality because $x$ is closed.
-Taking the infimum over $x \in S$ gives $u(l(\bigwedge S)) \le \bigwedge S$,
-and antisymmetry concludes. ∎
-
-**Theorem 5.2 (Greatest closed lower bound, `closed_isGreatestLB`).** For a
-family $S$ of closed elements, $\bigwedge S$ is closed, is a lower bound of
-$S$, and is the greatest closed lower bound: if $c$ is closed and
-$c \le a$ for all $a \in S$, then $c \le \bigwedge S$.
-
-*Proof.* Closedness is Lemma 5.1; the rest is the universal property of the
-ambient infimum. ∎
-
-**Theorem 5.3 (Least closed upper bound, `closed_isLeastUB`).** For a family
-$S$ of closed elements, the element $u(l(\bigvee S)) = \operatorname{cl}(\bigvee S)$
-is closed, is an upper bound of $S$, and is the least closed upper bound: if
-$c$ is closed and $a \le c$ for all $a \in S$, then $u(l(\bigvee S)) \le c$.
-
-*Proof.* Closedness is idempotence (Theorem 3.6). For each $a \in S$,
-$a \le \bigvee S \le u(l(\bigvee S))$ by extensivity, so it is an upper
-bound. If $c$ is a closed upper bound then $\bigvee S \le c$, hence by
-monotonicity $u(l(\bigvee S)) \le u(l(c)) = c$. ∎
-
-**Theorem 5.4 (Completeness, `Closed.completeLattice`).** With infimum of a
-family $T$ of closed elements given by the ambient infimum and supremum given
-by $\operatorname{cl}(\bigvee T)$, the closed elements
-$\mathrm{Closed}(l,u)$ form a complete lattice. Dually, $\mathrm{Coclosed}(l,u)$
-is a complete lattice with inherited suprema and infima computed by
-$\operatorname{ker}$.
-
-*Proof.* By Lemma 5.1 the closed elements are closed under arbitrary ambient
-infima; this provides an `InfSet` structure that produces genuine greatest
-lower bounds (Theorem 5.2). A complete lattice can be built from arbitrary
-infima alone (the standard `completeLatticeOfInf` construction), with suprema
-recovered as the infimum of the set of upper bounds; Theorem 5.3 identifies
-that supremum concretely as $\operatorname{cl}(\bigvee T)$. The dual argument,
-using the kernel operator, handles the coclosed elements. ∎
-
-**Remark 5.5 (Independence from Knaster–Tarski).** The proof of Theorem 5.4
-uses only the closure-system facts "infima are closed" and "the least closed
-upper bound is the closure of the ambient supremum." Neither statement
-mentions the adjoint pair *per se*, and no fixed-point theorem is invoked.
-This makes the development non-circular and reusable for arbitrary closure
-operators (see Section 7).
-
-### 5.1 Recovering Knaster–Tarski
-
-The Knaster–Tarski theorem asserts that a monotone self-map $f$ of a complete
-lattice has a complete lattice of fixed points, with extreme fixed points
-$\mathrm{lfp}(f)$ and $\mathrm{gfp}(f)$.
-
-**Corollary 5.6.** The closure operator $\operatorname{cl} = u \circ l$ is a
-monotone self-map of $\alpha$ whose fixed points are exactly the closed
-elements. By Theorem 5.4 these form a complete lattice; thus we recover the
-fixed-point part of Knaster–Tarski for $\operatorname{cl}$. Moreover the
-extreme fixed points have closed forms: the least fixed point of
-$\operatorname{cl}$ is
-$$\mathrm{lfp}(\operatorname{cl}) = u(l(\bot)),$$
-and the greatest fixed point of $\operatorname{ker}$ is
-$$\mathrm{gfp}(\operatorname{ker}) = l(u(\top)).$$
-
-*Proof sketch.* The fixed points of $\operatorname{cl}$ are by definition the
-closed elements, and Theorem 5.4 makes them a complete lattice. The least
-closed element is the least closed upper bound of the empty family, which by
-Theorem 5.3 is $\operatorname{cl}(\bigvee \varnothing) = \operatorname{cl}(\bot)
-= u(l(\bot))$. Dually for the kernel. ∎
-
----
-
-## 6. The bridge to topology
-
-### 6.1 Closure systems are topologies of closed sets
-
-Recall that the closed sets of a topological space are precisely a family of
-subsets that contains the whole space, is closed under arbitrary
-intersections, and is closed under finite unions. Compare with the closed
-elements of a Galois connection on the powerset lattice of a set $X$ (ordered
-by inclusion, with $\bigvee = \bigcup$, $\bigwedge = \bigcap$):
-
-- the top element $X$ is closed (it is $u(l(X))$ up to the unit/counit, in
-  fact $X$ is always closed because nothing exceeds it);
-- arbitrary intersections of closed sets are closed (Lemma 5.1);
-- finite unions of closed sets are closed *when the closure operator is
-  topological*, i.e. additive on finite joins.
-
-Thus every Galois connection on a powerset whose closure operator preserves
-finite joins induces a genuine topology, whose closed sets are exactly the
-closed elements, and under which both adjoints are continuous (preimages of
-closed sets are closed, by monotonicity and the triangle identities). More
-generally, the closed elements of *any* Galois connection form a complete
-lattice (Theorem 5.4) that serves as an abstract lattice of "closed sets,"
-giving a point-free topology.
-
-### 6.2 The canonical example: the Zariski topology on $\operatorname{Spec}(R)$
-
-Let $R$ be a commutative ring and $\operatorname{Spec}(R)$ the set of its
-prime ideals. Order the subsets of $\operatorname{Spec}(R)$ by inclusion and
-the ideals of $R$ by *reverse* inclusion, so that both sides are complete
-lattices in the orientation needed for a monotone connection. Define
-$$u(Y) = \bigcap_{\mathfrak{p}\in Y} \mathfrak{p}
-\quad(\text{the ideal of functions vanishing on } Y), \qquad
-l(I) = V(I) = \{\mathfrak{p} : I \subseteq \mathfrak{p}\}
-\quad(\text{the zero set of } I).$$
-Then $l \dashv u$ is a Galois connection. The closed elements on the
-geometric side are exactly the sets of the form $V(I)$ — the **Zariski-closed
-sets** — and Lemma 5.1 (intersections are closed) together with the algebraic
-identity $V(I) \cup V(J) = V(IJ)$ (finite unions are closed) and
-$V(0) = \operatorname{Spec}(R)$ (the whole space is closed) verifies the
-closed-set axioms. Therefore the **Zariski topology** is *induced* by this
-Galois connection; it is not an extra structure.
-
-The closure operator $u \circ l$ sends a set of primes to its Zariski
-closure, and the fixed-point correspondence (Theorem 4.2) restricts to the
-classical dictionary between Zariski-closed subsets and radical ideals
-(Hilbert's Nullstellensatz being the statement that, over an algebraically
-closed field, the closed elements on the algebraic side are precisely the
-radical ideals). This is the precise sense in which the present
-order-theoretic core *bridges* to algebraic geometry: the foundational
-topology of schemes is an instance of Theorem 4.2 and Theorem 5.4.
-
----
-
-## 7. Worked examples
-
-The abstract theory is best appreciated through small, fully computable
-instances. The three examples below are all realized in the accompanying
-numerical demonstration, where every claimed equality is checked by exhaustive
-enumeration over finite lattices.
-
-### 7.1 A divisor-closure closure system
-
-Let $U = \{1,2,3,4,6,12\}$ and order its subsets by inclusion, a complete
-lattice with $\bigvee = \bigcup$ and $\bigwedge = \bigcap$. Define
-$l(X) = \bigcup_{n \in X}\{d \in U : d \mid n\}$ (close under divisors) and let
-$u(Y) = \{n \in Y : \text{every divisor of } n \text{ in } U \text{ lies in } Y\}$.
-Then $l \dashv u$ is a Galois connection on the subset lattice, verified by
-checking the bi-implication on all $2^{6}\cdot 2^{6}$ pairs. The closure
-operator $\operatorname{cl} = u\circ l$ sends a set to its downward divisor
-closure. Its fixed points are exactly the divisor-closed subsets; there are
-ten of them, and they include $\varnothing$, $\{1\}$, $\{1,2\}$, $\{1,3\}$,
-$\{1,2,3\}$, and $\{1,2,4\}$. The extreme fixed points predicted by
-Corollary 5.6 are $\operatorname{lfp}(\operatorname{cl}) = u(l(\bot)) =
-\varnothing$ and $\operatorname{gfp}(\operatorname{ker}) = l(u(\top)) = U$.
-For two closed sets the meet is the ordinary intersection (e.g.
-$\{1\}\wedge\{1,2\} = \{1\}$, closed) and the join is the closure of the union,
-as in Theorem 5.3.
-
-### 7.2 A formal context and its concept lattice
-
-Take objects $G = \{1,2,3,4\}$ and attributes
-$M = \{\text{even},\text{prime},\text{square},\text{gt2}\}$ with the evident
-incidence. The derivation operators $l(X) = \{m : \forall g\in X,\ gIm\}$ and
-$u(Y) = \{g : \forall m\in Y,\ gIm\}$ form the FCA Galois connection. Its
-closed extents (fixed points of $u\circ l$), paired with their intents, are the
-formal concepts:
-$$\varnothing \mid M,\quad \{2\}\mid\{\text{even},\text{prime}\},\quad
-\{3\}\mid\{\text{prime},\text{gt2}\},\quad \{4\}\mid\{\text{even},\text{square},\text{gt2}\},$$
-$$\{1,4\}\mid\{\text{square}\},\quad \{2,3\}\mid\{\text{prime}\},\quad
-\{2,4\}\mid\{\text{even}\},\quad \{3,4\}\mid\{\text{gt2}\},\quad G\mid\varnothing.$$
-The round trip $u(l(X)) = X$ holds for every extent, an instance of
-Theorem 4.2: extents and intents are order-isomorphic.
-
-### 7.3 A finite Zariski caricature
-
-Let the "points" be $\{0,1,2,3,4\}$ and the "polynomials" be
-$x,\ x-1,\ x(x-1),\ (x-2)(x-3),\ 0$. With $u(S)$ the set of polynomials
-vanishing on $S$ and $l(F)$ the common zero set, the closure
-$\operatorname{cl} = l\circ u$ is the Zariski closure. Of the $2^5 = 32$
-subsets, exactly six are closed: $\varnothing$, $\{0\}$, $\{1\}$, $\{0,1\}$,
-$\{2,3\}$, and the whole space. These are closed under intersection and
-include the total space, confirming the closed-set axioms of Section 6.
-
-## 8. Applications and discussion
-
-**Formal concept analysis.** A formal context $(G, M, I)$ — objects $G$,
-attributes $M$, incidence $I \subseteq G \times M$ — induces a Galois
-connection between subsets of $G$ and subsets of $M$ via the derivation
-operators. The closed elements are exactly the *formal concepts*, and
-Theorem 4.2 is the "basic theorem of formal concept analysis," with
-Theorem 5.4 supplying the concept lattice.
-
-**Abstract interpretation.** In static program analysis a Galois connection
-$l \dashv u$ relates concrete and abstract domains; $u \circ l$ measures the
-precision lost by abstraction. The best abstract transformer of a concrete
-function $f$ is $l \circ f \circ u$, and the most precise inductive invariant
-is the least fixed point identified in Corollary 5.6. The non-circular
-fixed-point core proved here is exactly what a verified analyzer needs.
-
-**Logic.** The syntax–semantics adjunction (axiom sets vs. model classes)
-makes closed theories the closed elements; Theorem 4.2 is the Galois duality
-between deductively closed theories and definable model classes.
-
-**Why the non-circular route matters.** Many developments derive completeness
-of the closed lattice as a corollary of Knaster–Tarski applied to
-$u \circ l$. By instead deriving completeness from closure-system structure
-(Remark 5.5), we obtain a result that (i) does not depend on a separate
-fixed-point theorem, (ii) immediately generalizes to arbitrary closure
-operators not arising from an adjunction, and (iii) yields explicit witnesses
-for all infima and suprema.
-
----
-
-## 9. Future work
-
-A natural refactoring expresses Theorem 5.4 as a corollary of a single
-generic result about closure/interior operators, recovering the Galois case
-by feeding in the connection's closure operator. The closed/coclosed
-correspondence specializes to a fully verified concept lattice in formal
-concept analysis, and to soundness and best-abstraction results in abstract
-interpretation, where the least fixed point $u(l(\bot))$ is the most precise
-invariant. Finally, since a Galois connection is a monotone adjunction
-between posets-as-categories, the entire development lifts to the
-category-theoretic setting where closed elements are algebras for the induced
-monad and coclosed elements are coalgebras for the comonad.
-
----
+Order and topology encode two different forms of structure. An order records refinement, implication, containment, or increasing information. A topology records observability, local behavior, and continuity. These languages interact particularly cleanly on preordered sets: upward persistence can be interpreted as openness. Under this interpretation, monotonicity becomes continuity.
+
+Galois connections are a central mechanism for transporting information between ordered domains. Given preorders $P$ and $Q$, a pair of maps $l:P\to Q$ and $u:Q\to P$ is a Galois connection when
+
+$$
+l(x)\leq y\quad\Longleftrightarrow\quad x\leq u(y).
+$$
+
+The equivalence states that moving $x$ forward by $l$ and comparing in $Q$ is interchangeable with moving $y$ backward by $u$ and comparing in $P$. This pattern appears in logic, algebra, geometry, data analysis, and semantics.
+
+The first purpose of this paper is to make the topological content of this pattern explicit. Every preorder admits an upper Alexandrov topology, and every monotone map is continuous for this topology. More strongly, continuity and monotonicity coincide. Thus both adjoints of every Galois connection are continuous without requiring any additional hypotheses.
+
+The second purpose is to describe the stable objects produced by a round trip. The composite $c=u\circ l$ is a closure operator on $P$. If $P$ is complete, its fixed points form a complete lattice. This provides arbitrary meets and joins among the objects unchanged by translation to $Q$ and back.
+
+The third purpose is to connect the abstract framework to the Zariski topology. Ideals in a commutative ring and subsets of its prime spectrum are linked by zero-locus and vanishing-ideal operations. Their adjunction gives the Zariski closed sets, while the induced closure of an ideal is its radical.
+
+Finally, we distinguish order closure from topological closure. A closure operator on a powerset need only be extensive, monotone, and idempotent. A topological closure must additionally preserve the empty set and finite unions. We give a minimal, transparent three-point construction that violates the union law. Accordingly, the topology making adjoints continuous is universally available, but the fixed points of an arbitrary Galois closure cannot automatically be declared the closed subsets of a topology.
+
+## 2. Preorders and upper Alexandrov topology
+
+### 2.1. Preorders and monotone maps
+
+A **preorder** is a pair $(P,\leq)$ in which $\leq$ is reflexive and transitive. If it is also antisymmetric, then $P$ is a partially ordered set. We work with preorders because none of the continuity arguments requires antisymmetry.
+
+A function $f:P\to Q$ is **monotone** if
+
+$$
+x\leq_P y\quad\Longrightarrow\quad f(x)\leq_Q f(y).
+$$
+
+For $x\in P$, its principal upper set is
+
+$$
+\uparrow x=\{y\in P:x\leq y\}.
+$$
+
+A subset $U\subseteq P$ is **upward closed** if $x\in U$ and $x\leq y$ imply $y\in U$.
+
+### 2.2. The upper Alexandrov construction
+
+**Definition 2.1 (Upper Alexandrov topology).** Let $P$ be a preorder. The upper Alexandrov topology on $P$ is the family
+
+$$
+\tau_\uparrow(P)=\{U\subseteq P:U\text{ is upward closed}\}.
+$$
+
+**Proposition 2.2.** The family $\tau_\uparrow(P)$ is a topology.
+
+**Proof sketch.** The whole set $P$ is upward closed. If $U$ and $V$ are upward closed, then membership in $U\cap V$ persists upward in each coordinate, so $U\cap V$ is upward closed. If $\{U_i\}_{i\in A}$ is an arbitrary family of upward-closed sets and $x\in\bigcup_iU_i$, then $x\in U_j$ for some $j$. Whenever $x\leq y$, upward closure of $U_j$ gives $y\in U_j\subseteq\bigcup_iU_i$. Thus arbitrary unions are open. $\square$
+
+Unlike a general topology, an Alexandrov topology is also closed under arbitrary intersections of open sets. In particular, $\uparrow x$ is the smallest open neighborhood of $x$.
+
+### 2.3. Monotonicity is continuity
+
+**Theorem 2.3 (Order–Topology Bridge).** Let $P$ and $Q$ be preorders, each equipped with its upper Alexandrov topology. A function $f:P\to Q$ is continuous if and only if it is monotone.
+
+**Proof sketch.** Suppose first that $f$ is monotone. Let $V\subseteq Q$ be open, hence upward closed. If $x\in f^{-1}(V)$ and $x\leq y$, then $f(x)\leq f(y)$. Since $f(x)\in V$ and $V$ is upward closed, $f(y)\in V$. Therefore $f^{-1}(V)$ is upward closed and hence open.
+
+Conversely, suppose $f$ is continuous and let $x\leq y$ in $P$. The principal upper set $\uparrow f(x)$ is open in $Q$. Its inverse image is open in $P$ and contains $x$. Since that inverse image is upward closed and $x\leq y$, it contains $y$. Hence $f(y)\in\uparrow f(x)$, or $f(x)\leq f(y)$. Thus $f$ is monotone. $\square$
+
+The theorem identifies categories: preorders with monotone maps can be viewed as Alexandrov spaces with continuous maps, provided one remembers the topology arises from the given order. It also offers an algorithmic continuity test on finite preorders: check the order inequalities rather than enumerate all open sets.
+
+## 3. Galois connections and canonical continuity
+
+### 3.1. Definition and elementary consequences
+
+**Definition 3.1 (Galois connection).** Let $P$ and $Q$ be preorders. Maps $l:P\to Q$ and $u:Q\to P$ form a Galois connection, written $l\dashv u$, if for all $x\in P$ and $y\in Q$,
+
+$$
+l(x)\leq_Q y\quad\Longleftrightarrow\quad x\leq_P u(y).
+$$
+
+The map $l$ is the left adjoint and $u$ the right adjoint.
+
+Two unit–counit inequalities follow immediately. Taking $y=l(x)$ gives
+
+$$
+x\leq u(l(x)),
+$$
+
+and taking $x=u(y)$ gives
+
+$$
+l(u(y))\leq y.
+$$
+
+**Lemma 3.2 (Monotonicity of adjoints).** Both $l$ and $u$ are monotone.
+
+**Proof sketch.** If $x\leq x'$, then $x'\leq u(l(x'))$ by the unit inequality, so $x\leq u(l(x'))$. The adjunction yields $l(x)\leq l(x')$. Dually, if $y\leq y'$, then $l(u(y))\leq y\leq y'$, and the adjunction gives $u(y)\leq u(y')$. $\square$
+
+### 3.2. Continuity theorem
+
+**Theorem 3.3 (Continuity of Galois Adjoints).** Let $l\dashv u$ be a Galois connection between preorders $P$ and $Q$. Equip $P$ and $Q$ with their upper Alexandrov topologies. Then both
+
+$$
+l:P\to Q\qquad\text{and}\qquad u:Q\to P
+$$
+
+are continuous.
+
+**Proof sketch.** Lemma 3.2 shows that both maps are monotone. Theorem 2.3 identifies monotonicity with continuity for the chosen topologies. $\square$
+
+This construction is canonical relative to the order: it makes no arbitrary choices. It should not, however, be confused with a claim that these topologies are uniquely characterized among all topologies making $l$ and $u$ continuous. Classifying the finest and coarsest compatible pairs is a separate problem.
+
+## 4. Closure operators and complete lattices of fixed points
+
+### 4.1. Galois closure
+
+A **closure operator** on a preorder $P$ is a map $c:P\to P$ satisfying:
+
+1. **Extensivity:** $x\leq c(x)$ for all $x$.
+2. **Monotonicity:** $x\leq y$ implies $c(x)\leq c(y)$.
+3. **Idempotence:** $c(c(x))=c(x)$ for all $x$.
+
+Given $l\dashv u$, define
+
+$$
+c=u\circ l.
+$$
+
+**Proposition 4.1.** The composite $c=u\circ l$ is a closure operator on $P$.
+
+**Proof sketch.** Extensivity is the unit inequality $x\leq u(l(x))$. Monotonicity follows because both adjoints are monotone. For idempotence, extensivity applied to $c(x)$ gives $c(x)\leq c(c(x))$. In the reverse direction, the counit inequality $l(u(y))\leq y$, with $y=l(x)$, gives $l(u(l(x)))\leq l(x)$. Applying monotonicity of $u$ yields $c(c(x))\leq c(x)$. $\square$
+
+An element $x$ is **closed** when $c(x)=x$. Denote the set of fixed points by
+
+$$
+\operatorname{Fix}(c)=\{x\in P:c(x)=x\}.
+$$
+
+### 4.2. Complete lattice structure
+
+A **complete lattice** is a partially ordered set in which every family has an infimum and a supremum. Write $\bigwedge S$ and $\bigvee S$ for the meet and join of a family $S$.
+
+**Theorem 4.2 (Fixed-Point Complete Lattice Theorem).** Let $P$ be a complete lattice, let $Q$ be a preorder, and let $l:P\to Q$ and $u:Q\to P$ form a Galois connection. Then $\operatorname{Fix}(u\circ l)$ is a complete lattice under the inherited order.
+
+More explicitly, for every family $\{x_i\}_{i\in A}$ of fixed points,
+
+$$
+\bigwedge_{\operatorname{Fix}} x_i=\bigwedge_P x_i
+$$
+
+and
+
+$$
+\bigvee_{\operatorname{Fix}} x_i=c\!\left(\bigvee_P x_i\right),
+\qquad c=u\circ l.
+$$
+
+**Proof sketch.** Let $m=\bigwedge_Px_i$. Since $m\leq x_i$, monotonicity gives $c(m)\leq c(x_i)=x_i$ for every $i$, so $c(m)\leq m$. Extensivity gives $m\leq c(m)$; hence $c(m)=m$. Thus ambient meets of fixed points remain fixed and satisfy the required universal property.
+
+For joins, let $s=\bigvee_Px_i$. The element $c(s)$ is fixed by idempotence and lies above every $x_i$ because $x_i\leq s\leq c(s)$. If $z$ is any fixed upper bound of all $x_i$, then $s\leq z$, so $c(s)\leq c(z)=z$. Therefore $c(s)$ is the least fixed upper bound. Empty families yield the bottom fixed point $c(\bot)$ and the top fixed point $\top$. $\square$
+
+This result is closely related to the Knaster–Tarski fixed-point theorem. The special form $u\circ l$ provides not merely a monotone self-map but an idempotent closure, making the lattice operations especially explicit.
+
+### 4.3. Finite computation
+
+On a finite poset, the structure can be computed directly.
+
+**Algorithm 4.3 (Finite Galois closure and fixed points).** Given finite preorders $P,Q$ and maps $l,u$:
+
+1. Verify the adjunction by checking $l(x)\leq y$ if and only if $x\leq u(y)$ for every pair $(x,y)$.
+2. Compute $c(x)=u(l(x))$ for every $x\in P$.
+3. Retain precisely those $x$ satisfying $c(x)=x$.
+4. Compute a meet using the ambient meet in $P$.
+5. Compute a join by taking the ambient join and applying $c$.
+
+If comparisons and map evaluations take constant time, the adjunction check costs $O(|P||Q|)$, while closure and fixed-point enumeration cost $O(|P|)$. The cost of lattice operations depends on their representation.
+
+## 5. The ideal–zero-locus Galois connection
+
+### 5.1. Prime spectrum and zero loci
+
+Let $R$ be a commutative ring. Its **prime spectrum** $\operatorname{Spec}(R)$ is the set of prime ideals of $R$. For an ideal $I\subseteq R$, define
+
+$$
+V(I)=\{\mathfrak p\in\operatorname{Spec}(R):I\subseteq\mathfrak p\}.
+$$
+
+For a subset $Z\subseteq\operatorname{Spec}(R)$, define its **vanishing ideal** by
+
+$$
+I(Z)=\bigcap_{\mathfrak p\in Z}\mathfrak p.
+$$
+
+Equivalently, $I(Z)$ consists of the elements of $R$ contained in every prime ideal belonging to $Z$. For the empty set, the intersection is the unit ideal.
+
+Both assignments reverse inclusion. If $I\subseteq J$, then every prime containing $J$ contains $I$, so $V(J)\subseteq V(I)$. If $Z\subseteq W$, then an element vanishing on all of $W$ also vanishes on $Z$, so $I(W)\subseteq I(Z)$.
+
+### 5.2. The Galois law
+
+**Theorem 5.1 (Ideal–Zero-Locus Galois Law).** For every ideal $I\subseteq R$ and every subset $Z\subseteq\operatorname{Spec}(R)$,
+
+$$
+I\subseteq I(Z)
+\quad\Longleftrightarrow\quad
+Z\subseteq V(I).
+$$
+
+**Proof sketch.** The left side says that each $a\in I$ belongs to every prime $\mathfrak p\in Z$. This is equivalent to saying $I\subseteq\mathfrak p$ for every $\mathfrak p\in Z$, which is precisely the assertion that every $\mathfrak p\in Z$ lies in $V(I)$. $\square$
+
+Because both raw maps reverse inclusion, this is a Galois connection after one side is equipped with the opposite order. It is often called a Galois correspondence or polarity.
+
+### 5.3. Zariski closed sets
+
+**Definition 5.2 (Zariski topology).** The Zariski topology on $\operatorname{Spec}(R)$ is the topology whose closed sets are the zero loci $V(S)$ of subsets $S\subseteq R$, where
+
+$$
+V(S)=\{\mathfrak p:S\subseteq\mathfrak p\}.
+$$
+
+Since a prime contains $S$ exactly when it contains the ideal generated by $S$,
+
+$$
+V(S)=V((S)),
+$$
+
+where $(S)$ denotes the ideal generated by $S$.
+
+**Theorem 5.3 (Characterization of Zariski Closed Sets).** A subset $Z\subseteq\operatorname{Spec}(R)$ is Zariski closed if and only if there exists an ideal $I\subseteq R$ such that
+
+$$
+Z=V(I).
+$$
+
+**Proof sketch.** By definition, a closed set has the form $V(S)$ for some subset $S\subseteq R$. Replacing $S$ by its generated ideal does not change the zero locus, so $V(S)=V((S))$. Conversely, every ideal is itself a subset of $R$, hence every $V(I)$ is closed by the defining prescription. $\square$
+
+The Galois correspondence therefore does more than relate two collections: its zero-set side generates exactly the closed sets of the central topology on the prime spectrum.
+
+### 5.4. Radicalization as closure
+
+The **radical** of an ideal $I$ is
+
+$$
+\sqrt I=\{r\in R:\exists n\geq1,\ r^n\in I\}.
+$$
+
+An ideal is **radical** when $\sqrt I=I$. Every prime ideal is radical.
+
+**Theorem 5.4 (Galois Closure Equals Radicalization).** For every ideal $I$ in a commutative ring,
+
+$$
+I(V(I))=\sqrt I.
+$$
+
+**Proof sketch.** The vanishing ideal $I(V(I))$ is the intersection of all prime ideals containing $I$. A standard prime-ideal separation argument shows that this intersection equals $\sqrt I$. One inclusion is immediate: if $r^n\in I\subseteq\mathfrak p$ and $\mathfrak p$ is prime, then $r\in\mathfrak p$, so $\sqrt I$ lies in every prime over $I$. Conversely, if $r\notin\sqrt I$, localizing away from the multiplicative set $\{1,r,r^2,\ldots\}$ or applying the maximal-ideal principle produces a prime ideal containing $I$ but not $r$. Therefore $r\notin I(V(I))$. $\square$
+
+**Corollary 5.5.** The fixed points of the ideal-side Galois closure are exactly the radical ideals.
+
+**Proof sketch.** An ideal $I$ is fixed precisely when $I(V(I))=I$. By Theorem 5.4 this is equivalent to $\sqrt I=I$. $\square$
+
+Because the lattice of all ideals is complete, Theorem 4.2 applies. Arbitrary intersections of radical ideals are radical, while the join of radical ideals $I_j$ is
+
+$$
+\sqrt{\sum_j I_j}.
+$$
+
+### 5.5. Example: multiplicity disappears
+
+Let $R=k[x]$ for a field $k$. The ideals $(x)$ and $(x^2)$ define the same zero locus in $\operatorname{Spec}(k[x])$, since a prime ideal contains $x^2$ if and only if it contains $x$. Their radicals satisfy
+
+$$
+\sqrt{(x^2)}=(x).
+$$
+
+Thus the round trip from equations to geometry and back discards the exponent. The Zariski closed set records where an equation vanishes, not its multiplicity. Radical ideals are exactly the equation systems that already contain every consequence detectable purely from their prime zero locus.
+
+## 6. Order closure is not always topological closure
+
+### 6.1. The additional topological laws
+
+For a set $X$, a topological closure operation $\operatorname{cl}:\mathcal P(X)\to\mathcal P(X)$ is extensive, monotone, and idempotent, but it also satisfies
+
+$$
+\operatorname{cl}(\varnothing)=\varnothing
+$$
+
+and
+
+$$
+\operatorname{cl}(A\cup B)=\operatorname{cl}(A)\cup\operatorname{cl}(B).
+$$
+
+The second identity ensures that the fixed subsets are closed under finite unions. A general order closure on the complete lattice $\mathcal P(X)$ need not satisfy it.
+
+### 6.2. A three-point counterexample
+
+Let $X=\{0,1,2\}$. Define $c:\mathcal P(X)\to\mathcal P(X)$ by
+
+$$
+c(S)=
+\begin{cases}
+X,&\text{if }0\in S\text{ and }1\in S,\\
+S,&\text{otherwise.}
+\end{cases}
+$$
+
+**Proposition 6.1.** The map $c$ is an order-theoretic closure operator.
+
+**Proof sketch.** Extensivity is clear: either $c(S)=S$ or $c(S)=X$. For monotonicity, suppose $S\subseteq T$. If $S$ contains both $0$ and $1$, then so does $T$, and both closures equal $X$. If $S$ does not contain both, then $c(S)=S\subseteq T\subseteq c(T)$. For idempotence, if $S$ triggers expansion, its image is $X$, which remains $X$; otherwise $c(S)=S$, and the same condition remains false. $\square$
+
+**Theorem 6.2 (Failure of the Finite-Union Law).** The closure operator $c$ is not the closure operator of a topology.
+
+**Proof sketch.** Take $A=\{0\}$ and $B=\{1\}$. Neither singleton triggers expansion, so
+
+$$
+c(A)\cup c(B)=\{0,1\}.
+$$
+
+Their union contains both distinguished points, so
+
+$$
+c(A\cup B)=X=\{0,1,2\}.
+$$
+
+The two sets differ by the point $2$. Hence $c$ fails binary-union preservation, which every topological closure must satisfy. $\square$
+
+The example also identifies the fixed subsets: every subset except $\{0,1\}$ is fixed. This family is closed under arbitrary intersections, as expected for a closure system, but not under finite unions because $\{0\}$ and $\{1\}$ are fixed while their union is not.
+
+### 6.3. Consequence for Galois constructions
+
+Every closure operator on a complete lattice determines a Galois insertion between its fixed points and the ambient lattice. Therefore phenomena of the preceding kind genuinely belong to the Galois-connection setting. The correct general conclusions are:
+
+1. The upper Alexandrov topology always exists on each preorder.
+2. Both Galois adjoints are continuous for these topologies.
+3. The fixed points of the composite closure form a complete lattice when the ambient order is complete.
+4. The composite closure is not necessarily a topological closure on a powerset.
+
+To obtain a topology from the fixed subsets of a powerset closure, one needs the additional Kuratowski laws, notably preservation of the empty set and binary unions.
+
+## 7. Algorithms and applications
+
+### 7.1. Testing continuity through order
+
+For finite preorders represented by Boolean comparison matrices, continuity in the upper Alexandrov topologies can be tested by scanning comparable pairs. For each $x,y\in P$ with $x\leq y$, check whether $f(x)\leq f(y)$. This takes $O(|P|^2)$ comparisons in a dense representation and can be reduced to the number of stored order edges when a transitive relation is supplied sparsely.
+
+Directly enumerating all open subsets can require exponential time, because a finite preorder may have exponentially many upper sets. The bridge theorem therefore gives both a conceptual and computational simplification.
+
+### 7.2. Computing fixed-point lattices
+
+Given a finite closure operator $c$ on $P$, enumerate fixed points by evaluating $c(x)$ for each $x$. If ambient meets and joins are available, compute fixed-point operations by
+
+$$
+\operatorname{meet}_{\operatorname{Fix}}(S)=\operatorname{meet}_P(S),
+$$
+
+$$
+\operatorname{join}_{\operatorname{Fix}}(S)=c(\operatorname{join}_P(S)).
+$$
+
+For powersets, meet is intersection and join is union, so joins in the closure system are closures of unions. This underlies closed pattern mining, deductive closure, and concept-lattice computation.
+
+### 7.3. Equation–solution pipelines
+
+In algebraic settings, one alternates between constraints and their solution sets. The two maps are usually antitone: adding constraints shrinks solutions, while adding solutions shrinks the set of universally valid constraints. Reversing one order converts this polarity into a Galois connection. A round trip computes the semantic closure of a constraint set. In the prime-spectrum case, that semantic closure is radicalization.
+
+The resulting fixed points are robust descriptions: translating them into geometry and back changes nothing. Complete-lattice structure guarantees that arbitrary combinations of robust descriptions can be made robust again by a single closure step.
+
+## 8. Discussion
+
+The upper Alexandrov topology is an economical answer to a universal question: how can an order be regarded as a space so that order-preserving maps become continuous? Its open sets express properties stable under upward movement. The equivalence between monotonicity and continuity is exact, not merely one-directional.
+
+Galois connections then provide two layers of structure. At the map level, both adjoints are continuous. At the object level, the round-trip composite is a closure, and its stable elements form a complete lattice. These statements require only order-theoretic hypotheses.
+
+The Zariski application shows how much geometry can arise from this mechanism. The containment law between ideals and prime zero loci is the adjunction. Zariski closed sets are the geometric images supplied by the correspondence. Radicalization is the algebraic closure produced by a round trip. The familiar fact that algebraic sets ignore multiplicity becomes a fixed-point statement.
+
+The three-point example marks the limit of the analogy. “Closed under a closure operator” does not automatically mean “closed in a topology.” Closure systems are closed under arbitrary meets; topological closed sets must also be closed under finite joins in the powerset lattice. This missing distributive behavior is visible at the smallest nontrivial scale.
+
+## 9. Future directions
+
+Several directions follow naturally.
+
+First, one may classify compatible topologies more sharply. The upper Alexandrov topology makes every monotone map continuous, but a given adjoint pair may admit strictly finer or coarser topologies. Determining extremal compatible pairs would refine the canonical construction.
+
+Second, one may characterize exactly when a Galois-induced closure on a powerset is topological. Preservation of the bottom element and binary joins is the expected criterion, supplementing extensivity, monotonicity, and idempotence.
+
+Third, the fixed points of $u\circ l$ and $l\circ u$ should be compared directly. Restricting the adjoints yields mutually inverse order isomorphisms between these fixed-point systems, and one can ask for explicit formulas transporting arbitrary meets and joins.
+
+Fourth, in algebraic geometry the ideal–zero-set correspondence can be sharpened to an order anti-isomorphism between radical ideals and Zariski closed subsets of $\operatorname{Spec}(R)$. The corresponding formulas for arbitrary meets and joins expose how algebraic operations translate into geometric ones.
+
+Fifth, ring homomorphisms introduce functorial structure. Ideal extension and contraction form Galois connections, while the induced maps of prime spectra are continuous. Relating these constructions at the level of closure operators would connect order adjunctions to geometric functoriality.
+
+Finally, one can compare the Alexandrov topology of the specialization order on a spectrum with the Zariski topology itself. They agree in important finite cases but differ in general. Exact hypotheses for equality would measure how much of a topology is remembered by its order of specialization.
 
 ## 10. Conclusion
 
-From the single bi-implication $l(a) \le b \iff a \le u(b)$ we have derived,
-constructively and without circular appeal to Knaster–Tarski, the full
-fixed-point theory of a Galois connection: monotonicity, the unit/counit and
-triangle identities, the closure and kernel operators, the order isomorphism
-between closed and coclosed elements, and the completeness of the closed
-lattice with explicit suprema and infima. We then identified the bridge to
-topology, showing that the closed elements always satisfy the closed-set
-axioms and that the Zariski topology on $\operatorname{Spec}(R)$ is the
-canonical instance. The Galois connection thereby unifies order theory,
-fixed-point theory, and topology under one elementary adjunction.
+Every preorder determines an upper Alexandrov topology, and continuity in this topology is exactly monotonicity. It follows that both maps in every Galois connection are continuous. When one side is a complete lattice, the fixed points of the adjoint composite form a complete lattice, with ambient meets and closure-corrected joins.
+
+For a commutative ring, the zero-locus and vanishing-ideal operations instantiate this framework on the prime spectrum. Their Galois law characterizes Zariski closed sets, and their round trip on ideals is radicalization. Radical ideals are therefore the stable algebraic objects of the correspondence.
+
+The framework must be applied with one precise caveat: order-theoretic closure does not by itself imply topological closure. The three-point counterexample fails the finite-union law. This boundary separates two valid bridges—order to Alexandrov topology and adjunction to closure—while showing exactly what additional structure is needed to merge them.

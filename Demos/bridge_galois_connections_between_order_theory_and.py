@@ -1,275 +1,100 @@
-"""Numerical demonstrations of the Galois-connection / closure-system bridge.
-
-This self-contained script illustrates, with concrete finite examples, the
-mathematics formalized in the accompanying Lean development:
-
-  * A Galois connection  l : alpha -> beta,  u : beta -> alpha  on complete
-    lattices satisfying   l(a) <= b   iff   a <= u(b).
-  * The closure operator  cl = u . l  and kernel operator  ker = l . u.
-  * The fundamental fixed-point correspondence: an order isomorphism between
-    closed elements {a : u(l(a)) = a} and coclosed elements {b : l(u(b)) = b}.
-  * Completeness of the lattice of closed elements (infima inherited,
-    suprema = closure of the ambient supremum).
-  * The Knaster-Tarski extreme fixed points  lfp(cl) = u(l(bot)),
-    gfp(ker) = l(u(top)).
-  * The canonical topological instance: the Galois connection between subsets
-    of points and ideals (modeled finitely) yielding Zariski-style closed sets.
-
-Every example is fully inlined; no external libraries are required.
-"""
+#!/usr/bin/env python3
+"""Numerical demonstrations of order–topology and closure phenomena."""
 
 from __future__ import annotations
 
-from itertools import combinations, chain
-from typing import Callable, FrozenSet, Iterable, List, Set, Tuple, TypeVar
+from itertools import combinations
+from typing import Callable, FrozenSet, Iterable, Sequence, TypeVar
 
-A = TypeVar("A")
-B = TypeVar("B")
-
-
-# ---------------------------------------------------------------------------
-# Generic powerset-lattice Galois machinery
-# ---------------------------------------------------------------------------
-
-def powerset(universe: Iterable[A]) -> List[FrozenSet[A]]:
-    """Return all subsets of a finite universe, as frozensets."""
-    items = list(universe)
-    return [
-        frozenset(combo)
-        for r in range(len(items) + 1)
-        for combo in combinations(items, r)
-    ]
+T = TypeVar("T")
+Subset = FrozenSet[int]
 
 
-def closure(l: Callable[[FrozenSet[A]], FrozenSet[B]],
-            u: Callable[[FrozenSet[B]], FrozenSet[A]]
-            ) -> Callable[[FrozenSet[A]], FrozenSet[A]]:
-    """The closure operator cl(a) = u(l(a))."""
-    return lambda a: u(l(a))
+def powerset(items: Sequence[T]) -> list[FrozenSet[T]]:
+    """Return all subsets of a finite sequence as frozensets."""
+    return [frozenset(choice) for size in range(len(items) + 1)
+            for choice in combinations(items, size)]
 
 
-def kernel(l: Callable[[FrozenSet[A]], FrozenSet[B]],
-           u: Callable[[FrozenSet[B]], FrozenSet[A]]
-           ) -> Callable[[FrozenSet[B]], FrozenSet[B]]:
-    """The kernel/interior operator ker(b) = l(u(b))."""
-    return lambda b: l(u(b))
+def is_upper_set(subset: FrozenSet[T], points: Sequence[T],
+                 leq: Callable[[T, T], bool]) -> bool:
+    """Test whether a subset is upward closed in a finite preorder."""
+    return all(not (x in subset and leq(x, y)) or y in subset
+               for x in points for y in points)
 
 
-def is_galois_connection(
-    alpha: List[FrozenSet[A]],
-    beta: List[FrozenSet[B]],
-    l: Callable[[FrozenSet[A]], FrozenSet[B]],
-    u: Callable[[FrozenSet[B]], FrozenSet[A]],
-    le_a: Callable[[FrozenSet[A], FrozenSet[A]], bool],
-    le_b: Callable[[FrozenSet[B], FrozenSet[B]], bool],
-) -> bool:
-    """Check the defining bi-implication l(a) <= b  iff  a <= u(b) exhaustively."""
-    for a in alpha:
-        for b in beta:
-            if le_b(l(a), b) != le_a(a, u(b)):
-                return False
-    return True
+def is_monotone(points: Sequence[T], values: dict[T, T],
+                leq: Callable[[T, T], bool]) -> bool:
+    """Test monotonicity of a self-map on a finite preorder."""
+    return all(not leq(x, y) or leq(values[x], values[y])
+               for x in points for y in points)
 
 
-def closed_elements(
-    alpha: List[FrozenSet[A]],
-    cl: Callable[[FrozenSet[A]], FrozenSet[A]],
-) -> List[FrozenSet[A]]:
-    """Elements fixed by the closure operator: u(l(a)) = a."""
-    return [a for a in alpha if cl(a) == a]
+def is_alexandrov_continuous(points: Sequence[T], values: dict[T, T],
+                             leq: Callable[[T, T], bool]) -> bool:
+    """Test continuity by checking inverse images of every upper open set."""
+    opens = [u for u in powerset(points) if is_upper_set(u, points, leq)]
+    return all(is_upper_set(frozenset(x for x in points if values[x] in u),
+                            points, leq) for u in opens)
 
 
-# ---------------------------------------------------------------------------
-# Example 1: a contravariant relation-induced Galois connection (FCA-style)
-# ---------------------------------------------------------------------------
-
-def relation_galois(
-    objects: List[int],
-    attributes: List[str],
-    incidence: Set[Tuple[int, str]],
-):
-    """Build the classical derivation Galois connection of a formal context.
-
-    For a set X of objects, l(X) = attributes shared by ALL objects in X.
-    For a set Y of attributes, u(Y) = objects having ALL attributes in Y.
-    Ordered by inclusion on objects and REVERSE inclusion on attributes, this
-    is a monotone Galois connection; here we exhibit it in antitone form, the
-    classical Galois correspondence, and report its closed sets (concepts).
-    """
-    def l(X: FrozenSet[int]) -> FrozenSet[str]:
-        return frozenset(
-            m for m in attributes if all((g, m) in incidence for g in X)
-        )
-
-    def u(Y: FrozenSet[str]) -> FrozenSet[int]:
-        return frozenset(
-            g for g in objects if all((g, m) in incidence for m in Y)
-        )
-
-    return l, u
+def bad_closure(subset: Subset) -> Subset:
+    """Close to {0,1,2} exactly when both 0 and 1 are present."""
+    universe = frozenset({0, 1, 2})
+    return universe if {0, 1}.issubset(subset) else subset
 
 
-# ---------------------------------------------------------------------------
-# Example 2: a monotone Galois connection on subsets via a closure rule
-# ---------------------------------------------------------------------------
-
-def divisibility_closure(universe: List[int]):
-    """A monotone closure operator: close a set under divisors within universe.
-
-    We realize it as a genuine Galois connection l -| u where beta is the
-    same lattice and u = identity, l = 'add all divisors'. Then cl = u . l is
-    the divisor-closure, an honest closure operator on the subset lattice.
-    """
-    def divisors_within(n: int) -> Set[int]:
-        return {d for d in universe if n % d == 0}
-
-    def l(X: FrozenSet[int]) -> FrozenSet[int]:
-        out: Set[int] = set()
-        for n in X:
-            out |= divisors_within(n)
-        return frozenset(out)
-
-    def u(Y: FrozenSet[int]) -> FrozenSet[int]:
-        # Largest set whose divisor-closure is contained in Y: the elements of
-        # Y all of whose divisors lie in Y (the 'interior' under the rule).
-        return frozenset(
-            n for n in Y if all(d in Y for d in divisors_within(n))
-        )
-
-    return l, u
+def radical_monomial_exponent(exponent: int) -> int:
+    """Return the exponent generating the radical of (x^exponent) in k[x]."""
+    if exponent < 1:
+        raise ValueError("the exponent must be positive")
+    return 1
 
 
-# ---------------------------------------------------------------------------
-# Example 3: Zariski-style closed sets from an ideal / zero-set connection
-# ---------------------------------------------------------------------------
+def demonstrate_order_topology() -> None:
+    points = [0, 1, 2, 3]
+    leq = lambda x, y: x <= y
+    monotone_map = {0: 0, 1: 1, 2: 1, 3: 3}
+    nonmonotone_map = {0: 0, 1: 2, 2: 1, 3: 3}
+    opens = [u for u in powerset(points) if is_upper_set(u, points, leq)]
 
-def zariski_demo(points: List[int], polys: List[Callable[[int], int]]):
-    """A finite caricature of Spec: points and 'polynomials'.
-
-    A 'point' p is a value; a 'polynomial' f vanishes at p when f(p) == 0.
-    For a set S of points, u(S) = {f : f vanishes on all of S} (the ideal),
-    and for a set F of polynomials, l(F) = {p : every f in F vanishes at p}
-    (the zero set V(F)). The closure cl(S) = V(I(S)) is the Zariski closure;
-    its fixed points are exactly the Zariski-closed sets.
-    """
-    def u(S: FrozenSet[int]) -> FrozenSet[int]:
-        # index polynomials by position
-        return frozenset(
-            i for i, f in enumerate(polys) if all(f(p) == 0 for p in S)
-        )
-
-    def l(F: FrozenSet[int]) -> FrozenSet[int]:
-        return frozenset(
-            p for p in points if all(polys[i](p) == 0 for i in F)
-        )
-
-    return l, u
+    print("Upper Alexandrov opens on the chain 0 ≤ 1 ≤ 2 ≤ 3:")
+    print([sorted(u) for u in opens])
+    for name, mapping in [("monotone", monotone_map),
+                          ("nonmonotone", nonmonotone_map)]:
+        print(f"{name:11s}: monotone={is_monotone(points, mapping, leq)}, "
+              f"continuous={is_alexandrov_continuous(points, mapping, leq)}")
 
 
-# ---------------------------------------------------------------------------
-# Driver
-# ---------------------------------------------------------------------------
+def demonstrate_fixed_points_and_union_failure() -> None:
+    subsets = powerset([0, 1, 2])
+    fixed = [s for s in subsets if bad_closure(s) == s]
+    a, b = frozenset({0}), frozenset({1})
 
-def banner(title: str) -> None:
-    print("\n" + "=" * 70)
-    print(title)
-    print("=" * 70)
+    print("\nFixed subsets of the three-point closure:")
+    print([sorted(s) for s in fixed])
+    print("Closure of A union B:", sorted(bad_closure(a | b)))
+    print("Closure of A union closure of B:",
+          sorted(bad_closure(a) | bad_closure(b)))
+    print("Binary-union law holds:",
+          bad_closure(a | b) == bad_closure(a) | bad_closure(b))
+    ambient_join = a | b
+    fixed_point_join = bad_closure(ambient_join)
+    print("Ambient union of fixed sets:", sorted(ambient_join))
+    print("Join inside the fixed-point lattice:", sorted(fixed_point_join))
+
+
+def demonstrate_radicalization() -> None:
+    print("\nMonomial ideals (x^n) and their radical generators:")
+    for exponent in range(1, 7):
+        radical = radical_monomial_exponent(exponent)
+        print(f"rad((x^{exponent})) = (x^{radical})")
 
 
 def main() -> None:
-    subset_le = lambda x, y: x <= y  # inclusion order on frozensets
-
-    # ----- Example 2: monotone Galois connection & closure operator ---------
-    banner("Example: monotone Galois connection (divisor closure)")
-    universe = [1, 2, 3, 4, 6, 12]
-    l2, u2 = divisibility_closure(universe)
-    lattice = powerset(universe)
-    ok = is_galois_connection(lattice, lattice, l2, u2, subset_le, subset_le)
-    print(f"Defining bi-implication holds on all 2^{len(universe)} pairs: {ok}")
-
-    cl2 = closure(l2, u2)
-    ker2 = kernel(l2, u2)
-
-    # closure operator axioms
-    extensive = all(subset_le(a, cl2(a)) for a in lattice)
-    idem = all(cl2(cl2(a)) == cl2(a) for a in lattice)
-    print(f"cl extensive (a <= cl a): {extensive}")
-    print(f"cl idempotent (cl(cl a) = cl a): {idem}")
-
-    closed = closed_elements(lattice, cl2)
-    print(f"number of closed elements (fixed points of cl): {len(closed)}")
-    print("a few closed sets:",
-          [sorted(c) for c in sorted(closed, key=lambda s: (len(s), sorted(s)))][:6])
-
-    # Knaster-Tarski extreme fixed points
-    bot: FrozenSet[int] = frozenset()
-    top: FrozenSet[int] = frozenset(universe)
-    lfp = u2(l2(bot))
-    gfp = l2(u2(top))
-    print(f"lfp(cl) = u(l(bot)) = {sorted(lfp)}")
-    print(f"gfp(ker) = l(u(top)) = {sorted(gfp)}")
-
-    # completeness: supremum of two closed sets = closure of their union
-    c1, c2 = closed[1], closed[2]
-    sup_closed = cl2(c1 | c2)
-    print(f"closed sup of {sorted(c1)} and {sorted(c2)} "
-          f"= cl(union) = {sorted(sup_closed)} (closed: {sup_closed in closed})")
-    inf_closed = c1 & c2
-    print(f"closed inf (inherited intersection): {sorted(inf_closed)} "
-          f"(closed: {inf_closed in closed})")
-
-    # ----- Example 1: formal concept analysis -------------------------------
-    banner("Example: formal concept analysis (closed concepts)")
-    objects = [1, 2, 3, 4]
-    attributes = ["even", "prime", "square", "gt2"]
-    incidence: Set[Tuple[int, str]] = set()
-    for g in objects:
-        if g % 2 == 0:
-            incidence.add((g, "even"))
-        if g in (2, 3):
-            incidence.add((g, "prime"))
-        if g in (1, 4):
-            incidence.add((g, "square"))
-        if g > 2:
-            incidence.add((g, "gt2"))
-    l1, u1 = relation_galois(objects, attributes, incidence)
-    obj_lattice = powerset(objects)
-    cl1 = lambda X: u1(l1(X))  # extent closure
-    extents = closed_elements(obj_lattice, cl1)
-    print("Formal concepts (extent | intent):")
-    for X in sorted(extents, key=lambda s: (len(s), sorted(s))):
-        print(f"  objects {sorted(X)!s:18} attributes {sorted(l1(X))}")
-
-    # fixed-point correspondence: extent -> intent -> extent round trip
-    rt_ok = all(u1(l1(X)) == X for X in extents)
-    print(f"round trip u(l(extent)) = extent for all concepts: {rt_ok}")
-
-    # ----- Example 3: Zariski closed sets -----------------------------------
-    banner("Example: Zariski-style closed sets on a finite 'Spec'")
-    points = [0, 1, 2, 3, 4]
-    polys: List[Callable[[int], int]] = [
-        lambda x: x,                 # vanishes at 0
-        lambda x: x - 1,             # vanishes at 1
-        lambda x: x * (x - 1),       # vanishes at 0,1
-        lambda x: (x - 2) * (x - 3), # vanishes at 2,3
-        lambda x: 0,                 # the zero polynomial: vanishes everywhere
-    ]
-    l3, u3 = zariski_demo(points, polys)
-    pt_lattice = powerset(points)
-    cl3 = lambda S: l3(u3(S))  # Zariski closure V(I(S))
-    closed_sets = closed_elements(pt_lattice, cl3)
-    print(f"Zariski-closed subsets of the {len(points)} points "
-          f"({len(closed_sets)} of {2**len(points)} subsets):")
-    for C in sorted(closed_sets, key=lambda s: (len(s), sorted(s))):
-        print(f"  {sorted(C)}")
-
-    # closed-set axioms: intersection of closed is closed; whole space closed
-    inter_ok = all(
-        (C & D) in closed_sets for C in closed_sets for D in closed_sets
-    )
-    whole_closed = frozenset(points) in closed_sets
-    print(f"intersections of closed sets are closed: {inter_ok}")
-    print(f"the whole space is closed: {whole_closed}")
+    demonstrate_order_topology()
+    demonstrate_fixed_points_and_union_failure()
+    demonstrate_radicalization()
 
 
 if __name__ == "__main__":
