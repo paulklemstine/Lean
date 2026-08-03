@@ -1,528 +1,489 @@
-# Threshold Phenomena in the Erdős–Rényi Random Graph
+# Finite Moment Methods and Mean-Field Thresholds in Erdős–Rényi Random Graphs
+
+**Aristotle**  
+**August 3, 2026**
 
 ## Abstract
 
-We develop a self-contained account of threshold phenomena in the Erdős–Rényi model $G(n,p)$. Starting from the finite probability mass assigned to each edge configuration, we prove normalization, independence for prescribed edge sets, the union bound, and exact formulas for expected pattern counts. These yield a first-moment criterion for absence. We then derive the second-moment inequality $\Pr(X=0)\le \operatorname{Var}(X)/(\mathbb E X)^2$ and show that an expectation tending to infinity together with variance of order at most the expectation forces occurrence with high probability. We apply this framework to the two principal structural scales of random graphs. At $p=(1\pm\varepsilon)/n$, component exploration changes from subcritical to supercritical: below the scale all components have logarithmic size with high probability, while above it a component of linear size appears. At $p=(\log n+c)/n$, isolated vertices have an asymptotic Poisson law with mean $e^{-c}$ and connectivity converges to $e^{-e^{-c}}$. We also describe algorithms and numerical experiments that expose these transitions in finite graphs.
+We give a self-contained treatment of finite first- and second-moment methods for the independent-edge random graph and connect them to two characteristic threshold scales. For an arbitrary finite family of prescribed edge sets, we derive the exact first moment of the number of realized patterns and the exact second moment as a sum indexed by pairwise unions. This yields an overlap expansion for the variance and a Paley–Zygmund-type lower bound for the probability that at least one pattern appears. We also state and prove a variance criterion under which absence has probability tending to zero. At the sparse scaling $p=\lambda/n$, we analyse the Poisson exploration fixed point $\rho=1-e^{-\lambda\rho}$: the only nonnegative solution is zero for $0<\lambda\leq1$, whereas a solution in $(0,1)$ exists for $\lambda>1$, with the quantitative lower bound $\rho\geq2(\lambda-1)/\lambda^2$. We explain how this identifies the mean-field giant-component transition, and we distinguish it carefully from the later connectivity window $p=(\log n+c)/n$. Numerical algorithms for simulation, overlap enumeration, and fixed-point computation are included, together with applications and precise directions needed to pass from the finite identities to sharp asymptotic graph laws.
 
 ## 1. Introduction
 
-A threshold is a narrow parameter range across which a random structure changes from almost surely lacking a property to almost surely possessing it. The Erdős–Rényi random graph provides the canonical setting. It combines an elementary sampling rule with global behavior rich enough to distinguish several notions of network formation.
+The Erdős–Rényi model $G(n,p)$ begins with $n$ labelled vertices and includes each of the ${n\choose2}$ possible undirected edges independently with probability $p$. Despite the independence of individual edges, graph properties are strongly dependent: two triangles can share an edge, many connected subgraphs can compete for the same vertices, and the event of global connectivity is controlled by rare local obstructions near its threshold.
 
-Two transitions are central. The first occurs near $p=1/n$, where a connected component containing a positive fraction of all vertices emerges. The second occurs near $p=(\log n)/n$, where the last isolated vertices disappear and the graph becomes connected. These scales answer different questions. The giant-component threshold concerns extensive reachability; the connectivity threshold requires universal reachability.
+Threshold phenomena arise when a small change in $p$ produces a large change in the probability of a structural property. Two scales are especially important. At $p=\lambda/n$, the expected degree is approximately $\lambda$, and a macroscopic connected component first becomes possible when $\lambda$ passes through one. Connectivity itself appears later, at a scale of order $(\log n)/n$, when isolated vertices disappear.
 
-The proofs depend on a compact toolkit. Independence computes the probability of any prescribed edge pattern. Indicator variables convert counts into sums. The union bound and first moment prove nonexistence when expected counts vanish. Variance and the second moment prove existence when expected counts grow and fluctuations are controlled. Poisson approximation handles rare obstructions in a critical window, while branching-process comparison describes component exploration.
+The present paper focuses on the common finite mechanism beneath many such statements: count candidate structures, calculate how pairs overlap, and convert moment estimates into probability bounds. The method applies to any finite potential-edge set and any finite indexed family of required edge sets. It therefore covers copies of a fixed graph, prescribed routes, local motifs, and many non-graphical independent-feature models.
 
-Throughout, “with high probability” means with probability tending to $1$ as $n\to\infty$. All graphs are finite, simple, undirected, and labeled.
+A distinction between exact results and asymptotic interpretations is essential. The finite probability law, first-moment identities, exact pair-overlap formula, variance expansion, second-moment lower bound, and fixed-point phase transition are established here directly. The full finite-graph laws for connectivity and giant-component size require additional asymptotic inputs—respectively, Poisson approximation plus exclusion of nontrivial small components, and a branching-process coupling plus concentration. We state those targets and explain exactly how the results here enter their proofs, without conflating the mean-field fixed point with the complete finite-graph theorem.
 
-## 2. The finite random graph model
+## 2. The finite independent-edge model
 
-### 2.1 Configurations and their masses
-
-Let $V=[n]=\{1,\ldots,n\}$ and let
+Let $E$ be a finite set of potential edges. A configuration is a function assigning “absent” or “present” to each edge, equivalently a subset $g\subseteq E$. Fix $p\in[0,1]$. The probability mass of $g$ is
 
 $$
-\mathcal E_n=\bigl\{\{u,v\}:u,v\in V,\ u\ne v\bigr\}
+w_p(g)=p^{|g|}(1-p)^{|E|-|g|}.
 $$
 
-be the set of possible edges. Its cardinality is $N=\binom n2$. A configuration is a subset $S\subseteq\mathcal E_n$; it defines the graph whose edge set is $S$.
-
-**Definition 2.1 (Erdős–Rényi mass).** For $p\in[0,1]$ and $S\subseteq\mathcal E_n$, define
+The binomial theorem shows that this is normalized:
 
 $$
-\mu_p(S)=p^{|S|}(1-p)^{N-|S|}.
+\sum_{g\subseteq E}w_p(g)
+=\sum_{k=0}^{|E|}{|E|\choose k}p^k(1-p)^{|E|-k}=1.
 $$
 
-For an event $A\subseteq 2^{\mathcal E_n}$, define
+For an event $\mathcal A\subseteq2^E$, define
 
 $$
-\Pr_p(A)=\sum_{S\in A}\mu_p(S).
+\mathbb P_p(\mathcal A)=\sum_{g\in\mathcal A}w_p(g),
 $$
 
-**Theorem 2.2 (Normalization and nonnegativity).** For $p\in[0,1]$, every mass $\mu_p(S)$ is nonnegative and
+and for a real random variable $X:2^E\to\mathbb R$, define
 
 $$
-\sum_{S\subseteq\mathcal E_n}\mu_p(S)=1.
+\mathbb E_p[X]=\sum_{g\subseteq E}w_p(g)X(g),
+\qquad
+\mathbb E_p[X^2]=\sum_{g\subseteq E}w_p(g)X(g)^2.
 $$
 
-*Proof sketch.* Nonnegativity follows from $p\ge0$ and $1-p\ge0$. Group configurations according to $m=|S|$. There are $\binom Nm$ configurations with $m$ edges, so the total mass is
+These definitions require no limiting construction: all sums are finite.
+
+### Definition 2.1 (Required-edge event)
+
+For $A\subseteq E$, let
 
 $$
-\sum_{m=0}^{N}\binom Nm p^m(1-p)^{N-m}
-=(p+(1-p))^N=1
+\mathcal A_A=\{g\subseteq E:A\subseteq g\}
 $$
 
-by the binomial theorem. Thus $\Pr_p$ is a probability law.
+be the event that every edge in $A$ is present.
 
-### 2.2 Prescribed edges and independence
+### Lemma 2.2 (Probability of a required edge set)
 
-**Theorem 2.3 (Prescribed-edge probability).** If $T\subseteq\mathcal E_n$ is a fixed set of $t$ edges, then
-
-$$
-\Pr_p(T\subseteq S)=p^t.
-$$
-
-*Proof sketch.* Every configuration containing $T$ has the unique form $T\cup R$, where $R\subseteq\mathcal E_n\setminus T$. Factoring out $p^t$ and summing over $R$ gives
+For every $A\subseteq E$,
 
 $$
-p^t\sum_{R\subseteq\mathcal E_n\setminus T}
- p^{|R|}(1-p)^{N-t-|R|}
-=p^t(p+1-p)^{N-t}=p^t.
+\mathbb P_p(\mathcal A_A)=p^{|A|}.
 $$
 
-This theorem expresses the independence of edge indicators. Importantly, it leaves all edges outside $T$ unspecified.
-
-## 3. First moments and pattern counts
-
-### 3.1 Union bound
-
-**Lemma 3.1 (Finite union bound).** For events $A_1,\ldots,A_r$,
+**Proof sketch.** Every edge of $A$ must be present, contributing $p^{|A|}$. Summing over arbitrary choices on $E\setminus A$ contributes
 
 $$
-\Pr_p\!\left(\bigcup_{i=1}^r A_i\right)
-\le \sum_{i=1}^r\Pr_p(A_i).
+\sum_{R\subseteq E\setminus A}p^{|R|}(1-p)^{|E\setminus A|-|R|}=1.
 $$
 
-*Proof sketch.* A configuration in the union occurs in at least one event, so its nonnegative mass is counted at least once on the right. Configurations in several events may be counted repeatedly, producing an inequality.
+Multiplication gives the formula. $\square$
 
-### 3.2 Exact expected counts
+### Lemma 2.3 (Intersection equals union of requirements)
 
-Let $\mathcal T$ be a finite family of subsets of $\mathcal E_n$. Its members represent candidate copies of a desired edge pattern. Define
-
-$$
-X_{\mathcal T}(S)=|\{T\in\mathcal T:T\subseteq S\}|.
-$$
-
-**Theorem 3.2 (Expected pattern count).** The expected number of realized patterns is
+For all $A,B\subseteq E$,
 
 $$
-\mathbb E_p[X_{\mathcal T}]
-=\sum_{T\in\mathcal T}p^{|T|}.
+\mathcal A_A\cap\mathcal A_B=\mathcal A_{A\cup B},
 $$
 
-*Proof sketch.* Write
+and consequently
 
 $$
-X_{\mathcal T}=\sum_{T\in\mathcal T}\mathbf 1_{\{T\subseteq S\}}.
+\mathbb P_p(\mathcal A_A\cap\mathcal A_B)=p^{|A\cup B|}.
 $$
 
-Linearity of expectation and Theorem 2.3 give
+**Proof sketch.** A configuration contains both $A$ and $B$ if and only if it contains their union. Lemma 2.2 then supplies the probability. $\square$
+
+The second identity is the basic overlap calculation. If $A$ and $B$ are disjoint, it factors as $p^{|A|}p^{|B|}$. If they overlap, the shared edges are paid for only once.
+
+## 3. Families of patterns and their first moments
+
+Let $I$ be a finite index set and assign to each $i\in I$ a required set $S_i\subseteq E$. Repeated edge sets are allowed when different indices represent distinct labelled embeddings.
+
+### Definition 3.1 (Pattern count)
+
+The number of realized candidates is
 
 $$
-\mathbb E_p[X_{\mathcal T}]
-=\sum_{T\in\mathcal T}\Pr_p(T\subseteq S)
-=\sum_{T\in\mathcal T}p^{|T|}.
+X(g)=\sum_{i\in I}\mathbf1_{\mathcal A_{S_i}}(g)
+=\#\{i\in I:S_i\subseteq g\}.
 $$
 
-No independence among the indicators is needed.
+### Theorem 3.2 (Expected Count Formula)
 
-**Corollary 3.3 (Uniform pattern size).** If every member of $\mathcal T$ has $e$ edges, then
-
-$$
-\mathbb E_p[X_{\mathcal T}]=|\mathcal T|p^e.
-$$
-
-For example, the number $X_\triangle$ of triangles satisfies
+For every finite family $(S_i)_{i\in I}$,
 
 $$
-\mathbb E[X_\triangle]=\binom n3p^3.
+\mathbb E_p[X]=\sum_{i\in I}p^{|S_i|}.
 $$
 
-The number of labeled copies of a fixed graph $H$ with $v(H)$ vertices and $e(H)$ edges is of order
+**Proof sketch.** Expand $X$ as a finite sum of indicators. Linearity of expectation gives
 
 $$
-n^{v(H)}p^{e(H)},
+\mathbb E_p[X]=\sum_{i\in I}\mathbb E_p[\mathbf1_{\mathcal A_{S_i}}]
+=\sum_{i\in I}\mathbb P_p(\mathcal A_{S_i}),
 $$
 
-up to a constant determined by automorphisms.
+and Lemma 2.2 evaluates each summand. No independence between candidates is needed. $\square$
 
-### 3.3 First-moment threshold
+### Theorem 3.3 (First-Moment Vanishing Bound)
 
-**Theorem 3.4 (First-moment vanishing criterion).** For $p\in[0,1]$,
-
-$$
-\Pr_p(X_{\mathcal T}>0)
-\le \sum_{T\in\mathcal T}p^{|T|}
-=\mathbb E_p[X_{\mathcal T}].
-$$
-
-Consequently, if a sequence of families and probabilities satisfies $\mathbb E[X_n]\to0$, then $\Pr(X_n>0)\to0$.
-
-*Proof sketch.* The event $X_{\mathcal T}>0$ is the union, over $T\in\mathcal T$, of the events $T\subseteq S$. Apply Lemma 3.1 and Theorem 2.3.
-
-This result gives the lower side of many thresholds. For a fixed graph $H$, if $n^{v(H)}p^{e(H)}\to0$, then with high probability no copy of $H$ appears. For non-balanced graphs, denser subgraphs impose the decisive scale; this motivates the maximum density
+For $p\in[0,1]$,
 
 $$
-m(H)=\max_{H'\subseteq H,\ e(H')>0}\frac{e(H')}{v(H')}.
+\mathbb P_p(X>0)\leq\sum_{i\in I}p^{|S_i|}=\mathbb E_p[X].
 $$
 
-The natural general threshold is $p\asymp n^{-1/m(H)}$.
+**Proof sketch.** The positivity event is the union $\bigcup_{i\in I}\mathcal A_{S_i}$. Apply the union bound and then Lemma 2.2. Equivalently, use the pointwise inequality $\mathbf1_{\{X>0\}}\leq X$. $\square$
 
-## 4. The second-moment method
+For a sequence $X_n$, if $\mathbb E[X_n]\to0$, then $\mathbb P(X_n>0)\to0$. This criterion frequently proves the lower-density side of an appearance threshold.
 
-### 4.1 Variance and a zero-event inequality
+### Example 3.4 (Copies of a fixed graph)
 
-For any real random variable $X$ on the finite configuration space, define
-
-$$
-\mathbb E[X]=\sum_S\mu_p(S)X(S)
-$$
-
-and
+Let $H$ have $v(H)$ vertices and $e(H)$ edges. Index labelled embeddings of $H$ into the complete graph on $n$ vertices, and let $S_i$ be the edge set required by embedding $i$. Each candidate has $e(H)$ edges, so
 
 $$
-\operatorname{Var}(X)=\mathbb E[(X-\mathbb E[X])^2].
+\mathbb E[X_H]=N_H(n)p^{e(H)},
 $$
 
-**Theorem 4.1 (Second-moment zero bound).** If $\mathbb E[X]\ne0$, then
+where $N_H(n)$ is the number of indexed embeddings used by the counting convention. For unlabelled triangles, $N_H(n)={n\choose3}$ and
 
 $$
-\Pr(X=0)
-\le
-\frac{\operatorname{Var}(X)}{(\mathbb E[X])^2}.
+\mathbb E[X_\triangle]={n\choose3}p^3.
 $$
 
-*Proof sketch.* On $\{X=0\}$ one has
+## 4. Exact second moments and overlap expansions
+
+The first moment ignores dependence among candidates. The second moment records it exactly.
+
+### Theorem 4.1 (Exact Second-Moment Formula)
+
+For the count in Definition 3.1,
 
 $$
-(X-\mathbb E[X])^2=(\mathbb E[X])^2.
+\mathbb E_p[X^2]
+=\sum_{i\in I}\sum_{j\in I}p^{|S_i\cup S_j|}.
 $$
 
-All summands in the variance are nonnegative, hence
+**Proof sketch.** Expand the square:
 
 $$
-\operatorname{Var}(X)
-\ge (\mathbb E[X])^2\Pr(X=0).
+X^2=\sum_{i,j\in I}
+\mathbf1_{\mathcal A_{S_i}}\mathbf1_{\mathcal A_{S_j}}.
 $$
 
-Division by the positive square $(\mathbb E[X])^2$ proves the claim.
+The product of the two indicators is the indicator of their intersection. By Lemma 2.3, that intersection requires exactly $S_i\cup S_j$, whose probability is $p^{|S_i\cup S_j|}$. Summing proves the identity. $\square$
 
-**Lemma 4.2 (Analytic squeeze).** Let $P_n\ge0$, let $E_n\to\infty$, and suppose
+This theorem is exact for every finite family and every real $p$ for which the algebraic expressions are considered; its probabilistic interpretation uses $p\in[0,1]$.
 
-$$
-P_n\le\frac{V_n}{E_n^2}
-\qquad\text{and}\qquad
-V_n\le CE_n
-$$
+### Corollary 4.2 (Exact Variance Expansion)
 
-for a constant $C$. Then $P_n\to0$.
-
-*Proof sketch.* The assumptions imply $0\le P_n\le C/E_n$, and $C/E_n\to0$.
-
-**Theorem 4.3 (Second-moment occurrence criterion).** Let $X_n$ be nonnegative pattern counts. If
+The variance $\operatorname{Var}_p(X)=\mathbb E_p[X^2]-\mathbb E_p[X]^2$ satisfies
 
 $$
-\mathbb E[X_n]\to\infty
+\operatorname{Var}_p(X)
+=\sum_{i,j\in I}p^{|S_i\cup S_j|}
+-\left(\sum_{i\in I}p^{|S_i|}\right)^2.
+$$
+
+**Proof sketch.** Substitute Theorems 3.2 and 4.1 into the definition of variance. $\square$
+
+An equivalent covariance form is often revealing:
+
+$$
+\operatorname{Var}_p(X)
+=\sum_{i,j\in I}
+\left(p^{|S_i\cup S_j|}-p^{|S_i|+|S_j|}\right).
+$$
+
+Pairs with disjoint required edge sets contribute zero. Thus only edge-overlapping pairs affect covariance, even if the corresponding subgraphs share vertices.
+
+### Example 4.3 (Triangle overlaps)
+
+Let $X_\triangle$ count unlabelled triangles in $G(n,p)$. For an ordered pair of identical triangles, the union has three edges. For two distinct triangles sharing an edge, the union has five edges. For all other distinct pairs, their edge sets are disjoint and the union has six edges. Hence the second moment is obtained by counting these three classes. In covariance form, the disjoint class cancels entirely. This illustrates why pair classification, rather than enumeration of all graph configurations, is the computationally natural approach.
+
+### Algorithmic principle
+
+Given explicit sets $S_i$, store each as a bit mask. Then $|S_i\cup S_j|$ is the population count of a bitwise OR. A direct exact computation takes $O(|I|^2)$ pair operations and $O(|I|)$ storage beyond the input. If the family has symmetries, one can instead count orbit or overlap classes and reduce the calculation dramatically.
+
+## 5. From moments to appearance probabilities
+
+### Theorem 5.1 (Finite Support Cauchy–Schwarz Bound)
+
+Let $X\geq0$ be a real random variable on the finite independent-edge space. Then
+
+$$
+\mathbb E_p[X]^2
+\leq \mathbb P_p(X>0)\,\mathbb E_p[X^2].
+$$
+
+**Proof sketch.** Let $A=\{X>0\}$. Nonnegativity implies $X=0$ outside $A$, so
+
+$$
+\mathbb E_p[X]=\mathbb E_p[X\mathbf1_A].
+$$
+
+Apply Cauchy–Schwarz to $X$ and $\mathbf1_A$:
+
+$$
+\mathbb E_p[X\mathbf1_A]^2
+\leq\mathbb E_p[X^2]\mathbb E_p[\mathbf1_A^2]
+=\mathbb E_p[X^2]\mathbb P_p(A).
+$$
+
+This is the stated inequality. $\square$
+
+### Corollary 5.2 (Second-Moment Lower Bound)
+
+If $X\geq0$ and $\mathbb E_p[X^2]>0$, then
+
+$$
+\mathbb P_p(X>0)
+\geq\frac{\mathbb E_p[X]^2}{\mathbb E_p[X^2]}.
+$$
+
+For a family $(S_i)_{i\in I}$, this specializes to
+
+$$
+\mathbb P_p(X>0)
+\geq
+\frac{\left(\sum_{i\in I}p^{|S_i|}\right)^2}
+{\sum_{i,j\in I}p^{|S_i\cup S_j|}},
+$$
+
+whenever the denominator is positive.
+
+**Proof sketch.** Divide Theorem 5.1 by the positive second moment and use the exact formulas from Sections 3 and 4. $\square$
+
+The ratio is never greater than one, as Theorem 5.1 itself shows. Its usefulness depends on overlap. If
+
+$$
+\frac{\mathbb E[X^2]}{\mathbb E[X]^2}\longrightarrow1,
+$$
+
+then the probability of appearance tends to one.
+
+### Theorem 5.3 (Variance Criterion for High-Probability Appearance)
+
+Let $(X_n)$ be nonnegative random variables with nonzero means. Suppose
+
+$$
+\mathbb E[X_n]\longrightarrow\infty
 $$
 
 and there is a constant $C$ such that
 
 $$
-\operatorname{Var}(X_n)\le C\mathbb E[X_n]
+\operatorname{Var}(X_n)\leq C\mathbb E[X_n]
 $$
 
-for all $n$, then
+for all $n$. Then
 
 $$
-\Pr(X_n=0)\to0.
+\mathbb P(X_n=0)\longrightarrow0.
 $$
 
-Equivalently, $X_n>0$ with high probability.
-
-*Proof sketch.* Apply Theorem 4.1 with $E_n=\mathbb E[X_n]$ and $V_n=\operatorname{Var}(X_n)$, then invoke Lemma 4.2.
-
-The usefulness of this theorem lies in overlap enumeration. For a subgraph count $X=\sum_T I_T$,
+**Proof sketch.** On $X_n=0$, the squared deviation from the mean equals $\mathbb E[X_n]^2$. Since every term in the variance sum is nonnegative,
 
 $$
-\operatorname{Var}(X)
-=\sum_{T,U}\operatorname{Cov}(I_T,I_U).
+\mathbb P(X_n=0)\leq
+\frac{\operatorname{Var}(X_n)}{\mathbb E[X_n]^2}
+\leq\frac{C}{\mathbb E[X_n]}.
 $$
 
-Disjoint edge sets have zero covariance. Only overlapping pairs contribute, reducing variance control to a combinatorial classification of overlaps.
+The final quantity tends to zero. $\square$
 
-### 4.2 Example: the triangle count
+The hypotheses are sufficient rather than necessary. In applications one often proves the more general relation $\operatorname{Var}(X_n)=o(\mathbb E[X_n]^2)$.
 
-The triangle count illustrates both the power and the limits of moments. Let $I_A$ be the indicator that a three-vertex set $A$ spans a triangle, and put
+## 6. The mean-field giant-component transition
 
-$$
-X_\triangle=\sum_{A\in\binom{[n]}3}I_A.
-$$
+Set $p=\lambda/n$. The expected degree is $(n-1)\lambda/n\to\lambda$. Early in a breadth-first exploration of a component, collisions are rare, and the number of newly discovered neighbours is approximately Poisson with mean $\lambda$. This motivates a Poisson Galton–Watson process.
 
-The expectation is $\binom n3p^3$. To compute the variance, note that two distinct triangles are edge-disjoint unless they share an edge. Indicators for edge-disjoint triangles are independent, even when the triangles share a single vertex. Hence
+Let $q$ be its extinction probability. A particle has $K\sim\operatorname{Poisson}(\lambda)$ children, and extinction occurs exactly when all child lineages become extinct. Therefore
 
 $$
-\operatorname{Var}(X_\triangle)
-=\sum_A\operatorname{Var}(I_A)
-+2\sum_{A<B}\operatorname{Cov}(I_A,I_B),
+q=\mathbb E[q^K]=e^{\lambda(q-1)}.
 $$
 
-where only pairs sharing an edge contribute to the covariance sum. For one triangle,
+Writing $\rho=1-q$ for survival probability gives
 
 $$
-\operatorname{Var}(I_A)=p^3(1-p^3).
+\rho=1-e^{-\lambda\rho}.
 $$
 
-A pair sharing one edge has a union of five edges, so
+### Definition 6.1 (Mean-field order parameter)
+
+For $\lambda>0$, a nonnegative number $\rho$ is a mean-field survival parameter if
 
 $$
-\mathbb E[I_AI_B]=p^5
-\qquad\text{and}\qquad
-\operatorname{Cov}(I_A,I_B)=p^5-p^6.
+\rho=1-e^{-\lambda\rho}.
 $$
 
-There are $6\binom n4$ unordered pairs of triangles sharing an edge: choose four vertices and then choose their common edge. Therefore
+### Theorem 6.2 (Sharp Fixed-Point Phase Transition)
+
+The mean-field survival equation has the following regimes:
+
+1. If $0<\lambda\leq1$ and $\rho\geq0$ satisfies $\rho=1-e^{-\lambda\rho}$, then $\rho=0$.
+2. If $\lambda>1$, there exists $\rho$ with $0<\rho<1$ satisfying $\rho=1-e^{-\lambda\rho}$.
+
+In particular, at $\lambda=1$ the only nonnegative order parameter is zero.
+
+**Proof sketch.** Define
 
 $$
-\operatorname{Var}(X_\triangle)
-=\binom n3p^3(1-p^3)
-+12\binom n4(p^5-p^6).
+f_\lambda(x)=1-e^{-\lambda x}-x.
 $$
 
-This exact expression makes dependence visible. If $p$ is sufficiently above the triangle threshold, dividing by $(\mathbb E X_\triangle)^2$ shows that the zero-event probability vanishes. At the critical scale $p=c/n$, however, the expectation stays bounded and a Poisson law, rather than concentration around a diverging mean, is the appropriate limiting description.
-
-### 4.3 General overlap principle
-
-For copies of a fixed graph $H$, each pair of copies is classified by its common subgraph $J$. If the two copies together use $2e(H)-e(J)$ distinct edges, their joint probability is
+One has $f_\lambda(0)=0$ and
 
 $$
-p^{2e(H)-e(J)}.
+f_\lambda'(x)=\lambda e^{-\lambda x}-1,
+\qquad
+f_\lambda''(x)=-\lambda^2e^{-\lambda x}<0.
 $$
 
-The number of such pairs is of order $n^{2v(H)-v(J)}$. Comparing every overlap contribution with the square of the mean leads to ratios of the form
+Thus $f_\lambda$ is strictly concave. If $\lambda\leq1$, then $f_\lambda'(0)=\lambda-1\leq0$, so concavity forces $f_\lambda(x)<0$ for every $x>0$; no positive fixed point exists. If $\lambda>1$, then $f_\lambda'(0)>0$, so $f_\lambda$ is positive immediately to the right of zero, while
 
 $$
-n^{-v(J)}p^{-e(J)}.
+f_\lambda(1)=-e^{-\lambda}<0.
 $$
 
-These ratios explain why the densest nonempty subgraph of $H$ determines the general containment threshold. They also show why strictly balanced graphs are particularly clean: at the critical scale, proper overlaps are asymptotically negligible, leaving isolated copies whose count tends toward a Poisson distribution.
+Continuity produces a root in $(0,1)$. $\square$
 
-## 5. Connectivity at the logarithmic scale
+### Theorem 6.3 (Quantitative Supercritical Lower Bound)
 
-### 5.1 Isolated vertices determine the scale
+If $\lambda>1$ and $0<\rho<1$ satisfies $\rho=1-e^{-\lambda\rho}$, then
 
-Let $I_n$ denote the number of isolated vertices in $G(n,p)$. A fixed vertex is isolated if all of its $n-1$ incident edges are absent. Therefore
+$$
+\rho\geq\frac{2(\lambda-1)}{\lambda^2}.
+$$
+
+**Proof sketch.** The elementary inequality $e^{-x}\leq1-x+x^2/2$ for $x\geq0$ gives
+
+$$
+\rho=1-e^{-\lambda\rho}
+\geq\lambda\rho-\frac{\lambda^2\rho^2}{2}.
+$$
+
+Because $\rho>0$, rearrangement and division by $\rho$ yield
+
+$$
+\frac{\lambda^2\rho}{2}\geq\lambda-1,
+$$
+
+which is the claim. $\square$
+
+The equation predicts that the giant-component density is $\rho$. Theorems 6.2 and 6.3 establish the transition for this limiting exploration equation: extinction is certain at and below mean one, while positive survival occurs above one. To turn this into the finite random-graph law requires controlling the approximation throughout a sufficiently long exploration, proving concentration of the mass in large components, and proving uniqueness of the macroscopic component.
+
+## 7. Connectivity and isolated vertices
+
+Connectivity has a different threshold. Let $I_n$ count isolated vertices in $G(n,p)$. A fixed vertex has no incident edge with probability $(1-p)^{n-1}$, hence
 
 $$
 \mathbb E[I_n]=n(1-p)^{n-1}.
 $$
 
-If $p=(\log n+c)/n$, then
+At
 
 $$
-(1-p)^{n-1}
-=\exp\bigl((n-1)\log(1-p)\bigr)
-\sim e^{-np}
-=\frac{e^{-c}}{n},
+p_n=\frac{\log n+c}{n},
 $$
 
-and hence
+one obtains
 
 $$
-\mathbb E[I_n]\to e^{-c}.
+\mathbb E[I_n]\longrightarrow e^{-c}.
 $$
 
-Thus the expected number of isolated vertices remains of constant order precisely in a window of width $1/n$ around $(\log n)/n$.
+This expectation suggests, but does not by itself prove, a Poisson limit.
 
-### 5.2 Poisson law
+### Sharp connectivity target
 
-**Theorem 5.1 (Poisson limit for isolated vertices).** Fix $c\in\mathbb R$ and set $p_n=(\log n+c)/n$. Then
-
-$$
-I_n\xrightarrow{d}\operatorname{Poisson}(e^{-c}).
-$$
-
-*Proof sketch.* For each fixed positive integer $k$, consider the falling factorial $(I_n)_k$. It counts ordered $k$-tuples of distinct isolated vertices. A specified $k$-tuple is isolated exactly when every edge incident to one of those vertices is absent. The number of such edges is
+The classical sharp statement is
 
 $$
-k(n-k)+\binom k2.
+\mathbb P\bigl(G(n,p_n)\text{ is connected}\bigr)
+\longrightarrow e^{-e^{-c}}.
 $$
 
-Therefore
+A self-contained proof naturally separates into two asymptotic propositions:
+
+1. $I_n$ converges in distribution to a Poisson random variable of mean $e^{-c}$, so $\mathbb P(I_n=0)\to e^{-e^{-c}}$.
+2. The probability that $G(n,p_n)$ is disconnected but has no isolated vertices tends to zero.
+
+The first can be approached through falling-factorial moments. For fixed $k$,
 
 $$
 \mathbb E[(I_n)_k]
-=(n)_k(1-p_n)^{k(n-k)+\binom k2}
-\longrightarrow e^{-ck}.
+=(n)_k(1-p_n)^{k(n-k)+{k\choose2}},
 $$
 
-These are the factorial moments of a Poisson random variable with mean $e^{-c}$. The method of moments yields convergence in distribution.
+because $k$ ordered distinct vertices are all isolated precisely when every edge touching at least one of them is absent. The desired limit is $e^{-ck}$. The second proposition requires summing over possible separated vertex sets of sizes from two to $n/2$ and showing that the total probability vanishes. These are further asymptotic steps, not consequences of the first and second moments alone.
 
-### 5.3 Excluding other disconnected components
+## 8. Algorithms and numerical demonstrations
 
-A graph with no isolated vertices can still be disconnected, but this possibility vanishes in the critical window. If there is a component on a vertex set $S$ with $2\le |S|=k\le n/2$, then no edge joins $S$ to its complement. Ignoring the additional requirement that the induced graph on $S$ be connected gives
+### 8.1 Sampling $G(n,p)$
 
-$$
-\Pr(\text{some separated }k\text{-set})
-\le \binom nk(1-p)^{k(n-k)}.
-$$
+Generate all pairs $0\leq u<v<n$ and include each independently when a uniform random number is below $p$. A disjoint-set union structure computes connected components in almost linear time in the number of sampled edges. Straight pair scanning costs $O(n^2)$ random draws and $O(n+M)$ storage, where $M$ is the realized edge count.
 
-A refined split into small and moderate $k$, together with a spanning-tree bound for connected induced subgraphs, shows that the sum over $2\le k\le n/2$ tends to zero when $p=(\log n+c)/n$. Thus, asymptotically, disconnection is caused only by isolated vertices.
+### 8.2 Computing the survival parameter
 
-**Theorem 5.2 (Sharp connectivity window).** For every fixed $c\in\mathbb R$,
+For $\lambda\leq1$, return zero. For $\lambda>1$, solve
 
 $$
-\Pr\!\left(G\!\left(n,\frac{\log n+c}{n}\right)
-\text{ is connected}\right)
-\longrightarrow
-\exp(-e^{-c}).
+f_\lambda(\rho)=1-e^{-\lambda\rho}-\rho=0
 $$
 
-*Proof sketch.* By Theorem 5.1,
+for the nonzero root in $(0,1)$. Bisection is robust once the lower endpoint is chosen slightly above zero; fixed-point iteration $\rho_{t+1}=1-e^{-\lambda\rho_t}$ with a positive initial value is simpler and converges to the positive solution in the supercritical regime. Each iteration costs $O(1)$, and bisection reaches absolute error $\varepsilon$ in $O(\log(1/\varepsilon))$ iterations.
+
+### 8.3 Exact overlap computation
+
+Represent each required set by a bit mask. Compute
 
 $$
-\Pr(I_n=0)\to \Pr(\operatorname{Poisson}(e^{-c})=0)
-=e^{-e^{-c}}.
+M_1=\sum_i p^{|S_i|},
+\qquad
+M_2=\sum_{i,j}p^{|S_i\cup S_j|},
 $$
 
-The probability of being disconnected without an isolated vertex tends to zero, so connectivity and the event $I_n=0$ have the same limit.
+then report $M_1^2/M_2$ when $M_2>0$. The direct method takes $O(|I|^2)$ bitwise unions. For graph families with symmetry, classify pairs by intersection type and multiply one contribution by the class size.
 
-**Corollary 5.3 (Threshold form).** If $p=(\log n-\omega(n))/n$ with $\omega(n)\to\infty$, then the connectivity probability tends to $0$. If $p=(\log n+\omega(n))/n$, then it tends to $1$.
+### 8.4 What simulation can and cannot show
 
-The limiting profile is a shifted Gumbel-type curve. It records the disappearance of rare defects rather than the creation of a large component.
+Monte Carlo experiments make the two scales visible: near $\lambda=1$, the largest component changes from microscopic to macroscopic; near $p=(\log n)/n$, the connectivity probability changes rapidly. Such experiments illustrate finite-size behaviour but do not establish an asymptotic theorem. Exact moment formulas and analytic estimates remain necessary to control all configurations.
 
-## 6. The phase transition for component size
+## 9. Applications
 
-### 6.1 Exploration and branching processes
+**Network reliability.** Candidate edge sets can encode operational routes between terminals. The first moment bounds the probability that any route survives; the second moment corrects for shared links and gives a rigorous lower bound on successful connectivity through at least one prescribed route.
 
-To explore the component of a vertex $v$, maintain a queue of active vertices. Remove one active vertex, reveal its edges to all unexplored vertices, add newly discovered neighbors to the queue, and stop when the queue is empty. Early in the exploration, the number of new vertices is close to $\operatorname{Binomial}(n,p)$, whose mean is approximately $np$.
+**Motif detection.** Triangles, cliques, cycles, and feed-forward motifs are represented by required-edge families. Their exact second moments reduce to overlap counts, revealing when a high expected motif count corresponds to widespread occurrence rather than rare clustering.
 
-This suggests comparison with a Galton–Watson branching process. A process with mean offspring below $1$ dies out rapidly; one with mean above $1$ survives with positive probability. The critical mean $1$ corresponds to $p=1/n$.
+**Epidemic and information spread.** The equation $\rho=1-e^{-\lambda\rho}$ is the survival equation for Poisson reproduction. It identifies the critical reproduction mean and gives a quantitative lower bound on the supercritical survival fraction. Network epidemics require further assumptions, but the branching approximation explains the shared threshold geometry.
 
-### 6.2 Subcritical regime
+**Constraint systems.** More abstractly, $E$ may be a finite set of independently activated features and each $S_i$ a certificate for success. The formulas depend only on cardinalities and pairwise unions, not on graphical interpretation.
 
-**Theorem 6.1 (Logarithmic components below criticality).** Fix $\varepsilon\in(0,1)$ and set
+## 10. Discussion and limitations
 
-$$
-p_n=\frac{1-\varepsilon}{n}.
-$$
+The central exact result is the pair-overlap identity. It separates probability from combinatorics: probability contributes the factor $p^{|S_i\cup S_j|}$, while the application contributes the classification and enumeration of pair types. This modularity is why second-moment arguments recur across probabilistic combinatorics.
 
-There exists $A=A(\varepsilon)>0$ such that
+Several limitations should be explicit. First, a diverging expectation alone does not imply high-probability appearance. Second, the fixed-point transition describes the limiting branching process; by itself it does not prove the finite random graph has a unique component of size $\rho n+o(n)$. Third, the connectivity limit requires Poisson convergence and exclusion of other disconnected components. Finally, numerical experiments are explanatory rather than deductive.
 
-$$
-\Pr\bigl(L_1(G(n,p_n))\le A\log n\bigr)\to1,
-$$
+The finite results nevertheless provide a complete reusable pipeline: exact model normalization, required-edge probabilities, first moments, pairwise joint probabilities, second moments, variances, and probability bounds. The remaining work in a concrete asymptotic theorem is to estimate the resulting sums or to justify a limiting exploration process.
 
-where $L_1$ is the number of vertices in the largest connected component.
+There is also a useful division of labour between the two moment methods. The first moment is inherently one-sided: it rules out structures when the expected count vanishes. The second moment can establish existence when candidate occurrences are sufficiently dispersed, but it exposes rather than removes the combinatorial burden. A large overlap class may dominate the denominator and prevent the lower bound from approaching one. In that situation the correct response is often to refine the counted objects, condition on a typical environment, or use a truncated count that suppresses exceptionally clustered configurations. Thus the exact formula is both a theorem and a diagnostic: it identifies precisely which intersections obstruct concentration.
 
-*Proof sketch.* Couple component exploration from a fixed vertex with a subcritical branching process of mean $1-\varepsilon+o(1)$. Its total progeny has an exponentially decaying tail: for suitable $a>0$,
+## 11. Future work
 
-$$
-\Pr(|C(v)|\ge k)\le e^{-ak}.
-$$
+Five directions naturally continue this development.
 
-By the union bound over all $n$ starting vertices,
+1. **Poisson isolated-vertex limit in the connectivity window.** For fixed $c\in\mathbb R$, prove that if $I_n$ counts isolated vertices in $G(n,(\log n+c)/n)$, then every fixed falling-factorial moment converges to the corresponding moment of a Poisson variable of mean $e^{-c}$. This gives $\mathbb P(I_n=0)\to e^{-e^{-c}}$.
 
-$$
-\Pr(L_1\ge k)
-\le ne^{-ak}.
-$$
+2. **Equivalence of connectivity and absence of isolated vertices.** Prove that, at the same $p_n$, the probability of having no isolated vertices while remaining disconnected tends to zero. Combined with the preceding limit, this yields the sharp connectivity law.
 
-Choosing $k=A\log n$ with $A>1/a$ makes the right-hand side tend to zero.
+3. **Finite random-graph giant-component law.** For fixed $\lambda>1$, prove that the largest component divided by $n$ converges in probability to the positive solution $\rho$ of $\rho=1-e^{-\lambda\rho}$, while the second-largest divided by $n$ converges to zero.
 
-### 6.3 Supercritical regime
+4. **Subcritical logarithmic component bound.** For $0<\lambda<1$ and $A>1/(\lambda-1-\log\lambda)$, prove that every component of $G(n,\lambda/n)$ has at most $A\log n$ vertices with probability tending to one.
 
-**Theorem 6.2 (Emergence of a giant component).** Fix $\varepsilon>0$ and set
+5. **Clique appearance above threshold.** For fixed $r\geq3$, classify pairs of $r$-vertex sets by overlap size in the exact second-moment formula and prove high-probability appearance of $K_r$ whenever $p_n n^{2/(r-1)}\to\infty$ with $p_n\leq1$.
 
-$$
-p_n=\frac{1+\varepsilon}{n}.
-$$
+## 12. Conclusion
 
-There exists $\beta=\beta(\varepsilon)>0$ such that
+Independent edges generate dependent structures, and pairwise unions measure that dependence exactly. For any finite family of candidate patterns, the mean is a sum of single-copy probabilities and the second moment is a sum of pair-union probabilities. Cauchy–Schwarz then turns overlap control into a lower bound for appearance, while a variance estimate yields high-probability existence.
 
-$$
-\Pr\bigl(L_1(G(n,p_n))\ge\beta n\bigr)\to1.
-$$
-
-*Proof sketch.* The exploration process is compared with a supercritical branching process of mean $1+\varepsilon$. Its survival probability is positive. Consequently, a positive fraction of vertices have explorations that reach a mesoscopic size. A second-moment concentration argument controls the number of such vertices. A sprinkling argument—exposing a small additional independent set of edges—joins the large pieces into one linear-sized component.
-
-The asymptotic fraction has a more precise description.
-
-**Theorem 6.3 (Size and uniqueness of the supercritical giant).** Let $\varepsilon>0$, and let $\rho\in(0,1)$ be the positive solution of
-
-$$
-\rho=1-e^{-(1+\varepsilon)\rho}.
-$$
-
-Then, with high probability, $G(n,(1+\varepsilon)/n)$ has a unique component of size
-
-$$
-(\rho+o(1))n,
-$$
-
-and every other component has logarithmic size.
-
-*Proof sketch.* The fixed-point equation is the survival equation for a Poisson Galton–Watson process with mean $1+\varepsilon$. Local exploration identifies $\rho$ as the limiting proportion of vertices belonging to large components. Concentration gives total mass $(\rho+o(1))n$. Sprinkling connects all mesoscopic pieces with high probability, proving uniqueness, while the residual graph behaves subcritically and has only logarithmic components.
-
-## 7. Algorithms and numerical study
-
-### 7.1 Sampling
-
-To sample $G(n,p)$, iterate through all $\binom n2$ unordered vertex pairs and include each edge when an independent uniform random number is below $p$. This requires $O(n^2)$ random trials and, with adjacency lists, $O(n+m)$ storage for a graph with $m$ realized edges.
-
-### 7.2 Component analysis
-
-Breadth-first search or depth-first search labels every connected component in $O(n+m)$ time. One pass returns the largest component size, the number of components, the number of isolated vertices, and connectivity. Triangle counts can be obtained by checking all triples in $O(n^3)$ time; more sophisticated adjacency-intersection methods improve performance for sparse graphs.
-
-### 7.3 Monte Carlo estimators
-
-For independent samples $G_1,\ldots,G_R$, the estimator
-
-$$
-\widehat q=\frac1R\sum_{r=1}^R\mathbf1_{\{G_r\text{ connected}\}}
-$$
-
-is unbiased for the connectivity probability, with standard error
-
-$$
-\sqrt{\frac{q(1-q)}{R}}
-\le\frac{1}{2\sqrt R}.
-$$
-
-Similarly, averaging $L_1(G_r)/n$ estimates the expected giant fraction, and averaging isolated-vertex or triangle counts tests exact first-moment formulas.
-
-At $p=(\log n+c)/n$, one compares $\widehat q$ with $e^{-e^{-c}}$. At $p=\lambda/n$, one plots the largest-component fraction against $\lambda$. The finite-size curves smooth the asymptotic transitions but become steeper as $n$ increases.
-
-## 8. Applications
-
-In communication networks, the giant-component transition marks the onset of extensive mutual reachability, whereas the connectivity threshold marks universal service. The gap between average degree $1$ and average degree $\log n$ quantifies the cost of including rare peripheral devices.
-
-In epidemic models on static contact networks, the supercritical component supplies a substrate on which an outbreak may affect a positive fraction of the population. The branching-process approximation has a direct epidemiological interpretation: its mean offspring determines whether early transmission chains usually die out.
-
-In distributed systems, isolated vertices model uncontactable agents. The Poisson connectivity window predicts the residual count of such agents and thereby estimates failure probabilities. The limit $e^{-e^{-c}}$ gives a calibrated design curve rather than merely an order-of-magnitude threshold.
-
-Subgraph counts detect motifs, vulnerabilities, and local redundancy. The first moment certifies that a motif is absent in sparse regimes; the second moment proves its presence once overlaps no longer cause excessive variance.
-
-## 9. Discussion and limitations
-
-The finite-sum framework cleanly separates universal probabilistic principles from graph-specific asymptotics. Normalization, prescribed-edge probabilities, expected counts, and moment inequalities apply to arbitrary finite families of potential edges. Connectivity and giant components require additional structure: Poisson convergence for rare isolated vertices, enumeration of cuts, and branching-process coupling.
-
-The variance condition $\operatorname{Var}(X_n)=O(\mathbb E[X_n])$ is sufficient but not necessary. Some pattern counts occur with high probability even when their variance grows faster, provided it remains $o((\mathbb E[X_n])^2)$. The more general conclusion follows directly from Theorem 4.1.
-
-The two headline thresholds should not be conflated. At $p=(1+\varepsilon)/n$, a giant exists but the graph has many vertices outside it. Connectivity requires the additional logarithmic factor. The governing obstruction also changes: survival of local exploration controls the giant, while isolated vertices control connectivity.
-
-## 10. Future directions
-
-A complete refinement of the connectivity window should quantify error rates in the Poisson approximation, for example through Stein–Chen bounds. This would turn the limiting expression into finite-$n$ confidence estimates.
-
-For component structure, natural next steps include proving the precise giant fraction, uniqueness, and logarithmic bounds for all smaller components uniformly in $\varepsilon$. The critical window $p=1/n+\lambda n^{-4/3}$ is especially rich: component sizes are then of order $n^{2/3}$ and converge after rescaling to a nontrivial continuum limit.
-
-For a fixed finite graph $H$, the general appearance threshold is governed by $m(H)$. Strictly balanced graphs at their critical scale exhibit Poisson copy counts. Establishing these laws systematically requires organizing overlap types and their covariance contributions.
-
-Other directions include directed and bipartite random graphs, inhomogeneous edge probabilities, random geometric graphs, resilience under adversarial deletion, and dynamic graph processes in which edges arrive over time. Each asks how much of the moment-and-exploration toolkit survives when independence or symmetry is weakened.
-
-## 11. Conclusion
-
-The Erdős–Rényi model turns independent edge decisions into precise collective transitions. Its finite probability law yields exact prescribed-edge probabilities. Linearity and the union bound convert these into first-moment nonexistence results. Variance supplies a complementary second-moment route to occurrence. Branching-process exploration identifies $p=1/n$ as the birth scale of a giant component, while Poisson convergence of isolated vertices identifies $p=(\log n)/n$ as the sharp connectivity scale, with limiting probability $e^{-e^{-c}}$ throughout the critical window.
-
-These results illustrate a broad principle: global thresholds often arise from a small set of local witnesses or obstructions. Counting those objects, understanding their dependence, and controlling their fluctuations reveals when a random network changes its qualitative character.
-
-## Appendix: interpretation of asymptotic statements
-
-The limiting theorems compare sequences of probability spaces whose sample spaces change with $n$. A statement such as $L_1\ge\beta n$ with high probability means that for every $\delta>0$ there is $n_0$ such that the event has probability at least $1-\delta$ whenever $n\ge n_0$. It does not claim that every sampled graph has the property.
-
-Likewise, convergence in distribution of $I_n$ to a Poisson variable means that for each fixed nonnegative integer $j$,
-
-$$
-\Pr(I_n=j)\longrightarrow e^{-e^{-c}}\frac{e^{-cj}}{j!}.
-$$
-
-Taking $j=0$ produces the connectivity profile after non-isolated disconnected graphs are shown to be negligible. The phrase “sharp threshold” refers to the fact that an additive displacement of order $1/n$ around $(\log n)/n$ changes the limiting probability by a nontrivial amount, while displacements larger than this window drive the probability toward $0$ or $1$.
+At a global scale, the Poisson exploration equation undergoes its own sharp change at mean degree one: its nonnegative order parameter vanishes at and below criticality and becomes positive above it. Connectivity occurs later, in the logarithmic window governed by isolated vertices. Together these results display the layered nature of random-graph evolution and provide the counting machinery needed for sharper threshold theorems.
