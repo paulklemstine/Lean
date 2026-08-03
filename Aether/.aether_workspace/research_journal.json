@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bb566a68",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: EML Transseries\n\n## Results established in this phase\n\nThe formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`\nseparates three claims that are often bundle",
-      "quality_score": 0.7828599999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-01T03:58:55",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
-    {
       "cycle_id": "150a94b2",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n1. **Multivariate EML rate.** For every `n ≥ 1`, every `L`-Lipschitz function on `[0,1]^n`, and all positive `w,d`, there is an EML network of width at most `w` and depth at most",
@@ -499,19 +489,19 @@
       "theorem_count": 44,
       "timestamp": "2026-08-03T11:53:32",
       "title": "EML Integration in Finite Terms: The Risch Algorithm"
+    },
+    {
+      "cycle_id": "2125bb42",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For ev",
+      "quality_score": 0.71783,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-08-03T11:54:59",
+      "title": "The accompanying Lean development settles the operator-algebraic core used by"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a31e0b39",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\nThe completed formalization establishes an exact finite-support implementation of Conway's B3/S23 transition and an explicit `9^t` population bound. It is not yet a proof of Turin",
-      "quality_score": 0.52,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-25T22:18:16",
-      "title": "Game of Life Universality"
-    },
     {
       "cycle_id": "311c4349",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 44,
       "timestamp": "2026-08-03T11:53:32",
       "title": "EML Integration in Finite Terms: The Risch Algorithm"
+    },
+    {
+      "cycle_id": "2125bb42",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For ev",
+      "quality_score": 0.71783,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-08-03T11:54:59",
+      "title": "The accompanying Lean development settles the operator-algebraic core used by"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ef4982e9",
-      "domain": "Bridges",
-      "name": "galois_closed_elements_completeLattice",
-      "quality": 0.78888
-    },
-    {
-      "cycle_id": "c945ec38",
-      "domain": "Novelty",
-      "name": "infinitesimalGame_numeric",
-      "quality": 0.77894
-    },
-    {
-      "cycle_id": "c945ec38",
-      "domain": "Novelty",
-      "name": "epsilon_pos",
-      "quality": 0.77894
-    },
     {
       "cycle_id": "c945ec38",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "eval_qsmul",
       "quality": 0.7657699999999998
+    },
+    {
+      "cycle_id": "2125bb42",
+      "domain": "Combinatorics",
+      "name": "signedAdj_add",
+      "quality": 0.71783
+    },
+    {
+      "cycle_id": "2125bb42",
+      "domain": "Combinatorics",
+      "name": "signedAdj_smul",
+      "quality": 0.71783
+    },
+    {
+      "cycle_id": "2125bb42",
+      "domain": "Combinatorics",
+      "name": "positive_add_negative",
+      "quality": 0.71783
     }
   ],
-  "last_updated": "2026-08-03T11:53:32",
+  "last_updated": "2026-08-03T11:54:59",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "8a9b8560",
-        "quality": 0.7322500000000001,
-        "theorems": 7,
-        "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
-      },
-      {
         "cycle_id": "42454fab",
         "quality": 0.7628999999999999,
         "theorems": 18,
@@ -3265,6 +3259,12 @@
         "quality": 0.7496799999999999,
         "theorems": 9,
         "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
+      },
+      {
+        "cycle_id": "2125bb42",
+        "quality": 0.71783,
+        "theorems": 9,
+        "title": "The accompanying Lean development settles the operator-algebraic core used by"
       }
     ],
     "Computation": [

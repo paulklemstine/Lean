@@ -1575,7 +1575,7 @@
       "depth_estimate": 3,
       "description": "Proves the Alon-Boppana theorem establishing lower bounds λ_2 ≥ 2√(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -15860,7 +15860,7 @@
       "depth_estimate": 3,
       "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -18569,7 +18569,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n- The exact connective constant of the square lattice is not known. The proposed value `(2 + √2) / 2` is ruled out in `Catalog/Tropical/SAW/ConnectiveConstant.lean`, since it is strictly below the proved lower bound `2`.\n- The proved honeycomb-lattice algebraic results in `Catalog/EML/PosetTheory/SelfAvoidingWalk.lean` concern the exact value `√(2 + √2)`, not the square lattice.\n- A faithful formal statement of the Duminil-Copin–Smirnov honeycomb theorem should connect an independently defined honeycomb SAW counting sequence to `√(2 + √2)`; proving only algebraic properties of that real number is not yet that theorem.\n- A Hara–Slade development should define the lace-expansion coefficients and derive mean-field asymptotics in the dimensions covered by their theorem. It should not be presented as an exact evaluation of the square-lattice connective constant.\n- Computational evidence was not used to infer an exact square-lattice value: finite SAW counts cannot establish the unknown exact limit. The formal result added here instead gives a symbolic contradiction between the proposed candidate and a machine-checked lower bound.\n- `Catalog/Probability/NumberTheory/ErdosRenyiThreshold.lean` now contains complete reduction proofs for its connectivity and giant-component limits. The remaining mathematical work is to derive their explicit vanishing-error hypotheses from Poisson approximation and branching-process estimates; those deep inputs are no longer represented by incomplete Lean declarations.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -18938,7 +18938,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H → IsMinor H K → IsMinor G K`. This is falsifiable directly against the branch-set definition and would make the catalog relation a preorder.\n\n2. **The triangle case.** Prove `HadwigerCase 2`: every finite graph with no proper two-coloring has a `K₃` branch-set minor. A concrete route is to formalize the odd-cycle characterization of non-bipartite graphs and contract an odd cycle to three branch sets.\n\n3. **The four-clique case.** Prove `HadwigerCase 3`: every finite graph with no proper three-coloring has a `K₄` branch-set minor. This should be tested through a formal reduction to the classical low-order Hadwiger theorem rather than finite enumeration.\n\n4. **Wagner structural bridge.** Prove that every finite `K₅`-minor-free graph can be reduced, using clique-sums, to planar graphs and the Wagner graph, and derive `FourColorTheorem → HadwigerFive`. Together with `wagner_forward`, this yields the substantive Wagner equivalence rather than only the logical contrapositive formulation proved here.\n\n5. **Known cases through six colors.** Prove `∀ k ≤ 5, HadwigerCase k`. In the indexing used here, the endpoint `k = 5` asserts that every non-five-colorable finite graph contains a `K₆` minor; its formal proof should explicitly identify where the Four Color Theorem is used.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -19265,7 +19265,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: EML Transseries\n\n## Results established in this phase\n\nThe formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`\nseparates three claims that are often bundled together:\n\n1. **Formal asymptotic comparison survives and strengthens.** Every unequal pair\n   of Hahn transseries has a unique first rank where its coefficients disagree.\n2. **Real closedness fails for the current model.** The exponent group\n   `ℤ ×ₗ (ℤ ×ₗ ℤ)` is not divisible. The monomial at rank `(1, 0, 0)` cannot be a\n   square, because the order of a nonzero square is twice an order and therefore\n   has even first coordinate. Its negative is not a square either, contradicting\n   a necessary property of real closed fields.\n3. **Unrestricted EML semantic uniqueness fails.** Evaluation at one point is not\n   injective: the variable expression and constant zero are distinct syntax but\n   both evaluate to zero at `0`.\n\n## Corrected real-closedness program\n\nReplace the integer growth group by a divisible ordered abelian group, initially\n`ℚ ×ₗ (ℚ ×ₗ ℚ)`. The parity obstruction then disappears. A faithful\nreal-closedness theorem should be developed for Hahn series over a real closed\ncoefficient field and a divisible value group. This requires formalizing the\nrelevant Hahn-field real-closure theorem rather than asserting a typeclass for\nthis integer-ranked model.\n\nA later model should support arbitrarily many iterated exponential and logarithmic\nlevels. Candidate exponent structures include finitely supported maps from a\nwell-ordered level type into `ℚ`, with a reverse lexicographic order chosen to\nmatch asymptotic dominance.\n\n## Corrected EML expansion theorem\n\n“Uniquely determines it” needs a precise semantic quotient and domain. Point\nvalues are too weak, and raw syntax has identities such as commutativity,\nassociativity, and exp/log cancellation on suitable eventual domains. Promising\nformal statements are:\n\n- expansion uniqueness for **eventual germs at `+∞`**;\n- injectivity only after quotienting EML syntax by eventual equality;\n- a restricted positive-domain language where logarithms have controlled domains;\n- a normalization theorem assigning canonical transseries to a syntactic fragment.\n\nThe first substantial target is the polynomial–Laurent fragment, followed by a\nsingle logarithmic level, then one exponential level. At each stage, define an\nexpansion map, prove preservation of addition and multiplication, and prove that\nits kernel is exactly eventual semantic equality.\n\n## Asymptotic comparison beyond coefficient extensionality\n\nThe current theorem is an exact Hahn-series statement. To connect it to analysis,\nformalize an interpretation into germs of real functions and prove:\n\n1. the leading nonzero monomial controls eventual sign;\n2. smaller ranks are asymptotically negligible relative to larger ranks;\n3. the interpretation is injective on a normalized, summable fragment;\n4. formal agreement to all ranks implies equality of eventual germs.\n\nThis will distinguish the valid formal principle from the generally false claim\nthat arbitrary smooth functions with identical classical asymptotic power series\nmust coincide (flat functions provide counterexamples).\n\n## Computational work\n\nNo finite numerical search can decide the two structural claims tested here:\nnon-real-closedness follows from the parity of Hahn orders, while non-injectivity\nhas an explicit two-expression witness. Future computational work is useful after\na finite normalizer for bounded-depth EML expressions is defined; it can then\nenumerate collisions and test candidate rewrite systems before their correctness\nis proved.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -19428,7 +19428,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` reduces complement-closed reconstruction questions to either member of each complementary pair. Concrete next conjectures are:\n\n1. **Degree-multiset reconstruction.** If finite simple graphs `G` and `H` have at least three vertices and `SameDeck G H`, then the multisets of values `G.degree v` and `H.degree w` are equal (under the deck's vertex equivalence).\n\n2. **Induced-pattern count reconstruction.** For finite `F`, `G`, and `H`, if `Fintype.card F < Fintype.card G` and `SameDeck G H`, then `(inducedCopyFamily G F).card = (inducedCopyFamily H F).card`.\n\n3. **Regular-graph reconstruction.** If finite `G` and `H` have at least three vertices, `SameDeck G H`, and `G` is regular, then `Nonempty (G ≃g H)`.\n\n4. **Tree/connected-complement pair.** If finite `G` and `H` have at least three vertices, `SameDeck G H`, and either `G` or `Gᶜ` is a tree, then `Nonempty (G ≃g H)`.\n\n5. **Complement transfer for reconstructible predicates.** If a graph predicate is reconstructible from `SameDeck`, then the predicate obtained by applying it to graph complements is also reconstructible. This should be formalized as a general theorem and instantiated for every reconstructed class in the catalog.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -19468,7 +19468,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone does not guarantee robustness under finite deletion.\n\n## 1. Ordered-block criterion from the paper\n\nFormalize the paper's more general criterion before specializing to dyadic blocks. A useful interface should include:\n\n- a sequence of finite, pairwise ordered blocks of natural numbers;\n- lower bounds on each block's cardinality;\n- hypotheses controlling gaps or overlap of attainable subset-sum intervals;\n- a conclusion phrased as `StronglyComplete`.\n\nThis is likely the most reusable route to the headline theorem.\n\n## 2. Dyadic specialization\n\nDefine\n\n`dyadicBlock A k = A ∩ Set.Ioc (2^k) (2^(k+1))`\n\nand formalize the eventual six-elements-per-block condition. Once the ordered-block theorem is available, prove the dyadic result by checking its structural hypotheses.\n\n## 3. Analytic divergence hypothesis\n\nIntroduce distance to the nearest integer using the existing circle/quotient or `Int.fract` infrastructure, and formalize the condition\n\n`∀ θ : ℝ, θ ∉ Set.range ((↑) : ℤ → ℝ) → ∑' a, ... = ∞`\n\nwith a nonnegative extended-real sum (`ℝ≥0∞`) if that gives the cleanest notion of divergence. Care is needed because the paper writes a sum indexed by a set rather than a sequence.\n\n## 4. Monotonicity and tails\n\nUseful intermediate results include:\n\n- every superset of a complete set is complete;\n- every superset of a strongly complete set is strongly complete;\n- finite changes preserve strong completeness (already proved here);\n- a set is strongly complete iff every finite initial segment can be deleted while retaining completeness.\n\nThe final equivalence turns arbitrary finite deletions into canonical initial-segment deletions and may simplify the paper's argument.\n\n## 5. Further contrarian tests\n\nInvestigate and either prove or refute:\n\n1. If `A` is complete and contains infinitely many odd elements, then `A` is strongly complete.\n2. If every residue class modulo every `m ≥ 2` contains infinitely many elements of `A`, then completeness implies strong completeness.\n3. Six elements in each sufficiently large dyadic block can be reduced to five if the analytic divergence hypothesis is strengthened quantitatively.\n\nThe first conjecture is especially suspect: parity is only one possible finite-deletion obstruction, and analogous obstructions modulo larger integers should be searched for.\n\n## 6. Exact correspondence with the source\n\nA later phase should pin the paper's bibliographic version and translate its named propositions in proof order, recording exactly which assumptions are used in each result. This file deliberately focuses on foundational consequences and a contrarian counterexample rather than claiming a complete formalization of the analytic headline theorem.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -19509,7 +19509,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equivalence classes of `InSameComponent M`. This can be falsified by a finite matroid whose circuitwise-constant weights have a different dimension.\n\n2. **Connected projectivized fan conjecture.** For every finite circuit-connected matroid of positive rank, the quotient of `BergmanFan M` by constant translations is path connected. A finite connected matroid with a disconnected projectivized Bergman fan would refute it.\n\n3. **Nested fan convexity conjecture.** If a finite matroid is nested, then its Bergman fan modulo constant translations is an ordinary convex polyhedral cone. A nested matroid with two projective Bergman weights whose midpoint is not a Bergman weight would refute it.\n\n4. **Circuit-elimination closure conjecture.** For a finite matroid, imposing `MinAttainedTwice` only on a circuit generating family closed under circuit elimination cuts out the full `BergmanFan`. A generating family and a weight satisfying its constraints but violating another circuit constraint would refute it.\n\n5. **Direct-sum product conjecture.** The Bergman fan of a finite direct sum of matroids is naturally homeomorphic to the product of their Bergman fans, compatibly with circuit components and lineality spaces. Any finite pair for which the canonical restriction map fails to be a homeomorphism would refute it.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -19550,7 +19550,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe Lean development proves exact results for an explicit region-capacity model.  The following are concrete extensions that would connect those combinatorial bounds to analytic approximation and genuine network lower bounds.\n\n1. **Constructive width-`n+4` approximation.**  For every `n > 0`, continuous `f : (Fin n → ℝ) → ℝ`, and `ε > 0`, if `f` is restricted to the cube `[-1,1]^n`, there is a finite ReLU network with every hidden-layer width at most `n+4` whose uniform error is below `ε`.  This is falsified by a continuous function and positive tolerance for which no such bounded-width network exists.\n\n2. **Lipschitz shallow upper rate.**  There is a dimension-dependent constant `C_n` such that every `K`-Lipschitz function on `[-1,1]^n` has a one-hidden-layer ReLU approximation of uniform error at most `ε` and width at most `C_n * (K/ε)^n`.  A family of normalized Lipschitz functions violating this width bound falsifies the conjecture.\n\n3. **No function-independent rate for mere continuity.**  For every proposed width bound `W : ℕ → ℕ`, there are a continuous function on `[0,1]` and an integer `m > 0` such that every one-hidden-layer ReLU network of width at most `W m` has uniform error at least `1/m`.  A single bound working for all continuous functions falsifies this conjecture.\n\n4. **Tent-map linear-region separation.**  The `L`-fold iterate of the normalized tent map has exactly `2^L` maximal affine intervals, while every scalar depth-`D` ReLU network with widths `w₁,…,w_D` has at most `∏ i, (wᵢ+1)` maximal affine intervals.  Either an incorrect exact count or a network exceeding the product bound falsifies the statement.\n\n5. **Depth-`L` lower bound from oscillations.**  There are explicit functions represented by depth `L+1` networks of size polynomial in `L` such that any depth-`L` ReLU network approximating them within a fixed uniform tolerance has size exponential in `L`.  A polynomial-size depth-`L` approximating family for the explicit witnesses falsifies the conjecture.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -19754,7 +19754,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe Lean development proves statements inside a precise topological observer model. The following conjectures are concrete extensions of that model and do not assert an empirical law about biological perception without additional physical assumptions.\n\n1. **Finite observer-complexity monotonicity.** For every type `X`, every `N : Fin n → TopologicalSpace X`, and every extension `N' : Fin (n+1) → TopologicalSpace X` whose first `n` channels agree with `N`, prove `consensus N' ≤ consensus N`. This is falsified by any explicit extension violating the topology-lattice inequality.\n\n2. **Strictness criterion for channel addition.** Under the same setup, prove that `consensus N' < consensus N` if and only if there is a set open for every old channel but not open for the new channel. Either implication can be falsified by a finite topological-space counterexample.\n\n3. **Finite-space minimal observer complexity.** For a finite carrier `X` and target topology `t`, define the least `n` for which `t` is the consensus of `n` strict refinements, and prove that this number is bounded by the number of open sets of `t`. Exhaustive enumeration of topologies on carriers of size at most four can test the proposed bound.\n\n4. **Product compositionality.** Given observer families `N` on `X` and `M` on `Y` with a common finite index type, characterize when the consensus of the channelwise product topologies equals the product of `consensus N` and `consensus M`. A pair of finite spaces where these topologies differ would refute an unrestricted equality.\n\n5. **Empirical encoding conjecture.** For a specified finite neural-state transition graph, assign each readout channel a topology generated by its distinguishable state subsets. Test whether adding a readout node strictly coarsens consensus exactly when that node excludes an open set shared by all previous readouts. A measured transition graph and readout table make this directly falsifiable by finite computation.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -20122,7 +20122,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and\n   `∀ k ≥ k₀, (R k : ℝ) ≤ (4 * q)^k`.\n   This is falsified by any proof that no uniform `q < 1` satisfies the displayed estimate.\n\n2. **Explicit rational saving.** Strengthen the preceding statement by exhibiting a rational `q < 1` rather than an unspecified real witness. A concrete target is to prove the estimate for one explicitly stated rational and threshold `k₀`; exhaustive verification of all `k ≥ k₀` is then a precise proof obligation.\n\n3. **Threshold elimination.** If `R` is the catalog diagonal Ramsey-number function and an eventual sub-four estimate is available, determine whether there is an explicit `ε > 0` for which `(R k : ℝ) ≤ (4 - ε)^k` holds for every `k ≥ 2`. This conjecture is falsified by a single computed value of `R k` violating the inequality.\n\n4. **Asymmetric normalization.** Define the corresponding eventual bound for two parameters and prove that a uniform proportional saving in bounds for `R(s,t)` is equivalent to an additive gap below the classical entropy-derived base throughout any fixed compact ratio interval `s/(s+t) ∈ [a,b] ⊂ (0,1)`. A counterexample is a sequence of parameter pairs in the interval for which one formulation holds uniformly and the other does not.\n\n5. **Closure under subexponential losses.** Generalize the proved polynomial-loss theorem to any nonnegative real sequence `L` satisfying `∀ δ > 0, ∃ k₀, ∀ k ≥ k₀, L k ≤ exp (δ * k)`: if `r(k) ≤ L(k) (4q)^k` eventually for fixed `0 < q < 1`, then `HasSubFourUpperBound r`. A counterexample is a specific `L`, `q`, and natural-valued `r` satisfying both premises but admitting no eventual exponential bound with base below four.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -20367,7 +20367,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Clique-Incidence Codegrees\n\nThe formal results in `Catalog/Algebra/RamseyTheory/CliqueIncidenceCodegrees.lean`\nestablish that, for `0 < r ≤ k`, the clique-incidence construction has exactly\n`C(n,k)` distinct edges, and that two edges indexed by `k`-sets `S,T` have\nintersection size exactly `C(|S ∩ T|,r)`.  Thus the possible collisions in the\nedge count disappear in the nondegenerate Ramsey range; the remaining structure\nis entirely in the overlap profile.\n\n## Conjecture 1: explicit symmetric local-lemma range\n\nFor each fixed `r ≥ 3`, there is a constant `c_r > 0` such that whenever\n\n`e · 2^(1-C(k,r)) · (1 + Σ_{j=r}^{k-1} C(k,j) C(n-k,k-j)) ≤ 1`,\n\nthe diagonal Ramsey property `DiagonalRamsey n r k` fails; moreover, for\ninfinitely many `k`, this criterion permits an `n` at least\n`exp(c_r k^(r-1))` times larger than the raw edge-count criterion\n`C(n,k) < 2^(C(k,r)-1)` permits.\n\nThis is falsifiable by deriving the dependency degree from the proved disjointness\ncriterion and comparing the two explicit numerical inequalities.\n\n## Conjecture 2: lopsided improvement from exact codegrees\n\nFor every fixed `r ≥ 3`, weighting a pair of bad-clique events indexed by `S,T`\nby the proved codegree `C(|S ∩ T|,r)` yields a cluster-expansion local-lemma\ncriterion that is strictly stronger than the symmetric criterion in Conjecture 1\nfor all sufficiently large `k`.\n\nA counterexample would be an infinite sequence of `k` for which optimization of\nthe overlap-weighted criterion gives no larger admissible `n` than the symmetric\ndependency-degree bound.\n\n## Conjecture 3: spectrum determined by overlap classes\n\nFix `0 < r ≤ k ≤ n`.  The Gram matrix of the inclusion matrix from `r`-sets to\n`k`-sets has entries `C(|S ∩ T|,r)` and has exactly `r+1` distinct nonzero\neigenvalues whenever `n ≥ k+r`.\n\nThe entry formula is now reduced to the formal codegree theorem.  The conjecture\nis a finite, exact spectral assertion and can be falsified by a single parameter\ntriple or symbolic rank/eigenvalue calculation.\n\n## Conjecture 4: strict overlap monotonicity in optimized certificates\n\nFor fixed `r ≥ 3` and sufficiently large `k`, every optimal permutation-invariant\nfractional certificate for splitting all clique-incidence edges assigns strictly\nlarger penalty to overlap class `j+1` than to class `j` for each\n`r ≤ j < k`.\n\nThis can be tested as a finite linear or semidefinite optimization problem on the\n`k-r+1` overlap classes.  Failure of strict monotonicity at any arbitrarily large\n`k` disproves the conjecture.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -20736,7 +20736,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Current formal boundary\n\nThe completed Lean development establishes the finite minimum-information-partition\nsemantics, existence of a minimizing partition, nonnegativity, the exact bridge\n`Φ > 0 ↔ CutConnected` for nonnegative weighted directed networks, and transfer of\npointwise multiplicative cut approximations to `Φ`. These results are structural;\nthey do not assert an NP-hardness classification or a runtime bound for a concrete\nalgorithm. The items below identify the additional definitions and proofs required\nfor those claims.\n\n## Complexity layer\n\nThe current formalization identifies weighted integrated information exactly with a\nfinite minimum-cut functional. A faithful NP-hardness theorem for a richer IIT model\nrequires first fixing an input encoding, a decision problem, and a polynomial-time\nreduction notion. Future work should define Boolean transition systems and probability\ndistributions with bit-size-aware encodings, then reduce a standard NP-hard partition\nproblem to the resulting normalized information partition problem. No complexity claim\nis made without that infrastructure.\n\n## Approximation algorithms\n\nThe theorem `phi_multiplicative_approximation` isolates a reusable correctness interface:\nif a tractable surrogate approximates every cut between factors `1` and `c`, then its\nminimum approximates `Φ` by the same factor. A next step is to implement a concrete\nsurrogate and prove both its runtime and its pointwise bounds. For symmetric nonnegative\nweights, exact polynomial-time minimum-cut algorithms are another natural target.\n\n## Probabilistic IIT semantics\n\nReplace abstract effective information by divergence between repertoires of finite\nMarkov kernels. This requires formalizing interventions, subsystem marginalization,\nand a chosen divergence (for example total variation or KL divergence), followed by\nproofs of nonnegativity and data-processing properties.\n\n## Partition conventions\n\nThe present directed cut uses the weight leaving a subset. Alternatives include\nsymmetric crossing weight, unordered bipartitions (quotienting by complements), and\nmultipartitions. Their induced minima can be compared formally, including conditions\nunder which all conventions coincide.\n\n## Connectivity refinements\n\nFor symmetric weights, connect `CutConnected` to ordinary connectivity of the support\nsimple graph. Quantitative refinements can relate `Φ` to edge connectivity, conductance,\nspectral gaps, and robustness under perturbations of interaction weights.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Combinatorics"
@@ -20859,7 +20859,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Parity-Sensitive Stability of Optimal Hamilton Covers\n\n## Cycle-2 advance\n\nThe local part of the proposed near-optimal stability conjecture is true in a\nstrictly sharper form.\n\nLet a target graph have maximum degree `Δ`, let a family of two-regular spanning\nlayers be contained in and cover its edge set, and suppose the family has\n\n\\[\n  m=\\left\\lceil\\frac{\\Delta}{2}\\right\\rceil+k\n\\]\n\nlayers. At every maximum-degree vertex, define repeated incidence multiplicity\nas the sum of its incidences over all layers minus the number of distinct\nincidences in their union. Then\n\n\\[\n  \\operatorname{rep}(v)=2k+(\\Delta\\bmod 2).\n\\]\n\nConsequently the proposed bound `rep(v) ≤ 2k + 1` holds. More precisely:\n\n* if `Δ` is even, `rep(v) = 2k`;\n* if `Δ` is odd, `rep(v) = 2k + 1`, so the advertised upper bound is attained.\n\nThese statements are proved in\n`Catalog/Physics/HamiltonCover/Stability.lean`. The formalization also proves\nthat containment and coverage identify the union of all layer-incidence blocks\nwith the target incidence set. Thus the subtraction really counts repeated\nedge-layer incidences.\n\n## What was proved\n\n1. **Union identification.** For layers contained in the target and covering it,\n   the union of the incident-edge sets at any vertex equals the target's\n   incident-edge set.\n2. **Exact stability law.** At a target-degree-`Δ` vertex in a cover with\n   `⌈Δ/2⌉ + k` two-regular layers, repeated multiplicity is exactly\n   `2k + Δ % 2`.\n3. **The stated local bound.** Repeated multiplicity is at most `2k + 1`.\n4. **Parity refinement.** The bound improves to `2k` for even `Δ` and is exact\n   for odd `Δ`.\n\nNo part of the pseudorandom global `O(kn)` edit-distance assertion is claimed:\nit requires a precise edit metric and quantitative pseudorandom hypotheses.\n\n## Contrarian consequences\n\nThe exact identity rules out two tempting strengthenings:\n\n* **False strengthening:** repeated multiplicity is always at most `2k`.\n  This fails whenever `Δ` is odd; the formal odd-degree theorem forces\n  `2k + 1`.\n* **False interpretation:** the extra `+1` is merely proof slack. It is a\n  necessary parity term, not an artifact of an inequality argument.\n\nThe result also shows that pseudorandomness cannot improve the local formula:\nall graph structure disappears after the cover and two-regularity assumptions\nare imposed. Pseudorandomness can only enter the global repair step.\n\n## Bold next conjectures\n\n### 1. Slack-to-switching conjecture\n\nFor a quantitatively specified pseudorandom graph and a two-regular cover with\n`⌈Δ/2⌉ + k` layers, the exact local repeated-incidence budget can be routed by\nalternating switches so that at most `Ckn` edge-layer incidences are changed to\nobtain an optimal cover, for an absolute constant `C`.\n\nThe new identity supplies the correct conservation law for a switching proof:\nthe total removable local load is parity plus exactly two units per excess\nlayer. The missing ingredient is a simultaneous switching lemma that prevents\nlocal repairs from colliding.\n\n### 2. Even-degree one-step elimination conjecture\n\nIn a robust expander of even maximum degree, every non-optimal two-regular cover\nwith one excess layer admits a bounded-length alternating switching system that\nremoves that layer while preserving coverage.\n\nEven degree is the clean test case because the formal result gives exactly two\nrepeated incidences per maximum-degree vertex and no parity residue.\n\n### 3. Odd-degree defect-matching conjecture\n\nIn a robust expander of odd maximum degree, the unavoidable one-unit defects at\nmaximum-degree vertices can be paired by edge-disjoint alternating paths, after\nwhich every two units of remaining repeated incidence eliminate one excess\nlayer.\n\nThis isolates the parity defect as a matching/routing object rather than\nabsorbing it into an error term.\n\n### 4. Nonuniform-degree transport conjecture\n\nFor a near-regular pseudorandom graph, define the local capacity slack\n\n\\[\n  s(v)=2m-d(v).\n\\]\n\nThere is a flow on an auxiliary switching network that transports all slack\nabove the unavoidable parity residues to a set of `O(kn)` repair operations.\nThis would extend the maximum-degree identity to the vertices where the target\ndegree is below `Δ` and explain how local surplus becomes global edit distance.\n\n## Evidence-stage decision\n\nA separate finite computation was not used. The advanced claim is an exact\nidentity for arbitrary natural `Δ` and `k`, and the Lean proof is symbolic and\nuniversal; small-case enumeration would be strictly weaker and there is no\nassociated sequence requiring an OEIS lookup. Parity cases are captured by the\nproved even- and odd-degree theorems themselves.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -20900,7 +20900,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Finite partition formula.** For every finite pairwise-disjoint family of finite--cofinite\n   events, the probability of its union equals the finite sum of its probabilities. This should\n   follow by induction from `probability_union_of_disjoint`.\n\n2. **Strict monotonicity classification.** For finite--cofinite events `A ⊆ B`, prove\n   `probability A < probability B` if and only if `A ≠ B`. This is falsifiable on the existing event\n   algebra and would strengthen the proved monotonicity theorem.\n\n3. **Inclusion--exclusion.** For all finite--cofinite events `A` and `B`, prove\n   `probability (A ∪ B) + probability (A ∩ B) = probability A + probability B`.\n\n4. **No countably additive extension with equal positive singleton mass.** Prove that no\n   countably additive surreal-valued extension satisfying an appropriate convergent-series axiom\n   can assign the constructed `epsilon` to every singleton of a countably infinite subset while\n   retaining total mass one. The series/convergence structure must be stated explicitly.\n\n5. **Larger event algebra.** Construct a proper Boolean algebra extending the finite--cofinite\n   algebra on `[0,1]` and extend `probability` to it while preserving normalization, positivity,\n   finite additivity, and singleton mass `epsilon`; alternatively, prove that a specified candidate\n   algebra admits no such extension.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -21146,7 +21146,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe formalized uniqueness theorem isolates the combinatorial core of error-correcting Shamir reconstruction. The following are concrete next conjectures.\n\n1. **Sharpness of the decoding radius.** For every finite field with at least `n` elements and natural numbers satisfying `n ≤ d + 2e`, there exist `n` distinct locations, two distinct degree-at-most-`d` polynomials, and one received vector whose disagreement count with each polynomial is at most `e` (subject to the necessary feasibility conditions `d < n` and `e ≤ n`).\n\n2. **Berlekamp–Welch existence.** Over every finite field, if a received vector at `n ≥ d + 2e + 1` distinct locations differs from some degree-at-most-`d` polynomial in at most `e` positions, then a Berlekamp–Welch linear system has a solution `(E,Q)` with `E ≠ 0`, `degree E ≤ e`, `degree Q ≤ d+e`, and `Q(xᵢ)=received(xᵢ)E(xᵢ)` at every location; polynomial division recovers the unique polynomial from `ShamirErrorCorrection.unique_reconstruction_with_errors`.\n\n3. **Erasures-and-errors tradeoff.** If `s` locations are marked erased and the remaining received shares contain at most `e` errors, then degree-at-most-`d` reconstruction is unique whenever `n ≥ d + s + 2e + 1`; the bound is sharp under the same field-size feasibility conditions.\n\n4. **List-decoding failure beyond half distance.** For some finite fields and parameters with `2e > n-d-1`, there is a received vector admitting at least two distinct degree-at-most-`d` candidate polynomials within `e` disagreements, so unique reconstruction cannot be extended beyond half the Reed–Solomon minimum distance.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -21391,7 +21391,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## Verified outcome of this phase\n\nThe formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lean`\nproves the finite-measure packing principle and specializes it to the direct `S²`\narea bound\n\n`card ≤ 2 / (1 - cos r)`.\n\nOn `0 < r < π/2`, the requested proposed inequality follows as a weaker consequence,\nbecause `(2 / cos r)^2 ≥ 1`.  Thus the numerical upper bound is valid in this\nmeasure-theoretic cap model, but the stated stereographic-distortion rationale is\nnot needed.\n\nThe phase also disproves two claims in the prompt:\n\n* `(2 / cos r)^2` is not `1 + O(r²)` as written, since its value at zero is `4`.\n  A normalized candidate would be `1 / cos² r`, whose value at zero is one.\n* `N(2, π/3) = 4` is false for non-overlapping geodesic caps.  Four unit centers\n  separated by at least `2π/3` cannot exist.  The regular tetrahedron has mutual\n  center inner product `-1/3`, so its permissible cap radius is\n  `arccos(-1/3)/2`, not `π/3`.\n\nThe other labels should also be corrected: six equal-radius centers are naturally\nthe vertices of an octahedron, not a cuboctahedron (which has twelve vertices).\nThe formal result here verifies compatibility of cardinalities with upper bounds;\nit does not assert optimality or construct all named polyhedra.\n\n## Recommended next formalization\n\n1. Define the unit sphere as a subtype of Euclidean space and geodesic distance as\n   `arccos` of the real inner product.\n2. Define closed/open spherical caps and prove their surface measure formula from\n   the sphere's Hausdorff measure.\n3. Define `N(2,r)` as a finite supremum (or maximum after proving compactness) of\n   center sets with pairwise distance at least `2r`.\n4. Connect geometric cap disjointness to center separation, carefully distinguishing\n   open caps (allowing tangency) from closed caps.\n5. Formalize constructions and matching upper bounds at the corrected radii:\n   octahedron at `π/4`, icosahedron at half its minimum angular separation, and\n   tetrahedron at `arccos(-1/3)/2`.\n6. Replace the noncompact single-chart distortion argument with either direct\n   spherical measure or a finite stereographic atlas.  A global maximum distortion\n   does not exist in one stereographic chart near the omitted pole.\n7. Investigate genuine asymptotics.  For small caps, local planar packing density,\n   rather than area ratio alone, should enter any sharp asymptotic packing number;\n   this requires substantially more geometry than conformal-factor estimates.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -21432,7 +21432,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V → [0,1]`, and `p ∈ [0,1]`, the probability that\n   `siteThresholdConfig key p = η` is\n   `p ^ |{v | η v}| * (1-p) ^ |{v | ¬ η v}|`.\n\n2. **Crossing probability monotonicity.** For every positive grid size `n`, the\n   probability of `HasHorizontalCrossing n` under independent uniform threshold\n   keys is nondecreasing as a function of `p ∈ [0,1]`.\n\n3. **Finite Russo formula.** For any increasing Boolean event on a finite site\n   set, the derivative of its Bernoulli probability polynomial at `p ∈ (0,1)`\n   equals the sum of the pivotal probabilities of the sites.\n\n4. **Threshold coupling strictness for grids.** For every `n ≥ 2` and\n   `0 < p < q < 1`, the horizontal crossing probability of the `n × n` grid is\n   strictly smaller at `p` than at `q`.\n\n5. **Bond analogue.** For every finite graph and increasing bond event, the\n   independent uniform edge-key coupling realizes its Bernoulli bond measures\n   simultaneously and makes the event indicators pointwise nondecreasing in the\n   threshold.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -21514,7 +21514,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Bipartite Extremal Numbers of Trees' and formalize its key results. Abstract: We study a restriction of the classical Erdős--Sós problem, the extremal number of trees, to the class of bipartite host graphs, both when only the order of the host is prescribed and when its two part-sizes are fixed. We give natural lower-bound constructions and formulate corresponding linear upper-bound conjectures. We apply a weighted variant of $k$-minimality to prove upper bounds for a broad family of trees including brooms, trees with part-sizes differing by at most one, and all trees on at most 7 vertices, resolving part of a problem of Caro, Patkós and Tuza up to additive constants. We also relate the fixed-part extremal number of a tree to the ordinary extremal number, and consider an oriented bipartite extremal function analogous to the Zarankiewicz function.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -21555,7 +21555,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On some perfect matching conjectures in infinite, cubic, bridgeless graphs' and formalize its key results. Abstract: The Berge-Fulkerson Conjecture states that every bridgeless cubic graph has six perfect matchings such that each edge belongs to exactly two of them. This conjecture has remained open since 1971, and several of its weakenings have been proposed over the years. Two of the most prominent are the Fan-Raspaud Conjecture and the Máčajová-Škoviera Conjecture. It is well known that the Berge-Fulkerson Conjecture implies the Fan-Raspaud Conjecture, which in turn implies the Máčajová-Škoviera Conjecture. These problems have been studied for years in the context of finite graphs, and many equivalences between them and other results have been established. However, little to nothing is known about them in the context of infinite graphs. In this paper, we investigate whether these conjectures remain valid in the infinite setting, establish their implications in analogy to the finite case, and prove that their finite versions are equivalent to their respective infinite versions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -21596,7 +21596,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause–effect repertoires, and divergence-based information loss.\n- Prove that the abstract nonnegative loss model is instantiated by the resulting probabilistic semantics.\n- Develop perturbation bounds showing stability of `Phi` and of exclusion winners under bounded changes to the loss landscape.\n\n## Composition and exclusion\n\n- Extend parallel composition to interacting composites and characterize hypotheses under which `Phi` is additive, subadditive, or superadditive.\n- Formalize exclusion modulo causal equivalence, including the case where several candidates tie for the maximum.\n- Study how exclusion behaves under refinements and parallel composition.\n\n## Category theory\n\n- Package causal structures and refinements as a category, with the proved monotonicity theorem giving an order-valued invariant.\n- Investigate monoidal structure induced by independent parallel composition and express additivity of `Phi` as compatibility with that structure.\n- Define equivalences of causal structures and prove invariance of `Phi` under equivalence.\n\n## Finite combinatorics and complexity\n\n- Quotient cuts by complementation so each unordered bipartition is counted once, and derive the exact count of nontrivial bipartitions.\n- Relate finite minimization to algorithms by proving correctness and runtime bounds for exhaustive, branch-and-bound, and symmetry-reduced minimum-cut procedures.\n- Connect weighted causal losses to standard graph cut objectives and transfer approximation guarantees to `Phi`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Combinatorics"
@@ -21744,6 +21744,47 @@
       "thread_id": "th_4bb86386",
       "timestamp": "2026-08-03T11:54:55.061963+00:00",
       "title": "The spectral-projection decomposition in `SignedCubeSpectralProjections.lean` su"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\n- Prove sharpness by constructing a regular simplex of `N` unit vectors in dimension `N - 1` whose distinct inner products are exactly `-1/(N-1)`.\n- Translate the chordal bound into geodesic separation using `‖x-y‖² = 2 - 2 cos θ` on the unit sphere.\n- Combine the simplex obstruction with dimension-dependent linear-programming bounds for spherical codes.\n- Formalize stereographic projection itself and prove its exact chordal-distance and conformal-factor identities.\n- Derive cap-packing cardinality bounds from center separation and compare them with direct surface-area bounds.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0932",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "1343d96e",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/1343d96e",
+      "status": "available",
+      "thread_id": "th_16f04dcf",
+      "timestamp": "2026-08-03T11:55:00.346066+00:00",
+      "title": "Future directions from cycle 1343d96e"
     },
     {
       "ambition_level": "extension",
@@ -22159,7 +22200,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1c628216 (Q=0.762), which proved 15 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressib",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics"
       ],
@@ -23439,7 +23480,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7edbd52d (Q=0.790), which proved 19 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -24489,7 +24530,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.65648,
       "parent_direction": "",
       "priority_score": 0.8814599999999999,
       "proof_strategy": "",
@@ -24500,7 +24541,7 @@
       "source": "",
       "source_exp_id": "d7c83314",
       "source_path": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-08-03T00:21:55.948251+00:00",
       "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
@@ -24879,7 +24920,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ed94092b (Q=0.767), which proved 16 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -25239,7 +25280,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ff2a2247 (Q=0.758), which proved 12 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -30550,47 +30591,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "1cf3185d",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k ≤ 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
-      "domains": [
-        "Combinatorics",
-        "Geometry"
-      ],
-      "github_issue": 0,
-      "id": "seed_211",
-      "last_attempt_time": "2026-07-31T10:11:38.790617+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.8116299999999999,
-      "parent_direction": "",
-      "priority_score": 0.9,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "",
-      "title": "Hadwiger's Conjecture"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "",
@@ -30601,7 +30601,7 @@
       "depth_estimate": 3,
       "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -34576,7 +34576,7 @@
       "depth_estimate": 3,
       "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -35016,7 +35016,7 @@
     "Logic": 12,
     "MachineLearning": 9,
     "Novelty": 4,
-    "NumberTheory": 7,
+    "NumberTheory": 8,
     "Physics": 7,
     "Probability": 2,
     "Pythagorean": 7,
@@ -35026,104 +35026,104 @@
     "Tropical": 7
   },
   "recent_theme_keywords": {
-    "**connect": 1,
     "algebraic": 9,
-    "alphabets": 1,
     "associated": 2,
-    "beyond": 1,
-    "bounds": 10,
+    "bounds": 11,
     "bridge": 8,
+    "building": 1,
     "category": 2,
-    "certified": 1,
     "closed": 4,
     "cohomology": 2,
     "computation": 3,
     "compute": 5,
-    "conjecture": 27,
+    "conjecture": 28,
     "connect": 7,
     "constant": 5,
     "continuous": 6,
     "corner": 2,
     "corresponding": 4,
-    "define": 4,
+    "d7c83314": 1,
+    "deepening": 1,
+    "deeper": 1,
+    "define": 5,
     "density": 3,
     "determine": 4,
-    "dimension": 1,
     "direct": 5,
+    "direction": 1,
     "directions": 7,
     "equals": 5,
-    "expected": 1,
     "explicit": 10,
     "exponential": 7,
     "finite": 2,
-    "following": 1,
     "forces": 3,
     "formalize": 43,
     "framework": 3,
     "function": 13,
     "functions": 7,
-    "fundamental": 3,
+    "fundamental": 4,
     "future": 12,
-    "general": 8,
-    "geometry": 9,
-    "graphs": 1,
+    "general": 9,
+    "geometry": 10,
     "impact": 3,
-    "improvements": 1,
     "information": 3,
     "interior": 3,
-    "interlacing.**": 1,
     "invariant": 5,
     "investigate": 6,
     "logic": 2,
     "mathematical": 4,
-    "maximum": 1,
     "needed": 3,
     "network": 2,
+    "non-overlapping": 1,
     "number": 8,
     "numbers": 5,
-    "original": 5,
+    "numbertheory": 1,
+    "original": 6,
+    "packing": 1,
     "paper": 5,
     "parameters": 4,
+    "plane": 1,
     "polynomial": 9,
-    "problem": 2,
-    "proved": 8,
+    "problem": 3,
+    "processing": 1,
+    "proved": 9,
+    "q=0.781": 1,
+    "radius": 1,
     "rational": 4,
-    "relations": 1,
-    "remaining": 2,
+    "remaining": 3,
     "remains": 3,
-    "replace": 1,
     "representations": 3,
     "required": 2,
     "requires": 3,
-    "result": 3,
+    "result": 4,
     "results": 11,
     "satisfies": 7,
     "scheme": 6,
     "schemes": 2,
     "security": 2,
-    "sensitivity)`": 1,
+    "setting": 1,
+    "signal": 1,
+    "sorries": 1,
     "specific": 3,
-    "spectral": 1,
+    "spherical": 1,
     "split": 2,
     "statement": 3,
+    "stereographic": 1,
     "structure": 6,
     "structures": 3,
-    "subgraph": 1,
-    "switching": 1,
     "theorem": 17,
-    "theorems": 7,
-    "theory": 21,
-    "therefore": 1,
+    "theorems": 8,
+    "theory": 22,
     "threshold": 5,
+    "transform": 1,
     "tropical": 6,
     "uniform": 5,
     "universal": 5,
     "values": 3,
     "vanishing": 3,
-    "vertex": 1,
     "vertices": 4,
     "volume": 3,
     "weight": 2,
+    "weighted": 1,
     "without": 6,
     "yields": 7
   },
