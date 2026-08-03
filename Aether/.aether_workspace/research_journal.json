@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "febd9c83",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Sharpness of Prime-to-Characteristic Averaging\n\n## Contrarian conjecture tested\n\nA tempting strengthening of the finite-group averaging theorem is:\n\n> **Unconditional averaging co",
-      "quality_score": 0.74513,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-08-01T11:46:40",
-      "title": "Future directions from cycle a5e9a5f6"
-    },
-    {
       "cycle_id": "c0a515f0",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\n## Outcome\n\nThe unrestricted conjecture is false. `CertifiedRobustness.lean` gives a\nkernel-checked counterexample: the degree-one cellular cohomology of the\nconstant real sheaf o",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-03T21:41:00",
       "title": "Deepening: Percolation Threshold"
+    },
+    {
+      "cycle_id": "f8e43caa",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe completed formalization deliberately studies the smallest non-trivial model:\na width-one scalar two-layer ReLU network with an explicit time-dependent input,\ntogether with the",
+      "quality_score": 0.77257,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-08-03T23:28:48",
+      "title": "Grokking: Phase Transitions in Learning"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6a88207a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x ↦ 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the crit",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-26T05:37:18",
-      "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-    },
     {
       "cycle_id": "d7591934",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 33,
       "timestamp": "2026-08-03T23:27:46",
       "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
+    },
+    {
+      "cycle_id": "f8e43caa",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nThe completed formalization deliberately studies the smallest non-trivial model:\na width-one scalar two-layer ReLU network with an explicit time-dependent input,\ntogether with the",
+      "quality_score": 0.77257,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-08-03T23:28:48",
+      "title": "Grokking: Phase Transitions in Learning"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c7c1ec6d",
-      "domain": "NumberTheory",
-      "name": "scalarLogNorm_half_lt_one",
-      "quality": 0.7667599999999999
-    },
-    {
-      "cycle_id": "c7c1ec6d",
-      "domain": "NumberTheory",
-      "name": "one_lt_scalarLogNorm_three",
-      "quality": 0.7667599999999999
-    },
-    {
-      "cycle_id": "d7c83314",
-      "domain": "NumberTheory",
-      "name": "finite_disjoint_packing",
-      "quality": 0.7814599999999999
-    },
     {
       "cycle_id": "d7c83314",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "crossing_gt_half_of_lt",
       "quality": 0.72259
+    },
+    {
+      "cycle_id": "f8e43caa",
+      "domain": "MachineLearning",
+      "name": "grokNetwork_before",
+      "quality": 0.77257
+    },
+    {
+      "cycle_id": "f8e43caa",
+      "domain": "MachineLearning",
+      "name": "delayed_generalization",
+      "quality": 0.77257
+    },
+    {
+      "cycle_id": "f8e43caa",
+      "domain": "MachineLearning",
+      "name": "delayed_transition_has_critical_equilibrium",
+      "quality": 0.77257
     }
   ],
-  "last_updated": "2026-08-03T23:27:46",
+  "last_updated": "2026-08-03T23:28:48",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "735a1ab0",
-        "quality": 0.75,
-        "theorems": 10,
-        "title": "Neural Tangent Kernel: Convergence"
-      },
-      {
         "cycle_id": "b3e5f77d",
         "quality": 0.6666666666666667,
         "theorems": 18,
@@ -3575,6 +3569,12 @@
         "quality": 0.78167,
         "theorems": 8,
         "title": "ML Attention Mechanism: Formal Properties of Transformers"
+      },
+      {
+        "cycle_id": "f8e43caa",
+        "quality": 0.77257,
+        "theorems": 12,
+        "title": "Grokking: Phase Transitions in Learning"
       }
     ],
     "Novelty": [
