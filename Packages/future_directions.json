@@ -1215,7 +1215,7 @@
       "depth_estimate": 3,
       "description": "Proves the tropical analogue of the Hahn-Banach separation theorem for disjoint tropical convex polyhedra in ℝ^n.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -1255,7 +1255,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Nishinou-Siebert correspondence theorem relating algebraic curves in toric varieties to tropical curves in Euclidean space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -1295,7 +1295,7 @@
       "depth_estimate": 3,
       "description": "Proves that the unique tropical eigenvalue of a square min-plus matrix equals the minimum cycle mean of its associated weighted directed graph.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -3311,11 +3311,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3652ac9b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3328,7 +3328,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0064",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-03T23:31:40.365471+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -3343,7 +3343,7 @@
       "source": "",
       "source_exp_id": "2607.12026v1",
       "source_path": "http://arxiv.org/abs/2607.12026v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T05:49:09.739406+00:00",
       "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
@@ -17048,11 +17048,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "94d22408",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17065,7 +17065,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0795",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-03T23:31:23.660424+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -17080,7 +17080,7 @@
       "source": "",
       "source_exp_id": "ee1ae94f",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/ee1ae94f",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_8bd78083",
       "timestamp": "2026-07-28T16:59:57.083975+00:00",
       "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
@@ -19716,7 +19716,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L¹` empirical loss reaches the unique sample median after at most `⌈|x₀-m|/η⌉` iterations when `η > 0`.\n\n2. **Vector tropical monomials.** For a separable `d`-parameter tropical affine model with coordinatewise three-point losses, simultaneous clipped descent terminates after at most the maximum of the `d` coordinatewise termination times.\n\n3. **Perturbed tropical limit.** If each tropical update is perturbed by an error of magnitude at most `ε < η`, then its parameter distance after `n` steps is at most `max 0 (|x₀-m|-n(η-ε))` until it enters the closed `ε`-neighborhood of the minimizer.\n\n4. **ReLU lower bound.** A single ordinary ReLU unit cannot represent the two-sided clipped update `x ↦ tropicalFlow m t x` for `t > 0`, while two shifted ReLU units suffice, as proved in `Catalog/Applications/EML/TropicalGDConvergence.lean`.\n\n5. **Even-sample minimizer interval.** For `2k` ordered scalar residual targets, the tropical `L¹` minimizers are exactly the interval between the two central order statistics, and clipped subgradient descent reaches that interval in finite time for every positive step size.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Tropical"
@@ -20329,7 +20329,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n- Prove the converse regularity criterion, completing Proposition 24: an operation is regular when its commutative image equals its diagonal image. A useful route is to construct an inner inverse of the pairmorph transformation that remains equivariant under pair reversal.\n- Characterize principal left ideals by pairmorph image and diagonal image, and principal right ideals by pairmorph kernel.\n- Bundle binary operations with the magma product as a `Monoid`, and express pairmorph as an equivalence with reversal-equivariant transformations under composition.\n- Complete the classification of the center, including the hypothesis on the cardinality of the underlying type and the exceptional small cases.\n- For finite types, formalize the paper's exact enumerations of idempotent and regular elements and verify initial values inside Lean.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Tropical"
@@ -21639,7 +21639,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe proposed mixed-area formula needs a normalization correction. For standard degree triangles, normalized lattice area satisfies\n\n\\[\nA((d+e)\\Delta)-A(d\\Delta)-A(e\\Delta)=2de.\n\\]\n\nThus the raw polarization of normalized lattice area is twice the plane Bézout number. In particular, two tropical lines give area difference `2`, while their stable intersection number is `1`. The corrected convention is\n\n\\[\nI(P,Q)=\\frac{A(P+Q)-A(P)-A(Q)}{2}\n\\]\n\nwhen `A` denotes normalized lattice area. Equivalently, one may use Euclidean area without the factor `1/2` in the polarization formula.\n\n`Catalog/Tropical/MixedAreaNormalization.lean` proves the degree-triangle identity, its positive-degree incompatibility with the uncorrected formula, the corrected Bézout identity, symmetry, and additivity in one argument. The explicit `(1,1)` theorem supplies the decisive small-case counterexample computationally inside Lean.\n\nA next step is to define finite lattice polygons and normalized area, prove the full Minkowski polarization law for polygons, and connect that invariant to determinant-weighted stable intersections of balanced fans.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -21966,7 +21966,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d → ℝ` whose every subfamily of cardinality at most `d + 1` has nonempty intersection has nonempty total intersection. This is falsifiable by an explicit finite family violating the implication.\n\n2. **Sharpness for tropical boxes.** For every `d > 0`, there exist two tropical boxes in `Fin d → ℝ` that are individually nonempty but disjoint. Consequently, the Helly number `2` proved for boxes cannot be lowered to `1`.\n\n3. **Monotone-objective optimality.** For every nonempty feasible finite family of tropical boxes and every coordinatewise strictly monotone real-valued objective attaining a minimum on the feasible region, the canonical coordinatewise maximum of the lower bounds is the unique minimizer.\n\n4. **Difference-constraint extension.** For finite systems consisting of tropical box bounds together with constraints `x i - x j ≤ c`, infeasibility admits a certificate whose size is bounded solely as a function of the ambient dimension `d`.\n\n5. **Carathéodory–Helly duality.** The `d + 1` support bound for normalized max-plus tropical convex hulls yields a separation certificate of size at most `d + 1` for a point outside a finitely generated tropical convex set, and this certificate implies the general tropical Helly bound in Conjecture 1.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Tropical"
@@ -22127,7 +22127,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical"
       ],
@@ -22207,7 +22207,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0f65effc (Q=0.781), which proved 24 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical"
       ],
@@ -22727,7 +22727,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3cce8c08 (Q=0.766), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Applications"
       ],
@@ -23925,6 +23925,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle 8fa54bf5 (Q=0.760), which proved 20 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Tropical"
+      ],
+      "github_issue": 0,
+      "id": "push_8fa54bf5_0d1affa2",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8597999999999998,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "8fa54bf5",
+      "source_path": "Tropical Convexity and Helly Theorem",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-03T23:30:55.056594+00:00",
+      "title": "Deepening: Tropical Convexity and Helly Theorem"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 8fe295b2 (Q=0.771), which proved 6 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers",
       "domain_bridges": [],
       "domain_quality_penalty": 0.6,
@@ -24007,7 +24047,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 9fb19498 (Q=0.790), which proved 11 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical Bézout theorem with explicit bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -25047,7 +25087,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e801d98f (Q=0.762), which proved 29 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Transformation Semigroup Perspective on the Magma Monoid' and formalize its key results. Abstract: The monoid of all binary operations was first introduced by H. S. Kim and J. Neggers in 2008. Since then, different aspects and applications of this monoid were studied, wh",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical"
       ],
@@ -25597,11 +25637,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6337dbc1",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -25613,7 +25653,7 @@
       ],
       "github_issue": 0,
       "id": "push_fb6f9bc5_27aef76f",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-03T23:31:14.876539+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -25628,7 +25668,7 @@
       "source": "",
       "source_exp_id": "fb6f9bc5",
       "source_path": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-31T10:09:57.508317+00:00",
       "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
@@ -29502,7 +29542,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "feb53e35",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29531,7 +29571,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Integrated Information via Tensor Networks"
@@ -32225,11 +32265,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6ef351e2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -32242,7 +32282,7 @@
       ],
       "github_issue": 0,
       "id": "seed_299",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-03T23:31:30.758867+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -32257,7 +32297,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
@@ -35138,7 +35178,7 @@
       "depth_estimate": 3,
       "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simulta",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Tropical"
       ],
@@ -35331,9 +35371,6 @@
   },
   "selection_log": [
     "abduction_followup",
-    "abduction_followup",
-    "abduction_followup",
-    "abduction_followup",
     "famous_subtask",
     "famous_subtask",
     "cross_domain_bridge",
@@ -35349,6 +35386,9 @@
     "abduction_followup",
     "cross_domain_bridge",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "abduction_followup",
+    "cross_domain_bridge",
+    "cross_domain_bridge"
   ]
 }

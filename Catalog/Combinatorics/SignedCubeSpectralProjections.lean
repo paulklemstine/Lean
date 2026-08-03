@@ -1,4 +1,4 @@
-import Catalog.Computation.SensitivityConjectureExtensions
+import Computation.SensitivityConjectureExtensions
 
 /-!
 # Spectral projections for Huang's signed cube operator

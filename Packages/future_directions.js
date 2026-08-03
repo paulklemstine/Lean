@@ -709,21 +709,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
   },
   {
-    "consumed_by_exp_id": "c0621a16",
-    "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "fd_0646",
-    "phase": "A",
-    "priority_score": 0.93,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697730+00:00",
-    "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
@@ -867,21 +852,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T18:22:53.127464+00:00",
     "title": "Deepening: Bridge: Fourier Analysis as a Functor"
-  },
-  {
-    "consumed_by_exp_id": "28c84414",
-    "description": "Building on cycle 4db4579d (Q=0.805), which proved 26 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics)",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_4db4579d_67dd503e",
-    "phase": "A",
-    "priority_score": 0.90477,
-    "research_mode": "team",
-    "source_exp_id": "4db4579d",
-    "status": "in_progress",
-    "timestamp": "2026-08-03T08:07:06.620928+00:00",
-    "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2258,17 +2228,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ef351e2",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
       "Logic"
     ],
     "id": "seed_299",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
@@ -2414,6 +2385,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-28T12:21:06.834733+00:00",
     "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f8e43caa (Q=0.773), which proved 12 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_f8e43caa_d5109e93",
+    "priority_score": 0.87257,
+    "research_mode": "team",
+    "source_exp_id": "f8e43caa",
+    "status": "available",
+    "timestamp": "2026-08-03T23:28:48.795976+00:00",
+    "title": "Deepening: Grokking: Phase Transitions in Learning"
   },
   {
     "consumed_by_exp_id": "",
@@ -3284,6 +3269,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8fa54bf5 (Q=0.760), which proved 20 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_8fa54bf5_0d1affa2",
+    "priority_score": 0.8597999999999998,
+    "research_mode": "team",
+    "source_exp_id": "8fa54bf5",
+    "status": "available",
+    "timestamp": "2026-08-03T23:30:55.056594+00:00",
+    "title": "Deepening: Tropical Convexity and Helly Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 064bb153 (Q=0.760), which proved 12 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf geometry of a two-qubit state that is continuous, vanishes exactly on product states, and equals one ",
     "domains": [
       "Geometry"
@@ -3325,16 +3324,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6337dbc1",
     "description": "Building on cycle fb6f9bc5 (Q=0.756), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
     "domains": [
       "Bridges"
     ],
     "id": "push_fb6f9bc5_27aef76f",
+    "phase": "A",
     "priority_score": 0.8559799999999999,
     "research_mode": "team",
     "source_exp_id": "fb6f9bc5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T10:09:57.508317+00:00",
     "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
@@ -5025,17 +5025,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A minimal modularity lifting theorem for Siegel modular forms"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3652ac9b",
     "description": "Investigate the ArXiv paper 'Learning the Graphical Nature of Symmetries' and formalize its key results. Abstract: Finite groups are rigid algebraic objects, whose Cayley graphs expose a rich network geometry through which group-theoretic structure can be measured, compared, and learned. In this paper, a dataset of $131{,}406$ Cayley graphs is constructed, covering all groups of order at most $767$ except order $512$, recording exact algebraic labels for group properties together with a broad collection of graph, cycle, distance, and spectral statistics. This census aims to provide novel benchmarks for studying how finite-group properties are reflected in Cayley graph observables. It also yields new enumerative contributions: alongside recovering known OEIS sequences for standard group classes, new sequences for monolithic groups and for groups generated by at most three, four, and five elements are contributed to the OEIS. The accompanying network analysis identifies several empirical regularities and formulates testable conjectures, including relationships involving square clustering, Cayley grap",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_0064",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12026v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T05:49:09.739406+00:00",
     "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
   },
@@ -7199,22 +7200,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "f8e43caa",
-    "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "seed_245",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Grokking: Phase Transitions in Learning"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle dcd7a4b2 (Q=0.750) proved 0 theorems in Tropical but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simulta",
     "domains": [
@@ -7271,23 +7256,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
-  },
-  {
-    "consumed_by_exp_id": "8fa54bf5",
-    "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
-    "domains": [
-      "Tropical",
-      "Geometry",
-      "Computation"
-    ],
-    "id": "seed_052",
-    "phase": "A",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Tropical Convexity and Helly Theorem"
   },
   {
     "consumed_by_exp_id": "feb53e35",
@@ -9750,17 +9718,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite-cover gluing.: Extend the two-set theorem in"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94d22408",
     "description": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciprocity isomorphism `Gal(H/K) \u2243 Cl(\ud835\udcaa_K)`. This is falsifiable in the formal development by whether such data can be constructed without adding hypotheses to `K`.\n\n2. **Principal ideal theorem.** For the constructed Hilbert class field `H/K`, prove that extension of ideals sends every nonzero fractional ideal of `\ud835\udcaa_K` to a principal fractional ideal of `\ud835\udcaa_H`. Equivalently, prove that the induced homomorphism `Cl(\ud835\udcaa_K) \u2192 Cl(\ud835\udcaa_H)` is zero.\n\n3. **Id\u00e8lic realization of the unramified correspondence.** Construct the canonical quotient homomorphism from the id\u00e8le class group of `K` onto `Cl(\ud835\udcaa_K)`, identify its kernel with the subgroup generated by archimedean components and local unit groups, and prove that pullback identifies ideal-class characters exactly with id\u00e8le-class characters trivial on that kernel.\n\n4. **Compatibility with cyclotomic reciprocity over `\u211a`.** Prove that the general Artin reciprocity map, specialized to `K = \u211a` and a cyclotomic extension, agrees on every rational prime coprime to the conductor with the catalog map sending a residue-class unit to the automorphism `\u03b6 \u21a6 \u03b6^p`.\n\n5. **Explicit imaginary-quadratic generators.** For every imaginary quadratic field of class number at most `4`, construct a singular modulus generating its Hilbert class field and prove that its minimal polynomial has degree equal to the class number and splitting field unramified over the quadratic base field.\n",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0795",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ee1ae94f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-28T16:59:57.083975+00:00",
     "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
   },
@@ -11314,6 +11283,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-03T21:40:56.753216+00:00",
     "title": "Future directions from cycle 60e2b23a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe following are concrete formalization conjectures extending the verified finite optimization and arithmetic-progression bookkeeping in `Catalog/Novelty/TwinPrimeGaps/MaynardTao.lean`.\n\n1. **Bombieri\u2013Vinogradov at level `1/2`.** For every real `A > 0`, there is a constant `C_A` such that, for all sufficiently large `x`, the sum over `q \u2264 \u221ax / (log x)^(A+2)` of the largest reduced-residue-class von Mangoldt discrepancy modulo `q` is at most `C_A x / (log x)^A`.\n\n2. **Maynard multidimensional variational lower bound.** For every integer `m \u2265 1`, there is an explicitly represented smooth function supported on the standard simplex whose Maynard quotient is greater than `4m`; the integrals and support condition can be checked from a rational piecewise-polynomial certificate.\n\n3. **Sieve-to-prime-cluster implication.** Combining Conjectures 1 and 2 with an admissible `k`-tuple of diameter `246` yields arbitrarily large translates containing at least two primes.\n\n4. **Explicit diameter-246 admissible tuple certificate.** There exists a concrete finite set `H \u2286 {0, \u2026, 246}` of the cardinality required by the chosen Maynard parameter, and admissibility of `H` is decidable by checking only primes at most `|H|`.\n\n5. **Unconditional bounded-gap endpoint.** The predicate `TwinPrimeGaps.ArbitrarilyLargePrimePairs 246` holds. Together with the proved reduction `liminf_primeGap_le_246_of_maynard_output`, this gives `Filter.atTop.liminf TwinPrimeGaps.primeGap \u2264 246`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0941",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c0621a16",
+    "status": "available",
+    "timestamp": "2026-08-03T23:27:42.287981+00:00",
+    "title": "The following are concrete formalization conjectures extending the verified fini"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe completed formalization deliberately studies the smallest non-trivial model:\na width-one scalar two-layer ReLU network with an explicit time-dependent input,\ntogether with the exact saddle-node normal form. Natural extensions are:\n\n1. **Vector-valued two-layer networks.** Replace the scalar network by finite\n   hidden width, matrices, and a finite test set; prove delayed positivity of a\n   classification margin.\n2. **Training dynamics.** Derive the threshold trajectory from gradient flow or\n   weight-decayed gradient descent instead of prescribing it explicitly.\n3. **Train/test separation.** Formalize a dataset on which training error is\n   already zero while test error remains positive until the threshold.\n4. **Local dynamical bifurcation theory.** Add derivatives and prove the usual\n   saddle-node nondegeneracy conditions, local branch existence, and stability\n   exchange for an ODE.\n5. **Robustness.** Show that the delayed transition and two-branch structure\n   persist under sufficiently small perturbations of the network trajectory and\n   vector field.\n6. **Connection theorem.** Derive the saddle-node normal form from a reduced loss\n   landscape of a concrete trained network, making the bifurcation parameter an\n   optimizer or regularization parameter rather than a paired abstract model.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_0942",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f8e43caa",
+    "status": "available",
+    "timestamp": "2026-08-03T23:28:44.569815+00:00",
+    "title": "The completed formalization deliberately studies the smallest non-trivial model:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `C\u1d52\u1d56 \u2964+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   representables indexed by its category of elements.\n\n2. **Representability from limit preservation.** If `C` is a small finitely complete\n   category and a presheaf `F : C\u1d52\u1d56 \u2964 Type` preserves all small limits and satisfies the\n   solution-set condition, then `F` is representable.\n\n3. **Sheaf density by represented sheaves.** On every subcanonical site, each type-valued\n   sheaf is a colimit in the sheaf category of represented sheaves, with a canonical indexing\n   diagram obtained from maps out of represented sheaves.\n\n4. **Classifier uniqueness.** In a category with pullbacks and a terminal object, any two\n   subobject classifiers are uniquely isomorphic by an isomorphism commuting with their\n   truth arrows.\n\n5. **Predicate extensionality through characteristic maps.** In a category with a subobject\n   classifier, two subobjects of `X` are equal precisely when their characteristic morphisms\n   `X \u27f6 \u03a9` are equal, and this correspondence is natural under pullback along every\n   morphism into `X`.\n",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0943",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "28c84414",
+    "status": "available",
+    "timestamp": "2026-08-03T23:29:47.461561+00:00",
+    "title": "1. **Additive density.** For every preadditive category `C`, every additive pres"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d \u2192 \u211d` whose every subfamily of cardinality at most `d + 1` has nonempty intersection has nonempty total intersection. This is falsifiable by an explicit finite family violating the implication.\n\n2. **Sharpness for tropical boxes.** For every `d > 0`, there exist two tropical boxes in `Fin d \u2192 \u211d` that are individually nonempty but disjoint. Consequently, the Helly number `2` proved for boxes cannot be lowered to `1`.\n\n3. **Monotone-objective optimality.** For every nonempty feasible finite family of tropical boxes and every coordinatewise strictly monotone real-valued objective attaining a minimum on the feasible region, the canonical coordinatewise maximum of the lower bounds is the unique minimizer.\n\n4. **Difference-constraint extension.** For finite systems consisting of tropical box bounds together with constraints `x i - x j \u2264 c`, infeasibility admits a certificate whose size is bounded solely as a function of the ambient dimension `d`.\n\n5. **Carath\u00e9odory\u2013Helly duality.** The `d + 1` support bound for normalized max-plus tropical convex hulls yields a separation certificate of size at most `d + 1` for a point outside a finitely generated tropical convex set, and this certificate implies the general tropical Helly bound in Conjecture 1.\n",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_0944",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8fa54bf5",
+    "status": "available",
+    "timestamp": "2026-08-03T23:30:50.863648+00:00",
+    "title": "1. **General tropical Helly bound.** For every `d > 0`, every finite family of n"
   },
   {
     "consumed_by_exp_id": "bae1175e",

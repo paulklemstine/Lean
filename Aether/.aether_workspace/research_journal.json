@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "647e3d96",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nThe Lean development proves statements inside a precise topological observer model. The following conjectures are concrete extensions of that model and do not assert an empirical",
-      "quality_score": 0.7752299999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-01T17:24:08",
-      "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
-    },
-    {
       "cycle_id": "66e718fe",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecede",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-03T23:29:51",
       "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
+    },
+    {
+      "cycle_id": "8fa54bf5",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d → ℝ` whose every subfamily of cardinality at",
+      "quality_score": 0.7597999999999998,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-08-03T23:30:54",
+      "title": "Tropical Convexity and Helly Theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "64006a56",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Euler Characteristic and Curvature\n\n## 1. Subdivision completeness for finite triangulated surfaces\n\n**Conjecture.** Any two finite triangulations of the same compact piecewise-li",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-26T07:00:41",
-      "title": "Euler Characteristic and Gauss-Bonnet"
-    },
     {
       "cycle_id": "1ba7b435",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-03T23:29:51",
       "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
+    },
+    {
+      "cycle_id": "8fa54bf5",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d → ℝ` whose every subfamily of cardinality at",
+      "quality_score": 0.7597999999999998,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-08-03T23:30:54",
+      "title": "Tropical Convexity and Helly Theorem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "76a9f834",
-      "domain": "Cryptography",
-      "name": "siteThresholdConfig_mono",
-      "quality": 0.7250399999999999
-    },
-    {
-      "cycle_id": "76a9f834",
-      "domain": "Cryptography",
-      "name": "siteConnected_threshold_mono",
-      "quality": 0.7250399999999999
-    },
-    {
-      "cycle_id": "5bb368e2",
-      "domain": "NumberTheory",
-      "name": "three_not_wallSunSun",
-      "quality": 0.7482099999999999
-    },
     {
       "cycle_id": "5bb368e2",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "yoneda_reflects_object_isomorphism",
       "quality": 0.73729
+    },
+    {
+      "cycle_id": "8fa54bf5",
+      "domain": "Tropical",
+      "name": "for",
+      "quality": 0.7597999999999998
+    },
+    {
+      "cycle_id": "8fa54bf5",
+      "domain": "Tropical",
+      "name": "for",
+      "quality": 0.7597999999999998
+    },
+    {
+      "cycle_id": "8fa54bf5",
+      "domain": "Tropical",
+      "name": "directly",
+      "quality": 0.7597999999999998
     }
   ],
-  "last_updated": "2026-08-03T23:29:51",
+  "last_updated": "2026-08-03T23:30:54",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "8c9ac99e",
-        "quality": 0.7311099999999999,
-        "theorems": 19,
-        "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
-      },
-      {
         "cycle_id": "d5c8afaa",
         "quality": 0.686,
         "theorems": 40,
@@ -4009,6 +4003,12 @@
         "quality": 0.76179,
         "theorems": 29,
         "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
+      },
+      {
+        "cycle_id": "8fa54bf5",
+        "quality": 0.7597999999999998,
+        "theorems": 20,
+        "title": "Tropical Convexity and Helly Theorem"
       }
     ]
   }
