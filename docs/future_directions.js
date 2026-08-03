@@ -883,6 +883,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 4db4579d (Q=0.805), which proved 26 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics)",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_4db4579d_67dd503e",
+    "priority_score": 0.90477,
+    "research_mode": "team",
+    "source_exp_id": "4db4579d",
+    "status": "available",
+    "timestamp": "2026-08-03T08:07:06.620928+00:00",
+    "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
     "domains": [
       "Novelty"
@@ -1692,6 +1706,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ab554343 (Q=0.796), which proved 19 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_ab554343_8e2bded6",
+    "priority_score": 0.89623,
+    "research_mode": "team",
+    "source_exp_id": "ab554343",
+    "status": "available",
+    "timestamp": "2026-08-03T08:05:21.598922+00:00",
+    "title": "Deepening: Consciousness as Integrated Information"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
     "domains": [
       "MachineLearning"
@@ -2019,16 +2047,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Spectral Graph Theory Meets Network Robustness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1343d96e",
     "description": "Building on cycle d7c83314 (Q=0.781), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic pack",
     "domains": [
       "NumberTheory"
     ],
     "id": "push_d7c83314_138ba764",
+    "phase": "A",
     "priority_score": 0.8814599999999999,
     "research_mode": "team",
     "source_exp_id": "d7c83314",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-03T00:21:55.948251+00:00",
     "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
   },
@@ -3224,17 +3253,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ea9b367",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "seed_367",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
@@ -3631,22 +3661,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Generalization Bounds via Rademacher Complexity"
-  },
-  {
-    "consumed_by_exp_id": "4db4579d",
-    "description": "Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics). Prove that every Grothendieck topos is a bounded lattice with a universal property.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "seed_345",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Bridge: Category Theory as Universal Language for Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -7200,23 +7214,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Hilbert 15: Schubert Calculus Rigorization"
-  },
-  {
-    "consumed_by_exp_id": "ab554343",
-    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
-    "domains": [
-      "Speculative",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_057",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Consciousness as Integrated Information"
   },
   {
     "consumed_by_exp_id": "",
@@ -11215,6 +11212,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-03T00:24:41.651228+00:00",
     "title": "The requested theorem cannot presently be supplied faithfully: existence of a Wa"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause\u2013effect repertoires, and divergence-based information loss.\n- Prove that the abstract nonnegative loss model is instantiated by the resulting probabilistic semantics.\n- Develop perturbation bounds showing stability of `Phi` and of exclusion winners under bounded changes to the loss landscape.\n\n## Composition and exclusion\n\n- Extend parallel composition to interacting composites and characterize hypotheses under which `Phi` is additive, subadditive, or superadditive.\n- Formalize exclusion modulo causal equivalence, including the case where several candidates tie for the maximum.\n- Study how exclusion behaves under refinements and parallel composition.\n\n## Category theory\n\n- Package causal structures and refinements as a category, with the proved monotonicity theorem giving an order-valued invariant.\n- Investigate monoidal structure induced by independent parallel composition and express additivity of `Phi` as compatibility with that structure.\n- Define equivalences of causal structures and prove invariance of `Phi` under equivalence.\n\n## Finite combinatorics and complexity\n\n- Quotient cuts by complementation so each unordered bipartition is counted once, and derive the exact count of nontrivial bipartitions.\n- Relate finite minimization to algorithms by proving correctness and runtime bounds for exhaustive, branch-and-bound, and symmetry-reduced minimum-cut procedures.\n- Connect weighted causal losses to standard graph cut objectives and transfer approximation guarantees to `Phi`.\n",
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_0928",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ab554343",
+    "status": "available",
+    "timestamp": "2026-08-03T08:05:04.622401+00:00",
+    "title": "Future directions from cycle ab554343"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Subobject-frame realization.** For every Mathlib category `C` equipped with finite limits,\n   arbitrary coproducts satisfying the Grothendieck-topos axioms, and a subobject classifier,\n   construct an `Order.Frame (Subobject X)` instance for every `X : C`, and prove that pullback\n   `Subobject X \u2192 Subobject Y` preserves arbitrary suprema and finite infima.\n\n2. **Internal implication versus classifier exponentials.** In every elementary topos formalized\n   with exponentials and a classifier `\u03a9`, prove that the Heyting implication on `Subobject X`\n   agrees, under characteristic maps `X \u27f6 \u03a9`, with the implication morphism\n   `\u03a9 \u00d7 \u03a9 \u27f6 \u03a9` induced by the exponential universal property.\n\n3. **Additive Yoneda essential-image criterion.** For a small idempotent-complete preadditive\n   category `C`, characterize the essential image of `preadditiveYoneda` inside additive\n   presheaves as precisely the finitely generated projective additive presheaves.\n\n4. **Sheaf Yoneda compatibility with change of site.** Given a continuous functor between\n   subcanonical sites, prove that the induced pullback on sheaves carries represented sheaves to\n   the represented sheaves of the image objects exactly when the functor preserves covering\n   families and the relevant finite limits.\n\n5. **Booleanization by double negation.** For every formalized Grothendieck topos, construct the\n   double-negation sheaf subtopos and prove that its subobject frames are Boolean algebras, while\n   the inclusion into the original topos is universal among geometric morphisms from Boolean\n   toposes.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0929",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4db4579d",
+    "status": "available",
+    "timestamp": "2026-08-03T08:06:48.044869+00:00",
+    "title": "1. **Subobject-frame realization.** For every Mathlib category `C` equipped with"
   },
   {
     "consumed_by_exp_id": "",
