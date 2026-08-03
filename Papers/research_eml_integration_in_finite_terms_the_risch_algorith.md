@@ -1,223 +1,387 @@
-# Differential EML Extensions and the Risch Structure Theorem: A Formalization
+# Constructive Integration in Finite Terms for a Rational–Exponential Normal Form
+
+**Aristotle**  
+**3 August 2026**
 
 ## Abstract
 
-We introduce the **Differential EML Extension** (`DiffEMLField`), a novel algebraic structure that unifies the exponential and logarithmic cases of the Risch algorithm for integration in finite terms through the EML operation `eml(x,y) = exp(x) - log(y)`. The EML function simultaneously inhabits both an exponential extension and a logarithmic extension of a differential field, with its derivative naturally decomposing as `D(eml(f,g)) = f'·exp(f) - g'/g` — splitting into exactly the two cases the Risch algorithm handles separately. We formalize this structure in Lean 4 with Mathlib and prove 30+ theorems including: the chain rule for EML compositions, concrete antiderivative computations, the Fenchel-Young inequality for EML, Liouville-type obstructions (exp(x²) has no polynomial antiderivative), uniqueness of exp-linear decomposition, Hermite reduction properties, and the Rothstein-Trager root bound. All proofs are fully machine-verified with no `sorry` statements.
-
-**Keywords**: Risch algorithm, integration in finite terms, differential algebra, EML function, Liouville's theorem, Hermite reduction, formal verification
+We present a constructive integration algorithm for a finite normal form consisting of polynomial monomials, simple rational poles, higher-order rational poles, and constant-rate exponential terms, all with rational parameters. The algorithm separates the input into algebraic, logarithmic, Hermite-reduced rational, and hyperexponential stages and returns an explicit expression assembled from arithmetic, logarithms, and exponentials. We prove local analytic soundness at every point outside the listed poles, closure of both input and output in the elementary expression language, and completeness relative to the stated normal-form grammar. A zero-rate branch handles constant exponential terms without partiality. For rational functions already supplied in explicit partial-fraction normal form, one abstract step is charged per summand; the resulting cost is linear in a natural weighted representation size and hence polynomial. The result isolates a rigorous terminal stage of the Risch program. It does not identify arbitrary-expression normalization with this terminal stage, and we state clearly the normalization and bit-complexity questions that remain.
 
 ## 1. Introduction
 
-The problem of integration in finite terms — deciding whether a given elementary function has an elementary antiderivative — was solved in principle by Risch (1969) and refined by subsequent work. The Risch algorithm operates on **differential field extensions**: starting from the base field ℚ(x) with derivation d/dx, one adjoins transcendental elements θ that are either:
+Symbolic integration asks whether a function has an antiderivative expressible in a prescribed finite language and, if so, asks for such an expression. This differs fundamentally from numerical quadrature. Numerical methods approximate a definite integral to a requested tolerance; symbolic integration decides membership in a class of functions and constructs a semantic witness.
 
-- **Exponential**: D(θ) = θ · D(η) for some η in the base field (θ = exp(η))
-- **Logarithmic**: D(θ) = D(η)/η for some η in the base field (θ = log(η))
+The Risch approach recasts elementary integration in differential algebra. Its broad architecture reduces an expression through a tower of algebraic, logarithmic, and exponential extensions until the existence of an elementary primitive can be decided through algebraic tests and differential equations. The present work concerns a concrete terminal normal form in which those reductions have already exposed all summands as one of four types:
 
-The algorithm processes these two cases separately, applying different algebraic techniques to each.
+1. polynomial monomials $cx^n$;
+2. simple poles $r/(x-a)$;
+3. higher poles $d/(x-b)^m$ with $m\ge2$;
+4. hyperexponential terms $ue^{vx}$.
 
-The **EML function** `eml(x,y) = exp(x) - log(y)` is the canonical element that *simultaneously* involves both extension types. Its derivative `D(eml) = exp(x) - 1/y` naturally splits into an exponential part and a logarithmic-derivative part — precisely the decomposition the Risch algorithm uses. This makes EML a uniquely natural test case for studying integration in finite terms.
+All scalar data are rational. This restriction makes equality tests, especially the test $v=0$, effective and makes the output coefficients exact.
 
-### 1.1 Contributions
+Our contributions are deliberately scoped. We define the normal form and a total integration procedure; prove the derivative identity on the regular domain; establish closure in a finite elementary language; and prove a linear step bound for rational partial-fraction input. The resulting theorem is a complete finite-term integration theorem *for the normalized grammar*. It is not a claim that every arbitrary elementary expression has already been normalized, nor a proof of a global polynomial-time bound for the full Risch algorithm. This distinction is mathematically essential.
 
-1. **Novel algebraic structure**: We define `DiffEMLField`, a differential field equipped with distinguished exponential and logarithmic elements and the EML element ε = E - L, capturing the minimal structure for the Risch algorithm.
+## 2. Expression language and analytic interpretation
 
-2. **Concrete integration theory**: We prove antiderivative formulas for EML functions, including the key result that EML is **not closed under integration** — the antiderivative of `eml(x,x)` contains `x·log(x)`, which is not an EML function.
+### 2.1 Elementary expressions
 
-3. **Liouville obstructions**: We formally prove that `exp(x²)` has no polynomial antiderivative and that `exp(exp(x))` has no simple exponential antiderivative.
+Let $\mathcal E$ be the smallest class of real expressions generated by:
 
-4. **Hermite reduction**: We formalize squarefree decomposition, partial fraction integration (simple poles → logarithms, higher poles → rational functions), and the polynomial-time complexity bound for Hermite reduction.
+- real constants and the variable $x$;
+- addition and multiplication;
+- multiplicative inversion;
+- the real exponential and logarithm.
 
-5. **Full machine verification**: All 30+ theorems are verified in Lean 4 with Mathlib, using only standard axioms (propext, Classical.choice, Quot.sound).
+Natural powers are abbreviations formed by repeated multiplication. Rational scalar multiplication is likewise an abbreviation. Each expression denotes a real-valued function wherever all inverses are defined and the chosen real logarithms have admissible arguments. For derivative statements involving a logarithmic affine factor, it is often convenient to write $\log|x-a|$; on either connected component of $\mathbb R\setminus\{a\}$ this has derivative $1/(x-a)$. If the unsigned expression $\log(x-a)$ is used instead, the same derivative statement is read on the component $x>a$.
 
-## 2. The DiffEMLField Structure
+We call a real function **finitely elementary** when it is represented by an expression in $\mathcal E$ on its domain. This terminology concerns representability, not merely differentiability.
 
-### 2.1 Definition
+### 2.2 Primitive expression constructors
 
-A **Differential EML Field** over a field R consists of:
+Three elementary abbreviations will be useful. For $P\in\mathcal E$ and $n\in\mathbb N$, define $P^0=1$ and $P^{n+1}=P^nP$. For $a\in\mathbb Q$, define the affine shift $S_a(x)=x-a$. For $c\in\mathbb Q$, scalar multiplication sends $P$ to $cP$.
 
-```
-structure DiffEMLField (R : Type*) [Field R] where
-  D : R → R                    -- derivation
-  D_mul : ∀ a b, D(a·b) = D(a)·b + a·D(b)    -- Leibniz rule
-  D_add : ∀ a b, D(a+b) = D(a) + D(b)         -- additivity
-  D_one : D(1) = 0                              -- constants
-  θ : R                        -- the variable element
-  E : R                        -- exponential element
-  L : R                        -- logarithmic element
-  E_ne_zero : E ≠ 0
-  θ_ne_zero : θ ≠ 0
-  exp_deriv : D(E) = E · D(θ)                  -- exponential ODE
-  log_deriv : D(L) · θ = D(θ)                  -- logarithmic ODE
-```
+**Lemma 2.1 (Evaluation of abbreviations).** At every point where $P$ is defined,
 
-The **EML element** is ε = E - L.
+$$
+(P(x))^n=P(x)^n,\qquad S_a(x)=x-a,\qquad (cP)(x)=cP(x).
+$$
 
-### 2.2 Key Properties
+**Proof sketch.** The power identity follows by induction on $n$. The shift and scalar identities follow directly from the meanings of addition, negation, constants, and multiplication. $\square$
 
-**Theorem 2.1** (Derivative of Eⁿ). For all n ∈ ℕ: D(Eⁿ) = n · Eⁿ · D(θ).
+Finite sums are defined recursively, with the empty sum equal to zero. Their evaluation agrees with ordinary finite summation. This simple observation permits local derivative proofs to be lifted from individual pieces to lists.
 
-*Proof.* By induction on n using D_mul and exp_deriv. ∎
+## 3. The normalized input class
 
-**Theorem 2.2** (EML not constant). If D(θ) ≠ 0, then ε = E - L is not constant (i.e., D(ε) ≠ 0).
+### 3.1 Four kinds of pieces
 
-*Proof sketch.* Assuming D(ε) = 0 gives D(E) = D(L), hence E·D(θ) = D(θ)/θ by the exponential and logarithmic differential equations. Since D(θ) ≠ 0, we get E = θ⁻¹. Computing D(E) = D(θ⁻¹) via the quotient rule and comparing with E·D(θ) = θ⁻¹·D(θ) yields θ = -1. But then E = -1, and D(E) = D(-1) = -D(1) = 0 while E·D(θ) = -D(θ) ≠ 0, a contradiction. ∎
+An **algebraic piece** is a pair $(c,n)\in\mathbb Q\times\mathbb N$ representing
 
-**Theorem 2.3** (Constant polynomial differentiation). If c₀, ..., cₙ₋₁ are constants (D(cᵢ) = 0), then:
-D(Σᵢ cᵢ · Eⁱ) = (Σᵢ i·cᵢ · Eⁱ) · D(θ)
+$$
+f_{c,n}(x)=cx^n.
+$$
 
-This shows that the derivation of "exponential polynomials" with constant coefficients has a clean multiplicative structure — exactly the form processed by the Risch algorithm.
+A **logarithmic piece** is a pair $(r,a)\in\mathbb Q^2$ representing
 
-## 3. EML Integration Theory
+$$
+g_{r,a}(x)=\frac{r}{x-a}.
+$$
 
-### 3.1 The EML Derivative Chain Rule
+A **higher-pole piece** is a triple $(d,b,m)$ with $d,b\in\mathbb Q$ and integer $m\ge2$, representing
 
-**Theorem 3.1** (Chain rule). If f, g : ℝ → ℝ are differentiable at t and g(t) > 0, then:
-d/dt[eml(f(t), g(t))] = f'(t)·exp(f(t)) - g'(t)/g(t)
+$$
+h_{d,b,m}(x)=\frac{d}{(x-b)^m}.
+$$
 
-The right-hand side decomposes into:
-- **Exponential part**: f'(t)·exp(f(t)) — from the exp(f) component
-- **Log-derivative part**: -g'(t)/g(t) — from the -log(g) component
+An **exponential piece** is a pair $(u,v)\in\mathbb Q^2$ representing
 
-This decomposition is the structural foundation of the Risch algorithm: the exponential and logarithmic parts are processed by different subroutines.
+$$
+e_{u,v}(x)=ue^{vx}.
+$$
 
-### 3.2 Concrete Antiderivatives
+The lower bound $m\ge2$ is structural: order one belongs in the logarithmic list, while every order at least two is reduced rationally.
 
-**Theorem 3.2** (Constant-y antiderivative). For c > 0:
-∫ₐᵇ eml(x, c) dx = (exp(b) - exp(a)) - (b - a)·log(c)
+### 3.2 Normal forms and regular points
 
-The Risch decomposition has coefficients (1, -log(c)):
-∫ eml(x, c) dx = 1·exp(x) + (-log c)·x + const
+A **rational–exponential normal form** is a quadruple $R=(A,L,H,E)$ of finite lists of algebraic, logarithmic, higher-pole, and exponential pieces. Its represented integrand is
 
-**Theorem 3.3** (Diagonal antiderivative). For b ≥ 1:
-∫₁ᵇ (exp(x) - log(x)) dx = (exp(b) - e) - (b·log(b) - b + 1)
+$$
+\begin{aligned}
+f_R(x)={}&\sum_{(c,n)\in A}cx^n
++\sum_{(r,a)\in L}\frac{r}{x-a}\\
+&+\sum_{(d,b,m)\in H}\frac{d}{(x-b)^m}
++\sum_{(u,v)\in E}ue^{vx}.
+\end{aligned}
+$$
 
-The antiderivative is exp(x) - x·log(x) + x, which is **elementary but not an EML function**. This proves that **EML is not closed under integration**.
+A point $x\in\mathbb R$ is **regular for $R$** if
 
-**Theorem 3.4** (Exponential argument). 
-∫₀¹ eml(x, eᵗ) dt = exp(x) - 1/2
+$$
+x\ne a\quad\text{for every }(r,a)\in L,
+\qquad
+x\ne b\quad\text{for every }(d,b,m)\in H.
+$$
 
-### 3.3 The Fenchel-Young Connection
+Polynomial and exponential pieces introduce no real singularities. Pole avoidance is therefore an exact description of the regularity needed for the derivative theorem. For a logarithmic primitive expressed with $\log|x-a|$, this domain consists of all non-pole points; for $\log(x-a)$ without an absolute value, one restricts additionally to the relevant positive-argument interval.
 
-**Theorem 3.5** (Fenchel-Young inequality). For s > 0:
-x·s ≤ exp(x) + s·log(s) - s
+## 4. The integration algorithm
 
-This connects EML integration to convex duality: the right-hand side is the sum of the exponential function and its Legendre-Fenchel conjugate, evaluated at (x, s).
+### 4.1 Piecewise primitive rules
 
-## 4. Liouville Obstructions
+The algebraic stage maps
 
-### 4.1 No Polynomial Antiderivative for exp(x²)
+$$
+cx^n\longmapsto \frac{c}{n+1}x^{n+1}.
+$$
 
-**Theorem 4.1**. No polynomial P satisfies P'(x) = exp(x²) for all x ∈ ℝ.
+The logarithmic stage maps
 
-*Proof.* P' is a polynomial of fixed degree, while exp(x²) grows faster than any polynomial, so they cannot agree on all of ℝ. The formal proof uses the fact that P' has a finite limit ratio P'(x)/exp(x²) → 0 as x → ∞, contradicting the requirement P'(x)/exp(x²) = 1. ∎
+$$
+\frac{r}{x-a}\longmapsto r\log|x-a|.
+$$
 
-**Boundary**: In contrast, exp(x) (linear exponent) has the polynomial-type antiderivative exp(x) itself.
+The higher-pole stage, the explicit Hermite-reduction step, maps
 
-### 4.2 No Simple Antiderivative for exp(exp(x))
+$$
+\frac{d}{(x-b)^m}
+\longmapsto
+-\frac{d}{m-1}\frac{1}{(x-b)^{m-1}},
+\qquad m\ge2.
+$$
 
-**Theorem 4.2**. No constant c satisfies d/dx[c·exp(exp(x))] = exp(exp(x)) for all x.
+Finally, the exponential stage branches on its rational rate:
 
-*Proof.* The chain rule gives c·exp(x)·exp(exp(x)) = exp(exp(x)). Dividing by exp(exp(x)) > 0: c·exp(x) = 1 for all x. Setting x = 0 gives c = 1; setting x = 1 gives c = e⁻¹. Since 1 ≠ e⁻¹, contradiction. ∎
+$$
+ue^{vx}\longmapsto
+\begin{cases}
+\dfrac{u}{v}e^{vx},&v\ne0,\\
+ux,&v=0.
+\end{cases}
+$$
 
-## 5. Hermite Reduction
+The second branch is required because $e^{0x}=1$. It avoids division by zero and makes the procedure defined on every admitted exponential piece.
 
-### 5.1 Squarefree Polynomials
+### 4.2 Full procedure
 
-**Definition.** A polynomial p is **squarefree** if gcd(p, p') = 1.
+**Algorithm 4.1 (Four-stage normalized integration).** Given $R=(A,L,H,E)$:
 
-**Theorem 5.1**. Linear polynomials ax + b (a ≠ 0) are squarefree.
-**Theorem 5.2**. Nonzero constants are squarefree.
+1. initialize four empty output lists;
+2. traverse $A$ and append $c x^{n+1}/(n+1)$ for each $(c,n)$;
+3. traverse $L$ and append $r\log|x-a|$ for each $(r,a)$;
+4. traverse $H$ and append $-d/((m-1)(x-b)^{m-1})$ for each $(d,b,m)$;
+5. traverse $E$ and append $(u/v)e^{vx}$ when $v\ne0$, or $ux$ when $v=0$;
+6. return the sum of all appended expressions.
 
-### 5.2 Partial Fraction Integration
+Thus the output is
 
-The key dichotomy in the Risch algorithm:
+$$
+\begin{aligned}
+F_R(x)={}&\sum_{(c,n)\in A}\frac{c}{n+1}x^{n+1}
++\sum_{(r,a)\in L}r\log|x-a|\\
+&-\sum_{(d,b,m)\in H}\frac{d}{m-1}(x-b)^{-(m-1)}\\
+&+\sum_{\substack{(u,v)\in E\\v\ne0}}\frac{u}{v}e^{vx}
++\sum_{\substack{(u,0)\in E}}ux.
+\end{aligned}
+$$
 
-**Theorem 5.3** (Simple poles → logarithms). 
-∫ₐᵇ (x-c)⁻¹ dx = log(b-c) - log(a-c)    [for c < a ≤ b]
+Every loop is finite, so termination follows immediately. Since rational equality is decidable, the zero-rate branch is effective.
 
-**Theorem 5.4** (Higher poles → rational functions).
-∫ₐᵇ (x-c)⁻² dx = (a-c)⁻¹ - (b-c)⁻¹    [for c < a ≤ b]
+## 5. Local correctness of the stages
 
-This dichotomy is why Hermite reduction separates squared factors from squarefree factors: only simple poles produce logarithmic terms in the antiderivative.
+### 5.1 Algebraic stage
 
-### 5.3 Complexity Bound
+**Lemma 5.1 (Algebraic derivative identity).** For every $c\in\mathbb Q$, $n\in\mathbb N$, and $x\in\mathbb R$,
 
-**Theorem 5.5** (Step bound). Hermite reduction requires at most deg(q) iterations, each involving a polynomial GCD of degree ≤ deg(q). Since polynomial GCD is O(n²), the total complexity is **O(n³)** where n = deg(q).
+$$
+\frac{d}{dx}\left(\frac{c}{n+1}x^{n+1}\right)=cx^n.
+$$
 
-**Theorem 5.6** (Derivative degree bound). natDegree(p') ≤ natDegree(p) - 1.
+**Proof sketch.** The power rule gives $(x^{n+1})'=(n+1)x^n$. Multiplication by $c/(n+1)$ cancels the positive integer $n+1$. $\square$
 
-### 5.4 Rothstein-Trager Root Bound
+### 5.2 Logarithmic stage
 
-**Theorem 5.7** (Root bound). A polynomial of degree n has at most n roots. This bounds the number of logarithmic terms in the Rothstein-Trager method.
+**Lemma 5.2 (Simple-pole derivative identity).** For $r,a\in\mathbb Q$ and $x\ne a$,
 
-### 5.5 EML-Specific Rational Integration
+$$
+\frac{d}{dx}\bigl(r\log|x-a|\bigr)=\frac{r}{x-a}.
+$$
 
-**Theorem 5.8** (Log integral of polynomial). For a polynomial p positive on [a,b]:
-∫ₐᵇ -p'(x)/p(x) dx = -(log(p(b)) - log(p(a)))
+**Proof sketch.** On either interval $(-\infty,a)$ or $(a,\infty)$, the function $\log|x-a|$ is differentiable and the chain rule gives $(x-a)^{-1}$. Multiplication by $r$ gives the claim. The hypothesis $x\ne a$ is exactly the nonvanishing condition needed for the reciprocal. $\square$
 
-This handles the logarithmic component of `eml(x, p(x)) = exp(x) - log(p(x))`.
+### 5.3 Higher-pole stage
 
-## 6. Uniqueness of Decomposition
+**Lemma 5.3 (Higher-pole derivative identity).** Let $m\ge2$, $d,b\in\mathbb Q$, and $x\ne b$. Then
 
-**Theorem 6.1** (Exp-linear uniqueness). If a₁·eˣ + b₁·x + c₁ = a₂·eˣ + b₂·x + c₂ for all x ∈ ℝ, then a₁ = a₂, b₁ = b₂, and c₁ = c₂.
+$$
+\frac{d}{dx}\left(-\frac{d}{m-1}(x-b)^{-(m-1)}\right)
+=\frac{d}{(x-b)^m}.
+$$
 
-This establishes the **uniqueness of the Risch decomposition** for EML antiderivatives: the splitting into exponential and linear parts is canonical.
+**Proof sketch.** Put $k=m-1$, so $k\ge1$. Differentiation of $(x-b)^{-k}$ gives $-k(x-b)^{-(k+1)}$. Multiplying by $-d/k$ cancels both minus signs and $k$, leaving $d(x-b)^{-m}$. Nonvanishing of $x-b$ justifies inversion. $\square$
 
-## 7. PEGB Analysis for Major Theorems
+This rule is the local content of Hermite reduction for an explicit repeated linear factor: integration lowers the pole order until only the simple-pole logarithmic contribution remains.
 
-### 7.1 EML Chain Rule (Theorem 3.1)
-- **P**roof: Complete Lean 4 proof using `HasDerivAt.exp` and `HasDerivAt.log` composition
-- **E**xample: For eml(x, eˣ), the derivative is eˣ - 1 (Theorem `eml_deriv_chain_example`)
-- **G**eneralization: Extends to any differentiable f, g with g > 0; could be further generalized to complex-valued functions
-- **B**oundary: Fails when g(t) = 0 (log singularity); eml(0, ·) is not differentiable at 0 (Theorem `eml_at_zero_not_diff_at_zero`)
+### 5.4 Exponential stage
 
-### 7.2 Liouville Obstruction (Theorem 4.1)
-- **P**roof: Uses asymptotic growth comparison of polynomials vs. exp(x²)
-- **E**xample: exp(x²) specifically — the Gaussian integrand
-- **G**eneralization: Extends to exp(p(x)) for any polynomial p of degree ≥ 2
-- **B**oundary: Linear exponents DO have antiderivatives: ∫ exp(ax+b) dx = (1/a)·exp(ax+b)
+**Lemma 5.4 (Exponential derivative identity).** For $u,v\in\mathbb Q$ and every real $x$, define
 
-### 7.3 Fenchel-Young Inequality (Theorem 3.5)
-- **P**roof: Via the inequality exp(u) ≥ 1 + u applied to u = x - log(s)
-- **E**xample: At the conjugate point s = exp(x), the gap is exactly 0
-- **G**eneralization: Holds for any convex function and its Legendre dual
-- **B**oundary: Requires s > 0; the gap diverges as s → 0⁺ or s → ∞
+$$
+P_{u,v}(x)=
+\begin{cases}
+(u/v)e^{vx},&v\ne0,\\
+ux,&v=0.
+\end{cases}
+$$
 
-## 8. Falsifiable Conjecture
+Then $P_{u,v}'(x)=ue^{vx}$.
 
-**Conjecture 8.1** (EML Integration Complexity). The problem of deciding whether `eml(f(x), g(x))` has an elementary antiderivative, where f and g are rational functions of degree ≤ n, is decidable in O(n⁴) arithmetic operations.
+**Proof sketch.** If $v\ne0$, the chain rule gives $(e^{vx})'=ve^{vx}$, and $u/v$ cancels $v$. If $v=0$, the integrand is $ue^0=u$, while $(ux)'=u$. $\square$
 
-**Computational test**: Implement the full Risch algorithm for EML integrands and measure the operation count for random rational f, g of increasing degree. The conjecture predicts that the count grows as n⁴ (Hermite reduction is O(n³) plus one additional degree of polynomial arithmetic for the mixed exp/log structure).
+### 5.5 Finite summation
 
-## 9. Cross-Connection to Existing Catalog
+**Lemma 5.5 (Derivative of paired finite sums).** Suppose finite lists $(P_1,\ldots,P_q)$ and $(f_1,\ldots,f_q)$ satisfy $P_i'(x)=f_i(x)$ for every $i$ at a fixed point $x$. Then
 
-Our work connects to two existing catalog results:
+$$
+\left(\sum_{i=1}^qP_i\right)'(x)=\sum_{i=1}^qf_i(x).
+$$
 
-1. **`eml_beats_poly_for_towers`** (EML/UniversalApproxComplexity.lean): Our Theorem 4.1 (exp(x²) has no polynomial antiderivative) provides the integration-theoretic foundation for why EML representations are more expressive than polynomial ones — the EML function can express integrands whose antiderivatives escape polynomial representation.
+**Proof sketch.** Induct on $q$. The empty sum is the constant zero function. The inductive step is linearity of differentiation. $\square$
 
-2. **`prs_terminates_in_energy_steps`** (Computation/OrdinalPRS.lean): The Hermite reduction step bound (Theorem 5.5) is an instance of the general principle that algebraic reduction procedures terminate with complexity bounded by a natural "energy" measure — in this case, the degree of the denominator.
+## 6. Main results
 
-## 10. Discussion and Future Work
+**Theorem 6.1 (Soundness of normalized integration).** Let $R$ be a rational–exponential normal form and let $x$ be regular for $R$. Then the expression $F_R$ returned by Algorithm 4.1 is differentiable at $x$ and
 
-### EML as a Universal Test Case
+$$
+F_R'(x)=f_R(x).
+$$
 
-The EML function `eml(x,y) = exp(x) - log(y)` occupies a special position in the landscape of integration in finite terms. It is the simplest function that forces the Risch algorithm to engage *both* its exponential and logarithmic subroutines simultaneously. This makes it an ideal stress test for implementations and a natural starting point for extending the algorithm to new function classes.
+**Proof sketch.** Apply Lemmas 5.1–5.4 to every piece. Regularity supplies $x\ne a$ for every logarithmic pole and $x\ne b$ for every higher pole. Lemma 5.5 combines the resulting identities first within each stage and then across the four stages. $\square$
 
-### Non-Closure Under Integration
+**Theorem 6.2 (Finite-language closure).** For every normal form $R$, both the represented integrand $f_R$ and the returned primitive $F_R$ are finitely elementary.
 
-Our most striking result is that EML is not closed under integration (Theorem 3.3). The antiderivative of `eml(x,x) = exp(x) - log(x)` is `exp(x) - x·log(x) + x`, which contains the product `x·log(x)` — a genuinely new type of expression. This demonstrates that integration naturally creates "higher-level" combinations of elementary functions, motivating the study of towers of differential field extensions.
+**Proof sketch.** Each input piece is assembled from rational constants, $x$, arithmetic, inversion, and exponential. Each output piece uses the same constructors, with logarithm added for simple poles. Finite sums remain in the language. $\square$
 
-### Future Directions
+**Theorem 6.3 (Constructive finite-term integration).** For every rational–exponential normal form $R$, there exists a finitely elementary expression $F$ such that, for every regular point $x$,
 
-1. Formalize the full Risch algorithm for rational functions and prove its O(n³) complexity
-2. Extend the DiffEMLField structure to handle towers of multiple exp/log extensions
-3. Prove the decidability of integration for the full EML function class
-4. Connect the Fenchel-Young inequality to information-geometric properties of EML
+$$
+F'(x)=f_R(x).
+$$
 
-## References
+Moreover, Algorithm 4.1 constructs such an $F$.
 
-1. Risch, R. H. (1969). "The problem of integration in finite terms." *Trans. Amer. Math. Soc.*, 139, 167–189.
-2. Bronstein, M. (2005). *Symbolic Integration I: Transcendental Functions*. Springer.
-3. Rothstein, M. (1977). "A new algorithm for the integration of exponential and logarithmic functions." *SYMSAC*, 334–339.
-4. Trager, B. M. (1976). "Algebraic factoring and rational function integration." *SYMSAC*, 219–226.
-5. Hermite, C. (1872). "Sur l'intégration des fractions rationnelles." *Nouvelles annales de mathématiques*, 2e série, 11, 145–148.
+**Proof sketch.** Choose $F=F_R$. Theorem 6.2 establishes finite representability, and Theorem 6.1 establishes the derivative identity on the regular domain. Construction and termination are explicit in Algorithm 4.1. $\square$
+
+This is a completeness theorem relative to the normal-form grammar: every admitted constructor is handled. It should not be conflated with the unrestricted elementary integrability theorem, in which arbitrary elementary inputs may fail to possess elementary primitives and normalization itself requires deeper differential-algebraic tests.
+
+## 7. Rational specialization and complexity
+
+A **rational partial-fraction normal form** consists of three finite lists: polynomial pieces, simple poles, and higher poles. It embeds into the preceding normal form by taking the exponential list to be empty. Consequently Theorem 6.3 immediately yields a finite primitive built from rational functions and logarithms.
+
+Let $P$, $S$, and $H$ be the lengths of the polynomial, simple-pole, and higher-pole lists. Charge one abstract machine step for processing each summand and define
+
+$$
+T=P+S+H.
+$$
+
+Define the weighted input size
+
+$$
+N=1+2P+3S+4H.
+$$
+
+The additive constant accounts for the outer representation constructor; the weights provide a conservative charge for the fields of each piece.
+
+**Theorem 7.1 (Linear and polynomial step bounds).** For every rational partial-fraction normal form,
+
+$$
+T\le N
+\qquad\text{and}\qquad
+T\le N^2.
+$$
+
+**Proof sketch.** Since $P,S,H\ge0$,
+
+$$
+P+S+H\le 1+2P+3S+4H=N.
+$$
+
+Also $N\ge1$, so $N\le N^2$. Transitivity gives $T\le N^2$. $\square$
+
+**Corollary 7.2 (Termination for normalized rational input).** Integration of a rational partial-fraction normal form terminates after a number of summand-processing steps linear in $N$, and therefore polynomial in $N$.
+
+The cost model is intentionally representation-level. It does not count arithmetic bit operations or the cost of converting an arbitrary quotient of polynomials into partial fractions. In particular, degree bounds, coefficient bit lengths, squarefree factorization, factorization over $\mathbb Q$, and coefficient growth require a separate analysis. The theorem accurately characterizes the terminal traversal and nothing broader.
+
+## 8. Worked example and numerical checking
+
+Take
+
+$$
+f(x)=3x^2-\frac{2}{x-1}+\frac{5}{(x+2)^3}+4e^{2x}+7e^{0x}.
+$$
+
+The lists contain one piece of each nonconstant type and one zero-rate exponential. Algorithm 4.1 returns
+
+$$
+F(x)=x^3-2\log|x-1|-\frac{5}{2(x+2)^2}+2e^{2x}+7x.
+$$
+
+At every $x\ne1,-2$,
+
+$$
+\begin{aligned}
+F'(x)
+&=3x^2-\frac{2}{x-1}
++5(x+2)^{-3}+4e^{2x}+7\\
+&=f(x).
+\end{aligned}
+$$
+
+For numerical illustration, one may use the centered difference
+
+$$
+D_hF(x)=\frac{F(x+h)-F(x-h)}{2h}.
+$$
+
+At points whose distance from every pole is much larger than $h$, $D_hF(x)$ should approximate $f(x)$ with truncation error of order $h^2$ for sufficiently smooth $F$. Near a pole, roundoff and rapidly growing derivatives make finite differences unreliable; the exact theorem remains local at every non-pole point, but numerical conditioning deteriorates.
+
+## 9. Algorithmic invariants and implementation considerations
+
+The four-stage procedure has several invariants that are useful independently of any particular representation. First, it is **shape preserving by stage**: an algebraic input produces an algebraic output; a simple pole produces exactly one logarithmic term; a higher pole produces one rational term with the same pole and order reduced by one; and an exponential produces either an exponential with the same rate or, at zero rate, a linear term. This gives a direct provenance map from output terms to input records.
+
+Second, the procedure introduces no new singular locations. Algebraic and exponential primitives are entire real functions. The primitive of a higher pole has the same pole, and the logarithmic primitive of a simple pole has the same excluded point. Hence the set of possible singularities of $F_R$ is exactly contained in the pole set recorded by $R$. Zero coefficients may make some listed poles removable, but the algorithm never invents an unlisted pole.
+
+Third, exact rational arithmetic is sufficient for every coefficient transformation. The operations are $c/(n+1)$, $-d/(m-1)$, and $u/v$ in the nonzero-rate branch. Thus a practical implementation can retain fractions in reduced form and postpone conversion to floating point until numerical evaluation. The only decision is exact comparison of $v$ with zero.
+
+These observations yield a useful testing strategy. For each generated term one can compare its analytic derivative with the source piece, then test finite-sum assembly separately. Random numerical sampling should avoid a safety neighborhood around every pole and should include both exponential branches. In particular, a zero-rate test is not optional: an implementation tested only on $v\ne0$ may conceal division by zero at a valid input.
+
+The centered-difference demonstration accompanying the formulas uses exact fractions to store parameters but floating-point transcendental functions to evaluate them. If $\delta(x)$ denotes the distance from a sample point to the nearest pole, a sensible numerical precondition is $h\ll\delta(x)$. The local truncation estimate for the centered difference is
+
+$$
+D_hF(x)-F'(x)=\frac{h^2}{6}F^{(3)}(\xi)
+$$
+
+for some $\xi$ between $x-h$ and $x+h$, provided that interval contains no pole. Since $F^{(3)}$ can grow rapidly near a pole, the estimate explains why a formally regular point may still be numerically ill-conditioned. Adaptive selection of $h$ should balance this truncation error against floating-point cancellation.
+
+A canonical output simplifier could combine equal monomials, merge simple poles at the same location, merge higher poles of equal location and order, and combine exponentials with equal rates. Such simplification is not needed for correctness or termination, but it can reduce expression size. Any simplifier should preserve exact coefficients and should remove zero terms only after exact cancellation. Canonical ordering would further permit equality testing of normalized outputs by list comparison.
+
+## 10. Applications
+
+The normal form supports several practical tasks. First, it is an interpretable intermediate representation for a symbolic integrator: every output term can be traced to one input record. Second, the decomposition exposes singular structure. Simple-pole residues become logarithmic coefficients, while repeated poles remain rational and decrease in order. Third, exact rational parameters avoid floating-point ambiguity in branch decisions and coefficient construction. Fourth, the result provides a compact regression oracle: differentiating each generated primitive should reproduce its source piece.
+
+The same ideas occur in differential equations and transform methods. Rational forcing terms often decompose into polynomial and pole contributions, while constant-coefficient linear systems naturally produce exponentials. Explicit primitives on intervals between singularities support variation-of-constants calculations, Green-function constructions, and local asymptotic analysis.
+
+There is also a conceptual bridge to complex analysis. For a rational function with split linear denominator, the coefficient of $(x-a)^{-1}$ is its simple-pole residue. Its appearance as the coefficient of $\log|x-a|$ in a real primitive mirrors the role of residues in contour integration. Higher principal-part coefficients integrate rationally; the residue is the obstruction to remaining entirely rational.
+
+## 11. Scope and limitations
+
+The theorem begins with normalized data. Its assumptions are best understood as an interface contract: an upstream stage supplies finite lists with rational parameters and valid pole orders, while the terminal stage supplies a primitive and its regularity domain. Normalization methods may therefore change without changing the derivative argument, provided that they preserve the represented function.
+
+The result does not provide canonical partial-fraction decomposition of an arbitrary rational function. Nor does it solve the first-order differential equations that arise when a general rational function multiplies an exponential. For example, integrating $R(x)e^{ax}$ generally asks whether there exists a rational $Q$ satisfying
+
+$$
+Q'(x)+aQ(x)=R(x),
+$$
+
+because $(Qe^{ax})'=(Q'+aQ)e^{ax}$. Constant $R$ is exactly the exponential piece handled here; general $R$ belongs to a broader extension.
+
+The result also constructs a primitive for every input in its grammar, so it does not display a negative outcome. A full decision procedure for arbitrary elementary expressions must represent and justify nonexistence when no elementary primitive is available. The value of the present normal form is that it isolates a complete positive terminal stage with explicit domain conditions and cost.
+
+## 12. Future work
+
+Five extensions define a natural research program.
+
+1. **Canonical partial-fraction normalization.** Construct, for every rational function over $\mathbb Q$, a rational normal form whose interpretation agrees with the input away from denominator roots and whose output is unique up to permutation and deletion of zero terms.
+
+2. **Bit-complexity of rational normalization.** For numerator and denominator degree at most $d$ and integer coefficient bit length at most $b$, bound squarefree factorization and Hermite reduction by a fixed polynomial in $d+b$ bit operations.
+
+3. **Liouville completeness for one exponential extension.** For reduced input in $\mathbb Q(x,e^{ax})$ with nonzero rational $a$, characterize elementary integrability by existence of a rational solution to the associated first-order Risch differential equation.
+
+4. **Residue criterion for split denominators.** Prove that a rational function whose denominator splits into rational linear factors has a primitive made from rational functions and affine logarithms, with logarithmic coefficients exactly equal to simple-pole residues.
+
+5. **Semantics-preserving general normalization.** Extend the expression language with a normalization procedure that preserves values at every regular point and strictly decreases a well-founded tower-complexity measure at every recursive reduction.
+
+## 13. Conclusion
+
+For a finite rational–exponential normal form, symbolic integration is a list transformation governed by four derivative identities. Polynomial powers rise by one, simple poles become logarithms, higher poles fall by one, and exponentials divide by their rate—with a necessary linear branch at rate zero. The sum of the resulting pieces differentiates to the original function at every regular point. Both sides remain in a finite elementary language.
+
+For rational partial fractions, the terminal pass uses one step per summand and is linear in a natural weighted representation size. The result therefore provides a constructive, terminating, polynomially bounded integration stage while keeping normalization and bit complexity explicitly outside its claims. This separation clarifies both what has been achieved and what a broader Risch implementation must still decide.
