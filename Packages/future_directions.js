@@ -2047,21 +2047,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Spectral Graph Theory Meets Network Robustness"
   },
   {
-    "consumed_by_exp_id": "1343d96e",
-    "description": "Building on cycle d7c83314 (Q=0.781), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic pack",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_d7c83314_138ba764",
-    "phase": "A",
-    "priority_score": 0.8814599999999999,
-    "research_mode": "team",
-    "source_exp_id": "d7c83314",
-    "status": "in_progress",
-    "timestamp": "2026-08-03T00:21:55.948251+00:00",
-    "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 0f65effc (Q=0.781), which proved 24 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
     "domains": [
@@ -2838,6 +2823,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 362b8901 (Q=0.766), which proved 44 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Risch algorithm for deciding if the integral of an EML function is an EML function. Prove the Risch theorem: integration in finite terms is decidable for EML functions. Implement the key steps: logarithmic part, exponential part, and algebraic part. Prove that the algorithm terminates ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_362b8901_5bc594a1",
+    "priority_score": 0.8657699999999998,
+    "research_mode": "team",
+    "source_exp_id": "362b8901",
+    "status": "available",
+    "timestamp": "2026-08-03T11:53:32.213317+00:00",
+    "title": "Deepening: EML Integration in Finite Terms: The Risch Algorithm"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3cce8c08 (Q=0.766), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
     "domains": [
       "Applications"
@@ -2953,7 +2952,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Type Theory: Cubical Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb6ff95e",
     "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
     "domains": [
       "Physics",
@@ -2961,10 +2960,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "fd_0683",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697828+00:00",
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
@@ -3691,22 +3691,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "362b8901",
-    "description": "Formalize the Risch algorithm for deciding if the integral of an EML function is an EML function. Prove the Risch theorem: integration in finite terms is decidable for EML functions. Implement the key steps: logarithmic part, exponential part, and algebraic part. Prove that the algorithm terminates in polynomial time for rational functions.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "seed_372",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Integration in Finite Terms: The Risch Algorithm"
   },
   {
     "consumed_by_exp_id": "",
@@ -5190,16 +5174,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Arithmetic Properties for $k$-Color Analogue of Simultaneously $s$-Regular and $t$-Distinct Partitions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18ab6902",
     "description": "Investigate the ArXiv paper 'Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected' and formalize its key results. Abstract: The toughness of a non-complete graph $G$, denoted $\u03c4(G)$, is defined as \\[ \u03c4(G) = \\min\\left\\{ \\frac{|S|}{\u03c9(G-S)} : S \\subseteq V(G),\\ \u03c9(G-S) \\geq 2 \\right\\}, \\] where $\u03c9(G-S)$ is the number of components of $G - S$. For a complete graph $G$, we define $\u03c4(G) = \\infty$. A graph $G$ is $t$-tough if $\u03c4(G) \\geq t$. For a positive integer $k$, a graph $G$ is $(K_2 \\cup kK_1)$-free if it contains no induced subgraph isomorphic to $K_2 \\cup kK_1$. Recently, Liu \\cite{liu} showed that every $2k$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $\u03c4(G) > 1$ is Hamilton-connected. In this paper, we strengthen this result by proving that every $(k+1)$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $\u03c4(G) > 1$ and minimum degree $\u03b4(G) \\geq 2k$ is Hamilton-connected. Moreover, by imposing restrictions to the independence number $\u03b1(G)$, we prove that every $k$-connected $(K_2 \\cup kK_1)$-free graph $G$ of order $n$ with $2k+1 \\leq \u03b1(G) < \\frac{n}{2}$ and $\u03b4(G) \\geq 2k$ is Hamilton-connected, and that t",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0074",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11373v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T10:53:48.349640+00:00",
     "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
   },
@@ -7261,17 +7246,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8e43caa",
     "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
     "domains": [
       "MachineLearning",
       "Physics"
     ],
     "id": "seed_245",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Grokking: Phase Transitions in Learning"
   },
@@ -9721,18 +9707,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The present development supplies two self-contained Lean modules for the request"
   },
   {
-    "consumed_by_exp_id": "56208626",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nLet `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n < W\u2096`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-log position bound.** If `L\u2082(n)` is the least number of repeated applications of `x \u21a6 \u2308log\u2082(x + 1)\u2309` needed to reach a value at most `2`, then for every `n \u2265 2`, `|K(n) - L\u2082(n)| \u2264 2`.\n\n2. **No worst-case binary compression.** For every `k`, any injective, prefix-free binary encoding of all valid length-`k` tower representations has a codeword of length at least `\u2308log\u2082 W\u2096\u2309`.  Moreover, concatenating each digit in exactly `W\u1d62` bits attains total length `\u2211_{i<k} W\u1d62 = log\u2082 W\u2096`.\n\n3. **A radix-growth threshold.** For generalized weights `V\u2080 = 1` and `V\u2096\u208a\u2081 = r(V\u2096)V\u2096`, assume `r` is monotone and `r(x) \u2265 2`.  The least `k` with `n < V\u2096` is `O(log* n)` if `r(x) \u2265 2^x` for all sufficiently large `x`; it is not `O(log* n)` when `r(x) \u2264 x^C` for some fixed `C` and all sufficiently large `x`.\n\n4. **Balanced recursive digits.** With odd radix `r\u2096 = 2^(W\u2096+1) + 1` and weights `U\u2080 = 1`, `U\u2096\u208a\u2081 = r\u2096U\u2096`, every integer in `[-(U\u2096-1)/2, (U\u2096-1)/2]` has a unique length-`k` expansion whose `i`th digit lies in `[-(r\u1d62-1)/2, (r\u1d62-1)/2]`.\n\n5. **Zeckendorf comparison.** Let `Z(n)` be the largest Fibonacci index occurring in the canonical Zeckendorf expansion of `n`.  There are explicit constants `a,b > 0` such that `a log\u2082(n+1) \u2264 Z(n) \u2264 b log\u2082(n+1)` for every `n \u2265 1`, whereas `K(n) = o(Z(n))`; nevertheless, every injective binary encoding of either representation family has worst-case length at least `\u2308log\u2082(n+1)\u2309` on the interval `[0,n]`.\n",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0781",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e3956c60",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-27T00:20:03.090672+00:00",
     "title": "Let `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n <"
   },
@@ -10661,17 +10646,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "* Package `hypergeometricCoeff` as a `PowerSeries \u2102` and derive the displayed"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4843e14",
     "description": "# Future Directions\n\n1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton polygons are lattice polygons `P` and `Q`, the stable intersection number equals `area(P + Q) - area(P) - area(Q)` (with normalized lattice area).\n\n2. **Perturbation invariance.** Every finite balanced plane tropical intersection admits a sufficiently small generic translation for which the total local determinant multiplicity is unchanged.\n\n3. **Support bound with positive multiplicities.** If every supported local multiplicity is positive and the total intersection number is `d * e`, then the support has cardinality at most `d * e`, with equality exactly when every local multiplicity is one.\n\n4. **Realizability correspondence.** For transverse intersections of realizable plane tropical curves over a complete non-Archimedean field, valuation induces a support- and multiplicity-preserving finite correspondence with the classical intersection scheme.\n\n5. **Higher-dimensional multidegree formula.** For `n` transverse tropical hypersurfaces in tropical projective `n`-space of degrees `d\u2081, \u2026, d\u2099`, the weighted zero-dimensional stable intersection has total multiplicity `\u220f i, d\u1d62`.\n",
     "domains": [
       "Geometry",
       "Algebra"
     ],
     "id": "fd_0888",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "9fb19498",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T19:43:07.771912+00:00",
     "title": "1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton po"
   },
@@ -11049,22 +11035,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive a"
   },
   {
-    "consumed_by_exp_id": "2125bb42",
-    "description": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `A\u2099\u00b2 = nI` in every dimension;\n- every real eigenvalue with a nonzero eigenvector therefore satisfies\n  `\u03bb\u00b2 = n`;\n- an eigenvalue bound `|\u03bb| \u2264 s` implies the numerical inequality `n \u2264 s\u00b2`;\n- the stronger conjecture that every signing has scalar square is false, with\n  the unsigned two-dimensional cube as a formally verified counterexample.\n\nThe following are genuine extensions beyond that completed baseline.\n\n## Prioritized extensions\n\n1. **Connect the spectral certificate to Boolean functions.** Define Boolean\n   functions on `Cube n`, pointwise and maximum sensitivity, and multilinear\n   real degree. Formalize the induced-subgraph reduction in Huang's argument so\n   that the operator theorem yields the full degree\u2013sensitivity inequality.\n\n2. **Classify scalar-square signings.** Replace the disproved arbitrary-signing\n   conjecture by the face condition that every two-dimensional face has\n   negative sign product. Prove both directions of the expected equivalence\n   with `A\u00b2 = nI`, then classify such signings up to switching equivalence.\n\n3. **Multiplicity and characteristic polynomial.** For positive dimension,\n   prove that `\u221an` and `-\u221an` each have multiplicity `2^(n-1)`, and derive the\n   characteristic polynomial `(X\u00b2 - n)^(2^(n-1))`. A trace-zero argument\n   combined with the scalar-square identity should determine the\n   multiplicities.\n\n4. **Restriction and interlacing.** Represent the recursive operator as a\n   finite real symmetric matrix, define principal restrictions, and formalize\n   eigenvalue interlacing. This is the main bridge from density of a vertex\n   subset to a high-degree vertex in the induced subgraph.\n\n5. **Test tighter degree\u2013sensitivity proposals.** After the Boolean-function\n   definitions are in place, exhaustively enumerate small dimensions and\n   record extremal pairs `(degree, sensitivity)`. Use these certified finite\n   cases to reject false constants or lower-order improvements before pursuing\n   general bounds.\n\n6. **Beyond the binary cube.** Study signed operators on products of larger\n   alphabets and on other Cayley graphs. Determine which anticommutation or\n   face-cancellation relations force exact scalar-square identities and which\n   corresponding local-degree bounds survive.\n",
-    "domains": [
-      "Algebra",
-      "Combinatorics"
-    ],
-    "id": "fd_0915",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5814a7d4",
-    "status": "in_progress",
-    "timestamp": "2026-08-02T21:19:56.656175+00:00",
-    "title": "The accompanying Lean development settles the operator-algebraic core used by"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Quaternionic Hopf Concurrence\n\n## Result of this cycle\n\nThe new Lean development `Catalog/Geometry/QuaternionicConcurrence.lean` defines\n\n\\[\nH(\\psi)=\\begin{cases}\n0,&\\|\\psi\\|^2=0,\\\\\n\\dfrac{2|ad-bc|}{\\|\\psi\\|^2},&\\|\\psi\\|^2\\ne0,\n\\end{cases}\n\\]\n\nfor a two-qubit coefficient matrix with rows `(a,b)` and `(c,d)`.\nThis is the normalized modulus of the exterior-square coordinate and is the\nreal coordinate naturally singled out by the quaternionic Hopf description.\n\nThe following statements are formally proved:\n\n1. **Complex Lagrange identity**\n   \\[\n   |ad-bc|^2+|\\bar a c+\\bar b d|^2\n   =( |a|^2+|b|^2)(|c|^2+|d|^2).\n   \\]\n2. **Projective scale invariance:** `H(z\u03c8)=H(\u03c8)` for every nonzero complex\n   scalar `z`.\n3. **Sharp range:** every normalized state satisfies `0 \u2264 H(\u03c8) \u2264 1`.\n4. **Exact zero locus:** `H(\u03c8)=0` iff `ad-bc=0`.\n5. **Complete sharp-maximizer classification:** for a normalized state,\n   `H(\u03c8)=1` iff the coefficient rows are Hermitian-orthogonal and each has\n   squared norm `1/2`.\n\nThus the proposed continuous replacement for an integer linking invariant is\nnot merely bounded and correctly normalized: its top stratum is rigidly\nclassified by equality in Lagrange plus AM\u2013GM. This gives the algebraic core of\nthe Bell-state local-unitary-orbit claim without presupposing a formal theory\nof local unitary actions.\n\n## Computational-evidence decision\n\nA separate numerical evidence stage was skipped because the result proved here\nis a universal symbolic identity and exact equality classification over\narbitrary complex amplitudes, not a finite or sequence-based conjecture.\nSmall floating-point samples would be strictly weaker than the kernel-checked\nalgebraic proof, and no integer sequence arises, so an OEIS search is\ninapplicable. The proof itself performs the relevant counterexample test:\nany alleged non-orthogonal or unequal-row-norm maximizer contradicts the\nnonnegative terms in the Lagrange and AM\u2013GM identities.\n\n## Bold conjectures for the next cycle\n\n### 1. Local-unitary normal form\nFormalize the left and right `U(2)` actions and prove that every normalized\nsharp maximizer lies in the local-unitary orbit of `diag(1/\u221a2,1/\u221a2)`. The row\nclassification proved here should reduce this to constructing a unitary matrix\nfrom an orthonormal basis.\n\n### 2. Exact distance formula to the Segre variety\nFor normalized pure two-qubit states, conjecture that the minimal Euclidean\ndistance to normalized product states is\n\\[\n\\sqrt{2-2\\sqrt{(1+\\sqrt{1-H(\\psi)^2})/2}}.\n\\]\nA singular-value decomposition would prove this and simultaneously yield the\nFubini\u2013Study distance formula.\n\n### 3. Interior level-set topology\nAfter quotienting global phase, conjecture that each level `0<c<1` is a smooth\nhomogeneous space of fixed diffeomorphism type. The endpoint `c=1` has a larger\nstabilizer, while `c=0` is the Segre stratum; the exact maximizer theorem now\nidentifies one of the two singular endpoints algebraically.\n\n### 4. Exterior-power hierarchy\nFor a bipartite coefficient matrix of arbitrary finite dimensions, normalize\nthe Hilbert norm of its second exterior power. Conjecture that its zero locus\nis exactly rank one and that its sharp maximizers are precisely matrices with\nequal nonzero singular values on their support. The two-row Lagrange identity\nproved in this cycle is the first nontrivial case.\n",
     "domains": [
@@ -11242,6 +11212,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-03T08:06:48.044869+00:00",
     "title": "1. **Subobject-frame realization.** For every Mathlib category `C` equipped with"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following conjectures sharpen the boundary of the normalized development in\n`Catalog/Applications/EML/RischAlgorithm.lean`. Each is intended as a concrete,\nfalsifiable extension.\n\n1. **Canonical partial-fraction normalization.** For every `RatFunc \u211a`, there is\n   an algorithm producing a `RationalNormalForm` whose interpreted derivative\n   agrees with the original rational function away from denominator roots, with\n   output unique up to permutation and deletion of zero-coefficient pieces.\n\n2. **Bit-complexity bound for rational normalization.** If a rational function\n   has numerator and denominator degree at most `d` and integer coefficients of\n   bit length at most `b`, squarefree factorization plus Hermite reduction into\n   the rational normal form uses at most a fixed polynomial in `d + b` bit\n   operations.\n\n3. **Liouville completeness for one exponential extension.** For reduced input\n   in `\u211a(x, exp(a*x))` with nonzero rational `a`, an elementary antiderivative\n   exists if and only if the associated first-order Risch differential equation\n   has a rational-function solution.\n\n4. **Residue criterion over split rational denominators.** A rational function\n   whose denominator splits into rational linear factors has an antiderivative\n   expressible using rational functions and logarithms of affine factors, and\n   the logarithmic coefficients are exactly its simple-pole residues.\n\n5. **Certified normalization preserves semantics.** Extending `NormalForm` with\n   a verified normalization procedure from the catalog `Expr` syntax preserves\n   evaluation at every regular point and strictly decreases a well-founded\n   tower-complexity measure at each recursive Risch reduction step.\n",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0930",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "362b8901",
+    "status": "available",
+    "timestamp": "2026-08-03T11:53:27.721131+00:00",
+    "title": "The following conjectures sharpen the boundary of the normalized development in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For every `n > 0` and every real `r \u2260 0` with `r\u00b2 = n`, the images of `positiveSpectralPart n r` and `negativeSpectralPart n r` each have real vector-space dimension `2^(n-1)`.\n\n2. **Characteristic polynomial.** After representing `signedAdj n` as an endomorphism of the finite-dimensional space `Cube n \u2192 \u211d`, its characteristic polynomial is `(X^2 - n)^(2^(n-1))` for every `n > 0`.\n\n3. **Trace cancellation under restriction.** For every nonempty proper vertex subset `S` of `Cube n`, the principal restriction of the canonical signed adjacency matrix has trace zero; moreover, if `|S| > 2^(n-1)`, that restriction has a positive eigenvalue at least `1`.\n\n4. **Face-cancellation characterization.** A symmetric `{\u22121,1}` edge signing of the Boolean cube has adjacency square equal to `nI` if and only if the product of its four edge signs around every two-dimensional face is `\u22121`.\n\n5. **Switching uniqueness.** Any two symmetric cube-edge signings satisfying the negative face-product condition differ by vertex switching: there is a vertex labeling by `{\u22121,1}` whose endpoint products transform one signing into the other.\n",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_0931",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2125bb42",
+    "status": "available",
+    "timestamp": "2026-08-03T11:54:55.061963+00:00",
+    "title": "The spectral-projection decomposition in `SignedCubeSpectralProjections.lean` su"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n- Prove sharpness by constructing a regular simplex of `N` unit vectors in dimension `N - 1` whose distinct inner products are exactly `-1/(N-1)`.\n- Translate the chordal bound into geodesic separation using `\u2016x-y\u2016\u00b2 = 2 - 2 cos \u03b8` on the unit sphere.\n- Combine the simplex obstruction with dimension-dependent linear-programming bounds for spherical codes.\n- Formalize stereographic projection itself and prove its exact chordal-distance and conformal-factor identities.\n- Derive cap-packing cardinality bounds from center separation and compare them with direct surface-area bounds.\n",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_0932",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1343d96e",
+    "status": "available",
+    "timestamp": "2026-08-03T11:55:00.346066+00:00",
+    "title": "Future directions from cycle 1343d96e"
   },
   {
     "consumed_by_exp_id": "",

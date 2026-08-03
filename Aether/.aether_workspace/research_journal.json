@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "311c4349",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n- Construct the classical Airy function in Lean as the distinguished decaying solution of `y'' = x y`, and prove the integral and Christoffel–Darboux representations of the Airy k",
-      "quality_score": 0.54,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-25T23:20:34",
-      "title": "Random Matrices: Edge Universality"
-    },
-    {
       "cycle_id": "7b86dab6",
       "domain": "Physics",
       "key_insight": "# Future Directions: Holographic Proof Duality\n\n## What the formal results support\n\nThe verified core should be interpreted as an order-theoretic holographic principle, not as a literal dimension-redu",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-08-03T11:54:59",
       "title": "The accompanying Lean development settles the operator-algebraic core used by"
+    },
+    {
+      "cycle_id": "1343d96e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n- Prove sharpness by constructing a regular simplex of `N` unit vectors in dimension `N - 1` whose distinct inner products are exactly `-1/(N-1)`.\n- Translate the chordal bound in",
+      "quality_score": 0.65648,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-08-03T11:55:03",
+      "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71783
     }
   ],
-  "last_updated": "2026-08-03T11:54:59",
+  "last_updated": "2026-08-03T11:55:03",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "ee1ae94f",
-        "quality": 0.78664,
-        "theorems": 11,
-        "title": "Hilbert 12: Kronecker-Weber Generalization"
-      },
-      {
         "cycle_id": "c2653f80",
         "quality": 0.7720099999999999,
         "theorems": 24,
@@ -3699,6 +3693,12 @@
         "quality": 0.7482099999999999,
         "theorems": 10,
         "title": "Wall-Sun-Sun Primes"
+      },
+      {
+        "cycle_id": "1343d96e",
+        "quality": 0.65648,
+        "theorems": 4,
+        "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Ge"
       }
     ],
     "Physics": [
