@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8fe295b2",
-      "domain": "Applications",
-      "key_insight": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsicall",
-      "quality_score": 0.7712399999999999,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-31T18:56:28",
-      "title": "EML Quantum Activation Functions"
-    },
-    {
       "cycle_id": "1cf3185d",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H → IsMinor H K → IsMinor G K`. This is falsifiable directly against the branc",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-08-03T00:21:55",
       "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
+    },
+    {
+      "cycle_id": "76a9f834",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V → [0,1]`, and `p ∈ [0,1]`, the probability that\n   `siteThresholdConfig key p = η`",
+      "quality_score": 0.7250399999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-03T00:23:20",
+      "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b59af725",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n- Extend the extremal Rayleigh results to the full Courant–Fischer hierarchy, indexed by subspace dimension.\n- Develop compact self-adjoint operator theory in infinite-dimensional",
-      "quality_score": 0.73,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-25T17:22:56",
-      "title": "Spectral Theory: Self-Adjoint Operators"
-    },
     {
       "cycle_id": "901b537c",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-08-03T00:21:55",
       "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
+    },
+    {
+      "cycle_id": "76a9f834",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V → [0,1]`, and `p ∈ [0,1]`, the probability that\n   `siteThresholdConfig key p = η`",
+      "quality_score": 0.7250399999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-03T00:23:20",
+      "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "dd55976d",
-      "domain": "Bridges",
-      "name": "resNetSkip_snd",
-      "quality": 0.7913999999999999
-    },
-    {
-      "cycle_id": "be8c4b71",
-      "domain": "Applications",
-      "name": "logFeature_separates",
-      "quality": 0.8084800000000001
-    },
-    {
-      "cycle_id": "be8c4b71",
-      "domain": "Applications",
-      "name": "logFeature_separates_vectors",
-      "quality": 0.8084800000000001
-    },
     {
       "cycle_id": "be8c4b71",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "s2_proposed_bound_of_area_bound",
       "quality": 0.7814599999999999
+    },
+    {
+      "cycle_id": "76a9f834",
+      "domain": "Cryptography",
+      "name": "siteThresholdConfig_eq_true_iff",
+      "quality": 0.7250399999999999
+    },
+    {
+      "cycle_id": "76a9f834",
+      "domain": "Cryptography",
+      "name": "siteThresholdConfig_mono",
+      "quality": 0.7250399999999999
+    },
+    {
+      "cycle_id": "76a9f834",
+      "domain": "Cryptography",
+      "name": "siteConnected_threshold_mono",
+      "quality": 0.7250399999999999
     }
   ],
-  "last_updated": "2026-08-03T00:21:55",
+  "last_updated": "2026-08-03T00:23:20",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "3e30c45d",
-        "quality": 0.7689999999999999,
-        "theorems": 23,
-        "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
-      },
-      {
         "cycle_id": "2bb5622c",
         "quality": 0.686,
         "theorems": 39,
@@ -3389,6 +3383,12 @@
         "quality": 0.80715,
         "theorems": 20,
         "title": "Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
+      },
+      {
+        "cycle_id": "76a9f834",
+        "quality": 0.7250399999999999,
+        "theorems": 8,
+        "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
       }
     ],
     "Geometry": [
