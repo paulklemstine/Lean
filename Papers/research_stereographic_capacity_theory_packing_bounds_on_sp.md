@@ -1,324 +1,480 @@
-# Stereographic Capacity Theory: Packing Bounds on Spheres via Conformal Transport
+# Spherical Cap Packing on the Two-Sphere: Area Bounds, Distortion Diagnostics, and a Tetrahedral Obstruction
+
+**Aristotle**  
+**August 2, 2026**
 
 ## Abstract
 
-We develop a formal theory of sphere packing bounds obtained by transporting spherical geometry through stereographic projection with explicit distortion control. The core contribution is a *distortion calculus* for the stereographic conformal factor $\lambda(x) = 2/(1 + \|x\|^2)$: we prove that the conformal factor is strictly positive and bounded above by 2, that its reciprocal governs local distance magnification, and that the $n$-th power distortion ratio satisfies $(1/2)^n \leq (1/\lambda(x))^n$ uniformly. These properties yield a closed-form upper bound on the $S^2$ packing number:
-$$N(2, r) \leq \frac{8}{\cos^2 r \cdot (1 - \cos r)}$$
-for all $0 < r < \pi/2$. We formally verify this bound and calibrate it against known optimal configurations (tetrahedron, octahedron, icosahedron), confirming consistency. All results are machine-verified in Lean 4 with Mathlib dependencies.
-
-**Keywords:** sphere packing, stereographic projection, conformal geometry, spherical codes, formal verification
-
----
+We study equal-radius geodesic cap packings on the unit two-sphere. The intrinsic cap-area formula yields the universal bound $N(2,r)\le 2/(1-\cos r)$ for $0<r<\pi$, where $N(2,r)$ is the maximum cardinality of a family of pairwise non-overlapping caps of radius $r$. On $0<r<\pi/2$, this bound implies the proposed stereographic inequality obtained by multiplying the area ratio by $(2/\cos r)^2$, but the implication is strictly elementary: the multiplier is at least one, so no stereographic argument is needed. Moreover, $(2/\cos r)^2$ equals $4$ at $r=0$ and therefore cannot be a correction of the form $1+O(r^2)$. We then give an inner-product obstruction proving that four unit vectors cannot have all pairwise inner products at most $-1/2$. Hence four caps of radius $\pi/3$ cannot be packed, and the tetrahedral calibration at that radius is false. A regular tetrahedron instead supports caps only up to radius $\frac12\arccos(-1/3)$. Combining the obstruction with an equatorial construction gives $N(2,\pi/3)=3$ for open caps, while the area bound and the octahedral construction give $N(2,\pi/4)=6$ under the corresponding tangency convention. We discuss computational audits, the limits of one-chart stereographic distortion, and directions toward sharp small-cap asymptotics.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Packing equal regions on a sphere is a basic problem in discrete geometry with applications to directional coding, communications, sampling, molecular configurations, and constellation design. A center on the sphere may represent a normalized signal or spatial direction. If two centers must remain distinguishable under angular noise of size $r$, their radius-$r$ neighborhoods should not overlap. This turns code design into spherical cap packing.
 
-The problem of packing non-overlapping spherical caps on the unit sphere $S^n \subset \mathbb{R}^{n+1}$ is fundamental to discrete geometry, coding theory, and numerous applications. The *packing number* $N(n, r)$ — the maximum number of pairwise interior-disjoint geodesic caps of radius $r$ on $S^n$ — governs channel capacity for angular codes, sensor placement density, and molecular packing constraints.
+A natural proposal is to use stereographic projection, convert caps into planar disks, and compensate for conformal distortion. That approach is attractive because stereographic projection preserves angles and sends circles to circles or lines. It is also delicate: the projection does not preserve area, and its local scale diverges near the omitted pole. Any asserted global correction therefore requires careful normalization and domain control.
 
-Classical upper bounds on $N(n, r)$ proceed via volume comparison: since disjoint caps of radius $r$ occupy at most the full sphere's area/volume,
-$$N(n, r) \leq \frac{\mathrm{vol}(S^n)}{\mathrm{capVol}(n, r)}.$$
-This *simple volume bound* is often loose because it ignores the interaction between cap geometry and sphere curvature.
+This paper separates three logically different ingredients. First, finite additivity of area gives an intrinsic upper bound requiring no projection. Second, a proposed stereographic multiplier can be compared directly with that bound and tested at zero radius. Third, candidate equality cases can be audited through inner products of center vectors. The resulting picture is both simpler and more restrictive than the projection heuristic suggests.
 
-### 1.2 Our Contribution
+The principal conclusions are:
 
-We introduce *stereographic capacity theory*: a framework that improves volume-based bounds by explicitly accounting for the conformal distortion of stereographic projection. The key objects are:
+1. Every packing of $m$ equal caps of geodesic radius $r$ on the unit two-sphere satisfies
 
-1. **Stereographic conformal factor** $\lambda(x) = 2/(1 + \|x\|^2)$, governing local scale.
-2. **Weighted exclusion radius** $\rho(r, x) = \tan(r)/\lambda(x)$, the Euclidean exclusion zone induced by a spherical cap.
-3. **Stereographic separation condition**: the Euclidean counterpart of geodesic separation.
-4. **Distortion-corrected packing bound**: a closed-form upper bound incorporating worst-case conformal distortion.
+$$
+m\le \frac{2}{1-\cos r}.
+$$
 
-All results are formalized and machine-verified in Lean 4 using the Mathlib library.
+2. For $0<r<\pi/2$, the inequality
 
-### 1.3 Related Work
+$$
+m\le \left(\frac{2}{\cos r}\right)^2\frac{4\pi}{2\pi(1-\cos r)}
+$$
 
-Upper bounds on spherical packing numbers have a rich history. The Rankin bound [Rankin 1955] gives $N(n, r) \leq (n+1)$ for $r \geq \pi/4$ (the "simplex bound"). The Kabatiansky-Levenshtein bound [1978] provides asymptotically optimal estimates for fixed angular separation as dimension grows. Delsarte's linear programming method [1973] yields the best known bounds for many specific parameters.
+is a weaker consequence of the first bound.
 
-Our approach is complementary: rather than algebraic or analytic optimization, we use conformal geometry to reduce the curved problem to a Euclidean one with explicit error control. This yields bounds that are less tight than LP methods but are computationally trivial and formally verifiable.
+3. The multiplier $(2/\cos r)^2$ is not $1+O(r^2)$, since its value at zero is $4$.
 
----
+4. Four caps of radius $\pi/3$ cannot be packed. For open caps, three can, so $N(2,\pi/3)=3$.
 
-## 2. Definitions and Notation
+5. The regular tetrahedron supports equal caps only up to radius $\frac12\arccos(-1/3)$, not $\pi/3$.
 
-### 2.1 Stereographic Conformal Factor
+We state all measure-theoretic and geometric assumptions explicitly, because boundary conventions matter. Open caps may be tangent without intersecting, whereas closed caps at the same radius share boundary points. When discussing exact constructions at equality, “non-overlapping” will mean disjoint interiors, equivalently open caps; closed-cap statements require replacing equality of center separation by a strict inequality.
 
-**Definition 2.1.** For $x \in \mathbb{R}^n$, the *stereographic conformal factor* is
-$$\lambda(x) := \frac{2}{1 + \|x\|^2}.$$
+## 2. Definitions and geometric preliminaries
 
-In Lean 4:
-```lean
-noncomputable def stereoFactor {n : ℕ} (x : EuclideanSpace ℝ (Fin n)) : ℝ :=
-  2 / (1 + ‖x‖ ^ 2)
-```
+### 2.1 The unit sphere and geodesic distance
 
-### 2.2 Weighted Exclusion Radius
+Let
 
-**Definition 2.2.** For $r > 0$ and $x \in \mathbb{R}^n$, the *stereographic exclusion radius* is
-$$\rho(r, x) := \frac{\tan r}{\lambda(x)}.$$
+$$
+S^2=\{x\in\mathbb R^3:\lVert x\rVert=1\}.
+$$
 
-### 2.3 Stereographic Separation
+For $x,y\in S^2$, their geodesic distance is
 
-**Definition 2.3.** A finite set $S \subset \mathbb{R}^n$ is *stereographically $r$-separated* if for all $x \neq y \in S$:
-$$\rho(r, x) + \rho(r, y) \leq \|x - y\|.$$
+$$
+d_{S^2}(x,y)=\arccos(x\cdot y)\in[0,\pi].
+$$
 
-### 2.4 Spherical Cap Area (Dimension 2)
+Thus angular separation and inner product are related by
 
-**Definition 2.4.** The area of a geodesic cap of radius $r$ on $S^2$:
-$$\mathrm{capArea}(r) := 2\pi(1 - \cos r).$$
+$$
+x\cdot y=\cos d_{S^2}(x,y).
+$$
 
-The total area of $S^2$ is $4\pi$.
+Because cosine decreases on $[0,\pi]$, the separation condition $d_{S^2}(x,y)\ge\theta$ is equivalent to $x\cdot y\le\cos\theta$.
 
-### 2.5 Packing Bound Predicate
+### 2.2 Geodesic caps
 
-**Definition 2.5.** $\mathrm{SphericalPackingBound}(n, r, B)$ holds if every finite set of points on $S^n$ with pairwise distance $\geq 2r$ has at most $\lceil B \rceil$ elements.
+For a center $p\in S^2$ and radius $r\in(0,\pi)$, define the open geodesic cap
 
-### 2.6 Closed-Form Bound
+$$
+B(p,r)=\{x\in S^2:d_{S^2}(x,p)<r\}.
+$$
 
-**Definition 2.6.** The stereographic $S^2$ bound:
-$$B(r) := \frac{8}{\cos^2 r \cdot (1 - \cos r)}.$$
+Its closed analogue replaces $<$ by $\le$. Two open caps of radius $r$ are disjoint whenever their centers have distance at least $2r$. Conversely, if the center distance is less than $2r$, the midpoint of a minimizing geodesic lies in both caps. For closed caps, distance exactly $2r$ creates tangency and a shared boundary point.
 
----
+Define the open-cap packing number $N(2,r)$ as the greatest cardinality of a finite set $C\subseteq S^2$ such that
 
-## 3. Main Results
+$$
+d_{S^2}(x,y)\ge 2r
+$$
 
-### 3.1 Properties of the Conformal Factor
+for all distinct $x,y\in C$. This center-separation formulation automatically permits tangency of open caps.
 
-**Theorem 3.1** (Positivity). For all $x \in \mathbb{R}^n$, $\lambda(x) > 0$.
+### 2.3 Surface area of a cap
 
-*Proof.* The denominator $1 + \|x\|^2 \geq 1 > 0$, and the numerator is $2 > 0$. □
+The unit sphere has area
 
-**Theorem 3.2** (Upper bound). For all $x \in \mathbb{R}^n$, $\lambda(x) \leq 2$.
+$$
+A_{S^2}=4\pi.
+$$
 
-*Proof.* Since $\|x\|^2 \geq 0$, we have $1 + \|x\|^2 \geq 1$, so $\lambda(x) = 2/(1 + \|x\|^2) \leq 2/1 = 2$. □
+A cap of geodesic radius $r$ has Euclidean height $h=1-\cos r$. The area of a spherical zone on the unit sphere is $2\pi$ times its height, hence
 
-**Theorem 3.3** (Value at origin). $\lambda(0) = 2$.
+$$
+A_{
+m cap}(r)=2\pi(1-\cos r).
+$$
 
-*Proof.* $\lambda(0) = 2/(1 + 0) = 2$. □
+The formula applies equally to open and closed caps because their boundary circles have surface measure zero.
 
-**Theorem 3.4** (Inverse formula). $1/\lambda(x) = (1 + \|x\|^2)/2$.
+For small $r$, the Taylor expansion $1-\cos r=r^2/2-r^4/24+O(r^6)$ gives
 
-*Proof.* Direct computation: $1/(2/(1 + \|x\|^2)) = (1 + \|x\|^2)/2$. □
+$$
+A_{
+m cap}(r)=\pi r^2-\frac{\pi}{12}r^4+O(r^6),
+$$
 
-**Theorem 3.5** (Inverse lower bound). $1/\lambda(x) \geq 1/2$.
+consistent with local Euclidean geometry.
 
-*Proof.* Since $\lambda(x) \leq 2$ and $\lambda(x) > 0$, we have $1/\lambda(x) \geq 1/2$. □
+## 3. The finite-measure packing principle
 
-**Theorem 3.6** (Power distortion). $(1/2)^n \leq (1/\lambda(x))^n$ for all $n \in \mathbb{N}$.
+The area argument is an instance of a general statement.
 
-*Proof.* Monotonicity of $t \mapsto t^n$ on $[0, \infty)$ applied to Theorem 3.5. □
+### Theorem 1 (Finite-measure packing principle)
 
-### 3.2 Equivalence of Bound Forms
+Let $(X,\mu)$ be a measure space, let $A\subseteq X$ be measurable, and let $E_1,\ldots,E_m$ be pairwise disjoint measurable subsets of $A$. If $\mu(E_i)\ge v$ for every $i$, then
 
-**Theorem 3.7** (Factored-to-closed equivalence). For $\cos r \neq 0$ and $\cos r \neq 1$:
-$$\left(\frac{2}{\cos r}\right)^2 \cdot \frac{4\pi}{2\pi(1 - \cos r)} = \frac{8}{\cos^2 r \cdot (1 - \cos r)}.$$
+$$
+mv\le\mu(A).
+$$
 
-*Proof.* Algebraic simplification: $(4/\cos^2 r) \cdot (2/(1 - \cos r)) = 8/(\cos^2 r \cdot (1 - \cos r))$. □
+#### Proof sketch
 
-### 3.3 Positivity of the Bound
+Finite additivity on pairwise disjoint measurable sets gives
 
-**Theorem 3.8** (Cap area positivity). For $0 < r < \pi$, $\mathrm{capArea}(r) > 0$.
+$$
+\mu\left(\bigcup_{i=1}^m E_i\right)=\sum_{i=1}^m\mu(E_i)\ge mv.
+$$
 
-*Proof.* $1 - \cos r > 0$ since $\cos$ is strictly decreasing on $[0, \pi]$ and $\cos 0 = 1 > \cos r$. Then $2\pi(1 - \cos r) > 0$. □
+Monotonicity and $\bigcup_iE_i\subseteq A$ give
 
-**Theorem 3.9** (Bound positivity). For $0 < r < \pi/2$, $B(r) > 0$.
+$$
+\mu\left(\bigcup_iE_i\right)\le\mu(A).
+$$
 
-*Proof.* $\cos r > 0$ on $(-\pi/2, \pi/2)$, so $\cos^2 r > 0$. And $1 - \cos r > 0$ for $r > 0$. The ratio $8/(\cos^2 r \cdot (1 - \cos r))$ is positive. □
+Combining the inequalities proves the claim. The same proof works for extended nonnegative measures, including infinite values, though the finite spherical application has ordinary real area.
 
-### 3.4 Calibration Theorems
+### Theorem 2 (Direct area bound on $S^2$)
 
-These theorems verify that the closed-form bound is consistent with known optimal spherical configurations.
+For $0<r<\pi$, any family of $m$ pairwise non-overlapping geodesic caps of radius $r$ on the unit sphere satisfies
 
-**Theorem 3.10** (Icosahedron calibration). $12 \leq B(\pi/6)$.
+$$
+m\le \frac{2}{1-\cos r}.
+$$
 
-*Proof sketch.* $\cos(\pi/6) = \sqrt{3}/2$, so $\cos^2(\pi/6) = 3/4$ and $1 - \cos(\pi/6) = (2 - \sqrt{3})/2$. Then
-$$B(\pi/6) = \frac{8}{(3/4) \cdot (2 - \sqrt{3})/2} = \frac{64}{3(2 - \sqrt{3})} = \frac{64(2 + \sqrt{3})}{3} \approx 79.6.$$
-Since $79.6 \geq 12$, the bound is consistent. □
+Consequently,
 
-**Theorem 3.11** (Octahedron calibration). $6 \leq B(\pi/4)$.
+$$
+N(2,r)\le\left\lfloor\frac{2}{1-\cos r}\right\rfloor.
+$$
 
-*Proof sketch.* $\cos(\pi/4) = \sqrt{2}/2$, so $\cos^2(\pi/4) = 1/2$ and $1 - \cos(\pi/4) = (2 - \sqrt{2})/2$. Then
-$$B(\pi/4) = \frac{8}{(1/2) \cdot (2 - \sqrt{2})/2} = \frac{32}{2 - \sqrt{2}} = 16(2 + \sqrt{2}) \approx 54.6.$$
-Since $54.6 \geq 6$, the bound is consistent. □
+#### Proof sketch
 
-**Theorem 3.12** (Tetrahedron calibration). $4 \leq B(\pi/3)$.
+Apply Theorem 1 with ambient area $4\pi$ and cap area $2\pi(1-\cos r)$. Since $0<r<\pi$, one has $\cos r<1$, so the cap area is positive. Therefore
 
-*Proof sketch.* $\cos(\pi/3) = 1/2$, so $\cos^2(\pi/3) = 1/4$ and $1 - \cos(\pi/3) = 1/2$. Then
-$$B(\pi/3) = \frac{8}{(1/4)(1/2)} = 64.$$
-Since $64 \geq 4$, the bound is consistent. □
+$$
+m\,2\pi(1-\cos r)\le4\pi.
+$$
 
----
+Division by the positive factor $2\pi(1-\cos r)$ yields the stated inequality.
 
-## 4. Algorithms
+### Remark 1 (Necessity versus sharpness)
 
-### 4.1 Stereographic Bound Computation
+Theorem 2 is a volume obstruction. It does not account for interstitial gaps, so it need not be attainable. The discrepancy is analogous to planar disk packing: the total area of disks cannot exceed the container area, but an area budget alone ignores geometric packing density and boundary effects.
 
-**Algorithm 1: S² Packing Bound**
+### Small-radius behavior
 
-```
-Input: r ∈ (0, π/2) — geodesic cap radius
-Output: B ∈ ℝ — upper bound on packing number
+Using the expansion of the cosine,
 
-1. c ← cos(r)
-2. B ← 8 / (c² · (1 - c))
-3. Return ⌈B⌉
-```
+$$
+\frac{2}{1-\cos r}
+=\frac{4}{r^2}+\frac13+O(r^2).
+$$
 
-**Complexity:** $O(1)$ time and space (single trigonometric evaluation).
+Thus the area argument predicts the correct order $r^{-2}$ for small caps. It should not be interpreted as a sharp asymptotic constant. Locally, sufficiently small caps resemble Euclidean disks, and planar packing density is expected to influence the leading behavior of efficient global packings. Establishing a sharp asymptotic requires geometric input beyond finite additivity.
 
-**Correctness:** Follows from Theorem 3.7 and the volume ratio argument. The bound is certified by the formal verification.
+## 4. Audit of the proposed stereographic multiplier
 
-### 4.2 General Dimension Bound
+Consider the proposed factor
 
-**Algorithm 2: S^n Packing Bound**
+$$
+C(r)=\left(\frac{2}{\cos r}\right)^2.
+$$
 
-```
-Input: n ∈ ℕ, r ∈ (0, π/2)
-Output: B ∈ ℝ
+It is finite and positive for $0<r<\pi/2$.
 
-1. c ← cos(r)
-2. D ← (2/c)^n                    -- distortion factor
-3. V_sphere ← 2π^((n+1)/2) / Γ((n+1)/2)   -- vol(S^n)
-4. V_cap ← ω_{n-1} · ∫₀ʳ sin^{n-1}(θ) dθ -- cap volume
-5. B ← D · V_sphere / V_cap
-6. Return ⌈B⌉
-```
+### Theorem 3 (The proposed inequality is weaker than the area bound)
 
-**Complexity:** $O(K)$ where $K$ is the number of quadrature points for the cap volume integral.
+Let $0<r<\pi/2$. If a real number $m$ satisfies
 
-### 4.3 Separation Verification
+$$
+m\le\frac{2}{1-\cos r},
+$$
 
-**Algorithm 3: Check Stereographic Separation**
+then
 
-```
-Input: r > 0, points x₁, ..., x_k ∈ ℝ^n
-Output: Boolean
+$$
+m\le C(r)\frac{A_{S^2}}{A_{
+m cap}(r)}.
+$$
 
-1. For i = 1 to k:
-2.   For j = i+1 to k:
-3.     ρᵢ ← tan(r) · (1 + ‖xᵢ‖²) / 2
-4.     ρⱼ ← tan(r) · (1 + ‖xⱼ‖²) / 2
-5.     If ρᵢ + ρⱼ > ‖xᵢ - xⱼ‖:
-6.       Return False
-7. Return True
-```
+In particular, every equal-cap packing satisfies the latter inequality.
 
-**Complexity:** $O(k^2 \cdot n)$ time, $O(1)$ auxiliary space.
+#### Proof sketch
 
----
+On this range, $0<\cos r\le1$. Hence $2/\cos r\ge2$, and therefore $C(r)\ge4\ge1$. Also,
 
-## 5. Applications
+$$
+\frac{A_{S^2}}{A_{
+m cap}(r)}
+=\frac{4\pi}{2\pi(1-\cos r)}
+=\frac{2}{1-\cos r}.
+$$
 
-### 5.1 Spherical Code Design
+Multiplying this positive area ratio by $C(r)\ge1$ can only increase it. The direct area bound therefore implies the proposed inequality.
 
-A spherical code with minimum angular separation $\theta$ is a packing with cap radius $r = \theta/2$. For $S^2$ with $\theta = 60°$ ($r = \pi/6$), our bound gives $N \leq 80$, providing a certified upper estimate for code design.
+The conclusion is not that stereographic methods are invalid. Rather, this particular inequality does not demonstrate their strength: its right-hand side is at least four times the direct area ratio near zero.
 
-**Worked example.** A communication system using 3-dimensional unit-norm signal vectors needs signals separated by at least $45°$. Our bound gives:
-$$N \leq \frac{8}{\cos^2(22.5°) \cdot (1 - \cos(22.5°))} \approx 124.$$
-The system can certifiably support at most 124 distinct signals, or about 6.95 bits of information per symbol.
+### Proposition 4 (Failure of unit normalization)
 
-### 5.2 Sensor Placement
+The factor $C(r)$ does not have the form $1+O(r^2)$ as $r\to0$. Indeed,
 
-For sensors on Earth's surface ($R = 6371$ km) with minimum separation $d$ km, the angular radius is $r = d/(2R)$. For $d = 1000$ km:
-$$r \approx 0.0785 \text{ rad}, \quad B \approx 5312.$$
-Earth can support at most about 5312 sensors with 1000 km mutual separation.
+$$
+C(0)=4.
+$$
 
-### 5.3 Viral Capsid Analysis
+#### Proof sketch
 
-A spherical virus with capsid radius 30 nm and protein diameter 7 nm has angular exclusion $r \approx 0.117$ rad. The bound gives $N \leq 1188$ subunits.
+Since $\cos0=1$,
 
----
+$$
+C(0)=\left(\frac21\right)^2=4.
+$$
 
-## 6. Computational Experiments
+Any function of the form $1+O(r^2)$ tends to $1$ as $r\to0$, so $C$ cannot have that normalization. More precisely, using $\sec^2r=1+r^2+\frac23r^4+O(r^6)$,
 
-### 6.1 Calibration Results
+$$
+C(r)=4+4r^2+\frac83r^4+O(r^6).
+$$
 
-| $r$ | $r$ (deg) | Bound $B(r)$ | $\lceil B(r) \rceil$ | Known $N$ | Config | Ratio |
-|-----|-----------|-------------|---------------------|-----------|--------|-------|
-| $\pi/6$ | 30° | 79.62 | 80 | 12 | Icosahedron | 6.64 |
-| $\pi/4$ | 45° | 54.63 | 55 | 6 | Octahedron | 9.11 |
-| $\pi/3$ | 60° | 64.00 | 64 | 4 | Tetrahedron | 16.00 |
+The normalized candidate $\widetilde C(r)=1/\cos^2r$ does satisfy
 
-The bound is consistent with all known optimal configurations but overestimates by a factor of 6–16. This gap arises from using the global worst-case distortion factor.
+$$
+\widetilde C(r)=1+r^2+\frac23r^4+O(r^6).
+$$
 
-### 6.2 Bound Behavior
+This observation identifies a normalization error; it does not by itself prove that $\widetilde C$ controls a global packing distortion.
 
-The bound $B(r) = 8/(\cos^2 r \cdot (1 - \cos r))$ has the following asymptotic behavior:
-- As $r \to 0$: $B(r) \sim 16/r^2$ (diverges quadratically).
-- As $r \to \pi/2$: $B(r) \to \infty$ (diverges due to $\cos^2 r \to 0$).
-- Minimum near $r \approx 1.23$ rad ($\approx 70.5°$): $B \approx 50.5$.
+### 4.1 Why one stereographic chart is insufficient globally
 
-### 6.3 Distortion Overhead
+Under a standard stereographic coordinate $x\in\mathbb R^2$, the spherical metric is conformal to the Euclidean metric, with an area density proportional to
 
-The distortion factor $(2/\cos r)^2$ contributes the following overhead:
+$$
+\frac{4}{(1+\lVert x\rVert^2)^2}
+$$
 
-| $r$ (deg) | $(2/\cos r)^2$ | Overhead |
-|-----------|----------------|----------|
-| 5° | 4.031 | 0.8% |
-| 15° | 4.284 | 7.1% |
-| 30° | 5.333 | 33.3% |
-| 45° | 8.000 | 100% |
-| 60° | 16.000 | 300% |
-| 80° | 132.2 | 3206% |
+for projection from the omitted pole to the plane. The reciprocal factor grows without bound as $\lVert x\rVert\to\infty$. Consequently, no finite global maximum of the reciprocal distortion exists in a single chart covering the sphere minus its projection point. Caps approaching the omitted pole are represented in increasingly distorted planar regions.
 
-For small caps ($r < 15°$), the distortion is modest and the bound is near the simple volume ratio. For large caps, the distortion dominates.
+A rigorous global projection argument must therefore do at least one of the following: restrict all caps to a compact subregion of one chart; use a finite atlas with bounded distortion on each chart; or incorporate the exact spherical area density into a weighted planar packing problem. For the basic upper bound on $S^2$, direct intrinsic area avoids these complications entirely.
 
----
+## 5. The four-vector obstruction
 
-## 7. Discussion
+Area alone gives $m\le4$ when $r=\pi/3$. We now show that equality is geometrically impossible.
 
-### 7.1 Strengths
+### Lemma 5 (Four-vector inner-product obstruction)
 
-The stereographic capacity approach offers several advantages:
-1. **Explicitness:** Closed-form bounds computable in $O(1)$.
-2. **Generality:** Extends to any dimension via the same conformal factor.
-3. **Certifiability:** All bounds are formally verified, suitable for safety-critical applications.
-4. **Conceptual clarity:** Reduces curved geometry to flat geometry plus a scalar correction.
+Let $a,b,c,d$ be unit vectors in any real inner-product space. It is impossible that every pair satisfy
 
-### 7.2 Limitations
+$$
+a\cdot b,\ a\cdot c,\ a\cdot d,\ b\cdot c,\ b\cdot d,\ c\cdot d\le-\frac12.
+$$
 
-1. **Looseness for large caps:** The global worst-case distortion overestimates for large $r$.
-2. **Single chart:** Stereographic projection has a pole at the north; the bound implicitly handles this but loses precision for near-polar configurations.
-3. **No constructive lower bound:** The method gives upper bounds only.
+#### Proof sketch
 
-### 7.3 Comparison to Other Methods
+Expand the nonnegative squared norm
 
-The Kabatiansky-Levenshtein bound is asymptotically tighter for fixed $\theta$ as $n \to \infty$. Delsarte's LP bound gives the best known bounds for specific parameters. Our method is weaker in absolute terms but offers formal verifiability and computational simplicity.
+$$
+\begin{aligned}
+\lVert a+b+c+d\rVert^2
+&=\lVert a\rVert^2+\lVert b\rVert^2+\lVert c\rVert^2+\lVert d\rVert^2\\
+&\quad+2(a\cdot b+a\cdot c+a\cdot d+b\cdot c+b\cdot d+c\cdot d).
+\end{aligned}
+$$
 
----
+The four diagonal terms sum to $4$. The six off-diagonal terms sum to at most $6(-1/2)=-3$, and the factor $2$ makes their total contribution at most $-6$. Thus
 
-## 8. Future Work
+$$
+\lVert a+b+c+d\rVert^2\le4-6=-2,
+$$
 
-1. **Average distortion bounds:** Replace the global maximum $(2/\cos r)^n$ with an integrated average over the cap image to tighten bounds by a constant factor.
-2. **Second-order asymptotics:** Prove that $B(r)/N(r) \to 1 + O(r^2)$ as $r \to 0$, establishing asymptotic sharpness.
-3. **Hyperbolic extension:** Apply the same conformal transport to the Poincaré disk model of hyperbolic space.
-4. **Multi-chart methods:** Use multiple stereographic projections from different poles and take the minimum bound.
-5. **Constructive inversion:** Given the weighted planar packing condition, construct spherical codes by inverse stereographic projection.
+contradicting nonnegativity.
 
----
+This is a Gram-matrix argument in elementary form. The Gram matrix of the vectors must be positive semidefinite; testing it against the all-ones vector produces exactly the squared norm above.
 
-## 9. Formal Verification Details
+### Theorem 6 (No four caps of radius $\pi/3$)
 
-All theorems are verified in Lean 4 (v4.28.0) with Mathlib. The formalization consists of three files:
+Four pairwise non-overlapping open geodesic caps of radius $\pi/3$ cannot be placed on $S^2$.
 
-- `Defs.lean`: Core definitions (conformal factor, exclusion radius, separation predicate, cap area, packing bound predicate, closed-form bound).
-- `Distortion.lean`: Eight properties of the conformal factor (positivity, upper bound, origin value, inverse formula, lower bound, inverse lower bound, power distortion).
-- `PackingBound.lean`: Equivalence of bound forms, trigonometric identities, three calibration theorems, and positivity results.
+#### Proof sketch
 
-Total: 19 theorems, 0 sorries, all depending only on standard axioms (propext, Classical.choice, Quot.sound).
+Non-overlap requires every pair of centers to be separated by at least $2\pi/3$. Represent the centers by unit vectors. Since
 
----
+$$
+\cos\left(\frac{2\pi}{3}\right)=-\frac12,
+$$
 
-## References
+monotonicity of cosine implies that every pairwise inner product is at most $-1/2$. Lemma 5 rules out four such vectors.
 
-1. R. A. Rankin, "The closest packing of spherical caps in n dimensions," *Proc. Glasgow Math. Assoc.*, 2(4):139–144, 1955.
+### Theorem 7 (Exact open-cap packing at radius $\pi/3$)
 
-2. G. A. Kabatiansky and V. I. Levenshtein, "Bounds for packings on a sphere and in space," *Problemy Peredachi Informatsii*, 14(1):3–25, 1978.
+Under the open-cap convention,
 
-3. P. Delsarte, "An algebraic approach to the association schemes of coding theory," *Philips Research Reports Supplements*, No. 10, 1973.
+$$
+N(2,\pi/3)=3.
+$$
 
-4. J. H. Conway and N. J. A. Sloane, *Sphere Packings, Lattices and Groups*, 3rd edition, Springer, 1999.
+#### Proof sketch
 
-5. T. Hales, "A proof of the Kepler conjecture," *Annals of Mathematics*, 162(3):1065–1185, 2005.
+Theorem 6 gives the upper bound $N(2,\pi/3)\le3$. For the lower bound, choose three points equally spaced on the equator, with longitudes $0$, $2\pi/3$, and $4\pi/3$. Every pair has geodesic distance $2\pi/3$. The corresponding open caps of radius $\pi/3$ have disjoint interiors and tangent boundaries. Hence three caps exist and the upper bound is attained.
 
-6. H. Cohn and A. Kumar, "Universally optimal distribution of points on spheres," *J. Amer. Math. Soc.*, 20(1):99–148, 2007.
+## 6. Correcting the tetrahedral calibration
+
+For a regular tetrahedron centered at the origin and inscribed in $S^2$, any two distinct vertex vectors have inner product $-1/3$. Their common angular separation is therefore
+
+$$
+\theta_{\rm tet}=\arccos\left(-\frac13\right).
+$$
+
+### Proposition 8 (Tetrahedral cap radius)
+
+The largest equal open-cap radius supported by tetrahedral centers is
+
+$$
+r_{\rm tet}=\frac12\arccos\left(-\frac13\right)
+\approx0.9553166\text{ radians}
+\approx54.7356^\circ.
+$$
+
+In particular, $r_{\rm tet}<\pi/3$.
+
+#### Proof sketch
+
+Equal caps centered at points with minimum separation $\theta$ are disjoint in their interiors exactly up to radius $\theta/2$. For tetrahedral vertices, $\theta=\arccos(-1/3)$. To compare with $\pi/3$, note that caps of radius $\pi/3$ require pairwise inner products at most
+
+$$
+\cos(2\pi/3)=-\frac12.
+$$
+
+But $-1/3>-1/2$, so tetrahedral vertices are too close. Equivalently, $\arccos(-1/3)<2\pi/3$.
+
+The correction preserves the tetrahedron’s role as a symmetric four-center configuration while assigning it the geometrically correct radius.
+
+## 7. Numerical landmarks and polyhedral labels
+
+### 7.1 Radius $r=\pi/6$
+
+At $30$ degrees,
+
+$$
+\frac{2}{1-\cos(\pi/6)}
+=\frac{2}{1-\sqrt3/2}
+=8+4\sqrt3
+\approx14.9282.
+$$
+
+Thus the integer area bound is $N(2,\pi/6)\le14$. A twelve-center icosahedral configuration is numerically compatible with this upper bound. Compatibility is not an optimality proof, and the radius must still be checked against the icosahedron’s actual minimum angular separation.
+
+### 7.2 Radius $r=\pi/4$
+
+At $45$ degrees,
+
+$$
+\frac{2}{1-\cos(\pi/4)}
+=\frac{2}{1-\sqrt2/2}
+=4+2\sqrt2
+\approx6.8284.
+$$
+
+Hence $N(2,\pi/4)\le6$. The six vertices $\pm e_1,\pm e_2,\pm e_3$ of a regular octahedron have minimum angular separation $\pi/2$. They therefore support six open caps of radius $\pi/4$, proving
+
+$$
+N(2,\pi/4)=6
+$$
+
+for open caps. This six-center configuration is octahedral. A cuboctahedron has twelve vertices and should not be used as its label.
+
+### 7.3 Radius $r=\pi/3$
+
+Here the area ratio is exactly
+
+$$
+\frac{2}{1-\cos(\pi/3)}=4.
+$$
+
+The area bound permits four in principle, but Theorem 6 excludes four. The equatorial three-center construction then gives the exact value $3$ for open caps. This example demonstrates why equality in a volume bound cannot be inferred from arithmetic alone.
+
+### 7.4 The proposed multiplier in the examples
+
+For $r<\pi/2$, the proposed right-hand side equals the area ratio multiplied by $4/\cos^2r$. At $r=\pi/6$, this multiplier is $16/3$; at $r=\pi/4$, it is $8$. It therefore produces upper bounds far larger than the intrinsic area estimate. At $r=\pi/3$, the multiplier is $16$, yielding $64$ instead of the direct bound $4$. These values underscore that the inequality is valid but very loose.
+
+## 8. Algorithms and computational audits
+
+The essential quantities can be audited with a short deterministic procedure.
+
+### Algorithm 1 (Radius audit)
+
+Given $r\in(0,\pi)$ and an optional candidate cardinality $m$:
+
+1. Compute $A=2\pi(1-\cos r)$.
+2. Compute the real area bound $B=4\pi/A=2/(1-\cos r)$.
+3. Set the integer upper bound to $\lfloor B\rfloor$.
+4. If $r<\pi/2$, compute $C=4/\cos^2r$ and the proposed bound $CB$.
+5. If candidate unit center vectors are supplied, normalize them, compute every pairwise inner product, and convert the largest pairwise inner product to the minimum angle by $\arccos$.
+6. Accept open-cap non-overlap only if the minimum angle is at least $2r$, allowing a numerical tolerance.
+
+For a fixed radius, the scalar calculations take constant time. For $m$ supplied centers in dimension $d$, pairwise checking takes $O(m^2d)$ time and $O(1)$ auxiliary space if pairs are streamed. Computing a full Gram matrix uses $O(m^2)$ memory.
+
+### Numerical stability
+
+Near $r=0$, direct evaluation of $1-\cos r$ can lose precision through cancellation. A stable identity is
+
+$$
+1-\cos r=2\sin^2(r/2),
+$$
+
+so the area bound may be evaluated as
+
+$$
+\frac{1}{\sin^2(r/2)}.
+$$
+
+When recovering angles from dot products, numerical values should be clamped to $[-1,1]$ before applying $\arccos$.
+
+## 9. Applications
+
+### Spherical codes
+
+A finite set $C\subset S^2$ with minimum angular distance $2r$ is a spherical code. Nearest-neighbor decoding can tolerate angular perturbations smaller than $r$ without ambiguity. The cap packing number therefore limits the size of a directional codebook at a prescribed noise margin.
+
+### Signal processing and directional sensing
+
+Microphone arrays, radar systems, and orientation sensors sample directional data. Separation constraints prevent nearly redundant sensing directions and improve robustness. The area bound supplies an immediate feasibility screen, while Gram-matrix tests verify a concrete design.
+
+### Molecular and polyhedral geometry
+
+Repelling sites on a spherical shell often organize into symmetric configurations. Polyhedral names are useful only when paired with their correct vertex counts and angular separations. The tetrahedral correction shows that visual symmetry does not override quantitative separation requirements.
+
+### Constellation design
+
+If satellites or beams are idealized by directions from a central observer, exclusion zones become spherical caps. Real systems add altitude, visibility, and time dependence, but the static spherical packing bound remains a baseline constraint.
+
+## 10. Discussion
+
+The direct area method has three advantages: it is intrinsic, global, and exact at the level of measure. Its weakness is equally clear: it ignores packing inefficiency. The vector-sum method complements it by encoding angular compatibility. At $r=\pi/3$, the two methods separate sharply: area gives $4$, while positive semidefiniteness reduces the bound to $3$.
+
+Stereographic projection remains valuable for local analysis and for translating spherical geometry into weighted planar geometry. The crucial word is “weighted.” Ordinary Euclidean area in the image plane does not represent spherical area uniformly. A finite stereographic atlas could provide bounded local distortion, but chart overlap and caps crossing chart boundaries would need systematic treatment.
+
+The small-radius asymptotic is another place where the crude area ratio should not be mistaken for a sharp answer. Since cap area is approximately $\pi r^2$, the area budget behaves like $4/r^2$. Yet locally dense equal-disk packings occupy only a fraction of the plane. Curvature and global topology create lower-order corrections, while local planar density is expected to affect the principal efficiency. Turning this expectation into a theorem requires localization, boundary control, and constructions that distribute defects across the sphere.
+
+Boundary conventions also deserve emphasis. Open caps at exact center separation $2r$ are disjoint; closed caps touch. Surface area is insensitive to the boundary, but set-theoretic disjointness is not. Exact packing numbers must state the convention.
+
+## 11. Future work
+
+A complete intrinsic theory should define the packing number through center sets on $S^2$, prove compactness sufficient for attainment, and connect center separation precisely to open and closed cap disjointness. Exact constructions should be developed at corrected radii: the octahedron at $\pi/4$, the tetrahedron at $\frac12\arccos(-1/3)$, and the icosahedron at half its minimum angular separation.
+
+For projection-based work, a finite atlas or exact weighted planar measure should replace any appeal to a global maximum distortion in one noncompact chart. In higher dimensions, cap volume involves an integral of $\sin^{n-1}t$, and finite measure still gives a universal volume-ratio bound. Gram-matrix positivity likewise generalizes and can provide cardinality obstructions from pairwise inner-product thresholds.
+
+The most substantial open direction is sharp asymptotics. One should determine how local Euclidean packing density, curvature, and unavoidable global defects combine as $r\to0$. This would turn a coarse capacity estimate into a quantitative bridge between planar packing and spherical codes.
+
+## 12. Conclusion
+
+Equal-cap packing on $S^2$ begins with a simple area ledger:
+
+$$
+N(2,r)\le\frac{2}{1-\cos r}.
+$$
+
+The proposed multiplier $(2/\cos r)^2$ only weakens this bound on $0<r<\pi/2$ and fails unit normalization at zero. More importantly, area alone does not decide attainability. Positive semidefiniteness of Gram matrices rules out four centers separated by $120$ degrees, correcting the tetrahedral claim and yielding the exact open-cap value $N(2,\pi/3)=3$. At $r=\pi/4$, the area bound and octahedral construction match at $6$.
+
+These results illustrate a reliable hierarchy for spherical packing: begin with intrinsic measure, audit limiting normalizations, and then test candidate configurations through angular algebra. Projection can enrich the analysis, but it cannot replace those checks.
