@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a7ba7617",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n## What has been established\n\n`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by three real-valued sequences: stored usable energy, externally injected",
-      "quality_score": 0.76172,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-31T23:27:51",
-      "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
-    },
-    {
       "cycle_id": "bb566a68",
       "domain": "Applications",
       "key_insight": "# Future Directions: EML Transseries\n\n## Results established in this phase\n\nThe formal development in `Catalog/Applications/EML/ContrarianTransseries.lean`\nseparates three claims that are often bundle",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-08-03T08:07:06",
       "title": "Bridge: Category Theory as Universal Language for Mathematics"
+    },
+    {
+      "cycle_id": "362b8901",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe following conjectures sharpen the boundary of the normalized development in\n`Catalog/Applications/EML/RischAlgorithm.lean`. Each is intended as a concrete,\nfalsifiable extensi",
+      "quality_score": 0.7657699999999998,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-08-03T11:53:32",
+      "title": "EML Integration in Finite Terms: The Risch Algorithm"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8110b227",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Persistent Homology Stability\n\n## 1. Diagonal-completed bottleneck stability for arbitrary finite clouds\n\nFor finite metric spaces of unequal cardinality, enrich each persistence",
-      "quality_score": 0.66,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-25T21:17:29",
-      "title": "Topological Data Analysis: Persistent Homology Stability"
-    },
     {
       "cycle_id": "a31e0b39",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 26,
       "timestamp": "2026-08-03T08:07:06",
       "title": "Bridge: Category Theory as Universal Language for Mathematics"
+    },
+    {
+      "cycle_id": "362b8901",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe following conjectures sharpen the boundary of the normalized development in\n`Catalog/Applications/EML/RischAlgorithm.lean`. Each is intended as a concrete,\nfalsifiable extensi",
+      "quality_score": 0.7657699999999998,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-08-03T11:53:32",
+      "title": "EML Integration in Finite Terms: The Risch Algorithm"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "405d388b",
-      "domain": "Logic",
-      "name": "expOdds_eq",
-      "quality": 0.8013399999999999
-    },
-    {
-      "cycle_id": "ef4982e9",
-      "domain": "Bridges",
-      "name": "continuous_upperAlexandrov_iff_monotone",
-      "quality": 0.78888
-    },
-    {
-      "cycle_id": "ef4982e9",
-      "domain": "Bridges",
-      "name": "galoisConnection_continuous",
-      "quality": 0.78888
-    },
     {
       "cycle_id": "ef4982e9",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "yoneda_reconstruction",
       "quality": 0.80477
+    },
+    {
+      "cycle_id": "362b8901",
+      "domain": "Applications",
+      "name": "eval_npow",
+      "quality": 0.7657699999999998
+    },
+    {
+      "cycle_id": "362b8901",
+      "domain": "Applications",
+      "name": "eval_shift",
+      "quality": 0.7657699999999998
+    },
+    {
+      "cycle_id": "362b8901",
+      "domain": "Applications",
+      "name": "eval_qsmul",
+      "quality": 0.7657699999999998
     }
   ],
-  "last_updated": "2026-08-03T08:07:06",
+  "last_updated": "2026-08-03T11:53:32",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ae875fd7",
-        "quality": 0.686,
-        "theorems": 26,
-        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-      },
-      {
         "cycle_id": "8fe295b2",
         "quality": 0.7712399999999999,
         "theorems": 6,
@@ -3141,6 +3135,12 @@
         "quality": 0.8084800000000001,
         "theorems": 14,
         "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+      },
+      {
+        "cycle_id": "362b8901",
+        "quality": 0.7657699999999998,
+        "theorems": 44,
+        "title": "EML Integration in Finite Terms: The Risch Algorithm"
       }
     ],
     "Bridges": [
