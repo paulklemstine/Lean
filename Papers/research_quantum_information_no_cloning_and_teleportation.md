@@ -1,279 +1,435 @@
-# Quantum Information Rigidity: No-Cloning, Teleportation, and Monogamy as a Unified Resource Theory
+# No-Cloning, Exact Qubit Teleportation, and Entanglement Monogamy in the W Sector
+
+**Aristotle**  
+**August 3, 2026**
 
 ## Abstract
 
-We present a unified formal treatment of three foundational results in quantum information theory: the no-cloning theorem, quantum teleportation correctness, and monogamy of Bell-pair entanglement. All theorems are stated and proved in Lean 4 with complete machine verification, establishing them as logical consequences of the axioms of complex linear algebra without any unverified assumptions. The no-cloning theorem is derived from a linearity-versus-quadraticity argument in the qubit tensor product space. Teleportation correctness is verified for all four measurement outcomes at the density matrix level. Bell-pair monogamy is proved by showing that if a three-qubit pure state has its AB subsystem in a Bell state, the AC subsystem is necessarily a product state. We introduce formal definitions of cloning maps, teleportation correctness, and shareability predicates, providing a foundation for future verified work in quantum cryptography, quantum networks, and resource theories.
-
-**Keywords:** no-cloning theorem, quantum teleportation, monogamy of entanglement, formal verification, Lean 4, quantum information theory, resource theory
+Three structural features of quantum information are developed in a common amplitude-and-algebra framework. First, a universal no-cloning theorem is proved for every nontrivial complex $C^*$-algebra: no complex-linear map can send every element $a$ to the elementary tensor $a\otimes a$. The proof uses only scalar homogeneity and multiplication of tensor factors, and therefore rules out universal cloners under any stronger physical requirement that retains linearity. Second, the standard three-qubit teleportation circuit is calculated amplitude by amplitude. For every input qubit and each of Alice's four measurement outcomes, Bob's conditional Pauli correction yields exactly one half of the input amplitude vector; normalization therefore recovers the input state. Third, determinant/concurrence tangles are studied for W-sector states $a|100\rangle+b|010\rangle+c|001\rangle$. The Coffman--Kundu--Wootters inequality is saturated identically: the A--B and A--C squared concurrences sum exactly to the A-versus-BC one-tangle. For normalized W states this one-tangle is at most one. Numerical algorithms and applications to quantum communication are discussed, together with extensions to mixed states, optimal approximate cloning, and general three-qubit monogamy.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Quantum information differs from classical information not merely in implementation but in its allowed transformations. Classical bits can be copied, read, and broadcast without changing their logical values. An unknown quantum state cannot be copied by a universal physical operation. Nevertheless, an unknown qubit can be transferred perfectly through quantum teleportation, provided that sender and receiver share entanglement and exchange two classical bits. Entanglement itself obeys distribution constraints: correlations between one qubit and several partners cannot all be freely maximized.
 
-Quantum information theory rests on three structural pillars:
+This paper presents precise versions of these three principles. The emphasis is on arguments that expose their common algebraic foundation. Universal cloning fails because the proposed diagonal rule $a\mapsto a\otimes a$ is quadratic, not linear. Teleportation works because a particular linear circuit resolves an arbitrary amplitude pair into four branches differing only by Pauli transformations. Monogamy in the W sector becomes an exact distributive identity among squared moduli.
 
-1. **No-cloning**: No physical process can duplicate an arbitrary unknown quantum state.
-2. **Teleportation**: An unknown quantum state can be exactly transferred using pre-shared entanglement and classical communication.
-3. **Monogamy**: Maximal quantum correlations between two systems preclude correlations with any third system.
+The no-cloning result is stated at the level of complex $C^*$-algebras. This captures finite-dimensional observable algebras while making clear that neither positivity nor unitary implementation is needed for the obstruction. The teleportation theorem is stated for arbitrary, possibly unnormalized, complex amplitude vectors. This makes the branch factor explicit and separates algebraic correctness from probabilistic normalization. The monogamy results concern the one-excitation W sector and include both equality and boundedness.
 
-These results are typically presented as independent theorems in quantum information textbooks. However, they are intimately connected: no-cloning establishes the impossibility of duplication, teleportation demonstrates the possibility of transfer *without* duplication, and monogamy quantifies the shareability constraints that mediate between the two.
+Section 2 fixes the mathematical setting. Section 3 proves universal no-cloning. Sections 4 and 5 define the teleportation circuit and establish branchwise correctness. Sections 6 and 7 develop W-state entanglement measures, monogamy saturation, and the normalized bound. Section 8 gives computational procedures, Section 9 discusses applications and limitations, and Section 10 identifies directions for further work.
 
-### 1.2 Contributions
+## 2. Mathematical setting
 
-This work makes the following contributions:
+### 2.1 Complex $C^*$-algebras and tensor products
 
-- **Formal definitions** of cloning maps, teleportation correctness, and shareability predicates in Lean 4, suitable for reuse in downstream formalization projects.
-- **Machine-verified proofs** of no-cloning (Theorem 1), teleportation correctness (Theorem 2), Bell-pair monogamy (Theorem 3), and the non-shareability of Bell pairs (Theorem 4).
-- **Computational demonstrations** (Python) implementing all algorithms with concrete examples, monogamy tradeoff scans, and applications to quantum key distribution.
-- **A resource-theoretic framework** connecting the three results as constraints on quantum information flow.
+A complex $C^*$-algebra $A$ is a complex algebra equipped with an involution and a complete norm satisfying the $C^*$ identity. Only a small part of this structure is required below: $A$ is a complex vector space with bilinear multiplication, a multiplicative identity $1$, and nontrivial carrier. Nontriviality means that $0\neq1$.
 
-### 1.3 Related Work
+The algebraic tensor product $A\otimes_{\mathbb C}A$ is generated by elementary tensors $a\otimes b$, subject to bilinearity in both factors. In particular,
 
-The no-cloning theorem was discovered independently by Wootters–Zurek [1] and Dieks [2] in 1982. Quantum teleportation was proposed by Bennett et al. [3] in 1993. Monogamy of entanglement was formalized by Coffman, Kundu, and Wootters [4] in 2000 using the tangle measure, with the CKW inequality τ(A|BC) ≥ τ(A|B) + τ(A|C).
+$$
+(\lambda a)\otimes(\mu b)=\lambda\mu(a\otimes b)
+$$
 
-Prior formal verification work in quantum information includes randomized benchmarking verification (Rand et al., 2017), QWIRE (Paykin et al., 2017), and various Coq/Lean formalizations of quantum circuits. To our knowledge, this is the first machine-verified treatment unifying no-cloning, teleportation, and monogamy in a single formal development.
+for $\lambda,\mu\in\mathbb C$. Bilinear multiplication induces a linear contraction map
 
-## 2. Mathematical Framework
+$$
+m:A\otimes_{\mathbb C}A\longrightarrow A,
+\qquad m(a\otimes b)=ab.
+$$
 
-### 2.1 Qubit States and Tensor Products
+This map will convert a tensor equation into an equation inside $A$.
 
-We work in the finite-dimensional qubit model:
+For a qubit, a simple commutative observable algebra is
 
-- **Single qubit**: A vector ψ ∈ ℂ², represented as `Fin 2 → ℂ`
-- **Two qubits**: A vector in ℂ² ⊗ ℂ² ≅ ℂ⁴, represented as `(Fin 2 × Fin 2) → ℂ`
-- **Three qubits**: A vector in ℂ⁸, represented as `(Fin 2 × Fin 2 × Fin 2) → ℂ`
+$$
+A_2=\{f:\{0,1\}\to\mathbb C\},
+$$
 
-The tensor product of vectors u, v is the Kronecker product:
-```
-kronVec u v (i, j) = u(i) · v(j)
-```
+with pointwise addition, multiplication, conjugation, and the supremum norm. It is a nontrivial complex $C^*$-algebra.
 
-### 2.2 Normalization and Density Matrices
+### 2.2 Qubit amplitudes and gates
 
-A state ψ is **L2-normalized** if ∑ᵢ |ψ(i)|² = 1.
+A qubit amplitude vector is a function $\psi:\{0,1\}\to\mathbb C$, commonly written
 
-The **density matrix** of a pure state ψ is the rank-1 operator:
-```
-pureDensity ψ (i, j) = ψ(i) · ψ(j)*
-```
+$$
+|\psi\rangle=\psi(0)|0\rangle+\psi(1)|1\rangle.
+$$
 
-### 2.3 Partial Traces
+Normalization means $|\psi(0)|^2+|\psi(1)|^2=1$, although the teleportation identity below does not require it.
 
-For a three-qubit density matrix ρ_ABC:
+Set $s=1/\sqrt2$. The Hadamard transformation is
 
-- **Trace out C**: ρ_AB(a,b,a',b') = ∑_c ρ_ABC(a,b,c,a',b',c)
-- **Trace out B**: ρ_AC(a,c,a',c') = ∑_b ρ_ABC(a,b,c,a',b,c')
+$$
+H(x_0,x_1)=s(x_0+x_1,x_0-x_1).
+$$
 
-### 2.4 Bell State
+The Pauli transformations are
 
-The Bell state |Φ⁺⟩ = (|00⟩ + |11⟩)/√2 is maximally entangled:
-```
-bellPlus (i, j) = if i = j then 1/√2 else 0
-```
+$$
+X(x_0,x_1)=(x_1,x_0),
+\qquad
+Z(x_0,x_1)=(x_0,-x_1).
+$$
 
-## 3. Main Results
+For bits, $u\oplus v$ denotes exclusive-or. A CNOT with first bit as control maps $(u,v)$ to $(u,u\oplus v)$ and is its own inverse.
 
-### 3.1 Theorem 1: No-Cloning
+### 2.3 Squared modulus and W-sector tangles
 
-**Definition (Cloning Map).** A linear map Δ : ℂ² →_ℂ (ℂ² ⊗ ℂ²) is a *cloning map* if for every L2-unit vector ψ:
-```
-Δ(ψ) = ψ ⊗ ψ
-```
+For $z\in\mathbb C$, define
 
-**Theorem (No-Cloning).** There exists no cloning map.
+$$
+q(z)=|z|^2=z\overline z\in\mathbb R_{\geq0}.
+$$
 
-*Proof sketch.* Consider the standard basis vectors |0⟩, |1⟩ and the superposition |+⟩ = (|0⟩ + |1⟩)/√2, all of which are L2-unit vectors.
+A W-sector three-qubit amplitude tensor has the form
 
-If Δ is a cloning map, then:
-- Δ(|0⟩) = |0⟩ ⊗ |0⟩
-- Δ(|1⟩) = |1⟩ ⊗ |1⟩
-- Δ(|+⟩) = |+⟩ ⊗ |+⟩
+$$
+|W(a,b,c)\rangle=a|100\rangle+b|010\rangle+c|001\rangle.
+$$
 
-Since |+⟩ = (1/√2)(|0⟩ + |1⟩) and Δ is linear:
-```
-Δ(|+⟩) = (1/√2)(Δ(|0⟩) + Δ(|1⟩)) = (1/√2)(|00⟩ + |11⟩)
-```
+It is normalized precisely when
 
-But the cloning requirement gives:
-```
-Δ(|+⟩) = |+⟩ ⊗ |+⟩ = (1/2)(|00⟩ + |01⟩ + |10⟩ + |11⟩)
-```
+$$
+q(a)+q(b)+q(c)=1.
+$$
 
-Evaluating at index (0,1): the linearity expression gives 0, while the cloning expression gives 1/2. This is a contradiction. ∎
+For this family define the A-versus-BC one-tangle and pairwise squared concurrences by
 
-**Lean formalization:**
-```lean
-theorem no_cloning_qubit :
-    ¬ ∃ Δ : (Fin 2 → ℂ) →ₗ[ℂ] ((Fin 2 × Fin 2) → ℂ), IsCloningMap Δ
-```
+$$
+\tau_{A|BC}=4q(a)(q(b)+q(c)),
+$$
 
-The proof uses `ketPlus_eq_smul` to express |+⟩ as a scalar multiple of (|0⟩ + |1⟩), applies `map_smul` and `map_add` for linearity, and derives the contradiction by evaluating at the index (0,1).
+$$
+C_{AB}^2=4q(a)q(b),
+\qquad
+C_{AC}^2=4q(a)q(c).
+$$
 
-### 3.2 Theorem 2: Teleportation Correctness
+These formulas are taken as the entanglement measures under study. They agree with the determinant expression for the reduced one-qubit state and the concurrence formulas for W-sector reductions.
 
-**Definition (Teleportation Correct).** A quantum protocol P is *teleportation-correct* if P.channel(ψ) = ψ for all ψ.
+## 3. Universal no-cloning in nontrivial complex algebras
 
-**Theorem (Teleportation-All-Outcomes).** For any 2×2 density matrix ρ:
-1. ρ = ρ (identity outcome)
-2. X(XρX)X = ρ (bit-flip correction)
-3. Z(ZρZ)Z = ρ (phase-flip correction)
-4. (XZ)((XZ)ρ(XZ))(XZ) = ρ (both correction)
+A universal algebraic cloner on $A$ would be a complex-linear map $C:A\to A\otimes_{\mathbb C}A$ satisfying
 
-*Proof.* Each Pauli matrix σ satisfies σ² = ±I. At the density matrix level, σ(σρσ†)σ† = σ²ρ(σ†)² = ρ since the global phase cancels. The formal proof proceeds by matrix extension (`ext i j`), case analysis on indices (`fin_cases`), and arithmetic normalization. ∎
+$$
+C(a)=a\otimes a
+$$
 
-**Theorem (Teleportation Not Cloning).** If P is teleportation-correct, then P does not contain a universal cloner.
+for every $a\in A$. The definition deliberately imposes only linearity. Any unitary channel or completely positive linear implementation would in particular have to meet this basic requirement on the represented inputs.
 
-*Proof.* By Theorem 1 (no-cloning), no universal cloner exists. Since `ContainsUniversalCloner P` asserts the existence of a cloning map, it is immediately falsified. ∎
+**Theorem 1 (Universal No-Cloning).** Let $A$ be a nontrivial complex $C^*$-algebra. There is no complex-linear map $C:A\to A\otimes_{\mathbb C}A$ such that $C(a)=a\otimes a$ for every $a\in A$.
 
-### 3.3 Theorem 3: Bell-Pair Monogamy
+**Proof sketch.** Suppose such a map exists. Apply its two defining properties to $2\cdot1$. Linearity gives
 
-**Theorem (Bell-Pair Monogamy).** Let ψ be a normalized three-qubit pure state. If the AB reduced density matrix equals the Bell state density matrix, then the AC reduced density matrix is a product state.
+$$
+C(2\cdot1)=2C(1)=2(1\otimes1).
+$$
 
-*Proof sketch.* The proof proceeds in three structural steps:
+The cloning requirement gives
 
-**Step 1 (Vanishing components).** From traceOutC(ψ) = bellDensity, extract the diagonal entry at (0,1)(0,1):
-```
-∑_c |ψ(0,1,c)|² = bellDensity (0,1)(0,1) = 0
-```
-Since each term is non-negative and the sum is zero, ψ(0,1,c) = 0 for all c. Similarly ψ(1,0,c) = 0.
+$$
+C(2\cdot1)=(2\cdot1)\otimes(2\cdot1)=4(1\otimes1).
+$$
 
-**Step 2 (Equal components).** From the diagonal entries (0,0)(0,0) and (1,1)(1,1):
-```
-∑_c |ψ(0,0,c)|² = 1/2,  ∑_c |ψ(1,1,c)|² = 1/2
-```
-From the off-diagonal entry (0,0)(1,1):
-```
-∑_c ψ(0,0,c) · ψ(1,1,c)* = 1/2
-```
-By Cauchy-Schwarz equality (since |⟨u,v⟩| = ‖u‖·‖v‖), the vectors (ψ(0,0,c))_c and (ψ(1,1,c))_c are proportional with unit proportionality constant. Hence ψ(1,1,c) = ψ(0,0,c).
+Hence $2(1\otimes1)=4(1\otimes1)$. Apply the multiplication contraction $m$. Since $m(1\otimes1)=1$, one obtains $2\cdot1=4\cdot1$, and therefore $2\cdot1=0$. Scalar multiplication by the nonzero complex number $2$ is injective, so $1=0$, contradicting nontriviality. $\square$
 
-**Step 3 (Product structure).** Using Steps 1 and 2:
-```
-traceOutB(ψ) (a,c)(a',c') = ∑_b ψ(a,b,c) · ψ(a',b,c')*
-```
-The only non-zero terms come from b=0 (when a=0 or a=1 with the equal-component substitution). This yields:
-```
-traceOutB(ψ) (a,c)(a',c') = δ_{a,a'} · ψ(0,0,c) · ψ(0,0,c')*
-```
-This is a product state with ρ_A = I (identity) and ρ_C = |φ⟩⟨φ| where φ(c) = ψ(0,0,c). ∎
+The proof uses the scalar $2$ only for convenience. For any scalar $\lambda\notin\{0,1\}$, linearity scales by $\lambda$ while diagonal tensoring scales by $\lambda^2$. Universal copying is therefore incompatible with homogeneity.
 
-**Corollary (Bell Not Shareable).** If AB is in a Bell state, then AC cannot also be in a Bell state.
+**Corollary 2 (Qubit Observable No-Cloning).** No complex-linear map on $A_2$, the diagonal observable algebra of a qubit, universally sends $a$ to $a\otimes a$.
 
-*Proof.* By Theorem 3, the AC state is a product. But the Bell state is not a product state (its off-diagonal entries are non-zero in a way incompatible with product structure). ∎
+**Proof sketch.** The algebra $A_2$ is a nontrivial complex $C^*$-algebra, so Theorem 1 applies directly. $\square$
 
-## 4. Algorithms
+Several qualifications are important. The theorem does not forbid copying a fixed known element, nor a suitably restricted classical family. It does not concern a nonlinear mathematical function considered without physical implementability. It says that one linear device cannot realize the diagonal tensor rule on every input. Since quantum channels are linear on density operators, the obstruction expresses the essential shape of no-cloning.
 
-### 4.1 Universal Cloner Test
+## 4. The teleportation circuit
 
-**Input:** A 4×2 complex matrix Δ representing a candidate cloning map.
-**Output:** Boolean (is_cloner) and a counterexample vector if False.
+Let Alice's unknown input be $|\psi\rangle=\alpha|0\rangle+\beta|1\rangle$. Alice and Bob share the Bell state
 
-**Procedure:**
-1. Sample n random unit vectors ψ ∈ ℂ²
-2. For each ψ, compute Δψ and ψ⊗ψ
-3. If they differ, return (False, ψ)
+$$
+|\Phi^+\rangle=s(|00\rangle+|11\rangle),
+\qquad s=\frac1{\sqrt2}.
+$$
 
-**Complexity:** O(n · d²) where d is the Hilbert space dimension.
+Index the three wires by bits $(u,v,w)$: $u$ is Alice's input, $v$ is Alice's half of the Bell pair, and $w$ is Bob's half. The initial amplitude is
 
-**Algebraic variant:** Instead of sampling, test the specific triple (|0⟩, |1⟩, |+⟩) and use the linearity argument to produce a guaranteed disproof.
+$$
+T_0(u,v,w)=\psi(u)B(v,w),
+$$
 
-### 4.2 Bell-State Recognizer
+where
 
-**Input:** A 4×4 density matrix ρ.
-**Output:** Boolean (is_bell) and fidelity with |Φ⁺⟩.
+$$
+B(v,w)=
+\begin{cases}
+s,&v=w,\\
+0,&v\neq w.
+\end{cases}
+$$
 
-**Procedure:** Entry-wise comparison with the Bell density matrix, with tolerance ε.
+Alice first applies CNOT from the first wire to the second. In amplitude form the resulting table is
 
-**Complexity:** O(d²) where d = 4.
+$$
+T_1(u,v,w)=T_0(u,u\oplus v,w).
+$$
 
-### 4.3 Monogamy Witness
+She next applies Hadamard to the first wire. The amplitude table becomes
 
-**Input:** An 8-component vector ψ representing a 3-qubit pure state.
-**Output:** Bell fidelities F_AB, F_AC and product-state certification.
+$$
+T_2(0,v,w)=s\bigl(T_1(0,v,w)+T_1(1,v,w)\bigr),
+$$
 
-**Procedure:**
-1. Compute ρ = |ψ⟩⟨ψ| (8×8 density matrix)
-2. Trace out C to get ρ_AB; compute F_AB = Tr(ρ_AB · |Φ⁺⟩⟨Φ⁺|)
-3. Trace out B to get ρ_AC; compute F_AC = Tr(ρ_AC · |Φ⁺⟩⟨Φ⁺|)
-4. Check product structure of ρ_AC via singular value decomposition
+$$
+T_2(1,v,w)=s\bigl(T_1(0,v,w)-T_1(1,v,w)\bigr).
+$$
 
-**Complexity:** O(d³) for partial traces and SVD where d = 8.
+When Alice measures $(u,v)=(a,b)$, Bob's unnormalized conditional amplitude vector is
 
-## 5. Computational Experiments
+$$
+\chi_{a,b}(w)=T_2(a,b,w).
+$$
 
-### 5.1 No-Cloning Verification
+Bob computes a corrected vector by applying $X$ when $b=1$ and then $Z$ when $a=1$. Equivalently, with exponents in $\{0,1\}$,
 
-We tested 10,000 random candidate cloning maps (4×2 matrices). For each, the algebraic disproof using the (|0⟩, |1⟩, |+⟩) triple succeeded in 100% of cases where the map correctly cloned |0⟩ and |1⟩ (confirming that linearity prevents cloning of |+⟩).
+$$
+R_{a,b}=Z^aX^b,
+\qquad
+\widetilde\chi_{a,b}=R_{a,b}\chi_{a,b}.
+$$
 
-### 5.2 Teleportation Verification
+The order matters only up to a global sign in related conventions; here it is fixed as $X$ followed by $Z$.
 
-Over 10,000 random qubit density matrices, the Pauli correction protocol recovered the original state with fidelity > 1 - 10⁻¹⁴ in all cases, consistent with exact recovery limited only by floating-point precision.
+## 5. Exact branchwise correctness of teleportation
 
-### 5.3 Monogamy Tradeoff Scan
+The two factors of $s$ arising from Bell preparation and the Hadamard obey
 
-Sampling 10,000 random three-qubit pure states and computing Bell fidelities F_AB and F_AC:
+$$
+s^2=\left(\frac1{\sqrt2}\right)^2=\frac12.
+$$
 
-| F_AB range | Max F_AC | Mean F_AC | Count |
-|:---:|:---:|:---:|:---:|
-| [0.0, 0.3) | 0.97 | 0.25 | 5210 |
-| [0.3, 0.6) | 0.68 | 0.24 | 3450 |
-| [0.6, 0.9) | 0.38 | 0.16 | 1250 |
-| [0.9, 1.0] | 0.09 | 0.04 | 90 |
+Expanding the circuit yields four branches:
 
-The data confirms the monogamy tradeoff: as F_AB increases, the maximum achievable F_AC decreases, consistent with the formally proved theorem that F_AB = 1 implies F_AC < 1.
+$$
+\chi_{0,0}=\frac12(\alpha,\beta),
+\qquad
+\chi_{0,1}=\frac12(\beta,\alpha),
+$$
 
-### 5.4 BB84 Security
+$$
+\chi_{1,0}=\frac12(\alpha,-\beta),
+\qquad
+\chi_{1,1}=\frac12(-\beta,\alpha).
+$$
 
-We simulated 1000-bit BB84 key distribution:
-- Without eavesdropper: error rate = 0.0% (secure)
-- With intercept-resend eavesdropper: error rate ≈ 25% (detected, insecure)
+They are, respectively, $\frac12 I\psi$, $\frac12 X\psi$, $\frac12 Z\psi$, and $\frac12 XZ\psi$ in the chosen amplitude convention. Applying $I$, $X$, $Z$, and $ZX$ as dictated by the two measurement bits removes each distortion.
 
-The ~25% error rate is a direct consequence of the no-cloning theorem: the eavesdropper must measure (and disturb) each qubit since she cannot clone it.
+**Theorem 3 (Branchwise Teleportation Correctness).** Let $\psi:\{0,1\}\to\mathbb C$ be any qubit amplitude vector, not necessarily normalized. For all measurement bits $a,b\in\{0,1\}$ and output bit $w\in\{0,1\}$,
 
-## 6. Discussion
+$$
+\bigl(Z^aX^b\chi_{a,b}\bigr)(w)=\frac12\psi(w).
+$$
 
-### 6.1 The Resource-Theoretic Perspective
+Thus every corrected measurement branch is exactly $\frac12|\psi\rangle$.
 
-Our formal development reveals a natural resource-theoretic structure:
+**Proof sketch.** There are four choices of $(a,b)$ and two values of $w$. Substitute the definitions of $T_0$, CNOT, and Hadamard. The Bell amplitude vanishes unless its two indices agree, so each case leaves exactly one input amplitude multiplied by two factors of $s$. For $a=1$, the Hadamard introduces a relative minus sign; for $b=1$, the surviving amplitudes are exchanged. Applying $X$ according to $b$ reverses the exchange, and applying $Z$ according to $a$ reverses the sign. Finally $s^2=1/2$, giving the stated amplitude in all eight cases. $\square$
 
-- **Resources**: Quantum states (affine/linear resources), entanglement (consumable, non-duplicable)
-- **Free operations**: Classical communication, Pauli corrections
-- **Impossibility**: No-cloning (duplication of resources is forbidden)
-- **Protocol**: Teleportation (transfer using entanglement + classical communication)
-- **Constraint**: Monogamy (entanglement budget is finite)
+**Corollary 4 (Normalized Teleportation).** If $\psi$ is normalized, each of Alice's four outcomes has probability $1/4$, and normalization of Bob's corrected branch yields exactly $|\psi\rangle$.
 
-This connects quantum information to linear logic in computer science, where variables with linear types can be used exactly once. The no-cloning theorem is the semantic content of the linear usage discipline.
+**Proof sketch.** By Theorem 3, every corrected branch is $\psi/2$. Unitary Pauli corrections preserve norms, so the uncorrected branch also has squared norm
 
-### 6.2 Connections to Other Domains
+$$
+\left\|\frac12\psi\right\|^2=\frac14\|\psi\|^2=\frac14.
+$$
 
-**Operator Algebras**: The no-cloning theorem extends to the no-broadcasting theorem for noncommutative operator algebras. A broadcasting channel for a family of density matrices exists if and only if the family is pairwise commuting.
+The normalized vector is $(\psi/2)/(1/2)=\psi$. $\square$
 
-**Category Theory**: In symmetric monoidal categories, cloning corresponds to the existence of a natural diagonal (comonoid structure). Quantum categories lack this diagonal, and teleportation exploits compact closure instead.
+The theorem clarifies the relation between teleportation and no-cloning. Alice's measurement selects one branch and destroys coherence with the others. The input is not retained as an additional copy. Moreover, Bob's local state cannot be decoded before receiving $(a,b)$; two classical bits are indispensable. The protocol transfers a quantum state but neither duplicates it nor permits superluminal signaling.
 
-**Quantum Coding**: Monogamy constraints relate to quantum error correction through the quantum singleton bound. The entanglement budget of stabilizer codes is constrained by the same monogamy principles.
+## 6. W-sector entanglement measures
 
-### 6.3 Limitations
+Consider the three-qubit state
 
-Our formalization works in the finite-dimensional qubit model. Extending to infinite-dimensional Hilbert spaces requires additional functional-analytic machinery (trace-class operators, etc.) not yet fully available in Mathlib. The no-broadcasting theorem, which generalizes no-cloning to mixed states and requires CPTP channel theory, remains an open formalization target.
+$$
+|W(a,b,c)\rangle=a|100\rangle+b|010\rangle+c|001\rangle.
+$$
 
-## 7. Future Work
+The A-versus-BC split treats the first qubit as one subsystem and the final two as another. The component with A equal to $1$ has squared weight $q(a)$, while the component with A equal to $0$ has squared weight $q(b)+q(c)$. The associated one-tangle is therefore
 
-1. **No-broadcasting theorem**: Formalize that broadcasting a pair of states is possible iff they commute.
-2. **CKW inequality**: Formalize the full Coffman-Kundu-Wootters tangle monogamy inequality τ(A|BC) ≥ τ(A|B) + τ(A|C).
-3. **Quantum networks**: Extend monogamy to multi-party scenarios with non-trivial graph topologies.
-4. **Categorical semantics**: Formalize the connection between no-cloning and the absence of natural diagonals in quantum categories.
-5. **Post-quantum cryptography**: Connect entropy defect bounds to monogamy constraints for security proofs.
+$$
+\tau_{A|BC}=4q(a)(q(b)+q(c)).
+$$
 
-## References
+Within this sector the A--B and A--C pairwise contributions are
 
-[1] W. K. Wootters and W. H. Zurek, "A single quantum cannot be cloned," Nature 299, 802–803 (1982).
+$$
+C_{AB}^2=4q(a)q(b),
+\qquad
+C_{AC}^2=4q(a)q(c).
+$$
 
-[2] D. Dieks, "Communication by EPR devices," Phys. Lett. A 92, 271–272 (1982).
+All three quantities are nonnegative because squared moduli are nonnegative. They are invariant under independent phase changes of $a$, $b$, and $c$; only the probability weights matter for these formulas.
 
-[3] C. H. Bennett, G. Brassard, C. Crépeau, R. Jozsa, A. Peres, and W. K. Wootters, "Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels," Phys. Rev. Lett. 70, 1895–1899 (1993).
+The Coffman--Kundu--Wootters monogamy relation compares pairwise squared concurrence against the one-tangle:
 
-[4] V. Coffman, J. Kundu, and W. K. Wootters, "Distributed entanglement," Phys. Rev. A 61, 052306 (2000).
+$$
+C_{AB}^2+C_{AC}^2\leq\tau_{A|BC}.
+$$
 
-[5] H. Barnum, C. M. Caves, C. A. Fuchs, R. Jozsa, and B. Schumacher, "Noncommuting mixed states cannot be broadcast," Phys. Rev. Lett. 76, 2818 (1996).
+For general pure three-qubit states, the difference may encode residual tripartite entanglement. In the W sector, however, the difference vanishes identically.
 
-[6] B. Toner and F. Verstraete, "Monogamy of Bell correlations and Tsirelson's bound," arXiv:quant-ph/0611001 (2006).
+## 7. Monogamy saturation and the normalized bound
+
+**Theorem 5 (W-State Monogamy Equality).** For all $a,b,c\in\mathbb C$,
+
+$$
+C_{AB}^2+C_{AC}^2=\tau_{A|BC}.
+$$
+
+In particular, the monogamy inequality is saturated throughout the W sector.
+
+**Proof sketch.** Substitute the definitions and factor:
+
+$$
+C_{AB}^2+C_{AC}^2
+=4q(a)q(b)+4q(a)q(c)
+=4q(a)(q(b)+q(c))
+=\tau_{A|BC}.
+$$
+
+No normalization hypothesis is needed. $\square$
+
+The equality says that A's one-tangle is exhausted by the two pairwise squared concurrences. The residual quantity
+
+$$
+\tau_{A|BC}-C_{AB}^2-C_{AC}^2
+$$
+
+is zero for every W-sector amplitude triple. This distinguishes W-type sharing from forms of genuinely tripartite entanglement with nonzero residual tangle.
+
+**Theorem 6 (Unit Bound for Normalized W States).** If
+
+$$
+q(a)+q(b)+q(c)=1,
+$$
+
+then
+
+$$
+0\leq\tau_{A|BC}\leq1.
+$$
+
+The upper bound is attained exactly when $q(a)=1/2$.
+
+**Proof sketch.** Nonnegativity is immediate. Put $x=q(a)$. Normalization gives $q(b)+q(c)=1-x$, with $0\leq x\leq1$. Therefore
+
+$$
+\tau_{A|BC}=4x(1-x)=1-(2x-1)^2\leq1.
+$$
+
+Equality holds precisely when $(2x-1)^2=0$, or $x=1/2$. The remaining normalized weight $1/2$ may be divided between $b$ and $c$ arbitrarily. $\square$
+
+Combining Theorems 5 and 6 gives
+
+$$
+C_{AB}^2+C_{AC}^2\leq1
+$$
+
+for normalized W states, with equality precisely when the first qubit's excitation probability is $1/2$.
+
+For the symmetric W state $a=b=c=1/\sqrt3$, one obtains
+
+$$
+C_{AB}^2=C_{AC}^2=\frac49,
+\qquad
+\tau_{A|BC}=\frac89.
+$$
+
+This example displays substantial pairwise entanglement with both partners while respecting the exact budget.
+
+## 8. Algorithms and numerical demonstrations
+
+The results admit direct finite computations useful for teaching and circuit validation.
+
+### 8.1 Branch enumeration for teleportation
+
+Given complex amplitudes $\alpha$ and $\beta$, construct the three-bit initial amplitude table
+
+$$
+T_0(u,v,w)=\psi(u)B(v,w).
+$$
+
+Compute $T_1$ by the CNOT index substitution and $T_2$ by the Hadamard sum or difference. For each pair $(a,b)$, extract the two amplitudes $T_2(a,b,0)$ and $T_2(a,b,1)$, then perform the conditional swap and sign change. Compare the result with $(\alpha/2,\beta/2)$.
+
+The table contains eight complex amplitudes, so this direct simulation uses constant time and memory for a fixed three-qubit circuit. More generally, dense simulation of $n$ qubits uses $O(2^n)$ memory, while a one- or two-qubit gate update costs $O(2^n)$ arithmetic operations.
+
+### 8.2 W-state tangle evaluation
+
+Given $a,b,c\in\mathbb C$, compute $x=|a|^2$, $y=|b|^2$, and $z=|c|^2$. Return
+
+$$
+\tau=4x(y+z),\qquad C_{AB}^2=4xy,\qquad C_{AC}^2=4xz.
+$$
+
+The residual $\tau-C_{AB}^2-C_{AC}^2$ should vanish up to floating-point roundoff. This algorithm performs a constant number of complex multiplications and real arithmetic operations, hence has $O(1)$ time and memory complexity.
+
+For normalized inputs, the same routine checks the bound $\tau\leq1$. If raw amplitudes are nonzero but not normalized, divide each by
+
+$$
+\sqrt{|a|^2+|b|^2+|c|^2}
+$$
+
+before interpreting the values as normalized-state entanglement measures.
+
+## 9. Applications, interpretation, and limitations
+
+No-cloning underlies the disturbance-based security intuition of quantum key distribution: an adversary cannot make a perfect universal copy and postpone all measurements without consequence. The theorem here identifies an especially elementary obstruction, but it is intentionally algebraic. Operational security claims additionally require a state model, measurements, noise assumptions, and quantitative information bounds.
+
+Teleportation is a primitive for distributed quantum computing and quantum networking. It converts shared entanglement plus classical communication into a perfect identity channel on an unknown qubit. Gate teleportation and measurement-based computation elaborate the same idea: prepare resource entanglement in advance, perform local measurements, and track conditional corrections. In fault-tolerant architectures, Pauli corrections can often be recorded in a classical Pauli frame rather than physically applied immediately.
+
+The W-state equality provides an exact entanglement ledger. If A increases its squared concurrence with B while its total one-tangle is fixed, its squared concurrence with C must decrease by the same amount. Such relations matter in network design, where entanglement links compete for a finite local resource, and in classification, where residual tangle separates different kinds of multipartite correlation.
+
+The scope of the monogamy theorem must be stated carefully. It concerns the W sector and the displayed concurrence/tangle formulas. It is not by itself a proof of the full convex-roof Coffman--Kundu--Wootters theorem for arbitrary mixed reductions of arbitrary pure three-qubit states. Likewise, the teleportation calculation treats pure amplitude vectors and branchwise projective measurement, not a complete density-matrix channel with arbitrary ancillary extensions. These restrictions are mathematically transparent and point directly toward stronger formulations.
+
+## 10. Structural synthesis
+
+The preceding theorems can be organized around three different uses of linearity. In no-cloning, linearity is a constraint. The desired map would have to agree with a quadratic diagonal operation on every point, but its response to scalar multiplication is fixed to be homogeneous of degree one. A single test at $2\cdot1$ exposes the incompatibility. The argument is independent of dimension and does not rely on choosing a basis.
+
+In teleportation, linearity is a constructive tool. The Bell state creates two correlated paths, and the Hadamard combines paths by sums and differences. Alice's measurement does not reveal $\alpha$ or $\beta$; instead, it reveals which member of the finite set $\{I,X,Z,XZ\}$ relates Bob's branch to the input. The continuous quantum data remain encoded in Bob's amplitudes, while the discrete classical data specify the frame in which those amplitudes should be interpreted. This separation explains how two classical bits suffice without constituting a classical description of an arbitrary qubit.
+
+In W-state monogamy, quadratic quantities provide an additive ledger. Squared modulus converts complex amplitudes into nonnegative weights. Multiplication by $4|a|^2$ distributes over the sum $|b|^2+|c|^2$, producing exact additivity of the two pairwise squared concurrences. Normalization then reduces the total to the one-variable parabola $4x(1-x)$. Its maximum follows from completing the square, so the entanglement bound is both algebraically exact and geometrically visible.
+
+The three results also display different notions of resource consumption. A universal cloner would create an extra information-bearing output without sacrificing the input, which linear quantum dynamics forbids. Teleportation transfers the information by consuming one Bell pair, one local measurement, and two transmitted classical bits. W-state monogamy constrains simultaneous links rather than a time-dependent protocol: increasing one pairwise allocation at fixed total necessarily reduces the other. In each case, the mathematics prevents a resource from being obtained for free.
+
+### 10.1 Robustness of the teleportation calculation
+
+The branchwise theorem is homogeneous in $\psi$. Consequently it applies before normalization and remains valid for symbolic amplitudes, making it suitable for compositional calculations in larger circuits. Relative phases are fully retained because $\alpha$ and $\beta$ are arbitrary complex numbers. The common factor $1/2$ is independent of both the input and the outcome. This uniformity is what yields input-independent outcome probabilities for normalized pure states.
+
+Different circuit conventions may reverse the order of reported bits, choose another Bell state, or place signs in different branches. Such variations alter the correction table but not the architecture of the proof: enumerate the finite branches, identify a Pauli distortion in each, and invert it conditionally. Any claimed implementation can therefore be tested against the amplitude identity rather than only against selected basis states.
+
+### 10.2 Equality conditions and diagnostic value
+
+The normalized one-tangle bound contains more information than an inequality. Since
+
+$$
+1-\tau_{A|BC}=(2|a|^2-1)^2,
+$$
+
+the deficit from maximal one-tangle exactly measures the squared imbalance of the first qubit's excitation weight from $1/2$. The split of the remaining weight between $b$ and $c$ does not affect the total one-tangle, but it controls how that total is divided between $C_{AB}^2$ and $C_{AC}^2$. Thus two independent coordinates have clear roles: $|a|^2$ sets the size of the budget, while the ratio $|b|^2:(|b|^2+|c|^2)$ allocates it.
+
+This decomposition suggests a practical diagnostic for data intended to represent a W-sector state. First check normalization. Next compare the measured or calculated one-tangle with $4|a|^2(1-|a|^2)$. Finally compare the pairwise sum with that value. A nonzero residual beyond uncertainty indicates either departure from the W-sector model, inconsistent estimates, or noise not represented by a pure amplitude triple.
+
+## 11. Future work
+
+Four extensions are particularly natural.
+
+First, one can prove the full Coffman--Kundu--Wootters inequality for every normalized pure three-qubit amplitude tensor. This requires defining reduced density matrices and convex-roof squared concurrence, then showing that the A--B and A--C contributions sum to at most $4\det\rho_A$.
+
+Second, teleportation can be lifted to mixed states and channels. Bell-pair preparation, Alice's gates and measurement, classical control, and Bob's corrections should compose to the identity completely positive trace-preserving map on $2\times2$ complex matrices, including equality on extensions by arbitrary reference systems.
+
+Third, exact no-cloning can be complemented by an optimal approximate result. For symmetric $1\to2$ completely positive trace-preserving qubit cloners, the expected optimal worst-case single-copy fidelity is $5/6$, attained by the universal symmetric cloner.
+
+Fourth, the W-sector residual equality can be embedded in the general pure-state formula. The residual tangle should be nonnegative and equal four times the absolute value of Cayley's $2\times2\times2$ hyperdeterminant, revealing algebraically why it vanishes in the W sector and need not vanish elsewhere.
+
+## 12. Conclusion
+
+The three results form a coherent picture of quantum information. Universal copying fails already at scalar homogeneity: the diagonal tensor rule is quadratic and cannot be linear. Teleportation succeeds branch by branch because entanglement and interference transform an arbitrary input into four Pauli-related conditional states, each corrected to exactly half the original amplitude vector. In W-sector three-qubit states, entanglement obeys an exact allocation law, with pairwise squared concurrences summing to the one-tangle and the normalized total bounded by one.
+
+Prohibition, protocol, and resource bound are therefore linked by elementary algebra. The same linear structure that excludes a universal cloner makes the teleportation circuit analyzable, while squared-amplitude identities expose how entanglement can be shared.

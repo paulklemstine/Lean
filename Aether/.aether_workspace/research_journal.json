@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ed94092b",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nThe complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` reduces complement-closed reconstruction questions to either member of each complementary pair. Conc",
-      "quality_score": 0.7667599999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-08-01T09:30:07",
-      "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
-    },
-    {
       "cycle_id": "cb10fc42",
       "domain": "Logic",
       "key_insight": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone do",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-03T15:28:39",
       "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
+    },
+    {
+      "cycle_id": "e4843e14",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThe proposed mixed-area formula needs a normalization correction. For standard degree triangles, normalized lattice area satisfies\n\n\\[\nA((d+e)\\Delta)-A(d\\Delta)-A(e\\Delta)=2de.\n\\]",
+      "quality_score": 0.7439399999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-03T17:30:50",
+      "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "25e8f86d",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Neural Tangent Dynamics\n\n## 1. Uniform infinite-width kernel concentration\n\nFor fully connected networks with sub-Gaussian initialization and Lipschitz activation derivative, the",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-26T02:25:29",
-      "title": "Neural Tangent Kernel: Convergence of Gradient Descent"
-    },
     {
       "cycle_id": "830d234a",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-03T15:28:39",
       "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
+    },
+    {
+      "cycle_id": "e4843e14",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThe proposed mixed-area formula needs a normalization correction. For standard degree triangles, normalized lattice area satisfies\n\n\\[\nA((d+e)\\Delta)-A(d\\Delta)-A(e\\Delta)=2de.\n\\]",
+      "quality_score": 0.7439399999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-03T17:30:50",
+      "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2acb9b42",
-      "domain": "Shared",
-      "name": "exists_width_le_one",
-      "quality": 0.7411399999999999
-    },
-    {
-      "cycle_id": "5814a7d4",
-      "domain": "Computation",
-      "name": "signedAdj_sq",
-      "quality": 0.74072
-    },
-    {
-      "cycle_id": "064bb153",
-      "domain": "Geometry",
-      "name": "lagrange_identity",
-      "quality": 0.75976
-    },
     {
       "cycle_id": "064bb153",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "enhancement_state_sum",
       "quality": 0.77922
+    },
+    {
+      "cycle_id": "e4843e14",
+      "domain": "Algebra",
+      "name": "normalizedMixedAreaDifference_eq_twice",
+      "quality": 0.7439399999999999
+    },
+    {
+      "cycle_id": "e4843e14",
+      "domain": "Algebra",
+      "name": "two_tropical_lines_normalized_area_counterexample",
+      "quality": 0.7439399999999999
+    },
+    {
+      "cycle_id": "e4843e14",
+      "domain": "Algebra",
+      "name": "normalized_area_formula_ne_bezout_of_pos",
+      "quality": 0.7439399999999999
     }
   ],
-  "last_updated": "2026-08-03T15:28:39",
+  "last_updated": "2026-08-03T17:30:50",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "eae986b3",
-        "quality": 0.6380299999999999,
-        "theorems": 6,
-        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-      },
-      {
         "cycle_id": "229af38b",
         "quality": 0.80057,
         "theorems": 15,
@@ -3079,6 +3073,12 @@
         "quality": 0.74086,
         "theorems": 12,
         "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
+      },
+      {
+        "cycle_id": "e4843e14",
+        "quality": 0.7439399999999999,
+        "theorems": 8,
+        "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
       }
     ],
     "Applications": [
