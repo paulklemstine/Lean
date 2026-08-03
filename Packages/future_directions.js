@@ -782,21 +782,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Hadwiger's Conjecture"
   },
   {
-    "consumed_by_exp_id": "92412bd6",
-    "description": "Building on cycle f1303b99 (Q=0.811), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_f1303b99_36640bdc",
-    "phase": "A",
-    "priority_score": 0.9110699999999999,
-    "research_mode": "team",
-    "source_exp_id": "f1303b99",
-    "status": "in_progress",
-    "timestamp": "2026-07-29T06:54:54.862192+00:00",
-    "title": "Deepening: Game of Life Universality"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domains": [
@@ -1979,16 +1964,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Emergent Spacetime from Quantum Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5f7aac5",
     "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "NumberTheory"
     ],
     "id": "push_ee1ae94f_39fc795b",
+    "phase": "A",
     "priority_score": 0.88664,
     "research_mode": "team",
     "source_exp_id": "ee1ae94f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-28T17:00:01.809184+00:00",
     "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -2287,17 +2273,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87f6aef5",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
       "Logic"
     ],
     "id": "seed_303",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
@@ -2920,21 +2907,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-30T09:52:06.695169+00:00",
     "title": "Deepening: Borges' Library of Babel: Combinatorics of Everything"
-  },
-  {
-    "consumed_by_exp_id": "60e2b23a",
-    "description": "Building on cycle d333f65d (Q=0.761), which proved 13 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_d333f65d_614d72b5",
-    "phase": "A",
-    "priority_score": 0.8611099999999999,
-    "research_mode": "team",
-    "source_exp_id": "d333f65d",
-    "status": "in_progress",
-    "timestamp": "2026-08-01T23:24:18.928636+00:00",
-    "title": "Deepening: Percolation Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -5168,21 +5140,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T10:38:16.188646+00:00",
     "title": "ArXiv paper: Arithmetic Properties for $k$-Color Analogue of Simultaneously $s$-Regular and $t$-Distinct Partitions"
-  },
-  {
-    "consumed_by_exp_id": "18ab6902",
-    "description": "Investigate the ArXiv paper 'Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected' and formalize its key results. Abstract: The toughness of a non-complete graph $G$, denoted $\u03c4(G)$, is defined as \\[ \u03c4(G) = \\min\\left\\{ \\frac{|S|}{\u03c9(G-S)} : S \\subseteq V(G),\\ \u03c9(G-S) \\geq 2 \\right\\}, \\] where $\u03c9(G-S)$ is the number of components of $G - S$. For a complete graph $G$, we define $\u03c4(G) = \\infty$. A graph $G$ is $t$-tough if $\u03c4(G) \\geq t$. For a positive integer $k$, a graph $G$ is $(K_2 \\cup kK_1)$-free if it contains no induced subgraph isomorphic to $K_2 \\cup kK_1$. Recently, Liu \\cite{liu} showed that every $2k$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $\u03c4(G) > 1$ is Hamilton-connected. In this paper, we strengthen this result by proving that every $(k+1)$-connected $(K_2 \\cup kK_1)$-free graph $G$ with $\u03c4(G) > 1$ and minimum degree $\u03b4(G) \\geq 2k$ is Hamilton-connected. Moreover, by imposing restrictions to the independence number $\u03b1(G)$, we prove that every $k$-connected $(K_2 \\cup kK_1)$-free graph $G$ of order $n$ with $2k+1 \\leq \u03b1(G) < \\frac{n}{2}$ and $\u03b4(G) \\geq 2k$ is Hamilton-connected, and that t",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0074",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11373v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T10:53:48.349640+00:00",
-    "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
   },
   {
     "consumed_by_exp_id": "",
@@ -11315,15 +11272,61 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal development now identifies the recursively defined time-`t` dependency cone exactly with the radius-`t` Chebyshev ball and proves its exact cardinality `(2t+1)^2`. The next stages toward a constructive universality theorem are:\n\n1. Define finite Life patterns together with translation, reflection, and rotation actions, and prove evolution equivariant under these symmetries.\n2. Verify standard still lifes, oscillators, and gliders as reusable timed components.\n3. Construct signal tracks, fanout, crossings, and Boolean gates from finite patterns, with explicit latency and bounding-box specifications.\n4. Develop composition theorems that turn component certificates into clocked circuit simulations while tracking time and area overhead.\n5. Encode a universal register machine or Turing machine and prove a direct Life simulation theorem with explicit polynomial time and space bounds.\n6. Distinguish syntactic rule dependencies from semantic influence by characterizing which cells can change a designated output under some pair of initial configurations.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0938",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "92412bd6",
+    "status": "available",
+    "timestamp": "2026-08-03T21:38:49.340608+00:00",
+    "title": "The formal development now identifies the recursively defined time-`t` dependenc"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Completed foundation\n\n`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-contained,\nsorry-free treatment of the paper's forbidden induced configuration. In particular, it\nformalizes `(K\u2082 \u222a kK\u2081)`-freeness directly and proves both directions of the exact local\ncharacterization:\n\n> A graph is `(K\u2082 \u222a kK\u2081)`-free if and only if the common antineighbourhood of every\n> independent `k`-vertex set is independent.\n\nThe file also proves the stronger large-independent-set consequence, parameter\nmonotonicity, the `k = 0` characterization, and the `k = 1` singleton corollary.\n\n## Next formalization milestones\n\n1. **Induced-copy interface.** Relate `IsK2UnionK1Free` to Mathlib's induced-subgraph\n   and graph-isomorphism APIs, proving equivalence with nonexistence of an induced copy\n   of the disjoint union `K\u2082 \u222a kK\u2081`.\n2. **Finite graph invariants.** Put vertex connectivity, minimum degree, independence\n   number, component count after vertex deletion, toughness, Hamilton paths, and\n   Hamilton-connectedness into one compatible finite-simple-graph interface.\n3. **Toughness consequences.** Derive the separator inequalities used by the paper from\n   `\u03c4(G) > 1`, while handling complete graphs separately according to the convention\n   `\u03c4(G) = \u221e`.\n4. **Path exchange.** Formalize longest-path extension and endpoint-exchange lemmas. The\n   local characterization proved here should discharge each step where a large\n   independent set anticomplete to an edge would otherwise arise.\n5. **First headline theorem.** Prove that a `(k+1)`-connected,\n   `(K\u2082 \u222a kK\u2081)`-free graph with toughness greater than one and minimum degree at least\n   `2k` is Hamilton-connected.\n6. **Independence-number variants.** Formalize the paper's later results, explicitly\n   tracking graph order and hypotheses such as `2k + 1 \u2264 \u03b1(G)` and\n   `\u03b1(G) < |V(G)| / 2`.\n7. **Finite-model regression tests.** Once the invariant interface exists, enumerate\n   small finite graphs to test conventions and detect off-by-one errors in connectivity,\n   component count, toughness, and Hamilton-connectedness definitions.\n",
+    "domains": [
+      "Combinatorics",
+      "Bridges"
+    ],
+    "id": "fd_0939",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "18ab6902",
+    "status": "available",
+    "timestamp": "2026-08-03T21:39:54.243703+00:00",
+    "title": "`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-conta"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Instantiate the measure-preserving symmetry theorem for finite planar bond-percolation configurations, with primal crossing and dual crossing proved complementary by a discrete Jordan-curve argument.\n- Formalize planar dual graphs and derive the square-lattice bond threshold from finite-box duality together with the required infinite-volume limiting theory.\n- Connect monotone finite-volume crossing probabilities to product Bernoulli measures and prove sharp-threshold estimates.\n- Develop the star\u2013triangle transformation and use it to transfer exact bond thresholds among the triangular and hexagonal lattices.\n- Extend the event-level self-duality result to scaling limits, where conformal maps transport crossing events and preserve their limiting probabilities.\n- The infinite square-lattice site threshold is not presently known in closed analytic form; a faithful formal development should treat numerical estimates separately from exact theorems.\n",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_0940",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "60e2b23a",
+    "status": "available",
+    "timestamp": "2026-08-03T21:40:56.753216+00:00",
+    "title": "Future directions from cycle 60e2b23a"
+  },
+  {
+    "consumed_by_exp_id": "bae1175e",
     "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
     "domains": [
       "Combinatorics"
     ],
     "id": "sorry_fill_1a27f9f3_755cd7ae",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "1a27f9f3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T20:48:35.754087+00:00",
     "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
   },

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ee0c99e7",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe Lean development proves exact results for an explicit region-capacity model.  The following are concrete extensions that would connect those combinatorial bounds to analytic a",
-      "quality_score": 0.80029,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-01T11:45:24",
-      "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-    },
-    {
       "cycle_id": "febd9c83",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Sharpness of Prime-to-Characteristic Averaging\n\n## Contrarian conjecture tested\n\nA tempting strengthening of the finite-group averaging theorem is:\n\n> **Unconditional averaging co",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-03T21:39:58",
       "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
+    },
+    {
+      "cycle_id": "60e2b23a",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n- Instantiate the measure-preserving symmetry theorem for finite planar bond-percolation configurations, with primal crossing and dual crossing proved complementary by a discrete",
+      "quality_score": 0.72259,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-03T21:41:00",
+      "title": "Deepening: Percolation Threshold"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "735a1ab0",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: Neural Tangent Kernel Convergence\n\n## 1. Quantitative universality under approximately equal kernels\n\n**Conjecture.** Consider two lazy-training residual recursions with the same",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-26T05:37:01",
-      "title": "Neural Tangent Kernel: Convergence"
-    },
     {
       "cycle_id": "078d5371",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-03T21:39:58",
       "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
+    },
+    {
+      "cycle_id": "60e2b23a",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\n- Instantiate the measure-preserving symmetry theorem for finite planar bond-percolation configurations, with primal crossing and dual crossing proved complementary by a discrete",
+      "quality_score": 0.72259,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-03T21:41:00",
+      "title": "Deepening: Percolation Threshold"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f15cd85a",
-      "domain": "Geometry",
-      "name": "not_square_73225",
-      "quality": 0.76837
-    },
-    {
-      "cycle_id": "f15cd85a",
-      "domain": "Geometry",
-      "name": "brick_44_117_240_not_perfect",
-      "quality": 0.76837
-    },
-    {
-      "cycle_id": "c7c1ec6d",
-      "domain": "NumberTheory",
-      "name": "continuous_scalarLogNorm",
-      "quality": 0.7667599999999999
-    },
     {
       "cycle_id": "c7c1ec6d",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "free_iff_antineighborhood_independent",
       "quality": 0.72693
+    },
+    {
+      "cycle_id": "60e2b23a",
+      "domain": "Probability",
+      "name": "crossing_half_of_selfDual",
+      "quality": 0.72259
+    },
+    {
+      "cycle_id": "60e2b23a",
+      "domain": "Probability",
+      "name": "crossing_lt_half_of_lt",
+      "quality": 0.72259
+    },
+    {
+      "cycle_id": "60e2b23a",
+      "domain": "Probability",
+      "name": "crossing_gt_half_of_lt",
+      "quality": 0.72259
     }
   ],
-  "last_updated": "2026-08-03T21:39:58",
+  "last_updated": "2026-08-03T21:41:00",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "883686fe",
-        "quality": 0.677,
-        "theorems": 15,
-        "title": "Symmetric Group Generation Probability"
-      },
-      {
         "cycle_id": "bd7b389e",
         "quality": 0.686,
         "theorems": 35,
@@ -3823,6 +3817,12 @@
         "quality": 0.78272,
         "theorems": 23,
         "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+      },
+      {
+        "cycle_id": "60e2b23a",
+        "quality": 0.72259,
+        "theorems": 8,
+        "title": "Deepening: Percolation Threshold"
       }
     ],
     "Pythagorean": [
