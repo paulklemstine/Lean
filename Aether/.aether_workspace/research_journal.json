@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "078d5371",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Integer polynomial object.** Construct `chromaticPolynomial G : ℤ[X]`, prove its evaluation at every natural palette size equals `chromVal G`, and lift deletion–contraction f",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-07-26T05:37:07",
-      "title": "Graph Coloring: Chromatic Polynomial Theory"
-    },
-    {
       "cycle_id": "6a88207a",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## 1. Exact period-three certification at parameter 3.83\n\nConjecture: the logistic map `x ↦ 3.83x(1-x)` has an attracting orbit of exact period three whose basin contains the crit",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-08-03T21:41:00",
       "title": "Deepening: Percolation Threshold"
+    },
+    {
+      "cycle_id": "c0621a16",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe following are concrete formalization conjectures extending the verified finite optimization and arithmetic-progression bookkeeping in `Catalog/Novelty/TwinPrimeGaps/MaynardTao",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-08-03T23:27:46",
+      "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72259
     }
   ],
-  "last_updated": "2026-08-03T21:41:00",
+  "last_updated": "2026-08-03T23:27:46",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a7f30302",
-        "quality": 0.78251,
-        "theorems": 35,
-        "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynam"
-      },
-      {
         "cycle_id": "7b912198",
         "quality": 0.7734099999999999,
         "theorems": 21,
@@ -3637,6 +3631,12 @@
         "quality": 0.686,
         "theorems": 32,
         "title": "Deepening: Game of Life Universality"
+      },
+      {
+        "cycle_id": "c0621a16",
+        "quality": 0.686,
+        "theorems": 33,
+        "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
       }
     ],
     "NumberTheory": [
