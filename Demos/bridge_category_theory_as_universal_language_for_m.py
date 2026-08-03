@@ -1,237 +1,201 @@
-"""Numerical demonstration of the topos subobject-lattice results.
+#!/usr/bin/env python3
+"""Finite demonstrations of Yoneda reconstruction and Heyting-frame laws.
 
-This script builds *concrete finite frames* (complete Heyting algebras) and
-verifies, by exhaustive computation, every theorem proved in the Phase A Lean
-development:
-
-    himp_isGreatest   universal property: a ⇨ c is greatest x with a ⊓ x ≤ c
-    le_dneg           a ≤ aᶜᶜ                       (extensive)
-    dneg_monotone     a ≤ b ⟹ aᶜᶜ ≤ bᶜᶜ            (monotone)
-    dneg_idem         aᶜᶜᶜᶜ = aᶜᶜ                   (idempotent)
-    dneg_inf          (a ⊓ b)ᶜᶜ = aᶜᶜ ⊓ bᶜᶜ        (meet-preserving)
-    dneg_bot/top      ⊥ᶜᶜ = ⊥ , ⊤ᶜᶜ = ⊤
-    isRegular_inf     regular a, b ⟹ regular (a ⊓ b)
-    isRegular_iff     regular a ⟺ aᶜᶜ ≤ a
-    lfp_dneg_eq_bot   ⋂ {x | dneg x ≤ x}  = ⊥
-    gfp_dneg_eq_top   ⋃ {x | x ≤ dneg x}  = ⊤
-
-The frame used is the lattice of *down-sets* (order ideals) of a finite poset.
-Down-sets of any poset form a complete Heyting algebra — the Alexandrov-open
-sets of a finite topological space — so it is a faithful finite model of the
-subobject lattice `Opens X`.
+The script uses only Python's standard library.  It models a finite poset as a
+category and a finite topology as the frame of its open sets.
 """
 
 from __future__ import annotations
 
-from itertools import combinations
-from typing import Callable, FrozenSet, List, Set, Tuple
+from itertools import product
+from typing import Callable, Dict, FrozenSet, Iterable, List, Sequence, Tuple
 
-# A frame element is a down-closed set of poset points, stored as a frozenset.
-Elt = FrozenSet[int]
-
-
-class Frame:
-    """The frame of down-sets of a finite poset (a complete Heyting algebra)."""
-
-    def __init__(self, points: List[int], leq: Callable[[int, int], bool]) -> None:
-        self.points: List[int] = points
-        self.leq = leq  # leq(p, q) means p ≤ q in the poset
-        self.elements: List[Elt] = self._all_downsets()
-        self.bot: Elt = frozenset()
-        self.top: Elt = frozenset(points)
-
-    def _is_downset(self, s: Set[int]) -> bool:
-        # s is down-closed: q ∈ s and p ≤ q ⟹ p ∈ s
-        return all(p in s for q in s for p in self.points if self.leq(p, q))
-
-    def _all_downsets(self) -> List[Elt]:
-        downs: List[Elt] = []
-        n = len(self.points)
-        for r in range(n + 1):
-            for combo in combinations(self.points, r):
-                s = set(combo)
-                if self._is_downset(s):
-                    downs.append(frozenset(s))
-        return downs
-
-    # ---- lattice operations ------------------------------------------------
-    def meet(self, a: Elt, b: Elt) -> Elt:
-        return a & b
-
-    def join(self, a: Elt, b: Elt) -> Elt:
-        return a | b
-
-    def le(self, a: Elt, b: Elt) -> bool:
-        return a <= b
-
-    def himp(self, a: Elt, c: Elt) -> Elt:
-        """Heyting implication: the join of every element x with a ⊓ x ≤ c.
-
-        In a frame this join itself satisfies the constraint, so it is the
-        *greatest* such x (this is exactly `himp_isGreatest`).
-        """
-        result: Set[int] = set()
-        for x in self.elements:
-            if self.le(self.meet(a, x), c):
-                result |= x
-        return frozenset(result)
-
-    def compl(self, a: Elt) -> Elt:
-        """Pseudocomplement aᶜ = a ⇨ ⊥."""
-        return self.himp(a, self.bot)
-
-    def dneg(self, a: Elt) -> Elt:
-        """Double negation aᶜᶜ — the nucleus / regularization operator."""
-        return self.compl(self.compl(a))
-
-    def is_regular(self, a: Elt) -> bool:
-        return self.dneg(a) == a
+Point = int
+OpenSet = FrozenSet[Point]
+Restriction = Callable[[int], int]
 
 
-def fmt(a: Elt) -> str:
-    return "{" + ",".join(map(str, sorted(a))) + "}" if a else "∅"
+def powerset(points: Sequence[Point]) -> List[OpenSet]:
+    """Return all subsets of a finite sequence as frozensets."""
+    subsets: List[OpenSet] = [frozenset()]
+    for point in points:
+        subsets += [subset | {point} for subset in subsets]
+    return subsets
 
 
-# ---------------------------------------------------------------------------
-# Theorem checkers (each returns True iff the theorem holds on this frame).
-# ---------------------------------------------------------------------------
-
-def check_himp_isGreatest(F: Frame) -> bool:
-    for a in F.elements:
-        for c in F.elements:
-            h = F.himp(a, c)
-            witnesses = [x for x in F.elements if F.le(F.meet(a, x), c)]
-            # membership: a ⊓ h ≤ c
-            if not F.le(F.meet(a, h), c):
-                return False
-            # greatest: every witness is below h
-            if not all(F.le(x, h) for x in witnesses):
-                return False
-    return True
+def is_topology(points: Sequence[Point], opens: Iterable[OpenSet]) -> bool:
+    """Check the topology axioms for a finite family of subsets."""
+    family = set(opens)
+    whole = frozenset(points)
+    if frozenset() not in family or whole not in family:
+        return False
+    # In a finite family, arbitrary unions reduce to unions of subfamilies;
+    # closure under binary unions suffices by induction.
+    return all((a | b) in family and (a & b) in family for a in family for b in family)
 
 
-def check_le_dneg(F: Frame) -> bool:
-    return all(F.le(a, F.dneg(a)) for a in F.elements)
+def interior(subset: OpenSet, opens: Sequence[OpenSet]) -> OpenSet:
+    """Compute the largest open set contained in a subset."""
+    result: OpenSet = frozenset()
+    for candidate in opens:
+        if candidate <= subset:
+            result = result | candidate
+    return result
 
 
-def check_dneg_monotone(F: Frame) -> bool:
-    return all(
-        (not F.le(a, b)) or F.le(F.dneg(a), F.dneg(b))
-        for a in F.elements
-        for b in F.elements
+def heyting_implication(
+    antecedent: OpenSet,
+    consequent: OpenSet,
+    universe: OpenSet,
+    opens: Sequence[OpenSet],
+) -> OpenSet:
+    """Compute U => W as int((X \\ U) union W)."""
+    return interior((universe - antecedent) | consequent, opens)
+
+
+def heyting_implication_by_universal_property(
+    antecedent: OpenSet, consequent: OpenSet, opens: Sequence[OpenSet]
+) -> OpenSet:
+    """Join all V satisfying U intersection V subset W."""
+    admissible = [v for v in opens if (antecedent & v) <= consequent]
+    result: OpenSet = frozenset()
+    for v in admissible:
+        result = result | v
+    return result
+
+
+def negation(value: OpenSet, universe: OpenSet, opens: Sequence[OpenSet]) -> OpenSet:
+    """Compute intuitionistic negation value => empty."""
+    return heyting_implication(value, frozenset(), universe, opens)
+
+
+def double_negation(value: OpenSet, universe: OpenSet, opens: Sequence[OpenSet]) -> OpenSet:
+    """Compute the double-negation nucleus."""
+    return negation(negation(value, universe, opens), universe, opens)
+
+
+def verify_frame_laws(points: Sequence[Point], opens: Sequence[OpenSet]) -> Dict[str, bool]:
+    """Exhaustively verify implication and double-negation laws."""
+    universe = frozenset(points)
+    implication_formula = all(
+        heyting_implication(u, w, universe, opens)
+        == heyting_implication_by_universal_property(u, w, opens)
+        for u, w in product(opens, repeat=2)
     )
-
-
-def check_dneg_idem(F: Frame) -> bool:
-    return all(F.dneg(F.dneg(a)) == F.dneg(a) for a in F.elements)
-
-
-def check_dneg_inf(F: Frame) -> bool:
-    return all(
-        F.dneg(F.meet(a, b)) == F.meet(F.dneg(a), F.dneg(b))
-        for a in F.elements
-        for b in F.elements
+    adjunction = all(
+        ((u & v) <= w)
+        == (v <= heyting_implication(u, w, universe, opens))
+        for u, v, w in product(opens, repeat=3)
     )
-
-
-def check_dneg_bounds(F: Frame) -> bool:
-    return F.dneg(F.bot) == F.bot and F.dneg(F.top) == F.top
-
-
-def check_isRegular_inf(F: Frame) -> bool:
-    for a in F.elements:
-        for b in F.elements:
-            if F.is_regular(a) and F.is_regular(b):
-                if not F.is_regular(F.meet(a, b)):
-                    return False
-    return True
-
-
-def check_isRegular_iff(F: Frame) -> bool:
-    return all(
-        F.is_regular(a) == F.le(F.dneg(a), a) for a in F.elements
+    extensive = all(u <= double_negation(u, universe, opens) for u in opens)
+    monotone = all(
+        not (u <= v)
+        or double_negation(u, universe, opens) <= double_negation(v, universe, opens)
+        for u, v in product(opens, repeat=2)
     )
-
-
-def lfp_dneg(F: Frame) -> Elt:
-    """sInf of pre-fixed points {x | dneg x ≤ x} = intersection of them."""
-    pre = [x for x in F.elements if F.le(F.dneg(x), x)]
-    acc = F.top
-    for x in pre:
-        acc = F.meet(acc, x)
-    return acc
-
-
-def gfp_dneg(F: Frame) -> Elt:
-    """sSup of post-fixed points {x | x ≤ dneg x} = union of them."""
-    post = [x for x in F.elements if F.le(x, F.dneg(x))]
-    acc = F.bot
-    for x in post:
-        acc = F.join(acc, x)
-    return acc
-
-
-def run_on(name: str, F: Frame) -> Tuple[str, bool]:
-    print(f"\n=== Frame: {name} ===")
-    print(f"  elements ({len(F.elements)}): " + ", ".join(fmt(a) for a in F.elements))
-    regs = [a for a in F.elements if F.is_regular(a)]
-    print(f"  regular elements: " + ", ".join(fmt(a) for a in regs))
-    print(f"  example: dneg{fmt(F.elements[1])} = {fmt(F.dneg(F.elements[1]))}")
-
-    checks = {
-        "himp_isGreatest": check_himp_isGreatest(F),
-        "le_dneg": check_le_dneg(F),
-        "dneg_monotone": check_dneg_monotone(F),
-        "dneg_idem": check_dneg_idem(F),
-        "dneg_inf": check_dneg_inf(F),
-        "dneg_bot/dneg_top": check_dneg_bounds(F),
-        "isRegular_inf": check_isRegular_inf(F),
-        "isRegular_iff": check_isRegular_iff(F),
-        "lfp_dneg_eq_bot": lfp_dneg(F) == F.bot,
-        "gfp_dneg_eq_top": gfp_dneg(F) == F.top,
+    idempotent = all(
+        double_negation(double_negation(u, universe, opens), universe, opens)
+        == double_negation(u, universe, opens)
+        for u in opens
+    )
+    meet_preserving = all(
+        double_negation(u & v, universe, opens)
+        == (double_negation(u, universe, opens) & double_negation(v, universe, opens))
+        for u, v in product(opens, repeat=2)
+    )
+    fixes_bounds = (
+        double_negation(frozenset(), universe, opens) == frozenset()
+        and double_negation(universe, universe, opens) == universe
+    )
+    return {
+        "implication formula equals universal construction": implication_formula,
+        "meet-implication adjunction": adjunction,
+        "double negation is extensive": extensive,
+        "double negation is monotone": monotone,
+        "double negation is idempotent": idempotent,
+        "double negation preserves binary meets": meet_preserving,
+        "double negation fixes bottom and top": fixes_bounds,
     }
-    for k, v in checks.items():
-        print(f"    [{'PASS' if v else 'FAIL'}] {k}")
-    print(f"  lfp(dneg) = {fmt(lfp_dneg(F))}   gfp(dneg) = {fmt(gfp_dneg(F))}")
-    return name, all(checks.values())
+
+
+def yoneda_reconstruct_chain(
+    representing_object: int, section: int
+) -> Dict[Tuple[int, int], int]:
+    """Reconstruct a Yoneda transformation on the chain 0 <= 1 <= 2.
+
+    There is one arrow y -> x when y <= x.  The contravariant functor has an
+    integer at each object and sends the arrow y -> x to the restriction
+    n |-> 2**(x-y) * n from F(x) to F(y).  For every arrow y -> x into the
+    representing object x, Yoneda reconstruction assigns F(y -> x)(section).
+    """
+    if representing_object not in (0, 1, 2):
+        raise ValueError("the representing object must be 0, 1, or 2")
+    return {
+        (source, representing_object): (2 ** (representing_object - source)) * section
+        for source in range(representing_object + 1)
+    }
+
+
+def verify_yoneda_naturality(representing_object: int, section: int) -> bool:
+    """Check reconstruction compatibility along every composable chain arrow."""
+    alpha = yoneda_reconstruct_chain(representing_object, section)
+    x = representing_object
+    for z in range(x + 1):
+        for y in range(z, x + 1):
+            direct = alpha[(z, x)]
+            via_y = (2 ** (y - z)) * alpha[(y, x)]
+            if direct != via_y:
+                return False
+    return True
+
+
+def format_open(value: OpenSet) -> str:
+    """Format a finite open set deterministically."""
+    return "{" + ", ".join(str(x) for x in sorted(value)) + "}"
 
 
 def main() -> None:
-    # (1) Two-element chain 0 < 1: down-sets ∅ ⊂ {0} ⊂ {0,1}.
-    #     {0} is NOT regular: dneg{0} = ⊤. This is the intuitionistic phenomenon.
-    chain = Frame([0, 1], lambda p, q: p == q or (p == 0 and q == 1))
-
-    # (2) Three-element chain 0 < 1 < 2 (a longer Heyting chain).
-    def chain3_leq(p: int, q: int) -> bool:
-        return p <= q
-    chain3 = Frame([0, 1, 2], chain3_leq)
-
-    # (3) "V" poset: 0 < 2, 1 < 2 (two minimal points under a top).
-    def v_leq(p: int, q: int) -> bool:
-        if p == q:
-            return True
-        return q == 2 and p in (0, 1)
-    vshape = Frame([0, 1, 2], v_leq)
-
-    # (4) Diamond poset 0 < 1, 0 < 2, 1 < 3, 2 < 3.
-    diamond_edges = {(0, 1), (0, 2), (1, 3), (2, 3), (0, 3)}
-
-    def diamond_leq(p: int, q: int) -> bool:
-        return p == q or (p, q) in diamond_edges
-    diamond = Frame([0, 1, 2, 3], diamond_leq)
-
-    results = [
-        run_on("2-chain (0<1)", chain),
-        run_on("3-chain (0<1<2)", chain3),
-        run_on("V-poset (0<2, 1<2)", vshape),
-        run_on("diamond (0<1,2<3)", diamond),
+    """Run all demonstrations and print a compact mathematical report."""
+    points = [0, 1, 2]
+    # Upward-closed subsets of the chain 0 < 1 < 2 form an Alexandrov topology.
+    opens: List[OpenSet] = [
+        frozenset(),
+        frozenset({2}),
+        frozenset({1, 2}),
+        frozenset({0, 1, 2}),
     ]
+    assert is_topology(points, opens)
 
-    print("\n" + "=" * 48)
-    ok = all(r[1] for r in results)
-    for name, passed in results:
-        print(f"  {'ALL PASS' if passed else 'SOME FAIL'} :: {name}")
-    print(f"\nOverall: {'ALL THEOREMS VERIFIED' if ok else 'FAILURE DETECTED'}")
+    print("YONEDA RECONSTRUCTION ON THE CHAIN 0 <= 1 <= 2")
+    section = 3
+    reconstruction = yoneda_reconstruct_chain(2, section)
+    print(f"Universal element at object 2: {section}")
+    for (source, target), value in sorted(reconstruction.items()):
+        print(f"  arrow {source} -> {target}: reconstructed value = {value}")
+    print("Naturality along every composable arrow:", verify_yoneda_naturality(2, section))
+
+    print("\nHEYTING IMPLICATION IN THE FRAME OF OPEN SETS")
+    universe = frozenset(points)
+    u = frozenset({1, 2})
+    w = frozenset({2})
+    implication = heyting_implication(u, w, universe, opens)
+    print(f"U = {format_open(u)}, W = {format_open(w)}")
+    print(f"U => W = {format_open(implication)}")
+    admissible = [v for v in opens if (u & v) <= w]
+    print("Admissible V with U intersection V subset W:",
+          ", ".join(format_open(v) for v in admissible))
+
+    print("\nDOUBLE NEGATION TABLE")
+    for value in opens:
+        image = double_negation(value, universe, opens)
+        regular = image == value
+        print(f"  jj({format_open(value)}) = {format_open(image)}; regular = {regular}")
+
+    print("\nEXHAUSTIVE LAW CHECKS")
+    checks = verify_frame_laws(points, opens)
+    for name, passed in checks.items():
+        print(f"  {name}: {passed}")
+    assert all(checks.values())
 
 
 if __name__ == "__main__":

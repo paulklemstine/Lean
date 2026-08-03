@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ff2a2247",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-gr",
-      "quality_score": 0.7582199999999999,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-31T22:26:12",
-      "title": "Reconstruction Conjecture"
-    },
-    {
       "cycle_id": "e86cdc26",
       "domain": "Computation",
       "key_insight": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, an",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-08-03T04:05:34",
       "title": "Inverse Stereographic Neural Field Theory"
+    },
+    {
+      "cycle_id": "ab554343",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause–effect repertoires, and divergence-based informati",
+      "quality_score": 0.79623,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-08-03T08:05:21",
+      "title": "Consciousness as Integrated Information"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7277c96e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n## 1. Effective abc exclusion for powered additive triples\n\n**Conjecture.** There is an explicit constant `N` such that every coprime additive\ntriple `a+b=c` with `a=A^x`, `b=B^y`",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-25T20:16:39",
-      "title": "Beal's Conjecture"
-    },
     {
       "cycle_id": "92c4b5fc",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 19,
       "timestamp": "2026-08-03T04:05:34",
       "title": "Inverse Stereographic Neural Field Theory"
+    },
+    {
+      "cycle_id": "ab554343",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause–effect repertoires, and divergence-based informati",
+      "quality_score": 0.79623,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-08-03T08:05:21",
+      "title": "Consciousness as Integrated Information"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ffa9af78",
-      "domain": "Algebra",
-      "name": "inverseBranch_side",
-      "quality": 0.74086
-    },
-    {
-      "cycle_id": "8e0a0c8a",
-      "domain": "Novelty",
-      "name": "mem_parts",
-      "quality": 0.75983
-    },
-    {
-      "cycle_id": "8e0a0c8a",
-      "domain": "Novelty",
-      "name": "parts_nonempty",
-      "quality": 0.75983
-    },
     {
       "cycle_id": "8e0a0c8a",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "one_sub_inverseStereo_third",
       "quality": 0.78433
+    },
+    {
+      "cycle_id": "ab554343",
+      "domain": "Novelty",
+      "name": "exists_minimum_information_cut",
+      "quality": 0.79623
+    },
+    {
+      "cycle_id": "ab554343",
+      "domain": "Novelty",
+      "name": "phi_le_loss",
+      "quality": 0.79623
+    },
+    {
+      "cycle_id": "ab554343",
+      "domain": "Novelty",
+      "name": "le_phi",
+      "quality": 0.79623
     }
   ],
-  "last_updated": "2026-08-03T04:05:34",
+  "last_updated": "2026-08-03T08:05:21",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9cde2d61",
-        "quality": 0.686,
-        "theorems": 34,
-        "title": "Alien Mathematics: Non-Standard Arithmetic"
-      },
-      {
         "cycle_id": "66e718fe",
         "quality": 0.8129599999999999,
         "theorems": 28,
@@ -3637,6 +3631,12 @@
         "quality": 0.67235,
         "theorems": 3,
         "title": "Sonic Mathematics: Counterpoint as Category Theory"
+      },
+      {
+        "cycle_id": "ab554343",
+        "quality": 0.79623,
+        "theorems": 19,
+        "title": "Consciousness as Integrated Information"
       }
     ],
     "NumberTheory": [
