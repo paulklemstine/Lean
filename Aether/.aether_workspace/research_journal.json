@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cb10fc42",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone do",
-      "quality_score": 0.7388999999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-01T09:31:25",
-      "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
-    },
-    {
       "cycle_id": "0e1eb0cb",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equival",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-03T17:30:50",
       "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
+    },
+    {
+      "cycle_id": "eb6ff95e",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tensor `ψ : Fin 2 → Fin 2 → Fin 2 → ℂ`, the convex-roof squared concurrences of its `AB` and `AC` reduc",
+      "quality_score": 0.7944100000000001,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-08-03T17:32:21",
+      "title": "Quantum Information: No-Cloning and Teleportation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "830d234a",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\nThe formal development proves the finite-action policy-gradient identity directly from coordinatewise score factorization, derives the mean-zero score and baseline invariance, est",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-26T02:25:34",
-      "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
-    },
     {
       "cycle_id": "55a94506",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-03T17:30:50",
       "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
+    },
+    {
+      "cycle_id": "eb6ff95e",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tensor `ψ : Fin 2 → Fin 2 → Fin 2 → ℂ`, the convex-roof squared concurrences of its `AB` and `AC` reduc",
+      "quality_score": 0.7944100000000001,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-08-03T17:32:21",
+      "title": "Quantum Information: No-Cloning and Teleportation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "064bb153",
-      "domain": "Geometry",
-      "name": "hopfFunctional_scale_invariant",
-      "quality": 0.75976
-    },
-    {
-      "cycle_id": "064bb153",
-      "domain": "Geometry",
-      "name": "hopfFunctional_eq_one_iff",
-      "quality": 0.75976
-    },
-    {
-      "cycle_id": "5907c59d",
-      "domain": "Novelty",
-      "name": "product_entanglementDet_zero",
-      "quality": 0.78678
-    },
     {
       "cycle_id": "5907c59d",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "normalized_area_formula_ne_bezout_of_pos",
       "quality": 0.7439399999999999
+    },
+    {
+      "cycle_id": "eb6ff95e",
+      "domain": "Computation",
+      "name": "no_cloning_cstar",
+      "quality": 0.7944100000000001
+    },
+    {
+      "cycle_id": "eb6ff95e",
+      "domain": "Computation",
+      "name": "no_cloning_cstar_qubit",
+      "quality": 0.7944100000000001
+    },
+    {
+      "cycle_id": "eb6ff95e",
+      "domain": "Computation",
+      "name": "invSqrtTwo_sq",
+      "quality": 0.7944100000000001
     }
   ],
-  "last_updated": "2026-08-03T17:30:50",
+  "last_updated": "2026-08-03T17:32:21",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "627f5167",
-        "quality": 0.7662,
-        "theorems": 8,
-        "title": "Reflective Type Theory: Proving Things About Proving Things"
-      },
-      {
         "cycle_id": "d54ed94e",
         "quality": 0.76634,
         "theorems": 11,
@@ -3327,6 +3321,12 @@
         "quality": 0.74072,
         "theorems": 7,
         "title": "Sensitivity Conjecture Extensions"
+      },
+      {
+        "cycle_id": "eb6ff95e",
+        "quality": 0.7944100000000001,
+        "theorems": 17,
+        "title": "Quantum Information: No-Cloning and Teleportation"
       }
     ],
     "Cryptography": [

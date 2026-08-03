@@ -709,16 +709,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0621a16",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
     ],
     "id": "fd_0646",
+    "phase": "A",
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697730+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -1704,6 +1705,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-03T08:05:21.598922+00:00",
     "title": "Deepening: Consciousness as Integrated Information"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle eb6ff95e (Q=0.794), which proved 17 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_eb6ff95e_30f1328f",
+    "priority_score": 0.89441,
+    "research_mode": "team",
+    "source_exp_id": "eb6ff95e",
+    "status": "available",
+    "timestamp": "2026-08-03T17:32:21.114010+00:00",
+    "title": "Deepening: Quantum Information: No-Cloning and Teleportation"
   },
   {
     "consumed_by_exp_id": "",
@@ -2907,16 +2922,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Borges' Library of Babel: Combinatorics of Everything"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60e2b23a",
     "description": "Building on cycle d333f65d (Q=0.761), which proved 13 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
     "domains": [
       "Probability"
     ],
     "id": "push_d333f65d_614d72b5",
+    "phase": "A",
     "priority_score": 0.8611099999999999,
     "research_mode": "team",
     "source_exp_id": "d333f65d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T23:24:18.928636+00:00",
     "title": "Deepening: Percolation Threshold"
   },
@@ -2979,23 +2995,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697817+00:00",
     "title": "Type Theory: Cubical Type Theory Foundations"
-  },
-  {
-    "consumed_by_exp_id": "eb6ff95e",
-    "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
-    "domains": [
-      "Physics",
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0683",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697828+00:00",
-    "title": "Quantum Information: No-Cloning and Teleportation"
   },
   {
     "consumed_by_exp_id": "",
@@ -10644,22 +10643,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "* Package `hypergeometricCoeff` as a `PowerSeries \u2102` and derive the displayed"
   },
   {
-    "consumed_by_exp_id": "e4843e14",
-    "description": "# Future Directions\n\n1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton polygons are lattice polygons `P` and `Q`, the stable intersection number equals `area(P + Q) - area(P) - area(Q)` (with normalized lattice area).\n\n2. **Perturbation invariance.** Every finite balanced plane tropical intersection admits a sufficiently small generic translation for which the total local determinant multiplicity is unchanged.\n\n3. **Support bound with positive multiplicities.** If every supported local multiplicity is positive and the total intersection number is `d * e`, then the support has cardinality at most `d * e`, with equality exactly when every local multiplicity is one.\n\n4. **Realizability correspondence.** For transverse intersections of realizable plane tropical curves over a complete non-Archimedean field, valuation induces a support- and multiplicity-preserving finite correspondence with the classical intersection scheme.\n\n5. **Higher-dimensional multidegree formula.** For `n` transverse tropical hypersurfaces in tropical projective `n`-space of degrees `d\u2081, \u2026, d\u2099`, the weighted zero-dimensional stable intersection has total multiplicity `\u220f i, d\u1d62`.\n",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0888",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "9fb19498",
-    "status": "in_progress",
-    "timestamp": "2026-08-01T19:43:07.771912+00:00",
-    "title": "1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton po"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L\u00b9` empirical loss reaches the unique sample median after at most `\u2308|x\u2080-m|/\u03b7\u2309` iterations when `\u03b7 > 0`.\n\n2. **Vector tropical monomials.** For a separable `d`-parameter tropical affine model with coordinatewise three-point losses, simultaneous clipped descent terminates after at most the maximum of the `d` coordinatewise termination times.\n\n3. **Perturbed tropical limit.** If each tropical update is perturbed by an error of magnitude at most `\u03b5 < \u03b7`, then its parameter distance after `n` steps is at most `max 0 (|x\u2080-m|-n(\u03b7-\u03b5))` until it enters the closed `\u03b5`-neighborhood of the minimizer.\n\n4. **ReLU lower bound.** A single ordinary ReLU unit cannot represent the two-sided clipped update `x \u21a6 tropicalFlow m t x` for `t > 0`, while two shifted ReLU units suffice, as proved in `Catalog/Applications/EML/TropicalGDConvergence.lean`.\n\n5. **Even-sample minimizer interval.** For `2k` ordered scalar residual targets, the tropical `L\u00b9` minimizers are exactly the interval between the two central order statistics, and clipped subgradient descent reaches that interval in finite time for every positive step size.\n",
     "domains": [
@@ -11299,6 +11282,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-03T15:28:35.317033+00:00",
     "title": "Future directions from cycle 38046e56"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe proposed mixed-area formula needs a normalization correction. For standard degree triangles, normalized lattice area satisfies\n\n\\[\nA((d+e)\\Delta)-A(d\\Delta)-A(e\\Delta)=2de.\n\\]\n\nThus the raw polarization of normalized lattice area is twice the plane B\u00e9zout number. In particular, two tropical lines give area difference `2`, while their stable intersection number is `1`. The corrected convention is\n\n\\[\nI(P,Q)=\\frac{A(P+Q)-A(P)-A(Q)}{2}\n\\]\n\nwhen `A` denotes normalized lattice area. Equivalently, one may use Euclidean area without the factor `1/2` in the polarization formula.\n\n`Catalog/Tropical/MixedAreaNormalization.lean` proves the degree-triangle identity, its positive-degree incompatibility with the uncorrected formula, the corrected B\u00e9zout identity, symmetry, and additivity in one argument. The explicit `(1,1)` theorem supplies the decisive small-case counterexample computationally inside Lean.\n\nA next step is to define finite lattice polygons and normalized area, prove the full Minkowski polarization law for polygons, and connect that invariant to determinant-weighted stable intersections of balanced fans.\n",
+    "domains": [
+      "Tropical",
+      "Cryptography"
+    ],
+    "id": "fd_0936",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e4843e14",
+    "status": "available",
+    "timestamp": "2026-08-03T17:30:46.451859+00:00",
+    "title": "The proposed mixed-area formula needs a normalization correction. For standard d"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tensor `\u03c8 : Fin 2 \u2192 Fin 2 \u2192 Fin 2 \u2192 \u2102`, the convex-roof squared concurrences of its `AB` and `AC` reductions sum to at most `4 det \u03c1_A`. A counterexample is any normalized tensor violating this polynomial/optimization inequality.\n\n2. **Mixed-state teleportation.** The density-matrix channel obtained from Bell-pair preparation, Alice's CNOT and Hadamard, computational-basis measurement, two classical bits, and Bob's Pauli corrections is extensionally equal to the identity completely-positive trace-preserving map on `M\u2082(\u2102)`. A counterexample is a positive trace-one matrix whose output differs from its input.\n\n3. **Approximate cloning bound.** Every symmetric `1 \u2192 2` completely-positive trace-preserving qubit channel has worst-case single-copy fidelity at most `5/6`, and the universal symmetric cloner attains this bound. A counterexample is a channel with strictly larger worst-case fidelity.\n\n4. **Residual tangle outside the W sector.** For normalized pure three-qubit states, the difference `\u03c4_A|BC - C_AB\u00b2 - C_AC\u00b2` is nonnegative and equals four times the absolute value of Cayley's `2\u00d72\u00d72` hyperdeterminant. A counterexample is a normalized amplitude tensor for which either equality or nonnegativity fails.\n",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_0937",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "eb6ff95e",
+    "status": "available",
+    "timestamp": "2026-08-03T17:32:17.386961+00:00",
+    "title": "1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tens"
   },
   {
     "consumed_by_exp_id": "",
