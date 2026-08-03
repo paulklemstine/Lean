@@ -1064,16 +1064,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheaf-Cohomology: Formalization of Grothendieck-Serre Duality on Smooth Schemes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "38046e56",
     "description": "Proves that Khovanov homology categorifies the Jones polynomial for arbitrary oriented link diagrams.",
     "domains": [
       "Geometry"
     ],
     "id": "dir_50_08_be75e3e7",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:22.730976+00:00",
     "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
   },
@@ -2016,6 +2017,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T12:29:20.468595+00:00",
     "title": "Deepening: Spectral Graph Theory Meets Network Robustness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d7c83314 (Q=0.781), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic pack",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_d7c83314_138ba764",
+    "priority_score": 0.8814599999999999,
+    "research_mode": "team",
+    "source_exp_id": "d7c83314",
+    "status": "available",
+    "timestamp": "2026-08-03T00:21:55.948251+00:00",
+    "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -3241,17 +3256,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a60d1c49",
     "description": "Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prove that multi-head attention increases the rank of the attention matrix.",
     "domains": [
       "MachineLearning",
       "Algebra"
     ],
     "id": "seed_376",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
@@ -3634,17 +3650,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalization Bounds via Rademacher Complexity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4db4579d",
     "description": "Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics). Prove that every Grothendieck topos is a bounded lattice with a universal property.",
     "domains": [
       "Bridges",
       "Algebra"
     ],
     "id": "seed_345",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bridge: Category Theory as Universal Language for Mathematics"
   },
@@ -3797,39 +3814,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Kakeya Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "d7c83314",
-    "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
-    "domains": [
-      "Geometry",
-      "Computation",
-      "NumberTheory"
-    ],
-    "id": "seed_093",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
-  },
-  {
-    "consumed_by_exp_id": "5bb368e2",
-    "description": "Prove that Wall-Sun-Sun primes exist (primes p where p\u00b2 divides F_{p-(p|5)}). Formalize the connection to Fermat's Last Theorem and establish search bounds for the first such prime.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_207",
-    "phase": "A",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Wall-Sun-Sun Primes"
   },
   {
     "consumed_by_exp_id": "",
@@ -10800,22 +10784,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Catalog/Novelty/SurrealFiniteCofiniteProbability.lean` constructs a concrete Co"
   },
   {
-    "consumed_by_exp_id": "76a9f834",
-    "description": "# Future directions\n\n## What is established\n\n`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,\nself-contained results for a triangular face:\n\n1. the three-site crossing probability is `3p\u00b2 - 2p\u00b3`;\n2. it obeys exact complement duality `C(1-p)=1-C(p)`;\n3. it is below, equal to, or above `1/2` according as `p` is below, equal to, or\n   above `1/2` on the Bernoulli interval;\n4. its unique local self-dual parameter is `p=1/2`;\n5. the corresponding one-face bond-spanning polynomial is identical.\n\nThese are local ingredients, not an infinite-volume percolation theorem. In\nparticular, the proved predicate `IsTriangularSiteLocalCritical` records fairness\nof one three-site face; it is not being used as a definition of the infinite\nlattice critical probability.\n\nAll theorem declarations currently retained in the project have complete Lean\nproofs. The proposed infinite-volume declarations described below remain prose\nresearch targets rather than unproved Lean signatures.\n\n## Next formal steps\n\n1. **Finite planar lattice combinatorics.** Define finite triangular and hexagonal\n   patches, primal/dual paths, boundary arcs, and crossing events. Prove the\n   deterministic alternative that an open primal crossing excludes and is\n   complemented by an appropriate closed dual crossing.\n2. **Product measures.** Put Bernoulli product measures on finite site and bond\n   configurations. Lift the existing pointwise monotonicity results in\n   `Catalog/Combinatorics/Percolation.lean` to monotonicity of crossing\n   probabilities.\n3. **Site versus bond models.** Formalize the matching-lattice transformation for\n   site percolation and planar duality for bond percolation. Keep their sample\n   spaces distinct; the equality of the one-face polynomials does not identify\n   the infinite models.\n4. **Sharpness and infinite volume.** Develop increasing exhaustion, compactness,\n   Russo-type differentiation, pivotal sites, and enough sharp-threshold theory\n   to pass from finite crossings to an infinite cluster criterion.\n5. **Exact triangular-site theorem.** Combine self-duality with the preceding\n   planar and sharpness machinery to prove the infinite triangular-lattice site\n   critical probability `p_c=1/2`.\n6. **Square bond percolation.** Develop square-lattice planar bond duality, whose\n   exact threshold is also `1/2`, separately from square *site* percolation.\n7. **Square site threshold.** The requested analytic form is an open mathematical\n   problem; the accepted threshold is known numerically rather than by a closed\n   exact expression. A faithful formal project should therefore define and bound\n   this threshold, not assert an unsupported formula.\n8. **Conformal invariance.** Connect critical crossing laws to the measurable\n   transport framework in `Catalog/Probability/ConformalInvariance.lean`. A full\n   result requires formal constructions of scaling limits and SLE (for critical\n   percolation, SLE\u2086), plus proofs of convergence and conformal covariance; chart\n   transport alone does not establish those analytic facts.\n",
-    "domains": [
-      "Computation",
-      "Cryptography"
-    ],
-    "id": "fd_0896",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d333f65d",
-    "status": "in_progress",
-    "timestamp": "2026-08-01T23:24:15.206538+00:00",
-    "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n1. **Continuous time.** Replace finite sums by interval integrals and derive the same\n   information-adjusted extraction bound from an almost-everywhere differential energy\n   balance.\n2. **Nonuniform temperatures.** Give each cycle its own reservoir temperature and prove\n   a weighted cardinality bound with cycle-dependent Landauer prices.\n3. **Probabilistic computation.** Replace image-cardinality capacity by Shannon entropy\n   loss under a stochastic channel, connecting the harvesting budget to a genuine data\n   processing inequality.\n4. **Equality characterization.** Classify equality in the finite-horizon bound in\n   terms of zero terminal reserve and saturation of every finite-state compression\n   bound.\n5. **Infinite-horizon rates.** Formulate limsup average useful-power bounds when\n   cumulative injected energy and cumulative erased information have asymptotic rates.\n6. **Reversible realization.** Couple the rigidity result to Bennett embeddings and\n   construct an explicit enlarged-state process whose computational debit vanishes.\n",
     "domains": [
@@ -11203,6 +11171,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-02T23:23:46.812195+00:00",
     "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## Verified outcome of this phase\n\nThe formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lean`\nproves the finite-measure packing principle and specializes it to the direct `S\u00b2`\narea bound\n\n`card \u2264 2 / (1 - cos r)`.\n\nOn `0 < r < \u03c0/2`, the requested proposed inequality follows as a weaker consequence,\nbecause `(2 / cos r)^2 \u2265 1`.  Thus the numerical upper bound is valid in this\nmeasure-theoretic cap model, but the stated stereographic-distortion rationale is\nnot needed.\n\nThe phase also disproves two claims in the prompt:\n\n* `(2 / cos r)^2` is not `1 + O(r\u00b2)` as written, since its value at zero is `4`.\n  A normalized candidate would be `1 / cos\u00b2 r`, whose value at zero is one.\n* `N(2, \u03c0/3) = 4` is false for non-overlapping geodesic caps.  Four unit centers\n  separated by at least `2\u03c0/3` cannot exist.  The regular tetrahedron has mutual\n  center inner product `-1/3`, so its permissible cap radius is\n  `arccos(-1/3)/2`, not `\u03c0/3`.\n\nThe other labels should also be corrected: six equal-radius centers are naturally\nthe vertices of an octahedron, not a cuboctahedron (which has twelve vertices).\nThe formal result here verifies compatibility of cardinalities with upper bounds;\nit does not assert optimality or construct all named polyhedra.\n\n## Recommended next formalization\n\n1. Define the unit sphere as a subtype of Euclidean space and geodesic distance as\n   `arccos` of the real inner product.\n2. Define closed/open spherical caps and prove their surface measure formula from\n   the sphere's Hausdorff measure.\n3. Define `N(2,r)` as a finite supremum (or maximum after proving compactness) of\n   center sets with pairwise distance at least `2r`.\n4. Connect geometric cap disjointness to center separation, carefully distinguishing\n   open caps (allowing tangency) from closed caps.\n5. Formalize constructions and matching upper bounds at the corrected radii:\n   octahedron at `\u03c0/4`, icosahedron at half its minimum angular separation, and\n   tetrahedron at `arccos(-1/3)/2`.\n6. Replace the noncompact single-chart distortion argument with either direct\n   spherical measure or a finite stereographic atlas.  A global maximum distortion\n   does not exist in one stereographic chart near the omitted pole.\n7. Investigate genuine asymptotics.  For small caps, local planar packing density,\n   rather than area ratio alone, should enter any sharp asymptotic packing number;\n   this requires substantially more geometry than conformal-factor estimates.\n",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_0923",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d7c83314",
+    "status": "available",
+    "timestamp": "2026-08-03T00:21:51.578866+00:00",
+    "title": "The formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lea"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V \u2192 [0,1]`, and `p \u2208 [0,1]`, the probability that\n   `siteThresholdConfig key p = \u03b7` is\n   `p ^ |{v | \u03b7 v}| * (1-p) ^ |{v | \u00ac \u03b7 v}|`.\n\n2. **Crossing probability monotonicity.** For every positive grid size `n`, the\n   probability of `HasHorizontalCrossing n` under independent uniform threshold\n   keys is nondecreasing as a function of `p \u2208 [0,1]`.\n\n3. **Finite Russo formula.** For any increasing Boolean event on a finite site\n   set, the derivative of its Bernoulli probability polynomial at `p \u2208 (0,1)`\n   equals the sum of the pivotal probabilities of the sites.\n\n4. **Threshold coupling strictness for grids.** For every `n \u2265 2` and\n   `0 < p < q < 1`, the horizontal crossing probability of the `n \u00d7 n` grid is\n   strictly smaller at `p` than at `q`.\n\n5. **Bond analogue.** For every finite graph and increasing bond event, the\n   independent uniform edge-key coupling realizes its Bernoulli bond measures\n   simultaneously and makes the event indicators pointwise nondecreasing in the\n   threshold.\n",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_0924",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "76a9f834",
+    "status": "available",
+    "timestamp": "2026-08-03T00:23:16.697956+00:00",
+    "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Wall\u2013Sun\u2013Sun Primes: Results and Future Directions\n\n## Status of the requested existence claim\n\nThe requested theorem cannot presently be supplied faithfully: existence of a Wall\u2013Sun\u2013Sun\nprime is an open problem (no example is known as of 2026). The Lean development therefore\nexposes the exact existence proposition as `WallSunSunExistenceConjecture`, but does **not**\nmisrepresent it as a proved theorem.\n\n## Machine-checked results\n\n`NumberTheory/WallSunSunPrimes.lean` provides:\n\n- `fibonacciIndex` and `IsWallSunSunPrime`, a direct natural-number formulation of the\n  condition `p\u00b2 \u2223 F_{p-(p|5)}` (using the standard residue characterization away from the\n  exceptional primes 2 and 5);\n- proofs that 3 and 5 are not Wall\u2013Sun\u2013Sun primes;\n- a complete finite proof that no Wall\u2013Sun\u2013Sun prime is below 12, hence every candidate is at\n  least 12;\n- a precise relation to existing formal FLT results: FLT for exponent 3 holds while 3 is not a\n  Wall\u2013Sun\u2013Sun prime;\n- a disproof of the bold conjecture that, for every prime `p`, FLT at exponent `p` is equivalent\n  to `p` being Wall\u2013Sun\u2013Sun (counterexample `p = 3`);\n- a disproof of the bold conjecture that prime residue `\u00b11 mod 5` suffices for the property\n  (counterexample `p = 11`).\n\nAll results compile independently, contain no `sorry`, and use no nonstandard axioms.\n\n## Concise computational evidence\n\nThe initial Fibonacci values are\n\n`0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...`.\n\nFor the small prime candidates checked formally:\n\n| `p` | relevant index | Fibonacci value | outcome |\n|---:|---:|---:|:---|\n| 2 | 3 | 2 | `4 \u2224 2` |\n| 3 | 4 | 3 | `9 \u2224 3` |\n| 5 | 6 | 8 | `25 \u2224 8` |\n| 7 | 8 | 21 | `49 \u2224 21` |\n| 11 | 10 | 55 | `121 \u2224 55` |\n\nThus the finite sample has no example. Since no Wall\u2013Sun\u2013Sun prime is known, there are no\nknown first terms to tabulate. No OEIS identifier is asserted here because it was not\nindependently verified in this project.\n\n## Next steps\n\n1. Implement fast-doubling Fibonacci modulo `p\u00b2` and prove it agrees with `Nat.fib % p\u00b2`.\n   This should permit much larger kernel-checked finite bounds without expanding Fibonacci\n   numerals.\n2. Formalize the Legendre-symbol identity `(5/p)` in terms of residues modulo 5 and prove that\n   `fibonacciIndex p` literally represents `p - (p|5)` for primes other than 2 and 5.\n3. Build a certificate format listing primes in an interval together with modular Fibonacci\n   remainders, and verify certificates in Lean.\n4. Formalize only accurately sourced historical FLT criteria involving Fibonacci\u2013Wieferich\n   primes. Such criteria are subtler than an equivalence with FLT itself; the counterexample at\n   exponent 3 rules out that naive formulation.\n5. Keep existence as a named conjecture until either an explicit certified witness is found or\n   a genuine general existence proof is discovered.\n",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_0925",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5bb368e2",
+    "status": "available",
+    "timestamp": "2026-08-03T00:24:41.651228+00:00",
+    "title": "The requested theorem cannot presently be supplied faithfully: existence of a Wa"
   },
   {
     "consumed_by_exp_id": "",

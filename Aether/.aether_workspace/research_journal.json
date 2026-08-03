@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1cf3185d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H → IsMinor H K → IsMinor G K`. This is falsifiable directly against the branc",
-      "quality_score": 0.8116299999999999,
-      "sorry_count": 0,
-      "theorem_count": 60,
-      "timestamp": "2026-07-31T18:57:42",
-      "title": "Hadwiger's Conjecture"
-    },
-    {
       "cycle_id": "03b10997",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThe present development verifies algebraic search-to-decision ingredients, finite-distribution hybrid bounds for IND-CPA and post-compromise security, reconciliation inequalities,",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-03T00:23:20",
       "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
+    },
+    {
+      "cycle_id": "5bb368e2",
+      "domain": "NumberTheory",
+      "key_insight": "# Wall–Sun–Sun Primes: Results and Future Directions\n\n## Status of the requested existence claim\n\nThe requested theorem cannot presently be supplied faithfully: existence of a Wall–Sun–Sun\nprime is an",
+      "quality_score": 0.7482099999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-03T00:24:45",
+      "title": "Wall-Sun-Sun Primes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "901b537c",
-      "domain": "Physics",
-      "key_insight": "# Future Directions: From Code Metrics to Emergent Geometry\n\n## 1. Rigidity of Local Tensor-Network Realizations\n\n**Conjecture.** Let a family of bounded-degree stabilizer tensor networks have boundar",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-25T18:17:21",
-      "title": "Gravity as Quantum Error Correction: Spacetime from Codes"
-    },
     {
       "cycle_id": "7b875dce",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-03T00:23:20",
       "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
+    },
+    {
+      "cycle_id": "5bb368e2",
+      "domain": "NumberTheory",
+      "key_insight": "# Wall–Sun–Sun Primes: Results and Future Directions\n\n## Status of the requested existence claim\n\nThe requested theorem cannot presently be supplied faithfully: existence of a Wall–Sun–Sun\nprime is an",
+      "quality_score": 0.7482099999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-03T00:24:45",
+      "title": "Wall-Sun-Sun Primes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "be8c4b71",
-      "domain": "Applications",
-      "name": "coordinateExp_adjoin_separates",
-      "quality": 0.8084800000000001
-    },
-    {
-      "cycle_id": "e801d98f",
-      "domain": "Tropical",
-      "name": "product_assoc",
-      "quality": 0.76179
-    },
-    {
-      "cycle_id": "e801d98f",
-      "domain": "Tropical",
-      "name": "leftZero_product",
-      "quality": 0.76179
-    },
     {
       "cycle_id": "e801d98f",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "siteConnected_threshold_mono",
       "quality": 0.7250399999999999
+    },
+    {
+      "cycle_id": "5bb368e2",
+      "domain": "NumberTheory",
+      "name": "three_not_wallSunSun",
+      "quality": 0.7482099999999999
+    },
+    {
+      "cycle_id": "5bb368e2",
+      "domain": "NumberTheory",
+      "name": "five_not_wallSunSun",
+      "quality": 0.7482099999999999
+    },
+    {
+      "cycle_id": "5bb368e2",
+      "domain": "NumberTheory",
+      "name": "no_wallSunSun_below_12",
+      "quality": 0.7482099999999999
     }
   ],
-  "last_updated": "2026-08-03T00:23:20",
+  "last_updated": "2026-08-03T00:24:45",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "e3956c60",
-        "quality": 0.68,
-        "theorems": 25,
-        "title": "Alien Number Systems: Beyond Base-N"
-      },
-      {
         "cycle_id": "ee1ae94f",
         "quality": 0.78664,
         "theorems": 11,
@@ -3699,6 +3693,12 @@
         "quality": 0.7814599999999999,
         "theorems": 11,
         "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
+      },
+      {
+        "cycle_id": "5bb368e2",
+        "quality": 0.7482099999999999,
+        "theorems": 10,
+        "title": "Wall-Sun-Sun Primes"
       }
     ],
     "Physics": [
