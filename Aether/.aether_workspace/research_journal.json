@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0e1eb0cb",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equival",
-      "quality_score": 0.80043,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-08-01T11:44:09",
-      "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
-    },
-    {
       "cycle_id": "ee0c99e7",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nThe Lean development proves exact results for an explicit region-capacity model.  The following are concrete extensions that would connect those combinatorial bounds to analytic a",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-08-03T17:32:21",
       "title": "Quantum Information: No-Cloning and Teleportation"
+    },
+    {
+      "cycle_id": "18ab6902",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n## Completed foundation\n\n`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-contained,\nsorry-free treatment of the paper's forbidden induced configuration.",
+      "quality_score": 0.72693,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-03T21:39:58",
+      "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ce71f394",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Differential Structure of Exponential–Logarithmic Expressions\n\n## 1. Pole-order normal forms for all iterated derivatives\n\n**Conjecture.** For every integer `n ≥ 1`, the `n`th der",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-26T05:36:56",
-      "title": "EML Differential Calculus: Chain Rules for exp-log Compositions"
-    },
     {
       "cycle_id": "735a1ab0",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 32,
       "timestamp": "2026-08-03T21:38:53",
       "title": "Deepening: Game of Life Universality"
+    },
+    {
+      "cycle_id": "18ab6902",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n## Completed foundation\n\n`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-contained,\nsorry-free treatment of the paper's forbidden induced configuration.",
+      "quality_score": 0.72693,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-08-03T21:39:58",
+      "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamilton-connected"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5907c59d",
-      "domain": "Novelty",
-      "name": "bell_marginals_maximally_mixed",
-      "quality": 0.78678
-    },
-    {
-      "cycle_id": "5907c59d",
-      "domain": "Novelty",
-      "name": "bell_concurrence",
-      "quality": 0.78678
-    },
-    {
-      "cycle_id": "f15cd85a",
-      "domain": "Geometry",
-      "name": "brick_44_117_240",
-      "quality": 0.76837
-    },
     {
       "cycle_id": "f15cd85a",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "invSqrtTwo_sq",
       "quality": 0.7944100000000001
+    },
+    {
+      "cycle_id": "18ab6902",
+      "domain": "Bridges",
+      "name": "for",
+      "quality": 0.72693
+    },
+    {
+      "cycle_id": "18ab6902",
+      "domain": "Bridges",
+      "name": "antiNeighborhood_isIndepSet",
+      "quality": 0.72693
+    },
+    {
+      "cycle_id": "18ab6902",
+      "domain": "Bridges",
+      "name": "free_iff_antineighborhood_independent",
+      "quality": 0.72693
     }
   ],
-  "last_updated": "2026-08-03T21:38:53",
+  "last_updated": "2026-08-03T21:39:58",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "1a03af4c",
-        "quality": 0.78657,
-        "theorems": 14,
-        "title": "Langlands Program: Functoriality"
-      },
-      {
         "cycle_id": "5843d50f",
         "quality": 0.7539499999999999,
         "theorems": 7,
@@ -3203,6 +3197,12 @@
         "quality": 0.78888,
         "theorems": 11,
         "title": "Bridge: Galois Connections Between Order Theory and Topology"
+      },
+      {
+        "cycle_id": "18ab6902",
+        "quality": 0.72693,
+        "theorems": 8,
+        "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamil"
       }
     ],
     "Combinatorics": [
