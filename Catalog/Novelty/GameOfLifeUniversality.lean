@@ -4,9 +4,10 @@ import Mathlib
 # Conway's Game of Life: local semantics and finite simulation cones
 
 This file gives a self-contained formalization of Conway's rule on `ℤ × ℤ` and a
-constructive chain of results about exact local simulation.  The final results prove
+constructive chain of results about exact local simulation. The final results prove
 that the value of a cell after `t` generations is determined by an explicitly finite
-set of initial cells, and bound the size of this dependency cone by `9^t`.
+set of initial cells, identify that recursive dependency cone with the radius-`t`
+Chebyshev ball, and compute its exact cardinality as `(2t+1)²`.
 
 This is foundational infrastructure toward a direct universality proof; it does not
 claim the still-missing construction of wires, clocks, and a universal machine.
@@ -158,5 +159,112 @@ theorem finite_simulation_certificate (t : ℕ) (c : Config) (p : Cell) :
     (dependencyCone t p).card ≤ 9 ^ t ∧
     ∀ d : Config, (∀ q ∈ dependencyCone t p, c q = d q) → evolve t c p = evolve t d p := by
   exact ⟨dependencyCone_card_le t p, fun d h => evolve_eq_of_eq_on_dependencyCone t h⟩
+
+/-- The finite square of cells at Chebyshev distance at most `t` from `p`. -/
+def chebyshevBall (t : ℕ) (p : Cell) : Finset Cell :=
+  (Finset.Icc (p.1 - (t : ℤ)) (p.1 + (t : ℤ))).product
+    (Finset.Icc (p.2 - (t : ℤ)) (p.2 + (t : ℤ)))
+
+/-- Membership in a Chebyshev ball is equivalent to four coordinate inequalities. -/
+theorem mem_chebyshevBall_iff (t : ℕ) (p q : Cell) :
+    q ∈ chebyshevBall t p ↔
+      p.1 - (t : ℤ) ≤ q.1 ∧ q.1 ≤ p.1 + (t : ℤ) ∧
+      p.2 - (t : ℤ) ≤ q.2 ∧ q.2 ≤ p.2 + (t : ℤ) := by
+  unfold chebyshevBall
+  simp [Finset.mem_product, Finset.mem_Icc]
+  tauto
+
+/-- Conway's closed Moore neighborhood is exactly the radius-one Chebyshev ball. -/
+theorem closedNeighbors_eq_chebyshevBall_one (p : Cell) :
+    closedNeighbors p = chebyshevBall 1 p := by
+  ext q
+  rw [mem_chebyshevBall_iff]
+  unfold closedNeighbors neighbors
+  simp only [Finset.mem_insert, Finset.mem_singleton]
+  constructor
+  · rintro (rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl) <;> omega
+  · intro h
+    rcases q with ⟨x, y⟩
+    dsimp at h ⊢
+    have hx : x = p.1 - 1 ∨ x = p.1 ∨ x = p.1 + 1 := by omega
+    have hy : y = p.2 - 1 ∨ y = p.2 ∨ y = p.2 + 1 := by omega
+    rcases hx with hx | hx | hx <;> rcases hy with hy | hy | hy <;>
+      simp [Prod.ext_iff, hx, hy]
+
+/-- Finite propagation speed: every initial cell capable of influencing `p` after
+`t` generations lies at Chebyshev distance at most `t` from `p`. -/
+theorem dependencyCone_subset_chebyshevBall (t : ℕ) (p : Cell) :
+    dependencyCone t p ⊆ chebyshevBall t p := by
+  induction t with
+  | zero =>
+    simp [dependencyCone, chebyshevBall]
+  | succ t ih =>
+    rw [dependencyCone_succ]
+    exact (Finset.biUnion_subset).mpr fun q hq => by
+      rw [closedNeighbors_eq_chebyshevBall_one]
+      have hq_mem := ih hq
+      rw [mem_chebyshevBall_iff] at hq_mem
+      intro r hr
+      rw [mem_chebyshevBall_iff] at hr ⊢
+      exact ⟨by omega, by omega, by omega, by omega⟩
+
+/-- A radius-`t` Chebyshev ball in the Life grid has exactly `(2t+1)²` cells. -/
+theorem chebyshevBall_card (t : ℕ) (p : Cell) :
+    (chebyshevBall t p).card = (2 * t + 1) ^ 2 := by
+  unfold chebyshevBall
+  simp [Finset.card_product]
+  ring_nf
+  norm_cast
+  ring
+
+/-- Expanding a radius-`t` Chebyshev ball by one closed Moore neighborhood
+produces exactly the radius-`t+1` Chebyshev ball. -/
+theorem biUnion_chebyshevBall_closedNeighbors (t : ℕ) (p : Cell) :
+    (chebyshevBall t p).biUnion closedNeighbors = chebyshevBall (t + 1) p := by
+  ext r
+  rw [mem_chebyshevBall_iff]
+  simp [mem_chebyshevBall_iff, closedNeighbors_eq_chebyshevBall_one]
+  constructor
+  · intro ⟨a, b, ⟨ha1, ha2, hb1, hb2⟩, hab1, hab2, hab3, hab4⟩
+    omega
+  · intro ⟨hr1, hr2, hr3, hr4⟩
+    use max (p.1 - t) (r.1 - 1), max (p.2 - t) (r.2 - 1)
+    omega
+
+/-- The recursively defined dependency cone is exactly the corresponding
+Chebyshev ball, not merely a subset of it. -/
+theorem dependencyCone_eq_chebyshevBall (t : ℕ) (p : Cell) :
+    dependencyCone t p = chebyshevBall t p := by
+  induction t with
+  | zero => simp [dependencyCone, chebyshevBall]
+  | succ t ih =>
+    rw [dependencyCone_succ, ih, biUnion_chebyshevBall_closedNeighbors]
+
+/-- The dependency cone therefore has exactly `(2t+1)²` cells. -/
+theorem dependencyCone_card_exact (t : ℕ) (p : Cell) :
+    (dependencyCone t p).card = (2 * t + 1) ^ 2 := by
+  rw [dependencyCone_eq_chebyshevBall, chebyshevBall_card]
+
+/-- The exponential `9^t` dependency bound improves to the geometrically sharp
+quadratic ambient bound `(2t+1)²`. -/
+theorem dependencyCone_card_le_quadratic (t : ℕ) (p : Cell) :
+    (dependencyCone t p).card ≤ (2 * t + 1) ^ 2 := by
+  rw [← chebyshevBall_card t p]
+  exact Finset.card_le_card (dependencyCone_subset_chebyshevBall t p)
+
+/-- Local simulation certificate with quadratic rather than exponential input size. -/
+theorem quadratic_finite_simulation_certificate (t : ℕ) (c : Config) (p : Cell) :
+    (dependencyCone t p).card ≤ (2 * t + 1) ^ 2 ∧
+    ∀ d : Config, (∀ q ∈ dependencyCone t p, c q = d q) → evolve t c p = evolve t d p := by
+  exact ⟨dependencyCone_card_le_quadratic t p,
+    fun d h => evolve_eq_of_eq_on_dependencyCone t h⟩
+
+/-- Exact local-simulation certificate: the recursively inspected input region has
+precisely `(2t+1)²` cells, and agreement there determines the output cell. -/
+theorem exact_finite_simulation_certificate (t : ℕ) (c : Config) (p : Cell) :
+    (dependencyCone t p).card = (2 * t + 1) ^ 2 ∧
+    ∀ d : Config, (∀ q ∈ dependencyCone t p, c q = d q) → evolve t c p = evolve t d p := by
+  exact ⟨dependencyCone_card_exact t p,
+    fun d h => evolve_eq_of_eq_on_dependencyCone t h⟩
 
 end GameOfLife
