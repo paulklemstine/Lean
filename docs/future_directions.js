@@ -3119,23 +3119,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
   {
-    "consumed_by_exp_id": "06b881ae",
-    "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
-    "domains": [
-      "Geometry",
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "seed_090",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Inverse Stereographic Neural Field Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
     "domains": [
@@ -3696,17 +3679,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "362b8901",
     "description": "Formalize the Risch algorithm for deciding if the integral of an EML function is an EML function. Prove the Risch theorem: integration in finite terms is decidable for EML functions. Implement the key steps: logarithmic part, exponential part, and algebraic part. Prove that the algorithm terminates in polynomial time for rational functions.",
     "domains": [
       "EML",
       "Computation"
     ],
     "id": "seed_372",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Integration in Finite Terms: The Risch Algorithm"
   },
@@ -6643,22 +6627,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
   },
   {
-    "consumed_by_exp_id": "bffb7591",
-    "description": "For every fixed density\u00a0\u03b4\u2208(0,1) and every integer t\u22652 there is a constant C(t,\u03b4)>0 such that for all sufficiently large n one can find a subset S\u2282[n] of size at least \u03b4n that contains no t\u2011fold sumset A\u2081+\u22ef+A_t with each |A_i|\u2265C(t,\u03b4)\u00b7(log n)/(log(1/\u03b4))^{1/(t\u22121)}.  This conjecture generalises the extremal result of Serra\u2011Szegedy and the recent construction for t=2, and it is compatible with the lower\u2011bound phenomenon proved by Hern\u00e1ndez\u2011and\u2011Hetzel.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0214",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15269v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T12:35:07.930478+00:00",
-    "title": "Existence of Dense Sets without Large t\u2011Fold Sumsets"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any fixed \u03b4 \u2208 (0,1) and sufficiently large n, there exists a subset S \u2282 [n] with |S| \u2265 \u03b4n such that no A, B \u2282 \u2115 with min{|A|,|B|} \u2265 (3+o(1)) log n / log(1/\u03b4) satisfy A+B \u2282 S.",
     "domains": [
@@ -7187,6 +7155,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T05:11:30.572810+00:00",
     "title": "ArXiv paper: Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Bipartite Extremal Numbers of Trees' and formalize its key results. Abstract: We study a restriction of the classical Erd\u0151s--S\u00f3s problem, the extremal number of trees, to the class of bipartite host graphs, both when only the order of the host is prescribed and when its two part-sizes are fixed. We give natural lower-bound constructions and formulate corresponding linear upper-bound conjectures. We apply a weighted variant of $k$-minimality to prove upper bounds for a broad family of trees including brooms, trees with part-sizes differing by at most one, and all trees on at most 7 vertices, resolving part of a problem of Caro, Patk\u00f3s and Tuza up to additive constants. We also relate the fixed-part extremal number of a tree to the ordinary extremal number, and consider an oriented bipartite extremal function analogous to the Zarankiewicz function.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_0926",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.29579v1",
+    "status": "available",
+    "timestamp": "2026-08-03T04:05:41.331848+00:00",
+    "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On some perfect matching conjectures in infinite, cubic, bridgeless graphs' and formalize its key results. Abstract: The Berge-Fulkerson Conjecture states that every bridgeless cubic graph has six perfect matchings such that each edge belongs to exactly two of them. This conjecture has remained open since 1971, and several of its weakenings have been proposed over the years. Two of the most prominent are the Fan-Raspaud Conjecture and the M\u00e1\u010dajov\u00e1-\u0160koviera Conjecture. It is well known that the Berge-Fulkerson Conjecture implies the Fan-Raspaud Conjecture, which in turn implies the M\u00e1\u010dajov\u00e1-\u0160koviera Conjecture. These problems have been studied for years in the context of finite graphs, and many equivalences between them and other results have been established. However, little to nothing is known about them in the context of infinite graphs. In this paper, we investigate whether these conjectures remain valid in the infinite setting, establish their implications in analogy to the finite case, and prove that their finite versions are equivalent to their respective infinite versions.",
+    "domains": [
+      "Combinatorics",
+      "Bridges"
+    ],
+    "id": "fd_0927",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.29511v1",
+    "status": "available",
+    "timestamp": "2026-08-03T04:05:44.681478+00:00",
+    "title": "ArXiv paper: On some perfect matching conjectures in infinite, cubic, bridgeless graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -11054,17 +11052,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive a"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2125bb42",
     "description": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `A\u2099\u00b2 = nI` in every dimension;\n- every real eigenvalue with a nonzero eigenvector therefore satisfies\n  `\u03bb\u00b2 = n`;\n- an eigenvalue bound `|\u03bb| \u2264 s` implies the numerical inequality `n \u2264 s\u00b2`;\n- the stronger conjecture that every signing has scalar square is false, with\n  the unsigned two-dimensional cube as a formally verified counterexample.\n\nThe following are genuine extensions beyond that completed baseline.\n\n## Prioritized extensions\n\n1. **Connect the spectral certificate to Boolean functions.** Define Boolean\n   functions on `Cube n`, pointwise and maximum sensitivity, and multilinear\n   real degree. Formalize the induced-subgraph reduction in Huang's argument so\n   that the operator theorem yields the full degree\u2013sensitivity inequality.\n\n2. **Classify scalar-square signings.** Replace the disproved arbitrary-signing\n   conjecture by the face condition that every two-dimensional face has\n   negative sign product. Prove both directions of the expected equivalence\n   with `A\u00b2 = nI`, then classify such signings up to switching equivalence.\n\n3. **Multiplicity and characteristic polynomial.** For positive dimension,\n   prove that `\u221an` and `-\u221an` each have multiplicity `2^(n-1)`, and derive the\n   characteristic polynomial `(X\u00b2 - n)^(2^(n-1))`. A trace-zero argument\n   combined with the scalar-square identity should determine the\n   multiplicities.\n\n4. **Restriction and interlacing.** Represent the recursive operator as a\n   finite real symmetric matrix, define principal restrictions, and formalize\n   eigenvalue interlacing. This is the main bridge from density of a vertex\n   subset to a high-degree vertex in the induced subgraph.\n\n5. **Test tighter degree\u2013sensitivity proposals.** After the Boolean-function\n   definitions are in place, exhaustively enumerate small dimensions and\n   record extremal pairs `(degree, sensitivity)`. Use these certified finite\n   cases to reject false constants or lower-order improvements before pursuing\n   general bounds.\n\n6. **Beyond the binary cube.** Study signed operators on products of larger\n   alphabets and on other Cayley graphs. Determine which anticommutation or\n   face-cancellation relations force exact scalar-square identities and which\n   corresponding local-degree bounds survive.\n",
     "domains": [
       "Algebra",
       "Combinatorics"
     ],
     "id": "fd_0915",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5814a7d4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T21:19:56.656175+00:00",
     "title": "The accompanying Lean development settles the operator-algebraic core used by"
   },

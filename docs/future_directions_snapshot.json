@@ -4210,27 +4210,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "06b881ae",
-    "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "seed_090",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "Define stereographic neural field: Delta_{S^n} u = f(u) on S^n where f is Mexican-hat connectivity. Under inverse stereographic projection, this becomes Delta_{R^n} v + (2n|x|^2/(1+|x|^2)^2) * grad v = g(v) on R^n. Prove existence of traveling wave solutions using the Lyapunov-Schmidt reduction. The key: the Laplacian on S^n has eigenvalues l(l+n-1) with multiplicity 2l+1, so each eigenvalue gives 2l+1 pattern variants. For Mexican-hat kernel, the bifurcation selects l = floor(1/r). Test: compute the Green's function for the stereographic Laplacian and show it equals the Poisson kernel on the sphere. Prove 2*1+1 = 3 patterns for r=1 (icosahedral symmetry).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Inverse Stereographic Neural Field Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
     "domain_bridges": [],
@@ -4979,7 +4958,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "362b8901",
     "description": "Formalize the Risch algorithm for deciding if the integral of an EML function is an EML function. Prove the Risch theorem: integration in finite terms is decidable for EML functions. Implement the key steps: logarithmic part, exponential part, and algebraic part. Prove that the algorithm terminates in polynomial time for rational functions.",
     "domain_bridges": [],
     "domains": [
@@ -4992,7 +4971,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Integration in Finite Terms: The Risch Algorithm"
   },
@@ -8931,34 +8910,6 @@
     "title": "Optimality of the Constant 3 in Dense Sets Without Large Sumsets"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "https://arxiv.org/abs/2109.13305",
-      "https://arxiv.org/abs/2206.10289",
-      "https://arxiv.org/abs/2307.06441"
-    ],
-    "consumed_by_exp_id": "bffb7591",
-    "description": "For every fixed density δ∈(0,1) and every integer t≥2 there is a constant C(t,δ)>0 such that for all sufficiently large n one can find a subset S⊂[n] of size at least δn that contains no t‑fold sumset A₁+⋯+A_t with each |A_i|≥C(t,δ)·(log n)/(log(1/δ))^{1/(t−1)}.  This conjecture generalises the extremal result of Serra‑Szegedy and the recent construction for t=2, and it is compatible with the lower‑bound phenomenon proved by Hernández‑and‑Hetzel.",
-    "domain_bridges": [
-      "Finite combinatorics",
-      "Ramsey theory",
-      "Probabilistic method"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0214",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the probabilistic method: select each element of [n] independently with probability δ to form a random set S.  For any fixed t‑tuple of subsets A₁,…,A_t ⊂ ℕ with |A_i| ≥ C·(log n)/(log(1/δ))^{1/(t−1)}, the sumset A₁+⋯+A_t is a set of size at least exp(Ω(log n)) = n^{Ω(1)} in the worst case.  A Chernoff bound shows that the probability that all these sum‑elements lie outside S is at most exp(−Ω(δ·|A₁+⋯+A_t|)).  A union bound over all such t‑tuples (there are at most n^{tC(log n)/(log(1/δ))}) keeps the failure probability bounded away from 1 if C is chosen small enough.  Thus with positive probability S satisfies the desired property, proving existence.  A deterministic construction could be obtained by the method of conditional expectations.",
-    "research_mode": "team",
-    "source_exp_id": "2607.15269v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T12:35:07.930478+00:00",
-    "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Hernández and Hetzel 2026+growth",
@@ -9742,6 +9693,46 @@
     "status": "available",
     "timestamp": "2026-07-31T05:11:30.572810+00:00",
     "title": "ArXiv paper: Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Bipartite Extremal Numbers of Trees' and formalize its key results. Abstract: We study a restriction of the classical Erdős--Sós problem, the extremal number of trees, to the class of bipartite host graphs, both when only the order of the host is prescribed and when its two part-sizes are fixed. We give natural lower-bound constructions and formulate corresponding linear upper-bound conjectures. We apply a weighted variant of $k$-minimality to prove upper bounds for a broad family of trees including brooms, trees with part-sizes differing by at most one, and all trees on at most 7 vertices, resolving part of a problem of Caro, Patkós and Tuza up to additive constants. We also relate the fixed-part extremal number of a tree to the ordinary extremal number, and consider an oriented bipartite extremal function analogous to the Zarankiewicz function.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_0926",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.29579v1",
+    "status": "available",
+    "timestamp": "2026-08-03T04:05:41.331848+00:00",
+    "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On some perfect matching conjectures in infinite, cubic, bridgeless graphs' and formalize its key results. Abstract: The Berge-Fulkerson Conjecture states that every bridgeless cubic graph has six perfect matchings such that each edge belongs to exactly two of them. This conjecture has remained open since 1971, and several of its weakenings have been proposed over the years. Two of the most prominent are the Fan-Raspaud Conjecture and the Máčajová-Škoviera Conjecture. It is well known that the Berge-Fulkerson Conjecture implies the Fan-Raspaud Conjecture, which in turn implies the Máčajová-Škoviera Conjecture. These problems have been studied for years in the context of finite graphs, and many equivalences between them and other results have been established. However, little to nothing is known about them in the context of infinite graphs. In this paper, we investigate whether these conjectures remain valid in the infinite setting, establish their implications in analogy to the finite case, and prove that their finite versions are equivalent to their respective infinite versions.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Bridges"
+    ],
+    "id": "fd_0927",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2607.29511v1",
+    "status": "available",
+    "timestamp": "2026-08-03T04:05:44.681478+00:00",
+    "title": "ArXiv paper: On some perfect matching conjectures in infinite, cubic, bridgeless graphs"
   },
   {
     "ambition_level": "extension",
@@ -14898,7 +14889,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2125bb42",
     "description": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `Aₙ² = nI` in every dimension;\n- every real eigenvalue with a nonzero eigenvector therefore satisfies\n  `λ² = n`;\n- an eigenvalue bound `|λ| ≤ s` implies the numerical inequality `n ≤ s²`;\n- the stronger conjecture that every signing has scalar square is false, with\n  the unsigned two-dimensional cube as a formally verified counterexample.\n\nThe following are genuine extensions beyond that completed baseline.\n\n## Prioritized extensions\n\n1. **Connect the spectral certificate to Boolean functions.** Define Boolean\n   functions on `Cube n`, pointwise and maximum sensitivity, and multilinear\n   real degree. Formalize the induced-subgraph reduction in Huang's argument so\n   that the operator theorem yields the full degree–sensitivity inequality.\n\n2. **Classify scalar-square signings.** Replace the disproved arbitrary-signing\n   conjecture by the face condition that every two-dimensional face has\n   negative sign product. Prove both directions of the expected equivalence\n   with `A² = nI`, then classify such signings up to switching equivalence.\n\n3. **Multiplicity and characteristic polynomial.** For positive dimension,\n   prove that `√n` and `-√n` each have multiplicity `2^(n-1)`, and derive the\n   characteristic polynomial `(X² - n)^(2^(n-1))`. A trace-zero argument\n   combined with the scalar-square identity should determine the\n   multiplicities.\n\n4. **Restriction and interlacing.** Represent the recursive operator as a\n   finite real symmetric matrix, define principal restrictions, and formalize\n   eigenvalue interlacing. This is the main bridge from density of a vertex\n   subset to a high-degree vertex in the induced subgraph.\n\n5. **Test tighter degree–sensitivity proposals.** After the Boolean-function\n   definitions are in place, exhaustively enumerate small dimensions and\n   record extremal pairs `(degree, sensitivity)`. Use these certified finite\n   cases to reject false constants or lower-order improvements before pursuing\n   general bounds.\n\n6. **Beyond the binary cube.** Study signed operators on products of larger\n   alphabets and on other Cayley graphs. Determine which anticommutation or\n   face-cancellation relations force exact scalar-square identities and which\n   corresponding local-degree bounds survive.\n",
     "domain_bridges": [],
     "domains": [
@@ -14911,7 +14902,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "5814a7d4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T21:19:56.656175+00:00",
     "title": "The accompanying Lean development settles the operator-algebraic core used by"
   },

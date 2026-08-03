@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "61e33133",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass result into an explicit approximation operator on `[0,1]^n`, with error controlled by a modulus of",
-      "quality_score": 0.7666899999999999,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-31T22:24:57",
-      "title": "EML Universal Approximation: Density of EML Functions"
-    },
-    {
       "cycle_id": "ff2a2247",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-gr",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-08-03T04:04:06",
       "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
+    },
+    {
+      "cycle_id": "06b881ae",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n## Scope and computational-evidence justification\n\nA separate computational-evidence stage was not used. The results developed here are exact\nsymbolic identities over the real and",
+      "quality_score": 0.78433,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-08-03T04:05:34",
+      "title": "Inverse Stereographic Neural Field Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0d06265a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What this phase establishes\n\n`Catalog/Applications/EMLCategory/FiniteTemplateObstruction.lean` gives an intensional model of finite EML programs. It verifies semantic substitut",
-      "quality_score": 0.75,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-07-25T20:16:33",
-      "title": "EML Category: The Category of EML-Computable Maps"
-    },
     {
       "cycle_id": "7277c96e",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-08-03T04:04:06",
       "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
+    },
+    {
+      "cycle_id": "06b881ae",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\n## Scope and computational-evidence justification\n\nA separate computational-evidence stage was not used. The results developed here are exact\nsymbolic identities over the real and",
+      "quality_score": 0.78433,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-08-03T04:05:34",
+      "title": "Inverse Stereographic Neural Field Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "01a8c97a",
-      "domain": "Geometry",
-      "name": "hyperbolicArea_le_max",
-      "quality": 0.72854
-    },
-    {
-      "cycle_id": "ffa9af78",
-      "domain": "Algebra",
-      "name": "inverseBranch_logistic",
-      "quality": 0.74086
-    },
-    {
-      "cycle_id": "ffa9af78",
-      "domain": "Algebra",
-      "name": "inverseBranch_mem_Ioo",
-      "quality": 0.74086
-    },
     {
       "cycle_id": "ffa9af78",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "initialInterval_avoids_uniform_tfold",
       "quality": 0.77061
+    },
+    {
+      "cycle_id": "06b881ae",
+      "domain": "Physics",
+      "name": "stereoDenom_pos",
+      "quality": 0.78433
+    },
+    {
+      "cycle_id": "06b881ae",
+      "domain": "Physics",
+      "name": "stereoDenom_ne_zero",
+      "quality": 0.78433
+    },
+    {
+      "cycle_id": "06b881ae",
+      "domain": "Physics",
+      "name": "one_sub_inverseStereo_third",
+      "quality": 0.78433
     }
   ],
-  "last_updated": "2026-08-03T04:04:06",
+  "last_updated": "2026-08-03T04:05:34",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "7b86dab6",
-        "quality": 0.64,
-        "theorems": 14,
-        "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
-      },
-      {
         "cycle_id": "c6b3a18e",
         "quality": 0.6294117647058823,
         "theorems": 102,
@@ -3761,6 +3755,12 @@
         "quality": 0.69767,
         "theorems": 8,
         "title": "The deterministic incidence-capacity obstruction — that any cover of a graph by"
+      },
+      {
+        "cycle_id": "06b881ae",
+        "quality": 0.78433,
+        "theorems": 19,
+        "title": "Inverse Stereographic Neural Field Theory"
       }
     ],
     "Probability": [
