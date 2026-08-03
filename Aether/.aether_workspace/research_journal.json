@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9d058f1b",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThe explicit `Bool` witness shows that moving from `Prop`-valued to data-valued\nfibers avoids collapse, but it also raises the question of how restrictive the\nnew equation really",
-      "quality_score": 0.74478,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-31T14:49:23",
-      "title": "The exact proposed fixed-point equation was formalized in"
-    },
-    {
       "cycle_id": "8fe295b2",
       "domain": "Applications",
       "key_insight": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsicall",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-02T23:23:50",
       "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
+    },
+    {
+      "cycle_id": "d7c83314",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## Verified outcome of this phase\n\nThe formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lean`\nproves the finite-measure packing principle and specializes i",
+      "quality_score": 0.7814599999999999,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-03T00:21:55",
+      "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bb3a8583",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n## 1. Fingerprint compression at the logarithmic threshold\n\nFor every fixed `0 < δ < 1` and every `ε > 0`, the family of pairs of finite\ninteger sets `A,B ⊆ [n]` with `|A|=|B| ≥ (",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-25T16:28:24",
-      "title": "ArXiv paper: Dense sets without large sumsets"
-    },
     {
       "cycle_id": "b59af725",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-08-02T23:23:50",
       "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
+    },
+    {
+      "cycle_id": "d7c83314",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## Verified outcome of this phase\n\nThe formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lean`\nproves the finite-measure packing principle and specializes i",
+      "quality_score": 0.7814599999999999,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-08-03T00:21:55",
+      "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2bc344f1",
-      "domain": "Cryptography",
-      "name": "proves",
-      "quality": 0.80715
-    },
-    {
-      "cycle_id": "dd55976d",
-      "domain": "Bridges",
-      "name": "reuses",
-      "quality": 0.7913999999999999
-    },
-    {
-      "cycle_id": "dd55976d",
-      "domain": "Bridges",
-      "name": "resNetSkip_fst",
-      "quality": 0.7913999999999999
-    },
     {
       "cycle_id": "dd55976d",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "one_lt_scalarLogNorm_three",
       "quality": 0.7667599999999999
+    },
+    {
+      "cycle_id": "d7c83314",
+      "domain": "NumberTheory",
+      "name": "finite_disjoint_packing",
+      "quality": 0.7814599999999999
+    },
+    {
+      "cycle_id": "d7c83314",
+      "domain": "NumberTheory",
+      "name": "s2_cap_packing_area_bound",
+      "quality": 0.7814599999999999
+    },
+    {
+      "cycle_id": "d7c83314",
+      "domain": "NumberTheory",
+      "name": "s2_proposed_bound_of_area_bound",
+      "quality": 0.7814599999999999
     }
   ],
-  "last_updated": "2026-08-02T23:23:50",
+  "last_updated": "2026-08-03T00:21:55",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "e4773f49",
-        "quality": 0.6398028571428571,
-        "theorems": 7,
-        "title": "Perfect Numbers: Structure of Even Perfects"
-      },
-      {
         "cycle_id": "e3956c60",
         "quality": 0.68,
         "theorems": 25,
@@ -3699,6 +3693,12 @@
         "quality": 0.7667599999999999,
         "theorems": 8,
         "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
+      },
+      {
+        "cycle_id": "d7c83314",
+        "quality": 0.7814599999999999,
+        "theorems": 11,
+        "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
       }
     ],
     "Physics": [
