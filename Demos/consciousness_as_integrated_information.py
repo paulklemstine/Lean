@@ -1,236 +1,152 @@
-"""
-Integrated Information (Phi): numerical demonstrations of the verified core.
+#!/usr/bin/env python3
+"""Numerical demonstrations for a finite calculus of integrated information.
 
-This script mirrors, in Python, the formally verified development in
-`IntegratedInformation.lean` (namespace `IIT`). It demonstrates each of the
-main theorems numerically:
-
-    parts / mem_parts        -- the nontrivial bipartition landscape
-    parts_nonempty           -- a cut exists when n >= 2
-    parts_eq_empty           -- no cut exists when n <= 1
-    Phi                      -- integrated information = min over cuts of ei
-    phi_le_ei                -- Phi is a lower bound for every cut
-    exists_MIP               -- the Minimum Information Partition is attained
-    le_phi                   -- Phi is the GREATEST lower bound
-    phi_nonneg               -- Phi >= 0
-    phi_eq_zero_iff          -- Phi = 0  <=>  some cut has ei = 0 (reducibility)
-    phi_mono                 -- ei_S <= ei_T pointwise  =>  Phi(S) <= Phi(T)
-    phi_eq_of_common_mip     -- shared minimizing cut with equal value => equal Phi
-
-A concrete instantiation sets ei(A) = mutual information across the cut A,
-recovering the classical "two coins" example: independent coins are reducible
-(Phi = 0), perfectly correlated coins are integrated (Phi > 0).
+A causal structure is represented by a nonempty mapping from cut names to
+nonnegative losses. Integrated information is the least loss. The script
+illustrates minimum-cut attainment, exact reducibility, independent parallel
+composition, refinement monotonicity, exclusion, and exponential cut counts.
+It uses only the Python standard library.
 """
 
 from __future__ import annotations
 
-from itertools import chain, combinations, product
-from math import log2
-from typing import Callable, Dict, FrozenSet, Iterable, List, Tuple
+from dataclasses import dataclass
+from itertools import product
+from math import isclose
+from typing import Dict, Hashable, Mapping, Sequence, Tuple, TypeVar
 
-# A "cut" A is a frozenset of element indices in {0, ..., n-1}.
-Cut = FrozenSet[int]
-# An effective-information functional: nonnegative real value on each cut.
-EI = Callable[[Cut], float]
+Cut = TypeVar("Cut", bound=Hashable)
 
 
-# ----------------------------------------------------------------------------
-# The bipartition landscape  (parts, mem_parts, parts_nonempty, parts_eq_empty)
-# ----------------------------------------------------------------------------
-def parts(n: int) -> List[Cut]:
-    """Nontrivial bipartitions of {0,...,n-1}: nonempty proper subsets."""
-    elements: Tuple[int, ...] = tuple(range(n))
-    all_subsets: Iterable[Tuple[int, ...]] = chain.from_iterable(
-        combinations(elements, r) for r in range(n + 1)
+@dataclass(frozen=True)
+class CausalStructure:
+    """A named finite nonempty cut-loss landscape."""
+
+    name: str
+    losses: Mapping[str, float]
+
+    def __post_init__(self) -> None:
+        if not self.losses:
+            raise ValueError("A causal structure must have at least one cut.")
+        if any(value < 0 for value in self.losses.values()):
+            raise ValueError("Every cut loss must be nonnegative.")
+
+
+def integrated_information(structure: CausalStructure) -> Tuple[str, float]:
+    """Return a minimizing cut and the integrated-information value Phi."""
+    cut = min(structure.losses, key=structure.losses.__getitem__)
+    return cut, structure.losses[cut]
+
+
+def parallel_composite(
+    left: CausalStructure, right: CausalStructure
+) -> CausalStructure:
+    """Build the product cut space with additive independent losses."""
+    losses: Dict[str, float] = {
+        f"({left_cut}, {right_cut})": left_loss + right_loss
+        for (left_cut, left_loss), (right_cut, right_loss) in product(
+            left.losses.items(), right.losses.items()
+        )
+    }
+    return CausalStructure(f"{left.name} tensor {right.name}", losses)
+
+
+def refinement_is_valid(
+    source: CausalStructure,
+    target: CausalStructure,
+    target_to_source_cut: Mapping[str, str],
+) -> bool:
+    """Check L_source(f(c)) <= L_target(c) for every target cut c."""
+    if set(target_to_source_cut) != set(target.losses):
+        return False
+    return all(
+        source.losses[target_to_source_cut[cut]] <= target.losses[cut]
+        for cut in target.losses
     )
-    full: Cut = frozenset(elements)
-    return [
-        frozenset(s)
-        for s in all_subsets
-        if len(s) != 0 and frozenset(s) != full  # nonempty and proper
+
+
+def exclusion(
+    candidates: Sequence[CausalStructure],
+) -> Tuple[float, Tuple[CausalStructure, ...]]:
+    """Return Big Phi and every maximizing candidate (preserving ties)."""
+    if not candidates:
+        raise ValueError("Exclusion requires at least one candidate.")
+    scored = [(candidate, integrated_information(candidate)[1]) for candidate in candidates]
+    big_phi = max(score for _, score in scored)
+    winners = tuple(
+        candidate for candidate, score in scored if isclose(score, big_phi)
+    )
+    return big_phi, winners
+
+
+def represented_nontrivial_cut_count(n: int) -> int:
+    """Count nonempty proper subsets: 2**n - 2 for n >= 1."""
+    if n < 1:
+        return 0
+    return 2**n - 2
+
+
+def demonstrate() -> None:
+    """Run deterministic examples and assert every displayed identity."""
+    sensory = CausalStructure(
+        "Sensory loop", {"left/right": 2.0, "front/back": 5.0, "odd/even": 3.5}
+    )
+    memory = CausalStructure(
+        "Memory loop", {"upper/lower": 1.0, "inner/outer": 4.0}
+    )
+    reducible = CausalStructure(
+        "Separable relay", {"module boundary": 0.0, "cross boundary": 2.5}
+    )
+
+    print("MINIMUM-CUT PRINCIPLE")
+    for system in (sensory, memory, reducible):
+        cut, phi = integrated_information(system)
+        print(f"  {system.name}: minimizing cut = {cut!r}, Phi = {phi:.2f}")
+        assert phi >= 0
+        assert all(phi <= loss for loss in system.losses.values())
+    assert integrated_information(reducible)[1] == 0.0
+    assert any(loss == 0.0 for loss in reducible.losses.values())
+
+    print("\nINDEPENDENT PARALLEL COMPOSITION")
+    composite = parallel_composite(sensory, memory)
+    composite_cut, composite_phi = integrated_information(composite)
+    sensory_phi = integrated_information(sensory)[1]
+    memory_phi = integrated_information(memory)[1]
+    print(f"  minimizing product cut = {composite_cut}")
+    print(f"  Phi(composite) = {composite_phi:.2f}")
+    print(f"  Phi(sensory) + Phi(memory) = {sensory_phi + memory_phi:.2f}")
+    assert isclose(composite_phi, sensory_phi + memory_phi)
+
+    print("\nREFINEMENT MONOTONICITY")
+    coarse = CausalStructure("Coarse model", {"a": 1.0, "b": 2.0})
+    refined = CausalStructure("Refined model", {"alpha": 1.5, "beta": 3.0})
+    cut_translation = {"alpha": "a", "beta": "b"}
+    valid = refinement_is_valid(coarse, refined, cut_translation)
+    coarse_phi = integrated_information(coarse)[1]
+    refined_phi = integrated_information(refined)[1]
+    print(f"  refinement valid: {valid}")
+    print(f"  Phi(coarse) = {coarse_phi:.2f} <= Phi(refined) = {refined_phi:.2f}")
+    assert valid and coarse_phi <= refined_phi
+
+    print("\nEXCLUSION")
+    candidates = [
+        CausalStructure("Local pair", {"c1": 1.1, "c2": 1.7}),
+        CausalStructure("Recurrent core", {"c1": 3.1, "c2": 2.8, "c3": 4.0}),
+        CausalStructure("Wide assembly", {"c1": 2.2, "c2": 2.9}),
+        CausalStructure("Peripheral ring", {"c1": 1.9, "c2": 2.0}),
     ]
+    big_phi, winners = exclusion(candidates)
+    print(f"  Big Phi = {big_phi:.2f}")
+    print("  winner(s): " + ", ".join(candidate.name for candidate in winners))
+    assert len(winners) == 1 and winners[0].name == "Recurrent core"
 
-
-def mem_parts(n: int, A: Cut) -> bool:
-    """A in parts(n)  <=>  A nonempty and A != univ  (Lemma mem_parts)."""
-    return len(A) != 0 and A != frozenset(range(n))
-
-
-# ----------------------------------------------------------------------------
-# Integrated information  (Phi)  and the Minimum Information Partition (MIP)
-# ----------------------------------------------------------------------------
-def phi(n: int, ei: EI) -> float:
-    """Phi = min over all nontrivial cuts of ei  (requires n >= 2)."""
-    cuts = parts(n)
-    if not cuts:
-        raise ValueError("Phi is undefined for n <= 1 (parts(n) is empty).")
-    return min(ei(A) for A in cuts)
-
-
-def mip(n: int, ei: EI) -> Tuple[Cut, float]:
-    """A Minimum Information Partition and its value (Theorem exists_MIP)."""
-    cuts = parts(n)
-    best = min(cuts, key=ei)
-    return best, ei(best)
-
-
-# ----------------------------------------------------------------------------
-# A concrete ei: mutual information across a cut of a joint distribution.
-# ----------------------------------------------------------------------------
-def mutual_information_ei(n: int, joint: Dict[Tuple[int, ...], float]) -> EI:
-    """
-    Build ei(A) = I(A ; complement) for a joint distribution over binary
-    states of n elements. `joint` maps a length-n tuple of 0/1 values to a
-    probability; probabilities must be nonnegative and sum to 1.
-
-    I(A; A^c) = sum_{a,b} p(a,b) * log2( p(a,b) / (p_A(a) * p_Ac(b)) ),
-    which is nonnegative (Gibbs) and zero iff the two sides are independent.
-    """
-    def ei(A: Cut) -> float:
-        Ac = frozenset(range(n)) - A
-        a_idx = sorted(A)
-        b_idx = sorted(Ac)
-        # Marginals over the two sides.
-        p_joint: Dict[Tuple[Tuple[int, ...], Tuple[int, ...]], float] = {}
-        p_A: Dict[Tuple[int, ...], float] = {}
-        p_Ac: Dict[Tuple[int, ...], float] = {}
-        for state, p in joint.items():
-            a = tuple(state[i] for i in a_idx)
-            b = tuple(state[i] for i in b_idx)
-            p_joint[(a, b)] = p_joint.get((a, b), 0.0) + p
-            p_A[a] = p_A.get(a, 0.0) + p
-            p_Ac[b] = p_Ac.get(b, 0.0) + p
-        total = 0.0
-        for (a, b), p in p_joint.items():
-            if p > 0.0:
-                total += p * log2(p / (p_A[a] * p_Ac[b]))
-        return max(total, 0.0)  # clamp tiny negative round-off
-
-    return ei
-
-
-# ----------------------------------------------------------------------------
-# Theorem checks
-# ----------------------------------------------------------------------------
-def check_phi_le_ei(n: int, ei: EI) -> bool:
-    """phi_le_ei: Phi <= ei(A) for every cut A."""
-    value = phi(n, ei)
-    return all(value <= ei(A) + 1e-12 for A in parts(n))
-
-
-def check_le_phi(n: int, ei: EI) -> bool:
-    """le_phi: the largest common lower bound equals Phi (GLB property)."""
-    value = phi(n, ei)
-    c = min(ei(A) for A in parts(n))  # the greatest lower bound is the min
-    return abs(c - value) < 1e-12 and c <= value + 1e-12
-
-
-def check_phi_nonneg(n: int, ei: EI) -> bool:
-    """phi_nonneg: Phi >= 0 whenever ei is nonnegative."""
-    return phi(n, ei) >= -1e-12
-
-
-def check_phi_eq_zero_iff(n: int, ei: EI) -> bool:
-    """phi_eq_zero_iff: Phi = 0 <=> some cut has ei = 0."""
-    value = phi(n, ei)
-    exists_zero_cut = any(abs(ei(A)) < 1e-12 for A in parts(n))
-    return (abs(value) < 1e-12) == exists_zero_cut
-
-
-def check_phi_mono(n: int, ei_S: EI, ei_T: EI) -> bool:
-    """phi_mono: ei_S <= ei_T pointwise => Phi(S) <= Phi(T)."""
-    if not all(ei_S(A) <= ei_T(A) + 1e-12 for A in parts(n)):
-        return True  # hypothesis fails -> implication vacuously holds
-    return phi(n, ei_S) <= phi(n, ei_T) + 1e-12
-
-
-# ----------------------------------------------------------------------------
-# Demonstration driver
-# ----------------------------------------------------------------------------
-def uniform_correlated_bits(n: int) -> Dict[Tuple[int, ...], float]:
-    """All-equal n bits: only 00..0 and 11..1, each with probability 1/2."""
-    zeros = tuple(0 for _ in range(n))
-    ones = tuple(1 for _ in range(n))
-    return {zeros: 0.5, ones: 0.5}
-
-
-def independent_bits(n: int, p: float = 0.5) -> Dict[Tuple[int, ...], float]:
-    """n independent Bernoulli(p) bits (factorized joint distribution)."""
-    dist: Dict[Tuple[int, ...], float] = {}
-    for bits in product((0, 1), repeat=n):
-        prob = 1.0
-        for b in bits:
-            prob *= p if b == 1 else (1.0 - p)
-        dist[bits] = prob
-    return dist
-
-
-def main() -> None:
-    print("=" * 70)
-    print("INTEGRATED INFORMATION (Phi) -- numerical demonstration")
-    print("=" * 70)
-
-    # --- Boundary behavior (parts_nonempty / parts_eq_empty) -----------------
-    print("\n[parts] boundary behavior:")
-    for n in (0, 1, 2, 3):
-        print(f"  n = {n}:  |parts(n)| = {len(parts(n))} (expected {max(2**n - 2, 0)})")
-
-    # --- Two coins: independent vs. perfectly correlated ---------------------
-    print("\n[two coins, n = 2] the smallest interesting system:")
-    ei_indep = mutual_information_ei(2, independent_bits(2))
-    ei_glued = mutual_information_ei(2, uniform_correlated_bits(2))
-    print(f"  independent coins : Phi = {phi(2, ei_indep):.6f}  -> reducible (Phi=0)")
-    print(f"  glued coins       : Phi = {phi(2, ei_glued):.6f}  -> integrated (Phi>0)")
-
-    # --- exists_MIP ----------------------------------------------------------
-    print("\n[exists_MIP] the Minimum Information Partition (n = 3, glued bits):")
-    ei3 = mutual_information_ei(3, uniform_correlated_bits(3))
-    A_star, val = mip(3, ei3)
-    print(f"  MIP = {set(A_star)};  ei(MIP) = {val:.6f} = Phi = {phi(3, ei3):.6f}")
-
-    # --- Structural theorem checks ------------------------------------------
-    print("\n[theorem checks] over several systems:")
-    systems: List[Tuple[str, int, EI]] = [
-        ("indep 2 bits", 2, ei_indep),
-        ("glued 2 bits", 2, ei_glued),
-        ("glued 3 bits", 3, ei3),
-        ("indep 3 bits", 3, mutual_information_ei(3, independent_bits(3))),
-    ]
-    for name, n, ei in systems:
-        results = {
-            "phi_le_ei": check_phi_le_ei(n, ei),
-            "le_phi(GLB)": check_le_phi(n, ei),
-            "phi_nonneg": check_phi_nonneg(n, ei),
-            "phi_eq_zero_iff": check_phi_eq_zero_iff(n, ei),
-        }
-        flags = "  ".join(f"{k}={'OK' if v else 'FAIL'}" for k, v in results.items())
-        print(f"  {name:14s} Phi={phi(n, ei):.4f}  {flags}")
-
-    # --- phi_mono ------------------------------------------------------------
-    print("\n[phi_mono] strengthening every cut cannot lower Phi:")
-    weak = mutual_information_ei(2, independent_bits(2))
-    strong = mutual_information_ei(2, uniform_correlated_bits(2))
-    ok = check_phi_mono(2, weak, strong)
-    print(f"  weak (indep) Phi={phi(2, weak):.4f} <= strong (glued) "
-          f"Phi={phi(2, strong):.4f}:  {'OK' if ok else 'FAIL'}")
-
-    # --- phi_eq_of_common_mip -----------------------------------------------
-    print("\n[phi_eq_of_common_mip] two systems sharing a minimizing cut:")
-    # Both systems are minimized at A0={0}; we make their value there equal.
-    A0: Cut = frozenset({0})
-
-    def ei_a(A: Cut) -> float:
-        return 0.3 if A == A0 else 0.9
-
-    def ei_b(A: Cut) -> float:
-        return 0.3 if A == A0 else 1.5
-
-    same = abs(phi(2, ei_a) - phi(2, ei_b)) < 1e-12
-    print(f"  Phi(S)={phi(2, ei_a):.4f}, Phi(T)={phi(2, ei_b):.4f}: "
-          f"equal = {same}")
-
-    print("\nAll demonstrations complete.")
+    print("\nCOMBINATORIAL GROWTH")
+    for n in range(1, 11):
+        count = represented_nontrivial_cut_count(n)
+        bound = 2**n
+        print(f"  n={n:2d}: represented nontrivial cuts={count:4d}, bound={bound:4d}")
+        assert count <= bound
 
 
 if __name__ == "__main__":
-    main()
+    demonstrate()

@@ -1,370 +1,401 @@
-# A Formally Verified Structural Core for Integrated Information ($\Phi$)
+# A Finite Calculus of Integrated Information: Minima, Composition, Refinement, and Exclusion
 
-**Author:** Aristotle
-**Date:** 2026-06-24
-**Domain:** Novelty (Mathematical foundations of consciousness science)
+**Aristotle**  
+**August 3, 2026**
 
 ## Abstract
 
-Integrated Information Theory (IIT) proposes a scalar invariant $\Phi$ ("phi")
-that quantifies the *irreducibility* of a system of interacting elements: the
-degree to which the whole generates information above and beyond the information
-generated independently by its parts. We isolate and rigorously establish the
-combinatorial-order-theoretic skeleton on which every concrete formulation of
-$\Phi$ rests. Working over a finite element set $\{0, \dots, n-1\}$, we define
-the lattice of nontrivial bipartitions ("cuts"), model a system as an arbitrary
-nonnegative *effective-information functional* $\mathrm{ei}$ on cuts, and define
-the integrated information $\Phi$ as the value of $\mathrm{ei}$ at the **Minimum
-Information Partition** (MIP), i.e. the minimum of $\mathrm{ei}$ over all cuts.
-We prove: (i) the MIP exists and realizes $\Phi$; (ii) $\Phi$ is the greatest
-lower bound of the effective-information landscape; (iii) $\Phi \ge 0$; (iv) the
-reducibility characterization $\Phi = 0 \iff$ some cut destroys no information;
-(v) monotonicity of $\Phi$ in the functional $\mathrm{ei}$; and (vi) a
-shared-bottleneck rigidity result equating $\Phi$ across systems that agree at a
-common minimizing cut. Crucially, every theorem depends only on the
-nonnegativity of $\mathrm{ei}$, so the entire structure transfers verbatim to any
-concrete information measure (mutual information, KL divergence, etc.). All
-results have been formalized and machine-checked.
-
----
+We develop a self-contained finite mathematical model of integrated information. A causal structure is represented by a finite nonempty set of admissible cuts together with a nonnegative real loss assigned to each cut. Its integrated information $\Phi$ is the minimum cut loss. This elementary definition supports a coherent calculus. The minimum is attained; $\Phi$ is nonnegative and is the greatest lower bound of all cut losses; and $\Phi=0$ precisely when a lossless cut exists. Independent parallel composition is modeled by Cartesian products of cut spaces and addition of component losses, under which $\Phi$ is exactly additive. Causal refinements are cut translations that weakly increase loss; they compose, admit identities, and make $\Phi$ monotone. For a finite nonempty family of candidate complexes, the exclusion value is the maximum of their $\Phi$-values. A maximizing candidate always exists, every candidate lies below the exclusion value, and strict dominance implies uniqueness. Finally, the number of represented nontrivial cuts of an $n$-element mechanism is bounded by $2^n$, yielding an exponential worst-case bound for exhaustive evaluation. We give proof sketches, algorithms, numerical examples, applications, limitations, and extensions toward probabilistic causal semantics, interacting composites, categorical structure, and symmetry-reduced computation.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Integrated-information approaches begin with an intuition about causal wholeness. A system is integrated when dividing it destroys causal organization that cannot be assigned independently to the resulting pieces. The intuition has two nested optimization problems. Within a fixed system, one searches over possible cuts and asks which cut does the least damage. Across candidate subsystems or scales, one asks which candidate is most integrated.
 
-Integrated Information Theory, introduced by Tononi, seeks to characterize the
-extent to which a physical system is an irreducible whole rather than a
-collection of quasi-independent parts. Its central quantity, $\Phi$, is intended
-to vanish precisely for systems that decompose into informationally independent
-components and to be large for systems whose components are tightly bound. While
-the philosophical claims of IIT — that $\Phi$ measures the *quantity* of
-consciousness — are contested, the *mathematical* core of the theory is an
-optimization problem over the bipartitions of a finite system, and that core can
-be made fully precise.
+This paper isolates the finite order-theoretic core of those ideas. The model deliberately begins after the empirical or probabilistic work of assigning losses has been completed. Each admissible intervention has a nonnegative real cost, interpreted as destroyed causal information. The integrated information of a system is the smallest such cost. This choice enforces a weakest-seam principle: a structure counts as strongly integrated only if every admissible cut is costly.
 
-The literature contains several competing definitions of the per-cut measure
-(effective information, integrated conceptual information, $\Phi^{\max}$, and so
-on), and arguments about $\Phi$ frequently entangle the choice of per-cut measure
-with the structural properties of the minimization. The purpose of this paper is
-to **disentangle** the two. We show that the foundational properties of $\Phi$ —
-existence of the MIP, the greatest-lower-bound property, nonnegativity, the
-reducibility equivalence, monotonicity, and bottleneck rigidity — are *purely
-structural*: they require only that the per-cut measure is nonnegative. We
-formalize the per-cut measure as an opaque nonnegative functional, prove the
-structural theorems once, and thereby obtain results that hold for *every*
-admissible instantiation simultaneously.
+Despite its economy, the model supports several structural results. Finite minimization ensures an actual minimum-information cut. Nonnegativity gives a precise reducibility criterion. Product cut spaces and additive losses yield an exact composition law for independent systems. Pointwise comparison of losses gives a category-like refinement relation and a monotonic numerical invariant. Finite maximization yields an exclusion principle, including a sufficient condition for uniqueness. A power-set estimate exposes the exponential combinatorics behind exhaustive computation.
 
-### 1.2 Contributions
+The results are mathematical implications of the abstract loss model, not a claim that integrated information alone constitutes a complete theory of consciousness. In particular, the model does not prescribe how losses arise from neural dynamics, transition kernels, interventions, or statistical divergences. Its purpose is to separate universal finite optimization facts from domain-specific causal semantics.
 
-1. A precise definition of the bipartition landscape $\mathrm{parts}(n)$ of a
-   finite system and its boundary behavior (Section 2).
-2. An abstract model of an IIT system as a nonnegative effective-information
-   functional, with $\Phi$ defined as the MIP value (Section 2).
-3. Six structural theorems characterizing $\Phi$ (Section 3), each proved from
-   nonnegativity alone.
-4. A discussion of computational complexity, instantiation by mutual
-   information, and falsifiable extensions (Sections 4–6).
+## 2. Finite causal structures
 
-All definitions and theorems below correspond one-to-one to machine-checked
-formal statements; the formal names are given in brackets, e.g. [`phi_nonneg`].
+### 2.1. Basic definition
 
----
-
-## 2. Definitions
-
-Throughout, $n \in \mathbb{N}$ and the elements of the system are identified with
-the finite set $\mathrm{Fin}\,n = \{0, 1, \dots, n-1\}$. Subsets of elements are
-ranged over by $A, B$, and the complement of $A$ within the full element set is
-written $A^{c}$.
-
-### Definition 2.1 (Nontrivial bipartitions) [`parts`]
-
-The set of **nontrivial bipartitions** of an $n$-element system is
-$$
-\mathrm{parts}(n) \;=\; \bigl\{\, A \subseteq \mathrm{Fin}\,n \;:\;
-A \neq \varnothing \ \text{and}\ A \neq \mathrm{Fin}\,n \,\bigr\}.
-$$
-Each $A \in \mathrm{parts}(n)$ encodes the cut that separates $A$ from its
-complement $A^{c}$. (As a cut, $A$ and $A^{c}$ describe the same separation;
-this symmetry is harmless for everything below, which depends only on the value
-of $\mathrm{ei}$.)
-
-### Lemma 2.2 (Membership) [`mem_parts`]
-
-For any $A \subseteq \mathrm{Fin}\,n$,
-$$
-A \in \mathrm{parts}(n) \iff A \neq \varnothing \ \wedge\ A \neq \mathrm{Fin}\,n .
-$$
-*Proof.* Immediate by unfolding the definition (a powerset filter). $\square$
-
-The cardinality of $\mathrm{parts}(n)$ is $2^{n} - 2$.
-
-### Lemma 2.4 (Boundary behavior) [`parts_nonempty`, `parts_eq_empty`]
-
-1. If $2 \le n$, then $\mathrm{parts}(n) \neq \varnothing$.
-2. If $n \le 1$, then $\mathrm{parts}(n) = \varnothing$.
-
-*Proof.* (1) The singleton $\{0\}$ is nonempty, and it is proper because its
-cardinality $1$ differs from $|\mathrm{Fin}\,n| = n \ge 2$; hence
-$\{0\} \in \mathrm{parts}(n)$. (2) For $n \in \{0, 1\}$ every subset equals
-$\varnothing$ or $\mathrm{Fin}\,n$, so no member satisfies both conditions of
-Lemma 2.2; a finite case check closes both cases. $\square$
-
-Lemma 2.4 records the natural domain of $\Phi$: integration is defined precisely
-when the system has at least two elements.
-
-### Definition 2.3 (IIT system) [`System`]
-
-An **IIT system** on $n$ elements is a pair $S = (\mathrm{ei}, \text{nonneg})$
-where
-$$
-\mathrm{ei} : \mathcal{P}(\mathrm{Fin}\,n) \to \mathbb{R}, \qquad
-\mathrm{ei}(A) \ge 0 \ \text{ for all } A.
-$$
-The value $\mathrm{ei}(A)$ is the **effective information** lost when the cut $A$
-is imposed. The sole axiom is nonnegativity: severing a cut never produces
-negative information loss.
-
-We emphasize what is *not* assumed: no symmetry, no additivity, no submodularity,
-no particular functional form. The structural theory below uses nonnegativity and
-nothing more.
-
-### Definition 2.5 (Integrated information $\Phi$) [`Phi`]
-
-Let $S$ be a system on $n$ elements with $2 \le n$ (so that
-$\mathrm{parts}(n) \neq \varnothing$ by Lemma 2.4). The **integrated
-information** of $S$ is
-$$
-\Phi(S) \;=\; \min_{A \,\in\, \mathrm{parts}(n)} \mathrm{ei}(A),
-$$
-the minimum of the effective information over all nontrivial cuts. The minimizing
-cut is the **Minimum Information Partition (MIP)**. Formally $\Phi(S)$ is
-$\min'$ of the finite nonempty image $\mathrm{ei}\bigl(\mathrm{parts}(n)\bigr)$,
-where nonemptiness is supplied by Lemma 2.4(1).
-
-The choice of *minimum* (rather than mean or maximum) encodes the principle that
-a system is only as integrated as its weakest seam: a single low-cost cut
-suffices to expose the system as nearly decomposable.
-
----
-
-## 3. Main Results
-
-Fix a system $S$ on $n$ elements with $2 \le n$ throughout this section.
-
-### Theorem 3.1 ($\Phi$ is a lower bound) [`phi_le_ei`]
-
-For every nontrivial cut $A \in \mathrm{parts}(n)$,
-$$
-\Phi(S) \le \mathrm{ei}(A).
-$$
-*Proof sketch.* $\mathrm{ei}(A)$ belongs to the finite image
-$\mathrm{ei}(\mathrm{parts}(n))$, and $\Phi(S)$ is the minimum of that image; the
-minimum is $\le$ each member (`Finset.min'_le`). $\square$
-
-### Theorem 3.2 (Existence of the MIP) [`exists_MIP`]
-
-There exists a nontrivial cut realizing $\Phi$:
-$$
-\exists\, A \in \mathrm{parts}(n), \quad \mathrm{ei}(A) = \Phi(S).
-$$
-*Proof sketch.* Since $\mathrm{parts}(n)$ is finite and nonempty, its image
-under $\mathrm{ei}$ is a finite nonempty subset of $\mathbb{R}$, whose minimum is
-a member of the image (`Finset.min'_mem`). Pulling that member back through
-`Finset.mem_image` yields a witnessing partition. $\square$
-
-The MIP need not be unique; Theorem 3.2 asserts only that the infimum is
-attained, which is what distinguishes a genuine minimum from a mere bound.
-
-### Theorem 3.3 ($\Phi$ is the greatest lower bound) [`le_phi`]
-
-If $c \in \mathbb{R}$ is a common lower bound of the landscape — i.e.
-$c \le \mathrm{ei}(A)$ for all $A \in \mathrm{parts}(n)$ — then
-$$
-c \le \Phi(S).
-$$
-*Proof sketch.* Every element of the image $\mathrm{ei}(\mathrm{parts}(n))$ has
-the form $\mathrm{ei}(A)$ for some $A \in \mathrm{parts}(n)$ and hence is
-$\ge c$; by `Finset.le_min'`, $c$ is below the minimum. $\square$
-
-Theorems 3.1 and 3.3 together state exactly that $\Phi(S) = \inf$ of the
-effective-information landscape: it is a lower bound (3.1) and the largest one
-(3.3). This is the order-theoretic identity of $\Phi$.
-
-### Corollary 3.4 (Nonnegativity) [`phi_nonneg`]
+**Definition 2.1 (Finite causal structure).** A finite causal structure $S$ is a triple
 
 $$
-0 \le \Phi(S).
+S=(C_S,L_S,\mathcal{N}_S),
 $$
-*Proof sketch.* Apply Theorem 3.3 with $c = 0$; the hypothesis
-$0 \le \mathrm{ei}(A)$ for all $A$ is exactly the nonnegativity axiom of the
-system. $\square$
 
-### Theorem 3.5 (Reducibility characterization) [`phi_eq_zero_iff`]
+where $C_S$ is a finite nonempty set of admissible cuts, $L_S:C_S\to\mathbb{R}$ is a loss function, and $\mathcal{N}_S$ is the condition
 
 $$
-\Phi(S) = 0 \;\iff\; \exists\, A \in \mathrm{parts}(n),\ \mathrm{ei}(A) = 0.
+L_S(c)\ge 0\qquad\text{for every }c\in C_S.
 $$
-*Proof sketch.*
-($\Rightarrow$) If $\Phi(S) = 0$, apply Theorem 3.2 to obtain a cut $A$ with
-$\mathrm{ei}(A) = \Phi(S) = 0$.
-($\Leftarrow$) Suppose $A \in \mathrm{parts}(n)$ has $\mathrm{ei}(A) = 0$. Then
-$0 \le \Phi(S)$ by Corollary 3.4, while $\Phi(S) \le \mathrm{ei}(A) = 0$ by
-Theorem 3.1; antisymmetry gives $\Phi(S) = 0$. $\square$
 
-Theorem 3.5 is the formal content of "reducibility": a system has $\Phi = 0$
-exactly when some nontrivial cut loses no effective information, i.e. when the
-system decomposes (along that cut) into informationally independent parts.
-Contrapositively, $\Phi(S) > 0$ iff **every** cut destroys information — the
-defining signature of an integrated whole.
+The interpretation is that $c$ specifies an allowed causal intervention or partition, while $L_S(c)$ quantifies the causal information destroyed by that intervention. The abstract definition allows different applications to choose different notions of admissibility and different loss metrics.
 
-### Theorem 3.6 (Monotonicity in the functional) [`phi_mono`]
+**Definition 2.2 (Integrated information).** The integrated information of $S$ is
 
-Let $S, T$ be systems on the same $n$ with $\mathrm{ei}_S(A) \le \mathrm{ei}_T(A)$
-for every cut $A$. Then
 $$
-\Phi(S) \le \Phi(T).
+\Phi(S)=\min_{c\in C_S}L_S(c).
 $$
-*Proof sketch.* Let $A$ be a MIP of $T$, so $\mathrm{ei}_T(A) = \Phi(T)$
-(Theorem 3.2). Then
-$\Phi(S) \le \mathrm{ei}_S(A) \le \mathrm{ei}_T(A) = \Phi(T)$,
-using Theorem 3.1 for the first inequality and the hypothesis for the second.
-$\square$
 
-Monotonicity guarantees that uniformly strengthening (or never weakening) the
-cut-wise information loss cannot decrease integration: $\Phi$ moves in the
-expected direction as a substrate's couplings change.
+The finite and nonempty hypotheses are substantive. Finiteness makes exhaustive minima and maxima available without compactness or continuity assumptions. Nonemptiness prevents the minimum from being undefined.
 
-### Theorem 3.7 (Shared-bottleneck rigidity) [`phi_eq_of_common_mip`]
+### 2.2. Attainment and universal properties
 
-Let $S, T$ be systems on the same $n$ and let $A_0 \in \mathrm{parts}(n)$ be a
-common minimizer:
+**Theorem 2.3 (Minimum-cut attainment).** For every finite causal structure $S$, there exists a cut $c_*\in C_S$ such that
+
 $$
-\mathrm{ei}_S(A_0) \le \mathrm{ei}_S(B) \ \text{ and } \
-\mathrm{ei}_T(A_0) \le \mathrm{ei}_T(B) \quad \text{for all } B \in \mathrm{parts}(n),
+L_S(c_*)=\Phi(S).
 $$
-and suppose the two systems agree there, $\mathrm{ei}_S(A_0) = \mathrm{ei}_T(A_0)$.
-Then
+
+**Proof sketch.** The image $L_S(C_S)$ is a finite nonempty subset of $\mathbb{R}$. Every finite nonempty linearly ordered set has a least element. By definition, that least element is the loss of at least one cut and equals $\Phi(S)$. $\square$
+
+The minimum satisfies two complementary inequalities.
+
+**Lemma 2.4 (Lower comparison with each cut).** For every $c\in C_S$,
+
 $$
-\Phi(S) = \Phi(T).
+\Phi(S)\le L_S(c).
 $$
-*Proof sketch.* By Theorem 3.1, $\Phi(S) \le \mathrm{ei}_S(A_0)$; by Theorem 3.3
-applied with $c = \mathrm{ei}_S(A_0)$ (a lower bound by hypothesis),
-$\mathrm{ei}_S(A_0) \le \Phi(S)$. Hence $\Phi(S) = \mathrm{ei}_S(A_0)$, and
-symmetrically $\Phi(T) = \mathrm{ei}_T(A_0)$. The agreement hypothesis then gives
-$\Phi(S) = \Phi(T)$. $\square$
 
-Theorem 3.7 isolates the locality of $\Phi$: integrated information is a function
-of the bottleneck cut and its value there, independent of the system's behavior
-along all other cuts. Two systems may differ arbitrarily away from their shared
-weakest seam and still carry identical $\Phi$.
+**Proof sketch.** A minimum is no greater than any member of the set over which it is taken. $\square$
 
----
+**Lemma 2.5 (Greatest-lower-bound property).** If $a\in\mathbb{R}$ satisfies
 
-## 4. Algorithms and Complexity
-
-The definition of $\Phi$ is a minimization over $\mathrm{parts}(n)$, which has
-$2^{n} - 2$ elements. A direct evaluation therefore costs
 $$
-\Theta\!\left(2^{n}\right)
+a\le L_S(c)\qquad\text{for every }c\in C_S,
 $$
-calls to the effective-information functional $\mathrm{ei}$, each of which is
-itself typically expensive (involving marginalization or divergence
-computations). This exponential blow-up is intrinsic to the brute-force MIP
-search and is the principal obstacle to applying IIT to large systems; it has
-motivated a substantial literature on approximations and queyranne-style
-submodular minimization heuristics for specific $\mathrm{ei}$.
 
-We record the exact algorithm here, since it is what the structural theorems
-certify.
+then
 
-**Algorithm (Exact MIP / $\Phi$ search).**
-*Input:* $n \ge 2$ and an oracle for $\mathrm{ei} : \mathcal{P}(\mathrm{Fin}\,n)
-\to \mathbb{R}_{\ge 0}$.
-*Output:* $\Phi$ and a realizing MIP $A^{\star}$.
-1. Enumerate all subsets $A \subseteq \{0, \dots, n-1\}$.
-2. Discard $A = \varnothing$ and $A = \{0, \dots, n-1\}$ (Definition 2.1).
-3. For each surviving $A$, evaluate $\mathrm{ei}(A)$.
-4. Return the minimum value $\Phi$ (guaranteed to exist, Theorem 3.2) and an
-   argmin $A^{\star}$.
+$$
+a\le\Phi(S).
+$$
 
-By Theorem 3.2 step 4 always succeeds; by Theorems 3.1 and 3.3 the returned value
-is the true infimum; by Theorem 3.5 the returned $\Phi$ is zero iff the loop
-encountered a zero-cost cut. Restricting the cut set to a chosen subfamily (e.g.
-only balanced cuts, or only contiguous cuts) yields a *restricted* $\Phi$ for
-which the identical theorems hold, since they assume nothing about which family of
-cuts is used beyond nonemptiness.
+**Proof sketch.** Since $a$ is a lower bound for every loss, it is a lower bound for the least loss in particular. $\square$
 
----
+Together, Lemmas 2.4 and 2.5 characterize $\Phi(S)$ uniquely as the greatest lower bound of the finite loss landscape. This formulation is useful because many later arguments prove an equality by giving one feasible cut for an upper bound and a common lower bound for all cuts.
 
-## 5. Applications and Instantiations
+### 2.3. Nonnegativity and exact reducibility
 
-The abstraction by a nonnegative functional is not merely convenient; it is the
-mechanism by which the structural theorems become reusable. Any concrete IIT
-proposal that supplies a nonnegative per-cut measure inherits Theorems 3.1–3.7
-for free. Two natural instantiations:
+**Corollary 2.6 (Nonnegativity).** Every finite causal structure satisfies
 
-- **Mutual information across a cut.** Let the system state be a joint
-  distribution and set $\mathrm{ei}(A) = I(A ; A^{c})$, the mutual information
-  between the two sides. Mutual information is nonnegative (Gibbs' inequality) and
-  vanishes exactly under independence, so $\Phi = 0$ (Theorem 3.5) reproduces the
-  classical statement "$\Phi = 0$ iff the system factorizes across some cut," and
-  $\Phi > 0$ certifies that no cut yields independent halves.
+$$
+\Phi(S)\ge 0.
+$$
 
-- **Kullback–Leibler effective information.** Set $\mathrm{ei}(A)$ to the KL
-  divergence between the system's transition behavior and that of the
-  cut-disconnected system. Nonnegativity of KL again places this within the
-  framework, so the MIP exists and $\Phi$ is its canonical greatest lower bound.
+**Proof sketch.** Zero is a lower bound for every cut loss by Definition 2.1. Apply Lemma 2.5 with $a=0$. $\square$
 
-In each case the *analytic* work is confined to proving nonnegativity of the
-chosen measure; all *order-theoretic* and *combinatorial* content is already
-discharged by the results above.
+**Theorem 2.7 (Zero-integration criterion).** For every finite causal structure $S$,
 
----
+$$
+\Phi(S)=0
+\quad\Longleftrightarrow\quad
+\exists c\in C_S\text{ such that }L_S(c)=0.
+$$
 
-## 6. Discussion and Future Directions
+**Proof sketch.** If $\Phi(S)=0$, Theorem 2.3 supplies a minimizing cut $c_*$ with $L_S(c_*)=\Phi(S)=0$. Conversely, if some cut $c$ has zero loss, Lemma 2.4 gives $\Phi(S)\le 0$, while Corollary 2.6 gives $0\le\Phi(S)$. Antisymmetry yields equality. $\square$
 
-We have made precise the structural backbone of $\Phi$ and proved that the
-properties one expects of a measure of irreducibility — attained minimum, exact
-infimum, nonnegativity, the reducibility equivalence, monotonicity, and
-bottleneck rigidity — follow from a single nonnegativity hypothesis. This cleanly
-separates the *combinatorics of cuts* from the *information theory of any one
-cut*, and it guarantees that future work on concrete effective-information
-measures may focus solely on analytic properties of those measures.
+This theorem gives exact mathematical content to reducibility. A structure has zero integration precisely when an admissible division preserves all information represented by the loss function. Positive $\Phi$ means every admissible cut destroys a positive amount, although it does not by itself specify how large a positive amount should count as empirically important.
 
-Several precise, falsifiable extensions arise once $\mathrm{ei}$ is instantiated
-by mutual information $I(A; A^c)$:
+## 3. Independent parallel composition
 
-- **Capacity bound.** $I(A; A^c) \le \log \min(|A\text{-states}|,
-  |A^c\text{-states}|)$, hence $\Phi$ is bounded by the log-capacity of the
-  smaller side of its MIP; equality is approached by perfectly correlated states.
-- **Chain rule / refinement monotonicity.** Coarsening a cut (merging two sides)
-  cannot decrease the cross-cut mutual information, via a conditional-mutual-
-  information chain rule with a nonnegative remainder.
-- **Data-processing monotonicity.** Applying a stochastic channel independently
-  within each side of a cut cannot increase $I(A; A^c)$, so intra-part processing
-  cannot manufacture integration; combined with Theorem 3.6 this bounds $\Phi$
-  under local processing.
-- **Reducibility = disconnection.** Over the full MIP family, $\Phi = 0$ iff the
-  system's dependency hypergraph is disconnected, sharpening Theorem 3.5.
-- **Continuity / stability.** Mutual-information-based $\Phi$ is uniformly continuous on
-  the interior of the simplex and globally bounded, giving a modulus of stability
-  under total-variation perturbations of the state.
+### 3.1. Product construction
 
-Each is a concrete theorem-shaped target that sits directly on top of the
-verified skeleton of Section 3.
+Let $S$ and $T$ be finite causal structures. Independent parallel composition treats a composite cut as one cut in each component.
 
----
+**Definition 3.1 (Independent parallel composite).** The composite $S\otimes T$ has cut space
 
-## 7. Conclusion
+$$
+C_{S\otimes T}=C_S\times C_T
+$$
 
-Integrated Information Theory rests, mathematically, on minimizing an
-effective-information functional over the bipartitions of a finite system. We
-formalized that minimization, identified nonnegativity as its only essential
-hypothesis, and proved the six structural theorems that make $\Phi$ a coherent
-invariant: the MIP exists and realizes $\Phi$ (Theorem 3.2), $\Phi$ is the
-greatest lower bound (Theorems 3.1, 3.3), $\Phi \ge 0$ (Corollary 3.4),
-$\Phi = 0$ characterizes reducibility (Theorem 3.5), $\Phi$ is monotone in the
-functional (Theorem 3.6), and $\Phi$ is determined by its bottleneck
-(Theorem 3.7). Whatever one concludes about the relationship between $\Phi$ and
-consciousness, the quantity itself now has a rigorous and reusable foundation.
+and loss
+
+$$
+L_{S\otimes T}(s,t)=L_S(s)+L_T(t).
+$$
+
+This is again a finite causal structure: the Cartesian product of finite nonempty sets is finite and nonempty, and the sum of nonnegative losses is nonnegative.
+
+The definition encodes two assumptions. First, cuts can be selected independently in the two components. Second, the damage caused by a paired cut is the sum of its component damages. It is therefore appropriate for parallel systems without cross-component causal interaction in the chosen representation.
+
+### 3.2. Additivity
+
+**Theorem 3.2 (Parallel composition law).** For finite causal structures $S$ and $T$,
+
+$$
+\Phi(S\otimes T)=\Phi(S)+\Phi(T).
+$$
+
+**Proof sketch.** Choose minimizing cuts $s_*\in C_S$ and $t_*\in C_T$. The paired cut $(s_*,t_*)$ has loss
+
+$$
+L_{S\otimes T}(s_*,t_*)=L_S(s_*)+L_T(t_*)=\Phi(S)+\Phi(T),
+$$
+
+so $\Phi(S\otimes T)\le\Phi(S)+\Phi(T)$. Conversely, for every $(s,t)$, Lemma 2.4 gives $\Phi(S)\le L_S(s)$ and $\Phi(T)\le L_T(t)$. Adding yields
+
+$$
+\Phi(S)+\Phi(T)\le L_S(s)+L_T(t)=L_{S\otimes T}(s,t).
+$$
+
+Thus $\Phi(S)+\Phi(T)$ is a common lower bound for every composite cut. Lemma 2.5 gives the reverse inequality. $\square$
+
+**Example 3.3.** Suppose $S$ has losses $2.0$, $5.0$, and $3.5$, while $T$ has losses $1.0$ and $4.0$. Then $\Phi(S)=2.0$ and $\Phi(T)=1.0$. The six composite losses are $3.0$, $6.0$, $6.0$, $9.0$, $4.5$, and $7.5$, whose minimum is $3.0=2.0+1.0$.
+
+Additivity extends by induction to any finite sequence of independently composed structures:
+
+$$
+\Phi(S_1\otimes\cdots\otimes S_k)=\sum_{j=1}^{k}\Phi(S_j).
+$$
+
+This iterated formula is an immediate consequence of Theorem 3.2 and associativity of real addition, provided the composite is built repeatedly by the same product-and-sum rule.
+
+## 4. Causal refinement
+
+### 4.1. Definition and composition
+
+Causal descriptions may differ in resolution or admissible intervention vocabulary. We compare them using cut translations that control loss.
+
+**Definition 4.1 (Causal refinement).** A refinement from $S$ to $T$ is a function
+
+$$
+f:C_T\to C_S
+$$
+
+such that
+
+$$
+L_S(f(c))\le L_T(c)
+$$
+
+for every $c\in C_T$.
+
+The direction is worth noting: a cut of the target $T$ is translated back to a cut of the source $S$. The inequality says that the translated cut in $S$ is no more destructive than the original cut in $T$.
+
+**Proposition 4.2 (Identity refinement).** Every structure $S$ has an identity refinement $\operatorname{id}_S:S\to S$ given by $\operatorname{id}_S(c)=c$.
+
+**Proof sketch.** For each cut, $L_S(c)\le L_S(c)$ by reflexivity. $\square$
+
+**Proposition 4.3 (Composition of refinements).** If $g:R\to S$ and $f:S\to T$ are refinements, then the composite cut map $g\circ f:C_T\to C_R$ is a refinement $R\to T$.
+
+**Proof sketch.** For every $c\in C_T$,
+
+$$
+L_R(g(f(c)))\le L_S(f(c))\le L_T(c).
+$$
+
+Transitivity gives the required inequality. $\square$
+
+The identity and composition constructions suggest a category of causal structures and refinements. The present development needs only the explicit laws, but this viewpoint organizes longer chains of model comparison.
+
+### 4.2. Monotonicity of integrated information
+
+**Theorem 4.4 (Refinement monotonicity).** If there is a causal refinement $f:S\to T$, then
+
+$$
+\Phi(S)\le\Phi(T).
+$$
+
+**Proof sketch.** Choose a minimizing cut $c_*\in C_T$. The translated cut $f(c_*)$ belongs to $C_S$. Hence
+
+$$
+\Phi(S)
+\le L_S(f(c_*))
+\le L_T(c_*)
+=\Phi(T).
+$$
+
+The first inequality follows from Lemma 2.4, the second from the refinement condition, and the equality from minimum attainment. $\square$
+
+**Corollary 4.5 (Monotonicity along composable refinements).** If $R\to S$ and $S\to T$ are causal refinements, then
+
+$$
+\Phi(R)\le\Phi(T).
+$$
+
+**Proof sketch.** Apply Theorem 4.4 to each refinement to obtain $\Phi(R)\le\Phi(S)$ and $\Phi(S)\le\Phi(T)$, then use transitivity. Equivalently, apply Theorem 4.4 directly to the composite refinement from Proposition 4.3. $\square$
+
+Thus $\Phi$ is an order-valued invariant of the refinement calculus. It sends identity refinements to reflexive inequalities and composite refinements to transitive inequalities. If refinements exist in both directions, monotonicity gives equality of the two $\Phi$-values, a useful observation for future notions of causal equivalence.
+
+## 5. Exclusion among candidate complexes
+
+### 5.1. Candidate families and the exclusion value
+
+A physical network can support many candidate complexes, distinguished by boundary, scale, or coarse-graining. Let $I$ be a finite nonempty index set, and let $S_i$ be a finite causal structure for each $i\in I$.
+
+**Definition 5.1 (Finite candidate family).** A candidate family is the indexed collection
+
+$$
+\mathcal{F}=\{S_i:i\in I\},
+$$
+
+where $I$ is finite and nonempty.
+
+**Definition 5.2 (Exclusion value).** The exclusion value of $\mathcal{F}$ is
+
+$$
+\widehat{\Phi}(\mathcal{F})=\max_{i\in I}\Phi(S_i).
+$$
+
+This outer maximum is conceptually distinct from the inner minimum defining each candidate's integrated information. The full optimization has the max-min form
+
+$$
+\widehat{\Phi}(\mathcal{F})
+=
+\max_{i\in I}\min_{c\in C_{S_i}}L_{S_i}(c).
+$$
+
+A candidate is rewarded only after surviving its own weakest cut.
+
+### 5.2. Existence and order characterization
+
+**Theorem 5.3 (Exclusion).** Every finite nonempty candidate family contains a maximizing candidate. That is, there exists $i_*\in I$ such that
+
+$$
+\Phi(S_{i_*})=\widehat{\Phi}(\mathcal{F}).
+$$
+
+**Proof sketch.** The set $\{\Phi(S_i):i\in I\}$ is finite and nonempty, so it has a greatest member. That member is attained by at least one index. $\square$
+
+**Lemma 5.4 (Candidate upper bound).** Every candidate lies below the exclusion value:
+
+$$
+\Phi(S_i)\le\widehat{\Phi}(\mathcal{F})
+\qquad\text{for every }i\in I.
+$$
+
+**Proof sketch.** A maximum is at least every element of the set being maximized. $\square$
+
+**Lemma 5.5 (Least-upper-bound property).** If $a\in\mathbb{R}$ satisfies
+
+$$
+\Phi(S_i)\le a
+\qquad\text{for every }i\in I,
+$$
+
+then
+
+$$
+\widehat{\Phi}(\mathcal{F})\le a.
+$$
+
+**Proof sketch.** The maximum is one of the candidate values, and all candidate values are bounded above by $a$. $\square$
+
+Lemmas 5.4 and 5.5 characterize the exclusion value as the least upper bound of the finite $\Phi$-landscape.
+
+### 5.3. Strict dominance and uniqueness
+
+**Theorem 5.6 (Unique exclusion under strict dominance).** Suppose $w\in I$ satisfies
+
+$$
+\Phi(S_i)<\Phi(S_w)
+\qquad\text{for every }i\ne w.
+$$
+
+Then $w$ is the unique exclusion winner: for every $i\in I$,
+
+$$
+\Phi(S_i)=\widehat{\Phi}(\mathcal{F})
+\quad\Longrightarrow\quad
+i=w.
+$$
+
+**Proof sketch.** Candidate $w$ is an upper bound for the family because every other value is strictly smaller and its own value is equal to itself. By Lemma 5.5, $\widehat{\Phi}(\mathcal{F})\le\Phi(S_w)$. Lemma 5.4 gives the reverse inequality, so $\widehat{\Phi}(\mathcal{F})=\Phi(S_w)$. If another $i\ne w$ attained the exclusion value, strict dominance would imply
+
+$$
+\widehat{\Phi}(\mathcal{F})=\Phi(S_i)<\Phi(S_w)=\widehat{\Phi}(\mathcal{F}),
+$$
+
+an impossibility. $\square$
+
+The strict condition is sufficient and, in a finite family, exactly captures uniqueness at the level of numerical values: a unique maximizer must strictly exceed every other candidate. Without strict dominance, exclusion still has at least one winner, but ties may persist.
+
+## 6. Finite combinatorics and algorithms
+
+### 6.1. Counting represented cuts
+
+Let an $n$-element mechanism have underlying set $V$ with $|V|=n$. Represent a cut by selecting a subset $A\subseteq V$ as one side. A represented cut is nontrivial when $A\ne\varnothing$ and $A\ne V$.
+
+**Theorem 6.1 (Nontrivial cut-count bound).** If $N_{\mathrm{nt}}(n)$ denotes the number of represented nonempty proper subsets of an $n$-element mechanism, then
+
+$$
+N_{\mathrm{nt}}(n)\le 2^n.
+$$
+
+**Proof sketch.** The collection of nonempty proper subsets is obtained by filtering the power set $\mathcal{P}(V)$. Filtering cannot increase cardinality, and $|\mathcal{P}(V)|=2^n$. $\square$
+
+In this particular subset representation the exact count is $2^n-2$ for $n\ge 1$, but the stated theorem requires only the robust upper bound. If $A$ and $V\setminus A$ represent the same unordered bipartition, further quotienting can nearly halve the count. The bound nevertheless establishes exponential worst-case growth.
+
+### 6.2. Exhaustive computation of $\Phi$
+
+For explicit losses, integrated information can be computed by a one-pass minimum scan.
+
+**Algorithm 6.2 (Exhaustive integrated-information evaluation).** Given a finite nonempty list of cuts and a loss oracle:
+
+1. evaluate the loss of the first cut and store it as the current minimum;
+2. scan each remaining cut;
+3. whenever a smaller loss is found, update the minimum and the minimizing cut;
+4. return the final cut and loss.
+
+If there are $m$ admissible cuts and one loss evaluation costs $T_L$, the running time is $O(mT_L)$ and the additional storage is $O(1)$ beyond the cut representation. Under subset enumeration, $m\le 2^n$, so the worst-case number of evaluations is $O(2^n)$.
+
+Correctness follows from a loop invariant: after processing the first $k$ cuts, the stored value is the minimum among precisely those $k$ losses. At termination all cuts have been processed, so the stored value is $\Phi(S)$ and the stored cut realizes it.
+
+### 6.3. Parallel composition algorithm
+
+Given explicit component loss arrays, one could enumerate all $|C_S||C_T|$ pairwise sums and take their minimum. Theorem 3.2 makes that unnecessary. Compute the two component minima independently and add them. The direct product method costs $O(|C_S||C_T|)$ additions and comparisons, whereas the theorem-guided method costs $O(|C_S|+|C_T|)$ loss inspections. It also returns a minimizing paired cut by pairing the component minimizers.
+
+### 6.4. Exclusion algorithm
+
+For candidates $S_1,\ldots,S_k$, compute each inner minimum $\Phi(S_i)$ and then scan those $k$ values for the maximum. If candidate $i$ has $m_i$ cuts, the total number of loss inspections is $\sum_i m_i$, followed by $O(k)$ comparisons. Store all maximizing indices if ties matter; report a unique winner only when one value strictly exceeds all others.
+
+The correctness argument has two layers. Each inner scan is correct by Algorithm 6.2. The outer scan maintains the maximum of the integrated-information values processed so far. At termination it equals $\widehat{\Phi}$, and its stored index set contains exactly the exclusion winners.
+
+## 7. Applications and interpretation
+
+### 7.1. Causal network analysis
+
+In a directed or weighted network, admissible cuts can be graph bipartitions and losses can quantify severed causal influence. The abstract theorems then become templates. The zero criterion detects a partition with no measured cross-cut dependence. Refinement monotonicity compares alternative representations when a cut translation satisfies the required inequality. The cut-count bound explains why exact evaluation becomes difficult as the node count grows.
+
+### 7.2. Modular distributed systems
+
+For independent modules, additive losses and product cuts are natural. The composition theorem shows that integrated information accumulates exactly across independent parallel components under this convention. Conversely, if empirical composite losses violate the product-and-sum model, the discrepancy identifies interaction or a mismatch in the loss semantics. Thus additivity is both a computational shortcut and a diagnostic assumption.
+
+### 7.3. Multiscale candidate selection
+
+Candidate complexes can represent subnetworks, spatial regions, time scales, or coarse-grainings. The exclusion value chooses the candidate with the strongest weakest-cut performance. This max-min structure resembles robust optimization: each candidate is evaluated against its most revealing vulnerability, and candidates are then ranked by that worst case.
+
+### 7.4. Order-valued invariants
+
+The refinement calculus separates structural comparison from numerical measurement. A refinement is not defined merely by comparing two final $\Phi$-values; it compares all target cuts through a coherent translation. Monotonicity is then a consequence. This distinction matters: many unrelated systems can share the same scalar value, while a refinement supplies explicit structural evidence for the inequality.
+
+## 8. Scope and limitations
+
+The model is intentionally abstract. It assumes that admissible cuts and nonnegative losses have already been specified. Consequently, its theorems do not choose a divergence, define a causal repertoire, infer interventions from observational data, or establish a link between $\Phi$ and subjective experience. They state what is mathematically guaranteed for any finite nonnegative cut-loss landscape.
+
+Additivity is conditional on independent parallel composition as defined in Section 3. Interacting systems may contain synergy or redundancy, causing composite loss to differ from the sum of component losses. Such settings require a modified composition rule and may yield subadditivity or superadditivity instead of equality.
+
+Exclusion guarantees existence but not uniqueness without strict dominance. Tied candidates remain a genuine possibility, especially under symmetries. A richer theory may quotient candidates by causal equivalence, select equivalence classes, or add principled tie information.
+
+Finally, the exponential bound warns against naive scaling. It is an upper bound on represented subsets, not a claim that every application must inspect all of them. Graph structure, lower bounds, dynamic programming, branch-and-bound, and symmetries may reduce computation substantially.
+
+## 9. Future research
+
+A first priority is **causal semantics**. Abstract cut losses can be replaced by finite transition-probability kernels, explicit interventions, cause-effect repertoires, and divergence-based loss. One should then prove that these constructions always satisfy nonnegativity and instantiate the present framework. Perturbation bounds could quantify stability of $\Phi$ and exclusion winners under bounded changes in losses.
+
+A second direction concerns **composition and exclusion**. Interacting composites should be studied to characterize when $\Phi$ is additive, subadditive, or superadditive. Exclusion should be developed modulo causal equivalence and in the presence of ties. Its behavior under refinement and parallel composition may reveal useful distributive or monotonic laws.
+
+A third direction is **category theory**. Causal structures and refinements naturally suggest a category, while independent parallel composition suggests a monoidal product. In that language, $\Phi$ behaves as an order-valued monotone invariant, and additivity expresses compatibility with the monoidal structure. Suitable equivalences should preserve $\Phi$.
+
+A fourth direction is **finite combinatorics and complexity**. Quotienting cuts by complementation gives unordered bipartitions and supports exact counts. Correctness and runtime guarantees are needed for exhaustive, branch-and-bound, and symmetry-reduced algorithms. When losses correspond to weighted graph cuts, standard approximation methods may transfer useful guarantees to $\Phi$.
+
+## 10. Conclusion
+
+A finite nonnegative landscape of causal cut losses is enough to support a compact theory of integrated information. The minimum loss is attained, is nonnegative, and vanishes exactly at a lossless cut. Independent parallel products make the minimum additive. Cut-translating refinements make it monotone. Finite candidate families possess exclusion winners, with uniqueness under strict dominance. The represented search space is bounded by $2^n$ for an $n$-element mechanism.
+
+These results clarify the mathematical commitments behind the language of integration and exclusion. They distinguish universal consequences of finite optimization from assumptions about causal modeling and consciousness. The framework's central quantity has a simple meaning: $\Phi(S)$ is the cost of the weakest admissible seam. Its usefulness lies not in replacing richer causal science, but in providing that science with a precise and compositional foundation.
