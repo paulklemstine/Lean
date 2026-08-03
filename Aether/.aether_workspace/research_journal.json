@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c0a515f0",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## Outcome\n\nThe unrestricted conjecture is false. `CertifiedRobustness.lean` gives a\nkernel-checked counterexample: the degree-one cellular cohomology of the\nconstant real sheaf o",
-      "quality_score": 0.7776099999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-01T14:04:22",
-      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-    },
-    {
       "cycle_id": "647e3d96",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nThe Lean development proves statements inside a precise topological observer model. The following conjectures are concrete extensions of that model and do not assert an empirical",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-08-03T23:28:48",
       "title": "Grokking: Phase Transitions in Learning"
+    },
+    {
+      "cycle_id": "28c84414",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `Cᵒᵖ ⥤+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   r",
+      "quality_score": 0.73729,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-03T23:29:51",
+      "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d7591934",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Result formalized here\n\n`Catalog/Novelty/MatroidMinorFiniteObstructions.lean` proves the abstract bridge\nbehind forbidden-minor theorems.  Interpret `a ≤ b` as “`a` is a minor",
-      "quality_score": 0.6299480519480519,
-      "sorry_count": 8,
-      "theorem_count": 9240,
-      "timestamp": "2026-07-26T06:19:11",
-      "title": "Matroid Minors and the Graph Theorem: Robertson-Seymour for Matroids"
-    },
     {
       "cycle_id": "64006a56",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-08-03T23:28:48",
       "title": "Grokking: Phase Transitions in Learning"
+    },
+    {
+      "cycle_id": "28c84414",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `Cᵒᵖ ⥤+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   r",
+      "quality_score": 0.73729,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-03T23:29:51",
+      "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d7c83314",
-      "domain": "NumberTheory",
-      "name": "s2_cap_packing_area_bound",
-      "quality": 0.7814599999999999
-    },
-    {
-      "cycle_id": "d7c83314",
-      "domain": "NumberTheory",
-      "name": "s2_proposed_bound_of_area_bound",
-      "quality": 0.7814599999999999
-    },
-    {
-      "cycle_id": "76a9f834",
-      "domain": "Cryptography",
-      "name": "siteThresholdConfig_eq_true_iff",
-      "quality": 0.7250399999999999
-    },
     {
       "cycle_id": "76a9f834",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "delayed_transition_has_critical_equilibrium",
       "quality": 0.77257
+    },
+    {
+      "cycle_id": "28c84414",
+      "domain": "Shared",
+      "name": "presheaf_hom_ext_of_representables",
+      "quality": 0.73729
+    },
+    {
+      "cycle_id": "28c84414",
+      "domain": "Shared",
+      "name": "presheaf_isIso_of_pointwise_bijective",
+      "quality": 0.73729
+    },
+    {
+      "cycle_id": "28c84414",
+      "domain": "Shared",
+      "name": "yoneda_reflects_object_isomorphism",
+      "quality": 0.73729
     }
   ],
-  "last_updated": "2026-08-03T23:28:48",
+  "last_updated": "2026-08-03T23:29:51",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "d1098480",
-        "quality": 0.685,
-        "theorems": 9,
-        "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-      },
-      {
         "cycle_id": "434986f0",
         "quality": 0.686,
         "theorems": 39,
@@ -3947,6 +3941,12 @@
         "quality": 0.80477,
         "theorems": 26,
         "title": "Bridge: Category Theory as Universal Language for Mathematics"
+      },
+      {
+        "cycle_id": "28c84414",
+        "quality": 0.73729,
+        "theorems": 10,
+        "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
       }
     ],
     "Tropical": [
