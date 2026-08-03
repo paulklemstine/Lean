@@ -1063,7 +1063,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92412bd6",
     "description": "Building on cycle f1303b99 (Q=0.811), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domain_bridges": [],
     "domains": [
@@ -1075,7 +1075,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f1303b99",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-29T06:54:54.862192+00:00",
     "title": "Deepening: Game of Life Universality"
   },
@@ -1199,7 +1199,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28c84414",
     "description": "Building on cycle 4db4579d (Q=0.805), which proved 26 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics)",
     "domain_bridges": [],
     "domains": [
@@ -1211,7 +1211,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "4db4579d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-03T08:07:06.620928+00:00",
     "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
   },
@@ -1461,25 +1461,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:05:22.682938+00:00",
     "title": "Sheaf-Cohomology: Formalization of Grothendieck-Serre Duality on Smooth Schemes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "38046e56",
-    "description": "Proves that Khovanov homology categorifies the Jones polynomial for arbitrary oriented link diagrams.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "dir_50_08_be75e3e7",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:22.730976+00:00",
-    "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
   },
   {
     "ambition_level": "extension",
@@ -2755,6 +2736,44 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f7f562cc (Q=0.783), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_f7f562cc_9afd87aa",
+    "lineage_refs": [],
+    "priority_score": 0.88272,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f7f562cc",
+    "status": "available",
+    "timestamp": "2026-08-03T15:25:39.323194+00:00",
+    "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a60d1c49 (Q=0.782), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prov",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_a60d1c49_1f2423f4",
+    "lineage_refs": [],
+    "priority_score": 0.88167,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a60d1c49",
+    "status": "available",
+    "timestamp": "2026-08-03T15:27:09.366606+00:00",
+    "title": "Deepening: ML Attention Mechanism: Formal Properties of Transformers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 545fa377 (Q=0.782), which proved 10 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
     "domain_bridges": [],
     "domains": [
@@ -3089,6 +3108,25 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 38046e56 (Q=0.779), which proved 10 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that Khovanov homology categorifies the Jones polynomial for arbitrary oriented link diagrams.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_38046e56_68a03598",
+    "lineage_refs": [],
+    "priority_score": 0.87922,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "38046e56",
+    "status": "available",
+    "timestamp": "2026-08-03T15:28:39.168208+00:00",
+    "title": "Deepening: Knot-Jones: Quantum Group Verification of Khovanov Invariants"
   },
   {
     "ambition_level": "extension",
@@ -4408,26 +4446,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a60d1c49",
-    "description": "Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prove that multi-head attention increases the rank of the attention matrix.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Algebra"
-    ],
-    "id": "seed_376",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "ML Attention Mechanism: Formal Properties of Transformers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 8e0a0c8a (Q=0.760), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
     "domain_bridges": [],
@@ -5651,26 +5669,6 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697766+00:00",
     "title": "Quaternion Algebras and Rotations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "f7f562cc",
-    "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics",
-      "Probability"
-    ],
-    "id": "fd_0673",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697801+00:00",
-    "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
   {
     "ambition_level": "extension",
@@ -9913,7 +9911,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8fa54bf5",
     "description": "Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
     "domain_bridges": [],
     "domains": [
@@ -9927,7 +9925,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Convexity and Helly Theorem"
   },
@@ -15160,6 +15158,66 @@
     "status": "available",
     "timestamp": "2026-08-03T11:55:00.346066+00:00",
     "title": "Future directions from cycle 1343d96e"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n1. **Poisson isolated-vertex limit in the connectivity window.** For every fixed `c : ℝ`, if `I_n` is the isolated-vertex count in `G(n, (log n + c)/n)`, then for every fixed `k : ℕ`, its `k`th falling-factorial moment converges to `exp(-c)^k`. Consequently `P(I_n = 0) → exp(-exp(-c))`.\n\n2. **Connectivity is asymptotically equivalent to absence of isolated vertices.** At `p_n = (log n + c)/n`, the probability that a graph has no isolated vertices but is disconnected tends to zero. Combined with Conjecture 1, this gives the sharp connectivity limit `exp(-exp(-c))`.\n\n3. **Finite random-graph giant component law.** For each fixed `λ > 1`, let `ρ ∈ (0,1)` solve `ρ = 1 - exp(-λρ)`. In `G(n, λ/n)`, the largest component divided by `n` converges in probability to `ρ`, while the second-largest component divided by `n` converges in probability to zero.\n\n4. **Subcritical logarithmic component bound.** For each fixed `0 < λ < 1` and every `A > 1 / (λ - 1 - log λ)`, the probability that every component of `G(n, λ/n)` has at most `A log n` vertices tends to one.\n\n5. **Second-moment clique appearance above threshold.** For each fixed `r ≥ 3`, if `p_n * n^(2/(r-1)) → ∞` and `p_n ≤ 1`, then the probability that `G(n,p_n)` contains a copy of `K_r` tends to one. This should follow by classifying pairs of `r`-vertex sets by overlap size in the exact second-moment formula.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_0933",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f7f562cc",
+    "status": "available",
+    "timestamp": "2026-08-03T15:25:34.346948+00:00",
+    "title": "1. **Poisson isolated-vertex limit in the connectivity window.** For every fixed"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe formal development establishes the exact finite-dimensional permutation symmetry and\nprobabilistic normalization laws of standard scaled dot-product softmax attention. Natural\nnext steps are:\n\n1. **Multi-head attention.** Define concatenation followed by an output projection and prove\n   equivariance of the full block. A correct rank theorem should use explicit independence\n   hypotheses: additional heads do not increase rank automatically (duplicate heads are a\n   counterexample), while concatenation with a head whose column space contributes a direct\n   summand increases rank additively.\n2. **Masking.** Formalize attention masks and prove equivariance precisely for permutations\n   preserving the mask. Causal masks restrict the symmetry group to order-preserving\n   permutations.\n3. **Stability.** Derive norm and Lipschitz bounds from positivity and row-stochasticity,\n   including the fact that each output coordinate lies in the convex hull of the input value\n   coordinates.\n4. **Positive-definite exponential kernels.** For the symmetric specialization `q = k`, prove\n   positive definiteness of `exp (⟪q x, q y⟫ / scale)` via its power-series feature map and\n   construct the associated RKHS. With unrelated `q` and `k`, the proposed kernel need not be\n   symmetric, so an RKHS theorem requires additional assumptions or a two-sided feature-space\n   interpretation.\n5. **Approximation theory.** State universality on a compact permutation-invariant domain with\n   a precise architecture class, topology, activation assumptions, and approximation norm.\n   The current equivariance theorem supplies the symmetry-preservation component, but density\n   requires a separate constructive approximation argument.\n6. **Full transformer blocks.** Combine attention equivariance with pointwise feed-forward\n   layers, residual connections, and permutation-compatible normalization to verify an entire\n   encoder stack.\n",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_0934",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a60d1c49",
+    "status": "available",
+    "timestamp": "2026-08-03T15:27:05.074576+00:00",
+    "title": "The formal development establishes the exact finite-dimensional permutation symm"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n- Construct the Khovanov chain groups and signed cube differential over an arbitrary coefficient ring, then prove `d² = 0` from commuting square faces.\n- Refine the generator-level graded Euler calculation to finitely supported bigraded modules and prove that taking homology preserves the graded Euler characteristic.\n- Formalize Reidemeister chain maps and chain homotopies, yielding invariance of Khovanov homology under all three Reidemeister moves.\n- Connect the Jones state-sum normalization here to the oriented Kauffman-bracket normalization, including writhe shifts.\n- Extend the rank-two Frobenius-algebra development to linear maps and tensor powers rather than basis-level tables.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0935",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "38046e56",
+    "status": "available",
+    "timestamp": "2026-08-03T15:28:35.317033+00:00",
+    "title": "Future directions from cycle 38046e56"
   },
   {
     "ambition_level": "extension",
