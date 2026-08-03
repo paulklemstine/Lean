@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "03b10997",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThe present development verifies algebraic search-to-decision ingredients, finite-distribution hybrid bounds for IND-CPA and post-compromise security, reconciliation inequalities,",
-      "quality_score": 0.7701199999999999,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-31T20:49:43",
-      "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
-    },
-    {
       "cycle_id": "61e33133",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass result into an explicit approximation operator on `[0,1]^n`, with error controlled by a modulus of",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-03T00:24:45",
       "title": "Wall-Sun-Sun Primes"
+    },
+    {
+      "cycle_id": "bffb7591",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\nThe Lean development proves the sharp deterministic cardinal-growth obstruction and a linear-threshold avoidance theorem.  The following are concrete conjectures extending it.\n\n1.",
+      "quality_score": 0.77061,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-08-03T04:04:06",
+      "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7b875dce",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n## 1. Cycle-exchange theorem for symmetric tropical permanents\n\nFor every finite symmetric max-plus matrix, principal tropical permanents satisfy the two-set exchange inequality u",
-      "quality_score": 0.71,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-25T19:42:26",
-      "title": "ArXiv paper: Properties of the Tropical Characteristic Polynomial of Symmetric Matrices"
-    },
     {
       "cycle_id": "0d06265a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-03T00:24:45",
       "title": "Wall-Sun-Sun Primes"
+    },
+    {
+      "cycle_id": "bffb7591",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\nThe Lean development proves the sharp deterministic cardinal-growth obstruction and a linear-threshold avoidance theorem.  The following are concrete conjectures extending it.\n\n1.",
+      "quality_score": 0.77061,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-08-03T04:04:06",
+      "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e801d98f",
-      "domain": "Tropical",
-      "name": "product_leftZero",
-      "quality": 0.76179
-    },
-    {
-      "cycle_id": "01a8c97a",
-      "domain": "Geometry",
-      "name": "angle_sum_eq_zero_iff",
-      "quality": 0.72854
-    },
-    {
-      "cycle_id": "01a8c97a",
-      "domain": "Geometry",
-      "name": "hyperbolicArea_nonneg",
-      "quality": 0.72854
-    },
     {
       "cycle_id": "01a8c97a",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "no_wallSunSun_below_12",
       "quality": 0.7482099999999999
+    },
+    {
+      "cycle_id": "bffb7591",
+      "domain": "Pythagorean",
+      "name": "initialInterval_card",
+      "quality": 0.77061
+    },
+    {
+      "cycle_id": "bffb7591",
+      "domain": "Pythagorean",
+      "name": "contained_uniform_tfold_card_bound",
+      "quality": 0.77061
+    },
+    {
+      "cycle_id": "bffb7591",
+      "domain": "Pythagorean",
+      "name": "initialInterval_avoids_uniform_tfold",
+      "quality": 0.77061
     }
   ],
-  "last_updated": "2026-08-03T00:24:45",
+  "last_updated": "2026-08-03T04:04:06",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "2c3f15cd",
-        "quality": 0.55,
-        "theorems": 22,
-        "title": "1. **Replace discrete carriers by actual categories.** Define an analogy from fu"
-      },
-      {
         "cycle_id": "274c401c",
         "quality": 0.55,
         "theorems": 11,
@@ -3885,6 +3879,12 @@
         "quality": 0.699,
         "theorems": 4,
         "title": "ArXiv paper: Greenberg's $μ=0$ conjecture for lisse sheaves over global function"
+      },
+      {
+        "cycle_id": "bffb7591",
+        "quality": 0.77061,
+        "theorems": 9,
+        "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
       }
     ],
     "Shared": [
