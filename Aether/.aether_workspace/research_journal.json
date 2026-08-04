@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9fe269b0",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## Completed formal boundary\n\nThe Lean development is complete and contains no unfinished proofs. It establishes the incidence-theoretic coordinatization theorem: every `PlanarTer",
-      "quality_score": 0.7311199999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-26T22:24:17",
-      "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-    },
-    {
       "cycle_id": "1f5ea34f",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nEach item below is a concrete formal target whose success or failure can be checked in Lean.\n\n1. **Classical Schanuel versus the concrete pair.** Prove\n   `SchanuelConjecture → Al",
@@ -2501,6 +2491,16 @@
       "theorem_count": 162,
       "timestamp": "2026-08-04T23:25:37",
       "title": "ArXiv paper: Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algorithms and Hardness"
+    },
+    {
+      "cycle_id": "8d083ef6",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`\nsettles the \"sharp privacy threshold\" direction for binary network histories:\nperfectly private chan",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-08-04T23:25:44",
+      "title": "**Conjecture.** For a nonuniform distribution on finite network histories and an"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78433
     }
   ],
-  "last_updated": "2026-08-04T23:25:37",
+  "last_updated": "2026-08-04T23:25:44",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8fe295b2",
-        "quality": 0.7712399999999999,
-        "theorems": 6,
-        "title": "EML Quantum Activation Functions"
-      },
-      {
         "cycle_id": "61e33133",
         "quality": 0.7666899999999999,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.7657699999999998,
         "theorems": 44,
         "title": "EML Integration in Finite Terms: The Risch Algorithm"
+      },
+      {
+        "cycle_id": "8d083ef6",
+        "quality": 0.686,
+        "theorems": 37,
+        "title": "**Conjecture.** For a nonuniform distribution on finite network histories and an"
       }
     ],
     "Bridges": [
