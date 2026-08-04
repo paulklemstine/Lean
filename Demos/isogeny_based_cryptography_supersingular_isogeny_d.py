@@ -1,350 +1,253 @@
 #!/usr/bin/env python3
+"""Repair tool for the auto-generated `Shared/` catalog files.
+
+Two mechanical defects are fixed:
+
+* the module docstring is emitted before `import Mathlib` (illegal in Lean 4),
+* declarations are emitted in an arbitrary order, so a declaration may use a
+  definition or lemma that appears later in the same file, and some base
+  definitions are missing altogether.
+
+The script normalises the header, topologically sorts the declaration blocks by
+their dependencies (stably, so the original order is kept whenever possible) and
+inserts the missing base declarations listed in `BASE` when a file refers to
+them without defining them.
 """
-SIDH Key Exchange Demonstration
+import re
+import sys
 
-Demonstrates the Supersingular Isogeny Diffie-Hellman key exchange
-using a simplified finite group model. We use Z/nZ as the "class group"
-acting on itself, with Alice and Bob using different subgroups.
+BASE = {
+    "one_plus_exp_pos": """/-- 1 + eˣ > 0 for all x -/
+lemma one_plus_exp_pos (x : ℝ) : (1 : ℝ) + Real.exp x > 0 := by
+  linarith [Real.exp_pos x]""",
+    "softplus": """/-- Softplus(x) = log (1 + eˣ). -/
+def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)""",
+    "logisticSigmoid": """/-- The logistic sigmoid function S(x) = eˣ / (1 + eˣ). -/
+def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)""",
+    "spb": """/-- The velocity-addition ("speed boost") law. -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)""",
+    "IsPythTriple": """/-- `(a, b, c)` is a Pythagorean triple. -/
+def IsPythTriple (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2""",
+    "quatNorm": """/-- The norm form of the Lipschitz quaternions. -/
+def quatNorm (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2""",
+    "cayley": """/-- The Cayley transform maps a real number to a point on the unit circle
+in the complex plane: `cayley(x) = (1 + ix)/(1 - ix)`. -/
+def cayley (x : ℝ) : ℂ := (1 + x * Complex.I) / (1 - x * Complex.I)""",
+    "spbH": """/-- The hyperbolic (Einstein) velocity-addition law. -/
+def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)""",
+    "crossRatio": """/-- The cross ratio of four real numbers. -/
+def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))""",
+    "spb_zero_right": """/-- Zero is a right identity for `spb`. -/
+theorem spb_zero_right (x : ℝ) : spb x 0 = x := by unfold spb; simp""",
+    "spb_zero_left": """/-- Zero is a left identity for `spb`. -/
+theorem spb_zero_left (x : ℝ) : spb 0 x = x := by unfold spb; simp""",
+    "cauchy_pullback": """/-- The Cauchy pull-back identity for `spb`. -/
+theorem cauchy_pullback (x a : ℝ) (h : 1 - x * a ≠ 0) :
+    (1 + spb x a ^ 2) * (1 - x * a) ^ 2 = (1 + a ^ 2) * (1 + x ^ 2) := by
+  unfold spb; field_simp; ring""",
+    "tan_add_eq_spb": """/-- The tangent addition formula is the `spb` law. -/
+theorem tan_add_eq_spb (a b : ℝ) (ha : Real.cos a ≠ 0) (hb : Real.cos b ≠ 0) :
+    Real.tan (a + b) = spb (Real.tan a) (Real.tan b) := by
+  unfold spb
+  rw [Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos,
+    Real.sin_add, Real.cos_add]
+  rcases eq_or_ne (Real.cos a * Real.cos b - Real.sin a * Real.sin b) 0 with h | h
+  · rw [h]
+    have h2 : 1 - Real.sin a / Real.cos a * (Real.sin b / Real.cos b) = 0 := by
+      field_simp
+      linarith [h]
+    rw [h2]
+    simp
+  · field_simp""",
+    "spbMat": """/-- The `spb` matrix `M(a) = !![1, a; -a, 1]`. -/
+def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]""",
+    "spbMat_trace": """/-- The trace of the `spb` matrix. -/
+theorem spbMat_trace (a : ℝ) : (spbMat a).trace = 2 := by
+  simp [spbMat, Matrix.trace_fin_two]; norm_num""",
+    "spbMat_det": """/-- The determinant of the `spb` matrix. -/
+theorem spbMat_det (a : ℝ) : (spbMat a).det = 1 + a ^ 2 := by
+  simp [spbMat, Matrix.det_fin_two]; ring""",
+    "eml": """/-- The EML (exp-minus-log) operation `eml x y = eˣ - log y`. -/
+def eml (x y : ℝ) : ℝ := Real.exp x - Real.log y""",
+    "emlDiag": """/-- The diagonal of the EML operation, `emlDiag z = e^z - log z`. -/
+def emlDiag (z : ℝ) : ℝ := Real.exp z - Real.log z""",
+    "IsPythTriple'": """/-- `(a, b, c)` is a Pythagorean triple. -/
+def IsPythTriple' (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2""",
+}
 
-This illustrates the algebraic structure without implementing actual
-elliptic curve isogenies.
-"""
+# Fully qualified names that the generator emitted unqualified or under a
+# namespace that the file does not open.
+RENAME = [
+    (r"(?<![\w.])SPB\.", ""),
+]
 
-import random
-from typing import Tuple
-
-
-def mod_exp(base: int, exp: int, mod: int) -> int:
-    """Modular exponentiation."""
-    return pow(base, exp, mod)
-
-
-class SimplifiedSIDH:
-    """
-    Simplified SIDH using commuting group actions on Z/pZ.
-
-    In real SIDH:
-    - Alice uses 2^eA-isogenies
-    - Bob uses 3^eB-isogenies
-    - The commutativity comes from disjoint kernel support
-
-    Here we model this with:
-    - G_A = Z/2^eA Z acting by multiplication
-    - G_B = Z/3^eB Z acting by multiplication
-    - J = Z/NZ where N = 2^eA * 3^eB
-    """
-
-    def __init__(self, eA: int = 4, eB: int = 3):
-        self.eA = eA
-        self.eB = eB
-        self.nA = 2 ** eA  # Alice's key space
-        self.nB = 3 ** eB  # Bob's key space
-        self.N = self.nA * self.nB  # Total space
-
-    def act_A(self, secret: int, j: int) -> int:
-        """Alice's action: j -> (secret * nB + 1) * j mod N"""
-        # Use a commuting action structure
-        return (j + secret * self.nB) % self.N
-
-    def act_B(self, secret: int, j: int) -> int:
-        """Bob's action: j -> (secret * nA + 1) * j mod N"""
-        return (j + secret * self.nA) % self.N
-
-    def key_exchange(self, j0: int, secret_A: int, secret_B: int) -> Tuple[int, int, int, int, int]:
-        """
-        Perform SIDH key exchange.
-
-        Returns: (alice_public, bob_public, alice_shared, bob_shared, j0)
-        """
-        # Public keys
-        alice_public = self.act_A(secret_A, j0)
-        bob_public = self.act_B(secret_B, j0)
-
-        # Shared secrets (should be equal by commutativity)
-        alice_shared = self.act_A(secret_A, bob_public)
-        bob_shared = self.act_B(secret_B, alice_public)
-
-        return alice_public, bob_public, alice_shared, bob_shared, j0
-
-    def verify_commutativity(self, j: int, a: int, b: int) -> bool:
-        """Verify that act_A and act_B commute."""
-        lhs = self.act_A(a, self.act_B(b, j))
-        rhs = self.act_B(b, self.act_A(a, j))
-        return lhs == rhs
-
-
-def euler_four_square_identity(a1: int, b1: int, c1: int, d1: int,
-                                a2: int, b2: int, c2: int, d2: int) -> Tuple:
-    """
-    Euler's four-square identity: demonstrates quaternion norm multiplicativity.
-
-    (a1² + b1² + c1² + d1²)(a2² + b2² + c2² + d2²) = sum of 4 squares
-    """
-    lhs = (a1**2 + b1**2 + c1**2 + d1**2) * (a2**2 + b2**2 + c2**2 + d2**2)
-
-    p = a1*a2 - b1*b2 - c1*c2 - d1*d2
-    q = a1*b2 + b1*a2 + c1*d2 - d1*c2
-    r = a1*c2 - b1*d2 + c1*a2 + d1*b2
-    s = a1*d2 + b1*c2 - c1*b2 + d1*a2
-
-    rhs = p**2 + q**2 + r**2 + s**2
-
-    return lhs, rhs, (p, q, r, s)
+DECL_RE = re.compile(
+    r"^(?:noncomputable\s+|private\s+|protected\s+|@\[[^\]]*\]\s*)*"
+    r"(def|theorem|lemma|abbrev|instance|structure|inductive|example)\s+"
+    r"([A-Za-z_][A-Za-z0-9_'.]*)?")
+IDENT_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_'.]*")
+COMMENT_RE = re.compile(r"/-.*?-/", re.S)
 
 
-def castryck_decru_simulation(sidh: SimplifiedSIDH, j0: int,
-                               secret_A: int, secret_B: int):
-    """
-    Simulate the Castryck-Decru attack structure.
-
-    In real SIDH, Alice publishes torsion point images.
-    Here we show that this auxiliary data allows secret recovery.
-    """
-    alice_pub, bob_pub, alice_shared, bob_shared, _ = sidh.key_exchange(j0, secret_A, secret_B)
-
-    # Torsion data: images of Bob's generators under Alice's isogeny
-    torsion_images = []
-    for b in range(sidh.nB):
-        img = sidh.act_A(secret_A, sidh.act_B(b, j0))
-        torsion_images.append(img)
-
-    # Attack: recover secret_A from torsion data
-    # In our simplified model, we can solve this directly
-    # The key equation: act_A(secret_A, act_B(1, j0)) = torsion_images[1]
-    # => (j0 + nA + secret_A * nB) mod N = torsion_images[1]
-    target = torsion_images[1]
-    base = sidh.act_B(1, j0)
-
-    # Recover: target = base + secret_A * nB mod N
-    # Since nB divides N, we work mod nA instead
-    diff = (target - base) % sidh.N
-    # diff = secret_A * nB mod N, and since gcd(nB, N) = nB,
-    # we have diff / nB = secret_A mod nA
-    if diff % sidh.nB != 0:
-        recovered_A = diff % sidh.nA  # fallback
-    else:
-        recovered_A = (diff // sidh.nB) % sidh.nA
-
-    return recovered_A, secret_A, recovered_A == secret_A
+def strip_comments(text):
+    return re.sub(r"--.*", "", COMMENT_RE.sub(" ", text))
 
 
-def main():
-    print("=" * 70)
-    print("SIDH KEY EXCHANGE DEMONSTRATION")
-    print("=" * 70)
+def split_header(lines):
+    """Return (imports, doc, rest) with the module docstring moved after imports."""
+    imports, doc = [], []
+    i, n = 0, len(lines)
+    while i < n:
+        line = lines[i]
+        if line.startswith("import "):
+            imports.append(line)
+            i += 1
+        elif line.strip() == "":
+            i += 1
+        elif line.startswith("/-!"):
+            while i < n:
+                doc.append(lines[i])
+                if "-/" in lines[i]:
+                    i += 1
+                    break
+                i += 1
+        else:
+            break
+    return imports, doc, lines[i:]
 
-    # 1. Basic key exchange
-    print("\n--- 1. SIDH Key Exchange ---")
-    sidh = SimplifiedSIDH(eA=4, eB=3)
-    print(f"Parameters: eA={sidh.eA}, eB={sidh.eB}")
-    print(f"Alice's key space: Z/{sidh.nA}Z")
-    print(f"Bob's key space: Z/{sidh.nB}Z")
-    print(f"Total space: Z/{sidh.N}Z")
 
-    j0 = 42
-    secret_A = random.randint(0, sidh.nA - 1)
-    secret_B = random.randint(0, sidh.nB - 1)
+def parse_blocks(lines):
+    """Split a declaration body into blocks, each running to the next one."""
+    starts = []
+    in_doc = False
+    awaiting_decl = False  # a doc comment was seen, its declaration follows
+    for i, line in enumerate(lines):
+        if in_doc:
+            if "-/" in line:
+                in_doc = False
+            continue
+        if line.startswith("/--"):
+            starts.append(i)
+            awaiting_decl = True
+            if "-/" not in line:
+                in_doc = True
+            continue
+        if DECL_RE.match(line):
+            if awaiting_decl:
+                awaiting_decl = False
+                continue  # belongs to the doc comment that opened this block
+            starts.append(i)
+    if not starts:
+        return lines, []
+    blocks = []
+    for k, s in enumerate(starts):
+        e = starts[k + 1] if k + 1 < len(starts) else len(lines)
+        blocks.append(lines[s:e])
+    return lines[:starts[0]], blocks
 
-    alice_pub, bob_pub, alice_shared, bob_shared, _ = sidh.key_exchange(j0, secret_A, secret_B)
 
-    print(f"\nStarting point: j₀ = {j0}")
-    print(f"Alice's secret: {secret_A}")
-    print(f"Bob's secret: {secret_B}")
-    print(f"Alice's public key: {alice_pub}")
-    print(f"Bob's public key: {bob_pub}")
-    print(f"Alice's shared secret: {alice_shared}")
-    print(f"Bob's shared secret: {bob_shared}")
-    print(f"Shared secrets match: {alice_shared == bob_shared} ✓")
+def block_name(block):
+    for line in block:
+        m = DECL_RE.match(line)
+        if m:
+            return m.group(2)
+    return None
 
-    # 2. Commutativity verification
-    print("\n--- 2. Commutativity Verification ---")
-    all_commute = True
-    for a in range(sidh.nA):
-        for b in range(sidh.nB):
-            if not sidh.verify_commutativity(j0, a, b):
-                all_commute = False
-                break
-    print(f"All (a, b) pairs commute: {all_commute} ✓")
 
-    # 3. Euler's Four-Square Identity
-    print("\n--- 3. Euler's Four-Square Identity ---")
-    for _ in range(5):
-        vals = [random.randint(-10, 10) for _ in range(8)]
-        lhs, rhs, components = euler_four_square_identity(*vals)
-        print(f"  ({vals[0]}²+{vals[1]}²+{vals[2]}²+{vals[3]}²) × "
-              f"({vals[4]}²+{vals[5]}²+{vals[6]}²+{vals[7]}²) = {lhs}")
-        print(f"  = {components[0]}²+{components[1]}²+{components[2]}²+{components[3]}² = {rhs}")
-        assert lhs == rhs, "Identity failed!"
-        print(f"  Verified ✓")
+def block_names(blocks):
+    names = {}
+    for idx, b in enumerate(blocks):
+        nm = block_name(b)
+        if nm is not None and nm not in names:
+            names[nm] = idx
+    return names
 
-    # 4. Castryck-Decru Attack Simulation
-    print("\n--- 4. Castryck-Decru Attack Simulation ---")
-    sidh2 = SimplifiedSIDH(eA=6, eB=4)
-    j0 = 7
-    secret_A = random.randint(0, sidh2.nA - 1)
-    secret_B = random.randint(0, sidh2.nB - 1)
 
-    recovered, actual, success = castryck_decru_simulation(sidh2, j0, secret_A, secret_B)
-    print(f"Parameters: eA={sidh2.eA}, eB={sidh2.eB}")
-    print(f"Actual secret: {actual}")
-    print(f"Recovered secret: {recovered}")
-    print(f"Attack successful: {success} ✓")
+def toposort(blocks):
+    names = block_names(blocks)
+    deps = []
+    for idx, b in enumerate(blocks):
+        body = strip_comments("\n".join(b))
+        d = set()
+        for ident in IDENT_RE.findall(body):
+            for cand in {ident, ident.split(".")[0]}:
+                j = names.get(cand)
+                if j is not None and j != idx:
+                    d.add(j)
+        deps.append(d)
+    order, state = [], [0] * len(blocks)
 
-    # 5. Security parameter analysis
-    print("\n--- 5. Security Parameters ---")
-    for bits in [128, 192, 256, 384, 512]:
-        classical = bits // 4
-        quantum = bits // 6
-        key_size = 2 * bits
-        print(f"  λ={bits}: classical={classical}b, quantum={quantum}b, "
-              f"key={key_size}b, post-CD=0b")
+    def visit(i, stack):
+        if state[i] == 2 or i in stack:
+            return
+        state[i] = 1
+        for j in sorted(deps[i]):
+            visit(j, stack | {i})
+        state[i] = 2
+        order.append(i)
 
-    # 6. Coprimality check
-    print("\n--- 6. Coprimality of 2^eA and 3^eB ---")
-    from math import gcd
-    for eA in range(1, 11):
-        for eB in range(1, 8):
-            g = gcd(2**eA, 3**eB)
-            assert g == 1, f"gcd(2^{eA}, 3^{eB}) = {g} ≠ 1"
-    print("  All pairs (eA, eB) with 1≤eA≤10, 1≤eB≤7: gcd=1 ✓")
+    for i in range(len(blocks)):
+        visit(i, frozenset())
+    return [blocks[i] for i in order], set(names)
 
-    print("\n" + "=" * 70)
-    print("All demonstrations completed successfully.")
-    print("=" * 70)
+
+def needed_opens(text):
+    opens = []
+    if re.search(r"(?<![\w.])(cos|sin|tan|arctan|exp|log|sqrt)\b", text):
+        opens.append("open Real")
+    if re.search(r"(?<![\w.])(det_fin_two|det_mul|mul_apply|det_one)\b", text):
+        opens.append("open Matrix")
+    if re.search(r"(?<![\w.])(Ioi|Ioo|Icc|Ico|Ioc)\b", text):
+        opens.append("open Set")
+    return opens
+
+
+def main(path):
+    src = open(path).read()
+    for pat, rep in RENAME:
+        src = re.sub(pat, rep, src)
+    lines = src.split("\n")
+    imports, doc, rest = split_header(lines)
+    if not imports:
+        imports = ["import Mathlib"]
+    while rest and rest[-1].strip() == "":
+        rest.pop()
+    while rest and rest[-1].strip() == "end":
+        rest.pop()
+        while rest and rest[-1].strip() == "":
+            rest.pop()
+    prefix, blocks = parse_blocks(rest)
+    nscopes = sum(1 for l in prefix
+                  if re.match(r"^(noncomputable\s+)?(section|namespace)\b", l))
+    tail = ["end"] * nscopes
+    defined = set(block_names(blocks))
+    text = strip_comments("\n".join(sum(blocks, [])))
+    changed = True
+    while changed:
+        changed = False
+        for nm, snippet in BASE.items():
+            if nm not in defined and re.search(r"(?<![\w.])%s(?![\w'])" % re.escape(nm), text):
+                blocks.append(snippet.split("\n"))
+                defined.add(nm)
+                text += "\n" + snippet
+                changed = True
+    opens = needed_opens(text)
+    blocks, _ = toposort(blocks)
+    extra = []
+    out = imports + [""] + doc + [""] + opens
+    if opens:
+        out.append("")
+    out += [l for l in prefix if l.strip() != ""]
+    out.append("")
+    for b in extra + blocks:
+        while b and b[-1].strip() == "":
+            b.pop()
+        out += b
+        out.append("")
+    out += tail
+    open(path, "w").write("\n".join(out) + "\n")
 
 
 if __name__ == "__main__":
-    main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: SIDH Key Exchange and Castryck-Decru Attack
-
-Generates plots showing:
-1. The SIDH key exchange diagram
-2. Security parameter comparison (pre/post attack)
-3. Key space sizes vs. parameter choices
-"""
-
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-def plot_security_comparison():
-    """Compare pre-attack and post-attack security levels."""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-    lambdas = np.array([128, 192, 256, 384, 512])
-
-    # Pre-attack security
-    classical = lambdas // 4
-    quantum = lambdas // 6
-
-    ax1.bar(np.arange(len(lambdas)) - 0.15, classical, 0.3, label='Classical (λ/4)', color='#2196F3')
-    ax1.bar(np.arange(len(lambdas)) + 0.15, quantum, 0.3, label='Quantum (λ/6)', color='#FF9800')
-    ax1.set_xticks(np.arange(len(lambdas)))
-    ax1.set_xticklabels([f'λ={l}' for l in lambdas])
-    ax1.set_ylabel('Security bits')
-    ax1.set_title('SIDH Security (Pre-Attack)')
-    ax1.legend()
-    ax1.grid(axis='y', alpha=0.3)
-
-    # Post-attack: all zero
-    post_attack = np.zeros(len(lambdas))
-    colors = ['#F44336'] * len(lambdas)
-    ax2.bar(np.arange(len(lambdas)), post_attack + 0.5, color=colors)
-    ax2.set_xticks(np.arange(len(lambdas)))
-    ax2.set_xticklabels([f'λ={l}' for l in lambdas])
-    ax2.set_ylabel('Security bits')
-    ax2.set_title('SIDH Security (Post Castryck-Decru, 2022)')
-    ax2.set_ylim(0, max(classical) + 10)
-    ax2.text(2, max(classical) / 2, 'BROKEN\n(Polynomial-time attack)',
-             ha='center', va='center', fontsize=16, color='red', fontweight='bold')
-    ax2.grid(axis='y', alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('security_comparison.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: security_comparison.png")
-
-
-def plot_keyspace_sizes():
-    """Plot key space sizes as functions of eA and eB."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    eA_range = np.arange(1, 20)
-    eB_range = np.arange(1, 13)
-
-    alice_space = 2.0 ** eA_range
-    bob_space = 3.0 ** eB_range
-
-    ax.semilogy(eA_range, alice_space, 'b-o', label='Alice: 2^eA', markersize=4)
-    ax.semilogy(eB_range, bob_space, 'r-s', label='Bob: 3^eB', markersize=4)
-
-    # SIDH prime
-    for eA, eB in [(216, 137), (250, 159), (305, 192)]:
-        ax.axhline(y=2**eA, color='blue', alpha=0.2, linestyle='--')
-        ax.axhline(y=3**eB, color='red', alpha=0.2, linestyle='--')
-
-    ax.set_xlabel('Exponent (eA or eB)')
-    ax.set_ylabel('Key Space Size (log scale)')
-    ax.set_title('SIDH Key Space Sizes')
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('keyspace_sizes.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: keyspace_sizes.png")
-
-
-def plot_euler_identity_verification():
-    """Visualize Euler's four-square identity for random quaternions."""
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    n_tests = 100
-    norms_product = []
-    norms_composed = []
-
-    for _ in range(n_tests):
-        q1 = [np.random.randint(-20, 21) for _ in range(4)]
-        q2 = [np.random.randint(-20, 21) for _ in range(4)]
-
-        n1 = sum(x**2 for x in q1)
-        n2 = sum(x**2 for x in q2)
-
-        # Quaternion product
-        a1, b1, c1, d1 = q1
-        a2, b2, c2, d2 = q2
-        p = [a1*a2 - b1*b2 - c1*c2 - d1*d2,
-             a1*b2 + b1*a2 + c1*d2 - d1*c2,
-             a1*c2 - b1*d2 + c1*a2 + d1*b2,
-             a1*d2 + b1*c2 - c1*b2 + d1*a2]
-        n_prod = sum(x**2 for x in p)
-
-        norms_product.append(n1 * n2)
-        norms_composed.append(n_prod)
-
-    ax.scatter(norms_product, norms_composed, alpha=0.6, s=20, c='#4CAF50')
-    max_val = max(max(norms_product), max(norms_composed))
-    ax.plot([0, max_val], [0, max_val], 'r--', alpha=0.8, label='y = x (identity)')
-    ax.set_xlabel('N(q₁) · N(q₂)')
-    ax.set_ylabel('N(q₁ · q₂)')
-    ax.set_title("Euler's Four-Square Identity: N(q₁)·N(q₂) = N(q₁·q₂)")
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('euler_identity.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: euler_identity.png")
-
-
-if __name__ == "__main__":
-    plot_security_comparison()
-    plot_keyspace_sizes()
-    plot_euler_identity_verification()
-    print("\nAll visualizations generated.")
+    for p in sys.argv[1:]:
+        main(p)
