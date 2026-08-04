@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b3e5f77d",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n- Formalize a concrete universal prefix-free description language and its machine-relative Kolmogorov complexity, including invariance up to an additive constant.\n- Extract and ev",
-      "quality_score": 0.6666666666666667,
-      "sorry_count": 1,
-      "theorem_count": 18,
-      "timestamp": "2026-07-26T19:32:32",
-      "title": "Rucker: The Lifebox — Information-Theoretic Identity"
-    },
-    {
       "cycle_id": "b3ca6b38",
       "domain": "Tropical",
       "key_insight": "# Future directions: tropical, Kapranov, and factor rank\n\nThe completed formalization proves that the three rank notions coincide at the\nrank-one threshold.  The following are concrete next targets; e",
@@ -2501,6 +2491,16 @@
       "theorem_count": 71,
       "timestamp": "2026-08-04T20:08:49",
       "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "52522972",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\n## State of the development\n\nEvery Lean file in the repository compiles end-to-end against Mathlib (`lake\nbuild` from the repository root builds all declared libraries), and no fi",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 525,
+      "timestamp": "2026-08-04T23:25:31",
+      "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78433
     }
   ],
-  "last_updated": "2026-08-04T20:08:49",
+  "last_updated": "2026-08-04T23:25:31",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "2bb5622c",
-        "quality": 0.686,
-        "theorems": 39,
-        "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
-      },
-      {
         "cycle_id": "132832ee",
         "quality": 0.74352,
         "theorems": 11,
@@ -3389,6 +3383,12 @@
         "quality": 0.7250399999999999,
         "theorems": 8,
         "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
+      },
+      {
+        "cycle_id": "52522972",
+        "quality": 0.686,
+        "theorems": 525,
+        "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
       }
     ],
     "Geometry": [
