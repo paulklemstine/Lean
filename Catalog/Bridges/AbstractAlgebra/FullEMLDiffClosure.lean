@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.GraphTheory.Defs
+import EML.HardyEmlBase
 
 /-!
 # Depth Preservation for Full EML with Negation

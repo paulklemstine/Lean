@@ -98,14 +98,14 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
     SortsOrderings (t.pad r) n ∧ (t.pad r).height = r + t.height := by
       exact ⟨ le_trans hs ( ComparisonTree.leaves_le_pad r t ), ComparisonTree.height_pad r t ⟩
 
-/-- `sorting_info_erased` without the hypothesis `1 ≤ n`: the degenerate case `n = 0`
-also erases `logb 2 0! = 0` bits. -/
+/-- The information erased by sorting `n` elements is `log₂(n!)`, with no
+lower bound on `n`: for `n = 0` both sides vanish. -/
 theorem sorting_info_erased_all (n : ℕ) :
-    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
+    infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
   rcases n with _ | m
   · unfold infoErased sortingFunction
     norm_num [Fintype.card_perm]
-  · exact sorting_info_erased (m + 1) (Nat.succ_le_succ (Nat.zero_le m))
+  · exact sorting_info_erased (m + 1) (by omega)
 
 /-
 **Three-way factorial synthesis.** A correct comparison tree obeys the entropy lower
@@ -120,10 +120,9 @@ theorem factorial_controls_comparisons_entropy_and_history
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · exact sorting_info_erased_all n;
-      · convert sorting_history_lower_bound n Aux e hc using 1;
-        simp +decide [ Fintype.card_perm ]
+      refine ⟨comparison_lower_bound t n hs, sorting_info_erased_all n, ?_⟩
+      convert sorting_history_lower_bound n Aux e hc using 1
+      simp +decide [Fintype.card_perm]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
@@ -133,10 +132,7 @@ the change of base in `log₂(n!)`.
 theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
       unfold landauerGap landauerCost
-      rw [sorting_info_erased_all n, Real.logb, div_eq_inv_mul]
-      have h2 : Real.log 2 ≠ 0 := by
-        have : (0:ℝ) < Real.log 2 := Real.log_pos (by norm_num)
-        exact ne_of_gt this
+      rw [sorting_info_erased_all n, Real.logb]
       field_simp
 
 /-

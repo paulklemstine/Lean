@@ -2,7 +2,7 @@ import Mathlib
 import Pythagorean.HardyHierarchy.DiffClosure
 import Pythagorean.HardyHierarchy.DepthSharpness
 import Pythagorean.HardyHierarchy.DepthStability
-import output-final_aristotle.output-final_aristotle.Incomplete.MachineLearning.DepthHierarchy.Separation
+import EML.HardyEmlBase
 
 /-!
 # Differential Spectrum Theory for the Hardy Hierarchy
