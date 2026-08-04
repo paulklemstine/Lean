@@ -8389,7 +8389,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d44d635",
     "description": "Investigate the ArXiv paper 'Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algorithms and Hardness' and formalize its key results. Abstract: Roman domination and its variants form an important family of domination-type graph parameters motivated by protection, fault tolerance, and resource allocation. A Roman dominating function of a graph \\(G\\) is a function \\(f:V(G)\\rightarrow\\{0,1,2\\}\\) such that every vertex \\(v\\) with \\(f(v)=0\\) has a neighbour \\(u\\) with \\(f(u)=2\\). The weight of \\(f\\) is \\(w(f)=\\sum_{v\\in V(G)}f(v)\\), and the minimum weight of a Roman dominating function of \\(G\\) is the Roman domination number, denoted by \\(γ_R(G)\\). In this paper, we study four variants of Roman domination on two natural subclasses of bipartite graphs, namely convex bipartite graphs and chordal bipartite graphs. On the positive side, we develop a unified left-to-right dynamic programming framework for Roman-\\(\\{2\\}\\) domination, double Roman domination, perfect Roman domination, and unique response Roman domination on convex bipartite graphs. The algorithms exploit the interval structure of one bipartition class and represent all un",
     "domain_bridges": [],
     "domains": [
@@ -8402,7 +8402,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.15026v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T07:01:30.942809+00:00",
     "title": "ArXiv paper: Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algorithms and Hardness"
   },
@@ -9690,6 +9690,46 @@
     "status": "available",
     "timestamp": "2026-08-04T01:21:22.081541+00:00",
     "title": "ArXiv paper: The equality case of Ehrhart's volume conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Additive decompositions of multiplicative subgroups in prime fields: a self-contained approach' and formalize its key results. Abstract: Sárközy conjectured that the nonzero quadratic residues modulo a sufficiently large prime have no nontrivial additive decomposition. Hanson and Petridis proved the conjecture for almost all primes, and Kalmynin completed the proof. Kalmynin also developed a general framework for additive decompositions of multiplicative subgroups. More recently, Rudnev and Tyrrell used this framework to classify all additive decompositions of proper multiplicative subgroups of prime fields, showing that the only nontrivial example is the subgroup of order $4$. We give a new self-contained proof of this classification that streamlines the arguments of Kalmynin and of Rudnev and Tyrrell.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0947",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.02568v1",
+    "status": "available",
+    "timestamp": "2026-08-04T03:45:36.779324+00:00",
+    "title": "ArXiv paper: Additive decompositions of multiplicative subgroups in prime fields: a self-contained approach"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Automorphic functions for square-zero extensions of curves over finite fields' and formalize its key results. Abstract: We study automorphic functions for square-zero extensions $C$ of curves $\\overline{C}$ over finite fields, a study initiated by Braverman-Kazhdan-Polishchuk in [BKP23]. More precisely, we study the cuspidality and Hecke-finiteness of the functions in the orbit decomposition introduced in loc. cit. for split connected reductive groups $G$, generalizing some of the results for $G=\\mathrm{PGL}_2$. As a result, for $G=\\mathrm{PGL}_3$, we prove a new case of a conjecture in [BK23] concerning the finite-dimensionality of the space of unramified Hecke-finite functions. We also introduce a formulation of support bounds for spherical cuspidal and Hecke-finite functions in terms of the Harder-Narasimhan stratification of $G$-bundles on the reduced curve. Using representation-theoretic constructions together with their geometric interpretations in terms of $G$-bundles on $C$ and certain twisted $G$-Higgs bundles on $\\overline{C}$, we compute the optimal bounds in several cases and, in particular,",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0948",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.02514v1",
+    "status": "available",
+    "timestamp": "2026-08-04T03:45:40.382085+00:00",
+    "title": "ArXiv paper: Automorphic functions for square-zero extensions of curves over finite fields"
   },
   {
     "ambition_level": "extension",
@@ -13127,26 +13167,6 @@
     "status": "available",
     "timestamp": "2026-07-28T14:47:12.312702+00:00",
     "title": "Finite-cover gluing.: Extend the two-set theorem in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "94d22408",
-    "description": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciprocity isomorphism `Gal(H/K) ≃ Cl(𝒪_K)`. This is falsifiable in the formal development by whether such data can be constructed without adding hypotheses to `K`.\n\n2. **Principal ideal theorem.** For the constructed Hilbert class field `H/K`, prove that extension of ideals sends every nonzero fractional ideal of `𝒪_K` to a principal fractional ideal of `𝒪_H`. Equivalently, prove that the induced homomorphism `Cl(𝒪_K) → Cl(𝒪_H)` is zero.\n\n3. **Idèlic realization of the unramified correspondence.** Construct the canonical quotient homomorphism from the idèle class group of `K` onto `Cl(𝒪_K)`, identify its kernel with the subgroup generated by archimedean components and local unit groups, and prove that pullback identifies ideal-class characters exactly with idèle-class characters trivial on that kernel.\n\n4. **Compatibility with cyclotomic reciprocity over `ℚ`.** Prove that the general Artin reciprocity map, specialized to `K = ℚ` and a cyclotomic extension, agrees on every rational prime coprime to the conductor with the catalog map sending a residue-class unit to the automorphism `ζ ↦ ζ^p`.\n\n5. **Explicit imaginary-quadratic generators.** For every imaginary quadratic field of class number at most `4`, construct a singular modulus generating its Hilbert class field and prove that its minimal polynomial has degree equal to the class number and splitting field unramified over the quadratic base field.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0795",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ee1ae94f",
-    "status": "in_progress",
-    "timestamp": "2026-07-28T16:59:57.083975+00:00",
-    "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
   },
   {
     "ambition_level": "extension",
