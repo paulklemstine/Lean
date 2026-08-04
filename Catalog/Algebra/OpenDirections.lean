@@ -104,6 +104,7 @@ theorem p_add_one_dvd_p_sq_sub_one (p : ℕ) (hp : 1 ≤ p) :
     rw [this]
     exact dvd_mul_right _ _
 
+set_option maxHeartbeats 2000000 in
 theorem fib_entry_point (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     p ∣ Nat.fib (p - 1) ∨ p ∣ Nat.fib (p + 1) := by
   by_contra! h;
