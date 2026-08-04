@@ -1,383 +1,589 @@
-# A Complete Analysis of the Zero-Knowledge Proof System for Graph 3-Colourability
+# Exact Completeness, Soundness Amplification, and Perfect Zero Knowledge for the Graph 3-Colouring Protocol
+
+**Author:** Aristotle
+**Date:** 2026-08-03
+
+---
 
 ## Abstract
 
-We give a self-contained, rigorous treatment of the interactive zero-knowledge
-proof system for graph 3-colourability, establishing all three of its defining
-properties — completeness, soundness, and zero knowledge — together with a
-quantitative analysis of soundness amplification under sequential repetition. The
-protocol is the classical edge-challenge scheme: a prover commits to a randomly
-recoloured proper 3-colouring, and a verifier challenges a single random edge and
-checks that its endpoints reveal distinct colours. We prove that (i) an honest
-prover is always accepted; (ii) a prover committed to an improper colouring is
-rejected in a single round with probability at least $1/|E|$, equivalently is
-accepted with probability at most $1 - 1/|E|$; (iii) the $k$-round acceptance
-probability of a cheating prover is exactly the $k$-th power of the one-round
-probability and hence converges to zero, so any target soundness error is
-achievable with finitely many rounds; and (iv) for a challenged edge with distinct
-endpoint colours, the map sending a colour permutation to the revealed ordered
-pair is a bijection onto the set of ordered pairs of distinct colours, so the
-verifier's real view is distributed *exactly* like a colouring-independent uniform
-sample — establishing *perfect* honest-verifier zero knowledge. We highlight that
-the perfect (rather than merely statistical) simulability is a numerical
-coincidence special to a palette of three colours.
+We give a fully rigorous, quantitatively exact analysis of the classical interactive proof
+system for graph 3-colourability. Working with a finite edge set $E \subseteq V \times V$
+and colourings $c : V \to \mathbb{Z}_3$, we define the one-round acceptance and rejection
+probabilities of a committed colouring as exact rational fractions of the edge set, and
+prove: (i) *complementarity*, $\alpha(E,c) + \rho(E,c) = 1$ whenever $\#E > 0$;
+(ii) *perfect completeness*, $\alpha(E,c) = 1$ for every proper colouring $c$; (iii) *sharp
+one-round soundness*, $\alpha(E,c') \le 1 - 1/\#E$ for every improper committed colouring
+$c'$; and (iv) *soundness amplification*, $\alpha(E,c')^k \le (1 - 1/\#E)^k$ for $k$
+independent challenges against a fixed improper commitment. On the privacy side we work
+with genuine probability distributions on the six-element set $\mathcal{P}$ of ordered
+pairs of distinct colours, and prove (v) *transcript uniformity*, that a real protocol
+transcript assigns mass exactly $1/6$ to each element of $\mathcal{P}$; (vi) *colour-and-edge
+independence*, that the transcript law is literally identical across all graphs, all
+proper colourings, and all challenged edges; (vii) *perfect honest-verifier zero knowledge*,
+that the real transcript law equals the law produced by a colouring-oblivious simulator;
+and (viii) *zero distinguishing advantage*, that every deterministic Boolean distinguisher
+accepts real and simulated transcripts with exactly equal probability, so that both
+one-sided advantages vanish identically. The privacy results are information-theoretic:
+they hold for all distinguishers with no computational restriction and involve no
+security parameter or negligible function. We isolate the group-theoretic mechanism
+underlying (v)–(viii) — the simply transitive action of $S_3$ on $\mathcal{P}$ — discuss
+algorithmic consequences and parameter choices, and outline the extensions required to
+lift the analysis to commitment-scheme semantics, adaptive provers, and general verifiers.
 
-**Keywords:** zero-knowledge proof, graph 3-colouring, simulation paradigm,
-completeness, soundness, soundness amplification, honest-verifier zero knowledge,
-symmetric group, commitment.
+**Keywords:** zero-knowledge proofs, graph 3-colourability, simulation paradigm,
+honest-verifier zero knowledge, soundness amplification, perfect completeness,
+interactive proof systems, symmetric group action.
 
 ---
 
 ## 1. Introduction
 
-A zero-knowledge proof allows one party, the *prover*, to convince another, the
-*verifier*, that a statement is true, while conveying no information beyond the
-truth of the statement itself. Since their introduction, such proofs have become a
-central tool of modern cryptography, enabling privacy-preserving authentication,
-verifiable computation, and confidential transactions.
+### 1.1 The problem
+
+An interactive proof system lets a computationally unbounded *prover* convince a
+resource-bounded *verifier* of the truth of a statement. It is a *zero-knowledge* proof
+system if, additionally, the verifier ends the interaction knowing that the statement is
+true and nothing else — in particular, without having gained the ability to convince a
+third party, or to reconstruct the prover's witness.
+
+Making the phrase "and nothing else" mathematically precise is the conceptual achievement
+of the field, and the answer is the **simulation paradigm**: the interaction leaks nothing
+if a machine that does *not* know the witness can produce a transcript with the same
+probability law. Anything computable from a real transcript is then computable from a
+simulated one, which was manufactured out of coin flips alone.
+
+The canonical vehicle for this idea is the graph 3-colouring protocol. Since 3-colourability
+is NP-complete, a zero-knowledge proof for it yields, by reduction, a zero-knowledge proof
+for every language in NP.
+
+### 1.2 What this paper contributes
+
+The protocol is textbook material, but the standard treatment is informal in two places
+that reward precision. First, the soundness bound is usually stated asymptotically ("with
+probability at least $1/|E|$ the cheat is caught"), whereas the exact statement is a
+complementary pair of rational numbers whose sum is one, and the conversion between "at
+least $1/\#E$ rejection" and "at most $1 - 1/\#E$ acceptance" is exactly where the
+bookkeeping must be airtight. Second, the zero-knowledge claim is usually justified by the
+sentence "the two revealed colours are a random pair of distinct colours", whereas the
+content is an equality of probability distributions, quantified over *all* graphs,
+colourings and edges, and it should be stated as such.
+
+We therefore develop:
+
+1. **An exact rational probability model** for the one-round acceptance and rejection
+   events, in which every claim is an identity or an inequality between explicit fractions
+   of cardinalities, with no asymptotics.
+2. **A distributional model of privacy** in which real and simulated transcripts are
+   genuine probability distributions on a six-element sample space, and privacy is stated
+   as literal equality of distributions and as vanishing of every distinguisher's
+   advantage.
+3. **A clean isolation of the mechanism**: everything on the privacy side reduces to the
+   fact that $S_3$ acts simply transitively on the ordered pairs of distinct elements of a
+   three-element set.
+
+### 1.3 Organisation
+
+Section 2 fixes notation and defines the protocol. Section 3 develops the soundness
+model and proves complementarity, perfect completeness, one-round soundness, and
+amplification. Section 4 develops the privacy model and proves uniformity, independence,
+perfect zero knowledge, and zero advantage. Section 5 gives the algorithms and their
+complexity. Section 6 discusses parameter selection and applications. Section 7 states
+the scope of the model honestly and lists the extensions it invites.
+
+---
+
+## 2. Setting
+
+### 2.1 Graphs and colourings
+
+Throughout, $V$ is a type of *vertices* and $E$ is a **finite set of edges**, each edge an
+ordered pair $e = (e_1, e_2) \in V \times V$. We write $\#E$ for the cardinality of $E$
+and assume $\#E > 0$ wherever a probability is divided by it. Working with ordered pairs
+and an explicit finite edge set (rather than an abstract undirected graph) is deliberate:
+it makes the sampling model "choose $e$ uniformly from $E$" completely unambiguous, and it
+is exactly the data the verifier needs.
+
+**Definition 2.1 (Colouring).** A *3-colouring* of $V$ is a function $c : V \to \mathbb{Z}_3$,
+where $\mathbb{Z}_3 = \{0,1,2\}$ is the three-element colour set.
+
+**Definition 2.2 (Proper colouring).** A colouring $c$ is *proper for $E$*, written
+$\mathrm{Proper}(E,c)$, if
+$$\forall e \in E,\quad c(e_1) \neq c(e_2).$$
+A graph is *3-colourable* if some $c$ is proper for its edge set.
+
+**Definition 2.3 (Distinct pairs).** The *transcript space* is
+$$\mathcal{P} \;=\; \{(a,b) \in \mathbb{Z}_3 \times \mathbb{Z}_3 \;:\; a \neq b\},
+\qquad \#\mathcal{P} = 6 .$$
+
+### 2.2 The one-round protocol
+
+Fix a graph $(V,E)$. The prover holds a colouring $c$ claimed proper. One round proceeds:
+
+1. **Palette randomisation.** The prover samples $\pi \in S_3$ uniformly at random from
+   the six permutations of the colour set and forms $c_\pi = \pi \circ c$.
+2. **Commitment.** For each vertex $v$, the prover commits to $c_\pi(v)$, producing
+   a per-vertex commitment that is *binding* (the prover cannot later open it to a
+   different value) and *hiding* (the verifier learns nothing from an unopened
+   commitment).
+3. **Challenge.** The verifier samples an edge $e \in E$ uniformly at random and sends it.
+4. **Response.** The prover opens the commitments at $e_1$ and $e_2$.
+5. **Decision.** The verifier accepts iff the two opened colours are distinct.
+
+The *transcript* observed by the verifier in the idealised model analysed here is the
+opened pair $(c_\pi(e_1), c_\pi(e_2)) \in \mathcal{P}$ together with the challenge $e$.
+Since $e$ is the verifier's own uniform coin, the informative part of the transcript is
+the opened pair, and that is the object whose law we compute.
+
+**Remark 2.4 (Idealisation).** We model the commitment as an ideal locked box: binding is
+captured by treating the prover as committing to a *fixed function* $c'$ before seeing the
+challenge, and hiding is captured by omitting the commitment strings from the transcript.
+This is the standard first-order model; Section 7 discusses lifting it.
+
+### 2.3 The two analyses
+
+The two halves of the analysis look at the same round through different lenses.
+
+- **Soundness lens.** The prover's commitment is a fixed function $c' : V \to \mathbb{Z}_3$,
+  possibly improper. The only randomness is the verifier's choice of edge. Probabilities
+  are therefore exact rational fractions of $\#E$.
+- **Privacy lens.** The colouring $c$ is proper and the challenged edge $e$ is fixed; the
+  randomness is the prover's palette permutation $\pi$. Probabilities live on the
+  six-element space $\mathcal{P}$.
+
+---
+
+## 3. Completeness, soundness, and amplification
+
+### 3.1 The exact probability model
+
+**Definition 3.1 (Acceptance and rejection probability).** For a finite edge set $E$ with
+$\#E > 0$ and a committed colouring $c' : V \to \mathbb{Z}_3$, define
+$$\alpha(E, c') \;=\; \frac{\#\{\, e \in E : c'(e_1) \neq c'(e_2) \,\}}{\#E}
+\;\in\; \mathbb{Q},$$
+$$\rho(E, c') \;=\; \frac{\#\{\, e \in E : c'(e_1) = c'(e_2) \,\}}{\#E}
+\;\in\; \mathbb{Q}.$$
+
+These are literally the probabilities of acceptance and rejection in one round, because
+the verifier's edge is uniform on $E$ and the decision is a deterministic predicate of the
+edge once $c'$ is fixed. Both are exact rationals; nothing is approximated.
+
+**Theorem 3.2 (Complementarity).** *For every finite $E$ with $\#E > 0$ and every
+$c' : V \to \mathbb{Z}_3$,*
+$$\alpha(E, c') + \rho(E, c') = 1 .$$
+
+*Proof.* The predicates $c'(e_1) \neq c'(e_2)$ and $c'(e_1) = c'(e_2)$ are exact negations
+of one another, so the two filtered subsets of $E$ partition $E$ and their cardinalities
+satisfy
+$$\#\{e \in E : c'(e_1) \neq c'(e_2)\} + \#\{e \in E : c'(e_1) = c'(e_2)\} = \#E$$
+as natural numbers. Casting this identity into $\mathbb{Q}$ and dividing by
+$\#E \neq 0$ (which is legitimate precisely because $\#E > 0$) gives the claim. $\square$
+
+Theorem 3.2 is elementary but load-bearing: it is the bridge that converts every *lower*
+bound on the probability of catching a cheat into an *upper* bound on the cheat's success,
+and vice versa. Every subsequent quantitative statement passes through it.
+
+### 3.2 Perfect completeness
+
+**Theorem 3.3 (Perfect completeness).** *Let $\#E > 0$ and let $c$ be proper for $E$.
+Then*
+$$\alpha(E, c) = 1 .$$
+
+*Proof.* We claim the filtered set of accepting edges is all of $E$. One inclusion is
+immediate, since a filtered subset is contained in $E$. For the converse, let $e \in E$;
+properness of $c$ gives $c(e_1) \neq c(e_2)$, so $e$ satisfies the filter predicate and
+lies in the filtered set. Hence the numerator equals $\#E$, and since $\#E \neq 0$ in
+$\mathbb{Q}$, the quotient is $1$. $\square$
+
+This is *perfect* completeness: the honest prover is accepted with probability exactly one,
+in every round, with no error term. In particular, by Theorem 3.2, $\rho(E,c) = 0$: an
+honest prover is never rejected, so a single rejection anywhere in a repeated execution is
+conclusive evidence of cheating. This one-sidedness is a genuine design feature, not a
+technicality: it means the verifier's rejection is a *proof of dishonesty*, and it makes
+the amplification analysis of Section 3.4 a pure product of per-round bounds.
+
+### 3.3 One-round soundness
+
+We use the following counting fact, which is the entire content of soundness at the
+one-round level.
+
+**Lemma 3.4 (Rejection lower bound).** *Let $\#E > 0$ and suppose $c'$ is **not** proper
+for $E$. Then*
+$$\rho(E, c') \;\geq\; \frac{1}{\#E}.$$
+
+*Proof sketch.* Failure of properness means there exists $e^\star \in E$ with
+$c'(e^\star_1) = c'(e^\star_2)$. Hence the rejecting subset
+$\{e \in E : c'(e_1) = c'(e_2)\}$ is non-empty, so its cardinality is at least $1$, and
+dividing by $\#E > 0$ preserves the inequality. $\square$
+
+**Theorem 3.5 (One-round soundness).** *Let $\#E > 0$ and let $c'$ be a committed
+colouring that is not proper for $E$. Then*
+$$\alpha(E, c') \;\leq\; 1 - \frac{1}{\#E}.$$
+
+*Proof.* By Theorem 3.2, $\alpha(E,c') = 1 - \rho(E,c')$. By Lemma 3.4,
+$\rho(E,c') \geq 1/\#E$. Substituting and rearranging (a linear step) yields the bound.
+$\square$
+
+**Remark 3.6 (Sharpness).** The bound is attained. Take any graph with $\#E = m$ that
+admits a colouring failing on exactly one edge and correct on the other $m-1$ — for
+instance, a path with $m$ edges, properly 2-coloured except that one interior vertex
+copies its neighbour. Then $\rho = 1/m$ exactly and $\alpha = 1 - 1/m$ exactly. So no
+better one-round bound is available without further assumptions on the graph: the
+*minimum number of monochromatic edges over all colourings*, i.e. the "3-cut deficiency"
+of the graph, is the true parameter, and it can equal $1$.
+
+### 3.4 Soundness amplification
+
+**Theorem 3.7 (Amplification under independent repetition).** *Let $\#E > 0$, let $c'$ be
+improper for $E$, and let $k \in \mathbb{N}$. If $k$ challenges are sampled independently
+and the prover is committed to $c'$ throughout, the probability that all $k$ rounds accept
+satisfies*
+$$\alpha(E, c')^{\,k} \;\leq\; \Bigl(1 - \frac{1}{\#E}\Bigr)^{k}.$$
+
+*Proof.* Independence of the $k$ challenges makes the probability of accepting in all
+rounds the $k$-th power of the one-round acceptance probability. It then suffices to
+observe that $x \mapsto x^k$ is monotone non-decreasing on $[0,\infty)$ and apply it to the
+inequality of Theorem 3.5. The side condition needed for monotonicity is
+$\alpha(E,c') \geq 0$, which holds because $\alpha$ is a quotient of a cardinality by a
+positive cardinality. $\square$
+
+**Corollary 3.8 (Parameter selection).** *Write $m = \#E$ and let $\varepsilon \in (0,1)$
+be a target soundness error. Since $(1 - 1/m)^m \le e^{-1}$ for all $m \ge 1$, choosing*
+$$k \;=\; \bigl\lceil m \ln(1/\varepsilon) \bigr\rceil$$
+*forces $\alpha(E,c')^{k} \le \varepsilon$ for every improper $c'$.*
+
+*Proof sketch.* $(1-1/m)^k = \bigl((1-1/m)^m\bigr)^{k/m} \le e^{-k/m} \le \varepsilon$ for
+$k \ge m\ln(1/\varepsilon)$. $\square$
+
+Thus a *linear-in-$m$* number of rounds buys a *constant-factor-in-the-exponent* security
+level: $k = 100m$ rounds gives error below $e^{-100} \approx 10^{-43.4}$. This is the
+decisive practical point. A single round is nearly useless — for $m = 1000$ a cheat
+survives with probability $0.999$ — yet the protocol as a whole is arbitrarily reliable,
+because a stubborn per-round detection probability of $1/m$, compounded $\Theta(m)$ times,
+is overwhelming.
+
+**Remark 3.9 (Scope of Theorem 3.7).** As stated, the theorem bounds a prover locked into
+a *fixed* $c'$ across all rounds. In a real execution the prover recommits each round and
+may vary the committed function; the binding property of the commitment scheme is what
+licenses treating each round's commitment as a fixed function *for that round*, after
+which the same product bound applies round by round. Section 7 revisits this.
+
+---
+
+## 4. Privacy: uniformity, independence, and perfect zero knowledge
+
+### 4.1 The transcript distributions
+
+Both parties' views in a round are probability distributions on $\mathcal{P}$, the
+six-element set of ordered pairs of distinct colours.
+
+**Definition 4.1 (Real transcript law).** Let $a, b \in \mathbb{Z}_3$ with $a \ne b$ be the
+secret colours of the two endpoints of the challenged edge. The *real transcript law*
+$R_{a,b}$ is the distribution of $(\pi(a), \pi(b))$ where $\pi \in S_3$ is uniform. Since
+$a \ne b$ and $\pi$ is injective, $(\pi(a),\pi(b)) \in \mathcal{P}$ always, so $R_{a,b}$ is
+supported on $\mathcal{P}$.
+
+**Definition 4.2 (Simulator law).** The *simulator law* $S$ is the uniform distribution on
+$\mathcal{P}$: it assigns mass $1/6$ to each of the six pairs. Crucially, $S$ is defined
+without reference to any graph, any colouring, or any edge — it is *colouring-oblivious*.
+The simulator is the trivial algorithm "output a uniformly random ordered pair of distinct
+colours".
+
+**Definition 4.3 (Edge transcript law).** For a graph $E$, a colouring $c$ proper for $E$,
+and an edge $e \in E$, the *edge transcript law* is
+$$T(E, c, e) \;=\; R_{\,c(e_1),\, c(e_2)} ,$$
+which is well defined precisely because properness supplies the hypothesis
+$c(e_1) \neq c(e_2)$.
+
+### 4.2 The mechanism: a simply transitive action
+
+**Lemma 4.4 (Simple transitivity).** *The symmetric group $S_3$ acts on $\mathcal{P}$ by
+$\pi \cdot (a,b) = (\pi(a), \pi(b))$, and this action is simply transitive: for any
+$(a,b), (a',b') \in \mathcal{P}$ there is exactly one $\pi \in S_3$ with
+$\pi(a) = a'$ and $\pi(b) = b'$.*
+
+*Proof sketch.* Given $(a,b)$ and $(a',b')$ with $a \ne b$ and $a' \ne b'$, the assignments
+$a \mapsto a'$, $b \mapsto b'$ are consistent and injective on $\{a,b\}$; since
+$\#\mathbb{Z}_3 = 3$, the remaining element must map to the remaining element, determining
+$\pi$ uniquely. Existence and uniqueness are thus simultaneous. Counting confirms it:
+$\#S_3 = 6 = \#\mathcal{P}$. $\square$
+
+This single lemma is the source of all privacy in the protocol.
+
+**Theorem 4.5 (Transcript uniformity).** *For every $E$, every $c$ proper for $E$, every
+$e \in E$, and every $p \in \mathcal{P}$,*
+$$T(E,c,e)(p) \;=\; \tfrac{1}{6}.$$
+
+*Proof.* Write $(a,b) = (c(e_1), c(e_2))$, so $a \ne b$ by properness. By Lemma 4.4,
+exactly one $\pi \in S_3$ satisfies $\pi \cdot (a,b) = p$. Since $\pi$ is uniform on a set
+of size six, the event $\{(\pi(a),\pi(b)) = p\}$ has probability $1/6$. $\square$
+
+Observe what Theorem 4.5 says and does not say. It does not say the transcript is *nearly*
+uniform, or uniform up to a negligible function of a security parameter. It says the mass
+is the constant $1/6$, a number in which the pair $(a,b)$ — and hence the secret
+colouring — does not appear.
+
+### 4.3 Independence of the secret
+
+**Theorem 4.6 (Colour-and-edge independence).** *Let $(E_1, c_1, e_1)$ and
+$(E_2, c_2, e_2)$ be any two valid protocol instances: $c_i$ proper for $E_i$ and
+$e_i \in E_i$, for $i = 1,2$. Then the transcript laws coincide:*
+$$T(E_1, c_1, e_1) \;=\; T(E_2, c_2, e_2).$$
+
+*Proof.* By Theorem 4.5 both distributions assign mass $1/6$ to every point of the finite
+sample space $\mathcal{P}$, hence they are equal as distributions. Equivalently, both
+equal $R_{a,b}$ for their respective secret pairs, and $R_{a,b} = R_{a',b'}$ for all
+distinct pairs by Lemma 4.4. $\square$
 
-The canonical illustration is a proof system for **graph 3-colourability**: given a
-graph, prove that its vertices can be coloured with three colours so that adjacent
-vertices differ, without revealing the colouring. This problem is NP-complete, so a
-zero-knowledge proof for it is, by reduction, a template for a zero-knowledge proof
-of any NP statement. The scheme we analyse is the classical edge-challenge
-protocol built on a commitment primitive.
+The strength of this statement is worth emphasising: the graphs need not be equal, need not
+be isomorphic, need not have the same number of vertices or edges; the colourings need not
+be related; the edges need not correspond. The verifier's view is the *same random object*
+in all cases.
 
-This paper provides a complete and precise account of the protocol's guarantees.
-We prove completeness and soundness, give a sharp quantitative soundness bound,
-analyse soundness amplification under sequential repetition, and establish perfect
-honest-verifier zero knowledge via an exact distributional identity. Every result
-is stated inline in full mathematical detail with a proof sketch.
+### 4.4 Perfect honest-verifier zero knowledge
 
-## 2. Definitions
+**Theorem 4.7 (Perfect zero knowledge).** *For every $E$, every $c$ proper for $E$, and
+every $e \in E$,*
+$$T(E, c, e) \;=\; S ,$$
+*where $S$ is the colouring-oblivious simulator law of Definition 4.2.*
 
-Throughout, let $V$ be a finite set of **vertices** and let
-$E \subseteq V \times V$ be a finite set of **edges**, represented as a finite
-collection of ordered pairs. Colours are drawn from the three-element palette
-$\{0, 1, 2\}$, which we identify with the cyclic set of residues modulo $3$.
+*Proof.* Both distributions assign mass exactly $1/6$ to each of the six elements of
+$\mathcal{P}$ — the left-hand side by Theorem 4.5, the right-hand side by definition —
+and a distribution on a finite set is determined by its point masses. $\square$
 
-**Definition 2.1 (Colouring).** A *3-colouring* is a function
-$c : V \to \{0, 1, 2\}$ assigning a colour to each vertex.
+This is the simulation paradigm instantiated exactly. The simulator is given no colouring,
+is not told whether the graph is 3-colourable, and performs no interaction; it flips its
+own coins. Its output is *indistinguishable* from a real transcript not in the weak sense
+of computational indistinguishability, nor in the intermediate sense of small statistical
+distance, but in the strongest possible sense: the two laws are the same law.
 
-**Definition 2.2 (Proper colouring).** A 3-colouring $c$ is *proper* for the edge
-set $E$ if the endpoints of every edge receive distinct colours:
+### 4.5 Distinguishers have zero advantage
 
-$$\mathrm{Proper}(E, c) \;\iff\; \forall (u, v) \in E,\ c(u) \neq c(v).$$
+Equality of laws is the mathematician's formulation; the cryptographer's formulation is in
+terms of adversaries. We give both and show they agree.
 
-**Definition 2.3 (Colour permutation).** A *colour permutation* is a bijection
-$\pi : \{0, 1, 2\} \to \{0, 1, 2\}$. The set of all such permutations forms the
-symmetric group $S_3$, which has exactly $|S_3| = 3! = 6$ elements. Given a
-colouring $c$ and a permutation $\pi$, the *recoloured* colouring is
-$\pi \circ c$, i.e. the map $v \mapsto \pi(c(v))$.
+**Definition 4.8 (Distinguisher and its acceptance probability).** A *deterministic
+distinguisher* is any function $D : \mathcal{P} \to \{\mathrm{true}, \mathrm{false}\}$. Its
+*acceptance probability* under a distribution $\mu$ on $\mathcal{P}$ is
+$$\mathrm{Acc}(\mu, D) \;=\; \sum_{p \in \mathcal{P}} \begin{cases} \mu(p) & \text{if } D(p) \\ 0 & \text{otherwise,}\end{cases}$$
+i.e. the total mass $\mu$ assigns to the accepting set $D^{-1}(\mathrm{true})$.
 
-**Definition 2.4 (Revealed view).** For an edge with endpoint colours $a$ and $b$,
-and a colour permutation $\pi$, the verifier's *revealed view* is the ordered pair
-of opened colours
+No computational restriction is placed on $D$: it ranges over *all* $2^6 = 64$ Boolean
+functions on the transcript space, i.e. over all conceivable tests.
 
-$$\mathrm{view}(a, b, \pi) = (\pi(a), \pi(b)) \in \{0,1,2\} \times \{0,1,2\}.$$
+**Theorem 4.9 (Zero distinguishing advantage).** *For every $E$, every $c$ proper for $E$,
+every $e \in E$, and every deterministic distinguisher $D$,*
+$$\mathrm{Acc}\bigl(T(E,c,e), D\bigr) \;=\; \mathrm{Acc}(S, D).$$
 
-**The protocol.** The prover holds a proper colouring $c$. In one round:
+*Proof.* By Theorem 4.7 the two distributions are equal; substituting one for the other in
+the definition of $\mathrm{Acc}$ gives the identity. $\square$
+
+**Corollary 4.10 (Both one-sided advantages vanish).** *Under the hypotheses of
+Theorem 4.9,*
+$$\mathrm{Acc}\bigl(T(E,c,e), D\bigr) - \mathrm{Acc}(S, D) = 0
+\quad\text{and}\quad
+\mathrm{Acc}(S, D) - \mathrm{Acc}\bigl(T(E,c,e), D\bigr) = 0 .$$
 
-1. The prover samples $\pi \in S_3$ uniformly at random and commits to the
-   recoloured colouring $\pi \circ c$ (one commitment per vertex).
-2. The verifier samples an edge $(u, v) \in E$ uniformly at random and sends it as
-   a challenge.
-3. The prover opens the two committed colours $(\pi(c(u)), \pi(c(v)))$.
-4. The verifier accepts iff the two opened colours differ.
+*Proof.* Immediate from Theorem 4.9. $\square$
+
+Stating both one-sided differences is not redundant pedantry. Advantage is often measured
+in a truncated arithmetic where a negative difference is clipped to zero, so a single
+one-sided statement can be vacuously satisfied by a distinguisher that is biased the
+"wrong" way. Asserting that *both* differences vanish rules this out and pins the
+advantage at exactly zero regardless of the convention. Moreover, since the total variation
+distance between $T(E,c,e)$ and $S$ equals $\sup_D \bigl|\mathrm{Acc}(T,D) - \mathrm{Acc}(S,D)\bigr|$
+over the $64$ distinguishers, Corollary 4.10 says precisely that the statistical distance is
+$0$.
 
-The commitment is assumed *binding* (the prover cannot change committed values
-after step 1) and *hiding* (unopened commitments reveal nothing). Our analysis is
-information-theoretic given these commitment properties; it isolates the
-combinatorial and probabilistic core of the proof system.
-
-## 3. Completeness
-
-**Theorem 3.1 (Permutations preserve properness).** If $c$ is a proper colouring
-for $E$ and $\pi \in S_3$ is any colour permutation, then $\pi \circ c$ is also a
-proper colouring for $E$.
-
-*Proof.* Let $(u, v) \in E$. Suppose for contradiction that
-$\pi(c(u)) = \pi(c(v))$. Since $\pi$ is a bijection, it is injective, so
-$c(u) = c(v)$, contradicting properness of $c$ on the edge $(u, v)$. Hence
-$\pi(c(u)) \neq \pi(c(v))$ for every edge, i.e. $\pi \circ c$ is proper. $\qquad\blacksquare$
-
-**Corollary 3.2 (Completeness).** An honest prover holding a proper colouring is
-accepted with probability $1$ in every round, for every choice of permutation and
-every challenged edge.
-
-*Proof.* By Theorem 3.1 the committed colouring $\pi \circ c$ is proper, so for the
-challenged edge $(u, v)$ the opened pair $(\pi(c(u)), \pi(c(v)))$ consists of
-distinct colours, and the verifier accepts. $\qquad\blacksquare$
-
-## 4. Soundness
-
-We now analyse a prover committed to an arbitrary colouring $c'$ that is **not**
-proper. We call an edge $(u, v)$ a *catching edge* (for $c'$) if $c'(u) = c'(v)$;
-challenging such an edge forces the prover to open two equal colours and be
-rejected.
-
-**Lemma 4.1 (Existence of a catching edge).** If $c'$ is not a proper colouring for
-$E$, then there exists an edge $(u, v) \in E$ with $c'(u) = c'(v)$.
-
-*Proof.* Negating the definition of properness, $\neg\,\mathrm{Proper}(E, c')$
-means it is not the case that all edges have distinct endpoint colours; hence some
-edge $(u, v) \in E$ satisfies $c'(u) = c'(v)$. $\qquad\blacksquare$
-
-**Lemma 4.2 (At least one catching edge).** If $c'$ is not proper for $E$, then the
-number of catching edges is at least one:
-
-$$\big|\{\, (u,v) \in E : c'(u) = c'(v) \,\}\big| \ge 1.$$
-
-*Proof.* By Lemma 4.1 the set of catching edges is nonempty; a nonempty finite set
-has cardinality at least $1$. $\qquad\blacksquare$
-
-**Theorem 4.3 (One-round soundness bound).** Suppose $|E| > 0$ and $c'$ is not
-proper. Then a verifier challenging a uniformly random edge rejects with
-probability at least $1/|E|$:
-
-$$\frac{1}{|E|} \;\le\; \frac{\big|\{(u,v) \in E : c'(u) = c'(v)\}\big|}{|E|}.$$
-
-*Proof.* Divide the inequality of Lemma 4.2 by the positive integer $|E|$. The
-right-hand side is exactly the probability that a uniformly random edge is a
-catching edge, i.e. the rejection probability. $\qquad\blacksquare$
-
-### 4.1 A quantitative acceptance model for cheating provers
-
-To analyse repetition, we model the one-round *acceptance* probability of a prover
-committed to $c'$ as the fraction of edges the verifier fails to catch — the edges
-whose endpoints carry distinct colours.
-
-**Definition 4.4 (One-round acceptance probability).** For $c' : V \to \{0,1,2\}$,
-
-$$p(E, c') \;=\; \frac{\big|\{(u,v) \in E : c'(u) \neq c'(v)\}\big|}{|E|}.$$
-
-**Proposition 4.5 (Valid probability).** For every $E$ and $c'$,
-$0 \le p(E, c') \le 1$.
-
-*Proof.* Nonnegativity is immediate since both numerator and denominator are
-nonnegative. For the upper bound, if $|E| = 0$ the quantity is $0 \le 1$;
-otherwise the number of edges with distinct endpoints is at most $|E|$, so the
-ratio is at most $1$. $\qquad\blacksquare$
-
-**Theorem 4.6 (Quantitative acceptance gap).** If $|E| > 0$ and $c'$ is not proper,
-then
-
-$$p(E, c') \;\le\; 1 - \frac{1}{|E|}.$$
-
-*Proof.* Partition the edges into those with distinct endpoints and those with
-equal endpoints (the catching edges); their cardinalities sum to $|E|$. By
-Lemma 4.2 there is at least one catching edge, so the number of
-distinct-endpoint edges is at most $|E| - 1$. Dividing by $|E|$ gives
-$p(E, c') \le (|E| - 1)/|E| = 1 - 1/|E|$. $\qquad\blacksquare$
-
-**Corollary 4.7 (Strict soundness).** If $|E| > 0$ and $c'$ is not proper, then
-$p(E, c') < 1$.
-
-*Proof.* Since $|E| > 0$ we have $1/|E| > 0$, so by Theorem 4.6,
-$p(E, c') \le 1 - 1/|E| < 1$. $\qquad\blacksquare$
-
-## 5. Soundness Amplification
-
-A single round has a constant, possibly tiny, soundness gap. Sequential repetition
-with independent randomness turns this into an arbitrarily strong guarantee.
-Running $k$ independent rounds, and accepting only if all rounds accept, multiplies
-the per-round acceptance probabilities: a cheating prover is accepted across all
-$k$ rounds with probability $p(E, c')^k$.
-
-**Theorem 5.1 (Soundness amplification).** Let $|E| > 0$ and let $c'$ be improper,
-with one-round acceptance probability $p = p(E, c')$. Then the $k$-round cheating
-acceptance probability tends to zero:
-
-$$\lim_{k \to \infty} p^{\,k} = 0.$$
-
-*Proof.* By Proposition 4.5 and Corollary 4.7 we have $0 \le p < 1$. For any real
-$p$ with $0 \le p < 1$, the geometric sequence $p^k$ converges to $0$ as
-$k \to \infty$. $\qquad\blacksquare$
-
-**Theorem 5.2 (Achievability of any error target).** Under the hypotheses of
-Theorem 5.1, for every $\varepsilon > 0$ there exists a number of rounds $k \in
-\mathbb{N}$ such that the $k$-round cheating acceptance probability is below the
-target error:
-
-$$p^{\,k} < \varepsilon.$$
-
-*Proof.* Since $0 \le p < 1$, the powers $p^k$ can be made smaller than any
-positive $\varepsilon$; formally, this is the statement that for $p < 1$ and
-$\varepsilon > 0$ there is $k$ with $p^k < \varepsilon$. (When $p = 0$ any
-$k \ge 1$ works; when $0 < p < 1$, taking $k > \log \varepsilon / \log p$
-suffices.) $\qquad\blacksquare$
-
-**Remark 5.3 (Round budget).** Combining Theorem 4.6 with Theorem 5.2, using
-$p \le 1 - 1/|E|$ and the estimate $-\log(1 - 1/|E|) \ge 1/|E|$, it suffices to run
-
-$$k \;\ge\; |E| \cdot \ln(1/\varepsilon)$$
-
-rounds to guarantee cheating acceptance probability below $\varepsilon$. The round
-budget is thus linear in the number of edges and logarithmic in the inverse error.
-
-## 6. Honest-Verifier Zero Knowledge
-
-The zero-knowledge property is formalised via the **simulation paradigm**: the
-proof system leaks nothing if there is an efficient *simulator* that, without
-access to the prover's secret colouring, produces transcripts distributed
-identically to those of a real interaction. Since a simulated transcript can be
-generated by the verifier alone, it carries no information about the secret; if the
-real transcript has the same distribution, it too carries none.
-
-We analyse the verifier's view on a single challenged edge. Because the prover
-holds a proper colouring, the two endpoint colours $a, b$ of any edge are distinct;
-we therefore fix $a \neq b$ and study the distribution of the revealed pair
-$(\pi(a), \pi(b))$ as $\pi$ ranges uniformly over $S_3$.
-
-**Lemma 6.1 (Reveals are distinct).** If $a \neq b$ then for every $\pi \in S_3$,
-$\mathrm{view}(a, b, \pi) = (\pi(a), \pi(b))$ has $\pi(a) \neq \pi(b)$.
-
-*Proof.* If $\pi(a) = \pi(b)$ then injectivity of $\pi$ gives $a = b$, a
-contradiction. $\qquad\blacksquare$
-
-**Lemma 6.2 (The view determines the permutation).** For fixed $a \neq b$, the map
-$\pi \mapsto (\pi(a), \pi(b))$ is injective on $S_3$.
-
-*Proof.* Suppose $\pi(a) = \sigma(a)$ and $\pi(b) = \sigma(b)$ for two permutations
-$\pi, \sigma \in S_3$. We show $\pi = \sigma$ by checking agreement on every point
-of $\{0,1,2\}$. On $a$ and $b$ they agree by hypothesis. Let $x$ be the unique
-third point, distinct from both $a$ and $b$. Both $\pi(x)$ and $\sigma(x)$ must
-differ from the two already-assigned values $\pi(a) = \sigma(a)$ and
-$\pi(b) = \sigma(b)$ (again by injectivity), and in a three-element set there is
-only one remaining value; hence $\pi(x) = \sigma(x)$. Therefore $\pi = \sigma$.
-$\qquad\blacksquare$
-
-**Theorem 6.3 (Perfect honest-verifier zero knowledge).** Fix a challenged edge
-with distinct endpoint colours $a \neq b$. Then the map
-
-$$\Phi : S_3 \longrightarrow \{(x, y) \in \{0,1,2\}^2 : x \neq y\}, \qquad
-\Phi(\pi) = (\pi(a), \pi(b)),$$
-
-is a **bijection**. Consequently, when $\pi$ is drawn uniformly from $S_3$, the
-revealed pair $\Phi(\pi)$ is distributed uniformly over the set of ordered pairs of
-distinct colours — a distribution that does not depend on $a$, $b$, or the
-underlying colouring.
-
-*Proof.* By Lemma 6.1, $\Phi$ indeed maps into the set of distinct ordered pairs;
-by Lemma 6.2 it is injective. Both the domain and codomain are finite of the same
-size: $|S_3| = 6$, and the ordered pairs of distinct colours from a three-element
-set number $3 \times 2 = 6$. An injective map between finite sets of equal
-cardinality is a bijection. Pushing the uniform distribution on $S_3$ through the
-bijection $\Phi$ yields the uniform distribution on the codomain. $\qquad\blacksquare$
-
-**Corollary 6.4 (Simulator and perfect simulability).** Define a simulator that,
-given a challenged edge, outputs a uniformly random ordered pair of distinct
-colours. Then for a real interaction on any edge (whose endpoint colours are
-necessarily distinct), the distribution of the verifier's revealed pair is
-*exactly equal* to the distribution of the simulator's output. Hence the protocol
-is *perfect* honest-verifier zero knowledge on a per-edge challenge.
-
-*Proof.* By Theorem 6.3 the real revealed pair is uniform over the ordered pairs of
-distinct colours, which is precisely the simulator's output distribution. The two
-distributions are identical — not merely close — so the transcript reveals nothing
-about the colouring beyond the distinctness already guaranteed by properness.
-$\qquad\blacksquare$
-
-**Remark 6.5 (Why three colours is special).** Theorem 6.3 hinges on the
-coincidence $|S_3| = 6 = |\{(x,y) : x \neq y\}|$ over a three-element palette. For a
-palette of $q \ge 4$ colours, a single permutation applied to two fixed distinct
-colours cannot cover all $q(q-1)$ ordered pairs of distinct colours, so the reveal
-from one permutation orbit is *not* uniform. Perfect simulability then requires
-either a different opening (revealing the full committed colouring) or an averaging
-simulator. The three-colour case is thus the unique palette size for which the
-per-edge zero-knowledge argument is a pure bijection rather than an averaging
+**Remark 4.11 (Randomised distinguishers).** Allowing $D$ to flip coins adds no power:
+a randomised distinguisher is a convex combination of deterministic ones, so its advantage
+is the corresponding convex combination of zeros. Perfect zero knowledge is therefore
+robust across the usual variations of the adversary model.
+
+---
+
+## 5. Algorithms
+
+We record the four computational procedures implicit in the analysis, with complexity in
+terms of $n = \#V$, $m = \#E$, and the round count $k$.
+
+### 5.1 One-round execution
+
+**Procedure.** Sample $\pi \in S_3$ uniformly; sample $e \in E$ uniformly; return
+$(\pi(c(e_1)), \pi(c(e_2)))$ and the acceptance bit $[\pi(c(e_1)) \ne \pi(c(e_2))]$.
+
+In the idealised model the prover need only apply $\pi$ at the two challenged vertices, so
+one round costs $O(1)$ time given random access to $c$ and $E$. In an implementation with
+real commitments the prover must commit to all $n$ vertices before seeing $e$, giving
+$O(n)$ per round and $O(kn)$ overall, with $O(k)$ openings.
+
+### 5.2 Exact acceptance probability
+
+**Procedure.** Scan $E$, count the edges with $c'(e_1) \ne c'(e_2)$, and return the
+rational $\text{count}/m$.
+
+Complexity $O(m)$ with exact rational output; no floating point, no sampling. This computes
+$\alpha(E,c')$ of Definition 3.1 exactly, and by Theorem 3.2 also $\rho = 1 - \alpha$.
+
+### 5.3 Round-count selection
+
+**Procedure.** Given $m$ and a target error $\varepsilon$, return
+$k = \lceil m \ln(1/\varepsilon)\rceil$, per Corollary 3.8. Complexity $O(1)$. The
+guarantee it certifies — $\alpha^k \le (1 - 1/m)^k \le \varepsilon$ — is Theorem 3.7
+composed with the exponential bound.
+
+### 5.4 Simulation
+
+**Procedure.** Sample $p$ uniformly from the six-element set $\mathcal{P}$ and output it.
+
+Complexity $O(1)$ per transcript; the simulator reads no graph, no colouring, and no edge.
+That its input is empty is the whole point: by Theorem 4.7 its output law is *identical* to
+the real one, so a real transcript can carry no information that this input-free procedure
+could not have invented. Simulating $k$ rounds costs $O(k)$.
+
+---
+
+## 6. Discussion
+
+### 6.1 Where the difficulty lives
+
+The soundness half of the analysis is arithmetic: a partition of $E$ into accepting and
+rejecting edges, a non-emptiness observation, and monotonicity of $x \mapsto x^k$. It is
+easy but must be exact, and the complementarity identity of Theorem 3.2 is what makes the
+directions of the inequalities line up.
+
+The privacy half is structural, and reduces entirely to Lemma 4.4: $S_3$ acts simply
+transitively on $\mathcal{P}$. Because $\#S_3 = \#\mathcal{P} = 6$, a uniform permutation
+pushes any distinct pair to the uniform distribution. The secret is not concealed behind
+computational hardness; it is *destroyed by symmetry*. The verifier observes a point in an
+orbit on which the group acts transitively, and such an observation carries no information
+about the orbit representative.
+
+This is why the privacy is perfect while the soundness is only $1 - 1/m$ per round. The two
+guarantees have different characters: one is information-theoretic and exact, the other is
+combinatorial and must be amplified.
+
+### 6.2 Why a weak per-round bound is acceptable
+
+A protocol that catches cheats only $1/m$ of the time sounds broken. The resolution is
+Theorem 3.7 together with the *one-sidedness* supplied by Theorem 3.3: because an honest
+prover never fails, the verifier may demand that *all* $k$ rounds accept, with no tolerance
+for failures. Under a fixed improper commitment, this multiplies the per-round bounds, and
+$O(m)$ rounds suffice for cryptographic-grade error. The cost is linear in the instance
+size — entirely acceptable, and the reason the construction is regarded as practical in
+principle even though each round leaks so little conviction.
+
+Had completeness been imperfect (say $1 - \delta$ per round), the verifier would have had
+to tolerate some failures, the analysis would have required a Chernoff bound with a gap
+between the honest and cheating acceptance rates, and the round count would have grown
+accordingly. Perfect completeness buys a simpler and tighter analysis.
+
+### 6.3 NP-completeness and universality
+
+Graph 3-colourability is NP-complete. Consequently, for any language $L \in \mathrm{NP}$
+there is a polynomial-time reduction taking an instance $x$ to a graph $G_x$ such that
+$x \in L$ iff $G_x$ is 3-colourable, and taking a witness for $x$ to a proper colouring of
+$G_x$. Composing this reduction with the protocol analysed here yields a zero-knowledge
+proof system for $L$: the prover 3-colours $G_x$ using its witness, and the results above
+apply verbatim. This is the sense in which the three-colouring protocol is not a special
+case but a universal template.
+
+### 6.4 Applications
+
+The simulation paradigm formalised here underlies a broad family of deployed systems:
+
+- **Identification without secret transmission.** A user proves possession of a secret
+  without sending it, so a breach of the verifier reveals nothing usable.
+- **Confidential ledgers.** Validity of a transaction — well-formedness, sufficient
+  balance, absence of double spending — is proved without disclosing amounts or parties.
+- **Verifiable outsourced computation.** A server proves that it executed a computation
+  faithfully, without the client repeating the work and without revealing proprietary
+  internals.
+- **Regulatory attestation.** An institution proves that a private dataset satisfies a
+  public predicate (a solvency threshold, a fairness constraint) without publishing the
+  data.
+
+In each case the design goal is exactly the one proved here: a transcript that a
+witness-oblivious simulator could have produced.
+
+### 6.5 Relation to statistical and computational zero knowledge
+
+Three grades of privacy are standard. *Computational* zero knowledge asks that no
+polynomial-time distinguisher have non-negligible advantage; *statistical* zero knowledge
+asks that the statistical distance be negligible; *perfect* zero knowledge asks that the
+distributions be equal. Theorem 4.7 and Corollary 4.10 place the analysis in the strongest
+class, for the idealised transcript. This is not an accident of the analysis but a feature
+of the object: no computational assumption enters the privacy argument at all, only
+Lemma 4.4. Computational assumptions re-enter only through the commitment scheme, discussed
+next.
+
+---
+
+## 7. Scope, limitations, and future directions
+
+Precision about what has *not* been established is as valuable as what has.
+
+**(a) Idealised commitments.** The transcript here is the opened colour pair. A full model
+includes the commitment strings, and the hiding property then becomes a hypothesis. With a
+*perfectly hiding* commitment the perfect-privacy conclusion survives; with a
+computationally hiding one, perfect zero knowledge degrades to computational zero
+knowledge, and Theorem 4.9 must be re-stated for polynomial-time distinguishers with a
+negligible bound.
+
+**(b) Fixed versus adaptive provers.** Theorem 3.7 bounds a prover committed to one fixed
+colouring across all rounds. A general cheating prover is an interactive strategy that may
+choose each round's commitment adaptively; deriving the per-round fixedness needed for the
+product bound is exactly the role of the *binding* property.
+
+**(c) Honest verifier.** The privacy theorems are for a verifier who samples her edge
+uniformly and independently of the commitments. Against a general (malicious) verifier the
+simulator must use rewinding — guess the challenge, prepare a transcript for it, and retry
+on a mismatch — which introduces expected-polynomial running time and requires a separate
 argument.
 
-## 7. Algorithms
+**(d) Single round.** Section 4 computes the law of a single round's transcript. Full
+zero knowledge for the repeated protocol requires the *joint* law of $k$ rounds to equal
+the product of $k$ simulator draws, including the case of adaptively chosen challenges.
 
-We summarise the constructive content as algorithms; full implementations appear in
-the accompanying demonstration code.
+We accordingly record the following programme of extensions.
 
-**Algorithm A — Honest prover round.** Sample $\pi \in S_3$ uniformly; commit to
-$v \mapsto \pi(c(v))$; upon receiving the challenge edge $(u,v)$, open
-$(\pi(c(u)), \pi(c(v)))$.
+1. **Commitment scheme semantics.** Add a binding and hiding commitment interface, then
+   include commitments and openings in the transcript rather than modelling only the
+   opened pair.
+2. **Adaptive cheating provers.** Replace a fixed committed colouring by an interactive
+   strategy and derive soundness from commitment binding.
+3. **Sequential transcript composition.** Define the joint distribution of multiple rounds
+   and prove that the simulator's product distribution equals the real joint distribution,
+   including adaptive honest-verifier challenges.
+4. **General-verifier zero knowledge.** Formalise verifier strategies, rewinding, expected
+   running time, and the standard simulation proof beyond honest verifiers.
+5. **Witness indistinguishability.** Derive equality of transcript laws for two different
+   proper colourings at the level of complete commitment transcripts, under a perfectly
+   hiding commitment assumption.
+6. **Negligible-error framework.** Introduce security parameters, distribution ensembles,
+   statistical distance, computational indistinguishability, and polynomial-time
+   adversaries.
+7. **Knowledge extraction.** Study special soundness and extraction variants, relating
+   accepting responses to a global proper 3-colouring.
+8. **Undirected graph bridge.** Connect the finite ordered-pair edge-set presentation used
+   here to the standard undirected simple-graph formulation, including looplessness and
+   symmetric challenge sampling.
 
-**Algorithm B — Verifier round.** Sample an edge $(u,v) \in E$ uniformly; receive
-the opened pair; accept iff the two colours differ.
+---
 
-**Algorithm C — Sequential amplification.** Repeat Algorithms A–B for $k$ rounds
-with fresh randomness; accept overall iff all $k$ rounds accept. Choosing
-$k \ge |E|\,\ln(1/\varepsilon)$ guarantees cheating acceptance below $\varepsilon$.
+## 8. Conclusion
 
-**Algorithm D — Simulator.** Given a challenge edge, output a uniformly random
-ordered pair of distinct colours from $\{0,1,2\}$. By Corollary 6.4 its output is
-distributed identically to a real transcript.
+We have given an exact analysis of the graph 3-colouring interactive proof. On the
+soundness side, acceptance and rejection probabilities are complementary exact rationals;
+a proper colouring is accepted with probability exactly $1$; an improper commitment is
+accepted with probability at most $1 - 1/\#E$; and independent repetition drives this to
+$(1 - 1/\#E)^k$, so that $O(\#E \cdot \ln(1/\varepsilon))$ rounds achieve any target error
+$\varepsilon$. On the privacy side, the real transcript law is uniform on the six ordered
+pairs of distinct colours, is independent of the graph, the colouring and the challenged
+edge, coincides exactly with the output law of a colouring-oblivious simulator, and gives
+every deterministic distinguisher an advantage of exactly zero in both directions.
 
-## 8. Applications
-
-Because graph 3-colourability is NP-complete, the analysis above is a universal
-blueprint: any statement whose truth admits an efficient certificate can be proved
-in zero knowledge by reducing it to 3-colourability and running this protocol.
-Practical descendants of this idea include privacy-preserving authentication
-(proving possession of a credential without revealing it), confidential
-transactions (proving validity without revealing amounts or parties), and
-verifiable computation (proving a computation was performed correctly without
-re-executing it). The amplification analysis of Section 5 directly governs the cost
-of these deployments: the number of repetitions is the security-versus-cost dial,
-and Remark 5.3 gives its precise setting.
-
-## 9. Discussion
-
-The treatment separates cleanly into three layers. Completeness (Section 3) is a
-one-line consequence of the injectivity of permutations. Soundness (Section 4) is
-purely combinatorial — the existence of a single catching edge — and amplification
-(Section 5) is purely analytic — geometric decay of independent-round
-probabilities. Zero knowledge (Section 6) is a counting coincidence realised as a
-bijection. The strength of the design is precisely that these three concerns are
-orthogonal: each can be understood, and each proof read, in isolation.
-
-Two features deserve emphasis. First, the zero-knowledge guarantee here is
-*perfect*: the real and ideal transcript distributions are equal, not merely
-statistically close, so no error term propagates through the analysis. Second, the
-soundness guarantee is *sharp*: the worst-case cheating strategy miscolours a
-single edge, caught with probability exactly $1/|E|$ per round, so the geometric
-rate $(1 - 1/|E|)^k$ is attained and cannot be improved without enlarging the
-challenge space.
-
-## 10. Future Directions
-
-Several precise conjectures extend this work.
-
-*Perfect simulability at the boundary case of three colours.* For proofs of proper
-$q$-colourability, a per-edge transcript that opens the two permuted endpoint
-colours is perfectly simulable — real and simulated transcripts identically
-distributed — if and only if $q = 3$; for every $q \ge 4$ the single-permutation
-opening is strictly non-uniform on distinct pairs, and perfect simulability
-requires opening the entire committed colouring. Perfect equality of the real and
-ideal distributions is a coincidence of two counts — the number of colour
-symmetries and the number of admissible opened pairs — which agree exactly at three
-colours, the smallest nontrivial palette and the unique one where the argument is a
-pure bijection rather than an averaging.
-
-*Sequential repetition is soundness-optimal up to the edge count.* For any graph
-with $m$ edges, the $k$-round soundness error of the edge-challenge protocol is
-exactly $(1 - 1/m)^k$ in the worst case over improper colourings, and no
-relabelling or reordering of rounds beats this rate; the bound is attained by
-colourings that miscolour a single edge. The worst cheating strategy hides its
-single flaw in one edge out of $m$, so each independent round catches it with
-probability exactly $1/m$, and multiplicativity of independent rounds turns this
-constant gap into a sharp geometric law.
-
-*Parallel challenges preserve the zero-leakage guarantee.* Challenging a batch of
-edges simultaneously, each with its own fresh colour permutation, yields a joint
-transcript that is still perfectly simulable, provided distinct permutations are
-used per edge; sharing a single permutation across edges leaks colour-relationship
-information across the batch.
-
-## 11. Conclusion
-
-We have established the three pillars of the zero-knowledge proof system for graph
-3-colourability — completeness, soundness, and perfect honest-verifier zero
-knowledge — with sharp quantitative bounds and a full amplification analysis. The
-honest prover always succeeds; a cheating prover is caught with probability at
-least $1/|E|$ per round, driven to certainty by repetition at a cost linear in
-$|E|$ and logarithmic in the inverse error; and the verifier provably learns
-nothing, because the real transcript on any edge is distributed exactly like a
-colouring-independent uniform sample. The perfect zero-knowledge guarantee rests on
-a small arithmetic miracle unique to three colours, marking it as the natural and
-optimal setting for this classical construction.
+The two halves have different mathematical characters. Soundness is careful finite
+counting; privacy is a group action. It is a pleasant fact about this protocol that its
+strongest property — perfect, unconditional, information-theoretic secrecy — is also the
+one with the simplest cause: six permutations acting simply transitively on six pairs.

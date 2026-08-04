@@ -1,179 +1,365 @@
+#!/usr/bin/env python3
 """
-Numerical demonstrations for the zero-knowledge proof system for graph
-3-colourability.
+Numerical demonstration of the graph 3-colouring zero-knowledge proof system.
 
-This self-contained script illustrates the four core guarantees analysed in the
-accompanying paper:
+This self-contained script verifies, numerically and symbolically, the results of
+the accompanying paper:
 
-  1. Completeness    - an honest prover holding a proper colouring is always
-                       accepted, for every colour permutation and every edge.
-  2. Soundness       - a prover committed to an improper colouring is caught by a
-                       random edge with probability at least 1 / |E|, i.e. accepted
-                       with probability at most 1 - 1/|E|.
-  3. Amplification   - the k-round cheating acceptance probability p**k decays to
-                       zero; any target error is reached with finitely many rounds.
-  4. Perfect HVZK    - for an edge with distinct endpoint colours (a, b), the map
-                       pi |-> (pi(a), pi(b)) is a bijection from S_3 onto the six
-                       ordered pairs of distinct colours, so the revealed pair is
-                       uniform and independent of the underlying colouring.
+  1. Complementarity          alpha(E, c) + rho(E, c) = 1
+  2. Perfect completeness     alpha(E, c) = 1 for a proper colouring c
+  3. One-round soundness      alpha(E, c') <= 1 - 1/|E| for improper c'
+  4. Amplification            alpha(E, c')^k <= (1 - 1/|E|)^k
+  5. Round-count selection    k = ceil(|E| * ln(1/eps)) forces error <= eps
+  6. Transcript uniformity    every ordered pair of distinct colours has mass 1/6
+  7. Colour/edge independence the transcript law does not depend on (E, c, e)
+  8. Perfect zero knowledge   real transcript law == colouring-oblivious simulator law
+  9. Zero advantage           every one of the 64 deterministic distinguishers has
+                              acceptance probability difference exactly 0
 
-Colours are the residues {0, 1, 2}. A graph is a list of directed edges (u, v).
+All probabilities are computed with exact rational arithmetic (fractions.Fraction),
+so the equalities below are exact, not approximate.
+
+Run with:  python3 demo.py
 """
 
 from __future__ import annotations
 
-from itertools import permutations
-from math import log, ceil
-from typing import Callable, Dict, List, Tuple
+import itertools
+import math
+import random
+from fractions import Fraction
+from typing import Callable, Dict, Iterable, List, Sequence, Tuple
 
-Colour = int
+# ----------------------------------------------------------------------------
+# Basic types
+# ----------------------------------------------------------------------------
+
 Vertex = int
 Edge = Tuple[Vertex, Vertex]
-Colouring = Dict[Vertex, Colour]
-Perm = Tuple[Colour, Colour, Colour]  # perm[i] = image of colour i
+Colour = int                      # element of {0, 1, 2}
+Colouring = Dict[Vertex, Colour]  # total on the vertices used
+Pair = Tuple[Colour, Colour]      # element of the transcript space
+
+COLOURS: Tuple[Colour, ...] = (0, 1, 2)
+
+#: The six ordered pairs of distinct colours -- the transcript space P.
+DISTINCT_PAIRS: Tuple[Pair, ...] = tuple(
+    (a, b) for a in COLOURS for b in COLOURS if a != b
+)
+
+#: The six permutations of the three-element colour set, as tuples
+#: perm[i] = image of colour i.
+PERMUTATIONS: Tuple[Tuple[Colour, Colour, Colour], ...] = tuple(
+    itertools.permutations(COLOURS)
+)
 
 
-# --------------------------------------------------------------------------- #
-# Core definitions
-# --------------------------------------------------------------------------- #
-def all_perms() -> List[Perm]:
-    """All 6 colour permutations of {0, 1, 2} (the symmetric group S_3)."""
-    return list(permutations((0, 1, 2)))
+# ----------------------------------------------------------------------------
+# Colourings and the acceptance / rejection model
+# ----------------------------------------------------------------------------
+
+def is_proper_colouring(edges: Sequence[Edge], colouring: Colouring) -> bool:
+    """Return True iff no edge has both endpoints the same colour."""
+    return all(colouring[u] != colouring[v] for (u, v) in edges)
 
 
-def is_proper(edges: List[Edge], c: Colouring) -> bool:
-    """A colouring is proper when every edge joins differently-coloured vertices."""
-    return all(c[u] != c[v] for (u, v) in edges)
+def acceptance_probability(edges: Sequence[Edge], colouring: Colouring) -> Fraction:
+    """Exact one-round acceptance probability: fraction of bichromatic edges."""
+    if len(edges) == 0:
+        raise ValueError("acceptance probability undefined for an empty edge set")
+    good = sum(1 for (u, v) in edges if colouring[u] != colouring[v])
+    return Fraction(good, len(edges))
 
 
-def recolour(c: Colouring, pi: Perm) -> Colouring:
-    """Apply a colour permutation pi to a colouring: v |-> pi(c(v))."""
-    return {v: pi[colour] for v, colour in c.items()}
+def rejection_probability(edges: Sequence[Edge], colouring: Colouring) -> Fraction:
+    """Exact one-round rejection probability: fraction of monochromatic edges."""
+    if len(edges) == 0:
+        raise ValueError("rejection probability undefined for an empty edge set")
+    bad = sum(1 for (u, v) in edges if colouring[u] == colouring[v])
+    return Fraction(bad, len(edges))
 
 
-def catching_edges(edges: List[Edge], c: Colouring) -> List[Edge]:
-    """Edges whose endpoints share a colour: these expose an improper colouring."""
-    return [(u, v) for (u, v) in edges if c[u] == c[v]]
+def soundness_bound(num_edges: int) -> Fraction:
+    """The one-round soundness bound 1 - 1/|E| for an improper commitment."""
+    if num_edges <= 0:
+        raise ValueError("need at least one edge")
+    return Fraction(1) - Fraction(1, num_edges)
 
 
-def round_accept_prob(edges: List[Edge], c: Colouring) -> float:
-    """Fraction of edges with distinct endpoints = one-round acceptance probability."""
-    if not edges:
-        return 0.0
-    distinct = sum(1 for (u, v) in edges if c[u] != c[v])
-    return distinct / len(edges)
+def rounds_for_error(num_edges: int, epsilon: float) -> int:
+    """Smallest k with (1 - 1/|E|)^k <= epsilon guaranteed by k >= m ln(1/eps)."""
+    if not (0.0 < epsilon < 1.0):
+        raise ValueError("epsilon must lie strictly between 0 and 1")
+    return math.ceil(num_edges * math.log(1.0 / epsilon))
 
 
-# --------------------------------------------------------------------------- #
-# 1. Completeness
-# --------------------------------------------------------------------------- #
-def demo_completeness(edges: List[Edge], c: Colouring) -> None:
-    print("=" * 68)
-    print("1. COMPLETENESS: an honest prover is always accepted")
-    print("=" * 68)
-    assert is_proper(edges, c), "demo requires a proper colouring"
-    all_accept = True
-    for pi in all_perms():
-        committed = recolour(c, pi)
-        proper_after = is_proper(edges, committed)
-        # Honest prover accepted on EVERY edge under this permutation:
-        accepted_all_edges = all(committed[u] != committed[v] for (u, v) in edges)
-        all_accept = all_accept and proper_after and accepted_all_edges
-        print(f"  permutation {pi}: committed colouring proper = {proper_after}")
-    print(f"  => honest prover accepted for all permutations & edges: {all_accept}\n")
+# ----------------------------------------------------------------------------
+# Transcript distributions
+# ----------------------------------------------------------------------------
+
+def real_transcript_law(a: Colour, b: Colour) -> Dict[Pair, Fraction]:
+    """
+    Law of (pi(a), pi(b)) for pi uniform over the six colour permutations.
+
+    Requires a != b.  By simple transitivity of S_3 on ordered distinct pairs the
+    result is uniform on the six pairs; this function computes it by brute force
+    rather than assuming the theorem.
+    """
+    if a == b:
+        raise ValueError("real transcript law requires distinct endpoint colours")
+    law: Dict[Pair, Fraction] = {p: Fraction(0) for p in DISTINCT_PAIRS}
+    for perm in PERMUTATIONS:
+        law[(perm[a], perm[b])] += Fraction(1, len(PERMUTATIONS))
+    return law
 
 
-# --------------------------------------------------------------------------- #
-# 2. Soundness
-# --------------------------------------------------------------------------- #
-def demo_soundness(edges: List[Edge], c_bad: Colouring) -> None:
-    print("=" * 68)
-    print("2. SOUNDNESS: a cheating prover is caught with prob >= 1/|E|")
-    print("=" * 68)
-    assert not is_proper(edges, c_bad), "demo requires an IMPROPER colouring"
-    m = len(edges)
-    caught = catching_edges(edges, c_bad)
-    reject_prob = len(caught) / m
-    accept_prob = round_accept_prob(edges, c_bad)
-    print(f"  |E| = {m}, catching edges = {caught}")
-    print(f"  reject probability  = {len(caught)}/{m} = {reject_prob:.4f}")
-    print(f"  lower bound 1/|E|   = {1/m:.4f}   (reject >= 1/|E|: {reject_prob >= 1/m - 1e-12})")
-    print(f"  accept probability  = {accept_prob:.4f}")
-    print(f"  upper bound 1-1/|E| = {1 - 1/m:.4f} (accept <= 1-1/|E|: {accept_prob <= 1 - 1/m + 1e-12})\n")
+def simulator_law() -> Dict[Pair, Fraction]:
+    """The colouring-oblivious simulator: uniform on the six distinct pairs."""
+    return {p: Fraction(1, len(DISTINCT_PAIRS)) for p in DISTINCT_PAIRS}
 
 
-# --------------------------------------------------------------------------- #
-# 3. Amplification
-# --------------------------------------------------------------------------- #
-def rounds_for_error(p: float, eps: float) -> int:
-    """Smallest k with p**k < eps, for 0 <= p < 1."""
-    if p <= 0.0:
-        return 1
-    return max(1, ceil(log(eps) / log(p)))
+def edge_transcript_law(
+    edges: Sequence[Edge], colouring: Colouring, edge: Edge
+) -> Dict[Pair, Fraction]:
+    """Transcript law on a challenged edge of a properly coloured graph."""
+    if edge not in edges:
+        raise ValueError("challenged edge is not in the edge set")
+    if not is_proper_colouring(edges, colouring):
+        raise ValueError("transcript law requires a proper colouring")
+    u, v = edge
+    return real_transcript_law(colouring[u], colouring[v])
 
 
-def demo_amplification(edges: List[Edge], c_bad: Colouring, eps: float = 1e-9) -> None:
-    print("=" * 68)
-    print("3. AMPLIFICATION: p**k -> 0 under sequential repetition")
-    print("=" * 68)
-    p = round_accept_prob(edges, c_bad)
-    print(f"  one-round acceptance p = {p:.4f}")
-    for k in (1, 2, 5, 10, 20, 50):
-        print(f"    k = {k:>2}: cheating acceptance p**k = {p**k:.3e}")
-    k_star = rounds_for_error(p, eps)
-    print(f"  target error eps = {eps:.1e}")
-    print(f"  suffices to run k = {k_star} rounds (p**k = {p**k_star:.3e} < eps: {p**k_star < eps})")
-    print(f"  rule-of-thumb |E|*ln(1/eps) = {len(edges) * log(1/eps):.1f}\n")
+def distinguisher_acceptance(
+    law: Dict[Pair, Fraction], predicate: Callable[[Pair], bool]
+) -> Fraction:
+    """Total mass the law assigns to the transcripts the distinguisher accepts."""
+    return sum((law[p] for p in DISTINCT_PAIRS if predicate(p)), Fraction(0))
 
 
-# --------------------------------------------------------------------------- #
-# 4. Perfect honest-verifier zero knowledge
-# --------------------------------------------------------------------------- #
-def distinct_ordered_pairs() -> List[Tuple[Colour, Colour]]:
-    return [(x, y) for x in (0, 1, 2) for y in (0, 1, 2) if x != y]
+def all_deterministic_distinguishers() -> Iterable[Callable[[Pair], bool]]:
+    """Enumerate all 2^6 = 64 Boolean functions on the transcript space."""
+    for bits in itertools.product([False, True], repeat=len(DISTINCT_PAIRS)):
+        table = dict(zip(DISTINCT_PAIRS, bits))
+        yield (lambda p, table=table: table[p])
 
 
-def demo_hvzk(a: Colour = 0, b: Colour = 1) -> None:
-    print("=" * 68)
-    print("4. PERFECT HVZK: pi |-> (pi(a), pi(b)) is a bijection onto distinct pairs")
-    print("=" * 68)
-    assert a != b
-    reveals = [(pi[a], pi[b]) for pi in all_perms()]
-    target = distinct_ordered_pairs()
-    print(f"  edge endpoint colours (a, b) = ({a}, {b})")
-    print(f"  |S_3| = {len(all_perms())}, |distinct ordered pairs| = {len(target)}")
-    print(f"  revealed pairs over all 6 permutations: {reveals}")
-    is_bijection = sorted(reveals) == sorted(target)
-    print(f"  reveal map is a bijection onto distinct pairs: {is_bijection}")
+# ----------------------------------------------------------------------------
+# Protocol execution (Monte Carlo, for illustration)
+# ----------------------------------------------------------------------------
 
-    # Verify uniformity is independent of the underlying edge colours:
-    for (a2, b2) in [(0, 1), (1, 2), (2, 0), (0, 2)]:
-        r = sorted((pi[a2], pi[b2]) for pi in all_perms())
-        print(f"    endpoints ({a2},{b2}) -> reveal multiset uniform over all 6: {r == sorted(target)}")
-    print("  => real transcript distribution equals the simulator's; zero leakage.\n")
+def run_round(
+    edges: Sequence[Edge], colouring: Colouring, rng: random.Random
+) -> Tuple[Pair, bool]:
+    """One protocol round: random palette permutation, random edge, open, decide."""
+    perm = rng.choice(PERMUTATIONS)
+    u, v = rng.choice(list(edges))
+    revealed: Pair = (perm[colouring[u]], perm[colouring[v]])
+    return revealed, revealed[0] != revealed[1]
 
 
-def simulator(a: Colour, b: Colour) -> Tuple[Colour, Colour]:
-    """The simulator ignores (a, b) beyond distinctness: outputs a random distinct
-    ordered pair. Shown here deterministically as a uniform enumeration."""
-    return distinct_ordered_pairs()[0]  # placeholder single draw; distribution is uniform
+def run_protocol(
+    edges: Sequence[Edge], colouring: Colouring, rounds: int, rng: random.Random
+) -> bool:
+    """Verifier accepts only if all rounds accept (legitimate: completeness is perfect)."""
+    return all(run_round(edges, colouring, rng)[1] for _ in range(rounds))
 
 
-# --------------------------------------------------------------------------- #
-# Main
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# Example graphs
+# ----------------------------------------------------------------------------
+
+def triangle() -> Tuple[List[Edge], Colouring]:
+    """K_3 with its (essentially unique) proper 3-colouring."""
+    return [(0, 1), (1, 2), (2, 0)], {0: 0, 1: 1, 2: 2}
+
+
+def petersen() -> Tuple[List[Edge], Colouring]:
+    """The Petersen graph (15 edges) with a known proper 3-colouring."""
+    outer: List[Edge] = [(i, (i + 1) % 5) for i in range(5)]
+    spokes: List[Edge] = [(i, i + 5) for i in range(5)]
+    inner: List[Edge] = [(5 + i, 5 + ((i + 2) % 5)) for i in range(5)]
+    edges = outer + spokes + inner
+    colouring: Colouring = {0: 0, 1: 1, 2: 0, 3: 1, 4: 2,
+                            5: 1, 6: 2, 7: 2, 8: 0, 9: 0}
+    assert is_proper_colouring(edges, colouring), "Petersen colouring must be proper"
+    return edges, colouring
+
+
+def near_miss_path(num_edges: int) -> Tuple[List[Edge], Colouring]:
+    """
+    A path with `num_edges` edges, 2-coloured alternately except that the final
+    vertex copies its neighbour: exactly one monochromatic edge.  This attains
+    the one-round soundness bound with equality.
+    """
+    edges: List[Edge] = [(i, i + 1) for i in range(num_edges)]
+    colouring: Colouring = {i: i % 2 for i in range(num_edges + 1)}
+    colouring[num_edges] = colouring[num_edges - 1]
+    return edges, colouring
+
+
+# ----------------------------------------------------------------------------
+# Demonstrations
+# ----------------------------------------------------------------------------
+
+def demo_completeness_and_complementarity() -> None:
+    print("=" * 74)
+    print("1-2.  COMPLEMENTARITY AND PERFECT COMPLETENESS")
+    print("=" * 74)
+    for name, (edges, colouring) in [("triangle K3", triangle()),
+                                     ("Petersen graph", petersen())]:
+        alpha = acceptance_probability(edges, colouring)
+        rho = rejection_probability(edges, colouring)
+        print(f"  {name:16s} |E| = {len(edges):3d}   "
+              f"alpha = {alpha}   rho = {rho}   alpha + rho = {alpha + rho}")
+        assert alpha + rho == 1, "complementarity must hold exactly"
+        assert is_proper_colouring(edges, colouring)
+        assert alpha == 1, "perfect completeness: proper colourings always accepted"
+    print("  -> alpha + rho = 1 exactly, and alpha = 1 for every proper colouring.\n")
+
+
+def demo_soundness() -> None:
+    print("=" * 74)
+    print("3.  ONE-ROUND SOUNDNESS:  alpha <= 1 - 1/|E|, and it is tight")
+    print("=" * 74)
+    print(f"  {'|E|':>5} {'alpha (cheat)':>16} {'bound 1-1/|E|':>16} {'tight?':>8}")
+    for m in (3, 5, 10, 25, 100):
+        edges, colouring = near_miss_path(m)
+        assert not is_proper_colouring(edges, colouring)
+        alpha = acceptance_probability(edges, colouring)
+        bound = soundness_bound(m)
+        assert alpha <= bound
+        print(f"  {m:5d} {str(alpha):>16} {str(bound):>16} "
+              f"{str(alpha == bound):>8}")
+    print("  -> the near-miss path attains the bound with equality.\n")
+
+
+def demo_amplification() -> None:
+    print("=" * 74)
+    print("4-5.  AMPLIFICATION AND ROUND-COUNT SELECTION")
+    print("=" * 74)
+    m = 15
+    edges, colouring = near_miss_path(m)
+    alpha = acceptance_probability(edges, colouring)
+    bound = soundness_bound(m)
+    print(f"  Graph with |E| = {m}, cheating acceptance alpha = {alpha} "
+          f"= {float(alpha):.6f}")
+    print(f"  {'k':>6} {'alpha^k':>16} {'(1-1/|E|)^k':>16}")
+    for k in (1, 5, 15, 50, 150, 500):
+        lhs = alpha ** k
+        rhs = bound ** k
+        assert lhs <= rhs, "amplification bound must hold"
+        print(f"  {k:6d} {float(lhs):16.10e} {float(rhs):16.10e}")
+    print()
+    print(f"  {'target eps':>12} {'k = ceil(m ln(1/eps))':>24} "
+          f"{'achieved (1-1/m)^k':>22}")
+    for eps in (1e-3, 1e-6, 1e-12, 1e-30):
+        k = rounds_for_error(m, eps)
+        achieved = float(bound ** k)
+        assert achieved <= eps, "selected round count must meet the target"
+        print(f"  {eps:12.0e} {k:24d} {achieved:22.6e}")
+    print("  -> a number of rounds linear in |E| gives cryptographic-grade error.\n")
+
+
+def demo_transcript_uniformity() -> None:
+    print("=" * 74)
+    print("6-7.  TRANSCRIPT UNIFORMITY AND COLOUR/EDGE INDEPENDENCE")
+    print("=" * 74)
+    tri_edges, tri_col = triangle()
+    pet_edges, pet_col = petersen()
+
+    reference = edge_transcript_law(tri_edges, tri_col, tri_edges[0])
+    print("  Law of the opened pair on the triangle, edge (0,1):")
+    for p in DISTINCT_PAIRS:
+        print(f"     P[transcript = {p}] = {reference[p]}")
+    assert all(reference[p] == Fraction(1, 6) for p in DISTINCT_PAIRS)
+
+    instances = ([(tri_edges, tri_col, e) for e in tri_edges]
+                 + [(pet_edges, pet_col, e) for e in pet_edges])
+    laws = [edge_transcript_law(E, c, e) for (E, c, e) in instances]
+    assert all(law == reference for law in laws)
+    print(f"  Checked {len(laws)} distinct (graph, colouring, edge) instances: "
+          "all laws identical.")
+    print("  -> the transcript law is uniform (1/6 each) and independent of "
+          "graph, colouring and edge.\n")
+
+
+def demo_perfect_zero_knowledge() -> None:
+    print("=" * 74)
+    print("8-9.  PERFECT ZERO KNOWLEDGE AND ZERO DISTINGUISHING ADVANTAGE")
+    print("=" * 74)
+    pet_edges, pet_col = petersen()
+    sim = simulator_law()
+
+    max_abs_advantage = Fraction(0)
+    checked = 0
+    for edge in pet_edges:
+        real = edge_transcript_law(pet_edges, pet_col, edge)
+        assert real == sim, "real and simulated laws must coincide exactly"
+        for D in all_deterministic_distinguishers():
+            a_real = distinguisher_acceptance(real, D)
+            a_sim = distinguisher_acceptance(sim, D)
+            assert a_real - a_sim == 0 and a_sim - a_real == 0
+            max_abs_advantage = max(max_abs_advantage, abs(a_real - a_sim))
+            checked += 1
+    print(f"  Edges tested                       : {len(pet_edges)}")
+    print(f"  Deterministic distinguishers each  : "
+          f"{2 ** len(DISTINCT_PAIRS)}")
+    print(f"  Total (edge, distinguisher) checks : {checked}")
+    print(f"  Maximum |advantage| observed       : {max_abs_advantage}")
+    print(f"  Statistical (total variation) dist : {max_abs_advantage}")
+    print("  -> real and simulated transcripts are the same distribution; "
+          "every advantage is exactly 0.\n")
+
+
+def demo_monte_carlo() -> None:
+    print("=" * 74)
+    print("MONTE CARLO SANITY CHECK (empirical frequencies)")
+    print("=" * 74)
+    rng = random.Random(20260803)
+    trials = 200_000
+
+    pet_edges, pet_col = petersen()
+    counts: Dict[Pair, int] = {p: 0 for p in DISTINCT_PAIRS}
+    accepts = 0
+    for _ in range(trials):
+        pair, ok = run_round(pet_edges, pet_col, rng)
+        counts[pair] += 1
+        accepts += int(ok)
+    print(f"  Honest prover on the Petersen graph, {trials} rounds:")
+    print(f"     empirical acceptance rate = {accepts / trials:.6f}  "
+          "(theory: exactly 1)")
+    print("     empirical transcript frequencies (theory: 1/6 = 0.166667 each):")
+    print("       " + "  ".join(f"{p}:{counts[p] / trials:.4f}"
+                                for p in DISTINCT_PAIRS))
+
+    m = 15
+    bad_edges, bad_col = near_miss_path(m)
+    alpha = acceptance_probability(bad_edges, bad_col)
+    for k in (1, 10, 50):
+        survived = sum(run_protocol(bad_edges, bad_col, k, rng)
+                       for _ in range(5000))
+        print(f"  Cheating prover, k = {k:2d}: empirical survival "
+              f"{survived / 5000:.5f}   theory alpha^k = {float(alpha ** k):.5f}"
+              f"   bound = {float(soundness_bound(m) ** k):.5f}")
+    print()
+
+
 def main() -> None:
-    # A 5-cycle graph 0-1-2-3-4-0 (needs 3 colours; is 3-colourable).
-    edges: List[Edge] = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)]
-
-    proper: Colouring = {0: 0, 1: 1, 2: 0, 3: 1, 4: 2}  # a valid 3-colouring
-    improper: Colouring = {0: 0, 1: 0, 2: 1, 3: 2, 4: 1}  # edge (0,1) miscoloured
-
-    print("Graph: 5-cycle with edges", edges, "\n")
-    demo_completeness(edges, proper)
-    demo_soundness(edges, improper)
-    demo_amplification(edges, improper)
-    demo_hvzk(a=proper[0], b=proper[1] if proper[1] != proper[0] else 2)
+    print()
+    print("ZERO-KNOWLEDGE PROOFS FOR GRAPH 3-COLOURABILITY")
+    print("Exact verification of completeness, soundness, amplification, privacy")
+    print()
+    demo_completeness_and_complementarity()
+    demo_soundness()
+    demo_amplification()
+    demo_transcript_uniformity()
+    demo_perfect_zero_knowledge()
+    demo_monte_carlo()
+    print("=" * 74)
+    print("All assertions passed: every theorem of the paper is confirmed "
+          "on these instances.")
+    print("=" * 74)
 
 
 if __name__ == "__main__":
