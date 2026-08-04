@@ -1,133 +1,173 @@
-# The Hidden Algebra of Holes: How Mathematicians Built a Defect Detector for the Shape of Data
+# The Ghost in the Tensor Product
 
-## A surprising connection between 19th-century algebra and 21st-century science
+## How two "correction terms" — Ext and Tor — measure everything that goes wrong in algebra
 
-Imagine you could X-ray a pretzel. Not to see what's inside — but to see the *shape* of the holes. How many are there? How do they twist? Do they connect in ways you can't see from the outside?
+### A subtraction problem that isn't
 
-This is not a thought experiment. Scientists working with massive datasets — from protein folding to brain connectivity to the structure of the cosmos — face exactly this problem every day. They have clouds of data points living in high-dimensional spaces, and they need to understand the *topology* of those clouds: the hidden shape of holes, tunnels, and voids that no amount of coordinate-crunching can reveal.
+Here is an innocent-looking computation. Take the integers $\mathbb{Z}$ and multiply them by $2$. The map
+$$\mu_2 : \mathbb{Z} \to \mathbb{Z}, \qquad n \mapsto 2n$$
+is injective: no two integers get squashed together. Nothing is lost.
 
-For decades, the mathematical machinery to do this has existed. It was developed in the early 20th century by algebraists who had no idea their abstract constructions would one day scan medical images or classify quantum states of matter. The machinery is called *homological algebra*, and its central tools — objects with evocative names like Ext and Tor — are the mathematical equivalent of a CT scanner for shape.
+Now do something that ought to be harmless. Reduce everything modulo $2$ — that is, apply the operation $-\otimes \mathbb{Z}/2$, which takes an abelian group $A$ and forms $A \otimes \mathbb{Z}/2 \cong A/2A$. The map $\mu_2$ becomes a map
+$$\mathbb{Z}/2 \to \mathbb{Z}/2 .$$
+What map? It is multiplication by $2$ on $\mathbb{Z}/2$, which is the **zero map**. The element $1 \in \mathbb{Z}/2$ is now in the kernel. Injectivity has evaporated.
 
-But there was a problem. These tools were so abstract, so deeply embedded in categorical formalism, that actually *computing* with them was practically impossible. It was as if someone had invented the X-ray but couldn't build the machine.
+Something was destroyed by a process that only ever adds relations, never removes elements. Where did the lost injectivity *go*?
 
-Until now.
+The answer, discovered in the 1940s and 1950s and now one of the load-bearing pillars of modern algebra, geometry, and topology, is that it did not go anywhere. It became a group. It became
+$$\operatorname{Tor}_1(\mathbb{Z}/2, \mathbb{Z}/2) \cong \mathbb{Z}/2 \neq 0 .$$
+The failure is not an accident to be apologised for. It is a *measurement*, and the measurement is functorial, computable, and obeys exact laws.
 
----
-
-## The Shape of Nothing
-
-To understand what Ext and Tor actually do, start with a deceptively simple question: what is a hole?
-
-In topology, a "hole" in a space is formalized as an element of a *homology group*. The homology of a circle is ℤ (the integers), because there's one essential loop. The homology of a torus (a donut) has ℤ² in dimension one, reflecting two independent loops — one around the hole, one through the tube.
-
-But what happens when your space has more exotic structure? The real projective plane — a surface you can't embed in three dimensions — has homology ℤ/2ℤ in dimension one. That cryptic notation means: there's a loop, but if you go around it *twice*, you can contract it to a point. The hole has a *finite order*. Mathematicians call this **torsion**.
-
-Torsion is the dark matter of topology. Standard computational tools — the ones used in topological data analysis software — typically work over fields like the rational numbers ℚ or finite fields 𝔽ₚ. And over fields, torsion is invisible. It's as if your CT scanner can see bones but not cartilage.
-
-This is where derived functors enter the story.
+This article is about that measurement and its twin. The two functors $\operatorname{Ext}$ and $\operatorname{Tor}$ are the universal bookkeepers of failure in algebra: $\operatorname{Tor}$ records what tensoring breaks, $\operatorname{Ext}$ records what taking homomorphisms breaks. We will compute both completely for abelian groups, and see them force their way into topology through the Universal Coefficient Theorem.
 
 ---
 
-## The Algebraists' Secret Weapon
+## Part I: Resolutions, or how to approximate a bad object by good ones
 
-In the 1940s and 1950s, a group of mathematicians — including Samuel Eilenberg, Saunders Mac Lane, and Henri Cartan — developed a systematic way to measure how far algebraic operations fail to preserve structure. They called their inventions *derived functors*, and the two most important are Ext and Tor.
+An abelian group is the same thing as a module over the ring $\mathbb{Z}$, and we will use the two words interchangeably. Some abelian groups are *good* in a precise technical sense.
 
-Here is the key insight, stripped of formalism: if you want to understand a mathematical object *M*, don't study it directly. Instead, *approximate* it by something simpler — a "resolution" made of free modules, the algebraic equivalent of coordinate spaces — and then watch what happens when you apply an operation to the approximation.
+A module $P$ is **projective** if every surjection onto it splits — informally, $P$ is so free of internal relations that any map into a quotient can be lifted. Over $\mathbb{Z}$, projective is the same as free, so $\mathbb{Z}$, $\mathbb{Z}^n$, and $\bigoplus_{i \in I}\mathbb{Z}$ are the projective abelian groups. Dually, a module $I$ is **injective** if maps *into* it always extend along inclusions. Over $\mathbb{Z}$, injective is the same as *divisible*: every element has an $n$-th "multiple root" for all $n \ge 1$. So $\mathbb{Q}$ and $\mathbb{Q}/\mathbb{Z}$ are injective; $\mathbb{Z}$ itself emphatically is not, since $1$ is not divisible by $2$ inside $\mathbb{Z}$.
 
-Consider the simplest interesting example: the group ℤ/nℤ (integers modulo *n*). There is a beautiful two-step approximation:
+The bad object $\mathbb{Z}/k$ is neither projective nor injective. But it can be *resolved*: written as the last term of a complex of good objects. The star of this story is the shortest such resolution imaginable.
 
-> Take the integers ℤ. Map them to themselves by multiplication by *n*. Then project to ℤ/nℤ.
+> **The free resolution of a cyclic group.** For $k \neq 0$ the sequence
+> $$0 \longrightarrow \mathbb{Z} \xrightarrow{\;\cdot k\;} \mathbb{Z} \xrightarrow{\;\bmod k\;} \mathbb{Z}/k \longrightarrow 0$$
+> is exact: multiplication by $k$ is injective, reduction mod $k$ is surjective, and an integer reduces to $0$ exactly when it is a multiple of $k$.
 
-This gives an exact sequence: ℤ → ℤ → ℤ/nℤ → 0. The first map is "multiply by *n*", the second is "reduce mod *n*".
+Two free groups, one differential, and we have completely captured $\mathbb{Z}/k$. Its mirror image handles $\mathbb{Z}$:
 
-Now apply the operation "Hom into *A*" — that is, look at all the linear maps into some target group *A*. The first map becomes "multiply by *n* in *A*": it sends each element *a* to *na*. And the derived functor Ext¹ measures what's left over: the cokernel, which is exactly *A* divided by all multiples of *n*. In symbols:
+> **The injective resolution of $\mathbb{Z}$.** The sequence
+> $$0 \longrightarrow \mathbb{Z} \hookrightarrow \mathbb{Q} \longrightarrow \mathbb{Q}/\mathbb{Z} \longrightarrow 0$$
+> is exact, and $\mathbb{Q}$ and $\mathbb{Q}/\mathbb{Z}$ are both divisible, hence injective.
 
-> **Ext¹(ℤ/nℤ, A) ≅ A/nA**
+The **derived functors** are obtained by a fixed recipe: to compute $\operatorname{Ext}^n(X,Y)$, replace $X$ by a projective resolution, apply $\operatorname{Hom}(-,Y)$ to the resolution (throwing $X$ itself away), and take cohomology. To compute $\operatorname{Tor}_n(G,M)$, replace $M$ by a projective resolution, tensor with $G$, and take homology. Degree $0$ recovers the original functor — $\operatorname{Tor}_0(G,M) \cong G \otimes M$ — and the higher degrees are the correction terms.
 
-Dually, if you tensor with *A* instead of taking Hom, the map again becomes multiplication by *n*, and the derived functor Tor₁ measures the kernel: elements of *A* that are killed by *n*. In symbols:
+Now the punchline of Part I. If a resolution *stops* after one step, then so do the derived functors, because after the second stage there is nothing left to apply the functor to.
 
-> **Tor₁(ℤ/nℤ, A) ≅ A[n] = {a ∈ A : na = 0}**
+> **Cyclic groups have projective dimension one.** For $k \neq 0$ and any abelian group $Y$,
+> $$\operatorname{Ext}^{n}(\mathbb{Z}/k, Y) = 0 \quad \text{for all } n \geq 2 .$$
 
-These two formulas are the Rosetta Stone of computational homological algebra. They say that abstract derived functors — defined through a seemingly complicated procedure of resolutions and quotients — reduce to utterly concrete arithmetic operations.
+> **$\mathbb{Z}$ has injective dimension one.** For any abelian group $X$,
+> $$\operatorname{Ext}^{n}(X, \mathbb{Z}) = 0 \quad \text{for all } n \geq 2 .$$
 
----
+> **Higher Tor against cyclic groups vanishes.** For $k \neq 0$ and any abelian group $G$,
+> $$\operatorname{Tor}_{n}(G, \mathbb{Z}/k) = 0 \quad \text{for all } n \geq 2 .$$
 
-## The Torsion Detection Theorem
+These are not isolated curiosities. They are the first evidence for a structural fact: **$\mathbb{Z}$ is a hereditary ring**, and over a hereditary ring the entire infinite tower of derived functors collapses into degrees $0$ and $1$. Homological algebra over the integers is a two-storey building.
 
-The most powerful consequence of these computations is what we might call the **Torsion Detection Theorem**:
+We can push the collapse to a very large class of groups at once. Every finitely generated abelian group $X$ admits a surjection $\mathbb{Z}^m \twoheadrightarrow X$; the kernel $K$ is a subgroup of a finitely generated free group over a principal ideal domain, and is therefore itself free. So $X$ has a two-step free presentation $0 \to K \to \mathbb{Z}^m \to X \to 0$.
 
-> **Tor₁(ℤ/nℤ, A) vanishes if and only if A has no n-torsion.**
+> **Vanishing for finitely generated groups.** If $X$ is a finitely generated abelian group, then for every abelian group $Y$,
+> $$\operatorname{Ext}^{n}(X,Y) = 0 \quad \text{for all } n \geq 2 .$$
 
-In plain English: the derived functor Tor₁ is a *perfect detector* for torsion elements. If there are elements in *A* that are killed by multiplying by *n*, Tor₁ sees them — all of them. If there aren't any, Tor₁ is zero.
-
-This is not just a curiosity. It has immediate applications across multiple domains:
-
-**In topological data analysis**, torsion in homology groups corresponds to "almost-holes" — features that would be visible with one set of coefficients but invisible with another. The torsion detection theorem tells you *exactly* when switching coefficients will reveal new structure.
-
-**In coding theory**, periodic defects in error-correcting codes — patterns of errors that repeat with period *n* — correspond precisely to *n*-torsion in the code's algebraic structure. The vanishing of Tor₁ certifies that no such periodic defects exist: a provably ironclad guarantee.
-
-**In physics**, the classification of topological phases of matter — exotic quantum states that are protected by symmetry — involves computing Ext and Tor groups. The torsion detection theorem determines when certain topological obstructions exist.
-
----
-
-## The Exactness Machine
-
-There is a second major piece of the story. When algebraists apply Hom or tensor product to a "short exact sequence" — a perfectly dovetailed chain of maps where the image of each map equals the kernel of the next — something remarkable and slightly tragic happens.
-
-The resulting sequence is *almost* exact, but not quite. For Hom, the beginning is perfect:
-
-> 0 → Hom(M'', A) → Hom(M, A) → Hom(M', A) → ...
-
-The first three terms are exact: the sequence preserves the dovetailing. But then it breaks. There's a gap, and the gap is precisely filled by Ext¹.
-
-Proving this — that the induced map from precomposition is injective when the original map is surjective, and that the image of one map equals the kernel of the next — requires a careful *diagram chase*. You have to track elements through multiple maps, lift them through surjections, and verify that everything is well-defined.
-
-The proof of exactness at the middle term (what algebraists call "left-exactness of Hom") is particularly elegant. If a map ψ: M → A satisfies ψ ∘ f = 0, then ψ vanishes on the image of f, which equals the kernel of g. Since g is surjective, ψ must factor through g — meaning there exists α: M'' → A with ψ = α ∘ g. To show this factored map is well-defined, you observe that if g(m₁) = g(m₂), then m₁ - m₂ ∈ ker(g) = im(f), so ψ(m₁ - m₂) = 0, hence ψ(m₁) = ψ(m₂).
-
-This argument, though only a few lines in prose, is notoriously error-prone when formalized rigorously. Getting every quantifier right, every existence claim justified, every well-definedness check complete — this is exactly the kind of argument where machine verification adds genuine value.
+More abstractly, the same argument shows: whenever $X$ fits in a short exact sequence $0 \to P_1 \to P_0 \to X \to 0$ with $P_0, P_1$ projective, all $\operatorname{Ext}^{n}(X,-)$ vanish for $n \ge 2$.
 
 ---
 
-## The Universal Coefficient Theorem: Seeing Through Different Lenses
+## Part II: The long exact sequence, the engine room
 
-The crown jewel of this theory is the **Universal Coefficient Theorem** (UCT), which answers the question: if you know the homology of a space with integer coefficients, what can you say about homology with *any* other coefficients?
+Everything above is powered by a single machine. Suppose you have a short exact sequence of chain complexes
+$$0 \to C_\bullet' \to C_\bullet \to C_\bullet'' \to 0 .$$
+Homology is not exact — that is the whole problem — but the failure is perfectly organised into an infinite staircase:
+$$\cdots \to H_n(C') \to H_n(C) \to H_n(C'') \xrightarrow{\;\partial\;} H_{n-1}(C') \to H_{n-1}(C) \to \cdots$$
+which is exact at every spot. The mysterious map $\partial$, the **connecting homomorphism**, is built by the "diagram chase" every algebraist learns once and never forgets: lift a cycle from $C''$ to $C$, take its boundary, observe that it comes from $C'$.
 
-The answer is a short exact sequence:
+The three local exactness statements — at $H_n(C)$, at $H_n(C'')$, and at $H_{n-1}(C')$ — are what one actually uses, and they have immediate, sharp consequences:
 
-> 0 → Hₙ(X) ⊗ A → Hₙ(X; A) → Tor₁(Hₙ₋₁(X), A) → 0
+- If $C'$ and $C''$ are both acyclic in degree $n$, so is $C$. (Sandwiched between two zeros.)
+- If $C$ is acyclic in two adjacent degrees, the connecting map $\partial : H_n(C'') \to H_{n-1}(C')$ is a **bijection** — the entire homology of the quotient is a shifted copy of the homology of the subcomplex.
+- If $H_{n-1}(C'')$ vanishes, the map $H_n(C') \to H_n(C)$ is injective; if $H_{n+1}(C')$ vanishes, $H_n(C) \to H_n(C'')$ is surjective.
 
-Read from left to right: the homology with coefficients *A* is built from two pieces. The first piece, the tensor product Hₙ(X) ⊗ A, is the "expected" contribution — what you'd get if everything were torsion-free. The second piece, Tor₁, is the correction term: the torsion from one degree below bleeding upward.
-
-When the previous degree's homology is torsion-free — for instance, for the torus, where all homology is free — the Tor₁ term vanishes and the UCT simplifies to a clean isomorphism. But when there is torsion, the correction term is nonzero and reveals structure that would otherwise be hidden.
-
-Consider the real projective plane RP². Its homology is H₀ = ℤ, H₁ = ℤ/2ℤ, H₂ = 0. With ℤ/2ℤ coefficients, the UCT gives:
-
-- H₀(RP²; ℤ/2ℤ) ≅ ℤ/2ℤ (straightforward)
-- H₁(RP²; ℤ/2ℤ) involves Tor₁(ℤ, ℤ/2ℤ) = 0, so H₁ ≅ ℤ/2ℤ ⊗ ℤ/2ℤ ≅ ℤ/2ℤ
-- H₂(RP²; ℤ/2ℤ) involves Tor₁(ℤ/2ℤ, ℤ/2ℤ) = ℤ/2ℤ — so there's a *phantom* class in degree 2 that's invisible over the integers but materializes with ℤ/2ℤ coefficients!
-
-This is the torsion ghost. It appears only when you look through the right lens, and the UCT tells you exactly when to look.
+For $\operatorname{Ext}$ there are two such staircases, one in each variable. Given $0 \to A \to B \to C \to 0$ and a fixed $Y$:
+$$\cdots \to \operatorname{Ext}^n(C,Y) \to \operatorname{Ext}^n(B,Y) \to \operatorname{Ext}^n(A,Y) \to \operatorname{Ext}^{n+1}(C,Y) \to \cdots$$
+and dually in the second variable. Feed the resolution $0 \to \mathbb{Z} \to \mathbb{Z} \to \mathbb{Z}/k \to 0$ into this and observe that $\operatorname{Ext}^{n}(\mathbb{Z}, Y) = 0$ for all $n \geq 1$ because $\mathbb{Z}$ is projective: the staircase pinches shut, and the vanishing theorems of Part I fall out.
 
 ---
 
-## Building the Machine
+## Part III: $\operatorname{Ext}^1$ is an obstruction group — and you can hold it in your hand
 
-What makes the recent work significant is not that these theorems are new — Eilenberg and Mac Lane proved them seventy years ago. What's new is that the entire computational pipeline has been made *rigorous, mechanical, and executable*.
+The vanishing theorems say what *isn't* there. The interesting content is degree one. Here is the complete answer for cyclic groups.
 
-The definitions are concrete: the n-multiples subgroup, the n-torsion subgroup, the quotient construction, the short exact sequence, the precomposition map — each is an explicit mathematical object with verified properties. The theorems connect these objects with proofs that have been checked line by line.
+> **Computation of the first Ext group.** For $k \neq 0$ and any abelian group $Y$,
+> $$\operatorname{Ext}^1(\mathbb{Z}/k, Y) \;\cong\; Y/kY .$$
 
-This matters because mathematics is increasingly computational. Topological data analysis processes millions of data points. Coding theory designs systems where a single error can cost millions. Physics simulations of topological materials predict properties of real substances.
+The isomorphism is not abstract nonsense; it is an explicit formula. The short exact sequence $0 \to \mathbb{Z} \to \mathbb{Z} \to \mathbb{Z}/k \to 0$ has its own class $\varepsilon \in \operatorname{Ext}^1(\mathbb{Z}/k,\mathbb{Z})$. Each element $y \in Y$ determines a homomorphism $\mathbb{Z}\to Y$, $1 \mapsto y$, and pushing $\varepsilon$ forward along it gives a class $\varepsilon_y \in \operatorname{Ext}^1(\mathbb{Z}/k, Y)$. The assignment $y \mapsto \varepsilon_y$ is a group homomorphism; it is **surjective** (every class comes from an element), and its **kernel is exactly $kY$**. Quotient, and you have the isomorphism.
 
-In all these applications, the correctness of the underlying algebra is assumed. The derivations in textbooks are trusted. But textbooks have errors. Folklore claims sometimes turn out to be subtly wrong. And the proofs, when they exist, are often so compressed that they're effectively unverifiable by anyone who didn't write them.
+Read the formula slowly and it starts telling you things.
 
-The concrete engine built here eliminates that uncertainty. It doesn't just assert that Ext¹(ℤ/nℤ, A) equals A/nA — it *constructs* the isomorphism from the resolution, verifies that the construction is well-defined, and certifies the result against axioms that have been checked by a computer.
+> **Ext detects divisibility.** For $k \neq 0$, $\operatorname{Ext}^1(\mathbb{Z}/k, Y) = 0$ if and only if $Y$ is $k$-divisible, i.e. every $y \in Y$ is of the form $kz$.
+
+Two instances, both immediate:
+
+- $\operatorname{Ext}^1(\mathbb{Z}/k, \mathbb{Q}) = 0$, since one can always divide a rational number by $k$. Interpretation: **every extension of $\mathbb{Z}/k$ by $\mathbb{Q}$ splits.** There is no interesting abelian group containing $\mathbb{Q}$ with cyclic quotient other than $\mathbb{Q}\oplus\mathbb{Z}/k$.
+- $\operatorname{Ext}^1(\mathbb{Z}/k, \mathbb{Z}) \cong \mathbb{Z}/k$, which is nonzero for $k \geq 2$. Interpretation: **the extension $0 \to \mathbb{Z} \xrightarrow{\cdot k} \mathbb{Z} \to \mathbb{Z}/k \to 0$ does not split** — and if it did, $1 \in \mathbb{Z}$ would be divisible by $k$ inside $\mathbb{Z}$, which is absurd. This is the primal example. $\operatorname{Ext}^1$ has just detected, in group-theoretic language, that you cannot divide $1$ by $2$ in the integers.
+
+This is what "$\operatorname{Ext}$" is short for: **ext**ensions. $\operatorname{Ext}^1(C,A)$ classifies, up to equivalence, all the ways of fitting $A$ and $C$ into a short exact sequence $0 \to A \to B \to C \to 0$, with the zero class corresponding to the boring direct sum. It is the obstruction group for a splitting problem.
 
 ---
 
-## What Comes Next
+## Part IV: Flatness, or which groups are safe to tensor with
 
-The immediate extensions are clear. The computations described here handle cyclic groups — the simplest case. The next frontier is finitely presented groups, where the Smith Normal Form algorithm provides a systematic reduction. Beyond that lies the world of chain complexes, spectral sequences, and the full apparatus of derived categories.
+Now the other side. Tensoring $-\otimes G$ always preserves surjections but may destroy injections, as our opening example showed. Groups for which nothing is destroyed are called **flat**.
 
-But perhaps the most exciting direction is the least expected. The same torsion detection machinery that classifies holes in topological spaces can classify defects in quantum error-correcting codes, obstructions in crystallographic symmetry groups, and phase transitions in exotic materials. The fact that one algebraic computation governs phenomena across such different domains is not a coincidence — it reflects a deep structural unity that mathematicians have long suspected but rarely been able to certify.
+Flatness looks like an infinite condition — a statement about *every* injection. Homological algebra reduces it to a single, finite-flavoured test.
 
-The age of computational homological algebra is arriving. And with it, a new kind of certainty: not the certainty of belief, but the certainty of proof.
+> **The flatness criterion for abelian groups.** For an abelian group $G$, the following are equivalent:
+> 1. $G$ is flat;
+> 2. $G$ is torsion-free: $kg = 0$ with $k \neq 0$ forces $g = 0$;
+> 3. multiplication by $k$ is injective on $G$ for every $k \neq 0$;
+> 4. $\operatorname{Tor}_1(G, \mathbb{Z}/k) = 0$ for every $k \neq 0$;
+> 5. $\operatorname{Tor}_n(G, M) = 0$ for every $n \geq 1$ and every abelian group $M$.
+
+The chain of implications is a small masterpiece of efficiency. That (1) $\Rightarrow$ (5) is the general theorem *higher Tor against a flat module vanishes*: tensoring with a flat module is exact, hence commutes with taking homology, and a projective resolution has no homology in positive degrees, so nothing survives. That (5) $\Rightarrow$ (4) is trivial. That (4) $\Rightarrow$ (3) $\Rightarrow$ (2) $\Rightarrow$ (1) uses the key computation:
+
+> **The first Tor group against a cyclic group is torsion.** For any abelian group $G$ and any $k$,
+> $$\operatorname{Tor}_1(G, \mathbb{Z}/k) \;\cong\; G[k] := \{\, g \in G : kg = 0 \,\},$$
+> while in degree zero $G \otimes \mathbb{Z}/k \cong G/kG$.
+
+There is the whole picture in one line: **$\operatorname{Tor}$ is named after torsion because it *is* torsion.** Tensor with $\mathbb{Z}/k$ and you get a quotient, $G/kG$; the correction term is the sub, $G[k]$. The two extreme phenomena of a group — what dies under multiplication by $k$, and what is not hit by it — are exactly the two derived functors in degrees $1$ and $0$.
+
+And the opening puzzle resolves itself. Taking $G = \mathbb{Z}/2$:
+$$\operatorname{Tor}_1(\mathbb{Z}/2,\mathbb{Z}/2) \cong (\mathbb{Z}/2)[2] = \mathbb{Z}/2 \neq 0 .$$
+The lost injectivity became the $2$-torsion of $\mathbb{Z}/2$. More generally $\operatorname{Tor}_1(\mathbb{Z}/k,\mathbb{Z}/k) \cong \mathbb{Z}/k$, so **$\mathbb{Z}/k$ is not flat for $k \ge 2$** — cyclic groups are exactly the standard counterexamples, and $\operatorname{Tor}$ says precisely how badly they fail.
+
+---
+
+## Part V: The Universal Coefficient Theorem, or why topologists care
+
+Suppose you are a topologist who has computed the integral homology $H_n(X;\mathbb{Z})$ of a space, and someone asks for its homology with coefficients in $\mathbb{Z}/2$ — often much easier to compute with, and better adapted to certain geometric questions. Homology with coefficients in $G$ means: take the chain complex $C_\bullet$ of the space, tensor it with $G$, and take homology of $G \otimes C_\bullet$.
+
+The naive hope is $H_n(G \otimes C) \cong G \otimes H_n(C)$: homology and tensoring commute. When is the hope correct? Precisely when nothing is broken — that is, when $G$ is flat.
+
+> **Universal coefficients, flat case.** If $G$ is a flat module, then for every complex $C$ and every degree $n$,
+> $$H_n(G \otimes C) \;\cong\; G \otimes H_n(C) .$$
+> In particular, tensoring with a flat module preserves acyclicity.
+
+The proof is a one-liner once you have the right concept: tensoring with a flat module is an exact functor, and exact functors commute with homology. Over $\mathbb{Z}$ this covers $G = \mathbb{Q}$, $G = \mathbb{R}$, and all torsion-free coefficients — which is why rational homology is so much simpler than integral homology, and why one hardly ever hears about Tor terms in the rational setting.
+
+For non-flat $G$ the hope is false, and the failure is again a measurement:
+$$0 \longrightarrow G \otimes H_n(C) \longrightarrow H_n(G \otimes C) \longrightarrow \operatorname{Tor}_1\!\big(G, H_{n-1}(C)\big) \longrightarrow 0 .$$
+Homology with coefficients has two layers: the expected part in degree $n$, and a ghost of degree $n-1$ that arrived via $\operatorname{Tor}$.
+
+Both layers can be exhibited in isolation, and the smallest possible example does it. Let $C$ be the two-term complex of free groups
+$$C : \quad \cdots \to 0 \to \underbrace{\mathbb{Z}}_{\text{degree }1} \xrightarrow{\;\cdot k\;} \underbrace{\mathbb{Z}}_{\text{degree }0},$$
+so that $H_0(C) = \mathbb{Z}/k$ and $H_1(C) = 0$. Then for any coefficient group $G$:
+
+> **Degree zero.** There is no homology in degree $-1$, so the $\operatorname{Tor}$-term is absent and
+> $$H_0(G \otimes C) \;\cong\; G \otimes H_0(C) \;\cong\; G/kG .$$
+> **Degree one.** Here $H_1(C) = 0$, so the tensor term is absent, and the *entire* homology group is the correction term:
+> $$H_1(G \otimes C) \;\cong\; \operatorname{Tor}_1\!\big(G, H_0(C)\big) \;\cong\; G[k] .$$
+
+Take $G = \mathbb{Z}/k$ with $k \ge 2$. The complex $C$ is exact in degree $1$ — multiplication by $k$ is injective on $\mathbb{Z}$. After tensoring with $\mathbb{Z}/k$ the complex is **no longer exact in degree one**, and the surviving class is exactly the nonzero element of $\operatorname{Tor}_1(\mathbb{Z}/k,\mathbb{Z}/k) \cong \mathbb{Z}/k$. The correction term is not a bookkeeping convenience. It is a genuine, nonzero, *visible* homology class, and if you drop it from the Universal Coefficient Theorem the theorem becomes false.
+
+This is why, when a topologist computes the mod-$2$ homology of the real projective plane $\mathbb{RP}^2$ and finds a class in degree $2$ that has no integral counterpart, the class is not an error. Its integral homology is $H_0 = \mathbb{Z}$, $H_1 = \mathbb{Z}/2$, $H_2 = 0$; but $H_2(\mathbb{RP}^2;\mathbb{Z}/2) \cong \operatorname{Tor}_1(\mathbb{Z}/2, \mathbb{Z}/2) \cong \mathbb{Z}/2$. The extra class is the $2$-torsion of $H_1$, reappearing one degree up. $\operatorname{Tor}$ predicted it exactly.
+
+---
+
+## Coda: failure as a functor
+
+The intellectual move at the heart of this subject is worth stating baldly, because it recurs everywhere in twentieth-century mathematics. Faced with an operation that *almost* preserves a structure, do not shrug and add a caveat. Instead, name the discrepancy, prove that it is functorial, and study it as an object in its own right.
+
+Do that here and you get a complete two-storey theory of abelian groups: everything is controlled by degrees $0$ and $1$, where $\operatorname{Tor}$ splits any group into its torsion $G[k]$ and its cotorsion $G/kG$, and $\operatorname{Ext}$ splits it into its divisible and non-divisible parts through $Y/kY$. The same move gives sheaf cohomology in algebraic geometry (the failure of global sections to be exact), group cohomology in number theory (the failure of invariants to be exact), and the derived category, which takes the philosophy to its logical conclusion by declaring that a module *is* its resolution.
+
+The subtraction problem we opened with had no answer inside the world of abelian groups. It had an answer one level up. That, in the end, is the whole story: some questions can only be answered by enlarging the category of things that count as answers.

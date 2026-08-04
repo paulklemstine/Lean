@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "346c1c9a",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n- Instantiate the recoding bounds with concrete syntax encodings and prove explicit distortion constants.\n- Replace additive index distortion by affine distortion and derive corre",
-      "quality_score": 0.6043828571428571,
-      "sorry_count": 1,
-      "theorem_count": 7,
-      "timestamp": "2026-07-26T14:26:26",
-      "title": "Deepening: Speculative: Theorems as Phase Transitions in Proof Space"
-    },
-    {
       "cycle_id": "538b51f9",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n1. **Exact EML representation of every bivariate polynomial.** For every polynomial\n   `P ∈ ℝ[X,Y]`, there are finitely many ridge channels whose coordinate inner\n   functions are",
@@ -2501,6 +2491,16 @@
       "theorem_count": 437,
       "timestamp": "2026-08-04T06:48:36",
       "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
+    },
+    {
+      "cycle_id": "1ed3fd3a",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Snake-in-the-Box\n\nThis project formalises a chain of results about snakes (chordless induced\npaths) in the hypercube `Q_n`, culminating in\n\n* a proof of the **rigidity conjecture",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-08-04T12:26:19",
+      "title": "**Conjecture.** There is an absolute constant `c > 0` such that every sufficient"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7906299999999999
     }
   ],
-  "last_updated": "2026-08-04T06:48:36",
+  "last_updated": "2026-08-04T12:26:19",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "d54ed94e",
-        "quality": 0.76634,
-        "theorems": 11,
-        "title": "ArXiv paper: A positive square-energy strengthening of Turán's theorem"
-      },
-      {
         "cycle_id": "35f601c4",
         "quality": 0.686,
         "theorems": 32,
@@ -3327,6 +3321,12 @@
         "quality": 0.7944100000000001,
         "theorems": 17,
         "title": "Quantum Information: No-Cloning and Teleportation"
+      },
+      {
+        "cycle_id": "1ed3fd3a",
+        "quality": 0.686,
+        "theorems": 96,
+        "title": "**Conjecture.** There is an absolute constant `c > 0` such that every sufficient"
       }
     ],
     "Cryptography": [
