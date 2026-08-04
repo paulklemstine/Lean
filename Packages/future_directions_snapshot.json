@@ -3014,26 +3014,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6ef351e2",
-    "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "seed_299",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domain_bridges": [],
@@ -14305,7 +14285,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a08998f9",
     "description": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and\n   `∀ k ≥ k₀, (R k : ℝ) ≤ (4 * q)^k`.\n   This is falsified by any proof that no uniform `q < 1` satisfies the displayed estimate.\n\n2. **Explicit rational saving.** Strengthen the preceding statement by exhibiting a rational `q < 1` rather than an unspecified real witness. A concrete target is to prove the estimate for one explicitly stated rational and threshold `k₀`; exhaustive verification of all `k ≥ k₀` is then a precise proof obligation.\n\n3. **Threshold elimination.** If `R` is the catalog diagonal Ramsey-number function and an eventual sub-four estimate is available, determine whether there is an explicit `ε > 0` for which `(R k : ℝ) ≤ (4 - ε)^k` holds for every `k ≥ 2`. This conjecture is falsified by a single computed value of `R k` violating the inequality.\n\n4. **Asymmetric normalization.** Define the corresponding eventual bound for two parameters and prove that a uniform proportional saving in bounds for `R(s,t)` is equivalent to an additive gap below the classical entropy-derived base throughout any fixed compact ratio interval `s/(s+t) ∈ [a,b] ⊂ (0,1)`. A counterexample is a sequence of parameter pairs in the interval for which one formulation holds uniformly and the other does not.\n\n5. **Closure under subexponential losses.** Generalize the proved polynomial-loss theorem to any nonnegative real sequence `L` satisfying `∀ δ > 0, ∃ k₀, ∀ k ≥ k₀, L k ≤ exp (δ * k)`: if `r(k) ≤ L(k) (4q)^k` eventually for fixed `0 < q < 1`, then `HasSubFourUpperBound r`. A counterexample is a specific `L`, `q`, and natural-valued `r` satisfying both premises but admitting no eventual exponential bound with base below four.\n",
     "domain_bridges": [],
     "domains": [
@@ -14318,7 +14298,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d4159430",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T22:21:40.093219+00:00",
     "title": "1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-numb"
   },
@@ -15337,6 +15317,26 @@
     "status": "available",
     "timestamp": "2026-08-04T12:27:45.257942+00:00",
     "title": "Concrete, falsifiable conjectures suggested by the formalisation in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nStatus of the conjectures suggested by the formalisation in `Catalog/Bridges/`\n(`OrdinalAnalysisBridge.lean`, `OrdinalAnalysisBridgeExtras.lean` and\n`OrdinalAnalysisBridgeContinuity.lean`: the ordinal collapsing function `psi`, its term\nrewriting system, and the order-preserving embedding of the `PA` notation system\n`ONote`). Each item is stated so that it can be *refuted* by a single counterexample or\nby a Lean proof of its negation.\n\nNotation: `Ω = ω₁`; `Gen S` is the Skolem hull of `S ⊆ Ordinal` under `+` and `x ↦ ω^x`;\n`gens a = {0, Ω} ∪ {psi c | c < a}`; `psi a = min (Gen (gens a))ᶜ`; `eps0 = ε₀`; `ε_ ·` is\nMathlib's `Ordinal.epsilon` (the enumeration of the fixed points of `x ↦ ω ^ x`).\nNote that this `psi` uses the *unrestricted* hull: every `psi c` with `c < a` is a\ngenerator at stage `a`, with no side condition `c ∈ Gen (gens a)`.\n\n## Summary of what is now settled\n\nAll five original conjectures are settled: C1 is refuted, C2–C5 are proved. Beyond that,\n`psi` is now completely determined:\n\n| statement | Lean name |\n| --- | --- |\n| every value of `psi` is an epsilon number | `opow_psi` |\n| `psi c = ε_c` for countable `c` | `psi_eq_epsilon_of_lt_Om` |\n| `psi Ω = ε_{Ω+1}` | `psi_Om_eq`, `psi_Om_eq_epsilon` |\n| `psi (Ω + a) = ε_{Ω+1+a}`, hence `psi a = ε_{Ω+1+(a−Ω)}` for `a ≥ Ω` | `psi_add_eq_epsilon`, `psi_of_Om_le` |\n| `psi (Ω^ω) = ε_{Ω^ω}` and `bachmannHoward = ε_{ε_{Ω+1}}` | `psi_Om_opow_omega_eq_epsilon`, `bachmannHoward_eq_epsilon` |\n| range of `psi` = all epsilon numbers except `Ω` | `range_psi` |\n| above `Ω` the hull is the initial segment `Iio (psi a)` | `gen_iff_lt_psi` |\n\nThe headline chain of the first file, `ε₀ = ψ(0) < ψ(Ω^ω) ≤ ψ(ε_{Ω+1})`, and the bridge\ntheorems `ofONote_val_lt_psi_OmOmegaTerm`, `ofONote_val_lt_bachmannHoward` are unaffected\nby all of this; in the new notation they read `ε_0 < ε_{Ω^ω} ≤ ε_{ε_{Ω+1}}`.\n\n## C1. The collapse stays countable: `psi a < Ω` — **REFUTED (formally)**\n\nOriginal conjecture: `∀ a, psi a < Om`. This is **false** for the unrestricted hull:\n`Bridges.OrdinalCollapsing.not_forall_psi_lt_Om`. For `a < b` the ordinal `psi a` *is* a\ngenerator at stage `b`, whereas `psi b ∉ Gen (gens b)`; so `psi a ≠ psi b`, and with\n`psi_mono` this upgrades to `psi_strictMono`, hence `a ≤ psi a` (`self_le_psi`) and\n`Om ≤ psi Om`. The exact form of the failure is now known: `psi c < Ω` *does* hold for\nevery countable `c` (`psi_lt_Om`), and the first value at or above `Ω` is\n`psi Ω = ε_{Ω+1}`.\n\n> **C1′.** Let `psi'` be the *restricted* Madore collapse, defined by\n> `gens' a = {0, Ω} ∪ {psi' c | c < a ∧ c ∈ Gen (gens' a)}`. Then `psi' a < Ω` for every\n> `a`, `psi'` is non-decreasing, and `psi' (ε_{Ω+1})` is the Bachmann–Howard ordinal.\n> Falsifiable by exhibiting `a` with `psi' a ≥ Ω`. Formalising `psi'` requires a\n> simultaneous recursion between the hull and the function, which is the main technical\n> obstacle; the results proved here for `psi` (`psi_zero`, monotonicity, the bridge\n> theorems) should transfer, since the two functions agree at `0` and the chain\n> `ε₀ = psi 0 < psi (Ω^ω)` uses only generators of the form `psi c` with `c` explicitly\n> in the hull.\n\n## C2. Strict monotonicity of `psi` — **PROVED**\n\n`psi_strictMono : StrictMono psi`, with `psi_ne_of_lt`, `self_le_psi`, `psi_unbounded`.\nBy C1 the strictness holds *globally* here rather than only below `ε_{Ω+1}`; for the\nrestricted collapse `psi'` of C1′ strictness below `ε_{Ω+1}` becomes a genuine open\nproblem again:\n\n> **C2′.** `psi'` is strictly monotone on `Iio (ε_{Ω+1})` and constant on\n> `Ici (ε_{Ω+1})`. Falsifiable by `a < b < ε_{Ω+1}` with `psi' a = psi' b`.\n\n## C3. The rewriting system is confluent — **PROVED**\n\n`Bridges.OrdinalAnalysis.step_confluent` and `step_church_rosser`, by the \"canonical\nform\" route: an explicit normaliser `OTerm.norm` (flatten sums to the right via\n`OTerm.appendT`, delete units) invariant under `Step` (`norm_eq_of_step`,\n`norm_eq_of_rtstep`, `norm_eq_of_eqvGen`) and fixing normal forms (`norm_of_normal`),\nwhence unique normal forms (`normal_unique`, `norm_normal_form`).\n\n> **C3′.** Extend `Step` by the Cantor-normal-form rules (ordering of summands,\n> `ω^a + ω^b ⟶ ω^b` for `a < b`) and by `ψ`-specific rules; the extended system is still\n> terminating and confluent, and its normal forms are in bijection with the ordinals\n> below `psi (ε_{Ω+1})`. Falsifiable by a critical pair of the extended system that does\n> not join, or by two distinct normal forms with the same value.\n\n## C4. The image of the `Ω,ψ`-free fragment is exactly `Iio ε₀` — **PROVED**\n\n`Bridges.OrdinalAnalysis.simple_val_range : {x | ∃ t, t.Simple ∧ t.val = x} = Iio eps0`,\nvia `simple_val_lt_eps0` and `exists_simple_of_lt_eps0`.\n\n> **C4′.** The corresponding statement one level up: the values of terms using `Ω`, `+`\n> and `ω ^ ·` but not `ψ` are exactly the ordinals below `ε_{Ω+1}` that are `Ω`-CNF\n> representable, and the values of arbitrary terms are exactly the epsilon numbers\n> reachable by `range_psi` together with their `Ω`-CNF combinations. Falsifiable by a\n> `ψ`-free term whose value is not `Ω`-CNF representable.\n\n## C5. Continuity at `Ω^ω` — **PROVED**\n\n`psi_Om_opow_omega_eq_iSup : psi (Ω^ω) = ⨆ n : ℕ, psi (Ω^n)`, with\n`psi_Om_pow_nat_lt` showing the approximations are strictly increasing. The proof is the\ngeneral continuity theorem `psi_of_limit`: for a limit `a > Ω` one has\n`psi a = ⨆ c : Iio a, psi c`, because the supremum of the earlier collapses is itself an\nepsilon number (`opow_psi`, `opow_iSup_psi_Iio`) strictly above every stage-`a`\ngenerator, hence not generated.\n\nTwo findings refine the picture:\n\n* the hypothesis `Ω < a` cannot be dropped: `psi_discontinuous_at_Om` shows\n  `(⨆ c : Iio Ω, psi c) = Ω < psi Ω`, so `Ω` is the unique point of discontinuity;\n* the value is explicit: `psi (Ω^ω) = ε_{Ω^ω}` (`psi_Om_opow_omega_eq_epsilon`).\n\n> **C5′.** For the restricted collapse `psi'` of C1′ there is *no* analogue of the\n> `Ω`-discontinuity: `psi'` is continuous at every limit `< ε_{Ω+1}`, i.e. it is a normal\n> function on `Iio (ε_{Ω+1})`. Falsifiable by a limit `λ < ε_{Ω+1}` with\n> `psi' λ ≠ ⨆ c < λ, psi' c`.\n\n## New conjectures suggested by the closed form\n\n> **C6.** *(Collapsing is exactly the loss of one epsilon number.)* For the unrestricted\n> hull, `range psi = ε '' {a | a ≠ Ω}` is now a theorem (`range_psi`). Conjecture: for\n> the restricted collapse of C1′, `range psi' = {ε_a | a < Ω} ∪ {ψ'-values below Ω}` is\n> instead a set of order type `Ω` cofinal in `Ω`, and `psi'` is *not* injective.\n> Falsifiable by proving `psi'` injective, or by exhibiting a value of `psi'` at or\n> above `Ω`.\n\n> **C7.** *(Notation systems.)* The term system `OTerm` modulo `Step` (equivalently, its\n> normal forms) with the induced order is order-isomorphic to a *proper initial segment*\n> of `Iio (psi (ε_{Ω+1}))`, not to all of it: the missing ordinals are exactly those\n> whose `Ω`-CNF needs a value `psi a` with `a` not itself denoted by a term. Falsifiable\n> by producing a surjection of term values onto `Iio (psi (ε_{Ω+1}))`.\n\n> **C8.** *(Sharpness of the PA bridge.)* The `ψ`-free fragment of the term system and\n> the `PA` notation system have the same values:\n> `{t.val | t : OTerm, t.Simple} = {o.repr | o : ONote, o.NF}`, and `ofONote` maps every\n> `NF` notation to a `Simple` term. Value preservation and order reflection are already\n> proved (`val_ofONote`, `ofONote_val_lt_iff`, `strictMono_ofONote`), and the left-hand\n> side is `Iio ε₀` (`simple_val_range`), so the conjecture is equivalent to: every\n> ordinal below `ε₀` is `o.repr` for some `NF` notation `o`. Falsifiable by an ordinal\n> `< ε₀` outside the image of `ONote.repr`, or by an `NF` notation whose `ofONote`\n> translation is not `Simple`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0952",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6ef351e2",
+    "status": "available",
+    "timestamp": "2026-08-04T15:42:12.879543+00:00",
+    "title": "Status of the conjectures suggested by the formalisation in `Catalog/Bridges/`"
   },
   {
     "ambition_level": "extension",

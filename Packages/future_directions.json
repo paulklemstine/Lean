@@ -19705,11 +19705,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a08998f9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -19722,7 +19722,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0892",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-04T15:42:30.832688+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -19737,7 +19737,7 @@
       "source": "",
       "source_exp_id": "d4159430",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/d4159430",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_c5fef088",
       "timestamp": "2026-08-01T22:21:40.093219+00:00",
       "title": "1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-numb"
@@ -35494,7 +35494,6 @@
     "yields": 7
   },
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "famous_subtask",
     "famous_subtask",
@@ -35513,6 +35512,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup"
   ]
 }

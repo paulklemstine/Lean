@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cf55a60f",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n1. **Sharp finite-bath correction.** For an exactly energy-conserving erasure of a qubit coupled to a bath of heat capacity `C`, the least mean dissipated heat equals `k T log 2 +",
-      "quality_score": 0.6695599999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-26T18:21:06",
-      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-    },
-    {
       "cycle_id": "c3aad27b",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n## Formal result completed here\n\n`Catalog/Cryptography/LWE/INDCPA.lean` gives a finite-distribution formulation of the final LWE-to-IND-CPA game hop. It proves:\n\n- nonnegativity,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 78,
       "timestamp": "2026-08-04T12:27:50",
       "title": "Homological Algebra: Derived Functors"
+    },
+    {
+      "cycle_id": "6ef351e2",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nStatus of the conjectures suggested by the formalisation in `Catalog/Bridges/`\n(`OrdinalAnalysisBridge.lean`, `OrdinalAnalysisBridgeExtras.lean` and\n`OrdinalAnalysisBridgeContinui",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-08-04T15:42:16",
+      "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78643
     }
   ],
-  "last_updated": "2026-08-04T12:27:50",
+  "last_updated": "2026-08-04T15:42:16",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "5843d50f",
-        "quality": 0.7539499999999999,
-        "theorems": 7,
-        "title": "Logic-Physics Bridge: Consistency of Physical Theories"
-      },
-      {
         "cycle_id": "97183f28",
         "quality": 0.686,
         "theorems": 68,
@@ -3203,6 +3197,12 @@
         "quality": 0.72693,
         "theorems": 8,
         "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamil"
+      },
+      {
+        "cycle_id": "6ef351e2",
+        "quality": 0.686,
+        "theorems": 145,
+        "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
       }
     ],
     "Combinatorics": [

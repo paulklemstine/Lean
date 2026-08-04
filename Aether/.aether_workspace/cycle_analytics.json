@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-04T12:27:50.653625+00:00",
+  "last_updated": "2026-08-04T15:42:17.234863+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -46606,6 +46606,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -46678,6 +46679,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-04T12:27:50.526386+00:00",
       "title": "Homological Algebra: Derived Functors"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2074,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Bridges",
+      "duration_seconds": 20630.095513105392,
+      "end_time": 1785858121.7466516,
+      "files_integrated": 5,
+      "job_id": "6ef351e2",
+      "outcome_quality": 0.686,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19a",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19a",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.57,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8474,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.8375,
+        "novelty": 0.9456,
+        "proof_depth": 0.7911,
+        "usefulness": 0.8706
+      },
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785837491.6511385,
+      "strategy_count": 0,
+      "theorem_count": 145,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 126,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-04T15:42:17.109283+00:00",
+      "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
     }
   ]
 }
