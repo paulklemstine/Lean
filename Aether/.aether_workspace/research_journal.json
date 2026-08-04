@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c3aad27b",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n## Formal result completed here\n\n`Catalog/Cryptography/LWE/INDCPA.lean` gives a finite-distribution formulation of the final LWE-to-IND-CPA game hop. It proves:\n\n- nonnegativity,",
-      "quality_score": 0.6256666666666666,
-      "sorry_count": 1,
-      "theorem_count": 18,
-      "timestamp": "2026-07-26T18:21:12",
-      "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
-    },
-    {
       "cycle_id": "1782ce5d",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\nThe formalization establishes the paper's sharp obstruction for a three-vertex\npath rooted at its central vertex. Natural next steps are:\n\n1. Define path embeddings and rooted pat",
@@ -2501,6 +2491,16 @@
       "theorem_count": 145,
       "timestamp": "2026-08-04T15:42:16",
       "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
+    },
+    {
+      "cycle_id": "3652ac9b",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\n## What is in the repository\n\nThree Lean files carry the mathematics of this mission (all of them compile and\ncontain no `sorry`):\n\n* `Catalog/Bridges/GraphTheory/CayleyCharacterS",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 679,
+      "timestamp": "2026-08-04T20:07:45",
+      "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78643
     }
   ],
-  "last_updated": "2026-08-04T15:42:16",
+  "last_updated": "2026-08-04T20:07:45",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "5f676746",
-        "quality": 0.74002,
-        "theorems": 9,
-        "title": "EML Universal Approximation"
-      },
-      {
         "cycle_id": "89e28e84",
         "quality": 0.78874,
         "theorems": 12,
@@ -3079,6 +3073,12 @@
         "quality": 0.78643,
         "theorems": 78,
         "title": "Homological Algebra: Derived Functors"
+      },
+      {
+        "cycle_id": "3652ac9b",
+        "quality": 0.686,
+        "theorems": 679,
+        "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
       }
     ],
     "Applications": [
