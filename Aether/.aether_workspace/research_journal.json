@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a7f30302",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Sharp obstruction period for elementary rules.** Determine whether cycle\n   length 4 is necessary in `reversible_small_cycles_iff`: specifically, test\n   and prove or refute",
-      "quality_score": 0.78251,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-08-01T18:21:33",
-      "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-    },
-    {
       "cycle_id": "6c98f572",
       "domain": "Computation",
       "key_insight": "# Future Directions: Fourier Analysis as a Functor\n\n## What this phase establishes\n\n`Catalog/Bridges/FourierAsFunctor.lean` proves a self-contained finite-coordinate model of the requested bridge.\n\n1.",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-04T01:19:29",
       "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+    },
+    {
+      "cycle_id": "bae1175e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe following are concrete conjectures suggested by the formal metric/counting bridge.\n\n1. **Periodic-coordinate dimension formula.** For every `m > 0` and every set of residues `",
+      "quality_score": 0.7559799999999999,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-04T01:20:58",
+      "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c6b3a18e",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n## What was proved\n\nThe Lean development `Catalog/Applications/HeatDeathMathematics.lean` proves:\n\n1. **Countability of finitary theorems.** Statements and certificates are finite",
-      "quality_score": 0.6294117647058823,
-      "sorry_count": 1,
-      "theorem_count": 102,
-      "timestamp": "2026-07-26T14:03:58",
-      "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
-    },
     {
       "cycle_id": "c1a3ae41",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-08-04T01:19:29",
       "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+    },
+    {
+      "cycle_id": "bae1175e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe following are concrete conjectures suggested by the formal metric/counting bridge.\n\n1. **Periodic-coordinate dimension formula.** For every `m > 0` and every set of residues `",
+      "quality_score": 0.7559799999999999,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-04T01:20:58",
+      "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bffb7591",
-      "domain": "Pythagorean",
-      "name": "contained_uniform_tfold_card_bound",
-      "quality": 0.77061
-    },
-    {
-      "cycle_id": "bffb7591",
-      "domain": "Pythagorean",
-      "name": "initialInterval_avoids_uniform_tfold",
-      "quality": 0.77061
-    },
-    {
-      "cycle_id": "06b881ae",
-      "domain": "Physics",
-      "name": "stereoDenom_pos",
-      "quality": 0.78433
-    },
     {
       "cycle_id": "06b881ae",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "one_round_acceptance_bound",
       "quality": 0.76207
+    },
+    {
+      "cycle_id": "bae1175e",
+      "domain": "Combinatorics",
+      "name": "records",
+      "quality": 0.7559799999999999
+    },
+    {
+      "cycle_id": "bae1175e",
+      "domain": "Combinatorics",
+      "name": "closedBall_scale_iff_prefix",
+      "quality": 0.7559799999999999
+    },
+    {
+      "cycle_id": "bae1175e",
+      "domain": "Combinatorics",
+      "name": "truth_distance_ultrametric",
+      "quality": 0.7559799999999999
     }
   ],
-  "last_updated": "2026-08-04T01:19:29",
+  "last_updated": "2026-08-04T01:20:58",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "42454fab",
-        "quality": 0.7628999999999999,
-        "theorems": 18,
-        "title": "Frankl's Union-Closed Conjecture: Partial Results"
-      },
-      {
         "cycle_id": "d4d2267f",
         "quality": 0.73176,
         "theorems": 4,
@@ -3265,6 +3259,12 @@
         "quality": 0.71783,
         "theorems": 9,
         "title": "The accompanying Lean development settles the operator-algebraic core used by"
+      },
+      {
+        "cycle_id": "bae1175e",
+        "quality": 0.7559799999999999,
+        "theorems": 13,
+        "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
       }
     ],
     "Computation": [

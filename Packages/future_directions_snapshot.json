@@ -3034,26 +3034,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "87f6aef5",
-    "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "seed_303",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domain_bridges": [],
@@ -3947,7 +3927,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a65c164b",
     "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
     "domain_bridges": [],
     "domains": [
@@ -3960,7 +3940,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697762+00:00",
     "title": "Homological Algebra: Derived Functors"
   },
@@ -4267,7 +4247,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52522972",
     "description": "Formalize the SIDH key exchange: two parties compute a shared secret from supersingular isogenies of elliptic curves. Prove that computing the isogeny from j-invariant is as hard as the quaternion isogeny path problem. Analyze the Castryck-Decru attack.",
     "domain_bridges": [],
     "domains": [
@@ -4280,7 +4260,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
   },
@@ -9675,6 +9655,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Lattice point sumsets and asymptotic approximate groups' and formalize its key results. Abstract: We establish new quantitative bounds for asymptotic approximate groups arising from finite subsets of lattices and, more generally, semi-linear subsets of abelian groups. Our approach combines Khovanskii's theorem on sumsets with Rogers and Zong bounds for the covering numbers.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_0945",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.01064v1",
+    "status": "available",
+    "timestamp": "2026-08-04T01:21:18.633523+00:00",
+    "title": "ArXiv paper: Lattice point sumsets and asymptotic approximate groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The equality case of Ehrhart's volume conjecture' and formalize its key results. Abstract: We prove that every full-dimensional compact convex body in $\\mathbb R^n$ whose barycenter is its unique interior lattice point and whose volume is $(n+1)^n/n!$ is a unimodular image of the simplex $(n+1)Δ_n-(1,\\dots,1)$. This resolves the equality case of Ehrhart's volume conjecture, as a counterpart of the inequality part recently proved by OpenAI. The main result of this paper is obtained by generative AI, particularly GPT-5.6-sol, Fable 5, and the Danus system.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_0946",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.01040v1",
+    "status": "available",
+    "timestamp": "2026-08-04T01:21:22.081541+00:00",
+    "title": "ArXiv paper: The equality case of Ehrhart's volume conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Provide rigorous foundations for Schubert's enumerative geometry. Formalize intersection theory on Grassmannians and flag varieties, proving Schubert calculus results via modern algebraic geometry.",
     "domain_bridges": [],
     "domains": [
@@ -12131,7 +12151,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ed3fd3a",
     "description": "# Future Directions for Snake-in-the-Box Records\n\n## 1. Asymptotic density of induced hypercube paths\n\n**Conjecture.** There is an absolute constant `c > 0` such that every sufficiently large hypercube `Q_n` contains a snake with at least `c · 2^n` edges.\n\nThe key insight is that chordlessness can be viewed as a distance-two condition on each parity-separated subsequence, while consecutive vertices retain the local freedom of a Gray code. This suggests combining large binary codes with controlled bridges between their codewords.\n\n**Why now?** The new records through dimension thirteen have densities that remain substantial, and the distance-two code extraction isolates a concrete structure on which probabilistic nibble or local-lemma methods can act.\n\n## 2. Rigidity near the Boolean-cube ceiling\n\n**Conjecture.** For every `n ≥ 3`, a snake in `Q_n` omits at least `2^(n-2)` vertices.\n\nThe key insight is that a path using nearly every cube vertex would force most unused cube edges to become forbidden chords. Regularity then turns chordlessness into a severe edge-boundary constraint, potentially accessible through cube isoperimetry.\n\n**Why now?** The universal counting ceiling is easy, but the record data lie far below it. Quantifying the unavoidable gap is the natural next structural problem and would connect the census to edge-isoperimetric stability.\n\n## 3. Completeness of the dimension-nine census\n\n**Conjecture.** Every length-191 snake in `Q_9` is equivalent, under coordinate permutation, translation, and path reversal, to one of the 131 reported classes.\n\nThe key insight is that fixing an initial transition pattern should break the full cube symmetry, after which chordlessness and the distance-two constraints may force a finite collection of canonical extensions.\n\n**Why now?** Repeated searches found exactly the same 131 classes, making this a sharply falsifiable classification statement with a finite certificate target rather than an open-ended optimization claim.\n\n## 4. Product constructions with bounded chord repair\n\n**Conjecture.** There is an absolute constant `C` such that snakes of lengths `L` in `Q_m` and `K` in `Q_n` can be combined into a snake in `Q_(m+n)` of length at least `(L+1)(K+1) - C(L+K)`.\n\nThe key insight is that Cartesian products naturally create long grid walks, and all offending chords are localized near changes between factors. A bounded family of separator coordinates may repair those interfaces without destroying the multiplicative main term.\n\n**Why now?** Record searches currently proceed dimension by dimension. A successful product theorem would turn isolated records into systematic lower bounds in higher dimensions and would explain which transition motifs transfer across dimensions.\n\n## 5. Random extension threshold for long snakes\n\n**Conjecture.** For a uniformly chosen endpoint extension among currently legal coordinate flips, the probability that a greedy snake in `Q_n` survives for `2^(α n)` steps has a sharp threshold at a constant `α` strictly greater than one half.\n\nThe key insight is that each accepted vertex excludes a radius-one neighborhood from future nonconsecutive use, so the extension process resembles random sequential adsorption with highly structured overlaps in the Hamming cube.\n\n**Why now?** The census supplies long trajectories and many inequivalent optima, while the coding interpretation identifies the correct exclusion geometry. Together they make survival probabilities and overlap corrections measurable and mathematically testable.\n",
     "domain_bridges": [],
     "domains": [
@@ -12144,7 +12164,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "bf4ad478",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T20:45:21.848410+00:00",
     "title": "**Conjecture.** There is an absolute constant `c > 0` such that every sufficient"
   },
@@ -15277,25 +15297,6 @@
     "status": "available",
     "timestamp": "2026-08-03T23:30:50.863648+00:00",
     "title": "1. **General tropical Helly bound.** For every `d > 0`, every finite family of n"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "bae1175e",
-    "description": "Cycle 1a27f9f3 (Q=0.700) proved 15 theorems in Combinatorics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Define a natural metric on the space of all mathematical statements and prove that the set of true statements has a fractal dimension. Show that this dimension is strictly between 0 and 1 (truth is sp",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_1a27f9f3_755cd7ae",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "1a27f9f3",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T20:48:35.754087+00:00",
-    "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
   },
   {
     "ambition_level": "extension",
