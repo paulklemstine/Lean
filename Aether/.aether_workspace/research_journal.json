@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b3ca6b38",
-      "domain": "Tropical",
-      "key_insight": "# Future directions: tropical, Kapranov, and factor rank\n\nThe completed formalization proves that the three rank notions coincide at the\nrank-one threshold.  The following are concrete next targets; e",
-      "quality_score": 0.6900799999999998,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-26T20:52:00",
-      "title": "Tropical-Rank: Kapranov Rank vs Tropical Rank Equivalence Bounds"
-    },
-    {
       "cycle_id": "9fe269b0",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n## Completed formal boundary\n\nThe Lean development is complete and contains no unfinished proofs. It establishes the incidence-theoretic coordinatization theorem: every `PlanarTer",
@@ -2501,6 +2491,16 @@
       "theorem_count": 525,
       "timestamp": "2026-08-04T23:25:31",
       "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
+    },
+    {
+      "cycle_id": "1d44d635",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\n## What is formalized\n\nFour Lean files, all compiling with `lake build` and free of `sorry`:\n\n* `Geometry/RomanDomination/Variants.lean` — the six Roman-type domination\n  paramete",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 162,
+      "timestamp": "2026-08-04T23:25:37",
+      "title": "ArXiv paper: Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algorithms and Hardness"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78433
     }
   ],
-  "last_updated": "2026-08-04T23:25:31",
+  "last_updated": "2026-08-04T23:25:37",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "9fe269b0",
-        "quality": 0.7311199999999999,
-        "theorems": 15,
-        "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-      },
-      {
         "cycle_id": "9da9b807",
         "quality": 0.7645199999999999,
         "theorems": 7,
@@ -3451,6 +3445,12 @@
         "quality": 0.77922,
         "theorems": 10,
         "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
+      },
+      {
+        "cycle_id": "1d44d635",
+        "quality": 0.686,
+        "theorems": 162,
+        "title": "ArXiv paper: Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algor"
       }
     ],
     "Logic": [
