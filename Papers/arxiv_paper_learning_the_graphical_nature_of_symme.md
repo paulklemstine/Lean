@@ -1,27 +1,73 @@
-# Computational Evidence
+# Computational evidence
 
-## Small-case calculations
+Target identity (proved in `Catalog/Bridges/GraphTheory/CayleyCharacterSpectra.lean`):
+for a finite abelian group `G`, a symmetric connection set `S ⊆ G` with `0 ∉ S`, and `k : ℕ`,
 
-The proof targets are structural rather than census-specific. For the cycle Cayley graph of the additive group of order five with connection set `{+1,-1}`, each vertex has two neighbours. Adjacent pairs have no common neighbour, while vertices at distance two have one common neighbour. Translating both roots preserves these values, in agreement with dependence on the group difference.
+```
+∑_{ψ ∈ Ĝ} ( ∑_{s ∈ S} ψ(s) )^k
+      = trace( A(Cay(G,S))^k )
+      = #{ closed k-walks in Cay(G,S) }
+      = |G| · #{ (s₁,…,s_k) ∈ S^k : s₁ + ⋯ + s_k = 0 }.
+```
 
-For the complete Cayley graph on a group of order four, obtained from all nonidentity elements, every vertex has degree three and every distinct pair has two common neighbours. Again, the profile is constant on every nonidentity difference.
+## 1. Small-case calculations
 
-## OEIS search results
+The middle and last quantities are computable, so they were evaluated directly in Lean
+(`#eval`, exploratory — the *proof* is the Lean theorem, these numbers only guided it).
+`A S` is the ℕ-valued adjacency matrix `A x y = [y - x ∈ S]`, `tr S k = trace (A S ^ k)`,
+and `relCount S k = #{p ∈ S^k : ∑ p i = 0}`.
 
-No sequence identification is required for the theorem proved here. The arXiv signal about newly contributed generator-rank and monolithic-group sequences motivated using exact symmetry principles rather than asserting unverified sequence IDs or finite census totals.
+Each entry below is the pair `(trace(A^k), |G| · relCount(k))`.
 
-## Counterexample hunt and boundary cases
+| group, connection set | k = 0 | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|---|
+| `ZMod 4`, `S = {1,3}` (cycle `C₄`) | (4,4) | (0,0) | (8,8) | (0,0) | (32,32) | (0,0) |
+| `ZMod 6`, `S = {1,5}` (cycle `C₆`) | (6,6) | (0,0) | (12,12) | (0,0) | (36,36) | (0,0) |
+| `ZMod 5`, `S = {1,2,3,4}` (complete `K₅`) | (5,5) | (0,0) | (20,20) | (60,60) | (260,260) | — |
+| `ZMod 2 × ZMod 4`, `S = {(1,0),(0,1),(0,3)}` | (8,8) | (0,0) | (24,24) | (0,0) | (168,168) | — |
 
-The claims require an inverse-closed connection set not containing the identity, exactly the hypotheses needed for a simple undirected Cayley graph. Dropping inverse closure can produce a directed relation rather than a simple graph. Including the identity creates loops. Neither altered object is covered by the theorem.
+All 22 tested pairs agree. Two sanity checks by hand:
 
-Regularity alone is insufficient for the pair-difference conclusion: a regular graph has no canonical multiplication or coherent difference coordinate. Vertex-transitive non-Cayley graphs preserve local data along automorphism orbits, but need not admit the sharply transitive translations used in the proof.
+* `C₄`, `k = 4`: the ±1 step sequences of length 4 with sum ≡ 0 (mod 4) are those with
+  sum ∈ {−4, 0, 4}, i.e. `1 + 6 + 1 = 8` sequences, giving `4 · 8 = 32`; spectrally the
+  eigenvalues of `C₄` are `2, 0, −2, 0`, so `∑ λ⁴ = 16 + 16 = 32`. ✔
+* `K₅`, `k = 3`: the eigenvalues are `4` and `−1` (four times), so
+  `∑ λ³ = 64 − 4 = 60`, and indeed `5 · 12 = 60` (there are 12 triples of nonzero
+  residues mod 5 summing to 0). ✔
 
-## Evidence table
+## 1b. Nonabelian check
 
-| Group / connection set | degree | common-neighbour profile by difference | expected invariance |
-|---|---:|---|---|
-| cyclic order 5, `{±1}` | 2 | 0 for `±1`, 1 for `±2` | yes |
-| order 4, all nonidentity elements | 3 | 2 for every nonidentity difference | yes |
-| arbitrary finite group, inverse-closed `S` | `|S|` | `|S ∩ gS|` up to orientation convention | yes |
+For the general (nonabelian) statement proved in
+`Catalog/Bridges/GraphTheory/CayleyWalkRelations.lean`, the same comparison was run for
+`G = S₃` with `S` the three transpositions (the Cayley graph is `K_{3,3}`), where the
+relation count uses the ordered product `s₁ ⋯ s_k = 1`:
 
-The deliverable establishes the underlying bijections directly, so these small cases are illustrations rather than the basis of the result.
+| k | 0 | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|---|
+| `trace(A^k)` | 6 | 0 | 18 | 0 | 162 |
+| `\|G\| · relCount(k)` | 6 | 0 | 18 | 0 | 162 |
+
+(The odd entries vanish because a product of an odd number of transpositions is odd.)
+
+## 2. Spectral cross-check
+
+For `C_n` (`G = ZMod n`, `S = {1, n-1}`) the character eigenvalues are
+`2cos(2πj/n)`, and the table above matches `∑_j (2cos(2πj/n))^k`
+(e.g. `n = 6, k = 4`: `2⁴ + 2·1 + 2·1 + (−2)⁴ = 36`). ✔
+
+## 3. Counterexample hunt
+
+No counterexample exists: the identity is now a theorem, verified in Lean for **all**
+finite abelian groups, all symmetric `0 ∉ S`, and all `k` (and the walk-count/relation-count
+half of it for **all** finite groups). Before proving it, the search
+above (cyclic groups of order 4, 5, 6, a non-cyclic group of order 8, degrees 2, 3 and 4,
+`k ≤ 5`) produced no discrepancy.
+
+## 4. OEIS remarks
+
+The closed-walk sequences arising here are classical: for `C₄` the values
+`4, 0, 8, 0, 32, 0, 128, …` are `2^{k+1}` on even `k` (A004171 up to indexing), and for
+`K₅` the values `5, 0, 20, 60, 260, …` follow `(n−1)^k + (n−1)(−1)^k` with `n = 5`.
+The enumerative sequences highlighted by the source paper (monolithic groups, groups
+generated by ≤ 3, 4, 5 elements) are not touched by this file; the theorem here concerns
+the *graph-observable* side of that census.
