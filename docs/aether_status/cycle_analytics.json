@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-04T03:45:32.644046+00:00",
+  "last_updated": "2026-08-04T06:48:37.015047+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -46547,6 +46547,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-04T03:45:32.528954+00:00",
       "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2702,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "NumberTheory",
+      "duration_seconds": 19817.417005300522,
+      "end_time": 1785826091.9241393,
+      "files_integrated": 62,
+      "job_id": "a5f7aac5",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19a",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19a",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.9102,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9205,
+        "novelty": 0.95,
+        "proof_depth": 0.9079,
+        "usefulness": 0.9539
+      },
+      "quality_score": 0.6853135011441648,
+      "sorry_count": 5,
+      "sorry_density": 0.011441647597254004,
+      "start_time": 1785806274.507134,
+      "strategy_count": 0,
+      "theorem_count": 437,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 376,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-04T06:48:36.898606+00:00",
+      "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
     }
   ]
 }

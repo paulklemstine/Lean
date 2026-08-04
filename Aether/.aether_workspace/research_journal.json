@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "68e75c09",
-      "domain": "Logic",
-      "key_insight": "# Future Directions: Stone Duality for Neural Classifiers\n\n## Formal verdict\n\nThe proposed picture contains a useful construction, but its strongest numerical and\ntopological claims are false as state",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-26T14:04:08",
-      "title": "Stone Duality for Machine Learning: Neural Networks as Geometric Realizations"
-    },
-    {
       "cycle_id": "346c1c9a",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n- Instantiate the recoding bounds with concrete syntax encodings and prove explicit distortion constants.\n- Replace additive index distortion by affine distortion and derive corre",
@@ -2501,6 +2491,16 @@
       "theorem_count": 31,
       "timestamp": "2026-08-04T03:45:32",
       "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
+    },
+    {
+      "cycle_id": "a5f7aac5",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## What is now proved\n\nThe conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contains a complete\ndescent and classification theory. For a number field `K`, a fi",
+      "quality_score": 0.6853135011441648,
+      "sorry_count": 5,
+      "theorem_count": 437,
+      "timestamp": "2026-08-04T06:48:36",
+      "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7906299999999999
     }
   ],
-  "last_updated": "2026-08-04T03:45:32",
+  "last_updated": "2026-08-04T06:48:36",
   "open_questions": [
-    {
-      "context": "-  sorry; -  sorry; -  sorry",
-      "cycle_id": "0cd9c194",
-      "domain": "Combinatorics",
-      "sorry_count": 13,
-      "timestamp": "2026-07-20T01:50:29"
-    },
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "8797684d",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-08-02T23:22:25"
+    },
+    {
+      "context": "sorry; sorry; sorry",
+      "cycle_id": "a5f7aac5",
+      "domain": "NumberTheory",
+      "sorry_count": 5,
+      "timestamp": "2026-08-04T06:48:36"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "c2653f80",
-        "quality": 0.7720099999999999,
-        "theorems": 24,
-        "title": "Sierpiński Numbers: Covering Systems"
-      },
-      {
         "cycle_id": "3c125e46",
         "quality": 0.73757,
         "theorems": 9,
@@ -3699,6 +3693,12 @@
         "quality": 0.65648,
         "theorems": 4,
         "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Ge"
+      },
+      {
+        "cycle_id": "a5f7aac5",
+        "quality": 0.6853135011441648,
+        "theorems": 437,
+        "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
       }
     ],
     "Physics": [

@@ -1934,21 +1934,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Emergent Spacetime from Quantum Entanglement"
   },
   {
-    "consumed_by_exp_id": "a5f7aac5",
-    "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_ee1ae94f_39fc795b",
-    "phase": "A",
-    "priority_score": 0.88664,
-    "research_mode": "team",
-    "source_exp_id": "ee1ae94f",
-    "status": "in_progress",
-    "timestamp": "2026-07-28T17:00:01.809184+00:00",
-    "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 1a03af4c (Q=0.787), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
@@ -3903,17 +3888,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Optimization: Linear Programming in the Max-Plus Algebra"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3a707635",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
       "Computation"
     ],
     "id": "seed_370",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -11376,6 +11362,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is now proved\n\nThe conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contains a complete\ndescent and classification theory. For a number field `K`, a finite Galois extension `H/K` and an\nArtin reciprocity isomorphism `e : Gal(H/K) \u2243* Cl(\ud835\udcaa_K)`:\n\n* intermediate fields are classified, order-reversingly, by subgroups of `Cl(\ud835\udcaa_K)`\n  (`HilbertClassFieldDescent.intermediateFieldOrderIso`, `existsUnique_intermediateField`);\n* `[L : K] = (artinImage e L).index`, `[H : L] = #(artinImage e L)`, and\n  `Gal(L/K) \u2243* Cl(\ud835\udcaa_K) \u29f8 artinImage e L`;\n* ideal-class characters descend to `Gal(L/K)` exactly when they kill `artinImage e L`, and the\n  characters of `Cl(\ud835\udcaa_K) \u29f8 S` are exactly the one-dimensional representations of `Gal(L_S/K)`;\n* if `Cl(\ud835\udcaa_K)` is cyclic, each divisor `d` of `h_K` is the degree of exactly one intermediate\n  field (`CyclicClassGroupDescent.existsUnique_intermediateField_finrank`);\n* if `Cl(\ud835\udcaa_K)` is a Klein four group, the datum has exactly five intermediate fields, of degrees\n  `1, 2, 2, 2, 4` (`KleinFourClassField.card_intermediateField_of_kleinFour`,\n  `finrank_eq_one_or_two_or_four`, `exists_three_quadratic_intermediateField`,\n  `intermediateField_eq_of_kleinFour`) \u2014 this settles conjecture 2 of the previous cycle;\n* the transfer (Verlagerung) of `Cl(\ud835\udcaa_K)` into the Artin image of an intermediate field `L` is\n  the `[L : K]`-th power map, and it is trivial at the top of the datum\n  (`ClassFieldTransfer.coe_transfer_artinImage`, `transfer_artinImage_top_eq_one`) \u2014 this settles\n  the intermediate falsifiable step of conjecture 4 of the previous cycle.\n\n## Next targets\n\nEach of the following is falsifiable: it is either a Lean statement that compiles and is proved,\nor it fails for an explicit counterexample.\n\n1. **Unconditional imaginary-quadratic instance.** For `K = \u211a(\u221a-5)` (class number `2`), construct\n   in Lean the quadratic extension `H = K(i)` together with a group isomorphism\n   `Gal(H/K) \u2243* Cl(\ud835\udcaa_K)`, so that every theorem of `HilbertClassFieldDescent`,\n   `CyclicClassGroupDescent` and `ClassFieldTransfer` holds for `K` with no reciprocity datum\n   assumed. This requires `Nat.card (ClassGroup (\ud835\udcde \u211a(\u221a-5))) = 2` as a formal computation.\n   Falsifiable: the class number must come out `2`, not `1`.\n\n2. **Counting for arbitrary elementary abelian class groups.** Generalize\n   `KleinFourClassField.card_subgroup_V`: if `Cl(\ud835\udcaa_K) \u2243 (ZMod p)^r` then the Hilbert class field\n   datum has exactly `\u2211_{k=0}^{r} binom(r,k)_p` intermediate fields (the Galois `p`-binomial\n   count), of which exactly `binom(r,k)_p` have degree `p^k` over `K`. Falsifiable at `p = r = 2`,\n   where the prediction is `5 = 1 + 3 + 1`, already proved, and at `p = 2, r = 3`, where the\n   prediction is `16`.\n\n3. **Frobenius compatibility of the Artin datum.** Strengthen the interface by demanding that\n   `e\u207b\u00b9` send the class of an unramified prime `\ud835\udd2d` to the Frobenius element of `\ud835\udd2d` in `Gal(H/K)`\n   (Mathlib now provides `IsArithFrobAt` and `arithFrobAt`), and prove that with this hypothesis\n   `\ud835\udd2d` splits completely in `H` iff `[\ud835\udd2d] = 1` in `Cl(\ud835\udcaa_K)`, i.e. iff `\ud835\udd2d` is principal. This is\n   the decomposition law that makes the Hilbert class field explicit.\n\n4. **Principal ideal theorem via transfer.** Extend `ClassFieldTransfer` from the abelian case to\n   the tower `K \u2286 H \u2286 H\u2081` of successive class fields: formalize the transfer\n   `Ver : Gal(H\u2081/K)^ab \u2192 Gal(H\u2081/H)` for a non-abelian `Gal(H\u2081/K)` and prove that its triviality\n   (Furtw\u00e4ngler) implies that every ideal of `\ud835\udcaa_K` becomes principal in `\ud835\udcaa_H`. The abelian core\n   (`transfer_bot_eq_one`) is proved; the open step is the general group-theoretic statement.\n\n5. **Genus-theoretic intermediate field.** For an imaginary quadratic `K` whose discriminant has\n   `t` distinct prime divisors, prove `Nat.card (Cl(\ud835\udcaa_K) \u29f8 (Cl(\ud835\udcaa_K))\u00b2) = 2 ^ (t - 1)` and\n   identify, through `HilbertClassFieldDescent.classField`, the corresponding intermediate field\n   as the genus field, of degree `2 ^ (t - 1)` over `K`. Falsifiable at `K = \u211a(\u221a-15)`, where the\n   prediction is degree `2`.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0949",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a5f7aac5",
+    "status": "available",
+    "timestamp": "2026-08-04T06:48:30.523978+00:00",
+    "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -11415,6 +11416,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T10:29:18.797503+00:00",
     "title": "Close Proofs: Infinite Games Against Death: Immortality Strategies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle a5f7aac5 (Q=0.685) proved 437 theorems in NumberTheory but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general set",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_a5f7aac5_56da65b1",
+    "priority_score": 0.7353135011441648,
+    "research_mode": "team",
+    "source_exp_id": "a5f7aac5",
+    "status": "available",
+    "timestamp": "2026-08-04T06:48:36.690161+00:00",
+    "title": "Close Proofs: Hilbert 12: Kronecker-Weber Generalization"
   },
   {
     "consumed_by_exp_id": "",
