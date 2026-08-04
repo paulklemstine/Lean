@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "66e718fe",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecede",
-      "quality_score": 0.8129599999999999,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-08-01T17:25:26",
-      "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
-    },
-    {
       "cycle_id": "a7f30302",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Sharp obstruction period for elementary rules.** Determine whether cycle\n   length 4 is necessary in `reversible_small_cycles_iff`: specifically, test\n   and prove or refute",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-08-03T23:30:54",
       "title": "Tropical Convexity and Helly Theorem"
+    },
+    {
+      "cycle_id": "87f6aef5",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nThe completed development proves perfect honest-verifier zero knowledge for the opened colour pair, exact perfect completeness, a one-round soundness bound, and independent repeti",
+      "quality_score": 0.76207,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-04T01:19:29",
+      "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1ba7b435",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## What the formal development establishes\n\nThe Lean files prove four complementary results:\n\n1. Arbitrary complex coefficient sequences `ℕ → ℂ` are uncountable.\n2. Periodic seque",
-      "quality_score": 0.6243783783783784,
-      "sorry_count": 1,
-      "theorem_count": 37,
-      "timestamp": "2026-07-26T09:31:46",
-      "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-    },
     {
       "cycle_id": "c6b3a18e",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-08-03T23:30:54",
       "title": "Tropical Convexity and Helly Theorem"
+    },
+    {
+      "cycle_id": "87f6aef5",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nThe completed development proves perfect honest-verifier zero knowledge for the opened colour pair, exact perfect completeness, a one-round soundness bound, and independent repeti",
+      "quality_score": 0.76207,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-08-04T01:19:29",
+      "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5bb368e2",
-      "domain": "NumberTheory",
-      "name": "five_not_wallSunSun",
-      "quality": 0.7482099999999999
-    },
-    {
-      "cycle_id": "5bb368e2",
-      "domain": "NumberTheory",
-      "name": "no_wallSunSun_below_12",
-      "quality": 0.7482099999999999
-    },
-    {
-      "cycle_id": "bffb7591",
-      "domain": "Pythagorean",
-      "name": "initialInterval_card",
-      "quality": 0.77061
-    },
     {
       "cycle_id": "bffb7591",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "directly",
       "quality": 0.7597999999999998
+    },
+    {
+      "cycle_id": "87f6aef5",
+      "domain": "Shared",
+      "name": "acceptance_add_rejection",
+      "quality": 0.76207
+    },
+    {
+      "cycle_id": "87f6aef5",
+      "domain": "Shared",
+      "name": "honest_acceptance_eq_one",
+      "quality": 0.76207
+    },
+    {
+      "cycle_id": "87f6aef5",
+      "domain": "Shared",
+      "name": "one_round_acceptance_bound",
+      "quality": 0.76207
     }
   ],
-  "last_updated": "2026-08-03T23:30:54",
+  "last_updated": "2026-08-04T01:19:29",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "434986f0",
-        "quality": 0.686,
-        "theorems": 39,
-        "title": "Tropical Brill-Noether Theory"
-      },
-      {
         "cycle_id": "2996b72f",
         "quality": 0.77621,
         "theorems": 11,
@@ -3947,6 +3941,12 @@
         "quality": 0.73729,
         "theorems": 10,
         "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
+      },
+      {
+        "cycle_id": "87f6aef5",
+        "quality": 0.76207,
+        "theorems": 10,
+        "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
       }
     ],
     "Tropical": [
