@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9fb19498",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton polygons are lattice polygons `P` and `Q`, the stable intersection number equals `area(P + Q) - area(",
-      "quality_score": 0.79021,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-01T19:43:11",
-      "title": "Tropical Intersection Theory"
-    },
-    {
       "cycle_id": "3cce8c08",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L¹` empirical loss reaches the unique sample median af",
@@ -499,19 +489,19 @@
       "theorem_count": 31,
       "timestamp": "2026-08-04T03:45:32",
       "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
+    },
+    {
+      "cycle_id": "a65c164b",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nConcrete, falsifiable conjectures suggested by the formalisation in\n`Catalog/Algebra/DerivedFunctors/`. Each one is stated so that a single Lean statement would\nsettle it, and eac",
+      "quality_score": 0.78643,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-08-04T12:27:50",
+      "title": "Homological Algebra: Derived Functors"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "538b51f9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n1. **Exact EML representation of every bivariate polynomial.** For every polynomial\n   `P ∈ ℝ[X,Y]`, there are finitely many ridge channels whose coordinate inner\n   functions are",
-      "quality_score": 0.63,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-26T17:22:48",
-      "title": "EML Kolmogorov-Arnold Representation"
-    },
     {
       "cycle_id": "cf55a60f",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 96,
       "timestamp": "2026-08-04T12:26:19",
       "title": "**Conjecture.** There is an absolute constant `c > 0` such that every sufficient"
+    },
+    {
+      "cycle_id": "a65c164b",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nConcrete, falsifiable conjectures suggested by the formalisation in\n`Catalog/Algebra/DerivedFunctors/`. Each one is stated so that a single Lean statement would\nsettle it, and eac",
+      "quality_score": 0.78643,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-08-04T12:27:50",
+      "title": "Homological Algebra: Derived Functors"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ab554343",
-      "domain": "Novelty",
-      "name": "exists_minimum_information_cut",
-      "quality": 0.79623
-    },
-    {
-      "cycle_id": "ab554343",
-      "domain": "Novelty",
-      "name": "phi_le_loss",
-      "quality": 0.79623
-    },
-    {
-      "cycle_id": "ab554343",
-      "domain": "Novelty",
-      "name": "le_phi",
-      "quality": 0.79623
-    },
     {
       "cycle_id": "4db4579d",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "sub_pow_mem_span_of_adjoin_eq_top",
       "quality": 0.7906299999999999
+    },
+    {
+      "cycle_id": "a65c164b",
+      "domain": "Algebra",
+      "name": "ext_zmod_eq_zero",
+      "quality": 0.78643
+    },
+    {
+      "cycle_id": "a65c164b",
+      "domain": "Algebra",
+      "name": "ext_int_eq_zero",
+      "quality": 0.78643
+    },
+    {
+      "cycle_id": "a65c164b",
+      "domain": "Algebra",
+      "name": "homOfElt_apply_one",
+      "quality": 0.78643
     }
   ],
-  "last_updated": "2026-08-04T12:26:19",
+  "last_updated": "2026-08-04T12:27:50",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "229af38b",
-        "quality": 0.80057,
-        "theorems": 15,
-        "title": "Graceful Tree Conjecture"
-      },
-      {
         "cycle_id": "5f676746",
         "quality": 0.74002,
         "theorems": 9,
@@ -3079,6 +3073,12 @@
         "quality": 0.7439399999999999,
         "theorems": 8,
         "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
+      },
+      {
+        "cycle_id": "a65c164b",
+        "quality": 0.78643,
+        "theorems": 78,
+        "title": "Homological Algebra: Derived Functors"
       }
     ],
     "Applications": [
