@@ -205,81 +205,11 @@ theorem tropical_feasibility_certificate {n : ℕ} (lo hi : Fin n → Fin d → 
   convert helly_boxes lo hi _;
   assumption
 
-/-! ## Part 9: Exact intersection criterion and canonical optimizer -/
-
-/-- The coordinatewise maximum of all lower bounds.  For a nonempty family of
-boxes this is the canonical candidate for a common feasible point. -/
-def canonicalLowerPoint {n : ℕ} (lo : Fin n → Fin d → ℝ) (hn : 0 < n) : Fin d → ℝ :=
-  fun i => Finset.univ.sup' ⟨⟨0, hn⟩, Finset.mem_univ _⟩ (fun k => lo k i)
-
-/-- The canonical lower point dominates every lower bound. -/
-theorem lower_le_canonicalLowerPoint {n : ℕ} (lo : Fin n → Fin d → ℝ) (hn : 0 < n)
-    (k : Fin n) (i : Fin d) : lo k i ≤ canonicalLowerPoint lo hn i := by
-  exact Finset.le_sup' (fun k => lo k i) (Finset.mem_univ k)
-
-/-- The canonical lower point is coordinatewise least among all points satisfying
-all lower-bound constraints.  This gives its optimization interpretation: it is
-simultaneously optimal for every coordinatewise monotone objective. -/
-theorem canonicalLowerPoint_le_of_lower_bounds {n : ℕ} (lo : Fin n → Fin d → ℝ)
-    (hn : 0 < n) (x : Fin d → ℝ) (hx : ∀ k i, lo k i ≤ x i) :
-    ∀ i, canonicalLowerPoint lo hn i ≤ x i := by
-  intro i
-  rw [canonicalLowerPoint]
-  apply Finset.sup'_le _ _
-  intro k _
-  exact hx k i
-
-/-- Exact cross-bound characterization of feasibility for a nonempty finite
-family of tropical boxes. -/
-theorem boxes_nonempty_iff_cross_bounds {n : ℕ} (hn : 0 < n)
-    (lo hi : Fin n → Fin d → ℝ) :
-    (∃ x : Fin d → ℝ, ∀ k, x ∈ TropBox (lo k) (hi k)) ↔
-      ∀ p q i, lo p i ≤ hi q i := by
-  constructor
-  · intro ⟨x, hx⟩ p q i
-    exact le_trans (hx p i |>.1) (hx q i |>.2)
-  · intro hcross
-    use canonicalLowerPoint lo hn
-    intro k
-    rw [TropBox]
-    intro i
-    constructor
-    · exact Finset.le_sup' (fun j => lo j i) (Finset.mem_univ k)
-    · exact Finset.sup'_le _ _ fun j _ => hcross j k i
-
-/-- The canonical lower point solves the box-feasibility optimization problem
-whenever the exact cross-bound criterion holds. -/
-theorem canonicalLowerPoint_is_feasible {n : ℕ} (hn : 0 < n)
-    (lo hi : Fin n → Fin d → ℝ) (hcross : ∀ p q i, lo p i ≤ hi q i) :
-    ∀ k, canonicalLowerPoint lo hn ∈ TropBox (lo k) (hi k) := by
-  intro k
-  simp only [TropBox]
-  intro i
-  constructor
-  · exact lower_le_canonicalLowerPoint lo hn k i
-  · exact Finset.sup'_le _ _ fun p _ => hcross p k i
-
-/-- Helly's intersection characterization for tropical boxes: a finite family
-has nonempty total intersection exactly when every pair intersects. -/
-theorem boxes_nonempty_iff_pairwise {n : ℕ} (lo hi : Fin n → Fin d → ℝ) :
-    (∃ x : Fin d → ℝ, ∀ k, x ∈ TropBox (lo k) (hi k)) ↔
-      ∀ p q : Fin n, ∃ x : Fin d → ℝ,
-        x ∈ TropBox (lo p) (hi p) ∧ x ∈ TropBox (lo q) (hi q) := by
-  constructor
-  · -- Backward direction: common point implies pairwise intersection
-    rintro ⟨x, hx⟩ p q
-    exact ⟨x, hx p, hx q⟩
-  · -- Forward direction: use helly_boxes
-    intro hpair
-    apply helly_boxes
-    intro p q
-    obtain ⟨x, hx⟩ := hpair p q
-    exact ⟨x, hx.1, hx.2⟩
-
-/-! ## Part 10: Conjecture and Computational Target -/
+/-! ## Part 9: Conjecture and Computational Target -/
 
 /-- **Conjecture**: For general tropically convex sets in `Fin d → ℝ`,
-    the tropical Helly number is at most `2 * d`. -/
+    the tropical Helly number is at most `2 * d`.
+    Computationally tested in `demo.py` for `d ≤ 3`. -/
 def tropicalHellyConjecture (d : ℕ) : Prop :=
   ∀ n : ℕ, ∀ F : Fin n → Set (Fin d → ℝ),
     (∀ i, IsTropConvex (F i)) →

@@ -1,4 +1,4 @@
-import Novelty.RhoDominantCartan
+import Novelty.NeuralCoding.RhoDominantCartan
 
 /-!
 # Forest structure of the diagram `I` and the leaf obstruction to dominant singletons
