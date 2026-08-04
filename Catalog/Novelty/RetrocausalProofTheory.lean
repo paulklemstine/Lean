@@ -118,4 +118,153 @@ theorem recovery_monotone_under_verified_extension
   intro Q hQ
   exact hall Q (List.mem_append_left _ hQ)
 
+
+/-! ## Consequence-stable propositions -/
+
+/-- A finite family is consequence-stable for `P` when it is both implied by
+`P` and jointly sufficient to recover `P`.  This strengthens mere coherence by
+recording the missing backward direction explicitly. -/
+def ConsequenceStable (P : Prop) (qs : List Prop) : Prop :=
+  AreConsequences P qs ∧ BackwardCertificate P qs
+
+/-- Consequence stability is exactly equivalence with the conjunction of the
+listed consequences. -/
+theorem consequenceStable_iff (P : Prop) (qs : List Prop) :
+    ConsequenceStable P qs ↔ (P ↔ JointlyVerified qs) := by
+  constructor
+  · rintro ⟨hforward, hback⟩
+    constructor
+    · intro hP Q hQ
+      exact hforward Q hQ hP
+    · exact hback
+  · intro h
+    constructor
+    · intro Q hQ hP
+      exact h.mp hP Q hQ
+    · exact h.mpr
+
+/-- Every finite conjunction is consequence-stable with respect to its two
+components.  This gives a nonempty, reusable class of stable propositions. -/
+theorem conjunction_is_consequenceStable (A B : Prop) :
+    ConsequenceStable (A ∧ B) [A, B] := by
+  rw [consequenceStable_iff]
+  constructor
+  · rintro ⟨hA, hB⟩ Q hQ
+    rcases List.mem_cons.mp hQ with rfl | hQ
+    · exact hA
+    · have : Q = B := List.mem_singleton.mp hQ
+      simpa [this] using hB
+  · intro h
+    exact ⟨h A (by simp), h B (by simp)⟩
+
+/-- Verified consequences establish a stable proposition. -/
+theorem stable_of_verified (P : Prop) (qs : List Prop)
+    (hstable : ConsequenceStable P qs) (hverified : JointlyVerified qs) : P := by
+  exact hstable.2 hverified
+
+/-! ## Finite consequence-guided search -/
+
+/-- A candidate passes a list of semantic checks when every check holds of it. -/
+def Passes {α : Type*} (checks : List (α → Prop)) (a : α) : Prop :=
+  ∀ check ∈ checks, check a
+
+/-- Candidates remaining after all verified semantic checks are imposed. -/
+noncomputable def survivingCandidates {α : Type*} [DecidableEq α]
+    (candidates : Finset α) (checks : List (α → Prop)) : Finset α := by
+  classical
+  exact candidates.filter (Passes checks)
+
+/-- Consequence checks never enlarge a finite search space. -/
+theorem survivingCandidates_subset {α : Type*} [DecidableEq α]
+    (candidates : Finset α) (checks : List (α → Prop)) :
+    survivingCandidates candidates checks ⊆ candidates := by
+  classical
+  intro a ha
+  exact (Finset.mem_filter.mp (by simpa [survivingCandidates] using ha)).1
+
+/-- Hence consequence-guided filtering cannot increase the number of candidates. -/
+theorem survivingCandidates_card_le {α : Type*} [DecidableEq α]
+    (candidates : Finset α) (checks : List (α → Prop)) :
+    (survivingCandidates candidates checks).card ≤ candidates.card := by
+  exact Finset.card_le_card (survivingCandidates_subset candidates checks)
+
+/-- If one ambient candidate fails a check, filtering gives a strict reduction
+in search-space cardinality. -/
+theorem survivingCandidates_card_lt {α : Type*} [DecidableEq α]
+    (candidates : Finset α) (checks : List (α → Prop)) (a : α)
+    (ha : a ∈ candidates) (hfail : ¬ Passes checks a) :
+    (survivingCandidates candidates checks).card < candidates.card := by
+  classical
+  apply Finset.card_lt_card
+  rw [Finset.ssubset_iff_subset_ne]
+  refine ⟨survivingCandidates_subset candidates checks, ?_⟩
+  intro heq
+  have ha' : a ∈ survivingCandidates candidates checks := by
+    rw [heq]
+    exact ha
+  exact hfail (Finset.mem_filter.mp (by simpa [survivingCandidates] using ha')).2
+
+/-- If the verified checks isolate a unique target, their propositions form a
+backward certificate for candidate equality. -/
+theorem unique_survivor_gives_backward_certificate
+    {α : Type*} (checks : List (α → Prop)) (a target : α)
+    (hunique : Passes checks a → a = target) :
+    BackwardCertificate (a = target) (checks.map fun check => check a) := by
+  intro hall
+  apply hunique
+  intro check hcheck
+  apply hall (check a)
+  exact List.mem_map.mpr ⟨check, hcheck, rfl⟩
+
+/-- Search completeness: a target in the ambient candidate set that passes all
+checks remains in the filtered set. -/
+theorem target_mem_survivingCandidates {α : Type*} [DecidableEq α]
+    (candidates : Finset α) (checks : List (α → Prop)) (target : α)
+    (hmem : target ∈ candidates) (hpasses : Passes checks target) :
+    target ∈ survivingCandidates candidates checks := by
+  classical
+  simp [survivingCandidates, hmem, hpasses]
+
+/-! ## A small arithmetic calibration -/
+
+/-- Three elementary arithmetic consequences used to identify `6` among the
+natural numbers below `8`.  They are formulas of first-order arithmetic and so
+provide a small Peano-arithmetic calibration of consequence-guided filtering. -/
+def sixChecks : List (ℕ → Prop) :=
+  [fun n => 0 < n, fun n => 2 ∣ n, fun n => 3 ∣ n]
+
+/-- The three arithmetic checks isolate exactly `6` in the finite search space
+`{0, ..., 7}`. -/
+theorem sixChecks_unique :
+    survivingCandidates (Finset.range 8) sixChecks = {6} := by
+  classical
+  ext n
+  simp [survivingCandidates, Passes, sixChecks]
+  constructor
+  · rintro ⟨hn8, hn0, ⟨k, hk⟩, ⟨j, hj⟩⟩
+    omega
+  · intro hn
+    omega
+
+/-- In the arithmetic calibration, consequences compress eight candidates to
+one; the surviving-cardinality ratio is therefore exactly `1/8`. -/
+theorem sixChecks_compression_measure :
+    (survivingCandidates (Finset.range 8) sixChecks).card = 1 ∧
+      (Finset.range 8).card = 8 := by
+  rw [sixChecks_unique]
+  simp
+
+/-- The arithmetic checks also furnish a backward certificate for equality to
+`6`: any candidate satisfying all three checks and lying below `8` is `6`. -/
+theorem sixChecks_backward_certificate (n : ℕ) (hn : n < 8) :
+    BackwardCertificate (n = 6) (sixChecks.map fun check => check n) := by
+  apply unique_survivor_gives_backward_certificate sixChecks n 6
+  intro hx
+  have hxmem : n ∈ survivingCandidates (Finset.range 8) sixChecks := by
+    apply target_mem_survivingCandidates
+    · simpa using hn
+    · exact hx
+  rw [sixChecks_unique] at hxmem
+  simpa using hxmem
+
 end RetrocausalProofTheory
