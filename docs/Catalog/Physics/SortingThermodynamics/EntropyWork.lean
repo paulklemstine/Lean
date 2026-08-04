@@ -98,13 +98,22 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
     SortsOrderings (t.pad r) n ∧ (t.pad r).height = r + t.height := by
       exact ⟨ le_trans hs ( ComparisonTree.leaves_le_pad r t ), ComparisonTree.height_pad r t ⟩
 
+/-- `sorting_info_erased` without the hypothesis `1 ≤ n`: the degenerate case `n = 0`
+also erases `logb 2 0! = 0` bits. -/
+theorem sorting_info_erased_all (n : ℕ) :
+    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
+  rcases n with _ | m
+  · unfold infoErased sortingFunction
+    norm_num [Fintype.card_perm]
+  · exact sorting_info_erased (m + 1) (Nat.succ_le_succ (Nat.zero_le m))
+
 /-
 **Three-way factorial synthesis.** A correct comparison tree obeys the entropy lower
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
 implementation needs at least `n!` history states.
 -/
 theorem factorial_controls_comparisons_entropy_and_history
-    (t : ComparisonTree) (n : ℕ) (hn : 1 ≤ n) (hs : SortsOrderings t n)
+    (t : ComparisonTree) (n : ℕ) (hs : SortsOrderings t n)
     (Aux : Type*) [Fintype Aux]
     (e : Equiv.Perm (Fin n) ≃ Unit × Aux)
     (hc : ∀ σ, (e σ).1 = sortingFunction n σ) :
@@ -112,7 +121,7 @@ theorem factorial_controls_comparisons_entropy_and_history
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
       refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · exact sorting_info_erased n hn
+      · exact sorting_info_erased_all n;
       · convert sorting_history_lower_bound n Aux e hc using 1;
         simp +decide [ Fintype.card_perm ]
 
@@ -121,10 +130,10 @@ theorem factorial_controls_comparisons_entropy_and_history
 input permutation costs `kT · log(n!)`.  The factor `log 2` in the per-bit cost cancels
 the change of base in `log₂(n!)`.
 -/
-theorem sorting_landauer_gap_exact (n : ℕ) (hn : 1 ≤ n) (kT : ℝ) :
+theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
       unfold landauerGap landauerCost
-      rw [sorting_info_erased n hn, Real.logb, div_eq_mul_inv]
+      rw [sorting_info_erased_all n, Real.logb, div_eq_inv_mul]
       have h2 : Real.log 2 ≠ 0 := by
         have : (0:ℝ) < Real.log 2 := Real.log_pos (by norm_num)
         exact ne_of_gt this

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3cce8c08",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L¹` empirical loss reaches the unique sample median af",
-      "quality_score": 0.76564,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-08-01T21:16:58",
-      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
-    },
-    {
       "cycle_id": "b080b405",
       "domain": "Cryptography",
       "key_insight": "# Future directions\n\n- Extend the two-state Cayley–Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point",
@@ -499,19 +489,19 @@
       "theorem_count": 78,
       "timestamp": "2026-08-04T12:27:50",
       "title": "Homological Algebra: Derived Functors"
+    },
+    {
+      "cycle_id": "6337dbc1",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) — connected groupoids\n  (models of `K(G,1)`) are classifie",
+      "quality_score": 0.78433,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-04T20:08:49",
+      "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1782ce5d",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nThe formalization establishes the paper's sharp obstruction for a three-vertex\npath rooted at its central vertex. Natural next steps are:\n\n1. Define path embeddings and rooted pat",
-      "quality_score": 0.66484,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-07-26T18:21:17",
-      "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect to rooted and ordinar"
-    },
     {
       "cycle_id": "b3e5f77d",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 679,
       "timestamp": "2026-08-04T20:07:45",
       "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
+    },
+    {
+      "cycle_id": "6337dbc1",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) — connected groupoids\n  (models of `K(G,1)`) are classifie",
+      "quality_score": 0.78433,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-04T20:08:49",
+      "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4db4579d",
-      "domain": "Shared",
-      "name": "inside",
-      "quality": 0.80477
-    },
-    {
-      "cycle_id": "4db4579d",
-      "domain": "Shared",
-      "name": "yoneda_lemma_bijective",
-      "quality": 0.80477
-    },
-    {
-      "cycle_id": "4db4579d",
-      "domain": "Shared",
-      "name": "yoneda_reconstruction",
-      "quality": 0.80477
-    },
     {
       "cycle_id": "362b8901",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "homOfElt_apply_one",
       "quality": 0.78643
+    },
+    {
+      "cycle_id": "6337dbc1",
+      "domain": "Bridges",
+      "name": "for",
+      "quality": 0.78433
+    },
+    {
+      "cycle_id": "6337dbc1",
+      "domain": "Bridges",
+      "name": "basePath_self",
+      "quality": 0.78433
+    },
+    {
+      "cycle_id": "6337dbc1",
+      "domain": "Bridges",
+      "name": "loopOf_hom",
+      "quality": 0.78433
     }
   ],
-  "last_updated": "2026-08-04T20:07:45",
+  "last_updated": "2026-08-04T20:08:49",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "97183f28",
-        "quality": 0.686,
-        "theorems": 68,
-        "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
-      },
-      {
         "cycle_id": "7799fc2c",
         "quality": 0.686,
         "theorems": 66,
@@ -3203,6 +3197,12 @@
         "quality": 0.686,
         "theorems": 145,
         "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
+      },
+      {
+        "cycle_id": "6337dbc1",
+        "quality": 0.78433,
+        "theorems": 71,
+        "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invaria"
       }
     ],
     "Combinatorics": [

@@ -8,6 +8,8 @@ Declarations: 22
 -/
 
 
+open Matrix
+
 noncomputable section
 
 /-- Softmax function on a real-valued vector indexed by `Fin n`. -/
@@ -60,7 +62,7 @@ def rotationMatrix2D (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
 theorem rotationMatrix2D_det (θ : ℝ) :
     (rotationMatrix2D θ).det = 1 := by
   simp [rotationMatrix2D, Matrix.det_fin_two]
-  nlinarith [sin_sq_add_cos_sq θ]
+  nlinarith [Real.sin_sq_add_cos_sq θ]
 
 
 /-- Rotation matrices are orthogonal: R^T * R = I. -/
@@ -70,7 +72,7 @@ theorem rotationMatrix2D_orthogonal (θ : ℝ) :
   fin_cases i <;> fin_cases j <;>
     simp [rotationMatrix2D, Matrix.mul_apply, Matrix.transpose_apply,
           Fin.sum_univ_two] <;>
-    nlinarith [sin_sq_add_cos_sq θ]
+    nlinarith [Real.sin_sq_add_cos_sq θ]
 
 
 /-- Composition of rotations is a rotation by the sum of angles. -/
