@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "afbe2d9b",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe formal result shows that the unmodified Cauchy kernel on a unit sphere has a deterministic floor of `1/5`; hence randomness alone cannot produce near-zero weights below that t",
-      "quality_score": 0.7438,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-28T14:47:08",
-      "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
-    },
-    {
       "cycle_id": "eae986b3",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\n1. **Finite-cover gluing.** Extend the two-set theorem in\n   `Catalog/Algebra/SheafDatabaseGluing.lean` to finite families of column sets,\n   proving that pairwise-compatible loca",
@@ -2501,6 +2491,16 @@
       "theorem_count": 113,
       "timestamp": "2026-08-05T12:26:04",
       "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
+    },
+    {
+      "cycle_id": "2d9904f9",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nResults of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant.lean`\n(self-contained, `import Mathlib`, no `sorry`, axioms: `propext`, `Classical.choice`,\n`Quot.s",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-08-05T12:26:09",
+      "title": "1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tens"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79294
     }
   ],
-  "last_updated": "2026-08-05T12:26:04",
+  "last_updated": "2026-08-05T12:26:09",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "15429b4a",
-        "quality": 0.73393,
-        "theorems": 11,
-        "title": "Extremal Graph Theory: Turán and Szemerédi"
-      },
-      {
         "cycle_id": "343eb494",
         "quality": 0.76494,
         "theorems": 13,
@@ -3265,6 +3259,12 @@
         "quality": 0.7892299999999999,
         "theorems": 114,
         "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
+      },
+      {
+        "cycle_id": "2d9904f9",
+        "quality": 0.686,
+        "theorems": 91,
+        "title": "1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tens"
       }
     ],
     "Computation": [

@@ -1288,21 +1288,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML-Single-Operator: Universal Functional Completeness of EML Neuron Activation"
   },
   {
-    "consumed_by_exp_id": "8dd43c13",
-    "description": "Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
-    "domains": [
-      "Applications"
-    ],
-    "id": "dir_50_27_792075e7",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:23.666696+00:00",
-    "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves an explicit Lie algebra isomorphism between EML exponential-logarithmic state spaces and continuous scaling transformation groups.",
     "domains": [
@@ -1692,6 +1677,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8dd43c13 (Q=0.793), which proved 32 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_8dd43c13_ce2d18f0",
+    "priority_score": 0.89294,
+    "research_mode": "team",
+    "source_exp_id": "8dd43c13",
+    "status": "available",
+    "timestamp": "2026-08-05T12:25:58.467948+00:00",
+    "title": "Deepening: EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
     "domains": [
       "MachineLearning"
@@ -2005,30 +2004,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Homological Algebra: Derived Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08d2b371",
     "description": "Building on cycle 6337dbc1 (Q=0.784), which proved 71 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle fb6f9bc5 (Q=0.756), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine exactly which spaces are classified up to homotopy by their fundament",
     "domains": [
       "Bridges"
     ],
     "id": "push_6337dbc1_db95823c",
+    "phase": "A",
     "priority_score": 0.88433,
     "research_mode": "team",
     "source_exp_id": "6337dbc1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-04T20:08:49.717246+00:00",
     "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c424175",
     "description": "Building on cycle e9c14674 (Q=0.783), which proved 71 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Gilbert's disc model conditioned on the square lattice' and formalize its key results. Abstract: We present a new percolation model on the two-dimensional lattice, which can be seen as a conditioned version of continuous percolation on the plane. Let us place a point uni",
     "domains": [
       "Shared"
     ],
     "id": "push_e9c14674_3ae82f2a",
+    "phase": "A",
     "priority_score": 0.88349,
     "research_mode": "team",
     "source_exp_id": "e9c14674",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-05T06:54:14.154345+00:00",
     "title": "Deepening: ArXiv paper: Gilbert's disc model conditioned on the square lattice"
   },
@@ -2059,21 +2060,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T03:58:55.405414+00:00",
     "title": "Deepening: EML Transseries: Asymptotic Expansions Beyond Power Series"
-  },
-  {
-    "consumed_by_exp_id": "f14ecb01",
-    "description": "Building on cycle f7f562cc (Q=0.783), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_f7f562cc_9afd87aa",
-    "phase": "A",
-    "priority_score": 0.88272,
-    "research_mode": "team",
-    "source_exp_id": "f7f562cc",
-    "status": "in_progress",
-    "timestamp": "2026-08-03T15:25:39.323194+00:00",
-    "title": "Deepening: Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
     "consumed_by_exp_id": "",
@@ -2793,16 +2779,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e6f6f76",
     "description": "Building on cycle a68d3b50 (Q=0.767), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domains": [
       "Cryptography"
     ],
     "id": "push_a68d3b50_45b09485",
+    "phase": "A",
     "priority_score": 0.8667599999999999,
     "research_mode": "team",
     "source_exp_id": "a68d3b50",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-28T06:49:40.513188+00:00",
     "title": "Deepening: Lattice Cryptography: LWE Hardness"
   },
@@ -5427,17 +5414,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "63e5c24f",
     "description": "Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms for finding periodic structures in digraphs via the spectrum of a class of rotated Laplacian matrices. This class of Laplacian matrices was previously studied by Lange, Liu, Peyerimhoff, and Post [Lan+15]. We consider a notion of periodicity ratio that generalizes the bipartiteness ratio of Trevisan [Tre09], and show that it is closely related to the spectrum of rotated Laplacian matrices. In particular, if the digraph is strongly connected and represents a Markov chain, this periodicity ratio for a given $p \\in \\mathbb{N}$ is a quantitative measure of how close this Markov chain is to having periodicity $p$. We propose and analyze a periodicity-ratio variant of the spectral algorithm by Louis, Raghavendra, Tetali and Vempala [Lou+12]. We show that the algorithm runs in randomized polynomial time and can find many nearly periodic components (i.e, components with small per",
     "domains": [
       "Computation",
       "Algebra"
     ],
     "id": "fd_0106",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11333v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T10:53:52.382469+00:00",
     "title": "ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices"
   },
@@ -6017,22 +6005,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Corner Rectangle Visibility Graphs"
   },
   {
-    "consumed_by_exp_id": "d9d67aec",
-    "description": "Investigate the ArXiv paper 'Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheeger Inequality and Covering Radii' and formalize its key results. Abstract: We study asymptotic versions of the Brill-Noether existence conjecture on graphs via techniques inspired by the geometry of numbers. We confirm an asymptotic version of the conjecture at (and near) the half-canonical degree in several well-connected families of graphs. They include expander graphs of even valence, almost-Ramanujan graphs of a fixed valence at least five and certain random graphs. In particular, for any fixed $k \\geq 5$, almost all simple, connected, $k$-regular graphs satisfy the Brill-Noether existence conjecture at the half-canonical degree up to a constant factor. The key tool is a Cheeger-style inequality for the covering radius of a certain periodic set with respect to the energy quadratic form associated with the graph. As an application, we lower bound the diameter of graphs associated with certain dynamical systems called reversal systems. We conclude with a suggestion to tackle the asymptotic version of the conjecture, in general, i.e. beyond half-canonical de",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0168",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.15213v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T03:09:40.499550+00:00",
-    "title": "ArXiv paper: Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheeger Inequality and Covering Radii"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'The order of long rainbow arithmetic progressions' and formalize its key results. Abstract: Let $T_k$ be the minimum positive integer $t$ such that, for every positive integer $n$, every equinumerous $t$-coloring of $[tn]$ contains a rainbow $k$-term arithmetic progression. Jungi\u0107, Licht, Mahdian, Ne\u0161et\u0159il and Radoi\u010di\u0107 conjectured that $T_k=\u0398(k^2)$, while Conlon, Fox and Sudakov proved that $T_k=O(k^2\\log k)$. We prove the matching lower bound $T_k=\u03a9(k^2\\log k)$, and hence $T_k=\u0398(k^2\\log k)$.",
     "domains": [
@@ -6512,16 +6484,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The K\u0151vari-S\u00f3s-Tur\u00e1n Conjecture for GF(q)-representable Matroids: Sharp Asymptotic Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "018a4d2d",
     "description": "For every fixed \u03b4 > 0, there exists a constant C > 0 such that for all sufficiently large n, there is a subset S \u2282 [n] with |S| \u2265 \u03b4n, and for all A, B \u2282 \u2115 with min{|A|, |B|} \u2265 C log n, the sumset A + B is not contained in S.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0232",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15269v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T14:09:12.716043+00:00",
     "title": "Dense Sets Without Large Sumsets"
   },
@@ -11068,22 +11041,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The proposed mixed-area formula needs a normalization correction. For standard d"
   },
   {
-    "consumed_by_exp_id": "2d9904f9",
-    "description": "# Future Directions\n\n1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tensor `\u03c8 : Fin 2 \u2192 Fin 2 \u2192 Fin 2 \u2192 \u2102`, the convex-roof squared concurrences of its `AB` and `AC` reductions sum to at most `4 det \u03c1_A`. A counterexample is any normalized tensor violating this polynomial/optimization inequality.\n\n2. **Mixed-state teleportation.** The density-matrix channel obtained from Bell-pair preparation, Alice's CNOT and Hadamard, computational-basis measurement, two classical bits, and Bob's Pauli corrections is extensionally equal to the identity completely-positive trace-preserving map on `M\u2082(\u2102)`. A counterexample is a positive trace-one matrix whose output differs from its input.\n\n3. **Approximate cloning bound.** Every symmetric `1 \u2192 2` completely-positive trace-preserving qubit channel has worst-case single-copy fidelity at most `5/6`, and the universal symmetric cloner attains this bound. A counterexample is a channel with strictly larger worst-case fidelity.\n\n4. **Residual tangle outside the W sector.** For normalized pure three-qubit states, the difference `\u03c4_A|BC - C_AB\u00b2 - C_AC\u00b2` is nonnegative and equals four times the absolute value of Cayley's `2\u00d72\u00d72` hyperdeterminant. A counterexample is a normalized amplitude tensor for which either equality or nonnegativity fails.\n",
-    "domains": [
-      "Combinatorics",
-      "Geometry"
-    ],
-    "id": "fd_0937",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "eb6ff95e",
-    "status": "in_progress",
-    "timestamp": "2026-08-03T17:32:17.386961+00:00",
-    "title": "1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tens"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThe formal development now identifies the recursively defined time-`t` dependency cone exactly with the radius-`t` Chebyshev ball and proves its exact cardinality `(2t+1)^2`. The next stages toward a constructive universality theorem are:\n\n1. Define finite Life patterns together with translation, reflection, and rotation actions, and prove evolution equivariant under these symmetries.\n2. Verify standard still lifes, oscillators, and gliders as reusable timed components.\n3. Construct signal tracks, fanout, crossings, and Boolean gates from finite patterns, with explicit latency and bounding-box specifications.\n4. Develop composition theorems that turn component certificates into clocked circuit simulations while tracking time and area overhead.\n5. Encode a universal register machine or Turing machine and prove a direct Life simulation theorem with explicit polynomial time and space bounds.\n6. Distinguish syntactic rule dependencies from semantic influence by characterizing which cells can change a designated output under some pair of initial configurations.\n",
     "domains": [
@@ -11171,22 +11128,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-03T23:30:50.863648+00:00",
     "title": "1. **General tropical Helly bound.** For every `d > 0`, every finite family of n"
-  },
-  {
-    "consumed_by_exp_id": "8fa60fb0",
-    "description": "# Future directions\n\n## What is now proved\n\nThe conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contains a complete\ndescent and classification theory. For a number field `K`, a finite Galois extension `H/K` and an\nArtin reciprocity isomorphism `e : Gal(H/K) \u2243* Cl(\ud835\udcaa_K)`:\n\n* intermediate fields are classified, order-reversingly, by subgroups of `Cl(\ud835\udcaa_K)`\n  (`HilbertClassFieldDescent.intermediateFieldOrderIso`, `existsUnique_intermediateField`);\n* `[L : K] = (artinImage e L).index`, `[H : L] = #(artinImage e L)`, and\n  `Gal(L/K) \u2243* Cl(\ud835\udcaa_K) \u29f8 artinImage e L`;\n* ideal-class characters descend to `Gal(L/K)` exactly when they kill `artinImage e L`, and the\n  characters of `Cl(\ud835\udcaa_K) \u29f8 S` are exactly the one-dimensional representations of `Gal(L_S/K)`;\n* if `Cl(\ud835\udcaa_K)` is cyclic, each divisor `d` of `h_K` is the degree of exactly one intermediate\n  field (`CyclicClassGroupDescent.existsUnique_intermediateField_finrank`);\n* if `Cl(\ud835\udcaa_K)` is a Klein four group, the datum has exactly five intermediate fields, of degrees\n  `1, 2, 2, 2, 4` (`KleinFourClassField.card_intermediateField_of_kleinFour`,\n  `finrank_eq_one_or_two_or_four`, `exists_three_quadratic_intermediateField`,\n  `intermediateField_eq_of_kleinFour`) \u2014 this settles conjecture 2 of the previous cycle;\n* the transfer (Verlagerung) of `Cl(\ud835\udcaa_K)` into the Artin image of an intermediate field `L` is\n  the `[L : K]`-th power map, and it is trivial at the top of the datum\n  (`ClassFieldTransfer.coe_transfer_artinImage`, `transfer_artinImage_top_eq_one`) \u2014 this settles\n  the intermediate falsifiable step of conjecture 4 of the previous cycle.\n\n## Next targets\n\nEach of the following is falsifiable: it is either a Lean statement that compiles and is proved,\nor it fails for an explicit counterexample.\n\n1. **Unconditional imaginary-quadratic instance.** For `K = \u211a(\u221a-5)` (class number `2`), construct\n   in Lean the quadratic extension `H = K(i)` together with a group isomorphism\n   `Gal(H/K) \u2243* Cl(\ud835\udcaa_K)`, so that every theorem of `HilbertClassFieldDescent`,\n   `CyclicClassGroupDescent` and `ClassFieldTransfer` holds for `K` with no reciprocity datum\n   assumed. This requires `Nat.card (ClassGroup (\ud835\udcde \u211a(\u221a-5))) = 2` as a formal computation.\n   Falsifiable: the class number must come out `2`, not `1`.\n\n2. **Counting for arbitrary elementary abelian class groups.** Generalize\n   `KleinFourClassField.card_subgroup_V`: if `Cl(\ud835\udcaa_K) \u2243 (ZMod p)^r` then the Hilbert class field\n   datum has exactly `\u2211_{k=0}^{r} binom(r,k)_p` intermediate fields (the Galois `p`-binomial\n   count), of which exactly `binom(r,k)_p` have degree `p^k` over `K`. Falsifiable at `p = r = 2`,\n   where the prediction is `5 = 1 + 3 + 1`, already proved, and at `p = 2, r = 3`, where the\n   prediction is `16`.\n\n3. **Frobenius compatibility of the Artin datum.** Strengthen the interface by demanding that\n   `e\u207b\u00b9` send the class of an unramified prime `\ud835\udd2d` to the Frobenius element of `\ud835\udd2d` in `Gal(H/K)`\n   (Mathlib now provides `IsArithFrobAt` and `arithFrobAt`), and prove that with this hypothesis\n   `\ud835\udd2d` splits completely in `H` iff `[\ud835\udd2d] = 1` in `Cl(\ud835\udcaa_K)`, i.e. iff `\ud835\udd2d` is principal. This is\n   the decomposition law that makes the Hilbert class field explicit.\n\n4. **Principal ideal theorem via transfer.** Extend `ClassFieldTransfer` from the abelian case to\n   the tower `K \u2286 H \u2286 H\u2081` of successive class fields: formalize the transfer\n   `Ver : Gal(H\u2081/K)^ab \u2192 Gal(H\u2081/H)` for a non-abelian `Gal(H\u2081/K)` and prove that its triviality\n   (Furtw\u00e4ngler) implies that every ideal of `\ud835\udcaa_K` becomes principal in `\ud835\udcaa_H`. The abelian core\n   (`transfer_bot_eq_one`) is proved; the open step is the general group-theoretic statement.\n\n5. **Genus-theoretic intermediate field.** For an imaginary quadratic `K` whose discriminant has\n   `t` distinct prime divisors, prove `Nat.card (Cl(\ud835\udcaa_K) \u29f8 (Cl(\ud835\udcaa_K))\u00b2) = 2 ^ (t - 1)` and\n   identify, through `HilbertClassFieldDescent.classField`, the corresponding intermediate field\n   as the genus field, of degree `2 ^ (t - 1)` over `K`. Falsifiable at `K = \u211a(\u221a-15)`, where the\n   prediction is degree `2`.\n",
-    "domains": [
-      "Algebra",
-      "NumberTheory"
-    ],
-    "id": "fd_0949",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "a5f7aac5",
-    "status": "in_progress",
-    "timestamp": "2026-08-04T06:48:30.523978+00:00",
-    "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
   },
   {
     "consumed_by_exp_id": "",
@@ -11457,6 +11398,81 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T09:57:08.385764+00:00",
     "title": "The new files are"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formalisation in `Catalog/Pythagorean/BrillNoether/` now consists of ten\nself-contained files, each compiling on its own against Mathlib with no `sorry` and\nusing only the standard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n## What is formalised\n\n* `Divisors.lean` \u2014 divisors, linear equivalence, the Baker\u2013Norine rank inequality,\n  genus and canonical divisor (`deg K = 2g \u2212 2`), and the mechanism turning an\n  `\u2113^\u221e` covering bound `\u03c1` for the Laplacian lattice into rank statements\n  (`rankAtLeast_of_covering`, `rankAtLeast_halfCanonical_of_covering`).\n* `EnergyCovering.lean` \u2014 the energy (Dirichlet) form, cut sizes, the variational\n  spectral gap, the Poincar\u00e9 inequality, the easy direction of Cheeger's inequality\n  and a lower bound for the covering radius of the Laplacian lattice in the energy\n  metric.\n* `Reduced.lean` \u2014 `q`-reduced divisors via a strictly superharmonic potential,\n  **Riemann's theorem for graphs** (`deg D \u2265 g \u21d2 D` is equivalent to an effective\n  divisor), Riemann's inequality `r(D) \u2265 deg D \u2212 g`, and the **unconditional\n  covering bound** `IsCoveringBound G g`.\n* `ReducedUnique.lean` \u2014 **uniqueness of the `q`-reduced representative** in a\n  divisor class (maximum principle for chip firing), reduction inside the effective\n  cone, and the resulting **effectivity criterion**: `r(D) \u2265 0` if and only if the\n  `q`-reduced form of `D` has a nonnegative number of chips at `q`.  Consequently\n  reduction is a complete invariant of the divisor class\n  (`linEquiv_iff_reduced_eq`), and a reduced divisor is subcritical away from `q`\n  (`IsReduced.lt_degree`).\n* `Dhar.lean` \u2014 **Dhar's burning algorithm**: the burning process stabilises after\n  `#V` rounds, a legal firing set never burns, the unburnt set is the largest legal\n  firing set, and `D` is `q`-reduced exactly when the whole graph burns\n  (`isReduced_iff_burn_eq_univ`).  This turns the quantifier over all vertex sets in\n  the definition of reducedness into an effective test.\n* `Jacobian.lean` \u2014 **finiteness of the Jacobian**: the `q`-reduced divisors of a\n  fixed degree form a finite, complete and irredundant set of representatives of the\n  divisor classes of that degree, of size at most `\u220f_{v \u2260 q} deg v`\n  (`exists_reps`, `card_le_prod_degree`).\n* `EnergyPath.lean` \u2014 the Cauchy\u2013Schwarz bridge `(x u \u2212 x w)\u00b2 \u2264 dist(u,w) \u00b7 E(x)`\n  and the sup-norm bound `|x u| \u2264 \u221a(d \u00b7 E(x))` for mean-zero vectors.\n* `EnergyRadius.lean` \u2014 an **unconditional upper bound for the covering radius in\n  the energy metric**: on a connected graph with degrees at most `\u0394`, every\n  degree-zero divisor lies within energy distance `2\u0394\u00b3n` of the Laplacian lattice\n  (`exists_energy_close`).  The proof shows that the Laplacian is onto the mean-zero\n  hyperplane (`exists_mulVec_eq`, via Mathlib's description of its kernel) and then\n  rounds coordinates, using the operator estimates `E(x) \u2264 2\u0394\u2016x\u2016\u00b2` and\n  `\u2016Lz\u2016\u00b2 \u2264 2\u0394 E(z)`.  Combined with the bridge this gives unconditional `\u2113^\u221e`\n  covering and Brill\u2013Noether statements in terms of `\u0394` and the diameter.\n* `DiameterBound.lean` \u2014 ball growth in graphs of bounded degree and the Moore-type\n  diameter lower bound `log_{k+1} n \u2264 diam`.\n* `CoveringBridge.lean` \u2014 the passage from an energy covering radius `\u03b5` to the\n  `\u2113^\u221e` covering bound `\u221a(d \u03b5)` and hence to Brill\u2013Noether existence.\n\n## What remains\n\n1. **The lossiness of the covering mechanism.**  `rankAtLeast_of_covering` produces\n   rank `r` only from `deg D \u2265 n(\u03c1 + r)`, because it forces *every* vertex to hold\n   `\u03c1 + r` chips simultaneously.  At the half-canonical degree `g \u2212 1` this needs\n   `\u03c1 \u2272 g/n \u2212 r`, i.e. `\u03c1` smaller than half the average degree, which no covering\n   radius bound of the size predicted by the paper (`\u03c1 \u2248 \u221ag`) can satisfy.  The\n   paper's argument instead chooses the auxiliary effective divisor `E` adapted to\n   the point of the lattice, and measures the distance in the energy norm rather\n   than in `\u2113^\u221e`.  Formalising that refinement \u2014 a rank criterion of the shape\n   \"`deg D \u2265 g \u2212 1` and covering radius `\u2264 c\u221ag` imply `r(D) \u2273 \u221ag`\" \u2014 is the single\n   most important missing step, and everything else below feeds into it.\n\n2. **Baker\u2013Norine Riemann\u2013Roch.**  `r(D) \u2212 r(K \u2212 D) = deg D + 1 \u2212 g`.  With\n   `Reduced.lean`, `ReducedUnique.lean` and `Dhar.lean` the reduced-divisor calculus\n   is complete, so the missing ingredient is the combinatorics of acyclic\n   orientations with a unique source: the non-special divisors of degree `g \u2212 1` are\n   exactly the classes `\u03bd_\u03c3`, and reversing `\u03c3` realises `D \u21a6 K \u2212 D`.  This is what\n   makes the half-canonical degree self-dual and hence the natural place to test the\n   Brill\u2013Noether conjecture: at `deg D = g \u2212 1` Riemann's inequality gives nothing.\n\n3. **Sharper covering radii.**  `Reduced.lean` gives `\u03c1 \u2264 g` in `\u2113^\u221e`, optimal in\n   general (a tree of loops), and `EnergyRadius.lean` gives `\u03b5 \u2264 2\u0394\u00b3n` in the energy\n   metric with no use of expansion.  The paper's point is that expansion should\n   force `\u03b5` down to the order of `g`; proving this requires replacing the crude\n   rounding argument of `EnergyRadius.lean` by a transference/counting argument for\n   the Laplacian lattice which uses the spectral gap.\n\n4. **The hard direction of Cheeger's inequality**, `\u03bb\u2082 \u2265 h\u00b2/(2\u0394)`, i.e. the sweep-cut\n   argument.  It is the analytic input that converts combinatorial expansion\n   hypotheses (expanders, almost-Ramanujan graphs, random regular graphs) into the\n   spectral gap used in item 3.\n\n5. **Quantitative Brill\u2013Noether for explicit families.**  With items 1, 3 and 4 one\n   could formalise that `k`-regular graphs with a spectral gap bounded below satisfy\n   `r(D) \u2265 c\u221ag` at `deg D = g \u2212 1`, and the random graph statements of the paper.\n\n6. **Reversal systems.**  The Moore-type bound in `DiameterBound.lean` is the generic\n   ball-growth estimate; specialising it to the transition graphs of reversal\n   systems (whose degrees are bounded by the number of allowed reversals) gives the\n   logarithmic diameter lower bounds used as an application in the paper.\n\n7. **Computability.**  `Dhar.lean` makes reducedness testable and `Jacobian.lean`\n   bounds the number of classes, but the reduction *algorithm* itself (fire the\n   unburnt set, repeat) is still obtained in `Reduced.lean` by minimising a\n   potential rather than by a terminating recursion, and `reps` is defined with\n   classical choice.  Turning these into executable definitions would allow\n   machine-checked small-graph experiments of the kind recorded in\n   `ComputationalEvidence.md`, in particular exact Baker\u2013Norine ranks at the\n   half-canonical degree.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0970",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d9d67aec",
+    "status": "available",
+    "timestamp": "2026-08-05T12:24:14.477619+00:00",
+    "title": "The formalisation in `Catalog/Pythagorean/BrillNoether/` now consists of ten"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is now proved\n\nTwo new self-contained files extend the conditional Hilbert-class-field interface of\n`Catalog/NumberTheory/`, settling target 2 of the previous cycle (the Galois `p`-binomial count\nfor elementary abelian class groups).\n\n### `Catalog/NumberTheory/SubspaceCounting.lean` (no dependencies beyond Mathlib)\n\nLet `K` be a finite field with `q` elements and `V` a finite `K`-vector space of dimension `n`.\n\n* `gaussBinom q n k` : the Gaussian binomial coefficient `\u220f_{i<k}(q^n-q^i) / \u220f_{i<k}(q^k-q^i)`;\n* `spanFiberEquiv` : the linearly independent `k`-tuples spanning a fixed `k`-dimensional\n  subspace `W` are exactly the bases of `W`;\n* `card_linearIndependent_eq_mul` : fibring the linearly independent `k`-tuples of `V` over\n  their spans, `#{s : LI k-tuple} = #{W : dim W = k} \u00b7 \u220f_{i<k}(q^k-q^i)`;\n* `card_submodule_finrank_mul` : `#{W : dim W = k} \u00b7 \u220f_{i<k}(q^k-q^i) = \u220f_{i<k}(q^n-q^i)`;\n* `card_submodule_finrank_eq_gaussBinom` : `#{W : dim W = k} = gaussBinom q n k` for `k \u2264 n`;\n* `card_submodule_finrank_pos`, `card_submodule_finrank_eq_zero` : the count is positive exactly\n  in the range `k \u2264 n`;\n* `card_submodule_eq_sum_gaussBinom` : `#(subspaces of V) = \u2211_{k \u2264 n} gaussBinom q n k`\n  (the Galois number, OEIS A006116 for `q = 2`);\n* `card_submodule_finrank_le_sub`, `card_submodule_finrank_eq_card_submodule_finrank_sub` :\n  duality \u2014 `W \u21a6 W^\u22a5` (dual annihilator, transported by a basis isomorphism `V* \u2243 V`) is\n  injective, whence there are as many `k`-dimensional as `(n-k)`-dimensional subspaces;\n* `gaussBinom_symm`, `gaussBinom_pos` : consequences at `q = p` prime, obtained from the\n  `(ZMod p)^n` model;\n* `card_submodule_finrank_zmod`, `card_submodule_zmod` : the counts for `(ZMod p)^r`.\n\n### `Catalog/NumberTheory/ElementaryAbelianClassField.lean`\n\nFor a Hilbert class field datum `e : Gal(H/K) \u2243* Cl(\ud835\udcaa_K)` together with an isomorphism\n`E : Cl(\ud835\udcaa_K) \u2243* (\u2124/p)^r` (`p` prime):\n\n* `classGroupSubmoduleOrderIso` : `Subgroup Cl(\ud835\udcaa_K) \u2243o Submodule (ZMod p) ((ZMod p)^r)`;\n* `card_subgroup_eq_pow`, `index_eq_pow` : a subgroup corresponding to a `k`-dimensional\n  subspace has order `p^k` and index `p^{r-k}`;\n* `intermediateFieldSubmoduleEquiv` : intermediate fields of `H/K` \u2194 subspaces of `(ZMod p)^r`;\n* `card_intermediateField_eq_sum_gaussBinom` : **the datum has exactly `\u2211_{k\u2264r} binom(r,k)_p`\n  intermediate fields**;\n* `finrank_eq_pow_sub`, `finrank_eq_pow`, `finrank_classField_eq_pow` : degrees are the expected\n  powers of `p`;\n* `card_intermediateField_finrank_eq_gaussBinom` : **exactly `binom(r,k)_p` intermediate fields\n  have degree `p^k` over `K`** (this is where `gaussBinom_symm` is used);\n* `exists_intermediateField_finrank`, `exists_intermediateField_finrank_iff` : the degrees that\n  occur are exactly `p^k`, `k \u2264 r`;\n* `sum_card_intermediateField_finrank` : the degreewise counts sum to the total count;\n* explicit cases: `card_intermediateField_kleinFour` and `card_intermediateField_of_kleinFour`\n  (`p = r = 2`: five intermediate fields, `card_quadratic_intermediateField_of_kleinFour`: three\n  of them quadratic, `finrank_eq_one_or_two_or_four`), and\n  `card_intermediateField_elementary_two_three` together with\n  `card_intermediateField_finrank_two_three` (`p = 2, r = 3`: **sixteen** intermediate fields,\n  with degree distribution `1, 7, 7, 1` in degrees `1, 2, 4, 8`).\n\nThe two falsifiable predictions of the previous cycle at `p = r = 2` (`5 = 1 + 3 + 1`) and at\n`p = 2, r = 3` (`16 = 1 + 7 + 7 + 1`) are therefore both confirmed, as instances of a general\ntheorem rather than case analysis. All results are proved with no `sorry` and use only\n`propext`, `Classical.choice`, `Quot.sound`.\n\n### `Catalog/Speculative/AutoResearch/KleinFourClassField.lean` (now complete)\n\nThe standalone Klein four case, which had been left with five unproved statements, is finished;\nthe file compiles with no `sorry` and its theorems use only `propext`, `Classical.choice`,\n`Quot.sound`.  For a datum `e : Gal(H/K) \u2243* Cl(\ud835\udcaa_K)` together with `E : Cl(\ud835\udcaa_K) \u2243* V`, where\n`V = \u2124/2 \u00d7 \u2124/2`:\n\n* `card_subgroup_V` : `V` has exactly five subgroups (from `subgroup_cases`);\n* `index_comap_equiv` : transporting a subgroup of `V` back to the class group preserves index;\n* `card_intermediateField_of_kleinFour` : the datum has exactly five intermediate fields,\n  obtained from `HilbertClassFieldDescent.card_intermediateField_eq_card_subgroup` and\n  `MulEquiv.mapSubgroup E`;\n* `finrank_eq_one_or_two_or_four` : every intermediate field has degree `1`, `2` or `4` over `K`,\n  from `HilbertClassFieldDescent.finrank_eq_index` and `index_cases`;\n* `finrank_quadField` : the class field of `\u27e8x\u27e9` for `x \u2260 1` is quadratic over `K`;\n* `quadField_injective` and `exists_three_quadratic_intermediateField` : the three subgroups of\n  order two give three pairwise distinct quadratic intermediate fields;\n* `intermediateField_eq_of_kleinFour` : conversely every intermediate field is `K`, `H`, or one\n  of those three quadratic fields, so the degree multiset is exactly `{1, 2, 2, 2, 4}`.\n\nThis is the `p = r = 2` instance of the general count above, proved independently and by hand.\n\n## Next targets\n\nEach of the following is falsifiable: it is either a Lean statement that compiles and is proved,\nor it fails for an explicit counterexample.\n\n1. **General finite abelian class group.** Replace `(\u2124/p)^r` by an arbitrary finite abelian\n   group `A`. The number of intermediate fields is the number of subgroups of `A`, which is\n   multiplicative over the primary components; prove\n   `Nat.card (Subgroup A) = \u220f_p Nat.card (Subgroup A_p)` and, for `A_p = \u2295 \u2124/p^{\u03bb_i}`, the\n   Birkhoff\u2013Hall count. Falsifiable already at `A = \u2124/4`, where the answer is `3`, versus\n   `A = (\u2124/2)\u00b2`, where it is `5`.\n\n2. **The `q`-Pascal recursion.** Prove\n   `gaussBinom q (n+1) (k+1) = gaussBinom q n k + q^{k+1} * gaussBinom q n (k+1)` directly in \u2115,\n   and deduce `gaussBinom_symm` for arbitrary `q > 1` (not only for prime `q`, where the present\n   proof goes through the `(ZMod q)^n` model). Falsifiable at `q = 4, n = 2, k = 1`.\n\n3. **Unconditional imaginary-quadratic instance.** For `K = \u211a(\u221a-5)` construct\n   `Nat.card (ClassGroup (\ud835\udcde K)) = 2` and the datum `Gal(K(i)/K) \u2243* Cl(\ud835\udcaa_K)`, so that\n   `card_intermediateField_eq_sum_gaussBinom` becomes an unconditional statement (`p = 2`,\n   `r = 1`, two intermediate fields). Falsifiable: the class number must be `2`, not `1`.\n\n4. **Frobenius compatibility of the Artin datum.** Demand that `e\u207b\u00b9` send the class of an\n   unramified prime `\ud835\udd2d` to `arithFrobAt \ud835\udd2d`, and prove that `\ud835\udd2d` splits completely in `H` iff\n   `[\ud835\udd2d] = 1`. In the elementary abelian case this refines the counting above into a splitting\n   law: the primes splitting completely in the degree-`p^k` class field of a subspace `W` are\n   exactly those whose class lies in `W`.\n\n5. **Genus theory.** For imaginary quadratic `K` with `t` prime discriminant divisors, prove\n   `Nat.card (Cl \u29f8 Cl\u00b2) = 2^{t-1}` and identify the corresponding class field as the genus\n   field. Combined with the present count, when `Cl(\ud835\udcaa_K)` is elementary abelian of rank `r` the\n   genus field is the whole Hilbert class field and `r = t - 1`. Falsifiable at `K = \u211a(\u221a-15)`,\n   where the prediction is degree `2`.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_0971",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8fa60fb0",
+    "status": "available",
+    "timestamp": "2026-08-05T12:24:21.123742+00:00",
+    "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(x) = a x + log(1 + e^{bx})`;\n* strict convexity on all of `\u211d` for every `b \u2260 0` (`emlAct_strictConvexOn`);\n* the sharp monotonicity criterion `StrictMono E_{a,b} \u2194 0 \u2264 a` for `b > 0`\n  (`emlAct_strictMono_iff`), with the failure for `a < 0` proved via the\n  derivative limit at `\u2212\u221e`;\n* that log-sum-exp `x \u2295_b y = (1/b) log(e^{bx} + e^{by})` is exactly commutative,\n  associative and distributive over `+`, with idempotency defect exactly\n  `log 2 / b` (`lse_self`);\n* the sharp sandwich `max x y < x \u2295_b y \u2264 max x y + log 2 / b` and the\n  resulting convergence to tropical (max-plus, resp. min-plus via Mathlib's\n  `Tropical`) addition as `b \u2192 \u221e`;\n* the bridge theorem `eml_activation_tropical_bridge` tying the convex-analytic\n  and tropical pictures together.\n\nNatural continuations:\n\n1. **`n`-ary and measure-theoretic log-sum-exp.** Replace the binary `\u2295_b` by\n   `(1/b) log \u2211_{i<n} e^{b x_i}` and by `(1/b) log \u222b e^{b f} d\u03bc`; the sandwich\n   becomes `max \u2264 \u00b7 \u2264 max + log n / b` (resp. essential supremum), giving\n   `L^p \u2192 L^\u221e` style dequantization statements.\n\n2. **Strict convexity as a function of two variables.** Prove that\n   `(x,y) \u21a6 x \u2295_b y` is convex but not strictly convex, being affine along the\n   diagonal `x = y` (`lse_self` already gives the diagonal restriction exactly);\n   the tropical limit `max` is convex and affine on each of two half-planes.\n\n3. **Tropical semiring structure as a Lean instance.** Endow `\u211d` with the\n   `b`-deformed operations `(\u2295_b, +)` as a genuine `Semiring` instance\n   transported along `x \u21a6 e^{bx}` from `\u211d_{>0}`, and formalize the statement\n   that these semirings converge (in the sense of Gromov\u2013Hausdorff or of\n   pointwise convergence of structure maps) to `Tropical \u211d`.\n\n4. **Tropical polynomials from neural networks.** A ReLU network computes a\n   tropical rational function; the `b`-smoothed network computes a\n   log-sum-exp expression. Quantifying the uniform distance between a smoothed\n   network of depth `d` and its tropical limit (an `O(d \u00b7 log(width)/b)` bound)\n   would extend the bridge theorem from one neuron to a whole architecture.\n\n5. **Sharp monotonicity domains for other EML activations.** The same analysis\n   applies to `x\u00b7\u03c3(bx)` (Swish/SiLU), `x\u00b7tanh(log(1+e^{bx}))` (Mish) and\n   `a x + (1/b) log cosh(bx)`; each has an exact parameter domain of\n   monotonicity/convexity, and each degenerates to a piecewise-linear tropical\n   expression as `b \u2192 \u221e`.\n\n6. **Rate optimality.** Prove that `log 2 / b` cannot be replaced by\n   `c / b` with `c < log 2`, and study the second-order expansion\n   `x \u2295_b y = max x y + (1/b) log(1 + e^{-b|x-y|})`.\n",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0972",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8dd43c13",
+    "status": "available",
+    "timestamp": "2026-08-05T12:25:54.180391+00:00",
+    "title": "The file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: Erd\u0151s\u2013R\u00e9nyi threshold phenomena\n\nThis cycle proved the **sharp connectivity threshold** of `G(n,p)` at `p = log n / n`\ninside the catalog's elementary finite model\n(`ErdosRenyi.mass` / `ErdosRenyi.Prob` on `Finset (Edge n)`):\n\n* `ErdosRenyi.prob_connected_log_tendsto_zero` \u2014 for `0 < c < 1`,\n  `P(G(n, c\u00b7log n/n) connected) \u2192 0` (second moment on the isolated-vertex count);\n* `ErdosRenyi.prob_connected_log_tendsto_one` \u2014 for `c > 1`,\n  `P(G(n, c\u00b7log n/n) connected) \u2192 1` (cut union bound + entropy/Stirling estimate);\n* `ErdosRenyi.connectivity_sharp_threshold` \u2014 the two halves packaged together;\n* `ErdosRenyi.isolated_vertex_sharp_threshold` \u2014 the companion sharp threshold for the\n  existence of an isolated vertex (probability `\u2192 1` for `c < 1`, `\u2192 0` for `c > 1`).\n\nSupporting reusable results: `prob_avoids` (all-absent probability `(1-p)^{|T|}`),\n`expect_avoidCount` / `expect_avoidCount_sq` (exact first and second moments of a count\nof avoided edge-blocks), `expect_isolated_count`, `expect_isolated_count_sq` and\n`expect_isolated_count_factorial_two` (exact moments of the isolated-vertex count),\n`variance_eq_sub`, `probZero_isolated_le` / `prob_connected_le` (the explicit Chebyshev\nbound `1/(n(1-p)^{n-1}) + p/(1-p)`), `prob_disconnected_le` (cut union bound),\n`card_cutEdges` (a cut has exactly `|S|\u00b7|S\u1d9c|` potential edges), `choose_le_exp`\n(`C(n,k) \u2264 (e n/k)^k`).\n\nThe following conjectures are concrete and falsifiable next targets.\n\n## C1. Poisson window at `p = (log n + c)/n`\n\n**Conjecture.** For every `c \u2208 \u211d`,\n`Prob ((log n + c)/n) {s | (graphOf s).Connected} \u2192 exp(-exp(-c))`.\n\nFalsifiable: a proof must in particular reproduce the value `e^{-1} \u2248 0.3679` at\n`c = 0`, and any numerical simulation deviating from `e^{-e^{-c}}` refutes it.\nThe missing ingredient is a Poisson limit theorem (method of moments or Stein\u2013Chen)\nfor the isolated-vertex count `I_n`, whose factorial moments in the present model are\nexactly computable by the same block-avoidance technique as `expect_avoidCount_sq`:\n`E[(I_n)_r] = n(n-1)\u22ef(n-r+1)\u00b7(1-p)^{r(n-1) - C(r,2)}`.  The case `r = 2` is now proved\n(`expect_isolated_count_factorial_two`:\n`E[I_n(I_n-1)] = n(n-1)(1-p)^{2n-3}`), so the remaining milestone is:\n\n> **C1'.** The `r`-th factorial moment formula above for all `r`, whose combinatorial\n> core is `|star(v_1) \u222a \u22ef \u222a star(v_r)| = r(n-1) - C(r,2)` for distinct vertices \u2014 a\n> direct generalisation of `card_incident_union`.\n\n## C2. Sharp threshold for minimum degree \u2265 1 versus connectivity coincide\n\n**Conjecture.** With `p = c\u00b7log n/n` and `c > 1`,\n`Prob p {s | (graphOf s).Connected} - Prob p {s | \u2200 v, \u2203 u, (graphOf s).Adj v u} \u2192 0`;\ni.e. above the threshold, *the only* obstruction to connectivity is an isolated vertex.\n\nThis strengthens the pair (`prob_exists_isolated_tendsto_zero`,\n`prob_connected_log_tendsto_one`): the current proofs bound both quantities separately,\nwhereas the conjecture asserts the events differ with vanishing probability.  It is\nfalsified by exhibiting `c > 1` and a positive `\u03b5` with a subsequence on which the gap\nexceeds `\u03b5`.  A proof should follow by refining `prob_disconnected_le` to cuts of size\n`2 \u2264 k \u2264 n/2` only, whose total contribution is `O(n^{-\u03b4})` for `\u03b4 = \u03b4(c) > 0`.\n\n## C3. Threshold for a fixed subgraph `H` at `n^{-1/m(H)}`\n\n**Conjecture.** For a fixed graph `H` with `m(H) = max_{H' \u2286 H, v(H')>0} e(H')/v(H')`\nand `p_n = \u03c9(n) \u00b7 n^{-1/m(H)}` with `\u03c9 \u2192 \u221e`, the number of copies of `H` in `G(n,p_n)`\nis positive with probability `\u2192 1`, while for `\u03c9 \u2192 0` it is `0` a.a.s.\n\nThe `\u2192 0` half is already implied by `first_moment_threshold`; the `\u2192 1` half needs the\nsecond-moment estimate `Var X = O((E X)^2 / \u03a6)` with `\u03a6 = min_{H'} E[X_{H'}]`, which can\nbe assembled from `ErdosRenyi.secondMoment_subgraphCount` (exact overlap sum) plus\n`subgraph_count_pos_whp`.  Falsifiable by a single `H` for which the claimed exponent\n`1/m(H)` is wrong (e.g. by simulation for `H = K_4` with a pendant edge).\n\n## C4. Giant component: quantitative subcritical bound\n\n**Conjecture.** For `p = (1-\u03b5)/n` with `0 < \u03b5 < 1` there is `A = A(\u03b5)` such that\n`Prob p {s | largestComponent s \u2264 A \u00b7 log n} \u2192 1`, and the explicit choice\n`A = 3/(\u03b5 - log(1+\u03b5))` works.\n\nThe natural Lean route avoids branching processes entirely: a first-moment bound on the\nnumber of *connected* vertex sets of size `k` \u2014 `C(n,k) k^{k-2} p^{k-1}` for trees \u2014\ncombined with the cut machinery of `ErdosRenyiConnectivityUpper` (`cutEdges`,\n`sum_over_small_sets`).  Falsifiable numerically: simulate `G(n,(1-\u03b5)/n)` and check\nwhether the largest component exceeds `A log n` with non-vanishing frequency.\n\n## C5. Monotonicity/sharpness of the connectivity probability in `c`\n\n**Conjecture.** For each fixed `n \u2265 2` the map\n`c \u21a6 Prob (c\u00b7log n/n) {s | (graphOf s).Connected}` is nondecreasing on `[0, n/log n]`.\n\nThis is a finite-`n` statement (an instance of Harris/FKG monotonicity for the increasing\nevent \"connected\"), and hence directly falsifiable by exact enumeration for small `n`.\nProving it in the present model requires a Harris-type coupling lemma for `mass`, which\ndoes not yet exist in the catalog and would be reusable far beyond connectivity.\n",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_0973",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f14ecb01",
+    "status": "available",
+    "timestamp": "2026-08-05T12:26:00.127391+00:00",
+    "title": "**sharp connectivity threshold** of `G(n,p)` at `p = log n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nResults of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant.lean`\n(self-contained, `import Mathlib`, no `sorry`, axioms: `propext`, `Classical.choice`,\n`Quot.sound`). Proved there: relative `SL(2)^{\u00d73}` invariance of Cayley's\n`2 \u00d7 2 \u00d7 2` hyperdeterminant, its permutation symmetry, its vanishing on biseparable\nstates, SLOCC inequivalence of GHZ and W, covariance and local-unitary invariance of the\none-tangle, the two-qubit pure-state identity `4 det \u03c1_A = C\u00b2`, CKW saturation on the\ngeneralized GHZ and W families, and the monogamy bound `\u03c4_ABC \u2264 \u03c4_{A|BC}` with its sharp\ncorollary `\u03c4_ABC \u2264 1`.\n\nOpen directions building on this:\n\n1. **Full CKW inequality.** Define the convex-roof squared concurrences `C_AB\u00b2`, `C_AC\u00b2`\n   of the two-qubit reductions of a normalized pure three-qubit state and prove\n   `C_AB\u00b2 + C_AC\u00b2 \u2264 4 det \u03c1_A`. The key missing ingredient is Wootters' formula for the\n   concurrence of a rank-`\u2264 2` two-qubit mixed state (eigenvalues of `\u03c1 \u03c1\u0303`), which would\n   also upgrade `residualTangle_le_oneTangleA` to the exact identity\n   `\u03c4_{A|BC} \u2212 C_AB\u00b2 \u2212 C_AC\u00b2 = 4 |Det \u03c8|`.\n\n2. **GHZ normal form.** Prove the converse of `ghz_not_slocc_wState`: every tensor with\n   `hyperdet \u03c8 \u2260 0` is SLOCC equivalent to GHZ, and every genuinely entangled tensor with\n   `hyperdet \u03c8 = 0` is SLOCC equivalent to W. Together with the invariance results already\n   available this would give the complete D\u00fcr\u2013Vidal\u2013Cirac classification of three-qubit\n   SLOCC orbits.\n\n3. **Equality analysis.** Characterize the tensors saturating `\u03c4_ABC = \u03c4_{A|BC}`. The\n   proof given here reduces this to equality in the triangle inequality and in AM\u2013GM for\n   the six minors, so an explicit description of the extremal set should be within reach.\n\n4. **Higher local dimension.** Extend `hyperdet_eq_minors` and the Cauchy\u2013Binet identity\n   to `2 \u00d7 2 \u00d7 n` tensors, where the same slice-minor technique bounds the analogue of the\n   residual tangle by the one-tangle.\n",
+    "domains": [
+      "Logic",
+      "Combinatorics"
+    ],
+    "id": "fd_0974",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2d9904f9",
+    "status": "available",
+    "timestamp": "2026-08-05T12:26:05.647087+00:00",
+    "title": "Results of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant."
   },
   {
     "consumed_by_exp_id": "",
