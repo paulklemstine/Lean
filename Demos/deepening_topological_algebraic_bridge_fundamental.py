@@ -1,478 +1,576 @@
 """
-Homotopy 1-types and their fundamental groups: numerical demonstrations.
-========================================================================
+Symmetries of aspherical spaces: a numerical demonstration.
+===========================================================
 
-This self-contained script illustrates, by explicit finite computation, the
-classification of homotopy 1-types (aspherical spaces) by their fundamental
-groups:
+A homotopy 1-type is a space whose higher homotopy groups all vanish.  A
+connected one with fundamental group G is an Eilenberg-MacLane space K(G,1).
+The theory demonstrated here says:
 
-  * REALIZATION            every homomorphism  phi : G -> H  comes from a map
-                           K(G,1) -> K(H,1);
-  * HOMOTOPY = CONJUGACY   two such maps are homotopic exactly when the induced
-                           homomorphisms are conjugate, so
-                              [K(G,1), K(H,1)]  =  Hom(G,H) / conjugation;
-  * FIBRE COUNT            the homomorphisms realising one homotopy class form
-                           a coset space of the centraliser of the image, so
-                           their number is  [H : C_H(image phi)];
-  * COUNTING IDENTITY      |Hom(G,H)| = sum over homotopy classes of those
-                           centraliser indices;
-  * WHITEHEAD (1-TYPES)    a map of connected 1-types is a homotopy equivalence
-                           iff it induces an isomorphism of fundamental groups;
-  * COMPLETE INVARIANT     an arbitrary 1-type is classified by the multiset of
-                           fundamental groups of its connected components
-                           (pi_0 together with the family of pi_1's);
-  * SHARPNESS              a point and a two-point discrete space have the same
-                           homotopy groups in every degree but are not homotopy
-                           equivalent - the multiset invariant separates them.
+    hAut(K(G,1))              = Out(G) = Aut(G)/Inn(G)     (symmetry group)
+    Aut(id_{K(G,1)})          = Z(G)                       (higher symmetries)
+    [K(G,1), K(G,1)]          = End(G)/conjugation         (all self-maps)
 
-Groups are realised concretely as permutation groups; homomorphisms are
-enumerated by lifting from a generating set.  Everything runs in a second or
-two with the standard library alone.
+and, for a disjoint union of connected pieces C_1, ..., C_n,
+
+    1 -> prod_i Out(pi_1 C_i) -> hAut(| |_i C_i) -> Sym'(pi_0) -> 1
+
+is exact, where Sym'(pi_0) is the group of permutations of the components
+that preserve homotopy type.  Grouping the components into homotopy types
+with multiplicities m_1, ..., m_r therefore gives the counting formula
+
+    #hAut = (prod_i #Out(pi_1 C_i)) * prod_k m_k! .
+
+This script computes all of these numbers from scratch for finite groups
+(given by explicit multiplication tables) and checks them against the
+theorems, including the "totient theorem"
+
+    #hAut(K(Z/n,1)) = phi(n).
+
+Run with:  python3 demo.py
 """
 
 from __future__ import annotations
 
-from collections import Counter, deque
-from itertools import product
-from typing import Dict, FrozenSet, Iterable, List, Sequence, Tuple
+from dataclasses import dataclass
+from itertools import permutations, product
+from math import factorial, gcd
+from typing import Dict, List, Optional, Sequence, Tuple
 
-Perm = Tuple[int, ...]  # a permutation of {0, ..., n-1}, as its image tuple
-
-
-# ----------------------------------------------------------------------------
-# Finite groups as permutation groups
-# ----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# 1.  Finite groups by multiplication table
+# ---------------------------------------------------------------------------
 
 
-def compose(p: Perm, q: Perm) -> Perm:
-    """Composite ``p`` then ``q`` (left-to-right), i.e. i |-> q[p[i]]."""
-    return tuple(q[p[i]] for i in range(len(p)))
+@dataclass(frozen=True)
+class FiniteGroup:
+    """A finite group on the carrier {0, ..., n-1} with 0 as the identity.
 
+    ``table[a][b]`` is the product a * b.
+    """
 
-def inverse(p: Perm) -> Perm:
-    """Inverse permutation."""
-    out = [0] * len(p)
-    for i, pi in enumerate(p):
-        out[pi] = i
-    return tuple(out)
-
-
-class Group:
-    """A finite group given by permutation generators, with cached structure."""
-
-    def __init__(self, name: str, degree: int, generators: Sequence[Perm]) -> None:
-        self.name: str = name
-        self.degree: int = degree
-        self.generators: List[Perm] = [tuple(g) for g in generators]
-        self.identity: Perm = tuple(range(degree))
-        self.elements: List[Perm] = self._close()
-        self.index_of: Dict[Perm, int] = {g: i for i, g in enumerate(self.elements)}
-
-    def _close(self) -> List[Perm]:
-        seen = {self.identity}
-        frontier = deque([self.identity])
-        while frontier:
-            g = frontier.popleft()
-            for s in self.generators:
-                h = compose(g, s)
-                if h not in seen:
-                    seen.add(h)
-                    frontier.append(h)
-        return sorted(seen)
+    name: str
+    table: Tuple[Tuple[int, ...], ...]
 
     @property
     def order(self) -> int:
-        return len(self.elements)
+        return len(self.table)
 
-    def element_order(self, g: Perm) -> int:
-        n, h = 1, g
-        while h != self.identity:
-            h = compose(h, g)
-            n += 1
-        return n
+    def mul(self, a: int, b: int) -> int:
+        return self.table[a][b]
+
+    def inv(self, a: int) -> int:
+        for b in range(self.order):
+            if self.mul(a, b) == 0:
+                return b
+        raise ValueError(f"element {a} has no inverse in {self.name}")
+
+    def element_order(self, a: int) -> int:
+        k, x = 1, a
+        while x != 0:
+            x = self.mul(x, a)
+            k += 1
+        return k
 
     def is_abelian(self) -> bool:
         return all(
-            compose(a, b) == compose(b, a) for a in self.elements for b in self.elements
+            self.mul(a, b) == self.mul(b, a)
+            for a in range(self.order)
+            for b in range(self.order)
         )
 
-    def centre(self) -> List[Perm]:
-        return [
-            z
-            for z in self.elements
-            if all(compose(z, g) == compose(g, z) for g in self.elements)
-        ]
 
-    def fingerprint(self) -> Tuple[int, Tuple[Tuple[int, int], ...], bool]:
-        """A canonical invariant separating all groups used in this script:
-        (order, sorted multiset of element orders, commutativity)."""
-        orders = Counter(self.element_order(g) for g in self.elements)
-        return (self.order, tuple(sorted(orders.items())), self.is_abelian())
-
-    def __repr__(self) -> str:
-        return f"{self.name}(order {self.order})"
+def cyclic_group(n: int) -> FiniteGroup:
+    """The cyclic group Z/n, i.e. pi_1 of the infinite lens space K(Z/n,1)."""
+    table = tuple(tuple((a + b) % n for b in range(n)) for a in range(n))
+    return FiniteGroup(f"Z/{n}", table)
 
 
-def cyclic(n: int) -> Group:
-    """Z/n as the rotation group of n points."""
-    return Group(f"Z/{n}", n, [tuple((i + 1) % n for i in range(n))])
+def direct_product(g: FiniteGroup, h: FiniteGroup, name: Optional[str] = None) -> FiniteGroup:
+    """The direct product G x H, elements encoded as a * |H| + b."""
+    m = h.order
+    size = g.order * m
+
+    def enc(a: int, b: int) -> int:
+        return a * m + b
+
+    table = tuple(
+        tuple(
+            enc(g.mul(x // m, y // m), h.mul(x % m, y % m))
+            for y in range(size)
+        )
+        for x in range(size)
+    )
+    return FiniteGroup(name or f"{g.name} x {h.name}", table)
 
 
-def symmetric(n: int) -> Group:
-    """S_n, generated by a transposition and an n-cycle."""
-    transposition = tuple([1, 0] + list(range(2, n)))
-    cycle = tuple((i + 1) % n for i in range(n))
-    return Group(f"S_{n}", n, [transposition, cycle])
+def symmetric_group(n: int) -> FiniteGroup:
+    """The symmetric group S_n, elements enumerated in lexicographic order."""
+    perms: List[Tuple[int, ...]] = sorted(permutations(range(n)))
+    # put the identity first
+    perms.remove(tuple(range(n)))
+    perms.insert(0, tuple(range(n)))
+    index = {p: i for i, p in enumerate(perms)}
+
+    def compose(p: Tuple[int, ...], q: Tuple[int, ...]) -> Tuple[int, ...]:
+        return tuple(p[q[i]] for i in range(n))
+
+    table = tuple(tuple(index[compose(p, q)] for q in perms) for p in perms)
+    return FiniteGroup(f"S_{n}", table)
 
 
-def dihedral(n: int) -> Group:
-    """Dihedral group of order 2n acting on the vertices of an n-gon."""
-    rot = tuple((i + 1) % n for i in range(n))
-    refl = tuple((-i) % n for i in range(n))
-    return Group(f"D_{n}", n, [rot, refl])
+def dihedral_group(n: int) -> FiniteGroup:
+    """The dihedral group of order 2n, elements (r^i s^j) encoded as 2i + j."""
+    size = 2 * n
+
+    def enc(i: int, j: int) -> int:
+        return 2 * (i % n) + (j % 2)
+
+    def mul(x: int, y: int) -> int:
+        i, j = divmod(x, 2)
+        k, l = divmod(y, 2)
+        # (r^i s^j)(r^k s^l) = r^{i + (-1)^j k} s^{j+l}
+        return enc(i + (k if j == 0 else -k), j + l)
+
+    table = tuple(tuple(mul(x, y) for y in range(size)) for x in range(size))
+    return FiniteGroup(f"D_{n}", table)
 
 
-def klein_four() -> Group:
-    """Z/2 x Z/2 acting on 4 points."""
-    a = (1, 0, 3, 2)
-    b = (2, 3, 0, 1)
-    return Group("Z/2 x Z/2", 4, [a, b])
-
-
-def quaternion8() -> Group:
-    """The quaternion group Q_8 as a regular permutation group on 8 points."""
-    # elements 1,-1,i,-i,j,-j,k,-k encoded as 0..7 with a multiplication table
-    names = ["1", "-1", "i", "-i", "j", "-j", "k", "-k"]
-    # multiplication on {+-1, +-i, +-j, +-k}
+def quaternion_group() -> FiniteGroup:
+    """The quaternion group Q_8 = {1, -1, i, -i, j, -j, k, -k}."""
+    labels = ["1", "-1", "i", "-i", "j", "-j", "k", "-k"]
+    idx = {name: i for i, name in enumerate(labels)}
     base = {
-        ("i", "i"): "-1",
-        ("j", "j"): "-1",
-        ("k", "k"): "-1",
-        ("i", "j"): "k",
-        ("j", "k"): "i",
-        ("k", "i"): "j",
-        ("j", "i"): "-k",
-        ("k", "j"): "-i",
-        ("i", "k"): "-j",
+        ("i", "i"): "-1", ("j", "j"): "-1", ("k", "k"): "-1",
+        ("i", "j"): "k", ("j", "k"): "i", ("k", "i"): "j",
+        ("j", "i"): "-k", ("k", "j"): "-i", ("i", "k"): "-j",
     }
 
-    def split(x: str) -> Tuple[int, str]:
-        return (-1, x[1:]) if x.startswith("-") else (1, x)
+    def neg(s: str) -> str:
+        return s[1:] if s.startswith("-") else "-" + s
 
-    def mul(x: str, y: str) -> str:
-        sx, ux = split(x)
-        sy, uy = split(y)
-        s = sx * sy
-        if ux == "1":
-            u, extra = uy, 1
-        elif uy == "1":
-            u, extra = ux, 1
+    def mul_lab(a: str, b: str) -> str:
+        sign = 1
+        if a.startswith("-"):
+            a, sign = a[1:], -sign
+        if b.startswith("-"):
+            b, sign = b[1:], -sign
+        if a == "1":
+            prod = b
+        elif b == "1":
+            prod = a
         else:
-            r = base[(ux, uy)]
-            sr, u = split(r)
-            extra = sr
-        s *= extra
-        return u if s == 1 else "-" + u
+            prod = base[(a, b)]
+        if prod.startswith("-"):
+            prod, sign = prod[1:], -sign
+        return prod if sign == 1 else neg(prod)
 
-    idx = {n: i for i, n in enumerate(names)}
-
-    def perm_of(x: str) -> Perm:
-        return tuple(idx[mul(names[i], x)] for i in range(8))
-
-    return Group("Q_8", 8, [perm_of("i"), perm_of("j")])
+    table = tuple(
+        tuple(idx[mul_lab(a, b)] for b in labels) for a in labels
+    )
+    return FiniteGroup("Q_8", table)
 
 
-# ----------------------------------------------------------------------------
-# Homomorphisms: enumeration by generator lifting
-# ----------------------------------------------------------------------------
-
-Hom = Tuple[Perm, ...]  # image of G.elements[i] is hom[i]
+# ---------------------------------------------------------------------------
+# 2.  Algorithm A: Aut, Inn, Out and the centre of a finite group
+# ---------------------------------------------------------------------------
 
 
-def _lift(G: Group, H: Group, images: Sequence[Perm]) -> Hom | None:
-    """Try to extend an assignment of images of G's generators to all of G by a
-    breadth-first walk over the Cayley graph; return None on any conflict."""
-    phi: Dict[Perm, Perm] = {G.identity: H.identity}
-    frontier = deque([G.identity])
-    while frontier:
-        g = frontier.popleft()
-        for s, img in zip(G.generators, images):
-            gs = compose(g, s)
-            val = compose(phi[g], img)
-            if gs in phi:
-                if phi[gs] != val:
-                    return None
-            else:
-                phi[gs] = val
-                frontier.append(gs)
-    return tuple(phi[g] for g in G.elements)
+def generating_set(g: FiniteGroup) -> List[int]:
+    """A small generating set, found greedily."""
+    gens: List[int] = []
+    generated = {0}
+    for a in range(1, g.order):
+        if a in generated:
+            continue
+        gens.append(a)
+        # close up
+        frontier = set(generated) | {a}
+        while True:
+            new = {g.mul(x, y) for x in frontier for y in frontier} | frontier
+            if new == frontier:
+                break
+            frontier = new
+        generated = frontier
+        if len(generated) == g.order:
+            break
+    return gens
 
 
-def homomorphisms(G: Group, H: Group) -> List[Hom]:
-    """All group homomorphisms G -> H, as tuples indexed by ``G.elements``."""
-    found: List[Hom] = []
-    for images in product(H.elements, repeat=len(G.generators)):
-        phi = _lift(G, H, images)
+def _extend_by_generators(g: FiniteGroup, gens: Sequence[int],
+                          images: Sequence[int]) -> Optional[List[int]]:
+    """Try to extend gens |-> images to an endomorphism; None if inconsistent."""
+    phi: Dict[int, int] = {0: 0}
+    for gen, img in zip(gens, images):
+        phi[gen] = img
+    changed = True
+    while changed:
+        changed = False
+        known = list(phi.items())
+        for a, fa in known:
+            for b, fb in known:
+                ab = g.mul(a, b)
+                fab = g.mul(fa, fb)
+                if ab in phi:
+                    if phi[ab] != fab:
+                        return None
+                else:
+                    phi[ab] = fab
+                    changed = True
+    if len(phi) != g.order:
+        return None
+    return [phi[a] for a in range(g.order)]
+
+
+def automorphisms(g: FiniteGroup) -> List[Tuple[int, ...]]:
+    """All automorphisms of G, as tuples phi with phi[a] = image of a.
+
+    Generators are mapped to elements of the same order (a necessary
+    condition), then the assignment is closed up multiplicatively; the
+    resulting map is kept when it is a well-defined bijective homomorphism.
+    """
+    gens = generating_set(g)
+    orders = [g.element_order(a) for a in range(g.order)]
+    candidates = [
+        [b for b in range(g.order) if orders[b] == orders[gen]] for gen in gens
+    ]
+    out: List[Tuple[int, ...]] = []
+    for images in product(*candidates):
+        phi = _extend_by_generators(g, gens, images)
         if phi is None:
             continue
-        # verify on the full multiplication table
-        ok = all(
-            phi[G.index_of[compose(a, b)]] == compose(phi[i], phi[G.index_of[b]])
-            for i, a in enumerate(G.elements)
-            for b in G.elements
-        )
-        if ok and phi not in found:
-            found.append(phi)
-    return found
+        if len(set(phi)) != g.order:
+            continue
+        if all(
+            phi[g.mul(a, b)] == g.mul(phi[a], phi[b])
+            for a in range(g.order)
+            for b in range(g.order)
+        ):
+            out.append(tuple(phi))
+    return out
 
 
-def conjugate(H: Group, u: Perm, phi: Hom) -> Hom:
-    """The conjugated homomorphism  a |-> u phi(a) u^{-1}."""
-    ui = inverse(u)
-    return tuple(compose(compose(ui, x), u) for x in phi)
-    # note: with left-to-right composition, u x u^{-1} is compose(compose(ui, x), u)
+def centre(g: FiniteGroup) -> List[int]:
+    return [
+        z for z in range(g.order)
+        if all(g.mul(z, a) == g.mul(a, z) for a in range(g.order))
+    ]
 
 
-def conjugacy_classes_of_homs(G: Group, H: Group) -> List[List[Hom]]:
-    """Partition Hom(G,H) into conjugation orbits = homotopy classes of maps."""
-    remaining = list(homomorphisms(G, H))
-    classes: List[List[Hom]] = []
-    while remaining:
-        phi = remaining[0]
-        orbit = {conjugate(H, u, phi) for u in H.elements}
-        classes.append(sorted(orbit))
-        remaining = [p for p in remaining if p not in orbit]
+def inner_automorphism_count(g: FiniteGroup) -> int:
+    """|Inn(G)| = |G| / |Z(G)|, by the first isomorphism theorem."""
+    return g.order // len(centre(g))
+
+
+def out_order(g: FiniteGroup) -> int:
+    """|Out(G)| = |Aut(G)| / |Inn(G)| -- the number of symmetries of K(G,1)."""
+    return len(automorphisms(g)) // inner_automorphism_count(g)
+
+
+def endomorphism_classes(g: FiniteGroup) -> int:
+    """Number of conjugacy classes of endomorphisms = #[K(G,1), K(G,1)]."""
+    endos = set()
+    gens = generating_set(g)
+    for images in product(range(g.order), repeat=len(gens)):
+        phi = _extend_by_generators(g, gens, images)
+        if phi is None:
+            continue
+        if all(
+            phi[g.mul(a, b)] == g.mul(phi[a], phi[b])
+            for a in range(g.order)
+            for b in range(g.order)
+        ):
+            endos.add(tuple(phi))
+    # quotient by conjugation phi ~ c_a . phi
+    seen: set = set()
+    classes = 0
+    for phi in endos:
+        if phi in seen:
+            continue
+        classes += 1
+        for a in range(g.order):
+            ainv = g.inv(a)
+            conj = tuple(g.mul(g.mul(a, phi[x]), ainv) for x in range(g.order))
+            seen.add(conj)
     return classes
 
 
-def image(phi: Hom) -> FrozenSet[Perm]:
-    return frozenset(phi)
+# ---------------------------------------------------------------------------
+# 3.  Algorithm B: symmetries of a disjoint union of aspherical components
+# ---------------------------------------------------------------------------
 
 
-def centralizer(H: Group, subset: Iterable[Perm]) -> List[Perm]:
-    """C_H(S) = elements of H commuting with every element of S."""
-    S = list(subset)
-    return [u for u in H.elements if all(compose(u, s) == compose(s, u) for s in S)]
+@dataclass(frozen=True)
+class Component:
+    """One connected piece of a 1-type, described by its fundamental group.
 
-
-def is_isomorphism(G: Group, H: Group, phi: Hom) -> bool:
-    """A homomorphism is an isomorphism iff it is injective and surjective."""
-    return len(set(phi)) == G.order and set(phi) == set(H.elements)
-
-
-# ----------------------------------------------------------------------------
-# 1-types: pi_0 together with the fundamental groups of the components
-# ----------------------------------------------------------------------------
-
-
-class OneType:
-    """A homotopy 1-type, recorded by the fundamental groups of its components.
-
-    By the classification theorem this multiset of groups (equivalently, pi_0
-    together with the family of fundamental groups) is a complete invariant.
+    ``out`` is |Out(pi_1)| and ``centre_order`` is |Z(pi_1)|; ``None`` means
+    the corresponding group is infinite.  ``iso_key`` labels the isomorphism
+    type of pi_1, which by the complete-invariance theorem is exactly the
+    homotopy type of the component.
     """
 
-    def __init__(self, name: str, components: Sequence[Group]) -> None:
-        self.name = name
-        self.components = list(components)
-
-    @property
-    def pi0(self) -> int:
-        return len(self.components)
-
-    def invariant(self) -> Tuple[Tuple[int, Tuple[Tuple[int, int], ...], bool], ...]:
-        return tuple(sorted(g.fingerprint() for g in self.components))
-
-    def homotopy_equivalent(self, other: "OneType") -> bool:
-        return self.invariant() == other.invariant()
-
-    def __repr__(self) -> str:
-        inside = " ⊔ ".join(f"K({g.name},1)" for g in self.components) or "∅"
-        return f"{self.name} = {inside}"
+    label: str
+    iso_key: str
+    out: Optional[int]
+    centre_order: Optional[int]
 
 
-# ----------------------------------------------------------------------------
-# Demonstrations
-# ----------------------------------------------------------------------------
+def component_of(g: FiniteGroup, label: Optional[str] = None) -> Component:
+    return Component(
+        label=label or f"K({g.name},1)",
+        iso_key=g.name,
+        out=out_order(g),
+        centre_order=len(centre(g)),
+    )
+
+
+def haut_order(components: Sequence[Component]) -> Tuple[Optional[int], int, Optional[int]]:
+    """Return (|hAut|, |Sym'(pi_0)|, |Aut(identity)|) for a disjoint union.
+
+    ``None`` is returned for an infinite value.  The formula is
+        |hAut| = (prod_i |Out(pi_1 C_i)|) * prod_k m_k!
+    where m_k are the multiplicities of the homotopy types among components.
+    """
+    multiplicities: Dict[str, int] = {}
+    for c in components:
+        multiplicities[c.iso_key] = multiplicities.get(c.iso_key, 0) + 1
+    sym_prime = 1
+    for m in multiplicities.values():
+        sym_prime *= factorial(m)
+
+    internal: Optional[int] = 1
+    for c in components:
+        if c.out is None or internal is None:
+            internal = None
+        else:
+            internal *= c.out
+
+    higher: Optional[int] = 1
+    for c in components:
+        if c.centre_order is None or higher is None:
+            higher = None
+        else:
+            higher *= c.centre_order
+
+    total = None if internal is None else internal * sym_prime
+    return total, sym_prime, higher
+
+
+# ---------------------------------------------------------------------------
+# 4.  Number theory: Euler's totient, for the totient theorem
+# ---------------------------------------------------------------------------
+
+
+def euler_totient(n: int) -> int:
+    return sum(1 for k in range(1, n + 1) if gcd(k, n) == 1)
+
+
+# ---------------------------------------------------------------------------
+# 5.  The circle: the degree monoid
+# ---------------------------------------------------------------------------
+
+
+def circle_degree_compose(d: int, e: int) -> int:
+    """Composing self-maps of the circle multiplies degrees."""
+    return d * e
+
+
+def circle_is_equivalence(d: int) -> bool:
+    """A self-map of the circle is a homotopy equivalence iff its degree is +-1."""
+    return d in (1, -1)
+
+
+# ---------------------------------------------------------------------------
+# 6.  Demonstrations
+# ---------------------------------------------------------------------------
 
 
 def rule(title: str) -> None:
-    print("\n" + "=" * 78)
+    print("\n" + "=" * 74)
     print(title)
-    print("=" * 78)
+    print("=" * 74)
 
 
-def demo_classification_table(pairs: Sequence[Tuple[Group, Group]]) -> None:
-    rule("1. [K(G,1), K(H,1)] = Hom(G,H)/conjugation, and the fibre count")
-    print(
-        f"{'G':>10} {'H':>10} {'|Hom|':>7} {'[K(G,1),K(H,1)]':>17} "
-        f"{'orbit sizes':>24} {'= centraliser indices':>24}"
+def demo_totient_theorem(nmax: int = 24) -> None:
+    rule("1.  The totient theorem:  #hAut(K(Z/n,1)) = phi(n)")
+    print(f"{'n':>3} | {'|Aut(Z/n)|':>10} | {'|Inn|':>5} | {'|Out| = #hAut':>13} | {'phi(n)':>6} | ok")
+    print("-" * 74)
+    for n in range(1, nmax + 1):
+        g = cyclic_group(n)
+        a = len(automorphisms(g))
+        i = inner_automorphism_count(g)
+        o = a // i
+        phi = euler_totient(n)
+        assert o == phi, (n, o, phi)
+        print(f"{n:>3} | {a:>10} | {i:>5} | {o:>13} | {phi:>6} | {'yes'}")
+    print("\nRigid cases (only the identity):  n = 1, 2.")
+    print("Prime case: #hAut(K(Z/p,1)) = p - 1, e.g. p = 5 gives 4, p = 13 gives 12.")
+    for p in (2, 3, 5, 7, 11, 13):
+        assert out_order(cyclic_group(p)) == p - 1
+    print("Verified for p in {2, 3, 5, 7, 11, 13}.")
+
+
+def demo_connected_examples() -> None:
+    rule("2.  Symmetry groups of connected aspherical spaces")
+    groups = [
+        (cyclic_group(1), "a point"),
+        (cyclic_group(2), "K(Z/2,1), infinite real projective space"),
+        (cyclic_group(6), "K(Z/6,1)"),
+        (direct_product(cyclic_group(2), cyclic_group(2), "V"), "K(V,1), V the Klein four group"),
+        (symmetric_group(3), "K(S_3,1)"),
+        (dihedral_group(4), "K(D_4,1)"),
+        (quaternion_group(), "K(Q_8,1)"),
+        (symmetric_group(4), "K(S_4,1)"),
+    ]
+    header = f"{'group':>8} | {'|G|':>4} | {'|Z(G)|':>6} | {'|Aut|':>6} | {'|Inn|':>5} | {'#hAut = |Out|':>13} | space"
+    print(header)
+    print("-" * len(header))
+    for g, descr in groups:
+        z = len(centre(g))
+        a = len(automorphisms(g))
+        i = inner_automorphism_count(g)
+        print(f"{g.name:>8} | {g.order:>4} | {z:>6} | {a:>6} | {i:>5} | {a // i:>13} | {descr}")
+
+    print("\nHighlights:")
+    s3 = symmetric_group(3)
+    print(f"  K(S_3,1) is homotopy rigid: |Out(S_3)| = {out_order(s3)} and "
+          f"|Z(S_3)| = {len(centre(s3))}, so the identity is its only")
+    print("  self-homotopy-equivalence, and it has no nontrivial self-homotopy.")
+    v = direct_product(cyclic_group(2), cyclic_group(2), "V")
+    autv = automorphisms(v)
+    nonabelian = any(
+        tuple(p[q[x]] for x in range(v.order)) != tuple(q[p[x]] for x in range(v.order))
+        for p in autv for q in autv
     )
-    for G, H in pairs:
-        classes = conjugacy_classes_of_homs(G, H)
-        total = sum(len(c) for c in classes)
-        orbit_sizes = [len(c) for c in classes]
-        indices = [H.order // len(centralizer(H, image(c[0]))) for c in classes]
-        assert orbit_sizes == indices, "fibre-count theorem violated"
-        assert total == len(homomorphisms(G, H)), "counting identity violated"
-        print(
-            f"{G.name:>10} {H.name:>10} {total:>7} {len(classes):>17} "
-            f"{str(sorted(orbit_sizes)):>24} {str(sorted(indices)):>24}"
-        )
-    print(
-        "\nEvery row confirms:  |Hom(G,H)| = sum of centraliser indices, one per\n"
-        "homotopy class of maps K(G,1) -> K(H,1)."
-    )
+    print(f"  K(V,1) has |hAut| = {out_order(v)}; hAut is nonabelian: {nonabelian}")
+    print("  (an abelian fundamental group can have a nonabelian symmetry group).")
+    q8 = quaternion_group()
+    print(f"  K(Q_8,1) has |hAut| = {out_order(q8)} and higher symmetry group of order "
+          f"{len(centre(q8))}.")
 
 
-def demo_fibres_in_detail(G: Group, H: Group) -> None:
-    rule(f"2. Fibres in detail:  maps K({G.name},1) -> K({H.name},1)")
-    classes = conjugacy_classes_of_homs(G, H)
-    print(f"|Hom({G.name},{H.name})| = {sum(len(c) for c in classes)}")
-    print(f"number of homotopy classes of maps = {len(classes)}\n")
-    for k, orbit in enumerate(classes):
-        rep = orbit[0]
-        img = image(rep)
-        cent = centralizer(H, img)
-        idx = H.order // len(cent)
-        kind = (
-            "trivial map"
-            if len(img) == 1
-            else ("isomorphism" if is_isomorphism(G, H, rep) else "non-trivial")
-        )
-        print(
-            f"  class {k}: |image| = {len(img):>3}   |C_H(image)| = {len(cent):>3}   "
-            f"index = {idx:>3}   |orbit| = {len(orbit):>3}   ({kind})"
-        )
-        assert idx == len(orbit)
-    print(
-        "\nThe number of homomorphisms above a single homotopy class is exactly the\n"
-        "index of the centraliser of the image: rigid maps (trivial image) have a\n"
-        "one-element fibre; maps onto a centreless subgroup have the largest fibres."
-    )
+def demo_selfmap_monoid() -> None:
+    rule("3.  All self-maps, not only the equivalences:  [X,X] = End(pi_1)/conj")
+    print(f"{'group':>8} | {'#[X,X]':>7} | {'#hAut':>6} | comment")
+    print("-" * 74)
+    for g in [cyclic_group(2), cyclic_group(4), cyclic_group(6),
+              direct_product(cyclic_group(2), cyclic_group(2), "V"),
+              symmetric_group(3)]:
+        print(f"{g.name:>8} | {endomorphism_classes(g):>7} | {out_order(g):>6} | "
+              f"{'invertible classes = equivalences'}")
+    print("\nFor the circle the monoid is infinite: [S^1,S^1] = (Z, x) via the degree.")
+    print("  deg(f o g) = deg(f) * deg(g):",
+          circle_degree_compose(3, -5), "= 3 * (-5)")
+    print("  equivalences are exactly the degrees +-1:",
+          [d for d in range(-3, 4) if circle_is_equivalence(d)])
+    print("  hence #hAut(S^1) = 2 and hAut(S^1) = Z/2.")
+    print("  For the n-torus, hAut(T^n) = GL_n(Z); for n = 1 this is {+1,-1}.")
 
 
-def demo_abelian_target(G: Group, H: Group) -> None:
-    rule(f"3. Abelian target: conjugation acts trivially, {H.name} abelian")
-    classes = conjugacy_classes_of_homs(G, H)
-    total = sum(len(c) for c in classes)
-    print(f"{H.name} abelian? {H.is_abelian()}")
-    print(f"|Hom({G.name},{H.name})| = {total},  homotopy classes = {len(classes)}")
-    assert total == len(classes)
-    print(
-        "Every orbit is a singleton, so [K(G,1), K(H,1)] = Hom(G,H) on the nose:\n"
-        "with an abelian target there is no conjugacy quotient to take."
-    )
+def demo_disjoint_unions() -> None:
+    rule("4.  Disconnected 1-types:  1 -> prod Out -> hAut -> Sym'(pi_0) -> 1")
+
+    circle = Component("K(Z,1) (the circle)", "Z", out=2, centre_order=None)
+    lens3 = component_of(cyclic_group(3), "K(Z/3,1)")
+    lens5 = component_of(cyclic_group(5), "K(Z/5,1)")
+    s3 = component_of(symmetric_group(3), "K(S_3,1)")
+    klein = component_of(direct_product(cyclic_group(2), cyclic_group(2), "V"), "K(V,1)")
+
+    experiments: List[Tuple[str, List[Component], Optional[int]]] = [
+        ("K(Z,1) | | K(Z/3,1)  (different homotopy types)", [circle, lens3], 4),
+        ("three copies of K(S_3,1)  (rigid pieces, interchangeable)", [s3, s3, s3], 6),
+        ("two copies of K(V,1)", [klein, klein], 72),
+        ("K(Z,1) | | K(Z,1)  (two circles)", [circle, circle], 8),
+        ("K(Z/3,1) | | K(Z/5,1) | | K(Z/5,1)", [lens3, lens5, lens5], None),
+        ("K(Z,1) | | K(Z/3,1) | | K(S_3,1)", [circle, lens3, s3], None),
+    ]
+
+    for name, comps, expected in experiments:
+        total, symp, higher = haut_order(comps)
+        pieces = " * ".join(str(c.out) for c in comps)
+        print(f"\n  {name}")
+        print(f"    components:            {[c.label for c in comps]}")
+        print(f"    prod |Out(pi_1 C_i)| = {pieces} = "
+              f"{'infinite' if any(c.out is None for c in comps) else eval_product(comps)}")
+        print(f"    |Sym'(pi_0)|         = {symp}")
+        print(f"    #hAut                = {total if total is not None else 'infinite'}")
+        print(f"    self-homotopies of the identity: order "
+              f"{higher if higher is not None else 'infinite'}")
+        if expected is not None:
+            assert total == expected, (name, total, expected)
+            print(f"    matches the theorem's value {expected}: yes")
+
+    print("\n  Note the two extremes:")
+    print("   * K(Z,1) | | K(Z/3,1): the pieces have different homotopy types "
+          "(Z is infinite,")
+    print("     Z/3 is not), so Sym' is trivial and #hAut = 2 * 2 = 4.")
+    print("   * three copies of K(S_3,1): the pieces are rigid but interchangeable, "
+          "so all")
+    print("     6 = 3! symmetries are relabellings.")
 
 
-def demo_whitehead(G: Group, H: Group) -> None:
-    rule(f"4. Whitehead for 1-types:  K({G.name},1) vs K({H.name},1)")
-    homs = homomorphisms(G, H)
-    isos = [p for p in homs if is_isomorphism(G, H, p)]
-    print(f"|Hom| = {len(homs)},  of which isomorphisms: {len(isos)}")
-    equivalent = len(isos) > 0
-    print(f"Some homomorphism induces an isomorphism of fundamental groups: {equivalent}")
-    print(
-        f"Hence K({G.name},1) and K({H.name},1) are homotopy equivalent: {equivalent}\n"
-        "(a map of connected 1-types is a homotopy equivalence precisely when it is\n"
-        "an isomorphism on fundamental groups)."
-    )
-    same_fp = G.fingerprint() == H.fingerprint()
-    print(f"Cross-check by canonical group invariant: {same_fp}")
-    assert same_fp == equivalent
+def eval_product(comps: Sequence[Component]) -> int:
+    p = 1
+    for c in comps:
+        assert c.out is not None
+        p *= c.out
+    return p
 
 
-def demo_non_isomorphic_same_order() -> None:
-    rule("5. Same order, different homotopy type: K(Z/8,1), K(D_4,1), K(Q_8,1)")
-    groups = [cyclic(8), dihedral(4), quaternion8()]
-    for A in groups:
-        for B in groups:
-            homs = homomorphisms(A, B)
-            isos = [p for p in homs if is_isomorphism(A, B, p)]
-            mark = "≃" if isos else "≄"
-            print(
-                f"  K({A.name},1) {mark} K({B.name},1)   "
-                f"(|Hom| = {len(homs):>3}, isomorphisms = {len(isos):>3})"
-            )
-    print(
-        "\nAll three groups have order 8, so the three aspherical spaces have the\n"
-        "same 'size', yet no two distinct ones are homotopy equivalent: the\n"
-        "fundamental group, not its order, is the complete invariant."
-    )
+def demo_wreath_growth() -> None:
+    rule("5.  Constant families: the wreath product Out(G) wr Sym(n)")
+    print("For n copies of K(G,1), every permutation of the copies is realised, and")
+    print("  #hAut = |Out(G)|^n * n! .")
+    print(f"\n{'n':>3} | {'K(Z/5,1)':>12} | {'K(V,1)':>12} | {'K(S_3,1)':>12}")
+    print("-" * 50)
+    o5 = out_order(cyclic_group(5))
+    ov = out_order(direct_product(cyclic_group(2), cyclic_group(2), "V"))
+    os3 = out_order(symmetric_group(3))
+    for n in range(1, 7):
+        print(f"{n:>3} | {o5 ** n * factorial(n):>12} | {ov ** n * factorial(n):>12} | "
+              f"{os3 ** n * factorial(n):>12}")
+    # cross-check with the general counting routine
+    klein = component_of(direct_product(cyclic_group(2), cyclic_group(2), "V"))
+    total, _, _ = haut_order([klein] * 3)
+    assert total == ov ** 3 * factorial(3)
+    print("\nCross-checked against the general counting formula for 3 copies of K(V,1):",
+          total)
 
 
-def demo_pi0_and_completeness() -> None:
-    rule("6. Arbitrary 1-types: pi_0 plus the fundamental groups of the components")
-    Z2, Z3, Z4 = cyclic(2), cyclic(3), cyclic(4)
-    S3 = symmetric(3)
-    X = OneType("X", [Z2, Z3, S3])
-    Y = OneType("Y", [S3, Z3, Z2])  # same multiset, listed differently
-    Z = OneType("Z", [Z2, Z4, S3])  # one component changed
-    W = OneType("W", [Z2, Z3])  # one component removed
-    for A, B in [(X, Y), (X, Z), (X, W)]:
-        verdict = "homotopy equivalent" if A.homotopy_equivalent(B) else "NOT equivalent"
-        print(f"  {A}\n  {B}\n    pi_0: {A.pi0} vs {B.pi0}  ->  {verdict}\n")
-    assert X.homotopy_equivalent(Y)
-    assert not X.homotopy_equivalent(Z)
-    assert not X.homotopy_equivalent(W)
-    print(
-        "Two 1-types are homotopy equivalent exactly when some bijection of their\n"
-        "component sets matches up the fundamental groups: reordering is harmless,\n"
-        "changing one group or deleting a component is not."
-    )
+def demo_matrix_normal_form() -> None:
+    rule("6.  Matrix normal form of a self-map of a disjoint union")
+    print("A self-map of | |_i C_i is a pair <sigma, P>: an index map sigma and, for")
+    print("each i, a homotopy class of maps C_i -> C_{sigma(i)}.  Composition is")
+    print("  <sigma,P> . <tau,Q> = <sigma o tau, i |-> Q_i then P_{tau(i)}>.")
+    print("For copies of the circle the entries are integers (degrees), so a self-map")
+    print("of a disjoint union of n circles is an integer matrix with one entry per")
+    print("column, and composition is matrix multiplication.\n")
 
-
-def demo_sharpness() -> None:
-    rule("7. Sharpness: all homotopy groups agree, spaces do not")
-    trivial = Group("1", 1, [])
-    point = OneType("point", [trivial])
-    two_points = OneType("two-point discrete space", [trivial, trivial])
-    print("A totally disconnected space has *every* homotopy group trivial:")
-    print("  a cube is connected, its continuous image is connected, and a")
-    print("  connected subset of a totally disconnected space is a single point,")
-    print("  so every based cube map is constant.\n")
-    print("  pi_n(point)      = trivial for all n >= 1")
-    print("  pi_n(two points) = trivial for all n >= 1")
-    print(f"  pi_0(point) = {point.pi0},  pi_0(two points) = {two_points.pi0}")
-    print(f"  homotopy equivalent? {point.homotopy_equivalent(two_points)}")
-    assert not point.homotopy_equivalent(two_points)
-    print(
-        "\nSo no family of homotopy groups whatsoever - not merely pi_1 - can be a\n"
-        "complete invariant without a connectivity hypothesis.  The component set\n"
-        "is exactly the missing datum, and adding it restores completeness."
-    )
+    # Two circles: sigma swaps them, degrees 2 and -3.
+    sigma = {0: 1, 1: 0}
+    degrees = {0: 2, 1: -3}
+    tau = {0: 1, 1: 0}
+    deg2 = {0: 5, 1: 1}
+    comp_sigma = {i: sigma[tau[i]] for i in (0, 1)}
+    comp_deg = {i: degrees[tau[i]] * deg2[i] for i in (0, 1)}
+    print(f"  f = <sigma={sigma}, degrees={degrees}>")
+    print(f"  g = <tau={tau},   degrees={deg2}>")
+    print(f"  f o g = <{comp_sigma}, degrees={comp_deg}>")
+    print("  f is an equivalence iff sigma is a bijection and each degree is +-1:",
+          all(circle_is_equivalence(d) for d in degrees.values()))
+    print("  the identity-permutation self-equivalences of two circles number 2*2 = 4,")
+    print("  and with the swap the total is 4*2 = 8, as computed above.")
 
 
 def main() -> None:
-    Z2, Z3, Z4, Z6 = cyclic(2), cyclic(3), cyclic(4), cyclic(6)
-    V4 = klein_four()
-    S3, S4 = symmetric(3), symmetric(4)
-    D4 = dihedral(4)
-    Q8 = quaternion8()
-
     print(__doc__)
-
-    demo_classification_table(
-        [
-            (Z2, S3),
-            (Z3, S3),
-            (Z4, S4),
-            (Z6, S3),
-            (S3, S3),
-            (V4, S4),
-            (Z2, D4),
-            (Q8, Q8),
-        ]
-    )
-    demo_fibres_in_detail(S3, S3)
-    demo_abelian_target(Z6, Z6)
-    demo_whitehead(S3, D4)
-    demo_whitehead(V4, klein_four())
-    demo_non_isomorphic_same_order()
-    demo_pi0_and_completeness()
-    demo_sharpness()
-
-    rule("All assertions passed")
+    demo_totient_theorem()
+    demo_connected_examples()
+    demo_selfmap_monoid()
+    demo_disjoint_unions()
+    demo_wreath_growth()
+    demo_matrix_normal_form()
+    rule("All assertions passed.")
 
 
 if __name__ == "__main__":

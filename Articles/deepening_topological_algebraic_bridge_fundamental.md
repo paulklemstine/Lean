@@ -1,133 +1,136 @@
-# When a Group *Is* a Space
+# The Shape of a Group
 
-## The strange afterlife of the fundamental group
+## What a space remembers when you forget almost everything
 
-Take a shape — a coffee cup, a pretzel, a knotted loop of rope — and ask the simplest topological question you can: what happens if you walk in a circle on it? Start at a point, wander around, come back. Two such round trips are "the same" if you can slide one continuously into the other without leaving the shape and without letting go of the starting point. Compose two trips by doing one after the other. What you get is a group: the **fundamental group** $\pi_1(X,x)$, invented by Poincaré in 1895 and still the first serious invariant every topologist meets.
+Imagine you are handed a rubber shape and told you may stretch it, bend it, and squash it, but never tear or glue. Two shapes that can be deformed into one another this way are, for a topologist, *the same*. This is a brutal kind of forgetting: a coffee cup and a doughnut become indistinguishable, a solid ball becomes a point, and every question about distance, angle, and curvature evaporates.
 
-The fundamental group is a translator. It takes a geometric object and returns an algebraic one. And, like every translator, it loses something. A sphere and a point both have trivial fundamental group, yet a sphere is emphatically not a point. So the natural question — *how much does $\pi_1$ actually remember?* — has an easy pessimistic answer: not everything.
+What survives the forgetting? The most famous survivor is the **fundamental group**. Pick a point $x$ in a space $X$ and consider all the loops that start and end at $x$. Two loops count as equal if one can be slid continuously into the other. You can compose loops — run around the first, then the second — and every loop can be run backwards, so these loop-classes form a group, written $\pi_1(X,x)$. For a circle, the loops are classified by how many times you wind around, so $\pi_1(S^1) \cong \mathbb{Z}$. For a doughnut surface (a torus), you can wind around the hole and around the tube independently, so $\pi_1(T^2) \cong \mathbb{Z}^2$.
 
-The interesting question is the optimistic one. **Is there a class of spaces for which $\pi_1$ remembers everything?** And if so, can we say precisely, and completely, what the dictionary between geometry and algebra looks like on that class — not just for objects, but for maps between them?
+The fundamental group is a beautiful invariant, but on its own it is far from a complete one: a sphere and a point both have trivial fundamental group, yet nobody would call them the same. So here is the question this article is about:
 
-This article is about a complete answer, sharpened at every edge: what the dictionary translates, why it is a perfect translation, exactly how badly it fails the moment you weaken the hypotheses, and what the correct invariant is when it does fail.
+> **For which spaces is the fundamental group the whole story — and once we know it is, what exactly does the group tell us?**
 
-## Flattening space: the 1-type
+The answer turns out to be startlingly complete, and it converts topology into pure algebra with no residue.
 
-The trick is to throw away everything the fundamental group cannot see, and see what is left.
+---
 
-Imagine a space in which loops can be interesting but *spheres* cannot: any map of a 2-sphere into it can be shrunk to a point, and the same for 3-spheres, 4-spheres, and so on forever. Such a space is called an **aspherical space**, or an **Eilenberg–MacLane space** $K(G,1)$ when its fundamental group is $G$. The circle is one: its fundamental group is $\mathbb{Z}$, and it has no higher structure at all. So is an infinite genus-$g$ surface, so is the space of configurations of $n$ points in the plane (whose fundamental group is the braid group), so is any complete Riemannian manifold with non-positive curvature.
+## Homotopy $1$-types: spaces with nothing above dimension one
 
-These objects are called **homotopy 1-types**: everything about them lives in dimension $\le 1$. And a 1-type has a perfect finite-dimensional shadow. Instead of the space, keep only:
+The right class of spaces is the class of **homotopy $1$-types**: spaces whose only interesting topology lives in dimension one. Concretely, all higher homotopy groups $\pi_2, \pi_3, \dots$ vanish. A connected homotopy $1$-type with fundamental group $G$ is called an **Eilenberg–MacLane space** $K(G,1)$, or an *aspherical* space. Such a space exists for every group $G$ and is unique up to deformation. Examples are everywhere:
 
-- its points, and
-- the homotopy classes of paths between them.
+- the circle is a $K(\mathbb{Z},1)$;
+- the $n$-dimensional torus is a $K(\mathbb{Z}^n,1)$;
+- the infinite-dimensional lens space is a $K(\mathbb{Z}/n,1)$;
+- every closed surface of genus $\ge 1$ is aspherical;
+- a bouquet of $k$ circles is a $K(F_k,1)$ for the free group $F_k$.
 
-Paths compose; every path can be run backwards; running a path and then its reverse is the same as standing still. What you have written down is a **groupoid**: a category in which every arrow is invertible. This is the *fundamental groupoid* $\Pi_1(X)$, and for a 1-type it is not merely an invariant — it is a faithful replacement for the space. From this point on we can, and will, do topology by doing algebra.
+There is a marvellously economical way to think about a homotopy $1$-type: as a **groupoid**. A groupoid is a small category in which every arrow is invertible. Given a space, take its points as objects and its homotopy classes of paths as arrows; composition is concatenation, and every path can be reversed. Under this dictionary:
 
-Two pieces of vocabulary. For an object $c$ of a groupoid $\mathcal{C}$, the arrows from $c$ to itself form a group $\mathrm{Aut}(c)$, the **vertex group** — this is the fundamental group based at $c$. And $\mathcal{C}$ is **connected at $c$** if every object is isomorphic to $c$; this is the algebraic form of path-connectedness. A connected groupoid is exactly a $K(G,1)$ with $G = \mathrm{Aut}(c)$. Finally, the correct notion of "same shape" for groupoids is **equivalence of categories**, which corresponds precisely to homotopy equivalence of spaces.
+- the **objects** of the groupoid are the points of the space;
+- the **connected components** of the groupoid are the path components, i.e. $\pi_0$;
+- the **arrows from $x$ to itself**, i.e. the automorphism group $\mathrm{Aut}(x)$, are exactly $\pi_1(X,x)$;
+- a **continuous map** becomes a functor, and a **homotopy** between maps becomes a natural isomorphism between functors.
 
-## The first theorem: shape is group
+So a $K(G,1)$ is just a *connected groupoid whose vertex group is $G$* — and the very simplest one has a single object $\star$ with arrow set $G$. That tiny gadget, a group viewed as a one-object groupoid, is a perfectly good stand-in for an infinite-dimensional lens space. Everything below is carried out in this language, where a "space" is a groupoid, a "map" is a functor, and "homotopic" means "naturally isomorphic".
 
-The starting point of the story, which everything below deepens, is this.
+The first pillar is the classification of objects and maps:
 
-> **Theorem (Classification of connected 1-types).** Two connected groupoids are equivalent if and only if their vertex groups are isomorphic.
+> **Classification of $1$-types.** A connected homotopy $1$-type is determined up to homotopy equivalence by its fundamental group: two connected $1$-types are equivalent if and only if their fundamental groups are isomorphic. Moreover, for connected $1$-types the homotopy classes of maps are
+> $$[K(G,1),\,K(H,1)] \;\cong\; \mathrm{Hom}(G,H)/\text{conjugation}.$$
 
-So for aspherical spaces, the answer to "how much does $\pi_1$ remember?" is: *all of it*. A group and a connected 1-type are the same information wearing different clothes. The circle is $\mathbb{Z}$. A surface of genus 2 is its (rather complicated) surface group. The braid group *is* the configuration space.
+That last formula is worth savouring. A map between aspherical spaces is nothing but a homomorphism of fundamental groups, and two homomorphisms give homotopic maps exactly when they differ by conjugation in the target — the conjugation is the residue of not having chosen where the basepoint goes. Topology has been replaced, exactly and without loss, by group theory.
 
-That is a satisfying theorem about *objects*. But mathematics is never only about objects; it is about maps. If a group is a space, what is a homomorphism?
+---
 
-## The second theorem: homomorphism is map, and conjugacy is homotopy
+## Counting the symmetries of a space
 
-Here is where the dictionary becomes genuinely useful. Two results, and they fit together.
+Once you know what all maps $X \to X$ look like, you can ask the natural next question: what are the **self-symmetries** of $X$ up to homotopy? Compose two self-maps and you get a self-map; homotopy classes therefore form a *monoid* $[X,X]$, and inside it sits the group $\mathrm{hAut}(X)$ of invertible classes, the **homotopy self-equivalences**. This group is a genuinely subtle invariant — for honest spaces it is usually very hard to compute.
 
-**Realization.** Let $\mathcal{C}$ be a connected 1-type with basepoint $c$, and let $\mathcal{D}$ be any 1-type with a chosen point $d_0$. Then *every* group homomorphism
-$$\varphi : \mathrm{Aut}(c) \longrightarrow \mathrm{Aut}(d_0)$$
-is induced by an actual map of 1-types. Nothing algebraic is unrealizable: the map $[\,K(G,1), K(H,1)\,] \to \mathrm{Hom}(G,H)$ is surjective.
+For $1$-types it is completely computable. Composing the classification formula with itself gives:
 
-The construction is disarmingly simple, and worth savouring. Because $\mathcal{C}$ is connected, choose once and for all, for each object $X$, a path $p_X$ from the basepoint $c$ to $X$ (with $p_c$ the constant path). Now any arrow $g : X \to Y$, however far from the basepoint it lives, can be dragged home: the composite
-$$\ell(g) \;=\; p_X \cdot g \cdot p_Y^{-1}$$
-is a *loop at $c$*, an element of $\mathrm{Aut}(c)$. This "loop-of" operation reverses composition-order bookkeeping in the obvious way and sends identities to the identity. So we may define a functor that crushes every object of $\mathcal{C}$ to the single point $d_0$ and sends the arrow $g$ to $\varphi(\ell(g))$. It is a map of 1-types, and on fundamental groups it is exactly $\varphi$, because a loop at the basepoint is its own dragged-home version. Every homomorphism, realized.
+> **The self-map monoid.** For a connected $1$-type $X$ with $\pi_1 = G$, the monoid of homotopy classes of self-maps is isomorphic to the monoid of conjugacy classes of endomorphisms of $G$, with composition induced by composition of homomorphisms.
 
-**Homotopy is conjugation.** Realization is surjective, but it is not injective — and the failure is completely understood. When are two maps of 1-types homotopic? The homotopy-theoretic notion of "homotopy between maps" translates into "natural isomorphism between functors", and there is an exact criterion:
+> **Invertibility criterion (a Whitehead-type statement).** A homotopy class of self-maps of a $1$-type is invertible in the monoid $[X,X]$ if and only if it is represented by an honest homotopy equivalence.
 
-> **Theorem (Homotopies are conjugations).** Let $\mathcal{C}$ be connected at $c$, and let $F, G$ be two maps out of $\mathcal{C}$. Then $F$ and $G$ are homotopic if and only if there is a single isomorphism $h : F(c) \to G(c)$ that intertwines the two induced actions of the fundamental group: $F(a) \cdot h = h \cdot G(a)$ for every loop $a$ at $c$.
+> **The symmetry theorem.** For a connected $1$-type $X$ with $\pi_1 = G$,
+> $$\mathrm{hAut}(X)\;\cong\;\mathrm{Out}(G)\;=\;\mathrm{Aut}(G)/\mathrm{Inn}(G).$$
 
-One direction is a one-liner: a homotopy, evaluated at the basepoint, gives $h$, and naturality is exactly the intertwining. The other direction is the interesting one, and it is where connectedness earns its keep: from the single datum $h$ at the basepoint, one *propagates* the homotopy to all of $\mathcal{C}$ by conjugating with the chosen paths,
-$$h_X \;=\; F(p_X)^{-1} \cdot h \cdot G(p_X),$$
-and then checks — this is the technical heart — that the result does not depend on which path was chosen, precisely because two choices differ by a loop, and loops are intertwined by hypothesis. Path-independence then upgrades to naturality on the nose.
+Here $\mathrm{Inn}(G)$ is the group of *inner* automorphisms $g \mapsto aga^{-1}$; the quotient $\mathrm{Out}(G)$ is the group of **outer** automorphisms. Inner automorphisms disappear because conjugating a homomorphism does not change the homotopy class of the corresponding map — geometrically, an inner automorphism is realised by dragging the basepoint around a loop, which is a homotopy, not new symmetry.
 
-Specialize this to the two homomorphisms $\varphi, \psi : G \to H$ and their realizations, and the intertwining condition collapses to a single, familiar statement: there exists $u \in H$ with $\psi(a) = u\,\varphi(a)\,u^{-1}$ for all $a$. Conjugacy. So:
+There is one more layer. Symmetries of a space form not just a group but a *$2$-group*: not only can two self-maps be equal up to homotopy, but two homotopies can be equal up to a higher homotopy. The bottom layer of this $2$-group is $\mathrm{hAut}$; the top layer consists of self-homotopies of the identity map. Those, too, are pinned down exactly:
 
-> **Theorem (Classification of maps).** For connected 1-types, homotopy classes of maps correspond bijectively to conjugacy classes of homomorphisms:
-> $$[\,K(G,1),\,K(H,1)\,] \;\;\cong\;\; \mathrm{Hom}(G,H)\big/\text{conjugation}.$$
+> **Self-homotopies of the identity.** The self-homotopies of the identity map of a connected $1$-type with fundamental group $G$ form the **centre** $Z(G)$.
 
-There is the dictionary, complete on both objects and morphisms: *spaces are groups, maps are homomorphisms, homotopies are conjugations.* And the dictionary respects composition — the homomorphism induced by a composite of maps is conjugate to the composite of the induced homomorphisms, so the correspondence is an exact identity once one passes to conjugacy classes.
+So the entire automorphism $2$-group of an aspherical space is $(\mathrm{Out}\,G,\; Z(G))$: outer automorphisms on the bottom, the centre on top. The two most classical "defects" of a group — the failure of automorphisms to be inner, and the failure of the group to be centreless — are precisely the two layers of symmetry of its space.
 
-## Counting: how many homomorphisms hide inside one map?
+---
 
-Because the correspondence is a quotient, one can ask a quantitative question: given a homotopy class of maps, how many homomorphisms realize it? The answer is a clean piece of group theory.
+## The theorem in action
 
-Conjugation makes $H$ act on $\mathrm{Hom}(G,H)$, and the homomorphisms realizing a given homotopy class are exactly one orbit. What stabilizes $\varphi$? An element $u$ fixes $\varphi$ precisely when it commutes with every element of the image, i.e. lies in the **centralizer** $C_H(\varphi(G))$. The orbit–stabilizer theorem then gives:
+The strength of a general theorem is measured by what it computes.
 
-> **Theorem (Fibres of the classification).** The homomorphisms inducing a fixed homotopy class of maps form a coset space $H / C_H(\varphi(G))$; in particular their number equals the index $[H : C_H(\varphi(G))]$.
+**The circle.** $\pi_1(S^1) = \mathbb{Z}$, and every endomorphism of $\mathbb{Z}$ is multiplication by an integer $d$. Since $\mathbb{Z}$ is abelian, conjugation does nothing, and the monoid of self-maps of the circle is the multiplicative monoid $(\mathbb{Z},\cdot)$ — the classical **degree**. Two self-maps of the circle are homotopic exactly when they have the same degree; a self-map is an equivalence exactly when its degree is $\pm 1$. Hence $\mathrm{hAut}(S^1) \cong \mathbb{Z}/2$: the identity and the reflection. Two symmetries, no more.
 
-Two extremes make this vivid. If $\varphi$ is trivial, the centralizer is all of $H$ and the fibre is a single point — the constant map is homotopically rigid. If $\varphi$ is surjective onto a centreless group, the centralizer is the centre of $H$, which is trivial, so the fibre has $|H|$ elements: one full copy of $H$'s worth of homomorphisms, all describing the same map up to homotopy.
+**The torus.** $\pi_1(T^n) = \mathbb{Z}^n$ is abelian, so $\mathrm{Out} = \mathrm{Aut}$, and automorphisms of $\mathbb{Z}^n$ are invertible integer matrices:
+$$\mathrm{hAut}(T^n)\;\cong\;\mathrm{GL}_n(\mathbb{Z}).$$
+For $n=1$ this is $\{\pm 1\}$, recovering degree $\pm 1$; for $n = 2$ it is the classical statement that self-equivalences of the two-torus are classified by $2 \times 2$ integer matrices of determinant $\pm 1$ — the very matrices that govern continued fractions, the modular group, and Anosov diffeomorphisms.
 
-## Whitehead's theorem, in one dimension
+**Lens spaces and Euler's totient.** Take $G = \mathbb{Z}/n$. Again abelian, so $\mathrm{hAut} = \mathrm{Aut}(\mathbb{Z}/n)$, and an automorphism is multiplication by a unit mod $n$. Therefore
 
-There is a second classical question the dictionary answers. Suppose a map between spaces induces an isomorphism on fundamental groups. Must it be a homotopy equivalence? In general, no — that is the whole point of higher homotopy. But for 1-types:
+> **The totient theorem.** The infinite lens space $K(\mathbb{Z}/n,1)$ has homotopy self-equivalence group isomorphic to the unit group $(\mathbb{Z}/n)^{\times}$, and hence exactly
+> $$\#\,\mathrm{hAut}\bigl(K(\mathbb{Z}/n,1)\bigr) \;=\; \varphi(n)$$
+> homotopy classes of self-homotopy-equivalences, where $\varphi$ is Euler's totient function.
 
-> **Whitehead's Theorem for 1-types.** A map between *connected* 1-types which induces an isomorphism on fundamental groups is a homotopy equivalence. Conversely, every homotopy equivalence induces an isomorphism on fundamental groups.
+This is a genuine bridge: a purely homotopy-theoretic count is answered by the most elementary function in number theory. For $n = 1$ and $n = 2$ the count is $1$: those spaces are **homotopy rigid**, admitting no symmetry at all beyond the identity. For $n=5$ the count is $4$. For a prime $p$ it is $p-1$. And because $\varphi$ oscillates wildly — $\varphi(30) = 8$ while $\varphi(31) = 30$ — the symmetry group of $K(\mathbb{Z}/n,1)$ leaps up and down with $n$ in a way no coarse topological reasoning would predict.
 
-The proof is a pleasing three-step argument, each step a direct translation of a property of $\varphi$:
+**Rigidity without triviality.** One might guess that a space with lots of loops has lots of symmetry. Not so. Take $G = S_3$, the symmetric group on three letters: nonabelian, of order $6$. Every automorphism of $S_3$ is inner, so $\mathrm{Out}(S_3) = 1$; and $Z(S_3) = 1$. Therefore $K(S_3,1)$ is **completely rigid**: its only self-homotopy-equivalence is the identity, and the identity has no nontrivial self-homotopy. A space with a nonabelian fundamental group can be perfectly stiff.
 
-- **Injectivity on $\pi_1$ makes the map faithful.** Two arrows $f, g : X \to Y$ with the same image have loops-at-the-basepoint with the same image; injectivity forces $\ell(f) = \ell(g)$; conjugating back by the chosen paths recovers $f = g$.
-- **Surjectivity on $\pi_1$ makes the map full.** Given a target arrow, drag it home with the chosen paths, pull it back through $\varphi$, and push it out again.
-- **Connectedness of the target makes the map essentially surjective**, for free: every object of the target is isomorphic to the image of the basepoint.
+**Nonabelian symmetry.** Contrast the Klein four group $V = (\mathbb{Z}/2)^2$. It is abelian with trivial inner automorphisms, so $\mathrm{hAut}(K(V,1)) \cong \mathrm{Aut}(V)$, which permutes the three nonidentity elements arbitrarily and therefore has order $6$ and is *nonabelian*. So the symmetry group of a space with an abelian fundamental group can itself be nonabelian.
 
-Fully faithful plus essentially surjective is exactly an equivalence. It is a genuinely one-dimensional miracle: in this world, $\pi_1$-isomorphism *is* homotopy equivalence.
+---
 
-## Sharpness: what breaks, and how badly
+## Breaking the space into pieces
 
-Every hypothesis above deserves a stress test, and the most instructive result in this circle of ideas is a counterexample.
+All of the above assumed connectedness. What if the space falls apart into pieces? Every $1$-type is the disjoint union of its connected components, so this is the last thing to understand, and the answer completes the picture.
 
-Take two spaces: a single point, and a two-point space with the discrete topology. Their fundamental groups are both trivial. Are they homotopy equivalent? Obviously not — one is connected and the other is not. That much is the familiar warning that connectedness cannot be dropped, and its algebraic shadow is exact: the one-object discrete groupoid and the two-object discrete groupoid have isomorphic (trivial) vertex groups at every basepoint, are not both connected, and are not equivalent.
+Two extremes are easy to imagine. If all the pieces are points — a totally disconnected $1$-type, all fundamental groups trivial — then a self-map is just a function on the set of components, and
 
-But the counterexample is far sharper than the $\pi_1$-level statement suggests, and this is the punchline. In a totally disconnected space — one whose only connected subsets are points — *every* higher homotopy group vanishes too. The reason is simple and complete: an $n$-dimensional cube is connected; the continuous image of a connected set is connected; a connected subset of a totally disconnected space is a single point. So every based map of a cube is constant, and $\pi_n$ is trivial for all $n \ge 1$.
+> the monoid of self-maps is the full transformation monoid of $\pi_0$, and $\mathrm{hAut}$ is the **symmetric group** $\mathrm{Sym}(\pi_0)$.
 
-Therefore:
+Pure combinatorics. At the other extreme a connected space contributes only $\mathrm{Out}(\pi_1)$ — pure algebra. The general case has to interpolate, and it does so through a *matrix* description. Here is the idea. A map out of a connected space cannot split: its image is connected, so it lands inside a single component of the target. Consequently a self-map of $\bigsqcup_i C_i$ consists of
 
-> **Theorem (No family of homotopy groups suffices).** The one-point space and the discrete two-point space have isomorphic homotopy groups in *every* degree, yet they are not homotopy equivalent.
+1. a rule $\sigma$ saying which component each component goes to, and
+2. for each $i$, a homotopy class of maps $C_i \to C_{\sigma(i)}$.
 
-This is a much stronger failure than "$\pi_1$ is not a complete invariant". It says that *no* amount of higher homotopy data — the entire infinite tower $\pi_1, \pi_2, \pi_3, \dots$ — can rescue a classification if you refuse to look at the set of connected components. Whitehead's theorem in every dimension is a statement about connected spaces for a reason, and this pair of spaces is the reason.
+That is precisely a *matrix* with one nonzero entry per column, and composition multiplies these matrices. Formally:
 
-## The missing invariant, and the complete answer
+> **Matrix description of self-maps.** For an arbitrary family $(C_i)_{i \in \iota}$ of connected $1$-types, the monoid of homotopy classes of self-maps of $\bigsqcup_i C_i$ is isomorphic to the monoid of pairs $\langle \sigma, P\rangle$ with $\sigma : \iota \to \iota$ and $P_i \in [C_i, C_{\sigma(i)}]$, multiplied by
+> $$\langle \sigma,P\rangle \cdot \langle \tau, Q\rangle = \bigl\langle \sigma\circ\tau,\; i \mapsto Q_i \text{ followed by } P_{\tau(i)}\bigr\rangle .$$
 
-So what *is* the complete invariant of an arbitrary 1-type, connected or not? The counterexample tells us what is missing — the set of components — and it turns out that this is the only thing missing.
+Restricting to the invertible elements gives the structure theorem. A self-equivalence permutes the components, so there is a homomorphism $\mathrm{hAut}\bigl(\bigsqcup_i C_i\bigr) \to \mathrm{Sym}(\pi_0)$, and both its image and its kernel can be identified exactly:
 
-Write $\pi_0(\mathcal{C})$ for the set of isomorphism classes of objects of a groupoid: the algebraic form of "the set of connected components". It is a homotopy invariant, since an equivalence of groupoids induces a bijection on components, and it is a single point exactly when the 1-type is connected. On the opposite extreme, for totally disconnected 1-types — those whose only arrows are identities, all of whose fundamental groups are trivial — the set of components is a *complete* invariant: two such are equivalent precisely when their component sets are in bijection. So $\pi_0$ is exactly the information $\pi_1$ was missing in the extreme case.
+> **Structure of the symmetry group of a disconnected $1$-type.** The sequence
+> $$1 \longrightarrow \prod_i \mathrm{Out}\bigl(\pi_1 C_i\bigr) \longrightarrow \mathrm{hAut}\Bigl(\bigsqcup_i C_i\Bigr) \longrightarrow \mathrm{Sym}'(\pi_0) \longrightarrow 1$$
+> is exact, where $\mathrm{Sym}'(\pi_0)$ is the group of those permutations $\sigma$ of the components for which $C_i$ is homotopy equivalent to $C_{\sigma(i)}$ for every $i$. Moreover the self-homotopies of the identity form $\prod_i Z(\pi_1 C_i)$.
 
-The general theorem interpolates between the two extremes, and its proof is a decomposition.
+In words: **a symmetry of a disconnected space is a shuffle of look-alike pieces followed by an internal symmetry of each piece**, and nothing else. Only pieces of the same homotopy type can be interchanged — a topological version of the obvious statement that you may only swap identical parts.
 
-> **Theorem (Decomposition into components).** Every 1-type is equivalent to the disjoint union, over its set of connected components, of the connected 1-types sitting on those components.
+Both extremes drop out. If every piece is a copy of the same $K(G,1)$, every permutation is achievable and the extension splits into a **wreath product**
+$$\mathrm{hAut}\Bigl(\bigsqcup_{i \in \iota} K(G,1)\Bigr) \;\cong\; \mathrm{Out}(G) \wr \mathrm{Sym}(\iota) \;=\; \bigl(\iota \to \mathrm{Out}(G)\bigr) \rtimes \mathrm{Sym}(\iota),$$
+of order $|\mathrm{Out}(G)|^n \cdot n!$ for $n$ copies. If, on the other hand, no two pieces are equivalent, no permutation is achievable and the answer collapses to the plain product $\prod_i \mathrm{Out}(\pi_1 C_i)$.
 
-One assembles the pieces by the obvious functor from the disjoint union back into the whole; it is faithful because arrows never leave a component, full because a component is a full subgroupoid, and essentially surjective because every object lies in its own component.
+Two concrete illustrations pin down the extremes. Take the disjoint union of a circle and an infinite lens space with fundamental group $\mathbb{Z}/3$. Their fundamental groups are $\mathbb{Z}$ and $\mathbb{Z}/3$, one infinite and one finite, so the two pieces have *different homotopy types* and cannot be swapped. Each piece has exactly two symmetries ($\mathrm{Out}(\mathbb{Z}) = \{\pm 1\}$, and $\varphi(3) = 2$), so
 
-> **Theorem (Gluing).** A disjoint union of connected 1-types is determined by its indexing set together with the fundamental groups of the pieces: two such unions are equivalent if and only if there is a bijection of indexing sets under which corresponding fundamental groups are isomorphic.
+> the space $K(\mathbb{Z},1) \sqcup K(\mathbb{Z}/3,1)$ has exactly $2 \times 2 = 4$ homotopy classes of self-homotopy-equivalences, none of which moves a component.
 
-Here the forward direction uses the fact that objects in different summands are never isomorphic — so an equivalence must permute the summands — while the backward direction glues the component-wise equivalences supplied by the classification of connected 1-types.
+Contrast three copies of the rigid space $K(S_3,1)$: each copy has *no* internal symmetry, but the copies are interchangeable, so the symmetry group is exactly $\mathrm{Sym}(3)$, of order $6$ — all symmetry is relabelling. And two copies of $K(V,1)$ for the Klein four group have $6^2\cdot 2 = 72$ symmetries, mixing both sources.
 
-Putting the two together gives the theorem the whole story has been building toward.
+---
 
-> **Theorem (Complete invariant for arbitrary 1-types).** Two homotopy 1-types are homotopy equivalent if and only if there is a bijection between their sets of connected components under which the fundamental groups of corresponding components are isomorphic.
+## Why it matters
 
-The invariant is the pair: $\pi_0$, together with the family of fundamental groups indexed by $\pi_0$. Nothing more; nothing less. The point-versus-two-points counterexample is not a defect in the theory but its boundary condition made visible: those two spaces have the same fundamental groups and different $\pi_0$, and the theorem says that is exactly why they differ.
+There is a moral here that runs deeper than the individual computations. Aspherical spaces are the exact place where topology and group theory become the same subject. The dictionary is complete in every direction: spaces ↔ groups, maps ↔ homomorphisms up to conjugacy, symmetries ↔ outer automorphisms, higher symmetries ↔ centres, components ↔ index sets, and disjoint unions ↔ matrix and wreath constructions. Nothing is lost in translation, and everything is computable in principle from a presentation of the groups involved.
 
-## Why anyone should care
+This is why aspherical spaces are the natural home of some of the hardest open problems in topology — the Borel conjecture, the Farrell–Jones conjecture, geometric group theory as a whole. When a space is aspherical, all of its topology is encoded in a group, and questions about the space become questions about the group. What the results above make precise is the *homotopy-theoretic* half of that program, in complete generality: not just which spaces are classified by their fundamental groups, but exactly how many symmetries they have, which symmetries mix which pieces, and how the higher structure sits on top.
 
-Beyond the tidiness, this dictionary is a working tool.
-
-Aspherical spaces are everywhere in mathematics. Closed surfaces of genus at least one, configuration spaces of points in the plane, complements of many knots and links, locally symmetric spaces, non-positively curved manifolds, classifying spaces of discrete groups — all are $K(G,1)$'s. For all of them, the results above say that questions about maps, homotopies, and homotopy equivalences are *literally* questions about homomorphisms and conjugacy, which are finite computations when the groups are finite or finitely presented.
-
-Concretely: if $G$ and $H$ are finite groups, the set of homotopy classes of maps between the corresponding aspherical spaces is a finite set that can be enumerated by a computer — list the homomorphisms $G \to H$, group them into conjugation orbits, count. The orbit sizes are not arbitrary; they are indices of centralizers, and they must sum to $|\mathrm{Hom}(G,H)|$. This is the kind of statement one can check, and it is the kind of computation that turns a classification theorem into an algorithm.
-
-There is also a philosophical payoff. Mathematics is full of *bridges*: constructions that turn objects of one kind into objects of another. Most bridges leak. The fundamental group leaks badly in general — that is why homotopy theory is hard. What the results here identify is a precise region in which the bridge does not leak at all: on 1-types, algebra and topology are not merely analogous, they are the same subject in two notations, and the correspondence extends from objects to maps to homotopies between maps, with the failure modes classified exactly. Finding those regions — and marking their borders with counterexamples as sharp as a point versus two points — is a large part of what mathematics is for.
+And along the way, the count of symmetries of an infinite lens space turned out to be Euler's totient function. It is a small thing, but it is exactly the sort of small thing that tells you the dictionary is real: ask a question about rubber shapes, and receive an answer from elementary number theory.
