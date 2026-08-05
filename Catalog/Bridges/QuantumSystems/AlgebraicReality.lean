@@ -24,15 +24,15 @@ theorem complex_norm_sq_multiplicative (z w : ℂ) :
 fundamental quaternion identity i² = j² = k² = ijk = -1). -/
 theorem quaternion_ij_eq_k :
     (⟨0, 1, 0, 0⟩ : Quaternion ℝ) * ⟨0, 0, 1, 0⟩ = ⟨0, 0, 0, 1⟩ := by
-  ext <;> simp [Quaternion.re_mul, Quaternion.imI_mul,
-                Quaternion.imJ_mul, Quaternion.imK_mul] <;> ring
+  ext <;> simp [Quaternion.mul_re, Quaternion.mul_imI,
+                Quaternion.mul_imJ, Quaternion.mul_imK] <;> ring
 
 /-- The quaternionic relation ji = -k (demonstrating non-commutativity:
 ij = k ≠ -k = ji). -/
 theorem quaternion_ji_eq_neg_k :
     (⟨0, 0, 1, 0⟩ : Quaternion ℝ) * ⟨0, 1, 0, 0⟩ = ⟨0, 0, 0, -1⟩ := by
-  ext <;> simp [Quaternion.re_mul, Quaternion.imI_mul,
-                Quaternion.imJ_mul, Quaternion.imK_mul] <;> ring
+  ext <;> simp [Quaternion.mul_re, Quaternion.mul_imI,
+                Quaternion.mul_imJ, Quaternion.mul_imK] <;> ring
 
 /-- ℝ embeds in ℂ preserving multiplication. -/
 theorem real_embeds_in_complex (x y : ℝ) :
@@ -155,6 +155,5 @@ theorem dim_O_power_of_two : 8 = 2 ^ 3 := by norm_num
 theorem cayley_dickson_doubles (n : ℕ) : 2 * (2 ^ n) = 2 ^ (n + 1) := by
   ring
 
-end CayleyDicksonPair
-
 end
+end CayleyDicksonPair

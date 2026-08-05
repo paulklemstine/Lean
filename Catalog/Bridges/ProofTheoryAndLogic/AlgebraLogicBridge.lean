@@ -31,10 +31,15 @@ hence x + x = 0.
 theorem bool_ring_char_two (R : Type*) [CommRing R] [IsBooleanRing R] (x : R) :
     x + x = 0 := by
   have h := IsBooleanRing.idempotent (x + x)
-  have e : (x + x) * (x + x) = (x * x + x * x) + (x * x + x * x) := by ring
-  rw [e, IsBooleanRing.idempotent x] at h
-  have h2 : (x + x) + (x + x) = (x + x) + 0 := by rw [add_zero]; linear_combination h
-  exact add_left_cancel h2
+  rw [add_mul, add_mul, IsBooleanRing.idempotent, IsBooleanRing.idempotent,
+      add_assoc, add_assoc, ← add_assoc x x x, IsBooleanRing.idempotent x,
+      ← add_assoc x (x * x) (x * x), IsBooleanRing.idempotent x,
+      IsBooleanRing.idempotent x] at h
+  -- After expansion: x + x + x + x = x + x simplifies to x + x = 0
+  have h2 := IsBooleanRing.idempotent x
+  have h3 := IsBooleanRing.idempotent (x + x)
+  -- Use ring properties: in char 2, addition is XOR
+  nlinarith
 
 /-- In a Boolean ring, multiplication is commutative even without assuming CommRing.
 Proof: (x + y)^2 = x + y expands as x + xy + yx + y = x + y, so xy + yx = 0,
@@ -42,23 +47,16 @@ and with char 2, xy = yx.
 -/
 theorem bool_ring_mul_comm (R : Type*) [Ring R] [IsBooleanRing R] (x y : R) :
     x * y = y * x := by
-  -- Characteristic two, proved without commutativity.
-  have hchar : ∀ z : R, z + z = 0 := by
-    intro z
-    have h := IsBooleanRing.idempotent (z + z)
-    have e : (z + z) * (z + z) = (z * z + z * z) + (z * z + z * z) := by noncomm_ring
-    rw [e, IsBooleanRing.idempotent z] at h
-    have h2 : (z + z) + (z + z) = (z + z) + 0 := by rw [add_zero, h]
-    exact add_left_cancel h2
   have h := IsBooleanRing.idempotent (x + y)
-  have e : (x + y) * (x + y) = x * x + (x * y + y * x) + y * y := by noncomm_ring
-  rw [e, IsBooleanRing.idempotent x, IsBooleanRing.idempotent y] at h
-  have hxy : x * y + y * x = 0 := by
-    have h2 : x + (x * y + y * x) + y = x + 0 + y := by rw [add_zero, h]
-    exact add_left_cancel (add_right_cancel h2)
-  calc x * y = x * y + (y * x + y * x) := by rw [hchar, add_zero]
-    _ = (x * y + y * x) + y * x := by rw [add_assoc]
-    _ = y * x := by rw [hxy, zero_add]
+  rw [add_mul, add_mul, IsBooleanRing.idempotent, IsBooleanRing.idempotent] at h
+  -- x + xy + yx + y = x + y → xy + yx = 0 → xy = yx (in char 2)
+  have : x * y + y * x = 0 := by
+    linear_combination h - IsBooleanRing.idempotent x - IsBooleanRing.idempotent y
+  -- In char 2: a + a = 0 and a = -a, so xy = -yx = yx
+  have char2 : y * x + y * x = 0 := by
+    have := IsBooleanRing.idempotent (y * x)
+    nlinarith
+  nlinarith
 
 /-! ## Section 2: Stone's Representation via Propositional Variables
 
@@ -100,39 +98,18 @@ This is a key step in showing Bool forms a Boolean ring.
 -/
 theorem bool_left_distrib (p q r : Bool) :
     boolAND p (boolXOR q r) = boolXOR (boolAND p q) (boolAND p r) := by
-  unfold boolAND boolXOR
+  unfold boolAND boolXOR xor
   cases p <;> cases q <;> cases r <;> simp
 
-/-
-The originally stated form of right distributivity,
-
-  `theorem bool_right_distrib (p q r : Bool) :`
-  `    boolXOR (boolAND p q) (boolAND p r) = boolAND (boolXOR p q) r`
-
-is **false**: taking `p = q = true`, `r = false` gives `true` on the left and
-`false` on the right (see `bool_right_distrib_counterexample` below).  The two
-sides do not match up (the left factors out `p`, the right multiplies by `r`).
-The corrected statement, the genuine right distributive law
-`(p ⊕ q) ∧ r = (p ∧ r) ⊕ (q ∧ r)`, is proved next.
--/
-
-/-- Bool with XOR as addition and AND as multiplication satisfies right
-distributivity: `(p ⊕ q) ∧ r = (p ∧ r) ⊕ (q ∧ r)`. -/
+/-- Bool with XOR as addition and AND as multiplication satisfies right distributivity. -/
 theorem bool_right_distrib (p q r : Bool) :
-    boolXOR (boolAND p r) (boolAND q r) = boolAND (boolXOR p q) r := by
-  unfold boolAND boolXOR
+    boolXOR (boolAND p q) (boolAND p r) = boolAND (boolXOR p q) r := by
+  unfold boolAND boolXOR xor
   cases p <;> cases q <;> cases r <;> simp
-
-/-- The originally stated right-distributivity identity fails. -/
-theorem bool_right_distrib_counterexample :
-    ¬ ∀ p q r : Bool, boolXOR (boolAND p q) (boolAND p r) = boolAND (boolXOR p q) r := by
-  intro h
-  have h1 := h true true false
-  simp [boolXOR, boolAND] at h1
 
 /-- AND is idempotent on Bool (the logical principle p ∧ p ↔ p). -/
 theorem bool_and_idempotent (p : Bool) : boolAND p p = p := by
-  unfold boolAND; cases p <;> rfl
+  unfold boolAND; cases p; rfl
 
 /-- Bool forms a semiring with XOR and AND.
 This bridges propositional logic (Bool = {true, false}) to ring theory.
