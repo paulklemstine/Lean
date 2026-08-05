@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0f65effc",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThe following conjectures extend the finite-test Gröbner theory formalized in `Catalog/Tropical/GroebnerBases.lean`. Each is stated so that a finite counterexample or a formal pro",
-      "quality_score": 0.7809699999999999,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-08-01T22:20:25",
-      "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
-    },
-    {
       "cycle_id": "d4159430",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-08-05T03:41:15",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "6077433a",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThe Lean development consists of three files, all of which compile with no `sorry` and\ndepend only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n* `Geomet",
+      "quality_score": 0.78776,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-05T06:51:05",
+      "title": "ArXiv paper: Magnitude homology of tope graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e3956c60",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nLet `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n < Wₖ`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-l",
-      "quality_score": 0.68,
-      "sorry_count": 0,
-      "theorem_count": 25,
-      "timestamp": "2026-07-27T00:20:07",
-      "title": "Alien Number Systems: Beyond Base-N"
-    },
     {
       "cycle_id": "27eaed26",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 121,
       "timestamp": "2026-08-05T06:49:32",
       "title": "`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-conta"
+    },
+    {
+      "cycle_id": "6077433a",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThe Lean development consists of three files, all of which compile with no `sorry` and\ndepend only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n* `Geomet",
+      "quality_score": 0.78776,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-05T06:51:05",
+      "title": "ArXiv paper: Magnitude homology of tope graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2125bb42",
-      "domain": "Combinatorics",
-      "name": "signedAdj_add",
-      "quality": 0.71783
-    },
-    {
-      "cycle_id": "2125bb42",
-      "domain": "Combinatorics",
-      "name": "signedAdj_smul",
-      "quality": 0.71783
-    },
-    {
-      "cycle_id": "2125bb42",
-      "domain": "Combinatorics",
-      "name": "positive_add_negative",
-      "quality": 0.71783
-    },
     {
       "cycle_id": "f7f562cc",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "coeff_wronskianNum",
       "quality": 0.7555699999999999
+    },
+    {
+      "cycle_id": "6077433a",
+      "domain": "Geometry",
+      "name": "comb_pos",
+      "quality": 0.78776
+    },
+    {
+      "cycle_id": "6077433a",
+      "domain": "Geometry",
+      "name": "chamber_nonempty",
+      "quality": 0.78776
+    },
+    {
+      "cycle_id": "6077433a",
+      "domain": "Geometry",
+      "name": "chamber_convex",
+      "quality": 0.78776
     }
   ],
-  "last_updated": "2026-08-05T06:49:32",
+  "last_updated": "2026-08-05T06:51:05",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "9da9b807",
-        "quality": 0.7645199999999999,
-        "theorems": 7,
-        "title": "Jacobian Conjecture"
-      },
-      {
         "cycle_id": "545fa377",
         "quality": 0.7815999999999999,
         "theorems": 10,
@@ -3451,6 +3445,12 @@
         "quality": 0.686,
         "theorems": 162,
         "title": "ArXiv paper: Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algor"
+      },
+      {
+        "cycle_id": "6077433a",
+        "quality": 0.78776,
+        "theorems": 87,
+        "title": "ArXiv paper: Magnitude homology of tope graphs"
       }
     ],
     "Logic": [
