@@ -13309,11 +13309,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "059cccbd",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13326,7 +13326,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0611",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-05T20:55:12.114341+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13341,7 +13341,7 @@
       "source": "",
       "source_exp_id": "6622cac1",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/6622cac1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_938dd705",
       "timestamp": "2026-07-23T02:29:54.150505+00:00",
       "title": "Future directions from cycle 6622cac1"
@@ -18156,7 +18156,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Bridges"
       ],
@@ -18318,7 +18318,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone does not guarantee robustness under finite deletion.\n\n## 1. Ordered-block criterion from the paper\n\nFormalize the paper's more general criterion before specializing to dyadic blocks. A useful interface should include:\n\n- a sequence of finite, pairwise ordered blocks of natural numbers;\n- lower bounds on each block's cardinality;\n- hypotheses controlling gaps or overlap of attainable subset-sum intervals;\n- a conclusion phrased as `StronglyComplete`.\n\nThis is likely the most reusable route to the headline theorem.\n\n## 2. Dyadic specialization\n\nDefine\n\n`dyadicBlock A k = A ∩ Set.Ioc (2^k) (2^(k+1))`\n\nand formalize the eventual six-elements-per-block condition. Once the ordered-block theorem is available, prove the dyadic result by checking its structural hypotheses.\n\n## 3. Analytic divergence hypothesis\n\nIntroduce distance to the nearest integer using the existing circle/quotient or `Int.fract` infrastructure, and formalize the condition\n\n`∀ θ : ℝ, θ ∉ Set.range ((↑) : ℤ → ℝ) → ∑' a, ... = ∞`\n\nwith a nonnegative extended-real sum (`ℝ≥0∞`) if that gives the cleanest notion of divergence. Care is needed because the paper writes a sum indexed by a set rather than a sequence.\n\n## 4. Monotonicity and tails\n\nUseful intermediate results include:\n\n- every superset of a complete set is complete;\n- every superset of a strongly complete set is strongly complete;\n- finite changes preserve strong completeness (already proved here);\n- a set is strongly complete iff every finite initial segment can be deleted while retaining completeness.\n\nThe final equivalence turns arbitrary finite deletions into canonical initial-segment deletions and may simplify the paper's argument.\n\n## 5. Further contrarian tests\n\nInvestigate and either prove or refute:\n\n1. If `A` is complete and contains infinitely many odd elements, then `A` is strongly complete.\n2. If every residue class modulo every `m ≥ 2` contains infinitely many elements of `A`, then completeness implies strong completeness.\n3. Six elements in each sufficiently large dyadic block can be reduced to five if the analytic divergence hypothesis is strengthened quantitatively.\n\nThe first conjecture is especially suspect: parity is only one possible finite-deletion obstruction, and analogous obstructions modulo larger integers should be searched for.\n\n## 6. Exact correspondence with the source\n\nA later phase should pin the paper's bibliographic version and translate its named propositions in proof order, recording exactly which assumptions are used in each result. This file deliberately focuses on foundational consequences and a contrarian counterexample rather than claiming a complete formalization of the analytic headline theorem.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -18563,7 +18563,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe formal development now proves the converse criterion beginning with the usual individual-cylinder hypothesis. For every integer base `b ≥ 2`, uniform limiting frequencies for all aligned base-`b` cylinder cells imply the expected frequencies for finite unions of adjacent cells, hence for every interval with endpoints on a common base-`b` grid. Explicit floor/ceiling approximations then squeeze an arbitrary subinterval of `[0,1]`, proving interval equidistribution. The result is also specialized to the orbit `fract (b^n x)`.\n\nNatural next steps are:\n\n1. Reconcile and share the definitions in `NormalityConverse.lean` and `NormalityConnector.lean`, obtaining a single theorem that packages both directions between base-`b` normality and interval equidistribution of `fract (b^n x)`.\n2. Formalize the Weyl-criterion bridge between interval equidistribution and vanishing exponential sums for every nonzero integer frequency.\n3. Develop the measure-theoretic route to almost-everywhere base normality using ergodicity of multiplication modulo one and an appropriate pointwise ergodic theorem, then intersect over the countable set of integer bases for absolute normality.\n4. Keep claims about particular constants separate: the structural criteria proved here do not establish normality of familiar constants such as `π`, `e`, or `√2`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -18727,7 +18727,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Fourier Analysis as a Functor\n\n## What this phase establishes\n\n`Catalog/Bridges/FourierAsFunctor.lean` proves a self-contained finite-coordinate model of the requested bridge.\n\n1. **Contravariant character duality.** For finite free coordinate modules, transpose defines a functor from the opposite matrix category. The composition law is proved explicitly. The file also proves the corresponding composition-reversal theorem for Mathlib's actual circle-valued `PontryaginDual.map`.\n2. **Bidual equivalence.** Transposition twice is naturally isomorphic to the identity, yielding an equivalence between the finite-free matrix category's opposite and itself. This is a finite-dimensional algebraic analogue of Pontryagin biduality.\n3. **Fourier inversion.** The two-point DFT over `ℚ` has an explicit inverse and therefore gives an isomorphism in the matrix category.\n4. **Contrarian disproof: unrestricted naturality.** The two-point DFT does not commute with every endomorphism (a coordinate projection is a certified counterexample). Therefore Fourier matrices are not a natural endomorphism of the identity functor on a category whose arrows are all linear maps.\n5. **Contrarian disproof: variance is not uncertainty.** Contravariant duality alone does not imply a support uncertainty bound. The identity transform and a delta vector give support product `1 < 2`. Orthogonality or a suitable nondegenerate Fourier pairing is additional essential structure.\n\n## Recommended next formalization steps\n\n### 1. The category of locally compact abelian groups\n\nPackage commutative topological groups with local compactness and Hausdorffness as bundled objects, with continuous homomorphisms as arrows. Lift `PontryaginDual.map` to a functor from the opposite category. The composition theorem in the present file is the arrow-level core.\n\n### 2. Full Pontryagin biduality\n\nConstruct the evaluation morphism\n\n`A → PontryaginDual (PontryaginDual A)`, `a ↦ (χ ↦ χ a)`,\n\nprove continuity, and then prove it is a topological group isomorphism for LCA groups. The finite-free transpose equivalence here provides the exact categorical shape but not the analytic LCA theorem.\n\n### 3. Correct naturality domain for Fourier transform\n\nRather than naturality for all linear maps, identify morphisms compatible with Haar measure and character pullback. Candidate settings include finite abelian groups with group isomorphisms, or an indexed/kernel formalism where pushforward and pullback are tracked separately. State Fourier naturality between the appropriate function-space functors, not as an endomorphism of one identity functor.\n\n### 4. Categorical uncertainty with substantive hypotheses\n\nFormalize finite-group support uncertainty from an invertible character table plus a nonvanishing-minor or orthogonality hypothesis. The counterexample proved here should remain as a regression theorem showing that mere contravariance cannot discharge those assumptions.\n\n### 5. Analytic Fourier transform\n\nAfter Haar integration infrastructure is fixed, define the Fourier transform on `L¹(A)` with values on `PontryaginDual A`, prove change-of-variables naturality for measure-compatible isomorphisms, and connect Fourier inversion to Pontryagin biduality.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -19340,7 +19340,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following conjectures are concrete extensions of the formal reduction layer.\nEach can be falsified by a finite counterexample to its stated bound.\n\n1. **Randomized-distinguisher lifting.** For every finite transcript type, replacing\n   deterministic Boolean distinguishers by Markov kernels to `Bool` preserves the\n   exact-advantage theorem for every `PerfectReduction`.\n\n2. **Tight statistical loss.** For any two finite decision games on one transcript\n   space and any deterministic distinguisher, the additive loss in\n   `advantage_le_of_world_gaps` can be sharpened from the sum of the two `ℓ¹` gaps\n   to half that sum when both challenge distributions have total mass one.\n\n3. **Composable perfect reductions.** The identity transcript equivalence forms a\n   perfect reduction, perfect reductions compose, and the induced `reduce`\n   operation is functorial; in particular, exact advantage preservation remains\n   exact after any finite chain of reductions.\n\n4. **Hybrid-chain bound.** Given `n + 1` finite games on a common transcript space\n   whose adjacent corresponding-world `ℓ¹` gaps are bounded by `δ i b`, every\n   Boolean distinguisher's endpoint advantage differs by at most\n   `∑ i : Fin n, (δ i false + δ i true)`.\n\n5. **Canonical graded evaluation coherence.** For every `System` and every binary\n   parenthesization of a list of canonical level-one encodings, graded\n   multiplication yields the canonical encoding of the plaintext product at the\n   total level (after transporting along the induced equality of natural-number\n   level expressions).\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -19381,7 +19381,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Softmax attention naturality under equivariant logits.** For every finite group `G`, every pair of finite-dimensional real `G`-representations `V,W`, and every `G`-equivariant query, key, and value map, scaled dot-product softmax attention is a natural transformation between the corresponding representation functors. This is falsified by an explicit equivariant triple and group element for which the naturality square fails.\n\n2. **Residual-product stability bound is sharp.** For every `K ≥ 0`, the categorical residual construction on real normed spaces has worst-case Lipschitz constant exactly `1 + K` among residual branches with Lipschitz constant at most `K`. This is falsified by a uniform upper bound strictly below `1 + K` for some `K`, or by a branch exceeding `1 + K`.\n\n3. **Finite architecture search is invariant under natural isomorphism.** If loss is constant on natural-isomorphism classes, minimizing it over any finite candidate set in a functor category gives the same minimum after replacing every candidate by a naturally isomorphic one. This is falsified by finite categories, candidate sets, an isomorphism-invariant loss, and replacements producing different minima.\n\n4. **Parallel residual blocks obey a tensor-product certificate.** In the cartesian monoidal category of real normed spaces and Lipschitz maps, parallel residual blocks with residual constants `K₁` and `K₂` have Lipschitz constant at most `max (1 + K₁) (1 + K₂)` for the max product norm, and this bound is attained for every `K₁,K₂ ≥ 0`. A counterexample to either the upper bound or attainability falsifies the conjecture.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Bridges"
@@ -19422,7 +19422,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the algebra generated by coordinate\nexponentials is dense in the continuous real-valued functions.  This theorem does\n**not** imply the proposed Jackson width bound.  Establishing a rate of order\n`O(ε⁻ⁿ/α)` requires additional quantitative ingredients:\n\n1. formalize Hölder classes on compact subsets of `ℝⁿ`;\n2. construct a grid or partition-of-unity interpolant with mesh size comparable to\n   `(ε/C)^(1/α)`;\n3. realize each local basis function by the selected EML architecture while tracking\n   both uniform error and width;\n4. distinguish expression-tree width, number of hidden units, number of parameters,\n   and depth, since rates for one notion do not automatically transfer to another;\n5. combine the local errors without losing the desired dimensional exponent.\n\nMathlib contains qualitative Bernstein and Stone–Weierstrass approximation results,\nbut the needed multivariate Hölder-to-network width estimate is not an immediate\ncorollary of those results.\n\n## Architecture-sensitive lower and upper bounds\n\nBecause the expression language allows multiplication and the input variable, `x²`\nhas an exact width-two realization.  The file also proves an explicit shifted\nexp–log realization whose error is at most `2δ + δ²` on `[0,1]`.  Future work should\nfix a narrower neural architecture (for example, a single hidden layer of features\n`exp(a) log(bx+c)`) before claiming nontrivial width bounds.  Otherwise algebraic\noperations can make polynomial test cases exact at constant width.\n\nUseful next targets are:\n\n- a normal-form theorem translating generated-algebra terms into a specified network;\n- continuity and positivity invariants ensuring every logarithm receives a positive\n  input on the approximation domain;\n- matching lower bounds for restricted depth or restricted coefficients;\n- a multivariate exact representation theorem for quadratic forms;\n- quantitative stability bounds under composition of `exp` and `log`.\n\n## Computational evidence\n\nNo separate numerical evidence file is included.  The primary claims proved here are\nsymbolic identities, inequalities, and topological density statements rather than a\nfinite conjectural sequence.  Small floating-point tests would not validate the\nStone–Weierstrass conclusion, while the square error formula is established exactly\nin Lean for every point of the interval.  Computational experiments would become\nuseful after choosing a restricted architecture and an optimization procedure for the\nunproved Jackson-rate program.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -20160,7 +20160,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Diatonic-state quotient conjecture.** Extend each canonical state by a scale degree in `Fin 7`, use the C-major step pattern, and quotient generated reachability by mutual reachability. The resulting partial order has exactly 12 equivalence classes. This is falsified by an exhaustive quotient computation yielding any other cardinality.\n\n2. **Boundary-rule thinness conjecture.** Add the usual first-species opening and closing constraints (begin and end on perfect consonances, with contrary or oblique approach to the final). For every fixed cantus firmus of length at most 8 over a finite two-octave diatonic register, the category of complete admissible counterpoints is thin when morphisms are pointwise generated reachability. Two distinct morphisms between the same pair would refute it.\n\n3. **Seven-state strong-connectivity conjecture.** For the seven canonical interval representatives formalized in `SonicCounterpointCategory.lean`, the reflexive-transitive closure of `CanonicalMotion` is total: every interval reaches every other interval. A single unreachable ordered pair refutes this claim.\n\n4. **Register sensitivity conjecture.** If the dyad model is restricted to a finite register of width at least 12 semitones while retaining the present stepwise rule, the quotient of legal dyads by translation has the same generated reachability relation as the seven canonical interval model. A boundary-sensitive pair with different reachability refutes this claim.\n\n5. **Parallel-perfect repair conjecture.** Strengthening `SimilarMotion` to count repeated perfect consonances under nonzero equal-direction motion changes the canonical one-step table cardinality from 15 to 13. An exhaustive enumeration with a different cardinality refutes this claim.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -20405,7 +20405,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On some perfect matching conjectures in infinite, cubic, bridgeless graphs' and formalize its key results. Abstract: The Berge-Fulkerson Conjecture states that every bridgeless cubic graph has six perfect matchings such that each edge belongs to exactly two of them. This conjecture has remained open since 1971, and several of its weakenings have been proposed over the years. Two of the most prominent are the Fan-Raspaud Conjecture and the Máčajová-Škoviera Conjecture. It is well known that the Berge-Fulkerson Conjecture implies the Fan-Raspaud Conjecture, which in turn implies the Máčajová-Škoviera Conjecture. These problems have been studied for years in the context of finite graphs, and many equivalences between them and other results have been established. However, little to nothing is known about them in the context of infinite graphs. In this paper, we investigate whether these conjectures remain valid in the infinite setting, establish their implications in analogy to the finite case, and prove that their finite versions are equivalent to their respective infinite versions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -21060,7 +21060,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `Cᵒᵖ ⥤+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   representables indexed by its category of elements.\n\n2. **Representability from limit preservation.** If `C` is a small finitely complete\n   category and a presheaf `F : Cᵒᵖ ⥤ Type` preserves all small limits and satisfies the\n   solution-set condition, then `F` is representable.\n\n3. **Sheaf density by represented sheaves.** On every subcanonical site, each type-valued\n   sheaf is a colimit in the sheaf category of represented sheaves, with a canonical indexing\n   diagram obtained from maps out of represented sheaves.\n\n4. **Classifier uniqueness.** In a category with pullbacks and a terminal object, any two\n   subobject classifiers are uniquely isomorphic by an isomorphism commuting with their\n   truth arrows.\n\n5. **Predicate extensionality through characteristic maps.** In a category with a subobject\n   classifier, two subobjects of `X` are equal precisely when their characteristic morphisms\n   `X ⟶ Ω` are equal, and this correspondence is natural under pullback along every\n   morphism into `X`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Bridges"
       ],
@@ -21428,7 +21428,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nStatus of the conjectures suggested by the formalisation in `Catalog/Bridges/`\n(`OrdinalAnalysisBridge.lean`, `OrdinalAnalysisBridgeExtras.lean` and\n`OrdinalAnalysisBridgeContinuity.lean`: the ordinal collapsing function `psi`, its term\nrewriting system, and the order-preserving embedding of the `PA` notation system\n`ONote`). Each item is stated so that it can be *refuted* by a single counterexample or\nby a Lean proof of its negation.\n\nNotation: `Ω = ω₁`; `Gen S` is the Skolem hull of `S ⊆ Ordinal` under `+` and `x ↦ ω^x`;\n`gens a = {0, Ω} ∪ {psi c | c < a}`; `psi a = min (Gen (gens a))ᶜ`; `eps0 = ε₀`; `ε_ ·` is\nMathlib's `Ordinal.epsilon` (the enumeration of the fixed points of `x ↦ ω ^ x`).\nNote that this `psi` uses the *unrestricted* hull: every `psi c` with `c < a` is a\ngenerator at stage `a`, with no side condition `c ∈ Gen (gens a)`.\n\n## Summary of what is now settled\n\nAll five original conjectures are settled: C1 is refuted, C2–C5 are proved. Beyond that,\n`psi` is now completely determined:\n\n| statement | Lean name |\n| --- | --- |\n| every value of `psi` is an epsilon number | `opow_psi` |\n| `psi c = ε_c` for countable `c` | `psi_eq_epsilon_of_lt_Om` |\n| `psi Ω = ε_{Ω+1}` | `psi_Om_eq`, `psi_Om_eq_epsilon` |\n| `psi (Ω + a) = ε_{Ω+1+a}`, hence `psi a = ε_{Ω+1+(a−Ω)}` for `a ≥ Ω` | `psi_add_eq_epsilon`, `psi_of_Om_le` |\n| `psi (Ω^ω) = ε_{Ω^ω}` and `bachmannHoward = ε_{ε_{Ω+1}}` | `psi_Om_opow_omega_eq_epsilon`, `bachmannHoward_eq_epsilon` |\n| range of `psi` = all epsilon numbers except `Ω` | `range_psi` |\n| above `Ω` the hull is the initial segment `Iio (psi a)` | `gen_iff_lt_psi` |\n\nThe headline chain of the first file, `ε₀ = ψ(0) < ψ(Ω^ω) ≤ ψ(ε_{Ω+1})`, and the bridge\ntheorems `ofONote_val_lt_psi_OmOmegaTerm`, `ofONote_val_lt_bachmannHoward` are unaffected\nby all of this; in the new notation they read `ε_0 < ε_{Ω^ω} ≤ ε_{ε_{Ω+1}}`.\n\n## C1. The collapse stays countable: `psi a < Ω` — **REFUTED (formally)**\n\nOriginal conjecture: `∀ a, psi a < Om`. This is **false** for the unrestricted hull:\n`Bridges.OrdinalCollapsing.not_forall_psi_lt_Om`. For `a < b` the ordinal `psi a` *is* a\ngenerator at stage `b`, whereas `psi b ∉ Gen (gens b)`; so `psi a ≠ psi b`, and with\n`psi_mono` this upgrades to `psi_strictMono`, hence `a ≤ psi a` (`self_le_psi`) and\n`Om ≤ psi Om`. The exact form of the failure is now known: `psi c < Ω` *does* hold for\nevery countable `c` (`psi_lt_Om`), and the first value at or above `Ω` is\n`psi Ω = ε_{Ω+1}`.\n\n> **C1′.** Let `psi'` be the *restricted* Madore collapse, defined by\n> `gens' a = {0, Ω} ∪ {psi' c | c < a ∧ c ∈ Gen (gens' a)}`. Then `psi' a < Ω` for every\n> `a`, `psi'` is non-decreasing, and `psi' (ε_{Ω+1})` is the Bachmann–Howard ordinal.\n> Falsifiable by exhibiting `a` with `psi' a ≥ Ω`. Formalising `psi'` requires a\n> simultaneous recursion between the hull and the function, which is the main technical\n> obstacle; the results proved here for `psi` (`psi_zero`, monotonicity, the bridge\n> theorems) should transfer, since the two functions agree at `0` and the chain\n> `ε₀ = psi 0 < psi (Ω^ω)` uses only generators of the form `psi c` with `c` explicitly\n> in the hull.\n\n## C2. Strict monotonicity of `psi` — **PROVED**\n\n`psi_strictMono : StrictMono psi`, with `psi_ne_of_lt`, `self_le_psi`, `psi_unbounded`.\nBy C1 the strictness holds *globally* here rather than only below `ε_{Ω+1}`; for the\nrestricted collapse `psi'` of C1′ strictness below `ε_{Ω+1}` becomes a genuine open\nproblem again:\n\n> **C2′.** `psi'` is strictly monotone on `Iio (ε_{Ω+1})` and constant on\n> `Ici (ε_{Ω+1})`. Falsifiable by `a < b < ε_{Ω+1}` with `psi' a = psi' b`.\n\n## C3. The rewriting system is confluent — **PROVED**\n\n`Bridges.OrdinalAnalysis.step_confluent` and `step_church_rosser`, by the \"canonical\nform\" route: an explicit normaliser `OTerm.norm` (flatten sums to the right via\n`OTerm.appendT`, delete units) invariant under `Step` (`norm_eq_of_step`,\n`norm_eq_of_rtstep`, `norm_eq_of_eqvGen`) and fixing normal forms (`norm_of_normal`),\nwhence unique normal forms (`normal_unique`, `norm_normal_form`).\n\n> **C3′.** Extend `Step` by the Cantor-normal-form rules (ordering of summands,\n> `ω^a + ω^b ⟶ ω^b` for `a < b`) and by `ψ`-specific rules; the extended system is still\n> terminating and confluent, and its normal forms are in bijection with the ordinals\n> below `psi (ε_{Ω+1})`. Falsifiable by a critical pair of the extended system that does\n> not join, or by two distinct normal forms with the same value.\n\n## C4. The image of the `Ω,ψ`-free fragment is exactly `Iio ε₀` — **PROVED**\n\n`Bridges.OrdinalAnalysis.simple_val_range : {x | ∃ t, t.Simple ∧ t.val = x} = Iio eps0`,\nvia `simple_val_lt_eps0` and `exists_simple_of_lt_eps0`.\n\n> **C4′.** The corresponding statement one level up: the values of terms using `Ω`, `+`\n> and `ω ^ ·` but not `ψ` are exactly the ordinals below `ε_{Ω+1}` that are `Ω`-CNF\n> representable, and the values of arbitrary terms are exactly the epsilon numbers\n> reachable by `range_psi` together with their `Ω`-CNF combinations. Falsifiable by a\n> `ψ`-free term whose value is not `Ω`-CNF representable.\n\n## C5. Continuity at `Ω^ω` — **PROVED**\n\n`psi_Om_opow_omega_eq_iSup : psi (Ω^ω) = ⨆ n : ℕ, psi (Ω^n)`, with\n`psi_Om_pow_nat_lt` showing the approximations are strictly increasing. The proof is the\ngeneral continuity theorem `psi_of_limit`: for a limit `a > Ω` one has\n`psi a = ⨆ c : Iio a, psi c`, because the supremum of the earlier collapses is itself an\nepsilon number (`opow_psi`, `opow_iSup_psi_Iio`) strictly above every stage-`a`\ngenerator, hence not generated.\n\nTwo findings refine the picture:\n\n* the hypothesis `Ω < a` cannot be dropped: `psi_discontinuous_at_Om` shows\n  `(⨆ c : Iio Ω, psi c) = Ω < psi Ω`, so `Ω` is the unique point of discontinuity;\n* the value is explicit: `psi (Ω^ω) = ε_{Ω^ω}` (`psi_Om_opow_omega_eq_epsilon`).\n\n> **C5′.** For the restricted collapse `psi'` of C1′ there is *no* analogue of the\n> `Ω`-discontinuity: `psi'` is continuous at every limit `< ε_{Ω+1}`, i.e. it is a normal\n> function on `Iio (ε_{Ω+1})`. Falsifiable by a limit `λ < ε_{Ω+1}` with\n> `psi' λ ≠ ⨆ c < λ, psi' c`.\n\n## New conjectures suggested by the closed form\n\n> **C6.** *(Collapsing is exactly the loss of one epsilon number.)* For the unrestricted\n> hull, `range psi = ε '' {a | a ≠ Ω}` is now a theorem (`range_psi`). Conjecture: for\n> the restricted collapse of C1′, `range psi' = {ε_a | a < Ω} ∪ {ψ'-values below Ω}` is\n> instead a set of order type `Ω` cofinal in `Ω`, and `psi'` is *not* injective.\n> Falsifiable by proving `psi'` injective, or by exhibiting a value of `psi'` at or\n> above `Ω`.\n\n> **C7.** *(Notation systems.)* The term system `OTerm` modulo `Step` (equivalently, its\n> normal forms) with the induced order is order-isomorphic to a *proper initial segment*\n> of `Iio (psi (ε_{Ω+1}))`, not to all of it: the missing ordinals are exactly those\n> whose `Ω`-CNF needs a value `psi a` with `a` not itself denoted by a term. Falsifiable\n> by producing a surjection of term values onto `Iio (psi (ε_{Ω+1}))`.\n\n> **C8.** *(Sharpness of the PA bridge.)* The `ψ`-free fragment of the term system and\n> the `PA` notation system have the same values:\n> `{t.val | t : OTerm, t.Simple} = {o.repr | o : ONote, o.NF}`, and `ofONote` maps every\n> `NF` notation to a `Simple` term. Value preservation and order reflection are already\n> proved (`val_ofONote`, `ofONote_val_lt_iff`, `strictMono_ofONote`), and the left-hand\n> side is `Iio ε₀` (`simple_val_range`), so the conjecture is equivalent to: every\n> ordinal below `ε₀` is `o.repr` for some `NF` notation `o`. Falsifiable by an ordinal\n> `< ε₀` outside the image of `ONote.repr`, or by an `NF` notation whose `ofONote`\n> translation is not `Simple`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "Algebra"
@@ -22043,7 +22043,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions (thread th_995e2be3)\n\nThe thread attacks *quantitative sphere detection from finite data*: which explicitly\ncomputable, perturbation-stable quantities of a finite sample certify the topology of the\nunderlying space.  Three Lean files carry the formal content; all compile against Mathlib\nand contain **no `sorry`** and no added axioms (the theorems depend only on `propext`,\n`Classical.choice`, `Quot.sound`).\n\n## Cycle 1 — Direction 3: correspondence-based Rips interleaving\n\n`Catalog/Bridges/GraphTheory/RipsCorrespondenceInterleaving.lean`\n\n1. Rips simplices of a finite sample: monotonicity in the scale, closure under subsets.\n2. Correspondences and their **distortion**; existence of choice maps.\n3. A choice map of a correspondence of distortion `≤ c` expands distances by at most `c`,\n   hence pushes `ε`-Rips simplices to `(ε+c)`-Rips simplices (both directions), i.e. a\n   two-sided `c`-interleaving of Rips filtrations.\n4. The round trip `g ∘ f` moves points by at most `c`, and `s ∪ (g∘f)(s)` is an\n   `(ε+2c)`-simplex — the contiguity that makes the interleaving descend to homology.\n5. Distortions add under composition of correspondences.\n6. Samples at Hausdorff distance `≤ δ` are related by the `δ`-closeness correspondence, of\n   distortion `≤ 2δ`; the resulting `2δ` scale translation is sharp.\n7. Matched samples (`dist (X i) (Y i) ≤ δ`) are the special case of an indexwise\n   correspondence, recovering the classical `2δ` translation.\n8. Sharpness: for every `c > 0` and every shift `η < c` there is a correspondence of\n   distortion `≤ c` for which the shift `η` fails.\n\n## Cycle 2 — Directions 4 and 5: link certificates and the guarded interval\n\n`Catalog/Bridges/GraphTheory/RipsLinkGuardedInterval.lean`\n\nGlobal Betti numbers cannot separate manifolds from singular homology mimics; the mission's\nDirections 4 and 5 therefore ask for *local* link data and for an interval-valued detector\nwith stable endpoints.  This file supplies the quantitative skeleton of both, again as a\nchain in which each result uses the previous ones.\n\n1. `ripsBall` / `linkDeg` — the closed vertex star of a sample point and its cardinality.\n   `mem_ripsBall_iff_isRipsSimplex` identifies the ball with the set of vertices spanning\n   an edge with `v`, so the link degree is an invariant of the Rips complex.\n2. `ripsBall_mono`, `linkDeg_mono` — link degrees are monotone in the scale.\n3. `IsDeltaMatching`, `dist_map_le`, `le_dist_map` — a `δ`-matching distorts distances by at\n   most `2δ`: the local shadow of the distortion bound of cycle 1.\n4. `Separated`, `map_injOn` — on an `η`-separated sample with `2δ < η`, a `δ`-matching is\n   injective, so it cannot collapse links.  (Randomised search shows the hypothesis is not\n   removable: collapsing matchings do destroy link degrees.)\n5. `ripsBall_image_subset`, `linkDeg_le_of_matching` — hence\n   `linkDeg S ε v ≤ linkDeg T (ε + 2δ) (f v)`.\n6. `GuardedAt`, `GuardedAt_mono`, `GuardedAt_perturb`, `GuardedAt_perturb_ray` — the local\n   guard \"every vertex link has at least `k` vertices\" is an up-set in the scale, is\n   transported by a `δ`-matching with a `2δ` shift, and then holds on the whole ray.\n7. `exists_diam_bound`, `guardedAt_diam`, `guardSet_nonempty`, `guardSet_bddBelow` — the\n   guarded interval `guardSet S k` is a nonempty up-set bounded below by `0`, so its left\n   endpoint `guardThreshold S k` exists and is nonnegative.\n8. `guardThreshold_stability`, `guardThreshold_stability_abs` — **the endpoint of the\n   guarded interval is stable**: under a `δ`-matching of an `η`-separated sample with\n   `2δ < η`, `|guardThreshold T k − guardThreshold S k| ≤ 2δ`.  This is the Lipschitz\n   endpoint stability asked for in Direction 5, for the link-degree guard.\n9. `guardSet_pair`, `guardThreshold_pair` — the guarded interval of `{0, r} ⊆ ℝ` at `k = 2`\n   is exactly `[r, ∞)`: the guard is not vacuous and the endpoint is computed exactly.\n10. `linkDeg_shift_sharp` — the `2δ` shift of step 5 is optimal: for any `η < ε + 2δ` there\n    is a `δ`-matching with `linkDeg S ε 0 = 2` but `linkDeg T η (f 0) = 1`.\n\n## Cycle 3 — Direction 2: coverage, packing and the `n^{-1/d}` density law\n\n`Catalog/Bridges/GraphTheory/RipsCoverageDensity.lean`\n\nCycles 1 and 2 are *scale-free*: they bound how much a detector moves under a `δ`-matching\nbut say nothing about how large `δ` and the separation `η` may be for a sample of `n`\npoints.  Direction 2 asks exactly this.  Cycle 3 supplies the deterministic\n(measure-theoretic) half of the `n^{-1/d}` law in a finite-dimensional normed space `E`\nwith an additive Haar measure `μ`, writes `d = finrank ℝ E`, `V = μ K`, `v = μ (ball 0 1)`,\nand then feeds the result back into the cycle-2 stability theorem.  Again each result uses\nthe previous ones.\n\n1. `IsCoverAt P K ρ` — the sample `P` is a `ρ`-cover of `K` (its *resolution* is `ρ`);\n   `IsCoverAt.subset_iUnion` turns this into a covering by closed `ρ`-balls.\n2. `IsCoverAt.measure_le`, `IsCoverAt.volume_le` — subadditivity plus the Haar scaling law\n   `μ (closedBall x ρ) = ρ^d · μ (ball 0 1)` give `V ≤ n · ρ^d · v`.\n3. `IsCoverAt.le_card`, `IsCoverAt.le_pow` — hence `n ≥ V/(v ρ^d)` and `ρ^d ≥ V/(v n)`.\n4. `IsCoverAt.rpow_le` — **the `n^{-1/d}` law**: `ρ ≥ (V/(v n))^{1/d}`.  No sampling scheme,\n   random or not, can have covering radius below this floor.  The `log n` factor of the\n   probabilistic coverage threshold is therefore a genuine excess over the deterministic\n   floor coming from extreme gaps, not an artefact — which is precisely the correction to\n   the \"bare power law\" that Direction 2 asks for.\n5. `packing_card_bound` — dually, an `η`-separated sample (the hypothesis of the cycle-2\n   stability theorem) inside a ball of radius `R` satisfies `n · (η/2)^d ≤ (R + η/2)^d`,\n   because the open `η/2`-balls around the sample points are disjoint.\n6. `separation_le_two_radius`, `packing_spacing_bound`, `packing_spacing_rpow` — hence\n   `n · η^d ≤ (4R)^d` and `η · n^{1/d} ≤ 4R`: the *spacing* obeys the same power law, so\n   spacing and resolution are governed by the same exponent (a distinction Direction 2 asks\n   to keep separate — they differ only in the constant, not in the power).\n7. `IsCoverAt.hausdorffLe`, `IsCoverAt.exists_rips_shift`, `rips_shift_floor` — two samples\n   of the *same* set `K`, each of resolution `ρ`, are automatically at Hausdorff distance\n   `≤ ρ`, so the cycle-1 interleaving applies with shift `2ρ`; and by step 4 that budget can\n   never be smaller than `2 (V/(v n))^{1/d}`.  Refining the sample is the only way to shrink\n   the interleaving error, and it shrinks only like `n^{-1/d}`.\n8. `noise_resolution_tradeoff`, `noise_resolution_tradeoff_rpow` — combining 3 and 6, any\n   noise level `δ ≥ 0` admissible for the cycle-2 hypothesis `2δ < η` satisfies\n   `V · δ^d ≤ v · (2Rρ)^d`, i.e. `δ · V^{1/d} ≤ 2Rρ · v^{1/d}`.  The sample size has\n   cancelled: **the admissible noise is at most a fixed geometric multiple of the\n   resolution.**\n9. `guardThreshold_shift_le_resolution` — the capstone, which uses cycle 2's\n   `RipsGuard.guardThreshold_stability_abs` directly: the shift `Δ` of the left endpoint of\n   the guarded interval under a matched `δ`-perturbation satisfies\n   `V · |Δ|^d ≤ v · (4Rρ)^d`.  Endpoint stability is thus not merely Lipschitz in `δ`; it is\n   controlled by how finely the underlying set has been sampled, uniformly in the number of\n   sample points.\n\n## What remains open\n\n* **Persistent homology.**  The cycle-1 and cycle-2 files are simplicial (image, contiguity and link\n  statements).  Turning them into statements about persistence modules requires simplicial\n  homology of flag/Rips complexes as a functor of the scale, which is not available in the\n  library; `Correspondence.union_roundTrip_isRipsSimplex` is precisely the input such a\n  functorial argument needs.\n* **Gromov–Hausdorff.**  `DistortionLe` gives `2 d_GH(S,T) = inf over correspondences of the\n  distortion`; formalising this identity for finite metric spaces would upgrade the\n  interleaving to the standard stability theorem.\n* **From degree guards to manifold links.**  `GuardedAt` is the crudest link certificate\n  (a lower bound on the number of neighbours).  The next step is a combinatorial *link\n  complex* `lk(v)` of the flag complex together with a certificate that `lk(v)` has the\n  homology of `S^{d−1}`; the perturbation machinery of steps 3–5 (injectivity on separated\n  samples, `2δ` shift) should transport such a certificate verbatim, but the homology of the\n  link has to be defined first.\n* **Guarded Poincaré interval.**  Combining a sphere-homology predicate with the link guard\n  requires the homological half; once available, the endpoint-stability argument of step 8\n  (an infimum over an up-set that is transported by a `2δ` shift) applies unchanged to the\n  conjunction, provided the homological predicate is itself monotone on a persistence gap.\n* **Reach and density (Direction 1).**  The interleaving isolates the noise contribution\n  exactly; the missing ingredient is a reach-dependent upper endpoint making the interval\n  `[2δ, f(τ)]` nonempty.  This needs reach/medial-axis theory, absent from the library.\n* **Coverage law (Direction 2), probabilistic layer.**  Cycle 3 settles the deterministic\n  floor `ρ ≥ (V/(v n))^{1/d}` and the matching packing bound in a finite-dimensional normed\n  space.  What is still missing is the probabilistic layer: matching upper and lower tail\n  bounds of order `(log n / n)^{1/d}` for `n` i.i.d. uniform points, with constants uniform\n  over a range of dimensions.  The deterministic floor is the lower half of the sandwich;\n  the upper half needs a Chernoff/union bound over a `ρ`-net, which in turn needs a\n  covering-number estimate for the sphere (available in the library only in the abstract\n  totally-bounded form).\n* **Curved ambient spaces.**  Cycle 3 uses the exact Haar scaling `μ(B(x,ρ)) = ρ^d μ(B(0,1))`,\n  valid in a normed space.  On a compact submanifold of reach `≥ τ` the same argument runs\n  with two-sided Bishop–Gromov-type volume comparison `c ρ^d ≤ μ(B(x,ρ)) ≤ C ρ^d` for\n  `ρ ≤ τ`; isolating that comparison as a hypothesis (rather than proving it) would extend\n  every statement of cycle 3 verbatim and connect Direction 2 to Direction 1.\n* **Sharp constants.**  `packing_card_bound` loses a factor `2^d` on the way to\n  `packing_spacing_bound`, and the capstone constant `4Rρ` is certainly not optimal.  The\n  sharp constants are the sphere/ball packing and covering densities, which are not in the\n  library.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Bridges"
@@ -22084,7 +22084,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nConjectures suggested by the formalization in `Catalog/Bridges/VertexSplitting.lean` and\n`Catalog/Bridges/VertexSplittingExact.lean`.\nAll are stated in the vocabulary of those files (`IsSplit`, `IsExclusive`, `IsProjExclusive`,\n`SplitChain`, `IsCograph`, `IsChordal`, `IsPtFree`, `HasUnitIntervalRep`, `HasInducedClaw`,\n`matchingGraph`, `starGraph`).\n\nThroughout, `split_Π(G)` denotes the minimum of `|W| − |V|` over all `H : SimpleGraph W`\nand `f : W → V` with `IsSplit G H f` and `Π H`.\n\n## Resolved in this project\n\n* Every splitting map factors into single `singleSplit` steps, and the factorization can be taken\n  shallow: `exists_singleSplit_factor`, `SplitChain.of_isSplit`, `splitChain_matchingGraph`.\n  Consequently, in this model shallowness costs nothing.\n* Unit interval graphs are chordal: `isChordal_of_unitIntervalRep`.  Hence\n  `split_IsChordal(G) ≤ split_HasUnitIntervalRep(G)` for every `G`.\n* Exact splitting numbers of the smallest obstructions:\n  `split_IsCograph(P₄) = 1` (`cograph_split_pathP4_exact`),\n  `split_IsChordal(C₄) = 1` (`chordal_split_cycleC4_exact`),\n  `split_HasUnitIntervalRep(K_{1,3}) = split_HasUnitIntervalRep(K_{1,4}) = 1`\n  (`unitInterval_split_starK13_exact`, `unitInterval_split_starK14_exact`).\n  In each case the optimal split can be taken exclusive.\n* **A conjecture of the previous iteration was refuted.**  It was conjectured that\n  `split_HasUnitIntervalRep(K_{1,n}) = n − 2`.  In fact pairing up the leaves gives\n  `split_HasUnitIntervalRep(K_{1,n}) = ⌈n/2⌉ − 1` for every `n ≥ 1`\n  (`unitInterval_split_star_exact`), with a matching lower bound valid for every claw-free target\n  (`card_ge_of_split_clawFree_star`).  For `n = 4` the true value is `1`, not `2`.\n\n## Conjectures\n\n1. **Exclusive splittings need not decompose into exclusive single splits.**\n   `SplitChain.of_isSplit` produces an *exclusive* chain (each `singleSplit` step has\n   `A ∩ B = ∅`) from the hypothesis `IsProjExclusive H f`, which is strictly stronger than\n   `IsExclusive H f`.  Conjecture: there are finite `G, H, f` with `IsSplit G H f` and\n   `IsExclusive H f` for which **no** chain `SplitChain True G H f` exists — i.e. the ordering\n   of splits genuinely matters for exclusivity, and `IsProjExclusive` is the right invariant.\n   Falsifiable by proving `IsExclusive H f → SplitChain True G H f` in general.\n\n2. **No exclusivity gap for cograph splitting.**\n   (Exclusivity is automatic when the target has maximum degree at most one —\n   `isExclusive_of_deg_le_one` — and all optimal splits computed in this project are exclusive.)\n   For every finite graph `G`, the minimum number of splits producing a cograph equals the\n   minimum number of *exclusive* splits producing a cograph.\n   Falsifiable by a graph whose exclusive cograph splitting number is strictly larger than its\n   unrestricted one.\n\n3. **A cyclomatic bound for chordal targets.**\n   For every finite `G`, `split_IsChordal(G) ≤ |E| − |V| + c(G)`, where `c(G)` is the number of\n   connected components; i.e. one split per independent cycle suffices.  The case of a single\n   cycle is proved for `C₄` (`chordal_split_cycleC4_exact`), where unfolding the cycle at one\n   vertex produces the path `P₅` (`isSplit_pathP5_cycleC4`).  Falsifiable by a graph needing more\n   splits than its cyclomatic number.\n\n4. **A local degree lower bound for claw-free (hence unit interval) targets.**\n   For every finite `G`, every splitting of `G` into a claw-free graph has at least\n   `Σ_v ⌈deg(v)/2⌉` vertices coming from vertices of degree at least one, so\n   `split_HasUnitIntervalRep(G) ≥ Σ_v (⌈deg(v)/2⌉ − 1)`.\n   This is exactly `card_ge_of_split_clawFree_star` when `G` is a star, where it is tight.\n   Falsifiable by a graph and a claw-free splitting violating the count.\n\n5. **Hereditary monotonicity under induced subgraphs.**\n   If `Π` is hereditary (closed under induced subgraphs) then `split_Π(G') ≤ split_Π(G)` for\n   every induced subgraph `G'` of `G`; in particular this holds for `IsCograph`, `IsPtFree t`,\n   `IsChordal` and `HasUnitIntervalRep`.  Falsifiable by an induced subgraph that needs strictly\n   more splits than the whole graph, for one of these classes.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -22412,7 +22412,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe files in `Bridges/` develop Joyal's combinatorial species as transport-of-structure\nfunctors and connect them to generating series.  Everything listed below is fully proved:\n`lake build` compiles the whole `Bridges` library, no file contains `sorry`, and every\nheadline theorem depends only on `propext`, `Classical.choice` and `Quot.sound`.\n\n## What is formalised\n\n| file | content |\n|------|---------|\n| `SpeciesAnalyticBridge.lean` | `Species` (functor on the groupoid of finite sets), the equivalence with functors `Core Type ⥤ Type`, sum/product/derivative, the species `0, 1, X, E, S`, the product rule `card_mul`, and `egf_mul`, `egf_add`, `egf_deriv`, `egf_set = exp`, `egf_perm·(1-X)=1`, `egf_eq_iff` |\n| `SpeciesAnalyticBridgeExtras.lean` | powers of species, `egf_pow`, `card_set_pow = kⁿ`, `exp(X)^k = exp(kX)`, Leibniz/commutativity/associativity transferred back from `ℚ⟦X⟧`, and `ofSequence`: every sequence of naturals is the counting sequence of a species |\n| `SpeciesUnlabelled.lean` | the `Sym(n)`-action coming from functoriality, unlabelled counts, the type generating series, and Burnside's lemma for species |\n| `SpeciesPartitions.lean` | conjugacy classes of `Sym(n)` ↔ partitions of `n` (surjectivity of cycle type), `unlabelled S n = p(n)`, `∑_σ |C(σ)| = n!·p(n)` |\n| `SpeciesIso.lean` | isomorphism of species, invariance of all invariants, the two-way correspondence with natural isomorphisms of the associated functors (`toNatIso` / `ofNatIso`), the semiring isomorphisms `+`-comm/assoc/unit, `·`-distributivity, `F·0 ≅ 0` |\n| `SpeciesLinearOrders.lean` | linear orders vs permutations: equipotent (`egf L = egf S`) but **not isomorphic** |\n| `SpeciesColourings.lean` | the species of `k`-colourings, `egf = exp(X)^k`, `tgf = 1/(1-X)^k`, unlabelled colourings = multisets (stars and bars), Burnside for colourings |\n| `SpeciesCycleIndex.lean` | fixed colourings of `σ` number `k^{c(σ)}`, whence `∑_{σ∈Sym(n)} k^{c(σ)} = C(k+n-1,n)·n!` |\n| `SpeciesPointing.lean` | the pointed species `F•`, the **natural isomorphism `F• ≅ X · F′`** (`pointIso`), the bridge theorem `egf (F•) = X · d/dX (egf F)`, and `|E•⋯•[n]| = nᵏ` for iterated pointing |\n| `SpeciesDerangements.lean` | the species `D` of derangements, `card_derang = numDerangements`, the **species isomorphism `D · E ≅ S`** (`derangMulSetIso`), the identity `∑ₖ C(n,k)·D_k = n!`, the generating series `egf D · exp X · (1-X) = 1`, the alternating-sum formula and the limit `D_n/n! → e⁻¹` |\n| `SpeciesDerangementsUnlabelled.lean` | a permutation is fixed-point-free iff every part of its cycle-type partition is ≥ 2; hence `unlabelled D n` counts the partitions of `n` without parts equal to `1`, and Burnside gives `∑_σ #{derangements commuting with σ} = n!·#{such partitions}` |\n| `SpeciesCycles.lean` | the species `C` of cycles, `|C[n]| = (n-1)!` for `n ≥ 1`, `C′` equipotent with `L`, hence `(d/dX)(egf C)·(1-X) = 1` with zero constant term — i.e. `egf C = log(1/(1-X))` — and `tgf C = X/(1-X)` |\n| `SpeciesComposition.lean` | **substitution of species** `F ∘ G`: the structure `Blocking A` (a partition of `A`, encoded by block indicators), its blocks, the composite species `Species.comp` with its functoriality laws, the decomposition of a blocking of `Option A` (`optionEquiv`) and of its blocks (`blockOptionEquiv`), `A ≃ Σ blocks, block`, `∑ block sizes = |A|`, invariance of block sizes under transport, `card_comp` (the sum-over-partitions counting formula), `card_comp_zero`, degenerate cases `F ∘ 0`, `F ∘ 1`, and `Iso.compCongr` (composition respects isomorphism) |\n| `SpeciesExponentialFormula.lean` | the bijection `(E ∘ G)′[A] ≃ Σ_{S ⊆ A} G′[S] × (E ∘ G)[Aᶜ]` (`derivCompSetEquiv`), the recurrence `a_{n+1} = ∑ₖ C(n,k) g_{k+1} a_{n-k}`, the differential equation `(egf (E∘G))′ = (egf G)′ · egf (E∘G)`, uniqueness for `A′ = f·A`, and the **exponential formula in closed form** `egf (E ∘ G) = exp(egf G)` (`egf_comp_set`, with `egf_comp_set_sub_const` for general `G`); applications: partitions are counted by the **Bell numbers** (`card_partitions`, `card_blocking_eq_bell`, `egf_partitions = exp(exp X - 1)`, the Bell recurrence `bell_succ_choose`), the species isomorphism `E ∘ X ≅ E` (`compSetSingIso`: the only partition with singleton blocks is the discrete one), and **`E ∘ C` is counted by `n!`** — the cycle decomposition of permutations — whence `exp(log(1/(1-X))) = 1/(1-X)` |\n| `SpeciesCyclesDerangements.lean` | the species `C₂` of cycles of length ≥ 2, `egf C₂ = egf C - X`, the differential equations `D′·(1-X) = X·D` and `(egf (E∘C₂))′·(1-X) = X·egf (E∘C₂)`, hence `egf (E ∘ C₂) = egf D` and **derangements are sets of long cycles**: `|(E ∘ C₂)[n]| = numDerangements n` |\n\n## Notes on the encoding of composition\n\nA partition of `A` is encoded as a `Blocking A`: a Boolean-valued relation `rel` with\n`rel a a` and `rel a b → rel b = rel a`, so that `rel a` is the indicator of the block of\n`a`.  Blocks are the indicators in the range of `rel`, and are automatically nonempty;\nconsequently `Species.comp F G` is Joyal's `F ∘ G₊`, the constant term of `G` playing no\nrole (this is why `egf_comp_set_sub_const` subtracts it).  The Boolean encoding was chosen\nbecause transport along a bijection is then *definitionally* well behaved\n(`p.map (Equiv.refl A) = p` holds by `rfl`), which is what makes the functoriality laws of\n`comp` provable without dependent-transport gymnastics.\n\n## Natural next steps\n\n1. **Naturality for the exponential formula.**  `derivCompSetEquiv` is an isomorphism of\n   structure sets for each `A`, so `(E ∘ G)′` and `G′ · (E ∘ G)` are equipotent; upgrading\n   it to a `Species.Iso` requires checking naturality of a composite of `Equiv`\n   combinators (one of which is `Equiv.ofBijective`).  Rebuilding `blockOptionEquiv` with\n   an explicit inverse would be the first step.\n\n2. **The cycle decomposition as a species isomorphism.**  `card_comp_set_cyc` proves\n   `|(E ∘ C)[n]| = n!` analytically.  The bijection `S ≅ E ∘ C` itself (a permutation is\n   the set of its cycles) is the natural next target; `blockSigmaEquiv` (a partition\n   decomposes the underlying set) is the tool for transporting the cyclic structures.\n   The same remark applies to `D ≅ E ∘ C₂`, proved here only at the level of counts.\n\n3. **Unlabelled composites.**  `unlabelled (E ∘ E) n` should be the number of *integer*\n   partitions `p(n)`.  What is missing is (i) the multiset of block sizes as a map to\n   `Nat.Partition n` — `sum_card_elems` supplies the sum condition — and (ii) the fact\n   that two blockings with the same size multiset are conjugate, for which one needs a\n   size-preserving matching of block sets glued through `blockSigmaEquiv`.\n\n4. **General composition `F ∘ G` and associativity.**  `card_comp` gives the counting\n   formula for an arbitrary outer species; the analytic counterpart\n   `egf (F ∘ G) = (egf F) ∘ (egf G)` (substitution of power series) needs a grading of\n   composites by the number of blocks, which would also produce the Stirling numbers of\n   the second kind as `|{p : Blocking (Fin n) // #blocks = k}|`.  Associativity\n   `(F ∘ G) ∘ H ≅ F ∘ (G ∘ H)` is the other missing structural isomorphism.\n\n5. **The cycle index series.**  `Species.cycleCount` and `Species.burnside` are the two\n   halves of `Z_F(x₁,x₂,…) = (1/n!) ∑_σ |Fix F(σ)| x^{cycle type}`.  Formalising `Z_F`\n   would unify `egf` (`x₁ = X`, `xᵢ = 0`) and `tgf` (`xᵢ = Xⁱ`) and give Pólya enumeration\n   as a corollary of `burnside_colour`; `Z_C`, `Z_D` and now `Z_{E∘G}` are good tests.\n\n6. **The analytic functor proper.**  Define `F̂(X) = ⨿ₙ F[n] ×_{Sym(n)} Xⁿ` as an\n   endofunctor of `Type` and prove that `F ↦ F̂` is fully faithful onto the analytic\n   functors (Joyal).  `Species.toFunctor`, `Iso.toNatIso` and `card_obj` are the starting\n   points; with composition now available, the compatibility `\\widehat{F ∘ G} = F̂ ∘ Ĝ`\n   becomes statable.\n\n7. **Weighted and multisort species.**  Replacing `Nat.card` by a weight in a commutative\n   semiring turns `egf_mul` into the weighted product rule; multisort species give\n   multivariate exponential generating series and inversion formulas.\n\n8. **A `Species` semiring (and composition monoid) up to isomorphism.**  Quotienting by\n   isomorphism would present `egf` as a semiring homomorphism `Species/≅ → ℚ⟦X⟧` and,\n   using `Iso.compCongr`, would make substitution a well-defined monoid operation on the\n   quotient with `X` as unit.\n\n9. **`PowerSeries.log`.**  `SpeciesCycles.lean` states `egf C = log(1/(1-X))` only through\n   its derivative.  With `Mathlib`'s `PowerSeries.subst` now used here for `exp`, adding\n   `log` (and `exp (log f) = f`) would let `egf C` and `egf D` be stated in closed form;\n   `exp_subst_egf_cyc` is the special case proved combinatorially in this project.\n\n10. **More separating invariants.**  `linOrd_not_iso_perm` shows `egf` does not determine\n    a species.  Does `tgf` together with `egf` determine it?  (No — the cycle index series\n    is strictly finer; explicit counterexamples would be a nice addition.)\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -22699,7 +22699,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: dense sets without large sumsets\n\n## What is formalized here\n\nFiles (all in `Bridges/DenseSumsetFree/`, each compiles independently against\nMathlib; nothing is `sorry`-ed, and the main theorem depends only on\n`propext`, `Classical.choice`, `Quot.sound`):\n\n1. **`Basic.lean`** — the definition `AvoidsSumsets S k` (\"no `A + B ⊆ S` with\n   `|A|, |B| ≥ k`\"), Cauchy–Davenport for `ℕ` (`card_add_ge`), the baseline\n   avoidance theorem `avoidsSumsets_of_card_lt` (`|S| < 2k-1 ⟹ S avoids\n   k-sumsets`), and the distinct-sums notion with `|A+B| = |A|·|B|`.\n2. **`Extraction.lean`** — greedy extraction: any two sets of size `≥ l³ + l`\n   contain `l`-subsets whose `l²` pairwise sums are all distinct\n   (`exists_distinctSums_pair`), hence the reduction\n   `avoidsSumsets_of_no_distinctSums`.\n3. **`Counting.lean`** — the first-moment argument by pure finite counting:\n   the binomial ratio bound `binom(n-s,m-s)·nˢ ≤ binom(n,m)·mˢ`, the exact count\n   `binom(n-s, m-s)` of `m`-subsets containing a fixed `s`-set, and the\n   quantitative existence theorem `exists_avoidsSumsets_set`: if\n   `q·m ≤ p·n` and `n^{2l}·p^{l²} < q^{l²}` then some `m`-subset of `[n]`\n   avoids all `(l³+l)`-sumsets.\n4. **`Main.lean`** — the asymptotic theorem\n   `exists_dense_set_avoiding_polylog_sumsets`: for every `0 < δ < 1` there are\n   `C > 0` and `N` with: for all `n ≥ N` some `S ⊆ [n]` has `|S| ≥ δn` and\n   contains no `A + B` with `|A|, |B| ≥ C (log n)³`.\n5. **`Sharpness.lean`** — obstructions: a set containing an AP of length `2k-1`\n   never avoids `k`-sumsets; the interval `[n]` avoids `k`-sumsets **iff**\n   `n < 2k-1`; and an explicit machine-checked instance of the counting\n   hypotheses (`n = 1024`, density `1/2`).\n6. **`MultiFold.lean`** — two-fold avoidance implies `t`-fold avoidance, giving\n   the same polylogarithmic threshold for `A₁ + ⋯ + A_t` simultaneously in `t`.\n7. **`Triple.lean`** — the three-summand analysis carried out natively rather\n   than by grouping: `AvoidsSumsets3`, the greedy extraction of a distinct-sums\n   triple (`exists_distinctSums_triple`, needing parts of size `≥ l⁵ + l`), the\n   counting theorem `exists_avoidsSumsets3_set`, the asymptotic theorem\n   `exists_dense_set_avoiding_triple_sumsets` with threshold\n   `c (log n)² √(log n) = c (log n)^{5/2}`, the comparison lemma\n   `triple_threshold_le_log_cubed` showing this beats `(log n)³`, and a\n   machine-checked numerical instance (`n = 1024`, density `1/2`, `l = 6`,\n   threshold `7782`, versus `9282` for two summands).\n8. **`General.lean`** — the same analysis for an *arbitrary* number `t ≥ 2` of\n   summands, done natively (not by grouping).  It contains the list-indexed\n   notions `DistinctSumsList` and `AvoidsSumsetsN S t k`, the card formula\n   `card_sumsetNat_of_distinctSumsList` (`|A₁ + ⋯ + A_t| = l^t`), the greedy\n   extraction `exists_distinctSumsList` (parts of size `≥ l^{2t-1} + l` contain\n   `l`-subsets with all `l^t` sums distinct), the counting theorems\n   `exists_distinctSumsN_free_set` / `exists_avoidsSumsetsN_set` (hypotheses\n   `l^t ≤ m ≤ n`, `q·m ≤ p·n`, `n^{tl}·p^{l^t} < q^{l^t}`), and the asymptotic\n   theorem `exists_dense_set_avoiding_N_sumsets`: for every `t ≥ 2` and every\n   `0 < δ < 1` there is `c > 0` such that for large `n` some `S ⊆ [n]` with\n   `|S| ≥ δn` contains no `A₁ + ⋯ + A_t` with all `|Aᵢ| ≥ c (log n)^{(2t-1)/(t-1)}`.\n   The behaviour of the exponent is recorded formally\n   (`two_lt_general_exponent`, `general_exponent_lt_three`,\n   `general_exponent_antitone`, `exists_general_exponent_lt`: it is always `> 2`,\n   is `< 3` from `t = 3` on, decreases in `t`, and tends to `2`), together with a\n   machine-checked four-summand instance\n   (`general_counting_hypotheses_satisfiable`: `n = 1024`, density `1/2`,\n   `l = 4`, threshold `4⁷ + 4 = 16388`) and the compatibility lemmas\n   `avoidsSumsetsN_two_of_avoidsSumsets`, `avoidsSumsets3_of_avoidsSumsetsN`.\n9. **`Scales.lean`** — the predicate `AvoidanceAtScale f δ`, its monotonicity in\n   the scale, the proved instance at scale `(log n)³`, a definition\n   `LogScaleTarget` of the conjectural optimum at scale `log n`, and the\n   implication `LogScaleTarget δ → AvoidanceAtScale (log ·)³ δ` locating this\n   development strictly below the target.\n\nEach theorem in the chain uses the previous ones; the quantitative core and the\nasymptotic theorem are strict strengthenings of the linear (`k ≈ n/2`)\nCauchy–Davenport barrier previously recorded in the catalog\n(`Catalog/Logic/PosetTheory/TFoldSumsetAvoidance.lean`,\n`Catalog/Pythagorean/TFoldSumsetAvoidance.lean`).\n\nThe chain, in dependency order, is\n`Basic → Extraction → Counting → Main → {Sharpness, MultiFold, Scales, Triple → General}`.\n\nThe reusable engine, extracted while proving the three-summand theorem, consists\nof `exists_distinctSums_snd_of_card` (greedy extraction for a first set of\n*arbitrary* size), `exists_set_avoiding_family` (the first moment for any finite\nfamily of forbidden `s`-element patterns) and `mul_choose_sdiff_lt_choose` (the\nunion-bound arithmetic).  Any further instance of the method — more summands,\nother forbidden patterns — only has to supply a family and a counting bound.\n\n## The remaining gap: `(log n)³` versus `log n`\n\nThe target statement asks for the threshold `C log n`.  What is proved here is\n`C (log n)³`.  The loss is entirely in the extraction step, and it is a real\nobstruction to the present method:\n\n* the union bound over pairs of `l`-sets costs `n^{2l}`, so it can only be paid\n  by a sumset of size `≳ 2l log n / log(1/δ)`; using the *maximal* sumset size\n  `|A'+B'| = l²` this forces `l ≈ 2 log n / log(1/δ)`, which is optimal;\n* but to guarantee a distinct-sums pair of `l`-sets one needs the ambient sets to\n  have `≳ l³` elements — the two-sided analogue of the classical fact that a set\n  of `k` integers is only guaranteed a Sidon subset of size `≫ k^{1/3}`\n  (improving this to `k^{1/2}` is a well-known open problem; `k^{1/2}` is the\n  truth for `[0,k)`).\n\nThree concrete routes to `log n`:\n\n1. **Count sets with small doubling.** Replace \"all `l²` sums distinct\" with a\n   case analysis on the doubling constant `K = |A'+B'|/l`.  For each `K` one\n   needs an upper bound of Green–Morris type on the number of `l`-subsets of\n   `[n]` with `|A+A| ≤ Kl`, roughly `n^{O(K)} binom(Kl/2, l)`.  Formalizing a\n   Green–Morris style counting lemma is the single biggest missing ingredient,\n   and would be a substantial Mathlib contribution in its own right\n   (it needs Freiman/Ruzsa covering, currently only partially in Mathlib).\n2. **Container / hypergraph methods.** The graph-container method gives a clean\n   route to counting sets with small sumset; a Lean formalization of the\n   (finite, purely combinatorial) container lemma would unlock this and much\n   more of additive combinatorics.\n3. **Explicit constructions.** No periodic construction can work: our\n   `not_avoidsSumsets_of_ap` shows any set containing an AP of length `2k-1`\n   fails, and periodic sets of positive density contain arbitrarily long APs.\n   A derandomized construction would have to be built from, e.g., quadratic\n   phases or an explicit Sidon-like layered structure.\n\n## Other natural continuations\n\n* **Lower bound direction (the hard half).** Prove that *every* `S ⊆ [n]` of\n  density `δ` **does** contain some `A + B` with `min(|A|,|B|) ≥ c log n`\n  (the finitary shadow of the Kra–Moreira–Richter–Robertson `B + C` theorem).\n  Even the weaker \"contains `A + B` with `|A| = 2`\" version is an interesting\n  Lean target, and `not_avoidsSumsets_of_ap` already reduces it to producing long\n  APs, i.e. to a Szemerédi-type input.\n* **`t` summands natively, for every `t` — now done** (`General.lean`).  The\n  three ingredients give, for general `t`, extraction from parts of size\n  `≳ l^{2t-1}`, a union bound `n^{tl}` and a sumset of size `l^t`, hence\n  `l ≈ (t log n / log(q/p))^{1/(t-1)}` and the threshold\n  `(log n)^{(2t-1)/(t-1)}`, decreasing to `(log n)²` as `t → ∞`\n  (`t = 2 : 3`, `t = 3 : 5/2`, `t = 4 : 7/3`, …).  What remains open on this\n  branch is the limit itself: no `t` gives `(log n)^{2}` or below, since\n  `(2t-1)/(t-1) > 2` always, and a threshold of the conjectured shape\n  `(log n / log(1/δ))^{1/(t-1)}` would need an extraction cost sub-polynomial\n  in `l`, i.e. exactly the Sidon-type improvement discussed above.\n* **Dependence on `δ`.** Our constant is `C(δ) = 2(2/log(q/p) + 2)³` with\n  `p/q ≈ δ`; as `δ → 1` this blows up like `(1-δ)^{-3}`.  The conjectured optimal\n  shape is `C log n / log(1/δ)` for the two-fold case, and\n  `(log n / log(1/δ))^{1/(t-1)}` for `t`-fold sumsets — note that our `t`-fold\n  corollary does **not** exhibit the `1/(t-1)` exponent, since it simply groups\n  summands.  Getting the genuine `t`-fold improvement requires redoing the\n  counting with `t` summands, where the distinct-sums extraction should give\n  `|A₁+⋯+A_t| = l^t` and hence `l ≈ (2 log n / log(1/δ))^{1/(t-1)}` — this is a\n  realistic next formalization step with the machinery already in place; the\n  `t = 3` case (`Triple.lean`) and the general `t` case (`General.lean`) are now\n  done, so what is left here is the sharp dependence on `δ` rather than on `t`.\n* **Sharp small cases.** For `k = 2` avoidance is exactly the Sidon property, so\n  the extremal density is `Θ(n^{-1/2})`; formalizing \"maximal Sidon subsets of\n  `[n]` have size `Θ(√n)`\" would give the exact endpoint of the trade-off curve.\n* **Beyond `ℕ`.** All statements are for finite subsets of `ℕ`; the same proofs\n  work verbatim in `ℤ` and, with `card_add_ge` replaced by Cauchy–Davenport in\n  `ZMod p`, in cyclic groups.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -22725,6 +22725,47 @@
       "thread_id": "th_d788816e",
       "timestamp": "2026-08-05T19:03:35.608376+00:00",
       "title": "Files (all in `Bridges/DenseSumsetFree/`, each compiles independently against"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\nThis line of work studies **when the fundamental group is a complete invariant**, in the\nalgebraic model where a homotopy 1-type is a groupoid and a `K(G,1)` is a connected\ngroupoid with vertex group `G`.  Previous cycles classified the objects (a connected 1-type\nis determined by `π₁`), the maps (`[K(G,1), K(H,1)] ≃ Hom(G,H)/conj`), and the\nautomorphism 2-group of a connected 1-type (`π₀ = Out G`, `π₁ = Z(G)`).\n\nLater cycles closed the largest structural gap that remained — the description of\n`hAut` for a **disconnected** 1-type — and supplied the first **nonabelian** examples.\n\nThe present cycle removes the last hypothesis from that description: the components of the\ndisjoint union no longer have to be copies of a single `K(G,1)`.  For a completely\narbitrary 1-type the monoid of homotopy classes of self-maps is a matrix monoid, and\n\n  `1 → ∏ᵢ Out(π₁ Cᵢ) → hAut(⊔ᵢ Cᵢ) → Sym'(π₀) → 1`\n\nis exact, with `Sym'(π₀)` the permutations of the components preserving their homotopy\ntype; the self-homotopies of the identity are `∏ᵢ Z(π₁ Cᵢ)`.\n\n## What is proved (all machine-checked, no `sorry`, axioms `propext`/`Classical.choice`/`Quot.sound`)\n\n### Earlier cycles\n\n`Catalog/Bridges/FundamentalGroupOuterAutomorphisms.lean`\n\n* `HEnd C` (homotopy classes of self-maps, a monoid) and `ConjEnd G` (conjugacy classes of\n  endomorphisms); `hEndMulEquivConjEnd` : these are isomorphic monoids for a connected `C`.\n* `isUnit_hEnd_mk_iff` : a homotopy class is invertible iff it is represented by an\n  equivalence.\n* `outAut_mulEquiv_hEnd_units` : **`hAut(K(G,1)) ≅ Out G`**.\n* `autId_mulEquiv_center` : self-homotopies of the identity form `Z(G)`.\n* Abelian case, rigidity criterion, one-object models, and the circle: `HEnd(S¹) ≅ (ℤ,·)`,\n  degree a complete invariant, equivalences ⇔ degree `±1`.\n\n`FundamentalGroupCyclicSelfEquivalences.lean` : `#hAut(K(ℤ/n,1)) = φ(n)`.\n`FundamentalGroupTorusGL.lean` : `hAut(K(ℤⁿ,1)) ≅ GLₙ(ℤ)`.\n`FundamentalGroupSelfEquivalencesPi0.lean` : for a totally disconnected 1-type,\n`hAut ≅ Sym(π₀)`.\n`FundamentalGroupMapsDisconnectedTarget.lean`, `FundamentalGroupMapsClassification.lean` :\nthe classification of maps of arbitrary 1-types in terms of `π₀` and the vertex groups.\n`FundamentalGroupPi0Action.lean` : the action `hAut(C) →* Sym(π₀ C)` and the injective\nassembly of self-maps of the pieces of a disjoint union.\n\n### Earlier cycles: the constant-family wreath product and nonabelian examples\n\n`Catalog/Bridges/FundamentalGroupWreathProduct.lean` — **the wreath product theorem.**\n\n* `WreathEnd ι M` : the wreath monoid `(ι → M) × End(ι)` with\n  `(P,σ)(Q,τ) = (fun i => P (τ i) * Q i, σ ∘ τ)`.\n* `hEndMulEquivWreathEnd` : for a connected `D`, `[⊔_ι D, ⊔_ι D] ≅ WreathEnd ι [D,D]` —\n  a homotopy class of self-maps of the disjoint union is exactly an index map `σ : ι → ι`\n  together with a homotopy class of maps `D → D` for each copy.  (This classifies *all*\n  self-maps, not only the equivalences.)\n* `wreathEndUnitsMulEquivSemidirect` : the units of `WreathEnd ι M` are `Mˣ ≀ Sym(ι)`.\n* `hAutMulEquivWreathOut` : **`hAut(⊔_{i∈ι} K(G,1)) ≅ (ι → Out G) ⋊ Sym(ι) = Out(G) ≀ Sym(ι)`**,\n  and `hAutSigmaMulEquivWreathOut` for the coproduct model `Σ _ : ι, D`.\n* `hAutToPermCopies_surjective`, `ker_hAutToPermCopies`, `hAutToPermCopies_split` : the\n  extension `1 → ∏_ι Out G → hAut → Sym(ι) → 1` is exact and split, settling the\n  conjecture of the previous cycle for a constant family of components.\n* `componentsProdEquiv`, `hAutToPermCopies_eq_pi0Action` : `π₀(⊔_ι D) = ι` and the\n  projection onto `Sym(ι)` *is* the previously constructed action on `π₀`.\n* `hEndCongr` : `HEnd` is invariant under equivalence of 1-types; `sigmaEquivProdModel`\n  identifies the product model `Discrete ι × D` with the coproduct `Σ _ : ι, D`.\n* `autIdProdMulEquivPiCenter` : the self-homotopies of the identity of `⊔_ι K(G,1)` form\n  `∏_ι Z(G)`, computing the full automorphism 2-group of a disconnected 1-type of this\n  shape (`π₀ = Out(G) ≀ Sym(ι)`, `π₁ = ∏_ι Z(G)`).\n* Degenerations `hAutSingleCopyMulEquivOut` (`ι` a point ⇒ `Out G`) and\n  `hAutTrivialPiOneMulEquivPerm` (`G = 1` ⇒ `Sym ι`) recover the two previously known\n  extreme cases; `card_hAut_sigma` : `#hAut(⊔_{Fin n} K(G,1)) = |Out G|ⁿ · n!`.\n\n`Catalog/Bridges/FundamentalGroupRigidityExamples.lean` — **nonabelian examples.**\n\n* `symmetricGroupThree_forall_inner` : every automorphism of `S₃` is inner, hence\n  `Out(S₃) = 1`; `hEnd_units_subsingleton_symmetricGroupThree` : **`K(S₃,1)` is homotopy\n  rigid** although `π₁` is nonabelian of order 6; `autId_subsingleton_symmetricGroupThree`\n  : it has no nontrivial self-homotopy of the identity either (`Z(S₃) = 1`), so its whole\n  automorphism 2-group is trivial.\n* `card_hAut_three_copies_symmetricGroupThree` : the disjoint union of three copies of\n  `K(S₃,1)` has exactly `3! = 6` self-homotopy-equivalences — pure relabelling — and\n  `autId_subsingleton_three_copies_symmetricGroupThree` : no nontrivial self-homotopies of\n  its identity, so its automorphism 2-group is exactly `S₃`.\n* Klein four group `V`: `card_hAut_kleinFour` (`= 6`) and `hAut_kleinFour_not_comm` — the\n  first `K(G,1)` here whose homotopy self-equivalence group is **nonabelian**; two copies\n  give `6² · 2 = 72`.\n* `forall_inner_congr`, `outAut_subsingleton_of_forall_inner` : reusable transport lemmas\n  for \"all automorphisms are inner\".\n\n### New this cycle\n\n`Catalog/Bridges/FundamentalGroupHeterogeneousWreath.lean` — **arbitrary (non-constant)\nfamilies of components**, i.e. the automorphism 2-group of a completely general 1-type.\n\n* `HMap A B` : homotopy classes of maps of 1-types, with composition `HMap.comp`;\n  `WreathHom C` : the *matrix monoid* of pairs `⟨σ, P⟩` with `σ : ι → ι` and\n  `P i : HMap (Cᵢ) (C_{σ i})`, multiplied by `⟨σ,P⟩⟨τ,Q⟩ = ⟨σ ∘ τ, i ↦ Q i ; P (τ i)⟩`.\n* `exists_factor` : a map out of a connected 1-type factors, up to homotopy, through a\n  single component of the target (the technical heart, proved from the realization theorem\n  and full faithfulness of the inclusions of the summands).\n* `hEndSigmaMulEquivWreath` : **`[⊔ᵢ Cᵢ, ⊔ᵢ Cᵢ] ≅ WreathHom C`** for any family of\n  connected 1-types — all self-maps, not only the equivalences.  This is the general form\n  of `hEndMulEquivWreathEnd`, whose constant-family hypothesis is now removed.\n* `hAutSigmaToPerm` : the action `hAut(⊔ᵢ Cᵢ) →* Sym(π₀)`, computed on representatives by\n  `hAutSigmaToPerm_apply`.\n* `exists_hAut_perm_iff` : its **image** is exactly the subgroup `Sym'(π₀)` of permutations\n  `σ` with `Cᵢ ≌ C_{σ i}` for all `i` (equivalently `π₁ Cᵢ ≅ π₁ C_{σ i}`).\n* `kerHAutSigmaToPermMulEquivPiOut` : its **kernel** is `∏ᵢ Out(π₁ Cᵢ)`.  Hence\n\n    `1 → ∏ᵢ Out(π₁ Cᵢ) → hAut(⊔ᵢ Cᵢ) → Sym'(π₀) → 1`\n\n  is exact — the conjectured shape of item 1 of the previous cycle, now proved without any\n  hypothesis relating the components.\n* `hAutMulEquivPiOut_of_pairwise`, `card_hAut_of_pairwise` : when no two components are\n  homotopy equivalent the sequence degenerates and `hAut(⊔ᵢ Cᵢ) ≅ ∏ᵢ Out(π₁ Cᵢ)`, of order\n  `∏ᵢ |Out(π₁ Cᵢ)|`.\n* `autIdSigmaMulEquivPiCenter` : the self-homotopies of the identity of `⊔ᵢ Cᵢ` form\n  `∏ᵢ Z(π₁ Cᵢ)`.  Together with the exact sequence this computes the **entire automorphism\n  2-group of an arbitrary homotopy 1-type** (every 1-type being the disjoint union of its\n  components).\n\n`Catalog/Bridges/FundamentalGroupHeterogeneousExamples.lean` — the two extremes.\n\n* `twoPieces` is `K(ℤ,1) ⊔ K(ℤ/3,1)`; `twoPieces_pairwise` : its components are not\n  homotopy equivalent (an equivalence would identify `ℤ` with `ℤ/3`), so\n  `twoPieces_perm_trivial` : no self-equivalence interchanges them, and\n  `card_hAut_twoPieces` : it has exactly `2 · 2 = 4` homotopy classes of\n  self-homotopy-equivalences.\n* `perm_surjective_of_constant` : for a disjoint union of copies of a single 1-type, on the\n  contrary, *every* permutation of the components is realised.\n\n## Remaining conjectures and next steps\n\n1. **Splitting of the general extension.**  Item 1 of the previous cycle (non-constant\n   families) is now proved: the matrix monoid `WreathHom C` computes all self-maps and the\n   extension `1 → ∏ᵢ Out(π₁ Cᵢ) → hAut(⊔ᵢ Cᵢ) → Sym'(π₀) → 1` is exact.  What is not yet\n   formalised is a **splitting**.  For a constant family the splitting is proved\n   (`hAutToPermCopies_split`), and the general case should follow by choosing, inside each\n   homotopy-equivalence class of components, a representative and identifications of every\n   member of the class with it; the obstacle is again dependent bookkeeping, since such a\n   choice has to be transported along equalities of representatives.  Making this precise\n   would upgrade the exact sequence to `hAut(⊔ᵢ Cᵢ) ≅ (∏ᵢ Out(π₁ Cᵢ)) ⋊ Sym'(π₀)`.\n\n2. **More outer automorphism groups.**  `Out(Q₈) ≅ S₃` would give a `K(G,1)` with\n   nonabelian `π₁` *and* nonabelian `hAut` (the Klein four example has abelian `π₁`);\n   `Aut(Sₙ) ≅ Sₙ` for `n ≠ 2, 6` would give an infinite family of rigid nonabelian\n   `K(G,1)`s.  Neither is in Mathlib.  The `decide`-based route used here for `S₃` (720\n   candidate bijections) does not scale to `|G| = 8` (40320 candidates); a structural proof\n   — automorphisms preserve orders and permute the transpositions/generators — is needed.\n\n3. **Free groups.**  `hAut(⋁ⁿ S¹) ≅ Out(F_n)`; formalising `Out(F₂) ≅ GL₂(ℤ)` would\n   connect this bridge to arithmetic groups, complementing `hAut(K(ℤ²,1)) ≅ GL₂(ℤ)`.\n\n4. **Topological realisation.**  Everything is proved for groupoids.  Transporting across\n   the fundamental-groupoid functor to genuine aspherical spaces requires the equivalence\n   between homotopy classes of maps of aspherical spaces and of their fundamental\n   groupoids, which is not in Mathlib and remains the main missing ingredient for a\n   statement such as \"degree classifies self-maps of the topological circle\".\n\n5. **Higher types.**  The computation `π₀ hAut = Out G`, `π₁ hAut = Z(G)` is the `n = 1`\n   case of the automorphism `(n+1)`-group of a `K(A,n)`; the abelian case with\n   `hAut ≅ Aut(A)` should be within reach with a chain-complex model.\n\n6. **Functoriality of the classification.**  `mapsClassification` and\n   `hEndMulEquivWreathEnd` are compatible with composition in the cases treated here; the\n   remaining step is to package the whole picture as an equivalence between the homotopy\n   category of 1-types and a purely group-theoretic category whose morphisms are matrices\n   of conjugacy classes of homomorphisms indexed by `π₀ × π₀`.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0984",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "08d2b371",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/08d2b371",
+      "status": "available",
+      "thread_id": "th_d290be4a",
+      "timestamp": "2026-08-05T20:54:46.520220+00:00",
+      "title": "This line of work studies **when the fundamental group is a complete invariant**"
     },
     {
       "ambition_level": "extension",
@@ -23100,7 +23141,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1a03af4c (Q=0.787), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Bridges"
       ],
@@ -24150,7 +24191,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.79196,
       "parent_direction": "",
       "priority_score": 0.88433,
       "proof_strategy": "",
@@ -24161,7 +24202,7 @@
       "source": "",
       "source_exp_id": "6337dbc1",
       "source_path": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invaria",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-08-04T20:08:49.717246+00:00",
       "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
@@ -25820,7 +25861,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle dd55976d (Q=0.791), which proved 15 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -26380,7 +26421,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ef4982e9 (Q=0.789), which proved 11 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Bridges"
       ],
@@ -29391,47 +29432,6 @@
       "thread_id": "",
       "timestamp": "",
       "title": "Euler-Mascheroni Constant Irrationality"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "famous_subtask",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d333f65d",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
-      "domains": [
-        "Probability",
-        "Physics"
-      ],
-      "github_issue": 0,
-      "id": "seed_028",
-      "last_attempt_time": "2026-08-01T18:23:25.083511+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.76111,
-      "parent_direction": "",
-      "priority_score": 0.76,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "",
-      "title": "Percolation Threshold"
     },
     {
       "ambition_level": "extension",
@@ -35253,7 +35253,7 @@
       "depth_estimate": 3,
       "description": "Cycle 50f62832 (Q=0.680) proved 11 theorems in Bridges but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/ρ for each zero ρ with |Im(ρ)| ≤ n. Prove: the harmoni",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -35613,7 +35613,7 @@
       "depth_estimate": 3,
       "description": "Cycle f96004ff (Q=0.686) proved 271 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Quantitative Sphere Detection from Finite Data\n\n## 1. Quantitative homotopy recovery under reach and density\n\nLet a compact smooth submanifold have reach at least `τ`, and let a f",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35645,7 +35645,7 @@
     "Algebra": 40,
     "Analysis": 4,
     "Applications": 1,
-    "Bridges": 21,
+    "Bridges": 22,
     "Combinatorics": 11,
     "Computation": 30,
     "Cryptography": 10,
@@ -35664,18 +35664,19 @@
     "Tropical": 8
   },
   "recent_theme_keywords": {
+    "6337dbc1": 1,
     "algebraic": 12,
     "analysis": 2,
     "associated": 4,
     "bounds": 18,
-    "bridge": 16,
+    "bridge": 17,
     "category": 4,
     "closed": 7,
     "cohomology": 4,
-    "complete": 6,
+    "complete": 7,
     "computation": 7,
     "compute": 6,
-    "conjecture": 40,
+    "conjecture": 41,
     "connect": 12,
     "constant": 9,
     "construct": 5,
@@ -35683,73 +35684,72 @@
     "corner": 2,
     "correspond": 2,
     "corresponding": 7,
-    "deepening": 2,
+    "deepening": 3,
+    "deeper": 1,
     "define": 8,
     "definition": 2,
-    "dense": 1,
     "density": 5,
-    "determine": 10,
+    "determine": 11,
     "direct": 7,
-    "direction": 2,
+    "direction": 3,
     "directions": 19,
     "dynamic": 2,
     "equals": 11,
     "explicit": 18,
     "exponential": 10,
-    "extend": 3,
+    "extend": 4,
     "finite": 14,
     "forces": 3,
     "formalize": 75,
     "framework": 5,
     "function": 18,
     "functions": 10,
-    "fundamental": 6,
+    "fundamental": 7,
     "future": 24,
-    "general": 20,
+    "general": 21,
     "geometry": 16,
+    "homotopy": 1,
     "impact": 3,
     "information": 6,
     "interior": 3,
-    "invariant": 10,
+    "invariant": 11,
     "investigate": 18,
-    "large": 1,
     "logic": 2,
     "mathematical": 5,
-    "min{|a|": 1,
     "needed": 4,
     "network": 4,
     "number": 15,
     "numbers": 8,
-    "original": 15,
+    "original": 16,
     "paper": 17,
     "parameters": 6,
     "perfect": 2,
     "polynomial": 14,
     "problem": 10,
-    "proved": 22,
+    "proved": 23,
+    "q=0.784": 1,
     "rational": 5,
-    "remaining": 14,
+    "remaining": 15,
     "remains": 3,
     "representations": 4,
     "required": 2,
     "requires": 4,
-    "result": 14,
+    "result": 15,
     "results": 25,
     "satisfies": 10,
     "scheme": 8,
     "schemes": 2,
     "security": 4,
-    "setting": 6,
+    "setting": 7,
+    "sorries": 1,
     "specific": 5,
     "split": 2,
     "statement": 8,
-    "strongest": 7,
+    "strongest": 8,
     "structure": 12,
     "structures": 5,
-    "sufficiently": 1,
-    "sumset": 1,
     "theorem": 30,
-    "theorems": 16,
+    "theorems": 17,
     "theory": 27,
     "threshold": 13,
     "tropical": 8,
@@ -35766,7 +35766,6 @@
     "yields": 10
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
@@ -35785,6 +35784,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "abduction_followup"
   ]
 }

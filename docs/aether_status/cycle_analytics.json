@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-05T19:03:40.254764+00:00",
+  "last_updated": "2026-08-05T20:54:52.142084+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -48058,6 +48058,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19d",
@@ -48101,6 +48102,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v25",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v25",
@@ -48129,6 +48131,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-05T19:03:40.132034+00:00",
       "title": "Dense Sets Without Large Sumsets"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1257,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Bridges",
+      "duration_seconds": 6578.442906141281,
+      "end_time": 1785963189.4089403,
+      "files_integrated": 4,
+      "job_id": "08d2b371",
+      "outcome_quality": 0.79196,
+      "phase": "complete",
+      "phase_a_prompt_version": "v28",
+      "phase_a_quality_score": 0.78881,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v28",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7657,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.7086,
+        "novelty": 0.9474,
+        "proof_depth": 0.6063,
+        "usefulness": 0.7532
+      },
+      "quality_score": 0.79196,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785956610.9660342,
+      "strategy_count": 0,
+      "theorem_count": 202,
+      "theorem_novelty_disproof": 6,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 113,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-05T20:54:52.013916+00:00",
+      "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
     }
   ]
 }
