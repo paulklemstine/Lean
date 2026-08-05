@@ -38,7 +38,7 @@
   -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Probability.MinorClosed.OrderFramework
+import Probability.OrderFramework
 
 namespace MinorTheory.ForestDensity
 
