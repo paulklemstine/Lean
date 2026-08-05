@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "83a0d4e2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n1. **Bundle the graph diagram.** Replace the unbundled `deBruijnEdge` relation by finite directed graphs and package every truncation map as a graph homomorphism. Prove the invers",
-      "quality_score": 0.75101,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-28T22:26:29",
-      "title": "Strange Attractors as Algebraic Objects"
-    },
-    {
       "cycle_id": "d54ed94e",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the formally verified algebraic results in `Catalog/Computation/DeterminantValuesOnLattices.lean`. Each is falsifiable by an e",
@@ -2501,6 +2491,16 @@
       "theorem_count": 45,
       "timestamp": "2026-08-05T17:02:33",
       "title": "These conjectures are derived from the results proved this cycle in"
+    },
+    {
+      "cycle_id": "70c10cae",
+      "domain": "Physics",
+      "key_insight": "# Future directions\n\nThis project formalises a bridge between three areas that are usually kept apart:\n\n* **combinatorics of permutations** (inversions, adjacent transpositions, sign-reversing\n  invol",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-05T17:02:38",
+      "title": "ArXiv paper: Quantum determinants in polynomial time"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7934299999999999
     }
   ],
-  "last_updated": "2026-08-05T17:02:33",
+  "last_updated": "2026-08-05T17:02:38",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "cf55a60f",
-        "quality": 0.6695599999999999,
-        "theorems": 10,
-        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-      },
-      {
         "cycle_id": "e3e9c821",
         "quality": 0.79196,
         "theorems": 15,
@@ -3761,6 +3755,12 @@
         "quality": 0.686,
         "theorems": 45,
         "title": "This project formalizes, in Lean 4 (Mathlib), the quantitative and logical core"
+      },
+      {
+        "cycle_id": "70c10cae",
+        "quality": 0.686,
+        "theorems": 61,
+        "title": "ArXiv paper: Quantum determinants in polynomial time"
       }
     ],
     "Probability": [

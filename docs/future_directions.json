@@ -535,7 +535,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Håstad's Switching Lemma to prove exponential size lower bounds for constant-depth Boolean circuits computing the parity function.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -575,7 +575,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Shamir's Theorem establishing equality between Interactive Proof complexity class (IP) and Polynomial Space (PSPACE).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -615,7 +615,7 @@
       "depth_estimate": 3,
       "description": "Proves the Probabilistically Checkable Proofs (PCP) theorem for 3SAT, establishing NP-hardness of (7/8 + ε)-approximation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -695,7 +695,7 @@
       "depth_estimate": 3,
       "description": "Proves that BQP is not contained in NP relative to a random oracle with probability 1.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -1575,7 +1575,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,ω^u)\\)-core, the \\((k,ω^u)\\)-truss, and the more general \\((k,d,ω^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Computation"
       ],
@@ -4124,47 +4124,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "70c10cae",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Investigate the ArXiv paper 'Quantum determinants in polynomial time' and formalize its key results. Abstract: We give an algebraic branching program of polynomial size which computes Cayley determinant of right quantum matrices. This is a rare example of an efficient computation of a noncommutative determinant, and the first such example for quantum groups. We extend the results to the $q$-Cayley determinant of $q$-right quantum matrices, as well as to their multiparameter generalization. The proofs are entirely combinatorial, as we relate Cayley, Moore and Valiant determinants using bijections/involutions on words. We then employ the celebrated determinant construction of Mahajan and Vinay (SODA'97), to obtain the results.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Algebra",
-        "Physics"
-      ],
-      "github_issue": 0,
-      "id": "fd_0096",
-      "last_attempt_time": "2026-08-05T14:52:08.190384+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "Bypassed",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.13186v1",
-      "source_path": "http://arxiv.org/abs/2607.13186v1",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-07-16T04:10:55.100427+00:00",
-      "title": "ArXiv paper: Quantum determinants in polynomial time"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "cross_domain_bridge",
@@ -4485,47 +4444,6 @@
       "thread_id": "",
       "timestamp": "2026-07-16T10:38:19.903223+00:00",
       "title": "ArXiv paper: Polynomial-Time Evaluation of Aardal-Lenstra Denumerants via Constant Term Method"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "63e5c24f",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms for finding periodic structures in digraphs via the spectrum of a class of rotated Laplacian matrices. This class of Laplacian matrices was previously studied by Lange, Liu, Peyerimhoff, and Post [Lan+15]. We consider a notion of periodicity ratio that generalizes the bipartiteness ratio of Trevisan [Tre09], and show that it is closely related to the spectrum of rotated Laplacian matrices. In particular, if the digraph is strongly connected and represents a Markov chain, this periodicity ratio for a given $p \\in \\mathbb{N}$ is a quantitative measure of how close this Markov chain is to having periodicity $p$. We propose and analyze a periodicity-ratio variant of the spectral algorithm by Louis, Raghavendra, Tetali and Vempala [Lou+12]. We show that the algorithm runs in randomized polynomial time and can find many nearly periodic components (i.e, components with small per",
-      "domain_bridges": [],
-      "domain_quality_penalty": 1.0,
-      "domains": [
-        "Computation",
-        "Algebra"
-      ],
-      "github_issue": 0,
-      "id": "fd_0106",
-      "last_attempt_time": "2026-08-05T12:26:56.842653+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "Bypassed",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "2607.11333v1",
-      "source_path": "http://arxiv.org/abs/2607.11333v1",
-      "status": "in_progress",
-      "thread_id": "",
-      "timestamp": "2026-07-16T10:53:52.382469+00:00",
-      "title": "ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices"
     },
     {
       "ambition_level": "extension",
@@ -7185,7 +7103,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Aperiodicity and subword complexity in the binary expansion of powers of three' and formalize its key results. Abstract: We prove two results on the fine structure of the binary digits of $3^{m}$. First, for every fixed period $p$, the number of positions at which the binary expansion of $3^{m}$ breaks $p$-periodicity grows in order like $\\log m/\\log\\log m$; equivalently, no window of the expansion deeper than a fixed power of $\\log m$ is $p$-periodic. Second, the finite binary word formed by the low-order digits of $3^{m}$ has full low-order subword complexity: its complexity function satisfies $\\pcx_{3^{m}}(n)\\ge n+1$ for every length $n$, once $m$ is large enough.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Computation"
       ],
@@ -7764,7 +7682,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Kra, Moreira, Richter, Robertson 2025, Conjecture 4.10",
         "Hernández & Hetzel 2026, sharpness of sumset bounds",
@@ -7772,7 +7690,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fc0b5c3a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -7788,7 +7706,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0244",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-05T17:02:57.235904+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_δ_dense_set_avoiding_sumsets {δ : ℝ} (hδ : 0 < δ) (n : ℕ) (hn : n ≥ 2) : ∃ (S : Finset ℕ), S ⊆ Finset.Icc 1 n ∧ S.card ≥ ⌈δ * n⌉ ∧ ∀ (A B : Finset ℕ), A ⊆ Finset.Icc 1 n → B ⊆ Finset.Icc 1 n → (A.card ≥ (3 - ε) * (Real.log n / Real.log (1 / δ)) ∧ B.card ≥ (3 - ε) * (Real.log n / Real.log (1 / δ))) → (A + B).card > S.card := by sorry",
       "lineage_refs": [],
@@ -7803,7 +7721,7 @@
       "source": "",
       "source_exp_id": "2607.15269v1",
       "source_path": "http://arxiv.org/abs/2607.15269v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-17T23:47:44.115462+00:00",
       "title": "Existence of δ‑dense sets avoiding large sumsets"
@@ -11480,7 +11398,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'On the CGGRT Criterion for Detecting Bipartite Perfect Matchings in NC' and formalize its key results. Abstract: The recent breakthrough work of Chatterjee, Ghosh, Gurjar, Raj and Thierauf [CGGRT26] gives the first deterministic NC algorithm for the bipartite matching problem. They show how to detect as well as find perfect matchings in bipartite graphs in NC. In this note we present an arguably simpler-to-state variation of the NC detection criterion of [CGGRT26], with improved parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation"
       ],
@@ -11641,7 +11559,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Hitting all maximal independent sets in $c$-hollow graphs' and formalize its key results. Abstract: Fix a constant $c$ with $0<c<1$. We say a graph $G$ on $n$ vertices is $c$-hollow if every maximal independent set of $G$ has size at least $cn$. Denote by $τ(G)$ the size of a smallest set of vertices $T\\subseteq V(G)$ such that every maximal independent set in $G$ intersects $T$, i.e., $T$ is a transversal for the family of maximal independent sets. In 1991, Bollobás, Erdős, and Tuza conjectured that if $G$ is $c$-hollow, then $τ(G)=o(n)$. Using a random construction, we show there exist $c$-hollow graphs with $τ(G)=Ω\\left(\\frac{n^{1/3}}{\\log n }\\right)$, establishing the first nontrivial lower bound constraining the conjecture and complementing a closely related lower bound due to Alon for maximum independent sets. We also show the conjecture holds in a strong form for the class of cographs and split graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -11682,7 +11600,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Contextual Fraction on Permutation Gain Graphs: Exact Algorithms, Query Lower Bounds, and Dynamic Maintenance' and formalize its key results. Abstract: For an explicitly represented finite empirical model, deciding whether the contextual fraction is strictly below one is NP-complete, while the standard exact linear program has one column for every global assignment. We identify a permutation-transport class in which this global problem collapses to a fixed-point calculation. Let a connected permutation gain graph act on a finite state set $O$, let $H \\leq{ \\rm Sym}(O)$ be its holonomy subgroup, let $F = {\\rm Fix}(H)$, and let $p$ be an $H$-invariant root distribution. For the induced empirical model, \\[ {\\rm NCF}(e)=p(F),\\qquad {\\rm CF}(e)=1-p(F). \\] Consequently, compatibility, $F$, and ${\\rm CF}(e)$ are computable in $O(|O|(|V|+|E|))$ arithmetic and table operations. For every finite simple $2$-edge-connected graph, any deterministic exact algorithm in the explicit permutation-table query model requires at least $(|O|-1)|E|$ probes in the worst case, making the dependence on the input tables optimal up to constant factors. With a fi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -13570,7 +13488,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## From two-point risk to distributional lower bounds\n\nThe proved two-state theorem is a local obstruction. A next step is to integrate it over couplings of states whose functional observations are close but whose experiential values are separated. This should produce lower bounds for expected reconstruction loss in terms of an optimal-transport discrepancy between experiential and functional geometries.\n\n## Sharp constants and minimax reconstruction\n\nThe factor `1/2` comes from distributing a hidden contrast across two reconstruction errors. Characterizing equality, and then optimizing over Lipschitz decoders, would turn the bound into a minimax theorem. Finite metric spaces provide a tractable first setting, where the decoder problem can be compared with metric extension and facility-location problems.\n\n## Noisy and randomized decoders\n\nA randomized reconstruction is naturally a Markov kernel from functional observations to distributions on experiences. Replacing metric loss by Wasserstein loss should retain the same triangle-inequality obstruction. Formalizing this would connect hidden fibres to statistical experiments and data-processing inequalities.\n\n## Nontrivial coverings\n\nThe robust inequality does not require a globally split state space. It can therefore be applied locally to nontrivial finite coverings. A complementary topological development should construct an explicit connected two-sheeted cover and prove that it has local sheet swaps but no continuous global fibrewise choice of the opposite sheet.\n\n## Effective reconstruction\n\nThe present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -13651,7 +13569,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## 1. Arithmetic truth as an unbounded limit of bounded truth tables\n\n**Conjecture.** For a concrete syntax of first-order arithmetic with a standard-model satisfaction relation, every length-bounded fragment has a finite exact truth table, but there is no single computable procedure whose restrictions produce all of these tables uniformly.\n\nThe key insight is that each finite stage is harmless while uniformity across all stages can encode the full unbounded truth problem.\n\n**Why now?** Exact finite tabulation and diagonal non-enumeration have been separated cleanly, making the missing uniformity condition precise enough to target by a reduction.\n\n## 2. Quantitative advice lower bounds for bounded semantics\n\n**Conjecture.** For binary statements of length `n`, any family of predictors that realizes every Boolean semantics exactly requires at least `2^n` bits of worst-case advice; under a 95-percent Hamming-accuracy requirement, the optimal advice length is governed asymptotically by the volume of radius-0.05 Hamming balls in the Boolean cube.\n\nThe key insight is that finite computability does not remove information-theoretic storage barriers, and approximate prediction converts truth tables into a covering-code problem.\n\n**Why now?** The exact table theorem identifies the ambient Boolean cube, while the adversarial theorem shows that semantics-free guarantees need additional information.\n\n## 3. Sound abstention under a coverage constraint\n\n**Conjecture.** If definite answers must always be sound and an oracle must answer on at least a fixed positive fraction of every sufficiently rich arithmetic benchmark, then no computable oracle attains the requirement uniformly over all length bounds.\n\nThe key insight is that abstention ceases to be vacuous only when soundness is paired with an explicit lower bound on coverage.\n\n**Why now?** The three-valued model already isolates abstention and counts it as failure, so alternative precision-and-coverage scoring rules can be compared without ambiguity.\n\n## 4. A concrete relativized jump and strict degree hierarchy\n\n**Conjecture.** A partial-recursive oracle-machine model admits a concrete jump operator whose iterates form a strict order embedding of the natural numbers into the Turing degrees.\n\nThe key insight is that diagonal complementation supplies the combinatorial obstruction, while a universal relativized machine supplies the effective coding needed to turn that obstruction into reducibility statements.\n\n**Why now?** The sequence-level diagonal theorem and the existing abstract strict jump hierarchy delimit exactly what must be added: a universal machine, relativized simulation, and the halting reduction.\n\n## 5. Distribution-sensitive limits for bounded truth prediction\n\n**Conjecture.** Under any computably samplable sequence of full-support distributions on arithmetic sentences whose lengths tend to infinity, no computable predictor is uniformly 95-percent accurate unless the distributions concentrate on a computably decidable semantic fragment.\n\nThe key insight is that meaningful average-case accuracy depends jointly on semantic hardness and on how probability mass moves through increasingly expressive fragments.\n\n**Why now?** Pointwise exactness on finite domains has ruled out bare fixed-length impossibility, leaving distributional uniformity as the natural testable replacement.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -14102,7 +14020,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Pythagorean Energy Spectrum\n\nThe file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no\n`sorry` and only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n- **Fermat's difference-of-squares criterion** (`composite_iff_diff_squares`): an odd\n  `N` is composite **iff** the hyperbola `s² = N + t²` carries a non-trivial integer\n  point, with explicit factor extraction (`factor_from_repr`, `cofactor_from_repr`).\n- **The energy functional** `E N s = s² − N`: strict convexity on `ℝ`\n  (`energy_strictConvexOn`), strict monotonicity on `[0,∞)` (`energy_strictMonoOn`),\n  its value at a factor pair (`energy_at_factor`), and the fact that descending it\n  reaches the most balanced factorization first (`balanced_minimizes_energy`,\n  `energy_lt_of_more_balanced`).\n- **The Berggren bridge**: the three tree maps preserve the Pythagorean relation\n  (`bergA_pyth`, `bergB_pyth`, `bergC_pyth`), strictly grow the hypotenuse\n  (`bergA_hyp_grow`), and every triple yields a difference-of-squares factorization\n  of a leg square (`leg_sq_factorization`).\n- **A deterministic factoring algorithm** `fermatSearch : ℕ → Option (ℕ × ℕ)` that\n  scans the energy-spectrum abscissae in order of increasing energy and returns the\n  first difference-of-squares factor pair, proved correct in both directions:\n  `fermatSearch_sound` (every returned pair is a genuine proper factorization\n  `d * e = N` with `1 < d < N`) and `fermatSearch_complete` (for every odd composite\n  `N` the search succeeds).\n\n## Natural next theorems\n\n1. **Deterministic termination of the scan. — Done.** The bounded search is now\n   formalized as the computable function `fermatSearch : ℕ → Option (ℕ × ℕ)`, together\n   with its soundness (`fermatSearch_sound`) and completeness (`fermatSearch_complete`)\n   theorems, upgrading the *existence* criterion to a *correct algorithm* theorem.\n   Remaining refinements: extract the returned `t` as an explicit `Nat.sqrt`-based\n   witness, and show `fermatSearch` returns `none` exactly on primes and prime powers'\n   trivial-only cases.\n\n2. **Complexity of the descent.** Prove that for `N = p·q` with `|p − q|` small\n   (balanced semiprimes) the number of scanned abscissae is `O(|p−q|²/√N)`, giving a\n   formal statement of why Fermat/energy descent is fast on balanced RSA-like moduli\n   and slow otherwise. This is the honest \"guides a deterministic path to a factor\"\n   quantitative claim.\n\n3. **Full Berggren generation.** Combine with the existing\n   `Catalog/Pythagorean/BerggrenCompleteness.lean` to show that the leg-square\n   factorizations obtained from the Berggren subtree rooted at a triple with leg `a`\n   enumerate exactly the factorizations of `a²`, linking tree depth to divisor\n   structure.\n\n4. **Coprimality / primitivity transport.** Prove the Berggren maps preserve\n   `gcd = 1` (unimodularity of the underlying integer matrices), so the bridge maps\n   *primitive* triples to *primitive* triples, sharpening `leg_sq_factorization` to a\n   statement about `radical(a)`.\n\n5. **Real-analytic optimization view.** Lift `balanced_minimizes_energy` to a genuine\n   `argmin` statement over the finite candidate set of valid abscissae using\n   Mathlib's `IsMinOn` / `StrictConvexOn.lt_of_ne`, making the \"gradient descent on a\n   convex spectrum\" reading a literal Lean theorem about the minimizer.\n\n6. **Generalization to `x² − D y² = N`.** The same convex-energy machinery applies to\n   the Pell-conjugate forms; a uniform treatment would connect this file to the\n   `QuadraticReciprocity` and continued-fraction material elsewhere in the catalog.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -14225,7 +14143,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Wigner Semicircle Law\n\nThis development establishes the two pillars of the moment-method proof of the\nWigner semicircle law and bridges them:\n\n1. **Combinatorial side** (`Moments.lean`): the moments of the standard\n   semicircle distribution are the Catalan numbers, satisfying the Catalan/Wigner\n   moment recurrence, the central-binomial closed form, and the `4^k` growth\n   bound (Carleman determinacy).\n2. **Analytic side** (`Density.lean`): the radius-1 semicircle density is a\n   genuine probability density (nonnegative, symmetric, integrates to 1) with\n   mean 0 and variance 1/4.\n3. **Bridge** (`Bridge.lean`): the rescaled Catalan moments match the directly\n   computed integrals of the density (0th, 1st, 2nd moments).\n\n## Natural next steps\n\n- **General even moment integral.** Prove\n  `∫_{-1}^{1} x^{2k} √(1-x²) dx = π · C_k / 4^{k+1}` for all `k` (currently only\n  `k = 0, 1` are done via `integral_sqrt_one_sub_sq` and the sin-substitution).\n  A reduction/recurrence via integration by parts or the Beta function\n  (`Real.Gamma`/`betaIntegral` in Mathlib) would give the full moment sequence of\n  the density, closing the loop with `scaledMoment` for every `k`.\n\n- **Uniqueness via moments (Carleman).** Formalize that a probability measure on\n  a bounded interval is determined by its moments, then combine with\n  `scMoment_le_four_pow` to conclude the semicircle law is the unique measure\n  with these moments.\n\n- **Empirical spectral distribution.** Define the empirical spectral measure\n  `μ_N = (1/N) Σ δ_{λ_i}` of an `N×N` symmetric matrix from its eigenvalues, and\n  its moments `(1/N) tr(M^k)`.\n\n- **Expected traces → Catalan.** For a Wigner ensemble, prove\n  `lim_{N→∞} E[(1/N) tr(W_N^{2k})] = C_k` and the odd traces `→ 0` by the\n  non-crossing pair-partition enumeration; the recurrence `scMoment_recurrence`\n  is the target identity.\n\n- **Weak convergence.** Assemble the moment convergence plus determinacy into\n  weak convergence `μ_N ⇒ semicircle`, the full statement of Wigner's theorem.\n\n- **Concentration.** Strengthen convergence in expectation to almost-sure /\n  in-probability convergence via variance bounds on the traces.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -16361,7 +16279,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n- Formalize periodic configurations `Fin n → Bool` and count fixed points for\n  every rule and small period `n` with kernel-checked finite enumeration.\n- Represent local Boolean functions as multilinear polynomials over `ZMod 2`\n  and prove uniqueness of algebraic normal form for all 256 rules.\n- Replace the ambiguous dimension of a finite set of Boolean-valued points by\n  clearly separated invariants: Krull dimension of a scheme, dimension of a\n  coordinate-ring quotient, fixed-point count, and asymptotic entropy of\n  periodic fixed configurations.\n- Compare those invariants against an explicitly sourced and formalized\n  Wolfram-class data set.  The proved Rule 110 counterexample shows that the\n  original maximal-fixed-locus prediction must be revised before such a\n  correlation theorem can hold.\n- Study spacetime diagrams rather than only fixed points.  Turing completeness\n  concerns unbounded evolution, while a fixed-point locus discards transient\n  and propagating behavior.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -16402,7 +16320,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Finite-cover gluing.** Extend the two-set theorem in\n   `Catalog/Algebra/SheafDatabaseGluing.lean` to finite families of column sets,\n   proving that pairwise-compatible local records have a unique section on the\n   union.\n\n2. **Restriction maps and a bundled sheaf.** Package `LocalSection` as a\n   presheaf on the poset of column subsets, prove the identity and composition\n   laws for restrictions, and derive the sheaf condition from the concrete\n   gluing theorem.\n\n3. **Separate missingness from conflict.** Define a generative probability\n   model with (a) a distribution on ground-truth records, (b) a missingness\n   mechanism, and (c) optional noisy/conflicting observations. The expression\n   `(1-r)^C` should only be asserted after proving independence and identifying\n   the per-constraint failure probability; a cell-missing rate alone does not\n   imply that law.\n\n4. **Constraint dependence.** Pairwise overlap events commonly share columns\n   and therefore need not be independent. Formalize the dependency graph and\n   derive exact probabilities or rigorous upper/lower bounds instead of an\n   unconditional product formula.\n\n5. **Optimization formulation.** For finite columns and normed value spaces,\n   define a loss between partial observations and global sections. Prove that\n   minimizing over global sections is equivalent to minimizing subject to all\n   restriction/overlap equations. Existence of a nearest section will require\n   suitable finiteness, compactness, or coercivity assumptions.\n\n6. **Statistical comparisons.** Claims that one imputation method outperforms\n   mean, KNN, or MICE require a data-generating distribution, loss function,\n   hyperparameter policy, and evaluation protocol. Formalizable first steps\n   include defining expected reconstruction loss and proving comparisons in a\n   small, explicit latent-variable model. Conditions `r < 0.5` and `n > 10`\n   alone are insufficient for a universal dominance theorem.\n\n7. **Cohomological obstructions.** For richer data sheaves where compatible\n   local data may fail to extend globally, define Čech cochains for a finite\n   cover and connect nonzero obstruction classes to failed integration. The\n   dependent-record sheaf proved here has unconditional gluing after overlap\n   agreement, so its higher obstruction theory is correspondingly simple.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation",
         "Algebra"
@@ -16688,7 +16606,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n- Formalize repeated **scattered** words using pairs of order embeddings, distinguishing that notion from contiguous words inside a selected subsequence.\n- Determine sharp extremal lengths for avoiding two disjoint equal scattered four-mers over a four-letter alphabet.\n- Develop probabilistic bounds for random words and compare them with the deterministic pigeonhole threshold proved here.\n- Formalize local complexity parameters (effective alphabet size, subword complexity, and run structure) that yield sharper region-dependent thresholds.\n- Connect empirical genome data only after specifying a reproducible dataset, window convention, ambiguity-symbol policy, and exact statistic; the numerical human/random-genome claims require such data and are not consequences of the abstract combinatorics alone.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation",
         "Algebra"
@@ -16729,7 +16647,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Spectral Proof of the Hypergraph Moore Bound' and formalize its key results. Abstract: A nonempty subfamily of a $k$-uniform hypergraph is an \\emph{even cover} if every vertex lies in an even number of its hyperedges; for $k=2$ these are edge-disjoint unions of cycles, so the minimum size of an even cover is the natural hypergraph analogue of girth. We prove Feige's 2008 conjecture on the hypergraph Moore bound: there are absolute constants $A$ and $C$ (independent of $k$) such that for every $k\\ge3$ and every $1\\le\\ell\\le n$, any $k$-uniform hypergraph on $n$ vertices with more than $C\\,n^{k/2}/\\ell^{k/2-1}$ hyperedges contains an even cover of size at most $A\\,\\ell\\log(en/\\ell)$. Our proof is based on sharp spectral bounds for Kikuchi matrices, which we expect to be of independent interest; we apply them to the refutation of random constraint satisfaction problems in a companion paper.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -16852,7 +16770,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register deficit.\n   Trees, threshold graphs, and subclasses of chordal graphs are natural first cases.\n\n2. **Formalize weighted spill cost.** Replace the one-vertex feasibility model by a cost\n   function on variables and minimize total cost subject to `k`-colourability of the induced\n   graph on unspilled vertices. The counterexample shows that degree alone cannot solve this\n   optimization problem.\n\n3. **Connect perfect elimination orders to SSA construction.** The present theorem assumes a\n   chordal graph via an explicit perfect elimination order. A compiler-facing development\n   could define dominance, SSA live ranges, and prove that the resulting interference graph\n   admits such an order.\n\n4. **Certified greedy allocation.** Extract an executable colouring algorithm from a perfect\n   elimination ordering and prove that it uses exactly the clique number of registers.\n\n5. **Spill lower bounds from cliques.** For a budget `k`, formalize that every clique of size\n   `m > k` forces at least `m-k` spills from that clique, then compare this lower bound with\n   optimal weighted spilling.\n\n6. **Minimal counterexamples.** Exhaustively classify the smallest chordal graphs for which a\n   maximum-degree spill fails, with the exhaustive search reflected by a kernel-checked finite\n   theorem rather than an external computation.\n\n7. **Correct the empirical target.** For SSA/chordal interference graphs, test `χ = ω`, not\n   `χ = max(Δ+1,ω)`. Record maximum degree separately as a general upper-bound parameter; it\n   does not determine the exact chromatic number.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -16974,7 +16892,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding simulator for the graph 3-colouring protocol and prove that, for every finite verifier strategy whose edge challenge has nonzero probability, its simulated and real transcript distributions are identical (or have an explicit negligible statistical-distance bound).\n\n2. **Fiat–Shamir soundness in a random-oracle model.** Extend the simplified QAP protocol with a formally modelled random oracle and prove that replacing the verifier's random evaluation point by a hash-derived challenge preserves the existing degree-over-field-size soundness bound up to an explicit oracle-query loss.\n\n3. **QAP zero knowledge by polynomial blinding.** Add a blinding polynomial that is a random multiple of the target polynomial and prove both that QAP validity is preserved and that the verifier's opened value distribution is independent of the witness whenever the blinding coefficient is uniform over the field.\n\n4. **Constant-gap PCP for graph 3-colouring.** Construct a polynomial-size gap-amplified proof oracle for finite graph 3-colourability whose verifier makes a fixed constant number of queries and rejects every false instance with probability at least `1/100`, independent of the number of vertices and edges.\n\n5. **Composition of PCP locality with commitment hiding.** Define a committed local-oracle protocol and prove that perfect hiding of unopened coordinates plus perfect simulation of opened coordinates yields perfect honest-verifier zero knowledge for the full constant-query verifier transcript.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation",
         "Algebra"
@@ -18079,7 +17997,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe present development verifies algebraic search-to-decision ingredients, finite-distribution hybrid bounds for IND-CPA and post-compromise security, reconciliation inequalities, discrete-Gaussian facts, and concrete arithmetic checks. The following extensions would be needed for a full end-to-end formalization of the standard cryptographic claims.\n\n- Replace the abstract `LatticeSpectrum` interface with Euclidean lattices, dual lattices, successive minima, smoothing parameters, and discrete-Gaussian sampling; then prove the geometric transference estimates used by the quantum GapSVP/SIVP-to-LWE reduction.\n- Define search-LWE and decisional-LWE as explicit distribution ensembles indexed by a security parameter. Formalize polynomial-time reductions and negligible functions so that the existing coordinate and affine-rerandomization lemmas can be assembled into a complexity-theoretic reduction theorem.\n- Instantiate the finite IND-CPA experiment with complete Regev key generation, encryption, and decryption distributions. Prove correctness from the noise bounds and discharge each common-ideal hybrid premise from decisional LWE.\n- Extend the post-compromise experiment to an authenticated, multi-session key-exchange model with partnering, active adversaries, ephemeral-state erasure, and adaptive corruption. Derive the existing common-ideal premises from session-specific LWE assumptions.\n- Replace the raw `2^128` keyspace lower bound with a formal concrete-security estimator covering primal, dual, and decoding attacks. Include estimator assumptions, operation-cost models, decryption-failure probability, and a theorem connecting the resulting minimum work factor to a stated 128-bit security target.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Computation"
@@ -18202,7 +18120,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, and\n- `g ≤ (C_k rank(D)+1)^2`.\n\nOnce this square-root rank certificate is available, the Lean theorem\n`squareRootRankCertificate_implies_scaledExistence` supplies the requested\ndivisor for every half-canonical Brill–Noether-admissible rank simultaneously.\n\nNatural next steps are:\n\n1. Formalize finite connected simple regular graphs and prove\n   `2(g-1)=n(k-2)` from the handshaking lemma.\n2. Connect a graph's Laplacian energy pairing and covering radius to an\n   explicit chip-firing divisor rank lower bound.\n3. Derive the needed covering-radius estimate from a Cheeger or spectral-gap\n   hypothesis.\n4. Import a random-regular-graph expansion theorem and lift the pointwise\n   connector through the corresponding probability measure.\n5. Optimize the resulting constant `C_k`; the present connector intentionally\n   separates this analytic optimization from the Brill–Noether arithmetic.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Physics"
@@ -18243,7 +18161,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What has been established\n\n`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by three real-valued sequences: stored usable energy, externally injected energy, and harvested useful energy. A per-cycle balance equation and nonnegativity assumptions yield:\n\n- exact conservation over every finite horizon;\n- an absolute bound: harvested energy is at most initial reserve plus external input;\n- a net-export bound by the initial reserve alone;\n- exact equality of harvested energy and injected energy for a cyclic apparatus;\n- zero total and pointwise output from a ground-state, unpowered apparatus;\n- a finite-horizon average-power bound;\n- average net power eventually below every positive rate.\n\nThus the result does not assign a finite energy density to quantum vacuum fluctuations. Instead, it proves that fluctuations cannot act as an unaccounted thermodynamic source in any process satisfying the stated global energy balance.\n\n## Computational evidence\n\nComputational evidence was intentionally skipped. The result is a symbolic telescoping consequence of an assumed conservation equation, rather than a numerical or combinatorial conjecture. Testing selected numerical trajectories would merely instantiate the assumptions and would provide no independent support beyond the general Lean proof.\n\n## Natural extensions\n\n1. **Continuous time.** Replace discrete cycles by absolutely continuous energy trajectories and derive the integrated inequality from an almost-everywhere differential balance law.\n2. **Open quantum systems.** Connect `injected` and `harvested` to work and heat terms in completely positive trace-preserving dynamics, making passivity or complete passivity the source of the balance inequality.\n3. **Fluctuating outputs.** Model harvested energy as a random variable and prove expectation, tail-probability, and almost-sure long-time bounds.\n4. **Multiple reservoirs.** Separate work input, heat currents, measurement cost, feedback cost, and entropy production, then derive a Kelvin–Planck-style bound.\n5. **Lossy devices.** Add nonnegative dissipation to the balance equation. The existing extraction bounds should strengthen immediately.\n6. **Relativistic localization.** Index energy accounts by bounded spacetime regions and formalize compatibility between local negative-energy observations and global conservation bounds.\n7. **Tightness constructions.** Exhibit processes attaining the finite bound by converting all initial stored energy into output, and characterize equality conditions.\n8. **Rate units.** Add an explicit positive cycle duration, so average power is energy divided by physical elapsed time rather than cycle count.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics",
         "Computation"
@@ -18365,7 +18283,7 @@
       "depth_estimate": 3,
       "description": "# Molecular Computing Limits v26 — Results and Future Directions\n\n## Formal results\n\n`MolecularComputingLimitsV26.lean` is self-contained and proves the following claims.\n\n### Proved\n\n1. **Exact compiled CRN traces.** For any deterministic transition map, the unary reaction\n   `q → next(q)` takes the one-hot molecular encoding of `q` exactly to that of `next(q)`.\n   By induction, every finite execution trace is simulated exactly.\n2. **Mass-action compatibility.** At its one-hot source state, a compiled unary reaction's\n   falling-factorial mass-action propensity is exactly its assigned rate.\n3. **No hidden molecular replication.** Every state in a compiled one-hot trace has total\n   molecular mass one.\n4. **Exact volume law in the stated capacity model.** At positive density `b`, a description\n   of length `k` fits volume `v` exactly when `ceil(k/b) ≤ v`. At unit density, minimum\n   volume equals description length.\n5. **Asymptotic volume bounds.** The exact minimum satisfies\n   `k ≤ b * minimumVolume b k` and `minimumVolume b k ≤ k + 1`.\n6. **Charged preparation eliminates exponential end-to-end advantage.** If preparing each\n   candidate costs at least one time unit, sequential exhaustive search costs at most twice\n   the molecular search time, including on a Boolean search space of size `2^n`.\n7. **Storage/throughput independence.** In an abstract device specification, fixing storage\n   at `10^18` bits imposes no throughput value. Thus the proposed `10^15` operations/second\n   requires a separate empirical kinetic premise.\n\n### Disproved or delimited\n\n1. **Exact integral proportionality at arbitrary density is false.** At density two,\n   `minimumVolume 2 1 = minimumVolume 2 2 = 1`; therefore no natural constant `c` can make\n   `minimumVolume 2 k = c*k` for every `k`. Ceiling division, rather than exact integral\n   proportionality, is the correct law.\n2. **The factor-two speed bound fails with free preparation.** For preparation cost zero and\n   three candidates, molecular time is one and sequential time is three, so twice molecular\n   time is still strictly smaller than sequential time.\n3. **Storage density does not establish throughput.** The formal countermodel contains two\n   devices with identical `10^18`-bit storage but throughputs zero and `10^15` respectively.\n4. **Scope of “Turing-complete.”** The compiler theorem gives exact finite traces using a\n   species indexed by each machine configuration and an externally scheduled source\n   reaction. It does **not** prove that one finite autonomous laboratory CRN with ordinary\n   mass-action ODE semantics simulates an unbounded Turing tape. Calling that stronger claim\n   proved would require a finite encoding, autonomous reaction selection, and an output/\n   halting correctness theorem.\n\n## Computational evidence\n\nA separate evidence file was not produced because the requested output is restricted to\nLean files and this document. Instead, the evidence is machine-checked in theorem\n`preparation_small_cases`. For one unit of preparation cost and candidate counts `2^k`,\n`k = 0,…,7`, the molecular/sequential time pairs are:\n\n| `k` | candidates | molecular | sequential | sequential / molecular |\n|---:|---:|---:|---:|---:|\n| 0 | 1 | 2 | 2 | 1.000 |\n| 1 | 2 | 3 | 4 | 1.333 |\n| 2 | 4 | 5 | 8 | 1.600 |\n| 3 | 8 | 9 | 16 | 1.778 |\n| 4 | 16 | 17 | 32 | 1.882 |\n| 5 | 32 | 33 | 64 | 1.939 |\n| 6 | 64 | 65 | 128 | 1.969 |\n| 7 | 128 | 129 | 256 | 1.984 |\n\nThe ratio approaches two from below, matching the general theorem. The counterexample hunt\nalso found the free-preparation witness `(p,n) = (0,3)`. No OEIS search is relevant: these\nare direct geometric and affine sequences (`2^k`, `2^k+1`, and `2^(k+1)`) rather than a new\nenumerative sequence.\n\n## Future directions\n\n1. Define a finite-species autonomous CRN semantics and encode unbounded tape data in molecule\n   counts rather than species names.\n2. Prove fair stochastic simulation: desired reactions occur with probability one and decoded\n   outputs stabilize after machine halting.\n3. Relate stochastic mass-action chains to deterministic mass-action ODEs, with explicit error\n   probabilities and concentration/volume scaling.\n4. Introduce a universal prefix machine and a genuine Kolmogorov-complexity definition. Prove\n   lower bounds only after specifying how CRN descriptions are encoded and accounting for the\n   usual additive machine constant.\n5. Replace the linear preparation model by a work–depth–volume model that charges synthesis,\n   copying, mixing, readout, error correction, and disposal. Determine which constant-factor\n   conclusions survive.\n6. Formalize SAT solution enumeration and prove conditional lower bounds under an explicit\n   preparation model; avoid unconditional complexity claims that would imply unresolved\n   complexity-class separations.\n7. Add experimentally sourced premises for DNA packing density, reaction rates, thermal noise,\n   and readout bandwidth before attempting to certify the `10^18` bits or `10^15` operations/\n   second figures as physical claims.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Computation",
         "Geometry"
@@ -18406,7 +18324,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe formal development shows that the proposed endpoint-independent formula is false, while the catalog's endpoint-dependent conformal weight exactly transports chordal Vietoris–Rips and chart-centered Čech filtrations. The following are concrete, falsifiable next claims.\n\n1. **Geodesic filtration reparameterization.** For every finite stereographic point cloud and every `ε ∈ [0, π]`, its spherical-geodesic Vietoris–Rips complex at `ε` equals its weighted-chordal Vietoris–Rips complex at `2 * sin (ε / 2)`.\n\n2. **Full spherical Čech transport including the omitted pole.** If Čech centers are allowed on the entire sphere, then exact transport to the stereographic chart holds precisely for those simplices admitting a common-ball center distinct from the omitted pole. A finite counterexample should exist when this condition is dropped.\n\n3. **Metric property of the exact conformal weight.** The function\n   `2 * ‖x-y‖ / sqrt ((1+‖x‖²)(1+‖y‖²))`\n   satisfies the triangle inequality on every finite-dimensional real Euclidean space, because it is the pullback of chordal distance under inverse stereographic projection.\n\n4. **No endpoint-independent radial replacement.** There is no function `f : ℝ → ℝ` such that the inverse-stereographic chordal distance equals `f (‖x-y‖)` for every pair `x,y : ℝⁿ` when `n ≥ 1`. This can be falsified by exhibiting such a function, or proved using two translated pairs with equal Euclidean separation and unequal chordal distance.\n\n5. **Complexity claim requires a sparse model.** For arbitrary dense point clouds, explicitly producing all pairwise filtration values requires `Ω(N²)` output operations; an `O(N log N)` exact algorithm can therefore exist only under an implicit, sparse, bounded-dimensional, or output-sensitive representation. A precise lower bound should be proved in a comparison or algebraic decision-tree model.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Computation"
@@ -18732,7 +18650,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe formal development now proves the converse criterion beginning with the usual individual-cylinder hypothesis. For every integer base `b ≥ 2`, uniform limiting frequencies for all aligned base-`b` cylinder cells imply the expected frequencies for finite unions of adjacent cells, hence for every interval with endpoints on a common base-`b` grid. Explicit floor/ceiling approximations then squeeze an arbitrary subinterval of `[0,1]`, proving interval equidistribution. The result is also specialized to the orbit `fract (b^n x)`.\n\nNatural next steps are:\n\n1. Reconcile and share the definitions in `NormalityConverse.lean` and `NormalityConnector.lean`, obtaining a single theorem that packages both directions between base-`b` normality and interval equidistribution of `fract (b^n x)`.\n2. Formalize the Weyl-criterion bridge between interval equidistribution and vanishing exponential sums for every nonzero integer frequency.\n3. Develop the measure-theoretic route to almost-everywhere base normality using ergodicity of multiplication modulo one and an appropriate pointwise ergodic theorem, then intersect over the countable set of integer bases for absolute normality.\n4. Keep claims about particular constants separate: the structural criteria proved here do not establish normality of familiar constants such as `π`, `e`, or `√2`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Computation",
         "Bridges"
@@ -18855,7 +18773,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Sharp obstruction period for elementary rules.** Determine whether cycle\n   length 4 is necessary in `reversible_small_cycles_iff`: specifically, test\n   and prove or refute that bijectivity on cycles of lengths 1, 2, and 3 already\n   forces the Wolfram rule to lie in `{15, 51, 85, 170, 204, 240}`.\n\n2. **Ternary radius-one finite-window classification.** For alphabet `Fin 3`,\n   classify all local rules `Fin 3 → Fin 3 → Fin 3 → Fin 3` whose global maps\n   are bijective on every nonempty finite cycle, and test the falsifiable claim\n   that every such rule is a single-coordinate rule followed by a permutation\n   of `Fin 3`.\n\n3. **Uniform finite obstruction bound for larger alphabets.** For each finite\n   alphabet size `q ≥ 2`, determine whether there is a number `B(q)` such that\n   any radius-one rule reversible on cycles `1,…,B(q)` is reversible on every\n   finite cycle. A first concrete target is to prove or refute `B(3) ≤ 8` by\n   exhaustive computation followed by a Lean certificate.\n\n4. **Faithfulness of the coordinate/alphabet action.** For `n ≥ 3` and an\n   alphabet with at least two elements, prove that\n   `coordinateAlphabetEquiv p e = coordinateAlphabetEquiv q d` implies\n   `p = q ∧ e = d`, or produce an explicit counterexample. This would identify\n   the exact direct-product subgroup represented by independent site and\n   alphabet permutations.\n\n5. **Infinite-configuration extension.** On configurations `ℤ → α`, formalize\n   radius-one global maps and prove that every single-coordinate permutative\n   rule has an inverse which is again a radius-one cellular automaton, with the\n   same explicit opposite-shift formula established here for finite cycles.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Algebra"
@@ -19345,7 +19263,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Continuous time.** Replace finite sums by interval integrals and derive the same\n   information-adjusted extraction bound from an almost-everywhere differential energy\n   balance.\n2. **Nonuniform temperatures.** Give each cycle its own reservoir temperature and prove\n   a weighted cardinality bound with cycle-dependent Landauer prices.\n3. **Probabilistic computation.** Replace image-cardinality capacity by Shannon entropy\n   loss under a stochastic channel, connecting the harvesting budget to a genuine data\n   processing inequality.\n4. **Equality characterization.** Classify equality in the finite-horizon bound in\n   terms of zero terminal reserve and saturation of every finite-state compression\n   bound.\n5. **Infinite-horizon rates.** Formulate limsup average useful-power bounds when\n   cumulative injected energy and cumulative erased information have asymptotic rates.\n6. **Reversible realization.** Couple the rigidity result to Bennett embeddings and\n   construct an explicit enlarged-state process whose computational debit vanishes.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation",
         "Algebra"
@@ -19509,7 +19427,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following conjectures are concrete extensions of the formal reduction layer.\nEach can be falsified by a finite counterexample to its stated bound.\n\n1. **Randomized-distinguisher lifting.** For every finite transcript type, replacing\n   deterministic Boolean distinguishers by Markov kernels to `Bool` preserves the\n   exact-advantage theorem for every `PerfectReduction`.\n\n2. **Tight statistical loss.** For any two finite decision games on one transcript\n   space and any deterministic distinguisher, the additive loss in\n   `advantage_le_of_world_gaps` can be sharpened from the sum of the two `ℓ¹` gaps\n   to half that sum when both challenge distributions have total mass one.\n\n3. **Composable perfect reductions.** The identity transcript equivalence forms a\n   perfect reduction, perfect reductions compose, and the induced `reduce`\n   operation is functorial; in particular, exact advantage preservation remains\n   exact after any finite chain of reductions.\n\n4. **Hybrid-chain bound.** Given `n + 1` finite games on a common transcript space\n   whose adjacent corresponding-world `ℓ¹` gaps are bounded by `δ i b`, every\n   Boolean distinguisher's endpoint advantage differs by at most\n   `∑ i : Fin n, (δ i false + δ i true)`.\n\n5. **Canonical graded evaluation coherence.** For every `System` and every binary\n   parenthesization of a list of canonical level-one encodings, graded\n   multiplication yields the canonical encoding of the plaintext product at the\n   total level (after transporting along the induced equality of natural-number\n   level expressions).\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Bridges"
@@ -19714,7 +19632,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe exact interior-fiber theorem reduces several follow-up questions to explicit properties of the two inverse branches. The following are concrete, falsifiable conjectures.\n\n1. **Closed trigonometric indexing.** For `0 < θ < π/2`, every value `decodeSeed bits (sin θ)^2` is equal to\n   `sin² ((s * θ + k * π) / 2^n)` for a uniquely determined sign `s ∈ {-1,1}` and an explicitly bit-decoded residue `k`; conversely, the resulting `2^n` values give the complete interior fiber.\n\n2. **Boundary fiber cardinalities.** For every `n > 0`, the interior fiber of `0` under the `n`-fold logistic iterate is empty, while the interior fiber of `1` has exactly `2^(n-1)` elements. (The second formula records the collision of the two branches at the critical value.)\n\n3. **Fixed-point rounding collapse.** For rounding to the nearest point of the grid `{k / 2^p | 0 ≤ k ≤ 2^p}`, there is a computable equivalence relation on `Fin n → Bool` such that two decoded seeds round to the same grid point exactly when their real distance is at most the appropriate pair of adjacent half-cell thresholds. The number of distinct rounded seeds is therefore the number of equivalence classes and is at most `min (2^n) (2^p + 1)`.\n\n4. **Orbit-suffix ambiguity.** In a stream interface exposing an exact logistic-map state after `n` transitions, every observed interior state is compatible with exactly `2^n` interior initial states. Consequently, any deterministic observer whose output depends only on that suffix has the same output on all members of this fiber.\n\n5. **Arcsine invariance.** The probability measure on `(0,1)` with density `1 / (π * sqrt (x * (1-x)))` is invariant under the full-strength logistic map. Equivalently, integrating an integrable test function after `logistic` against this density gives the same integral as before composition.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Computation"
@@ -19755,7 +19673,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Current formal boundary\n\nThe completed Lean development establishes the finite minimum-information-partition\nsemantics, existence of a minimizing partition, nonnegativity, the exact bridge\n`Φ > 0 ↔ CutConnected` for nonnegative weighted directed networks, and transfer of\npointwise multiplicative cut approximations to `Φ`. These results are structural;\nthey do not assert an NP-hardness classification or a runtime bound for a concrete\nalgorithm. The items below identify the additional definitions and proofs required\nfor those claims.\n\n## Complexity layer\n\nThe current formalization identifies weighted integrated information exactly with a\nfinite minimum-cut functional. A faithful NP-hardness theorem for a richer IIT model\nrequires first fixing an input encoding, a decision problem, and a polynomial-time\nreduction notion. Future work should define Boolean transition systems and probability\ndistributions with bit-size-aware encodings, then reduce a standard NP-hard partition\nproblem to the resulting normalized information partition problem. No complexity claim\nis made without that infrastructure.\n\n## Approximation algorithms\n\nThe theorem `phi_multiplicative_approximation` isolates a reusable correctness interface:\nif a tractable surrogate approximates every cut between factors `1` and `c`, then its\nminimum approximates `Φ` by the same factor. A next step is to implement a concrete\nsurrogate and prove both its runtime and its pointwise bounds. For symmetric nonnegative\nweights, exact polynomial-time minimum-cut algorithms are another natural target.\n\n## Probabilistic IIT semantics\n\nReplace abstract effective information by divergence between repertoires of finite\nMarkov kernels. This requires formalizing interventions, subsystem marginalization,\nand a chosen divergence (for example total variation or KL divergence), followed by\nproofs of nonnegativity and data-processing properties.\n\n## Partition conventions\n\nThe present directed cut uses the weight leaving a subset. Alternatives include\nsymmetric crossing weight, unordered bipartitions (quotienting by complements), and\nmultipartitions. Their induced minima can be compared formally, including conditions\nunder which all conventions coincide.\n\n## Connectivity refinements\n\nFor symmetric weights, connect `CutConnected` to ordinary connectivity of the support\nsimple graph. Quantitative refinements can relate `Φ` to edge connectivity, conductance,\nspectral gaps, and robustness under perturbations of interaction weights.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation",
         "Combinatorics"
@@ -19796,7 +19714,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Gödel's Casino, Cycle 2\n\n## Completed in this cycle\n\n`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational\ncasino to asymmetric odds: a correct bet earns `a`, while an incorrect bet loses\n`b`.  The development proves:\n\n- the affine per-world and expected-payoff formulas;\n- randomized play is an affine combination of the two pure strategies;\n- randomization cannot beat the better pure strategy;\n- a positive randomized edge exists exactly when a pure strategy has one;\n- for a normalized prior and `a + b > 0`, positive profit exists exactly outside\n  the no-bet interval\n  `b/(a+b) ≤ trueMass ≤ a/(a+b)`;\n- adding abstention gives value\n  `max 0 (max pureFalseValue pureTrueValue)`, hence a nonnegative value, value\n  zero when both bets are nonpositive, and an upper bound on every randomized\n  strategy.\n\n## Computational evidence\n\nThe result is affine, so finite sampling is not needed to infer its universal\nshape: the formal identity reduces every randomized strategy to the segment\nbetween its endpoint values.  As a small sanity table, with normalized true\nmass `π`:\n\n| `(a,b)` | `π` | false value `a-(a+b)π` | true value `(a+b)π-b` | best with abstention |\n|---|---:|---:|---:|---:|\n| `(1,1)` | `1/2` | `0` | `0` | `0` |\n| `(2,1)` | `1/3` | `1` | `0` | `1` |\n| `(2,1)` | `2/3` | `0` | `1` | `1` |\n| `(1,2)` | `1/2` | `-1/2` | `-1/2` | `0` |\n\nNo integer sequence arises, so an OEIS search is inapplicable.  The exact affine\nformula also supplies the counterexample hunt: an interior randomized strategy\ncannot exceed both endpoint values, and the formal Lean theorem proves this for\nall rational parameters rather than only sampled cases.\n\n## Next steps\n\n1. Replace rational finite priors with `PMF` or `Measure` and prove the same\n   affine expectation formulas on infinite world spaces.\n2. Model sequential Bayesian updating and characterize cumulative regret under\n   asymmetric odds.\n3. Add explicit transaction fees or bid–ask spreads, producing distinct entry\n   thresholds for true and false bets.\n4. Formulate the player/prior interaction as a two-player zero-sum game and\n   derive an explicit `sInf`/`sSup` minimax equality.\n5. Study proper scoring rules, where reported probabilities replace a single\n   randomized Boolean action.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Algebra"
@@ -19960,7 +19878,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) ≤ N^k` is robust and directly yields the\n`log₂ N` bits-per-spike ceiling. A sharper next theorem is\n\n`binom(N,k) ≤ (e N / k)^k`,\n\nfollowed by two-sided estimates from Stirling's formula. For a fixed active\nfraction `k ≈ ρN`, this should connect sparse neural capacity to binary entropy:\n\n`log₂ binom(N,ρN) ≈ N H₂(ρ)`.\n\nThat formulation would quantify one-percent coding precisely rather than merely\nsubstituting `k = N/100` into a polynomial bound.\n\n## 2. Cumulative energy budgets\n\n`card_budgetCodebook` gives the exact lower-binomial sum\n`∑_{j≤k} binom(N,j)`. Useful follow-up bounds include\n\n- `∑_{j≤k} binom(N,j) ≤ (k+1) N^k` for `1 ≤ k ≤ N`,\n- entropy bounds for `k ≤ N/2`, and\n- comparison of exact-energy and at-most-energy codebooks.\n\nThese would turn the exact combinatorial identity into practical capacity\nestimates for variable spike counts.\n\n## 3. Noise robustness versus metabolic energy\n\nCombine sparse layers with Hamming-distance constraints. The resulting question\nis the maximum cardinality of a constant-weight binary code with prescribed\nminimum distance. Formal targets include Johnson-type and sphere-packing bounds,\nand explicit constructions showing when sparse representations remain robust to\nneuron flips.\n\n## 4. Population precision from probability theory\n\nThe existing population result models the variance law algebraically. A deeper\nformalization would define independent random neural responses, prove the\nvariance of their average, and derive concentration or confidence-interval\nbounds. Extensions could cover heterogeneous variances, correlated neurons,\nand optimal weighted decoding.\n\n## 5. Nonlinear neural manifolds\n\nThe current dimension theorem treats activity as the range of a linear map from\nbehavioral coordinates. A nonlinear version should formalize a smooth map from\na `d`-dimensional behavioral manifold into neural state space and prove that an\nimmersed image has dimension at most `d`. Rank bounds on the derivative are a\nnatural first bridge.\n\n## 6. Efficient decoding\n\nCapacity alone does not provide a decoder. Future work could define encoders and\ndecoders for one-hot, constant-weight, and error-correcting sparse codes, prove\nround-trip correctness, and compare decoding complexity with energy and noise\ntolerance.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Computation"
@@ -20001,7 +19919,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe present development establishes a finite, discrete chain:\n\n1. a pointwise code-length bound on information density;\n2. mutual information bounded by expected description length;\n3. monotonicity of the square-root PAC-Bayes radius;\n4. transfer of an information-theoretic generalization guarantee to expected and uniform description-length bounds;\n5. monotonic improvement of the resulting guarantee as descriptions become shorter.\n\nNatural next steps are:\n\n- **Derive the PAC-Bayes premise probabilistically.** Formalize the exponential-moment and change-of-measure argument that produces the assumed mutual-information gap bound with a confidence penalty.\n- **Allow zero-probability events.** Replace strict positivity by absolute continuity and use an extended-real-valued KL divergence, including the standard endpoint conventions.\n- **Connect to Mathlib probability spaces.** Express the joint law as the distribution of random variables `S` and `H`, and prove equivalence with measure-theoretic mutual information.\n- **Formalize prefix-free compression.** Introduce binary codewords, prove Kraft's inequality, and derive suitable pointwise or expected information-density bounds from code lengths.\n- **Treat randomized and deterministic learners explicitly.** Build a joint law from a data distribution and a Markov kernel, then specialize to deterministic algorithms.\n- **Prove expectation and high-probability variants.** Relate expected generalization bounds involving `I(S;H)` to PAC-Bayes bounds holding with probability at least `1 - δ`.\n- **Obtain strict improvement criteria.** Under positivity and nondegeneracy assumptions, strengthen no-worse monotonicity to a strictly smaller radius when description length strictly decreases.\n- **Extend beyond finite spaces.** Develop countable and standard Borel versions using Radon–Nikodym derivatives and measure-theoretic relative entropy.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "MachineLearning"
@@ -20042,7 +19960,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Scope of the proved connector\n\n`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive axis-aligned boxes of volume one. It connects convex geometry to a finite multiplicative pigeonhole principle: the full volume factors as\n\n`(coordinate section volume) × (perpendicular width)`.\n\nSince a finite product equal to one cannot have every factor strictly greater than one, some width is at most one; positivity and the factorization then force the corresponding section volume to be at least one.\n\nThis is a special case and structural model, not a proof of the requested dimension-free assertion for arbitrary convex bodies.\n\n## Natural extensions\n\n1. **Linear images (parallelotopes).** Define volume and hyperplane section measures for invertible linear images of boxes, then transport the product identity through determinants and restrictions of linear maps.\n2. **Ellipsoids.** Formalize ellipsoids as positive-definite linear images of Euclidean balls and derive explicit central-section formulas. This would connect slicing bounds with eigenvalues and determinant normalization.\n3. **General measurable sections.** Develop the measure-theoretic definition of `(n-1)`-dimensional hyperplane volume using Hausdorff measure or an isometric parametrization of affine hyperplanes.\n4. **Convex-body infrastructure.** Package compactness, convexity, nonempty interior, volume normalization, affine transformations, and central sections into reusable Lean definitions.\n5. **Isotropic normalization.** Formalize barycenters, covariance operators, and isotropic position. This is the standard bridge from geometric sections to analytic information about a normalized measure.\n6. **Analytic bridge.** Relate maximal hyperplane-section density to one-dimensional marginals (via an appropriate coarea/Fubini statement), making precise the connection between convex geometry and probability density bounds.\n7. **Dimension-dependent bounds.** Before attempting a universal constant for arbitrary convex bodies, formalize an available dimension-dependent lower bound. This would validate the full geometric interface without presupposing the unresolved dimension-free step.\n\nAny extension to arbitrary convex bodies must retain an honest distinction between established intermediate bounds and the universal-constant slicing conjecture itself.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Computation"
@@ -20288,7 +20206,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe formal results delimit what remains conjectural. In particular,\n`□A → □□◇ₜA` follows from ordinary transitivity (`4`) plus reflexive time, so it does\nnot by itself prove a strict extension of GL. The following are concrete, falsifiable\nnext claims.\n\n1. **Finite-frame completeness for a specified TGL calculus.** Define a Hilbert\n   calculus with GL, temporal S4, persistence `□A → G□A`, and explicit interaction\n   axioms. Conjecture: every formula valid on all finite `TempFrame`s is derivable in\n   that calculus. A finite counterframe to any derivable formula, or a valid\n   underivable formula, refutes the claim.\n\n2. **Finite model property with an explicit bound.** Conjecture: every\n   non-derivable formula `A` of the calculus above has a `TempFrame` countermodel with\n   at most `2^(2 * subformulaCount A)` worlds. This can be tested by filtration and\n   exhaustive bounded model search.\n\n3. **Decidability via bounded countermodel search.** Conjecture: derivability in the\n   specified calculus is decidable by searching the bound in Conjecture 2 with an\n   executable finite-frame model checker. Termination plus verified soundness and\n   completeness of this algorithm would prove the claim.\n\n4. **Non-refutability of proof gain.** Conjecture: no sound calculus for all\n   `TempFrame`s proves the negation of “not provable now and provable at some later\n   stage.” The two-world model underlying `proof_gain_is_satisfiable` is a concrete\n   countermodel to any such proposed refutation.\n\n5. **Arithmetical completeness requires a precise clock.** Fix a recursively\n   axiomatized increasing sequence of PA fragments `(PA_t)` and interpret `□_t A` as\n   `Prov_{PA_t}(⌜A⌝)`. Conjecture: after specifying a recursively enumerable modal\n   calculus for these indexed operators, its theorems are exactly the formulas valid\n   under every arithmetical substitution. A single modal formula separating the two\n   sets refutes this conjecture for that clock and calculus.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "Computation"
@@ -20615,7 +20533,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause–effect repertoires, and divergence-based information loss.\n- Prove that the abstract nonnegative loss model is instantiated by the resulting probabilistic semantics.\n- Develop perturbation bounds showing stability of `Phi` and of exclusion winners under bounded changes to the loss landscape.\n\n## Composition and exclusion\n\n- Extend parallel composition to interacting composites and characterize hypotheses under which `Phi` is additive, subadditive, or superadditive.\n- Formalize exclusion modulo causal equivalence, including the case where several candidates tie for the maximum.\n- Study how exclusion behaves under refinements and parallel composition.\n\n## Category theory\n\n- Package causal structures and refinements as a category, with the proved monotonicity theorem giving an order-valued invariant.\n- Investigate monoidal structure induced by independent parallel composition and express additivity of `Phi` as compatibility with that structure.\n- Define equivalences of causal structures and prove invariance of `Phi` under equivalence.\n\n## Finite combinatorics and complexity\n\n- Quotient cuts by complementation so each unordered bipartition is counted once, and derive the exact count of nontrivial bipartitions.\n- Relate finite minimization to algorithms by proving correctness and runtime bounds for exhaustive, branch-and-bound, and symmetry-reduced minimum-cut procedures.\n- Connect weighted causal losses to standard graph cut objectives and transfer approximation guarantees to `Phi`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Combinatorics"
@@ -20697,7 +20615,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe following conjectures sharpen the boundary of the normalized development in\n`Catalog/Applications/EML/RischAlgorithm.lean`. Each is intended as a concrete,\nfalsifiable extension.\n\n1. **Canonical partial-fraction normalization.** For every `RatFunc ℚ`, there is\n   an algorithm producing a `RationalNormalForm` whose interpreted derivative\n   agrees with the original rational function away from denominator roots, with\n   output unique up to permutation and deletion of zero-coefficient pieces.\n\n2. **Bit-complexity bound for rational normalization.** If a rational function\n   has numerator and denominator degree at most `d` and integer coefficients of\n   bit length at most `b`, squarefree factorization plus Hermite reduction into\n   the rational normal form uses at most a fixed polynomial in `d + b` bit\n   operations.\n\n3. **Liouville completeness for one exponential extension.** For reduced input\n   in `ℚ(x, exp(a*x))` with nonzero rational `a`, an elementary antiderivative\n   exists if and only if the associated first-order Risch differential equation\n   has a rational-function solution.\n\n4. **Residue criterion over split rational denominators.** A rational function\n   whose denominator splits into rational linear factors has an antiderivative\n   expressible using rational functions and logarithms of affine factors, and\n   the logarithmic coefficients are exactly its simple-pole residues.\n\n5. **Certified normalization preserves semantics.** Extending `NormalForm` with\n   a verified normalization procedure from the catalog `Expr` syntax preserves\n   evaluation at every regular point and strictly decreases a well-founded\n   tower-complexity measure at each recursive Risch reduction step.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Computation",
         "Geometry"
@@ -20819,7 +20737,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Poisson isolated-vertex limit in the connectivity window.** For every fixed `c : ℝ`, if `I_n` is the isolated-vertex count in `G(n, (log n + c)/n)`, then for every fixed `k : ℕ`, its `k`th falling-factorial moment converges to `exp(-c)^k`. Consequently `P(I_n = 0) → exp(-exp(-c))`.\n\n2. **Connectivity is asymptotically equivalent to absence of isolated vertices.** At `p_n = (log n + c)/n`, the probability that a graph has no isolated vertices but is disconnected tends to zero. Combined with Conjecture 1, this gives the sharp connectivity limit `exp(-exp(-c))`.\n\n3. **Finite random-graph giant component law.** For each fixed `λ > 1`, let `ρ ∈ (0,1)` solve `ρ = 1 - exp(-λρ)`. In `G(n, λ/n)`, the largest component divided by `n` converges in probability to `ρ`, while the second-largest component divided by `n` converges in probability to zero.\n\n4. **Subcritical logarithmic component bound.** For each fixed `0 < λ < 1` and every `A > 1 / (λ - 1 - log λ)`, the probability that every component of `G(n, λ/n)` has at most `A log n` vertices tends to one.\n\n5. **Second-moment clique appearance above threshold.** For each fixed `r ≥ 3`, if `p_n * n^(2/(r-1)) → ∞` and `p_n ≤ 1`, then the probability that `G(n,p_n)` contains a copy of `K_r` tends to one. This should follow by classifying pairs of `r`-vertex sets by overlap size in the exact second-moment formula.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Combinatorics"
@@ -21024,7 +20942,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe formal development now identifies the recursively defined time-`t` dependency cone exactly with the radius-`t` Chebyshev ball and proves its exact cardinality `(2t+1)^2`. The next stages toward a constructive universality theorem are:\n\n1. Define finite Life patterns together with translation, reflection, and rotation actions, and prove evolution equivariant under these symmetries.\n2. Verify standard still lifes, oscillators, and gliders as reusable timed components.\n3. Construct signal tracks, fanout, crossings, and Boolean gates from finite patterns, with explicit latency and bounding-box specifications.\n4. Develop composition theorems that turn component certificates into clocked circuit simulations while tracking time and area overhead.\n5. Encode a universal register machine or Turing machine and prove a direct Life simulation theorem with explicit polynomial time and space bounds.\n6. Distinguish syntactic rule dependencies from semantic influence by characterizing which cells can change a designated output under some pair of initial configurations.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Algebra"
@@ -21802,7 +21720,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`\nsettles the \"sharp privacy threshold\" direction for binary network histories:\nperfectly private channels — deterministic or randomized — achieve worst-case\nHamming distortion `D` exactly when a single ball of radius `D` covers the\nhistory space, so the optimal private distortion is the covering radius of the\none-codeword code, and for binary tensors this is the full ambient dimension\n`T·n²`. On the quantitative side the Hamming ball volume is computed exactly,\nturning the fibre-covering converse into `2^{T n²} ≤ rate · ∑_{i ≤ D} C(T n², i)`,\nwith an excess-distortion version where only a good set of histories must be\nreconstructed.\n\nOpen follow-ups:\n\n1. **Entropy-sensitive converse.** Replace the counting version of the excess\n   set by a probability measure: for a source law `p` on histories and a channel\n   with excess-distortion probability `ε`, prove\n   `H(X) - H(X | Y) ≥ H(X) - log(vol_D) - h(ε) - ε·log|S|` (Fano-type\n   correction). The combinatorial skeleton (`card_good_le_rate_mul_ball`) is the\n   counting shadow of this statement.\n\n2. **Average- rather than worst-case distortion.** The threshold theorems here\n   use almost-sure distortion. Under expected distortion a private channel can\n   do better than the covering radius; identify the exact private\n   rate–distortion function `D_priv(p) = min_c E_p[d(c, X)]` and compare it to\n   the covering radius.\n\n3. **Causal / sequential covering.** For time-indexed histories the record is\n   produced online; replace the single covering number by a sequential covering\n   number along the natural filtration and relate the resulting quantity to\n   directed information.\n\n4. **Structured sources.** For histories generated by a Markov chain on\n   snapshots, the ambient count `2^{T n²}` is far from tight; a mixing-based\n   deficit in the exponent is the natural next quantitative target.\n\n5. **Distortion modulo relabeling.** Replace Hamming balls by orbit balls under\n   the `S_n` action on vertices; the exact volume computation\n   (`hamming_ball_card`) must be replaced by an orbit-counting (Burnside) volume,\n   with graph asymmetry controlling the loss.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -21854,7 +21772,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.686,
       "parent_direction": "",
       "priority_score": 0.75,
       "proof_strategy": "",
@@ -21865,7 +21783,7 @@
       "source": "",
       "source_exp_id": "a08998f9",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/a08998f9",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "th_c5fef088",
       "timestamp": "2026-08-04T23:25:46.007097+00:00",
       "title": "These conjectures are derived from the results proved this cycle in"
@@ -22048,7 +21966,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinatorics/HarrisFKGThresholdCoupling.lean` contain complete Lean 4\nproofs (no `sorry`, only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`) of the following.\n\n* `keyMeasure_thresholdFiber` — the finite-key probability formula\n  `P(siteThresholdConfig key p = η) = p^{|open η|}(1-p)^{|closed η|}` for the\n  product of uniform `[0,1]` keys on any finite index type;\n* `keyMeasure_eventKeys` — the key measure of an arbitrary event equals its\n  Bernoulli polynomial `bernProb p A`;\n* `keyMeasure_eventKeys_mono`, `bernProb_mono`, `crossing_prob_mono` —\n  monotonicity in `p` for increasing events, in particular for horizontal\n  crossings of the `n × n` grid;\n* `keyMeasure_eventKeys_strictMono`, `bernProb_strictMono`,\n  `crossing_prob_strictMono`, `crossing_bernProb_strictMono` — strict\n  monotonicity on `(0,1)` for nondegenerate increasing events and for grid\n  crossings;\n* `hasDerivAt_bernProb`, `deriv_bernProb`, `deriv_bernProb_pos_iff`,\n  `deriv_bernProb_pos` — the finite Russo formula and the characterization of\n  strict positivity of the derivative;\n* `bond_keyMeasure_thresholdFiber`, `bond_keyMeasure_eventKeys`,\n  `bond_connected_prob_mono` — the bond analogue on `Sym2 V`;\n* **new:** `weight_inf_mul_weight_sup` (log-supermodularity of the Bernoulli\n  weight), `bernProb_harris` and `keyMeasure_harris` (the Harris/FKG inequality\n  `P(A)P(B) ≤ P(A ∩ B)` for increasing events, in polynomial and in key-measure\n  form), `bernProb_harris_compl` (increasing versus decreasing negative\n  correlation), `bernProb_harris_biInter` and `bernProb_harris_biInter_compl`\n  (finite families), `bernProb_biUnion_ge` (product form of the square-root\n  trick), and the grid instances `crossing_harris`,\n  `crossing_harris_open_site`.\n\nConjecture 4 of the previous cycle (the finite Harris inequality) is therefore\nnow a theorem.  The list below is the updated set of falsifiable conjectures.\n\n## Conjecture 1 (size of the Russo derivative for grid crossings)\n\nLet `θ_n(p)` be the horizontal crossing probability of the `n × n` grid, so that\n`θ_n'(p) = ∑_v P_p(v pivotal)` by `deriv_bernProb`.  Conjecture: the sequence\n`θ_n'(1/2)` is strictly increasing in `n` and satisfies `θ_n'(1/2) ≤ n` for all\n`n ≥ 1`.  Enumeration gives `θ_1'(1/2) = 1`, `θ_2'(1/2) = 3/2`,\n`θ_3'(1/2) = 961/512 ≈ 1.879`.  Either half is refuted by a single computed\nvalue.\n\n## Conjecture 2 (self-duality defect and decay of the crossing density)\n\nWith `θ_n` as above, `θ_n(1/2) < 1/2` for every `n ≥ 2`, the sequence\n`θ_n(1/2)` is strictly decreasing and tends to `0`, and the unique root\n`p_n ∈ (0,1)` of `θ_n(p) = 1/2` satisfies `p_n > 1/2`.  Enumeration gives\n`θ_1(1/2) = 1/2`, `θ_2(1/2) = 7/16`, `θ_3(1/2) = 197/512`.  A single computed\npair with `θ_{n+1}(1/2) ≥ θ_n(1/2)` refutes the monotonicity half.\n\n## Conjecture 3 (strict Harris correlation for grid crossings)\n\nThe Harris inequality `crossing_harris_open_site`,\n`p · θ_n(p) ≤ P_p(crossing ∩ {v open})`, is *strict* for every `n ≥ 2`, every\nsite `v` of the `n × n` grid and every `p ∈ (0,1)`.  Enumeration at `n = 2`,\n`p = 1/2` gives `P = 5/16 > 7/32 = p · θ_2(1/2)`.  Conjecturally the defect\n`P_p(crossing ∩ {v open}) - p·θ_n(p)` is maximal, for fixed `n` and `p = 1/2`,\nat a corner site.  Both halves are refuted by a single enumerated grid.\n\n## Conjecture 4 (BK inequality on a finite site set)\n\nFor increasing events `A, B ⊆ (ι → Bool)` on a finite site set, let `A ∘ B` be\nthe event that `A` and `B` occur on disjoint sets of open sites.  Then\n\n`bernProb p (A ∘ B) ≤ bernProb p A * bernProb p B` for all `p ∈ [0,1]`.\n\nThis is the van den Berg–Kesten inequality, the natural counterpart to the\nHarris inequality now proved.  Together with `bernProb_harris` it would pin the\ncorrelation of increasing events between the two matching bounds.  It is\nfalsifiable on any explicit finite site set.\n\n## Conjecture 5 (bond–site domination on the same key space)\n\nFor a finite graph `G` and vertices `u, v`, using the *same* index type\n`Sym2 V` for bond keys and `V` for site keys, the bond connection probability\ndominates the site connection probability of the line graph:\n\n`bernProb p {ω | BondConnected G ω u v} ≥ bernProb p {η | SiteConnected (lineGraph G) η e f}`\n\nfor all `p ∈ [0,1]` and all edges `e ∋ u`, `f ∋ v`.  This is a finite,\ncheckable statement (both sides are explicit polynomials for small graphs) and\nwould give a formal counterpart of the classical \"bond percolates at least as\neasily as site percolation\" heuristic.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Logic"
@@ -22089,7 +22007,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `ℤ²`, two points joined when\ntheir Euclidean distance is `< R`).  Notation as in `GilbertLatticeCriticalRadii.lean`:\n\n* `Rmin  = sInf {R : some placement has an infinite component}` — proved: `1/3 ≤ Rmin ≤ 1/2`;\n* `Rconn = sInf {R : some placement connects all the points}` — proved: `1/3 ≤ Rconn ≤ 1`;\n* `Rfull = sInf {R : every placement connects all the points}` — proved: `√17/2 ≤ Rfull ≤ √5`.\n\nEach conjecture below is falsifiable by exhibiting one explicit configuration (for the\nupper-bound direction) or one explicit infinite path (for the lower-bound direction).\n\n## Conjecture 1 (sharp geometric threshold): `Rmin = 1/2`\n\nEquivalently: for every `R ≤ 1/2` and every placement of the points, all connected\ncomponents are finite.  The upper bound `Rmin ≤ 1/2` is proved (the line configuration\n`lineConfig`); the formalised lower bound is only `Rmin ≥ 1/3`.  Evidence: an exhaustive\nconvex optimisation over all periodic drifting paths of period `≤ 4`, and a random\nsearch for periods `5 … 8`, never produced a longest edge below `1/2`\n(`ComputationalEvidence.md`).  *Falsifiable*: a periodic path of some period `T` with\nnonzero drift and all edges `< 1/2` would refute it.\n\nProof strategy suggested by the formalisation: along a path each step crosses exactly\none grid line up to bounces (`cross_x`, `cross_y`, and the \"no two consecutive steps of\nthe same type\" arguments used in `no_double_x_trivial` / `no_double_y_trivial`), so the\nsigned slack `a_t = x_t - K_t` to the last vertical line crossed decreases by at least\n`1 - 2R` at each column advance.  What is missing for the sharp result is a joint\n`x`/`y` potential controlling the recharging of the slack by direction reversals.\n\n## Conjecture 2 (quantitative subcriticality): exponentially small components below `1/2`\n\nFor every `R < 1/2` there are constants `c(R), C(R) > 0` such that, for **every**\nplacement, the component of a given cell has at most `C(R)` cells, with\n`C(R) = O((1-2R)^{-2})` as `R ↑ 1/2`.  The formalised result gives `C(R) = 9` for\n`R < 1/3` (`component_finite`, in fact components lie in a `3 × 3` block).  The slack\nrecursion `a_{t+1} ≤ a_t - (1-2R)` suggests a diameter of order `1/(1-2R)` in each\ncoordinate.  *Falsifiable*: a family of placements whose components have diameter\ngrowing faster than `(1-2R)^{-1}` in some coordinate.\n\n## Conjecture 3 (full connectivity): `Rfull = √5`\n\nEvery placement is connected as soon as `R > √5` (proved), and we conjecture that this\nis optimal: for every `R < √5` there is a placement whose graph is disconnected.  Our\nverified lower bound is only `√17/2 ≈ 2.0616`, obtained from a *straight* horizontal cut\nwith a `1/2` horizontal stagger.  A refutation would be a proof that every placement is\nconnected for some `R < √5` — e.g. showing that the worst cut is the straight staggered\none, which would instead give `Rfull = √17/2`.  Deciding between `√17/2` and `√5` (or an\nintermediate value coming from a periodic wavy cut) is a concrete finite-dimensional\noptimisation over cut shapes.\n\n## Conjecture 4 (connected placements): `Rconn = 1`\n\nThe centred placement connects all points for `R > 1` (proved: `centerConfig_connected`),\nand we conjecture no placement does better: for `R ≤ 1`, every placement has at least one\npoint isolated from the rest, i.e. the graph is never connected.  Intuition: to connect\n*all* points, in particular the four points of every `2 × 2` block, the placement cannot\nbe compressed onto lines, and one unit of \"grid spacing\" must be paid somewhere.\n*Falsifiable*: a placement (periodic, say) with all points connected and all edges of a\nspanning structure `< 1`.\n\n## Conjecture 5 (probabilistic threshold): `1/2 < R_c < √5`, with `R_c` non-degenerate\n\nFor the random model (each point uniform in its cell, independently), let `R_c` be the\nalmost sure percolation threshold.  Then `Rmin ≤ R_c` and `R_c ≤ √5`, both of which\nfollow from the results formalised here (below `Rmin` no placement percolates; above\n`√5` every placement is connected).  We conjecture the strict inequalities\n`Rmin = 1/2 < R_c < √5`, and more precisely that `R_c` is strictly larger than the\nthreshold `R'` at which the two-row line mechanism becomes available, because that\nmechanism has probability zero in the random model.  *Falsifiable*: a proof that\n`R_c = 1/2`, or a numerical simulation exhibiting an infinite cluster for `R` close to\n`1/2`.  A first formalisable step is a rigorous, computer-checkable bound of the form\n`R_c ≥ R₀` obtained by a Peierls contour argument on the induced dependent bond\npercolation on `ℤ²`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Geometry"
@@ -22294,7 +22212,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: falsifiable conjectures from the group-model Schnorr formalization\n\nThe new files are\n\n* `Catalog/Cryptography/ZeroKnowledge/SchnorrGroupProtocol.lean` — Schnorr Σ-protocol in a\n  commutative group of exponent `q` (`gexp` API, completeness, knowledge soundness /\n  extraction, perfect HVZK as an equality of `PMF`s, soundness error `≤ 1/q`);\n* `Catalog/Cryptography/ZeroKnowledge/SchnorrGroupFiatShamir.lean` — the Fiat–Shamir\n  transform, forking extraction, oracle programming, and the random-oracle bounds `1/q` and\n  `Q/q`;\n* `Catalog/Cryptography/ZeroKnowledge/SchnorrGroupInstances.lean` — exact soundness error\n  `= 1/q` in a cyclic group of prime order, unique responses, and the concrete instance\n  `Multiplicative (ZMod q)`;\n* `Catalog/Cryptography/ZeroKnowledge/SchnorrGroupBridge.lean` — identification of the\n  catalog's additive model (`Cryptography.SchnorrIdentification`) with the group model at\n  `Multiplicative (ZMod p)`, plus the resulting `PMF`-level HVZK statement for the additive\n  model.\n\nEach conjecture below is a precise Lean-statable claim that can be proved or refuted.\n\n## C1. The `Q/q` random-oracle bound is tight, and `Q/q` is attained only by distinct commitments\n\n`rom_union_bound` shows that an adversary precommitting to `Q` pairs `(a i, z i)` succeeds\nwith probability at most `Q/q` over the oracle answer vector.  Conjecture: in a cyclic group\nof prime order `q`, equality holds **iff** the commitments `a i` are pairwise distinct (and\n`Q ≤ q`); if two indices share a commitment, the success probability drops by at least\n`1/q²`.  Falsifiable: exhibit a family with repeated commitments attaining `Q/q`.\n\n## C2. Perfect HVZK survives adaptive challenge choice but not adaptive statement choice\n\n`hvzk_pmf` fixes the challenge `c` before sampling.  Conjecture: for every function\n`C : G → ZMod q` (a verifier choosing the challenge from the commitment), the honest\ntranscript distribution `r ↦ (g^r, C (g^r), r + C(g^r)·x)` is **not** in general equal to any\nwitness-free simulator's output distribution — concretely, there exists `q`, `x` and `C` for\nwhich no simulator matching `hvzk` exists, while for every *constant* `C` one does.  This\nwould formally separate honest-verifier ZK from malicious-verifier ZK inside the catalog's\nframework.\n\n## C3. Special soundness is equivalent to the `1/q` soundness error in this model\n\nConjecture: for a fixed public key `pub ≠ 1` in a group of prime order `q`, the following are\nequivalent for the predicate `Accepts g pub`: (i) any two accepting transcripts with a common\ncommitment and distinct challenges determine a unique extracted exponent; (ii) for every\n`(a, z)` the accepting-challenge set has cardinality exactly one.  We proved (ii) ⇒ tight\nsoundness error; the converse direction, stated as an abstract property of an arbitrary\nacceptance predicate `P : G → ZMod q → ZMod q → Prop`, is open in the formalization and is\nthe natural definition of a \"generic Σ-protocol with knowledge error `1/q`\".\n\n## C4. Exponent-`q` hypothesis can be weakened to `pub ∈ Subgroup.zpowers g`\n\nAll extraction results assume `pub ^ q = 1`.  Conjecture: `special_soundness_witness` remains\ntrue, with the same extractor, under the strictly weaker hypothesis\n`pub ∈ Subgroup.zpowers g` in an arbitrary (possibly infinite, possibly non-commutative but\nwith `g` central) group, provided `orderOf g = q`.  Falsifiable: a group, `g` of order `q`,\nand `pub` a power of `g` for which the extractor fails.\n\n## C5. Fiat–Shamir with commitment-only hashing is insecure for multi-message signing\n\n`FSAccepts` hashes `(pub, a, m)`.  Conjecture: if the message is dropped from the hash input\n(oracle of the form `H : G × G → ZMod q`), then there is an explicit adversary that, given a\nsingle valid signature on `m₀`, produces a valid signature on every message `m`, i.e.\nuniversal forgery with probability `1`; whereas with the message included, the `Q/q` bound of\n`rom_union_bound` continues to hold.  This is a concrete, checkable separation between the\ntwo hashing conventions inside the present formalization.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "NumberTheory"
@@ -22335,7 +22253,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe formalisation in `Catalog/Pythagorean/BrillNoether/` now consists of ten\nself-contained files, each compiling on its own against Mathlib with no `sorry` and\nusing only the standard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n## What is formalised\n\n* `Divisors.lean` — divisors, linear equivalence, the Baker–Norine rank inequality,\n  genus and canonical divisor (`deg K = 2g − 2`), and the mechanism turning an\n  `ℓ^∞` covering bound `ρ` for the Laplacian lattice into rank statements\n  (`rankAtLeast_of_covering`, `rankAtLeast_halfCanonical_of_covering`).\n* `EnergyCovering.lean` — the energy (Dirichlet) form, cut sizes, the variational\n  spectral gap, the Poincaré inequality, the easy direction of Cheeger's inequality\n  and a lower bound for the covering radius of the Laplacian lattice in the energy\n  metric.\n* `Reduced.lean` — `q`-reduced divisors via a strictly superharmonic potential,\n  **Riemann's theorem for graphs** (`deg D ≥ g ⇒ D` is equivalent to an effective\n  divisor), Riemann's inequality `r(D) ≥ deg D − g`, and the **unconditional\n  covering bound** `IsCoveringBound G g`.\n* `ReducedUnique.lean` — **uniqueness of the `q`-reduced representative** in a\n  divisor class (maximum principle for chip firing), reduction inside the effective\n  cone, and the resulting **effectivity criterion**: `r(D) ≥ 0` if and only if the\n  `q`-reduced form of `D` has a nonnegative number of chips at `q`.  Consequently\n  reduction is a complete invariant of the divisor class\n  (`linEquiv_iff_reduced_eq`), and a reduced divisor is subcritical away from `q`\n  (`IsReduced.lt_degree`).\n* `Dhar.lean` — **Dhar's burning algorithm**: the burning process stabilises after\n  `#V` rounds, a legal firing set never burns, the unburnt set is the largest legal\n  firing set, and `D` is `q`-reduced exactly when the whole graph burns\n  (`isReduced_iff_burn_eq_univ`).  This turns the quantifier over all vertex sets in\n  the definition of reducedness into an effective test.\n* `Jacobian.lean` — **finiteness of the Jacobian**: the `q`-reduced divisors of a\n  fixed degree form a finite, complete and irredundant set of representatives of the\n  divisor classes of that degree, of size at most `∏_{v ≠ q} deg v`\n  (`exists_reps`, `card_le_prod_degree`).\n* `EnergyPath.lean` — the Cauchy–Schwarz bridge `(x u − x w)² ≤ dist(u,w) · E(x)`\n  and the sup-norm bound `|x u| ≤ √(d · E(x))` for mean-zero vectors.\n* `EnergyRadius.lean` — an **unconditional upper bound for the covering radius in\n  the energy metric**: on a connected graph with degrees at most `Δ`, every\n  degree-zero divisor lies within energy distance `2Δ³n` of the Laplacian lattice\n  (`exists_energy_close`).  The proof shows that the Laplacian is onto the mean-zero\n  hyperplane (`exists_mulVec_eq`, via Mathlib's description of its kernel) and then\n  rounds coordinates, using the operator estimates `E(x) ≤ 2Δ‖x‖²` and\n  `‖Lz‖² ≤ 2Δ E(z)`.  Combined with the bridge this gives unconditional `ℓ^∞`\n  covering and Brill–Noether statements in terms of `Δ` and the diameter.\n* `DiameterBound.lean` — ball growth in graphs of bounded degree and the Moore-type\n  diameter lower bound `log_{k+1} n ≤ diam`.\n* `CoveringBridge.lean` — the passage from an energy covering radius `ε` to the\n  `ℓ^∞` covering bound `√(d ε)` and hence to Brill–Noether existence.\n\n## What remains\n\n1. **The lossiness of the covering mechanism.**  `rankAtLeast_of_covering` produces\n   rank `r` only from `deg D ≥ n(ρ + r)`, because it forces *every* vertex to hold\n   `ρ + r` chips simultaneously.  At the half-canonical degree `g − 1` this needs\n   `ρ ≲ g/n − r`, i.e. `ρ` smaller than half the average degree, which no covering\n   radius bound of the size predicted by the paper (`ρ ≈ √g`) can satisfy.  The\n   paper's argument instead chooses the auxiliary effective divisor `E` adapted to\n   the point of the lattice, and measures the distance in the energy norm rather\n   than in `ℓ^∞`.  Formalising that refinement — a rank criterion of the shape\n   \"`deg D ≥ g − 1` and covering radius `≤ c√g` imply `r(D) ≳ √g`\" — is the single\n   most important missing step, and everything else below feeds into it.\n\n2. **Baker–Norine Riemann–Roch.**  `r(D) − r(K − D) = deg D + 1 − g`.  With\n   `Reduced.lean`, `ReducedUnique.lean` and `Dhar.lean` the reduced-divisor calculus\n   is complete, so the missing ingredient is the combinatorics of acyclic\n   orientations with a unique source: the non-special divisors of degree `g − 1` are\n   exactly the classes `ν_σ`, and reversing `σ` realises `D ↦ K − D`.  This is what\n   makes the half-canonical degree self-dual and hence the natural place to test the\n   Brill–Noether conjecture: at `deg D = g − 1` Riemann's inequality gives nothing.\n\n3. **Sharper covering radii.**  `Reduced.lean` gives `ρ ≤ g` in `ℓ^∞`, optimal in\n   general (a tree of loops), and `EnergyRadius.lean` gives `ε ≤ 2Δ³n` in the energy\n   metric with no use of expansion.  The paper's point is that expansion should\n   force `ε` down to the order of `g`; proving this requires replacing the crude\n   rounding argument of `EnergyRadius.lean` by a transference/counting argument for\n   the Laplacian lattice which uses the spectral gap.\n\n4. **The hard direction of Cheeger's inequality**, `λ₂ ≥ h²/(2Δ)`, i.e. the sweep-cut\n   argument.  It is the analytic input that converts combinatorial expansion\n   hypotheses (expanders, almost-Ramanujan graphs, random regular graphs) into the\n   spectral gap used in item 3.\n\n5. **Quantitative Brill–Noether for explicit families.**  With items 1, 3 and 4 one\n   could formalise that `k`-regular graphs with a spectral gap bounded below satisfy\n   `r(D) ≥ c√g` at `deg D = g − 1`, and the random graph statements of the paper.\n\n6. **Reversal systems.**  The Moore-type bound in `DiameterBound.lean` is the generic\n   ball-growth estimate; specialising it to the transition graphs of reversal\n   systems (whose degrees are bounded by the number of allowed reversals) gives the\n   logarithmic diameter lower bounds used as an application in the paper.\n\n7. **Computability.**  `Dhar.lean` makes reducedness testable and `Jacobian.lean`\n   bounds the number of classes, but the reduction *algorithm* itself (fire the\n   unburnt set, repeat) is still obtained in `Reduced.lean` by minimising a\n   potential rather than by a terminating recursion, and `reps` is defined with\n   classical choice.  Turning these into executable definitions would allow\n   machine-checked small-graph experiments of the kind recorded in\n   `ComputationalEvidence.md`, in particular exact Baker–Norine ranks at the\n   half-canonical degree.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -22458,7 +22376,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: Erdős–Rényi threshold phenomena\n\nThis cycle proved the **sharp connectivity threshold** of `G(n,p)` at `p = log n / n`\ninside the catalog's elementary finite model\n(`ErdosRenyi.mass` / `ErdosRenyi.Prob` on `Finset (Edge n)`):\n\n* `ErdosRenyi.prob_connected_log_tendsto_zero` — for `0 < c < 1`,\n  `P(G(n, c·log n/n) connected) → 0` (second moment on the isolated-vertex count);\n* `ErdosRenyi.prob_connected_log_tendsto_one` — for `c > 1`,\n  `P(G(n, c·log n/n) connected) → 1` (cut union bound + entropy/Stirling estimate);\n* `ErdosRenyi.connectivity_sharp_threshold` — the two halves packaged together;\n* `ErdosRenyi.isolated_vertex_sharp_threshold` — the companion sharp threshold for the\n  existence of an isolated vertex (probability `→ 1` for `c < 1`, `→ 0` for `c > 1`).\n\nSupporting reusable results: `prob_avoids` (all-absent probability `(1-p)^{|T|}`),\n`expect_avoidCount` / `expect_avoidCount_sq` (exact first and second moments of a count\nof avoided edge-blocks), `expect_isolated_count`, `expect_isolated_count_sq` and\n`expect_isolated_count_factorial_two` (exact moments of the isolated-vertex count),\n`variance_eq_sub`, `probZero_isolated_le` / `prob_connected_le` (the explicit Chebyshev\nbound `1/(n(1-p)^{n-1}) + p/(1-p)`), `prob_disconnected_le` (cut union bound),\n`card_cutEdges` (a cut has exactly `|S|·|Sᶜ|` potential edges), `choose_le_exp`\n(`C(n,k) ≤ (e n/k)^k`).\n\nThe following conjectures are concrete and falsifiable next targets.\n\n## C1. Poisson window at `p = (log n + c)/n`\n\n**Conjecture.** For every `c ∈ ℝ`,\n`Prob ((log n + c)/n) {s | (graphOf s).Connected} → exp(-exp(-c))`.\n\nFalsifiable: a proof must in particular reproduce the value `e^{-1} ≈ 0.3679` at\n`c = 0`, and any numerical simulation deviating from `e^{-e^{-c}}` refutes it.\nThe missing ingredient is a Poisson limit theorem (method of moments or Stein–Chen)\nfor the isolated-vertex count `I_n`, whose factorial moments in the present model are\nexactly computable by the same block-avoidance technique as `expect_avoidCount_sq`:\n`E[(I_n)_r] = n(n-1)⋯(n-r+1)·(1-p)^{r(n-1) - C(r,2)}`.  The case `r = 2` is now proved\n(`expect_isolated_count_factorial_two`:\n`E[I_n(I_n-1)] = n(n-1)(1-p)^{2n-3}`), so the remaining milestone is:\n\n> **C1'.** The `r`-th factorial moment formula above for all `r`, whose combinatorial\n> core is `|star(v_1) ∪ ⋯ ∪ star(v_r)| = r(n-1) - C(r,2)` for distinct vertices — a\n> direct generalisation of `card_incident_union`.\n\n## C2. Sharp threshold for minimum degree ≥ 1 versus connectivity coincide\n\n**Conjecture.** With `p = c·log n/n` and `c > 1`,\n`Prob p {s | (graphOf s).Connected} - Prob p {s | ∀ v, ∃ u, (graphOf s).Adj v u} → 0`;\ni.e. above the threshold, *the only* obstruction to connectivity is an isolated vertex.\n\nThis strengthens the pair (`prob_exists_isolated_tendsto_zero`,\n`prob_connected_log_tendsto_one`): the current proofs bound both quantities separately,\nwhereas the conjecture asserts the events differ with vanishing probability.  It is\nfalsified by exhibiting `c > 1` and a positive `ε` with a subsequence on which the gap\nexceeds `ε`.  A proof should follow by refining `prob_disconnected_le` to cuts of size\n`2 ≤ k ≤ n/2` only, whose total contribution is `O(n^{-δ})` for `δ = δ(c) > 0`.\n\n## C3. Threshold for a fixed subgraph `H` at `n^{-1/m(H)}`\n\n**Conjecture.** For a fixed graph `H` with `m(H) = max_{H' ⊆ H, v(H')>0} e(H')/v(H')`\nand `p_n = ω(n) · n^{-1/m(H)}` with `ω → ∞`, the number of copies of `H` in `G(n,p_n)`\nis positive with probability `→ 1`, while for `ω → 0` it is `0` a.a.s.\n\nThe `→ 0` half is already implied by `first_moment_threshold`; the `→ 1` half needs the\nsecond-moment estimate `Var X = O((E X)^2 / Φ)` with `Φ = min_{H'} E[X_{H'}]`, which can\nbe assembled from `ErdosRenyi.secondMoment_subgraphCount` (exact overlap sum) plus\n`subgraph_count_pos_whp`.  Falsifiable by a single `H` for which the claimed exponent\n`1/m(H)` is wrong (e.g. by simulation for `H = K_4` with a pendant edge).\n\n## C4. Giant component: quantitative subcritical bound\n\n**Conjecture.** For `p = (1-ε)/n` with `0 < ε < 1` there is `A = A(ε)` such that\n`Prob p {s | largestComponent s ≤ A · log n} → 1`, and the explicit choice\n`A = 3/(ε - log(1+ε))` works.\n\nThe natural Lean route avoids branching processes entirely: a first-moment bound on the\nnumber of *connected* vertex sets of size `k` — `C(n,k) k^{k-2} p^{k-1}` for trees —\ncombined with the cut machinery of `ErdosRenyiConnectivityUpper` (`cutEdges`,\n`sum_over_small_sets`).  Falsifiable numerically: simulate `G(n,(1-ε)/n)` and check\nwhether the largest component exceeds `A log n` with non-vanishing frequency.\n\n## C5. Monotonicity/sharpness of the connectivity probability in `c`\n\n**Conjecture.** For each fixed `n ≥ 2` the map\n`c ↦ Prob (c·log n/n) {s | (graphOf s).Connected}` is nondecreasing on `[0, n/log n]`.\n\nThis is a finite-`n` statement (an instance of Harris/FKG monotonicity for the increasing\nevent \"connected\"), and hence directly falsifiable by exact enumeration for small `n`.\nProving it in the present model requires a Harris-type coupling lemma for `mass`, which\ndoes not yet exist in the catalog and would be reusable far beyond connectivity.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -22730,6 +22648,88 @@
       "thread_id": "th_4db6e6b5",
       "timestamp": "2026-08-05T14:51:30.686735+00:00",
       "title": "Five concrete, falsifiable conjectures arising from the LWE development in"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Rotated Laplacians and periodicity ratios: results and future directions\n\nTwo self-contained Lean files were produced, both building with no `sorry` and\ndepending only on the standard axioms (`propext`, `Classical.choice`,\n`Quot.sound`):\n\n* `Computation/RotatedLaplacianPeriodicity.lean`\n* `Computation/RotatedLaplacianQuantization.lean` (imports the first)\n\nThe setting is a finite weighted digraph `w : V → V → ℝ` with rotation\n`om ∈ ℂ`, the rotated Laplacian quadratic form\n`rotEnergy w om x = Σ_{u,v} w u v ‖x v − om · x u‖²` (the Hermitian form of the\nrotated Laplacian `D − A_om` studied by Lange–Liu–Peyerimhoff–Post), the volume\n`vol w x = Σ_v deg(v) ‖x v‖²`, and the periodicity ratio\n`periodicityRatio w om = inf { rotEnergy/vol : x a nonzero phase vector }`,\nwhich generalizes Trevisan's bipartiteness ratio (the case `p = 2`, where the\nphase vectors are exactly the `0/±1` vectors).\n\n## What was proved\n\n**Structure of the zero set (main characterization).**\nFor a strongly connected, nonnegatively weighted digraph and `p ≥ 1`:\n\n> `exists_zero_energy_phase_iff` — a unimodular `p`-phase vector of zero rotated\n> energy exists **iff** `p` divides the length of every closed walk.\n\nConsequently the set `{p : β_p = 0}` is closed under divisors\n(`exists_zero_energy_phase_of_dvd`) and under least common multiples\n(`exists_zero_energy_phase_lcm`), i.e. it is exactly the set of divisors of the\nperiod.\n\n**Disproof of the bold converse.** `not_period_eq_of_zero_energy` shows that a\nvanishing `2`-periodicity ratio does *not* mean the period is `2`: the directed\n`4`-cycle carries a zero-energy `±1` phase vector while all of its closed walks\nhave length divisible by `4`.  Zero ratio detects *divisors* of the period only.\n\n**Reversal invariance.** `rotEnergy_reverse`, `vol_reverse`,\n`phaseRatios_reverse`, `periodicityRatio_reverse`: reversing every arc of a\ndigraph leaves the whole periodicity ratio unchanged (conjugating the phase\nvector).\n\n**Universal upper bound.** `rotEnergy_le_two_mul_vol` / `rotRayleigh_le_two`:\nthe Rayleigh quotient of the rotated Laplacian is always at most `2`.\n\n**Markov chains.** With `w u v = π u · P u v` for a stationary distribution `π`:\n\n* `rotEnergy_eq_zero_of_eigenvector` — a right eigenvector of `P` with\n  *unimodular* eigenvalue has rotated energy exactly `0` (proved through the\n  variance identity `row_energy_eq`, `E‖Z − EZ‖² = E‖Z‖² − ‖EZ‖²`).\n* `eigenvector_of_rotEnergy_eq_zero` — conversely, if `π > 0` then any\n  zero-energy vector is such an eigenvector.\n* `dvd_of_eigenvalue_rotWeight` — hence a `p`-th root of unity in the spectrum of\n  an irreducible chain forces `p` to divide every closed-walk length.\n\n**Quantization / rigidity (the boldest conjecture, proved).**\n`rotEnergy_eq_zero_or_rootGap_le`: if every nonzero weight is `≥ 1` and `x` is a\nunimodular `p`-phase vector (`p ≥ 2`), then\n\n> `rotEnergy = 0`  or  `rotEnergy ≥ rootGap p`,\n\nwhere `rootGap p` is the minimal squared distance from `1` to a nontrivial `p`-th\nroot of unity (`= 4 sin²(π/p)`, `rootGap_pos`).  So there is no *strictly nearly\nperiodic* integral digraph below the threshold; `dvd_of_rotEnergy_lt_rootGap`\nturns any sub-threshold energy into exact `p`-periodicity.  Numerics show the\nconstant is attained, hence sharp.  `exists_small_positive_rotEnergy` shows the\nweight hypothesis is necessary: scaling the weights of the `4`-cycle produces\narbitrarily small positive `3`-energies.\n\n## Future directions\n\n1. **The Cheeger-type inequalities.**  Neither direction relating `β_p` to the\n   smallest eigenvalue `λ_min` of the rotated Laplacian is formalized here (the\n   eigenvalue itself is not yet defined in these files; see item 5).  The easy\n   direction `λ_min ≤ β_p` is immediate once `λ_min` is introduced as an infimum\n   of Rayleigh quotients, since phase vectors are particular test vectors; the\n   substantial content of the paper is a Trevisan-style bound `β_p ≤ C √λ_min`\n   obtained by rounding.\n   Formalizing the rounding argument (a random threshold on the phase of the\n   eigenvector) is the natural next target, and needs a Lean development of the\n   `p`-phase sweep cut.\n2. **The Louis–Raghavendra–Tetali–Vempala style algorithm.**  Formalizing the\n   randomized algorithm that outputs many nearly-periodic components requires a\n   probabilistic-analysis layer (expectation bounds over random projections) that\n   is not yet present.\n3. **Quantitative rigidity beyond unit weights.**  Replace \"nonzero weights ≥ 1\"\n   by a general lower bound `w_min` and derive the threshold `w_min · rootGap p`;\n   then obtain a *normalized* rigidity statement in terms of\n   `β_p < w_min · rootGap p / vol`.\n4. **Exact value of `rootGap`.**  We only prove `rootGap p > 0`; identifying it\n   with `4 sin²(π/p)` requires the monotonicity of `cos` on `[0, π]` applied to\n   the arguments `2πk/p`, which is routine but was not needed here.\n5. **Spectral side.**  Relate `rotEnergy` to the eigenvalues of the actual\n   matrix `D − A_om` in `Matrix.IsHermitian` form, and prove\n   `λ_min ≤ periodicityRatio` as a statement about `Matrix.IsHermitian.eigenvalues`.\n6. **Almost-periodic decompositions.**  Formalize \"many nearly-periodic\n   components\": a partition of the vertex set into parts each with small\n   periodicity ratio, with guarantees in terms of the higher eigenvalues of the\n   rotated Laplacian.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0980",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "63e5c24f",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/63e5c24f",
+      "status": "available",
+      "thread_id": "th_87864f1d",
+      "timestamp": "2026-08-05T17:02:21.034420+00:00",
+      "title": "Two self-contained Lean files were produced, both building with no `sorry` and"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions\n\nThis project formalises a bridge between three areas that are usually kept apart:\n\n* **combinatorics of permutations** (inversions, adjacent transpositions, sign-reversing\n  involutions),\n* **noncommutative algebra / quantum groups** (Manin's right-quantum relations, the\n  algebra `M_q(2)` and its quantum determinant),\n* **linear algebra** (the determinant and its alternating property).\n\nThe two Lean files are self-contained (they import only Mathlib) and contain no `sorry`.\n\n## What is proved\n\n`Physics/QuantumCayleyDeterminant.lean`\n\n* `cdet` — the Cayley (column-ordered) determinant over an arbitrary, possibly noncommutative,\n  ring, defined through `List.prod` so that the order of the factors is part of the data.\n* `IsRightQuantum` — Manin's relations, with `IsRightQuantum.cross'` the unrestricted\n  symmetric form and `IsRightQuantum.submatrix_col` stability under column permutations.\n* `cdet_swap_adjacent_cols` — an adjacent column swap negates `cdet`.  The proof is a\n  sign-reversing involution `σ ↦ σ·s` on `Perm (Fin n)`, where the crossing relation is exactly\n  what makes each orbit cancel.\n* `cdet_col_perm` — the full alternating property `cdet (A ∘ τ) = sgn τ • cdet A`, obtained by\n  induction along the generation of the symmetric group by adjacent transpositions.\n* `cdet_add_self_eq_zero_of_col_eq`, `cdet_eq_zero_of_col_eq` — two equal columns kill the\n  determinant (in a ring without additive `2`-torsion).\n* `cdet_row_perm` — the row version, valid with no hypothesis at all.\n* `invCount`, `invCount_mul_swap`, `invCount_eq_zero_iff`, `sign_eq_neg_one_pow_invCount` —\n  the inversion statistic and the identification of the sign homomorphism with the parity of\n  the number of inversions.\n* `qcdet`, `IsQRightQuantum`, `qcdet_swap_adjacent_cols` — the `q`-deformed theory: an adjacent\n  column swap multiplies the `q`-Cayley determinant by `-q⁻¹`.  `qcdet_one_eq_cdet` recovers\n  the undeformed statement at `q = 1`.\n* `cdet_eq_det`, `isRightQuantum_of_comm`, `det_col_perm_of_cdet` — the bridge to Mathlib's\n  commutative determinant, of which the noncommutative theorem is a strict generalisation.\n* Concrete `2 × 2` evaluations, noncommutative examples, and a verified counterexample showing\n  the right-quantum hypothesis cannot be dropped.\n\n`Physics/QuantumGroupDeterminant.lean`\n\n* `IsQuantumMatrixTwo` — the defining relations of `M_q(2)` in hypothesis form (any ring that\n  is an algebra over a commutative ring `K`, any invertible `q : Kˣ`).\n* `qdet_comm_a/b/c/d`, `qdet_central`, `qdet_mem_centralizer` — the quantum determinant\n  `ad - q⁻¹ bc` is central, in fact central for the whole subring generated by the entries.\n* `qdet_eq_qCayley` — the quantum determinant is the `q`-Cayley determinant of `!![a,b;c,d]`.\n* `entries_commute_of_q_eq_one` — at `q = 1` the relations collapse to commutativity.\n\n## Natural next steps\n\n1. **Full column antisymmetry in the `q`-case.**  For `q ≠ 1` an adjacent swap multiplies\n   `qcdet` by `-q⁻¹`, but a general column permutation is not simply `(-q⁻¹)^{ℓ(τ)}` times the\n   original, because the swapped matrix satisfies the relations with `q` replaced by `q⁻¹` in\n   the affected pair.  Working out the exact cocycle (presumably `(-q⁻¹)^{inv τ}` after a\n   suitable multiparameter bookkeeping) would give the `q`-analogue of `cdet_col_perm`.\n\n2. **Multiparameter deformations.**  Chan–Pak also treat matrices with a parameter `q_{kl}`\n   attached to each pair of columns.  The involution used here is local (it touches only two\n   adjacent columns), so it should adapt verbatim once the weight of a permutation is defined\n   as a product over inversions of the corresponding `q_{kl}`.\n\n3. **Cayley = Moore determinant.**  The heart of the Chan–Pak paper is a bijective proof that\n   for right-quantum matrices the Cayley determinant coincides with the Moore determinant (and\n   with Valiant's determinant).  Our `cword_split_pair` lemma, which factors a column word\n   around two adjacent positions, is the natural starting point for such word manipulations.\n\n4. **Mahajan–Vinay and algebraic branching programs.**  The paper's polynomial-time algorithm\n   comes from the clow-sequence expansion of the determinant.  Formalising\n   `det A = ∑_{clow sequences} (-1)^{n+k} weight` (a sign-reversing involution on clow\n   sequences) would be a substantial and independently valuable addition: it connects graph\n   walks with determinants, and combined with item 3 gives the polynomial-size ABP for the\n   Cayley determinant of a right-quantum matrix.\n\n5. **Laplace expansion and Cramer-type identities.**  `cdet` satisfies a cofactor expansion\n   along the first column for *any* matrix; for right-quantum matrices one expects the full\n   set of quantum Cramer identities and a quantum Jacobi ratio theorem.\n\n6. **`sign_eq_neg_one_pow_invCount` for Mathlib.**  The identification of `Equiv.Perm.sign`\n   with the parity of `invCount` is stated here for `Fin n` and proved from scratch; a\n   polished version (together with `∑_{σ} q^{inv σ} = [n]_q!`) would be a reasonable Mathlib\n   contribution.\n\n7. **Higher quantum groups.**  Centrality of `det_q` is proved here for `M_q(2)`.  The same\n   hypothesis-style approach should scale to `M_q(n)` once the `q`-Cayley determinant is known\n   to be alternating in both rows and columns.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "fd_0981",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "70c10cae",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/70c10cae",
+      "status": "available",
+      "thread_id": "th_5173e1cf",
+      "timestamp": "2026-08-05T17:02:34.839344+00:00",
+      "title": "This project formalises a bridge between three areas that are usually kept apart"
     },
     {
       "ambition_level": "extension",
@@ -23025,7 +23025,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1443bb24 (Q=0.791), which proved 19 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Computation"
       ],
@@ -24105,7 +24105,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 627f5167 (Q=0.766), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -24170,6 +24170,46 @@
       "thread_id": "",
       "timestamp": "2026-08-04T20:08:49.717246+00:00",
       "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 63e5c24f (Q=0.793), which proved 50 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "github_issue": 0,
+      "id": "push_63e5c24f_8857bbb8",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8934299999999998,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "63e5c24f",
+      "source_path": "ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains fr",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-05T17:02:26.736199+00:00",
+      "title": "Deepening: ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains fr"
     },
     {
       "ambition_level": "extension",
@@ -24345,7 +24385,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 6c98f572 (Q=0.805), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) i",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation"
       ],
@@ -25175,11 +25215,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "716ebed1",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -25191,7 +25231,7 @@
       ],
       "github_issue": 0,
       "id": "push_b0710fef_72ac41c5",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-05T17:03:13.667456+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -25206,7 +25246,7 @@
       "source": "",
       "source_exp_id": "b0710fef",
       "source_path": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-02T17:26:14.394886+00:00",
       "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
@@ -25665,7 +25705,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle d54ed94e (Q=0.766), which proved 11 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Determinant values on lattices' and formalize its key results. Abstract: We study the distribution of determinant values on lattices in $\\operatorname{M}_d(\\mathbb R)$ for $d\\ge 2$. Let $Λ<\\operatorname{M}_d(\\mathbb R)$ be a lattice whose elements all have algebraic entr",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -25705,7 +25745,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle d58932ad (Q=0.772), which proved 13 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Computation"
       ],
@@ -26025,7 +26065,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e86cdc26 (Q=0.800), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k ≥ 5, there exists a constant C_k > 0 such that for a uniformly random simple k-regular graph G on n vertices (with n → ∞ through admissible values), with probability tending to 1, G satisfies the following asymptotic Brill-Noether existence property at half-canonical degree: for ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Computation"
       ],
@@ -26065,7 +26105,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e9a483ed (Q=0.760), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation"
       ],
@@ -26185,7 +26225,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle eb6ff95e (Q=0.794), which proved 17 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -27077,7 +27117,7 @@
       "depth_estimate": 3,
       "description": "Proves that crystalline lattice computation arrays exhibit zero error propagation when subject to high-energy cosmic radiation damage.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -27517,7 +27557,7 @@
       "depth_estimate": 3,
       "description": "Proves the existence of a self-replicating code parasite that mutates its own source AST while preserving its core payload behavior across all executions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -27557,7 +27597,7 @@
       "depth_estimate": 3,
       "description": "Proves Thompson's Reflections on Trusting Trust attack for recursive compiler self-replication with zero detection footprint.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -27637,7 +27677,7 @@
       "depth_estimate": 3,
       "description": "Proves that an automated code immune system can detect and isolate arbitrary unknown malicious self-modifying AST mutations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -27917,7 +27957,7 @@
       "depth_estimate": 3,
       "description": "Derives Lloyd's ultimate physical computational limit for a 1-kilogram micro black hole processing quantum information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -28397,7 +28437,7 @@
       "depth_estimate": 3,
       "description": "Formally proves computational limits of Infinite Time Turing Machines (ITTMs) accessing hyper-arithmetical halting oracles.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation"
       ],
@@ -30229,53 +30269,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7b912198",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
-      "domains": [
-        "Analysis",
-        "Speculative",
-        "Bridges"
-      ],
-      "github_issue": 0,
-      "id": "seed_061",
-      "last_attempt_time": "2026-08-01T18:23:19.928456+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.7734099999999999,
-      "parent_direction": "",
-      "priority_score": 0.82,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "seed",
-      "source_path": "seed:manual_v2",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "",
-      "title": "Non-Archimedean Probability via Surreal Numbers"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b20da64b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30289,7 +30287,7 @@
       ],
       "github_issue": 0,
       "id": "seed_065",
-      "last_attempt_time": "2026-08-02T23:24:18.099040+00:00",
+      "last_attempt_time": "2026-08-05T17:03:06.950684+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -30304,7 +30302,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Integrated Information via Tensor Networks"
@@ -35649,20 +35647,20 @@
   ],
   "pruned": [],
   "recent_domain_counts": {
-    "Algebra": 37,
+    "Algebra": 39,
     "Analysis": 4,
     "Applications": 1,
     "Bridges": 20,
-    "Combinatorics": 10,
-    "Computation": 29,
+    "Combinatorics": 11,
+    "Computation": 30,
     "Cryptography": 10,
     "EML": 8,
     "Geometry": 21,
-    "Logic": 16,
+    "Logic": 17,
     "MachineLearning": 11,
     "Novelty": 5,
     "NumberTheory": 11,
-    "Physics": 9,
+    "Physics": 10,
     "Probability": 5,
     "Pythagorean": 10,
     "Shared": 3,
@@ -35671,9 +35669,10 @@
     "Tropical": 8
   },
   "recent_theme_keywords": {
-    "a68d3b50": 1,
-    "algebraic": 11,
+    "abstract": 1,
+    "algebraic": 12,
     "analysis": 2,
+    "arxiv": 1,
     "associated": 4,
     "bounds": 17,
     "bridge": 16,
@@ -35681,11 +35680,11 @@
     "closed": 6,
     "cohomology": 3,
     "complete": 5,
-    "computation": 6,
+    "computation": 7,
     "compute": 6,
     "conjecture": 40,
     "connect": 12,
-    "constant": 7,
+    "constant": 8,
     "construct": 5,
     "continuous": 8,
     "corner": 2,
@@ -35698,83 +35697,80 @@
     "determine": 10,
     "direct": 7,
     "direction": 2,
-    "directions": 17,
+    "directions": 18,
     "dynamic": 2,
-    "equals": 10,
-    "errors": 1,
-    "explicit": 16,
-    "exponential": 9,
-    "extend": 2,
-    "finite": 12,
+    "equals": 11,
+    "explicit": 17,
+    "exponential": 10,
+    "extend": 3,
+    "finite": 13,
     "forces": 3,
-    "formalize": 73,
+    "formalize": 75,
     "framework": 5,
     "function": 18,
     "functions": 10,
     "fundamental": 5,
-    "future": 22,
-    "general": 19,
+    "future": 23,
+    "general": 20,
     "geometry": 16,
     "impact": 3,
     "information": 6,
     "interior": 3,
-    "invariant": 9,
-    "investigate": 16,
+    "invariant": 10,
+    "investigate": 18,
     "logic": 2,
     "mathematical": 5,
+    "matrices": 1,
     "needed": 4,
     "network": 4,
     "number": 15,
-    "numbers": 7,
+    "numbers": 8,
     "original": 15,
-    "paper": 15,
+    "paper": 17,
     "parameters": 6,
     "perfect": 2,
-    "polynomial": 11,
+    "polynomial": 14,
     "problem": 9,
-    "proved": 21,
-    "q=0.767": 1,
+    "program": 1,
+    "proved": 22,
     "rational": 5,
-    "reduction": 1,
     "remaining": 13,
     "remains": 3,
     "representations": 4,
     "required": 2,
     "requires": 4,
     "result": 14,
-    "results": 22,
-    "ring-lwe": 1,
-    "satisfies": 8,
+    "results": 25,
+    "satisfies": 9,
     "scheme": 8,
     "schemes": 2,
     "security": 4,
     "setting": 6,
     "specific": 5,
     "split": 2,
-    "statement": 6,
+    "statement": 7,
     "strongest": 7,
     "structure": 12,
-    "structures": 4,
+    "structures": 5,
     "theorem": 29,
     "theorems": 16,
     "theory": 27,
-    "threshold": 12,
+    "threshold": 13,
     "tropical": 8,
-    "uniform": 8,
+    "uniform": 9,
     "universal": 10,
     "values": 3,
     "vanishing": 3,
-    "variant": 1,
+    "variant": 2,
     "verifiable": 2,
     "vertices": 8,
     "volume": 4,
     "weight": 4,
     "without": 9,
+    "words": 1,
     "yields": 10
   },
   "selection_log": [
-    "abduction_followup",
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
@@ -35792,6 +35788,8 @@
     "abduction_followup",
     "abduction_followup",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge",
+    "famous_subtask"
   ]
 }
