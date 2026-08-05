@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f1303b99",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: Conway Life universality\n\nThe completed Lean development establishes Conway's exact B3/S23 rule on the infinite integer lattice, finite-speed dependence, and a certified `9^t` upp",
-      "quality_score": 0.81107,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-29T06:54:54",
-      "title": "Game of Life Universality"
-    },
-    {
       "cycle_id": "229af38b",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\nThe universal Graceful Tree Conjecture remains open. The verified path and star constructions in this project suggest the following precise next targets. Each target has a finite",
@@ -2501,6 +2491,16 @@
       "theorem_count": 536,
       "timestamp": "2026-08-05T22:29:11",
       "title": "Future directions from cycle 4be361b7"
+    },
+    {
+      "cycle_id": "5b6f1a1d",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nAll notation is that of `Catalog/Applications/AffineSubspaceStats/AffineStats.lean`:\n`Vec n = 𝔽₂ⁿ`, an affine `D`-cube is a base point `c` together with `D` directions\n`v₀,…,v_{D-",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 122,
+      "timestamp": "2026-08-05T22:29:17",
+      "title": "All formal results live in four files, which together compile with no `sorry` an"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79196
     }
   ],
-  "last_updated": "2026-08-05T22:29:11",
+  "last_updated": "2026-08-05T22:29:17",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "3308088b",
-        "quality": 0.686,
-        "theorems": 37,
-        "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
-      },
-      {
         "cycle_id": "1cf3185d",
         "quality": 0.8116299999999999,
         "theorems": 60,
@@ -3451,6 +3445,12 @@
         "quality": 0.686,
         "theorems": 130,
         "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
+      },
+      {
+        "cycle_id": "5b6f1a1d",
+        "quality": 0.686,
+        "theorems": 122,
+        "title": "All formal results live in four files, which together compile with no `sorry` an"
       }
     ],
     "Logic": [
