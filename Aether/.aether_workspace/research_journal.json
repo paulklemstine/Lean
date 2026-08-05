@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7fa0ef0b",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: dimensions of products of posets\n\nThe following are concrete, falsifiable conjectures extracted from Bergman's *Further thoughts on dimensions of posets*. Here `dim` is Dushnik–Mi",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-07-27T10:29:23",
-      "title": "ArXiv paper: Further thoughts on dimensions of posets"
-    },
-    {
       "cycle_id": "1443bb24",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ances",
@@ -2501,6 +2491,16 @@
       "theorem_count": 307,
       "timestamp": "2026-08-05T09:57:01",
       "title": "ArXiv paper: Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond"
+    },
+    {
+      "cycle_id": "9f23a455",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: falsifiable conjectures from the group-model Schnorr formalization\n\nThe new files are\n\n* `Catalog/Cryptography/ZeroKnowledge/SchnorrGroupProtocol.lean` — Schnorr Σ-protocol in a",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-05T09:57:12",
+      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79609
     }
   ],
-  "last_updated": "2026-08-05T09:57:01",
+  "last_updated": "2026-08-05T09:57:12",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "132832ee",
-        "quality": 0.74352,
-        "theorems": 11,
-        "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-      },
-      {
         "cycle_id": "42b8568d",
         "quality": 0.686,
         "theorems": 36,
@@ -3389,6 +3383,12 @@
         "quality": 0.686,
         "theorems": 525,
         "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
+      },
+      {
+        "cycle_id": "9f23a455",
+        "quality": 0.686,
+        "theorems": 68,
+        "title": "Zero-Knowledge Proofs: Schnorr Protocol"
       }
     ],
     "Geometry": [
