@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ee1ae94f",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciproci",
-      "quality_score": 0.78664,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-28T17:00:01",
-      "title": "Hilbert 12: Kronecker-Weber Generalization"
-    },
-    {
       "cycle_id": "a07085b6",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\n1. Generalize the scalar output theorem to vector-valued output layers.\n2. Package each selected formula as an affine map and prove continuity across adjacent cell boundaries.\n3.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 122,
       "timestamp": "2026-08-05T14:51:06",
       "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$"
+    },
+    {
+      "cycle_id": "b369f029",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\nThe files in `Bridges/` develop Joyal's combinatorial species as transport-of-structure\nfunctors and connect them to generating series.  Everything listed below is fully proved:\n`",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 248,
+      "timestamp": "2026-08-05T14:51:14",
+      "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79294
     }
   ],
-  "last_updated": "2026-08-05T14:51:06",
+  "last_updated": "2026-08-05T14:51:14",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "fb6f9bc5",
-        "quality": 0.7559799999999999,
-        "theorems": 14,
-        "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-      },
-      {
         "cycle_id": "aeb64258",
         "quality": 0.686,
         "theorems": 22,
@@ -3203,6 +3197,12 @@
         "quality": 0.686,
         "theorems": 307,
         "title": "ArXiv paper: Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond"
+      },
+      {
+        "cycle_id": "b369f029",
+        "quality": 0.686,
+        "theorems": 248,
+        "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
       }
     ],
     "Combinatorics": [
