@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3e30c45d",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: radical isogenies on Montgomery curves\n\nThe following conjectures are concrete extensions of the verified degree-two affine formulas. Each can be falsified by an explicit finite f",
-      "quality_score": 0.7689999999999999,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-07-28T18:55:07",
-      "title": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
-    },
-    {
       "cycle_id": "e68f39b0",
       "domain": "Logic",
       "key_insight": "# Future directions\n\n`Catalog/Logic/ProofSpaceTransitionWindows.lean` advances the finite transition model from pointwise descent to blockwise drift. It proves that strict decrease only at sampled blo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 56,
       "timestamp": "2026-08-05T14:51:29",
       "title": "Deepening: ArXiv paper: Gilbert's disc model conditioned on the square lattice"
+    },
+    {
+      "cycle_id": "2e6f6f76",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nFive concrete, falsifiable conjectures arising from the LWE development in\n`Catalog/Cryptography/LWE/`. Each is stated so that a single Lean theorem (or a\nsingle counterexample) s",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-08-05T14:51:35",
+      "title": "Deepening: Lattice Cryptography: LWE Hardness"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79294
     }
   ],
-  "last_updated": "2026-08-05T14:51:29",
+  "last_updated": "2026-08-05T14:51:35",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "42b8568d",
-        "quality": 0.686,
-        "theorems": 36,
-        "title": "Quantum Key Distribution: BB84 Security Proof"
-      },
-      {
         "cycle_id": "29953b58",
         "quality": 0.6988599999999999,
         "theorems": 7,
@@ -3389,6 +3383,12 @@
         "quality": 0.686,
         "theorems": 68,
         "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+      },
+      {
+        "cycle_id": "2e6f6f76",
+        "quality": 0.686,
+        "theorems": 100,
+        "title": "Deepening: Lattice Cryptography: LWE Hardness"
       }
     ],
     "Geometry": [
