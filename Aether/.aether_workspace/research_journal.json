@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d333f65d",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n## What is established\n\n`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,\nself-contained results for a triangular face:\n\n1. the three-site crossing probabi",
-      "quality_score": 0.76111,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-08-01T23:24:18",
-      "title": "Percolation Threshold"
-    },
-    {
       "cycle_id": "316f6446",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n1. **Continuous time.** Replace finite sums by interval integrals and derive the same\n   information-adjusted extraction bound from an almost-everywhere differential energy\n   bal",
@@ -499,19 +489,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-05T06:54:14",
       "title": "ArXiv paper: Gilbert's disc model conditioned on the square lattice"
+    },
+    {
+      "cycle_id": "5357ee14",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nDerived from the results now proved in `Catalog/Shared/DreamRevisionNormalForm.lean`\n(last-occurrence normalization `mem_reviseSeq`, extensional rigidity `reviseSeq_ext_iff`,\nnorm",
+      "quality_score": 0.79609,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-08-05T06:55:48",
+      "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e50f9bec",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\n1. **General-resolution Haken bound.** For the standard DAG-resolution calculus over `phpCNF (n+1) n`, there is a constant `c > 1` and threshold `N` such that every refutation has",
-      "quality_score": 0.78468,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-07-27T07:58:34",
-      "title": "Proof Complexity: Resolution and Cutting Planes"
-    },
     {
       "cycle_id": "92e6405b",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-05T06:54:14",
       "title": "ArXiv paper: Gilbert's disc model conditioned on the square lattice"
+    },
+    {
+      "cycle_id": "5357ee14",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nDerived from the results now proved in `Catalog/Shared/DreamRevisionNormalForm.lean`\n(last-occurrence normalization `mem_reviseSeq`, extensional rigidity `reviseSeq_ext_iff`,\nnorm",
+      "quality_score": 0.79609,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-08-05T06:55:48",
+      "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "38046e56",
-      "domain": "Geometry",
-      "name": "proves",
-      "quality": 0.77922
-    },
-    {
-      "cycle_id": "38046e56",
-      "domain": "Geometry",
-      "name": "enhancementDegree_cons",
-      "quality": 0.77922
-    },
-    {
-      "cycle_id": "38046e56",
-      "domain": "Geometry",
-      "name": "enhancement_state_sum",
-      "quality": 0.77922
-    },
     {
       "cycle_id": "e4843e14",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "gilbert_adj_iff",
       "quality": 0.78349
+    },
+    {
+      "cycle_id": "5357ee14",
+      "domain": "Shared",
+      "name": "eq_or_eq_opposite",
+      "quality": 0.79609
+    },
+    {
+      "cycle_id": "5357ee14",
+      "domain": "Shared",
+      "name": "Consistent",
+      "quality": 0.79609
+    },
+    {
+      "cycle_id": "5357ee14",
+      "domain": "Shared",
+      "name": "revise_comm_of_ne_atom",
+      "quality": 0.79609
     }
   ],
-  "last_updated": "2026-08-05T06:54:14",
+  "last_updated": "2026-08-05T06:55:48",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "593a0386",
-        "quality": 0.7903499999999999,
-        "theorems": 19,
-        "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
-      },
-      {
         "cycle_id": "6d7202c5",
         "quality": 0.73827,
         "theorems": 7,
@@ -3947,6 +3941,12 @@
         "quality": 0.78349,
         "theorems": 71,
         "title": "ArXiv paper: Gilbert's disc model conditioned on the square lattice"
+      },
+      {
+        "cycle_id": "5357ee14",
+        "quality": 0.79609,
+        "theorems": 37,
+        "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
       }
     ],
     "Tropical": [
