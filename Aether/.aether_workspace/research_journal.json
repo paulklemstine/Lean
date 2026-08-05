@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8a9b8560",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n- Formalize repeated **scattered** words using pairs of order embeddings, distinguishing that notion from contiguous words inside a selected subsequence.\n- Determine sharp extrema",
-      "quality_score": 0.7322500000000001,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-28T22:28:32",
-      "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
-    },
-    {
       "cycle_id": "9da9b807",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n## Result formalized\n\n`Catalog/Geometry/JacobianConjecture/AffineWeylBridge.lean` proves an explicit\nconnection between the Jacobian and Dixmier settings in degree one.\n\nFor the a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 130,
       "timestamp": "2026-08-05T19:03:25",
       "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
+    },
+    {
+      "cycle_id": "018a4d2d",
+      "domain": "Bridges",
+      "key_insight": "# Future directions: dense sets without large sumsets\n\n## What is formalized here\n\nFiles (all in `Bridges/DenseSumsetFree/`, each compiles independently against\nMathlib; nothing is `sorry`-ed, and the",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-05T19:03:39",
+      "title": "Dense Sets Without Large Sumsets"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7934299999999999
     }
   ],
-  "last_updated": "2026-08-05T19:03:25",
+  "last_updated": "2026-08-05T19:03:39",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "4be361b7",
-        "quality": 0.686,
-        "theorems": 305,
-        "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifol"
-      },
-      {
         "cycle_id": "dd55976d",
         "quality": 0.7913999999999999,
         "theorems": 15,
@@ -3203,6 +3197,12 @@
         "quality": 0.686,
         "theorems": 122,
         "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+      },
+      {
+        "cycle_id": "018a4d2d",
+        "quality": 0.686,
+        "theorems": 73,
+        "title": "Dense Sets Without Large Sumsets"
       }
     ],
     "Combinatorics": [

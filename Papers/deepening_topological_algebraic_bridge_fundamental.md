@@ -1,120 +1,159 @@
-# Computational Evidence
+# Computational evidence
 
-Target statements (formalised in `Catalog/Bridges/FundamentalGroupK1Classification.lean`):
+All computations below were run in Lean (`#eval`) before the formal development; the
+statements they support are *proved* in the accompanying `.lean` files, so the numbers are
+sanity checks rather than the final justification.
 
-* **Realization.** Every homomorphism `φ : π₁(C,c) → π₁(D,d₀)` between vertex groups of
-  connected groupoids (models of `K(G,1)`) is induced by a functor `C ⥤ D`.
-* **Conjugacy classification.** Two such functors are naturally isomorphic (= homotopic
-  maps of 1-types) iff the induced homomorphisms are conjugate, i.e.
-  `[K(G,1), K(H,1)] ≃ Hom(G,H)/conj`.
-* **Whitehead for 1-types.** A functor between connected groupoids inducing a bijection
-  on vertex groups is an equivalence.
-* **Sharpness.** Without connectedness the vertex group is not a complete invariant.
+## 1. The main claim being tested
 
-These are statements about all (possibly infinite) groupoids, so the computations below
-are finite sanity checks on the *finite* models, not proofs; the Lean file contains the
-proofs.
+For a connected groupoid `C` (an algebraic model of a `K(G,1)`, `G = π₁(C,c)`), the group
+of homotopy classes of self-homotopy-equivalences should be `Out G = Aut G / Inn G`, and
+the *monoid* of homotopy classes of all self-maps should be `End G / conjugation`.
 
-## 1. Counting homomorphisms and conjugacy classes
+Small-case predictions of this claim:
 
-`|Hom(G,H)|` versus `|Hom(G,H)/conj|`, the predicted cardinality of the set of homotopy
-classes of maps `K(G,1) → K(H,1)`:
+| `G` | `Inn G` | predicted `hAut = Out G` | predicted `#hAut` |
+|---|---|---|---|
+| `1` | `1` | `1` | 1 |
+| `ℤ` | `1` (abelian) | `Aut ℤ = {±1}` | 2 |
+| `ℤ/n` | `1` (abelian) | `(ℤ/n)ˣ` | `φ(n)` |
+| `(ℤ/2)²` | `1` (abelian) | `GL₂(𝔽₂) ≅ S₃` | 6 |
+| discrete set `α` (all `π₁` trivial) | — | `Sym(α)` | `#α !` |
 
-|  G  |  H  | \|Hom\| | \|Hom/conj\| |
-|-----|-----|-------|------------|
-| Z2 | Z2 | 2 | 2 |
-| Z2 | Z3 | 1 | 1 |
-| Z2 | Z6 | 2 | 2 |
-| Z2 | S3 | 4 | 2 |
-| Z3 | Z2 | 1 | 1 |
-| Z3 | Z3 | 3 | 3 |
-| Z3 | Z6 | 3 | 3 |
-| Z3 | S3 | 3 | 2 |
-| Z4 | Z2 | 2 | 2 |
-| Z4 | Z6 | 2 | 2 |
-| Z4 | S3 | 4 | 2 |
-| Z6 | Z6 | 6 | 6 |
-| Z6 | S3 | 6 | 3 |
-| S3 | Z2 | 2 | 2 |
-| S3 | S3 | 10 | 3 |
+## 2. Cyclic case: `#hAut(K(ℤ/n,1)) = φ(n)`
 
-Note that the two counts differ exactly when the target is non-abelian: conjugation is a
-genuinely necessary quotient, which is why the formal statement
-`realize_natIso_iff_conj` is an "up to conjugacy" statement and not an equality.
+Brute-force count of invertible residues mod `n` (i.e. of automorphisms of `ℤ/n`)
+against Euler's totient:
 
-## 2. Brute-force check of the conjugacy classification
+```lean
+def numUnits (n : ℕ) : ℕ := ((List.range n).filter (fun a => Nat.gcd a n = 1)).length
+#eval (List.range' 1 15).map (fun n => (n, numUnits n, Nat.totient n,
+        decide (numUnits n = Nat.totient n)))
+```
 
-Model of a connected groupoid with vertex group `G` and `n` objects: objects `0,…,n-1`,
-`Hom(i,j) = G`, composition `(j,k,h) ∘ (i,j,g) = (i,k,hg)`. Functors into the one-object
-groupoid `SingleObj(H)` were enumerated (via the parametrisation
-`F(i,j,g) = t_j φ(g) t_i⁻¹` with `φ ∈ Hom(G,H)`, `t_0 = 1`, `t_i ∈ H`) and then quotiented
-by natural isomorphism (components `a_i ∈ H`, `F' (m) = a_j F(m) a_i⁻¹`).
+Output:
 
-| n objects | G | H | #functors | #natural-iso classes | \|Hom(G,H)/conj\| | match |
-|---|---|---|---|---|---|---|
-| 1 | Z3 | S3 | 3 | 2 | 2 | ✓ |
-| 1 | Z2 | S3 | 4 | 2 | 2 | ✓ |
-| 1 | S3 | S3 | 10 | 3 | 3 | ✓ |
-| 2 | Z3 | S3 | 18 | 2 | 2 | ✓ |
-| 2 | Z2 | S3 | 24 | 2 | 2 | ✓ |
-| 2 | S3 | S3 | 60 | 3 | 3 | ✓ |
-| 3 | Z3 | S3 | 108 | 2 | 2 | ✓ |
-| 3 | Z2 | S3 | 144 | 2 | 2 | ✓ |
+```
+[(1,1,1,true), (2,1,1,true), (3,2,2,true), (4,2,2,true), (5,4,4,true), (6,2,2,true),
+ (7,6,6,true), (8,4,4,true), (9,6,6,true), (10,4,4,true), (11,10,10,true), (12,4,4,true),
+ (13,12,12,true), (14,6,6,true), (15,8,8,true)]
+```
 
-The number of natural-isomorphism classes is independent of the number of objects `n`
-(i.e. of the size of the connected groupoid) and equals `|Hom(G,H)/conj|` in every case
-tested. This is the finite shadow of `natIso_iff_conjugating_iso` and
-`realize_natIso_iff_conj`.
+So the predicted counts of homotopy classes of self-homotopy-equivalences of
+`K(ℤ/n,1)` for `n = 1,…,15` are
 
-## 3. Counterexample hunt
+```
+1, 1, 2, 2, 4, 2, 6, 4, 6, 4, 10, 4, 12, 6, 8
+```
 
-* Searched for connected finite groupoids with isomorphic vertex groups that are not
-  equivalent: none exist (consistent with the previous cycle's classification theorem,
-  and with `isEquivalence_of_bijective_mapAut`).
-* Dropping connectedness immediately produces counterexamples: the discrete groupoids on
-  a one-element and a two-element set have trivial (hence isomorphic) vertex groups at
-  every basepoint but different numbers of isomorphism classes of objects, so they are
-  inequivalent. Formalised as `connectedness_necessary`, and topologically as
-  `allHomotopyGroups_equiv_not_homotopyEquiv` (`Unit` versus discrete `Bool`, where in
-  fact *all* homotopy groups agree).
+which is Euler's totient sequence (OEIS **A000010**, first terms
+`1, 1, 2, 2, 4, 2, 6, 4, 6, 4, 10, 4, 12, 6, 8, …`).  This is
+`FundamentalGroupCyclic.card_hEnd_units_cyclicModel`.
 
-## 3b. A hypothesis discovered by counterexample search
+## 3. Circle case: degrees
 
-The first version of the statement "all homotopy groups of a totally disconnected space are
-trivial" was refuted while formalising: for the empty index type `N = Empty` the cube is a
-point and its boundary is empty, so `HomotopyGroup Empty Z z` is (in bijection with) `Z`
-itself — this is `π₀`, which is exactly the invariant distinguishing `Unit` from `Bool`.
-The formal statement therefore carries the hypothesis `[Nonempty N]`
-(`homotopyGroup_subsingleton_of_totallyDisconnected`), and the counterexample
-`allHomotopyGroups_equiv_not_homotopyEquiv` asserts agreement of all homotopy groups in
-positive degrees only.
+For `G = ℤ` the monoid `End ℤ` is `(ℤ, ·)`, so composition of self-maps of `K(ℤ,1)`
+should multiply degrees and the invertible classes should be exactly `±1`:
 
-## 4. OEIS
+```lean
+#eval [((2:ℤ)*3, (3:ℤ)*2), ((-1)*(-1), 1)]   -- (6, 6), (1, 1)
+```
 
-No new integer sequence arises; the counts above are the standard "number of conjugacy
-classes of homomorphisms" data and are not tabulated here as a single sequence.
+Only `1` and `-1` are units of `(ℤ, ·)`, predicting exactly two self-homotopy
+equivalences of the circle model.  Proved as
+`FundamentalGroupOut.card_hEnd_units_circleModel`,
+`FundamentalGroupOut.degree_comp` and
+`FundamentalGroupOut.isEquivalence_circle_iff_degree`.
 
-## 5. Appendix (this cycle): orbit sizes and centraliser indices
+## 4. Klein four group
 
-The tables above count `|Hom(G,H)|` against `|Hom(G,H)/conj|`. The refinement suggested by
-them — that the conjugacy class (orbit) of a homomorphism `φ` has size the index of the
-centraliser of its image — is no longer conjectural: it is proved in general in
-`Catalog/Bridges/FundamentalGroupK1Deepening.lean` as `card_orbit_eq_index_centralizer`
-(and, in the homotopy-theoretic form counting the homomorphisms realising a fixed homotopy
-class of maps of 1-types, as `card_homs_natIso_realize`). For `G = H = S₃` the three orbits
-have sizes 1, 3, 6, with centralisers of the images of index 1, 3, 6 respectively.
+For `G = (ℤ/2)²` (abelian, so `Out G = Aut G = GL₂(𝔽₂)`), a brute-force count of the
+linear automorphisms — a linear endomorphism is determined by the images `u, v` of the two
+basis vectors, and is invertible iff `u ≠ 0`, `v ≠ 0`, `u ≠ v`:
 
-## 6. Appendix (this cycle): π₀ + vertex groups
+```lean
+#eval ((List.range 4).flatMap (fun u => (List.range 4).map (fun v => (u, v)))).filter
+    (fun p => (p.1 != 0) && (p.2 != 0) && (p.1 != p.2)) |>.length   -- 6
+```
 
-The `Unit` vs. discrete `Bool` counterexample of cycles 1–2 is a `π₀` phenomenon: the two
-spaces have the same homotopy groups in all positive degrees but 1 versus 2 components.
-Small-case bookkeeping for groupoids with `n` components and vertex groups `G₁, …, Gₙ`:
-the number of equivalence classes with a fixed multiset of vertex groups is the number of
-multisets of isomorphism classes, e.g. with `n = 2` and vertex groups drawn from
-`{1, ℤ/2, ℤ/3}` there are 6 equivalence classes (3 with equal groups, 3 with distinct
-ones), matching a bijection-of-components-plus-group-isomorphisms count.  This pattern is
-no longer conjectural: it is the content of
-`FundamentalGroupPi0.groupoid_equivalence_iff_pi0_aut` in
-`Catalog/Bridges/FundamentalGroupPi0Decomposition.lean`, which says that the pair
-(π₀, family of fundamental groups of the components) is a complete invariant of a
-homotopy 1-type.
+so `#hAut(K((ℤ/2)²,1)) = 6`, consistent with `Aut((ℤ/2)²) ≅ S₃`.
+
+## 5. Counterexample hunt
+
+* **Is connectedness needed?**  Yes.  For the discrete 1-type on a set `α` all fundamental
+  groups are trivial, yet `hAut = Sym(α)`, which is huge; so `Out(π₁)` alone cannot be the
+  answer without connectedness.  Formalised as
+  `FundamentalGroupPi0SelfEquiv.hEndDiscreteUnitsMulEquivPerm` (and matching the
+  `π₁`-does-not-classify counterexamples in the earlier files of this project).
+* **Is `Aut G` (rather than `Out G`) the answer?**  No: for `G` with nontrivial centre-free
+  inner automorphisms the conjugation action is not trivial on homotopy classes; the
+  general theorem shows the kernel of `Aut G → hAut` is *exactly* `Inn G`
+  (`FundamentalGroupOut.ker_autToConjEndUnit`).  For abelian `G` the two answers agree,
+  which is why all the numerical examples above are `Aut`-counts.
+* **Could a non-invertible endomorphism give a homotopy equivalence?**  No — searched
+  conceptually and proved: `FundamentalGroupOut.bijective_of_isUnit_conjEnd_mk` shows an
+  endomorphism whose conjugacy class is invertible is already bijective (the circle case is
+  the familiar statement that only degree `±1` maps are equivalences).
+
+No counterexample to the main claim was found; all small cases match.
+
+## 6. Evidence for the wreath-product theorem (this cycle)
+
+The new claim is that for a disjoint union of `ι` copies of a `K(G,1)`,
+
+  `hAut(⊔_ι K(G,1)) ≅ Out(G) ≀ Sym(ι) = (ι → Out G) ⋊ Sym(ι)`,
+
+so that for finite `ι` the count should be `|Out G| ^ |ι| · |ι|!`.  Predictions for small
+cases, all of which are now theorems:
+
+| `G` | `|Out G|` | `|ι|` | predicted `#hAut(⊔_ι K(G,1))` | theorem |
+|---|---|---|---|---|
+| `1` | 1 | `n` | `n!` | `hAutTrivialPiOneMulEquivPerm` |
+| any | `k` | 1 | `k` | `hAutSingleCopyMulEquivOut` |
+| `S₃` | 1 | 3 | `6` | `card_hAut_three_copies_symmetricGroupThree` |
+| `(ℤ/2)²` | 6 | 2 | `72` | `card_hAut_two_copies_kleinFour` |
+| `ℤ/5` | 4 | `n` | `4^n · n!` | `card_hAut_sigma_of_card_hAut` |
+
+The two group-theoretic inputs for the nonabelian examples were first checked by finite
+computation and are now proved by kernel-checked `decide`:
+
+```lean
+-- every automorphism of S₃ is inner  (720 candidate bijections of a 6-element group)
+example : ∀ f : MulAut (Equiv.Perm (Fin 3)), ∃ x, ∀ a, f a = x * a * x⁻¹ := by decide
+-- Aut of the Klein four group has 6 elements and is nonabelian
+example : Nat.card (MulAut (Multiplicative (ZMod 2 × ZMod 2))) = 6 := by
+  simp only [Nat.card_eq_fintype_card]; decide
+example : ¬ ∀ x y : MulAut (Multiplicative (ZMod 2 × ZMod 2)), x * y = y * x := by decide
+```
+
+Counterexample hunt for the wreath claim: the obvious weaker guesses fail, and the file
+records why.  The *direct product* `(ι → Out G) × Sym(ι)` is not the answer — the
+extension is genuinely twisted, as the multiplication rule
+`(P, σ)(Q, τ) = (fun i => P (τ i) * Q i, σ ∘ τ)` of `WreathEnd` shows — while the
+*monoid* of all self-maps is strictly larger than its unit group whenever `End(G)/conj`
+has non-invertible elements (e.g. degree `0` for `G = ℤ`), so no formulation in terms of
+`Out` alone can classify self-maps.
+
+## Heterogeneous components: small-case evidence
+
+The general matrix-monoid theorem is structural rather than a finite conjecture, but its
+smallest non-constant example gives a useful check.  For
+`K(ℤ,1) ⊔ K(ℤ/3,1)` the two components cannot be interchanged (their fundamental groups
+have different cardinalities), while both outer automorphism groups have order two.
+Consequently the theorem predicts
+
+| component family | permitted component permutations | kernel | `#hAut` |
+|---|---:|---:|---:|
+| `K(ℤ,1) ⊔ K(ℤ/3,1)` | 1 | `2 · 2` | 4 |
+| two copies of `K(ℤ/3,1)` | 2 | `2 · 2` | 8 |
+| three pairwise inequivalent rigid components | 1 | 1 | 1 |
+
+The first row is now kernel-checked as
+`FundamentalGroupHeteroExamples.card_hAut_twoPieces`; the proof also establishes directly
+that an equivalence between its two components would induce an impossible equivalence of
+an infinite group with the three-element group.  The second row is the `n = 2` instance of
+the already proved constant-family wreath formula `|Out G|^n · n!`.  No OEIS search is
+relevant: these are consequences of a structural classification, not a newly observed
+integer sequence.  The counterexample hunt confirms that replacing the subgroup
+`Sym'(π₀)` by all of `Sym(π₀)` is false for a heterogeneous family: the transposition in
+the first row is not realised.
