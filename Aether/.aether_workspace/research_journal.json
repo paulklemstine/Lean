@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a68d3b50",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThe completed development establishes two reusable foundations: an operational\nbound translating finite `ℓ¹` game distance into advantage for every bounded or\nBoolean distinguishe",
-      "quality_score": 0.7667599999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-28T06:49:40",
-      "title": "Lattice Cryptography: LWE Hardness"
-    },
-    {
       "cycle_id": "38d3a014",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n- Formalize periodic configurations `Fin n → Bool` and count fixed points for\n  every rule and small period `n` with kernel-checked finite enumeration.\n- Represent local Boolean f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 143,
       "timestamp": "2026-08-05T12:24:19",
       "title": "ArXiv paper: Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheege"
+    },
+    {
+      "cycle_id": "8fa60fb0",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## What is now proved\n\nTwo new self-contained files extend the conditional Hilbert-class-field interface of\n`Catalog/NumberTheory/`, settling target 2 of the previous cycle (the G",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-08-05T12:24:25",
+      "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79609
     }
   ],
-  "last_updated": "2026-08-05T12:24:19",
+  "last_updated": "2026-08-05T12:24:25",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "3c125e46",
-        "quality": 0.73757,
-        "theorems": 9,
-        "title": "EML Algebraic Independence: Transcendence Results"
-      },
-      {
         "cycle_id": "3811f14c",
         "quality": 0.7326499999999999,
         "theorems": 11,
@@ -3699,6 +3693,12 @@
         "quality": 0.6853135011441648,
         "theorems": 437,
         "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
+      },
+      {
+        "cycle_id": "8fa60fb0",
+        "quality": 0.686,
+        "theorems": 78,
+        "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
       }
     ],
     "Physics": [
