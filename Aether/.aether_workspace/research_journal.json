@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b080b405",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n- Extend the two-state Cayley–Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point",
-      "quality_score": 0.7891599999999999,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-08-01T21:18:01",
-      "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
-    },
-    {
       "cycle_id": "0f65effc",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\nThe following conjectures extend the finite-test Gröbner theory formalized in `Catalog/Tropical/GroebnerBases.lean`. Each is stated so that a finite counterexample or a formal pro",
@@ -499,19 +489,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-04T20:08:49",
       "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "3a707635",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe three files\n\n* `Catalog/Applications/EML/EMLDifferentialEquations.lean`\n* `Catalog/Applications/EML/AiryRationalObstruction.lean`\n* `Catalog/Applications/EML/AiryKovacicCaseTw",
+      "quality_score": 0.7555699999999999,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-05T03:41:15",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "060e882c",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n## Topological realization of the classification theorem\n\nThe completed result classifies **connected groupoids**, hence connected homotopy 1-types, by the automorphism group at a",
-      "quality_score": 0.79231,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-26T23:20:05",
-      "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-    },
     {
       "cycle_id": "95478b50",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 41,
       "timestamp": "2026-08-04T23:25:49",
       "title": "1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-numb"
+    },
+    {
+      "cycle_id": "3a707635",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe three files\n\n* `Catalog/Applications/EML/EMLDifferentialEquations.lean`\n* `Catalog/Applications/EML/AiryRationalObstruction.lean`\n* `Catalog/Applications/EML/AiryKovacicCaseTw",
+      "quality_score": 0.7555699999999999,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-08-05T03:41:15",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "362b8901",
-      "domain": "Applications",
-      "name": "eval_npow",
-      "quality": 0.7657699999999998
-    },
-    {
-      "cycle_id": "362b8901",
-      "domain": "Applications",
-      "name": "eval_shift",
-      "quality": 0.7657699999999998
-    },
-    {
-      "cycle_id": "362b8901",
-      "domain": "Applications",
-      "name": "eval_qsmul",
-      "quality": 0.7657699999999998
-    },
     {
       "cycle_id": "2125bb42",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "loopOf_hom",
       "quality": 0.78433
+    },
+    {
+      "cycle_id": "3a707635",
+      "domain": "Applications",
+      "name": "coeff_mul_of_natDegree_le",
+      "quality": 0.7555699999999999
+    },
+    {
+      "cycle_id": "3a707635",
+      "domain": "Applications",
+      "name": "coeff_derivative_mul",
+      "quality": 0.7555699999999999
+    },
+    {
+      "cycle_id": "3a707635",
+      "domain": "Applications",
+      "name": "coeff_wronskianNum",
+      "quality": 0.7555699999999999
     }
   ],
-  "last_updated": "2026-08-04T23:25:49",
+  "last_updated": "2026-08-05T03:41:15",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "61e33133",
-        "quality": 0.7666899999999999,
-        "theorems": 12,
-        "title": "EML Universal Approximation: Density of EML Functions"
-      },
-      {
         "cycle_id": "bb566a68",
         "quality": 0.7828599999999999,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.686,
         "theorems": 37,
         "title": "**Conjecture.** For a nonuniform distribution on finite network histories and an"
+      },
+      {
+        "cycle_id": "3a707635",
+        "quality": 0.7555699999999999,
+        "theorems": 13,
+        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
       }
     ],
     "Bridges": [
