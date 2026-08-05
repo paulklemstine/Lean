@@ -1,5 +1,5 @@
 import Mathlib
-import EML.HardyEmlBase
+import Computation.NeuralCoding.Theorems
 
 /-!
 # Differential Closure for Hardy Hierarchies — Transseries Fragments

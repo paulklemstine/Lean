@@ -25,7 +25,6 @@ to get (z₁ - z₂) * gen = (c₁ - c₂) * pub = (c₁ - c₂) * x * gen.
 Since gen ≠ 0 and ZMod q is a field, we can cancel gen and invert (c₁ - c₂).
 -/
 import Logic.GraphTheory.Defs
-import Cryptography.GameTheory.SchnorrTranscripts
 
 open Finset BigOperators
 
