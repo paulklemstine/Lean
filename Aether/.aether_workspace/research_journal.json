@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "87772396",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe following are concrete conjectures extending the formal model in `Catalog/Novelty/ImmortalityGame.lean`. Each has a definite Lean statement and can be proved or refuted indepe",
-      "quality_score": 0.6857029702970298,
-      "sorry_count": 1,
-      "theorem_count": 202,
-      "timestamp": "2026-07-27T10:29:18",
-      "title": "Infinite Games Against Death: Immortality Strategies"
-    },
-    {
       "cycle_id": "7fa0ef0b",
       "domain": "Pythagorean",
       "key_insight": "# Future directions: dimensions of products of posets\n\nThe following are concrete, falsifiable conjectures extracted from Bergman's *Further thoughts on dimensions of posets*. Here `dim` is Dushnik–Mi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 271,
       "timestamp": "2026-08-05T09:56:52",
       "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
+    },
+    {
+      "cycle_id": "a6a59cd3",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nConjectures suggested by the formalization in `Catalog/Bridges/VertexSplitting.lean` and\n`Catalog/Bridges/VertexSplittingExact.lean`.\nAll are stated in the vocabulary of those fil",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 307,
+      "timestamp": "2026-08-05T09:57:01",
+      "title": "ArXiv paper: Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79609
     }
   ],
-  "last_updated": "2026-08-05T09:56:52",
+  "last_updated": "2026-08-05T09:57:01",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "6ef427dd",
-        "quality": 0.7636799999999999,
-        "theorems": 22,
-        "title": "Consciousness as Emergent Fixed Point"
-      },
-      {
         "cycle_id": "fb6f9bc5",
         "quality": 0.7559799999999999,
         "theorems": 14,
@@ -3203,6 +3197,12 @@
         "quality": 0.686,
         "theorems": 271,
         "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
+      },
+      {
+        "cycle_id": "a6a59cd3",
+        "quality": 0.686,
+        "theorems": 307,
+        "title": "ArXiv paper: Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond"
       }
     ],
     "Combinatorics": [
