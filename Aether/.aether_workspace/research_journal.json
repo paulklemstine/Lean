@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "627f5167",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n1. **Guarded fixed points are semantically monotone.** Define a polarity judgment on `RType` and prove that every code positive in its distinguished bound variable induces a monot",
-      "quality_score": 0.7662,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-28T18:57:10",
-      "title": "Reflective Type Theory: Proving Things About Proving Things"
-    },
-    {
       "cycle_id": "83a0d4e2",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n1. **Bundle the graph diagram.** Replace the unbundled `deBruijnEdge` relation by finite directed graphs and package every truncation map as a graph homomorphism. Prove the invers",
@@ -2501,6 +2491,16 @@
       "theorem_count": 50,
       "timestamp": "2026-08-05T17:02:26",
       "title": "ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of R"
+    },
+    {
+      "cycle_id": "36894b52",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nThese conjectures are derived from the results proved this cycle in\n`Catalog/Logic/RamseySubexponentialLoss.lean`,\n`Catalog/Logic/RamseyRootTest.lean`,\n`Catalog/Logic/RamseyAsymme",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 45,
+      "timestamp": "2026-08-05T17:02:33",
+      "title": "These conjectures are derived from the results proved this cycle in"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7934299999999999
     }
   ],
-  "last_updated": "2026-08-05T17:02:26",
+  "last_updated": "2026-08-05T17:02:33",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "920a890c",
-        "quality": 0.6,
-        "theorems": 18,
-        "title": "The formal development establishes a concrete genuinely non-strict bicategory: i"
-      },
-      {
         "cycle_id": "9f0b015d",
         "quality": 0.74,
         "theorems": 19,
@@ -3513,6 +3507,12 @@
         "quality": 0.8013399999999999,
         "theorems": 20,
         "title": "Earlier cycles settled the **deterministic** game: complementing a world negates"
+      },
+      {
+        "cycle_id": "36894b52",
+        "quality": 0.686,
+        "theorems": 45,
+        "title": "These conjectures are derived from the results proved this cycle in"
       }
     ],
     "MachineLearning": [
