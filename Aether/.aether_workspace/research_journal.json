@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d54ed94e",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the formally verified algebraic results in `Catalog/Computation/DeterminantValuesOnLattices.lean`. Each is falsifiable by an e",
-      "quality_score": 0.76634,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-28T22:27:31",
-      "title": "ArXiv paper: A positive square-energy strengthening of Turán's theorem"
-    },
-    {
       "cycle_id": "8a9b8560",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n- Formalize repeated **scattered** words using pairs of order embeddings, distinguishing that notion from contiguous words inside a selected subsequence.\n- Determine sharp extrema",
@@ -2501,6 +2491,16 @@
       "theorem_count": 61,
       "timestamp": "2026-08-05T17:02:38",
       "title": "ArXiv paper: Quantum determinants in polynomial time"
+    },
+    {
+      "cycle_id": "069d69dc",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: impossible figures as cellular obstructions\n\nAll Lean files listed below live in `Catalog/Geometry/`, compile against Mathlib\n(Lean 4.28.0) and contain **no `sorry`**; every theor",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 130,
+      "timestamp": "2026-08-05T19:03:25",
+      "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7934299999999999
     }
   ],
-  "last_updated": "2026-08-05T17:02:38",
+  "last_updated": "2026-08-05T19:03:25",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "545fa377",
-        "quality": 0.7815999999999999,
-        "theorems": 10,
-        "title": "Spectral Graph Theory Meets Network Robustness"
-      },
-      {
         "cycle_id": "3308088b",
         "quality": 0.686,
         "theorems": 37,
@@ -3451,6 +3445,12 @@
         "quality": 0.78776,
         "theorems": 87,
         "title": "ArXiv paper: Magnitude homology of tope graphs"
+      },
+      {
+        "cycle_id": "069d69dc",
+        "quality": 0.686,
+        "theorems": 130,
+        "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
       }
     ],
     "Logic": [
