@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "229af38b",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThe universal Graceful Tree Conjecture remains open. The verified path and star constructions in this project suggest the following precise next targets. Each target has a finite",
-      "quality_score": 0.80057,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-29T09:58:20",
-      "title": "Graceful Tree Conjecture"
-    },
-    {
       "cycle_id": "545fa377",
       "domain": "Geometry",
       "key_insight": "# Spectral Graph Theory Meets Network Robustness\n\n## Formal results\n\n`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version of the proposed spectral certificate.\n\n1. **Exact sp",
@@ -2501,6 +2491,16 @@
       "theorem_count": 122,
       "timestamp": "2026-08-05T22:29:17",
       "title": "All formal results live in four files, which together compile with no `sorry` an"
+    },
+    {
+      "cycle_id": "f52c2f13",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nThe new file `Catalog/Shared/RevisionHistoryMonoid.lean` completes the last-occurrence\nnormal-form programme: revision histories modulo extensional equivalence form a monoid\nisomo",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-08-05T22:29:21",
+      "title": "Deepening: **Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79196
     }
   ],
-  "last_updated": "2026-08-05T22:29:17",
+  "last_updated": "2026-08-05T22:29:21",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "a7ba7617",
-        "quality": 0.76172,
-        "theorems": 10,
-        "title": "Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
-      },
-      {
         "cycle_id": "316f6446",
         "quality": 0.8021799999999999,
         "theorems": 8,
@@ -3947,6 +3941,12 @@
         "quality": 0.686,
         "theorems": 56,
         "title": "Deepening: ArXiv paper: Gilbert's disc model conditioned on the square lattice"
+      },
+      {
+        "cycle_id": "f52c2f13",
+        "quality": 0.686,
+        "theorems": 52,
+        "title": "Deepening: **Conjecture.** Every finite sequence of signed-literal revisions has"
       }
     ],
     "Tropical": [
