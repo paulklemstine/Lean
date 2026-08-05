@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "09a3e4f4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory a",
-      "quality_score": 0.77355,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-28T12:21:06",
-      "title": "The Monster Group's Secret Message: Moonshine Beyond the j-Function"
-    },
-    {
       "cycle_id": "afbe2d9b",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nThe formal result shows that the unmodified Cauchy kernel on a unit sphere has a deterministic floor of `1/5`; hence randomness alone cannot produce near-zero weights below that t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 32,
       "timestamp": "2026-08-05T12:25:58",
       "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
+    },
+    {
+      "cycle_id": "f14ecb01",
+      "domain": "Probability",
+      "key_insight": "# Future directions: Erdős–Rényi threshold phenomena\n\nThis cycle proved the **sharp connectivity threshold** of `G(n,p)` at `p = log n / n`\ninside the catalog's elementary finite model\n(`ErdosRenyi.ma",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 113,
+      "timestamp": "2026-08-05T12:26:04",
+      "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79294
     }
   ],
-  "last_updated": "2026-08-05T12:25:58",
+  "last_updated": "2026-08-05T12:26:04",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "bd7b389e",
-        "quality": 0.686,
-        "theorems": 35,
-        "title": "Deepening: EML Information Geometry: Fisher Information of exp-log Models"
-      },
-      {
         "cycle_id": "177b02a7",
         "quality": 0.73659,
         "theorems": 8,
@@ -3823,6 +3817,12 @@
         "quality": 0.72259,
         "theorems": 8,
         "title": "Deepening: Percolation Threshold"
+      },
+      {
+        "cycle_id": "f14ecb01",
+        "quality": 0.686,
+        "theorems": 113,
+        "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
       }
     ],
     "Pythagorean": [
