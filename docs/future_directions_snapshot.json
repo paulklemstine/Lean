@@ -4286,7 +4286,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a4657f8",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
     "domain_bridges": [],
     "domains": [
@@ -4299,7 +4299,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -5190,26 +5190,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Tropical Optimization: Linear Programming in the Max-Plus Algebra"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "3a707635",
-    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "seed_370",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "ambition_level": "extension",
@@ -8134,7 +8114,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d9d67aec",
     "description": "Investigate the ArXiv paper 'Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheeger Inequality and Covering Radii' and formalize its key results. Abstract: We study asymptotic versions of the Brill-Noether existence conjecture on graphs via techniques inspired by the geometry of numbers. We confirm an asymptotic version of the conjecture at (and near) the half-canonical degree in several well-connected families of graphs. They include expander graphs of even valence, almost-Ramanujan graphs of a fixed valence at least five and certain random graphs. In particular, for any fixed $k \\geq 5$, almost all simple, connected, $k$-regular graphs satisfy the Brill-Noether existence conjecture at the half-canonical degree up to a constant factor. The key tool is a Cheeger-style inequality for the covering radius of a certain periodic set with respect to the energy quadratic form associated with the graph. As an application, we lower bound the diameter of graphs associated with certain dynamical systems called reversal systems. We conclude with a suggestion to tackle the asymptotic version of the conjecture, in general, i.e. beyond half-canonical de",
     "domain_bridges": [],
     "domains": [
@@ -8147,7 +8127,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.15213v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T03:09:40.499550+00:00",
     "title": "ArXiv paper: Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheeger Inequality and Covering Radii"
   },
@@ -9630,6 +9610,46 @@
     "status": "available",
     "timestamp": "2026-08-04T03:45:40.382085+00:00",
     "title": "ArXiv paper: Automorphic functions for square-zero extensions of curves over finite fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Non-split Cartan curves and a characterization of fake elliptic curves' and formalize its key results. Abstract: The $\\ell$-adic Tate module of an abelian surface with quaternionic multiplication (QM) decomposes as two copies of a two-dimensional $\\mathbb{Q}$-rational representation. To this day, there is no criterion to distinguish these representations from those attached to elliptic curves. For this reason, QM abelian surfaces are usually called fake elliptic curves. In this paper we characterize QM abelian surfaces defined over an imaginary quadratic field $K$. Namely, we consider an abelian surface $A/K$ without potential CM and whose $L$-function is a square. Under a reasonable conjecture, we show that $A$ has QM if and only if it has residual image contained in a non-split Cartan group modulo at least two primes. The characterization is unconditional for all indefinite quaternion discriminants up to 33. The proof is based on previous work of Siksek and Michaud-Jacobs on quadratic points on non-split Cartan modular curves. In particular, we compute the rational points on the curve $X_{ns}^+",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0959",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.03934v1",
+    "status": "available",
+    "timestamp": "2026-08-05T03:41:29.176376+00:00",
+    "title": "ArXiv paper: Non-split Cartan curves and a characterization of fake elliptic curves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On Diophantine equations over the integer rings of quadratic fields' and formalize its key results. Abstract: Let $K$ be any quadratic number field, and let $O_K$ be the ring of algebraic integers in $K$. In 1975 J. Denef proved that Hilbert's Tenth Problem over $O_K$ has a negative solution. In this paper we establish the following undecidability result: There is no algorithm to decide whether an arbitrarily given polynomial equation $P(z_1,\\ldots,z_{16})=0$ (with integer coefficients and 16 unknowns) has solutions over $O_K$. Moreover, when $K$ is a real quadratic field, we show that $15$ unknowns suffice for undecidability.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0960",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.03992v1",
+    "status": "available",
+    "timestamp": "2026-08-05T03:41:33.685216+00:00",
+    "title": "ArXiv paper: On Diophantine equations over the integer rings of quadratic fields"
   },
   {
     "ambition_level": "extension",
@@ -12546,28 +12566,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:28:41.148428+00:00",
     "title": "Universal pentagon theorem.: The concrete 5-cycle instance is now formaliz"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "f993c4fa",
-    "description": "# Future Directions — Orthogonal families over the coordinate framework\n\nThis cycle specialized the coordinate/incidence framework for generalized nets\nto the classical square case and established the Euler–MacNeish ceiling: a\nfamily of pairwise-orthogonal reduced Latin squares of order `n` has at most\n`n − 1` members, with the ceiling attained at order three. The pivot argument at\nthe heart of the proof — inspecting only two grid cells — suggests several bold,\ntestable next steps.\n\n## Conjecture 1 — Reduction is a free normalization\n\n**Statement.** Every family of pairwise-orthogonal Latin squares of order `n` is\nequivalent, under independent symbol relabellings of each square, to a family of\n*reduced* squares of the same size, and the equivalence preserves orthogonality.\nConsequently the `n − 1` ceiling holds for *arbitrary* (not necessarily reduced)\nfamilies.\n\n**The key insight is** that orthogonality is invariant under relabelling the\nsymbol alphabet of each square separately, because it is a statement about the\n*fibres* of the coordinate maps rather than about the symbols attached to them;\nreduction is just the choice of relabelling that sends the first row to the\nidentity.\n\n**Why now?** The pivot proof already localizes the whole argument to two cells,\nso the only missing ingredient is a clean lemma that relabelling is a symmetry of\nthe incidence structure — a small, self-contained addition to the framework that\nimmediately upgrades the ceiling from reduced families to all families.\n\n## Conjecture 2 — The window bound generalizes to nets\n\n**Statement.** For a generalized net with `m` weft classes and `n` warp classes,\nthe maximum number of pairwise-orthogonal parallel classes that can be adjoined\nis controlled by the number of distinct symbols appearing in a *single bounded\nwindow* of the coordinate grid, generalizing the pivot count from a single cell\nto an `r × s` block.\n\n**The key insight is** that the pivot obstruction — distinct nonzero symbols in\none column — is the smallest instance of a general phenomenon: orthogonality\nforces injectivity of a \"local fingerprint\" map, and larger windows yield sharper\nceilings for higher-dimensional nets.\n\n**Why now?** The proof here demonstrates that a two-cell window already yields the\nsharp classical bound; extending the fingerprint to a block is a natural,\nmechanically checkable escalation that has not been isolated before at this level\nof generality.\n\n## Conjecture 3 — Tightness is exactly the prime-power spectrum\n\n**Statement.** Within the coordinate framework, a family attaining the full\n`n − 1` ceiling exists if and only if there is a coordinate system on the grid\ncarrying an affine-plane structure of order `n`; combined with the classical\ntheory this forces `n` to be a prime power (with the known exceptions `n = 6` and\nthe still-open `n = 10` on the impossibility side).\n\n**The key insight is** that a complete set of `n − 1` MOLS is interchangeable\nwith a finite affine plane, and the coordinate/reticulation language makes the\nplane's parallel classes literally the fibres of the coordinate maps, turning\n\"tightness\" into \"existence of a coordinatizing algebra\".\n\n**Why now?** With the ceiling and a concrete tight witness both in hand, the\nframework is ready to host the equivalence between complete MOLS families and\naffine planes, closing the loop between the incidence axioms and classical\ndesign theory.\n\n## Conjecture 4 — Parastrophy acts freely on saturated families\n\n**Statement.** The parastrophy (coordinate-permutation) action introduced for\nreticulations restricts to an action on the set of ceiling-saturating families,\nand this action is free whenever `n > 2`; in particular the number of saturated\nfamilies up to parastrophy is a divisor-controlled fraction of the total count.\n\n**The key insight is** that a saturated family pins down all six coordinate roles\nsimultaneously, leaving no nontrivial coordinate permutation that fixes it, so the\nsymmetry group acts without fixed points once the order exceeds the degenerate\ncase.\n\n**Why now?** The pivot proof exposes exactly which coordinate roles are forced by\nsaturation, giving a concrete handle on the stabilizer of a family — the first\nstep toward an orbit count for small orders.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Physics",
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0619",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "abab9083",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T22:26:04.074432+00:00",
-    "title": "This project formalizes, in Lean 4 (Mathlib), the quantitative and logical core"
   },
   {
     "ambition_level": "extension",

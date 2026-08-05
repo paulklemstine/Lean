@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "95478b50",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n## What has and has not been established\n\nThe exact connective constant of nearest-neighbour self-avoiding walk on the square lattice is an open problem. The requested value `(2 +",
-      "quality_score": 0.61,
-      "sorry_count": 5,
-      "theorem_count": 794,
-      "timestamp": "2026-07-27T00:19:54",
-      "title": "Self-Avoiding Walk: Connective Constant"
-    },
-    {
       "cycle_id": "e4773f49",
       "domain": "NumberTheory",
       "key_insight": "# Future directions\n\n## Completed foundation\n\nThe present development supplies two self-contained Lean modules for the requested\nperfect-number program:\n\n- `Catalog/Applications/PerfectNumbers/Abundan",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-08-05T03:41:15",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "f993c4fa",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — after the affine-plane closure of the coordinate framework\n\nThis cycle closed the loop between the pivot bound for mutually orthogonal Latin squares\n(MOLS) and classical design t",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 45,
+      "timestamp": "2026-08-05T03:41:20",
+      "title": "This project formalizes, in Lean 4 (Mathlib), the quantitative and logical core"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7555699999999999
     }
   ],
-  "last_updated": "2026-08-05T03:41:15",
+  "last_updated": "2026-08-05T03:41:20",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "c6b3a18e",
-        "quality": 0.6294117647058823,
-        "theorems": 102,
-        "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
-      },
-      {
         "cycle_id": "cf55a60f",
         "quality": 0.6695599999999999,
         "theorems": 10,
@@ -3761,6 +3755,12 @@
         "quality": 0.78433,
         "theorems": 19,
         "title": "Inverse Stereographic Neural Field Theory"
+      },
+      {
+        "cycle_id": "f993c4fa",
+        "quality": 0.686,
+        "theorems": 45,
+        "title": "This project formalizes, in Lean 4 (Mathlib), the quantitative and logical core"
       }
     ],
     "Probability": [
