@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1443bb24",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n1. **Graphical-oracle adequacy.** For every finite acyclic causal graph and disjoint query components, an implementation of the three Boolean side conditions using moralized ances",
-      "quality_score": 0.7907,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-27T13:44:25",
-      "title": "Causal Inference: Do-Calculus as Formal Logic"
-    },
-    {
       "cycle_id": "a68d3b50",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThe completed development establishes two reusable foundations: an operational\nbound translating finite `ℓ¹` game distance into advantage for every bounded or\nBoolean distinguishe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 68,
       "timestamp": "2026-08-05T09:57:12",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+    },
+    {
+      "cycle_id": "d9d67aec",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nThe formalisation in `Catalog/Pythagorean/BrillNoether/` now consists of ten\nself-contained files, each compiling on its own against Mathlib with no `sorry` and\nusing only the sta",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 143,
+      "timestamp": "2026-08-05T12:24:19",
+      "title": "ArXiv paper: Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheege"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79609
     }
   ],
-  "last_updated": "2026-08-05T09:57:12",
+  "last_updated": "2026-08-05T12:24:19",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "0e007163",
-        "quality": 0.63,
-        "theorems": 13,
-        "title": "Future directions from cycle 279ae676"
-      },
-      {
         "cycle_id": "e8a20d63",
         "quality": 0.63,
         "theorems": 35,
@@ -3885,6 +3879,12 @@
         "quality": 0.7906299999999999,
         "theorems": 31,
         "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
+      },
+      {
+        "cycle_id": "d9d67aec",
+        "quality": 0.686,
+        "theorems": 143,
+        "title": "ArXiv paper: Asymptotic Brill-Noether Existence at the Half-Canonical Degree: En"
       }
     ],
     "Shared": [
