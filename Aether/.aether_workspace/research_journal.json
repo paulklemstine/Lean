@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a07085b6",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n1. Generalize the scalar output theorem to vector-valued output layers.\n2. Package each selected formula as an affine map and prove continuity across adjacent cell boundaries.\n3.",
-      "quality_score": 0.76088,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-28T17:00:44",
-      "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
-    },
-    {
       "cycle_id": "b7ae8967",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nThe current development proves an exact finite-domain universality result for a clearly delimited linear-attention lookup architecture. Natural extensions are:\n\n1. **Softmax atten",
@@ -2501,6 +2491,16 @@
       "theorem_count": 248,
       "timestamp": "2026-08-05T14:51:14",
       "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
+    },
+    {
+      "cycle_id": "52648a00",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the formalization in\n\n* `Catalog/Bridges/B3FreeFamilies.lean` — framework of weak/strong `P`-free families,\n  layers, `e(P)`, `La(n,",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 122,
+      "timestamp": "2026-08-05T14:51:21",
+      "title": "ArXiv paper: On the maximum size of $B_3$-free families"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79294
     }
   ],
-  "last_updated": "2026-08-05T14:51:14",
+  "last_updated": "2026-08-05T14:51:21",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "aeb64258",
-        "quality": 0.686,
-        "theorems": 22,
-        "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
-      },
-      {
         "cycle_id": "4be361b7",
         "quality": 0.686,
         "theorems": 305,
@@ -3203,6 +3197,12 @@
         "quality": 0.686,
         "theorems": 248,
         "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
+      },
+      {
+        "cycle_id": "52648a00",
+        "quality": 0.686,
+        "theorems": 122,
+        "title": "ArXiv paper: On the maximum size of $B_3$-free families"
       }
     ],
     "Combinatorics": [
