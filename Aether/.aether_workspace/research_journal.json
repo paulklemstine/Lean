@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "eae986b3",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\n1. **Finite-cover gluing.** Extend the two-set theorem in\n   `Catalog/Algebra/SheafDatabaseGluing.lean` to finite families of column sets,\n   proving that pairwise-compatible loca",
-      "quality_score": 0.6380299999999999,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-28T14:47:15",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
-    {
       "cycle_id": "ee1ae94f",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\n1. **Existence of Hilbert class fields.** For every number field `K`, construct a finite Galois extension `H/K`, unramified at every finite prime, together with an Artin reciproci",
@@ -2501,6 +2491,16 @@
       "theorem_count": 91,
       "timestamp": "2026-08-05T12:26:09",
       "title": "1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tens"
+    },
+    {
+      "cycle_id": "3664af53",
+      "domain": "Applications",
+      "key_insight": "# Affine subspace statistics in `𝔽₂ⁿ` — results and future directions\n\nAll formal results live in four files, which together compile with no `sorry` and use only\nthe standard axioms (`propext`, `Class",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 122,
+      "timestamp": "2026-08-05T14:51:06",
+      "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79294
     }
   ],
-  "last_updated": "2026-08-05T12:26:09",
+  "last_updated": "2026-08-05T14:51:06",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "150a94b2",
-        "quality": 0.73519,
-        "theorems": 6,
-        "title": "EML Neural Network Expressiveness: Depth vs Width"
-      },
-      {
         "cycle_id": "788947d7",
         "quality": 0.7986800000000001,
         "theorems": 19,
@@ -3141,6 +3135,12 @@
         "quality": 0.79294,
         "theorems": 32,
         "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
+      },
+      {
+        "cycle_id": "3664af53",
+        "quality": 0.686,
+        "theorems": 122,
+        "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mat"
       }
     ],
     "Bridges": [
