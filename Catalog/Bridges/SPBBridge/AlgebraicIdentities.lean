@@ -17,6 +17,22 @@ Deep algebraic identities connecting SPB, hyperbolic SPB, and field operations.
 -/
 
 noncomputable section
+
+/-! ## Core SPB definitions
+
+`spb` is the "special projective bracket" (the Möbius/tangent-addition law) and
+`spbH` its hyperbolic (Einstein velocity-addition) counterpart. -/
+
+namespace SPBResearch
+
+/-- The special projective bracket `spb x y = (x + y) / (1 - x y)`. -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+
+/-- The hyperbolic bracket `spbH u v = (u + v) / (1 + u v)`. -/
+def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
+
+end SPBResearch
+
 open Real SPBResearch
 
 namespace SPBAlgebra

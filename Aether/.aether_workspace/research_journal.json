@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f8a71afd",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThe following are concrete, falsifiable conjectures extending the proved scalar-extension and isometry results in `Catalog/Algebra/QuadraticFormsNumberFields.lean`.\n\n1. **Concrete",
-      "quality_score": 0.75276,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-27T07:58:55",
-      "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
-    },
-    {
       "cycle_id": "87772396",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThe following are concrete conjectures extending the formal model in `Catalog/Novelty/ImmortalityGame.lean`. Each has a definite Lean statement and can be proved or refuted indepe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 82,
       "timestamp": "2026-08-05T06:55:53",
       "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
+    },
+    {
+      "cycle_id": "f96004ff",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions (thread th_995e2be3)\n\nThe thread attacks *quantitative sphere detection from finite data*: which explicitly\ncomputable, perturbation-stable quantities of a finite sample certify th",
+      "quality_score": 0.686,
+      "sorry_count": 1,
+      "theorem_count": 271,
+      "timestamp": "2026-08-05T09:56:52",
+      "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.79609
     }
   ],
-  "last_updated": "2026-08-05T06:55:53",
+  "last_updated": "2026-08-05T09:56:52",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
-      "cycle_id": "8797684d",
-      "domain": "MachineLearning",
-      "sorry_count": 1,
-      "timestamp": "2026-07-20T02:08:03"
-    },
     {
       "context": "+  sorry; +  sorry; +  sorry",
       "cycle_id": "c1b3f8da",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 5,
       "timestamp": "2026-08-04T06:48:36"
+    },
+    {
+      "context": "Everything is proved; there are no `sorry`s and no new axioms.",
+      "cycle_id": "f96004ff",
+      "domain": "Bridges",
+      "sorry_count": 1,
+      "timestamp": "2026-08-05T09:56:52"
     }
   ],
   "research_threads": {
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "7799fc2c",
-        "quality": 0.686,
-        "theorems": 66,
-        "title": "ArXiv paper: On lower bounds for canonical heights of the map $φ(X,Y)=(Y,X+Y^D+b"
-      },
-      {
         "cycle_id": "6ef427dd",
         "quality": 0.7636799999999999,
         "theorems": 22,
@@ -3203,6 +3197,12 @@
         "quality": 0.78433,
         "theorems": 71,
         "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invaria"
+      },
+      {
+        "cycle_id": "f96004ff",
+        "quality": 0.686,
+        "theorems": 271,
+        "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
       }
     ],
     "Combinatorics": [
