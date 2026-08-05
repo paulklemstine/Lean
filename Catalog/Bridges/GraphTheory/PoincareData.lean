@@ -141,7 +141,7 @@ The number of components is at most n (the number of points).
 -/
 theorem component_count_le {n d : ℕ} (X : PointCloud n d) (ε : ℝ) :
     componentCount X ε ≤ n := by
-  exact Fintype.card_le_of_surjective _ Quotient.mk_surjective |> le_trans <| by simp
+  exact Fintype.card_le_of_surjective _ Quotient.mk_surjective |> le_trans <| by simpa;
 
 /-! ## Section 3: The Unit Sphere and Distance Bounds -/
 
