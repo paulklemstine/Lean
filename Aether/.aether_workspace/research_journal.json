@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "92e6405b",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — 2D Ising phase transition\n\n## Verified results in this delivery\n\nThe Lean files under `Catalog/Applications/IsingModel/` establish the following\nparts of the requested developmen",
-      "quality_score": 0.75773,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-07-27T07:58:40",
-      "title": "Statistical Mechanics: Ising Model Phase Transition"
-    },
-    {
       "cycle_id": "f8a71afd",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\nThe following are concrete, falsifiable conjectures extending the proved scalar-extension and isometry results in `Catalog/Algebra/QuadraticFormsNumberFields.lean`.\n\n1. **Concrete",
@@ -2501,6 +2491,16 @@
       "theorem_count": 37,
       "timestamp": "2026-08-05T06:55:48",
       "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
+    },
+    {
+      "cycle_id": "6a4657f8",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nThe four files in `Catalog/Shared/ZeroKnowledge/` develop, with complete proofs:\n\n* `ThreeColoringZK.lean` — the GMW protocol for graph 3-colorability: perfect\n  completeness, the",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-08-05T06:55:53",
+      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79609
     }
   ],
-  "last_updated": "2026-08-05T06:55:48",
+  "last_updated": "2026-08-05T06:55:53",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "6d7202c5",
-        "quality": 0.73827,
-        "theorems": 7,
-        "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of leng"
-      },
-      {
         "cycle_id": "275a5749",
         "quality": 0.75115,
         "theorems": 19,
@@ -3947,6 +3941,12 @@
         "quality": 0.79609,
         "theorems": 37,
         "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
+      },
+      {
+        "cycle_id": "6a4657f8",
+        "quality": 0.686,
+        "theorems": 82,
+        "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
       }
     ],
     "Tropical": [

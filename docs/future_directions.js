@@ -1288,16 +1288,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML-Single-Operator: Universal Functional Completeness of EML Neuron Activation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8dd43c13",
     "description": "Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
     "domains": [
       "Applications"
     ],
     "id": "dir_50_27_792075e7",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:23.666696+00:00",
     "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
   },
@@ -1663,6 +1664,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5357ee14 (Q=0.796), which proved 37 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## 1. Last-occurrence normal forms for revision histories\n\n**Conjecture.** Every finite sequence of signed-literal revisions has a unique normal form containing, for each atom mentioned by the sequence, exactly the sign appearing at that atom\u2019s last occurrence; atoms never revis",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_5357ee14_745b7cd3",
+    "priority_score": 0.8960899999999999,
+    "research_mode": "team",
+    "source_exp_id": "5357ee14",
+    "status": "available",
+    "timestamp": "2026-08-05T06:55:48.409183+00:00",
+    "title": "Deepening: **Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle eb6ff95e (Q=0.794), which proved 17 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
     "domains": [
       "Computation"
@@ -1851,6 +1866,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6ffc84c2 (Q=0.789), which proved 114 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V \u2192 [0,1]`, and `p \u2208 [0,1]`, the probability that\n   `siteThresholdConfig key p = \u03b7` is\n   `p ^ |{v | \u03b7 v}| * (1-p) ^ |{v | \u00ac \u03b7 v}|`.\n\n2. **Crossing probability monotonicity.** For eve",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_6ffc84c2_3b046f07",
+    "priority_score": 0.8892299999999999,
+    "research_mode": "team",
+    "source_exp_id": "6ffc84c2",
+    "status": "available",
+    "timestamp": "2026-08-05T06:52:39.466101+00:00",
+    "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, independent"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b080b405 (Q=0.789), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple n",
     "domains": [
       "Cryptography"
@@ -1904,6 +1933,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T21:21:22.115983+00:00",
     "title": "Deepening: Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 6077433a (Q=0.788), which proved 87 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simpl",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_6077433a_dca76e44",
+    "priority_score": 0.88776,
+    "research_mode": "team",
+    "source_exp_id": "6077433a",
+    "status": "available",
+    "timestamp": "2026-08-05T06:51:05.180719+00:00",
+    "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -1974,6 +2017,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-04T20:08:49.717246+00:00",
     "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e9c14674 (Q=0.783), which proved 71 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Gilbert's disc model conditioned on the square lattice' and formalize its key results. Abstract: We present a new percolation model on the two-dimensional lattice, which can be seen as a conditioned version of continuous percolation on the plane. Let us place a point uni",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_e9c14674_3ae82f2a",
+    "priority_score": 0.88349,
+    "research_mode": "team",
+    "source_exp_id": "e9c14674",
+    "status": "available",
+    "timestamp": "2026-08-05T06:54:14.154345+00:00",
+    "title": "Deepening: ArXiv paper: Gilbert's disc model conditioned on the square lattice"
   },
   {
     "consumed_by_exp_id": "",
@@ -3174,22 +3231,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Noncommutative Geometry as a Generalization of Topology"
   },
   {
-    "consumed_by_exp_id": "6a4657f8",
-    "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "seed_357",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domains": [
@@ -3377,7 +3418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9f23a455",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -3385,10 +3426,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "fd_0690",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697840+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -3523,17 +3565,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b369f029",
     "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
     "domains": [
       "Bridges",
       "Computation"
     ],
     "id": "seed_297",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
   },
@@ -4332,22 +4375,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "6077433a",
-    "description": "Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simplicial complexes naturally associated with the arrangements. For Coxeter arrangements, this gives a computation of the magnitude homology of the Cayley graph of the corresponding Coxeter group. We also prove the homological reciprocity for central arrangements conjectured by Koizumi--Liu. The proof combines poset combinatorics, the Edelman--Walker theorem, and Alexander duality.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0001",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11863v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T06:52:23.069944+00:00",
-    "title": "ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Improving Upper Bounds for the Maximum Clique Problem using Reduction Rules' and formalize its key results. Abstract: We study the interaction between reduction rules and upper-bound functions for the Maximum Clique Problem (MCP). We show how MCP upper-bound functions can strengthen classical core and truss reductions by replacing local size conditions with upper-bound tests. This leads to the \\((k,\u03c9^u)\\)-core, the \\((k,\u03c9^u)\\)-truss, and the more general \\((k,d,\u03c9^u)\\)-truss, where the parameter \\(d\\) controls the trade-off between stronger reductions and additional computational cost. For each of these notions, we prove clique-preservation properties, correctness of the corresponding peeling algorithm, and running-time bounds. Based on these reductions, we introduce a general framework for improving upper-bound values for MCP. We give two concrete instantiations of the framework: one that uses only the combined truss and core reductions, and one that combines the truss and core reductions with repeated applications of structions. Computational experiments on 73 benchmark graphs show that the proposed ",
     "domains": [
@@ -4376,16 +4403,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Exact Cardinality And Nonredundant Parametrization Of Character-Polynomial Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52648a00",
     "description": "Investigate the ArXiv paper 'On the maximum size of $B_3$-free families' and formalize its key results. Abstract: A family $\\mathcal{G}$ of sets is a weak copy of the poset $(P,\\leqslant)$ if there exists a bijection $\u03b9:P\\rightarrow \\mathcal{G}$ with $\u03b9(p)\\subset \u03b9(q)$ whenever $p\\leqslant q$. $\\mathcal{G}$ is a strong copy if $\u03b9(p)\\subset \u03b9(q)$ if and only if $p\\leqslant q$ holds. A family is weak (strong) $P$-free if it does not contain any weak (strong) copies of $P$. For a poset $P$, let $e(P)$ ($e^*(P)$) denote the most number of middle layers of $2^{[n]}$ that does not contain a weak (strong) copy of $P$. Ellis, Ivan, and Leader were the first to show the existence of posets $P$ for which there exists a positive real $\\varepsilon_P$ such that $La(n,P)\\ge (e(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ and $La^*(n,P)\\ge (e^*(P)+\\varepsilon_P)\\binom{n}{\\lfloor n/2}$ holds, where $La(n,P)$ ($La^*(n,P)$) denotes the maximum size of a weak (strong) $P$-free family $\\mathcal{F}\\subseteq 2^{[n]}$. More precisely, they showed that $P=B_d$ are such posets for all $d\\ge 4$, where $B_d$ is the Boolean latt",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0013",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11753v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T07:28:27.663774+00:00",
     "title": "ArXiv paper: On the maximum size of $B_3$-free families"
   },
@@ -5633,22 +5661,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T15:34:56.562118+00:00",
     "title": "ArXiv paper: The Lean Number of a Hypergraph"
-  },
-  {
-    "consumed_by_exp_id": "e9c14674",
-    "description": "Investigate the ArXiv paper 'Gilbert's disc model conditioned on the square lattice' and formalize its key results. Abstract: We present a new percolation model on the two-dimensional lattice, which can be seen as a conditioned version of continuous percolation on the plane. Let us place a point uniformly at random in each cell of the grid $\\mathbb{Z}^2$. These points correspond to the vertices of our graph, and we connect two points by an edge if their distance is less than a fixed radius $R$. We are interested in the radius from which there exists almost surely an infinite connected component. We also study two other critical radii specific to the geometry of our model: the smallest radius such that there exists a positioning of the points for which there is an infinite connected component, and the radius from which all points are connected to each other.",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0130",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14062v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T15:52:36.132855+00:00",
-    "title": "ArXiv paper: Gilbert's disc model conditioned on the square lattice"
   },
   {
     "consumed_by_exp_id": "",
@@ -6930,17 +6942,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: A Spectral Proof of the Hypergraph Moore Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3664af53",
     "description": "Investigate the ArXiv paper 'Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$' and formalize its key results. Abstract: Given a subset $A \\subseteq \\mathbb F_2^n$, we can consider the distribution of the intersection size of $A$ with a uniformly random $d$-flat $F$. Motivated by the edge statistics problem and the hypercube statistics problem, the affine subspace statistics problem concerns the maximum of $\\mathbb{P}[|F\\cap A|=s]$ among $A \\subseteq \\mathbb F_2^n$ for any fixed $s\\in\\{1,\\dots,2^d\\}$ over a uniformly random $d$-flat $F$. We use $\u03bb^*(d,s)$ to denote the limit of the maximum when $n$ goes to infinity. In this note, we prove tight bounds for $\u03bb^*(d,s)$ in two different regimes. For $s=j2^k$ where $j$ is a positive odd integer, the best known lower bound construction achieving $\u03bb^*(d,s)\\ge 1-2^{-k}$ is due to taking $A$ as the union of $j$ parallel $(n-d+k)$-flats in $\\mathbb F_2^n$. Our main result is a matching upper bound with an additive error term of $O(2^{-3k/2})$. We also study the case $s=1$, where we determine $\u03bb^*(d,1)$ exactly. We show that the random construction where each point",
     "domains": [
       "Computation",
       "Geometry"
     ],
     "id": "fd_0807",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.25920v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-29T03:47:42.750351+00:00",
     "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$"
   },
@@ -8590,22 +8603,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T20:26:03.577332+00:00",
     "title": "**Conjecture.** If two machine substrates simulate one another with polynomially"
-  },
-  {
-    "consumed_by_exp_id": "5357ee14",
-    "description": "# Future Directions\n\n## 1. Last-occurrence normal forms for revision histories\n\n**Conjecture.** Every finite sequence of signed-literal revisions has a unique normal form containing, for each atom mentioned by the sequence, exactly the sign appearing at that atom\u2019s last occurrence; atoms never revised retain their initial status.\n\nThe key insight is that revisions at distinct atoms should commute, while contrary revisions at the same atom obey a last-write-wins law.\n\n**Why now?** Single-step consistency preservation and the demonstrated noncommutativity of contrary revisions isolate precisely the local rewriting rules needed for a global normalization theorem.\n\n## 2. Revision paths and cubical state geometry\n\n**Conjecture.** For a finite atom set, consistent signed states and single-atom revisions form an oriented cubical graph whose strongly connected components are classified by the set of atoms that have been assigned a sign.\n\nThe key insight is that a consistent state chooses at most one of two complementary vertices over each atom, while revision changes one coordinate without disturbing the others.\n\n**Why now?** The exact equivalence between consistency and conflict-freedom supplies a combinatorial complex, and the revision invariant supplies a well-defined dynamics on its faces.\n\n## 3. Compact completion of finitary dream states\n\n**Conjecture.** The ideal completion of the poset of finite signed states is homeomorphic, under a natural Scott topology, to the space of arbitrary signed states; consistent ideals correspond exactly to globally consistent states.\n\nThe key insight is that arbitrary states are directed unions of finite fragments even though the finite fragments themselves are not closed under arbitrary unions.\n\n**Why now?** The arbitrary-union obstruction identifies the missing operation, while finite-union closure suggests ideal completion as the canonical repair rather than an ad hoc enlargement.\n\n## 4. Persistent non-explosion under irrelevant revision\n\n**Conjecture.** If a state contains both signs of one atom and omits a literal over a distinct atom, then every revision history avoiding that distinct atom preserves omission of that literal, regardless of how often the contradictory atom is revised.\n\nThe key insight is that revision is local to one complementary pair, so unrelated coordinates should satisfy a frame property.\n\n**Why now?** The two-atom countermodel establishes the base case, and the local definition of revision makes the proposed persistence law sharply testable by induction on histories.\n\n## 5. Semantic information retained by downward closure\n\n**Conjecture.** For finite complementary-attack frameworks, the maximal faces of the conflict-free complex determine all total consistent belief states, while the face poset together with revision orientation determines the atom partition into complementary pairs up to relabeling.\n\nThe key insight is that topology alone records compatibility, whereas oriented revision records which incompatibilities arise from paired signs of the same atom.\n\n**Why now?** The current bridge identifies consistent states with conflict-free faces, but also shows that semantics and finitary topology are distinct; adding dynamics may recover the semantic information forgotten by downward closure.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0488",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7286e7be",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T20:26:28.580190+00:00",
-    "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
   },
   {
     "consumed_by_exp_id": "",
@@ -10968,22 +10965,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lea"
   },
   {
-    "consumed_by_exp_id": "6ffc84c2",
-    "description": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V \u2192 [0,1]`, and `p \u2208 [0,1]`, the probability that\n   `siteThresholdConfig key p = \u03b7` is\n   `p ^ |{v | \u03b7 v}| * (1-p) ^ |{v | \u00ac \u03b7 v}|`.\n\n2. **Crossing probability monotonicity.** For every positive grid size `n`, the\n   probability of `HasHorizontalCrossing n` under independent uniform threshold\n   keys is nondecreasing as a function of `p \u2208 [0,1]`.\n\n3. **Finite Russo formula.** For any increasing Boolean event on a finite site\n   set, the derivative of its Bernoulli probability polynomial at `p \u2208 (0,1)`\n   equals the sum of the pivotal probabilities of the sites.\n\n4. **Threshold coupling strictness for grids.** For every `n \u2265 2` and\n   `0 < p < q < 1`, the horizontal crossing probability of the `n \u00d7 n` grid is\n   strictly smaller at `p` than at `q`.\n\n5. **Bond analogue.** For every finite graph and increasing bond event, the\n   independent uniform edge-key coupling realizes its Bernoulli bond measures\n   simultaneously and makes the event indicators pointwise nondecreasing in the\n   threshold.\n",
-    "domains": [
-      "Combinatorics",
-      "Computation"
-    ],
-    "id": "fd_0924",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "76a9f834",
-    "status": "in_progress",
-    "timestamp": "2026-08-03T00:23:16.697956+00:00",
-    "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Wall\u2013Sun\u2013Sun Primes: Results and Future Directions\n\n## Status of the requested existence claim\n\nThe requested theorem cannot presently be supplied faithfully: existence of a Wall\u2013Sun\u2013Sun\nprime is an open problem (no example is known as of 2026). The Lean development therefore\nexposes the exact existence proposition as `WallSunSunExistenceConjecture`, but does **not**\nmisrepresent it as a proved theorem.\n\n## Machine-checked results\n\n`NumberTheory/WallSunSunPrimes.lean` provides:\n\n- `fibonacciIndex` and `IsWallSunSunPrime`, a direct natural-number formulation of the\n  condition `p\u00b2 \u2223 F_{p-(p|5)}` (using the standard residue characterization away from the\n  exceptional primes 2 and 5);\n- proofs that 3 and 5 are not Wall\u2013Sun\u2013Sun primes;\n- a complete finite proof that no Wall\u2013Sun\u2013Sun prime is below 12, hence every candidate is at\n  least 12;\n- a precise relation to existing formal FLT results: FLT for exponent 3 holds while 3 is not a\n  Wall\u2013Sun\u2013Sun prime;\n- a disproof of the bold conjecture that, for every prime `p`, FLT at exponent `p` is equivalent\n  to `p` being Wall\u2013Sun\u2013Sun (counterexample `p = 3`);\n- a disproof of the bold conjecture that prime residue `\u00b11 mod 5` suffices for the property\n  (counterexample `p = 11`).\n\nAll results compile independently, contain no `sorry`, and use no nonstandard axioms.\n\n## Concise computational evidence\n\nThe initial Fibonacci values are\n\n`0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, ...`.\n\nFor the small prime candidates checked formally:\n\n| `p` | relevant index | Fibonacci value | outcome |\n|---:|---:|---:|:---|\n| 2 | 3 | 2 | `4 \u2224 2` |\n| 3 | 4 | 3 | `9 \u2224 3` |\n| 5 | 6 | 8 | `25 \u2224 8` |\n| 7 | 8 | 21 | `49 \u2224 21` |\n| 11 | 10 | 55 | `121 \u2224 55` |\n\nThus the finite sample has no example. Since no Wall\u2013Sun\u2013Sun prime is known, there are no\nknown first terms to tabulate. No OEIS identifier is asserted here because it was not\nindependently verified in this project.\n\n## Next steps\n\n1. Implement fast-doubling Fibonacci modulo `p\u00b2` and prove it agrees with `Nat.fib % p\u00b2`.\n   This should permit much larger kernel-checked finite bounds without expanding Fibonacci\n   numerals.\n2. Formalize the Legendre-symbol identity `(5/p)` in terms of residues modulo 5 and prove that\n   `fibonacciIndex p` literally represents `p - (p|5)` for primes other than 2 and 5.\n3. Build a certificate format listing primes in an interval together with modular Fibonacci\n   remainders, and verify certificates in Lean.\n4. Formalize only accurately sourced historical FLT criteria involving Fibonacci\u2013Wieferich\n   primes. Such criteria are subtler than an equivalence with FLT itself; the counterexample at\n   exponent 3 rules out that naive formulation.\n5. Keep existence as a named conjecture until either an explicit certified witness is found or\n   a genuine general existence proof is discovered.\n",
     "domains": [
@@ -11163,22 +11144,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal development now identifies the recursively defined time-`t` dependenc"
   },
   {
-    "consumed_by_exp_id": "caed44fe",
-    "description": "# Future directions\n\n## Completed foundation\n\n`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-contained,\nsorry-free treatment of the paper's forbidden induced configuration. In particular, it\nformalizes `(K\u2082 \u222a kK\u2081)`-freeness directly and proves both directions of the exact local\ncharacterization:\n\n> A graph is `(K\u2082 \u222a kK\u2081)`-free if and only if the common antineighbourhood of every\n> independent `k`-vertex set is independent.\n\nThe file also proves the stronger large-independent-set consequence, parameter\nmonotonicity, the `k = 0` characterization, and the `k = 1` singleton corollary.\n\n## Next formalization milestones\n\n1. **Induced-copy interface.** Relate `IsK2UnionK1Free` to Mathlib's induced-subgraph\n   and graph-isomorphism APIs, proving equivalence with nonexistence of an induced copy\n   of the disjoint union `K\u2082 \u222a kK\u2081`.\n2. **Finite graph invariants.** Put vertex connectivity, minimum degree, independence\n   number, component count after vertex deletion, toughness, Hamilton paths, and\n   Hamilton-connectedness into one compatible finite-simple-graph interface.\n3. **Toughness consequences.** Derive the separator inequalities used by the paper from\n   `\u03c4(G) > 1`, while handling complete graphs separately according to the convention\n   `\u03c4(G) = \u221e`.\n4. **Path exchange.** Formalize longest-path extension and endpoint-exchange lemmas. The\n   local characterization proved here should discharge each step where a large\n   independent set anticomplete to an edge would otherwise arise.\n5. **First headline theorem.** Prove that a `(k+1)`-connected,\n   `(K\u2082 \u222a kK\u2081)`-free graph with toughness greater than one and minimum degree at least\n   `2k` is Hamilton-connected.\n6. **Independence-number variants.** Formalize the paper's later results, explicitly\n   tracking graph order and hypotheses such as `2k + 1 \u2264 \u03b1(G)` and\n   `\u03b1(G) < |V(G)| / 2`.\n7. **Finite-model regression tests.** Once the invariant interface exists, enumerate\n   small finite graphs to test conventions and detect off-by-one errors in connectivity,\n   component count, toughness, and Hamilton-connectedness definitions.\n",
-    "domains": [
-      "Combinatorics",
-      "Bridges"
-    ],
-    "id": "fd_0939",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "18ab6902",
-    "status": "in_progress",
-    "timestamp": "2026-08-03T21:39:54.243703+00:00",
-    "title": "`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-conta"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n- Instantiate the measure-preserving symmetry theorem for finite planar bond-percolation configurations, with primal crossing and dual crossing proved complementary by a discrete Jordan-curve argument.\n- Formalize planar dual graphs and derive the square-lattice bond threshold from finite-box duality together with the required infinite-volume limiting theory.\n- Connect monotone finite-volume crossing probabilities to product Bernoulli measures and prove sharp-threshold estimates.\n- Develop the star\u2013triangle transformation and use it to transfer exact bond thresholds among the triangular and hexagonal lattices.\n- Extend the event-level self-duality result to scaling limits, where conformal maps transport crossing events and preserve their limiting probabilities.\n- The infinite square-lattice site threshold is not presently known in closed analytic form; a faithful formal development should treat numerical estimates separately from exact theorems.\n",
     "domains": [
@@ -11253,17 +11218,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "1. **General tropical Helly bound.** For every `d > 0`, every finite family of n"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8fa60fb0",
     "description": "# Future directions\n\n## What is now proved\n\nThe conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contains a complete\ndescent and classification theory. For a number field `K`, a finite Galois extension `H/K` and an\nArtin reciprocity isomorphism `e : Gal(H/K) \u2243* Cl(\ud835\udcaa_K)`:\n\n* intermediate fields are classified, order-reversingly, by subgroups of `Cl(\ud835\udcaa_K)`\n  (`HilbertClassFieldDescent.intermediateFieldOrderIso`, `existsUnique_intermediateField`);\n* `[L : K] = (artinImage e L).index`, `[H : L] = #(artinImage e L)`, and\n  `Gal(L/K) \u2243* Cl(\ud835\udcaa_K) \u29f8 artinImage e L`;\n* ideal-class characters descend to `Gal(L/K)` exactly when they kill `artinImage e L`, and the\n  characters of `Cl(\ud835\udcaa_K) \u29f8 S` are exactly the one-dimensional representations of `Gal(L_S/K)`;\n* if `Cl(\ud835\udcaa_K)` is cyclic, each divisor `d` of `h_K` is the degree of exactly one intermediate\n  field (`CyclicClassGroupDescent.existsUnique_intermediateField_finrank`);\n* if `Cl(\ud835\udcaa_K)` is a Klein four group, the datum has exactly five intermediate fields, of degrees\n  `1, 2, 2, 2, 4` (`KleinFourClassField.card_intermediateField_of_kleinFour`,\n  `finrank_eq_one_or_two_or_four`, `exists_three_quadratic_intermediateField`,\n  `intermediateField_eq_of_kleinFour`) \u2014 this settles conjecture 2 of the previous cycle;\n* the transfer (Verlagerung) of `Cl(\ud835\udcaa_K)` into the Artin image of an intermediate field `L` is\n  the `[L : K]`-th power map, and it is trivial at the top of the datum\n  (`ClassFieldTransfer.coe_transfer_artinImage`, `transfer_artinImage_top_eq_one`) \u2014 this settles\n  the intermediate falsifiable step of conjecture 4 of the previous cycle.\n\n## Next targets\n\nEach of the following is falsifiable: it is either a Lean statement that compiles and is proved,\nor it fails for an explicit counterexample.\n\n1. **Unconditional imaginary-quadratic instance.** For `K = \u211a(\u221a-5)` (class number `2`), construct\n   in Lean the quadratic extension `H = K(i)` together with a group isomorphism\n   `Gal(H/K) \u2243* Cl(\ud835\udcaa_K)`, so that every theorem of `HilbertClassFieldDescent`,\n   `CyclicClassGroupDescent` and `ClassFieldTransfer` holds for `K` with no reciprocity datum\n   assumed. This requires `Nat.card (ClassGroup (\ud835\udcde \u211a(\u221a-5))) = 2` as a formal computation.\n   Falsifiable: the class number must come out `2`, not `1`.\n\n2. **Counting for arbitrary elementary abelian class groups.** Generalize\n   `KleinFourClassField.card_subgroup_V`: if `Cl(\ud835\udcaa_K) \u2243 (ZMod p)^r` then the Hilbert class field\n   datum has exactly `\u2211_{k=0}^{r} binom(r,k)_p` intermediate fields (the Galois `p`-binomial\n   count), of which exactly `binom(r,k)_p` have degree `p^k` over `K`. Falsifiable at `p = r = 2`,\n   where the prediction is `5 = 1 + 3 + 1`, already proved, and at `p = 2, r = 3`, where the\n   prediction is `16`.\n\n3. **Frobenius compatibility of the Artin datum.** Strengthen the interface by demanding that\n   `e\u207b\u00b9` send the class of an unramified prime `\ud835\udd2d` to the Frobenius element of `\ud835\udd2d` in `Gal(H/K)`\n   (Mathlib now provides `IsArithFrobAt` and `arithFrobAt`), and prove that with this hypothesis\n   `\ud835\udd2d` splits completely in `H` iff `[\ud835\udd2d] = 1` in `Cl(\ud835\udcaa_K)`, i.e. iff `\ud835\udd2d` is principal. This is\n   the decomposition law that makes the Hilbert class field explicit.\n\n4. **Principal ideal theorem via transfer.** Extend `ClassFieldTransfer` from the abelian case to\n   the tower `K \u2286 H \u2286 H\u2081` of successive class fields: formalize the transfer\n   `Ver : Gal(H\u2081/K)^ab \u2192 Gal(H\u2081/H)` for a non-abelian `Gal(H\u2081/K)` and prove that its triviality\n   (Furtw\u00e4ngler) implies that every ideal of `\ud835\udcaa_K` becomes principal in `\ud835\udcaa_H`. The abelian core\n   (`transfer_bot_eq_one`) is proved; the open step is the general group-theoretic statement.\n\n5. **Genus-theoretic intermediate field.** For an imaginary quadratic `K` whose discriminant has\n   `t` distinct prime divisors, prove `Nat.card (Cl(\ud835\udcaa_K) \u29f8 (Cl(\ud835\udcaa_K))\u00b2) = 2 ^ (t - 1)` and\n   identify, through `HilbertClassFieldDescent.classField`, the corresponding intermediate field\n   as the genus field, of degree `2 ^ (t - 1)` over `K`. Falsifiable at `K = \u211a(\u221a-15)`, where the\n   prediction is degree `2`.\n",
     "domains": [
       "Algebra",
       "NumberTheory"
     ],
     "id": "fd_0949",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "a5f7aac5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-04T06:48:30.523978+00:00",
     "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
   },
@@ -11401,6 +11367,96 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-04T23:25:46.007097+00:00",
     "title": "These conjectures are derived from the results proved this cycle in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is now proved in Lean (sorry-free)\n\nAll statements below are formalized and proved in this repository; every theorem checks with\nonly the standard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\nNotation: `n = |V(G)|`, `\u03b4` = minimum degree, `\u03ba` = vertex connectivity, `\u03b1` = independence\nnumber, `\u03c4` = toughness with the convention `\u03c4(K_n) = \u221e`.\n\n### `Catalog/Combinatorics/K2UnionK1FreeInvariants.lean`\n\n* `k2UnionK1 k = K\u2082 \u2295g kK\u2081` and **`free_iff_isEmpty_embedding`**:\n  `IsK2UnionK1Free G k \u2194 IsEmpty (k2UnionK1 k \u21aag G)`, i.e. the combinatorial definition from\n  the earlier bridge file agrees with \"no induced copy\" in Mathlib's graph-embedding sense\n  (milestone 1).\n* A finite-graph invariant interface (milestone 2): `compCount G S` (components after\n  deleting `S`), `ToughAtLeast G t` (`\u03c4 \u2265 t`), `ToughGreaterThan G t` (`\u03c4 > t`),\n  `IsHamiltonConnected`, together with `compCount_empty`, `two_le_compCount_of_isolated`,\n  `compCount_compl_isIndepSet`, `ncard_neighborSet`, `two_le_compCount_neighborSet`.\n* Toughness consequences (milestone 3): `connected_of_toughAtLeast`,\n  `compCount_singleton_le_one` (no cut vertex), the separator inequalities\n  `succ_compCount_le_ncard_of_toughGreaterThan_one`, `three_le_ncard_of_separator`, the\n  degree bounds `two_le_minDegree_of_toughAtLeast`, `three_le_minDegree_of_toughGreaterThan_one`,\n  and `two_mul_indepNum_lt`: `\u03c4(G) > 1`, `n \u2265 3` imply `2\u03b1(G) < n`.\n* Freeness \u00d7 toughness: `two_mul_ncard_antiNeighborhood_lt`, `lt_two_mul_ncard_hasNeighbor`.\n* Regression tests on `P\u2083`, `P\u2084`, `3K\u2081`.\n\n### `Catalog/Combinatorics/K2UnionK1FreeHierarchy.lean`\n\n* `free_one_iff_edge_dominating`: `(K\u2082 \u222a K\u2081)`-freeness \u27fa every edge dominates every vertex.\n* `hierarchy_strict`: the chain of classes is **strictly** increasing in `k`.\n* `C\u2085` regression tests.\n\n### `Catalog/Combinatorics/K2UnionK1FreeToughnessBounds.lean` (new)\n\nEvery toughness inequality above is proved for an arbitrary rational parameter `t`, not just\n`t = 1`.\n\n* `compCount_le_one_of_ncard_lt_two_mul`: with `\u03c4(G) \u2265 t \u2265 0`, no vertex set of size smaller\n  than `2t` disconnects `G`. With the predicate `VertexConnAtLeast G k` (`\u03ba \u2265 k`) this is\n  `vertexConnAtLeast_of_toughAtLeast`, the classical bound **`\u03ba(G) \u2265 2\u03c4(G)`**;\n  `connected_of_vertexConnAtLeast` and `VertexConnAtLeast.mono` complete that interface.\n* `two_mul_lt_degree_of_toughGreaterThan`, `two_mul_le_degree_of_toughAtLeast`,\n  `two_mul_lt_minDegree_of_toughGreaterThan`: `\u03b4 > 2t` when `\u03c4 > t` (and `\u03b4 \u2265 2t` when\n  `\u03c4 \u2265 t`) as soon as `n > 2t + 1`. The integral form is\n  **`floor_two_mul_lt_minDegree`: `\u03b4(G) \u2265 \u230a2t\u230b + 1`** \u2014 this settles the previous cycle's\n  Conjecture 5 affirmatively, with a weaker order hypothesis than conjectured.\n* `succ_mul_ncard_isIndepSet_lt`, **`succ_mul_indepNum_lt`: `(t + 1)\u00b7\u03b1(G) < n`** whenever\n  `\u03c4(G) > t \u2265 0` and `n > t + 1`, generalizing `2\u03b1 < n`.\n* `succ_mul_ncard_antiNeighborhood_lt`, `lt_mul_ncard_hasNeighbor`: the same statements for\n  the common antineighbourhood of an independent `k`-set in a `(K\u2082 \u222a kK\u2081)`-free graph.\n* `compCount_top_le_one`, `toughAtLeast_top`, `toughGreaterThan_top`: complete graphs satisfy\n  every toughness predicate, confirming the convention `\u03c4(K_n) = \u221e`; plus regression tests\n  (`K\u2085` is `4`-connected with `\u03b4 = 4`, `\u03b4(C\u2085) = 2`).\n\n### `Catalog/Combinatorics/K2UnionK1FreeParameter.lean` (new)\n\n* **Heredity.** `IsK2UnionK1Free.of_embedding` (freeness transports along induced\n  embeddings) and `IsK2UnionK1Free.induce`: the class is hereditary.\n* **The freeness parameter.** `freeParam G = sInf {k | IsK2UnionK1Free G k}`, with\n  `freeParam_spec`, the threshold property `freeParam_le_iff`, and monotonicity\n  `freeParam_induce_le`, `freeParam_le_of_embedding`.\n* **Bounds.** `free_indepNum` (every finite graph is `(K\u2082 \u222a \u03b1(G)K\u2081)`-free) gives\n  **`freeParam G \u2264 \u03b1(G)`**; `freeParam_eq_zero_iff` identifies parameter `0` with the\n  edgeless graphs. Combined with the toughness bound: `succ_mul_freeParam_lt` and\n  **`two_mul_freeParam_lt`: `2\u00b7freeParam(G) < n` whenever `\u03c4(G) > 1`, `n \u2265 3`.**\n* **Computed values.** `freeParam (cycleGraph 5) = 2`, `freeParam (k2UnionK1 k) = k + 1`,\n  `freeParam \u22a5 = 0`, `freeParam \u22a4 = 1` for `n \u2265 2`.\n\n### `Catalog/Combinatorics/HamiltonConnectedDegree.lean` (new)\n\nNecessary conditions for Hamilton-connectedness, the invariant counterpart of milestone 5.\n\n* `two_le_degree_of_mem_support_of_ne`: a vertex interior to a path has two distinct\n  neighbours (its predecessor and successor along the path).\n* `two_le_degree_of_isHamiltonConnected`, `two_le_minDegree_of_isHamiltonConnected`:\n  Hamilton-connected and `n \u2265 3` imply `\u03b4 \u2265 2`.\n* **`three_le_degree_of_isHamiltonConnected`, `three_le_minDegree_of_isHamiltonConnected`:\n  Hamilton-connected and `n \u2265 4` imply `\u03b4 \u2265 3`** \u2014 a degree-two vertex `v` with neighbours\n  `a`, `b` would force the Hamiltonian `a`\u2013`b` path to be exactly `a, v, b`.\n* Obstructions `not_isHamiltonConnected_of_degree_lt_two`,\n  `not_isHamiltonConnected_of_degree_lt_three`, applied to give\n  `pathGraph_three_not_isHamiltonConnected` and `cycleGraph_five_not_isHamiltonConnected`;\n  `isHamiltonConnected_bot_iff` checks the definition against the degenerate case.\n\n### `Catalog/Combinatorics/K2UnionK1FreeDiameter.lean` (new)\n\nMetric consequences of the forbidden configuration.\n\n* Distance-layer toolkit: `not_adj_of_dist_add_two_le` (vertices whose distances from a common\n  base point differ by at least two are non-adjacent), `exists_dist_eq` (every intermediate\n  distance is realised) and `exists_indepSet_dist` (the vertices at distances\n  `a, a+2, \u2026, a+2m` from `u` form an independent set of size `m + 1`).\n* **`dist_le_two_mul_of_free`: a `(K\u2082 \u222a kK\u2081)`-free graph has `diam(G) \u2264 2k` for `k \u2265 1`**\n  (more precisely, any two vertices of one component are at distance at most `2k`), with the\n  `\u2115\u221e`-form `ediam_le_two_mul_of_free`, the contrapositive `not_free_of_two_mul_lt_dist`, and\n  the case `k = 1`, `dist_le_two_of_free_one`.\n* **`dist_le_two_mul_freeParam`: `diam(G) \u2264 2\u00b7freeParam(G)`** for every connected finite\n  graph, and the companion **`dist_lt_two_mul_indepNum`: `diam(G) < 2\u00b7\u03b1(G)`** proved by the\n  same layer argument (a strengthening chain, since `freeParam \u2264 \u03b1`).\n* **Sharpness.** `pathGraph_free`: the path on `2k + 1` vertices *is* `(K\u2082 \u222a kK\u2081)`-free (via\n  the counting lemma `card_le_of_gap` for sets of naturals without two consecutive elements);\n  `val_sub_le_walk_length` and `pathGraph_dist_ge` give the matching metric lower bound, and\n  **`pathGraph_dist_eq`: the endpoints of `P_{2k+1}` are at distance exactly `2k`**, so the\n  bound `2k` is attained for every `k \u2265 1`. On the other side, `pathGraph_not_free` and\n  `lt_freeParam_pathGraph` show `P_{2k+2}` is not `(K\u2082 \u222a kK\u2081)`-free.\n\n### `Catalog/Combinatorics/LongestPathExchange.lean` (new)\n\nThe extension half of milestone 4, together with the step where freeness is used.\n\n* `IsLongestPath p`: `p` is a path of maximum length among all paths of `G`;\n  `exists_isLongestPath` (existence in a finite nonempty graph), `IsLongestPath.reverse`,\n  `IsLongestPath.dist_le`.\n* **`IsLongestPath.mem_support_of_adj_fst` / `mem_support_of_adj_snd`: every neighbour of an\n  endpoint of a longest path lies on the path**, equivalently\n  `IsLongestPath.not_adj_of_notMem_support`: the endpoints are anticomplete to the vertices\n  the path misses.\n* **`IsLongestPath.card_lt_of_indepSet_off`: the exchange step.** If the endpoints of a\n  longest path are adjacent, then in a `(K\u2082 \u222a kK\u2081)`-free graph every independent set of\n  vertices missed by the path has fewer than `k` elements; `IsLongestPath.indepNum_off_lt`\n  states this as `\u03b1(G \u2212 V(P)) < k`.\n* `IsLongestPath.spanning_of_free_one`: for `k = 1` the missed set is empty, i.e. a longest\n  path with adjacent endpoints in a `(K\u2082 \u222a K\u2081)`-free graph is Hamiltonian.\n\n\n## Conjectures\n\nEach is falsifiable by a single explicit finite graph (or by one exhaustive finite search).\n\n**Conjecture 1 (small orders cannot separate `\u03c4 > 1` from Hamilton-connectedness).**\nEvery non-complete graph with `\u03c4(G) > 1` and `n \u2264 9` is Hamilton-connected. *Evidence:*\nexhaustively verified for `n \u2264 7` (\u00a72 of `ComputationalEvidence.md`, an unverified external\nenumeration); the Petersen graph (`n = 10`, `\u03c4 = 4/3`) is not Hamilton-connected, so the bound\n`9` would be optimal. *Falsified by:* a graph on at most `9` vertices with `\u03c4 > 1` and two\nvertices joined by no Hamiltonian path.\n\n**Conjecture 2 (`k = 2` needs no degree hypothesis).**\nEvery `(K\u2082 \u222a 2K\u2081)`-free graph with `\u03c4(G) > 1` and `n \u2265 3` is Hamilton-connected; in\nparticular the hypotheses `\u03b4 \u2265 2k` and `(k+1)`-connectivity of the headline theorem are\nredundant when `k = 2`. Equivalently, in the language of the new invariant: `\u03c4(G) > 1` and\n`freeParam(G) \u2264 2` imply Hamilton-connectedness. *Evidence:* all non-complete graphs with\n`\u03c4 > 1` on `\u2264 7` vertices are Hamilton-connected, and every obstruction found so far has\n`freeParam \u2265 3` (Petersen has `freeParam = 3`). *Falsified by:* a `(K\u2082 \u222a 2K\u2081)`-free graph with\n`\u03c4 > 1` that is not Hamilton-connected.\n\n**Conjecture 3 (the degree hypothesis `\u03b4 \u2265 2k` is far from optimal).**\nFor every `k \u2265 1`, every `(k+1)`-connected, `(K\u2082 \u222a kK\u2081)`-free graph with `\u03c4(G) > 1` and\n`\u03b4(G) \u2265 k + 1` is Hamilton-connected. *Evidence:* exhaustive check for `n \u2264 7`, no\ncounterexample; the Petersen graph has `k = 3`, `\u03b4 = 3 = k`, `\u03ba = 3 = k`, so it violates both\nweakened hypotheses and is consistent with the conjecture. *Falsified by:* a `(k+1)`-connected,\n`(K\u2082 \u222a kK\u2081)`-free graph with `\u03c4 > 1`, `\u03b4 \u2265 k + 1`, and a non-Hamilton-connected pair.\n\n**Conjecture 4 (toughness improves the diameter bound to `freeParam + 1`).**\nEvery non-complete graph with `\u03c4(G) > 1` satisfies `diam(G) \u2264 freeParam(G) + 1`. *Evidence:*\n`dist_le_two_mul_freeParam` proves the unconditional bound `diam \u2264 2\u00b7freeParam`, and every\nexample attaining it (the paths `P_{2k+1}` of `pathGraph_dist_eq`, and the stars) has\ntoughness at most `1`; the inequality `diam \u2264 freeParam` itself is false (there are graphs of\norder `5` with `\u03c4 = 3/2`, `diam = 2`, `freeParam = 1`), so `+1` is the right correction. An\nexhaustive scan of all labelled graphs on `n \u2264 6` vertices and `4000` random graphs each on\n`7` and `8` vertices produced no counterexample (external Python enumeration; see\n`ComputationalEvidence.md`, not machine-verified). *Falsified by:* a non-complete graph with\n`\u03c4 > 1` and two vertices at distance greater than `freeParam(G) + 1`.\n\n**Conjecture 5 (the order bound `2\u00b7freeParam < n` is not tight).**\nEvery non-complete graph with `\u03c4(G) > 1` satisfies `n \u2265 2\u00b7freeParam(G) + 2`. *Evidence:*\n`two_mul_freeParam_lt` proves `n \u2265 2\u00b7freeParam + 1`; the parity-improved bound held in an\nexhaustive scan for `n \u2264 6` and in random samples for `n = 7, 8, 9` (external Python\nenumeration, not machine-verified), where the observed maxima were\n`freeParam = 2` at `n = 6, 7` and `freeParam = 3` at `n = 8, 9`. *Falsified by:* a\nnon-complete graph with `\u03c4 > 1` and `n = 2\u00b7freeParam + 1`.\n\n*(The previous cycle's Conjecture 5, `\u03c4(G) > t \u27f9 \u03b4(G) \u2265 \u230a2t\u230b + 1`, is no longer a conjecture:\nit is proved as `floor_two_mul_lt_minDegree`. The two conjectures displaced from this list \u2014\nsharpness of `(t+1)\u03b1 < n`, and Hamilton-connectedness above the threshold\n`n \u2265 2\u00b7freeParam + 5` \u2014 remain open and untouched by the present cycle. A further\nconsequence of the new exchange step is worth recording as a target rather than a\nconjecture: proving that in a `2`-connected graph some longest path has adjacent endpoints\nwould turn `IsLongestPath.card_lt_of_indepSet_off` into a bound on the vertices missed by a\nlongest path.)*\n\n## Next formalization milestones\n\n1. **Cycle rotation (the second half of milestone 4).** `LongestPathExchange` supplies the\n   extension lemma and the freeness exchange step; what is missing is the rotation argument\n   showing that in a `2`-connected graph a longest path can be closed into a cycle, after\n   which `IsLongestPath.card_lt_of_indepSet_off` bounds the vertices off the path.\n2. **Headline theorem (milestone 5).** The separator inequalities, `\u03ba \u2265 2\u03c4`, the degree\n   bounds, the necessary condition `\u03b4 \u2265 3`, the diameter bound `diam \u2264 2k` and the exchange\n   step are now available; the rotation argument of item 1 is the remaining gap.\n3. **Toughness as a number.** Define `\u03c4(G) : \u211a\u221e` and prove it agrees with the predicates\n   `ToughAtLeast` / `ToughGreaterThan` (chosen here to avoid an `sInf` over an empty family\n   for complete graphs), and likewise turn `VertexConnAtLeast` into a numerical `\u03ba(G)`.\n4. **Decidable regression harness.** Make `compCount`, `IsK2UnionK1Free` and `freeParam`\n   decidable for `Fin n`-indexed graphs so that the finite checks in \u00a72 of\n   `ComputationalEvidence.md` \u2014 and the scans behind Conjectures 4 and 5 \u2014 can be replayed\n   inside Lean by `decide` rather than by external enumeration.\n",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_0961",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "caed44fe",
+    "status": "available",
+    "timestamp": "2026-08-05T06:49:27.121987+00:00",
+    "title": "All statements below are formalized and proved in this repository; every theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe Lean development consists of three files, all of which compile with no `sorry` and\ndepend only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n* `Geometry/MagnitudeTopeGraphs.lean` \u2014 chambers of the coordinate arrangement, the tope\n  graph and its metric, magnitude chains in degrees 1 and 2, the differential `\u03b4\u2082`,\n  degree-1 diagonality, and the Coxeter (Cayley graph) model.\n* `Geometry/MagnitudeTopeGraphsDiagonal.lean` \u2014 degree-3 chains, the identification of\n  `MH_{2,2}` with the cycle group, and the exact rank computation of `MH_{2,2}` for the\n  tope graph and for the Cayley graph of `(\u2124/2)\u207f`.\n* `Geometry/MagnitudeTopeGraphsHilbert.lean` \u2014 the `(2,2)` computation for an arbitrary\n  finite connected graph, the description and Vandermonde count of the degree-2 chains of\n  the tope graph in *every* length `\u2113`, and the resulting rank of the `(2,\u2113)`-cycle\n  groups.\n\nThe setting throughout is the smallest non-trivial family of real arrangements: the\narrangement of the `n` coordinate hyperplanes in `\u211d\u207f`, whose tope graph is the `n`-cube\nand simultaneously the Cayley graph of the Coxeter group `(\u2124/2)\u207f`.\n\n## What is proved\n\n1. Chambers of the coordinate arrangement: nonempty, convex, pairwise disjoint, avoid the\n   hyperplanes, and the *separation set* of two chambers is the symmetric difference of\n   their sign vectors (`chamber_nonempty`, `chamber_convex`,\n   `chamber_avoids_hyperplanes`, `mem_symmDiff_iff_separated`, `chamber_disjoint`).\n2. The tope graph is an isometric model of the separation metric:\n   `topeGraph_dist : dist s t = |s \u0394 t|`, and it is connected (`topeGraph_connected`).\n3. Magnitude chains in degrees 1 and 2 for an arbitrary connected graph, with the\n   magnitude differential `\u03b4\u2082`; `MC_{2,\u2113} = 0` for `\u2113 < 2`; `MH_{1,1}` is free on the\n   ordered edges (`MH1_one_equiv`, `Gen1_one_equiv`); `\u03b4\u2082` is surjective for `\u2113 \u2265 2`\n   (`delta2_range_eq_top`), whence `MH_{1,\u2113} = 0` (`MH1_subsingleton_of_two_le`).\n4. Splitting `MC_{2,\u2113} \u2245 ker \u03b4\u2082 \u2295 MC_{1,\u2113}` for `\u2113 \u2265 2` (`chain_split`), and the diagonal\n   cycles `(x,y) \u21a6 (x,y,x)` embedding the ordered edges into `ker \u03b4\u2082` in length 2\n   (`diagIncl_injective`, `diagIncl_range_le_ker`).\n5. For the tope graph: `rk MC_{1,\u2113} = 2\u207f\u00b7C(n,\u2113)`, `rk MC_{2,2} = 2\u207f\u00b7n\u00b2`\n   (`card_tope_gen1`, `card_tope_gen2`), and nontriviality of the `(2,2)`-cycles.\n6. Graph isomorphisms are isometries (`iso_dist_eq`); the tope graph is isomorphic to the\n   Cayley graph of `(\u2124/2)\u207f` with respect to its Coxeter generators (`topeIsoCayley`), and\n   the degree-1 results transport to that Cayley graph.\n7. Degree-3 chains `Gen3 G \u2113` are empty for `\u2113 < 3` (`Gen3_isEmpty_of_lt`), so *any*\n   differential into the `(2,2)`-cycles vanishes (`delta3_range_eq_bot`) and the homology\n   at the `(2,2)` spot is the whole cycle group (`MH22_equiv_cycles`).\n8. For a connected graph with finitely many chains and `\u2113 \u2265 2`,\n   `rk (ker \u03b4\u2082) + #MC_{1,\u2113} = #MC_{2,\u2113}` (`finrank_ker_delta2_add`).\n9. Hence, using `C(n,2) + C(n+1,2) = n\u00b2` (`choose_two_add_choose_two`),\n   `MH_{2,2}(topeGraph n) \u2245 \u2124^{2\u207f\u00b7C(n+1,2)}`, i.e. it is free of rank `2\u207f\u00b7n(n+1)/2`\n   (`topeMH22_finrank`, `topeMH22_free`).  The factor `C(n+1,2)` is exactly the value at\n   degree `2` of the Hilbert function of the polynomial ring in the `n` hyperplanes \u2014 the\n   Stanley\u2013Reisner ring of the simplex attached to each tope of the Boolean arrangement \u2014\n   as predicted by the paper's description of the ranks of `MH_{k,k}`.\n10. The magnitude differential is natural under graph isomorphisms\n    (`genEquiv2`, `delta2_naturality`, `ker_delta2_equiv`), so the same rank computation\n    holds for the Cayley graph of the Coxeter group `(\u2124/2)\u207f`\n    (`cayleyMH22_finrank`, `cayleyMH22_free`).\n11. For *any* finite connected graph, `MH_{2,2}(G)` is free abelian of rank\n    `#MC_{2,2}(G) - #MC_{1,2}(G)` (`finrank_ker_delta2_two`, `MH22_free_of_finite`).\n12. A degree-2 magnitude chain of the tope graph of length `\u2113` is the same thing as a\n    tope `y` together with an ordered pair `(a,b)` of *nonempty* sets of hyperplanes with\n    `|a| + |b| = \u2113`, namely `a = x \u0394 y` and `b = y \u0394 z` (`topeGen2EquivGeneral`).\n13. Pairs of subsets of an `n`-set of total size `\u2113` biject with `\u2113`-subsets of a `2n`-set\n    (`pairSumEquiv`), so there are `C(2n,\u2113)` of them (`card_pair_card_sum`); exactly\n    `2\u00b7C(n,\u2113)` of them have an empty member when `\u2113 \u2265 1` (`card_pair_with_empty`,\n    `card_subsetPair`).  Hence, for every `\u2113 \u2265 1`,\n    `#MC_{2,\u2113}(topeGraph n) = 2\u207f\u00b7(C(2n,\u2113) - 2\u00b7C(n,\u2113))` (`card_tope_gen2_general`),\n    which for `\u2113 = 2` is `2\u207f\u00b7n\u00b2` as before (`card_tope_gen2_general_two`).\n14. Combining 8, 13 and `#MC_{1,\u2113} = 2\u207f\u00b7C(n,\u2113)`: for every `\u2113 \u2265 2` the `(2,\u2113)`-cycle\n    group of the tope graph is free abelian of rank `2\u207f\u00b7(C(2n,\u2113) - 3\u00b7C(n,\u2113))`\n    (`finrank_tope_cycles_general`, `tope_cycles_free_general`), specialising at `\u2113 = 2`\n    to the Hilbert-function value `2\u207f\u00b7C(n+1,2)` (`finrank_tope_cycles_general_two`); the\n    same holds for the Coxeter Cayley graph (`cayley_cycles_finrank_general`).\n\n## Natural next steps\n\n### A. The full magnitude chain complex in all degrees\n\nThe files work with degrees `0,1,2` (plus the generators in degree `3`, which is all that\nis needed to know that `MH_{2,2}` is the cycle group).  The first substantial extension is\nto define `MC_{k,\u2113}` for all `k` (tuples indexed by `Fin (k+1)`, or lists), the alternating\nsum differential, and to prove `\u2202\u00b2 = 0`.  The only genuinely fiddly part is the simplicial\nidentity for the \"length-preserving deletion\" faces; the key auxiliary fact is that if\ndeleting `x_i` preserves the total length then `x_{i-1} \u2260 x_{i+1}`, which is already\nproved here in the `k = 2` case inside `delta2gen`.\n\n### B. Diagonality in all degrees\n\nThe proof of `MH_{1,\u2113} = 0` for `\u2113 \u2265 2` given here is by cutting a geodesic\n(`exists_geodesic_step`).  For a general connected graph, diagonality fails; for tope\ngraphs (more generally partial cubes / graphs of oriented matroids) it holds.  A workable\nroute in Lean is the standard homotopy/discrete Morse argument on the \"middle\" vertex of a\nchain, using that in a partial cube every interval `[x,y]` is a cube.  A first milestone\nwould be `MH_{2,\u2113} = 0` for `\u2113 \u2265 3` in the hypercube.  Stage 14 already computes the\n*cycle* side of that statement exactly: the `(2,\u2113)`-cycles of the tope graph are free of\nrank `2\u207f\u00b7(C(2n,\u2113) - 3\u00b7C(n,\u2113))`.  So diagonality in degree 2 is now equivalent to the\nstatement that the image of `\u03b4\u2083` in length `\u2113 \u2265 3` has exactly this rank, and the only\nmissing ingredient is the differential `\u03b4\u2083` itself, i.e. step A.\n\n### C. Rank of `MH_{k,k}` as a Hilbert function\n\nThe case `k = 2` is now proved: `rk MH_{2,2}(Q_n) = 2\u207f\u00b7C(n+1,2)`.  The general statement\nsuggested by `ComputationalEvidence.md` is `rk MH_{k,k}(Q_n) = 2\u207f\u00b7C(k+n-1, n-1)`, i.e.\n`2\u207f` times the Hilbert function of the polynomial ring on the `n` hyperplanes \u2014 the\nStanley\u2013Reisner ring of the full simplex, which is the complex attached to each tope of\nthe Boolean arrangement.  With A and B in place, the same Euler-characteristic argument\nused in `finrank_ker_delta2_add` (a surjection onto a free module splits, so ranks add)\ncomputes every `rk MH_{k,k}` from the chain counts; the combinatorial input is then the\nalternating-sum identity `\u03a3_j (-1)^j \u00b7 #MC_{k-j,k} = 2\u207f\u00b7C(k+n-1,n-1)`.\n\n### D. General real arrangements and oriented matroids\n\nThe step from the Boolean arrangement to an arbitrary real arrangement is the step from\n`Finset (Fin n)` to the set of topes of an oriented matroid (covectors of maximal\nsupport).  A reasonable formalization target is: define topes abstractly as a set of sign\nvectors closed under the tope axioms, prove `dist T T' = |Sep(T,T')|` for the tope graph\n(the partial-cube property), and re-derive stages 3\u20139 in that generality.  `topeGraph_dist`\nhere is the special case where all `2\u207f` sign vectors are topes.  Note that stages 7, 8, 10\nare already proved for arbitrary (finite, connected) graphs, so only the counts of stage 9\nhave to be redone.\n\n### E. Coxeter arrangements beyond `(\u2124/2)\u207f`\n\n`topeIsoCayley` is the type `A\u2081\u207f` case of the statement that the tope graph of a Coxeter\narrangement is the Cayley graph of the Coxeter group with respect to the simple\nreflections, with graph distance the Coxeter length of `w\u207b\u00b9v`.  Formalizing the type `A`\ncase (symmetric group, adjacent transpositions, distance = number of inversions) would be\nthe natural next instance, and Mathlib's `CoxeterSystem` API is a plausible base.  Once\nthe isomorphism is available, `ker_delta2_equiv` transports the homology computations for\nfree, exactly as it does for `(\u2124/2)\u207f` in `cayleyMH22_free`.\n\n### F. Homological reciprocity\n\nThe reciprocity conjectured by Koizumi\u2013Liu and proved in the paper for central\narrangements is a relation between the ranks of `MH_{k,\u2113}` of an arrangement and of its\n\"complement\" data, ultimately Alexander duality for the associated simplicial complex.\nThis needs A, C and a formalization of Alexander duality for simplicial complexes,\nwhich is not currently in Mathlib; it is the most distant of these targets.\n",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_0962",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6077433a",
+    "status": "available",
+    "timestamp": "2026-08-05T06:51:00.867073+00:00",
+    "title": "The Lean development consists of three files, all of which compile with no `sorr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinatorics/HarrisFKGThresholdCoupling.lean` contain complete Lean 4\nproofs (no `sorry`, only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`) of the following.\n\n* `keyMeasure_thresholdFiber` \u2014 the finite-key probability formula\n  `P(siteThresholdConfig key p = \u03b7) = p^{|open \u03b7|}(1-p)^{|closed \u03b7|}` for the\n  product of uniform `[0,1]` keys on any finite index type;\n* `keyMeasure_eventKeys` \u2014 the key measure of an arbitrary event equals its\n  Bernoulli polynomial `bernProb p A`;\n* `keyMeasure_eventKeys_mono`, `bernProb_mono`, `crossing_prob_mono` \u2014\n  monotonicity in `p` for increasing events, in particular for horizontal\n  crossings of the `n \u00d7 n` grid;\n* `keyMeasure_eventKeys_strictMono`, `bernProb_strictMono`,\n  `crossing_prob_strictMono`, `crossing_bernProb_strictMono` \u2014 strict\n  monotonicity on `(0,1)` for nondegenerate increasing events and for grid\n  crossings;\n* `hasDerivAt_bernProb`, `deriv_bernProb`, `deriv_bernProb_pos_iff`,\n  `deriv_bernProb_pos` \u2014 the finite Russo formula and the characterization of\n  strict positivity of the derivative;\n* `bond_keyMeasure_thresholdFiber`, `bond_keyMeasure_eventKeys`,\n  `bond_connected_prob_mono` \u2014 the bond analogue on `Sym2 V`;\n* **new:** `weight_inf_mul_weight_sup` (log-supermodularity of the Bernoulli\n  weight), `bernProb_harris` and `keyMeasure_harris` (the Harris/FKG inequality\n  `P(A)P(B) \u2264 P(A \u2229 B)` for increasing events, in polynomial and in key-measure\n  form), `bernProb_harris_compl` (increasing versus decreasing negative\n  correlation), `bernProb_harris_biInter` and `bernProb_harris_biInter_compl`\n  (finite families), `bernProb_biUnion_ge` (product form of the square-root\n  trick), and the grid instances `crossing_harris`,\n  `crossing_harris_open_site`.\n\nConjecture 4 of the previous cycle (the finite Harris inequality) is therefore\nnow a theorem.  The list below is the updated set of falsifiable conjectures.\n\n## Conjecture 1 (size of the Russo derivative for grid crossings)\n\nLet `\u03b8_n(p)` be the horizontal crossing probability of the `n \u00d7 n` grid, so that\n`\u03b8_n'(p) = \u2211_v P_p(v pivotal)` by `deriv_bernProb`.  Conjecture: the sequence\n`\u03b8_n'(1/2)` is strictly increasing in `n` and satisfies `\u03b8_n'(1/2) \u2264 n` for all\n`n \u2265 1`.  Enumeration gives `\u03b8_1'(1/2) = 1`, `\u03b8_2'(1/2) = 3/2`,\n`\u03b8_3'(1/2) = 961/512 \u2248 1.879`.  Either half is refuted by a single computed\nvalue.\n\n## Conjecture 2 (self-duality defect and decay of the crossing density)\n\nWith `\u03b8_n` as above, `\u03b8_n(1/2) < 1/2` for every `n \u2265 2`, the sequence\n`\u03b8_n(1/2)` is strictly decreasing and tends to `0`, and the unique root\n`p_n \u2208 (0,1)` of `\u03b8_n(p) = 1/2` satisfies `p_n > 1/2`.  Enumeration gives\n`\u03b8_1(1/2) = 1/2`, `\u03b8_2(1/2) = 7/16`, `\u03b8_3(1/2) = 197/512`.  A single computed\npair with `\u03b8_{n+1}(1/2) \u2265 \u03b8_n(1/2)` refutes the monotonicity half.\n\n## Conjecture 3 (strict Harris correlation for grid crossings)\n\nThe Harris inequality `crossing_harris_open_site`,\n`p \u00b7 \u03b8_n(p) \u2264 P_p(crossing \u2229 {v open})`, is *strict* for every `n \u2265 2`, every\nsite `v` of the `n \u00d7 n` grid and every `p \u2208 (0,1)`.  Enumeration at `n = 2`,\n`p = 1/2` gives `P = 5/16 > 7/32 = p \u00b7 \u03b8_2(1/2)`.  Conjecturally the defect\n`P_p(crossing \u2229 {v open}) - p\u00b7\u03b8_n(p)` is maximal, for fixed `n` and `p = 1/2`,\nat a corner site.  Both halves are refuted by a single enumerated grid.\n\n## Conjecture 4 (BK inequality on a finite site set)\n\nFor increasing events `A, B \u2286 (\u03b9 \u2192 Bool)` on a finite site set, let `A \u2218 B` be\nthe event that `A` and `B` occur on disjoint sets of open sites.  Then\n\n`bernProb p (A \u2218 B) \u2264 bernProb p A * bernProb p B` for all `p \u2208 [0,1]`.\n\nThis is the van den Berg\u2013Kesten inequality, the natural counterpart to the\nHarris inequality now proved.  Together with `bernProb_harris` it would pin the\ncorrelation of increasing events between the two matching bounds.  It is\nfalsifiable on any explicit finite site set.\n\n## Conjecture 5 (bond\u2013site domination on the same key space)\n\nFor a finite graph `G` and vertices `u, v`, using the *same* index type\n`Sym2 V` for bond keys and `V` for site keys, the bond connection probability\ndominates the site connection probability of the line graph:\n\n`bernProb p {\u03c9 | BondConnected G \u03c9 u v} \u2265 bernProb p {\u03b7 | SiteConnected (lineGraph G) \u03b7 e f}`\n\nfor all `p \u2208 [0,1]` and all edges `e \u220b u`, `f \u220b v`.  This is a finite,\ncheckable statement (both sides are explicit polynomials for small graphs) and\nwould give a formal counterpart of the classical \"bond percolates at least as\neasily as site percolation\" heuristic.\n",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0963",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6ffc84c2",
+    "status": "available",
+    "timestamp": "2026-08-05T06:52:34.895974+00:00",
+    "title": "`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `\u2124\u00b2`, two points joined when\ntheir Euclidean distance is `< R`).  Notation as in `GilbertLatticeCriticalRadii.lean`:\n\n* `Rmin  = sInf {R : some placement has an infinite component}` \u2014 proved: `1/3 \u2264 Rmin \u2264 1/2`;\n* `Rconn = sInf {R : some placement connects all the points}` \u2014 proved: `1/3 \u2264 Rconn \u2264 1`;\n* `Rfull = sInf {R : every placement connects all the points}` \u2014 proved: `\u221a17/2 \u2264 Rfull \u2264 \u221a5`.\n\nEach conjecture below is falsifiable by exhibiting one explicit configuration (for the\nupper-bound direction) or one explicit infinite path (for the lower-bound direction).\n\n## Conjecture 1 (sharp geometric threshold): `Rmin = 1/2`\n\nEquivalently: for every `R \u2264 1/2` and every placement of the points, all connected\ncomponents are finite.  The upper bound `Rmin \u2264 1/2` is proved (the line configuration\n`lineConfig`); the formalised lower bound is only `Rmin \u2265 1/3`.  Evidence: an exhaustive\nconvex optimisation over all periodic drifting paths of period `\u2264 4`, and a random\nsearch for periods `5 \u2026 8`, never produced a longest edge below `1/2`\n(`ComputationalEvidence.md`).  *Falsifiable*: a periodic path of some period `T` with\nnonzero drift and all edges `< 1/2` would refute it.\n\nProof strategy suggested by the formalisation: along a path each step crosses exactly\none grid line up to bounces (`cross_x`, `cross_y`, and the \"no two consecutive steps of\nthe same type\" arguments used in `no_double_x_trivial` / `no_double_y_trivial`), so the\nsigned slack `a_t = x_t - K_t` to the last vertical line crossed decreases by at least\n`1 - 2R` at each column advance.  What is missing for the sharp result is a joint\n`x`/`y` potential controlling the recharging of the slack by direction reversals.\n\n## Conjecture 2 (quantitative subcriticality): exponentially small components below `1/2`\n\nFor every `R < 1/2` there are constants `c(R), C(R) > 0` such that, for **every**\nplacement, the component of a given cell has at most `C(R)` cells, with\n`C(R) = O((1-2R)^{-2})` as `R \u2191 1/2`.  The formalised result gives `C(R) = 9` for\n`R < 1/3` (`component_finite`, in fact components lie in a `3 \u00d7 3` block).  The slack\nrecursion `a_{t+1} \u2264 a_t - (1-2R)` suggests a diameter of order `1/(1-2R)` in each\ncoordinate.  *Falsifiable*: a family of placements whose components have diameter\ngrowing faster than `(1-2R)^{-1}` in some coordinate.\n\n## Conjecture 3 (full connectivity): `Rfull = \u221a5`\n\nEvery placement is connected as soon as `R > \u221a5` (proved), and we conjecture that this\nis optimal: for every `R < \u221a5` there is a placement whose graph is disconnected.  Our\nverified lower bound is only `\u221a17/2 \u2248 2.0616`, obtained from a *straight* horizontal cut\nwith a `1/2` horizontal stagger.  A refutation would be a proof that every placement is\nconnected for some `R < \u221a5` \u2014 e.g. showing that the worst cut is the straight staggered\none, which would instead give `Rfull = \u221a17/2`.  Deciding between `\u221a17/2` and `\u221a5` (or an\nintermediate value coming from a periodic wavy cut) is a concrete finite-dimensional\noptimisation over cut shapes.\n\n## Conjecture 4 (connected placements): `Rconn = 1`\n\nThe centred placement connects all points for `R > 1` (proved: `centerConfig_connected`),\nand we conjecture no placement does better: for `R \u2264 1`, every placement has at least one\npoint isolated from the rest, i.e. the graph is never connected.  Intuition: to connect\n*all* points, in particular the four points of every `2 \u00d7 2` block, the placement cannot\nbe compressed onto lines, and one unit of \"grid spacing\" must be paid somewhere.\n*Falsifiable*: a placement (periodic, say) with all points connected and all edges of a\nspanning structure `< 1`.\n\n## Conjecture 5 (probabilistic threshold): `1/2 < R_c < \u221a5`, with `R_c` non-degenerate\n\nFor the random model (each point uniform in its cell, independently), let `R_c` be the\nalmost sure percolation threshold.  Then `Rmin \u2264 R_c` and `R_c \u2264 \u221a5`, both of which\nfollow from the results formalised here (below `Rmin` no placement percolates; above\n`\u221a5` every placement is connected).  We conjecture the strict inequalities\n`Rmin = 1/2 < R_c < \u221a5`, and more precisely that `R_c` is strictly larger than the\nthreshold `R'` at which the two-row line mechanism becomes available, because that\nmechanism has probability zero in the random model.  *Falsifiable*: a proof that\n`R_c = 1/2`, or a numerical simulation exhibiting an infinite cluster for `R` close to\n`1/2`.  A first formalisable step is a rigorous, computer-checkable bound of the form\n`R_c \u2265 R\u2080` obtained by a Peierls contour argument on the induced dependent bond\npercolation on `\u2124\u00b2`.\n",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "fd_0964",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e9c14674",
+    "status": "available",
+    "timestamp": "2026-08-05T06:54:09.718337+00:00",
+    "title": "Conjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.le"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nDerived from the results now proved in `Catalog/Shared/DreamRevisionNormalForm.lean`\n(last-occurrence normalization `mem_reviseSeq`, extensional rigidity `reviseSeq_ext_iff`,\nnormal-form uniqueness up to permutation `normalForm_unique`, the frame property\n`persistent_nonexplosion`, and the component classification `mutually_reachable_iff`).\n\n## 1. The revision monoid is the free \"last-write-wins\" monoid\n\n**Conjecture.** The map sending a history `ls` to its action `B \u21a6 reviseSeq B ls` is a\nmonoid homomorphism from `List (Literal Atom)` (concatenation) onto the monoid of partial\nsign assignments `Atom \u2192\u2080 Option Bool` under *right-biased overwrite*, and its kernel\ncongruence is generated by exactly the two local rules `revise_comm_of_ne_atom` and\n`revise_revise_of_eq_atom`.\n\n*Falsifiable content.* Produce two histories with the same action that cannot be connected\nby a finite chain of the two local rewrites. `reviseSeq_ext_iff` already shows that the\naction is determined by `lastSign`, so the open half is completeness of the rewrite system;\n`normalForm_unique` supplies the confluence target.\n\n## 2. Component geometry: cube structure, diameter, and orientation\n\n**Conjecture.** For a finite atom set `A`, the strongly connected component of the revision\ngraph indexed by an assigned set `S \u2286 A` is isomorphic (as a graph with self-loops removed)\nto the `|S|`-dimensional hypercube graph `Q_{|S|}`, so it has `2^{|S|}` vertices and\ndiameter `|S|`; the whole revision graph is the disjoint union of these cubes together with\nthe strictly monotone edges that enlarge `S`, and its condensation is order-isomorphic to\nthe Boolean lattice `2^A`.\n\n*Falsifiable content.* Exhibit a component that is not a cube, or a pair of states in one\ncomponent whose revision distance exceeds `|S|`. `mutually_reachable_iff` fixes the vertex\nsets of the components; the metric statement is untouched so far.\n\n## 3. Optimal-length histories and a normal-form metric\n\n**Conjecture.** For consistent finite states `B, C` with `assigned B \u2286 assigned C`, the\nminimal length of a history `ls` with `reviseSeq B ls = C` equals `|C \\ B|`, and any minimal\nhistory is a permutation of the list of literals of `C \\ B`.\n\n*Falsifiable content.* A pair `B, C` reachable by a strictly shorter history than\n`|C \\ B|`. The construction in `reachable_of_assigned_eq` gives the upper bound `|C|`; the\nsharpened bound and the rigidity of minimizers are open.\n\n## 4. Failure of the frame property for non-local revision operators\n\n**Conjecture.** Among all operators `r : Set (Literal Atom) \u2192 Literal Atom \u2192\nSet (Literal Atom)` satisfying \"success\" (`l \u2208 r B l`) and \"consistency preservation\",\n`revise` is the unique one satisfying the frame law of `reviseSeq_frame`\n(`p.1 \u2260 l.1 \u2192 (p \u2208 r B l \u2194 p \u2208 B)`); equivalently, the frame law plus success characterizes\n`revise` outright, with consistency preservation a consequence rather than an assumption.\n\n*Falsifiable content.* A second operator with success and the frame law that differs from\n`revise` on some state \u2014 necessarily differing only in whether `opposite l` is retracted.\n\n## 5. Ideal completion of finite states and continuity of revision\n\n**Conjecture.** The poset of finite signed states, ordered by inclusion, has ideal\ncompletion order-isomorphic to all signed states, the isomorphism restricts to consistent\nideals \u2194 consistent states, and `reviseSeq` is Scott-continuous in the state argument: for\nevery directed family `{B_i}`, `reviseSeq (\u22c3 B_i) ls = \u22c3 reviseSeq B_i ls`.\n\n*Falsifiable content.* The continuity half is immediately testable from `mem_reviseSeq`,\nsince membership in `reviseSeq B ls` depends on `B` only through membership of the single\npoint `p`; a directed family violating the displayed identity would refute it. The harder\nhalf is that the topological identification respects the *consistency* predicate, which is\nnot Scott-open (it is co-open), so a mismatch would show up exactly at limit points.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0965",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5357ee14",
+    "status": "available",
+    "timestamp": "2026-08-05T06:55:44.220015+00:00",
+    "title": "Derived from the results now proved in `Catalog/Shared/DreamRevisionNormalForm.l"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe four files in `Catalog/Shared/ZeroKnowledge/` develop, with complete proofs:\n\n* `ThreeColoringZK.lean` \u2014 the GMW protocol for graph 3-colorability: perfect\n  completeness, the `1 - 1/|E|` soundness gap (shown tight on `K\u2084`), exponential\n  amplification, and **perfect zero knowledge** (the real view distribution is literally\n  equal to the witness-free simulator's, hence also witness-indistinguishable).\n* `SnarkSoundness.lean` \u2014 a simplified zk-SNARK: R1CS arithmetization, the batching\n  polynomial, faithfulness, Schwartz\u2013Zippel soundness `(m-1)/|F|`, error amplification,\n  algebraic knowledge extraction from `m` distinct challenges, and perfect hiding of a\n  one-time-pad field mask.\n* `PCPBridge.lean` \u2014 the same verifier read as a 2-query PCP: locality, query count,\n  the completeness/soundness gap, and an *exact* parallel repetition theorem\n  (`accepting k-tuples = accCard ^ k`) with the resulting `2k` queries versus\n  `exp(-k/|E|)` error trade-off.\n* `NIZKFiatShamir.lean` \u2014 non-interactive zero knowledge in the random-oracle model:\n  exact fiber counting for uniform oracles (uniformity of `H a`, undetectability of\n  reprogramming at one point), the identity `Pr[H a \u2208 B] = |B|/|Chal|`, a union bound\n  over the prover's choice of first message, and Fiat\u2013Shamir soundness for a\n  `d`-special-sound \u03a3-protocol.\n\nNatural continuations:\n\n1. **Sequential and concurrent composition.** Prove that the perfect-ZK property of\n   `viewProb` is preserved under `k`-fold sequential repetition by showing that the\n   product view distribution factorizes, i.e. `viewProb^{\u2297k} = simProb^{\u2297k}`.\n\n2. **Commitment schemes as a first-class object.** The present treatment idealizes the\n   commitment (the verifier learns exactly the two opened symbols). Formalizing\n   computationally hiding/binding commitments requires a notion of negligible function and\n   of efficient adversary; a first step is a statistically hiding, perfectly binding scheme\n   over a finite field, where all statements remain finite counting statements.\n\n3. **From special soundness to knowledge soundness.** `batch_extraction` extracts from `m`\n   accepting transcripts algebraically. The general rewinding-based extractor (an expected\n   polynomial-time argument) would need a probabilistic-complexity layer on top of the\n   present counting layer.\n\n4. **Full QAP / Groth16 pipeline.** Convert `R1CS` to a quadratic arithmetic program by\n   interpolating the constraint matrices at distinct evaluation points and prove the\n   divisibility criterion `A(X)\u00b7B(X) - C(X) = H(X)\u00b7Z(X)` is equivalent to satisfaction.\n   Mathlib's `Lagrange` interpolation API makes this reachable.\n\n5. **Genuine gap amplification for the PCP theorem.** The repetition theorem here increases\n   the number of queries. Dinur-style gap amplification keeps the query complexity constant\n   at the price of a larger alphabet; formalizing even the graph-powering step (with\n   expander mixing, which Mathlib now partially supports) would be a substantial next\n   target on the road to `NP \u2286 PCP(log n, O(1))`.\n\n6. **Zero knowledge for the PCP verifier.** Combining `PCPBridge.lean` with the simulator of\n   `ThreeColoringZK.lean` should yield a *zero-knowledge PCP*: the verifier's local view of\n   the randomized proof string is simulable. The counting lemma `perm3_pair_count`\n   generalizes to `k` queries as long as the queried vertices carry pairwise distinct\n   colours, which fails in general \u2014 quantifying the resulting leakage is an interesting\n   combinatorial question.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0966",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6a4657f8",
+    "status": "available",
+    "timestamp": "2026-08-05T06:55:49.869545+00:00",
+    "title": "The four files in `Catalog/Shared/ZeroKnowledge/` develop, with complete proofs:"
   },
   {
     "consumed_by_exp_id": "",
