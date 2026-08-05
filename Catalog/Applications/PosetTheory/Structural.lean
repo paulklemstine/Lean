@@ -3,7 +3,7 @@ Copyright (c) 2024 Harmonic Research. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Logic.BasicMonotoneCircuit.Basic
+import Applications.PosetTheory.MatroidMinorBasic
 
 /-!
 # Structural Results on Matroid Minors
