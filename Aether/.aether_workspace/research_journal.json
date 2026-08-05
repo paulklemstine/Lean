@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1a03af4c",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nThe completed Lean development proves the unramified local symmetric-square transfer on Satake parameters. The following are concrete next statements whose truth can be checked ag",
-      "quality_score": 0.78657,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-29T06:53:52",
-      "title": "Langlands Program: Functoriality"
-    },
-    {
       "cycle_id": "f1303b99",
       "domain": "Novelty",
       "key_insight": "# Future directions: Conway Life universality\n\nThe completed Lean development establishes Conway's exact B3/S23 rule on the infinite integer lattice, finite-speed dependence, and a certified `9^t` upp",
@@ -2501,6 +2491,16 @@
       "theorem_count": 202,
       "timestamp": "2026-08-05T20:54:51",
       "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "0763cd86",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nDerived from the results proved in this research thread.\n\n## Formalized so far (all statements below are proved, with no `sorry`)\n\n* `Catalog/Computation/InformationGeometry/Fishe",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 536,
+      "timestamp": "2026-08-05T22:29:11",
+      "title": "Future directions from cycle 4be361b7"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79196
     }
   ],
-  "last_updated": "2026-08-05T20:54:51",
+  "last_updated": "2026-08-05T22:29:11",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "00b7234b",
-        "quality": 0.7997299999999999,
-        "theorems": 27,
-        "title": "Quantum Topological Phase Computation"
-      },
-      {
         "cycle_id": "7c352e1f",
         "quality": 0.80603,
         "theorems": 21,
@@ -3327,6 +3321,12 @@
         "quality": 0.7934299999999999,
         "theorems": 50,
         "title": "ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains fr"
+      },
+      {
+        "cycle_id": "0763cd86",
+        "quality": 0.686,
+        "theorems": 536,
+        "title": "Future directions from cycle 4be361b7"
       }
     ],
     "Cryptography": [
