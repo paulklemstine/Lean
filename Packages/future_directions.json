@@ -1175,7 +1175,7 @@
       "depth_estimate": 3,
       "description": "Proves the tropical analogue of the Hahn-Banach separation theorem for disjoint tropical convex polyhedra in ℝ^n.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -1215,7 +1215,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Nishinou-Siebert correspondence theorem relating algebraic curves in toric varieties to tropical curves in Euclidean space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -1255,7 +1255,7 @@
       "depth_estimate": 3,
       "description": "Proves that the unique tropical eigenvalue of a square min-plus matrix equals the minimum cycle mean of its associated weighted directed graph.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -8843,11 +8843,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9f1ee483",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -8860,7 +8860,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0325",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-05T22:30:44.209191+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -8875,7 +8875,7 @@
       "source": "",
       "source_exp_id": "115a4ee3",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/115a4ee3",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_7e6f8065",
       "timestamp": "2026-07-18T13:38:18.493859+00:00",
       "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
@@ -12489,11 +12489,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "66bb09ac",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12506,7 +12506,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0568",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-05T22:30:57.098534+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -12521,7 +12521,7 @@
       "source": "",
       "source_exp_id": "f3a76d9a",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/f3a76d9a",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_80545068",
       "timestamp": "2026-07-21T20:45:58.328718+00:00",
       "title": "The phrase “directly apprehended by a human brain” is not presently a mathematic"
@@ -17982,11 +17982,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "71b84dd8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17999,7 +17999,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0870",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-05T22:31:07.422449+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -18014,7 +18014,7 @@
       "source": "",
       "source_exp_id": "a7ba7617",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/a7ba7617",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_994911fd",
       "timestamp": "2026-07-31T23:27:47.395510+00:00",
       "title": "`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by t"
@@ -18727,7 +18727,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step subgradient descent on the scalar tropical `L¹` empirical loss reaches the unique sample median after at most `⌈|x₀-m|/η⌉` iterations when `η > 0`.\n\n2. **Vector tropical monomials.** For a separable `d`-parameter tropical affine model with coordinatewise three-point losses, simultaneous clipped descent terminates after at most the maximum of the `d` coordinatewise termination times.\n\n3. **Perturbed tropical limit.** If each tropical update is perturbed by an error of magnitude at most `ε < η`, then its parameter distance after `n` steps is at most `max 0 (|x₀-m|-n(η-ε))` until it enters the closed `ε`-neighborhood of the minimizer.\n\n4. **ReLU lower bound.** A single ordinary ReLU unit cannot represent the two-sided clipped update `x ↦ tropicalFlow m t x` for `t > 0`, while two shifted ReLU units suffice, as proved in `Catalog/Applications/EML/TropicalGDConvergence.lean`.\n\n5. **Even-sample minimizer interval.** For `2k` ordered scalar residual targets, the tropical `L¹` minimizers are exactly the interval between the two central order statistics, and clipped subgradient descent reaches that interval in finite time for every positive step size.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Tropical"
@@ -19340,7 +19340,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n- Prove the converse regularity criterion, completing Proposition 24: an operation is regular when its commutative image equals its diagonal image. A useful route is to construct an inner inverse of the pairmorph transformation that remains equivariant under pair reversal.\n- Characterize principal left ideals by pairmorph image and diagonal image, and principal right ideals by pairmorph kernel.\n- Bundle binary operations with the magma product as a `Monoid`, and express pairmorph as an equivalence with reversal-equivariant transformations under composition.\n- Complete the classification of the center, including the hypothesis on the cardinality of the underlying type and the exceptional small cases.\n- For finite types, formalize the paper's exact enumerations of idempotent and regular elements and verify initial values inside Lean.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Tropical"
@@ -20650,7 +20650,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe proposed mixed-area formula needs a normalization correction. For standard degree triangles, normalized lattice area satisfies\n\n\\[\nA((d+e)\\Delta)-A(d\\Delta)-A(e\\Delta)=2de.\n\\]\n\nThus the raw polarization of normalized lattice area is twice the plane Bézout number. In particular, two tropical lines give area difference `2`, while their stable intersection number is `1`. The corrected convention is\n\n\\[\nI(P,Q)=\\frac{A(P+Q)-A(P)-A(Q)}{2}\n\\]\n\nwhen `A` denotes normalized lattice area. Equivalently, one may use Euclidean area without the factor `1/2` in the polarization formula.\n\n`Catalog/Tropical/MixedAreaNormalization.lean` proves the degree-triangle identity, its positive-degree incompatibility with the uncorrected formula, the corrected Bézout identity, symmetry, and additivity in one argument. The explicit `(1,1)` theorem supplies the decisive small-case counterexample computationally inside Lean.\n\nA next step is to define finite lattice polygons and normalized area, prove the full Minkowski polarization law for polygons, and connect that invariant to determinant-weighted stable intersections of balanced fans.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -20977,7 +20977,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d → ℝ` whose every subfamily of cardinality at most `d + 1` has nonempty intersection has nonempty total intersection. This is falsifiable by an explicit finite family violating the implication.\n\n2. **Sharpness for tropical boxes.** For every `d > 0`, there exist two tropical boxes in `Fin d → ℝ` that are individually nonempty but disjoint. Consequently, the Helly number `2` proved for boxes cannot be lowered to `1`.\n\n3. **Monotone-objective optimality.** For every nonempty feasible finite family of tropical boxes and every coordinatewise strictly monotone real-valued objective attaining a minimum on the feasible region, the canonical coordinatewise maximum of the lower bounds is the unique minimizer.\n\n4. **Difference-constraint extension.** For finite systems consisting of tropical box bounds together with constraints `x i - x j ≤ c`, infeasibility admits a certificate whose size is bounded solely as a function of the ambient dimension `d`.\n\n5. **Carathéodory–Helly duality.** The `d + 1` support bound for normalized max-plus tropical convex hulls yields a separation certificate of size at most `d + 1` for a point outside a finitely generated tropical convex set, and this certificate implies the general tropical Helly bound in Conjecture 1.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Geometry",
         "Tropical"
@@ -22125,7 +22125,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(x) = a x + log(1 + e^{bx})`;\n* strict convexity on all of `ℝ` for every `b ≠ 0` (`emlAct_strictConvexOn`);\n* the sharp monotonicity criterion `StrictMono E_{a,b} ↔ 0 ≤ a` for `b > 0`\n  (`emlAct_strictMono_iff`), with the failure for `a < 0` proved via the\n  derivative limit at `−∞`;\n* that log-sum-exp `x ⊕_b y = (1/b) log(e^{bx} + e^{by})` is exactly commutative,\n  associative and distributive over `+`, with idempotency defect exactly\n  `log 2 / b` (`lse_self`);\n* the sharp sandwich `max x y < x ⊕_b y ≤ max x y + log 2 / b` and the\n  resulting convergence to tropical (max-plus, resp. min-plus via Mathlib's\n  `Tropical`) addition as `b → ∞`;\n* the bridge theorem `eml_activation_tropical_bridge` tying the convex-analytic\n  and tropical pictures together.\n\nNatural continuations:\n\n1. **`n`-ary and measure-theoretic log-sum-exp.** Replace the binary `⊕_b` by\n   `(1/b) log ∑_{i<n} e^{b x_i}` and by `(1/b) log ∫ e^{b f} dμ`; the sandwich\n   becomes `max ≤ · ≤ max + log n / b` (resp. essential supremum), giving\n   `L^p → L^∞` style dequantization statements.\n\n2. **Strict convexity as a function of two variables.** Prove that\n   `(x,y) ↦ x ⊕_b y` is convex but not strictly convex, being affine along the\n   diagonal `x = y` (`lse_self` already gives the diagonal restriction exactly);\n   the tropical limit `max` is convex and affine on each of two half-planes.\n\n3. **Tropical semiring structure as a Lean instance.** Endow `ℝ` with the\n   `b`-deformed operations `(⊕_b, +)` as a genuine `Semiring` instance\n   transported along `x ↦ e^{bx}` from `ℝ_{>0}`, and formalize the statement\n   that these semirings converge (in the sense of Gromov–Hausdorff or of\n   pointwise convergence of structure maps) to `Tropical ℝ`.\n\n4. **Tropical polynomials from neural networks.** A ReLU network computes a\n   tropical rational function; the `b`-smoothed network computes a\n   log-sum-exp expression. Quantifying the uniform distance between a smoothed\n   network of depth `d` and its tropical limit (an `O(d · log(width)/b)` bound)\n   would extend the bridge theorem from one neuron to a whole architecture.\n\n5. **Sharp monotonicity domains for other EML activations.** The same analysis\n   applies to `x·σ(bx)` (Swish/SiLU), `x·tanh(log(1+e^{bx}))` (Mish) and\n   `a x + (1/b) log cosh(bx)`; each has an exact parameter domain of\n   monotonicity/convexity, and each degenerates to a piecewise-linear tropical\n   expression as `b → ∞`.\n\n6. **Rate optimality.** Prove that `log 2 / b` cannot be replaced by\n   `c / b` with `c < log 2`, and study the second-order expansion\n   `x ⊕_b y = max x y + (1/b) log(1 + e^{-b|x-y|})`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Geometry"
@@ -22781,7 +22781,7 @@
       "depth_estimate": 3,
       "description": "# Tropical Mathematics of Social Choice — results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from the tropical side to\n**classical analysis** via Maslov dequantization.  Everything claimed below as\n*proved* is machine-checked in Lean 4 / Mathlib, with no `sorry` and only the\nstandard axioms (`propext`, `Classical.choice`, `Quot.sound`).\n\nFiles:\n\n| file | contents |\n|---|---|\n| `Tropical/SocialChoice/TropicalArrow.lean` | classification of min-plus aggregators; uniqueness; anonymity; counterexample to the literal conjecture; dependence filters; the Arrow/ultrafilter dichotomy |\n| `Tropical/SocialChoice/Dequantization.lean` | log-sum-exp deformation, explicit sandwich bound, convergence, exactness ⟺ dictatorship |\n| `Tropical/SocialChoice/Chambers.lean` | polyhedral chamber decomposition of the profile space, walls, concavity |\n| `Tropical/SocialChoice/ChamberComplex.lean` | the cell complex labelled by decisive coalitions, and the single-voter exchange law |\n| `Tropical/SocialChoice/SupportMatroid.lean` | face lattice of the cell complex, walls as flats of the graphic matroid of `K_S`, codimension `|T| − 1` of a cell, exchange law |\n| `Tropical/SocialChoice/OrbitDefect.lean` | exact orbit count of decisive coalitions: the sharp `1 − 1/binom(n,k)` anonymity defect |\n| `ComputationalEvidence.md` | small-case numerical exploration that guided the statements |\n\n## Setting\n\nAn electorate is a finite type `ι`; a *profile* is a vector of real scores\n`x : ι → ℝ` (a point of the tropical torus, before projectivization); an\n*aggregator* is a map `F : (ι → ℝ) → ℝ`.  The tropical axioms are\n\n* **tropical additivity** `F (x ⊓ y) = min (F x) (F y)` (`min_hom`),\n* **translation equivariance** `F (x + c·1) = F x + c` (`trans_eq`), which is\n  exactly equivariance for tropical scalar multiplication and makes `F`\n  well-defined on the tropical projective space,\n* **normalization** `F 0 = 0`.\n\n## 1. Classification of finite min-plus aggregators — *corrected and proved*\n\nThe conjecture as stated (\"every such map is a finite minimum of coordinate\nprojections\") is **false**.  The two-voter aggregator\n\n```\nW (x₀, x₁) = min (x₀, x₁ + 1)\n```\n\nsatisfies all three axioms, yet `W (1, −1) = 0` is not any individual score, so\n`W` cannot be a minimum of projections (`weightedAgg_not_min_of_projections`).\nTropical weights are genuinely allowed by the axioms.\n\nThe correct classification is proved as `exists_tropical_representation`:\n\n> Every normalized, translation-equivariant, minimum-preserving aggregator on a\n> finite nonempty electorate is a **tropical linear form**\n> `F x = min_{i ∈ S} (x i + δ i)`\n> for a nonempty support `S ⊆ ι` and weights `δ ≥ 0` on `S` with\n> `min_{i ∈ S} δ i = 0`.\n\nThe support is intrinsic: `i ∈ S` iff voter `i` is *active*, i.e. some\nnonpositive \"dip\" at `i` moves the outcome.  The proof runs through the\nfunctional equation for dips (`dip_key`, `dip_formula`: `t ↦ F (dip i t)` is a\nclamped translate `min (t + δ i) 0`) and the fact that every profile is a finite\ntropical sum of one-coordinate dips (`inf'_hom`).\n\n**Uniqueness** (`repr_unique`): two normalized nonnegative representations of the\nsame aggregator have the same support and the same weights.  So the\n\"irredundant tropical support\" of the original conjecture exists and is unique —\nin the weighted form.\n\n**When is it a minimum of projections?**  Exactly when one adds the social-choice\naxiom of *selectivity* (the social score is always an individual score):\n`selective_repr_is_min_of_projections` shows selectivity forces `δ ≡ 0` on `S`,\nwhence `F x = min_{i ∈ S} x i`.  This is the repaired version of the\nconjecture's classification statement.\n\n## 2. Ultrafilter support as the exact Arrow threshold — *proved*\n\nCall `C ⊆ ι` a *dependence set* (decisive coalition) if the scores of the\nmembers of `C` already determine the outcome.  Then:\n\n* `dependence_eq_principal`: the dependence family of a tropical aggregator with\n  support `S` is exactly the **principal filter** `{C | S ⊆ C}` generated by `S`\n  (also stated as `dependence_eq_filter_sets` in terms of `Filter.principal`).\n* `ultrafilter_iff_dictator`: this family satisfies the ultrafilter dichotomy\n  (`C` decisive or `Cᶜ` decisive, for every coalition `C`) **iff** the\n  aggregator is a dictatorship `F x = x i₀`, i.e. iff the irredundant tropical\n  support is a singleton.\n* `exists_ultrafilter_iff_dictator`: the same statement phrased with Mathlib's\n  `Ultrafilter` type — there is an ultrafilter whose sets are the dependence\n  sets iff `F` is dictatorial, and that ultrafilter is then `pure i₀`.\n\nThis is precisely the tropical form of Arrow's ultrafilter theorem: the\nultrafilter property of decisive coalitions is *equivalent* to dictatorship,\nwhile every larger tropical support gives a genuine non-dictatorial aggregator\nwhose decisive coalitions form only a (non-maximal) principal filter.\nConjecture 2 is thus confirmed, with \"support\" understood in the corrected\nweighted sense of §1.\n\n## 3. Dequantization stability of decisive coalitions — *proved in sharp form*\n\n`Tropical/SocialChoice/Dequantization.lean` studies the classical (positive,\nsmooth) deformations\n\n```\nF_ε x = −ε · log ( Σ_{i ∈ S} exp (−(x i + δ i)/ε) ).\n```\n\n* `logSumExp_sandwich`: for every `ε > 0`,\n  `A − ε log |S| ≤ F_ε x ≤ A` with `A = min_{i ∈ S} (x i + δ i)` — an explicit\n  two-sided bound, not merely an asymptotic statement.\n* `dequant_sub_trop_abs_le`: hence `|F_ε x − F x| ≤ ε log |S|` *uniformly in the\n  profile*, and `tendsto_logSumExp` / `tendsto_dequant` give the convergence\n  `F_ε → F` as `ε ↓ 0`.\n* `dequant_eq_trop_iff_card_eq_one`: the deformation is **exact** (i.e.\n  `F_ε = F` for every scale and profile) **iff** `|S| = 1`, i.e. iff the\n  aggregator is a dictatorship.\n\nSo dictatorships are exactly the tropical aggregators that survive\ndequantization without deformation, and the deformation defect of a `k`-element\nsupport is exactly of size `ε log k`.  This makes the informal conjecture\n(\"ultrafilter-valued dependence prevents two coefficients from surviving at the\nsame exponential scale\") precise and proves the corresponding sharp statement.\n\n## 4. Polyhedral chambers of social decisiveness — *proved*\n\n`Tropical/SocialChoice/Chambers.lean` establishes the geometric skeleton:\n\n* `chamber S δ i = {x | ∀ j ∈ S, x i + δ i ≤ x j + δ j}` is **convex**\n  (`chamber_convex`), being a finite intersection of half-spaces;\n* the chambers of the support **cover** the profile space (`iUnion_chamber`), and\n  a voter attaining the minimum lies in its chamber (`mem_chamber_of_eq_inf'`);\n* on its chamber the aggregator is the shifted coordinate projection\n  (`tropAgg_eq_on_chamber`), and two chambers meet exactly along the **wall**\n  where the two tropical monomials agree (`wall_eq`);\n* the aggregator is **concave** (`tropAgg_concave`).\n\n`Tropical/SocialChoice/ChamberComplex.lean` now supplies the labelling by\ndecisive coalitions and the combinatorial exchange law that were left open:\n\n* the *decisive coalition at a profile* is\n  `decisiveSet S δ x = {i ∈ S | x i + δ i = F x}`; it is always nonempty\n  (`decisiveSet_nonempty`) and `i ∈ decisiveSet S δ x ↔ i ∈ S ∧ x ∈ chamber S δ i`\n  (`mem_decisiveSet_iff_mem_chamber`), so the cells of the complex are exactly\n  the level sets of this labelling;\n* the closed cell of a label `T ⊆ S` is the intersection of chambers\n  `⋂ i ∈ T, chamber S δ i` (`closedCell_eq_iInter`) and is a convex polyhedron\n  (`closedCell_convex`); on it all monomials indexed by `T` agree\n  (`eq_on_closedCell`), so cells with `|T| ≥ 2` lie in walls;\n* the label is genuinely *decisive*: raising the scores of all voters outside\n  `decisiveSet S δ x` leaves the social score unchanged\n  (`decisiveSet_locally_decisive`);\n* **every** nonempty `T ⊆ S` occurs as a label (`exists_decisiveSet_eq`), so the\n  cells are labelled precisely by the nonempty subcoalitions of the support, the\n  top-dimensional ones by the singletons `{i}`, `i ∈ S`;\n* **single-voter exchange law.** From a profile `x` in the chamber of `i`,\n  changing the score of the *single* voter `j` to `x i + δ i − δ j` lands on the\n  wall between the chambers of `i` and `j` (`exchange_mem_wall`), and changing it\n  to `x i + δ i − δ j − ε` with `ε > 0` lands in the open cell labelled `{j}`\n  (`single_voter_exchange`, a special case of\n  `decisiveSet_update_eq_singleton`).  Adjacency of top-dimensional cells is\n  therefore realized by one-voter exchanges, as conjectured.\n\n`Tropical/SocialChoice/SupportMatroid.lean` completes the picture with the\nface lattice, the dimension count and the matroid packaging, so nothing of §4\nremains open:\n\n* **Face lattice.** `closedCell_subset_iff` proves that for nonempty labels\n  `T, T' ⊆ S` one has `closedCell T ⊆ closedCell T' ↔ T' ⊆ T`; with\n  `closedCell_injOn` and `closedCell_ssubset` the labelling `T ↦ closedCell T`\n  is an inclusion-reversing bijection from the nonempty subcoalitions of `S`\n  onto the faces of the complex, and `closedCell_union` shows the family is\n  closed under intersection (`closedCell (T ∪ T') = closedCell T ∩ closedCell T'`).\n  So the face lattice is the opposite of the lattice of nonempty subcoalitions.\n* **Walls are flats of the support matroid.**  Since the walls are the loci\n  `x i − x j = δ j − δ i`, the arrangement is a weighted braid (type `A_{n−1}`)\n  arrangement, whose matroid is the graphic matroid of the complete graph on\n  `S`.  `closedCell_subset_wallSet_iff` proves that the walls containing the\n  cell of `T` are exactly the pairs `(i, j)` with `i, j ∈ T`, i.e. the edge set\n  of `K_T`: the flat spanned by the cell.  `closedCell_eq_star_inter` exhibits\n  the star of any `i₀ ∈ T` — the `|T| − 1` equations `x i + δ i = x i₀ + δ i₀`,\n  `i ∈ T` — as a spanning set of that flat, cutting the cell out of the chamber\n  of `i₀`; by `closedCell_ssubset` no proper subcoalition suffices, so the star\n  is a basis.\n* **Rank = codimension.**  `sub_mem_cellDirection` shows the cell is directed by\n  `cellDirection T = {v | v is constant on T}`, `exists_relOpen_closedCell`\n  produces a profile of the open cell together with a whole relative\n  neighbourhood inside it (so the cell really spans that direction space), and\n  `finrank_cellDirection` computes\n  `dim (cellDirection T) + |T| = n + 1`, i.e. the cell labelled `T` has\n  codimension exactly `|T| − 1`, the rank of its flat.  Top-dimensional cells\n  are therefore precisely the singletons and walls precisely the pairs.\n* **Exchange.** `exists_decisiveSet_pair` shows any two voters of the support\n  label a common codimension-one face, and\n  `adjacency_single_voter_exchange` packages the exchange law: from a profile in\n  the chamber of `i`, one single-voter change reaches the face `{i, j}` and any\n  further decrease reaches the chamber of `j`.\n\n## 5. Quantitative anonymity–independence tradeoff — *proved in exact form*\n\nThe qualitative half is **proved** (`anonymous_repr` in\n`Tropical/SocialChoice/TropicalArrow.lean`): a normalized tropical aggregator\nthat is invariant under every relabelling of the electorate has full support\n`S = ι` and identically zero weights, i.e. `F x = min_i x i`.  So no anonymous\ntropical aggregator with support of size `k < n` exists at all, and in\nparticular anonymity and dictatorship are incompatible as soon as `n ≥ 2`.\n\nThe quantitative conjecture is proved in `Tropical/SocialChoice/OrbitDefect.lean`,\nin exact rather than inequality form.  Let `F x = min_{i ∈ S}(x i + δ i)` with\n`|S| = k` on an electorate of `n` voters.\n\n* The orbit of the minimal dependence set `S` under relabellings is the family of\n  all `k`-coalitions: `mem_orbit_iff_exists_perm` shows two coalitions of equal\n  size are exchanged by a permutation of the electorate, and\n  `orbit_eq_powersetCard` / `card_orbit` give `|orbit S| = binom(n, k)`.\n* Exactly **one** member of that orbit is a dependence set of `F`, namely `S`\n  itself (`decisive_in_orbit`, and `dependence_in_orbit_eq_singleton` phrased\n  directly with `Dependence F` via `dependence_eq_principal`).\n* Hence the proportion of the orbit on which coalition decisiveness *fails* is\n  exactly\n\n  `1 − 1 / binom(n, k)`\n\n  (`defect_card`, `defect_ratio`, and `dependence_defect_ratio`).  Because this\n  is an equality and not merely a lower bound, the conjectured bound holds and is\n  sharp for every `n` and every support size `k`.\n\nCombined with `anonymous_repr` this settles the tradeoff: anonymity forces\n`k = n` (defect `1 − 1/binom(n,n) = 0`, the plain tropical sum `min_i x i`),\ndictatorship forces `k = 1` (defect `1 − 1/n`, the largest possible for a\nnontrivial electorate), and the intermediate supports interpolate exactly by\n`1 − 1/binom(n,k)`.\n\n## Summary of the cross-domain bridge\n\nThe chain proved here is:\n\n```\ntropical axioms  ⟹  tropical linear form min_{i∈S}(x_i + δ_i)   (§1, unique)\n                 ⟹  dependence sets = principal filter ⟨S⟩       (§2)\n                 ⟹  ultrafilter ⟺ |S| = 1 ⟺ dictatorship        (§2)\n                 ⟺  exact log-sum-exp dequantization             (§3)\n                 ⟹  polyhedral chamber geometry, concavity       (§4)\n                 ⟹  cells labelled by decisive coalitions,\n                    single-voter exchange law                     (§4)\n                 ⟹  face lattice = subcoalitions (reversed),\n                    codimension |T| − 1 = matroid rank            (§4)\n                 ⟹  exact anonymity defect 1 − 1/binom(n,k)       (§5)\n```\n\nTropical additivity plus projective normalization is thus *exactly* the\nstructure needed to convert an aggregator into a semimodule homomorphism, and\nArrow's ultrafilter dichotomy becomes the cardinality of a tropical support.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -22942,7 +22942,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical"
       ],
@@ -23022,7 +23022,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0f65effc (Q=0.781), which proved 24 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -23542,7 +23542,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3cce8c08 (Q=0.766), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Applications"
       ],
@@ -24620,6 +24620,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle 785c09ab (Q=0.786), which proved 85 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-preserving map from a finite tropical projective space to the tropical line is a finite minimum of coordi",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Tropical"
+      ],
+      "github_issue": 0,
+      "id": "push_785c09ab_23b00019",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8857999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "785c09ab",
+      "source_path": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-05T22:30:27.421578+00:00",
+      "title": "Deepening: **Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 78bbd545 (Q=0.787), which proved 10 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers eq",
       "domain_bridges": [],
       "domain_quality_penalty": 1.0,
@@ -24982,7 +25022,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 8fa54bf5 (Q=0.760), which proved 20 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical"
       ],
@@ -25102,7 +25142,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 9fb19498 (Q=0.790), which proved 11 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical Bézout theorem with explicit bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical"
       ],
@@ -26102,7 +26142,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e801d98f (Q=0.762), which proved 29 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Transformation Semigroup Perspective on the Magma Monoid' and formalize its key results. Abstract: The monoid of all binary operations was first introduced by H. S. Kim and J. Neggers in 2008. Since then, different aspects and applications of this monoid were studied, wh",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical"
       ],
@@ -33687,11 +33727,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "413bc2f0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -33704,7 +33744,7 @@
       ],
       "github_issue": 0,
       "id": "seed_328",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-05T22:31:02.698859+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -33719,7 +33759,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Generalization Bounds via Rademacher Complexity"
@@ -35768,9 +35808,6 @@
   "selection_log": [
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "abduction_followup",
-    "cross_domain_bridge",
-    "cross_domain_bridge",
     "famous_subtask",
     "cross_domain_bridge",
     "abduction_followup",
@@ -35785,6 +35822,9 @@
     "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
+    "abduction_followup",
+    "abduction_followup",
+    "abduction_followup",
     "abduction_followup"
   ]
 }

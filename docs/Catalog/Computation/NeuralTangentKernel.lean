@@ -1,5 +1,4 @@
 import Mathlib
-import Catalog.Computation.EML.AdvancedTheory
 
 /-! # Neural Tangent Kernels and Linearized Gradient Descent
 
@@ -200,6 +199,24 @@ theorem ntk_nearly_constant_along_training {n p : ℕ}
     calc
       |J path i a - J θ₀ i a| ≤ L * |path - θ₀| := lipschitz path i a
       _ ≤ L * ((t : ℝ) * η * G) := mul_le_mul_of_nonneg_left path_radius hL
+
+/-- The inverse-time gradient-descent optimization bound `E₀ / (2 η t)`.
+
+This definition and the following lemma are stated locally: the theorem below
+referred to a catalog module (`Computation.EML.AdvancedTheory`) that is not part
+of this snapshot, so the two declarations it used are supplied here in their
+standard form. -/
+def gdConvergenceBound (initialError η : ℝ) (t : ℕ) : ℝ :=
+  initialError / (2 * η * t)
+
+/-- The inverse-time bound is nonnegative for a nonnegative initial error and a
+positive learning rate. -/
+theorem gd_convergence_nonneg (initialError η : ℝ) (t : ℕ)
+    (he : 0 ≤ initialError) (hη : 0 < η) (ht : 0 < t) :
+    0 ≤ gdConvergenceBound initialError η t := by
+  have htR : (0 : ℝ) < t := by exact_mod_cast ht
+  unfold gdConvergenceBound
+  positivity
 
 /-- The catalog's inverse-time optimization bound is compatible with NTK training:
 for nonnegative initial error it is itself nonnegative. -/

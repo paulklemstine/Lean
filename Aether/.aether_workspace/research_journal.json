@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dd55976d",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n1. **Softmax attention naturality under equivariant logits.** For every finite group `G`, every pair of finite-dimensional real `G`-representations `V,W`, and every `G`-equivarian",
-      "quality_score": 0.7913999999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-08-02T09:30:03",
-      "title": "Category-Theoretic Neural Architectures"
-    },
-    {
       "cycle_id": "be8c4b71",
       "domain": "Applications",
       "key_insight": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the al",
@@ -499,19 +489,19 @@
       "theorem_count": 202,
       "timestamp": "2026-08-05T20:54:51",
       "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "785c09ab",
+      "domain": "Tropical",
+      "key_insight": "# Tropical Mathematics of Social Choice — results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from",
+      "quality_score": 0.7857999999999999,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-08-05T22:30:27",
+      "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "545fa377",
-      "domain": "Geometry",
-      "key_insight": "# Spectral Graph Theory Meets Network Robustness\n\n## Formal results\n\n`Geometry/SpectralNetworkRobustness.lean` proves a precise conditional version of the proposed spectral certificate.\n\n1. **Exact sp",
-      "quality_score": 0.7815999999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-29T12:29:20",
-      "title": "Spectral Graph Theory Meets Network Robustness"
-    },
     {
       "cycle_id": "dff51e05",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 52,
       "timestamp": "2026-08-05T22:29:21",
       "title": "Deepening: **Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
+    },
+    {
+      "cycle_id": "785c09ab",
+      "domain": "Tropical",
+      "key_insight": "# Tropical Mathematics of Social Choice — results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from",
+      "quality_score": 0.7857999999999999,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-08-05T22:30:27",
+      "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "60e2b23a",
-      "domain": "Probability",
-      "name": "crossing_half_of_selfDual",
-      "quality": 0.72259
-    },
-    {
-      "cycle_id": "60e2b23a",
-      "domain": "Probability",
-      "name": "crossing_lt_half_of_lt",
-      "quality": 0.72259
-    },
-    {
-      "cycle_id": "60e2b23a",
-      "domain": "Probability",
-      "name": "crossing_gt_half_of_lt",
-      "quality": 0.72259
-    },
     {
       "cycle_id": "f8e43caa",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "card_hEnd_units_cyclicModel_two",
       "quality": 0.79196
+    },
+    {
+      "cycle_id": "785c09ab",
+      "domain": "Tropical",
+      "name": "mem_decisiveSet_iff",
+      "quality": 0.7857999999999999
+    },
+    {
+      "cycle_id": "785c09ab",
+      "domain": "Tropical",
+      "name": "decisiveSet_subset",
+      "quality": 0.7857999999999999
+    },
+    {
+      "cycle_id": "785c09ab",
+      "domain": "Tropical",
+      "name": "decisiveSet_nonempty",
+      "quality": 0.7857999999999999
     }
   ],
-  "last_updated": "2026-08-05T22:29:21",
+  "last_updated": "2026-08-05T22:30:27",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "d5c8afaa",
-        "quality": 0.686,
-        "theorems": 40,
-        "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-      },
-      {
         "cycle_id": "e3c425e4",
         "quality": 0.7868499999999999,
         "theorems": 16,
@@ -4009,6 +4003,12 @@
         "quality": 0.7597999999999998,
         "theorems": 20,
         "title": "Tropical Convexity and Helly Theorem"
+      },
+      {
+        "cycle_id": "785c09ab",
+        "quality": 0.7857999999999999,
+        "theorems": 85,
+        "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
       }
     ]
   }

@@ -9,7 +9,7 @@ Fibonacci fusion rule `τ ⊗ τ = 𝟙 ⊕ τ`, the two-dimensional fusion-spac
 and the algebraic interface turning matrices satisfying the Yang--Baxter equation
 into a representation of `B₃`.
 -/
-import Catalog.Cryptography.KnotAndBraidTheory.BraidGroup
+import Cryptography.KnotAndBraidTheory.BraidGroup
 
 noncomputable section
 
