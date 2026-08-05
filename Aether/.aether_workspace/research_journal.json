@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e4773f49",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## Completed foundation\n\nThe present development supplies two self-contained Lean modules for the requested\nperfect-number program:\n\n- `Catalog/Applications/PerfectNumbers/Abundan",
-      "quality_score": 0.6398028571428571,
-      "sorry_count": 1,
-      "theorem_count": 7,
-      "timestamp": "2026-07-27T00:20:01",
-      "title": "Perfect Numbers: Structure of Even Perfects"
-    },
-    {
       "cycle_id": "e3956c60",
       "domain": "NumberTheory",
       "key_insight": "# Future directions\n\nLet `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n < Wₖ`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-l",
@@ -2501,6 +2491,16 @@
       "theorem_count": 45,
       "timestamp": "2026-08-05T03:41:20",
       "title": "This project formalizes, in Lean 4 (Mathlib), the quantitative and logical core"
+    },
+    {
+      "cycle_id": "caed44fe",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## What is now proved in Lean (sorry-free)\n\nAll statements below are formalized and proved in this repository; every theorem checks with\nonly the standard axioms `propext`, `Class",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 121,
+      "timestamp": "2026-08-05T06:49:32",
+      "title": "`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-conta"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7555699999999999
     }
   ],
-  "last_updated": "2026-08-05T03:41:20",
+  "last_updated": "2026-08-05T06:49:32",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "1c628216",
-        "quality": 0.76172,
-        "theorems": 15,
-        "title": "Borges' Library of Babel: Combinatorics of Everything"
-      },
-      {
         "cycle_id": "7edbd52d",
         "quality": 0.78958,
         "theorems": 19,
@@ -3265,6 +3259,12 @@
         "quality": 0.686,
         "theorems": 41,
         "title": "1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-numb"
+      },
+      {
+        "cycle_id": "caed44fe",
+        "quality": 0.686,
+        "theorems": 121,
+        "title": "`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-conta"
       }
     ],
     "Computation": [
