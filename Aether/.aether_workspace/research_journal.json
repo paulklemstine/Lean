@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b7ae8967",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe current development proves an exact finite-domain universality result for a clearly delimited linear-attention lookup architecture. Natural extensions are:\n\n1. **Softmax atten",
-      "quality_score": 0.8002199999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-28T17:01:26",
-      "title": "Attention is All You Need: Formalizing Transformer Architecture"
-    },
-    {
       "cycle_id": "3e30c45d",
       "domain": "Cryptography",
       "key_insight": "# Future directions: radical isogenies on Montgomery curves\n\nThe following conjectures are concrete extensions of the verified degree-two affine formulas. Each can be falsified by an explicit finite f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 122,
       "timestamp": "2026-08-05T14:51:21",
       "title": "ArXiv paper: On the maximum size of $B_3$-free families"
+    },
+    {
+      "cycle_id": "7c424175",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nState of the formalisation of *Gilbert's disc model conditioned on the square lattice*\n(one point per cell of `ℤ²`, two points joined when at distance `< R`), files\n`Catalog/Share",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-05T14:51:29",
+      "title": "Deepening: ArXiv paper: Gilbert's disc model conditioned on the square lattice"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79294
     }
   ],
-  "last_updated": "2026-08-05T14:51:21",
+  "last_updated": "2026-08-05T14:51:29",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "275a5749",
-        "quality": 0.75115,
-        "theorems": 19,
-        "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-      },
-      {
         "cycle_id": "a7ba7617",
         "quality": 0.76172,
         "theorems": 10,
@@ -3947,6 +3941,12 @@
         "quality": 0.686,
         "theorems": 82,
         "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
+      },
+      {
+        "cycle_id": "7c424175",
+        "quality": 0.686,
+        "theorems": 56,
+        "title": "Deepening: ArXiv paper: Gilbert's disc model conditioned on the square lattice"
       }
     ],
     "Tropical": [
