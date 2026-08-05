@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7b912198",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What the formal result establishes\n\n`Catalog/Novelty/SurrealFiniteCofiniteProbability.lean` constructs a concrete Conway surreal\n\n\\[\n\\varepsilon=\\{0\\mid 1,1/2,1/4,\\ldots\\}\n\\]",
-      "quality_score": 0.7734099999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-01T23:23:00",
-      "title": "Non-Archimedean Probability via Surreal Numbers"
-    },
-    {
       "cycle_id": "d333f65d",
       "domain": "Probability",
       "key_insight": "# Future directions\n\n## What is established\n\n`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,\nself-contained results for a triangular face:\n\n1. the three-site crossing probabi",
@@ -499,19 +489,19 @@
       "theorem_count": 114,
       "timestamp": "2026-08-05T06:52:39",
       "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
+    },
+    {
+      "cycle_id": "e9c14674",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `ℤ²`, two points joined when\ntheir Eucl",
+      "quality_score": 0.78349,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-05T06:54:14",
+      "title": "ArXiv paper: Gilbert's disc model conditioned on the square lattice"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "27c8e30f",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n- Extend the certified Fibonacci primitive-divisor interval beyond `10000` by improving the executable primitive-part computation.\n- Develop cyclotomic factorization and growth es",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 224,
-      "timestamp": "2026-07-27T07:58:26",
-      "title": "Close Proofs: [Reset] Fresh approach in Shared"
-    },
     {
       "cycle_id": "e50f9bec",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 114,
       "timestamp": "2026-08-05T06:52:39",
       "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
+    },
+    {
+      "cycle_id": "e9c14674",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `ℤ²`, two points joined when\ntheir Eucl",
+      "quality_score": 0.78349,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-05T06:54:14",
+      "title": "ArXiv paper: Gilbert's disc model conditioned on the square lattice"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a60d1c49",
-      "domain": "MachineLearning",
-      "name": "proves",
-      "quality": 0.78167
-    },
-    {
-      "cycle_id": "a60d1c49",
-      "domain": "MachineLearning",
-      "name": "softmaxDenom_pos",
-      "quality": 0.78167
-    },
-    {
-      "cycle_id": "a60d1c49",
-      "domain": "MachineLearning",
-      "name": "softmaxWeight_pos",
-      "quality": 0.78167
-    },
     {
       "cycle_id": "38046e56",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "unifKey_Ioc",
       "quality": 0.7892299999999999
+    },
+    {
+      "cycle_id": "e9c14674",
+      "domain": "Shared",
+      "name": "sqdist_comm",
+      "quality": 0.78349
+    },
+    {
+      "cycle_id": "e9c14674",
+      "domain": "Shared",
+      "name": "sqdist_nonneg",
+      "quality": 0.78349
+    },
+    {
+      "cycle_id": "e9c14674",
+      "domain": "Shared",
+      "name": "gilbert_adj_iff",
+      "quality": 0.78349
     }
   ],
-  "last_updated": "2026-08-05T06:52:39",
+  "last_updated": "2026-08-05T06:54:14",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "2996b72f",
-        "quality": 0.77621,
-        "theorems": 11,
-        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-      },
-      {
         "cycle_id": "593a0386",
         "quality": 0.7903499999999999,
         "theorems": 19,
@@ -3947,6 +3941,12 @@
         "quality": 0.76207,
         "theorems": 10,
         "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+      },
+      {
+        "cycle_id": "e9c14674",
+        "quality": 0.78349,
+        "theorems": 71,
+        "title": "ArXiv paper: Gilbert's disc model conditioned on the square lattice"
       }
     ],
     "Tropical": [
