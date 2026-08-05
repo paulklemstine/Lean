@@ -3,7 +3,7 @@
 
   This file develops, from first principles, the *first–moment* and *second–moment*
   machinery underlying the classical threshold theorems for the Erdős–Rényi random
-  graph `G(n,p)`, together with precise descriptions of three headline threshold
+  graph `G(n,p)`, together with faithful statements of the three headline threshold
   results (connectivity, the emergence of the giant component, and the second–moment
   method for subgraph counts).
 
@@ -36,13 +36,17 @@
   7. `tendsto_zero_of_variance_bound`         -- analytic squeeze used by ↓
   8. `subgraph_count_pos_whp`                 -- **second–moment method** (uses 6 + 7)
 
-  The two deepest asymptotic results — the sharp connectivity threshold with its
-  Poisson `e^{-e^{-c}}` limit, and the birth of the giant component — are stated
-  as open formalization targets.  Their proofs require substantial probabilistic
-  machinery (a Poisson limit theorem for the isolated–vertex count and a
-  branching–process coupling) that is not currently available in Mathlib; they are
-  therefore documented as open formalization targets rather than exported as
-  theorems in the "Open questions" section at the end of the file.
+  The two deepest asymptotic results — the Poisson `e^{-e^{-c}}` window form of the
+  connectivity threshold, and the birth of the giant component — need substantial
+  further probabilistic machinery (a Poisson limit theorem for the isolated–vertex
+  count and a branching–process coupling) that is not currently available in Mathlib.
+  Their statements are therefore recorded verbatim as *commented* open formalization
+  targets, so that this file exports no unproved declaration.
+
+  The *sharp connectivity threshold at* `p = log n / n` (`P(connected) → 0` for
+  `p = c·log n/n` with `c < 1`, and `→ 1` for `c > 1`) is proved in the companion files
+  `Probability.ErdosRenyiConnectivityLower` and
+  `Probability.ErdosRenyiConnectivityUpper`.
 -/
 import Mathlib
 
@@ -321,8 +325,11 @@ limit for connectivity.
 
 The full proof needs a Poisson convergence theorem for the isolated–vertex count,
 which is not yet in Mathlib; we record the statement and leave it open. -/
-/- The sharp connectivity threshold is recorded as an open formalization target.
-No declaration is exported until its Poisson-limit proof is available.
+/- The *Poisson-window* form of the connectivity threshold is recorded here as an open
+formalization target (no declaration is exported, so that this file contains no
+unproved statements).  The coarser but fully proved *sharp threshold* at
+`p = c·log n/n`, `c ≠ 1`, is available in `Probability.ErdosRenyiConnectivityUpper`
+as `ErdosRenyi.connectivity_sharp_threshold`.
 
 Proposed declaration:
 
@@ -358,11 +365,7 @@ such a process survives with positive probability `ρ = ρ(ε) > 0`.  A second�
 argument shows the number of vertices in "large" components concentrates around `ρ n`,
 producing a unique component of size `Θ(n)`.  The branching-process survival theory and
 the concentration step are not yet available in Mathlib. -/
-/- The supercritical giant-component theorem is recorded as an open
-formalization target.  No declaration is exported until the required
-branching-process coupling and concentration proof is available.
-
-Proposed declaration:
+/- Open formalization target (branching-process coupling not yet available):
 
   theorem giant_component_supercritical {ε : ℝ} (hε : 0 < ε) :
       ∃ β : ℝ, 0 < β ∧
@@ -383,18 +386,15 @@ probability that a fixed vertex lies in a component of size `≥ k` decays expon
 in `k`.  A first–moment (union) bound (`first_moment_threshold`) over all vertices then
 shows no component exceeds `A log n`.  This again rests on quantitative
 branching-process tail bounds not yet in Mathlib. -/
-/- The subcritical giant-component theorem is likewise recorded as an open
-formalization target until the branching-process tail bounds are proved.
-
-Proposed declaration:
+/- Open formalization target (subcritical branching-process tail bounds not yet
+available):
 
   theorem giant_component_subcritical {ε : ℝ} (hε : 0 < ε) (hε1 : ε < 1) :
       ∃ A : ℝ, 0 < A ∧
         Tendsto
           (fun n : ℕ => Prob ((1 - ε) / n)
             (Finset.univ.filter
-              (fun s : Finset (Edge n) =>
-                (largestComponent s : ℝ) ≤ A * Real.log n)))
+              (fun s : Finset (Edge n) => (largestComponent s : ℝ) ≤ A * Real.log n)))
           atTop (𝓝 1)
 -/
 
@@ -403,8 +403,8 @@ Proposed declaration:
 The following are natural extensions of the results above that remain open *as Lean
 formalizations* (the underlying mathematics is classical):
 
-* **Poisson limit for the isolated–vertex count.**  The proof of the connectivity
-  threshold reduces to showing that the number of isolated vertices of
+* **Poisson limit for the isolated–vertex count.**  The proof of
+  `connectivity_threshold` reduces to showing that the number of isolated vertices of
   `G(n, (log n + c)/n)` converges in distribution to `Poisson(e^{-c})`.  A reusable
   method-of-moments / Stein–Chen Poisson convergence theorem in Mathlib would close
   this gap and many like it.

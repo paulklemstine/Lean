@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "316f6446",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n1. **Continuous time.** Replace finite sums by interval integrals and derive the same\n   information-adjusted extraction bound from an almost-everywhere differential energy\n   bal",
-      "quality_score": 0.8021799999999999,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-08-01T23:25:37",
-      "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
-    },
-    {
       "cycle_id": "18622a4a",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe exact compiler in `Catalog/Applications/EML/SingleOperatorCompilation.lean`\nsettles the equivalence of the catalog's finite `{exp, log, field operations}`\ngrammar and its sing",
@@ -499,19 +489,19 @@
       "theorem_count": 37,
       "timestamp": "2026-08-05T06:55:48",
       "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
+    },
+    {
+      "cycle_id": "8dd43c13",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(",
+      "quality_score": 0.79294,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-08-05T12:25:58",
+      "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "38d3a014",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n- Formalize periodic configurations `Fin n → Bool` and count fixed points for\n  every rule and small period `n` with kernel-checked finite enumeration.\n- Represent local Boolean f",
-      "quality_score": 0.7097100000000001,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-28T12:20:33",
-      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-    },
     {
       "cycle_id": "09a3e4f4",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 78,
       "timestamp": "2026-08-05T12:24:25",
       "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
+    },
+    {
+      "cycle_id": "8dd43c13",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(",
+      "quality_score": 0.79294,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-08-05T12:25:58",
+      "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e4843e14",
-      "domain": "Algebra",
-      "name": "normalizedMixedAreaDifference_eq_twice",
-      "quality": 0.7439399999999999
-    },
-    {
-      "cycle_id": "e4843e14",
-      "domain": "Algebra",
-      "name": "two_tropical_lines_normalized_area_counterexample",
-      "quality": 0.7439399999999999
-    },
-    {
-      "cycle_id": "e4843e14",
-      "domain": "Algebra",
-      "name": "normalized_area_formula_ne_bezout_of_pos",
-      "quality": 0.7439399999999999
-    },
     {
       "cycle_id": "eb6ff95e",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "revise_comm_of_ne_atom",
       "quality": 0.79609
+    },
+    {
+      "cycle_id": "8dd43c13",
+      "domain": "Applications",
+      "name": "one_add_exp_pos",
+      "quality": 0.79294
+    },
+    {
+      "cycle_id": "8dd43c13",
+      "domain": "Applications",
+      "name": "logistic_pos",
+      "quality": 0.79294
+    },
+    {
+      "cycle_id": "8dd43c13",
+      "domain": "Applications",
+      "name": "logistic_lt_one",
+      "quality": 0.79294
     }
   ],
-  "last_updated": "2026-08-05T12:24:25",
+  "last_updated": "2026-08-05T12:25:58",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bb566a68",
-        "quality": 0.7828599999999999,
-        "theorems": 11,
-        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-      },
-      {
         "cycle_id": "150a94b2",
         "quality": 0.73519,
         "theorems": 6,
@@ -3141,6 +3135,12 @@
         "quality": 0.7555699999999999,
         "theorems": 13,
         "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+      },
+      {
+        "cycle_id": "8dd43c13",
+        "quality": 0.79294,
+        "theorems": 32,
+        "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
       }
     ],
     "Bridges": [
