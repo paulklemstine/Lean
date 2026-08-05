@@ -98,42 +98,33 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
     SortsOrderings (t.pad r) n ∧ (t.pad r).height = r + t.height := by
       exact ⟨ le_trans hs ( ComparisonTree.leaves_le_pad r t ), ComparisonTree.height_pad r t ⟩
 
-/-- The information erased by sorting `n` elements is `log₂(n!)`, with no
-lower bound on `n`: for `n = 0` both sides vanish. -/
-theorem sorting_info_erased_all (n : ℕ) :
-    infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
-  rcases n with _ | m
-  · unfold infoErased sortingFunction
-    norm_num [Fintype.card_perm]
-  · exact sorting_info_erased (m + 1) (by omega)
-
 /-
 **Three-way factorial synthesis.** A correct comparison tree obeys the entropy lower
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
 implementation needs at least `n!` history states.
 -/
 theorem factorial_controls_comparisons_entropy_and_history
-    (t : ComparisonTree) (n : ℕ) (hs : SortsOrderings t n)
+    (t : ComparisonTree) (n : ℕ) (hn : 1 ≤ n) (hs : SortsOrderings t n)
     (Aux : Type*) [Fintype Aux]
     (e : Equiv.Perm (Fin n) ≃ Unit × Aux)
     (hc : ∀ σ, (e σ).1 = sortingFunction n σ) :
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine ⟨comparison_lower_bound t n hs, sorting_info_erased_all n, ?_⟩
-      convert sorting_history_lower_bound n Aux e hc using 1
-      simp +decide [Fintype.card_perm]
+      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
+      · convert sorting_info_erased n hn;
+      · convert sorting_history_lower_bound n Aux e hc using 1;
+        simp +decide [ Fintype.card_perm ]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
 input permutation costs `kT · log(n!)`.  The factor `log 2` in the per-bit cost cancels
 the change of base in `log₂(n!)`.
 -/
-theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
+theorem sorting_landauer_gap_exact (n : ℕ) (hn : 1 ≤ n) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      unfold landauerGap landauerCost
-      rw [sorting_info_erased_all n, Real.logb]
-      field_simp
+      convert congr_arg _ ( sorting_info_erased n hn ) using 1;
+      unfold landauerCost; rw [ Real.logb ] ; ring; norm_num;
 
 /-
 The Landauer work assigned to irreversible sorting is unchanged when redundant
