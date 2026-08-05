@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4159430",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and",
-      "quality_score": 0.7496799999999999,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-08-01T22:21:43",
-      "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
-    },
-    {
       "cycle_id": "7b912198",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## What the formal result establishes\n\n`Catalog/Novelty/SurrealFiniteCofiniteProbability.lean` constructs a concrete Conway surreal\n\n\\[\n\\varepsilon=\\{0\\mid 1,1/2,1/4,\\ldots\\}\n\\]",
@@ -499,19 +489,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-05T06:51:05",
       "title": "ArXiv paper: Magnitude homology of tope graphs"
+    },
+    {
+      "cycle_id": "6ffc84c2",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinato",
+      "quality_score": 0.7892299999999999,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-05T06:52:39",
+      "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "27eaed26",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\n## Completed formal result\n\n`Logic/ProofSpaceTransition.lean` gives a self-contained finite theorem for a\nprecise order parameter.  For natural-valued counts `provable n` and\n`unp",
-      "quality_score": 0.6962981818181817,
-      "sorry_count": 1,
-      "theorem_count": 11,
-      "timestamp": "2026-07-27T01:25:35",
-      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-    },
     {
       "cycle_id": "27c8e30f",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-05T06:51:05",
       "title": "ArXiv paper: Magnitude homology of tope graphs"
+    },
+    {
+      "cycle_id": "6ffc84c2",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinato",
+      "quality_score": 0.7892299999999999,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-05T06:52:39",
+      "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f7f562cc",
-      "domain": "Probability",
-      "name": "allPresent_inter",
-      "quality": 0.78272
-    },
-    {
-      "cycle_id": "f7f562cc",
-      "domain": "Probability",
-      "name": "prob_allPresent_pair",
-      "quality": 0.78272
-    },
-    {
-      "cycle_id": "f7f562cc",
-      "domain": "Probability",
-      "name": "secondMoment_subgraphCount",
-      "quality": 0.78272
-    },
     {
       "cycle_id": "a60d1c49",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "chamber_convex",
       "quality": 0.78776
+    },
+    {
+      "cycle_id": "6ffc84c2",
+      "domain": "Combinatorics",
+      "name": "unifKey_Iic",
+      "quality": 0.7892299999999999
+    },
+    {
+      "cycle_id": "6ffc84c2",
+      "domain": "Combinatorics",
+      "name": "unifKey_Ioi",
+      "quality": 0.7892299999999999
+    },
+    {
+      "cycle_id": "6ffc84c2",
+      "domain": "Combinatorics",
+      "name": "unifKey_Ioc",
+      "quality": 0.7892299999999999
     }
   ],
-  "last_updated": "2026-08-05T06:51:05",
+  "last_updated": "2026-08-05T06:52:39",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "7edbd52d",
-        "quality": 0.78958,
-        "theorems": 19,
-        "title": "Frankl's Union-Closed Conjecture"
-      },
-      {
         "cycle_id": "15429b4a",
         "quality": 0.73393,
         "theorems": 11,
@@ -3265,6 +3259,12 @@
         "quality": 0.686,
         "theorems": 121,
         "title": "`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-conta"
+      },
+      {
+        "cycle_id": "6ffc84c2",
+        "quality": 0.7892299999999999,
+        "theorems": 114,
+        "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
       }
     ],
     "Computation": [
