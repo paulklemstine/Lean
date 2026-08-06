@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Bridges.ReedMuller.Defs
+import Logic.GraphTheory.Defs
 
 /-!
 # Fiber Restriction for Multivariate Polynomials
