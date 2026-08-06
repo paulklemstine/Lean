@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-06T06:55:10.987932+00:00",
+  "last_updated": "2026-08-06T07:55:36.313310+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -48879,6 +48879,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-06T06:55:10.869089+00:00",
       "title": "**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1401,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 5,
+      "domain": "Combinatorics",
+      "duration_seconds": 3583.8353917598724,
+      "end_time": 1786000629.1682804,
+      "files_integrated": 5,
+      "job_id": "39ee2889",
+      "outcome_quality": 0.79707,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_a_quality_score": 0.80603,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7801,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.8139,
+        "novelty": 0.77,
+        "proof_depth": 0.8327,
+        "usefulness": 0.8663
+      },
+      "quality_score": 0.79707,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1785997045.3328886,
+      "strategy_count": 0,
+      "theorem_count": 34,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 32,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-06T07:55:36.221097+00:00",
+      "title": "Concrete, falsifiable conjectures arising from the formalization in"
     }
   ]
 }
