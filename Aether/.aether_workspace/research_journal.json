@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8c9ac99e",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Integer-slope criterion.** For every compiled network whose affine weights and linear-combination weights are integers, both polynomials produced by `compile` can be represen",
-      "quality_score": 0.7311099999999999,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-29T19:52:46",
-      "title": "Tropical-Neural: Duality Between Tropical Polynomials and Deep Neural Networks"
-    },
-    {
       "cycle_id": "42454fab",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n1. **Universe size four.** Extend the singleton/residual decomposition used for\n   `Fin 3`. A direct search has 65,536 candidate families, so useful structural\n   reductions (sing",
@@ -2501,6 +2491,16 @@
       "theorem_count": 29,
       "timestamp": "2026-08-06T05:23:12",
       "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+    },
+    {
+      "cycle_id": "2784f3be",
+      "domain": "Pythagorean",
+      "key_insight": "# Tower weights `Wₖ₊₁ = 2^Wₖ · Wₖ`: what is now proved, and what remains\n\nTwo self-contained Lean files carry the development:\n\n* `Catalog/Pythagorean/TowerRadix.lean` — the tower weights `W`, the pos",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-06T05:23:19",
+      "title": "Let `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n <"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7947599999999999
     }
   ],
-  "last_updated": "2026-08-06T05:23:12",
+  "last_updated": "2026-08-06T05:23:19",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "2ae125a9",
-        "quality": 0.78,
-        "theorems": 17,
-        "title": "The repaired repeated-summand rule is now completely classified: its unique traj"
-      },
-      {
         "cycle_id": "1782ce5d",
         "quality": 0.66484,
         "theorems": 5,
@@ -3885,6 +3879,12 @@
         "quality": 0.686,
         "theorems": 29,
         "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+      },
+      {
+        "cycle_id": "2784f3be",
+        "quality": 0.686,
+        "theorems": 124,
+        "title": "Let `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n <"
       }
     ],
     "Shared": [
