@@ -1,11 +1,11 @@
 {
   "title": "The Dimension Spectrum of Truth: Fractal Dimension of Theories over Cantor Space",
-  "domain": "Algebra",
+  "domain": "Geometry",
   "description": "The box-counting dimension of a theory of bit-string statements equals the asymptotic density of its information-bearing coordinates: the periodic density theory of modulus m freeing the residues R has dimension exactly |R|/m, so every rational number in [0,1] is the fractal dimension of an explicitly constructed theory.",
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-06T19:01:45Z",
+  "date": "2026-08-06T10:05:27Z",
   "key_results": [
     "Universal bounds: the fractal dimension of every theory lies in the unit interval, and both endpoints are attained.",
     "Monotonicity: if one theory accepts every statement another accepts, its fractal dimension is at least as large.",
