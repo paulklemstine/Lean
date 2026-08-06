@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dff51e05",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Established result\n\nFor the split metric\n\n\\[\nds^2=\\frac{dx^2}{\\cosh^2y}+\\cosh^2x\\,dy^2,\n\\]\n\nthe computed Gaussian curvature is\n\n\\[\nK_G(x,y)=-\\cosh^2y-\\operatorname{sech}^2x\n +2",
-      "quality_score": 0.78321,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-29T12:30:24",
-      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-    },
-    {
       "cycle_id": "5843d50f",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT₀` and an interpretation in arithmetic such that PA proves `Con(QFT₀) → Con",
@@ -2501,6 +2491,16 @@
       "theorem_count": 85,
       "timestamp": "2026-08-05T22:30:27",
       "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
+    },
+    {
+      "cycle_id": "fc0b5c3a",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\n## What is proved\n\n`Bridges/DeltaDenseSumsetAvoidance.lean` proves, for every fixed `0 < δ < 1` and every\nsufficiently large `n`, the existence of `S ⊆ [n]` with `|S| ≥ δn` such t",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-08-06T00:18:07",
+      "title": "Existence of δ‑dense sets avoiding large sumsets"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7857999999999999
     }
   ],
-  "last_updated": "2026-08-05T22:30:27",
+  "last_updated": "2026-08-06T00:18:07",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "ef4982e9",
-        "quality": 0.78888,
-        "theorems": 11,
-        "title": "Bridge: Galois Connections Between Order Theory and Topology"
-      },
-      {
         "cycle_id": "18ab6902",
         "quality": 0.72693,
         "theorems": 8,
@@ -3203,6 +3197,12 @@
         "quality": 0.79196,
         "theorems": 202,
         "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invaria"
+      },
+      {
+        "cycle_id": "fc0b5c3a",
+        "quality": 0.686,
+        "theorems": 118,
+        "title": "Existence of δ‑dense sets avoiding large sumsets"
       }
     ],
     "Combinatorics": [
