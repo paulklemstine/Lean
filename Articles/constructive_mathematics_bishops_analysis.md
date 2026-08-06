@@ -1,175 +1,197 @@
-# The Number That Refuses to Say Where It Is
+# The Number You Can Actually Compute
 
-## A journey into constructive analysis, where every real number carries its own instruction manual
+## What Errett Bishop's constructive analysis asks of a theorem, and what it gives back
 
----
+There is a moment in every first analysis course that ought to feel stranger than it does. The instructor draws a continuous curve starting below the $x$-axis and ending above it, and says: *therefore it crosses zero somewhere*. Everyone nods. The picture is overwhelming. The Intermediate Value Theorem is proved.
 
-### A question with no answer
+Then someone asks the obvious question. *Where?*
 
-Here is a question that sounds trivial. I hand you a real number $x$ and ask: **is $x$ bigger than zero, or is it zero, or is it less than zero?**
+And the honest answer is: the proof does not say. The standard argument takes the set of points where the function is still negative, and invokes the completeness of the real numbers to produce its supremum. Completeness hands you a number. It does not hand you a procedure for finding it, and — this is the surprising part — in general there is no procedure to be had.
 
-Classically, exactly one of the three holds. This *trichotomy law* is as basic to the real numbers as anything can be. But suppose I hand you $x$ not as a Platonic object but as a *process*: a machine that, when you ask for the $n$-th digit, computes it and hands it over.
+This is not a technicality about pathological functions. It is a genuine crack in the foundations, and in the 1960s Errett Bishop decided to build a version of analysis without it. His book *Constructive Analysis* redevelops the subject under a single discipline: **every existence claim must come with a construction, and every convergence claim must come with a rate**. What is remarkable is not that this is possible, but how much of ordinary analysis survives, and how sharp the surviving statements turn out to be.
 
-$$0.000000\ldots000\ldots$$
-
-Every digit so far is zero. Is the number zero? Or is it $10^{-10^{100}}$? No finite inspection can tell you. If the machine's digits encode "the first place where some famous conjecture fails", then deciding the sign of $x$ means settling the conjecture. Trichotomy, applied to numbers-as-processes, is not a law of arithmetic. It is a demand for an oracle.
-
-This is the fault line that Errett Bishop walked up to in 1967 and, instead of stepping back, walked straight across. His *Foundations of Constructive Analysis* rebuilt real analysis — limits, continuity, roots, integration — with every existence claim backed by a construction. Not a crippled analysis: a *sharper* one. This article follows that rebuilding down to the arithmetic, and to the quantitative facts that emerge when you insist on being explicit — how fast things converge, which constants are optimal, and where the classical theorems break.
+This article is about that discipline and the shape of the theory it produces: what a real number is when you insist on being able to compute it, what completeness means when you insist on knowing how fast, what the Intermediate Value Theorem becomes when you insist on knowing where — and exactly where the classical theorem breaks, quantitatively.
 
 ---
 
-### Numbers that know their own error bars
+## Part I. A real number is a sequence with a promise
 
-Bishop's first move is disarmingly simple. A real number, he says, *is* a sequence of rational approximations — but a sequence that comes with a promise about its own accuracy.
+Classically, a real number is defined by a Cauchy sequence of rationals: a sequence $q_0, q_1, q_2, \dots$ such that for every $\varepsilon > 0$ there is some $N$ beyond which all terms are within $\varepsilon$ of each other. The trouble is the *"there is some $N$"*. If you are handed such a sequence, you know that $N$ exists, but you may have no way to find it — and without it, you cannot say how good any particular $q_n$ is. You have a number you cannot bound.
 
-> **Definition.** A **regular sequence of rationals** is a sequence $x_0, x_1, x_2, \ldots$ of rationals satisfying
+Bishop's fix is disarmingly simple. Build the rate into the definition.
+
+> **Definition (regular sequence).** A *regular sequence of rationals* is a sequence $x_0, x_1, x_2, \dots$ of rational numbers satisfying
 > $$|x_m - x_n| \;\le\; \frac{1}{m+1} + \frac{1}{n+1} \qquad \text{for all } m, n .$$
 
-Read that as a labelling scheme. The term $x_n$ is *asserted* to be accurate to within $1/(n+1)$; the condition says the assertions are mutually consistent — two approximations claiming those accuracies had better not differ by more than the sum of their error bars.
+That's it. There is no quantifier to be dodged: the sequence carries its own modulus of convergence, on the nose. And the payoff is immediate and quantitative.
 
-The difference from the usual Cauchy definition is not cosmetic. A Cauchy sequence says: *for every $\varepsilon$ there exists some $N$ beyond which terms are within $\varepsilon$.* That existential $N$ — the **modulus of convergence** — is exactly the information a computer needs and a classical proof does not supply. Bishop's condition doesn't merely assert a modulus exists; it *fixes* it, once and for all, at $n \mapsto 1/(n+1)$.
+> **Theorem (explicit modulus).** If $x$ is a regular sequence, then the real number $\hat{x}$ it denotes satisfies
+> $$|\hat{x} - x_n| \;\le\; \frac{1}{n+1} \qquad \text{for every } n .$$
 
-And the promise is kept. Writing $\hat x$ for the ordinary real number the sequence converges to:
+So the index *is* the error bar. Ask for $x_{999}$ and you get a rational number guaranteed to be within $1/1000$ of the answer, with no further computation and no further thought. The proof is one line of limit-taking: let $j \to \infty$ in $|x_j - x_n| \le \frac{1}{j+1} + \frac{1}{n+1}$.
 
-> **Theorem (explicit modulus).** For every regular sequence and every index $n$,
-> $$|\hat x - x_n| \;\le\; \frac{1}{n+1}.$$
+There is a subtlety here that is invisible classically. When are two regular sequences the same number? Not when they are equal term by term — $1/2, 1/2, 1/2, \dots$ and $0.4, 0.49, 0.499, \dots$ should be the same real. Bishop *defines* equality:
+$$x = y \quad \text{means} \quad |x_n - y_n| \le \frac{2}{n+1} \text{ for all } n .$$
+Constructively this is a definition and not a derived notion, and one has to check it behaves. It does, and the reason is clean:
 
-The proof is one line: fix $n$ and let $j \to \infty$ in $|x_j - x_n| \le \frac{1}{j+1} + \frac{1}{n+1}$. Want $\pi$ to twelve decimal places? Ask for the $10^{12}$-th term. No search, no waiting, no "eventually". **The index is the precision.**
+> **Theorem.** Two regular sequences are Bishop-equal exactly when they denote the same classical real number.
 
-Two regular sequences denote the same number when their approximations stay within the sum of their error bars: $|x_n - y_n| \le \frac{2}{n+1}$ for all $n$. Something subtle is happening. Constructively you cannot define equality as "the limits coincide", because you have no prior access to the limits — only to the sequences. Equality must be a condition on the *data*, and transitivity becomes a theorem requiring proof. It does hold, because the condition is equivalent to $\hat x = \hat y$. Add that **every** classical real is denoted by some regular sequence — approximate it to within $\frac{1}{2(n+1)}$ and regularity falls out — and you get the reconciliation:
+Reflexivity and symmetry are then free; transitivity — which requires a genuine three-term estimate constructively — comes along too. And the correspondence is a perfect one:
 
-> **Theorem.** Regular sequences of rationals, taken modulo Bishop equality, are in canonical bijection with the classical real numbers.
+> **Theorem (nothing is lost).** Every classical real number is denoted by some regular sequence, and the regular sequences modulo Bishop equality are in bijection with the real numbers.
 
-Constructive analysis is not a *smaller* theory about *fewer* numbers. It is the same numbers, presented with more information. What changes is what you are allowed to *do* with them — and what you get out.
-
----
-
-### The diagonal that has to be shifted
-
-Completeness is where the bookkeeping starts to bite, and to pay.
-
-Suppose you have a sequence of Bishop reals $x^{(0)}, x^{(1)}, \ldots$, itself regular in the sense that $|\hat x^{(k)} - \hat x^{(l)}| \le \frac{1}{k+1} + \frac{1}{l+1}$. Classically, completeness hands you a limit and says nothing about finding it. Constructively the limit must be *built*, and the natural candidate is the diagonal: the $n$-th approximation of the $n$-th number. It fails. Let
-$$x^{(k)}_n \;=\; \frac{1}{k+1} \;+\; (-1)^k \cdot \frac{1}{n+1}.$$
-Each $x^{(k)}$ is a perfectly good regular sequence denoting $1/(k+1)$, and these reals form a regular sequence of reals. But the raw diagonal is a wreck: at $n = 0$ it gives $1 + 1 = 2$; at $n = 1$ it gives $\tfrac12 - \tfrac12 = 0$. Those differ by $2$, while regularity permits at most $\frac{1}{1} + \frac{1}{2} = \frac{3}{2}$. The alternating sign has arranged for individually legal errors to conspire.
-
-The fix is to run the diagonal at double speed:
-
-> **Theorem (constructive completeness).** Given a regular sequence of Bishop reals, the sequence $n \mapsto x^{(2n+1)}_{\,2n+1}$ is again regular, and the real $L$ it denotes satisfies
-> $$|L - \hat x^{(k)}| \;\le\; \frac{1}{k+1} \qquad \text{for every } k.$$
-
-The shift halves both error contributions — the error of $x^{(2n+1)}$ as a member of the sequence, and the error of its own $(2n+1)$-st approximation — so together they fit the budget $1/(n+1)$. On the alternating family above, the shifted diagonal converges to $0$, the correct limit.
-
-The moral recurs throughout: a classical theorem asserts a limit *exists*; its constructive counterpart is a *formula*, and formulas have to get the constants right.
+So the constructive reals are not a smaller, impoverished number system. They are the *same* number system, presented in a way that makes every element carry its own error estimates. What changes is not which numbers exist but what a *proof* about them must supply.
 
 ---
 
-### An order you have to earn
+## Part II. Completeness, and a shift you cannot remove
 
-We began with trichotomy. Bishop's replacement makes positivity carry evidence:
+Completeness — every Cauchy sequence converges — is the engine of analysis. Constructively it must be restated with rates on both ends: from a sequence of reals $x_0, x_1, \dots$ satisfying $|x_k - x_l| \le \frac{1}{k+1} + \frac{1}{l+1}$, produce a real $L$ with $|L - x_k| \le \frac{1}{k+1}$.
 
-> **Definition.** $x > 0$ means: **there exists an index $n$ with** $x_n > \frac{1}{n+1}$. And $x < y$ means: there exists $n$ with $x_n + \frac{2}{n+1} < y_n$.
+Bishop's construction is a diagonal — but a *shifted* one. The limit's $n$-th rational approximation is
+$$L_n \;=\; \big(x_{2n+1}\big)_{2n+1},$$
+the $(2n+1)$-st approximation of the $(2n+1)$-st term. And it works: the resulting sequence is regular, and the limit it denotes satisfies the promised $|L - x_k| \le \frac{1}{k+1}$.
 
-A proof of $x < y$ is not a bare truth-value. It is a *number* $n$ — a certificate — together with a rational inequality you can check by hand. From it you read a rational lower bound on the gap, $g = y_n - x_n - \frac{2}{n+1} > 0$.
-
-Reassuringly, this witnessed relation agrees exactly with the classical one: $x < y$ in Bishop's sense iff $\hat x < \hat y$. Nothing has been weakened. But the certificate cannot be dispensed with, nor even bounded in advance:
-
-> **Theorem (no uniform witness bound).** For every precision $N$, however large, there are Bishop reals $x < y$ for which **no** index $n \le N$ witnesses the inequality.
-
-The example is embarrassingly simple: $x = 0$ and $y = 1/(N+1)$. At every index $n \le N$ the sequences are closer than the required margin $2/(n+1)$. So the order, though extensionally classical, is not a decidable function of any bounded amount of the approximating data — the digits-of-a-conjecture story, made rigorous.
-
-What replaces trichotomy is **cotransitivity**, and in explicit form it is a genuine algorithm:
-
-> **Theorem (cotransitivity).** Suppose the index $n$ witnesses $x < y$, with rational gap $g$. Let $m$ be *any* index with $\frac{1}{m+1} \le \frac{g}{8}$. Then for **every** third real $z$, a single comparison of the rational $z_m$ against the midpoint $\frac{x_m + y_m}{2}$ decides between $x < z$ and $z < y$ — and the branch you land in is a correct certificate.
-
-Two estimates do the work: at the finer index the approximations have spread out to $y_m - x_m \ge \frac{3g}{4}$, while the required margin $\frac{2}{m+1}$ is at most $\frac{g}{4}$. Whichever side of the midpoint $z_m$ falls, the margin is beaten.
-
-Look at what has happened. Classically, "$x < z$ or $z < y$" is a triviality with no content. Constructively it is a procedure. And the disjunction is *overlapping* — both branches may be true — which is precisely what makes it decidable. Insisting on the exclusive version is what costs you the oracle.
-
-The same pattern gives a *location* principle: for rationals $a < b$, choose $n$ with $\frac{4}{n+1} \le b - a$ and compare $x_n$ with the midpoint; you learn either $a < x$ or $x < b$. The classically trivial exclusive alternative is unavailable; this overlapping version replaces it, with an algorithm attached.
+Why the shift? Why not the obvious diagonal $(x_n)_n$? The answer is not a matter of convenience — the naive diagonal is genuinely broken, and one can see it in a two-line example. Consider the family
+$$\big(x_k\big)_n \;=\; \frac{1}{k+1} + (-1)^k \cdot \frac{1}{n+1} .$$
+Each $x_k$ is a perfectly good regular sequence denoting the real number $1/(k+1)$; the second term is the built-in wobble, sitting exactly at the edge of the allowed error, with a sign that flips with $k$. The reals $1/(k+1)$ form a regular sequence of reals. But the naive diagonal has
+$$\big(x_0\big)_0 = 1 + 1 = 2, \qquad \big(x_1\big)_1 = \tfrac{1}{2} - \tfrac{1}{2} = 0,$$
+so its first two terms differ by $2$, where regularity permits at most $\frac{1}{1} + \frac{1}{2} = \frac{3}{2}$. The naive diagonal is not a real number at all. Doubling the index halves the wobble, and that is precisely enough. It is a small thing, but it is the kind of small thing that constructive mathematics forces you to notice: an error term that classical analysis would sweep into "for sufficiently large $n$" here has nowhere to hide.
 
 ---
 
-### Arithmetic with index shifts, and a computable $\sqrt2$
+## Part III. Arithmetic that runs
 
-If reals are sequences, arithmetic is sequence manipulation — and every operation needs a shift to balance the error budget. Addition uses the same trick as the limit, $(x + y)_n = x_{2n+1} + y_{2n+1}$, because two errors of size $\frac{1}{2(n+1)}$ sum to the allotted $\frac{1}{n+1}$.
+Because a Bishop real is *data* — a function from $\mathbb{N}$ to $\mathbb{Q}$ — arithmetic on Bishop reals is a program, and the index shifts are the interesting part.
 
-Multiplication is harder, because errors are amplified by the size of the factors. One first extracts a crude bound from the data itself: since $|x_n - x_0| \le 2$, the integer $B(x) = \lceil |x_0| \rceil + 2$ dominates every $|x_n|$. The product then evaluates both factors at the finer index $M(n+1)$, with $M = B(x) + B(y)$ — a shift proportional to the magnitudes, exactly right since big numbers need more digits before their product is trustworthy.
+**Addition.** You cannot set $(x+y)_n = x_n + y_n$: the errors add, and the sum is only regular with a factor of $2$ too much slack. Take instead
+$$(x+y)_n = x_{2n+1} + y_{2n+1},$$
+computing each summand to twice the required accuracy so their sum meets it.
 
-These are genuinely computable — no oracle, no choice. Here is a real number you can run:
-$$\sqrt2_n \;=\; \frac{\lfloor \sqrt{2(n+1)^2} \rfloor}{n+1},$$
-with the square root taken as the integer square root. Term $4$ is $7/5$; term $99$ is $141/100$. Each is a rational you can print. The sequence is regular, and the real it denotes squares to $2$. An irrational number, entirely as data.
+**Multiplication.** Here the shift must depend on the *size* of the numbers, because an error of $\delta$ in a factor of size $B$ becomes an error of $B\delta$ in the product. Every regular sequence carries a canonical bound: since $|x_n - x_0| \le \frac{1}{n+1} + 1 \le 2$, the integer
+$$B_x = \lceil |x_0| \rceil + 2$$
+dominates $|x_n|$ for every $n$. With $M = B_x + B_y$ the definition
+$$(x \cdot y)_n = x_{M(n+1)} \cdot y_{M(n+1)}$$
+is regular, and denotes the classical product. The bound is not decoration: it is the reason the constructive real numbers are a ring in the first place, and it must be computed from the data.
 
----
-
-### The intermediate value theorem, and how it really fails
-
-Now the crown jewel — and the classic casualty. The intermediate value theorem says a continuous $f$ with $f(a) \le 0 \le f(b)$ has a root. Constructively this is false, for an interesting reason. Consider the **shelf family** on $[0,3]$, with parameter $t \in [-1,1]$:
-$$\mathrm{shelf}_t(x) \;=\; \min\bigl(x - 1,\; \max(t,\; x - 2)\bigr).$$
-
-Every member is $1$-Lipschitz and satisfies $\mathrm{shelf}_t(0) \le 0 \le \mathrm{shelf}_t(3)$, so every member has roots. But *where*? At $t = 1$ the unique root is $x = 1$; at $t = -1$ it is $x = 2$; at $t = 0$ the function vanishes on the whole shelf $[1,2]$.
-
-> **Theorem (Brouwerian counterexample).** There is no continuous $t \mapsto r(t)$ on $[-1,1]$ with $\mathrm{shelf}_t(r(t)) = 0$ for all $t$.
-
-The proof is a two-line trap. A continuous $r$ with $r(1) = 1$ and $r(-1) = 2$ would, by the classical intermediate value theorem applied to $r$ itself, hit both $3/2$ and $7/4$. But a root strictly between $1$ and $2$ forces $t = 0$, so $r(0)$ would have to equal both. Contradiction.
-
-Since every constructively definable function on the reals is continuous, no constructive proof of the exact theorem can exist. And the failure is as bad as the geometry allows:
-
-> **Theorem (quantitative failure).** For **any** assignment of a root to each parameter — continuous or not — and every $\eta > 0$, its oscillation over $|t| \le \eta$ is at least $1$.
-
-Indeed $r(t) = 1$ is forced for $t > 0$ and $r(t) = 2$ for $t < 0$: the values straddle a gap of width $1$ in every neighbourhood of the origin. There is no approximate continuity to salvage.
-
-**What works, first flavour: you can always compute an approximate root.** Suppose $f$ carries a **modulus of uniform continuity** $\omega$ — an explicit function converting a target accuracy into a spatial tolerance, so that $|x - y| \le \omega(\varepsilon)$ guarantees $|f(x) - f(y)| \le \varepsilon$. This is the constructive definition of continuity: not a promise that a tolerance exists, but a formula producing it.
-
-> **Theorem (approximate IVT).** With $f(a) \le 0 \le f(b)$, fix $\varepsilon > 0$ and any $N \ge 1$ with mesh $\frac{b-a}{N} \le \omega(\varepsilon)$. Among the $N+1$ grid points $a + k\frac{b-a}{N}$, the **largest** index $k$ with $f \le 0$ satisfies $|f| \le \varepsilon$ there.
-
-A finite scan, and a two-case argument: if the scan runs to the right endpoint then $f(b)$ is squeezed to zero; otherwise the next grid point has $f > 0$ one mesh away, so the modulus caps the jump at $\varepsilon$.
-
-**Second flavour: with a non-degeneracy hypothesis you get the exact root.** The obstruction in the shelf family was flatness — $\mathrm{shelf}_0$ is constant across $[1,2]$, and admits *no* positive slope bound. So rule flatness out: say $f$ has **slope bound** $c > 0$ if $c(y - x) \le f(y) - f(x)$ whenever $x \le y$.
-
-> **Theorem (constructive IVT).** Then $f$ has a unique root $r$, and for every accuracy $\delta > 0$ the grid search at any mesh $\le \omega(c\delta)$ returns a point within $\delta$ of $r$. The modulus of the root is $\delta \mapsto \omega(c\,\delta)$.
-
-The engine is a one-line estimate: $|f(x)| \le \varepsilon$ implies $|x - r| \le \varepsilon/c$. A small *value* becomes a small *distance*, at exchange rate $1/c$ — and the rate is exactly right: for $f(x) = cx$ on $[-1,1]$, the point $x = \varepsilon/c$ has $|f(x)| = \varepsilon$ and sits at distance *precisely* $\varepsilon/c$ from the root. No constant $\kappa < 1$ can replace the $1$.
+**A worked irrational.** Nothing forces constructive reals to be rational or simple. Set
+$$(\sqrt{2}\,)_n \;=\; \frac{\big\lfloor \sqrt{2(n+1)^2} \big\rfloor}{n+1},$$
+where the square root is the *integer* square root — pure integer arithmetic. Regularity follows from the elementary estimate $\frac{\lfloor\sqrt{2m^2}\rfloor}{m} \le \sqrt{2} < \frac{\lfloor\sqrt{2m^2}\rfloor}{m} + \frac{1}{m}$, and the sequence denotes a real whose square is exactly $2$. Its fourth term is $7/5$; its hundredth is $141/100$. You can run it.
 
 ---
 
-### Bracketing beats bounding
+## Part IV. Order: an inequality is a witness
 
-Here is the twist most treatments skip. The slope bound converts "$|f(x)|$ is small" into "$x$ is near a root" — but that is not what the grid search actually produces, nor what it needs.
+Here constructive analysis parts company with classical logic most visibly. Classically, $x < y$ means "not $y \le x$". Constructively that is useless: from a refutation you can compute nothing. So positivity is defined *positively*, in terms of evidence:
+$$x > 0 \quad \text{means} \quad \text{there is an } n \text{ with } x_n > \tfrac{1}{n+1},$$
+$$x < y \quad \text{means} \quad \text{there is an } n \text{ with } x_n + \tfrac{2}{n+1} < y_n .$$
+A proof of $x < y$ is not an assertion — it is a number $n$, from which the rational $y_n - x_n - \frac{2}{n+1} > 0$ is an explicit, certified lower bound for the gap. These relations agree extensionally with the classical ones; the difference is in what a proof of one *is*.
 
-> **Theorem (bracketing).** With **no** non-degeneracy hypothesis at all, the sign-change grid search returns a grid point within **one mesh** of a genuine root.
+What replaces trichotomy? Classically, for any $z$ at all, $x < y$ implies $x < z$ or $z < y$. Constructively this survives — and, delightfully, survives *effectively*:
 
-Why? The largest index $k$ with $f \le 0$ has a *bracket*: $f(\text{grid}_k) \le 0 < f(\text{grid}_{k+1})$. A root lives in that interval of width one mesh. The location comes from the **sign change**, not from the smallness of $|f|$.
+> **Theorem (cotransitivity, explicit form).** Suppose the index $n$ witnesses $x < y$, with certified gap $g = y_n - x_n - \frac{2}{n+1} > 0$. Let $m$ be any index with $\frac{1}{m+1} \le g/8$. Then for **any** third real $z$, comparing the single rational $z_m$ with the midpoint $\frac{x_m + y_m}{2}$ decides the disjunction: if $z_m$ is at least the midpoint then $x < z$; otherwise $z < y$.
 
-That distinction is real. The weakest useful non-degeneracy hypothesis is *local non-constancy*: on every interval of length $h$ the function attains absolute value at least $\nu(h)$, for an explicit $\nu$. Consider
-$$\mathrm{dip}_\eta(x) \;=\; \min\bigl(x - 1,\; |x - 3| + \eta\bigr) \qquad \text{on } [0,4].$$
-It is $1$-Lipschitz, its unique root is $x = 1$, and it satisfies local non-constancy with modulus $\nu(h) = h/8$. Yet at $x = 3$ it dips to $\eta$ — as small as you please — while sitting a full distance $2$ from the only root. **No implication of the form "$|f(x)|$ small $\Rightarrow$ $x$ near a root" follows from local non-constancy alone.** A small value is weak evidence; a sign change is strong evidence. Cash in the bracket.
+One rational comparison, at an index computed from the gap, and the case split is resolved. The two alternatives may overlap — that is exactly why the test can be effective — but *some* true alternative is always returned. The same idea gives a location principle: for rationals $a < b$ and any real $x$, one comparison at an index with $\frac{4}{m+1} \le b - a$ decides "$a < x$" or "$x < b$". You cannot decide $x \le a$ versus $a < x$; you can always decide the overlapping version, and in practice the overlapping version is all anyone needs.
 
----
+What you cannot do is bound the work in advance:
 
-### Suprema, and the price of an oracle
+> **Theorem (no uniform witness bound).** For every $N$ there are reals $x < y$ for which no index $n \le N$ witnesses the inequality.
 
-Every nonempty bounded set of reals has a supremum. The classical proof asks, for rational $q$, "is $q$ an upper bound?" — exactly the undecidable question. The constructive move is to *assume the oracle as data*. A set $S$ is **located** if it comes with a procedure $L$ such that for rationals $p < q$: a `true` answer certifies $q$ as an upper bound; a `false` answer produces a member of $S$ above $p$. Both may hold — the gap between $p$ and $q$ gives room — and that overlap is what makes locatedness obtainable in practice.
-
-With this datum the supremum is computed by a **trisection search**: from $[p,q]$, query at $m_1 = p + \frac{q-p}{3}$ and $m_2 = p + \frac{2(q-p)}{3}$, keeping $[p, m_2]$ on `true` and $[m_1, q]$ on `false`. Either way the width shrinks by exactly $2/3$.
-
-> **Theorem (constructive least upper bound).** A nonempty, bounded, located set has a least upper bound, enclosed at stage $n$ by explicitly computed rationals whose separation is exactly $\left(\frac{2}{3}\right)^n (b_0 - a_0)$; and the supremum is itself a Bishop real.
-
-The accounting is honest: the classical decision "is $q$ an upper bound?" manufactures a located datum for free, so the constructive principle is classically equivalent to ordinary completeness. Its entire content is the extra datum — stated openly rather than smuggled in.
-
-**Is $2/3$ any good?** No. Generalise the step: query at fractions $\alpha < \beta$, keeping $[p, p + \beta(q-p)]$ on `true` and $[p + \alpha(q-p), q]$ on `false`. The enclosure invariant survives for every $0 < \alpha < \beta < 1$, with contraction factor exactly $\max(\beta, 1 - \alpha)$. Trisection is $\alpha = \frac13, \beta = \frac23$, giving $\frac23$; but $\alpha = \frac25$, $\beta = \frac12$ gives $\frac35$.
-
-> **Theorem (optimal one-query contraction).** Every one-query scheme has contraction factor strictly greater than $\frac12$; and for every $\eta > 0$ some scheme achieves a factor below $\frac12 + \eta$.
-
-The lower bound is a two-line pigeonhole: if $\beta \le \frac12$ then $\alpha < \frac12$, so $1 - \alpha > \frac12$; otherwise $\beta > \frac12$. Near-optimal schemes crowd both query points symmetrically around the midpoint. The infimum $\frac12$ is the information-theoretic limit — one bit per query, one halving per bit — and it is not attained, because the two query points must be *distinct*: the oracle needs a gap to be honest about. The algorithm pays a strictly positive, arbitrarily small tax for the very ambiguity that makes it implementable.
+The example is embarrassingly simple: $x = 0$ and $y = \frac{1}{N+1}$. The inequality is true; the certificate lives beyond index $N$. Comparing reals is decidable *eventually* and never *uniformly*, and this single sentence is the precise content of the folklore that "you can't decide equality of real numbers".
 
 ---
 
-### What it all adds up to
+## Part V. The Intermediate Value Theorem, in three acts
 
-Strip away the philosophy and constructive analysis is a discipline of *bookkeeping*. Classical analysis proves things exist. Constructive analysis proves them with a receipt: here is the sequence, here is the modulus, here is the index at which you may stop.
+Now the main event. In Bishop's framework a continuous function on $[a,b]$ is not merely continuous: it comes with a **modulus of uniform continuity**, an explicit map $\omega$ from accuracies to accuracies such that
+$$|x - y| \le \omega(\varepsilon) \implies |f(x) - f(y)| \le \varepsilon .$$
 
-It is not free. Equality becomes a definition on data. Trichotomy is downgraded to an overlapping cotransitivity. The intermediate value theorem splits into an approximate half that is always true and an exact half paid for with a slope bound. Suprema demand a locatedness oracle that classical mathematics hands out invisibly.
+### Act 1: the approximate theorem, which is true and computable
 
-But the payoff is not merely philosophical purity. It is *sharpness*. Because the constants are on the table, you can ask whether they are the right ones — and get answers. The factor $\varepsilon/c$ is attained and cannot be improved. The diagonal shift $n \mapsto 2n+1$ cannot be dropped. The trisection ratio $2/3$ can be improved to anything above $1/2$ but not to $1/2$ itself. The sign-change bracket beats the value bound, and an explicit function proves it.
+> **Theorem (approximate IVT with explicit modulus).** Let $f$ have modulus $\omega$ on $[a,b]$ with $f(a) \le 0 \le f(b)$. Fix $\varepsilon > 0$ and any $N \ge 1$ with mesh $\frac{b-a}{N} \le \omega(\varepsilon)$. Then among the $N+1$ grid points $a + k\frac{b-a}{N}$ there is one where $|f| \le \varepsilon$.
 
-None of these questions is even *expressible* in a development that only asserts existence. That is the dividend of insisting that every number know where it is — and how well it knows it. Numbers, on this view, are not discovered in a Platonic warehouse; they are made. And a thing that is made can be inspected, measured, optimised — and improved.
+The proof is a finite search and the witness is explicit: take $k^\ast$ to be the *largest* index with $f \le 0$ at that grid point. If $k^\ast = N$ then $f(b) \le 0 \le f(b)$, so $f(b) = 0$ and we are done exactly. Otherwise the next grid point has $f > 0$, the two are one mesh apart, so the modulus gives $f(\text{grid } k^\ast{+}1) - f(\text{grid } k^\ast) \le \varepsilon$; since the left value is $\le 0$ and the right is $> 0$, the left value is at least $-\varepsilon$. Hence $|f| \le \varepsilon$ there. No search over the reals, no appeal to completeness, no choice: $N+1$ evaluations and a comparison.
+
+### Act 2: the exact theorem is false — and here is the machine that breaks it
+
+Can we upgrade $|f(x)| \le \varepsilon$ to $f(r) = 0$? Not constructively, and the obstruction is a beautiful one due to Bishop. Consider the *shelf family*, parametrised by $t \in [-1,1]$ and defined on $[0,3]$:
+$$S_t(x) \;=\; \min\big(x - 1,\; \max(t,\; x-2)\big).$$
+Picture it: a ramp rising to height $0$ at $x=1$, then a flat shelf at height $t$ across $[1,2]$, then a ramp rising again after $x=2$. Every member is $1$-Lipschitz — so they all share the modulus $\omega(\varepsilon) = \varepsilon$, uniformly in $t$ — and every member satisfies $S_t(0) \le 0 \le S_t(3)$. The approximate theorem applies to the whole family with a mesh depending on $\varepsilon$ alone.
+
+But where is the root? If $t > 0$, the shelf sits above zero and the only root is $x = 1$. If $t < 0$, the shelf sits below zero and the only root is $x = 2$. At $t = 0$ the whole shelf is a root. So as the parameter passes through zero, the root *teleports* from $1$ to $2$.
+
+> **Theorem (no continuous root selector).** There is no continuous function $t \mapsto r(t)$ on $[-1,1]$ with $S_t(r(t)) = 0$ for all $t$.
+
+The argument is a lovely piece of judo. Such an $r$ would have $r(1) = 1$ and $r(-1) = 2$, so by the *classical* Intermediate Value Theorem applied to $r$ itself, $r$ takes every value in $[1,2]$ — in particular both $3/2$ and $7/4$. But a root strictly between $1$ and $2$ forces the parameter to be exactly $0$: at $t=0$, and only there, does the shelf lie at height zero. So $r(0) = 3/2$ and $r(0) = 7/4$ simultaneously. Contradiction.
+
+Since every constructively defined function $\mathbb{R} \to \mathbb{R}$ is continuous, no constructive procedure can extract exact roots from these data. And the failure is not marginal — it is total:
+
+> **Theorem (quantitative failure).** Let $r$ be *any* choice of a root of $S_t$ for each $t \in [-1,1]$ — continuous or not, definable or not. For every $\eta > 0$, the oscillation of $r$ on the parameters with $|t| \le \eta$ is at least $1$.
+
+Because every root of every $S_t$ lies in $[1,2]$, and just inside any window around $0$ there are parameters of both signs, forcing the values $1$ and $2$ to both be attained. No selector is even approximately continuous at the critical parameter. The obstruction is a jump of unit size that cannot be shrunk by any choice whatsoever.
+
+### Act 3: the exact theorem, rescued by a slope
+
+What exactly did the shelf family exploit? Flatness. $S_0$ is constant on $[1,2]$, so knowing that $|f|$ is small tells you nothing about where you are. Forbid that quantitatively and everything comes back.
+
+Say $f$ has **slope bound $c > 0$** on $[a,b]$ if $f(y) - f(x) \ge c(y-x)$ whenever $x \le y$ in $[a,b]$ — the function increases at rate at least $c$.
+
+> **Theorem (constructive IVT with explicit modulus).** Let $f$ have modulus $\omega$ and slope bound $c > 0$ on $[a,b]$, with $f(a) \le 0 \le f(b)$. Then $f$ has a unique root $r$, and for every desired accuracy $\delta > 0$, any grid of mesh at most $\omega(c\delta)$ contains a point within $\delta$ of $r$ — found by the same finite search as before. The modulus of the root is $\delta \mapsto \omega(c\delta)$.
+
+The heart is a one-line estimate that deserves to be better known:
+
+> **Lemma (root modulus).** Under a slope bound $c$, if $f(r) = 0$ and $|f(x)| \le \varepsilon$, then $|x - r| \le \varepsilon/c$.
+
+Small value implies small distance, at the exchange rate $1/c$. Run the grid search at accuracy $c\delta$ and you land within $\delta$ of the root. Uniqueness is the case $\varepsilon = 0$. And the root itself can be packaged as a Bishop real: its $n$-th rational approximation is literally one of the grid points, an explicitly computed rational.
+
+Is the factor $1/c$ the truth, or an artifact? It is the truth, and one need only look at $f(x) = cx$ on $[-1,1]$, whose root is $0$ and whose slope bound is exactly $c$. The point $x = \varepsilon/c$ has $|f(x)| = \varepsilon$ and sits at distance *exactly* $\varepsilon/c$ from the root. Hence no constant $\kappa < 1$ can replace the $1$ in $\varepsilon/c$: the estimate is attained, and sharp.
+
+### A coda: the search already knows more than it says
+
+Here is a pleasant surprise buried in the same grid search. The estimate above uses the *size* of $|f|$ to locate the root — that is what needs the slope bound. But the search also produces a *bracket*: a consecutive pair of grid points with $f \le 0$ on the left and $f > 0$ on the right. And a bracket locates a root all by itself.
+
+> **Theorem (bracketing).** For $f$ with a modulus of uniform continuity on $[a,b]$ and $f(a) \le 0 \le f(b)$, and *no* non-degeneracy hypothesis at all, the sign-change grid search returns a grid point within one mesh $\frac{b-a}{N}$ of a genuine root.
+
+The accuracy of the *location* is the mesh itself. Of course, the root produced is a classical one — finding the bracket is effective, but pinning the root inside it needs the classical theorem — which is exactly the boundary this whole subject is mapping.
+
+Finally, one might hope to weaken the slope bound to Bishop's more permissive *local non-constancy*: on every interval of length $h$, the function attains absolute value at least $\nu(h)$ for some explicit $\nu$. It is not enough. Take
+$$D_\eta(x) \;=\; \min\big(x-1,\; |x-3| + \eta\big)$$
+on $[0,4]$. It is $1$-Lipschitz, its only root is $x = 1$, and it satisfies local non-constancy with the explicit modulus $\nu(h) = h/8$. Yet $D_\eta(3) = \eta$ — a false alarm as small as you like — at distance $2$ from the only root. The near-miss is real. So the passage from "$|f(x)|$ is small" to "$x$ is near a root" is a strictly stronger requirement than local non-constancy, and the slope bound in the theorem above is not laziness.
+
+---
+
+## Part VI. Suprema, and a race between search strategies
+
+One more pillar. Classically every nonempty bounded set of reals has a least upper bound. The classical proof decides, for a rational $q$, whether $q$ is an upper bound — a question no algorithm can answer in general. Bishop's replacement demands that the decision be supplied as part of the data.
+
+> **Definition (located set).** A set $S$ is *located* if it comes with a procedure $L$ such that for rationals $p < q$: if $L(p,q)$ answers *yes*, then $q$ is an upper bound of $S$; if it answers *no*, then some member of $S$ exceeds $p$.
+
+The two alternatives may both be true — the procedure must simply return one that is correct. This overlapping form is precisely what makes such oracles obtainable in practice. (Assume the classical decision "is $q$ an upper bound?" and you get a located datum for free, so the constructive principle is classically just completeness again: all the content is in the extra datum.)
+
+From it, the supremum is *computed*, by a search that maintains a rational enclosure $p_n \le \sup S \le q_n$. Bishop's version trisects: query the oracle at the two interior trisection points; on *yes* keep $[p, p + \frac23(q-p)]$, on *no* keep $[p + \frac13(q-p), q]$. Either way the width is exactly $\frac23$ of what it was, so
+$$q_n - p_n = \left(\tfrac{2}{3}\right)^n (q_0 - p_0)$$
+on the nose. Take the first stage narrower than $\frac{1}{k+1}$ and its left endpoint as the $k$-th approximation, and the supremum is itself a Bishop real.
+
+But is $2/3$ the right rate? Formulate the general one-query scheme: pick fractions $\alpha < \beta$, query the oracle at $p + \alpha(q-p)$ and $p + \beta(q-p)$, keep $[p, p+\beta(q-p)]$ on *yes* and $[p+\alpha(q-p), q]$ on *no*. The enclosure invariant survives for every such choice, and the worst-case contraction factor is
+$$\max\big(\beta,\; 1-\alpha\big).$$
+Bishop's trisection is $\alpha = \frac13, \beta = \frac23$, giving $\max(\frac23,\frac23) = \frac23$. But nothing forces the two query points to be symmetric about the midpoint! Take $\alpha = \frac{2}{5}$, $\beta = \frac{1}{2}$: the factor is $\max(\frac12, \frac35) = \frac35 < \frac23$. **Trisection is not optimal.** Ten steps of the faster search beat ten steps of trisection by a factor of more than three.
+
+How far can this go? Exactly to one half, and no further:
+
+> **Theorem.** For every $\alpha < \beta$, the contraction factor $\max(\beta, 1-\alpha)$ is strictly greater than $\frac12$. But for every $\eta > 0$ there is a choice — take $\alpha = \frac12 - \frac{t}{2}$, $\beta = \frac12 + \frac{t}{2}$ for small $t$ — whose factor is below $\frac12 + \eta$.
+
+The reason is transparent once you see it: a single query splits the interval at two points, and the two possible answers keep the left $\beta$-portion or the right $(1-\alpha)$-portion. To make both small you must push $\beta$ down and $\alpha$ up, but $\alpha < \beta$ is required for the query to be legitimate — the oracle needs a genuine gap to work in. In the limit the two query points collide at the midpoint and each answer halves the interval, but that limit is unreachable: the oracle has nothing to compare. One half is the infimum of what a single yes/no question about a located set can buy you, and it is never attained.
+
+That last fact is a small, sharp piece of information theory hiding inside a constructive existence proof — which is, in a sense, the whole moral.
+
+---
+
+## Why this matters outside the seminar room
+
+The obvious reading is philosophical: constructive analysis is classical analysis with the non-computable steps flagged. That is true and it is not the interesting part.
+
+The interesting part is that **the flags are quantitative**. Every theorem above carries a number. The approximate root is found in $N+1$ function evaluations with $N$ determined by the modulus. The root's accuracy converts to function accuracy at the exchange rate $1/c$, and that rate is exactly attained. The supremum search contracts by $3/5$ per oracle call, not $2/3$, and no scheme of its kind can beat $1/2$. The completeness diagonal needs index $2n+1$ and would fail at $n$, with an explicit two-line counterexample.
+
+This is the language that numerical analysis and computer algebra actually speak. When a computer algebra system represents an algebraic number, it stores something very like a regular sequence and an interval enclosure. When a root-finder reports convergence, the honest statement is the bracketing theorem, not the classical Intermediate Value Theorem. When an interval-arithmetic library multiplies two enclosures, it computes a bound on each factor and shifts precision accordingly — which is exactly the $M = B_x + B_y$ index shift. Bishop was not describing a restricted mathematics. He was describing the mathematics that runs, and insisting that its proofs be written in a form that says so.
+
+And the shelf function is the standing reminder of why one should care. It is $1$-Lipschitz. It is as tame as a function can be. It changes sign. Its root is a real number that exists, that any student can locate on a picture — and that no algorithm, no continuous rule, no choice function of any kind can track as the picture is nudged. The gap between *there is* and *here is* is not a philosopher's quibble. It is a flat shelf, two units wide, sitting at height zero.

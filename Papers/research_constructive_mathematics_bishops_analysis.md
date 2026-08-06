@@ -1,4 +1,4 @@
-# Bishop's Constructive Analysis with Explicit Moduli: Completeness, the Intermediate Value Theorem, and Sharp Constants
+# Bishop's Constructive Analysis: Explicit Moduli, Sharp Constants, and the Cost of the Intermediate Value Theorem
 
 **Author:** Aristotle
 **Date:** 2026-08-06
@@ -7,543 +7,527 @@
 
 ## Abstract
 
-We present a self-contained quantitative development of Errett Bishop's constructive real analysis, organised around the principle that every existence claim must be accompanied by an explicit modulus. Real numbers are taken to be *regular sequences of rationals*, sequences $x : \mathbb{N} \to \mathbb{Q}$ satisfying $|x_m - x_n| \le \frac{1}{m+1} + \frac{1}{n+1}$, so that the modulus of Cauchyness is part of the datum rather than an object produced by a non-effective search. We establish: (i) the explicit approximation bound $|\hat x - x_n| \le \frac{1}{n+1}$ relating a regular sequence to the classical real it denotes; (ii) the equivalence of Bishop equality $|x_n - y_n| \le \frac{2}{n+1}$ with equality of denoted reals, whence the quotient of regular sequences by Bishop equality is in canonical bijection with $\mathbb{R}$; (iii) constructive completeness by the shifted diagonal $n \mapsto x^{(2n+1)}_{2n+1}$, together with the error estimate $|L - \hat x^{(k)}| \le \frac{1}{k+1}$, and an explicit family showing that the shift cannot be removed; (iv) the witnessed order relation, its extensional agreement with the classical order, an explicit cotransitivity algorithm requiring one rational comparison at any index $m$ with $\frac{1}{m+1} \le \frac{g}{8}$ where $g$ is the certified rational gap, and the impossibility of any uniform bound on the witness index; (v) the approximate intermediate value theorem by an explicit finite grid search, and the exact intermediate value theorem under a positive slope bound $c$, with root modulus $\delta \mapsto \omega(c\delta)$ and the sharp displacement estimate $|x - r| \le \varepsilon / c$; (vi) a Brouwerian counterexample — Bishop's shelf family — showing that no continuous, hence no constructive, root selector exists, strengthened to the statement that *every* root selector has oscillation at least $1$ in every neighbourhood of the critical parameter; (vii) a bracketing refinement showing that the sign-change grid search locates a genuine root to within one mesh *without any non-degeneracy hypothesis*, together with an explicit function proving that Bishop's local non-constancy hypothesis is by itself insufficient for any "small value implies near a root" principle; and (viii) the constructive least upper bound principle for located sets via a trisection search with exact geometric rate $(2/3)^n$, together with a complete analysis of the general one-query search: the contraction factor of the scheme with query fractions $\alpha < \beta$ is exactly $\max(\beta, 1-\alpha)$, trisection is therefore not optimal, and the optimal contraction factor of a one-query located search is the infimum $\tfrac12$, which is never attained.
+We develop the elementary theory of Errett Bishop's constructive real numbers — regular sequences of rationals carrying their own modulus of Cauchyness — and use it to give a fully quantitative account of the constructive intermediate value theorem, the constructive least upper bound principle, and the constructive order relation. Four groups of results are established.
 
-**Keywords:** constructive analysis, Bishop reals, regular sequences, explicit modulus, intermediate value theorem, Brouwerian counterexample, located sets, cotransitivity, computable reals.
+**(i) The number system.** A regular sequence $x : \mathbb{N} \to \mathbb{Q}$ with $|x_m - x_n| \le \frac{1}{m+1} + \frac{1}{n+1}$ denotes a real $\hat x$ with the exact error bound $|\hat x - x_n| \le \frac{1}{n+1}$; Bishop's definitional equality $|x_n - y_n| \le \frac{2}{n+1}$ coincides with equality of denoted reals, every real is denoted, and the quotient is in canonical bijection with $\mathbb{R}$. Constructive completeness holds with an explicit diagonal $L_n = (x_{2n+1})_{2n+1}$ and the rate $|L - x_k| \le \frac{1}{k+1}$; we show by an explicit two-parameter family that the index shift $n \mapsto 2n+1$ cannot be dropped. Arithmetic is given in computable form, with the index shift $n \mapsto 2n+1$ for sums and $n \mapsto (B_x+B_y)(n+1)$ for products, where $B_x = \lceil |x_0|\rceil + 2$; a concrete computable irrational denoting $\sqrt2$ is exhibited.
+
+**(ii) The order.** Bishop positivity ($\exists n,\ x_n > \frac{1}{n+1}$) and strict order ($\exists n,\ x_n + \frac{2}{n+1} < y_n$) agree extensionally with the classical relations. Cotransitivity is proved in explicit form: from a witness $n$ for $x < y$ with certified rational gap $g$, any index $m$ with $\frac{1}{m+1} \le g/8$ reduces the disjunction $x<z \vee z<y$ to a single decidable rational comparison against the midpoint. A location lemma decides $a < x$ or $x < b$ for rationals $a<b$ by one comparison. We prove that the witness index admits no uniform bound.
+
+**(iii) The intermediate value theorem.** For $f$ with an explicit modulus of uniform continuity $\omega$ on $[a,b]$ and $f(a)\le 0\le f(b)$, a finite grid search of mesh $\le \omega(\varepsilon)$ produces a grid point with $|f|\le\varepsilon$. Under a positive slope bound $c$, an $\varepsilon$-approximate root lies within $\varepsilon/c$ of the exact root; we prove this constant is attained and that no factor $\kappa<1$ improves it. The resulting root is presented as a Bishop real whose approximations are grid points, with root modulus $\delta \mapsto \omega(c\delta)$. Separately we prove a *bracketing* theorem: with **no** non-degeneracy hypothesis, the sign-change search returns a grid point within one mesh of a genuine root. Bishop's shelf family $S_t(x)=\min(x-1,\max(t,x-2))$ admits no continuous root selector, and — a quantitative strengthening — **no** selector whatsoever has oscillation below $1$ on any neighbourhood of the critical parameter. An explicit $1$-Lipschitz function shows that local non-constancy with an explicit modulus does not suffice to convert small values into small distances.
+
+**(iv) Suprema and the cost of a query.** For located sets, an explicit one-query search computes the supremum. The general scheme with query fractions $\alpha<\beta$ preserves the enclosure invariant and contracts by exactly $\max(\beta,1-\alpha)$ per oracle call. Bishop's trisection ($\frac23$) is therefore **not optimal**: $\alpha=\frac25,\beta=\frac12$ contracts by $\frac35$. We prove $\frac12$ is a strict lower bound for every one-query scheme and an infimum that is approached but never attained.
+
+**Keywords.** Constructive analysis, Bishop reals, regular sequence, explicit modulus, intermediate value theorem, cotransitivity, located set, Brouwerian counterexample.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The problem of effective content
+### 1.1 The problem
 
-Classical analysis proves existence statements. It proves that a Cauchy sequence converges, that a continuous function changing sign has a root, that a bounded set has a supremum. What it typically does not do is say *how* — at what rate, from what index, with what precision. For most mathematical purposes this is harmless. For any purpose in which the objects must be produced rather than merely contemplated, it is fatal.
+The classical intermediate value theorem asserts that a continuous $f : [a,b] \to \mathbb{R}$ with $f(a) \le 0 \le f(b)$ has a zero. Its standard proof forms $\sup\{x : f(x) \le 0\}$ and invokes the order-completeness of $\mathbb{R}$. That step is not effective: deciding, for a rational $q$, whether $q$ is an upper bound of a set of reals is not in general decidable, and the resulting supremum carries no rate of approximation.
 
-The gap is easy to locate precisely. The classical definition of a Cauchy sequence reads
-$$\forall \varepsilon > 0 \; \exists N \; \forall m, n \ge N : |x_m - x_n| < \varepsilon,$$
-and the object $N$ — the *modulus of convergence* — is bound by an unrestricted existential quantifier. A classical proof may produce that $N$ by any means whatsoever, including by an appeal to excluded middle over an undecidable predicate. There is then no function $\varepsilon \mapsto N(\varepsilon)$ available, and no way to compute the limit to a prescribed accuracy.
+Bishop's programme, initiated in *Foundations of Constructive Analysis* (1967) and refined in Bishop–Bridges, *Constructive Analysis* (1985), reconstructs analysis under two disciplines:
 
-Bishop's response, developed in *Foundations of Constructive Analysis* (1967) and its revision with Bridges (*Constructive Analysis*, 1985), was to relocate the modulus from the conclusion into the datum. This paper carries that programme out for the core of elementary real analysis, and pushes it one step further: once every constant is explicit, one can ask whether the constants are *optimal*, and in several cases we answer.
+- **(D1)** every existence assertion is accompanied by a construction of the witness;
+- **(D2)** every convergence assertion is accompanied by an explicit rate.
 
-### 1.2 What is new here
+The programme is not a restriction to a smaller universe of numbers. As we prove below, the constructive reals are in bijection with the classical reals. What changes is the *content of a proof*: theorems become algorithms with proved error bounds, and the theorems that cannot be made into algorithms become visible, with counterexamples that measure exactly how badly they fail.
 
-Much of the content below is Bishop's, restated with full quantitative detail. The following results are, to our knowledge, either new or not standard in the literature, and they are the ones we regard as the contribution of this paper:
+### 1.2 Contributions
 
-1. **Necessity of the diagonal shift.** An explicit family of regular sequences of reals for which the unshifted diagonal $n \mapsto x^{(n)}_n$ fails regularity, at the concrete indices $m=0$, $n=1$ (Theorem 4.4).
-2. **Sharpness of the root modulus.** The displacement bound $|x - r| \le \varepsilon/c$ is attained, and no constant $\kappa < 1$ may replace the implicit $1$ (Theorems 7.6, 7.7).
-3. **Quantitative failure of the exact intermediate value theorem.** Every root selector for the shelf family, continuous or not, has oscillation at least $1$ on every neighbourhood of the critical parameter (Theorem 8.4).
-4. **Bracketing beats bounding.** The sign-change grid search locates a genuine root to within one mesh with no non-degeneracy hypothesis (Theorem 9.1); and local non-constancy, even with an explicit modulus, supports no "small value implies near a root" principle (Theorem 9.3).
-5. **The optimal one-query contraction ratio.** The contraction factor of the general one-query located search is exactly $\max(\beta, 1-\alpha)$; trisection's $2/3$ is not optimal; the infimum over all one-query schemes is $\tfrac12$, and it is not attained (Theorems 11.2, 11.3, 11.4).
-6. **No uniform witness bound for the order.** For every $N$ there are Bishop reals $x < y$ with no witness index $\le N$ (Theorem 6.6).
+This paper gives a self-contained development with, in each case, the sharpest constant we can prove:
 
-### 1.3 Conventions
+1. The number system and constructive completeness, with a proof that Bishop's diagonal shift is *necessary* (§2, §3).
+2. Computable arithmetic with the canonical bound and index shifts, and a concrete computable irrational (§4).
+3. The constructive order with explicit cotransitivity, explicit location, and a proof that the witness index is not uniformly bounded (§5).
+4. The approximate intermediate value theorem with explicit modulus, the exact theorem under a slope bound with a *sharp* root modulus $\varepsilon/c$, the presentation of the root as a Bishop real, and a hypothesis-free bracketing theorem (§6).
+5. Brouwerian counterexamples: no continuous root selector, no selector of oscillation $<1$, and the insufficiency of local non-constancy (§7).
+6. Constructive suprema for located sets, the general one-query search, the exact contraction law $\max(\beta,1-\alpha)$, the suboptimality of trisection, and the infimum $\frac12$ (§8).
 
-Throughout, $\mathbb{Q}$ and $\mathbb{R}$ denote the rationals and the classical reals. We work in a classical metatheory: our theorems are classical statements *about* constructive data, and we make the comparison with classical analysis explicit rather than tacit. This is the standard way to make sharpness claims precise — one wants to prove, for instance, that no constant below $1$ works, and such a statement is naturally a classical one about the space of all functions.
-
-We write $\hat x$ for the classical real denoted by a regular sequence $x$, and $x_n$ for its $n$-th rational approximation.
+Notation: throughout, $\mathbb{Q}$ and $\mathbb{R}$ are the rationals and the classical reals; $\lceil\,\cdot\,\rceil$ is the ceiling to a natural number. We reason classically *about* the constructive objects, so that the results have unambiguous meaning as statements of ordinary mathematics; the constructive content resides in the fact that every witness asserted to exist is exhibited by an explicit formula or a finite search.
 
 ---
 
-## 2. Regular sequences of rationals
+## 2. The constructive real numbers
 
-### 2.1 The definition
+### 2.1 Regular sequences
 
-**Definition 2.1 (regular sequence).** A **regular sequence of rationals**, or **Bishop real**, is a sequence $x : \mathbb{N} \to \mathbb{Q}$ satisfying
-$$|x_m - x_n| \;\le\; \frac{1}{m+1} + \frac{1}{n+1} \qquad \text{for all } m, n \in \mathbb{N}.$$
+> **Definition 2.1 (regular sequence).** A **regular sequence of rationals** is a function $x : \mathbb{N} \to \mathbb{Q}$, written $n \mapsto x_n$, such that
+> $$|x_m - x_n| \;\le\; \frac{1}{m+1} + \frac{1}{n+1} \qquad \text{for all } m,n \in \mathbb{N}.$$
+> We call such an $x$ a **Bishop real**, and $x_n$ its $n$-th approximation.
 
-The intended reading: $x_n$ is an approximation, accurate to within $1/(n+1)$, of the number the sequence denotes; the inequality expresses that these accuracy claims are mutually consistent. The essential point is that the modulus is *fixed by the definition*, not obtained by a search. No choice principle and no non-effective extraction is involved. If the function $n \mapsto x_n$ is computable, the real number is a computable object in the most concrete sense: a program that on input $n$ outputs a rational within $1/(n+1)$ of the intended value.
+The condition is a Cauchy condition with the modulus already chosen: to obtain accuracy $\varepsilon$ one takes $n \ge 1/\varepsilon$, with no appeal to an existential quantifier and no choice principle. This is the whole point of the definition.
 
-(Bishop indexes from $1$ with bound $\frac1m + \frac1n$; the shift to $\frac{1}{m+1} + \frac{1}{n+1}$ is a matter of avoiding division by zero and changes nothing.)
+> **Lemma 2.2.** Every regular sequence is a Cauchy sequence in $\mathbb{R}$; indeed for $m,n \ge N$ one has $|x_m - x_n| \le \frac{2}{N+1} \to 0$.
 
-**Lemma 2.2.** The real sequence $n \mapsto x_n$ (regarded in $\mathbb{R}$) is Cauchy, with $|x_n - x_m| \le \frac{2}{N+1}$ whenever $n, m \ge N$.
+*Proof.* Monotonicity of $t \mapsto 1/(t+1)$ applied to both terms of Definition 2.1. $\square$
 
-*Proof.* Immediate from Definition 2.1 and the monotonicity of $t \mapsto 1/(t+1)$. $\square$
+> **Definition 2.3.** $\hat x := \lim_{n} x_n \in \mathbb{R}$ is the real number **denoted** by $x$.
 
-**Definition 2.3.** $\hat x := \lim_{n} x_n \in \mathbb{R}$, the classical real **denoted** by $x$.
+### 2.2 The explicit modulus
 
-### 2.2 The explicit approximation bound
+> **Theorem 2.4 (explicit modulus).** For every Bishop real $x$ and every $n$,
+> $$|\hat x - x_n| \;\le\; \frac{1}{n+1}.$$
 
-**Theorem 2.4 (explicit modulus).** For every regular sequence $x$ and every $n$,
-$$|\hat x - x_n| \;\le\; \frac{1}{n+1}.$$
+*Proof sketch.* Fix $n$ and let $j \to \infty$ in $|x_j - x_n| \le \frac{1}{j+1} + \frac{1}{n+1}$. The left side converges to $|\hat x - x_n|$ by continuity of $t \mapsto |t - x_n|$, the right side to $\frac{1}{n+1}$. $\square$
 
-*Proof sketch.* Fix $n$ and let $j \to \infty$ in the regularity inequality $|x_j - x_n| \le \frac{1}{j+1} + \frac{1}{n+1}$. The left side converges to $|\hat x - x_n|$ by continuity of $t \mapsto |t - x_n|$; the right side converges to $\frac{1}{n+1}$. Weak inequalities are preserved in the limit. $\square$
+Theorem 2.4 is the reason the theory is usable: the *index is the error bar*. It has an equally useful converse, which is the workhorse for identifying denoted reals.
 
-This is the theorem that makes the whole development usable: to compute $\hat x$ to accuracy $\varepsilon$ it suffices to evaluate $x_n$ for any $n \ge \lceil 1/\varepsilon \rceil$. There is no search and no waiting phase.
-
-The following converse is the standard tool for identifying the real denoted by a constructed sequence.
-
-**Theorem 2.5 (identification criterion).** Let $x$ be a regular sequence, $r \in \mathbb{R}$ and $C \ge 0$. If $|x_n - r| \le \frac{C}{n+1}$ for all $n$, then $\hat x = r$.
+> **Theorem 2.5 (recognition).** Let $x$ be a Bishop real, $r \in \mathbb{R}$, and $C \ge 0$. If $|x_n - r| \le \frac{C}{n+1}$ for all $n$, then $\hat x = r$.
 
 *Proof sketch.* By Theorem 2.4 and the triangle inequality, $|\hat x - r| \le \frac{1+C}{n+1}$ for every $n$; letting $n \to \infty$ gives $|\hat x - r| = 0$. $\square$
 
+Note the tolerance for an arbitrary constant $C$: one need not verify the canonical rate exactly, only up to a multiplicative constant. Every identification in §4 uses this.
+
+We record the two-sided form, used constantly in §5:
+$$x_n - \tfrac{1}{n+1} \;\le\; \hat x \;\le\; x_n + \tfrac{1}{n+1}. \tag{2.1}$$
+
 ### 2.3 Equality
 
-Constructively one cannot define $x = y$ as $\hat x = \hat y$: the limits are not antecedently available, only the sequences are. Bishop therefore defines equality on the data.
+Constructively, equality of reals is not decidable and cannot be defined as the negation of apartness. Bishop takes it as a primitive relation on regular sequences.
 
-**Definition 2.6 (Bishop equality).** Regular sequences $x, y$ are **equal**, written $x \approx y$, if
-$$|x_n - y_n| \;\le\; \frac{2}{n+1} \qquad \text{for all } n.$$
+> **Definition 2.6 (Bishop equality).** $x \equiv y$ iff $|x_n - y_n| \le \frac{2}{n+1}$ for all $n$.
 
-The tolerance $2/(n+1)$ is forced: it is the sum of the two error bars, so it is the largest tolerance under which two sequences denoting the same number are guaranteed to satisfy the condition, and the smallest under which they always do.
+The tolerance $\frac{2}{n+1}$ is exactly the sum of the two error bars, so $x \equiv y$ says: *at every index, the approximations are as close as their own accuracy allows*.
 
-**Theorem 2.7.** $x \approx y$ if and only if $\hat x = \hat y$.
+> **Theorem 2.7 (equality is extensional).** $x \equiv y \iff \hat x = \hat y$.
 
-*Proof sketch.* ($\Rightarrow$) By two applications of Theorem 2.4 and one of the hypothesis,
-$$|\hat x - \hat y| \le |\hat x - x_n| + |x_n - y_n| + |y_n - \hat y| \le \frac{1}{n+1} + \frac{2}{n+1} + \frac{1}{n+1} = \frac{4}{n+1}$$
-for every $n$; let $n \to \infty$. ($\Leftarrow$) Conversely $|x_n - y_n| \le |x_n - \hat x| + |\hat y - y_n| \le \frac{2}{n+1}$ using $\hat x = \hat y$. $\square$
+*Proof sketch.* ($\Rightarrow$) By two applications of Theorem 2.4 and the triangle inequality through $x_n$ and $y_n$,
+$$|\hat x - \hat y| \le |\hat x - x_n| + |x_n - y_n| + |y_n - \hat y| \le \tfrac{1}{n+1} + \tfrac{2}{n+1} + \tfrac{1}{n+1} = \tfrac{4}{n+1},$$
+and $n \to \infty$ gives $\hat x = \hat y$. ($\Leftarrow$) Route through the common value: $|x_n - y_n| \le |x_n - \hat x| + |\hat x - y_n| \le \frac{2}{n+1}$. $\square$
 
-**Corollary 2.8.** $\approx$ is an equivalence relation.
+> **Corollary 2.8.** $\equiv$ is an equivalence relation. In particular transitivity — the constructive "$3\varepsilon$" argument — holds.
 
-Transitivity is not a triviality in this setting — it is the classical "$3\varepsilon$" argument, and it is exactly what Theorem 2.7 packages. We write $\mathbf{R}_{\mathrm{B}}$ for the quotient of regular sequences by $\approx$.
+> **Theorem 2.9 (surjectivity).** Every $r \in \mathbb{R}$ is denoted by a Bishop real.
 
-### 2.4 Nothing is lost
+*Proof sketch.* Choose $q_n \in \mathbb{Q}$ with $|r - q_n| < \frac{1}{2(n+1)}$ (density of $\mathbb{Q}$). Then
+$$|q_m - q_n| \le |q_m - r| + |r - q_n| < \tfrac{1}{2(m+1)} + \tfrac{1}{2(n+1)} \le \tfrac{1}{m+1} + \tfrac{1}{n+1},$$
+so $q$ is regular, and $|q_n - r| \le \frac{1}{n+1}$ gives $\hat q = r$ by Theorem 2.5. $\square$
 
-**Theorem 2.9 (surjectivity).** Every $r \in \mathbb{R}$ is denoted by some regular sequence.
+> **Theorem 2.10 (comparison with classical analysis).** Let $\mathbf{R}_{\mathrm{B}}$ be the set of Bishop reals modulo $\equiv$. The map $[x] \mapsto \hat x$ is a well-defined bijection $\mathbf{R}_{\mathrm{B}} \to \mathbb{R}$.
 
-*Proof sketch.* For each $n$ choose $q_n \in \mathbb{Q}$ with $|r - q_n| < \frac{1}{2(n+1)}$ (density of $\mathbb{Q}$). Then
-$$|q_m - q_n| \le |q_m - r| + |r - q_n| < \frac{1}{2(m+1)} + \frac{1}{2(n+1)} \le \frac{1}{m+1} + \frac{1}{n+1},$$
-so $q$ is regular, and by Theorem 2.5 (with $C = 1$) it denotes $r$. $\square$
+*Proof.* Well-definedness and injectivity are Theorem 2.7 in its two directions; surjectivity is Theorem 2.9. $\square$
 
-**Theorem 2.10 (comparison with classical analysis).** The map $[x] \mapsto \hat x$ is a bijection $\mathbf{R}_{\mathrm{B}} \to \mathbb{R}$.
-
-*Proof.* Well-definedness and injectivity are Theorem 2.7; surjectivity is Theorem 2.9. $\square$
-
-Theorem 2.10 is the precise sense in which constructive analysis is not a theory of *fewer* numbers. It is the same numbers, presented with more information; what differs is the admissible operations on that presentation.
+Theorem 2.10 is the precise sense in which nothing is lost. The constructive presentation is a presentation of the *same* structure, in which every element carries its own approximation data.
 
 ---
 
-## 3. Computable arithmetic
+## 3. Constructive completeness, and the necessity of the shift
 
-Each arithmetic operation must be defined so that the result is again regular, and the index shifts required are the quantitative heart of the matter.
+> **Definition 3.1.** A sequence $x : \mathbb{N} \to \{\text{Bishop reals}\}$ is a **regular sequence of reals** if
+> $$|\widehat{x_k} - \widehat{x_l}| \;\le\; \frac{1}{k+1} + \frac{1}{l+1} \qquad \text{for all } k,l.$$
 
-**Definition 3.1 (rational constants and negation).** For $q \in \mathbb{Q}$, the constant sequence $(q)_n = q$ is regular and denotes $q$. For a regular $x$, $(-x)_n = -x_n$ is regular and denotes $-\hat x$.
+> **Theorem 3.2 (constructive completeness).** Let $x$ be a regular sequence of reals. Define
+> $$L_n \;:=\; \big(x_{2n+1}\big)_{2n+1} \in \mathbb{Q}.$$
+> Then $L$ is a regular sequence of rationals, and its denoted real $\widehat L$ satisfies the explicit rate
+> $$|\widehat L - \widehat{x_k}| \;\le\; \frac{1}{k+1} \qquad \text{for all } k.$$
 
-**Definition 3.2 (addition).** $(x + y)_n := x_{2n+1} + y_{2n+1}$.
+*Proof sketch.* **Regularity.** Write $j' = 2j+1$, so $\frac{1}{j'+1} = \frac{1}{2(j+1)} = \frac12 \cdot \frac{1}{j+1}$. By Theorem 2.4, $|(x_{m'})_{m'} - \widehat{x_{m'}}| \le \frac{1}{2}\cdot\frac{1}{m+1}$, and likewise at $n$. Chaining through $\widehat{x_{m'}}$ and $\widehat{x_{n'}}$ and using Definition 3.1,
+$$|L_m - L_n| \le \tfrac12\tfrac{1}{m+1} + \left(\tfrac12\tfrac{1}{m+1} + \tfrac12\tfrac{1}{n+1}\right) + \tfrac12\tfrac{1}{n+1} = \tfrac{1}{m+1} + \tfrac{1}{n+1}.$$
+**Rate.** For any $n$, chain $\widehat L \to L_n \to \widehat{x_{2n+1}} \to \widehat{x_k}$, picking up $\frac{1}{n+1}$, $\frac{1}{2(n+1)}$ and $\frac{1}{2(n+1)} + \frac{1}{k+1}$ respectively, giving $|\widehat L - \widehat{x_k}| \le \frac{2}{n+1} + \frac{1}{k+1}$; let $n \to \infty$. $\square$
 
-**Proposition 3.3.** $x + y$ is regular and denotes $\hat x + \hat y$.
+The shift $n \mapsto 2n+1$ halves each error bar, and each of the two chains above consumes exactly one half. It is therefore not slack:
 
-*Proof sketch.* $|(x+y)_m - (x+y)_n| \le |x_{2m+1} - x_{2n+1}| + |y_{2m+1} - y_{2n+1}| \le 2\left(\frac{1}{2(m+1)} + \frac{1}{2(n+1)}\right) = \frac{1}{m+1} + \frac{1}{n+1}$, using $(2k+1)+1 = 2(k+1)$. The identification of the limit is Theorem 2.5. $\square$
+> **Theorem 3.3 (the shift is necessary).** There is a regular sequence of reals $x$ for which the **unshifted** diagonal $n \mapsto (x_n)_n$ is *not* a regular sequence.
 
-The shift $n \mapsto 2n+1$ is exactly the halving of the error budget needed to accommodate two summands.
+*Proof.* Take
+$$(x_k)_n \;=\; \frac{1}{k+1} + (-1)^k \cdot \frac{1}{n+1}.$$
+Each $x_k$ is regular: the difference of two of its terms is $(-1)^k\big(\frac{1}{m+1} - \frac{1}{n+1}\big)$, whose absolute value is at most $\max\big(\frac{1}{m+1}, \frac{1}{n+1}\big) \le \frac{1}{m+1} + \frac{1}{n+1}$. By Theorem 2.5 (with $C=1$), $\widehat{x_k} = \frac{1}{k+1}$. Since $\big|\frac{1}{k+1} - \frac{1}{l+1}\big| \le \frac{1}{k+1} + \frac{1}{l+1}$ trivially (both terms are positive), $x$ is a regular sequence of reals. But
+$$(x_0)_0 = 1 + 1 = 2, \qquad (x_1)_1 = \tfrac12 - \tfrac12 = 0,$$
+so $|(x_0)_0 - (x_1)_1| = 2 > \tfrac{3}{2} = \tfrac{1}{0+1} + \tfrac{1}{1+1}$. $\square$
 
-Multiplication requires a bound on the factors, since errors are amplified multiplicatively.
+For the same family the shifted diagonal behaves correctly: since $\widehat{x_k} = \frac1{k+1} \to 0$, Theorem 3.2 forces $\widehat L = 0$ (any $\varepsilon>0$ is beaten by taking $k$ with $\frac{2}{k+1} < \varepsilon$). So the family separates the two constructions rather than merely breaking one.
 
-**Definition 3.4 (canonical bound).** $B(x) := \lceil |x_0| \rceil + 2$, where $\lceil \cdot \rceil$ is the ceiling into $\mathbb{N}$.
+---
 
-**Lemma 3.5.** $|x_n| \le B(x)$ for all $n$.
+## 4. Computable arithmetic
+
+A Bishop real is a function $\mathbb{N}\to\mathbb{Q}$; if that function is computable, so is the real. The operations below are ordinary recursive definitions, and each is verified against the classical operation via Theorem 2.5.
+
+### 4.1 Constants and negation
+
+The constant sequence $(q)_n = q$ is regular (its differences vanish) and denotes $q$. Negation, $(-x)_n = -x_n$, requires no shift, and $\widehat{-x} = -\hat x$.
+
+### 4.2 Addition
+
+Termwise addition fails: $|(x_m+y_m)-(x_n+y_n)|$ is bounded only by $2(\frac{1}{m+1}+\frac{1}{n+1})$. The remedy is to compute each summand to twice the required accuracy.
+
+> **Definition 4.1.** $(x + y)_n := x_{2n+1} + y_{2n+1}$.
+
+> **Proposition 4.2.** $x+y$ is regular and $\widehat{x+y} = \hat x + \hat y$.
+
+*Proof sketch.* With $\frac{1}{(2j+1)+1} = \frac12\cdot\frac{1}{j+1}$, the triangle inequality gives
+$$|(x+y)_m - (x+y)_n| \le |x_{2m+1}-x_{2n+1}| + |y_{2m+1}-y_{2n+1}| \le 2\left(\tfrac12\tfrac{1}{m+1} + \tfrac12\tfrac{1}{n+1}\right),$$
+which is exactly the required bound. For the value, $|(x+y)_n - (\hat x + \hat y)| \le \frac12\frac1{n+1} + \frac12\frac1{n+1} = \frac{1}{n+1}$, and Theorem 2.5 applies with $C=1$. $\square$
+
+### 4.3 Multiplication and the canonical bound
+
+Multiplication amplifies error by the size of the factors, so the shift must depend on a bound.
+
+> **Definition 4.3 (canonical bound).** $B_x := \lceil |x_0| \rceil + 2 \in \mathbb{N}$.
+
+> **Lemma 4.4.** $|x_n| \le B_x$ for every $n$, and $B_x \ge 1$.
 
 *Proof.* $|x_n| \le |x_0| + |x_n - x_0| \le |x_0| + \frac{1}{n+1} + 1 \le \lceil|x_0|\rceil + 2$. $\square$
 
-**Definition 3.6 (multiplication).** With $M := B(x) + B(y)$ and the index map $\mu(n) := M(n+1)$,
-$$(x \cdot y)_n := x_{\mu(n)} \cdot y_{\mu(n)}.$$
+> **Definition 4.5.** With $M := B_x + B_y$ set $\mu(n) := M(n+1)$ and
+> $$(x \cdot y)_n := x_{\mu(n)} \cdot y_{\mu(n)}.$$
 
-**Proposition 3.7.** $x \cdot y$ is regular and denotes $\hat x \, \hat y$.
+> **Proposition 4.6.** $x\cdot y$ is regular and $\widehat{x\cdot y} = \hat x \cdot \hat y$.
 
-*Proof sketch.* Write $ab - a'b' = a(b - b') + b'(a - a')$ with $a = x_{\mu(m)}$ etc.; bound $|a|, |b'|$ by $B(x), B(y)$ and each difference by the regularity of $x$, $y$. The resulting bound is $M\left(\frac{1}{\mu(m)+1} + \frac{1}{\mu(n)+1}\right)$, and the arithmetic inequality $M \cdot \frac{1}{M(n+1)+1} \le \frac{1}{n+1}$ closes the estimate. $\square$
+*Proof sketch.* Write $a=\mu(m)$, $b=\mu(n)$ and split
+$$x_ay_a - x_by_b = x_a(y_a-y_b) + y_b(x_a-x_b),$$
+so that by Lemma 4.4,
+$$|x_ay_a - x_by_b| \;\le\; (B_x + B_y)\left(\tfrac{1}{a+1}+\tfrac{1}{b+1}\right).$$
+The key arithmetic fact is
+$$M \cdot \frac{1}{\mu(n)+1} = \frac{M}{M(n+1)+1} \;\le\; \frac{1}{n+1},$$
+valid since $M \ge 1$; applying it at $m$ and at $n$ yields the regularity bound. For the value one splits $(x\cdot y)_n - \hat x\hat y = x_a(y_a - \hat y) + \hat y(x_a - \hat x)$ and uses $\frac{1}{a+1}\le\frac{1}{n+1}$ (because $\mu(n)\ge n$), obtaining the hypothesis of Theorem 2.5 with $C = B_x + |\hat y|$. $\square$
 
-The shift is proportional to the magnitude of the factors — larger numbers require more precision before their product is trustworthy — which is the correct behaviour of a floating-point-free exact arithmetic.
+### 4.4 A concrete computable irrational
 
-**Example 3.8 (a computable irrational).** Define
-$$\sqrt2_n \;:=\; \frac{\lfloor \sqrt{2(n+1)^2} \rfloor}{n+1} \in \mathbb{Q},$$
-the numerator being the integer square root. Then $\sqrt2$ is a regular sequence, $\widehat{\sqrt 2}^{\,2} = 2$, and its terms are literally computable: $\sqrt2_4 = 7/5$ and $\sqrt2_{99} = 141/100$.
+> **Definition 4.7.** $\displaystyle (\sqrt2)_n := \frac{\big\lfloor \sqrt{2(n+1)^2}\big\rfloor}{n+1}$, where $\lfloor\sqrt{\cdot}\rfloor$ denotes the integer square root.
 
-*Proof sketch.* The integer square root satisfies $s \le \sqrt{2m^2} < s+1$ with $s = \lfloor\sqrt{2m^2}\rfloor$, hence $|s/m - \sqrt2| \le 1/m$; with $m = n+1$ this gives $|\sqrt2_n - \sqrt2| \le \frac{1}{n+1}$, from which regularity follows by the triangle inequality through $\sqrt 2$, and the identification by Theorem 2.5. $\square$
+> **Proposition 4.8.** $\sqrt2$ as defined is a regular sequence of rationals, and its denoted real is the classical $\sqrt2$; in particular $(\widehat{\sqrt2})^2 = 2$.
 
----
+*Proof sketch.* Put $s = \lfloor\sqrt{2m^2}\rfloor$, so $s^2 \le 2m^2 < (s+1)^2$, whence $s \le \sqrt2\,m < s+1$ and therefore
+$$\left|\frac{s}{m} - \sqrt2\right| \le \frac{1}{m}. \tag{4.1}$$
+With $m = n+1$ this reads $|(\sqrt2)_n - \sqrt2| \le \frac{1}{n+1}$; regularity follows by the triangle inequality through $\sqrt2$, and Theorem 2.5 with $C=1$ identifies the denoted real. $\square$
 
-## 4. Constructive completeness
-
-**Definition 4.1.** A sequence $x^{(0)}, x^{(1)}, \ldots$ of Bishop reals is a **regular sequence of reals** if
-$$\bigl|\hat x^{(k)} - \hat x^{(l)}\bigr| \le \frac{1}{k+1} + \frac{1}{l+1} \qquad \text{for all } k, l.$$
-
-Any Cauchy sequence with a known modulus can be reindexed into this normal form, so the definition costs no generality.
-
-**Theorem 4.2 (constructive completeness).** Let $x^{(\bullet)}$ be a regular sequence of reals. Then
-$$L_n \;:=\; x^{(2n+1)}_{\,2n+1}$$
-defines a regular sequence of rationals, and its denoted real $\hat L$ satisfies the explicit estimate
-$$\bigl|\hat L - \hat x^{(k)}\bigr| \;\le\; \frac{1}{k+1} \qquad \text{for every } k.$$
-
-*Proof sketch.* Regularity: by Theorem 2.4, $|x^{(2j+1)}_{2j+1} - \hat x^{(2j+1)}| \le \frac{1}{2j+2} = \frac{1}{2}\cdot\frac{1}{j+1}$. Hence
-$$|L_m - L_n| \le \tfrac12\tfrac{1}{m+1} + \bigl|\hat x^{(2m+1)} - \hat x^{(2n+1)}\bigr| + \tfrac12\tfrac{1}{n+1} \le \tfrac12\tfrac{1}{m+1} + \left(\tfrac12\tfrac{1}{m+1} + \tfrac12\tfrac{1}{n+1}\right) + \tfrac12\tfrac{1}{n+1},$$
-which is exactly $\frac{1}{m+1} + \frac{1}{n+1}$. The rate: for any $n$,
-$$|\hat L - \hat x^{(k)}| \le |\hat L - L_n| + |L_n - \hat x^{(2n+1)}| + |\hat x^{(2n+1)} - \hat x^{(k)}| \le \frac{1}{n+1} + \frac{1}{2(n+1)} + \frac{1}{2(n+1)} + \frac{1}{k+1},$$
-and letting $n \to \infty$ leaves $\frac{1}{k+1}$. $\square$
-
-Note that the *shifted diagonal* is not an artefact of the proof; the following family shows it is forced.
-
-**Definition 4.3 (the witness family).** For $k \in \mathbb{N}$ let
-$$w^{(k)}_n \;:=\; \frac{1}{k+1} + (-1)^k \cdot \frac{1}{n+1}.$$
-
-Each $w^{(k)}$ is regular (the difference of two of its terms is $\pm\left(\frac{1}{m+1} - \frac{1}{n+1}\right)$, of absolute value at most $\max$ of the two, hence at most their sum), and $\hat w^{(k)} = \frac{1}{k+1}$. Since $\left|\frac{1}{k+1} - \frac{1}{l+1}\right| \le \frac{1}{k+1} + \frac{1}{l+1}$, the family is a regular sequence of reals.
-
-**Theorem 4.4 (the diagonal shift is necessary).** For the family $w^{(\bullet)}$, the *unshifted* diagonal $n \mapsto w^{(n)}_n$ is **not** a regular sequence: at $m = 0, n = 1$ its terms differ by $2$, whereas regularity permits at most $\frac{1}{1} + \frac{1}{2} = \frac32$.
-
-*Proof.* $w^{(0)}_0 = 1 + 1 = 2$ and $w^{(1)}_1 = \frac12 - \frac12 = 0$. $\square$
-
-**Theorem 4.5.** For the same family, the shifted diagonal converges to the correct limit: $\hat L = 0 = \lim_k \hat w^{(k)}$.
-
-*Proof sketch.* By Theorem 4.2, $|\hat L - \frac{1}{k+1}| \le \frac{1}{k+1}$ for every $k$, so $|\hat L| \le \frac{2}{k+1} \to 0$. $\square$
-
-The lesson is general: a constructive completeness theorem is a *formula*, and the formula must budget the two independent sources of error — the error of the $k$-th member as an approximation to the limit, and the error of its own $n$-th approximation — against a single allowance $1/(n+1)$. The factor $2$ is exactly the cost of two sources.
+The definition uses integer arithmetic only. For instance $(\sqrt2)_4 = 7/5$ and $(\sqrt2)_{99} = 141/100$, both exactly as (4.1) predicts.
 
 ---
 
-## 5. Continuity with an explicit modulus
+## 5. The constructive order
 
-**Definition 5.1.** A function $\omega : (0,\infty) \to (0,\infty)$ is a **modulus of uniform continuity** for $f$ on a set $S$ if for every $\varepsilon > 0$ we have $\omega(\varepsilon) > 0$ and
-$$x, y \in S, \; |x - y| \le \omega(\varepsilon) \;\Longrightarrow\; |f(x) - f(y)| \le \varepsilon.$$
+### 5.1 Definitions with positive content
 
-This is Bishop's definition of a continuous function on a compact interval: not the assertion that a tolerance exists, but a function producing it. Classically it is strictly stronger than continuity pointwise but coincides with uniform continuity on compacta; the point is the *presentation*.
+> **Definition 5.1.** For Bishop reals $x,y$:
+> - $x$ is **positive**, written $\mathrm{Pos}(x)$, iff $\exists n:\ x_n > \frac{1}{n+1}$;
+> - $x < y$ iff $\exists n:\ x_n + \frac{2}{n+1} < y_n$.
 
-**Proposition 5.2.** A function with a modulus of uniform continuity on $S$ is continuous on $S$.
+Both are existential statements about *rational* data, so a proof is a natural number together with a decidable rational inequality. From a witness one reads off a rational lower bound on the gap:
 
-Every $1$-Lipschitz function has the modulus $\omega = \mathrm{id}$; the linear function $x \mapsto cx$ ($c > 0$) has the modulus $\omega(\varepsilon) = \varepsilon/c$ and, as we shall use repeatedly, the slope bound $c$ of Definition 7.3.
+> **Definition 5.2.** $g_n(x,y) := y_n - x_n - \frac{2}{n+1} \in \mathbb{Q}$.
 
----
+> **Lemma 5.3.** If $n$ witnesses $x<y$ then $g_n(x,y) > 0$ and $g_n(x,y) \le \hat y - \hat x$.
 
-## 6. The constructive order
+*Proof.* By (2.1), $\hat x \le x_n + \frac1{n+1}$ and $\hat y \ge y_n - \frac1{n+1}$, so $\hat y - \hat x \ge y_n - x_n - \frac{2}{n+1}$. $\square$
 
-### 6.1 Witnessed positivity
+> **Theorem 5.4 (extensionality of the order).** $\mathrm{Pos}(x) \iff \hat x > 0$, and $x<y \iff \hat x < \hat y$.
 
-**Definition 6.1.** For a regular sequence $x$:
-$$x > 0 \;:\iff\; \exists\, n : \; x_n > \frac{1}{n+1}; \qquad\qquad x < y \;:\iff\; \exists\, n : \; x_n + \frac{2}{n+1} < y_n .$$
+*Proof sketch.* ($\Rightarrow$) is Lemma 5.3 (resp. its one-sided analogue). ($\Leftarrow$) Given $\hat y - \hat x > 0$, choose $n$ with $\frac{4}{n+1} < \hat y - \hat x$; then by (2.1),
+$$y_n - x_n \;\ge\; (\hat y - \tfrac1{n+1}) - (\hat x + \tfrac1{n+1}) \;>\; \tfrac{4}{n+1} - \tfrac{2}{n+1} = \tfrac{2}{n+1}. \qquad\square$$
 
-A proof of $x < y$ is thus a pair (index, rational inequality) — a certificate that can be checked by a finite computation. The margin $2/(n+1)$ is again the sum of the two error bars, and it is what makes the definition robust.
+Thus the constructive relations are not weaker as relations; they are *stronger as proofs*. Irreflexivity, transitivity and asymmetry follow at once from Theorem 5.4.
 
-**Theorem 6.2 (extensional agreement).** $x > 0 \iff \hat x > 0$, and $x < y \iff \hat x < \hat y$.
+### 5.2 Cotransitivity: the constructive substitute for trichotomy
 
-*Proof sketch.* ($\Rightarrow$) If $x_n > \frac{1}{n+1}$ then $\hat x \ge x_n - \frac{1}{n+1} > 0$ by Theorem 2.4. ($\Leftarrow$) If $\hat x > 0$, pick $n$ with $\frac{2}{n+1} < \hat x$; then $x_n \ge \hat x - \frac{1}{n+1} > \frac{1}{n+1}$. The relation $<$ reduces to positivity of the difference by the same two-sided estimate. $\square$
+Classically $x<y$ implies, for any $z$, that $x<z$ or $z<y$ (indeed both alternatives can hold). Constructively this must be *decided*, and it can be:
 
-Consequently $<$ is irreflexive, transitive and asymmetric — but these are now *theorems about certificates*, and the certificates must be recomputed at each step.
+> **Theorem 5.5 (cotransitivity, explicit form).** Let $n$ witness $x<y$, with gap $g := g_n(x,y) > 0$. Let $m$ be **any** index with $\frac{1}{m+1} \le \frac{g}{8}$. Then for every Bishop real $z$:
+> $$\frac{x_m + y_m}{2} \le z_m \;\Longrightarrow\; x < z \ \text{(witnessed at } m), \qquad z_m < \frac{x_m + y_m}{2} \;\Longrightarrow\; z < y \ \text{(witnessed at } m).$$
 
-### 6.2 Cotransitivity
+*Proof sketch.* First, the gap survives to index $m$: by Lemma 5.3 and (2.1) at $m$,
+$$y_m - x_m \;\ge\; (\hat y - \tfrac{1}{m+1}) - (\hat x + \tfrac{1}{m+1}) \;\ge\; g - \tfrac{2}{m+1} \;\ge\; g - \tfrac{g}{4} \;=\; \tfrac{3g}{4}. \tag{5.1}$$
+Second, the tolerance at $m$ is small: $\frac{2}{m+1} \le \frac{g}{4}$. Now if $z_m \ge \frac{x_m+y_m}{2}$ then, using (5.1),
+$$z_m - x_m \;\ge\; \frac{y_m - x_m}{2} \;\ge\; \frac{3g}{8} \;>\; \frac{g}{4} \;\ge\; \frac{2}{m+1},$$
+which is exactly the witness condition for $x<z$ at $m$. The other case is symmetric. $\square$
 
-Trichotomy is unavailable. Its constructive substitute is cotransitivity, and we give it in fully explicit form.
+The arithmetic above in fact only needs $\frac{1}{m+1} < g/6$; the constant $8$ is chosen for a clean non-strict hypothesis. Whether $6$ is optimal is stated as a conjecture in §10.
 
-**Definition 6.3 (certified gap).** If the index $n$ witnesses $x < y$, set
-$$g \;:=\; y_n - x_n - \frac{2}{n+1} \;\in\; \mathbb{Q}_{>0}.$$
+> **Corollary 5.6.** If $x<y$ then for every $z$, $x<z$ or $z<y$. (Choose any $m$ with $\frac1{m+1}\le g/8$; such $m$ exists and is computed from $g$.)
 
-**Lemma 6.4 (gap propagation).** If $\frac{1}{m+1} \le \frac{g}{8}$ then $y_m - x_m \ge \frac{3g}{4}$.
+### 5.3 Location between rationals
 
-*Proof sketch.* By Theorem 2.4, $\hat y - \hat x \ge g$ (the certified gap is a genuine lower bound on the real gap), while $x_m \le \hat x + \frac{1}{m+1}$ and $y_m \ge \hat y - \frac{1}{m+1}$. Hence $y_m - x_m \ge g - \frac{2}{m+1} \ge g - \frac{g}{4} = \frac{3g}{4}$. $\square$
+> **Theorem 5.7 (constructive location).** Let $a<b$ be rationals and $x$ a Bishop real. Let $m$ satisfy $\frac{4}{m+1} \le b-a$. Then
+> $$\frac{a+b}{2} \le x_m \;\Longrightarrow\; a < \hat x, \qquad x_m < \frac{a+b}{2} \;\Longrightarrow\; \hat x < b.$$
+> In particular $a<\hat x$ or $\hat x < b$, decided by one rational comparison.
 
-**Theorem 6.5 (cotransitivity, explicit form).** Let $n$ witness $x < y$ with certified gap $g$, and let $m$ be any index with $\frac{1}{m+1} \le \frac{g}{8}$. Then for every regular sequence $z$, the single decidable rational comparison
-$$z_m \;\ge\; \frac{x_m + y_m}{2} \quad ?$$
-decides between the two certificates
-$$x_m + \frac{2}{m+1} < z_m \qquad\text{and}\qquad z_m + \frac{2}{m+1} < y_m,$$
-so that $x < z$ or $z < y$.
+*Proof sketch.* If $x_m \ge \frac{a+b}{2}$ then by (2.1), $\hat x \ge \frac{a+b}{2} - \frac{1}{m+1} \ge \frac{a+b}{2} - \frac{b-a}{4} = a + \frac{b-a}{4} > a$. The other case is symmetric. $\square$
 
-*Proof sketch.* By Lemma 6.4, $y_m - x_m \ge \frac{3g}{4}$, and by hypothesis $\frac{2}{m+1} \le \frac{g}{4}$. If $z_m \ge \frac{x_m + y_m}{2}$ then $z_m - x_m \ge \frac{y_m - x_m}{2} \ge \frac{3g}{8} > \frac{g}{4} \ge \frac{2}{m+1}$; symmetrically in the other case. $\square$
+The classically trivial dichotomy $a<\hat x$ or $\hat x \le a$ is *not* available; Theorem 5.7 is its constructive replacement, and the price is the overlap on $(a,b)$.
 
-The disjunction is *overlapping*: both branches may hold, and this is exactly why the test is decidable. Insisting on the exclusive disjunction $x < z$ or $z \ge y$ reinstates the undecidable comparison.
+### 5.4 The order is not decidable at bounded precision
 
-The same technique yields **constructive location**: for rationals $a < b$ and any $x$, choose $n$ with $\frac{4}{n+1} \le b - a$ and compare $x_n$ with the midpoint $\frac{a+b}{2}$; one obtains $a < \hat x$ or $\hat x < b$. The classically trivial exclusive alternative "$a < \hat x$ or $\hat x \le a$" is not constructively available; the overlapping version is its replacement, and it is an algorithm.
+> **Theorem 5.8 (no uniform witness bound).** For every $N \in \mathbb{N}$ there exist Bishop reals $x<y$ such that no index $n \le N$ witnesses $x<y$.
 
-### 6.3 The witness cannot be bounded
+*Proof.* Take $x$ the constant $0$ and $y$ the constant $\frac{1}{N+1}$. Then $\hat x < \hat y$, so $x<y$ by Theorem 5.4. But for $n \le N$,
+$$x_n + \frac{2}{n+1} = \frac{2}{n+1} \;\ge\; \frac{2}{N+1} \;>\; \frac{1}{N+1} = y_n,$$
+so $n$ is not a witness. $\square$
 
-**Theorem 6.6 (no uniform witness bound).** For every $N \in \mathbb{N}$ there are Bishop reals $x < y$ such that **no** index $n \le N$ witnesses the inequality.
-
-*Proof.* Take $x$ the constant sequence $0$ and $y$ the constant sequence $\frac{1}{N+1}$; then $\hat x < \hat y$, so $x < y$ by Theorem 6.2. But for $n \le N$ we have $\frac{1}{N+1} \le \frac{1}{n+1} \le \frac{2}{n+1}$, so $x_n + \frac{2}{n+1} \ge \frac{2}{n+1} \ge y_n$, and $n$ is not a witness. $\square$
-
-This is the exact sense in which the constructive order, though extensionally the classical one (Theorem 6.2), is not decidable at any bounded precision. No algorithm inspecting a fixed finite number of approximations of $x$ and $y$ can decide the order.
-
----
-
-## 7. The intermediate value theorem
-
-### 7.1 The grid search
-
-**Definition 7.1.** For $a \le b$ and $N \ge 1$, the **grid points** are $\mathrm{gr}_k := a + k\frac{b-a}{N}$, $0 \le k \le N$; the **mesh** is $\frac{b-a}{N}$.
-
-**Theorem 7.2 (approximate intermediate value theorem).** Let $f$ have modulus of uniform continuity $\omega$ on $[a,b]$, with $f(a) \le 0 \le f(b)$. Let $\varepsilon > 0$ and let $N \ge 1$ satisfy $\frac{b-a}{N} \le \omega(\varepsilon)$. Then the **largest** index $k \le N$ with $f(\mathrm{gr}_k) \le 0$ satisfies
-$$|f(\mathrm{gr}_k)| \le \varepsilon .$$
-In particular, for every $\varepsilon > 0$ one can compute a point of $[a,b]$ at which $|f| \le \varepsilon$.
-
-*Proof sketch.* The set $S = \{k \le N : f(\mathrm{gr}_k) \le 0\}$ contains $0$ and is finite, so it has a maximum $k$. If $k = N$ then $f(b) \le 0 \le f(b)$ gives $f(b) = 0$ and the claim is trivial. Otherwise $k+1 \le N$ and $f(\mathrm{gr}_{k+1}) > 0$ by maximality. The two grid points are one mesh apart, hence within $\omega(\varepsilon)$, so $f(\mathrm{gr}_{k+1}) - f(\mathrm{gr}_k) \le \varepsilon$. Since $f(\mathrm{gr}_k) \le 0 < f(\mathrm{gr}_{k+1})$, we get $|f(\mathrm{gr}_k)| = -f(\mathrm{gr}_k) \le \varepsilon$. $\square$
-
-The search is finite, explicit, and free of any non-degeneracy hypothesis. It is the constructive content of the intermediate value theorem that always survives.
-
-### 7.2 From small values to small distances
-
-**Definition 7.3 (slope bound).** $f$ has **slope bound** $c$ on $S$ if
-$$x, y \in S,\; x \le y \;\Longrightarrow\; c\,(y - x) \le f(y) - f(x).$$
-
-For $c > 0$ this is an explicit quantitative form of "$f$ is nowhere locally constant and increasing".
-
-**Theorem 7.4 (root modulus).** Let $f$ have slope bound $c > 0$ on $[a,b]$, let $r \in [a,b]$ with $f(r) = 0$, and let $x \in [a,b]$ with $|f(x)| \le \varepsilon$. Then
-$$|x - r| \le \frac{\varepsilon}{c}.$$
-
-*Proof sketch.* If $r \le x$ then $c(x - r) \le f(x) - f(r) = f(x) \le \varepsilon$; if $x \le r$ then $c(r - x) \le f(r) - f(x) = -f(x) \le \varepsilon$. $\square$
-
-**Corollary 7.5 (uniqueness).** Under a positive slope bound the root is unique (take $\varepsilon = 0$).
-
-**Theorem 7.6 (constructive intermediate value theorem with explicit modulus).** Let $f$ have modulus $\omega$ and slope bound $c > 0$ on $[a,b]$, with $f(a) \le 0 \le f(b)$. Then $f$ has a unique root $r \in [a,b]$, and for every $\delta > 0$ and every $N \ge 1$ with $\frac{b-a}{N} \le \omega(c\delta)$, the grid search of Theorem 7.2 (run at accuracy $c\delta$) returns an index $k \le N$ with
-$$|\mathrm{gr}_k - r| \le \delta .$$
-The **modulus of the root** is therefore $\delta \mapsto \omega(c\,\delta)$.
-
-*Proof.* Existence of $r$ follows from continuity (Proposition 5.2) and the classical intermediate value theorem; uniqueness is Corollary 7.5. Apply Theorem 7.2 with $\varepsilon := c\delta$ to obtain a grid point with $|f| \le c\delta$, then Theorem 7.4 to convert this into $|\mathrm{gr}_k - r| \le c\delta/c = \delta$. $\square$
-
-Running this construction over $\delta = \frac{1}{2(n+1)}$ presents the root itself as a Bishop real: there is a regular sequence of rationals denoting $r$, each of whose terms is an explicitly computed *rational* grid point $a + k\frac{b-a}{N}$ with $a, b \in \mathbb{Q}$.
-
-### 7.3 Sharpness of the constant
-
-**Theorem 7.7 (the root modulus is attained).** For every $c > 0$ and every $\varepsilon > 0$ with $\varepsilon/c \le 1$ there is a function $f$ on $[-1,1]$ with an explicit modulus of uniform continuity and slope bound $c$, a root $r$, and a point $x$ with $|f(x)| \le \varepsilon$ and
-$$|x - r| = \frac{\varepsilon}{c} \quad \text{exactly}.$$
-
-*Proof.* Take $f(x) = cx$, with modulus $\omega(\varepsilon) = \varepsilon/c$ and slope bound $c$ (both with equality). Then $r = 0$, and $x = \varepsilon/c$ has $|f(x)| = \varepsilon$ and $|x - r| = \varepsilon/c$. $\square$
-
-**Theorem 7.8 (no smaller constant).** There is no $\kappa < 1$ such that for all $f, a, b, c > 0, \varepsilon > 0, r, x$: a slope bound $c$, a root $r$, and $|f(x)| \le \varepsilon$ imply $|x - r| \le \kappa \frac{\varepsilon}{c}$.
-
-*Proof.* Instantiate with $f(x) = x$ on $[-1,1]$, $c = \varepsilon = 1$, $r = 0$, $x = 1$: the hypothesis gives $1 \le \kappa$, contradicting $\kappa < 1$. $\square$
-
-So $\varepsilon/c$ is exactly the right exchange rate between a value bound and a distance bound.
+This is the exact sense in which the order, though extensionally the classical order (Theorem 5.4), is not decidable from bounded data: any algorithm that inspects only $x_0,\dots,x_N$ and $y_0,\dots,y_N$ can be defeated.
 
 ---
 
-## 8. The Brouwerian counterexample
+## 6. The intermediate value theorem
 
-### 8.1 The shelf family
+### 6.1 Continuity with a modulus
 
-**Definition 8.1.** For $t \in [-1,1]$ define $\mathrm{shelf}_t : [0,3] \to \mathbb{R}$ by
-$$\mathrm{shelf}_t(x) \;=\; \min\bigl(x - 1,\; \max(t,\; x - 2)\bigr).$$
+> **Definition 6.1.** $\omega : \mathbb{R}\to\mathbb{R}$ is a **modulus of uniform continuity** for $f$ on $s \subseteq \mathbb{R}$ if for every $\varepsilon>0$: $\omega(\varepsilon)>0$, and for all $x,y \in s$ with $|x-y|\le\omega(\varepsilon)$ one has $|f(x)-f(y)|\le\varepsilon$.
 
-**Proposition 8.2.** Each $\mathrm{shelf}_t$ is $1$-Lipschitz (hence has the explicit modulus $\omega = \mathrm{id}$), and satisfies $\mathrm{shelf}_t(0) \le 0 \le \mathrm{shelf}_t(3)$. Consequently Theorem 7.2 applies **uniformly in $t$**: for every $\varepsilon > 0$ and every $N$ with $3/N \le \varepsilon$, some grid point of $[0,3]$ satisfies $|\mathrm{shelf}_t| \le \varepsilon$, and the required $N$ does not depend on $t$.
+Every function with a modulus is uniformly continuous on $s$ in the ordinary sense; the modulus is the constructive *datum* rather than a consequence. Every Lipschitz function with constant $1$ has the modulus $\omega = \mathrm{id}$; the map $x \mapsto cx$ with $c>0$ has $\omega(\varepsilon)=\varepsilon/c$.
 
-*Proof sketch.* Lipschitzness follows from $|\min(a,b) - \min(a',b')| \le \max(|a-a'|,|b-b'|)$ and the corresponding inequality for $\max$, applied to the two translates of the identity. The sign conditions are direct: $\mathrm{shelf}_t(0) \le 0 - 1 < 0$ and $\mathrm{shelf}_t(3) = \min(2, \max(t,1)) \ge 0$. $\square$
+Write $G_k := a + k\frac{b-a}{N}$ for the $k$-th point of the uniform grid of $N$ subintervals of $[a,b]$, so $G_0=a$, $G_N=b$, $G_{k+1}-G_k = \frac{b-a}{N}$, and $G_k \in [a,b]$ for $k \le N$.
 
-The root structure is completely explicit:
+### 6.2 The approximate theorem
 
-**Lemma 8.3.**
-- If $t > 0$ then the unique root of $\mathrm{shelf}_t$ is $x = 1$; in particular $\mathrm{shelf}_1(x) = 0 \Rightarrow x = 1$.
-- If $t < 0$ then the unique root is $x = 2$; in particular $\mathrm{shelf}_{-1}(x) = 0 \Rightarrow x = 2$.
-- If $1 < x < 2$ and $\mathrm{shelf}_t(x) = 0$ then $t = 0$.
-- Every root of every $\mathrm{shelf}_t$ lies in $[1,2]$.
-- $\mathrm{shelf}_0$ vanishes identically on $[1,2]$; consequently it admits **no** positive slope bound on $[0,3]$.
+> **Theorem 6.2 (approximate IVT with explicit modulus).** Let $a \le b$, let $\omega$ be a modulus for $f$ on $[a,b]$, let $\varepsilon>0$, let $N \ge 1$ with mesh $\frac{b-a}{N} \le \omega(\varepsilon)$, and suppose $f(a)\le 0 \le f(b)$. Then there is $k \le N$ with $|f(G_k)| \le \varepsilon$.
 
-*Proof sketch.* All five are finite case analyses on which of the two branches of $\min$ and of $\max$ is active. For the last: $\mathrm{shelf}_0(1) = \mathrm{shelf}_0(2) = 0$, so a slope bound $c$ would force $c \cdot 1 \le 0$. $\square$
+*Proof.* Let $S := \{k \le N : f(G_k) \le 0\}$. It is nonempty ($0 \in S$ since $f(G_0)=f(a)\le 0$) and finite; let $k^\ast := \max S$.
 
-### 8.2 No continuous root selector
+*Case $k^\ast = N$.* Then $f(b) \le 0 \le f(b)$, so $f(G_{k^\ast}) = 0$ and $|f(G_{k^\ast})| = 0 \le \varepsilon$.
 
-**Theorem 8.4 (Brouwerian counterexample).** There is no continuous $r : [-1,1] \to \mathbb{R}$ with $\mathrm{shelf}_t(r(t)) = 0$ for all $t \in [-1,1]$.
+*Case $k^\ast < N$.* Then $k^\ast+1 \le N$ and $k^\ast+1 \notin S$, i.e. $f(G_{k^\ast+1}) > 0$. Both grid points lie in $[a,b]$ and $|G_{k^\ast} - G_{k^\ast+1}| = \frac{b-a}{N} \le \omega(\varepsilon)$, so $|f(G_{k^\ast+1}) - f(G_{k^\ast})| \le \varepsilon$; combined with $f(G_{k^\ast+1}) > 0$ this gives $f(G_{k^\ast}) \ge -\varepsilon$. Since also $f(G_{k^\ast}) \le 0$, we conclude $|f(G_{k^\ast})| \le \varepsilon$. $\square$
 
-*Proof.* Suppose such an $r$ exists. By Lemma 8.3, $r(1) = 1$ and $r(-1) = 2$. By the classical intermediate value theorem applied to the continuous function $r$ on $[-1,1]$, the interval $[1,2]$ is contained in the image of $r$; in particular there are $t_0, t_1$ with $r(t_0) = 3/2$ and $r(t_1) = 7/4$. Both values lie strictly between $1$ and $2$, so by Lemma 8.3 $t_0 = t_1 = 0$. But then $3/2 = r(0) = 7/4$, a contradiction. $\square$
+The witness is explicit and the cost is $N+1$ evaluations. An admissible $N$ always exists: any $N > \frac{b-a}{\omega(\varepsilon)}$ will do.
 
-Since every constructively definable function $\mathbb{R} \to \mathbb{R}$ is continuous, no constructive proof of the exact intermediate value theorem can exist: the root is not a continuous — let alone computable — function of the data $(f, a, b)$. What rescues Theorem 7.6 is precisely the hypothesis that Lemma 8.3 shows this family to violate: a positive slope bound.
+> **Corollary 6.3.** Under the hypotheses of Theorem 6.2 minus the choice of $N$: for every $\varepsilon>0$ there is $x \in [a,b]$ with $|f(x)|\le\varepsilon$.
 
-### 8.3 The failure is maximal
+### 6.3 From small values to small distances
 
-Theorem 8.4 excludes *continuous* selectors. In fact no selector whatsoever is even approximately continuous at the critical parameter.
+> **Definition 6.4 (slope bound).** $f$ has **slope bound $c$** on $s$ if for all $x \le y$ in $s$, $\;f(y)-f(x) \ge c\,(y-x)$.
 
-**Theorem 8.5 (quantitative failure).** Let $r : [-1,1] \to \mathbb{R}$ be **any** function with $\mathrm{shelf}_t(r(t)) = 0$ for all $t$. Then for every $\eta > 0$,
-$$\sup\, r\bigl([-1,1] \cap [-\eta,\eta]\bigr) \;-\; \inf\, r\bigl([-1,1] \cap [-\eta,\eta]\bigr) \;\ge\; 1 .$$
+> **Theorem 6.5 (root modulus).** Let $c>0$ be a slope bound for $f$ on $[a,b]$, let $r \in [a,b]$ with $f(r)=0$, and let $x \in [a,b]$ with $|f(x)|\le\varepsilon$. Then
+> $$|x-r| \;\le\; \frac{\varepsilon}{c}.$$
 
-*Proof sketch.* Set $s = \min(\eta, 1) > 0$. Both $s$ and $-s$ lie in $[-1,1] \cap [-\eta,\eta]$. By Lemma 8.3, $r(s) = 1$ and $r(-s) = 2$. All values of $r$ lie in $[1,2]$, so the image is bounded and the supremum is at least $2$ while the infimum is at most $1$. $\square$
+*Proof.* If $r \le x$, the slope bound gives $c(x-r) \le f(x)-f(r) = f(x) \le \varepsilon$, hence $x - r \le \varepsilon/c$. If $x \le r$, it gives $c(r-x) \le f(r)-f(x) = -f(x) \le \varepsilon$, hence $r - x \le \varepsilon/c$. $\square$
 
-The hypothesis is not vacuous: the discontinuous selector $r(t) = 2$ for $t < 0$ and $r(t) = 1$ otherwise satisfies it. The point is that *every* selector jumps by at least $1$ arbitrarily close to $t = 0$.
+> **Corollary 6.6 (uniqueness).** Under a positive slope bound, $f$ has at most one root in $[a,b]$. (Take $\varepsilon=0$ in Theorem 6.5.)
 
----
+> **Theorem 6.7 (sharpness of the root modulus).** For every $c>0$ and every $\varepsilon>0$ with $\varepsilon/c \le 1$ there is a function $f$ on $[-1,1]$ with a modulus of uniform continuity, slope bound $c$, $f(-1)\le 0 \le f(1)$, a root $r \in [-1,1]$, and a point $x \in [-1,1]$ with $|f(x)|\le\varepsilon$ and
+> $$|x-r| \;=\; \frac{\varepsilon}{c}.$$
+> Consequently no constant $\kappa<1$ makes "$|f(x)|\le\varepsilon \Rightarrow |x-r| \le \kappa\varepsilon/c$" valid.
 
-## 9. Bracketing versus bounding
+*Proof.* Take $f(x)=cx$, which has modulus $\omega(\eta)=\eta/c$ and slope bound exactly $c$; $r=0$ and $x=\varepsilon/c$. Then $|f(x)|=\varepsilon$ and $|x-r|=\varepsilon/c$. For the second claim, specialise to $c=\varepsilon=1$, $f(x)=x$ on $[-1,1]$, $r=0$, $x=1$: any valid $\kappa$ would give $1 \le \kappa$. $\square$
 
-Theorem 7.6 converts a value bound into a distance bound using the slope bound, at the price of the factor $1/c$. We now show that the grid search actually delivers something stronger *for free*, and that the value bound alone is genuinely too weak.
+### 6.4 The exact theorem, with explicit modulus
 
-**Theorem 9.1 (bracketing form of the grid search).** Let $f$ have a modulus of uniform continuity on $[a,b]$ with $f(a) \le 0 \le f(b)$, and let $N \ge 1$. Then the largest grid index $k$ with $f(\mathrm{gr}_k) \le 0$ satisfies: there exists a genuine root $r \in [a,b]$ of $f$ with
-$$|\mathrm{gr}_k - r| \le \frac{b-a}{N}.$$
-**No** non-degeneracy hypothesis is required.
+> **Theorem 6.8 (constructive IVT with explicit modulus).** Let $a\le b$, $c>0$, let $\omega$ be a modulus for $f$ on $[a,b]$, let $c$ be a slope bound for $f$ on $[a,b]$, and let $f(a)\le 0\le f(b)$. Then there is $r \in [a,b]$ with $f(r)=0$, and for every $\delta>0$ and every $N\ge1$ with mesh $\frac{b-a}{N} \le \omega(c\delta)$, some grid point satisfies
+> $$|G_k - r| \;\le\; \delta.$$
+> The **modulus of the root** is therefore $\delta \mapsto \omega(c\delta)$.
 
-*Proof sketch.* If $k = N$ then $f(b) = 0$ and $r = b = \mathrm{gr}_k$. Otherwise $f(\mathrm{gr}_k) \le 0 < f(\mathrm{gr}_{k+1})$, and continuity on $[\mathrm{gr}_k, \mathrm{gr}_{k+1}]$ supplies a root $r$ in that interval, which has length exactly one mesh. $\square$
+*Proof.* Existence of $r$ follows from continuity and the sign change. Given $\delta$ and an admissible $N$, apply Theorem 6.2 with $\varepsilon := c\delta$ to obtain $k \le N$ with $|f(G_k)| \le c\delta$; then Theorem 6.5 gives $|G_k - r| \le c\delta/c = \delta$. $\square$
 
-The accuracy of the *location* is the mesh itself, with no $1/c$ factor. The information used is the **sign change**, not the smallness of $|f|$ — the two are different, and the difference is real:
+> **Theorem 6.9 (the root is a Bishop real).** Under the hypotheses of Theorem 6.8 with rational endpoints $a,b$, there is a Bishop real $x$ such that $\hat x \in [a,b]$, $f(\hat x)=0$, and each approximation $x_n$ is a **rational grid point** $a + k\frac{b-a}{N}$ for explicitly computed $N \ge 1$ and $k \le N$.
 
-**Definition 9.2 (local non-constancy).** $f$ satisfies **local non-constancy with modulus $\nu$** if $\nu(h) > 0$ for $h > 0$ and, for every $h > 0$ and every interval $[p,q]$ with $q - p \ge h$, there is $z \in [p,q]$ with $|f(z)| \ge \nu(h)$.
+*Proof sketch.* For each $n$, apply Theorem 6.8 with $\delta = \frac{1}{2(n+1)}$ to obtain a rational grid point $q_n$ with $|q_n - r| \le \frac{1}{2(n+1)}$. Then
+$$|q_m-q_n| \le |q_m-r| + |r-q_n| \le \tfrac{1}{2(m+1)}+\tfrac{1}{2(n+1)} \le \tfrac{1}{m+1}+\tfrac{1}{n+1},$$
+so $q$ is regular; and $|q_n - r| \le \frac{1}{n+1}$ identifies $\hat q = r$ by Theorem 2.5. $\square$
 
-This is Bishop's weakest standard non-degeneracy hypothesis. It does not suffice.
+So the root is not merely asserted to exist: it is produced as a regular sequence of rationals, each term of which the finite grid search of Theorem 6.2 computes.
 
-**Theorem 9.3 (local non-constancy is insufficient).** For every $\delta \in (0,2)$ there is a $1$-Lipschitz function $f$ on $[0,4]$ with $f(0) \le 0 \le f(4)$, satisfying local non-constancy with the explicit modulus $\nu(h) = h/8$, and a point $x \in [0,4]$ with
-$$|f(x)| \le \frac{\nu(\delta)}{2} \qquad\text{yet}\qquad |x - r| > \delta \ \text{ for every root } r \text{ of } f.$$
+### 6.5 Bracketing: what the search delivers with no hypotheses
+
+Theorem 6.5 converts a small *value* into a small *distance*, and that is where the slope bound is spent. But the search of Theorem 6.2 produces more than a small value: it produces a *sign bracket*, and a bracket localises a root by itself.
+
+> **Theorem 6.10 (bracketing form of the search).** Let $a\le b$, let $\omega$ be a modulus for $f$ on $[a,b]$, let $N\ge1$, and let $f(a)\le0\le f(b)$. With **no** further hypothesis, the largest grid index $k^\ast$ with $f(G_{k^\ast})\le0$ satisfies: there exists a root $r \in [a,b]$ of $f$ with
+> $$|G_{k^\ast} - r| \;\le\; \frac{b-a}{N}.$$
+
+*Proof.* As in Theorem 6.2. If $k^\ast=N$, then $r=b=G_{k^\ast}$ works. Otherwise $f(G_{k^\ast}) \le 0 < f(G_{k^\ast+1})$; $f$ is continuous on $[G_{k^\ast},G_{k^\ast+1}] \subseteq [a,b]$, so it has a root $r$ in that subinterval, whose length is one mesh. $\square$
+
+The accuracy of the *location* is the mesh — no slope bound, no non-degeneracy. The constructive content is that the bracket is found by a finite search; extracting the root from the bracket is where classical completeness enters, and that is precisely the boundary §7 charts.
+
+### 6.6 Local non-constancy is not enough
+
+Bishop's exact IVT replaces the slope bound by *local non-constancy*: an explicit $\nu$ such that on every interval of length $\ge h$, $f$ attains absolute value $\ge \nu(h)$. This suffices to rule out flat shelves, but it does *not* license the inference from small values to small distances.
+
+> **Theorem 6.11.** For every $\delta \in (0,2)$ there is a $1$-Lipschitz $f$ on $[0,4]$ with $f(0)\le0\le f(4)$, satisfying local non-constancy with the explicit modulus $\nu(h)=h/8$, together with a point $x \in [0,4]$ such that $|f(x)| \le \nu(\delta)/2$ while $|x-r| > \delta$ for **every** root $r$ of $f$.
 
 *Proof sketch.* Take $\eta := \delta/32$ and
-$$f(x) \;=\; \mathrm{dip}_\eta(x) \;:=\; \min\bigl(x - 1,\; |x - 3| + \eta\bigr), \qquad x \in [0,4].$$
-This is $1$-Lipschitz as a minimum of two $1$-Lipschitz functions; $f(0) = -1 \le 0$ and $f(4) = \min(3, 1+\eta) > 0$. Its unique root is $x = 1$: on $[0,2]$ the first branch is active and vanishes only at $1$, while the second branch is bounded below by $\eta > 0$. Local non-constancy with $\nu(h) = h/8$ holds because on any interval of length $\ge h$ one can find a point at distance $\ge h/8$ from both critical points $1$ and $3$, and at such a point $|f| \ge h/8$. Finally $f(3) = \min(2, \eta) = \eta = \delta/32 \le \nu(\delta)/2 = \delta/16$, while $|3 - 1| = 2 > \delta$. $\square$
+$$D_\eta(x) := \min\big(x-1,\ |x-3|+\eta\big), \qquad x \in [0,4].$$
+It is $1$-Lipschitz as a min of $1$-Lipschitz functions; $D_\eta(0)\le -1<0$ and $D_\eta(4)\ge 0$. Its only root is $x=1$: if $D_\eta(r)=0$ then either $r-1=0$, or $|r-3|+\eta=0$, impossible for $\eta>0$. Local non-constancy with $\nu(h)=h/8$: in any interval of length $\ge h$ one finds a point $z$ at distance $\ge h/8$ from both critical points $1$ and $3$ (three probes at $x$, $x+h/3$, $x+2h/3$ cannot all be within $h/8$ of $\{1,3\}$, by the pigeonhole and the spacing), and at such $z$ one checks $|D_\eta(z)| \ge h/8$. Finally $D_\eta(3) = \min(2, \eta) = \eta = \delta/32 \le \nu(\delta)/2 = \delta/16$, while $|3-1|=2 > \delta$. $\square$
 
-The moral for algorithm design: report the bracket, not the residual. A small residual is weak evidence of proximity to a root; a certified sign change is strong evidence, and the grid search produces it at no extra cost.
-
----
-
-## 10. The constructive least upper bound principle
-
-### 10.1 Located sets
-
-The classical construction of $\sup S$ decides, for rational $q$, whether $q$ is an upper bound of $S$. That decision is in general undecidable. Bishop's replacement makes the decision procedure part of the data, in a form weakened just enough to be attainable.
-
-**Definition 10.1 (located data).** A **located datum** for $S \subseteq \mathbb{R}$ is a function $L : \mathbb{Q} \times \mathbb{Q} \to \{\texttt{true}, \texttt{false}\}$ such that for all rationals $p < q$:
-- if $L(p,q) = \texttt{true}$ then $s \le q$ for every $s \in S$;
-- if $L(p,q) = \texttt{false}$ then there exists $s \in S$ with $s > p$.
-
-The two conclusions are compatible — when $\sup S$ lies in $(p, q)$ both are true — and it is exactly this slack that makes $L$ implementable. The datum asserts only the disjunction, not an exclusive decision.
-
-**Definition 10.2 (enclosure invariant).** A pair $(p,q) \in \mathbb{Q}^2$ **encloses** $S$ if $q$ is an upper bound of $S$ and some $s \in S$ satisfies $s > p$.
-
-### 10.2 The trisection search
-
-**Algorithm 10.3 (trisection step).** Given $(p, q)$ with $p < q$, set $m_1 = p + \frac{q-p}{3}$, $m_2 = p + \frac{2(q-p)}{3}$ and return
-$$T(p,q) \;=\; \begin{cases} (p,\, m_2) & \text{if } L(m_1, m_2) = \texttt{true},\\[2pt] (m_1,\, q) & \text{if } L(m_1, m_2) = \texttt{false}.\end{cases}$$
-Let $(p_n, q_n) := T^n(a_0, b_0)$.
-
-**Theorem 10.4 (exact geometric rate).** $q_n - p_n = \left(\frac{2}{3}\right)^n (b_0 - a_0)$ for every $n$ — with equality, not merely an inequality.
-
-*Proof sketch.* Both branches produce an interval of length exactly $\frac23 (q - p)$: $m_2 - p = \frac23(q-p)$ and $q - m_1 = \frac23(q-p)$. Induct. $\square$
-
-**Theorem 10.5 (invariance).** If $(a_0, b_0)$ encloses $S$ and $a_0 < b_0$, then $(p_n, q_n)$ encloses $S$ for every $n$.
-
-*Proof sketch.* Induction on $n$. In the `true` branch, $L(m_1,m_2) = \texttt{true}$ certifies $m_2$ as an upper bound while the old lower witness above $p$ is retained. In the `false` branch, $L(m_1,m_2) = \texttt{false}$ produces a member of $S$ above $m_1$ while the old upper bound $q$ is retained. Note that the query points are chosen *inside* the current interval, so $m_1 < m_2$ and the located datum applies. $\square$
-
-**Theorem 10.6 (constructive least upper bound principle).** Let $S$ be nonempty and bounded above, with a located datum $L$ and an initial enclosure $(a_0, b_0)$, $a_0 < b_0$. Then $S$ has a least upper bound $u$, and for every $n$,
-$$p_n \le u \le q_n, \qquad q_n - p_n = \left(\tfrac23\right)^n (b_0 - a_0).$$
-
-*Proof sketch.* Nonemptiness and boundedness give a classical supremum $u$. Theorem 10.5 gives, at stage $n$, an element of $S$ above $p_n$ (so $p_n \le u$) and an upper bound $q_n$ (so $u \le q_n$). The width is Theorem 10.4. $\square$
-
-**Theorem 10.7 (the supremum is a Bishop real).** Under the hypotheses of Theorem 10.6, the sequence whose $k$-th term is $p_{n(k)}$, where $n(k)$ is the least stage with $\left(\frac23\right)^{n} (b_0 - a_0) \le \frac{1}{k+1}$, is a regular sequence of rationals denoting $u$.
-
-*Proof sketch.* $|p_{n(k)} - u| \le q_{n(k)} - p_{n(k)} \le \frac{1}{k+1}$, whence regularity via the triangle inequality through $u$, and identification via Theorem 2.5. $\square$
-
-The whole construction stays inside $\mathbb{Q}$: the approximations are rational endpoints of the search.
-
-### 10.3 A worked instance, and the cost of the hypothesis
-
-**Example 10.8.** For $c \in \mathbb{Q}$ the half-line $S = (-\infty, c]$ has the located datum $L(p, q) := [\,c \le q\,]$, a decidable rational comparison. Indeed $c \le q$ makes $q$ an upper bound, and $q < c$ makes $c \in S$ a member above $p$ (since $p < q < c$). Running the trisection on $[0,1]$ with $c = 1/2$ produces
-$$(0,1),\quad \left(0, \tfrac23\right),\quad \left(\tfrac29, \tfrac23\right),\quad \left(\tfrac29, \tfrac{14}{27}\right),\ \ldots$$
-and after ten steps the width is exactly $(2/3)^{10}$, with $\frac12$ inside the enclosure.
-
-**Theorem 10.9 (classical equivalence).** Assuming the classically valid decision "is $q$ an upper bound of $S$?", every $S$ has a located datum.
-
-*Proof.* Take $L(p,q) := [\,\forall s \in S,\; s \le q\,]$. A `true` answer is literally the upper bound condition; a `false` answer yields $s \in S$ with $s > q > p$. $\square$
-
-So the constructive principle is classically equivalent to ordinary completeness, and its entire content is the extra datum. Constructive mathematics does not weaken the theorem; it makes visible a hypothesis that the classical proof consumes silently.
+The function has a *near-root* of depth $\eta$ at $x=3$, arbitrarily shallow, at distance $2$ from the true root. This is the precise obstruction that the slope bound of Theorem 6.5 removes.
 
 ---
 
-## 11. Optimising the located search
+## 7. Brouwerian counterexamples: the exact IVT has no effective solution
 
-Because Algorithm 10.3 is completely explicit, one may ask whether $2/3$ is the best contraction per oracle call. It is not, and the exact answer is available.
+### 7.1 The shelf family
 
-**Algorithm 11.1 (general one-query step).** Fix $0 < \alpha < \beta < 1$. Given $(p,q)$, query the oracle at $p + \alpha(q-p)$ and $p + \beta(q-p)$ and return
-$$T_{\alpha,\beta}(p,q) \;=\; \begin{cases} \bigl(p,\; p + \beta(q-p)\bigr) & \text{on \texttt{true}},\\[2pt] \bigl(p + \alpha(q-p),\; q\bigr) & \text{on \texttt{false}}.\end{cases}$$
+> **Definition 7.1.** For $t \in [-1,1]$ define $S_t : [0,3]\to\mathbb{R}$ by
+> $$S_t(x) := \min\big(x-1,\ \max(t,\ x-2)\big).$$
 
-**Theorem 11.2 (exact contraction factor).** For $0 < \alpha < \beta < 1$ the scheme $T_{\alpha,\beta}$ preserves the enclosure invariant of Definition 10.2, never degenerates ($p_n < q_n$ for all $n$), and after $n$ oracle calls
-$$q_n - p_n \;\le\; \bigl(\max(\beta,\, 1-\alpha)\bigr)^n (b_0 - a_0),$$
-with the factor $\max(\beta, 1-\alpha)$ attained in the worst case (the `true` branch contracts by $\beta$, the `false` branch by $1 - \alpha$).
+> **Lemma 7.2.** Each $S_t$ is $1$-Lipschitz, hence has the modulus $\omega=\mathrm{id}$ uniformly in $t$; and $S_t(0)\le0\le S_t(3)$.
 
-*Proof sketch.* The two branch widths are $\beta(q-p)$ and $(1-\alpha)(q-p)$; both are positive by $0 < \alpha < \beta < 1$, and both are at most $\max(\beta,1-\alpha)(q-p)$. Invariance is as in Theorem 10.5, using $\alpha < \beta$ to ensure the two query points are distinct and ordered. Induct for the $n$-fold bound. $\square$
+*Proof.* $|\min(u_1,v_1)-\min(u_2,v_2)| \le \max(|u_1-u_2|,|v_1-v_2|)$ and likewise for $\max$; apply with $u_i = x_i-1$, $v_i = \max(t,x_i-2)$. For the endpoints: $S_t(0)\le 0-1 <0$, and $S_t(3) = \min(2,\max(t,1)) \ge 0$. $\square$
 
-Trisection is $(\alpha,\beta) = (\frac13, \frac23)$, giving $\max(\frac23,\frac23) = \frac23$.
+Consequently Theorem 6.2 applies to the whole family with a mesh depending on $\varepsilon$ alone: for every $t$ and $\varepsilon>0$, any $N$ with $3/N \le \varepsilon$ yields a grid point of $[0,3]$ with $|S_t| \le \varepsilon$. The approximate theorem is uniformly effective on the family.
 
-**Theorem 11.3 (trisection is not optimal).** The scheme with $(\alpha, \beta) = \left(\frac25, \frac12\right)$ preserves the same enclosure invariant and contracts by
-$$\max\left(\tfrac12,\; \tfrac35\right) = \tfrac35 \;<\; \tfrac23$$
-per oracle call.
+### 7.2 Where the roots are
 
-**Theorem 11.4 (the optimal ratio is the infimum $\tfrac12$, never attained).**
-1. For all $\alpha < \beta$, $\max(\beta, 1-\alpha) > \frac12$.
-2. For every $\eta > 0$ there are $0 < \alpha < \beta < 1$ with $\max(\beta, 1-\alpha) < \frac12 + \eta$.
+> **Lemma 7.3.** (i) If $1<x<2$ and $S_t(x)=0$ then $t=0$. (ii) If $t>0$ and $S_t(x)=0$ then $x=1$. (iii) If $t<0$ and $S_t(x)=0$ then $x=2$. (iv) Every root of every $S_t$ lies in $[1,2]$.
 
-*Proof.* (1) If $\beta > \frac12$ we are done. If $\beta \le \frac12$ then $\alpha < \beta \le \frac12$, so $1 - \alpha > \frac12$. (2) Put $t := \min(\eta, \frac14) > 0$ and $\alpha := \frac12 - \frac t2$, $\beta := \frac12 + \frac t2$. Then $0 < \alpha < \beta < 1$ and $\max(\beta, 1-\alpha) = \frac12 + \frac t2 < \frac12 + \eta$. $\square$
+*Proof sketch.* All four are finite case analyses on which branch of the $\min$ and the $\max$ is active. For (i): if the active branch is $x-1$, then $x=1$, contradicting $x>1$; so $\max(t,x-2)=0$, and since $x-2<0$ the max must be $t$, giving $t=0$. For (ii): if the active branch were $\max(t,x-2)$, its value would be $\ge t > 0$, not $0$; so the active branch is $x-1$ and $x=1$. For (iii): if the active branch were $x-1$ then $x=1$, and $\max(t,-1)<0$ since $t<0$, so the minimum would be negative, not $0$; hence $\max(t,x-2)=0$, and $t<0$ forces $x-2=0$, i.e. $x=2$. For (iv): $x-1 \ge S_t(x) = 0$ gives $x \ge 1$; and either the active branch is $x-1$, whence $x=1\le2$, or $\max(t,x-2)=0 \ge x-2$, whence $x \le 2$. $\square$
 
-The interpretation is information-theoretic. One oracle call returns one bit, and one bit can at best halve the search space; hence the barrier at $\frac12$. It is not attained because the two query points must be *distinct*: the located datum is only defined for $p < q$, and it is precisely the gap between the query points that gives the oracle the freedom to answer either way when the supremum lies between them. The constructive algorithm pays a strictly positive, arbitrarily small tax for the very ambiguity that makes locatedness implementable.
+So the root set jumps: $\{1\}$ for $t>0$, $[1,2]$ at $t=0$, $\{2\}$ for $t<0$.
 
----
+### 7.3 No continuous selector
 
-## 12. Algorithmic summary
+> **Theorem 7.4.** There is no continuous $r : [-1,1] \to \mathbb{R}$ with $S_t(r(t))=0$ for all $t \in [-1,1]$.
 
-The development yields five algorithms, all finite and all with proved bounds:
+*Proof.* Suppose such an $r$ exists. By Lemma 7.3(ii)–(iii), $r(1)=1$ and $r(-1)=2$. By the *classical* intermediate value theorem applied to the continuous $r$ on $[-1,1]$, the image $r([-1,1])$ contains $[1,2]$; pick $t_0$ with $r(t_0)=\frac32$ and $t_1$ with $r(t_1)=\frac74$. Both values lie strictly between $1$ and $2$, so Lemma 7.3(i) gives $t_0=0$ and $t_1=0$. Then $\frac32 = r(0) = \frac74$, a contradiction. $\square$
 
-| Algorithm | Input | Output | Guarantee |
-|---|---|---|---|
-| Approximation | Bishop real $x$, target $\varepsilon$ | rational $x_n$, $n = \lceil 1/\varepsilon\rceil$ | $|\hat x - x_n| \le \varepsilon$ |
-| Shifted diagonal | regular sequence of reals | Bishop real $L$ | $|\hat L - \hat x^{(k)}| \le \frac{1}{k+1}$ |
-| Cotransitivity test | certificate for $x<y$, third real $z$ | branch $x<z$ or $z<y$ | one rational comparison at any $m$ with $\frac{1}{m+1}\le\frac g8$ |
-| Sign-change grid search | $f$ with modulus $\omega$, $N$ | grid index $k$ | $|f(\mathrm{gr}_k)| \le \varepsilon$ if mesh $\le\omega(\varepsilon)$; and $\mathrm{gr}_k$ within one mesh of a root |
-| One-query located search | located datum, $(\alpha,\beta)$ | enclosure of $\sup S$ | width $\le \max(\beta,1-\alpha)^n(b_0-a_0)$ |
+Since every constructively defined function $\mathbb{R}\to\mathbb{R}$ is (pointwise, hence on compacta uniformly) continuous, Theorem 7.4 rules out any constructive proof of the exact IVT from the data "modulus of uniform continuity + sign change". It also identifies the missing hypothesis:
 
-Complexity, in oracle/evaluation calls: the approximation algorithm is $O(1)$ calls to the sequence; the grid search at accuracy $\varepsilon$ costs $N + 1$ function evaluations with $N = \lceil (b-a)/\omega(\varepsilon)\rceil$, which for a $c$-Lipschitz $f$ is $O((b-a)c/\varepsilon)$; the located search costs $\lceil \log(1/\varepsilon)/\log(1/\rho)\rceil$ oracle calls with $\rho = \max(\beta, 1-\alpha)$, so the improvement from $\rho = 2/3$ to $\rho = 3/5$ is a constant-factor speedup of $\log(3/2)/\log(5/3) \approx 0.794$, and pushing $\rho \to 1/2$ gives at best $\log(3/2)/\log 2 \approx 0.585$.
+> **Proposition 7.5.** If $c$ is a slope bound for $S_0$ on $[0,3]$ then $c \le 0$.
 
-Note that the grid search is *not* a bisection: bisection on $[a,b]$ would require deciding the sign of $f$ at the midpoint, and that decision is exactly the undecidable comparison. The linear scan over $N+1$ grid points avoids the issue because it never needs to know the sign at any *particular* point in advance — it only needs the finite set $\{k : f(\mathrm{gr}_k) \le 0\}$ to have a maximum, which is a decidable fact about a finite list once the finitely many comparisons are made.
+*Proof.* $S_0(1)=S_0(2)=0$, so the slope bound at $x=1$, $y=2$ reads $c \cdot 1 \le 0$. $\square$
 
----
+That is, the shelf family violates precisely the hypothesis of Theorem 6.8, at precisely the critical parameter.
 
-## 13. Discussion
+### 7.4 Quantitative failure: no selector at all is nearly continuous
 
-### 13.1 A pattern: overlapping disjunctions
+Theorem 7.4 excludes continuous selectors. In fact no selector, of any kind, is even approximately continuous at $t=0$.
 
-Three of the central results share a shape. Cotransitivity (Theorem 6.5) concludes "$x < z$ **or** $z < y$", and both may hold. Constructive location concludes "$a < x$ **or** $x < b$" for $a < b$, and both may hold. The located datum (Definition 10.1) concludes "$q$ is an upper bound **or** some member exceeds $p$", and both may hold.
+> **Theorem 7.6 (oscillation bound).** Let $r$ be **any** function with $S_t(r(t))=0$ for all $t \in [-1,1]$. Then for every $\eta>0$, on the parameter window $T_\eta := [-1,1]\cap[-\eta,\eta]$,
+> $$\sup r(T_\eta) \;-\; \inf r(T_\eta) \;\ge\; 1.$$
 
-In each case the classical statement is an exclusive dichotomy that is undecidable, and the constructive replacement is an *overlapping* disjunction that is decidable. The overlap is not a defect; it is the mechanism. A decision procedure needs slack in order to be implementable, and the size of the slack is the quantitative content: $\frac{g}{8}$ in cotransitivity, $\frac{b-a}{4}$ in location, $q - p$ in locatedness. Theorem 11.4 says something remarkable about this: the slack in the located datum forces a strictly positive information loss, but the loss can be made arbitrarily small.
+*Proof.* By Lemma 7.3(iv) the image $r(T_\eta)$ is contained in $[1,2]$, so both sup and inf exist. Put $s := \min(\eta,1) > 0$; then $s, -s \in T_\eta$. By Lemma 7.3(ii), $r(s)=1$; by Lemma 7.3(iii), $r(-s)=2$. Hence $\sup r(T_\eta) \ge 2$ and $\inf r(T_\eta) \le 1$. $\square$
 
-### 13.2 Where the classical proofs hide their hypotheses
-
-Each constructive theorem here has a classical counterpart with strictly fewer hypotheses, and in each case the missing hypothesis is one the classical proof consumes invisibly:
-
-- **Completeness.** Classically, no modulus is required; constructively, the modulus is the datum and the diagonal shift is forced (Theorem 4.4).
-- **Intermediate value theorem.** Classically, continuity suffices; constructively, one needs a modulus *and* either to weaken the conclusion to $\varepsilon$-approximation (Theorem 7.2) or to add a slope bound (Theorem 7.6). The shelf family (Theorem 8.4) shows this is not an artefact of proof technique.
-- **Least upper bound.** Classically, boundedness suffices; constructively, locatedness is needed, and Theorem 10.9 shows that classically it is free.
-
-The uniform diagnosis: the classical proof performs an undecidable decision, and the constructive theorem either supplies that decision as data or weakens the conclusion until the decision is unnecessary.
-
-### 13.3 Sharpness as a dividend
-
-The results of Sections 4.4, 7.3, 9 and 11 are of a kind that cannot even be *stated* in a purely existential development. "The constant $\varepsilon/c$ is attained" presupposes that a constant has been named. "The shift $2n+1$ cannot be removed" presupposes that the limit is given by a formula. "$2/3$ is not optimal" presupposes an algorithm with a rate. Making the constructions explicit does not merely make them implementable; it makes them *criticisable*, and the criticism yields new mathematics.
-
-### 13.4 Limitations
-
-Our metatheory is classical: we prove classical statements about constructive data, and we use the classical intermediate value theorem to produce the exact root whose *location* is then computed constructively (Theorem 7.6, Theorem 9.1). A fully intuitionistic treatment would construct the root by the search itself. This is a difference of packaging rather than of content — the algorithms and their bounds are unchanged, and the sharpness statements (which quantify over all functions or all constants) are most naturally classical anyway.
+The hypothesis is not vacuous: classically, selectors exist — e.g. $r(t)=2$ for $t<0$ and $r(t)=1$ otherwise — and Theorem 7.6 says every one of them jumps by at least a full unit at $0$. The failure of the exact IVT is not a delicate matter of definability; it is a discontinuity of fixed size $1$ that no choice can avoid.
 
 ---
 
-## 14. Future directions
+## 8. The constructive least upper bound principle
 
-The following are concrete, falsifiable conjectures suggested by the development. Each is stated so that a single proof or a single counterexample settles it.
+### 8.1 Located sets
 
-### C6. $k$ oracle calls per step cannot beat the ratio $1/(k+1)$
+The classical construction of $\sup S$ decides, for a rational $q$, whether $q$ is an upper bound. Bishop demands that this decision be part of the data, in a deliberately *overlapping* form.
 
-Theorem 11.4 shows that the optimal contraction ratio of a *one-query* located search is the infimum $1/2$, never attained. The natural generalisation queries the locatedness oracle $k$ times per step, at the pairs $\bigl(p + \alpha_i (q-p),\, p + \beta_i (q-p)\bigr)$ with $\alpha_1 < \beta_1 \le \alpha_2 < \beta_2 \le \cdots < \beta_k$, keeping the smallest enclosure the answers certify.
+> **Definition 8.1 (located set).** A **located datum** for $S \subseteq \mathbb{R}$ is a function $L : \mathbb{Q}\times\mathbb{Q} \to \{\mathsf{true},\mathsf{false}\}$ such that for all rationals $p<q$:
+> - if $L(p,q)=\mathsf{true}$ then $q$ is an upper bound of $S$;
+> - if $L(p,q)=\mathsf{false}$ then some $s \in S$ satisfies $s > p$.
 
-> **Conjecture.** The worst-case contraction factor of any such $k$-query scheme is $> \frac{1}{k+1}$, and for every $\eta > 0$ some $k$-query scheme achieves a factor $< \frac{1}{k+1} + \eta$. In particular the per-oracle-call efficiency $(\text{contraction})^{1/k}$ tends to $0$ as $k \to \infty$: batching queries strictly pays.
+Both alternatives may hold simultaneously (when $p < \sup S \le q$); the oracle need only return a correct one. This is what makes located data available in practice: for the half-line $S = (-\infty,c]$ with $c \in \mathbb{Q}$, the decidable test $L(p,q) := (c \le q)$ is a located datum, since $c \le q$ makes $q$ an upper bound and $q<c$ makes $c \in S$ exceed $p<q<c$.
 
-Falsifiable: a $k$-query scheme (for a concrete $k$, e.g. $k = 2$) that provably preserves the enclosure invariant and contracts by a factor $\le \frac{1}{k+1}$ refutes the first half; a proof that no $2$-query scheme beats, say, $2/5$ refutes the second.
+> **Definition 8.2 (enclosure).** A pair $(p,q) \in \mathbb{Q}^2$ **encloses** $S$ if $q$ is an upper bound of $S$ and some $s \in S$ has $s>p$.
 
-### C7. The cotransitivity threshold is exactly $6$
+### 8.2 Trisection
 
-Theorem 6.5 decides $x < z$ or $z < y$ at any index $m$ with $\frac{1}{m+1} \le \frac{g}{8}$, where $g$ is the certified gap; the arithmetic of the proof only needs $\frac{1}{m+1} < \frac{g}{6}$.
+> **Definition 8.3.** One trisection step: given $(p,q)$, let $m_1 = p+\frac{q-p}{3}$, $m_2 = p+\frac{2(q-p)}{3}$, and set
+> $$T(p,q) := \begin{cases} (p, m_2) & \text{if } L(m_1,m_2)=\mathsf{true},\\ (m_1, q) & \text{otherwise.}\end{cases}$$
+> Let $(p_n,q_n) := T^n(p_0,q_0)$.
 
-> **Conjecture.** $6$ is optimal: the hypothesis $\frac{1}{m+1} \le \frac{g}{\kappa}$ with $\kappa < 6$ is insufficient — there are $x, y, z$ and indices $n, m$ satisfying it for which the midpoint test at $m$ decides neither $x < z$ nor $z < y$ — while the conclusion of cotransitivity does hold under $\frac{1}{m+1} < \frac{g}{6}$.
+> **Theorem 8.4 (exact geometric rate).** $\;q_n - p_n = \left(\frac23\right)^n (q_0-p_0)$ for all $n$.
 
-Falsifiable: a proof of cotransitivity with a constant $\kappa < 6$ refutes the first half; an explicit triple defeating the constant $6$ refutes the second.
+*Proof.* Each step replaces the width $w$ by $\frac23 w$ in both branches: $m_2 - p = \frac23 w$ and $q - m_1 = \frac23 w$. Induct. $\square$
 
-### C8. The canonical multiplication bound can be lowered to $\lceil |x_0| \rceil + 1$
+> **Theorem 8.5 (enclosure invariant).** If $p_0<q_0$ and $(p_0,q_0)$ encloses $S$, then $(p_n,q_n)$ encloses $S$ for every $n$.
 
-The bound $B(x) = \lceil |x_0| \rceil + 2$ of Definition 3.4 is used to choose the index shift in the definition of multiplication. Since $|x_n - x_0| \le \frac{1}{n+1} + 1 \le 2$, with strict inequality for $n \ge 1$, only $n = 0$ is at issue.
+*Proof.* Induction. Widths stay positive by Theorem 8.4, so $m_1<m_2$ and the oracle guarantee applies. On $\mathsf{true}$, $m_2$ becomes an upper bound (oracle clause 1) and the left endpoint is unchanged, so the witness survives; on $\mathsf{false}$, some $s>m_1$ exists (oracle clause 2) and the right endpoint is unchanged, so the upper bound survives. $\square$
 
-> **Conjecture.** Replacing $B$ by $\lceil |x_0| \rceil + 1$ still yields a regular sequence for the product, and the identification of the product with $\hat x \hat y$ continues to hold; the constant $1$ is then optimal, i.e. $\lceil |x_0| \rceil$ alone fails for some pair of Bishop reals.
+> **Theorem 8.6 (constructive least upper bound principle).** Let $S$ have a located datum, let $p_0<q_0$ with $(p_0,q_0)$ enclosing $S$. Then $S$ has a least upper bound $u$, and for every $n$
+> $$p_n \le u \le q_n, \qquad q_n - p_n = \left(\tfrac23\right)^n(q_0-p_0).$$
 
-Falsifiable: a pair $x, y$ for which the sequence defined with $\lceil |x_0| \rceil + 1$ violates the regularity inequality refutes the first half; a proof that $\lceil |x_0| \rceil$ always suffices refutes the second.
+*Proof sketch.* $S$ is nonempty (the witness at $p_0$) and bounded above (by $q_0$), so $u := \sup S$ exists classically. By Theorem 8.5, at each $n$ some $s \in S$ has $s>p_n$, whence $u \ge s > p_n$; and $q_n$ is an upper bound, whence $u \le q_n$. The width is Theorem 8.4. $\square$
 
-### Further questions
+> **Theorem 8.7 (the supremum is a Bishop real).** Under the hypotheses of Theorem 8.6 there is a Bishop real $x$ with $\hat x = \sup S$, whose $k$-th approximation $x_k$ is the left endpoint $p_{n(k)}$ of the first trisection stage with $\left(\frac23\right)^{n}(q_0-p_0) \le \frac{1}{k+1}$.
 
-- **Sharpness of the addition shift.** Is $n \mapsto 2n+1$ the least shift for which the pointwise sum of two regular sequences is regular? The analogue of Theorem 4.4 for addition is open.
-- **Uniformity in the shelf oscillation.** Theorem 8.5 gives oscillation $\ge 1$ for every root selector. Is $1$ the exact value of the oscillation infimum over all selectors, and is it attained by the discontinuous selector of Section 8.3?
-- **Bracket-based moduli.** Theorem 9.1 gives location to within one mesh with no non-degeneracy hypothesis. Can the whole of Theorem 7.6 be rederived from bracketing alone, with the slope bound entering only in the uniqueness statement?
+*Proof sketch.* Such an $n(k)$ exists since $(2/3)^n \to 0$. Then $|p_{n(k)} - u| \le q_{n(k)}-p_{n(k)} \le \frac{1}{k+1}$; regularity follows by the triangle inequality through $u$, and Theorem 2.5 with $C=1$ identifies $\hat x = u$. $\square$
+
+Finally, the classical content of the located hypothesis:
+
+> **Proposition 8.8 (comparison).** Classically, every $S$ has a located datum, namely $L(p,q) := $ "$q$ is an upper bound of $S$". Hence Theorem 8.6 is classically equivalent to ordinary order-completeness, and its entire constructive content lies in the extra datum.
+
+### 8.3 The optimal contraction ratio of a one-query search
+
+Trisection contracts by $\frac23$ per oracle call. Is that optimal? Consider the general scheme.
+
+> **Definition 8.9 (one-query search).** Fix rationals $0<\alpha<\beta<1$. One step: given $(p,q)$ with $w := q-p$,
+> $$T_{\alpha,\beta}(p,q) := \begin{cases} \big(p,\ p+\beta w\big) & \text{if } L(p+\alpha w,\ p+\beta w)=\mathsf{true},\\[2pt] \big(p+\alpha w,\ q\big) & \text{otherwise.}\end{cases}$$
+
+Trisection is $(\alpha,\beta)=(\frac13,\frac23)$.
+
+> **Theorem 8.10 (invariant and contraction).** For $0<\alpha<\beta<1$ and $p_0<q_0$ enclosing $S$: every stage of $T_{\alpha,\beta}$ encloses $S$, the widths remain strictly positive, and
+> $$q_n - p_n \;\le\; \big(\max(\beta,\,1-\alpha)\big)^{n}\,(q_0-p_0).$$
+
+*Proof sketch.* The invariant is Theorem 8.5 verbatim, using $\alpha<\beta$ (so the two query points are distinct and ordered, as the oracle requires) and positivity of the width. For the rate: on $\mathsf{true}$ the new width is $\beta w$, on $\mathsf{false}$ it is $(1-\alpha)w$; both are $\le \max(\beta,1-\alpha)\,w$. Positivity: $\beta>0$ and $1-\alpha>0$. Induct. $\square$
+
+The bound is attained in the worst case: an adversarial oracle answering $\mathsf{true}$ when $\beta \ge 1-\alpha$ and $\mathsf{false}$ otherwise realises the factor exactly at every step.
+
+> **Theorem 8.11 (trisection is not optimal).** With $(\alpha,\beta)=(\frac25,\frac12)$ the scheme preserves the enclosure invariant and contracts by
+> $$\max\left(\tfrac12,\ 1-\tfrac25\right) = \tfrac35 \;<\; \tfrac23$$
+> per oracle call.
+
+> **Theorem 8.12 (the barrier $\frac12$).** For all $\alpha<\beta$, $\;\max(\beta,1-\alpha) > \frac12$. Conversely, for every $\eta>0$ there is an admissible pair with $\max(\beta,1-\alpha)<\frac12+\eta$.
+
+*Proof.* If $\beta > \frac12$ we are done. Otherwise $\alpha < \beta \le \frac12$, so $1-\alpha > \frac12$. For the converse, put $t := \min(\eta,\frac14)>0$ and take $\alpha = \frac12-\frac t2$, $\beta=\frac12+\frac t2$; these satisfy $0<\alpha<\beta<1$ and
+$$\max(\beta, 1-\alpha) = \max\left(\tfrac12+\tfrac t2,\ \tfrac12+\tfrac t2\right) = \tfrac12+\tfrac t2 < \tfrac12+\eta. \qquad\square$$
+
+The interpretation is information-theoretic. One yes/no query splits the interval at two points; a $\mathsf{true}$ keeps the left $\beta$-fraction, a $\mathsf{false}$ the right $(1-\alpha)$-fraction, and these two fractions overlap in $[\alpha,\beta]$ — necessarily, since a legitimate query requires $\alpha<\beta$. The overlap is the cost of the oracle's freedom to answer either way in the ambiguous region. As $\beta-\alpha \to 0$ the overlap vanishes and each answer halves the interval, but the limiting query $\alpha=\beta$ is not admissible. Hence $\frac12$ is an infimum that is approached and never attained, and the "one bit per query" of an idealised bisection is unreachable for located suprema.
 
 ---
 
-## 15. Conclusion
+## 9. Algorithms
 
-We have carried out a quantitative development of Bishop's constructive analysis in which every existence statement is accompanied by an explicit modulus: real numbers as regular sequences with the canonical rate $1/(n+1)$; completeness by the shifted diagonal $n \mapsto x^{(2n+1)}_{2n+1}$, with the shift shown necessary; an order carrying certificates, with an explicit cotransitivity algorithm and a proof that the certificate cannot be bounded in advance; the intermediate value theorem in its approximate form (always available, by finite grid search) and its exact form (available under a slope bound, with root modulus $\delta \mapsto \omega(c\delta)$ and the sharp displacement bound $\varepsilon/c$); a Brouwerian counterexample whose failure is quantified to oscillation $\ge 1$; a bracketing refinement showing that sign changes locate roots better than residuals do, with an explicit function proving local non-constancy insufficient; and the least upper bound principle for located sets, with the exact rate $(2/3)^n$ improved to $\max(\beta, 1-\alpha)^n$ and the optimal ratio identified as the unattained infimum $1/2$.
+The development yields four algorithms, all elementary and all with proved error bounds.
 
-The recurring theme is that explicitness is not merely a philosophical constraint but a mathematical instrument. Once a rate is written down, one can ask whether it is optimal; once an algorithm is written down, one can ask whether it is efficient. The classical theorems, which assert only that something exists, do not admit these questions. Bishop's discipline turns analysis into a subject with constants — and constants can be improved.
+**A1. Grid root search.** Input: $f$, $[a,b]$, modulus $\omega$, accuracy $\varepsilon$. Choose $N > (b-a)/\omega(\varepsilon)$. Evaluate $f$ at $G_0,\dots,G_N$, return the largest $k$ with $f(G_k)\le 0$. Cost $O(N)$ evaluations, $N = O\big(\tfrac{b-a}{\omega(\varepsilon)}\big)$. Guarantee: $|f(G_k)| \le \varepsilon$ (Theorem 6.2), and $G_k$ is within one mesh of a genuine root (Theorem 6.10). Under a slope bound $c$, running with $\varepsilon = c\delta$ gives $|G_k - r|\le\delta$ (Theorem 6.8).
+
+**A2. Bishop arithmetic.** Represent a real by its approximation function. Add with index $2n+1$; multiply with index $(B_x+B_y)(n+1)$ after computing $B_x = \lceil|x_0|\rceil+2$. Requesting accuracy $\frac{1}{n+1}$ from a product costs one evaluation of each factor at index $\Theta(Mn)$; the precision blow-up is linear in the magnitude bound.
+
+**A3. Located supremum search.** Input: oracle $L$, bracket $(p_0,q_0)$, target accuracy $\tau$. Iterate $T_{\alpha,\beta}$ until $q_n-p_n \le \tau$. Number of oracle calls $\lceil \log(\tau/(q_0-p_0)) / \log \max(\beta,1-\alpha)\rceil$; with $(\frac25,\frac12)$ this is $\log_{5/3}$ rather than $\log_{3/2}$, a constant-factor saving of $\log(3/2)/\log(5/3) \approx 0.794$ in the number of calls.
+
+**A4. Cotransitive comparison.** Input: $x,y$ with witness index $n$ for $x<y$, and $z$. Compute $g = y_n - x_n - \frac{2}{n+1}$; choose $m$ with $\frac1{m+1}\le \frac g8$, i.e. $m = \lceil 8/g\rceil$; compare $z_m$ with $\frac{x_m+y_m}{2}$. Cost: three approximation queries at index $O(1/g)$ and one rational comparison. Output: a certified witness for $x<z$ or for $z<y$ (Theorem 5.5).
 
 ---
 
-## References
+## 10. Discussion and open problems
 
-- E. Bishop, *Foundations of Constructive Analysis*, McGraw-Hill, 1967.
-- E. Bishop and D. Bridges, *Constructive Analysis*, Grundlehren der mathematischen Wissenschaften 279, Springer, 1985.
-- D. Bridges and F. Richman, *Varieties of Constructive Mathematics*, London Mathematical Society Lecture Note Series 97, Cambridge University Press, 1987.
-- A. S. Troelstra and D. van Dalen, *Constructivism in Mathematics: An Introduction*, North-Holland, 1988.
+### 10.1 What the sharp constants say
+
+Every principal theorem above carries a constant, and in each case we have determined the constant or bracketed it.
+
+| Quantity | Value proved | Status |
+|---|---|---|
+| Approximation error of $x_n$ | $\frac{1}{n+1}$ | exact (Theorem 2.4) |
+| Completeness diagonal shift | $n \mapsto 2n+1$ | necessary (Theorem 3.3) |
+| Product index shift | $(B_x+B_y)(n+1)$, $B_x = \lceil|x_0|\rceil+2$ | sufficient; see C3 below |
+| Root modulus under slope $c$ | $\varepsilon/c$ | attained, no $\kappa<1$ (Theorem 6.7) |
+| Location accuracy of sign search | one mesh $\frac{b-a}{N}$ | no hypotheses (Theorem 6.10) |
+| Shelf-selector oscillation | $\ge 1$ near $t=0$ | for every selector (Theorem 7.6) |
+| Trisection contraction | exactly $(2/3)^n$ | not optimal (Theorem 8.11) |
+| One-query contraction | $\max(\beta,1-\alpha)$ | infimum $\frac12$, unattained (Theorem 8.12) |
+| Cotransitivity threshold | $\frac1{m+1}\le g/8$ (proof needs $g/6$) | see C2 below |
+
+The pattern is that the constructive versions are not weaker statements but *more informative* ones, and that the extra information is exactly what a numerical implementation would have to supply anyway.
+
+### 10.2 Relation to the classical theory
+
+Theorem 2.10 shows that the constructive number system is the classical one; Theorem 5.4 shows the same for the order; Proposition 8.8 shows that the least upper bound principle differs from classical completeness only by the located datum; and Theorem 6.8's hypotheses (modulus + slope bound) are strictly stronger than continuity + sign change, with Theorems 7.4 and 7.6 showing that the strengthening is unavoidable. So the picture is uniform: constructive analysis adds *data* to hypotheses and *rates* to conclusions, and it is precisely the theorems whose classical proof consumes an undecidable case split — the exact IVT, unrestricted completeness — that require the added data.
+
+### 10.3 Future directions
+
+Three concrete, falsifiable conjectures suggested by the development. Each is settled by a single proof or a single counterexample.
+
+**C1 (batched queries).** Theorem 8.12 shows the optimal contraction of a *one-query* located search is the unattained infimum $\frac12$. The natural generalisation queries the oracle $k$ times per step, at pairs $\big(p+\alpha_i w,\ p+\beta_i w\big)$ with $\alpha_1<\beta_1\le\alpha_2<\beta_2\le\cdots<\beta_k$, keeping the smallest enclosure the $k$ answers certify.
+
+> **Conjecture.** The worst-case contraction factor of any such $k$-query scheme is $>\frac{1}{k+1}$, and for every $\eta>0$ some $k$-query scheme achieves a factor $<\frac{1}{k+1}+\eta$. In particular the per-query efficiency $(\text{contraction})^{1/k} \to 0$ as $k\to\infty$: batching strictly pays.
+
+Falsifiable by exhibiting a $k$-query scheme (say $k=2$) that preserves the enclosure invariant and contracts by $\le \frac{1}{k+1}$, or by proving that no $2$-query scheme beats $\frac25$.
+
+**C2 (the cotransitivity threshold).** Theorem 5.5 decides $x<z$ or $z<y$ at any index $m$ with $\frac1{m+1}\le g/8$; the arithmetic of the proof needs only $\frac1{m+1}<g/6$.
+
+> **Conjecture.** $6$ is optimal: for every $\kappa<6$ there are $x,y,z$ and indices $n,m$ with $\frac1{m+1}\le g_n(x,y)/\kappa$ for which the midpoint test at $m$ decides neither $x<z$ nor $z<y$ — while the conclusion of Theorem 5.5 does hold under $\frac{1}{m+1}<g/6$.
+
+Falsifiable by a proof with a constant $\kappa<6$, or by an explicit triple defeating $6$.
+
+**C3 (the canonical bound).** Definition 4.3 uses $B_x = \lceil|x_0|\rceil+2$, and Lemma 4.4's slack comes only from $n=0$, since $|x_n - x_0| \le \frac1{n+1}+1 \le 2$ with strict inequality for $n\ge1$.
+
+> **Conjecture.** Replacing $B_x$ by $\lceil|x_0|\rceil+1$ still yields a regular sequence in Definition 4.5, with Proposition 4.6 intact; and the constant $1$ is then optimal, i.e. $\lceil|x_0|\rceil$ alone fails for some pair of Bishop reals.
+
+Falsifiable by a pair $x,y$ for which the $+1$ definition violates regularity, or by a pair for which the $+0$ definition succeeds in all cases.
+
+Beyond these, three broader lines suggest themselves: extending the arithmetic to a full ordered field structure with a constructive reciprocal (which requires a positivity witness for the denominator, and so a modulus depending on that witness); developing constructive differentiation with explicit moduli and a corresponding sharp mean value theorem — noting that the mean value theorem, like the exact IVT, must fail effectively and should admit a shelf-like counterexample; and quantifying the failure of the classical Bolzano–Weierstrass theorem in the same oscillation-lower-bound style as Theorem 7.6.
+
+---
+
+## 11. Conclusion
+
+Bishop's discipline — constructions for existence, rates for convergence — turns analysis into a subject whose theorems carry numbers. We have shown that the resulting number system is the classical one (Theorem 2.10), that its order is the classical order presented with witnesses (Theorem 5.4), and that its completeness is classical completeness with an explicit diagonal whose index shift cannot be removed (Theorems 3.2, 3.3).
+
+At the centre is the intermediate value theorem. Its approximate form is a finite grid search with a proved error bound (Theorem 6.2); its exact form requires a positive slope bound, and then delivers a unique root together with the modulus $\delta \mapsto \omega(c\delta)$ and the root itself as a regular sequence of rationals (Theorems 6.8, 6.9). The conversion constant $\varepsilon/c$ is attained and cannot be improved by any factor $\kappa<1$ (Theorem 6.7). Dropping the slope bound is fatal in a strong sense: Bishop's $1$-Lipschitz shelf family admits no continuous root selector (Theorem 7.4) and no selector whatsoever of oscillation below $1$ near the critical parameter (Theorem 7.6); and weakening it to local non-constancy is insufficient (Theorem 6.11). What survives with no hypotheses at all is the bracketing statement: the sign-change search lands within one mesh of a genuine root (Theorem 6.10).
+
+Finally, the least upper bound principle for located sets is a search whose cost we have determined exactly: the general one-query scheme contracts by $\max(\beta,1-\alpha)$, so Bishop's trisection factor $\frac23$ is beaten by $\frac35$, and $\frac12$ is a barrier that is approached but never reached (Theorems 8.10–8.12). That a foundational question about constructive completeness resolves into a sharp two-parameter optimisation is, we think, the most striking thing the quantitative discipline buys.

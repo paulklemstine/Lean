@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e722c646",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n1. **Continuous beta function.** Introduce a continuous scale parameter and an\n   RG semigroup, then define its beta function as the infinitesimal generator.\n   This would cleanly",
-      "quality_score": 0.7708899999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-29T22:22:57",
-      "title": "Inverse Stereographic Renormalization Group"
-    },
-    {
       "cycle_id": "42b8568d",
       "domain": "Cryptography",
       "key_insight": "# Future directions\n\nThe completed Lean development establishes an exact finite BB84 core rather than claiming a composable-security theorem beyond the definitions currently formalized. In particular,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 994,
       "timestamp": "2026-08-06T12:26:25",
       "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
+    },
+    {
+      "cycle_id": "68319f3d",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of cycles 1–9\n(`Catalog/Computation/FourierFunctor/`), where we proved: `pontryagin : FinAb ≌\nFinAbᵒᵖ`, `fourierNatIso` (Fourier i",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 133,
+      "timestamp": "2026-08-06T12:28:01",
+      "title": "Deepening: Bridge: Fourier Analysis as a Functor"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7010699999999999
     }
   ],
-  "last_updated": "2026-08-06T12:26:25",
+  "last_updated": "2026-08-06T12:28:01",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "e86cdc26",
-        "quality": 0.8002199999999999,
-        "theorems": 9,
-        "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical D"
-      },
-      {
         "cycle_id": "d58932ad",
         "quality": 0.7725,
         "theorems": 13,
@@ -3327,6 +3321,12 @@
         "quality": 0.686,
         "theorems": 154,
         "title": "Group actions and orbit relations.: Instantiate `InvariantPattern` with th"
+      },
+      {
+        "cycle_id": "68319f3d",
+        "quality": 0.686,
+        "theorems": 133,
+        "title": "Deepening: Bridge: Fourier Analysis as a Functor"
       }
     ],
     "Cryptography": [
