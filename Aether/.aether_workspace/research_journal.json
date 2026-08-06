@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8e0a0c8a",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Current formal boundary\n\nThe completed Lean development establishes the finite minimum-information-partition\nsemantics, existence of a minimizing partition, nonnegativity, the",
-      "quality_score": 0.75983,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-08-02T11:45:37",
-      "title": "Consciousness as Integrated Information: Mathematical Foundations"
-    },
-    {
       "cycle_id": "405d388b",
       "domain": "Logic",
       "key_insight": "# Future Directions — Gödel's Casino, Cycle 2\n\n## Completed in this cycle\n\n`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational\ncasino to asymmetric odds: a correct bet ear",
@@ -499,19 +489,19 @@
       "theorem_count": 34,
       "timestamp": "2026-08-06T07:55:36",
       "title": "Concrete, falsifiable conjectures arising from the formalization in"
+    },
+    {
+      "cycle_id": "39ee2889",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle in\n`Catalog/Combinatorics/B3FreeAntichainMonotone.lean`, on top of the framework of\n`Catalog/Bridges/B",
+      "quality_score": 0.7010699999999999,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-08-06T10:02:07",
+      "title": "Concrete, falsifiable conjectures arising from the formalization in"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "97183f28",
-      "domain": "Bridges",
-      "key_insight": "# Future directions: quantum–classical de Finetti bridge\n\nThe formal development proves the exact constructive direction of de Finetti in the finite-support, computational-basis (diagonal) sector: a f",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-07-29T22:21:30",
-      "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
-    },
     {
       "cycle_id": "576be6d2",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 154,
       "timestamp": "2026-08-06T09:23:28",
       "title": "Group actions and orbit relations.: Instantiate `InvariantPattern` with th"
+    },
+    {
+      "cycle_id": "39ee2889",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle in\n`Catalog/Combinatorics/B3FreeAntichainMonotone.lean`, on top of the framework of\n`Catalog/Bridges/B",
+      "quality_score": 0.7010699999999999,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-08-06T10:02:07",
+      "title": "Concrete, falsifiable conjectures arising from the formalization in"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "87f6aef5",
-      "domain": "Shared",
-      "name": "one_round_acceptance_bound",
-      "quality": 0.76207
-    },
-    {
-      "cycle_id": "bae1175e",
-      "domain": "Combinatorics",
-      "name": "records",
-      "quality": 0.7559799999999999
-    },
-    {
-      "cycle_id": "bae1175e",
-      "domain": "Combinatorics",
-      "name": "closedBall_scale_iff_prefix",
-      "quality": 0.7559799999999999
-    },
     {
       "cycle_id": "bae1175e",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "liftUp_subset_iff",
       "quality": 0.79707
+    },
+    {
+      "cycle_id": "39ee2889",
+      "domain": "Combinatorics",
+      "name": "castLat_subset_iff",
+      "quality": 0.7010699999999999
+    },
+    {
+      "cycle_id": "39ee2889",
+      "domain": "Combinatorics",
+      "name": "last_not_mem_castLat",
+      "quality": 0.7010699999999999
+    },
+    {
+      "cycle_id": "39ee2889",
+      "domain": "Combinatorics",
+      "name": "liftUp_subset_iff",
+      "quality": 0.7010699999999999
     }
   ],
-  "last_updated": "2026-08-06T09:23:28",
+  "last_updated": "2026-08-06T10:02:07",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "ff2a2247",
-        "quality": 0.7582199999999999,
-        "theorems": 12,
-        "title": "Reconstruction Conjecture"
-      },
-      {
         "cycle_id": "ed94092b",
         "quality": 0.7667599999999999,
         "theorems": 16,
@@ -3263,6 +3257,12 @@
       {
         "cycle_id": "39ee2889",
         "quality": 0.79707,
+        "theorems": 34,
+        "title": "Concrete, falsifiable conjectures arising from the formalization in"
+      },
+      {
+        "cycle_id": "39ee2889",
+        "quality": 0.7010699999999999,
         "theorems": 34,
         "title": "Concrete, falsifiable conjectures arising from the formalization in"
       }
