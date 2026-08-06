@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "560cda23",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n1. **Sharp existence threshold for the `b = 1` family.** For every real `a` and every `c > 0`, the equation\n   `x = exp(a) log(x+c)` on `x+c>0` has a solution if and only if\n   `c",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 38,
-      "timestamp": "2026-07-29T19:53:58",
-      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-    },
-    {
       "cycle_id": "89e28e84",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n## Completed formal results\n\n`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic formalization of the one-component perturbative model in the chosen nor",
@@ -2501,6 +2491,16 @@
       "theorem_count": 34,
       "timestamp": "2026-08-06T07:55:36",
       "title": "Concrete, falsifiable conjectures arising from the formalization in"
+    },
+    {
+      "cycle_id": "43d8701a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.lean`,\n`Catalog/Novelty/ConsistencyTransferSharpness.lean`,\n`Catalog/Novelty/HeightSpectrumTransfer.l",
+      "quality_score": 0.6859624765478425,
+      "sorry_count": 1,
+      "theorem_count": 1599,
+      "timestamp": "2026-08-06T10:05:24",
+      "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.79707
     }
   ],
-  "last_updated": "2026-08-06T07:55:36",
+  "last_updated": "2026-08-06T10:05:24",
   "open_questions": [
-    {
-      "context": "+  sorry; +  sorry; +  sorry",
-      "cycle_id": "d4bc25af",
-      "domain": "Logic",
-      "sorry_count": 13,
-      "timestamp": "2026-07-20T03:02:07"
-    },
     {
       "context": "+  sorry; +  sorry; +  sorry",
       "cycle_id": "50f62832",
@@ -3016,6 +3009,13 @@
       "domain": "Probability",
       "sorry_count": 4,
       "timestamp": "2026-08-06T03:44:49"
+    },
+    {
+      "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
+      "cycle_id": "43d8701a",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-08-06T10:05:24"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b0710fef",
-        "quality": 0.7679199999999999,
-        "theorems": 21,
-        "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-      },
-      {
         "cycle_id": "5907c59d",
         "quality": 0.78678,
         "theorems": 22,
@@ -3637,6 +3631,12 @@
         "quality": 0.686,
         "theorems": 128,
         "title": "The phrase “directly apprehended by a human brain” is not presently a mathematic"
+      },
+      {
+        "cycle_id": "43d8701a",
+        "quality": 0.6859624765478425,
+        "theorems": 1599,
+        "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
       }
     ],
     "NumberTheory": [
