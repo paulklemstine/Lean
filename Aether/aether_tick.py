@@ -1988,7 +1988,7 @@ def rebuild_commit_push() -> bool:
         result = subprocess.run(
             [sys.executable, "update_index.py"],
             cwd=str(PACKAGES_DIR),
-            capture_output=True, text=True, timeout=300
+            capture_output=True, text=True, timeout=600
         )
         if result.returncode != 0:
             print(f"[Tick] update_index.py failed: {result.stderr}")
@@ -2096,7 +2096,7 @@ def rebuild_commit_push() -> bool:
             r = subprocess.run(
                 [sys.executable, "update_index.py"],
                 cwd=str(PACKAGES_DIR),
-                capture_output=True, text=True, timeout=300
+                capture_output=True, text=True, timeout=600
             )
             if r.returncode == 0:
                 # Re-rsync the fixed files to docs
