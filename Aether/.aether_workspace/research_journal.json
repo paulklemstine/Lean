@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e801d98f",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\n- Prove the converse regularity criterion, completing Proposition 24: an operation is regular when its commutative image equals its diagonal image. A useful route is to construct",
-      "quality_score": 0.76179,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-02T09:32:15",
-      "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
-    },
-    {
       "cycle_id": "01a8c97a",
       "domain": "Geometry",
       "key_insight": "# Future directions\n\nThe formal development proves the algebraic Gauss–Bonnet invariant for a\nconstant-curvature hyperbolic triangle and its extremal consequences. The next\nsteps toward a geometric, r",
@@ -499,19 +489,19 @@
       "theorem_count": 36,
       "timestamp": "2026-08-06T03:46:13",
       "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
+    },
+    {
+      "cycle_id": "413bc2f0",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nWhat is formalised (all statements proved, no `sorry`), in `Logic/Rademacher/`:\n\n* `Basic.lean` — empirical Rademacher complexity of a class of vectors: vanishing on\n  singletons,",
+      "quality_score": 0.7947599999999999,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-06T03:47:31",
+      "title": "Generalization Bounds via Rademacher Complexity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e3e9c821",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n## Scope of the formalization\n\n`Catalog/Physics/Noether/ContinuousSymmetries.lean` proves the differential core of Noether's first theorem for finite-dimensional real inner-produc",
-      "quality_score": 0.79196,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-29T17:48:52",
-      "title": "Noether's Theorem: Symmetries and Conservation Laws"
-    },
     {
       "cycle_id": "e771e647",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 36,
       "timestamp": "2026-08-06T03:46:13",
       "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
+    },
+    {
+      "cycle_id": "413bc2f0",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nWhat is formalised (all statements proved, no `sorry`), in `Logic/Rademacher/`:\n\n* `Basic.lean` — empirical Rademacher complexity of a class of vectors: vanishing on\n  singletons,",
+      "quality_score": 0.7947599999999999,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-06T03:47:31",
+      "title": "Generalization Bounds via Rademacher Complexity"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "28c84414",
-      "domain": "Shared",
-      "name": "presheaf_hom_ext_of_representables",
-      "quality": 0.73729
-    },
-    {
-      "cycle_id": "28c84414",
-      "domain": "Shared",
-      "name": "presheaf_isIso_of_pointwise_bijective",
-      "quality": 0.73729
-    },
-    {
-      "cycle_id": "28c84414",
-      "domain": "Shared",
-      "name": "yoneda_reflects_object_isomorphism",
-      "quality": 0.73729
-    },
     {
       "cycle_id": "8fa54bf5",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "subadditive_log",
       "quality": 0.79301
+    },
+    {
+      "cycle_id": "413bc2f0",
+      "domain": "Logic",
+      "name": "sgn_neg",
+      "quality": 0.7947599999999999
+    },
+    {
+      "cycle_id": "413bc2f0",
+      "domain": "Logic",
+      "name": "abs_sgn",
+      "quality": 0.7947599999999999
+    },
+    {
+      "cycle_id": "413bc2f0",
+      "domain": "Logic",
+      "name": "sgn_sq",
+      "quality": 0.7947599999999999
     }
   ],
-  "last_updated": "2026-08-06T03:46:13",
+  "last_updated": "2026-08-06T03:47:31",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "9f0b015d",
-        "quality": 0.74,
-        "theorems": 19,
-        "title": "Proof Automation: Custom Lean 4 Tactics"
-      },
-      {
         "cycle_id": "68e75c09",
         "quality": 0.63,
         "theorems": 16,
@@ -3513,6 +3507,12 @@
         "quality": 0.686,
         "theorems": 45,
         "title": "These conjectures are derived from the results proved this cycle in"
+      },
+      {
+        "cycle_id": "413bc2f0",
+        "quality": 0.7947599999999999,
+        "theorems": 72,
+        "title": "Generalization Bounds via Rademacher Complexity"
       }
     ],
     "MachineLearning": [

@@ -48,17 +48,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31b96673",
     "description": "Constructs a single EML exponential-logarithmic activation neuron that evaluates the Berggren node energy spectrum in O(1) time per tree step.",
     "domains": [
       "Pythagorean",
       "Applications"
     ],
     "id": "pyth_factor_eml_02f073c8",
+    "phase": "A",
     "priority_score": 0.96,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
   },
@@ -2749,21 +2750,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Perfect Cuboid (Euler Brick)"
   },
   {
-    "consumed_by_exp_id": "716ebed1",
-    "description": "Building on cycle b0710fef (Q=0.768), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural coding: how does the brain represent information? Define: a 'neural code' is a binary pattern on N neurons. Prove: the maximum number of distinct concepts representable by N binary neurons is 2^N. Show: with population coding (distributed representations), the brain can represent co",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_b0710fef_72ac41c5",
-    "phase": "A",
-    "priority_score": 0.8679199999999999,
-    "research_mode": "team",
-    "source_exp_id": "b0710fef",
-    "status": "in_progress",
-    "timestamp": "2026-08-02T17:26:14.394886+00:00",
-    "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle c7c1ec6d (Q=0.767), which proved 8 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H\u2082 = 0` produces zero.  They also\nshow that unitary output forc",
     "domains": [
@@ -3534,22 +3520,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Tropical Amoebas and Ronkin Functions"
-  },
-  {
-    "consumed_by_exp_id": "413bc2f0",
-    "description": "Prove that the Rademacher complexity of a hypothesis class provides tight generalization bounds for supervised learning. Formalize the margin bound for linear classifiers and extend to kernel methods. Show that VC dimension bounds are looser than Rademacher bounds for structured hypothesis classes.",
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "id": "seed_328",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Generalization Bounds via Rademacher Complexity"
   },
   {
     "consumed_by_exp_id": "",
@@ -6930,6 +6900,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Combinatorial and algebraic proofs of Keller's $A_2\\square A_2$ $q$-dilogarithm identity' and formalize its key results. Abstract: The classical Durfee-square argument gives a combinatorial proof of the pentagon identity for the quantum dilogarithm. Just as the pentagon identity is associated with the $A_2$ quiver, Keller's identity is associated with the square-product quiver $A_2\\square A_2$. Previous proofs of Keller's identity use cluster categories or spectral sequences in rapid-decay equivariant cohomology. We give three proofs of Keller's identity: a generating-function proof, an explicit weight-preserving bijection on colored partitions, and a standard-monomial proof using a four-colored arc algebra. Their common mechanism is an iterated Durfee decomposition: two possible pairings give horizontal and vertical decompositions, while a third binary step accounts for the coupling factor. These constructions provide a ``superpotential analogue'' of the Durfee-square argument.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0991",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.05057v1",
+    "status": "available",
+    "timestamp": "2026-08-06T03:47:36.177153+00:00",
+    "title": "ArXiv paper: Combinatorial and algebraic proofs of Keller's $A_2\\square A_2$ $q$-dilogarithm identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Chebotarev geodesic theorem: non-split case' and formalize its key results. Abstract: We study the prime geodesic theorem for congruence subgroups of indefinite quaternion orders. We prove that the geodesic analogue of the Chebotarev density theorem for these groups holds with exponent $25/36 + \\varepsilon$. In particular, we deduce that the prime geodesic theorem holds with exponent $25/36 + \\varepsilon$ for any congruence subgroup of any indefinite quaternion order over $\\mathbb{Q}$. The idea of the proof is to reduce the problem to the split case, which has been handled previously by the author.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_0992",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.04923v1",
+    "status": "available",
+    "timestamp": "2026-08-06T03:47:39.444312+00:00",
+    "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Provide rigorous foundations for Schubert's enumerative geometry. Formalize intersection theory on Grassmannians and flag varieties, proving Schubert calculus results via modern algebraic geometry.",
     "domains": [
       "Geometry",
@@ -7045,23 +7045,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
-  },
-  {
-    "consumed_by_exp_id": "b20da64b",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Speculative"
-    ],
-    "id": "seed_065",
-    "phase": "A",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Integrated Information via Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -7511,22 +7494,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T13:38:08.403841+00:00",
     "title": "Heterogeneous planets.: Generalize the equal-rate formula `(1-p)^N` to `\u220f"
-  },
-  {
-    "consumed_by_exp_id": "9f1ee483",
-    "description": "# Future Directions\n\n## 1. Entropy dimension for genuinely submultiplicative search languages\n\n**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in a finitely branching search language, and suppose `N(n+m) \u2264 N(n)N(m)` with `N(n) \u2265 1`. Then the normalized logarithmic growth rate exists and equals the infimum of the finite-scale rates. Under a compatible ultrametric and a finite-type extension condition, this rate also equals the Hausdorff dimension of the infinite successful-path boundary.\n\nThe key insight is that the exact additivity proved for finite profiles should be replaced by subadditivity, while the relative-entropy normalization remains unchanged. **Why now?** The finite multiscale composition law identifies precisely which quantity must survive when exact self-similarity is weakened.\n\n## 2. Ergodic branching and almost-sure dimension\n\n**Conjecture.** For a stationary ergodic sequence of ambient and successful branching pairs `(B\u2099,S\u2099)` satisfying `1 \u2264 S\u2099 \u2264 B\u2099` and suitable logarithmic integrability, the almost-sure proof-search dimension is\n\n`E[log S\u2080] / E[log B\u2080]`.\n\nThe key insight is that logarithmic path volumes are additive cocycles, so their ratio should converge by ergodic averaging. **Why now?** The deterministic profile theorem supplies the exact finite-block identity whose random-block limit this conjecture predicts.\n\n## 3. Dimension spectrum under finite-state pruning\n\n**Conjecture.** For successful paths accepted by a strongly connected finite-state pruning automaton over a fixed `b`-ary tree, the dimension equals `log \u03c1(A) / log b`, where `\u03c1(A)` is the spectral radius of the automaton's nonnegative transition matrix. Moreover, every algebraic number arising as such a normalized Perron root is realizable by a finite-state proof-search geometry.\n\nThe key insight is that scalar products of branching numbers generalize to matrix products, with Perron growth replacing ordinary multiplication. **Why now?** The nonstationary scalar theory clarifies the exact point at which linear algebra should enter and provides the expected normalization.\n\n## 4. Policy-sensitive search cost at fixed dimension\n\n**Conjecture.** For every rational `d` strictly between zero and one and every computable unbounded function `f`, there are two finitely branching search instances with the same successful-prefix dimension `d` but deterministic depth-first discovery costs whose ratio exceeds `f(n)` at infinitely many depths.\n\nThe key insight is that dimension measures abundance, whereas a search policy measures ordering; adversarial rearrangement can preserve all prefix counts while moving successful terminals arbitrarily late. **Why now?** The current entropy laws sharply characterize geometry, making it possible to isolate and test the independent contribution of traversal policy.\n\n## 5. Stability under sparse adversarial perturbations\n\n**Conjecture.** If two nonstationary branching profiles differ on a set of levels of asymptotic density zero and their branching numbers are uniformly bounded above and below away from the unary degeneration, then their limiting relative entropy dimensions agree whenever either limit exists.\n\nThe key insight is that sparse changes contribute sublinear error to both logarithmic volumes. **Why now?** Repetition invariance and weighted composition already establish the finite-block algebra needed to quantify the effect of exceptional blocks.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0325",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "115a4ee3",
-    "status": "in_progress",
-    "timestamp": "2026-07-18T13:38:18.493859+00:00",
-    "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
   },
   {
     "consumed_by_exp_id": "",
@@ -7994,17 +7961,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle 8201cdaf"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "713730e2",
     "description": "# Future Directions\n\n## 1. Uniform half-canonical existence\n\n**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such that every simple connected `k`-regular graph on at least `N\u2080(k)` vertices has a divisor of degree `g-1` and rank at least `k-1`.\n\nThe key insight is that regularity fixes `g-1=(k-2)n/2`, while the remaining difficulty lies entirely in controlling chip-firing classes rather than numerical feasibility. **Why now?** The exact Brill\u2013Noether calculation isolates a concrete non-negative regime and removes genus bookkeeping from the construction problem.\n\n## 2. Quadratic universal threshold\n\n**Conjecture.** One may take `N\u2080(k) \u2264 2k\u00b2` in uniform half-canonical existence.\n\nThe key insight is that `2k\u00b2` already guarantees non-negativity of the relevant Brill\u2013Noether number with one unit of arithmetic slack. **Why now?** This is the first explicit scale singled out by the exact regular-graph calculation, so it is a falsifiable target for exhaustive tests and structural estimates.\n\n## 3. Expansion-driven linear threshold\n\n**Conjecture.** For every spectral gap parameter `\u03b5>0`, there is a constant `C(\u03b5)` such that every connected `k`-regular graph with normalized spectral gap at least `\u03b5` and `n \u2265 C(\u03b5)k` has a degree-`g-1` divisor of rank at least `k-1`.\n\nThe key insight is that expansion should make chip-firing mass redistribution sufficiently uniform to replace a quadratic counting threshold by a linear one. **Why now?** The numerical obstruction is already absent at quadratic scale, leaving expansion as a specific additional mechanism that can plausibly control reduced divisors.\n\n## 4. Uniform probabilistic witness principle\n\n**Conjecture.** For fixed `k \u2265 5`, the proportion of effective divisors of degree `g-1` having rank at least `k-1` tends to one as `n\u2192\u221e`, uniformly over simple connected `k`-regular graphs.\n\nThe key insight is that high degree may make low-rank divisor classes sparse even in graphs with highly non-generic geometry. **Why now?** A uniform counting statement would simultaneously prove existence and explain why the eventual theorem should be insensitive to the detailed structure of the regular graph.\n\n## 5. Residual pairing of extremal witnesses\n\n**Conjecture.** In every connected graph satisfying Baker\u2013Norine Riemann\u2013Roch, the involution `D \u21a6 K-D` preserves the set of divisor classes of degree `g-1` and rank at least `r`, and its fixed classes govern the sharp threshold for half-canonical existence.\n\nThe key insight is that at degree `g-1`, Riemann\u2013Roch forces equality of the ranks of a divisor and its residual, producing a genuine duality on candidate witnesses. **Why now?** The residual-rank identity is available without any probabilistic assumptions and suggests reducing the search to paired or fixed divisor classes.\n",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0400",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2eae5d0f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T04:49:01.534045+00:00",
     "title": "**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
   },
@@ -8399,17 +8367,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** A reflective fixed-point code admits a monotone interpretation i"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0830d66b",
     "description": "# Future Directions\n\n## 1. Quantitative Complexity\u2013Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is polynomial but whose workspace is\nreused across instances must dissipate at least a constant times the conditional\nentropy of the discarded computation history. A matching reversible construction\nshould attain the bound up to polylogarithmic overhead.\n\nThe key insight is that time complexity and dissipation become coupled only after\none specifies which intermediate information is irreversibly discarded, rather\nthan merely classifying the final decision problem. **Why now?** The finite\npushforward entropy inequality and the positive one-bit work bound isolate exactly\nthe local information-loss quantity that a family-level theorem must aggregate.\n\n## 2. Reversible Simulation Boundary for NP Search\n\n**Conjecture.** If every polynomially balanced NP search relation admits a\npolynomial-time decision algorithm, then every successful search computation has a\nlogically reversible implementation with polynomial time and space overhead, but\nnot necessarily with zero thermodynamic work when its output or history is reset.\n\nThe key insight is to separate reversible evaluation from irreversible cleanup:\na collapse may simplify the former while Landauer cost remains attached to the\nlatter. **Why now?** The surviving bridge theorem shows that efficient decidability\nalone cannot remove erasure cost, making reversible cleanup the precise missing\nmechanism.\n\n## 3. Physical Polynomial-Hierarchy Collapse Criterion\n\n**Conjecture.** In a physical complexity model closed under composition,\ncomplementation, and polynomially bounded oracle access, an efficiently realizable\ncomplete process for any fixed level of the polynomial hierarchy collapses every\nhigher physically realizable level to that level.\n\nThe key insight is that the extended Church\u2013Turing inclusion should interact with\nhierarchy stability through closure under oracle simulation, not through an\nunqualified assertion about all physical processes. **Why now?** The present\ncomplexity transfer identifies the first-level collapse mechanism; the next test is\nwhether it persists under alternating oracle structure.\n\n## 4. Fluctuation-Robust Demon Impossibility\n\n**Conjecture.** For finite-memory demons obeying a Crooks-type fluctuation relation,\nthe probability of observing total work below the Landauer threshold decays\nexponentially in the number of independently erased bits, uniformly over every\npolynomial-time control strategy.\n\nThe key insight is that rare negative-work trajectories need not contradict the\nsecond law; the physically testable obstruction is an exponential concentration\nbound on repeated erasure. **Why now?** The expectation-level Jarzynski argument\nalready supplies the correct threshold, while repeated finite systems provide a\nconcrete setting in which to seek sharp tail estimates.\n\n## 5. Zero-Temperature Boundary Classification\n\n**Conjecture.** Every apparent zero-work erasing demon obtained as temperature tends\nto zero falls into one of two classes: either its expected running time diverges\nsuperpolynomially, or the finite Jarzynski model loses uniform integrability and the\nlimiting process is not a valid finite-resource realization.\n\nThe key insight is that strict positivity fails algebraically at zero temperature,\nso the obstruction must reappear as a resource divergence or a singular limit.\n**Why now?** Boundary analysis pinpoints `T = 0` as the main escape hatch from the\npositive-work theorem and turns that loophole into a precise asymptotic research\nquestion.\n",
     "domains": [
       "Computation",
       "Algebra"
     ],
     "id": "fd_0507",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e3542946",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T05:48:58.813652+00:00",
     "title": "**Conjecture.** For a family of finite decision processes with bounded error, an"
   },
@@ -8985,22 +8954,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** For every fixed pair `l \u2265 k \u2265 3`, every sufficiently large outer"
   },
   {
-    "consumed_by_exp_id": "059cccbd",
-    "description": "# Future Directions\n\n- Replace the stipulated variance-of-the-mean formula with a probability-space model of independent, identically distributed neural responses, and derive the `1 / \u221aN` error law from variance and independence.\n- Generalize binary activity to finite alphabets, obtaining `q^N` capacity and energy-constrained type-class bounds.\n- Develop exact and asymptotic bounds for codes with weight at most `k`, including entropy estimates for `\u2211_{j \u2264 k} N.choose j` when `k / N` is near one percent.\n- Add noisy channels and prove decoding guarantees from Hamming distance, minimum-distance bounds, and error-correcting neural populations.\n- Optimize information per expected spike under nonuniform concept distributions and neuron-dependent energy costs.\n- Extend the linear neural-manifold theorem to smooth maps. The appropriate target is a local rank bound for the image of a smooth behavioral parametrization, with explicit hypotheses distinguishing image dimension, tangent rank, and the dimension of the image's linear span.\n- Formalize nonlinear population codes and Fisher information, then connect estimator variance to a rigorously stated Cram\u00e9r\u2013Rao bound.\n- Study temporal codes by replacing a single Boolean pattern with spike trains and proving finite-window capacity bounds under refractory-period constraints.\n",
-    "domains": [
-      "Computation",
-      "Geometry"
-    ],
-    "id": "fd_0611",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6622cac1",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T02:29:54.150505+00:00",
-    "title": "Future directions from cycle 6622cac1"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## From two-point risk to distributional lower bounds\n\nThe proved two-state theorem is a local obstruction. A next step is to integrate it over couplings of states whose functional observations are close but whose experiential values are separated. This should produce lower bounds for expected reconstruction loss in terms of an optimal-transport discrepancy between experiential and functional geometries.\n\n## Sharp constants and minimax reconstruction\n\nThe factor `1/2` comes from distributing a hidden contrast across two reconstruction errors. Characterizing equality, and then optimizing over Lipschitz decoders, would turn the bound into a minimax theorem. Finite metric spaces provide a tractable first setting, where the decoder problem can be compared with metric extension and facility-location problems.\n\n## Noisy and randomized decoders\n\nA randomized reconstruction is naturally a Markov kernel from functional observations to distributions on experiences. Replacing metric loss by Wasserstein loss should retain the same triangle-inequality obstruction. Formalizing this would connect hidden fibres to statistical experiments and data-processing inequalities.\n\n## Nontrivial coverings\n\nThe robust inequality does not require a globally split state space. It can therefore be applied locally to nontrivial finite coverings. A complementary topological development should construct an explicit connected two-sheeted cover and prove that it has local sheet swaps but no continuous global fibrewise choice of the opposite sheet.\n\n## Effective reconstruction\n\nThe present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.\n",
     "domains": [
@@ -9315,17 +9268,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The present development supplies two self-contained Lean modules for the request"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2784f3be",
     "description": "# Future directions\n\nLet `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n < W\u2096`.  The following are concrete conjectures suggested by the formal development.\n\n1. **Iterated-log position bound.** If `L\u2082(n)` is the least number of repeated applications of `x \u21a6 \u2308log\u2082(x + 1)\u2309` needed to reach a value at most `2`, then for every `n \u2265 2`, `|K(n) - L\u2082(n)| \u2264 2`.\n\n2. **No worst-case binary compression.** For every `k`, any injective, prefix-free binary encoding of all valid length-`k` tower representations has a codeword of length at least `\u2308log\u2082 W\u2096\u2309`.  Moreover, concatenating each digit in exactly `W\u1d62` bits attains total length `\u2211_{i<k} W\u1d62 = log\u2082 W\u2096`.\n\n3. **A radix-growth threshold.** For generalized weights `V\u2080 = 1` and `V\u2096\u208a\u2081 = r(V\u2096)V\u2096`, assume `r` is monotone and `r(x) \u2265 2`.  The least `k` with `n < V\u2096` is `O(log* n)` if `r(x) \u2265 2^x` for all sufficiently large `x`; it is not `O(log* n)` when `r(x) \u2264 x^C` for some fixed `C` and all sufficiently large `x`.\n\n4. **Balanced recursive digits.** With odd radix `r\u2096 = 2^(W\u2096+1) + 1` and weights `U\u2080 = 1`, `U\u2096\u208a\u2081 = r\u2096U\u2096`, every integer in `[-(U\u2096-1)/2, (U\u2096-1)/2]` has a unique length-`k` expansion whose `i`th digit lies in `[-(r\u1d62-1)/2, (r\u1d62-1)/2]`.\n\n5. **Zeckendorf comparison.** Let `Z(n)` be the largest Fibonacci index occurring in the canonical Zeckendorf expansion of `n`.  There are explicit constants `a,b > 0` such that `a log\u2082(n+1) \u2264 Z(n) \u2264 b log\u2082(n+1)` for every `n \u2265 1`, whereas `K(n) = o(Z(n))`; nevertheless, every injective binary encoding of either representation family has worst-case length at least `\u2308log\u2082(n+1)\u2309` on the interval `[0,n]`.\n",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0781",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e3956c60",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-27T00:20:03.090672+00:00",
     "title": "Let `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n <"
   },
@@ -9523,17 +9477,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "For the split metric"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43d8701a",
     "description": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT\u2080` and an interpretation in arithmetic such that PA proves `Con(QFT\u2080) \u2192 Con(PA)`. This is falsified by any PA-model satisfying `Con(QFT\u2080) \u2227 \u00acCon(PA)`.\n\n2. **Minimal soundness for the negative independence half.** For recursively axiomatized extensions of Robinson arithmetic, determine whether 1-consistency is strictly stronger than necessary for proving `PA \u22ac \u00acCon(T)` under a fixed arithmetized interpretation. A separating theory would falsify any claimed equivalence.\n\n3. **Constructive physical countermodel.** Replace the empty-world witness separating mathematical from physical consistency by a nonempty, finitely presented operational semantics and a consistent theory whose constraints have no jointly realizable state. The conjecture fails if every consistent finite constraint set in that semantics has a realization.\n\n4. **Completeness boundary for physical semantics.** Characterize semantic conditions on a nonempty class of physical worlds under which `Consistent P T \u2194 PhysicallyConsistent M T` holds for every theory `T`. The proposed characterization is falsified by either a condition-satisfying incomplete semantics or a complete semantics violating one of the stated conditions.\n\n5. **Independence transfer along interpretations.** If theories `U` and `T` are mutually faithfully interpretable over PA and PA verifies preservation of falsum proofs in both directions, then `Con(U)` is PA-independent exactly when `Con(T)` is PA-independent. A single verified pair of interpretations for which only one consistency sentence is independent would refute this conjecture.\n",
     "domains": [
       "Logic",
       "Pythagorean"
     ],
     "id": "fd_0814",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5843d50f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-29T12:31:24.540032+00:00",
     "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
   },
@@ -9969,22 +9924,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-31T23:26:30.110033+00:00",
     "title": "The formal connector isolates a concrete target for the asymptotic random"
-  },
-  {
-    "consumed_by_exp_id": "71b84dd8",
-    "description": "# Future directions\n\n## What has been established\n\n`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by three real-valued sequences: stored usable energy, externally injected energy, and harvested useful energy. A per-cycle balance equation and nonnegativity assumptions yield:\n\n- exact conservation over every finite horizon;\n- an absolute bound: harvested energy is at most initial reserve plus external input;\n- a net-export bound by the initial reserve alone;\n- exact equality of harvested energy and injected energy for a cyclic apparatus;\n- zero total and pointwise output from a ground-state, unpowered apparatus;\n- a finite-horizon average-power bound;\n- average net power eventually below every positive rate.\n\nThus the result does not assign a finite energy density to quantum vacuum fluctuations. Instead, it proves that fluctuations cannot act as an unaccounted thermodynamic source in any process satisfying the stated global energy balance.\n\n## Computational evidence\n\nComputational evidence was intentionally skipped. The result is a symbolic telescoping consequence of an assumed conservation equation, rather than a numerical or combinatorial conjecture. Testing selected numerical trajectories would merely instantiate the assumptions and would provide no independent support beyond the general Lean proof.\n\n## Natural extensions\n\n1. **Continuous time.** Replace discrete cycles by absolutely continuous energy trajectories and derive the integrated inequality from an almost-everywhere differential balance law.\n2. **Open quantum systems.** Connect `injected` and `harvested` to work and heat terms in completely positive trace-preserving dynamics, making passivity or complete passivity the source of the balance inequality.\n3. **Fluctuating outputs.** Model harvested energy as a random variable and prove expectation, tail-probability, and almost-sure long-time bounds.\n4. **Multiple reservoirs.** Separate work input, heat currents, measurement cost, feedback cost, and entropy production, then derive a Kelvin\u2013Planck-style bound.\n5. **Lossy devices.** Add nonnegative dissipation to the balance equation. The existing extraction bounds should strengthen immediately.\n6. **Relativistic localization.** Index energy accounts by bounded spacetime regions and formalize compatibility between local negative-energy observations and global conservation bounds.\n7. **Tightness constructions.** Exhibit processes attaining the finite bound by converting all initial stored energy into output, and characterize equality conditions.\n8. **Rate units.** Add an explicit positive cycle duration, so average power is energy divided by physical elapsed time rather than cycle count.\n",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0870",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "a7ba7617",
-    "status": "in_progress",
-    "timestamp": "2026-07-31T23:27:47.395510+00:00",
-    "title": "`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by t"
   },
   {
     "consumed_by_exp_id": "",
@@ -11285,17 +11224,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The files in `Bridges/` develop Joyal's combinatorial species as transport-of-st"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "39ee2889",
     "description": "# Future directions\n\nConcrete, falsifiable conjectures arising from the formalization in\n\n* `Catalog/Bridges/B3FreeFamilies.lean` \u2014 framework of weak/strong `P`-free families,\n  layers, `e(P)`, `La(n,P)`, `La*(n,P)`, Sperner;\n* `Catalog/Bridges/B3FreeFamiliesBounds.lean` \u2014 maximality of layer families, exact values\n  for `n \u2208 {d, d+1}`, the chain/Mirsky upper bound;\n* `Catalog/Bridges/B3FreeFamiliesLevels.lean` \u2014 level (size-determined) families,\n  strong copies spread over arbitrary levels, the exact level-restricted extremal number,\n  and permutation-invariant families.\n\nNotation: `BoolLat d = B_d` is the Boolean lattice on `d` atoms; `layers \u03b1 a k` is the union\nof the `k` layers of sizes `a, \u2026, a+k\u22121`; `\ud835\udcdb(S) = levelFamily \u03b1 S` is the family of all sets\nwhose size lies in `S`; `n = Fintype.card \u03b1`.\n\n## Resolved since the earlier drafts\n\nConjectures from previous drafts that are now theorems, and therefore no longer listed\nbelow.\n\n* *Maximality of the layer families* \u2014 `not_strongFree_insert_layers`,\n  `layers_maximal_weakFree`, `layers_maximal_strongFree`.  Adding to `layers \u03b1 a d` any set\n  whose size lies outside `[a, a+d)` creates a **strong** (hence also weak) copy of `B_d`,\n  so an `\u03b5`-improvement can never be obtained by enlarging a layer family.\n* *The exact value on a ground set of size `d+1`* \u2014 `La_boolLat_eq_of_card_eq_succ`:\n  `La(d+1, B_d) = 2^(d+1) \u2212 2`, in particular `La(4, B_3) = 14`; and\n  `La_boolLat_lt_succ_of_card_eq_succ`: `La(d+1, B_d) < La(d+1, B_(d+1))`.\n* *No gain from families defined by a set of levels* \u2014 `levelFamily_weakFree_iff`\n  (`\ud835\udcdb(S)` is weak, equivalently strong, `B_d`-free iff `S` realizes at most `d` levels),\n  `sum_choose_le_sum_choose_window` (any `d` levels weigh at most the `d` central ones),\n  and `level_extremal`: the maximum size of a weak `B_d`-free level family is *exactly*\n  `|layers \u03b1 (centralStart n d) d|`.  By `symmetric_weakFree_card_le` the same bound holds\n  for every permutation-invariant weak `B_d`-free family.  Hence the paper's `(3 + \u03b5)`\n  construction must break the symmetry of the cube.\n\nAlso proved: the general upper bound `La(n, B_d) \u2264 (2^d \u2212 1)\u00b7C(n, \u230an/2\u230b)` (`La_boolLat_le`),\ngiving the bracket `3\u00b7C(n, \u230an/2\u230b\u22122) \u2264 La(n, B_3) \u2264 7\u00b7C(n, \u230an/2\u230b)` (`La_boolLat3_bounds`);\nand `La(n, B_1) = La*(n, B_1) = C(n, \u230an/2\u230b)` (`La_boolLatOne_eq`, `LaStar_boolLatOne_eq`).\n\n## D1. The paper's headline bound: an `\u03b5`-gain for `B_3`\n\n**Conjecture.** There are a real `\u03b5 > 0` and an `n\u2080` such that for all `n \u2265 n\u2080` there is a\nweak `B_3`-free family `F \u2286 2^[n]` with `|F| \u2265 (3 + \u03b5)\u00b7C(n, \u230an/2\u230b)`, and likewise a strong\n`B_3`-free family of that size.\n\n*Status.* This is the theorem of the paper; not formalized here.  The formalization pins\ndown what has to be beaten (`e(B_3) = e*(B_3) = 3`, `weakFree_layers_iff`), shows that the\nimprovement cannot come from adding sets to a layer family (maximality) and cannot come\nfrom a level or symmetric family at all (`level_extremal`, `symmetric_weakFree_card_le`).\n*Falsifiable*: a proof of `La(n, B_3) \u2264 3\u00b7C(n, \u230an/2\u230b) + o(C(n, \u230an/2\u230b))` refutes it.\n*Lean shape.* `\u2203 \u03b5 > 0, \u2200 n \u2265 n\u2080, \u2203 F : Finset (Finset (Fin n)), WeakFree F (BoolLat 3) \u2227\n((3 : \u211d) + \u03b5) * (n.choose (n/2)) \u2264 F.card`.\n\n## D2. Sharpening the chain upper bound from `2^d \u2212 1` to `O(d)`\n\n**Conjecture.** The factor `2^d \u2212 1` in `La_boolLat_le` is far from optimal:\n`La(n, B_d) \u2264 (d + c)\u00b7C(n, \u230an/2\u230b)` for an absolute constant `c` independent of `d` and `n`.\nConcretely for `d = 3`: `La(n, B_3) \u2264 4\u00b7C(n, \u230an/2\u230b)` for all `n`.\n\n*Status.* Open.  Proved here: `\u2264 7\u00b7C(n, \u230an/2\u230b)` for `d = 3`, and the exact value\n`C(n, \u230an/2\u230b)` for `d = 1`.  *Falsifiable* by a construction beating `4\u00b7C(n, \u230an/2\u230b)` for some\n`n`; D1 only asks for `3 + \u03b5`, so D1 and D2 are compatible.\n\n## D3. Strict monotonicity of `La` in the poset, for every `n`\n\n**Conjecture.** `La(n, B_d) < La(n, B_(d+1))` for all `n \u2265 d + 1`, and quantitatively\n`La(n, B_(d+1)) \u2212 La(n, B_d) \u2265 C(n, \u230an/2\u230b)`.\n\n*Status.* The non-strict inequality is proved (`La_boolLat_mono`); strictness is proved at\n`n = d + 1` (`La_boolLat_lt_succ_of_card_eq_succ`).  For the level-restricted problem the\nquantitative form is a theorem: by `level_extremal` the level optima differ by exactly one\ncentral binomial coefficient.  *Falsifiable* by one pair `(n, d)` with equality.\n\n## D4. Weak and strong extremal numbers differ for `B_d`\n\n**Conjecture.** For every `d \u2265 2` there is `n\u2080` with `La(n, B_d) < La*(n, B_d)` for all\n`n \u2265 n\u2080`: the proved inequality `La \u2264 La*` (`La_le_LaStar`) is eventually strict, even\nthough the layer invariants coincide (`e(B_d) = e*(B_d) = d`).\n\n*Status.* Open; the first cases are settled the other way: `La = La*` is proved for `n = d`\n(`La_eq_LaStar_of_card_eq`), for `n = d + 1` (`La_eq_LaStar_of_card_eq_succ`), for all `n`\nwhen `d = 1` (`La_eq_LaStar_boolLatOne`), and on level families for all `n, d`\n(`levelFamily_weakFree_iff_strongFree`).  So any such `n\u2080` must exceed `d + 1`, and the\nseparating families cannot be level families.  *Falsifiable* by showing that some extremal\nstrong `B_d`-free family is always weak `B_d`-free.\n\n## D5. Stability: an `\u03b5`-gain forces a large distance from every level family\n\n**Conjecture.** There is an absolute constant `c > 0` such that for all `\u03b5 > 0` and all\nlarge `n`, every weak `B_3`-free family `F \u2286 2^[n]` with `|F| \u2265 (3 + \u03b5)\u00b7C(n, \u230an/2\u230b)`\nsatisfies `min_S |F \u0394 \ud835\udcdb(S)| \u2265 c\u00b7\u03b5\u00b7C(n, \u230an/2\u230b)`, the minimum being over all sets `S` of\nlevels.  More generally the same should hold with `\ud835\udcdb(S)` replaced by any\npermutation-invariant family.\n\n*Status.* The degenerate case `F = \ud835\udcdb(S)` is the proved theorem `card_levelFamily_le_layers`\n(a level family never exceeds the central-layer bound), so the conjecture is precisely a\nrobust, quantitative version of it: an `\u03b5`-gain must not merely break the symmetry of the\ncube, it must break it on a positive proportion of the middle layer.  *Falsifiable* by a\nweak `B_3`-free family of size `(3 + \u03b5)\u00b7C(n, \u230an/2\u230b)` that differs from some level family in\n`o(C(n, \u230an/2\u230b))` sets.\n\n*Remark (a related claim we deliberately do not conjecture).* One might guess that no gain\nis possible from families of *bounded width*, i.e. contained in `d + t` consecutive layers\nfor constant `t`.  Since the known `\u03b5`-constructions for `B_d`, `d \u2265 4`, appear to live on a\nbounded number of layers, we expect that guess to be false, and record it here only as a\nquestion: for which `t` is the maximum size of a weak `B_d`-free family inside `d + t`\nconsecutive layers equal to the sum of the `d` largest of those binomial coefficients?  The\ncase `t = 0` is `layers_weakFree`; the case \"`t = 1`, one extra set\" is the maximality\ntheorem.\n",
     "domains": [
       "Combinatorics",
       "Cryptography"
     ],
     "id": "fd_0977",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "52648a00",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-05T14:51:17.300835+00:00",
     "title": "Concrete, falsifiable conjectures arising from the formalization in"
   },
