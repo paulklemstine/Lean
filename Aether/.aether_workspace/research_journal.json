@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e771e647",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n- Formalize primitive quadratic Dirichlet characters of arbitrary conductor and connect their periodic values to Mathlib's `DirichletCharacter` API.\n- Define generalized Bernoulli",
-      "quality_score": 0.73183,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-29T17:49:55",
-      "title": "ArXiv paper: On a character-twisted analogue of Schäffer's equation"
-    },
-    {
       "cycle_id": "434986f0",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n1. **Instantiate the abstract connector for metric graphs.** Define divisors on\n   compact metric graphs, principal divisors of piecewise-linear functions, and\n   Baker--Norine ra",
@@ -2501,6 +2491,16 @@
       "theorem_count": 72,
       "timestamp": "2026-08-06T03:47:31",
       "title": "Generalization Bounds via Rademacher Complexity"
+    },
+    {
+      "cycle_id": "66bb09ac",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nFormal results live in\n\n* `Catalog/Novelty/MindToolsBoundedApprehension.lean` — bounded apprehension,\n  counting certificates, concrete ordinal ranks, well-founded ≠ linear;\n* `Ca",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 128,
+      "timestamp": "2026-08-06T05:23:07",
+      "title": "The phrase “directly apprehended by a human brain” is not presently a mathematic"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7947599999999999
     }
   ],
-  "last_updated": "2026-08-06T03:47:31",
+  "last_updated": "2026-08-06T05:23:07",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c945ec38",
-        "quality": 0.77894,
-        "theorems": 29,
-        "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
-      },
-      {
         "cycle_id": "b0710fef",
         "quality": 0.7679199999999999,
         "theorems": 21,
@@ -3637,6 +3631,12 @@
         "quality": 0.686,
         "theorems": 123,
         "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theore"
+      },
+      {
+        "cycle_id": "66bb09ac",
+        "quality": 0.686,
+        "theorems": 128,
+        "title": "The phrase “directly apprehended by a human brain” is not presently a mathematic"
       }
     ],
     "NumberTheory": [
