@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5843d50f",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT₀` and an interpretation in arithmetic such that PA proves `Con(QFT₀) → Con",
-      "quality_score": 0.7539499999999999,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-29T12:31:28",
-      "title": "Logic-Physics Bridge: Consistency of Physical Theories"
-    },
-    {
       "cycle_id": "687f4282",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register defici",
@@ -2501,6 +2491,16 @@
       "theorem_count": 118,
       "timestamp": "2026-08-06T00:18:07",
       "title": "Existence of δ‑dense sets avoiding large sumsets"
+    },
+    {
+      "cycle_id": "10a6c20b",
+      "domain": "Probability",
+      "key_insight": "# Future directions: tropical mathematics of social choice\n\nAll statements below are conjectures suggested by the formalised results in\n\n* `Catalog/Probability/TropicalSocialChoice.lean` (tropical Arr",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 216,
+      "timestamp": "2026-08-06T00:18:13",
+      "title": "Speculative: Tropical Mathematics of Social Choice"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7857999999999999
     }
   ],
-  "last_updated": "2026-08-06T00:18:07",
+  "last_updated": "2026-08-06T00:18:13",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "177b02a7",
-        "quality": 0.73659,
-        "theorems": 8,
-        "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-      },
-      {
         "cycle_id": "513ffc93",
         "quality": 0.7676799999999999,
         "theorems": 16,
@@ -3823,6 +3817,12 @@
         "quality": 0.686,
         "theorems": 113,
         "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
+      },
+      {
+        "cycle_id": "10a6c20b",
+        "quality": 0.686,
+        "theorems": 216,
+        "title": "Speculative: Tropical Mathematics of Social Choice"
       }
     ],
     "Pythagorean": [
