@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "01a8c97a",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe formal development proves the algebraic Gauss–Bonnet invariant for a\nconstant-curvature hyperbolic triangle and its extremal consequences. The next\nsteps toward a geometric, r",
-      "quality_score": 0.72854,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-08-02T09:33:21",
-      "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
-    },
-    {
       "cycle_id": "ffa9af78",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\nThe exact interior-fiber theorem reduces several follow-up questions to explicit properties of the two inverse branches. The following are concrete, falsifiable conjectures.\n\n1. *",
@@ -499,19 +489,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-06T03:47:31",
       "title": "Generalization Bounds via Rademacher Complexity"
+    },
+    {
+      "cycle_id": "713730e2",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k ≥ 6` with `k ≠ 7`,\n**every** simple `",
+      "quality_score": 0.78748,
+      "sorry_count": 0,
+      "theorem_count": 47,
+      "timestamp": "2026-08-06T07:00:49",
+      "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "42454fab",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Universe size four.** Extend the singleton/residual decomposition used for\n   `Fin 3`. A direct search has 65,536 candidate families, so useful structural\n   reductions (sing",
-      "quality_score": 0.7628999999999999,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-07-29T19:53:49",
-      "title": "Frankl's Union-Closed Conjecture: Partial Results"
-    },
     {
       "cycle_id": "35f601c4",
       "domain": "Computation",
@@ -2501,21 +2491,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-06T05:23:19",
       "title": "Let `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n <"
+    },
+    {
+      "cycle_id": "713730e2",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k ≥ 6` with `k ≠ 7`,\n**every** simple `",
+      "quality_score": 0.78748,
+      "sorry_count": 0,
+      "theorem_count": 47,
+      "timestamp": "2026-08-06T07:00:49",
+      "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8fa54bf5",
-      "domain": "Tropical",
-      "name": "for",
-      "quality": 0.7597999999999998
-    },
-    {
-      "cycle_id": "8fa54bf5",
-      "domain": "Tropical",
-      "name": "for",
-      "quality": 0.7597999999999998
-    },
     {
       "cycle_id": "8fa54bf5",
       "domain": "Tropical",
@@ -2803,9 +2791,21 @@
       "domain": "Logic",
       "name": "sgn_sq",
       "quality": 0.7947599999999999
+    },
+    {
+      "cycle_id": "713730e2",
+      "domain": "Pythagorean",
+      "name": "lap_single",
+      "quality": 0.78748
+    },
+    {
+      "cycle_id": "713730e2",
+      "domain": "Pythagorean",
+      "name": "rankAtLeast_add_of_forall_le",
+      "quality": 0.78748
     }
   ],
-  "last_updated": "2026-08-06T05:23:19",
+  "last_updated": "2026-08-06T07:00:49",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "1782ce5d",
-        "quality": 0.66484,
-        "theorems": 5,
-        "title": "ArXiv paper: From roots to paths: graphs simultaneously irregular with respect t"
-      },
-      {
         "cycle_id": "7fa0ef0b",
         "quality": 0.686,
         "theorems": 31,
@@ -3885,6 +3879,12 @@
         "quality": 0.686,
         "theorems": 124,
         "title": "Let `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n <"
+      },
+      {
+        "cycle_id": "713730e2",
+        "quality": 0.78748,
+        "theorems": 47,
+        "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
       }
     ],
     "Shared": [

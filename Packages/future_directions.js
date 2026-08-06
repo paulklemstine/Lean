@@ -7954,7 +7954,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "fd_0400",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2eae5d0f",
