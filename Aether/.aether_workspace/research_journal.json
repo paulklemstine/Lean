@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1098480",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n1. **Hopf-map surjectivity with an explicit section on two charts.** For every `q : Fin 3 → ℝ` satisfying `∑ i, q i ^ 2 = 1`, prove that there exist `z w : ℂ` with `‖z‖ ^ 2 + ‖w‖",
-      "quality_score": 0.685,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-29T17:46:39",
-      "title": "Deepening: Rucker: The Fourth Dimension as a Mathematical Playground"
-    },
-    {
       "cycle_id": "2bb5622c",
       "domain": "Cryptography",
       "key_insight": "# Future directions\n\nThe present development establishes the Reed–Solomon root-count, designed-distance, encoder-injectivity, and unique-decoding-radius theorems. It also restores the shared finite-af",
@@ -2501,6 +2491,16 @@
       "theorem_count": 123,
       "timestamp": "2026-08-06T03:44:43",
       "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+    },
+    {
+      "cycle_id": "059cccbd",
+      "domain": "Probability",
+      "key_insight": "# Future directions: concrete, falsifiable conjectures\n\nDerived from the theorems proved in `Catalog/Probability/NeuralCoding/`:\n`IIDPopulationCoding.lean`, `SparseEntropyBound.lean`,\n`SparseEntropyLo",
+      "quality_score": 0.6545542168674698,
+      "sorry_count": 4,
+      "theorem_count": 166,
+      "timestamp": "2026-08-06T03:44:49",
+      "title": "Future directions from cycle 6622cac1"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7857999999999999
     }
   ],
-  "last_updated": "2026-08-06T03:44:43",
+  "last_updated": "2026-08-06T03:44:49",
   "open_questions": [
-    {
-      "context": "+  sorry; +  sorry; +  sorry",
-      "cycle_id": "c1b3f8da",
-      "domain": "Pythagorean",
-      "sorry_count": 13,
-      "timestamp": "2026-07-20T02:08:19"
-    },
     {
       "context": "+  sorry; +  sorry; +  sorry",
       "cycle_id": "d4bc25af",
@@ -3016,6 +3009,13 @@
       "domain": "Bridges",
       "sorry_count": 1,
       "timestamp": "2026-08-05T09:56:52"
+    },
+    {
+      "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
+      "cycle_id": "059cccbd",
+      "domain": "Probability",
+      "sorry_count": 4,
+      "timestamp": "2026-08-06T03:44:49"
     }
   ],
   "research_threads": {
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "513ffc93",
-        "quality": 0.7676799999999999,
-        "theorems": 16,
-        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-      },
-      {
         "cycle_id": "70779ff4",
         "quality": 0.7678799999999999,
         "theorems": 4,
@@ -3823,6 +3817,12 @@
         "quality": 0.686,
         "theorems": 216,
         "title": "Speculative: Tropical Mathematics of Social Choice"
+      },
+      {
+        "cycle_id": "059cccbd",
+        "quality": 0.6545542168674698,
+        "theorems": 166,
+        "title": "Future directions from cycle 6622cac1"
       }
     ],
     "Pythagorean": [
