@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7799fc2c",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n1. **Sharp real escape region.** For every integer `D ≥ 2`, replace the strengthened condition `3|y| < |y|^D` in `InForwardRegion` by the paper's original condition `|y|^D > 3 max",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-07-29T23:21:28",
-      "title": "ArXiv paper: On lower bounds for canonical heights of the map $φ(X,Y)=(Y,X+Y^D+b)$"
-    },
-    {
       "cycle_id": "d4d2267f",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\nThe unrestricted Rota basis conjecture remains open. The following five statements\nare concrete, falsifiable extensions of the definitions and small-rank results in\n`Catalog/Combi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 131,
       "timestamp": "2026-08-06T12:29:37",
       "title": "Constructive Mathematics: Bishop's Analysis"
+    },
+    {
+      "cycle_id": "68319f3d",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of cycles 1–9\n(`Catalog/Computation/FourierFunctor/`), where we proved: `pontryagin : FinAb ≌\nFinAbᵒᵖ`, `fourierNatIso` (Fourier i",
+      "quality_score": 0.646,
+      "sorry_count": 0,
+      "theorem_count": 1088,
+      "timestamp": "2026-08-06T12:29:44",
+      "title": "Deepening: Bridge: Fourier Analysis as a Functor"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7010699999999999
     }
   ],
-  "last_updated": "2026-08-06T12:29:37",
+  "last_updated": "2026-08-06T12:29:44",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "d58932ad",
-        "quality": 0.7725,
-        "theorems": 13,
-        "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
-      },
-      {
         "cycle_id": "6c98f572",
         "quality": 0.80505,
         "theorems": 21,
@@ -3326,6 +3320,12 @@
         "cycle_id": "68319f3d",
         "quality": 0.686,
         "theorems": 133,
+        "title": "Deepening: Bridge: Fourier Analysis as a Functor"
+      },
+      {
+        "cycle_id": "68319f3d",
+        "quality": 0.646,
+        "theorems": 1088,
         "title": "Deepening: Bridge: Fourier Analysis as a Functor"
       }
     ],
