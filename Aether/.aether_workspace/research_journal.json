@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "687f4282",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register defici",
-      "quality_score": 0.8022499999999999,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-29T12:32:32",
-      "title": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Coloring"
-    },
-    {
       "cycle_id": "5f676746",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\n1. **Rational-constant density conjecture.** Extend the catalog EML syntax with rational constant leaves encoded by finite binary strings. For every continuous `f : C([0,1], ℝ)` a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 216,
       "timestamp": "2026-08-06T00:18:13",
       "title": "Speculative: Tropical Mathematics of Social Choice"
+    },
+    {
+      "cycle_id": "b20da64b",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: integrated information via tensor networks\n\n## Where the formalization stands\n\nThe Lean development lives in `Catalog/Novelty/` and compiles end to end against\nMathlib (Lean 4.28.",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 213,
+      "timestamp": "2026-08-06T03:44:36",
+      "title": "Integrated Information via Tensor Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7857999999999999
     }
   ],
-  "last_updated": "2026-08-06T00:18:13",
+  "last_updated": "2026-08-06T03:44:36",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7b912198",
-        "quality": 0.7734099999999999,
-        "theorems": 21,
-        "title": "Non-Archimedean Probability via Surreal Numbers"
-      },
-      {
         "cycle_id": "8e0a0c8a",
         "quality": 0.75983,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.686,
         "theorems": 33,
         "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
+      },
+      {
+        "cycle_id": "b20da64b",
+        "quality": 0.686,
+        "theorems": 213,
+        "title": "Integrated Information via Tensor Networks"
       }
     ],
     "NumberTheory": [
