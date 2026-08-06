@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "be8c4b71",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the al",
-      "quality_score": 0.8084800000000001,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-02T09:31:08",
-      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-    },
-    {
       "cycle_id": "e801d98f",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\n- Prove the converse regularity criterion, completing Proposition 24: an operation is regular when its commutative image equals its diagonal image. A useful route is to construct",
@@ -499,19 +489,19 @@
       "theorem_count": 85,
       "timestamp": "2026-08-05T22:30:27",
       "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
+    },
+    {
+      "cycle_id": "9f1ee483",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nThis cycle proved a cross-domain bridge, formalized in\n`Catalog/Bridges/SubmultiplicativeSearchEntropy.lean`:\n\n> **Bridge.** For a nonnegative transition matrix `A` of a finite-st",
+      "quality_score": 0.79301,
+      "sorry_count": 0,
+      "theorem_count": 36,
+      "timestamp": "2026-08-06T03:46:13",
+      "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "132832ee",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n1. **Malicious-verifier GMW simulation.** Formalize a polynomial-time rewinding simulator for the graph 3-colouring protocol and prove that, for every finite verifier strategy who",
-      "quality_score": 0.74352,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-29T17:47:50",
-      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-    },
     {
       "cycle_id": "e3e9c821",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 31,
       "timestamp": "2026-08-06T03:44:54",
       "title": "`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by t"
+    },
+    {
+      "cycle_id": "9f1ee483",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nThis cycle proved a cross-domain bridge, formalized in\n`Catalog/Bridges/SubmultiplicativeSearchEntropy.lean`:\n\n> **Bridge.** For a nonnegative transition matrix `A` of a finite-st",
+      "quality_score": 0.79301,
+      "sorry_count": 0,
+      "theorem_count": 36,
+      "timestamp": "2026-08-06T03:46:13",
+      "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f8e43caa",
-      "domain": "MachineLearning",
-      "name": "grokNetwork_before",
-      "quality": 0.77257
-    },
-    {
-      "cycle_id": "f8e43caa",
-      "domain": "MachineLearning",
-      "name": "delayed_generalization",
-      "quality": 0.77257
-    },
-    {
-      "cycle_id": "f8e43caa",
-      "domain": "MachineLearning",
-      "name": "delayed_transition_has_critical_equilibrium",
-      "quality": 0.77257
-    },
     {
       "cycle_id": "28c84414",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "decisiveSet_nonempty",
       "quality": 0.7857999999999999
+    },
+    {
+      "cycle_id": "9f1ee483",
+      "domain": "Algebra",
+      "name": "pos",
+      "quality": 0.79301
+    },
+    {
+      "cycle_id": "9f1ee483",
+      "domain": "Algebra",
+      "name": "rate_nonneg",
+      "quality": 0.79301
+    },
+    {
+      "cycle_id": "9f1ee483",
+      "domain": "Algebra",
+      "name": "subadditive_log",
+      "quality": 0.79301
     }
   ],
-  "last_updated": "2026-08-06T03:44:54",
+  "last_updated": "2026-08-06T03:46:13",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "89e28e84",
-        "quality": 0.78874,
-        "theorems": 12,
-        "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
-      },
-      {
         "cycle_id": "d1f879fc",
         "quality": 0.76753,
         "theorems": 13,
@@ -3079,6 +3073,12 @@
         "quality": 0.686,
         "theorems": 679,
         "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
+      },
+      {
+        "cycle_id": "9f1ee483",
+        "quality": 0.79301,
+        "theorems": 36,
+        "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
       }
     ],
     "Applications": [
