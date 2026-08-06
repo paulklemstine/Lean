@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "97183f28",
-      "domain": "Bridges",
-      "key_insight": "# Future directions: quantum–classical de Finetti bridge\n\nThe formal development proves the exact constructive direction of de Finetti in the finite-support, computational-basis (diagonal) sector: a f",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-07-29T22:21:30",
-      "title": "Quantum-Classical Bridge: de Finetti Theorem for Quantum States"
-    },
-    {
       "cycle_id": "576be6d2",
       "domain": "Logic",
       "key_insight": "# Future directions\n\n1. **Well-founded rank generalization.** Replace the natural-valued quality rank by an arbitrary partial order satisfying the ascending-chain condition. This would isolate precise",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-08-06T10:07:06",
       "title": "**Conjecture.** For a family of finite decision processes with bounded error, an"
+    },
+    {
+      "cycle_id": "ffc2840e",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nDerived from the five Lean files of this thread, all of which compile against\nmathlib4 (Lean 4.28.0) with no `sorry` and use only the standard axioms\n`propext`, `Classical.choice`",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 154,
+      "timestamp": "2026-08-06T10:10:20",
+      "title": "Group actions and orbit relations.: Instantiate `InvariantPattern` with th"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79707
     }
   ],
-  "last_updated": "2026-08-06T10:07:06",
+  "last_updated": "2026-08-06T10:10:20",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "e86cdc26",
-        "quality": 0.8002199999999999,
-        "theorems": 9,
-        "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical D"
-      },
-      {
         "cycle_id": "d58932ad",
         "quality": 0.7725,
         "theorems": 13,
@@ -3327,6 +3321,12 @@
         "quality": 0.686,
         "theorems": 15,
         "title": "**Conjecture.** For a family of finite decision processes with bounded error, an"
+      },
+      {
+        "cycle_id": "ffc2840e",
+        "quality": 0.686,
+        "theorems": 154,
+        "title": "Group actions and orbit relations.: Instantiate `InvariantPattern` with th"
       }
     ],
     "Cryptography": [
