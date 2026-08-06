@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5f676746",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n1. **Rational-constant density conjecture.** Extend the catalog EML syntax with rational constant leaves encoded by finite binary strings. For every continuous `f : C([0,1], ℝ)` a",
-      "quality_score": 0.74002,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-29T15:28:54",
-      "title": "EML Universal Approximation"
-    },
-    {
       "cycle_id": "d1098480",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n1. **Hopf-map surjectivity with an explicit section on two charts.** For every `q : Fin 3 → ℝ` satisfying `∑ i, q i ^ 2 = 1`, prove that there exist `z w : ℂ` with `‖z‖ ^ 2 + ‖w‖",
@@ -2501,6 +2491,16 @@
       "theorem_count": 213,
       "timestamp": "2026-08-06T03:44:36",
       "title": "Integrated Information via Tensor Networks"
+    },
+    {
+      "cycle_id": "716ebed1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThe neural-coding development now consists of six files, all compiling against\nMathlib with complete proofs (no `sorry`, axioms limited to `propext`,\n`Classical.choice`, `Quot.sou",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 123,
+      "timestamp": "2026-08-06T03:44:43",
+      "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7857999999999999
     }
   ],
-  "last_updated": "2026-08-06T03:44:36",
+  "last_updated": "2026-08-06T03:44:43",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8e0a0c8a",
-        "quality": 0.75983,
-        "theorems": 12,
-        "title": "Consciousness as Integrated Information: Mathematical Foundations"
-      },
-      {
         "cycle_id": "c945ec38",
         "quality": 0.77894,
         "theorems": 29,
@@ -3637,6 +3631,12 @@
         "quality": 0.686,
         "theorems": 213,
         "title": "Integrated Information via Tensor Networks"
+      },
+      {
+        "cycle_id": "716ebed1",
+        "quality": 0.686,
+        "theorems": 123,
+        "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theore"
       }
     ],
     "NumberTheory": [
