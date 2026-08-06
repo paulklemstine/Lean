@@ -1935,6 +1935,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 713730e2 (Q=0.787), which proved 47 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## 1. Uniform half-canonical existence\n\n**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such that every simple connected `k`-regular graph on at least `N\u2080(k)` vertices has a divisor of degree `g-1` and rank at least `k-1`.\n\nThe key insight is that regular",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_713730e2_daf07605",
+    "priority_score": 0.8874799999999999,
+    "research_mode": "team",
+    "source_exp_id": "713730e2",
+    "status": "available",
+    "timestamp": "2026-08-06T06:55:10.679751+00:00",
+    "title": "Deepening: **Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 78bbd545 (Q=0.787), which proved 10 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers eq",
     "domains": [
       "Tropical"
@@ -6900,17 +6914,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Combinatorial and algebraic proofs of Keller's $A_2\\square A_2$ $q$-dilogarithm identity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c07c4d0",
     "description": "Investigate the ArXiv paper 'Chebotarev geodesic theorem: non-split case' and formalize its key results. Abstract: We study the prime geodesic theorem for congruence subgroups of indefinite quaternion orders. We prove that the geodesic analogue of the Chebotarev density theorem for these groups holds with exponent $25/36 + \\varepsilon$. In particular, we deduce that the prime geodesic theorem holds with exponent $25/36 + \\varepsilon$ for any congruence subgroup of any indefinite quaternion order over $\\mathbb{Q}$. The idea of the proof is to reduce the problem to the split case, which has been handled previously by the author.",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "fd_0992",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2608.04923v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-06T03:47:39.444312+00:00",
     "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
   },
@@ -7945,22 +7960,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T04:29:26.179570+00:00",
     "title": "Future directions from cycle 8201cdaf"
-  },
-  {
-    "consumed_by_exp_id": "713730e2",
-    "description": "# Future Directions\n\n## 1. Uniform half-canonical existence\n\n**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such that every simple connected `k`-regular graph on at least `N\u2080(k)` vertices has a divisor of degree `g-1` and rank at least `k-1`.\n\nThe key insight is that regularity fixes `g-1=(k-2)n/2`, while the remaining difficulty lies entirely in controlling chip-firing classes rather than numerical feasibility. **Why now?** The exact Brill\u2013Noether calculation isolates a concrete non-negative regime and removes genus bookkeeping from the construction problem.\n\n## 2. Quadratic universal threshold\n\n**Conjecture.** One may take `N\u2080(k) \u2264 2k\u00b2` in uniform half-canonical existence.\n\nThe key insight is that `2k\u00b2` already guarantees non-negativity of the relevant Brill\u2013Noether number with one unit of arithmetic slack. **Why now?** This is the first explicit scale singled out by the exact regular-graph calculation, so it is a falsifiable target for exhaustive tests and structural estimates.\n\n## 3. Expansion-driven linear threshold\n\n**Conjecture.** For every spectral gap parameter `\u03b5>0`, there is a constant `C(\u03b5)` such that every connected `k`-regular graph with normalized spectral gap at least `\u03b5` and `n \u2265 C(\u03b5)k` has a degree-`g-1` divisor of rank at least `k-1`.\n\nThe key insight is that expansion should make chip-firing mass redistribution sufficiently uniform to replace a quadratic counting threshold by a linear one. **Why now?** The numerical obstruction is already absent at quadratic scale, leaving expansion as a specific additional mechanism that can plausibly control reduced divisors.\n\n## 4. Uniform probabilistic witness principle\n\n**Conjecture.** For fixed `k \u2265 5`, the proportion of effective divisors of degree `g-1` having rank at least `k-1` tends to one as `n\u2192\u221e`, uniformly over simple connected `k`-regular graphs.\n\nThe key insight is that high degree may make low-rank divisor classes sparse even in graphs with highly non-generic geometry. **Why now?** A uniform counting statement would simultaneously prove existence and explain why the eventual theorem should be insensitive to the detailed structure of the regular graph.\n\n## 5. Residual pairing of extremal witnesses\n\n**Conjecture.** In every connected graph satisfying Baker\u2013Norine Riemann\u2013Roch, the involution `D \u21a6 K-D` preserves the set of divisor classes of degree `g-1` and rank at least `r`, and its fixed classes govern the sharp threshold for half-canonical existence.\n\nThe key insight is that at degree `g-1`, Riemann\u2013Roch forces equality of the ranks of a divisor and its residual, producing a genuine duality on candidate witnesses. **Why now?** The residual-rank identity is available without any probabilistic assumptions and suggests reducing the search to paired or fixed divisor classes.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0400",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2eae5d0f",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T04:49:01.534045+00:00",
-    "title": "**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
   },
   {
     "consumed_by_exp_id": "",
@@ -11433,6 +11432,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-06T05:23:16.074697+00:00",
     "title": "Two self-contained Lean files carry the development:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k \u2265 6` with `k \u2260 7`,\n**every** simple `k`-regular graph \u2014 on any number of vertices \u2014 carries a divisor\nof degree `g - 1` with Baker\u2013Norine rank at least `k - 1`\n(`BrillNoetherSetFiring.exists_halfCanonical_rank_conjecture`).  No threshold\n`N\u2080(k)` is needed for those `k`; one may take `N\u2080(k) = 1`.  The engine is a\none-shot set-firing estimate: on a graph of minimum degree `k`, a divisor with\n`m \u2265 2` chips on every vertex has rank at least `min(3m - 1, k + m)`\n(`rankAtLeast_of_forall_le_three_mul`), a bound attained exactly on K\u2086 (`m = 2`,\n`k = 5`, rank 5) and on K\u2087, C\u2088(1,2,3), C\u2089(1,2,3) at the half-canonical degree.\n\nThe conjectures below are what the proved statements and the computations in\n`ComputationalEvidence.md` now make falsifiable.\n\n## 1. The residual degrees `k = 5` and `k = 7`\n\n**Conjecture.** There is a finite `N\u2080(5)` such that every simple connected\n`5`-regular graph on at least `N\u2080(5)` vertices carries a divisor of degree\n`g - 1` and rank at least `4`, and likewise a finite `N\u2080(7)` for rank `6`; and in\nboth cases `N\u2080(k) > k + 3`, i.e. a genuine threshold is required.\n\n*Why now.* Exhaustive enumeration of all `3125` divisor classes of degree\n`g - 1 = 9` on K\u2086 shows the maximal rank there is `2`, so `N\u2080(5) > 6`: unlike\n`k \u2265 6, k \u2260 7`, the `k = 5` statement cannot hold with `N\u2080(5) = 1`.  For `k = 7`\nevery tested witness on K\u2088 has rank exactly `5 = k - 2`, matching the proved\nbound.  These two degrees are exactly the cases where `\u230a(k-2)/2\u230b \u2208 {1, 2}` makes\nthe one-shot firing estimate fall short, so they isolate the genuinely\nchip-firing-theoretic content of the problem.\n\n## 2. Sharpness of the set-firing bound\n\n**Conjecture.** For every `k \u2265 5` there are infinitely many `k`-regular graphs on\nwhich the divisor `const \u230a(k-2)/2\u230b + (leftover)` of degree `g - 1` has rank\n*exactly* `min(3\u230a(k-2)/2\u230b - 1, k + \u230a(k-2)/2\u230b)` \u2014 i.e. the theorem\n`rankAtLeast_of_forall_le_three_mul` is asymptotically sharp for uniform\nwitnesses, and cannot be improved to `k + m` by any refinement of one-shot\nfiring.\n\n*Why now.* The bound is already attained (not merely approached) at `k = 5`\n(K\u2086: rank 5 for `const 2`), at `k = 6` (K\u2087, C\u2088(1,2,3), C\u2089(1,2,3): rank 5 at\ndegree `g - 1`) and at `k = 7` (K\u2088: rank 5).  The competing upper expression\n`k + m` is *false* for K\u2087 (`k + m = 8` while the true rank is `5`), so the `3m-1`\nterm, not the `k+m` term, is the essential one.\n\n## 3. Non-uniform witnesses at `k = 5`\n\n**Conjecture.** For `5`-regular graphs the maximal rank at degree `g - 1` is not\na function of `n` alone: there are arbitrarily large `5`-regular graphs whose\nbest near-uniform witness has rank `2`, while for others (e.g. complete bipartite\nK\u2085,\u2085-like and other highly symmetric bipartite graphs) it is `\u2265 5`.  Consequently\nany proof of uniform existence at `k = 5` must select the witness using the\nstructure of `G`.\n\n*Why now.* Near-uniform witnesses on the circulants C\u2088(1,2,4), C\u2081\u2080(1,2,5),\nC\u2081\u2082(1,2,6), C\u2081\u2084(1,2,7) all have rank exactly `2` \u2014 flat in `n` \u2014 while the same\nrecipe on K\u2085,\u2085 gives rank `5`.  A uniform (graph-independent) recipe therefore\ncannot work, which rules out the most natural attack on the remaining case.\n\n## 4. Linear, not quadratic, threshold\n\n**Conjecture.** `N\u2080(k) \u2264 2k + 7` for all `k \u2265 5`; more precisely the sharp\nthreshold is `\u0398(k)`, not `\u0398(k\u00b2)`.\n\n*Why now.* The exact criterion `bnNumber_regular_pos_iff` shows the\nBrill\u2013Noether number at `(d, r) = (g-1, k-1)` is positive **iff**\n`2k\u00b2 \u2264 (k-2)n`, i.e. iff `n \u2273 2k + 4`; the proved sufficient bound is\n`n \u2265 2k + 7` (`bnNumber_regular_pos_of_linear_threshold`).  The quadratic scale\n`2k\u00b2` singled out earlier is therefore far larger than the numerical\nobstruction requires, and for `k \u2265 6, k \u2260 7` the true threshold is now known to\nbe `1`.\n\n## 5. Theta characteristics as extremal witnesses\n\n**Conjecture.** For every even `k \u2265 6` the maximum of the rank over divisor\nclasses of degree `g - 1` on a `k`-regular graph is attained at a theta\ncharacteristic (a class fixed by the residual involution `D \u21a6 K - D`), and the\nsharp threshold for half-canonical existence is governed by these fixed classes.\n\n*Why now.* `ResidualDuality.lean` proves the two halves of the pairing picture:\n`D \u21a6 K - D` is an involution preserving degree `g - 1`, it preserves rank under\nBaker\u2013Norine Riemann\u2013Roch (`residual_preserves_witnesses`), its fixed classes are\nexactly the theta characteristics (`linEquiv_residual_iff_thetaChar`), and on an\neven-degree regular graph the constant divisor `(k-2)/2` is such a fixed class\nof rank at least `k - 2` (`exists_thetaChar_regular_even`), and for `k \u2265 6` even\nof rank at least `k - 1` (`exists_thetaChar_rank_regular_even`) \u2014 indeed of rank\nexactly `k - 1` on K\u2087, C\u2088(1,2,3) and C\u2089(1,2,3), where it attains the observed\nmaximum.  So the conjecture is a statement about a computable, finite set of\nclasses rather than about all of `Pic^{g-1}`.\n",
+    "domains": [
+      "Combinatorics",
+      "Pythagorean"
+    ],
+    "id": "fd_0996",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "713730e2",
+    "status": "available",
+    "timestamp": "2026-08-06T06:55:05.761048+00:00",
+    "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
   },
   {
     "consumed_by_exp_id": "",

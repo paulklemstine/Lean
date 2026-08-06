@@ -1,0 +1,250 @@
+/-
+Copyright (c) 2026. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Harmonic
+-/
+import Computation.WallpaperRhythm.OrbitEntropy
+
+/-!
+# Sharpness of the canon onset obstruction
+
+`Computation.WallpaperRhythm.OrbitEntropy` proves one half of a numerical test for
+the musical label "canon": if a pattern on the `p × q` time–pitch torus is a canon
+at time distance `g`, then its number of onsets is divisible by `d = addOrderOf g`
+(`OrbitEntropy.addOrderOf_dvd_onsetCount`).  Here we prove the converse, so the
+obstruction is *complete*: every multiple of `d` that fits on the grid really is
+the onset count of some canon at distance `g`.
+
+## Main results
+
+* `card_fiber_of_free` — for a free action of a finite group, every fiber of the
+  orbit map has exactly `|Γ|` elements.
+* `exists_invariant_finset_card` — a free action of a finite group `Γ` admits an
+  invariant subset of size `|Γ| · j` for every `j` at most the number of orbits.
+* `exists_canon_onsetCount` — for every `k` divisible by `d = addOrderOf g` with
+  `k ≤ p * q` there is a canon at time distance `g` with exactly `k` onsets.
+* `isCanonAt_onsetCount_iff` — combining with the divisibility obstruction: the
+  achievable onset counts of canons at distance `g` are *exactly* the multiples
+  of `d` that are at most `p * q`.
+-/
+
+namespace WallpaperRhythm
+namespace CanonSharpness
+
+open MulAction Finset OrbitCounting OrbitEntropy
+
+/-! ## Invariant subsets of a free action -/
+
+open Classical in
+/-- For a free action of a finite group, the fiber of the orbit map over any orbit
+has exactly `|Γ|` elements. -/
+theorem card_fiber_of_free {Γ α : Type*} [Group Γ] [Fintype Γ] [Fintype α] [MulAction Γ α]
+    (hfree : ∀ (γ : Γ) (a : α), γ • a = a → γ = 1)
+    (q : Quotient (MulAction.orbitRel Γ α)) :
+    (Finset.univ.filter (fun b : α => Quotient.mk (MulAction.orbitRel Γ α) b = q)).card
+      = Fintype.card Γ := by
+  classical
+  obtain ⟨a, rfl⟩ := q.exists_rep
+  have hinj : Function.Injective (fun γ : Γ => γ • a) := by
+    intro g1 g2 h
+    have hh : (g2⁻¹ * g1) • a = a := by
+      rw [mul_smul]
+      simp only at h
+      rw [h, inv_smul_smul]
+    have h1 := hfree _ _ hh
+    have h2 := congrArg (fun x => g2 * x) h1
+    simpa [mul_assoc] using h2
+  have himg : (Finset.univ.filter
+      (fun b : α => Quotient.mk (MulAction.orbitRel Γ α) b = Quotient.mk _ a))
+      = Finset.univ.image (fun γ : Γ => γ • a) := by
+    ext b
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image]
+    rw [Quotient.eq, MulAction.orbitRel_apply, MulAction.mem_orbit_iff]
+  rw [himg, Finset.card_image_of_injective _ hinj, Finset.card_univ]
+
+open Classical in
+/-- **Invariant subsets of every admissible size.**  A free action of a finite group
+`Γ` on a finite type has an invariant subset of size `|Γ| · j` for every `j` not
+exceeding the number of orbits. -/
+theorem exists_invariant_finset_card {Γ α : Type*} [Group Γ] [Fintype Γ] [Fintype α]
+    [MulAction Γ α] (hfree : ∀ (γ : Γ) (a : α), γ • a = a → γ = 1)
+    (j : ℕ) (hj : j ≤ Fintype.card (Quotient (MulAction.orbitRel Γ α))) :
+    ∃ S : Finset α, (∀ (γ : Γ) (a : α), a ∈ S → γ • a ∈ S) ∧ S.card = Fintype.card Γ * j := by
+  classical
+  obtain ⟨T, -, hTcard⟩ :=
+    Finset.exists_subset_card_eq
+      (s := (Finset.univ : Finset (Quotient (MulAction.orbitRel Γ α)))) (n := j)
+      (by simpa using hj)
+  refine ⟨Finset.univ.filter (fun a => Quotient.mk (MulAction.orbitRel Γ α) a ∈ T), ?_, ?_⟩
+  · intro γ a ha
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and] at ha ⊢
+    have hq : Quotient.mk (MulAction.orbitRel Γ α) (γ • a)
+        = Quotient.mk (MulAction.orbitRel Γ α) a := Quotient.sound ⟨γ, rfl⟩
+    rw [hq]
+    exact ha
+  · have hsplit := Finset.card_eq_sum_card_fiberwise
+      (f := fun a => Quotient.mk (MulAction.orbitRel Γ α) a)
+      (s := Finset.univ.filter (fun a => Quotient.mk (MulAction.orbitRel Γ α) a ∈ T))
+      (t := T) (fun a ha => (Finset.mem_filter.mp ha).2)
+    rw [hsplit]
+    have hfib : ∀ q ∈ T,
+        ((Finset.univ.filter (fun a => Quotient.mk (MulAction.orbitRel Γ α) a ∈ T)).filter
+          (fun a => Quotient.mk (MulAction.orbitRel Γ α) a = q)).card = Fintype.card Γ := by
+      intro q hq
+      have heq : (Finset.univ.filter
+            (fun a => Quotient.mk (MulAction.orbitRel Γ α) a ∈ T)).filter
+              (fun a => Quotient.mk (MulAction.orbitRel Γ α) a = q)
+          = Finset.univ.filter (fun a => Quotient.mk (MulAction.orbitRel Γ α) a = q) := by
+        ext b
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+        constructor
+        · rintro ⟨-, h⟩
+          exact h
+        · intro h
+          exact ⟨by rw [h]; exact hq, h⟩
+      rw [heq, card_fiber_of_free hfree q]
+    rw [Finset.sum_congr rfl hfib, Finset.sum_const, hTcard, smul_eq_mul, mul_comm]
+
+/-! ## Canons with a prescribed number of onsets -/
+
+variable {p q : ℕ} [NeZero p] [NeZero q]
+
+/-- The time shifts generated by `g`, as a group acting on the torus. -/
+abbrev shiftSubgroup (g : ZMod p) : Subgroup (Multiplicative (ZMod p)) :=
+  Subgroup.zpowers (Multiplicative.ofAdd g)
+
+omit [NeZero q] in
+theorem shiftSubgroup_free (g : ZMod p) :
+    ∀ (γ : shiftSubgroup g) (a : ZMod p × ZMod q), γ • a = a → γ = 1 := by
+  intro γ a ha
+  have ha' : ((γ : Multiplicative (ZMod p))) • a = a := ha
+  have h1 : (γ : Multiplicative (ZMod p)) = 1 := by
+    by_contra hne
+    have hempty := fixedBy_timeShift_eq_empty p q (γ : Multiplicative (ZMod p)) hne
+    have hmem : a ∈ fixedBy (ZMod p × ZMod q) (γ : Multiplicative (ZMod p)) := ha'
+    rw [hempty] at hmem
+    exact hmem
+  exact Subtype.ext h1
+
+theorem card_shiftSubgroup (g : ZMod p) :
+    Fintype.card (shiftSubgroup g) = addOrderOf g := by
+  rw [← Nat.card_eq_fintype_card, Nat.card_zpowers, orderOf_ofAdd_eq_addOrderOf]
+
+/-- The number of orbits of the shifts generated by `g` on the `p × q` torus, times
+the order of `g`, is the number of cells. -/
+theorem card_orbits_shift (g : ZMod p) :
+    addOrderOf g * Fintype.card
+        (Quotient (MulAction.orbitRel (shiftSubgroup g) (ZMod p × ZMod q)))
+      = p * q := by
+  classical
+  have hst : ∀ b : ZMod p × ZMod q, stabilizer (shiftSubgroup g) b = ⊥ := by
+    intro b
+    ext γ
+    simp only [mem_stabilizer_iff, Subgroup.mem_bot]
+    constructor
+    · intro h
+      exact shiftSubgroup_free g γ b h
+    · rintro rfl
+      simp
+  have hcard := Nat.card_congr (MulAction.selfEquivOrbitsQuotientProd
+    (α := shiftSubgroup g) (β := ZMod p × ZMod q) hst)
+  have hprod : Nat.card (ZMod p × ZMod q)
+      = Nat.card (Quotient (MulAction.orbitRel (shiftSubgroup g) (ZMod p × ZMod q)))
+        * Nat.card (shiftSubgroup g) := by
+    rw [← Nat.card_prod]
+    exact hcard
+  have hcells : Nat.card (ZMod p × ZMod q) = p * q := by
+    simp [Nat.card_eq_fintype_card, ZMod.card]
+  rw [hcells, Nat.card_eq_fintype_card, Nat.card_eq_fintype_card, card_shiftSubgroup g] at hprod
+  calc addOrderOf g
+        * Fintype.card (Quotient (MulAction.orbitRel (shiftSubgroup g) (ZMod p × ZMod q)))
+      = Fintype.card (Quotient (MulAction.orbitRel (shiftSubgroup g) (ZMod p × ZMod q)))
+        * addOrderOf g := Nat.mul_comm _ _
+    _ = p * q := hprod.symm
+
+open Classical in
+/-- **Sharpness of the canon obstruction.**  For every multiple `k` of the additive
+order of `g` with `k ≤ p * q` there is a canon at time distance `g` on the `p × q`
+torus with exactly `k` onsets. -/
+theorem exists_canon_onsetCount (g : ZMod p) (k : ℕ)
+    (hdvd : addOrderOf g ∣ k) (hk : k ≤ p * q) :
+    ∃ f : ZMod p × ZMod q → Bool, IsCanonAt f g ∧ onsetCount f = k := by
+  classical
+  obtain ⟨j, rfl⟩ := hdvd
+  set d := addOrderOf g with hd
+  have hdpos : 0 < d := by
+    rw [hd]
+    exact addOrderOf_pos g
+  have hj : j ≤ Fintype.card
+      (Quotient (MulAction.orbitRel (shiftSubgroup g) (ZMod p × ZMod q))) := by
+    have hcells := card_orbits_shift (q := q) g
+    rw [← hd] at hcells
+    have hle : d * j ≤ d * Fintype.card
+        (Quotient (MulAction.orbitRel (shiftSubgroup g) (ZMod p × ZMod q))) := by
+      rw [hcells]
+      exact hk
+    exact Nat.le_of_mul_le_mul_left hle hdpos
+  obtain ⟨S, hSinv, hScard⟩ :=
+    exists_invariant_finset_card (shiftSubgroup_free g) j hj
+  rw [card_shiftSubgroup, ← hd] at hScard
+  refine ⟨fun v => decide (v ∈ S), ?_, ?_⟩
+  · intro v
+    have hgen : Multiplicative.ofAdd g ∈ shiftSubgroup g := Subgroup.mem_zpowers _
+    set γ : shiftSubgroup g := ⟨Multiplicative.ofAdd g, hgen⟩ with hγ
+    have hsmul : ∀ w : ZMod p × ZMod q, γ • w = (w.1 + g, w.2) := fun w => rfl
+    have hforward : ∀ w : ZMod p × ZMod q, w ∈ S → (w.1 + g, w.2) ∈ S := by
+      intro w hw
+      have := hSinv γ w hw
+      rwa [hsmul] at this
+    have hback : ∀ w : ZMod p × ZMod q, (w.1 + g, w.2) ∈ S → w ∈ S := by
+      intro w hw
+      have h := hSinv γ⁻¹ _ hw
+      have hcancel : γ⁻¹ • ((w.1 + g, w.2) : ZMod p × ZMod q) = w := by
+        rw [← hsmul w, inv_smul_smul]
+      rwa [hcancel] at h
+    by_cases hv : v ∈ S
+    · simp [hv, hforward v hv]
+    · have : ¬ ((v.1 + g, v.2) ∈ S) := fun hc => hv (hback v hc)
+      simp [hv, this]
+  · rw [onsetCount]
+    have hequiv : {v : ZMod p × ZMod q // (decide (v ∈ S)) = true} ≃ {v // v ∈ S} :=
+      Equiv.subtypeEquivRight (fun v => by simp)
+    rw [Nat.card_congr hequiv, Nat.card_eq_fintype_card, Fintype.card_coe, hScard]
+
+/-- **The complete onset spectrum of canons.**  A natural number `k` is the onset
+count of some canon at time distance `g` on the `p × q` torus if and only if `k` is
+a multiple of the additive order of `g` and `k ≤ p * q`. -/
+theorem isCanonAt_onsetCount_iff (g : ZMod p) (k : ℕ) :
+    (∃ f : ZMod p × ZMod q → Bool, IsCanonAt f g ∧ onsetCount f = k)
+      ↔ (addOrderOf g ∣ k ∧ k ≤ p * q) := by
+  constructor
+  · rintro ⟨f, hcanon, rfl⟩
+    refine ⟨addOrderOf_dvd_onsetCount f g hcanon, ?_⟩
+    have hle : Nat.card {v : ZMod p × ZMod q // f v = true} ≤ Nat.card (ZMod p × ZMod q) :=
+      Nat.card_le_card_of_injective (fun v => (v : ZMod p × ZMod q)) Subtype.val_injective
+    have hcells : Nat.card (ZMod p × ZMod q) = p * q := by
+      simp [Nat.card_eq_fintype_card, ZMod.card]
+    rw [hcells] at hle
+    exact hle
+  · rintro ⟨hdvd, hk⟩
+    exact exists_canon_onsetCount g k hdvd hk
+
+/-- The additive order of the half-bar shift on a four-beat cycle is two. -/
+theorem addOrderOf_two_zmod_four : addOrderOf (2 : ZMod 4) = 2 := by
+  apply addOrderOf_eq_prime <;> decide
+
+/-- **A worked onset spectrum.**  On the four-beat, one-pitch grid the canons at
+the half-bar distance `2` are exactly the patterns with `0`, `2` or `4` onsets:
+the divisibility obstruction of `OrbitEntropy.addOrderOf_dvd_onsetCount` is met by
+an actual canon at each admissible value. -/
+theorem canon_onsetCount_four_one (k : ℕ) :
+    (∃ f : ZMod 4 × ZMod 1 → Bool, IsCanonAt f 2 ∧ onsetCount f = k)
+      ↔ (k = 0 ∨ k = 2 ∨ k = 4) := by
+  rw [isCanonAt_onsetCount_iff, addOrderOf_two_zmod_four]
+  constructor
+  · rintro ⟨⟨c, rfl⟩, hk⟩
+    omega
+  · rintro (rfl | rfl | rfl) <;> exact ⟨by decide, by decide⟩
+
+end CanonSharpness
+end WallpaperRhythm
