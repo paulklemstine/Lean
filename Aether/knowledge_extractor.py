@@ -2486,12 +2486,27 @@ Research mode: {concept.research_mode}
             # Blend heuristic and structural scores using direction-driven weights
             concept_domains = getattr(job.concept, 'domains', []) if job.concept else []
             composite = qscore.composite_with_domains(domains=concept_domains) if hasattr(qscore, 'composite_with_domains') else qscore.composite
-            job.quality_score = 0.3 * heuristic_score + 0.7 * composite
+            
+            # Check if Aristotle provided self-evaluation for Phase A
+            self_eval = qeval.extract_self_evaluation(
+                result_dir=job.project_dir if hasattr(job, 'project_dir') and job.project_dir else None,
+                result_fields={
+                    "SELF_EVALUATION.json": getattr(job, 'result_self_evaluation', '') or getattr(job, 'self_evaluation', ''),
+                },
+                lean_source=compact_lean,
+            ) if getattr(job, 'phase', 'A') == 'A' else None
+
+            if self_eval:
+                job.quality_score = composite
+                print(f"[Evaluate] Aristotle self-evaluation adopted for {job.job_id[:8]}: "
+                      f"Q={job.quality_score:.3f} (grade={self_eval.get('grade')}, source={self_eval.get('source')})")
+            else:
+                job.quality_score = 0.3 * heuristic_score + 0.7 * composite
 
             # ── Adversarial quality judging ──
             # Second LLM evaluates as a skeptical critic; if they disagree,
-            # a third tiebreaker adjudicates.
-            if self.pi_agent and hasattr(qeval, 'adversarial_evaluate'):
+            # a third tiebreaker adjudicates. (Skipped if Aristotle self-graded)
+            if self.pi_agent and hasattr(qeval, 'adversarial_evaluate') and not self_eval:
                 # Phase 2 (Lever E): critic skip-gate. When the structural
                 # composite is decisive (>0.85 clearly good, <0.15 clearly
                 # bad) the adversarial critic is unlikely to change the

@@ -135,12 +135,7 @@ REPO_ROOT = Path(__file__).parent.parent
 
 # All known Phase A prompt versions — used for A/B stats printing.
 # Extend this when new variants are added.
-PHASE_A_VERSIONS = (
-    "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15",
-    "v16", "v16a", "v16b", "v17", "v18",
-    "v19", "v19a", "v19b", "v19c", "v19d",
-    "v24", "v25", "v26", "v27", "v28",
-)
+PHASE_A_VERSIONS = ("v19",)
 PACKAGES_DIR = REPO_ROOT / "Packages"
 
 

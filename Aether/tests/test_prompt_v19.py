@@ -175,7 +175,7 @@ def test_version_selection_defaults_to_v19_family():
     for _ in range(50):
         version = select_phase_a_prompt_version()
         assert version in V19_VARIANTS, f"unexpected version {version}"
-    assert "v19" in DEFAULT_PHASE_A_PROMPT_WEIGHTS
+    assert "v19c" in DEFAULT_PHASE_A_PROMPT_WEIGHTS
     assert abs(sum(DEFAULT_PHASE_A_PROMPT_WEIGHTS.values()) - 1.0) < 1e-9
 
 

@@ -409,18 +409,12 @@ def test_research_job_carries_two_phases(research_job):
 
 
 def test_phase_a_prompt_version_independent(research_concept):
-    """Phase A can use v8 or v9 — the A/B test still works in Phase A."""
+    """Phase A uses locked generator v19c."""
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
-    p_v8 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v8")
-    p_v9 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v9")
-    # v8 emphasizes Duality & Representation
-    assert "Duality & Representation" in p_v8
-    # v9 emphasizes adversarial critic
-    assert "Adversarial Critic" in p_v9 or "weakened" in p_v9.lower()
-    # Both have Phase A header
-    assert "PHASE A: LEAN 4 ONLY" in p_v8
-    assert "PHASE A: LEAN 4 ONLY" in p_v9
+    p = client._build_phase_a_lean_prompt(concept=research_concept)
+    assert "Phase A Research Mission" in p
+    assert "SELF_EVALUATION.json" in p
 
 
 # ─── Analytics tests ─────────────────────────────────────────────────────
@@ -496,6 +490,7 @@ def test_phase_b_pruned_workspace(temp_workspace, research_job):
     with patch.object(KnowledgeExtractor, "_load_config", return_value=config):
         extractor = KnowledgeExtractor()
         extractor.catalog_root = catalog_root
+        extractor.workspace = temp_workspace
         
         # 1. Test Phase A: should copy all files
         research_job.phase = "A"

@@ -28,13 +28,9 @@ from research_memory import ResearchMemory
 from arxiv_provider import ArxivTexProvider
 
 
-# Phase A prompt version registry and default A/B weights.
-# New prompt variants are added here; the orchestrator samples from these weights.
+# Phase A prompt version registry (locked to best generator: v19c).
 DEFAULT_PHASE_A_PROMPT_WEIGHTS: Dict[str, float] = {
-    # v19 family (5 arms) — scientific-method team loop
-    "v19": 0.10, "v19a": 0.10, "v19b": 0.10, "v19c": 0.10, "v19d": 0.10,
-    # v24-v28 (5 arms) — minimalist prompts, less is more
-    "v24": 0.10, "v25": 0.10, "v26": 0.10, "v27": 0.10, "v28": 0.10,
+    "v19c": 1.0,
 }
 
 DEFAULT_PHASE_B_PROMPT_WEIGHTS: Dict[str, float] = {
@@ -68,75 +64,12 @@ def _select_version_from_weights(
 
 
 def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None, workspace_dir=None) -> str:
-    """Sample a Phase A prompt version using Thompson sampling over configured variants."""
-    import json
-    import os
-    import random
-    from pathlib import Path
-
-    active_arms = list(DEFAULT_PHASE_A_PROMPT_WEIGHTS.keys())
-    
-    if weights is not None:
+    """Select Phase A prompt version (locked to best generator: v19c)."""
+    if weights:
         candidates = {v: w for v, w in weights.items() if w > 0}
-        if not candidates:
-            return "v19"
-        total = sum(candidates.values())
-        r = random.uniform(0, total)
-        cumulative = 0.0
-        for version, weight in candidates.items():
-            cumulative += weight
-            if r <= cumulative:
-                return version
-        return list(candidates.keys())[-1]
-
-    workspace = workspace_dir if workspace_dir else Path(__file__).parent / ".aether_workspace"
-    state_file = workspace / "prompt_bandit_state.json"
-    
-    stats = {}
-    try:
-        from cycle_analytics import CycleAnalytics
-        ca = CycleAnalytics(workspace.parent)
-        stats = ca.get_prompt_version_stats()
-    except Exception:
-        pass
-
-    under_explored = [arm for arm in active_arms if stats.get(arm, {}).get("count", 0) < 30]
-    
-    if under_explored:
-        chosen = random.choice(under_explored)
-        arm_stats = stats.get(chosen, {})
-        print(f"[Bandit] arm={chosen} n={arm_stats.get('n', 0)} avg_Q={arm_stats.get('avg_Q', 0.0):.3f} sampled={chosen}")
-        return chosen
-
-    best_sample = -1.0
-    chosen = active_arms[0]
-    
-    state = {}
-    for arm in active_arms:
-        arm_stats = stats.get(arm, {})
-        n = arm_stats.get("count", 0)
-        avg_q = arm_stats.get("avg_quality", 0.0)
-        sum_q = avg_q * n
-        alpha = max(1.0, 1 + sum_q)
-        beta = max(1.0, 1 + (n - sum_q))
-        
-        state[arm] = {"alpha": alpha, "beta": beta, "n": n, "avg_Q": avg_q}
-        
-        sample = random.betavariate(alpha, beta)
-        if sample > best_sample:
-            best_sample = sample
-            chosen = arm
-
-    try:
-        os.makedirs(state_file.parent, exist_ok=True)
-        with open(state_file, "w") as f:
-            json.dump(state, f)
-    except Exception:
-        pass
-        
-    c_stats = stats.get(chosen, {})
-    print(f"[Bandit] arm={chosen} n={c_stats.get('count', 0)} avg_Q={c_stats.get('avg_quality', 0.0):.3f} sampled={chosen}")
-    return chosen
+        if candidates:
+            return list(candidates.keys())[0]
+    return "v19c"
 
 
 def select_phase_b_prompt_version(weights: Optional[Dict[str, float]] = None) -> str:
@@ -2195,6 +2128,18 @@ class PiAgentClient:
             critique. Repeat this cycle continuously within the available context window,
             refining, deepening, and cross-checking until forced to emit output. Use
             Aristotle to its fullest.
+
+            ### Anti-Trivial Guardrails
+            - Do not produce trivial proofs (`True := by trivial`, `rfl`-only, `Inhabited X`-only, `native_decide`-only).
+            - Use an insight-bearing tactic (e.g. `induction`, `nlinarith`, `omega`, `field_simp`).
+
+            ### Self-Critique Checklist
+            - No theorem is trivial.
+            - Every main theorem has 0 sorries.
+            - Lab Notes blocks contain real experimental data.
+
+            ### Strictly Forbidden in Phase A
+            Do NOT create packaging deliverables in Phase A: `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, `PACKAGE.json`.
         """)
 
 
@@ -2336,7 +2281,7 @@ class PiAgentClient:
         catalog_references: Optional[List[str]] = None,
         catalog_context: str = "",
         theorem_context: str = "",
-        prompt_version: str = "v19",
+        prompt_version: str = "v19c",
     ) -> str:
         """Phase A v19 family: speculative + scientific-method baseline with A/B extras."""
         depth_requirements = self._build_v19_baseline_depth_requirements()
@@ -2359,7 +2304,7 @@ class PiAgentClient:
             )
 
         prompt = textwrap.dedent(f"""\
-            # Research Mission: {concept.title}
+            # Phase A Research Mission {prompt_version}: {concept.title}
 
             ## Assignment
             **Domain**: {concept.domain} | **Mode**: {concept.research_mode}
@@ -2367,6 +2312,8 @@ class PiAgentClient:
             **Mathematical Framing**: {concept.mathematical_framing}
 
             {refs_section}
+
+            {depth_requirements}
 
             ## Hard Constraints
             1. Every theorem MUST be fully proved (0 sorries, no stubbed signatures).
@@ -2379,6 +2326,14 @@ class PiAgentClient:
             Return ONLY:
             1. `.lean` files in `Catalog/{concept.domain}/` with complete formal proofs.
             2. `FUTURE_DIRECTIONS.md` with 3–5 concrete, falsifiable conjectures derived from your findings.
+            3. `SELF_EVALUATION.json` with your honest self-assessment of the research:
+               {{
+                 "quality_score": <float 0.0 to 1.0>,
+                 "proof_depth": <float 0.0 to 1.0>,
+                 "novelty": <float 0.0 to 1.0>,
+                 "grade": "world_class" | "substantial" | "partial" | "shallow" | "trivial",
+                 "rationale": "<2-3 sentence justification of grade and mathematical significance>"
+               }}
 
             Focus all compute budget on proving theorems.
         """)
@@ -2699,6 +2654,14 @@ class PiAgentClient:
             Return ONLY:
             1. `.lean` files in `Catalog/{concept.domain}/` with complete formal proofs.
             2. `FUTURE_DIRECTIONS.md` with 3–5 concrete, falsifiable conjectures derived from your findings.
+            3. `SELF_EVALUATION.json` with your honest self-assessment of the research:
+               {{
+                 "quality_score": <float 0.0 to 1.0>,
+                 "proof_depth": <float 0.0 to 1.0>,
+                 "novelty": <float 0.0 to 1.0>,
+                 "grade": "world_class" | "substantial" | "partial" | "shallow" | "trivial",
+                 "rationale": "<2-3 sentence justification of grade and mathematical significance>"
+               }}
 
             Focus all compute budget on proving theorems.
         """)
@@ -2716,229 +2679,14 @@ class PiAgentClient:
         research_journal=None,
         prompt_version: Optional[str] = None,
     ) -> str:
-        """Phase A: Lean 4 only. The math is the deliverable.
-
-        This prompt is intentionally narrow. It says NO to packaging
-        (article, paper, widgets, demos). Aristotle's only job is to produce
-        new Lean 4 code that extends the frontier. If the math is genuinely
-        world-class, a separate Phase B prompt will be dispatched to package it.
-        """
-        if prompt_version is None:
-            prompt_version = "v19"
-        if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
-            raise ValueError(
-                f"{prompt_version} prompt is no longer supported — use v8 through v19 family. "
-                "v19 (Speculative Scientific-Method) is the default."
-            )
-        if prompt_version in ("v16", "v16a", "v16b", "v17", "v18", "v20", "v21", "v22", "v23"):
-            return self._build_phase_a_v16_prompt(
-                concept=concept,
-                catalog_references=catalog_references,
-                catalog_context=catalog_context,
-                theorem_context=theorem_context,
-                prompt_version=prompt_version,
-            )
-        if prompt_version.startswith("v19"):
-            return self._build_phase_a_v19_prompt(
-                concept=concept,
-                catalog_references=catalog_references,
-                catalog_context=catalog_context,
-                theorem_context=theorem_context,
-                prompt_version=prompt_version,
-            )
-        if prompt_version in ("v24", "v25", "v26", "v27", "v28"):
-            return self._build_phase_a_minimal_prompt(
-                concept=concept,
-                prompt_version=prompt_version,
-            )
-        if prompt_version == "v8":
-            depth_requirements = self._build_v8_depth_requirements()
-        elif prompt_version == "v9":
-            depth_requirements = self._build_v9_depth_requirements()
-        elif prompt_version == "v10":
-            depth_requirements = self._build_v10_depth_requirements()
-        elif prompt_version == "v11":
-            depth_requirements = self._build_v11_depth_requirements()
-        elif prompt_version == "v12":
-            depth_requirements = self._build_v12_depth_requirements()
-        elif prompt_version == "v13":
-            depth_requirements = self._build_v13_depth_requirements()
-        elif prompt_version == "v14":
-            depth_requirements = self._build_v14_depth_requirements()
-        elif prompt_version == "v15":
-            depth_requirements = self._build_v15_depth_requirements()
-        else:
-            depth_requirements = self._build_v15_depth_requirements()
-
-        if prompt_version == "v15":
-            catalog_section = ""
-            if catalog_context:
-                catalog_section = f"\n### Catalog Context\n{catalog_context}\n"
-
-            theorem_section = ""
-            if theorem_context:
-                theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
-
-            prompt = textwrap.dedent(f"""\
-                # MATHEMATICAL RESEARCH MISSION: {concept.title}
-
-                ## Objective / Task Brief:
-                Create a team to research this mathematical direction. Brainstorm new hypotheses, run experiments, analyze results, take notes, iterate. Combine all the researchers' findings into clean, verified Lean 4 files, and then brainstorm a list of the next research directions.
-
-                ## Deliverables & Acceptance Criteria:
-                1. **Lean 4 Proofs**: Fully verified, compiling Lean 4 files under the appropriate Catalog directory. Main theorems must be fully proved (0 sorries).
-                2. **Lab Notes**: Include inline comment blocks (`-- !-- Lab Notes -- !--`) in the Lean files detailing your hypotheses, experimental outcomes, insights, and failure analysis.
-                3. **FUTURE_DIRECTIONS.md**: Outlining 3-5 bold, testable mathematical conjectures for follow-up cycles based on your combined findings.
-
-                ## Constraints (Strictly Enforced):
-                - **NO prose or documentation articles**: Do NOT output ARTICLE.md, RESEARCH_PAPER.md, python algorithms, HTML widgets, or PACKAGE.json. Focus 100% of your compute on standard Lean 4 code and proofs.
-
-                ## Context & Resources:
-                - Domain: {concept.domain}
-                - Existing Catalog References: {", ".join(concept.catalog_references) if concept.catalog_references else "None"}
-                {catalog_section}
-                {theorem_section}
-
-                {depth_requirements}
-                """)
-            return prompt
-
-        # Lean-specific section
-        lean_section = ""
-        if concept.lean_guess:
-            lean_section = f"\n### Lean 4 Sketch\n{concept.lean_guess[:500]}\n"
-
-        # Catalog context
-        catalog_section = ""
-        if catalog_context:
-            catalog_section = f"\n### Catalog Context\n{catalog_context}\n"
-
-        # Recent discoveries
-        theorem_section = ""
-        if theorem_context:
-            theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
-
-        # Domain context
-        domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
-
-        # Phase A header — explicit DO NOT list.
-        # v8-v14 use research team framing and Lab Notebooks.
-        if prompt_version in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
-            deliverable_files = "lean files (count chosen by theorem declarations)"
-            deliverable_theorems = "2-4 theorems with correct proofs (sorry = 0 on main results)"
-        else:
-            deliverable_files = "1-3 .lean files in `Catalog/{concept.domain}/<package_name>/`"
-            deliverable_theorems = "3-5 non-trivial theorems with `sorry = 0` (PROVED, not admitted)"
-
-        # v8-v14 use research team framing.
-        if prompt_version in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
-            role_framing = (
-                "You are leading a research team: Hypothesizer, Experimenter, Analyst,\n"
-                "Critic, and Synthesist. Run the loop:\n"
-                "Hypothesize -> Experiment -> Analyze -> Critique -> Generalize -> Iterate.\n"
-                "Your ONLY job is to produce **new Lean 4 code** and **take good notes**\n"
-                "for the next team."
-            )
-        else:
-            role_framing = (
-                "You are a world-class mathematician. Your ONLY job in this cycle is\n"
-                "to produce **new Lean 4 code that extends the frontier of mathematics**."
-            )
-
-        # v8-v14 add Lab Notebook as a required deliverable.
-        lab_notebook_deliverable = ""
-        if prompt_version in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
-            lab_notebook_deliverable = (
-                "\n5. **Lab Notebook** as `-- !-- Lab Notebook -- !--` comment blocks\n"
-                "   in each .lean file: Hypothesis, Result, Insight, Failure analysis."
-            )
-
-        phase_a_header = textwrap.dedent(f"""
-            ## PHASE A: LEAN 4 ONLY — DOING THE MATH
-
-            {role_framing}
-
-            ### DELIVERABLES (strict — only this):
-            1. **{deliverable_files}**
-            2. **{deliverable_theorems}**
-            3. **Brief proof sketches** as `-- !-- comment -- !--` blocks (1-2 sentences each)
-            4. **A FUTURE_DIRECTIONS.md file** listing 3-5 testable, falsifiable
-               conjectures as a freeform narrative (NOT a form). Each direction MUST
-               include a "The key insight is..." sentence and a "Why now?" justification.
-               This file drives the next research cycle — make it count.{lab_notebook_deliverable}
-
-            ### DO NOT OUTPUT (Phase B handles these — if your work passes quality bar):
-            - NO `ARTICLE.md`
-            - NO `RESEARCH_PAPER.md`
-            - NO `demo.py` / `algorithms.py`
-            - NO HTML widgets
-            - NO `PACKAGE.json`
-            - NO prose for human readers (except FUTURE_DIRECTIONS.md)
-
-            ### WHY THIS NARROW:
-            The Lean 4 file IS the deliverable. A self-contained Lean file with
-            3-5 world-class theorems is worth more than 30K characters of prose
-            about trivial results. Focus 100% of your compute on the math.
-            If your work is genuinely world-class, the packaging step is dispatched
-            automatically and cheaply.
-
-            ### CATALOG SYNTHESIS (required — examine the catalog yourself):
-            The entire project catalog is attached to this prompt. You have access
-            to all existing Lean 4 files in `Catalog/`. Do NOT rely only on the
-            summary sections below — OPEN the relevant files, read their theorems,
-            definitions, and proof strategies, and use them as your foundation.
-            Specifically:
-
-            1. **Read the catalog files directly** — Open `Catalog/<Domain>/` files
-               related to your direction. Understand their theorem statements, tactics,
-               and proof structures. Use `import` to build on them.
-            2. **Identify relevant catalog theorems** — Which existing results connect
-               to your research direction? Cite them by name in your proof sketches.
-            3. **Build on catalog foundations** — Your theorems should EXTEND or
-               GENERALIZE catalog results, not reprove them from scratch.
-            4. **Combine concepts across domains** — The most valuable theorems connect
-               ideas from different catalog domains (e.g., applying algebraic structures
-               to topological problems, or using combinatorial arguments in number theory).
-               Look for cross-domain connections in the catalog context.
-            5. **Avoid duplication** — Before proving, search the catalog for similar
-               results. If one exists, extend it rather than reproving it.
-
-            ### DISPROVE-AS-SUCCESS (required):
-            Not every conjecture is true — and that is valuable science. If a hypothesis
-            seems false, attempt to DISPROVE it with a concrete counterexample or a
-            proof of negation. A well-justified disproof is as valuable as a proof.
-            When you disprove a conjecture:
-            - State the disproved theorem clearly (e.g., `theorem no_such_object_exists`)
-            - Provide the counterexample or contradiction
-            - Explain why the original conjecture failed
-            - Suggest a modified conjecture that might hold
-            """)
-
-        prompt = f"""{phase_a_header}
-
-## Concept
-
-**Title**: {concept.title}
-**Domain**: {concept.domain}
-**Mathematical framing**: {concept.mathematical_framing}
-**Concept description**: {concept.concept_description}
-**Novelty estimate**: {concept.novelty_estimate}
-**Breakthrough potential**: {concept.breakthrough_potential}
-{domain_brief}
-{lean_section}
-{catalog_section}
-{theorem_section}
-
-{depth_requirements}
-
-## Output format reminder
-
-Your output must include `.lean` files AND a `FUTURE_DIRECTIONS.md` file.
-The .lean files contain the proofs. The FUTURE_DIRECTIONS.md contains 3-5
-research conjectures that extend the work. Both are required.
-Be precise, be deep, be world-class.
-"""
-        return prompt
+        """Phase A: Lean 4 formalization generator (locked to best generator: v19c)."""
+        return self._build_phase_a_v19_prompt(
+            concept=concept,
+            catalog_references=catalog_references,
+            catalog_context=catalog_context,
+            theorem_context=theorem_context,
+            prompt_version=prompt_version or "v19c",
+        )
 
     def _build_phase_b_package_prompt(
         self,

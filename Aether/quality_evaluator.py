@@ -225,6 +225,68 @@ class QualityEvaluator:
         self.pi_agent = pi_agent
         self.catalog_root = catalog_root
 
+    def extract_self_evaluation(
+        self,
+        result_dir: Optional[Path] = None,
+        result_fields: Optional[Dict[str, str]] = None,
+        lean_source: str = "",
+    ) -> Optional[Dict[str, Any]]:
+        """Extract Aristotle's self-evaluation from result_dir, result_fields, or lean_source."""
+        # 1. Try reading SELF_EVALUATION.json from result_dir
+        if result_dir and (Path(result_dir) / "SELF_EVALUATION.json").exists():
+            try:
+                content = (Path(result_dir) / "SELF_EVALUATION.json").read_text(encoding="utf-8")
+                data = json.loads(content)
+                if isinstance(data, dict) and "quality_score" in data:
+                    return {
+                        "quality_score": _safe_float(data.get("quality_score"), 0.5),
+                        "proof_depth": _safe_float(data.get("proof_depth"), 0.5),
+                        "novelty": _safe_float(data.get("novelty"), 0.5),
+                        "grade": str(data.get("grade", "partial")),
+                        "rationale": str(data.get("rationale", "")),
+                        "source": "SELF_EVALUATION.json",
+                    }
+            except Exception as e:
+                print(f"[QualityEvaluator] Error parsing SELF_EVALUATION.json: {e}")
+
+        # 2. Try result_fields
+        if result_fields:
+            for k in ("self_evaluation", "result_self_evaluation", "SELF_EVALUATION.json"):
+                if k in result_fields and result_fields[k]:
+                    try:
+                        data = json.loads(result_fields[k])
+                        if isinstance(data, dict) and "quality_score" in data:
+                            return {
+                                "quality_score": _safe_float(data.get("quality_score"), 0.5),
+                                "proof_depth": _safe_float(data.get("proof_depth"), 0.5),
+                                "novelty": _safe_float(data.get("novelty"), 0.5),
+                                "grade": str(data.get("grade", "partial")),
+                                "rationale": str(data.get("rationale", "")),
+                                "source": "result_fields",
+                            }
+                    except Exception:
+                        pass
+
+        # 3. Check for embedded json block in lean_source
+        if lean_source and "quality_score" in lean_source:
+            match = re.search(r'\{[^{}]*"quality_score"[^{}]*\}', lean_source)
+            if match:
+                try:
+                    data = json.loads(match.group(0))
+                    if isinstance(data, dict) and "quality_score" in data:
+                        return {
+                            "quality_score": _safe_float(data.get("quality_score"), 0.5),
+                            "proof_depth": _safe_float(data.get("proof_depth"), 0.5),
+                            "novelty": _safe_float(data.get("novelty"), 0.5),
+                            "grade": str(data.get("grade", "partial")),
+                            "rationale": str(data.get("rationale", "")),
+                            "source": "embedded_lean",
+                        }
+                except Exception:
+                    pass
+
+        return None
+
     def evaluate(
         self,
         lean_source: str,
@@ -252,9 +314,13 @@ class QualityEvaluator:
             the math-only output for missing deliverables it shouldn't produce.
         """
         score = QualityScore()
+        score.phase = phase
+
+        # For Phase A, check if Aristotle provided a self-evaluation first
+        self_eval = self.extract_self_evaluation(result_dir, result_fields, lean_source) if phase == "A" else None
 
         # Local evaluations (free)
-        score.proof_depth = self._eval_proof_depth(lean_source)
+        score.proof_depth = self_eval["proof_depth"] if self_eval else self._eval_proof_depth(lean_source)
 
         # PEGB compliance check: if a cycle claims 5+ theorems but lacks
         # explicit examples/generalizations/boundaries, penalize proof_depth
@@ -273,12 +339,10 @@ class QualityEvaluator:
         else:
             score.pegb_compliance = self._eval_pegb_compliance(lean_source)
 
-        score.novelty = self._eval_novelty(lean_source, concept_title, concept_description, phase, existing_titles)
+        score.novelty = self_eval["novelty"] if self_eval else self._eval_novelty(lean_source, concept_title, concept_description, phase, existing_titles)
         score.cross_domain = self._eval_cross_domain(lean_source)
         score.artifact_richness = self._eval_artifacts(result_dir, result_fields)
         score.actionability = self._eval_actionability(result_dir, result_fields)
-
-        score.phase = phase
 
         # Artifacts and Actionability are inherently 0 for Phase A, but we leave them at 0
         # because the composite_with_domains will zero out their weights anyway.
@@ -290,10 +354,23 @@ class QualityEvaluator:
             concept_title, catalog_references or [], existing_titles
         )
 
-        # Heuristic evaluation for importance, usefulness, applications
-        score.importance = min(1.0, score.proof_depth * 0.7 + score.novelty * 0.3)
-        score.usefulness = min(1.0, score.cross_domain * 0.5 + score.proof_depth * 0.5)
-        score.applications = min(1.0, score.cross_domain * 0.6 + score.artifact_richness * 0.4)
+        # Heuristic/Self-eval evaluation for importance, usefulness, applications
+        if self_eval:
+            qs = self_eval["quality_score"]
+            score.importance = qs
+            score.usefulness = qs
+            score.applications = qs
+        else:
+            score.importance = min(1.0, score.proof_depth * 0.7 + score.novelty * 0.3)
+            score.usefulness = min(1.0, score.cross_domain * 0.5 + score.proof_depth * 0.5)
+            score.applications = min(1.0, score.cross_domain * 0.6 + score.artifact_richness * 0.4)
+
+        # Safety floor: penalize unresolved sorries in Lean code
+        sorry_count = lean_source.count("sorry")
+        if sorry_count > 0:
+            penalty = max(0.0, 1.0 - 0.2 * sorry_count)
+            score.proof_depth *= penalty
+            score.importance *= penalty
 
         # Jargon penalty: penalize excessive use of narrow jargon without substance
         if lean_source:
