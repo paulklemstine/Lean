@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "89e28e84",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\n## Completed formal results\n\n`Catalog/Physics/WilsonEpsilonExpansion.lean` gives a self-contained algebraic formalization of the one-component perturbative model in the chosen nor",
-      "quality_score": 0.78874,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-07-29T21:21:22",
-      "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
-    },
-    {
       "cycle_id": "97183f28",
       "domain": "Bridges",
       "key_insight": "# Future directions: quantum–classical de Finetti bridge\n\nThe formal development proves the exact constructive direction of de Finetti in the finite-support, computational-basis (diagonal) sector: a f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 1599,
       "timestamp": "2026-08-06T10:05:24",
       "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
+    },
+    {
+      "cycle_id": "0830d66b",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nFour Lean files now carry the fluctuation-theoretic side of this thread.  All of them\ncompile against Lean 4.28 / Mathlib with no `sorry`, no stubbed signature and only the\nstanda",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-06T10:07:06",
+      "title": "**Conjecture.** For a family of finite decision processes with bounded error, an"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79707
     }
   ],
-  "last_updated": "2026-08-06T10:05:24",
+  "last_updated": "2026-08-06T10:07:06",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "7c352e1f",
-        "quality": 0.80603,
-        "theorems": 21,
-        "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
-      },
-      {
         "cycle_id": "e86cdc26",
         "quality": 0.8002199999999999,
         "theorems": 9,
@@ -3327,6 +3321,12 @@
         "quality": 0.686,
         "theorems": 536,
         "title": "Future directions from cycle 4be361b7"
+      },
+      {
+        "cycle_id": "0830d66b",
+        "quality": 0.686,
+        "theorems": 15,
+        "title": "**Conjecture.** For a family of finite decision processes with bounded error, an"
       }
     ],
     "Cryptography": [
