@@ -1120,7 +1120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "68319f3d",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 6c98f572 (Q=0.805), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) i",
     "domain_bridges": [],
     "domains": [
@@ -1132,7 +1132,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "6c98f572",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-01T18:22:53.127464+00:00",
     "title": "Deepening: Bridge: Fourier Analysis as a Functor"
   },
@@ -1458,25 +1458,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:05:22.928149+00:00",
     "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "edfd57dd",
-    "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_13_7a196f48",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:22.976652+00:00",
-    "title": "Black-Hole-Entropy: Bekenstein-Hawking Metric Area Law Proof"
   },
   {
     "ambition_level": "extension",
@@ -4630,7 +4611,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e384d0b8",
     "description": "Building on cycle b596d3d1 (Q=0.750), which proved 21 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the",
     "domain_bridges": [],
     "domains": [
@@ -4642,7 +4623,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "b596d3d1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T13:21:34.658597+00:00",
     "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
   },
@@ -5028,7 +5009,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "768360e4",
     "description": "Prove that the category of chain complexes is equivalent to the derived category modulo homotopy. Show that Ext and Tor are universal delta-functors. Bridge: singular homology of a space X equals Ext^*(Z, C_*(X)) in the derived category. Prove the universal coefficient theorem as a consequence.",
     "domain_bridges": [],
     "domains": [
@@ -5041,7 +5022,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
   },
@@ -6394,7 +6375,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b95b0e68",
     "description": "Investigate the ArXiv paper 'On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$' and formalize its key results. Abstract: Let $\\mathbf{F} = \\mathbf{Q}(\\sqrt D)$ be a real quadratic field. In this paper, we establish a large sieve inequality for the Asai lifts $ \\mathrm{As} (f) $ with $f$ in a Hecke orthonormal basis of the space of Hilbert modular cusp forms of parallel weight $(k, k)$ over $ \\mathbf{F} $. As an application, for a fixed Hecke--Maass cusp form $φ$ over $\\mathbf{Q}$, we prove a non-trivial bound for the second moment of the convoluted central $L$-values $ L (1/2, \\mathrm{As}(f) \\times φ) $ in the $k$-aspect.",
     "domain_bridges": [],
     "domains": [
@@ -6407,7 +6388,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.13484v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:19:02.464129+00:00",
     "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
   },
@@ -9218,7 +9199,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e033e47",
     "description": "Investigate the ArXiv paper 'On some perfect matching conjectures in infinite, cubic, bridgeless graphs' and formalize its key results. Abstract: The Berge-Fulkerson Conjecture states that every bridgeless cubic graph has six perfect matchings such that each edge belongs to exactly two of them. This conjecture has remained open since 1971, and several of its weakenings have been proposed over the years. Two of the most prominent are the Fan-Raspaud Conjecture and the Máčajová-Škoviera Conjecture. It is well known that the Berge-Fulkerson Conjecture implies the Fan-Raspaud Conjecture, which in turn implies the Máčajová-Škoviera Conjecture. These problems have been studied for years in the context of finite graphs, and many equivalences between them and other results have been established. However, little to nothing is known about them in the context of infinite graphs. In this paper, we investigate whether these conjectures remain valid in the infinite setting, establish their implications in analogy to the finite case, and prove that their finite versions are equivalent to their respective infinite versions.",
     "domain_bridges": [],
     "domains": [
@@ -9231,7 +9212,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.29511v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-03T04:05:44.681478+00:00",
     "title": "ArXiv paper: On some perfect matching conjectures in infinite, cubic, bridgeless graphs"
   },
@@ -9378,7 +9359,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6c07c4d0",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Chebotarev geodesic theorem: non-split case' and formalize its key results. Abstract: We study the prime geodesic theorem for congruence subgroups of indefinite quaternion orders. We prove that the geodesic analogue of the Chebotarev density theorem for these groups holds with exponent $25/36 + \\varepsilon$. In particular, we deduce that the prime geodesic theorem holds with exponent $25/36 + \\varepsilon$ for any congruence subgroup of any indefinite quaternion order over $\\mathbb{Q}$. The idea of the proof is to reduce the problem to the split case, which has been handled previously by the author.",
     "domain_bridges": [],
     "domains": [
@@ -9391,7 +9372,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2608.04923v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-06T03:47:39.444312+00:00",
     "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
   },
@@ -12691,26 +12672,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "43d8701a",
-    "description": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT₀` and an interpretation in arithmetic such that PA proves `Con(QFT₀) → Con(PA)`. This is falsified by any PA-model satisfying `Con(QFT₀) ∧ ¬Con(PA)`.\n\n2. **Minimal soundness for the negative independence half.** For recursively axiomatized extensions of Robinson arithmetic, determine whether 1-consistency is strictly stronger than necessary for proving `PA ⊬ ¬Con(T)` under a fixed arithmetized interpretation. A separating theory would falsify any claimed equivalence.\n\n3. **Constructive physical countermodel.** Replace the empty-world witness separating mathematical from physical consistency by a nonempty, finitely presented operational semantics and a consistent theory whose constraints have no jointly realizable state. The conjecture fails if every consistent finite constraint set in that semantics has a realization.\n\n4. **Completeness boundary for physical semantics.** Characterize semantic conditions on a nonempty class of physical worlds under which `Consistent P T ↔ PhysicallyConsistent M T` holds for every theory `T`. The proposed characterization is falsified by either a condition-satisfying incomplete semantics or a complete semantics violating one of the stated conditions.\n\n5. **Independence transfer along interpretations.** If theories `U` and `T` are mutually faithfully interpretable over PA and PA verifies preservation of falsum proofs in both directions, then `Con(U)` is PA-independent exactly when `Con(T)` is PA-independent. A single verified pair of interpretations for which only one consistency sentence is independent would refute this conjecture.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Pythagorean"
-    ],
-    "id": "fd_0814",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "5843d50f",
-    "status": "in_progress",
-    "timestamp": "2026-07-29T12:31:24.540032+00:00",
-    "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register deficit.\n   Trees, threshold graphs, and subclasses of chordal graphs are natural first cases.\n\n2. **Formalize weighted spill cost.** Replace the one-vertex feasibility model by a cost\n   function on variables and minimize total cost subject to `k`-colourability of the induced\n   graph on unspilled vertices. The counterexample shows that degree alone cannot solve this\n   optimization problem.\n\n3. **Connect perfect elimination orders to SSA construction.** The present theorem assumes a\n   chordal graph via an explicit perfect elimination order. A compiler-facing development\n   could define dominance, SSA live ranges, and prove that the resulting interference graph\n   admits such an order.\n\n4. **Certified greedy allocation.** Extract an executable colouring algorithm from a perfect\n   elimination ordering and prove that it uses exactly the clique number of registers.\n\n5. **Spill lower bounds from cliques.** For a budget `k`, formalize that every clique of size\n   `m > k` forces at least `m-k` spills from that clique, then compare this lower bound with\n   optimal weighted spilling.\n\n6. **Minimal counterexamples.** Exhaustively classify the smallest chordal graphs for which a\n   maximum-degree spill fails, with the exhaustive search reflected by a kernel-checked finite\n   theorem rather than an external computation.\n\n7. **Correct the empirical target.** For SSA/chordal interference graphs, test `χ = ω`, not\n   `χ = max(Δ+1,ω)`. Record maximum degree separately as a general upper-bound parameter; it\n   does not determine the exact chromatic number.\n",
     "domain_bridges": [],
@@ -15443,6 +15404,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.lean`,\n`Catalog/Novelty/ConsistencyTransferSharpness.lean`,\n`Catalog/Novelty/HeightSpectrumTransfer.lean`,\n`Catalog/Novelty/TransferPreorderRealization.lean` and\n`Catalog/Novelty/PhysicalCountermodelCompleteness.lean`.  Each conjecture is\nstated so that a single verified Lean object refutes it.\n\n## 1. Exact reflection strength of the interpretation axiom\n\nThe explicit arithmetic `PAsys pa qft` proves `Con(QFT₀) → Con(PA)` from the single\ninterpretation axiom `□_pa ⊥ → □_qft ⊥`.\n\n**Conjecture.**  Over the GL calculus `Thm pa Ax`, the reflection sentence\n`Con(qft) → Con(pa)` is derivable from an axiom set `Ax` consisting of *boxed-falsum\nimplications only* if and only if `Ax` already contains (or derives) the transfer\nimplication `□_pa ⊥ → □_qft ⊥`.\n\n*Falsified by* an axiom set of that shape, plus a derivation of the reflection\nsentence, together with a GL model validating `Ax` in which `□_pa ⊥ → □_qft ⊥` fails.\n\n## 2. Depth-graded failure of reflection\n\n`capSysN n` is consistent, minimally sound, and refutes the uniform reflection rule\nexactly at iteration depth `n`: it proves `□^{n+1}⊥` and refutes `□^n ⊥`.\n\n**Conjecture (depth-graded reflection hierarchy).**  For every `n ≥ 1` the *restricted*\nreflection rule \"`⊢ □ φ` implies `⊢ φ` for all `φ` of box-depth `< n`\" holds in\n`capSysN n`, while it fails at depth `n`.  Hence 1-consistency stratifies into a\nstrictly increasing chain of conditions, each strictly stronger than the minimal\nsoundness condition `⊬ □⊥` that is *equivalent* to the negative independence half.\n\n*Falsified by* a formula of box-depth `< n` provably boxed but unprovable in\n`capSysN n`, or by a proof that the depth-`n` rule holds.\n\n## 3. Beyond the resolved one-sided transfer question\n\n*Status: the previous conjecture of this section is now a theorem.*  In\n`Catalog/Novelty/ConsistencyTransferSharpness.lean` the tag-sensitive Kripke\nsemantics `satC` yields an explicit consistent GL theory `sepSys u` with tags `u ≠ t`\nproving `Con u → Con t` in which `Con t` is independent while `Con u` is refuted\n(`one_sided_transfer_insufficient`, `mutual_transfer_not_weakenable`).  The exact\nrepair is also proved: one-sided transfer *plus* minimal soundness at the source tag\nrestores independence (`one_sided_transfer_with_min_soundness`), and minimal soundness\ncannot be dropped (`min_soundness_hypothesis_necessary`).\n\n*Status: the height-spectrum conjecture previously listed here is now settled — and it\nwas **false**.*  `Catalog/Novelty/HeightSpectrumTransfer.lean` computes the spectrum\nexactly:\n\n* `capC_Con_independent_iff` : `Independent (capC c N) (Con i) ↔ 1 ≤ c i ∧ 1 ≤ N`,\n  so the conjectured upper constraint `c i ≤ N` is spurious\n  (`height_spectrum_conjecture_false`);\n* `capC_transfer_iff` : `Provable (capC c N) (imp (Con i) (Con j)) ↔ min N (c i) ≤ c j`,\n  so the conjectured description `c i ≤ c j ∨ c i = 0` is too narrow\n  (`transfer_spectrum_conjecture_false`).\n\nThe correct invariant is the *truncated* height `min N (c i)`: mutual transfer holds\niff `min N (c i) = min N (c j)` (`capC_mutual_transfer_iff`), which by\n`capC_mutual_transfer_forces_simultaneous_independence` gives an explicit non-vacuous\nfamily of instances of `independence_transfer`.  That invariant is moreover\n**complete** — `provable_capC_congr_of_min_eq`: height functions with the same\ntruncation `min N ∘ c` generate the very same theory — and the transfer relation\n`i ≼ j :↔ Provable (capC c N) (Con i → Con j)` is always a total preorder\n(`capC_transfer_total_preorder`).\n\n*Status: the realization conjecture previously listed here is now a theorem — and it\nwas **true**.*  `Catalog/Novelty/TransferPreorderRealization.lean` proves the exact\ncharacterization of the realizable consistency-strength preorders:\n\n* `transfer_preorder_characterization` : a relation `R` on tags is the provable-transfer\n  relation `TransferRel c N` of some height function `c` **iff** `R` is transitive,\n  total, and has no strict chain of length `N + 1` (`HasChainTo R (N+1) i`);\n* `totalPreorder_iff_rank_representation` : equivalently, `R i j ↔ h i ≤ h j` for some\n  `h` bounded by `N` — the rank function `rank R N` (the longest strict chain ending at\n  a tag) is such an `h`, so the realizing theory is the explicit `capC (rank R N) N`\n  (`transfer_preorder_summary`, which also records that it is consistent and GL);\n* `transfer_pigeonhole` : among any `N + 2` tags two are transfer-equivalent, so at most\n  `N + 1` strengths are separated, and `transfer_linear_order_realized` shows the bound\n  is attained.\n\nSection §6 of the same file explains the invariant: the truncated height is exactly the\n*depth of provable inconsistency*, `Provable (capC c N) (□_i^k ⊥) ↔ 1 ≤ k ∧ min N (c i) < k`\n(`capC_provable_boxPow_bot_iff`), and the transfer spectrum for all iterated boxed falsa\nis computed in `capC_boxPow_transfer_iff`.\n\nTwo further facts about the *depth vector* `d c N i := min N (c i)` are proved there:\nit is a complete invariant in the strong sense that different depth vectors give\ndifferent theories (`capC_ne_of_min_ne`, converse of `provable_capC_congr_of_min_eq`),\nbut the inclusion order between these theories is **not** the pointwise order on depth\nvectors — `theory_inclusion_not_pointwise` exhibits `N = 1`, `d = (0, 1, 1, …) ≤\nd' = (1, 1, …)` with `□_0 ⊥ → □_1 ⊥` provable for `d'` and refuted for `d`.\n\n**Conjecture (order-preservation criterion for inclusion).**  For truncated depth\nvectors `d = min N ∘ c` and `d' = min N ∘ c'`, the inclusion\n`Provable (capC c' N) a → Provable (capC c N) a` holds for **every** formula `a` iff\n\n1. `d i ≤ d' i` for every tag `i`  (depths may only increase), *and*\n2. `d' i ≤ d' j → d i ≤ d j` for all tags `i, j`  (the relative order of the depths is\n   not disturbed).\n\nCondition 1 alone is provably insufficient (`theory_inclusion_not_pointwise`, in which\ncondition 2 fails); condition 1 alone is necessary because\n`capC_provable_boxPow_bot_iff` reads the depths off the iterated boxed falsa.\n\n*Falsified by* a pair `(c, c')` satisfying 1 and 2 together with a formula provable for\n`c'` but not for `c`, or by a pair violating 1 or 2 whose theories are nevertheless\nincluded.\n\n## 4. Realizability gap for finitely presented operational semantics\n\nThe two-state switch is nonempty, finite, fully sound, and refutes\n\"consistent ⟹ realizable\" with the finite constraint set `{on, off}`.\n\n**Conjecture (no finite completeness).**  Every finitely presented operational\nsemantics (finite world type, decidable satisfaction) whose language contains at\nleast two mutually exclusive observation constraints is incomplete for the\nassumption-plus-ex-falso proof system: some finite consistent constraint set has no\nrealization.\n\n*Falsified by* a finite, decidable semantics with mutually exclusive observables in\nwhich every consistent finite constraint set is realizable.\n\n## 5. Sharpness of the completeness boundary\n\n`consistency_equivalence_iff` characterizes the coincidence of mathematical and\nphysical consistency as `FalsumSound ∧ Complete`, and\n`equivalence_without_full_soundness` shows full soundness is *not* implied by the\nboundary.\n\n**Conjecture (boundary rigidity).**  There is no semantic condition `C` strictly\nbetween falsum-soundness and full soundness such that `C ∧ Complete` is *equivalent*\nto the consistency biconditional for every proof system: any such `C` must already be\nimplied by falsum-soundness on complete semantics.\n\n*Falsified by* a condition `C`, a complete falsum-sound semantics violating `C`\n(showing `C` is strictly stronger), together with a proof that `C ∧ Complete` is\nstill equivalent to the biconditional.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1001",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "43d8701a",
+    "status": "available",
+    "timestamp": "2026-08-06T19:01:34.949435+00:00",
+    "title": "Derived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.le"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nFour Lean files now carry the fluctuation-theoretic side of this thread.  All of them\ncompile against Lean 4.28 / Mathlib with no `sorry`, no stubbed signature and only the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n* `Catalog/Computation/FluctuationRobustDemon.lean` — the finite Jarzynski/Crooks model and\n  the **independent** concentration bound\n  `P( ∑_{i<n} W_i ≤ n·w ) ≤ exp( -n·β·(ΔF - w) )` (`FluctDemon.deficit_concentration`).\n* `Catalog/Computation/AdaptiveFluctuationDemon.lean` — the **adaptive** version.  An\n  adaptive demon is a fixed-depth decision tree of work systems\n  (`FluctDemon.AdaptiveDemon`); if each stage dissipates at least `ΔF` in the sense\n  `⟨e^{-βW}⟩ ≤ e^{-βΔF}`, then `P( total work over n stages ≤ t ) ≤ exp( -β·(n·ΔF - t) )`\n  (`FluctDemon.adaptive_deficit_bound_of_dissipative`).\n* `Catalog/Computation/StoppingTimeDemon.lean` — the **stopping-time** version.  A\n  `FluctDemon.StoppingDemon` may halt at any node, so the number of erasure stages `N` is a\n  random variable and the depth index is only an a priori horizon.  Proved:\n\n  ```\n  P( total work ≤ t  and  N ≥ m )   ≤  exp( -β·(m·ΔF - t) )      stopping_deficit_bound\n  P( total work ≤ w·N and N ≥ m )   ≤  exp( -m·β·(ΔF - w) )      stopping_rate_deficit_bound\n  ΔF · E[N]                         ≤  E[total work]              stopping_wald\n  ```\n\n  together with the reliability bound `m ≤ log(1/δ)/(β(ΔF-w))`\n  (`FluctDemon.stopping_reliability_bound`), the vanishing of the success probability\n  (`FluctDemon.stopping_deficit_tendsto_zero`), and two non-vacuity witnesses: `coinStop`\n  (random horizon, `E[N] = 3/2`, exact sub-threshold probability `1/4` against the bound\n  `4/9`, strict Wald slack `(3/4)log(4/3)/β`) and the unbounded-horizon family `geoStop`\n  whose exact sub-threshold probability is `(1/2)^n` at every horizon `n`, against the\n  bound `(2/3)^n`.\n\n* `Catalog/Computation/CrooksCompleteness.lean` (this cycle) — the **converse direction** of\n  the model.  Conjecture 4 of the previous cycle (\"Crooks-completeness of the finite\n  model\") is resolved affirmatively, and in a stronger form than conjectured:\n\n  ```\n  Jarzynski β ΔF S  ↔  ∃ C : CrooksPair β ΔF Ω, C.fwd = S      jarzynski_iff_exists_crooks\n  ```\n\n  The partner lives on the *same* outcome space and the time reversal `flip` may be\n  prescribed arbitrarily (`FluctDemon.reverseSystem`, `FluctDemon.crooksCompletion`); it is\n  unique given `(fwd, flip)` (`FluctDemon.crooks_rev_unique`); it charges the time reverse\n  of every outcome the forward protocol charges (`FluctDemon.reverseSystem_prob_pos`), so\n  the conjectured obstruction (\"an outcome of zero forward and nonzero reverse\n  probability\") is vacuous (`FluctDemon.no_jarzynski_system_lacks_crooks_partner`).  In\n  addition:\n\n  ```\n  Jarzynski β (-ΔF) C.rev                                        crooks_rev_jarzynski\n  CrooksPair.reverse : CrooksPair β ΔF Ω → CrooksPair β (-ΔF) Ω  (an involution)\n  P( W ≤ w )  ≤  e^{-β(ΔF-w)} · (reverse mass of the reversed event)\n                                                                 crooks_deficit_le_rev\n  ```\n\n  the last being a strict sharpening of the one-shot Chernoff bound\n  (`FluctDemon.crooks_deficit_strict`).  Non-vacuity: for the catalog's `coinDemon` the\n  reverse protocol is `(q(true), q(false)) = (1/4, 3/4)` and the sharpened bound is\n  *exactly attained*, `e^{-β(ΔF-w)}·(3/4) = (2/3)(3/4) = 1/2 = P(W ≤ w)`\n  (`FluctDemon.coinCrooks_sharpened_bound_eq`), against the unsharpened value `2/3`.\n\n  The moral of the cycle: in the finite model, Jarzynski compliance and Crooks compliance\n  carry *the same information*; the reversal is free data, and what genuinely constrains a\n  demon beyond `⟨e^{-βW}⟩ = e^{-βΔF}` is the reverse mass of the deficit event.\n\nThe conjectures below are what remains open, restated against this baseline.\n\n---\n\n## 1. Exact large-deviation rate and the equality case\n\n**Conjecture.** For a fixed finite-outcome protocol `S` obeying Jarzynski at cost `ΔF`,\n\n```\nlim_{n→∞} -(1/n) log P( ∑ W_i ≤ n·w )  =  I_S(w)  ≥  β (ΔF - w),\n```\n\nwhere `I_S` is the Legendre transform of `Λ_S(λ) = log ⟨e^{λ W}⟩`, and equality\n`I_S(w) = β(ΔF - w)` holds **iff** the sub-threshold mass of `S` sits at the single work\nvalue `w` (the \"all-or-nothing\" protocol).\n\n*Status.* `FluctDemon.single_deficit_bound` gives `≥` at `n = 1`, and the new\n`FluctDemon.crooks_deficit_le_rev` identifies the exact one-shot slack: the bound is\n`e^{-β(ΔF-w)}·m_rev(w)` with `m_rev(w)` the reverse mass of the time-reversed deficit\nevent, and this is attained with equality for `coinDemon` at `w = ΔF - log(3/2)/β`.  So the\nsharpened one-shot statement is tight; the open content is now purely the `n → ∞`\ntensorisation of the factor `m_rev(w)`, which we conjecture contributes the missing\n`I_S(w) - β(ΔF - w)`.\n\n*Falsifiable:* a two- or three-outcome protocol with `I_S(w) = β(ΔF-w)` whose sub-threshold\nmass is spread over two distinct work values; equivalently, one whose reverse mass\n`m_rev(w)^n` fails to capture the `n`-fold slack.\n\n## 2. Almost-surely finite demons with no horizon at all\n\n**Conjecture.** Let a demon be an infinite decision tree with an almost surely finite\nstopping time `N` (rather than a tree of some finite depth `n`), every node dissipative at\n`ΔF`.  Then the three displayed stopping-time bounds hold verbatim, and moreover\n`E[total work] ≥ ΔF·E[N]` requires no integrability hypothesis beyond `E[N] < ∞`.\n\nThe stopping-time theorem covers every tree of *some* finite depth, uniformly in that\ndepth, which already forces the conclusion for the truncations `N ∧ n` of an infinite tree.\nThe open content is the passage to the limit: is `lim_n E[W_{N∧n}] = E[W_N]`, or can a\ndemon smuggle work into the tail?  We expect uniform integrability to fail exactly when\n`E[N] = ∞`, which would make this the horizon-free counterpart of the `T → 0` analysis in\n§5.\n\n*Falsifiable:* an infinite tree, all nodes Jarzynski compliant, with `E[N] < ∞` and\n`E[total work] < ΔF·E[N]`.\n\n## 3. Erasure-count lower bound for reusable workspace\n\n**Conjecture.** Fix a family of decision processes whose size-`n` instance discards `b(n)`\nbits in the sense of the catalog's size-indexed dissipation theory.  Then every\nimplementation reusing a workspace of `s(n)` cells performs at least `b(n) - O(s(n))`\ndissipative stages, hence by `FluctDemon.stopping_reliability_bound` no implementation can\nspend below `(1-ε)·b(n)·k_B T log 2` with probability `Ω(1)` unless `b(n) = O(s(n) + log n)`.\n\nThe thermodynamic half is proved in the form the computational half needs: the reliability\nbound is stated for a *random* number of stages, so an implementation whose number of\nerasures depends on the instance is covered.  The open content is the *identification\nstep*: which reuse patterns of a polynomial-time workspace force stages that are genuinely\ndissipative at the Landauer value, rather than merely logically irreversible?\n\n*Falsifiable:* a polynomial-time family with `b(n) = n`, workspace `s(n) = O(log n)`, and a\nconstant-probability sub-Landauer implementation.\n\n## 4. Rigidity of the time reversal: self-dual Crooks pairs\n\nCrooks-completeness shows that the reversal `flip` is *free data* — every Jarzynski system\nadmits a partner for every `flip`, even the identity.  A physically meaningful reversal must\ntherefore be pinned down by an extra axiom, and the natural one is self-duality.\n\n**Conjecture.** Call a Crooks pair *self-dual* if `flip` is an involution, `rev = fwd` as\nwork systems, and `ΔF = 0`.  Then a finite work system `S = (p, W)` is the forward half of a\nself-dual pair **iff** there is an involution `flip` with `W ∘ flip = -W` and\n`p(ω) = e^{βW(ω)} p(flip ω)` for all `ω`; and every such `S` has `⟨W⟩ ≥ 0` with equality iff\n`W ≡ 0`.  Consequently the self-dual systems are exactly the equilibrium (zero-free-energy,\ndetailed-balanced) protocols, and no demon is self-dual at `ΔF > 0`.\n\n*Status.* The \"only if\" direction is immediate from `FluctDemon.crooks_rev_prob_eq`; the\ncontent is the converse construction and the equality case, which should follow from the\nproved `FluctDemon.crooks_rev_jarzynski` applied to `CrooksPair.reverse` together with\n`FluctDemon.meanWork_ge_of_jarzynski` at both `ΔF` and `-ΔF`.\n\n*Falsifiable:* a self-dual pair with `ΔF > 0`, or a work system satisfying the displayed\ndetailed-balance identity with `⟨W⟩ < 0`.\n\n## 5. Zero-temperature degeneration of the exponent\n\n**Conjecture.** As `β → ∞` with `ΔF = k_B T log 2` fixed at the Landauer value, the exponent\n`β(ΔF - w)` tends to `-βw`, so the bound is vacuous for every fixed `w > 0` and informative\nonly for `w ≤ 0`.  Consequently an apparent zero-work erasing demon obtained in the `T → 0`\nlimit must have diverging resources: with `w = 0`, `FluctDemon.stopping_reliability_bound`\ngives `m ≤ log(1/δ)/log 2`, a *`β`-independent constant* on the number of erasures the\ndemon can complete at fixed success probability — and by `FluctDemon.stopping_wald` the\nexpected work still grows like `ΔF·E[N]`, so the only escape is `E[N] → ∞`.\n\nThis turns the \"Zero-Temperature Boundary Classification\" conjecture of the original\ndirection into a quantitative dichotomy: at `T → 0` the loophole closes as a divergence of\nthe *resource* `E[N]`, not of the exponent.\n\n*Falsifiable:* a family of finite stopping strategies, parameterised by `β`, with `w = 0`,\n`ΔF = k_B T log 2`, deficit probability bounded below, bounded `E[N]`, and outcome-space\nsize `O(poly)`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_1002",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0830d66b",
+    "status": "available",
+    "timestamp": "2026-08-06T19:46:42.774907+00:00",
+    "title": "Four Lean files now carry the fluctuation-theoretic side of this thread.  All of"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domain_bridges": [],
     "domains": [
@@ -15495,6 +15496,25 @@
     "status": "available",
     "timestamp": "2026-08-05T09:56:52.925244+00:00",
     "title": "Close Proofs: Let a compact smooth submanifold have reach at least `τ`, and let a fi"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 43d8701a (Q=0.686) proved 1673 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT₀` and an interpretation in arithmetic such that PA proves `Con(QFT₀) → Con",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_43d8701a_b40afbc6",
+    "lineage_refs": [],
+    "priority_score": 0.735964136282128,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "43d8701a",
+    "status": "available",
+    "timestamp": "2026-08-06T19:01:43.955990+00:00",
+    "title": "Close Proofs: Arithmetized QFT reflection.: Construct an explicit recursively enumer"
   },
   {
     "ambition_level": "extension",

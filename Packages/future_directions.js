@@ -33,17 +33,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b2707824",
     "description": "Maps the Berggren tree to hyperbolic geodesics on the Poincar\u00e9 disk, proving sub-linear path length O(log N) to factor N via geodesic energy minimization.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
     "id": "pyth_factor_hyperbolic_13cb023f",
+    "phase": "A",
     "priority_score": 0.97,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:10:45.812999+00:00",
     "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar\u00e9 Disk"
   },
@@ -825,17 +826,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
   },
   {
-    "consumed_by_exp_id": "68319f3d",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 6c98f572 (Q=0.805), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) i",
     "domains": [
       "Computation"
     ],
     "id": "push_6c98f572_c4dd1d3a",
-    "phase": "A",
     "priority_score": 0.90505,
     "research_mode": "team",
     "source_exp_id": "6c98f572",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-01T18:22:53.127464+00:00",
     "title": "Deepening: Bridge: Fourier Analysis as a Functor"
   },
@@ -1078,16 +1078,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "edfd57dd",
     "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
     "domains": [
       "Physics"
     ],
     "id": "dir_50_13_7a196f48",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:22.976652+00:00",
     "title": "Black-Hole-Entropy: Bekenstein-Hawking Metric Area Law Proof"
   },
@@ -6926,18 +6927,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Combinatorial and algebraic proofs of Keller's $A_2\\square A_2$ $q$-dilogarithm identity"
   },
   {
-    "consumed_by_exp_id": "6c07c4d0",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Chebotarev geodesic theorem: non-split case' and formalize its key results. Abstract: We study the prime geodesic theorem for congruence subgroups of indefinite quaternion orders. We prove that the geodesic analogue of the Chebotarev density theorem for these groups holds with exponent $25/36 + \\varepsilon$. In particular, we deduce that the prime geodesic theorem holds with exponent $25/36 + \\varepsilon$ for any congruence subgroup of any indefinite quaternion order over $\\mathbb{Q}$. The idea of the proof is to reduce the problem to the split case, which has been handled previously by the author.",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "fd_0992",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2608.04923v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-06T03:47:39.444312+00:00",
     "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
   },
@@ -8348,22 +8348,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** A reflective fixed-point code admits a monotone interpretation i"
   },
   {
-    "consumed_by_exp_id": "0830d66b",
-    "description": "# Future Directions\n\n## 1. Quantitative Complexity\u2013Dissipation Tradeoff\n\n**Conjecture.** For a family of finite decision processes with bounded error, any\nimplementation whose expected running time is polynomial but whose workspace is\nreused across instances must dissipate at least a constant times the conditional\nentropy of the discarded computation history. A matching reversible construction\nshould attain the bound up to polylogarithmic overhead.\n\nThe key insight is that time complexity and dissipation become coupled only after\none specifies which intermediate information is irreversibly discarded, rather\nthan merely classifying the final decision problem. **Why now?** The finite\npushforward entropy inequality and the positive one-bit work bound isolate exactly\nthe local information-loss quantity that a family-level theorem must aggregate.\n\n## 2. Reversible Simulation Boundary for NP Search\n\n**Conjecture.** If every polynomially balanced NP search relation admits a\npolynomial-time decision algorithm, then every successful search computation has a\nlogically reversible implementation with polynomial time and space overhead, but\nnot necessarily with zero thermodynamic work when its output or history is reset.\n\nThe key insight is to separate reversible evaluation from irreversible cleanup:\na collapse may simplify the former while Landauer cost remains attached to the\nlatter. **Why now?** The surviving bridge theorem shows that efficient decidability\nalone cannot remove erasure cost, making reversible cleanup the precise missing\nmechanism.\n\n## 3. Physical Polynomial-Hierarchy Collapse Criterion\n\n**Conjecture.** In a physical complexity model closed under composition,\ncomplementation, and polynomially bounded oracle access, an efficiently realizable\ncomplete process for any fixed level of the polynomial hierarchy collapses every\nhigher physically realizable level to that level.\n\nThe key insight is that the extended Church\u2013Turing inclusion should interact with\nhierarchy stability through closure under oracle simulation, not through an\nunqualified assertion about all physical processes. **Why now?** The present\ncomplexity transfer identifies the first-level collapse mechanism; the next test is\nwhether it persists under alternating oracle structure.\n\n## 4. Fluctuation-Robust Demon Impossibility\n\n**Conjecture.** For finite-memory demons obeying a Crooks-type fluctuation relation,\nthe probability of observing total work below the Landauer threshold decays\nexponentially in the number of independently erased bits, uniformly over every\npolynomial-time control strategy.\n\nThe key insight is that rare negative-work trajectories need not contradict the\nsecond law; the physically testable obstruction is an exponential concentration\nbound on repeated erasure. **Why now?** The expectation-level Jarzynski argument\nalready supplies the correct threshold, while repeated finite systems provide a\nconcrete setting in which to seek sharp tail estimates.\n\n## 5. Zero-Temperature Boundary Classification\n\n**Conjecture.** Every apparent zero-work erasing demon obtained as temperature tends\nto zero falls into one of two classes: either its expected running time diverges\nsuperpolynomially, or the finite Jarzynski model loses uniform integrability and the\nlimiting process is not a valid finite-resource realization.\n\nThe key insight is that strict positivity fails algebraically at zero temperature,\nso the obstruction must reappear as a resource divergence or a singular limit.\n**Why now?** Boundary analysis pinpoints `T = 0` as the main escape hatch from the\npositive-work theorem and turns that loophole into a precise asymptotic research\nquestion.\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_0507",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e3542946",
-    "status": "in_progress",
-    "timestamp": "2026-07-20T05:48:58.813652+00:00",
-    "title": "**Conjecture.** For a family of finite decision processes with bounded error, an"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions: Reciprocal-Zero Harmonics\n\n## 1. Certified low-height window theorem\n\nConstruct a proof-quality zero-counting certificate showing that the nontrivial zeros of the Riemann zeta function have no ordinates in `[-3,3]`. This would settle the support question behind the proposed octave and fifth cutoffs: under the stated reciprocal-sum definition, both harmonics would be zero rather than arithmetically distinct.\n\nThe key insight is that arithmetic classification must follow, not precede, certified knowledge of which zeros lie in the window.\n\nWhy now? Rigorous interval methods and explicit argument-principle computations make a finite low-height certification sharply testable.\n\n## 2. Correct asymptotic scale of the reciprocal-zero harmonic\n\nFor the conjugation-symmetric multiset of nontrivial zeros with ordinates of absolute value at most `T`, determine the asymptotic behavior of the symmetrically ordered sum of reciprocals, including multiplicity. Test whether it converges, remains bounded, or has a main term after the real contribution from each conjugate pair is isolated.\n\nThe key insight is that the classical zero count grows on the scale `T log T`, while reciprocal weighting and conjugate pairing substantially alter the scale of the resulting sum.\n\nWhy now? The separation-and-counting transfer theorem identifies exactly which analytic estimates must be sharpened and exposes why the originally proposed `log T / log log T` bound does not follow from zero counting alone.\n\n## 3. Arithmetic rigidity of finite spectral harmonics\n\nClassify quadratic and higher-degree spectral factors over number fields for which the sum of reciprocals of distinct roots is rational. In degree two the harmonic is the coefficient ratio `l/q`; in higher degree, test whether rationality is controlled precisely by the ratio of the linear and constant coefficients together with multiplicity corrections.\n\nThe key insight is that reciprocal-root harmonics are elementary symmetric functions, so musical interval labels can be replaced by explicit Galois-invariant coefficient conditions.\n\nWhy now? The exact graph-zeta calculation supplies a nontrivial finite model in which rationality is computable and stable under conjugation.\n\n## 4. Graph-to-Riemann limiting bridge\n\nFind a family of finite graph-zeta factors whose normalized zero measures converge to a zeta-like spectral measure, and determine whether their rational reciprocal harmonics converge to a canonical regularized reciprocal-zero sum.\n\nThe key insight is that finite graph spectra provide exact algebraic identities and critical-circle theorems, while a limiting process may retain enough structure to illuminate infinite zeta spectra.\n\nWhy now? Exact local factorization and harmonic identities are available at every finite stage, making convergence and loss of rationality concrete falsifiable questions.\n\n## 5. Renormalized interval map\n\nDefine a nondegenerate interval map by replacing the empty low-height cutoff with either shifted windows around certified zeros or normalized increments between consecutive zero ordinates. Test whether any resulting values are algebraic, transcendental, or statistically equidistributed modulo a musical octave.\n\nThe key insight is that interval information should come from changes in spectral content, not from cutoffs lying below the first spectral event.\n\nWhy now? The empty-window diagnosis identifies the precise defect in the original map and suggests several corrected observables with computable finite approximations.\n",
     "domains": [
@@ -8589,17 +8573,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The present development proves an exact theorem for a finite exhaustive-verifica"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a95dbc85",
     "description": "# Future Directions: Fitness Landscapes of Mathematical Theories\n\n## 1. Dependency-adjusted global champion conjecture\nFix a finite corpus of statements and charge each theory for both source length and the transitive size of its dependency closure. Among theories proving the entire corpus, the mature shared library has maximal dependency-adjusted fitness.\n\nThe key insight is that extensive reuse can outweigh the local cost of general abstractions once dependencies are charged only once. **Why now?** The finite maximum principle identifies exactly what remains empirical: a fixed comparison class, a reproducible cost model, and complete theorem-coverage measurements.\n\n## 2. Three-style metastability conjecture\nIn a migration graph built from bounded refactorings, algebraic, analytic, and combinatorial developments each contain a distinct strict local maximum after quotienting by semantics-preserving renaming.\n\nThe key insight is that local maxima require both stylewise efficiency and neighborhoods that rarely cross methodological boundaries. **Why now?** The style-center theorem separates these two conditions, making each independently measurable and falsifiable on a finite corpus.\n\n## 3. Quantitative adapter-valley conjecture\nFor pairs of developments whose principal interfaces use inequivalent abstraction layers, every semantics-preserving migration path incurs an intermediate source-length overhead of at least a fixed positive fraction of the smaller endpoint length.\n\nThe key insight is that the first boundary crossing is unavoidable; the open issue is whether interface adapters impose a uniform quantitative penalty there. **Why now?** The boundary-crossing theorem reduces the conjecture to measuring a single class of cross-interface transitions rather than all intermediate states.\n\n## 4. Multiplicative-reuse phase transition\nThere is a threshold dependency density above which composing two libraries increases fitness, even after charging for an adapter layer, while below that threshold composition decreases fitness.\n\nThe key insight is that independent candidate populations can grow multiplicatively while implementation costs usually add, but duplicated or incompatible interfaces can reverse the gain. **Why now?** Exact exponential candidate counts provide a controlled combinatorial baseline against which realistic additive and subadditive cost models can be tested.\n\n## 5. No universal maximum without resource normalization\nFor any theory language permitting conservative addition of independently stated consequences at sublinear marginal source cost, raw theorem-per-line fitness has no global maximum on the unrestricted class of expressible theories.\n\nThe key insight is that a global champion is meaningful only after fixing theorem identity, admissible dependencies, and a bounded comparison universe. **Why now?** The finite existence result and the documented unbounded boundary case together isolate normalization as the decisive hypothesis, turning a vague universality claim into a sharp falsifiable dichotomy.\n",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0554",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "91cdf1e0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T14:31:18.360788+00:00",
     "title": "Fix a finite corpus of statements and charge each theory for both source length"
   },
@@ -9424,22 +9409,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T12:30:20.287636+00:00",
     "title": "For the split metric"
-  },
-  {
-    "consumed_by_exp_id": "43d8701a",
-    "description": "# Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT\u2080` and an interpretation in arithmetic such that PA proves `Con(QFT\u2080) \u2192 Con(PA)`. This is falsified by any PA-model satisfying `Con(QFT\u2080) \u2227 \u00acCon(PA)`.\n\n2. **Minimal soundness for the negative independence half.** For recursively axiomatized extensions of Robinson arithmetic, determine whether 1-consistency is strictly stronger than necessary for proving `PA \u22ac \u00acCon(T)` under a fixed arithmetized interpretation. A separating theory would falsify any claimed equivalence.\n\n3. **Constructive physical countermodel.** Replace the empty-world witness separating mathematical from physical consistency by a nonempty, finitely presented operational semantics and a consistent theory whose constraints have no jointly realizable state. The conjecture fails if every consistent finite constraint set in that semantics has a realization.\n\n4. **Completeness boundary for physical semantics.** Characterize semantic conditions on a nonempty class of physical worlds under which `Consistent P T \u2194 PhysicallyConsistent M T` holds for every theory `T`. The proposed characterization is falsified by either a condition-satisfying incomplete semantics or a complete semantics violating one of the stated conditions.\n\n5. **Independence transfer along interpretations.** If theories `U` and `T` are mutually faithfully interpretable over PA and PA verifies preservation of falsum proofs in both directions, then `Con(U)` is PA-independent exactly when `Con(T)` is PA-independent. A single verified pair of interpretations for which only one consistency sentence is independent would refute this conjecture.\n",
-    "domains": [
-      "Logic",
-      "Pythagorean"
-    ],
-    "id": "fd_0814",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5843d50f",
-    "status": "in_progress",
-    "timestamp": "2026-07-29T12:31:24.540032+00:00",
-    "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
   },
   {
     "consumed_by_exp_id": "",
@@ -11475,6 +11444,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle in\n`Catalog/Combinatorics/B3FreeAntichainMonotone.lean`, on top of the framework of\n`Catalog/Bridges/B3FreeFamilies.lean`, `\u2026Bounds.lean`, `\u2026Levels.lean`.\n\nNotation: `B_d = BoolLat d` is the Boolean lattice on `d` atoms, `n = Fintype.card \u03b1`,\n`La(n, P)` / `La*(n, P)` the weak / strong extremal numbers, `\ud835\udcdb(S)` the level family.\n\n## Resolved this cycle (no longer conjectures)\n\n* **D3, qualitative part, in full.**  `La_boolLat_lt_succ`: `La(n, B_d) < La(n, B_(d+1))`\n  for *every* `n \u2265 d` (previously known only for `n = d + 1`), and\n  `LaStar_boolLat_lt_succ` for the strong extremal number.  Sharpened to an equivalence\n  by `La_boolLat_lt_succ_iff`: strictness holds precisely when `d \u2264 n`, since for `d > n`\n  both sides equal `2^n`.  Iterating, `La_boolLat_add_le`:\n  `La(n, B_d) + k \u2264 La(n, B_(d+k))` whenever `d + k \u2264 n + 1`.\n* **A quantitative version of D3.**  `La_succ_pigeonhole`:\n  `2^n + n \u00b7 La(n, B_d) \u2264 (n + 1) \u00b7 La(n, B_(d+1))` for all `n, d`; equivalently the gain\n  `La(n, B_(d+1)) \u2212 La(n, B_d)` is at least `(2^n \u2212 La(n, B_d))/(n + 1)`.  (The\n  conjectured gain `C(n, \u230an/2\u230b)` remains open; see **F2**.)\n* **The mechanism behind both**: `weakFree_union_antichain` \u2014 adjoining *any* antichain\n  to a weak `B_d`-free family produces a weak `B_(d+1)`-free family, and\n  `strongFree_union_antichain` for strong copies.  The proof constructs, for every\n  antichain `A \u2286 B_(d+1)`, an order embedding `B_d \u21aa B_(d+1)` avoiding `A`\n  (`liftUp`: add the last atom exactly on an up-set).\n* **Height criteria.**  `weakFree_of_not_hasChain`: any family with no chain of `d + 1`\n  sets is weak `B_d`-free \u2014 a generalization of `layers_weakFree` beyond layer families;\n  and `weakFree_of_card_image_le`: any family whose members realize at most `d` distinct\n  sizes is weak `B_d`-free, with no completeness or permutation-invariance hypothesis.\n  Combined with `not_hasChain_of_weakFree`, weak `B_d`-freeness is sandwiched between\n  height `\u2264 d` and height `\u2264 2^d \u2212 1`.\n* **Both height thresholds are sharp**: `exists_not_weakFree_of_height_succ` (a family of\n  height `d + 1` containing a copy of `B_d`, for `n \u2265 d`) and `exists_weakFree_hasChain`\n  (a weak `B_d`-free family containing a chain of `2^d \u2212 1` sets, for `2^d \u2264 n + 2`),\n  the latter via `weakFree_of_card_lt`.\n\n## F1. Subadditivity of the free dimension\n\n**Conjecture.**  If `F` is weak `B_d`-free and `G` is weak `B_e`-free, then `F \u222a G` is\nweak `B_(d+e)`-free; likewise for strong freeness.\n\n*Status.*  The case `e = 1` is the theorem `weakFree_union_antichain` proved here (a\nweak `B_1`-free family is exactly an antichain).  Exhaustively verified with no\ncounterexample for `n = 3`, `(d,e) \u2208 {(1,1),(1,2),(2,1)}`, and for `n = 4`, `d = e = 1`\n(Section 4 of `ComputationalEvidence.md`).  Equivalently, in poset form: *for every\nsubset `A \u2286 B_(d+e)` containing no weak copy of `B_e`, there is an order embedding\n`B_d \u21aa B_(d+e)` whose image avoids `A`.*  The proof given here for `e = 1` chooses the\nembedding `X \u21a6 X \u222a {last}` on an up-set and `X \u21a6 X` off it; a proof of F1 presumably\nneeds a monotone selection `u : B_d \u2192 B_e` with `(X, u X) \u2209 A` for all `X`, i.e. a\nHall-type / fixed-point statement.\n*Falsifiable* by a single triple `(F, G, n)` violating it.\n*Consequence if true*: `La(n, B_(d+e)) \u2265 |F \u222a G|` for all such pairs; in particular the\nextremal numbers would satisfy a superadditive lower bound.\n\n## F2. The gain per dimension is a full central binomial coefficient\n\n**Conjecture.**  `La(n, B_(d+1)) \u2212 La(n, B_d) \u2265 C(n, \u230an/2\u230b)` for all `n \u2265 d`.\n\n*Status.*  Open; this is the quantitative half of D3.  Proved here: the gain is at least\n`(2^n \u2212 La(n, B_d))/(n + 1)` (`La_succ_pigeonhole`), which is weaker than\n`C(n, \u230an/2\u230b)` by a factor of order `\u221an`.  The bound proved here comes from adjoining the\nlargest layer of the *complement* of an extremal family; upgrading it to F2 amounts to\nshowing that some extremal weak `B_d`-free family misses a full middle layer, or to a\ndifferent construction.  For level families the statement is a theorem (`level_extremal`:\nconsecutive level optima differ by exactly one binomial coefficient).\n*Falsifiable* by one pair `(n, d)` with `La(n, B_(d+1)) \u2212 La(n, B_d) < C(n, \u230an/2\u230b)`.\n\n## F3. Extremal families of maximal height\n\n**Conjecture.**  For every `d \u2265 2` and all large `n`, every extremal weak `B_d`-free\nfamily `F \u2286 2^[n]` (i.e. `|F| = La(n, B_d)`) contains a chain of `d + 1` sets; that is,\nno extremal family has height `\u2264 d`.\n\n*Status.*  Open, and it is exactly the statement that conjecture D1 (an `\u03b5`-gain over\n`d` layers) cannot be realized by a bounded-height family: by\n`weakFree_of_not_hasChain` a family of height `\u2264 d` is automatically weak `B_d`-free, and\nby Mirsky plus Sperner (`card_le_of_not_hasChain`) such a family has at most\n`d \u00b7 C(n, \u230an/2\u230b)` sets \u2014 matching the `d` central layers only up to the constant.  So F3\nis a *weakening* of D1 in the direction that can be attacked with the tools formalized\nhere: it would follow from any lower bound `La(n, B_d) > d \u00b7 C(n, \u230an/2\u230b)`.\n*Falsifiable* by exhibiting, for some `n` and `d \u2265 2`, an extremal family of height `d`\n(equivalently by proving `La(n, B_d) = ` the sum of the `d` largest binomial\ncoefficients).\n\n## F4. The chain (Mirsky) bound is never tight for `d \u2265 2`\n\n**Conjecture.**  For every `d \u2265 2` there is `n\u2080` with\n`La(n, B_d) < M(n, 2^d \u2212 1)` for all `n \u2265 n\u2080`, where `M(n, k)` denotes the maximum size of\na family in `2^[n]` of height at most `k` (by Erd\u0151s's theorem, the sum of the `k` largest\nbinomial coefficients).  Quantitatively: `La(n, B_d) \u2264 (2^d \u2212 1 \u2212 c_d)\u00b7C(n, \u230an/2\u230b)` for\nsome `c_d > 0`; conjecture D2 is the strong form `c_d = 2^d \u2212 1 \u2212 d \u2212 c`.\n\n*Status.*  Open.  This cycle pins down exactly why the chain route cannot do better on its\nown: the two height criteria proved here are both **sharp**.\n`exists_not_weakFree_of_height_succ` gives, for `n \u2265 d`, a family of height `d + 1`\ncontaining a copy of `B_d` \u2014 so `weakFree_of_not_hasChain` cannot be pushed past height\n`d`; and `exists_weakFree_hasChain` gives, for `2^d \u2264 n + 2`, a weak `B_d`-free family\ncontaining a chain of `2^d \u2212 1` sets (any chain of `2^d \u2212 1` sets is weak `B_d`-free,\nsince a copy needs `2^d` distinct sets) \u2014 so `not_hasChain_of_weakFree` cannot be improved\neither.  Hence *height alone* determines nothing between `d` and `2^d \u2212 1`, and the\nfactor `2^d \u2212 1` in `La_boolLat_le` can only be improved by an argument that also uses the\nwidth of a copy of `B_d`, not just its chains.\n*Falsifiable* by a weak `B_d`-free family, for some `d \u2265 2` and arbitrarily large `n`, of\nsize `(2^d \u2212 1 \u2212 o(1))\u00b7C(n, \u230an/2\u230b)`.\n\n## F5. Where the weak/strong separation must live\n\n**Conjecture (refinement of D4).**  If `La(n, B_d) < La*(n, B_d)` for some `n`, then\nevery extremal strong `B_d`-free family of that size has height at least `d + 1` and is\nnot the union of an antichain with a strong `B_(d\u22121)`-free family.\n\n*Status.*  Motivated by the two union theorems proved here: `weakFree_union_antichain`\nand `strongFree_union_antichain` produce weak and strong free families in lockstep, so\nnone of the \"one antichain at a time\" constructions can separate `La` from `La*`.\nCombined with the earlier `La = La*` for `n \u2208 {d, d+1}` and on level families, this\nnarrows the search for a separation considerably.  Small cases computed here\n(`n \u2264 3`, `d \u2264 3`) all give `La = La*`.\n*Falsifiable* by any explicit separating pair, or by proving `La = La*` for all `n, d`.\n",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_1000",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "39ee2889",
+    "status": "available",
+    "timestamp": "2026-08-06T10:02:00.146265+00:00",
+    "title": "Concrete, falsifiable conjectures arising from the results proved this cycle in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.lean`,\n`Catalog/Novelty/ConsistencyTransferSharpness.lean`,\n`Catalog/Novelty/HeightSpectrumTransfer.lean`,\n`Catalog/Novelty/TransferPreorderRealization.lean` and\n`Catalog/Novelty/PhysicalCountermodelCompleteness.lean`.  Each conjecture is\nstated so that a single verified Lean object refutes it.\n\n## 1. Exact reflection strength of the interpretation axiom\n\nThe explicit arithmetic `PAsys pa qft` proves `Con(QFT\u2080) \u2192 Con(PA)` from the single\ninterpretation axiom `\u25a1_pa \u22a5 \u2192 \u25a1_qft \u22a5`.\n\n**Conjecture.**  Over the GL calculus `Thm pa Ax`, the reflection sentence\n`Con(qft) \u2192 Con(pa)` is derivable from an axiom set `Ax` consisting of *boxed-falsum\nimplications only* if and only if `Ax` already contains (or derives) the transfer\nimplication `\u25a1_pa \u22a5 \u2192 \u25a1_qft \u22a5`.\n\n*Falsified by* an axiom set of that shape, plus a derivation of the reflection\nsentence, together with a GL model validating `Ax` in which `\u25a1_pa \u22a5 \u2192 \u25a1_qft \u22a5` fails.\n\n## 2. Depth-graded failure of reflection\n\n`capSysN n` is consistent, minimally sound, and refutes the uniform reflection rule\nexactly at iteration depth `n`: it proves `\u25a1^{n+1}\u22a5` and refutes `\u25a1^n \u22a5`.\n\n**Conjecture (depth-graded reflection hierarchy).**  For every `n \u2265 1` the *restricted*\nreflection rule \"`\u22a2 \u25a1 \u03c6` implies `\u22a2 \u03c6` for all `\u03c6` of box-depth `< n`\" holds in\n`capSysN n`, while it fails at depth `n`.  Hence 1-consistency stratifies into a\nstrictly increasing chain of conditions, each strictly stronger than the minimal\nsoundness condition `\u22ac \u25a1\u22a5` that is *equivalent* to the negative independence half.\n\n*Falsified by* a formula of box-depth `< n` provably boxed but unprovable in\n`capSysN n`, or by a proof that the depth-`n` rule holds.\n\n## 3. Beyond the resolved one-sided transfer question\n\n*Status: the previous conjecture of this section is now a theorem.*  In\n`Catalog/Novelty/ConsistencyTransferSharpness.lean` the tag-sensitive Kripke\nsemantics `satC` yields an explicit consistent GL theory `sepSys u` with tags `u \u2260 t`\nproving `Con u \u2192 Con t` in which `Con t` is independent while `Con u` is refuted\n(`one_sided_transfer_insufficient`, `mutual_transfer_not_weakenable`).  The exact\nrepair is also proved: one-sided transfer *plus* minimal soundness at the source tag\nrestores independence (`one_sided_transfer_with_min_soundness`), and minimal soundness\ncannot be dropped (`min_soundness_hypothesis_necessary`).\n\n*Status: the height-spectrum conjecture previously listed here is now settled \u2014 and it\nwas **false**.*  `Catalog/Novelty/HeightSpectrumTransfer.lean` computes the spectrum\nexactly:\n\n* `capC_Con_independent_iff` : `Independent (capC c N) (Con i) \u2194 1 \u2264 c i \u2227 1 \u2264 N`,\n  so the conjectured upper constraint `c i \u2264 N` is spurious\n  (`height_spectrum_conjecture_false`);\n* `capC_transfer_iff` : `Provable (capC c N) (imp (Con i) (Con j)) \u2194 min N (c i) \u2264 c j`,\n  so the conjectured description `c i \u2264 c j \u2228 c i = 0` is too narrow\n  (`transfer_spectrum_conjecture_false`).\n\nThe correct invariant is the *truncated* height `min N (c i)`: mutual transfer holds\niff `min N (c i) = min N (c j)` (`capC_mutual_transfer_iff`), which by\n`capC_mutual_transfer_forces_simultaneous_independence` gives an explicit non-vacuous\nfamily of instances of `independence_transfer`.  That invariant is moreover\n**complete** \u2014 `provable_capC_congr_of_min_eq`: height functions with the same\ntruncation `min N \u2218 c` generate the very same theory \u2014 and the transfer relation\n`i \u227c j :\u2194 Provable (capC c N) (Con i \u2192 Con j)` is always a total preorder\n(`capC_transfer_total_preorder`).\n\n*Status: the realization conjecture previously listed here is now a theorem \u2014 and it\nwas **true**.*  `Catalog/Novelty/TransferPreorderRealization.lean` proves the exact\ncharacterization of the realizable consistency-strength preorders:\n\n* `transfer_preorder_characterization` : a relation `R` on tags is the provable-transfer\n  relation `TransferRel c N` of some height function `c` **iff** `R` is transitive,\n  total, and has no strict chain of length `N + 1` (`HasChainTo R (N+1) i`);\n* `totalPreorder_iff_rank_representation` : equivalently, `R i j \u2194 h i \u2264 h j` for some\n  `h` bounded by `N` \u2014 the rank function `rank R N` (the longest strict chain ending at\n  a tag) is such an `h`, so the realizing theory is the explicit `capC (rank R N) N`\n  (`transfer_preorder_summary`, which also records that it is consistent and GL);\n* `transfer_pigeonhole` : among any `N + 2` tags two are transfer-equivalent, so at most\n  `N + 1` strengths are separated, and `transfer_linear_order_realized` shows the bound\n  is attained.\n\nSection \u00a76 of the same file explains the invariant: the truncated height is exactly the\n*depth of provable inconsistency*, `Provable (capC c N) (\u25a1_i^k \u22a5) \u2194 1 \u2264 k \u2227 min N (c i) < k`\n(`capC_provable_boxPow_bot_iff`), and the transfer spectrum for all iterated boxed falsa\nis computed in `capC_boxPow_transfer_iff`.\n\nTwo further facts about the *depth vector* `d c N i := min N (c i)` are proved there:\nit is a complete invariant in the strong sense that different depth vectors give\ndifferent theories (`capC_ne_of_min_ne`, converse of `provable_capC_congr_of_min_eq`),\nbut the inclusion order between these theories is **not** the pointwise order on depth\nvectors \u2014 `theory_inclusion_not_pointwise` exhibits `N = 1`, `d = (0, 1, 1, \u2026) \u2264\nd' = (1, 1, \u2026)` with `\u25a1_0 \u22a5 \u2192 \u25a1_1 \u22a5` provable for `d'` and refuted for `d`.\n\n**Conjecture (order-preservation criterion for inclusion).**  For truncated depth\nvectors `d = min N \u2218 c` and `d' = min N \u2218 c'`, the inclusion\n`Provable (capC c' N) a \u2192 Provable (capC c N) a` holds for **every** formula `a` iff\n\n1. `d i \u2264 d' i` for every tag `i`  (depths may only increase), *and*\n2. `d' i \u2264 d' j \u2192 d i \u2264 d j` for all tags `i, j`  (the relative order of the depths is\n   not disturbed).\n\nCondition 1 alone is provably insufficient (`theory_inclusion_not_pointwise`, in which\ncondition 2 fails); condition 1 alone is necessary because\n`capC_provable_boxPow_bot_iff` reads the depths off the iterated boxed falsa.\n\n*Falsified by* a pair `(c, c')` satisfying 1 and 2 together with a formula provable for\n`c'` but not for `c`, or by a pair violating 1 or 2 whose theories are nevertheless\nincluded.\n\n## 4. Realizability gap for finitely presented operational semantics\n\nThe two-state switch is nonempty, finite, fully sound, and refutes\n\"consistent \u27f9 realizable\" with the finite constraint set `{on, off}`.\n\n**Conjecture (no finite completeness).**  Every finitely presented operational\nsemantics (finite world type, decidable satisfaction) whose language contains at\nleast two mutually exclusive observation constraints is incomplete for the\nassumption-plus-ex-falso proof system: some finite consistent constraint set has no\nrealization.\n\n*Falsified by* a finite, decidable semantics with mutually exclusive observables in\nwhich every consistent finite constraint set is realizable.\n\n## 5. Sharpness of the completeness boundary\n\n`consistency_equivalence_iff` characterizes the coincidence of mathematical and\nphysical consistency as `FalsumSound \u2227 Complete`, and\n`equivalence_without_full_soundness` shows full soundness is *not* implied by the\nboundary.\n\n**Conjecture (boundary rigidity).**  There is no semantic condition `C` strictly\nbetween falsum-soundness and full soundness such that `C \u2227 Complete` is *equivalent*\nto the consistency biconditional for every proof system: any such `C` must already be\nimplied by falsum-soundness on complete semantics.\n\n*Falsified by* a condition `C`, a complete falsum-sound semantics violating `C`\n(showing `C` is strictly stronger), together with a proof that `C \u2227 Complete` is\nstill equivalent to the biconditional.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1001",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "43d8701a",
+    "status": "available",
+    "timestamp": "2026-08-06T19:01:34.949435+00:00",
+    "title": "Derived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.le"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle d1663b23 (Q=0.700) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'A minimal modularity lifting theorem for Siegel modular forms' and formalize its key results. Abstract: We prove a minimal modularity lifting theorem (in the spirit of Gen",
     "domains": [
       "Applications"
@@ -11514,6 +11513,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T09:56:52.925244+00:00",
     "title": "Close Proofs: Let a compact smooth submanifold have reach at least `\u03c4`, and let a fi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 43d8701a (Q=0.686) proved 1673 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT\u2080` and an interpretation in arithmetic such that PA proves `Con(QFT\u2080) \u2192 Con",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_43d8701a_b40afbc6",
+    "priority_score": 0.735964136282128,
+    "research_mode": "team",
+    "source_exp_id": "43d8701a",
+    "status": "available",
+    "timestamp": "2026-08-06T19:01:43.955990+00:00",
+    "title": "Close Proofs: Arithmetized QFT reflection.: Construct an explicit recursively enumer"
   },
   {
     "consumed_by_exp_id": "",
