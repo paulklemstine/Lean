@@ -1,0 +1,109 @@
+# One Antichain at a Time: How a Single Extra Layer Makes Room for More Sets
+
+## A question about closets, committees, and cubes
+
+Take a finite set — say the $n$ ingredients in your pantry — and consider all $2^n$ possible recipes: every subset of ingredients, from the empty dish to the everything-bagel. Order these subsets by inclusion. The resulting structure is the *Boolean lattice* $2^{[n]}$, the mathematical shape of the $n$-dimensional cube, and it is one of the most-studied objects in combinatorics.
+
+Extremal set theory asks: *how many subsets can you collect before an unavoidable pattern appears?* The founding result is **Sperner's theorem** (1928): if no set in your collection contains another, then your collection has at most $\binom{n}{\lfloor n/2\rfloor}$ members — the size of the largest "layer" of equally-sized sets. You cannot beat the middle layer.
+
+Sperner's forbidden pattern is the simplest possible one: a single strict containment $A \subsetneq B$. Modern extremal set theory replaces it by an arbitrary *poset* $P$ and asks for
+$$\mathrm{La}(n,P) = \max\{|\mathcal F| : \mathcal F \subseteq 2^{[n]} \text{ contains no copy of } P\}.$$
+
+The posets that resist us most stubbornly are the Boolean lattices themselves. Write $B_d$ for the lattice of all subsets of a $d$-element set: $B_1$ is a single containment (Sperner), $B_2$ is the *diamond*, and $B_3$ is a cube of eight sets. A **copy** of $B_d$ inside a family $\mathcal F$ is an injective assignment $\iota$ of a member of $\mathcal F$ to each of the $2^d$ elements of $B_d$ such that whenever $X \subsetneq Y$ in $B_d$, we have $\iota(X) \subsetneq \iota(Y)$. (If we additionally demand the converse — that unrelated elements of $B_d$ get unrelated sets — we call the copy *strong*, and write $\mathrm{La}^*(n,B_d)$ for the corresponding extremal number. Since every strong copy is in particular a copy, avoiding all copies is the harder demand, so $\mathrm{La}(n,B_d) \le \mathrm{La}^*(n,B_d)$.)
+
+The easy construction is always the same: take $d$ consecutive layers of the cube. No chain $A_1 \subsetneq A_2 \subsetneq \cdots$ inside such a family can have more than $d$ links, because members of a chain have strictly increasing sizes and only $d$ sizes are available. But a copy of $B_d$ needs a chain of $d+1$ sets (the bottom, an atom, a two-element set, …, the top). So $d$ consecutive layers are $B_d$-free, and taking the $d$ *central* layers gives
+$$\mathrm{La}(n, B_d) \; \ge \; \binom{n}{k} + \binom{n}{k+1} + \cdots + \binom{n}{k+d-1} \;\approx\; d\binom{n}{\lfloor n/2\rfloor}.$$
+
+For $d = 1$ this is exactly optimal (Sperner). For $d = 2$ — the notorious *diamond conjecture* — nobody knows whether $2\binom{n}{\lfloor n/2\rfloor}$ is the truth. For $d = 3$ the central layers give roughly $3\binom{n}{\lfloor n/2\rfloor}$, and a celebrated recent line of work shows you can do slightly better: some cleverer family reaches $(3+\varepsilon)\binom{n}{\lfloor n/2\rfloor}$.
+
+This article is about a mechanism that sits underneath all of these questions, and about what that mechanism forces to be true. The mechanism is embarrassingly simple to state:
+
+> **Adding an antichain raises the forbidden dimension by at most one.**
+
+## The move: bolt on an antichain
+
+An *antichain* is a family of sets no two of which are nested — Sperner's objects. Here is the theorem.
+
+**Antichain Union Theorem.** *Let $\mathcal F \subseteq 2^{[n]}$ contain no copy of $B_d$, and let $\mathcal L \subseteq 2^{[n]}$ be an antichain. Then $\mathcal F \cup \mathcal L$ contains no copy of $B_{d+1}$. The same statement holds verbatim for strong copies.*
+
+Why should this be true? Suppose $\mathcal F \cup \mathcal L$ *did* contain a copy of $B_{d+1}$, given by an assignment $\iota$. We would like to extract from it a copy of $B_d$ living entirely inside $\mathcal F$ — contradiction. To do that we need to find a sub-lattice of $B_{d+1}$, isomorphic to $B_d$, whose $\iota$-image dodges $\mathcal L$ completely.
+
+There are many copies of $B_d$ inside $B_{d+1}$: the obvious ones are "the bottom half" (all subsets of the first $d$ atoms) and "the top half" (all sets containing the last atom). Either one might unluckily hit $\mathcal L$. The insight is that between these two extremes lies a whole continuum of copies, one for each *up-set*.
+
+**The Lifting Lemma.** *Identify $B_d$ with the subsets of $\{1,\dots,d\}$ and $B_{d+1}$ with the subsets of $\{1,\dots,d+1\}$. Let $U \subseteq B_d$ be an up-set (if $X \in U$ and $X \subseteq Y$ then $Y \in U$), and define*
+$$\lambda_U(X) \;=\; \begin{cases} X \cup \{d+1\}, & X \in U,\\ X, & X \notin U.\end{cases}$$
+*Then $\lambda_U$ is an order embedding: $X \subseteq Y$ if and only if $\lambda_U(X) \subseteq \lambda_U(Y)$. Consequently, for every antichain $A \subseteq B_{d+1}$ there is an order embedding of $B_d$ into $B_{d+1}$ whose image misses $A$ entirely — namely $\lambda_U$ for the up-set $U$ generated by the members of $A$ that already lie in the bottom half.*
+
+Picture the cube $B_{d+1}$ as two parallel copies of $B_d$: the bottom face (sets avoiding the last atom) and the top face (sets containing it). A copy of $B_d$ can be assembled by choosing, for each element $X$ of $B_d$, whether to take its bottom-face avatar or its top-face avatar — provided the choice is *monotone*: once you go up, you stay up. That monotonicity is exactly the condition that the "go up" set $U$ is an up-set, and it is exactly what makes $\lambda_U$ preserve *and reflect* containment. So the copies of $B_d$ inside $B_{d+1}$ that we can use are indexed by the up-sets of $B_d$ — there are Dedekind-many of them, wildly more than two.
+
+Now the dodge. Given the antichain $A$, take $U$ to be the collection of all $Y$ such that some subset $Z \subseteq Y$ has its bottom-face avatar in $A$. This is an up-set by construction, and $\lambda_U$ avoids $A$:
+
+* If $X \notin U$, then $\lambda_U(X)$ is just $X$ on the bottom face; if it lay in $A$ we could take $Z = X$ and conclude $X \in U$ — contradiction.
+* If $X \in U$, then there is $Z \subseteq X$ whose bottom-face avatar lies in $A$, and that avatar is a *strict* subset of $\lambda_U(X) = X \cup \{d+1\}$. Two strictly nested sets cannot both belong to an antichain, so $\lambda_U(X) \notin A$.
+
+That is the whole proof. Composing the dodging embedding with the hypothetical copy $\iota$ produces a copy of $B_d$ inside $\mathcal F$, which does not exist. Hence no copy of $B_{d+1}$ could have existed in $\mathcal F \cup \mathcal L$ in the first place.
+
+## Consequence 1: height is all you need
+
+The Antichain Union Theorem immediately explains, and generalises, the layer construction. Call the *height* of a family the number of sets in its longest chain. Peel the maximal sets off a family: they form an antichain, and what remains has height one smaller. Iterating and applying the theorem $d$ times gives:
+
+**Height Criterion.** *If a family contains no chain of $d+1$ sets, it contains no copy of $B_d$ — nor any strong copy.*
+
+This is strictly stronger than the layer construction, which is the special case where "few sizes" enforces "small height". In fact the same argument yields:
+
+**Few Sizes Criterion.** *If the members of a family realise at most $d$ distinct cardinalities, the family contains no copy of $B_d$.* The family need not contain *all* sets of those sizes, and need not be symmetric under permuting the ground set — arbitrary sub-families of $d$ layers qualify.
+
+There is also a converse, and together the two bracket the notion:
+
+**Height Sandwich.** *Height $\le d$ forces $B_d$-freeness, and $B_d$-freeness forces height $\le 2^d - 1$.*
+
+The second implication holds because a chain of $2^d$ sets contains a copy of $B_d$: list the elements of $B_d$ in any order that respects containment and match them, in order, to the links of the chain. Both thresholds are attained exactly: the lattice $B_d$ itself has height $d+1$ and obviously contains a copy of $B_d$; and a chain of $2^d - 1$ sets is $B_d$-free for the trivial reason that a copy of $B_d$ needs $2^d$ distinct sets. So "height at most $d$" is the strongest *chain-only* criterion, and "height at most $2^d-1$" the weakest *chain-only* consequence, and neither can be improved.
+
+The upper end of the sandwich is what gives the standard general bound. Split the cube into $\binom{n}{\lfloor n/2\rfloor}$ symmetric chains; each chain contributes at most $2^d - 1$ sets to a $B_d$-free family. Hence
+$$\mathrm{La}(n,B_d) \;\le\; (2^d-1)\binom{n}{\lfloor n/2\rfloor},$$
+and for $d = 3$ the truth is squeezed between roughly $3$ and $7$ central binomial coefficients.
+
+## Consequence 2: the extremal numbers really do grow
+
+Here is the result that the antichain move was built for. It answers a question that the layer construction cannot: *is forbidding a bigger cube genuinely a weaker constraint, for every ground set?*
+
+**Strict Monotonicity Theorem.** *For all $n$ and $d$,*
+$$\mathrm{La}(n,B_d) < \mathrm{La}(n,B_{d+1}) \quad \Longleftrightarrow \quad d \le n,$$
+*and identically for the strong extremal numbers $\mathrm{La}^*$. When $d > n$ both sides equal $2^n$, because the whole cube has height $n+1 \le d$ and so is $B_d$-free.*
+
+The proof is three lines, and it is a perfect illustration of how much leverage the antichain move gives. Let $\mathcal F$ be a largest $B_d$-free family, so $|\mathcal F| = \mathrm{La}(n,B_d)$. If $d \le n$ then $\mathcal F$ cannot be everything, since $2^{[n]}$ itself contains a copy of $B_d$. Pick any missing set $A$. A single set is an antichain. So $\mathcal F \cup \{A\}$ is $B_{d+1}$-free and one bigger. Done.
+
+Iterating: $\mathrm{La}(n,B_d) + k \le \mathrm{La}(n,B_{d+k})$ whenever $d + k \le n+1$.
+
+The one-set version is wasteful, though — we threw away an antichain's worth of room and used only a single set. Being greedy gives a genuinely quantitative statement.
+
+**Pigeonhole Gain Theorem.** *For all $n$ and $d$,*
+$$2^n + n\,\mathrm{La}(n,B_d) \;\le\; (n+1)\,\mathrm{La}(n,B_{d+1}),$$
+*equivalently*
+$$\mathrm{La}(n,B_{d+1}) - \mathrm{La}(n,B_d) \;\ge\; \frac{2^n - \mathrm{La}(n,B_d)}{n+1}.$$
+
+Why: take an extremal $B_d$-free family $\mathcal F$ and look at its complement, of size $2^n - |\mathcal F|$. Sort the complement by cardinality into $n+1$ classes. Each class is an antichain — all its sets have the same size — and by pigeonhole one class has at least $(2^n - |\mathcal F|)/(n+1)$ members. Bolt that class on. The union is $B_{d+1}$-free, disjoint by construction, and its size is the claimed bound.
+
+In words: *whatever an extremal $B_d$-free family fails to cover, one $(n+1)$-th of it can be added for free when the forbidden cube grows by one dimension.* A pleasant unconditional by-product: $\mathrm{La}(n,B_{d+1}) \ge 2^n/(n+1)$ for every $d \ge 0$ — an "almost half the cube, divided by $n$" lower bound that costs nothing and knows nothing about layers.
+
+Small cases confirm the picture and show that the bound is not vacuous. On a three-element ground set, exhaustive search gives $\mathrm{La}(3,B_1) = 3$, $\mathrm{La}(3,B_2) = 6$, $\mathrm{La}(3,B_3) = 7$, $\mathrm{La}(3,B_4) = 8$, and the strong extremal numbers agree at every entry. The pigeonhole inequality with $n = 3$, $d = 1$ predicts a gain of at least $\lceil (8-3)/4 \rceil = 2$; the true gain is $3$.
+
+## Why this matters
+
+Three reasons.
+
+**It is a construction principle, not just a proof device.** The Antichain Union Theorem says that the space of $B_{d}$-free families is closed under adding antichains, at the cost of one dimension. Every known good construction for these problems — central layers, layers plus a sprinkling of extra sets, and the intricate families that reach $(3+\varepsilon)\binom{n}{\lfloor n/2\rfloor}$ for the cube $B_3$ — can be read as an instance or a refinement of this move. And it explains why the layer constructions are so hard to beat: they are the output of the greediest possible application of the move, applied $d$ times starting from nothing.
+
+**It tells you where *not* to look.** Combined with the fact that families defined by a set of allowed sizes can never beat the central layers, and that the same holds for every family invariant under permuting the ground set, the antichain mechanism pins down exactly what an $\varepsilon$-improvement must do: break the symmetry of the cube in an essential way, on a positive proportion of the middle layer. A family that is close to being defined by sizes gains nothing.
+
+**It is quantitative.** Strict monotonicity for all $n \ge d$ was previously accessible only on the smallest ground sets. The antichain move gives it in one stroke, with an explicit gain of $(2^n - \mathrm{La}(n,B_d))/(n+1)$, and delivers the exact criterion — strict growth happens precisely when $d \le n$, and stops the instant the forbidden cube outgrows the ground set.
+
+What remains open is the size of the gain. The conjecture is that it is at least a full central binomial coefficient, $\mathrm{La}(n,B_{d+1}) - \mathrm{La}(n,B_d) \ge \binom{n}{\lfloor n/2\rfloor}$, which is what the layer construction suggests and what the level-restricted version of the problem provably delivers. The pigeonhole bound gives $2^n/(n+1)$ when $\mathrm{La}(n,B_d)$ is small, but degrades exactly where the problem is hardest — when $\mathrm{La}(n,B_d)$ is already a constant times $\binom{n}{\lfloor n/2\rfloor}$, and $2^n/(n+1)$ is smaller by a factor of order $\sqrt{n}$.
+
+A more speculative direction: the antichain move is the case $e = 1$ of a natural *subadditivity* principle — that the union of a $B_d$-free family and a $B_e$-free family should be $B_{d+e}$-free. In poset language: for every subfamily $A$ of $B_{d+e}$ containing no copy of $B_e$, there should be an order embedding of $B_d$ into $B_{d+e}$ whose image misses $A$. Exhaustive checking on small cubes finds no counterexample. If true, it would turn the antichain move into a full calculus of forbidden dimension — and would let every good construction for a small cube be composed into a good construction for a large one.
+
+## The shape of the thing
+
+Strip away the notation and the story is about a cube made of two parallel faces. To find a smaller cube inside a bigger one while dodging obstacles, you do not have to choose one face or the other; you can weave between them, going up wherever you must, as long as you never come back down. Monotone weaving is enough to preserve the shape you are looking for, and there are enough monotone weavings — one for every up-set — to dodge anything that is an antichain.
+
+That one image, made precise, gives the height criterion, the growth of the extremal numbers, an explicit quantitative gain, and a map of the territory where the hardest open problems in the subject live.
