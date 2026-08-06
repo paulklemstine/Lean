@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "42b8568d",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nThe completed Lean development establishes an exact finite BB84 core rather than claiming a composable-security theorem beyond the definitions currently formalized. In particular,",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 36,
-      "timestamp": "2026-07-29T23:21:22",
-      "title": "Quantum Key Distribution: BB84 Security Proof"
-    },
-    {
       "cycle_id": "7799fc2c",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n1. **Sharp real escape region.** For every integer `D ≥ 2`, replace the strengthened condition `3|y| < |y|^D` in `InForwardRegion` by the paper's original condition `|y|^D > 3 max",
@@ -2501,6 +2491,16 @@
       "theorem_count": 133,
       "timestamp": "2026-08-06T12:28:01",
       "title": "Deepening: Bridge: Fourier Analysis as a Functor"
+    },
+    {
+      "cycle_id": "96503fdf",
+      "domain": "Logic",
+      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures suggested by the formalization in\n`Catalog/Logic/ConstructiveAnalysis/` (files `BishopReals.lean`,\n`ConstructiveIVT.lean`, `BrouwerianCounterexam",
+      "quality_score": 0.622,
+      "sorry_count": 0,
+      "theorem_count": 131,
+      "timestamp": "2026-08-06T12:29:37",
+      "title": "Constructive Mathematics: Bishop's Analysis"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7010699999999999
     }
   ],
-  "last_updated": "2026-08-06T12:28:01",
+  "last_updated": "2026-08-06T12:29:37",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "27eaed26",
-        "quality": 0.6962981818181817,
-        "theorems": 11,
-        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
-      },
-      {
         "cycle_id": "e50f9bec",
         "quality": 0.78468,
         "theorems": 30,
@@ -3511,6 +3505,12 @@
       {
         "cycle_id": "96503fdf",
         "quality": 0.686,
+        "theorems": 131,
+        "title": "Constructive Mathematics: Bishop's Analysis"
+      },
+      {
+        "cycle_id": "96503fdf",
+        "quality": 0.622,
         "theorems": 131,
         "title": "Constructive Mathematics: Bishop's Analysis"
       }
