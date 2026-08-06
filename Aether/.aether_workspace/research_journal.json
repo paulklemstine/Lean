@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "576be6d2",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\n1. **Well-founded rank generalization.** Replace the natural-valued quality rank by an arbitrary partial order satisfying the ascending-chain condition. This would isolate precise",
-      "quality_score": 0.75955,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-29T22:22:15",
-      "title": "Self-Modifying Research via Reflective Type Theory"
-    },
-    {
       "cycle_id": "e722c646",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\n1. **Continuous beta function.** Introduce a continuous scale parameter and an\n   RG semigroup, then define its beta function as the infinitesimal generator.\n   This would cleanly",
@@ -2501,6 +2491,16 @@
       "theorem_count": 34,
       "timestamp": "2026-08-06T10:02:07",
       "title": "Concrete, falsifiable conjectures arising from the formalization in"
+    },
+    {
+      "cycle_id": "43d8701a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.lean`,\n`Catalog/Novelty/ConsistencyTransferSharpness.lean`,\n`Catalog/Novelty/HeightSpectrumTransfer.l",
+      "quality_score": 0.6859641362821279,
+      "sorry_count": 1,
+      "theorem_count": 1673,
+      "timestamp": "2026-08-06T19:01:43",
+      "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7010699999999999
     }
   ],
-  "last_updated": "2026-08-06T10:02:07",
+  "last_updated": "2026-08-06T19:01:43",
   "open_questions": [
-    {
-      "context": "+  sorry; +  sorry; +  sorry",
-      "cycle_id": "d4bc25af",
-      "domain": "Logic",
-      "sorry_count": 13,
-      "timestamp": "2026-07-20T03:02:07"
-    },
     {
       "context": "+  sorry; +  sorry; +  sorry",
       "cycle_id": "50f62832",
@@ -3016,6 +3009,13 @@
       "domain": "Probability",
       "sorry_count": 4,
       "timestamp": "2026-08-06T03:44:49"
+    },
+    {
+      "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
+      "cycle_id": "43d8701a",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-08-06T19:01:43"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b0710fef",
-        "quality": 0.7679199999999999,
-        "theorems": 21,
-        "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-      },
-      {
         "cycle_id": "5907c59d",
         "quality": 0.78678,
         "theorems": 22,
@@ -3637,6 +3631,12 @@
         "quality": 0.686,
         "theorems": 128,
         "title": "The phrase “directly apprehended by a human brain” is not presently a mathematic"
+      },
+      {
+        "cycle_id": "43d8701a",
+        "quality": 0.6859641362821279,
+        "theorems": 1673,
+        "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
       }
     ],
     "NumberTheory": [
