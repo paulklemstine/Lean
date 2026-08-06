@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-06T10:08:42Z",
+  "date": "2026-08-06T08:45:00Z",
   "key_results": [
     "Orbit Capacity Theorem: a group action with m orbits on a finite cell set admits exactly 2^m invariant binary patterns, so the capacity in bits is exactly the orbit count.",
     "Closed-form toroidal capacities: 2^q for full time-shift invariance, 2^((pq + tau(p)tau(q))/2) for the point reflection, 2^((p^2 + 2tau(p) + tau(p)^2)/4) for quarter turns on a square torus, and 2^(pq/2) for a glide reflection, which is fixed-point free.",
