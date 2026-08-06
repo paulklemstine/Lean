@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d4d2267f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nThe unrestricted Rota basis conjecture remains open. The following five statements\nare concrete, falsifiable extensions of the definitions and small-rank results in\n`Catalog/Combi",
-      "quality_score": 0.73176,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-29T23:22:26",
-      "title": "Rota's Basis Conjecture"
-    },
-    {
       "cycle_id": "8aec96a6",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\nThe formal result identifies a structural obstruction in the proposed single-neuron model: after normalization, the factor `exp(a)` cancels, so `a` is unidentifiable and the two-p",
@@ -2501,6 +2491,16 @@
       "theorem_count": 1088,
       "timestamp": "2026-08-06T12:29:44",
       "title": "Deepening: Bridge: Fourier Analysis as a Functor"
+    },
+    {
+      "cycle_id": "a95dbc85",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Fitness Landscapes of Mathematical Theories (cycle 1)\n\nThe cycle-1 development (`Catalog/Pythagorean/TheoryFitness/`) fixes a\nreproducible cost model — a finite corpus, a source-",
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "theorem_count": 112,
+      "timestamp": "2026-08-06T15:41:44",
+      "title": "Fix a finite corpus of statements and charge each theory for both source length"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7010699999999999
     }
   ],
-  "last_updated": "2026-08-06T12:29:44",
+  "last_updated": "2026-08-06T15:41:44",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "7fa0ef0b",
-        "quality": 0.686,
-        "theorems": 31,
-        "title": "ArXiv paper: Further thoughts on dimensions of posets"
-      },
-      {
         "cycle_id": "a07085b6",
         "quality": 0.76088,
         "theorems": 11,
@@ -3885,6 +3879,12 @@
         "quality": 0.78748,
         "theorems": 47,
         "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
+      },
+      {
+        "cycle_id": "a95dbc85",
+        "quality": 0.686,
+        "theorems": 112,
+        "title": "Fix a finite corpus of statements and charge each theory for both source length"
       }
     ],
     "Shared": [

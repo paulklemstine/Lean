@@ -4329,22 +4329,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Submultiplicative Polynomials in Combinatorics"
   },
   {
-    "consumed_by_exp_id": "2c38bc1a",
-    "description": "Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $\u03b7>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+\u03b7)n/2}$ containing all the $n$-element posets as induced subposets. This improves a recent result of Bastide, Groenland and Nenadov. Our proof provides a labeling scheme preserving transitivity, inspired by the Boolean lattice. Among other tools, we use the Szemer\u00e9di Regularity Lemma.",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "fd_0020",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.12980v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T12:33:21.946611+00:00",
-    "title": "ArXiv paper: Even smaller universal posets"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Cyclic Projective Orbits on Rational Normal Curves and MDS Codes' and formalize its key results. Abstract: Let \\(A\\) be a cyclic operator on an \\(r\\)-dimensional vector space over a field \\(k\\), and let \\(z\\) be a cyclic vector. Their Krylov code has parity-check matrix \\((z,Az,\\ldots,A^{n-1}z)\\). For \\(r\\ge 3\\) and \\(n\\ge r+3\\), we prove that an MDS orbit segment lies on a rational normal curve precisely when the projective pair \\((A,[z])\\) is conjugate to one arising from the \\((r-1)\\)-st symmetric-power action of \\(\\mathrm{PGL}_2\\). Over finite fields, for companion operators, this gives a complete classification of the generalized Reed--Solomon locus into split semisimple, two nonsplit semisimple, and unipotent families. Over an algebraically closed field \\(k\\), the Zariski closure \\(\\GRSsurf_{r,k}\\) of the semisimple GRS coefficient locus is an irreducible rational surface, generically parameterized two-to-one by a two-dimensional torus of geometric-progression root sets; reversal is the generic ambiguity. The affine quotient of the parameter torus by reversal is the normalization of \\",
     "domains": [
@@ -9728,17 +9712,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`,"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "786dcda9",
     "description": "# Future Directions\n\nThe following conjectures are concrete extensions of the proved bridge.  Each is\nfalsifiable because it specifies an exact equality, involution, bound, or congruence.\n\n1. **Graded genus-zero mirror/Picard specialization.**  For a specified mirror pair of\n   Calabi\u2013Yau threefolds `(X,Y)` and a specified finite set `S` of effective primitive\n   curve classes on `X`, the sum of genus-zero BPS invariants over `S` equals\n   `rank Pic(Y)`.  This should first be tested on an explicitly named toric mirror family;\n   a single mismatch disproves that specialization.\n\n2. **Integral SYZ monodromy duality.**  For an integral affine base with singular locus\n   and torus local system `L`, dualizing fibers sends every monodromy matrix `M` to\n   `(M\u207b\u00b9)\u1d40`, and dualizing twice gives an isomorphic local system.  A counterexample is\n   any admissible loop for which the computed dual monodromy differs from `(M\u207b\u00b9)\u1d40`.\n\n3. **Mirror point-count congruence.**  For every good prime `p` in a fixed smooth proper\n   mirror family `(X,Y)` of dimension `n`,\n   `#X(F_p) \u2261 (-1)^n #Y(F_p) (mod p)` after removing explicitly specified algebraic\n   cohomology factors.  Computing one good-prime point count violating the congruence\n   refutes the conjecture for that family.\n\n4. **Reciprocal middle zeta factor.**  If `P_X(T)` is the middle \u00e9tale-cohomology factor\n   of a smooth proper Calabi\u2013Yau `n`-fold over `F_q`, then there is a sign `\u03b5 \u2208 {\u22121,1}`\n   such that\n   `T^(deg P_X) P_X(1/(q^n T)) = \u03b5 q^((n * deg P_X)/2) P_X(T)`, whenever the displayed\n   exponent is integral.  Explicit Frobenius polynomials make this directly testable.\n\n5. **Weight-four modularity for a rigid threefold.**  For a fixed rigid Calabi\u2013Yau\n   threefold over `Q`, the trace of Frobenius on middle cohomology equals the `p`-th\n   Fourier coefficient of a specified weight-four newform at every prime of good\n   reduction.  Any good prime with unequal traces is a counterexample.\n",
     "domains": [
       "Geometry",
       "Algebra"
     ],
     "id": "fd_0864",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "aeb64258",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T20:48:24.225333+00:00",
     "title": "The following conjectures are concrete extensions of the proved bridge.  Each is"
   },
@@ -11464,6 +11449,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-06T12:29:33.148998+00:00",
     "title": "Concrete, falsifiable conjectures suggested by the formalization in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Fitness Landscapes of Mathematical Theories (cycle 1)\n\nThe cycle-1 development (`Catalog/Pythagorean/TheoryFitness/`) fixes a\nreproducible cost model \u2014 a finite corpus, a source-length function, and a\ntransitive dependency closure charged exactly once \u2014 and settles, inside that\nmodel, the finite maximum principle, the dependency-adjusted champion, the exact\ncomposition threshold, the adapter valley, the style-centre theorem, and the\nnon-existence of a normalisation-free global maximum.  What survived sharpened\nthe open questions rather than closing them; the five conjectures below are the\nones the proofs single out.\n\n## 1. Canonicity gap conjecture (route-choice hardness)\n\n*In the fixed-route model the champion is the canonical closure\n(`canonicalLibrary_is_global_champion`).  Conjecture: with `r \u2265 2` alternative\nproof routes per statement, deciding whether a corpus admits a covering library\nof dependency-adjusted cost `\u2264 B` is NP-complete, and the gap between the\ncanonical-closure heuristic and the true optimum is `\u0398(log |corpus|)` in the\nworst case.*\n\n**The key insight is** that `two_routes_no_canonical_champion` already exhibits\nthe exact obstruction: two cost-equal covering closures with empty intersection,\nso the covering problem loses its least element the moment routes branch, and\nwhat remains is a weighted set-cover instance in disguise.\nExistence itself is not at risk \u2014 `min_cost_cover_is_champion` proves a\nminimum-cost covering library is still attained with alternative routes \u2014 so the\nopen content is exactly the complexity of finding it.\n**Why now?** The fixed-route case is fully proved, so the remaining content is\nprecisely the combinatorics of route choice \u2014 a finite, measurable object that\ncan be extracted mechanically from any real library's proof terms.\n\n## 2. Sharp reuse threshold for realistic cost models\n\n*The threshold `adapter \u2276 shared mass` (`compose_gain_iff_density`) assumes an\nadditive adapter charge.  Conjecture: for any subadditive adapter cost\n`A(s) \u2264 c \u00b7 s^\u03b8` with `\u03b8 < 1`, composition of `k` libraries of shared density\n`\u03c1` increases fitness for all `k \u2265 k\u2080(\u03c1, \u03b8)` with `k\u2080 = O(\u03c1^{-1/(1-\u03b8)})`, and\nthis exponent is optimal.*\n\n**The key insight is** that the exact identity\n`cost(library) + k \u00b7 core = \u03a3 cost(specialist) + core` makes the saving grow\nlinearly in `k` while a subadditive adapter grows sublinearly, so the crossing\npoint is determined by a single exponent rather than by the library's contents.\n**Why now?** Both sides of the inequality are already formalised and exactly\ncomputable (`cost_library_add_card_core`), so the conjecture reduces to fitting\n`\u03b8` on measured interface-adapter sizes.\n\n## 3. Quantitative adapter valleys are universal, not hypothetical\n\n*`adapter_valley` derives a relative overshoot `(\u03b1 \u2212 \u03b2)/(1 + \u03b2)` from an assumed\nadapter law.  Conjecture: in any real corpus, the adapter law holds with\n`\u03b1 \u2265 1/4` and endpoint efficiency `\u03b2 \u2264 1/10`, so every semantics-preserving\nmigration across an interface boundary has intermediate source-length overhead\nof at least `15%` of the smaller endpoint.*\n\n**The key insight is** that the combinatorial half of the statement is now\nunconditional \u2014 `exists_boundary_crossing` shows a crossing step always exists \u2014\nso the entire empirical burden is the single constant `\u03b1` measured on\ncross-interface transitions.\n**Why now?** The theorem reduces measurement from all intermediate states of all\npaths to one class of transitions, and the computed instance shows the bound is\nattained, so any measured `\u03b1` immediately yields a falsifiable numeric floor.\n\n## 4. Metastability requires only bounded style leakage\n\n*The style-centre theorem needs either closed neighbourhoods or strictly worse\ncross-style neighbours (`strictLocalMax_of_quarantine`).  Conjecture: there is a\nleakage constant `\u03bb > 0` such that any migration graph in which at most a\n`\u03bb`-fraction of each vertex's neighbourhood crosses styles still contains at\nleast three strict local maxima, one per style, after quotienting by renaming;\nand `\u03bb` can be taken independent of corpus size.*\n\n**The key insight is** that quarantine is a purely local condition, and\n`strictLocalMax_of_renaming` shows the whole notion is stable under\nsemantics-preserving renaming, so the quotient step costs nothing and only the\nleakage fraction remains to be bounded.\n**Why now?** The two hypotheses are now provably independent, so each can be\nmeasured separately on a finite corpus without re-deriving the other.\n\n## 5. Normalisation dichotomy is exhaustive\n\n*`normalization_dichotomy` shows maxima always exist on finite classes and never\non the unrestricted class.  Conjecture: for a comparison class `C` closed under\nthe inflation operator, a global fitness maximum exists **iff** `C` bounds the\ntheorem-to-content ratio; i.e. resource normalisation is not merely sufficient\nbut necessary, and \"bounded content-adjusted redundancy\" is the unique minimal\nhypothesis making the champion question well posed.*\n\n**The key insight is** that the divergent family produced by\n`unbounded_witnesses_are_semantically_inert` is semantically constant, so the\nonly quantity distinguishing it from genuine progress is redundancy relative to\nsemantic content \u2014 which suggests redundancy, not size, is the correct\nnormaliser.\n**Why now?** The two halves of the dichotomy are proved, so the remaining task is\nexactly to show no weaker hypothesis suffices \u2014 a single, sharp, falsifiable\nstatement.\n\n## Three concrete next-cycle sub-conjectures\n\n1. **Submodular closure cost.** The map `s \u21a6 cost(closure of s)` is modular on\n   dependency-closed sets (proved: `cost_merge_add_cost_inter`) but is\n   conjectured *strictly submodular* on arbitrary generating sets; if so, greedy\n   library construction is a `(1 \u2212 1/e)`-approximation of the champion.\n2. **Candidate-count phase transition.** Between the exponential `2^n`\n   (independent) and linear `n + 1` (chain) baselines, the number of usable\n   sub-libraries of a random dependency DAG with edge density `p` is conjectured\n   to be `exp(\u0398(n / (1 + pn)))`, with the crossover at `p \u224d 1/n`.\n3. **Fitness-preserving refactoring is a groupoid.** The renaming equivariance\n   `strictLocalMax_of_renaming` should extend to a groupoid action whose orbits\n   are exactly the fitness level sets; if so, the migration graph descends to a\n   finite quotient on which \"distinct strict local maxima\" is decidable.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1005",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a95dbc85",
+    "status": "available",
+    "timestamp": "2026-08-06T15:41:40.624293+00:00",
+    "title": "The cycle-1 development (`Catalog/Pythagorean/TheoryFitness/`) fixes a"
   },
   {
     "consumed_by_exp_id": "",

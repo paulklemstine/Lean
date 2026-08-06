@@ -17279,11 +17279,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "786dcda9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17296,7 +17296,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0864",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-06T15:42:03.426679+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -17311,7 +17311,7 @@
       "source": "",
       "source_exp_id": "aeb64258",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/aeb64258",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_cb90dedd",
       "timestamp": "2026-07-31T20:48:24.225333+00:00",
       "title": "The following conjectures are concrete extensions of the proved bridge.  Each is"
@@ -35788,6 +35788,7 @@
   "selection_log": [
     "cross_domain_bridge",
     "famous_subtask",
+    "abduction_followup",
     "abduction_followup"
   ]
 }
