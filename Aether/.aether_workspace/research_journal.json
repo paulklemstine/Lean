@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3811f14c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nThe following conjectures use the energy from\n`Catalog/NumberTheory/PythagoreanEnergySpectrum.lean`. Each is concrete and\nfalsifiable by finite computation at any fixed bound.\n\n1.",
-      "quality_score": 0.7326499999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-31T00:07:36",
-      "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Berggre"
-    },
-    {
       "cycle_id": "13e8a4d7",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n1. **Miller-function realization.** Construct the divisor-theoretic Miller function for every nonsingular Mathlib Weierstrass curve over a finite field of characteristic coprime t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 56,
       "timestamp": "2026-08-07T21:06:35",
       "title": "The formal results show that a scalar missing rate and feature count do not dete"
+    },
+    {
+      "cycle_id": "100d7a9d",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — idempotent probability and max-plus large deviations\n\n## Status of the thread\n\nEverything below is formalized in Lean 4 (Mathlib v4.28.0) with **0 sorries**, and every\nmain theor",
+      "quality_score": 0.6599028963414636,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-08-07T22:03:31",
+      "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-07T21:06:35",
+  "last_updated": "2026-08-07T22:03:31",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "92412bd6",
-        "quality": 0.686,
-        "theorems": 32,
-        "title": "Deepening: Game of Life Universality"
-      },
-      {
         "cycle_id": "c0621a16",
         "quality": 0.686,
         "theorems": 33,
@@ -3637,6 +3631,12 @@
         "quality": 0.6345760413043479,
         "theorems": 152,
         "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
+      },
+      {
+        "cycle_id": "100d7a9d",
+        "quality": 0.6599028963414636,
+        "theorems": 106,
+        "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
       }
     ],
     "NumberTheory": [
