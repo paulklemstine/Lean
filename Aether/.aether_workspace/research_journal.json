@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1f879fc",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThe following are concrete conjectures extending the proved algebraic bounds. Each is\nfalsifiable by an explicit profile, architecture, or loss distribution violating the\nstated i",
-      "quality_score": 0.76753,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-30T03:41:04",
-      "title": "Machine Learning Generalization Bounds"
-    },
-    {
       "cycle_id": "883686fe",
       "domain": "Probability",
       "key_insight": "# Future directions\n\nThe following are concrete conjectures extending the proved exact formula and parity bound.  Here `pₙ` denotes `SymmetricGroupGeneration.symmetricGenProb n`.\n\n1. **Dixon limit for",
@@ -2501,6 +2491,16 @@
       "theorem_count": 228,
       "timestamp": "2026-08-07T04:27:44",
       "title": "ArXiv paper: On some perfect matching conjectures in infinite, cubic, bridgeless graphs"
+    },
+    {
+      "cycle_id": "768360e4",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the results proved in\n\n* `Catalog/Bridges/DerivedHomotopyBridge.lean` — homotopy/derived-category hom-groups\n  out of a single complex c",
+      "quality_score": 0.6509097115384616,
+      "sorry_count": 0,
+      "theorem_count": 130,
+      "timestamp": "2026-08-07T04:27:51",
+      "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73419
     }
   ],
-  "last_updated": "2026-08-07T04:27:44",
+  "last_updated": "2026-08-07T04:27:51",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "6ef351e2",
-        "quality": 0.686,
-        "theorems": 145,
-        "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
-      },
-      {
         "cycle_id": "6337dbc1",
         "quality": 0.78433,
         "theorems": 71,
@@ -3203,6 +3197,12 @@
         "quality": 0.648859294871795,
         "theorems": 228,
         "title": "ArXiv paper: On some perfect matching conjectures in infinite, cubic, bridgeless"
+      },
+      {
+        "cycle_id": "768360e4",
+        "quality": 0.6509097115384616,
+        "theorems": 130,
+        "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
       }
     ],
     "Combinatorics": [
