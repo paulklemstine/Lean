@@ -10,10 +10,32 @@ Declarations: 12
 
 noncomputable section
 
+/-! The two brackets this file is about.  (The catalog module that used to hold them,
+`Shared.AbstractAlgebra.Spb`, does not compile, so the definitions are repeated here in the
+form forced by the statements below.) -/
+
+/-- The split-Pythagorean bracket `spb x y = (x + y) / (1 - x y)` (tangent addition). -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+
+/-- The hyperbolic bracket `spbH x y = (x + y) / (1 + x y)` (velocity addition). -/
+def spbH (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
+
 /-- (1-xy)²(1+spb(x,y)²) = (1+x²)(1+y²). -/
 theorem norm_identity (x y : ℝ) (h : 1 - x * y ≠ 0) :
     (1 - x * y) ^ 2 * (1 + spb x y ^ 2) = (1 + x ^ 2) * (1 + y ^ 2) := by
   unfold spb; field_simp; ring
+
+/-- The hyperbolic bracket is symmetric. -/
+theorem spbH_comm (x y : ℝ) : spbH x y = spbH y x := by
+  unfold spbH; rw [add_comm x y, mul_comm x y]
+
+/-- The hyperbolic bracket preserves the open unit interval: this is the statement that
+subluminal velocities compose to a subluminal velocity. -/
+theorem spbH_bounded (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) : |spbH u v| < 1 := by
+  rw [abs_lt] at hu hv
+  have hpos : 0 < 1 + u * v := by nlinarith [hu.1, hu.2, hv.1, hv.2]
+  rw [spbH, abs_lt, div_lt_one hpos, lt_div_iff₀ hpos]
+  constructor <;> nlinarith [hu.1, hu.2, hv.1, hv.2]
 
 /-- Hyperbolic norm: (1+uv)²(1-spbH(u,v)²) = (1-u²)(1-v²). -/
 theorem hyp_norm_identity (u v : ℝ) (h : 1 + u * v ≠ 0) :
@@ -56,7 +78,7 @@ theorem spb_spbH_diff (x y : ℝ) (hc : 1 - x * y ≠ 0) (hh : 1 + x * y ≠ 0) 
 Proof: spb(1/x,1/y) = (1/x+1/y)/(1-1/(xy)) = (x+y)/(xy-1) = -(x+y)/(1-xy) = -spb(x,y). -/
 theorem spb_reciprocal (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) (h : x * y ≠ 1) :
     spb (1/x) (1/y) = -spb x y := by
-  simp only [SPBResearch.spb]
+  simp only [spb]
   have h1 : 1 - x * y ≠ 0 := fun hc => h (by linarith)
   have h2 : 1 - 1/x * (1/y) ≠ 0 := by
     intro hc; apply h; have := sub_eq_zero.mp hc; field_simp at this; linarith
