@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bf94368f",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\n## Corrected mathematical status\n\nThe proposed powers-of-two family is a **strictly descending**, separated\nfiltration, not an ascending chain.  The formal development proves this",
-      "quality_score": 0.80162,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-07-30T14:42:57",
-      "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-    },
-    {
       "cycle_id": "bd7b389e",
       "domain": "Probability",
       "key_insight": "# EML information geometry: results and future directions\n\n## Formal results\n\nThe new self-contained module `Catalog/Probability/EMLInformationGeometryDeepening.lean`\nstudies the normalized finite mod",
@@ -2501,6 +2491,16 @@
       "theorem_count": 196,
       "timestamp": "2026-08-07T08:07:25",
       "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
+    },
+    {
+      "cycle_id": "e384d0b8",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE DIRECTIONS\n\nBold, falsifiable conjectures spun off from this cycle. Each is stated so that a\nfuture cycle can either prove it in Lean or kill it with an explicit\ncounterexample. Everything re",
+      "quality_score": 0.6540809924078091,
+      "sorry_count": 0,
+      "theorem_count": 1352,
+      "timestamp": "2026-08-07T09:22:25",
+      "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73319
     }
   ],
-  "last_updated": "2026-08-07T08:07:25",
+  "last_updated": "2026-08-07T09:22:25",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "a07085b6",
-        "quality": 0.76088,
-        "theorems": 11,
-        "title": "For an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite sem"
-      },
-      {
         "cycle_id": "e771e647",
         "quality": 0.73183,
         "theorems": 16,
@@ -3885,6 +3879,12 @@
         "quality": 0.686,
         "theorems": 112,
         "title": "Fix a finite corpus of statements and charge each theory for both source length"
+      },
+      {
+        "cycle_id": "e384d0b8",
+        "quality": 0.6540809924078091,
+        "theorems": 1352,
+        "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Ent"
       }
     ],
     "Shared": [
