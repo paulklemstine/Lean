@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "558c6b54",
+    "description": "Establishes spectral gap bounds for integer solutions to non-homogeneous quadratic forms using lattice reduction and theta series expansion. Lean stub: theorem diophantine_quadratic_spectral_gap (Q : QuadraticForm \u2124 (EuclideanSpace \u2124 n)) (c : \u2124) : SpectralGap Q c \u2265 MinLatticeEnergy Q",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1028",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-07T14:05:38.820243+00:00",
+    "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [

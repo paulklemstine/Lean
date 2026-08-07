@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T14:15:05.419633+00:00",
+  "last_updated": "2026-08-07T14:05:26.144722+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50207,8 +50207,8 @@
       "bridge_count": 0,
       "cycle_n": 2,
       "domain": "Combinatorics",
-      "duration_seconds": 7784.290525197983,
-      "end_time": 1786112089.2734807,
+      "duration_seconds": 7205.4888796806335,
+      "end_time": 1786111510.4718351,
       "files_integrated": 53,
       "job_id": "09b12514",
       "outcome_quality": 0.6640958333333333,
@@ -50240,7 +50240,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 593,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-08-07T14:15:05.286743+00:00",
+      "timestamp": "2026-08-07T14:05:26.012440+00:00",
       "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
     }
   ]
