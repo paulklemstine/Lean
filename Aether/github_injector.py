@@ -15,11 +15,13 @@ import sys
 def run_gh_command(args):
     """Run a gh CLI command and return its stdout as a string or parsed JSON."""
     try:
+        repo_root = Path(__file__).resolve().parent.parent
         result = subprocess.run(
             ["gh"] + args,
             capture_output=True,
             text=True,
-            check=True
+            check=True,
+            cwd=str(repo_root)
         )
         return result.stdout
     except subprocess.CalledProcessError as e:
