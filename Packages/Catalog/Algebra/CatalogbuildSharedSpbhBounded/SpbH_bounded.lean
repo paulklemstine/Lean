@@ -9,12 +9,6 @@ Declarations: 3
 
 noncomputable section
 
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- The hyperbolic SPB (Einstein velocity addition). -/
-def spbH (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
-
 /-- [Section: # CatalogBuild.Shared.SpbH_bounded
 Auto-generated from theorem catalog database.
 Domain: Bridges
@@ -36,6 +30,5 @@ theorem spbH_assoc (u v w : ℝ) (huv : u * v ≠ -1) (hvw : v * w ≠ -1)
 /-- Inverse in hyperbolic SPB. -/
 theorem spbH_neg_self (u : ℝ) : spbH u (-u) = 0 := by
   simp [spbH]
-
 
 end

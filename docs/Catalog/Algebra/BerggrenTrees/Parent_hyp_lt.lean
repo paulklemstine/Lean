@@ -7,67 +7,11 @@ Domain: Shared
 Declarations: 3
 -/
 
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- `IsPT a b c` says `(a, b, c)` is a Pythagorean triple. -/
-def IsPT (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
-
-/-! ### Berggren parent maps restored for this auto-generated fragment
-
-The three inverse Barning–Hall maps sending a primitive Pythagorean triple to its
-parent in the Berggren tree.  All three share the hypotenuse `-2a - 2b + 3c`. -/
-
-/-- First inverse Barning map. -/
-def invB1 (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
-
-/-- Second inverse Barning map. -/
-def invB2 (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-
-/-- Third inverse Barning map. -/
-def invB3 (a b c : ℤ) : ℤ × ℤ × ℤ := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-
-/-- For a Pythagorean triple with positive legs, `a + 2b` and `2a + b` cannot both
-be at most `2c`. -/
-theorem not_both_neg (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hpt : IsPT a b c)
-    (h3 : a + 2*b ≤ 2*c) (h4 : 2*a + b ≤ 2*c) : False := by
-  unfold IsPT at hpt
-  have h1 : 3*a ≥ 4*b := by nlinarith [mul_pos ha hb]
-  have h2 : 3*b ≥ 4*a := by nlinarith [mul_pos ha hb]
-  nlinarith [mul_pos ha hb]
-
 /-- The parent hypotenuse is strictly less than c for any PPT with a,b > 0. -/
 theorem parent_hyp_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpt : IsPT a b c) : -2*a - 2*b + 3*c < c := by
   unfold IsPT at hpt
   nlinarith [sq_nonneg (a + b - c), sq_nonneg (a - b)]
-
-/-- The parent hypotenuse 3c - 2(a+b) is positive for any PPT with a,b,c > 0. -/
-theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
-  unfold IsPT at hpt
-  nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]
-
-/-- Positivity of the first parent. -/
-theorem invB1_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (hpt : IsPT a b c) (h3 : a + 2*b > 2*c) (h4 : 2*a + b < 2*c) :
-    0 < (invB1 a b c).1 ∧ 0 < (invB1 a b c).2.1 ∧ 0 < (invB1 a b c).2.2 := by
-  refine ⟨by simp [invB1]; omega, by simp [invB1]; omega, ?_⟩
-  simpa [invB1] using parent_hyp_pos a b c ha hb hc hpt
-
-/-- Positivity of the second parent. -/
-theorem invB2_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (hpt : IsPT a b c) (h3 : a + 2*b > 2*c) (h4 : 2*a + b > 2*c) :
-    0 < (invB2 a b c).1 ∧ 0 < (invB2 a b c).2.1 ∧ 0 < (invB2 a b c).2.2 := by
-  refine ⟨by simp [invB2]; omega, by simp [invB2]; omega, ?_⟩
-  simpa [invB2] using parent_hyp_pos a b c ha hb hc hpt
-
-/-- Positivity of the third parent. -/
-theorem invB3_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (hpt : IsPT a b c) (h3 : a + 2*b < 2*c) (h4 : 2*a + b > 2*c) :
-    0 < (invB3 a b c).1 ∧ 0 < (invB3 a b c).2.1 ∧ 0 < (invB3 a b c).2.2 := by
-  refine ⟨by simp [invB3]; omega, by simp [invB3]; omega, ?_⟩
-  simpa [invB3] using parent_hyp_pos a b c ha hb hc hpt
 
 /-- [Section: # CatalogBuild.Shared.Parent_hyp_lt
 Auto-generated from theorem catalog database.
@@ -101,3 +45,9 @@ theorem parent_exists (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
       · exact Or.inl <| invB1_pos_case a b c ha hb hc hpt h3 <| lt_of_le_of_ne ( le_of_not_gt h4 ) h2;
       · exact Or.inr <| Or.inr <| invB3_pos_case a b c ha hb hc hpt ( lt_of_le_of_ne ( le_of_not_gt h3 ) h1 ) h4;
       · exact False.elim <| not_both_neg a b c ha hb hpt ( le_of_not_gt h3 ) ( le_of_not_gt h4 )
+
+/-- The parent hypotenuse 3c - 2(a+b) is positive for any PPT with a,b,c > 0. -/
+theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
+  unfold IsPT at hpt
+  nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]

@@ -7,12 +7,6 @@ Domain: Shared
 Declarations: 1
 -/
 
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- `IsPythTriple' a b c` says `(a, b, c)` is a Pythagorean triple. -/
-def IsPythTriple' (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
-
 /-- [Section: # CatalogBuild.Shared.Euclid_parametrization
 Auto-generated from theorem catalog database.
 Domain: EML

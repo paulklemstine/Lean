@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ae875fd7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## What is established\n\n`Catalog/Applications/EML/StoneWeierstrassConnector.lean` proves a cross-domain bridge from finite-dimensional topology to exp-log networks:\n\n- a continuou",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-07-30T22:27:40",
-      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-    },
-    {
       "cycle_id": "513ffc93",
       "domain": "Probability",
       "key_insight": "# Future directions\n\n1. **Poisson connectivity window.** For every fixed real `c`, if `pₙ = (log n + c)/n`, then the number of isolated vertices in `G(n,pₙ)` converges in distribution to `Poisson(exp(",
@@ -2501,6 +2491,16 @@
       "theorem_count": 201,
       "timestamp": "2026-08-07T17:14:16",
       "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
+    },
+    {
+      "cycle_id": "6e948588",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Algebra/Heisenberg125/` (all results\nthere are machine-checked and `sorry`-free, depending only on `propext`,\n`Classical.choice`, `Quot.",
+      "quality_score": 0.6542925496031746,
+      "sorry_count": 0,
+      "theorem_count": 600,
+      "timestamp": "2026-08-07T18:08:42",
+      "title": "ArXiv paper: The small Davenport constant of the Heisenberg group of order 125"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71348
     }
   ],
-  "last_updated": "2026-08-07T17:14:16",
+  "last_updated": "2026-08-07T18:08:42",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "85fa434c",
-        "quality": 0.73204,
-        "theorems": 7,
-        "title": "BSD Conjecture: Rank Computability"
-      },
-      {
         "cycle_id": "0fbfba35",
         "quality": 0.7781,
         "theorems": 13,
@@ -3079,6 +3073,12 @@
         "quality": 0.6583992433823346,
         "theorems": 196,
         "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
+      },
+      {
+        "cycle_id": "6e948588",
+        "quality": 0.6542925496031746,
+        "theorems": 600,
+        "title": "ArXiv paper: The small Davenport constant of the Heisenberg group of order 125"
       }
     ],
     "Applications": [

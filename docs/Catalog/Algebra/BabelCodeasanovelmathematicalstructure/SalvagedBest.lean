@@ -1,88 +1,3 @@
-import Mathlib
-
-/-!
-# Babel codes: Plotkin, Lawvere and sphere-packing bounds
-
-A *Babel code* is a set of words over a finite alphabet with a prescribed minimum
-Hamming distance.  This file proves the Plotkin bound, a Lawvere fixed-point
-(diagonal) theorem for words, invariance of Hamming-ball cardinalities, and the
-sphere-packing (Hamming) bound.
-
-The definitions below (`Volume`, `IsBabelCode`, `hammingBall` and the column
-disagreement bound) were reconstructed from the theorem bodies of an
-auto-salvaged fragment.
--/
-
-open Finset Function
-
-namespace BabelCode
-
-/-- The library of words of length `L` over an alphabet with `A` letters. -/
-abbrev Volume (A L : ℕ) := Fin L → Fin A
-
-/-- `C` is a Babel code of minimum distance `d`: distinct codewords are at
-Hamming distance at least `d`. -/
-def IsBabelCode {A L : ℕ} (C : Finset (Volume A L)) (d : ℕ) : Prop :=
-  ∀ v w : Volume A L, v ∈ C → w ∈ C → v ≠ w → d ≤ hammingDist v w
-
-/-- The Hamming ball of radius `r` around `v`. -/
-def hammingBall {A L : ℕ} (v : Volume A L) (r : ℕ) : Finset (Volume A L) :=
-  Finset.univ.filter (fun w => hammingDist v w ≤ r)
-
-/-- **Column disagreement bound.**  In a single coordinate, the number of ordered
-pairs of codewords that disagree is at most `|C|² (A-1)/A`. -/
-theorem column_disagreement_bound {A L : ℕ} (hA : 1 ≤ A) (j : Fin L)
-    (C : Finset (Volume A L)) :
-    (∑ p ∈ C ×ˢ C, (if p.1 j ≠ p.2 j then 1 else 0)) * A ≤ C.card ^ 2 * (A - 1) := by
-  classical
-  set f : Fin A → ℕ := fun a => (C.filter (fun v => v j = a)).card with hf
-  -- the fibres of the `j`-th coordinate partition `C`
-  have hsum : ∑ a : Fin A, f a = C.card := by
-    conv_rhs => rw [Finset.card_eq_sum_ones C]
-    rw [← Finset.sum_fiberwise_of_maps_to (g := fun (v : Volume A L) => v j)
-      (t := (Finset.univ : Finset (Fin A))) (fun v _ => Finset.mem_univ (v j))]
-    refine Finset.sum_congr rfl (fun a _ => ?_)
-    simp only [hf]
-    exact Finset.card_eq_sum_ones _
-  -- ordered pairs agreeing at `j` are counted by the sum of squares of the fibre sizes
-  have hagree : (∑ p ∈ C ×ˢ C, (if p.1 j = p.2 j then 1 else 0)) = ∑ a : Fin A, (f a) ^ 2 := by
-    rw [Finset.sum_product]
-    have hfil : ∀ v : Volume A L,
-        (C.filter (fun w => v j = w j)) = C.filter (fun w => w j = v j) :=
-      fun v => Finset.filter_congr (fun w _ => ⟨Eq.symm, Eq.symm⟩)
-    have inner : ∀ v : Volume A L, (∑ w ∈ C, (if v j = w j then 1 else 0))
-        = (C.filter (fun w => w j = v j)).card := by
-      intro v
-      rw [Finset.sum_boole, hfil v]
-      simp
-    rw [Finset.sum_congr rfl (fun v _ => inner v)]
-    rw [← Finset.sum_fiberwise_of_maps_to (g := fun (v : Volume A L) => v j)
-        (t := (Finset.univ : Finset (Fin A))) (fun v _ => Finset.mem_univ (v j))]
-    refine Finset.sum_congr rfl (fun a _ => ?_)
-    rw [Finset.sum_congr rfl (fun v hv => by rw [(Finset.mem_filter.mp hv).2])]
-    rw [Finset.sum_const, smul_eq_mul, sq]
-  -- every ordered pair either agrees or disagrees at `j`
-  have htotal : (∑ p ∈ C ×ˢ C, (if p.1 j ≠ p.2 j then 1 else 0))
-      + (∑ p ∈ C ×ˢ C, (if p.1 j = p.2 j then 1 else 0)) = C.card ^ 2 := by
-    have h1 : ∀ p : Volume A L × Volume A L,
-        (if p.1 j ≠ p.2 j then 1 else 0) + (if p.1 j = p.2 j then 1 else 0) = 1 := by
-      intro p; by_cases h : p.1 j = p.2 j <;> simp [h]
-    rw [← Finset.sum_add_distrib, Finset.sum_congr rfl (fun p _ => h1 p)]
-    simp [sq]
-  -- Cauchy-Schwarz on the fibre sizes
-  have hCS : ((C.card : ℤ)) ^ 2 ≤ (A : ℤ) * ∑ a : Fin A, ((f a : ℤ)) ^ 2 := by
-    have h := sq_sum_le_card_mul_sum_sq (s := (Finset.univ : Finset (Fin A)))
-      (f := fun a => (f a : ℤ))
-    have hs : ∑ a : Fin A, ((f a : ℤ)) = (C.card : ℤ) := by
-      rw [← Nat.cast_sum, hsum]
-    rw [hs] at h
-    simpa using h
-  have hCS' : C.card ^ 2 ≤ A * ∑ a : Fin A, (f a) ^ 2 := by exact_mod_cast hCS
-  have hsplit : (∑ p ∈ C ×ˢ C, (if p.1 j ≠ p.2 j then 1 else 0)) + (∑ a : Fin A, (f a) ^ 2)
-      = C.card ^ 2 := by rw [← hagree]; exact htotal
-  have hAm : A - 1 + 1 = A := Nat.sub_add_cancel hA
-  nlinarith [hsplit, hCS', hAm]
-
 theorem plotkin_bound {A L d : ℕ} (hA : 1 ≤ A) (hd : 1 ≤ d)
     (hPlotkin : L * (A - 1) < d * A)
     (C : Finset (Volume A L)) (hC : IsBabelCode C d) :
@@ -184,7 +99,7 @@ theorem hamming_bound_via_packing {A L d : ℕ} (_hA : 1 ≤ A) (t : ℕ)
         have h_dist : ∀ u : Volume A L, u ∈ hammingBall v t → u ∈ hammingBall w t → False := by
           intros u hu hvu
           have h_dist : hammingDist v w ≤ hammingDist v u + hammingDist u w := by
-            exact hammingDist_triangle v u w;
+            exact?;
           unfold hammingBall at *; simp_all +decide [ hammingDist_comm ] ; linarith [ hC v w hv hw hvw ] ;
         exact Finset.disjoint_left.mpr h_dist;
       -- The disjoint union of the balls has cardinality equal to the sum of their cardinalities.

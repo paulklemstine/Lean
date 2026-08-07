@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T17:14:17.058895+00:00",
+  "last_updated": "2026-08-07T18:08:47.339665+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50390,6 +50390,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50418,6 +50419,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-07T17:14:16.924592+00:00",
       "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2687,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Algebra",
+      "duration_seconds": 9385.201155662537,
+      "end_time": 1786126105.3235793,
+      "files_integrated": 77,
+      "job_id": "6e948588",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.9087,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9186,
+        "novelty": 0.9463,
+        "proof_depth": 0.9068,
+        "usefulness": 0.9534
+      },
+      "quality_score": 0.6542925496031746,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786116720.1224236,
+      "strategy_count": 0,
+      "theorem_count": 600,
+      "theorem_novelty_disproof": 7,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 501,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-07T18:08:47.204644+00:00",
+      "title": "ArXiv paper: The small Davenport constant of the Heisenberg group of order 125"
     }
   ]
 }

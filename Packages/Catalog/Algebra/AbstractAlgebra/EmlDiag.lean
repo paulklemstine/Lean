@@ -1,7 +1,5 @@
 import Mathlib
 
-open Real Set
-
 /-! # CatalogBuild.Shared.EmlDiag
 
 Auto-generated from theorem catalog database.
@@ -10,12 +8,6 @@ Declarations: 3
 -/
 
 noncomputable section
-
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- The EML diagonal `emlDiag z = exp z - log z`. -/
-def emlDiag (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 /-- [Section: # CatalogBuild.Shared.EmlDiag
 Auto-generated from theorem catalog database.
@@ -58,6 +50,5 @@ theorem emlDiag_gt (z : ℝ) : emlDiag z > z := by
     have := Real.add_one_le_exp ( z - 1 );
     rw [ show z = 1 + ( z - 1 ) by ring, Real.exp_add ];
     nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 + ( z - 1 ) ) ]
-
 
 end

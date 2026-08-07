@@ -1,7 +1,5 @@
 import Mathlib
 
-open Matrix
-
 /-! # CatalogBuild.Shared.SpbMatrix
 
 Auto-generated from theorem catalog database.
@@ -10,7 +8,6 @@ Declarations: 8
 -/
 
 noncomputable section
-
 
 /-- The SPB matrix: M(a) = [[1, a], [-a, 1]]. -/
 def spbMatrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
@@ -55,6 +52,5 @@ theorem spbMatrix_zero : spbMatrix 0 = 1 := by
 theorem spbMatrix_det_mul (a b : ℝ) :
     (spbMatrix a * spbMatrix b).det = (1 + a ^ 2) * (1 + b ^ 2) := by
   rw [det_mul, spbMatrix_det, spbMatrix_det]
-
 
 end
