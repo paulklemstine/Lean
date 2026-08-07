@@ -508,38 +508,79 @@ import io
 import base64
 import os
 
-# Override plt.savefig and plt.close during user code so calls like
-# plt.savefig('file.png') don't write to the virtual filesystem and
-# plt.close() doesn't destroy the figure before we can capture it.
-_orig_savefig = plt.savefig
+# Record initial files in working directory so we can detect any images saved to disk
+_initial_files = set(os.listdir('.'))
+
+# Track closed figures in case plt.close() was called without saving to disk
+_closed_figs = []
 _orig_close = plt.close
-def _viz_savefig(*args, **kwargs):
-    pass
+_orig_show = plt.show
+
 def _viz_close(*args, **kwargs):
+    try:
+        fig = plt.gcf()
+        if fig and fig not in _closed_figs:
+            _closed_figs.append(fig)
+    except Exception:
+        pass
+    try:
+        return _orig_close(*args, **kwargs)
+    except Exception:
+        pass
+
+def _viz_show(*args, **kwargs):
     pass
-plt.savefig = _viz_savefig
+
 plt.close = _viz_close
+plt.show = _viz_show
 
+try:
 ${processedCode}
+finally:
+    plt.close = _orig_close
+    plt.show = _orig_show
 
-# Restore originals and capture the current figure
-plt.savefig = _orig_savefig
-plt.close = _orig_close
+# Check for newly generated image files on disk (.png, .jpg, .jpeg, .svg, .webp)
+_img_exts = ('.png', '.jpg', '.jpeg', '.svg', '.webp')
+_new_files = [f for f in os.listdir('.') if f not in _initial_files and f.lower().endswith(_img_exts)]
 
-# Check if the user code generated any SVG files
-svg_files = [f for f in os.listdir('.') if f.endswith('.svg')]
-if svg_files:
-    with open(svg_files[0], 'r', encoding='utf-8') as f:
-        svg_content = f.read()
-    for f in svg_files:
-        os.remove(f)
-    _viz_result = 'SVG_CONTENT:' + svg_content
+if _new_files:
+    # Sort by modification time to get the latest generated files
+    _new_files.sort(key=lambda f: os.path.getmtime(f) if os.path.exists(f) else 0)
+    _target_file = _new_files[-1]
+    
+    if _target_file.lower().endswith('.svg'):
+        with open(_target_file, 'r', encoding='utf-8') as f:
+            _viz_result = 'SVG_CONTENT:' + f.read()
+    else:
+        _ext = _target_file.split('.')[-1].lower()
+        if _ext == 'jpg': _ext = 'jpeg'
+        with open(_target_file, 'rb') as f:
+            _b64 = base64.b64encode(f.read()).decode('utf-8')
+        _viz_result = f'data:image/{_ext};base64,{_b64}'
+        
+    for f in _new_files:
+        try:
+            os.remove(f)
+        except Exception:
+            pass
 else:
+    # No files saved to disk: capture active figure or last closed figure
     buf = io.BytesIO()
-    plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
-    buf.seek(0)
-    _viz_result = base64.b64encode(buf.read()).decode('utf-8')
+    _fig_to_save = None
+    if plt.get_fignums():
+        _fig_to_save = plt.gcf()
+    elif _closed_figs:
+        _fig_to_save = _closed_figs[-1]
+        
+    if _fig_to_save is not None:
+        _fig_to_save.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
+        buf.seek(0)
+        _viz_result = 'data:image/png;base64,' + base64.b64encode(buf.read()).decode('utf-8')
+    else:
+        _viz_result = ''
 
+plt.close('all')
 _viz_result
 `;
             }
@@ -594,30 +635,34 @@ _viz_result
                     svgEl.style.cssText = 'max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 8px;';
                 }
             } else {
-                const imgData = String(result || '');
-                const img = document.createElement('img');
-                img.src = 'data:image/png;base64,' + imgData;
-                img.alt = description || '';
-                img.style.cssText = 'width: 100%; border-radius: 8px; cursor: pointer; display: block;';
-                img.title = 'Click to view full size';
-                img.addEventListener('click', () => {
-                    if (window.openLightbox) {
-                        const pkg = window.Aether.currentPackage || {};
-                        // Build _vizImages from all generated images currently on the page
-                        const allImgs = document.querySelectorAll('.gallery-img-container img');
-                        pkg._vizImages = Array.from(allImgs).map((i, idx) => ({
-                            data: i.src,
-                            name: i.closest('.viz-container')?.querySelector('.code-title')?.textContent || `Visualization ${idx + 1}`
-                        }));
-                        window.Aether.currentPackage = pkg;
-                        // Find this image's index
-                        const myIndex = pkg._vizImages.findIndex(v => v.data === img.src);
-                        window.Aether.currentVizIndex = myIndex >= 0 ? myIndex : 0;
-                        window.openLightbox(window.Aether.currentVizIndex);
-                    }
-                });
-                outputContainer.innerHTML = '';
-                outputContainer.appendChild(img);
+                const imgData = String(result || '').trim();
+                if (!imgData) {
+                    outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">No image output generated by visualization.</div>';
+                } else {
+                    const img = document.createElement('img');
+                    img.src = imgData.startsWith('data:') ? imgData : ('data:image/png;base64,' + imgData);
+                    img.alt = description || '';
+                    img.style.cssText = 'width: 100%; border-radius: 8px; cursor: pointer; display: block;';
+                    img.title = 'Click to view full size';
+                    img.addEventListener('click', () => {
+                        if (window.openLightbox) {
+                            const pkg = window.Aether.currentPackage || {};
+                            // Build _vizImages from all generated images currently on the page
+                            const allImgs = document.querySelectorAll('.gallery-img-container img');
+                            pkg._vizImages = Array.from(allImgs).map((i, idx) => ({
+                                data: i.src,
+                                name: i.closest('.viz-container')?.querySelector('.code-title')?.textContent || `Visualization ${idx + 1}`
+                            }));
+                            window.Aether.currentPackage = pkg;
+                            // Find this image's index
+                            const myIndex = pkg._vizImages.findIndex(v => v.data === img.src);
+                            window.Aether.currentVizIndex = myIndex >= 0 ? myIndex : 0;
+                            window.openLightbox(window.Aether.currentVizIndex);
+                        }
+                    });
+                    outputContainer.innerHTML = '';
+                    outputContainer.appendChild(img);
+                }
             }
         } catch (err) {
             outputContainer.innerHTML = `<pre class="code-output error">${err.toString()}</pre>`;
