@@ -1,158 +1,154 @@
-# The Warehouse of All Possible Hierarchies
+# One Poset to Hold Them All
 
-*How small can a single ordered structure be, if it has to contain every ordered structure of a given size hiding inside it?*
+## The hotel problem
 
-## A catalogue that contains everything
+Imagine you run a very peculiar hotel. Your guests arrive in groups of $n$, and every group comes with a rigid internal hierarchy: some guests outrank others, some pairs are simply incomparable, and the whole arrangement is *transitive* — if Alice outranks Bob and Bob outranks Carol, then Alice outranks Carol. Mathematicians call such a hierarchy a **partially ordered set**, or **poset**.
 
-Imagine you run a warehouse whose customers order not objects but *hierarchies*. One wants a chain of command with five ranks; another, five independent contractors answering to nobody; a third, a diamond: one boss, three incomparable deputies, one common subordinate.
+Your hotel is itself organised as a hierarchy: each room sits somewhere in a fixed, permanent pecking order that you built once and can never change. When a group checks in, you must assign each guest a room so that the hotel's own pecking order, restricted to the occupied rooms, reproduces the group's hierarchy *exactly*. Not approximately: exactly. If two guests are incomparable, their rooms must be incomparable. If one outranks the other, so must their rooms.
 
-You could stock every hierarchy separately, but there are astronomically many — the number on $n$ labelled elements grows like $2^{n^2/4}$. Better: build **one** master hierarchy $H$, so richly interconnected that every request can be found *sitting inside it*. Pick out the right $n$ points of $H$, and the relationships they already have are exactly the ones asked for. Not approximately — exactly. If two chosen points are unrelated in the request, they must be unrelated in $H$ too.
+The question is brutally simple to state:
 
-The mathematical name for a hierarchy is a **partially ordered set**, or *poset*: a set with a relation $\le$ that is reflexive ($x \le x$), transitive ($x \le y$ and $y \le z$ force $x \le z$), and antisymmetric ($x \le y$ and $y \le x$ force $x = y$). Picking out a subset and keeping exactly the relations it already carries is called taking an **induced subposet**. A poset containing every $n$-element poset as an induced subposet is called a **universal poset** for size $n$.
+> **How many rooms do you need so that *every* possible group of $n$ guests can be accommodated?**
 
-The question of this article is deceptively simple:
+Call that number $U(n)$. It is the size of the smallest **universal poset** for the $n$-element posets — smallest host containing every $n$-point hierarchy as an *induced* sub-hierarchy.
 
-> **How few points can a universal poset for size $n$ have?**
+This is not an idle puzzle. The same question, dressed differently, is the **adjacency labelling** problem of distributed computing: how few bits must you attach to each vertex of a network so that any two vertices can decide, from their labels alone, how they are related — with no lookup table, no central server, no communication? A host poset with $N$ points is exactly a labelling scheme using $\log_2 N$ bits per element, and universality is exactly the guarantee that the scheme works for *every* input. Compact labelling schemes of this kind underpin routing, distributed data structures, and the succinct encoding of relational data.
 
-Write $U(n)$ for that minimum. The whole story is a fight to pin $U(n)$ down.
+## The lazy answer, and why it is nearly right
 
-## The obvious answer, and why it is nearly right
+There is an embarrassingly simple universal host: the **Boolean lattice**. Take all $2^n$ subsets of an $n$-element set, ordered by inclusion. Given any poset $P$ on the points $x_1,\dots,x_n$, send each $x$ to its **principal ideal**
+$$\downarrow x = \{\,y : y \le x\,\}.$$
+Then $x \le y$ if and only if $\downarrow x \subseteq \downarrow y$. The forward direction is transitivity; the backward direction is the observation that $x$ always belongs to $\downarrow x$, so if $\downarrow x \subseteq \downarrow y$ then $x \in \downarrow y$, i.e. $x \le y$. That single line proves:
 
-Here is a construction that always works, and it is beautiful in its simplicity. Take any poset $P$ on the points $\{1,\dots,n\}$. To each point $x$, attach the set of everything below it:
-$$\downarrow x \;=\; \{\,y : y \le x\,\}.$$
-This is called the *principal down-set*, or *principal ideal*, of $x$. Now compare two such sets by inclusion. Transitivity says that if $x \le y$ then everything below $x$ is below $y$, so $\downarrow x \subseteq \downarrow y$. Conversely, reflexivity says $x \in \downarrow x$, so if $\downarrow x \subseteq \downarrow y$ then $x \in \downarrow y$, i.e. $x \le y$. Antisymmetry makes the assignment injective. In one line:
+> **Theorem (Boolean upper bound).** Every partial order on $n$ points embeds as an induced subposet of the Boolean lattice of all subsets of an $n$-element set. Hence $U(n) \le 2^n$.
 
-**Theorem (Boolean host).** *For every poset $P$ on $n$ points, the map $x \mapsto \downarrow x$ is an induced embedding of $P$ into the lattice of all subsets of $\{1,\dots,n\}$ ordered by inclusion.*
+And notice: the empty set is *never used as a label*, because $x \in \downarrow x$ always. So we may delete it from the host and still accommodate everybody:
 
-So the Boolean lattice — the poset of all $2^n$ subsets of an $n$-element set — is universal. Just like that, $U(n) \le 2^n$.
+> **Theorem (the naive bound is never attained).** $U(n) \le 2^n - 1$; in particular $U(n) < 2^n$ for every $n \ge 0$.
 
-And in fact you can shave a point off, for free: since $x$ always lies in $\downarrow x$, the *empty* subset is never used as a label. Throwing it away leaves a universal host on $2^n - 1$ points, so
+That "minus one" looks like a joke, but it makes a real point: the natural barrier $2^n$ is *strictly* not the truth. And one cannot do better with this particular scheme. For every nonempty subset $S$ of the ground set and every $x \in S$, there is a genuine partial order — put $S \setminus \{x\}$ as an antichain strictly below $x$ and leave everything else isolated — whose ideal label for $x$ is exactly $S$. So the ideal labelling uses *all* $2^n - 1$ nonempty subsets, and beating $2^n$ by a factor requires an entirely different idea.
 
-$$U(n) \;\le\; 2^n - 1 \;<\; 2^n .$$
+## How small can it possibly be?
 
-The naive bound is never attained. That hints at something: the Boolean lattice is *wasteful*. Could it be wasteful by a huge factor — could $U(n)$ actually be something like $2^{n/2}$, the square root of the naive answer?
+Here is the counting argument, the oldest and still the strongest lower bound known. Restrict attention to the simplest interesting posets: the **height-two** or **bipartite** ones. Take $k$ "bottom" points and $l$ "top" points; let no two bottom points be comparable, no two top points be comparable, and let each bottom point $a$ be below each top point $b$ or not, freely. There are exactly $2^{kl}$ such posets, one for each bipartite relation, and distinct relations give distinct posets.
 
-This is exactly the question that a recent line of work answers, and the answer is yes: for every $\eta>0$ and all large enough $n$, there is a universal poset of size $2^{(1+\eta)n/2}$. The exponent drops from $n$ to $n/2$. The construction is a labelling scheme, inspired by the Boolean lattice but far more economical, designed so that comparability can still be read off from labels and so that transitivity is automatically preserved; the hardest step relies on the Szemerédi Regularity Lemma, the great structural theorem of extremal combinatorics that says every large graph can be chopped into a bounded number of pieces that behave, pairwise, almost like random graphs.
+Now suppose a host with $N$ points accommodates all of them. Each such poset comes with an embedding, a function from $k+l$ guests into $N$ rooms — and crucially, from the embedding you can *read the poset back off*, because the embedding is induced. So the map "poset $\mapsto$ its chosen embedding" is injective, and there are only $N^{k+l}$ functions to land in. Therefore:
 
-What follows is a self-contained tour of the landscape around that theorem: the counting barrier that says the exponent can never drop below $n/4$, an explicit host that *achieves* the exponent $n/2$ on the hardest-looking sub-family, exact values of $U(n)$ for tiny $n$, and a new proof that $U(n)$ must grow faster than any constant multiple of $n$.
+> **Theorem (counting lower bound).** If a poset with $N$ points contains every $(k,l)$-bipartite poset as an induced subposet, then
+> $$2^{kl} \le N^{\,k+l}, \qquad\text{equivalently}\qquad N \ge 2^{\,kl/(k+l)}.$$
 
-## The counting barrier: why you cannot do better than $2^{n/4}$
+Split $n$ guests as evenly as possible, $k = \lfloor n/2 \rfloor$ and $l = \lceil n/2 \rceil$; then $kl/(k+l) \ge (n-1)/4$ and we obtain the shape of the problem:
 
-Why can a universal poset not be tiny — say, polynomial in $n$? The reason is pure information theory, and it is worth savouring because it is so short.
+> **Theorem (the sandwich).** For every $n \ge 1$,
+> $$\frac{n-1}{4} \;\le\; \log_2 U(n) \;\le\; n.$$
 
-Fix two numbers $k$ and $l$ and look only at the simplest interesting posets: the **bipartite** ones, of height at most two. Take $k$ "low" elements $a_1,\dots,a_k$ and $l$ "high" elements $b_1,\dots,b_l$. No two lows are comparable, no two highs are comparable, and for each pair $(i,j)$ you get to *choose freely* whether $a_i < b_j$. Every such choice gives a genuine poset — transitivity is free because there are no chains of length three. So there are exactly $2^{kl}$ bipartite posets of shape $(k,l)$, all distinct.
+So $U(n)$ is exponential, with exponent somewhere between $n/4$ and $n$. And that gap — a factor of four in the exponent, a *quartic* gap in the actual number of rooms — is the entire subject.
 
-Now suppose $H$ is a host with $N$ points containing all of them. For each of the $2^{kl}$ choices, fix one embedding: a map from the $k+l$ elements into the $N$ host points. Two *different* bipartite posets can never yield the *same* map, because from the map you can read the poset straight back off: $a_i < b_j$ holds if and only if the image of $a_i$ is below the image of $b_j$ in $H$. So we have an injection from $2^{kl}$ posets into the $N^{k+l}$ possible maps:
+## The half-way house
 
-**Theorem (Counting bound).** *If a poset on $N$ points contains every $(k,l)$-bipartite poset as an induced subposet, then*
-$$2^{kl} \;\le\; N^{\,k+l}, \qquad\text{equivalently}\qquad N \;\ge\; 2^{\,kl/(k+l)} .$$
+Recent work has narrowed the gap dramatically from the top. For every $\eta > 0$ and all sufficiently large $n$ there is a universal host of size $2^{(1+\eta)n/2}$: the exponent can be pushed down to $n/2$, arbitrarily closely. The proof designs a labelling scheme that preserves transitivity, inspired by the Boolean lattice, and deploys the Szemerédi Regularity Lemma — the great structural hammer of extremal combinatorics, which says that the edges of any huge graph can be partitioned into a bounded number of blocks that behave, statistically, like random graphs.
 
-Set $k=l=m$ and $n=2m$. Then $kl/(k+l) = m/2 = n/4$, so every universal poset for $n$ points needs at least $2^{n/4}$ of them. In logarithmic form, for every $n \ge 1$,
-$$\frac{n-1}{4} \;\le\; \log_2 U(n) \;\le\; n .$$
+Where does the exponent $n/2$ come from? There is a beautifully clean place to see it: on the bipartite subclass, the exponent $n/2$ is *achieved by an explicit, elementary construction*. Here it is.
 
-There is the whole game in one line. The truth lies somewhere in the corridor between exponent $1/4$ and exponent $1$, and the theorem quoted above pushes the ceiling down to $1/2 + \eta$.
+> **Theorem (the tagged-neighbourhood host).** Fix $k$ and $l$. Let the host consist of
+> * $k$ **bottom points** $1,\dots,k$, pairwise incomparable, and
+> * all pairs $(S, j)$ with $S \subseteq \{1,\dots,k\}$ and $j \in \{1,\dots,l\}$, pairwise incomparable,
+>
+> with the rule that bottom point $a$ lies below $(S,j)$ exactly when $a \in S$. This poset has $k + 2^k l$ points and contains **every** $(k,l)$-bipartite poset as an induced subposet.
 
-An amusing footnote: the counting bound is *lossy from the very first case*. For $n=2$ it gives only $U(2) \ge 2$, whereas the true value is $U(2)=3$ — you genuinely need three points (say $x < y$ and a third point $z$ incomparable to both) to host both the two-element chain and the two-element antichain. Counting arguments do not see that kind of obstruction at all.
+The embedding is what you would guess: send bottom point $a$ to itself, and send top point $b$ to the pair $(\,\{a : a < b\},\; b\,)$ — its down-set, *tagged* with its own name. The down-set does all the ordering work; the tag does something subtler, and it is not optional:
 
-## Achieving the exponent $n/2$, explicitly
+> **Theorem (the tag is necessary).** In any host for the $(k,2)$-bipartite posets, the two top points of the poset in which nothing is comparable receive *distinct* host points.
 
-Here is the surprise. On the bipartite family — the very family that produced the lower bound — one can write down an explicit optimal-looking host with no regularity lemma, no probabilistic argument, and no asymptotics.
+Two guests with identical relationships to everyone else still need separate rooms — an induced embedding must be injective, since a poset has no two distinct points that are mutually comparable. The down-set alone cannot distinguish them; the tag can. This is the small, sharp reason why "labelling by neighbourhood" needs one extra coordinate.
 
-**The tagged-neighbourhood host.** Fix $k$ and $l$. Build a poset $B_{k,l}$ whose points are of two kinds:
+Balancing at $k = l = m$ and $n = 2m$, the tagged host has $m \cdot 2^m + m$ points, exponent $n/2$ — exactly the exponent of the general theorem, on the very subclass where the counting lower bound is at its strongest. Meanwhile the counting bound on the same subclass gives only $2^{n/4}$. So we have, on the bipartite class,
+$$2^{n/4} \;\le\; (\text{smallest bipartite host}) \;\le\; \tfrac{n}{2}\bigl(2^{n/2}+1\bigr),$$
+and the mystery — factor two in the exponent — is fully visible in a construction you can draw on a napkin.
 
-* $k$ *bottom* points, one for each $a_i$, pairwise incomparable;
-* all pairs $(S,t)$ where $S$ is any subset of the bottom points and $t$ is a *tag* drawn from $\{1,\dots,l\}$, pairwise incomparable.
+## Where the counting argument leaks
 
-The order is the only sensible one: bottom point $a$ lies below $(S,t)$ exactly when $a \in S$; there are no other relations. The number of points is
-$$|B_{k,l}| \;=\; k + 2^{k}\,l .$$
+Why does counting lose a factor of two? Because it allows a host point to be *reused*: the argument treats all $N^{k+l}$ functions as available, when in reality a host point that is high up in the host order cannot suddenly play the role of a low point in some other embedding. Comparabilities in the host cannot be switched off.
 
-**Theorem (Bipartite universality).** *$B_{k,l}$ contains every $(k,l)$-bipartite poset as an induced subposet.*
+You can watch this leak already at $n = 2$. There are exactly three posets on two points: the antichain, and the two chains (which are isomorphic, so really two shapes). A host must contain a comparable pair *and* an incomparable pair. Two points can be one or the other but never both, so a two-point host is impossible; and a three-point host — a two-element chain plus an isolated point — works.
 
-The proof is one line: given a bipartite poset with relation $R$, send $a_i$ to the bottom point $a_i$, and send the high element $b_j$ to the pair $(\{a_i : a_i R\, b_j\},\, j)$ — its neighbourhood, tagged with its own index. A bottom point is below the image of $b_j$ exactly when it belongs to the neighbourhood, which is exactly the required relation; and two high images are equal only if their tags agree, so distinct high elements land on distinct points.
+> **Theorem.** $U(2) = 3$.
 
-Why the tag? Because two high elements may have *identical* down-sets — imagine two managers overseeing precisely the same team. Their neighbourhoods are the same set, so the neighbourhood label alone cannot separate them; but a universal host must place them at *different* points, since a host is a poset and two distinct points of a poset are never "the same". Formally:
+The counting bound at $n=2$ predicts only $U(2) \ge 2$. Already lossy, in the very first nontrivial case, and lossy for exactly the reason that costs a factor of two asymptotically.
 
-**Proposition (The tag is necessary).** *In any host containing all $(k,2)$-bipartite posets, the two high elements of the poset with no relations at all must receive distinct host points.*
+## Small numbers, hard-won
 
-So the tag coordinate is not decoration; it is forced.
+Exact values of $U(n)$ are startlingly difficult. Here is what is known with certainty:
+$$U(0)=0,\quad U(1)=1,\quad U(2)=3,\quad U(3)=5,\quad 7 \le U(4) \le 8.$$
 
-Now balance the parts: $k=l=m$, so $n=2m$. The host has $m\,2^m + m$ points, an exponent of $m = n/2$. Setting this beside the counting bound gives a clean sandwich for the balanced bipartite family on $n=2m$ points:
-$$2^{\,m/2} \;\le\; U_{\text{bip}}(m,m) \;\le\; m\,2^{m} + m .$$
-Exponent $n/4$ below, exponent $n/2$ above — and the upper bound is a completely explicit list of points. The deep theorem about *all* posets says that the exponent $n/2$ survives when the bipartite restriction is dropped, up to a factor $2^{\eta n}$.
+$U(3)=5$ has a satisfying witness: the five-point host consisting of a **diamond** (one bottom point below two incomparable middle points, both below a top point) together with one isolated point contains all nineteen partial orders on three points. The matching lower bound $U(3) \ge 5$ needs no search at all — it follows from a general structural principle, to which we now turn.
 
-Is the remaining factor-of-two gap an artefact of a lazy argument? No. On the balanced bipartite family there are $2^{n^2/4}$ posets to host, while a host with $2^{cn}$ points offers $2^{cn^2}$ ways to place $n$ labelled points; counting is defeated only when $c < 1/4$. So it is *structurally impossible* for counting to certify an exponent above $1/4$: the method never notices that a single host point is *reused* by enormously many different embeddings. Closing the gap means understanding that reuse — precisely where machinery like the regularity lemma enters.
+## The overlap method: geometry, not counting
 
-## Small numbers, exactly
+Counting is not the only way to force a host to be large. Here is a completely different mechanism, and it is the source of the most interesting new results in this circle of ideas.
 
-Asymptotics are one thing; the first few values are another, and they are unexpectedly stubborn.
+Say two $n$-element posets $P$ and $Q$ have **common induced bound $s$** if no set of more than $s$ points can sit inside $P$ and inside $Q$ in a way that matches all relations. Then:
 
-$$U(0)=0,\qquad U(1)=1,\qquad U(2)=3,\qquad U(3)=5,\qquad 7 \le U(4)\le 8 .$$
+> **Theorem (overlap bound).** If $P$ and $Q$ are $n$-element posets with common induced bound $s$, then every host containing both as induced subposets has at least $2n - s$ points.
 
-The upper bounds are explicit hosts. For $n=3$ there is a five-point poset into which all nineteen three-element orders embed as induced subposets; for $n=4$ there is an eight-point poset that hosts all $219$ four-element orders — a finite check, but a real one, over all $4096$ candidate relations on four points.
+The proof is a picture. The copy of $P$ occupies $n$ host points, the copy of $Q$ occupies $n$ host points, and their intersection is a set of host points that is *simultaneously* an induced subposet of $P$ and of $Q$ — so it has at most $s$ points. Inclusion–exclusion finishes it.
 
-The lower bounds come from an idea entirely different from counting, and it is the engine of everything in the rest of this article.
+Feed in the two most incompatible posets there are: the **$n$-chain** (everybody comparable) and the **$n$-antichain** (nobody comparable). Two points cannot be comparable and incomparable at once, so their common induced bound is $1$, and:
 
-**The overlap principle.** Suppose $P$ and $Q$ are two $n$-element posets that are *incompatible*: no poset on more than $s$ points embeds as an induced subposet into both. Any host must contain an induced copy of $P$ (occupying $n$ points) and an induced copy of $Q$ (occupying $n$ points), and the two copies can share at most $s$ points — because a shared set of points is an induced subposet of both. By inclusion–exclusion,
-$$N \;\ge\; 2n - s .$$
+> **Theorem.** $U(n) \ge 2n - 1$ for every $n$.
 
-Take $P$ = the $n$-chain $x_1 < x_2 < \dots < x_n$ and $Q$ = the $n$-antichain. Any poset embedding into both must be simultaneously totally ordered and totally unordered, so it has at most one point: $s=1$. Hence
+Sharp at $n = 1, 2, 3$. And it explains, with no computation whatsoever, why no four-point host can serve all three-point posets: a four-point host containing a $3$-chain has only one point left over, so it cannot also contain a $3$-antichain.
 
-**Theorem (Linear lower bound).** $U(n) \ge 2n-1$.
+Add a third poset — the disjoint union of two chains of lengths $\lceil n/2 \rceil$ and $\lfloor n/2 \rfloor$ — and run inclusion–exclusion for three sets. Its overlap with the chain is at most $\lceil n/2 \rceil$ (a chain inside a union of two chains lives in one of them), and with the antichain at most $2$ (an antichain inside a union of two chains has at most one point per chain). So:
 
-This is sharp for $n \le 3$ — it gives $U(3)\ge 5$, matching the five-point host exactly — and it gives $U(4)\ge 7$.
+> **Theorem.** $U(n) \ge 3n - \lceil n/2 \rceil - 3$, asymptotically $\tfrac{5}{2}n - 3$.
 
-Three posets are better than two. Add $R$ = the disjoint union of two chains, each of about $n/2$ points. A chain sitting inside $R$ must live in one of the two chains, so the chain and $R$ share at most $\lceil n/2 \rceil$ points; the antichain and $R$ share at most $2$ points (one from each chain); the chain and the antichain share at most $1$. Bonferroni's inequality for three sets — $|A \cup B \cup C| \ge |A|+|B|+|C| - |A\cap B| - |A \cap C| - |B \cap C|$ — then yields
+This beats $2n-1$ from $n = 6$ on. But it is still linear, and one naturally asks: is the overlap method *intrinsically* linear? It is not.
 
-**Theorem (Three-poset bound).** $U(n) \;\ge\; 3n - \lceil n/2 \rceil - 3$,
+## Going superlinear: a geometric family of rulers
 
-which is asymptotically $\tfrac52 n$, beating $2n-1$ for every $n \ge 6$.
+The trick is to use not three posets but a whole geometric ladder of them, and to make the overlaps decay fast enough that they cost only a constant fraction of the gain.
 
-## Breaking the linear barrier
+Fix $n = 4^k$. For each $i$ with $0 \le i < k$, cut the ground set $\{0,1,\dots,n-1\}$ into consecutive blocks of length $4^i$, and let $P_i$ be the poset in which two points are comparable exactly when they lie in the same block, ordered by their index. So $P_i$ is a disjoint union of $4^{k-i}$ chains of length $4^i$: a ruler with tick spacing $4^i$. $P_0$ is the antichain, and the ladder gets coarser as $i$ grows.
 
-All of the above is linear in $n$, while the truth is exponential. Can the overlap method — which never counts posets at all — nevertheless see superlinear growth? The answer is yes, and the trick is to play a whole *geometric family* of posets against each other rather than two or three.
+The key estimate is a two-line argument. Suppose $j < i$ and consider a set of points sitting inside both $P_i$ (coarse) and $P_j$ (fine). It splits into at most $4^{k-i}$ pieces, one per coarse block, and each piece is a chain of $P_i$, hence a chain of $P_j$, hence lies inside a single fine block, hence has at most $4^j$ points. Total: at most $4^{k-i} \cdot 4^j$ points.
 
-For a block size $d$, let $C_d$ be the poset on $\{0,1,\dots,n-1\}$ obtained by cutting the line into consecutive blocks of length $d$ and making each block a chain, with no relations between blocks. So $C_1$ is the antichain and $C_n$ is the full chain. The key combinatorial fact is a two-sided squeeze:
+Now sum. The $k$ copies together demand $k \cdot 4^k$ host points; the pairwise overlaps subtract at most
+$$\sum_{i<k}\sum_{j<i} 4^{k-i} 4^{j} \;\le\; \frac{k \cdot 4^k}{3},$$
+using the exact identity $3\sum_{j<i} 4^j + 1 = 4^i$. Two thirds of the demand survives:
 
-**Lemma (Chain-union overlap).** *If $e \ge d$, then any common induced subposet of $C_e$ and $C_d$ has at most $\lceil n/e\rceil \cdot d$ points.*
+> **Theorem (superlinear lower bound).** $2k\cdot 4^k \le 3\,U(4^k)$; consequently, for every $n$,
+> $$n \log_4 n \;\le\; 6\, U(n),$$
+> and therefore $U(n)/n \to \infty$.
 
-The reason is a pigeonhole with two prongs. Such a common subposet meets each of the $\approx n/e$ blocks of $C_e$ in a chain; and each of those chains, being totally ordered, must be carried into a *single* block of $C_d$, which holds at most $d$ points. Multiply.
+The base $4$ is not decoration. With ratio $2$ instead of $4$ the geometric series of overlaps contributes almost exactly one full copy per index, and what survives is only $2n-2$ — a bound independent of $k$, no better than the trivial linear one. Ratio $2$ is the **exact threshold** of the method. This also explains why the three-poset argument stalled at $\tfrac52 n$ — it was one step of a ladder that only pays off when you climb it with the right stride.
 
-Now take $n = 4^k$ and the geometric family $C_{4^0}, C_{4^1}, \dots, C_{4^{k-1}}$. Each contributes $n$ host points; the pairwise overlaps sum to at most
-$$\sum_{i<k}\sum_{j<i} 4^{\,k-i}\,4^{\,j} \;\le\; \frac{k\,4^{k}}{3},$$
-using the exact identity $3(1+4+\dots+4^{i-1}) + 1 = 4^{i}$. A Bonferroni bound for $k$ sets — $|\bigcup A_i| \ge \sum |A_i| - \sum_{j<i}|A_i \cap A_j|$ — gives $k\cdot 4^{k} \le N + \tfrac13 k\,4^k$, hence
+The result is still astronomically below the truth ($n\log n$ versus $2^{n/4}$). Its interest is that it measures precisely how much *structure*, as opposed to *counting*, can force. And by a Dilworth/Erdős–Szekeres argument, any two $n$-element posets share a chain or an antichain on $\Omega(\log n)$ points, so the overlap method cannot itself go beyond order $n \log n$: the exponential must come from counting.
 
-**Theorem (Superlinear lower bound).** *For all $k$,* $\;2k\,4^{k} \le 3\,U(4^{k})$, *and for every $n$,*
-$$n\log_4 n \;\le\; 6\,U(n).$$
-*Consequently $U(n)/n \to \infty$: for every constant $C$ there are arbitrarily large $n$ with $U(n) \ge C n$.*
+## The staircase never rests
 
-The base $4$ is not cosmetic. If you run the same argument with ratio $2$ instead of $4$, the geometric series of overlaps grows exactly as fast as the gain from adding a new poset, and the whole bound collapses to something linear. Ratio $2$ is precisely the threshold of the method; anything strictly larger works, and $4$ makes the arithmetic exact.
+One more structural fact, small but pleasing. Is $U$ strictly increasing? Nothing in the counting bounds says so — they are far too crude. But a direct argument works.
 
-One more structural fact deserves a place. Delete a *maximal* point from an optimal host for the $(n+1)$-element posets and what remains still hosts all $n$-element posets, because every $n$-element poset extends to an $(n+1)$-element poset with an extra point on top, whose copy must use the deleted point last. Hence:
+> **Theorem (strict monotonicity).** $U(n) < U(n+1)$ for every $n$; in particular $U$ is injective.
 
-**Theorem (Strict monotonicity).** $U(n) < U(n+1)$ *for every $n$; in particular $U$ is injective.*
+Take an optimal host $H$ for the $(n+1)$-element posets and let $m$ be any maximal point of $H$. Given an $n$-element poset $P$, adjoin a new element $\top$ above everything, obtaining an $(n+1)$-element poset $P^{+}$. Inside $H$, the copy of $P^{+}$ places the image of $\top$ strictly above the images of all other $n$ points — so *none* of those $n$ points can be $m$, since nothing lies strictly above a maximal point. Therefore $H$ with $m$ deleted, one point smaller, is already universal for the $n$-element posets. Hence $U(n) \le U(n+1) - 1$. No plateaux, ever.
 
-## Graphs, regularity, and where the difficulty really lives
+## The bridge to graphs
 
-There is a bridge from posets to graphs that makes the connection to the regularity lemma visible. The **comparability graph** of a poset joins two distinct points whenever they are comparable. Under this translation, a bipartite poset of shape $(k,l)$ becomes an ordinary bipartite graph on parts of sizes $k$ and $l$, and — this is the point — induced subposets become induced subgraphs. So a universal poset yields, via its comparability graph, a graph containing every $(k,l)$-bipartite graph as an induced subgraph; the counting bound $2^{kl} \le N^{k+l}$ can be re-derived on the graph side without ever mentioning order.
+Finally, the reason the Regularity Lemma can enter at all. To a poset $P$ associate its **comparability graph**: same points, with $x$ and $y$ joined by an edge exactly when they are distinct and comparable. This is a functor on induced embeddings — an induced subposet becomes an induced subgraph — provided the embedding both preserves and *reflects* the order, and is injective, which induced embeddings automatically are.
 
-And on the graph side the heavy machinery is available. The Szemerédi Regularity Lemma states that for every $\varepsilon > 0$ there is a bound $M(\varepsilon)$ such that every large enough graph admits an equipartition of its vertices into between $m$ and $M(\varepsilon)$ parts, almost all pairs of which are $\varepsilon$-uniform: the edge density between any two large sub-parts is within $\varepsilon$ of the density between the parts themselves. Applied to comparability graphs of posets, it says every large poset can be split into a bounded number of blocks whose mutual comparability patterns look pseudorandom. That is the leverage which converts "a host point can serve many embeddings" from an obstruction into a resource, and it is what powers the passage from the explicit exponent $n/2$ on bipartite posets to the exponent $(1+\eta)n/2$ on all posets.
+On height-two posets, nothing is lost. The comparability graph of a $(k,l)$-bipartite poset is *exactly* the corresponding bipartite graph, and the correspondence is a bijection on relations. So the poset counting bound and the graph counting bound are the same theorem seen from two sides: a host graph on $N$ vertices containing all $(k,l)$-bipartite graphs as induced subgraphs also satisfies $2^{kl} \le N^{k+l}$, and pushing a universal poset host through the comparability functor re-derives the poset bound by a genuinely different route.
 
-## Why anyone should care
+For general posets the functor *does* lose information — the comparability graph forgets which way each edge points — and that is precisely why the regularity-based construction must re-orient afterwards. And regularity applies verbatim: every sufficiently large finite poset admits, for each $\varepsilon > 0$, an $\varepsilon$-uniform equipartition of its comparability graph into a bounded number of parts, the bound depending on $\varepsilon$ alone and not on the poset. That is the door through which the modern machinery walks in.
 
-Universal posets are a problem in *labelling*, and labelling is a practical business.
+## What we know, and what we want
 
-An **adjacency labelling scheme** assigns to each element a short binary string, so that the relation between any two elements can be decided from their two labels alone — no global lookup table. A universal host with $N$ points is exactly a labelling scheme with $\log_2 N$-bit labels: label a point by the host point it maps to, and decide comparability inside the host. Improving the exponent from $n$ to $n/2$ halves the label length. Such schemes let a distributed system answer "does $u$ dominate $v$?" from local data, compress version-control ancestry and taxonomies, and underlie succinct reachability structures.
+Assembling everything:
+$$\max\Bigl(3n - \bigl\lceil \tfrac n2 \bigr\rceil - 3,\ \tfrac16 n\log_4 n,\ 2^{(n-1)/4}\Bigr) \;\le\; U(n) \;\le\; 2^n - 1,$$
+with $2^{(1+\eta)n/2}$ available from above for large $n$, and exact values $1, 3, 5$ at $n = 1,2,3$ and $U(4)\in\{7,8\}$.
 
-The Boolean-lattice construction is precisely the naive scheme "label each element by the bit-vector of everything below it" — $n$ bits per element. The tagged-neighbourhood host is the observation that in a two-level hierarchy you only need the neighbourhood plus a disambiguating serial number. The deep theorem is the statement that a similar economy is achievable across all hierarchies at once, with about $n/2$ bits.
+The linear and superlinear bounds are sharp for tiny $n$ and hopeless afterwards; the counting bound is vacuous for $n \le 4$ and dominant from around $n = 20$ on. The two regimes cross, and neither knows anything about the other.
 
-And the counting bound is the hard floor: no scheme can beat $n/4$ bits per element, because there are simply too many hierarchies and too few short labels. Somewhere between $n/4$ and $n/2$ lies the truth, and nobody yet knows where.
+And the real question is untouched by both. Write $U(n) = 2^{c(n) n}$. We know $c(n) \in [1/4, 1/2 + o(1)]$. Is the truth $1/4$? Is it $1/2$? Is there a genuine constant at all? Every improvement so far has come from finding a cleverer labelling scheme (pushing the top down) or a cleverer family of mutually hostile posets (pushing the bottom up). The bipartite class shows exactly where the difficulty lives: there, counting says $n/4$, an explicit napkin construction says $n/2$, and nobody knows which of the two is telling the truth.
 
-## The state of play
-
-Collecting everything:
-
-$$\max\!\left(2n-1,\; 3n-\lceil n/2\rceil-3,\; \tfrac{1}{6}n\log_4 n,\; 2^{(n-1)/4}\right) \;\le\; U(n) \;\le\; 2^{n}-1,$$
-
-with $U(0)=0$, $U(1)=1$, $U(2)=3$, $U(3)=5$, $7 \le U(4) \le 8$, and $U$ strictly increasing throughout. The exponential lower bound eventually swamps all the linear and near-linear ones — the crossover happens around $n \approx 25$ — but for small $n$ the structural bounds are the sharp ones, and they are the only bounds that ever produce an *exact* value.
-
-The exponent of $U(n)$ is now known to lie between $1/4$ and $1/2$. Which end is the truth? The counting bound is provably lossy in every small case where the answer is known, and the tagged-neighbourhood host achieves exponent $1/2$ on the bipartite family — faint evidence for the upper end. But the honest summary is the one every good open problem deserves: we know the corridor, and we do not know the room.
+A hotel, a hierarchy, and a factor of two in an exponent. Some of the best problems really are that easy to state.

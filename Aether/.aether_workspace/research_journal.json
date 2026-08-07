@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c945ec38",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Finite partition formula.** For every finite pairwise-disjoint family of finite--cofinite\n   events, the probability of its union equals the finite sum of its probabilities.",
-      "quality_score": 0.77894,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-02T17:24:52",
-      "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
-    },
-    {
       "cycle_id": "b0710fef",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) ≤ N^k` is robust and directly yields the\n`log₂ N` bits-per-spike ceiling. A sharper next theorem is\n\n`b",
@@ -499,19 +489,19 @@
       "theorem_count": 3,
       "timestamp": "2026-08-07T04:15:17",
       "title": "ArXiv paper: Even smaller universal posets"
+    },
+    {
+      "cycle_id": "b2707824",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Geometry/HyperbolicBerggrenGeodesics.lean`.\n\n## What survived, what failed\n\n**Survived (proved, 0 sorries).**\nThe Berg",
+      "quality_score": 0.73319,
+      "sorry_count": 0,
+      "theorem_count": 182,
+      "timestamp": "2026-08-07T05:23:46",
+      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3308088b",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe completed development proves finite normalized max-plus tropical\nCarathéodory in `Catalog/Tropical/TropicalConvexity/Caratheodory.lean`, including\nsingleton membership, monoto",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-07-30T12:12:00",
-      "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
-    },
     {
       "cycle_id": "72d619d5",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 225,
       "timestamp": "2026-08-07T05:22:09",
       "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
+    },
+    {
+      "cycle_id": "b2707824",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Geometry/HyperbolicBerggrenGeodesics.lean`.\n\n## What survived, what failed\n\n**Survived (proved, 0 sorries).**\nThe Berg",
+      "quality_score": 0.73319,
+      "sorry_count": 0,
+      "theorem_count": 182,
+      "timestamp": "2026-08-07T05:23:46",
+      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "94d22408",
-      "domain": "Pythagorean",
-      "name": "sub_pow_mem_span_of_mem_adjoin",
-      "quality": 0.7906299999999999
-    },
     {
       "cycle_id": "94d22408",
       "domain": "Pythagorean",
@@ -2803,9 +2797,15 @@
       "domain": "Geometry",
       "name": "sub_div_le_log_div",
       "quality": 0.73419
+    },
+    {
+      "cycle_id": "b2707824",
+      "domain": "Geometry",
+      "name": "sub_div_le_log_div",
+      "quality": 0.73319
     }
   ],
-  "last_updated": "2026-08-07T05:22:09",
+  "last_updated": "2026-08-07T05:23:46",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "febd9c83",
-        "quality": 0.74513,
-        "theorems": 6,
-        "title": "Future directions from cycle a5e9a5f6"
-      },
-      {
         "cycle_id": "01a8c97a",
         "quality": 0.72854,
         "theorems": 15,
@@ -3449,6 +3443,12 @@
       {
         "cycle_id": "b2707824",
         "quality": 0.73419,
+        "theorems": 182,
+        "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
+      },
+      {
+        "cycle_id": "b2707824",
+        "quality": 0.73319,
         "theorems": 182,
         "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
       }

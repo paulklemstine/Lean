@@ -1,513 +1,568 @@
 #!/usr/bin/env python3
 """
-Induced-universal posets: numerical demonstrations.
-===================================================
+Universal Posets: numerical demonstrations
+==========================================
 
-A poset H is *induced-universal for size n* if every partial order on n points
-occurs as an induced subposet of H:  there is a map f from the n points into H
-with
+A poset H is *universal* for the n-element posets if every partial order on n
+points occurs as an INDUCED subposet of H, i.e. there is an injective map f with
 
-        f(x) <= f(y)   in H     <==>     x <= y   in P.
+        f(x) <= f(y)   <==>   x <= y      (for all x, y).
 
-U(n) denotes the least number of points of such a host.
+U(n) denotes the least number of points of such a host.  This script verifies,
+by explicit finite computation, the quantitative results of the accompanying
+paper:
 
-This script demonstrates, by direct computation, every quantitative statement
-of the accompanying paper:
+  1. exhaustive enumeration of the partial orders on n <= 4 points (1, 1, 3, 19, 219);
+  2. U(2) = 3 exactly (brute force over all hosts on <= 3 points);
+  3. U(3) = 5 exactly: the diamond-plus-isolated-point host works, and no
+     4-point host does;
+  4. U(4) <= 8: an explicit 8-point host serves all 219 four-element posets,
+     while the structural bound gives U(4) >= 7;
+  5. the principal-ideal (Boolean) host: U(n) <= 2^n - 1, and every nonempty
+     subset really occurs as a label;
+  6. the tagged-neighbourhood host of size k + 2^k * l is (k,l)-bipartite
+     universal, and the tag coordinate is necessary;
+  7. the counting lower bound 2^{kl} <= N^{k+l}, its logarithmic form
+     (n-1)/4 <= log2 U(n) <= n, and the crossover with the structural bounds;
+  8. the overlap method: 2n-1, then 3n-ceil(n/2)-3, then the geometric
+     block-chain family giving n*log_4(n) <= 6*U(n) -- and the degeneration of
+     the same computation at ratio 2.
 
-  1.  The principal-ideal (Boolean) embedding:  U(n) <= 2^n,  and the sharper
-      U(n) <= 2^n - 1 because the empty label is never used.
-  2.  The counting lower bound  2^(kl) <= N^(k+l)  for hosts of the
-      (k,l)-bipartite family, and its analytic form  N >= 2^(kl/(k+l)).
-  3.  The tagged-neighbourhood host B(k,l) on  k + 2^k * l  points, verified
-      exhaustively to contain every (k,l)-bipartite poset, and the necessity of
-      the tag coordinate.
-  4.  The overlap method:  incompatible posets force  N >= 2n - s;  the
-      chain/antichain pair gives  U(n) >= 2n - 1, and adding a two-chain poset
-      gives  U(n) >= 3n - ceil(n/2) - 3.
-  5.  Exact small values  U(0)=0, U(1)=1, U(2)=3, U(3)=5, and  7 <= U(4) <= 8,
-      including an exhaustive check that a specific 5-point host works for
-      n = 3 and that no 4-point host does.
-  6.  The geometric chain-union family, the Bonferroni bound for k posets, and
-      the resulting superlinear bound  n*log_4(n) <= 6*U(n).
-  7.  The full bound table, showing where the exponential counting bound
-      overtakes the linear structural bounds.
-
-Everything is self-contained: standard library only.
+Self-contained: standard library only.
 """
 
 from __future__ import annotations
 
 from itertools import combinations, product
-from math import floor, log, log10
-from typing import Dict, FrozenSet, Iterator, List, Sequence, Set, Tuple
+from math import log2
+from typing import Dict, FrozenSet, Iterable, List, Sequence, Set, Tuple
 
-Relation = Tuple[Tuple[bool, ...], ...]  # r[x][y] means x <= y
+# ----------------------------------------------------------------------------
+# Representation
+# ----------------------------------------------------------------------------
+# A poset on {0, ..., n-1} is a tuple of n bitmasks: up[x] has bit y set iff
+# x <= y.  This makes composition and comparison cheap.
 
-
-def pow2_str(exponent: float) -> str:
-    """Render 2**exponent in scientific notation without overflowing floats."""
-    log10v = exponent * log10(2.0)
-    e = floor(log10v)
-    mant = 10.0 ** (log10v - e)
-    return f"{mant:.3f}e+{e:03d}"
+Poset = Tuple[int, ...]
 
 
-# --------------------------------------------------------------------------- #
-# 0.  Basic poset machinery
-# --------------------------------------------------------------------------- #
+def leq(P: Poset, x: int, y: int) -> bool:
+    """True iff x <= y in the poset P."""
+    return (P[x] >> y) & 1 == 1
 
-def is_partial_order(r: Relation) -> bool:
-    """Reflexive, transitive, antisymmetric."""
-    n = len(r)
+
+def is_partial_order(P: Poset) -> bool:
+    """Reflexive, transitive, antisymmetric?"""
+    n = len(P)
     for x in range(n):
-        if not r[x][x]:
+        if not leq(P, x, x):
             return False
-    for x in range(n):
         for y in range(n):
-            if x != y and r[x][y] and r[y][x]:
-                return False
-    for x in range(n):
-        for y in range(n):
-            if r[x][y]:
+            if leq(P, x, y):
+                if x != y and leq(P, y, x):
+                    return False  # antisymmetry
                 for z in range(n):
-                    if r[y][z] and not r[x][z]:
-                        return False
+                    if leq(P, y, z) and not leq(P, x, z):
+                        return False  # transitivity
     return True
 
 
-def all_partial_orders(n: int) -> List[Relation]:
-    """Every partial order on the labelled set {0,...,n-1}."""
-    if n == 0:
-        return [tuple()]
-    orders: List[Relation] = []
-    offdiag = [(x, y) for x in range(n) for y in range(n) if x != y]
-    for bits in product([False, True], repeat=len(offdiag)):
-        table = [[x == y for y in range(n)] for x in range(n)]
-        for (x, y), b in zip(offdiag, bits):
-            table[x][y] = b
-        r: Relation = tuple(tuple(row) for row in table)
-        if is_partial_order(r):
-            orders.append(r)
-    return orders
+def all_posets(n: int) -> List[Poset]:
+    """Every labelled partial order on {0,...,n-1}, by brute force over the
+    n(n-1) off-diagonal bits."""
+    off = [(i, j) for i in range(n) for j in range(n) if i != j]
+    out: List[Poset] = []
+    for bits in range(1 << len(off)):
+        up = [1 << i for i in range(n)]  # reflexive part
+        for b, (i, j) in enumerate(off):
+            if (bits >> b) & 1:
+                up[i] |= 1 << j
+        P = tuple(up)
+        if is_partial_order(P):
+            out.append(P)
+    return out
 
 
-def is_induced_embedding(r: Relation, host: Relation, f: Sequence[int]) -> bool:
-    """f realises r as an induced subposet of host."""
-    n = len(r)
-    return all(host[f[x]][f[y]] == r[x][y] for x in range(n) for y in range(n))
+def embeds_induced(P: Poset, H: Poset) -> Tuple[bool, Sequence[int]]:
+    """Is P an induced subposet of H?  Returns (yes/no, witness)."""
+    n, N = len(P), len(H)
+    assign: List[int] = []
+
+    def rec(x: int) -> bool:
+        if x == n:
+            return True
+        for h in range(N):
+            if h in assign:
+                continue
+            ok = True
+            for y, hy in enumerate(assign):
+                if leq(H, h, hy) != leq(P, x, y) or leq(H, hy, h) != leq(P, y, x):
+                    ok = False
+                    break
+            if ok:
+                assign.append(h)
+                if rec(x + 1):
+                    return True
+                assign.pop()
+        return False
+
+    found = rec(0)
+    return found, tuple(assign)
 
 
-def hosts_all(host: Relation, n: int, orders: List[Relation] | None = None) -> bool:
-    """Brute force: does `host` contain every n-element poset as an induced subposet?"""
-    N = len(host)
-    if orders is None:
-        orders = all_partial_orders(n)
-    for r in orders:
-        if not any(is_induced_embedding(r, host, f) for f in product(range(N), repeat=n)):
-            return False
-    return True
+def is_universal(H: Poset, family: Iterable[Poset]) -> bool:
+    return all(embeds_induced(P, H)[0] for P in family)
 
 
-# --------------------------------------------------------------------------- #
-# 1.  The principal-ideal (Boolean) host
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# 1. Counting the partial orders
+# ----------------------------------------------------------------------------
 
-def principal_ideals(r: Relation) -> List[FrozenSet[int]]:
-    """The down-set labels  down(x) = {y : y <= x}."""
-    n = len(r)
-    return [frozenset(y for y in range(n) if r[y][x]) for x in range(n)]
-
-
-def demo_boolean_host(n: int = 4) -> None:
+def demo_enumeration() -> Dict[int, List[Poset]]:
     print("=" * 74)
-    print("1.  PRINCIPAL-IDEAL (BOOLEAN) HOST:  U(n) <= 2^n - 1")
+    print("1. Labelled partial orders on n points")
     print("=" * 74)
-    orders = all_partial_orders(n)
-    print(f"partial orders on {n} labelled points: {len(orders)}")
-    all_ok = True
-    empty_used = False
-    labels_seen: Set[FrozenSet[int]] = set()
-    for r in orders:
-        ideals = principal_ideals(r)
-        # injective?
-        if len(set(ideals)) != n:
-            all_ok = False
-        # induced?
-        for x in range(n):
-            for y in range(n):
-                if (ideals[x] <= ideals[y]) != r[x][y]:
-                    all_ok = False
-        labels_seen |= set(ideals)
-        if frozenset() in ideals:
-            empty_used = True
-    print(f"  every order embedded by inclusion of down-sets : {all_ok}")
-    print(f"  empty label ever used                          : {empty_used}")
-    print(f"  distinct labels realised                       : {len(labels_seen)}"
-          f"  (out of 2^{n} - 1 = {2**n - 1} nonempty subsets)")
-    print(f"  => U({n}) <= 2^{n} - 1 = {2**n - 1}\n")
-
-
-# --------------------------------------------------------------------------- #
-# 2.  The counting lower bound
-# --------------------------------------------------------------------------- #
-
-def counting_bound(k: int, l: int) -> float:
-    """Any (k,l)-bipartite-universal host has at least 2^(kl/(k+l)) points."""
-    if k + l == 0:
-        return 0.0
-    return 2.0 ** (k * l / (k + l))
-
-
-def demo_counting_bound() -> None:
-    print("=" * 74)
-    print("2.  COUNTING LOWER BOUND:  2^(kl) <= N^(k+l),  i.e.  N >= 2^(kl/(k+l))")
-    print("=" * 74)
-    print(f"{'k':>3} {'l':>3} {'#bipartite posets':>20} {'N >= 2^(kl/(k+l))':>20}")
-    for k, l in [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (8, 8), (16, 16), (25, 25)]:
-        print(f"{k:>3} {l:>3} {'2^' + str(k*l):>20} {counting_bound(k, l):>20.3f}")
+    fam: Dict[int, List[Poset]] = {}
+    for n in range(5):
+        fam[n] = all_posets(n)
+        print(f"   n = {n}:  {len(fam[n]):5d} partial orders")
+    print("   (the sequence 1, 1, 3, 19, 219 -- labelled posets)")
     print()
-    print("Balanced case k = l = m, so n = 2m points:  N >= 2^(m/2) = 2^(n/4).")
-    print("General n (split into floor(n/2) and ceil(n/2)):  log2 U(n) >= (n-1)/4.")
-    print()
-    print(f"{'n':>4} {'2^((n-1)/4)':>16} {'2n-1':>8} {'3n-ceil(n/2)-3':>16}")
-    for n in [2, 4, 8, 12, 16, 20, 24, 28, 32, 40, 64]:
-        print(f"{n:>4} {2.0**((n-1)/4):>16.2f} {2*n-1:>8} {3*n - (n+1)//2 - 3:>16}")
+    return fam
+
+
+# ----------------------------------------------------------------------------
+# 2. U(2) = 3
+# ----------------------------------------------------------------------------
+
+def demo_U2(fam: Dict[int, List[Poset]]) -> None:
+    print("=" * 74)
+    print("2. U(2) = 3, exactly")
+    print("=" * 74)
+    for N in range(0, 4):
+        hosts = [H for H in all_posets(N) if is_universal(H, fam[2])]
+        print(f"   hosts on {N} points universal for the 2-element posets: {len(hosts)}")
+        if hosts and N == 3:
+            H = hosts[0]
+            print(f"   e.g. up-sets {[bin(m) for m in H]}  "
+                  f"(a 2-chain plus an isolated point)")
+    print("   => U(2) = 3.  The counting bound only predicts U(2) >= 2:")
+    print("      2^(k*l) <= N^(k+l) with k = l = 1 reads 2 <= N^2, i.e. N >= 2.")
     print()
 
 
-# --------------------------------------------------------------------------- #
-# 3.  The tagged-neighbourhood host
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# 3. U(3) = 5
+# ----------------------------------------------------------------------------
 
-def bip_poset(k: int, l: int, R: FrozenSet[Tuple[int, int]]) -> Relation:
-    """The (k,l)-bipartite poset:  points 0..k-1 low, k..k+l-1 high, a_i < b_j iff (i,j) in R."""
+def diamond_plus_point() -> Poset:
+    """5 points: 4 < {2,3} < 1 (a diamond), and 0 isolated."""
+    n = 5
+    rel = {(4, 2), (4, 3), (4, 1), (2, 1), (3, 1)}
+    up = [1 << i for i in range(n)]
+    for (a, b) in rel:
+        up[a] |= 1 << b
+    return tuple(up)
+
+
+def demo_U3(fam: Dict[int, List[Poset]]) -> None:
+    print("=" * 74)
+    print("3. U(3) = 5, exactly")
+    print("=" * 74)
+    H = diamond_plus_point()
+    assert is_partial_order(H)
+    ok = is_universal(H, fam[3])
+    print(f"   diamond (4 < 2,3 < 1) plus isolated point 0 is a poset: True")
+    print(f"   it contains all {len(fam[3])} three-element posets as induced "
+          f"subposets: {ok}")
+    four = [H4 for H4 in all_posets(4) if is_universal(H4, fam[3])]
+    print(f"   four-point hosts universal for the 3-element posets: {len(four)}")
+    print("   structural reason (no search needed): a 4-point host containing a")
+    print("   3-chain has only 1 point left, so it cannot contain a 3-antichain;")
+    print("   in general U(n) >= 2n - 1 (chain vs. antichain overlap <= 1).")
+    print("   => U(3) = 5.")
+    print()
+
+
+# ----------------------------------------------------------------------------
+# 4. U(4) <= 8 via an explicit host
+# ----------------------------------------------------------------------------
+
+HOST8_ROWS: Tuple[int, ...] = (251, 226, 132, 232, 80, 96, 64, 128)
+
+
+def host8() -> Poset:
+    """The explicit 8-point host: row i is the bitmask of {j : i <= j}."""
+    return HOST8_ROWS
+
+
+def demo_U4(fam: Dict[int, List[Poset]]) -> None:
+    print("=" * 74)
+    print("4. 7 <= U(4) <= 8")
+    print("=" * 74)
+    H = host8()
+    print(f"   host rows (up-set bitmasks): {list(H)}")
+    print(f"   is a partial order: {is_partial_order(H)}")
+    bad = [P for P in fam[4] if not embeds_induced(P, H)[0]]
+    print(f"   four-element posets NOT embedding: {len(bad)}  "
+          f"(out of {len(fam[4])})")
+    print(f"   => U(4) <= 8;  and U(4) >= 2*4 - 1 = 7 by the overlap bound.")
+    P = fam[4][len(fam[4]) // 2]
+    ok, w = embeds_induced(P, H)
+    print(f"   sample witness for one poset: f = {list(w)}  (induced: {ok})")
+    print()
+
+
+# ----------------------------------------------------------------------------
+# 5. The Boolean / principal-ideal host
+# ----------------------------------------------------------------------------
+
+def ideal_labels(P: Poset) -> List[int]:
+    """iota(x) = {y : y <= x}, as a bitmask."""
+    n = len(P)
+    return [sum(1 << y for y in range(n) if leq(P, y, x)) for x in range(n)]
+
+
+def demo_ideal_host(fam: Dict[int, List[Poset]]) -> None:
+    print("=" * 74)
+    print("5. The principal-ideal host:  U(n) <= 2^n - 1")
+    print("=" * 74)
+    for n in range(1, 5):
+        used: Set[int] = set()
+        good = True
+        for P in fam[n]:
+            lab = ideal_labels(P)
+            used.update(lab)
+            for x in range(n):
+                for y in range(n):
+                    # inclusion of ideals must match the order exactly
+                    if ((lab[x] & ~lab[y]) == 0) != leq(P, x, y):
+                        good = False
+        print(f"   n = {n}: ideal labelling is induced for all "
+              f"{len(fam[n]):3d} posets: {good};  "
+              f"distinct labels used = {len(used):3d} = 2^{n} - 1 "
+              f"= {2**n - 1}: {len(used) == 2**n - 1}")
+    print("   The empty label is never used (x is always in its own ideal), so")
+    print("   the empty set may be deleted: U(n) <= 2^n - 1 < 2^n, always.")
+    print("   And every nonempty subset IS used, so no further deletion is")
+    print("   possible for this labelling scheme.")
+    print()
+
+
+# ----------------------------------------------------------------------------
+# 6. The tagged-neighbourhood host for bipartite posets
+# ----------------------------------------------------------------------------
+
+def bipartite_poset(k: int, l: int, R: Sequence[Sequence[int]]) -> Poset:
+    """B_R on k+l points: 0..k-1 bottom, k..k+l-1 top, a < b iff R[a][b]."""
     n = k + l
-    t = [[False] * n for _ in range(n)]
-    for x in range(n):
-        t[x][x] = True
-    for i in range(k):
+    up = [1 << i for i in range(n)]
+    for a in range(k):
+        for b in range(l):
+            if R[a][b]:
+                up[a] |= 1 << (k + b)
+    return tuple(up)
+
+
+def tagged_host(k: int, l: int) -> Tuple[Poset, List[str]]:
+    """k bottom points, then all pairs (S, j) with S subset of [k], j < l."""
+    points: List[Tuple[int, int]] = [(-1, a) for a in range(k)]  # bottom a
+    for S in range(1 << k):
         for j in range(l):
-            if (i, j) in R:
-                t[i][k + j] = True
-    return tuple(tuple(row) for row in t)
-
-
-def tagged_neighbourhood_host(k: int, l: int) -> Tuple[Relation, List[str]]:
-    """
-    B(k,l):  k bottom points, plus all pairs (S, t) with S subset of [k], t in [l].
-    Order:  bottom a <= (S,t) iff a in S; nothing else.  Size  k + 2^k * l.
-    """
-    points: List[Tuple[int, ...]] = []
-    names: List[str] = []
-    for i in range(k):
-        points.append(("bot", i))            # type: ignore[arg-type]
-        names.append(f"a{i}")
-    for mask in range(1 << k):
-        S = frozenset(i for i in range(k) if (mask >> i) & 1)
-        for t in range(l):
-            points.append(("top", mask, t))  # type: ignore[arg-type]
-            names.append("({" + ",".join(f"a{i}" for i in sorted(S)) + "}," + str(t) + ")")
+            points.append((S, j))
     N = len(points)
-    tbl = [[False] * N for _ in range(N)]
-    for x in range(N):
-        tbl[x][x] = True
-    for x in range(N):
-        for y in range(N):
-            px, py = points[x], points[y]
-            if px[0] == "bot" and py[0] == "top":
-                tbl[x][y] = bool((py[1] >> px[1]) & 1)
-    return tuple(tuple(row) for row in tbl), names
+    up = [1 << i for i in range(N)]
+    for i, pi in enumerate(points):
+        if pi[0] != -1:
+            continue
+        a = pi[1]
+        for j2, pj in enumerate(points):
+            if pj[0] != -1 and (pj[0] >> a) & 1:
+                up[i] |= 1 << j2
+    names = [f"bot{p[1]}" if p[0] == -1 else f"({bin(p[0])[2:].zfill(k)},{p[1]})"
+             for p in points]
+    return tuple(up), names
 
 
-def demo_tagged_host(k: int = 3, l: int = 3) -> None:
+def demo_tagged_host() -> None:
     print("=" * 74)
-    print("3.  TAGGED-NEIGHBOURHOOD HOST  B(k,l)  ON  k + 2^k * l  POINTS")
+    print("6. The tagged-neighbourhood host: size k + 2^k * l, exponent n/2")
     print("=" * 74)
-    host, names = tagged_neighbourhood_host(k, l)
-    N = len(host)
-    print(f"k = {k}, l = {l}:  |B(k,l)| = k + 2^k*l = {k} + {2**k}*{l} = {N}")
-    assert N == k + (1 << k) * l
-
-    # exhaustively verify universality over all 2^(kl) bipartite posets
-    pairs = [(i, j) for i in range(k) for j in range(l)]
-    total = 0
-    ok = 0
-    for bits in product([0, 1], repeat=len(pairs)):
-        R = frozenset(p for p, b in zip(pairs, bits) if b)
-        P = bip_poset(k, l, R)
-        # the canonical embedding of the theorem
-        f: List[int] = list(range(k))
-        for j in range(l):
-            mask = sum(1 << i for i in range(k) if (i, j) in R)
-            f.append(k + mask * l + j)
-        total += 1
-        if is_induced_embedding(P, host, f):
-            ok += 1
-    print(f"  canonical embedding verified for all {total} = 2^{k*l} bipartite posets: {ok == total}")
-
-    # the tag is necessary
-    R_empty: FrozenSet[Tuple[int, int]] = frozenset()
-    f0 = k + 0 * l + 0
-    f1 = k + 0 * l + 1 if l >= 2 else None
-    print(f"  neighbourhoods of the two 'empty' top elements coincide, but their")
-    print(f"  host points differ:  {names[f0]}  vs  {names[f1] if f1 else 'n/a'}")
-    print("  => the tag coordinate is necessary (Proposition: necessity of the tag).")
-
-    m = 4
+    for (k, l) in [(1, 1), (2, 2), (3, 2), (2, 3)]:
+        H, names = tagged_host(k, l)
+        assert is_partial_order(H)
+        size = len(H)
+        # check every bipartite relation embeds, by the explicit formula
+        allR = list(product([0, 1], repeat=k * l))
+        ok = True
+        for flat in allR:
+            R = [[flat[a * l + b] for b in range(l)] for a in range(k)]
+            P = bipartite_poset(k, l, R)
+            # explicit embedding: bottom a -> bot a; top b -> (N_R(b), b)
+            f: List[int] = list(range(k))
+            for b in range(l):
+                S = sum(1 << a for a in range(k) if R[a][b])
+                f.append(k + S * l + b)
+            for x in range(k + l):
+                for y in range(k + l):
+                    if leq(H, f[x], f[y]) != leq(P, x, y):
+                        ok = False
+        print(f"   (k,l) = ({k},{l}): host size {size} = {k} + 2^{k}*{l};  "
+              f"all {len(allR)} bipartite posets embed via the explicit "
+              f"formula: {ok}")
     print()
-    print(f"{'m (n=2m)':>10} {'2^(m/2) lower':>16} {'m*2^m+m upper':>16}")
-    for m in [1, 2, 4, 8, 16, 32]:
-        print(f"{m:>10} {2.0**(m/2):>16.2f} {m*2**m + m:>16}")
+    print("   Balanced case n = 2m -> size m*2^m + m, i.e. exponent n/2,")
+    print("   matching the exponent of the best asymptotic construction, while")
+    print("   the counting bound on the same class gives only 2^{n/4}:")
+    print(f"   {'m':>3} {'n=2m':>5} {'lower 2^(n/4)':>15} {'host m*2^m+m':>15}")
+    for m in (2, 4, 8, 16, 32):
+        print(f"   {m:>3} {2*m:>5} {2**(m/2):>15.3e} {m*2**m + m:>15.3e}")
+    print()
+    print("   The tag is necessary: in ANY host for the (k,2)-bipartite posets,")
+    print("   the two top points of the all-incomparable relation get distinct")
+    print("   host points -- an induced embedding is injective -- yet they have")
+    print("   the same down-set.  Down-sets alone cannot separate twins.")
     print()
 
 
-# --------------------------------------------------------------------------- #
-# 4.  The overlap method
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# 7. Counting bound, logarithmic form, crossover
+# ----------------------------------------------------------------------------
 
-def chain(n: int) -> Relation:
-    return tuple(tuple(x <= y for y in range(n)) for x in range(n))
-
-
-def antichain(n: int) -> Relation:
-    return tuple(tuple(x == y for y in range(n)) for x in range(n))
+def counting_lower_bound(n: int) -> float:
+    """2^{floor(n/2)*ceil(n/2)/n} <= U(n)."""
+    k, l = n // 2, n - n // 2
+    return 2.0 ** (k * l / n)
 
 
-def block_chains(n: int, d: int) -> Relation:
-    """C_{n,d}: consecutive blocks of length d, each block a chain."""
-    return tuple(tuple(x <= y and x // d == y // d for y in range(n)) for x in range(n))
+def structural_bound_2n1(n: int) -> int:
+    return max(0, 2 * n - 1)
 
 
-def two_chains(n: int) -> Relation:
-    """Disjoint union of a chain on the low ceil(n/2) points and a chain on the rest."""
-    half = (n + 1) // 2
-    return tuple(
-        tuple(x <= y and ((x < half) == (y < half)) for y in range(n)) for x in range(n)
-    )
+def structural_bound_three(n: int) -> int:
+    return max(0, 3 * n - (3 + (n + 1) // 2))
 
 
-def max_common_induced(r: Relation, s: Relation) -> int:
-    """
-    Brute-force size of the largest poset embedding as an induced subposet into BOTH
-    r and s.  Exponential; only for tiny n.
-    """
-    n = len(r)
+def geometric_bound(n: int) -> float:
+    """n*log_4(n) <= 6*U(n)."""
+    if n < 2:
+        return 0.0
+    return n * (log2(n) / 2) / 6
+
+
+def demo_bounds() -> None:
+    print("=" * 74)
+    print("7. All lower bounds against each other, and the crossover")
+    print("=" * 74)
+    print(f"   {'n':>4} {'2n-1':>8} {'3n-ce(n/2)-3':>14} {'n log4 n / 6':>14}"
+          f" {'2^(kl/n)':>14} {'2^n - 1':>14}")
+    for n in [2, 3, 4, 5, 6, 8, 10, 16, 20, 24, 32, 40, 64]:
+        print(f"   {n:>4} {structural_bound_2n1(n):>8}"
+              f" {structural_bound_three(n):>14}"
+              f" {geometric_bound(n):>14.1f}"
+              f" {counting_lower_bound(n):>14.3e}"
+              f" {2.0**n - 1:>14.3e}")
+    print()
+    print("   Logarithmic sandwich  (n-1)/4 <= log2 U(n) <= n:")
+    print(f"   {'n':>4} {'(n-1)/4':>10} {'kl/n (exact)':>14} {'n':>6}")
+    for n in [1, 2, 3, 4, 10, 40, 100]:
+        k, l = n // 2, n - n // 2
+        print(f"   {n:>4} {(n - 1) / 4:>10.3f} {k * l / n:>14.3f} {n:>6}")
+    print()
+    cross_lin = next(n for n in range(2, 400)
+                     if counting_lower_bound(n) > structural_bound_three(n))
+    print(f"   The counting bound overtakes the best linear bound at n = {cross_lin}.")
+    first6 = next(n for n in range(1, 50)
+                  if structural_bound_three(n) > structural_bound_2n1(n))
+    print(f"   The three-poset bound overtakes 2n-1 at n = {first6}.")
+    print()
+
+
+# ----------------------------------------------------------------------------
+# 8. The overlap method, and the ratio-2 threshold
+# ----------------------------------------------------------------------------
+
+def block_chains(n: int, d: int) -> Poset:
+    """Disjoint union of chains: x <= y iff x <= y and x//d == y//d."""
+    up = [1 << i for i in range(n)]
+    for x in range(n):
+        for y in range(n):
+            if x <= y and x // d == y // d:
+                up[x] |= 1 << y
+    return tuple(up)
+
+
+def max_common_induced(P: Poset, Q: Poset) -> int:
+    """Largest A that sits order-isomorphically inside both P and Q
+    (brute force; only for tiny n)."""
+    n = len(P)
     best = 0
     for size in range(n, 0, -1):
-        found = False
+        if size <= best:
+            break
         for A in combinations(range(n), size):
-            for phi in permutations_of(range(n), size):
-                if all(
-                    r[A[i]][A[j]] == s[phi[i]][phi[j]]
-                    for i in range(size)
-                    for j in range(size)
-                ):
-                    found = True
+            for phi in combinations(range(n), size):
+                for perm in _perms(phi):
+                    ok = True
+                    for i, x in enumerate(A):
+                        for j, y in enumerate(A):
+                            if leq(P, x, y) != leq(Q, perm[i], perm[j]):
+                                ok = False
+                                break
+                        if not ok:
+                            break
+                    if ok:
+                        best = max(best, size)
+                        break
+                if best == size:
                     break
-            if found:
+            if best == size:
                 break
-        if found:
-            return size
     return best
 
 
-def permutations_of(pool: range, size: int) -> Iterator[Tuple[int, ...]]:
+def _perms(t: Sequence[int]) -> Iterable[Tuple[int, ...]]:
     from itertools import permutations
-    return permutations(pool, size)
+    return permutations(t)
 
 
 def demo_overlap() -> None:
     print("=" * 74)
-    print("4.  THE OVERLAP METHOD:  incompatible posets force  N >= 2n - s")
+    print("8. The overlap method")
     print("=" * 74)
-    print(f"{'n':>3} {'s(chain,antichain)':>20} {'2n-s':>8} {'s(chain,2-chains)':>20} "
-          f"{'s(anti,2-chains)':>18} {'3-poset bound':>15}")
-    for n in range(2, 7):
-        c, a, d = chain(n), antichain(n), two_chains(n)
-        s_ca = max_common_induced(c, a)
-        s_cd = max_common_induced(c, d)
-        s_ad = max_common_induced(a, d)
-        three = 3 * n - (s_ca + s_cd + s_ad)
-        print(f"{n:>3} {s_ca:>20} {2*n - s_ca:>8} {s_cd:>20} {s_ad:>18} {three:>15}")
+    n = 6
+    chain = block_chains(n, n)
+    anti = block_chains(n, 1)
+    print(f"   n = {n}: chain vs antichain, largest common induced "
+          f"configuration = {max_common_induced(chain, anti)}  (theory: 1)")
+    print(f"   => U({n}) >= 2*{n} - 1 = {2*n-1}")
+    two = block_chains(n, (n + 1) // 2)
+    print(f"   chain vs two-chains: {max_common_induced(chain, two)}  "
+          f"(theory: ceil(n/2) = {(n+1)//2})")
+    print(f"   antichain vs two-chains: {max_common_induced(anti, two)}  "
+          f"(theory: 2)")
+    print(f"   => U({n}) >= 3*{n} - (3 + {(n+1)//2}) = "
+          f"{structural_bound_three(n)}")
     print()
-    print("Theoretical bounds:  s(chain,antichain) = 1,  s(chain,2-chains) = ceil(n/2),")
-    print("s(antichain,2-chains) = 2, giving  U(n) >= 3n - ceil(n/2) - 3.")
-    print(f"{'n':>4} {'2n-1':>8} {'3n-ceil(n/2)-3':>16} {'max':>8}")
-    for n in [2, 3, 4, 5, 6, 8, 10, 20, 50, 100]:
-        a, b = 2 * n - 1, 3 * n - (n + 1) // 2 - 3
-        print(f"{n:>4} {a:>8} {b:>16} {max(a, b):>8}")
+    print("   Geometric family:  P_i = block chains of size r^i inside n = r^k.")
+    print("   Pairwise overlap bound  s_ij = r^{k-i} * r^j  for j < i.")
+    print(f"   {'ratio r':>8} {'k':>3} {'n = r^k':>10} {'gain k*n':>12}"
+          f" {'total overlap':>14} {'bound':>12}")
+    for r in (2, 3, 4, 5):
+        for k in (3, 5):
+            n_ = r ** k
+            gain = k * n_
+            overlap = sum(r ** (k - i) * r ** j
+                          for i in range(k) for j in range(i))
+            print(f"   {r:>8} {k:>3} {n_:>10} {gain:>12} {overlap:>14}"
+                  f" {max(0, gain - overlap):>12}")
     print()
-
-
-# --------------------------------------------------------------------------- #
-# 5.  Exact small values
-# --------------------------------------------------------------------------- #
-
-FIVE_POINT_HOST_FOR_N3 = None  # discovered by search below
-
-
-def search_host(N: int, n: int, tries: int | None = None) -> Relation | None:
-    """
-    Search all partial orders on N points for one that is induced-universal for
-    size n.  Feasible for N <= 5.
-    """
-    orders_n = all_partial_orders(n)
-    for host in all_partial_orders(N):
-        if hosts_all(host, n, orders_n):
-            return host
-    return None
-
-
-def show_poset(r: Relation, label: str = "") -> None:
-    n = len(r)
-    covers = []
-    for x in range(n):
-        for y in range(n):
-            if x != y and r[x][y]:
-                # is it a cover?
-                if not any(x != z and z != y and r[x][z] and r[z][y] for z in range(n)):
-                    covers.append((x, y))
-    print(f"  {label}({n} points)  cover relations: "
-          + (", ".join(f"{x}<{y}" for x, y in covers) if covers else "none (antichain)"))
-
-
-def demo_exact_small_values() -> None:
-    print("=" * 74)
-    print("5.  EXACT SMALL VALUES OF U(n)")
-    print("=" * 74)
-
-    # U(2) = 3 : B(1,1)
-    host11, _ = tagged_neighbourhood_host(1, 1)
-    print(f"U(2): B(1,1) has {len(host11)} points; universal for n=2: "
-          f"{hosts_all(host11, 2)}")
-    two_point_hosts = [h for h in all_partial_orders(2) if hosts_all(h, 2)]
-    print(f"      any 2-point host universal for n=2? {len(two_point_hosts) > 0}")
-    print("      => U(2) = 3   (counting bound only gives 2: already lossy)")
-
-    # U(3) = 5
-    print("U(3): searching all partial orders on 4 points ...")
-    h4 = search_host(4, 3)
-    print(f"      4-point host exists? {h4 is not None}")
-    print("      searching all partial orders on 5 points ...")
-    h5 = search_host(5, 3)
-    print(f"      5-point host exists? {h5 is not None}")
-    if h5 is not None:
-        show_poset(h5, "found host: ")
-    print("      => U(3) = 5")
-
-    print("U(4): 2n-1 = 7 lower bound; an explicit 8-point host is known.")
-    print("      => 7 <= U(4) <= 8   (exact value open)")
-    print()
-    print(f"{'n':>3} {'U(n)':>8}")
-    for n, v in [(0, "0"), (1, "1"), (2, "3"), (3, "5"), (4, "7 or 8")]:
-        print(f"{n:>3} {v:>8}")
-    print()
-
-
-# --------------------------------------------------------------------------- #
-# 6.  The geometric family and superlinearity
-# --------------------------------------------------------------------------- #
-
-def chain_union_overlap(n: int, e: int, d: int) -> int:
-    """Common induced bound for (C_{n,e}, C_{n,d}):  (#blocks of coarse) * (block size of fine)."""
-    return ((n - 1) // e + 1) * d
-
-
-def geometric_family_bound(k: int) -> Tuple[int, int, int]:
-    """
-    For n = 4^k and the family C_{n,4^i}, 0 <= i < k:
-    returns (n, total overlap sum, resulting lower bound  k*n - overlaps).
-    """
-    n = 4 ** k
-    total = 0
-    for i in range(k):
-        for j in range(i):
-            total += min(chain_union_overlap(n, 4 ** i, 4 ** j), 4 ** (k - i) * 4 ** j)
-    return n, total, k * n - total
-
-
-def demo_superlinear() -> None:
-    print("=" * 74)
-    print("6.  GEOMETRIC CHAIN-UNION FAMILY:  n*log_4(n) <= 6*U(n)")
-    print("=" * 74)
-    print(f"{'k':>3} {'n = 4^k':>10} {'k*n':>14} {'overlap sum':>14} "
-          f"{'bound k*n-ovl':>14} {'2k*4^k/3':>12}")
+    print("   At ratio 2 the surviving bound is exactly 2^(k+1) - 2 = 2n - 2,")
+    print("   independent of k: no superlinear gain at all.  Ratio 2 is the")
+    print("   threshold of the method.")
+    print("   Ratio 4 keeps two thirds of the gain: 2*k*4^k <= 3*U(4^k),")
+    print("   hence n*log_4(n) <= 6*U(n) and U(n)/n -> infinity.")
+    print(f"   {'k':>3} {'n = 4^k':>10} {'2k*4^k/3 <= U(n)':>20}")
     for k in range(1, 9):
-        n, ovl, bound = geometric_family_bound(k)
-        print(f"{k:>3} {n:>10} {k*n:>14} {ovl:>14} {bound:>14} {2*k*4**k/3:>12.1f}")
-    print()
-    print("Certified:  2*k*4^k <= 3*U(4^k), hence  n*floor(log_4 n) <= 6*U(n).")
-    print()
-    print(f"{'n':>10} {'n*log4(n)/6':>14} {'2n-1':>10} {'3n-ceil(n/2)-3':>16} {'2^((n-1)/4)':>16}")
-    for n in [4, 16, 64, 256, 1024, 4096, 16384]:
-        lg = floor(log(n, 4) + 1e-9)
-        print(f"{n:>10} {n*lg/6:>14.1f} {2*n-1:>10} {3*n-(n+1)//2-3:>16} "
-              f"{pow2_str((n-1)/4):>16}")
-    print()
-    print("Threshold analysis: with ratio r the family bound is")
-    print("      k*r^k * (1 - 1/(r-1))  <=  U(r^k),")
-    print("nontrivial only for r > 2.  Values of the factor (1 - 1/(r-1)):")
-    for r in [2, 3, 4, 5, 8, 16]:
-        factor = 1 - 1 / (r - 1)
-        print(f"      r = {r:>2}:  factor = {factor:+.4f}"
-              + ("   <-- degenerate" if factor <= 0 else ""))
+        n_ = 4 ** k
+        print(f"   {k:>3} {n_:>10} {2 * k * n_ / 3:>20.1f}")
     print()
 
 
-# --------------------------------------------------------------------------- #
-# 7.  Full bound table
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# 9. Strict monotonicity, illustrated
+# ----------------------------------------------------------------------------
 
-def all_lower_bounds(n: int) -> Dict[str, float]:
-    lg4 = floor(log(n, 4) + 1e-9) if n >= 1 else 0
-    return {
-        "2n-1": float(2 * n - 1),
-        "3n-ceil(n/2)-3": float(3 * n - (n + 1) // 2 - 3),
-        "n*log4(n)/6": n * lg4 / 6,
-        "2^((n-1)/4)": 2.0 ** ((n - 1) / 4),
-    }
-
-
-def demo_bound_table() -> None:
+def demo_strict_mono(fam: Dict[int, List[Poset]]) -> None:
     print("=" * 74)
-    print("7.  THE FULL CORRIDOR:  best lower bound  <=  U(n)  <=  2^n - 1")
+    print("9. Deleting a maximal point:  U(n) < U(n+1)")
     print("=" * 74)
-    hdr = f"{'n':>5} {'2n-1':>10} {'3n-n/2-3':>10} {'nlog4n/6':>12} {'2^((n-1)/4)':>14} " \
-          f"{'BEST':>14} {'winner':>16} {'2^n - 1':>16}"
-    print(hdr)
-    for n in [2, 4, 8, 12, 16, 20, 24, 25, 26, 28, 32, 40, 64]:
-        b = all_lower_bounds(n)
-        best_name = max(b, key=lambda kk: b[kk])
-        print(f"{n:>5} {b['2n-1']:>10.0f} {b['3n-ceil(n/2)-3']:>10.0f} "
-              f"{b['n*log4(n)/6']:>12.1f} {b['2^((n-1)/4)']:>14.2f} "
-              f"{b[best_name]:>14.2f} {best_name:>16} {pow2_str(n):>16}")
-    print()
-    print("Exponent corridor:   1/4  <=  limsup log2 U(n) / n  <=  1/2 + eta.")
-    print("Lower end: counting.  Upper end: the labelling scheme of size 2^((1+eta)n/2).")
-    print()
-    print("Label lengths (bits per element) implied by the hosts:")
-    print(f"{'n':>6} {'Boolean host':>14} {'exponent 1/2':>14} {'counting floor':>16}")
-    for n in [16, 64, 256, 1024]:
-        print(f"{n:>6} {n:>14} {n/2:>14.1f} {(n-1)/4:>16.2f}")
+    H = diamond_plus_point()  # universal for n = 3, 5 points
+    n = 5
+    maximal = [x for x in range(n)
+               if all(y == x for y in range(n) if leq(H, x, y))]
+    print(f"   the 5-point host universal for the 3-element posets has maximal "
+          f"points {maximal}")
+    for m in maximal:
+        keep = [x for x in range(n) if x != m]
+        idx = {x: i for i, x in enumerate(keep)}
+        up = [sum(1 << idx[y] for y in keep if leq(H, x, y)) for x in keep]
+        H2 = tuple(up)
+        ok = is_universal(H2, fam[2])
+        print(f"   delete maximal point {m}: the remaining 4-point poset is "
+              f"universal for the 2-element posets: {ok}")
+    print("   In general: adjoin a global top to an n-element poset; inside a")
+    print("   host for the (n+1)-element posets the image of the top lies")
+    print("   strictly above the other n images, so none of them is a maximal")
+    print("   point of the host.  Delete it:  U(n) <= U(n+1) - 1.")
     print()
 
 
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# 10. Comparability graphs
+# ----------------------------------------------------------------------------
+
+def comparability_edges(P: Poset) -> FrozenSet[FrozenSet[int]]:
+    n = len(P)
+    return frozenset(frozenset((x, y)) for x in range(n) for y in range(n)
+                     if x != y and (leq(P, x, y) or leq(P, y, x)))
+
+
+def demo_comparability() -> None:
+    print("=" * 74)
+    print("10. The comparability bridge: height two loses nothing")
+    print("=" * 74)
+    k, l = 2, 3
+    seen: Set[FrozenSet[FrozenSet[int]]] = set()
+    for flat in product([0, 1], repeat=k * l):
+        R = [[flat[a * l + b] for b in range(l)] for a in range(k)]
+        P = bipartite_poset(k, l, R)
+        E = comparability_edges(P)
+        expected = frozenset(frozenset((a, k + b)) for a in range(k)
+                             for b in range(l) if R[a][b])
+        assert E == expected, "comparability graph must equal the bipartite graph"
+        seen.add(E)
+    print(f"   (k,l) = ({k},{l}): the comparability graph of B_R equals the")
+    print(f"   bipartite graph of R, for all {2**(k*l)} relations, and the map")
+    print(f"   R -> Comp(B_R) is injective: {len(seen)} distinct graphs "
+          f"= 2^(k*l) = {2**(k*l)}")
+    print("   Hence the poset counting bound 2^{kl} <= N^{k+l} is exactly the")
+    print("   graph counting bound, and regularity-based graph technology")
+    print("   applies to height-two posets with no loss.  For general posets")
+    print("   the comparability graph forgets orientation, which is why any")
+    print("   graph construction must be re-oriented afterwards.")
+    print()
+
+
+# ----------------------------------------------------------------------------
 
 def main() -> None:
     print()
     print("#" * 74)
-    print("#  INDUCED-UNIVERSAL POSETS: NUMERICAL DEMONSTRATIONS".ljust(73) + "#")
+    print("#  UNIVERSAL POSETS -- numerical demonstrations".ljust(73) + "#")
     print("#" * 74)
     print()
-    demo_boolean_host(n=4)
-    demo_counting_bound()
-    demo_tagged_host(k=3, l=3)
+    fam = demo_enumeration()
+    demo_U2(fam)
+    demo_U3(fam)
+    demo_U4(fam)
+    demo_ideal_host(fam)
+    demo_tagged_host()
+    demo_bounds()
     demo_overlap()
-    demo_exact_small_values()
-    demo_superlinear()
-    demo_bound_table()
-    print("All demonstrations completed.")
+    demo_strict_mono(fam)
+    demo_comparability()
+    print("=" * 74)
+    print("SUMMARY")
+    print("=" * 74)
+    print("   U(0)=0, U(1)=1, U(2)=3, U(3)=5, 7 <= U(4) <= 8")
+    print("   max(3n - ceil(n/2) - 3,  n*log_4(n)/6,  2^((n-1)/4))"
+          " <= U(n) <= 2^n - 1")
+    print("   U is strictly increasing; on the balanced bipartite class an")
+    print("   explicit host of size m*2^m + m attains exponent n/2, while")
+    print("   counting gives only 2^{n/4}.  The gap is a factor 2 in the")
+    print("   exponent, and it is open.")
+    print()
 
 
 if __name__ == "__main__":
