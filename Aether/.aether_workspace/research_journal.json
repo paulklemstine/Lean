@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e3c425e4",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `r : ℕ`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if ther",
-      "quality_score": 0.7868499999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-30T22:30:03",
-      "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
-    },
-    {
       "cycle_id": "85fa434c",
       "domain": "Algebra",
       "key_insight": "# Future Directions: BSD Rank Computability\n\n## What is formalized\n\n`Catalog/Applications/BSD/RankComputability.lean` proves a complete finite linear-algebra chain for a certified descent presentation",
@@ -2501,6 +2491,16 @@
       "theorem_count": 456,
       "timestamp": "2026-08-07T19:22:32",
       "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
+    },
+    {
+      "cycle_id": "2116bc97",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: radical isogenies on Montgomery curves\n\n## Where the thread stands\n\nThe thread has run through several cycles on the same object: the radical\n2-isogeny step on a Montgomery curve",
+      "quality_score": 0.6539737559241706,
+      "sorry_count": 0,
+      "theorem_count": 324,
+      "timestamp": "2026-08-07T19:22:39",
+      "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71348
     }
   ],
-  "last_updated": "2026-08-07T19:22:32",
+  "last_updated": "2026-08-07T19:22:39",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "03b10997",
-        "quality": 0.7701199999999999,
-        "theorems": 17,
-        "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
-      },
-      {
         "cycle_id": "b080b405",
         "quality": 0.7891599999999999,
         "theorems": 13,
@@ -3389,6 +3383,12 @@
         "quality": 0.7003711194029851,
         "theorems": 134,
         "title": "ArXiv paper: Even smaller universal posets"
+      },
+      {
+        "cycle_id": "2116bc97",
+        "quality": 0.6539737559241706,
+        "theorems": 324,
+        "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
       }
     ],
     "Geometry": [
