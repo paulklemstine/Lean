@@ -1,217 +1,158 @@
-# The Fitness Landscape of Mathematical Theories
+# The Warehouse of All Possible Hierarchies
 
-## Why some libraries of mathematics win
+*How small can a single ordered structure be, if it has to contain every ordered structure of a given size hiding inside it?*
 
-Every working mathematician has, at some point, had the following argument.
+## A catalogue that contains everything
 
-One side says: *write it in full generality*. Set up the abstract machinery, prove the theorem once, and every special case falls out for free. The other side says: *just prove the thing*. The abstract setup costs three hundred pages before it says anything, and you only ever wanted the one corollary.
+Imagine you run a warehouse whose customers order not objects but *hierarchies*. One wants a chain of command with five ranks; another, five independent contractors answering to nobody; a third, a diamond: one boss, three incomparable deputies, one common subordinate.
 
-Both sides are right, and both sides know it, and the argument never ends — because it has never been an argument about mathematics. It has been an argument about *economics*: how much does a piece of mathematics cost to write down, and how much does it buy you?
+You could stock every hierarchy separately, but there are astronomically many — the number on $n$ labelled elements grows like $2^{n^2/4}$. Better: build **one** master hierarchy $H$, so richly interconnected that every request can be found *sitting inside it*. Pick out the right $n$ points of $H$, and the relationships they already have are exactly the ones asked for. Not approximately — exactly. If two chosen points are unrelated in the request, they must be unrelated in $H$ too.
 
-This article is about what happens when you take that economic question literally. Fix a finite list of statements you want proved — call it the **corpus**. Consider all the possible bodies of mathematics that prove it. Charge each one for the total length of everything it actually needs, counting shared material once. Divide the number of theorems proved by the total cost. Call that number the **fitness** of the theory.
+The mathematical name for a hierarchy is a **partially ordered set**, or *poset*: a set with a relation $\le$ that is reflexive ($x \le x$), transitive ($x \le y$ and $y \le z$ force $x \le z$), and antisymmetric ($x \le y$ and $y \le x$ force $x = y$). Picking out a subset and keeping exactly the relations it already carries is called taking an **induced subposet**. A poset containing every $n$-element poset as an induced subposet is called a **universal poset** for size $n$.
 
-You now have a landscape. Each possible development of the subject is a point; its fitness is its altitude. The abstract library and the hand-rolled special case are two nearby points, and the question "which is better?" has become the question "which one is higher?"
+The question of this article is deceptively simple:
 
-The surprise is how much of that landscape can be mapped exactly.
+> **How few points can a universal poset for size $n$ have?**
 
----
+Write $U(n)$ for that minimum. The whole story is a fight to pin $U(n)$ down.
 
-## Charging honestly: the cost of a theory
+## The obvious answer, and why it is nearly right
 
-The first thing you need is an honest accounting rule, and getting it right is more delicate than it sounds.
+Here is a construction that always works, and it is beautiful in its simplicity. Take any poset $P$ on the points $\{1,\dots,n\}$. To each point $x$, attach the set of everything below it:
+$$\downarrow x \;=\; \{\,y : y \le x\,\}.$$
+This is called the *principal down-set*, or *principal ideal*, of $x$. Now compare two such sets by inclusion. Transitivity says that if $x \le y$ then everything below $x$ is below $y$, so $\downarrow x \subseteq \downarrow y$. Conversely, reflexivity says $x \in \downarrow x$, so if $\downarrow x \subseteq \downarrow y$ then $x \in \downarrow y$, i.e. $x \le y$. Antisymmetry makes the assignment injective. In one line:
 
-Naively, the cost of a development is the number of lines you wrote. But mathematics is not written in isolation. A proof of the class number formula rests on algebraic number theory, which rests on commutative algebra, which rests on set theory. If you charge the proof for all of that, you get an absurd number. If you charge it for none of it, you can "prove" anything for free by declaring the hard part a prerequisite.
+**Theorem (Boolean host).** *For every poset $P$ on $n$ points, the map $x \mapsto \downarrow x$ is an induced embedding of $P$ into the lattice of all subsets of $\{1,\dots,n\}$ ordered by inclusion.*
 
-The rule that works is: **charge for the transitive dependency closure, and charge each item exactly once.**
+So the Boolean lattice — the poset of all $2^n$ subsets of an $n$-element set — is universal. Just like that, $U(n) \le 2^n$.
 
-Formally: suppose each mathematical item $i$ — a definition, a lemma, a theorem — has a set of *direct* dependencies $\mathrm{deps}(i)$, the things its statement and proof invoke immediately. Call a collection $S$ of items **dependency-closed** if it contains the direct dependencies of everything in it: $\mathrm{deps}(i) \subseteq S$ for all $i \in S$. A dependency-closed collection is exactly a collection you could actually read from beginning to end without ever encountering an undefined term.
+And in fact you can shave a point off, for free: since $x$ always lies in $\downarrow x$, the *empty* subset is never used as a label. Throwing it away leaves a universal host on $2^n - 1$ points, so
 
-Now, given a starting set $B$ of items you want, the **transitive closure** $\overline{B}$ is what you get by repeatedly throwing in the dependencies of what you already have, until nothing new appears. Inside any fixed finite universe of items this terminates — each round either adds something or stops, and there are only finitely many things to add. What makes the definition canonical rather than arbitrary is:
+$$U(n) \;\le\; 2^n - 1 \;<\; 2^n .$$
 
-> **Minimality of the closure.** $\overline{B}$ is dependency-closed, contains $B$, and is contained in *every* dependency-closed set containing $B$.
+The naive bound is never attained. That hints at something: the Boolean lattice is *wasteful*. Could it be wasteful by a huge factor — could $U(n)$ actually be something like $2^{n/2}$, the square root of the naive answer?
 
-So $\overline{B}$ is not merely *a* reasonable notion of "everything you need". It is the unique smallest one. There is no accounting slack. Anyone who insists on a different notion of what a development requires is insisting on a set that either fails to be readable or strictly contains the canonical answer.
+This is exactly the question that a recent line of work answers, and the answer is yes: for every $\eta>0$ and all large enough $n$, there is a universal poset of size $2^{(1+\eta)n/2}$. The exponent drops from $n$ to $n/2$. The construction is a labelling scheme, inspired by the Boolean lattice but far more economical, designed so that comparability can still be read off from labels and so that transitivity is automatically preserved; the hardest step relies on the Szemerédi Regularity Lemma, the great structural theorem of extremal combinatorics that says every large graph can be chopped into a bounded number of pieces that behave, pairwise, almost like random graphs.
 
-With that fixed, assign each item $i$ a source length $\ell(i) \geq 0$ and define, for a development $T$ with dependency closure $C(T)$ proving a set $P(T)$ of corpus statements:
+What follows is a self-contained tour of the landscape around that theorem: the counting barrier that says the exponent can never drop below $n/4$, an explicit host that *achieves* the exponent $n/2$ on the hardest-looking sub-family, exact values of $U(n)$ for tiny $n$, and a new proof that $U(n)$ must grow faster than any constant multiple of $n$.
 
-$$\mathrm{cost}(T) \;=\; \sum_{i \in C(T)} \ell(i), \qquad \mathrm{fitness}(T) \;=\; \frac{|P(T)|}{\mathrm{cost}(T)}.$$
+## The counting barrier: why you cannot do better than $2^{n/4}$
 
-Two structural facts make this cost model well behaved rather than merely definable.
+Why can a universal poset not be tiny — say, polynomial in $n$? The reason is pure information theory, and it is worth savouring because it is so short.
 
-**Dependency-closed collections form a lattice.** If $S$ and $T$ are both dependency-closed, so are $S \cup T$ and $S \cap T$. The intersection statement is the important one: it says the *shared* material of two developments is itself a legitimate, self-contained body of mathematics. That is precisely what licenses the phrase "charge shared dependencies once" — the shared part is a real thing, not a bookkeeping fiction.
+Fix two numbers $k$ and $l$ and look only at the simplest interesting posets: the **bipartite** ones, of height at most two. Take $k$ "low" elements $a_1,\dots,a_k$ and $l$ "high" elements $b_1,\dots,b_l$. No two lows are comparable, no two highs are comparable, and for each pair $(i,j)$ you get to *choose freely* whether $a_i < b_j$. Every such choice gives a genuine poset — transitivity is free because there are no chains of length three. So there are exactly $2^{kl}$ bipartite posets of shape $(k,l)$, all distinct.
 
-**Merging obeys exact inclusion–exclusion.** If $T$ and $U$ are pooled into a single development $T \sqcup U$ whose closure is $C(T) \cup C(U)$,
+Now suppose $H$ is a host with $N$ points containing all of them. For each of the $2^{kl}$ choices, fix one embedding: a map from the $k+l$ elements into the $N$ host points. Two *different* bipartite posets can never yield the *same* map, because from the map you can read the poset straight back off: $a_i < b_j$ holds if and only if the image of $a_i$ is below the image of $b_j$ in $H$. So we have an injection from $2^{kl}$ posets into the $N^{k+l}$ possible maps:
 
-$$\mathrm{cost}(T \sqcup U) \;+\; \sum_{i \in C(T) \cap C(U)} \ell(i) \;=\; \mathrm{cost}(T) + \mathrm{cost}(U).$$
+**Theorem (Counting bound).** *If a poset on $N$ points contains every $(k,l)$-bipartite poset as an induced subposet, then*
+$$2^{kl} \;\le\; N^{\,k+l}, \qquad\text{equivalently}\qquad N \;\ge\; 2^{\,kl/(k+l)} .$$
 
-In words: *pooling saves exactly the shared mass.* Not approximately, not asymptotically — exactly. That identity is the engine behind almost everything that follows.
+Set $k=l=m$ and $n=2m$. Then $kl/(k+l) = m/2 = n/4$, so every universal poset for $n$ points needs at least $2^{n/4}$ of them. In logarithmic form, for every $n \ge 1$,
+$$\frac{n-1}{4} \;\le\; \log_2 U(n) \;\le\; n .$$
 
----
+There is the whole game in one line. The truth lies somewhere in the corridor between exponent $1/4$ and exponent $1$, and the theorem quoted above pushes the ceiling down to $1/2 + \eta$.
 
-## Fitness is just cost, upside down
+An amusing footnote: the counting bound is *lossy from the very first case*. For $n=2$ it gives only $U(2) \ge 2$, whereas the true value is $U(2)=3$ — you genuinely need three points (say $x < y$ and a third point $z$ incomparable to both) to host both the two-element chain and the two-element antichain. Counting arguments do not see that kind of obstruction at all.
 
-Here is the first simplification, and it is a large one. On a fixed corpus — that is, when comparing developments that all prove the same number of statements — fitness is a purely *ordinal* inverse of cost:
+## Achieving the exponent $n/2$, explicitly
 
-> For nonempty corpora of equal size and positive costs, $\mathrm{fitness}(T) \leq \mathrm{fitness}(U)$ if and only if $\mathrm{cost}(U) \leq \mathrm{cost}(T)$.
+Here is the surprise. On the bipartite family — the very family that produced the lower bound — one can write down an explicit optimal-looking host with no regularity lemma, no probabilistic argument, and no asymptotics.
 
-Nothing about the corpus matters except how big it is. This collapses a question about ratios of possibly-irrational-looking quantities into a question about comparing two integers, and it means the whole landscape metaphor can be run on cost alone.
+**The tagged-neighbourhood host.** Fix $k$ and $l$. Build a poset $B_{k,l}$ whose points are of two kinds:
 
-It has an immediate consequence. Suppose you are handed any nonempty finite collection of competing developments. Since a finite set of rational numbers has a maximum:
+* $k$ *bottom* points, one for each $a_i$, pairwise incomparable;
+* all pairs $(S,t)$ where $S$ is any subset of the bottom points and $t$ is a *tag* drawn from $\{1,\dots,l\}$, pairwise incomparable.
 
-> **Finite maximum principle.** Any nonempty finite comparison class of theories contains a fitness champion.
+The order is the only sensible one: bottom point $a$ lies below $(S,t)$ exactly when $a \in S$; there are no other relations. The number of points is
+$$|B_{k,l}| \;=\; k + 2^{k}\,l .$$
 
-That sounds trivial, and as a piece of mathematics it is. Its role is different: it tells you exactly which part of the "which library is best?" question is mathematics and which part is empirical measurement. Existence of a champion is free. *Identifying* it is the real work — and the answer turns out to depend delicately on the rules of the game.
+**Theorem (Bipartite universality).** *$B_{k,l}$ contains every $(k,l)$-bipartite poset as an induced subposet.*
 
----
+The proof is one line: given a bipartite poset with relation $R$, send $a_i$ to the bottom point $a_i$, and send the high element $b_j$ to the pair $(\{a_i : a_i R\, b_j\},\, j)$ — its neighbourhood, tagged with its own index. A bottom point is below the image of $b_j$ exactly when it belongs to the neighbourhood, which is exactly the required relation; and two high images are equal only if their tags agree, so distinct high elements land on distinct points.
 
-## The champion is the shared core — and here is why
+Why the tag? Because two high elements may have *identical* down-sets — imagine two managers overseeing precisely the same team. Their neighbourhoods are the same set, so the neighbourhood label alone cannot separate them; but a universal host must place them at *different* points, since a host is a poset and two distinct points of a poset are never "the same". Formally:
 
-The folklore claim is that a mature, heavily reused general library beats a collection of bespoke developments. Under the cost model above, this is not folklore. It is a theorem, and it comes in two forms.
+**Proposition (The tag is necessary).** *In any host containing all $(k,2)$-bipartite posets, the two high elements of the poset with no relations at all must receive distinct host points.*
 
-**The abstract form.** Suppose $L$ is a development whose dependency closure embeds into the closure of every competitor, all of them proving corpora of the same size. Then $L$ is the champion: $\mathrm{fitness}(T) \le \mathrm{fitness}(L)$ for every competitor $T$. This is immediate once you know that cost is monotone in the closure and fitness is inverted cost — but it is worth saying out loud what it means. *Being contained in everyone else is the same thing as winning.* Generality is not a cost to be justified; it is a structural advantage, provided the general material is genuinely what everyone needs.
+So the tag coordinate is not decoration; it is forced.
 
-**The sharp form.** The abstract statement has a hypothesis you have to check. It can be replaced by a construction. Fix a **proof system**: each corpus statement $s$ comes with the set $\mathrm{base}(s)$ of items its chosen proof consumes. Define the **canonical library** for the corpus as the transitive closure of the union of all the proof bases:
+Now balance the parts: $k=l=m$, so $n=2m$. The host has $m\,2^m + m$ points, an exponent of $m = n/2$. Setting this beside the counting bound gives a clean sandwich for the balanced bipartite family on $n=2m$ points:
+$$2^{\,m/2} \;\le\; U_{\text{bip}}(m,m) \;\le\; m\,2^{m} + m .$$
+Exponent $n/4$ below, exponent $n/2$ above — and the upper bound is a completely explicit list of points. The deep theorem about *all* posets says that the exponent $n/2$ survives when the bipartite restriction is dropped, up to a factor $2^{\eta n}$.
 
-$$C_{\mathrm{can}} \;=\; \overline{\textstyle\bigcup_{s \in \mathrm{corpus}} \mathrm{base}(s)}.$$
+Is the remaining factor-of-two gap an artefact of a lazy argument? No. On the balanced bipartite family there are $2^{n^2/4}$ posets to host, while a host with $2^{cn}$ points offers $2^{cn^2}$ ways to place $n$ labelled points; counting is defeated only when $c < 1/4$. So it is *structurally impossible* for counting to certify an exponent above $1/4$: the method never notices that a single host point is *reused* by enormously many different embeddings. Closing the gap means understanding that reuse — precisely where machinery like the regularity lemma enters.
 
-Then two things hold. The canonical library proves the entire corpus — every proof base sits inside it by construction. And *every* dependency-closed development that proves the corpus contains it, by minimality of the closure. Therefore:
+## Small numbers, exactly
 
-> **Dependency-adjusted global champion.** Over the whole, unbounded class of dependency-closed developments proving a fixed corpus, the canonical library is a fitness maximum. Any competitor achieving the same fitness has exactly the same cost.
+Asymptotics are one thing; the first few values are another, and they are unexpectedly stubborn.
 
-This is the sharpest possible version of "reuse wins". It is not a statement about a finite tournament; it is a statement about all conceivable developments at once. The shared core wins not because it is elegant, but because logic forces every rival to contain it.
+$$U(0)=0,\qquad U(1)=1,\qquad U(2)=3,\qquad U(3)=5,\qquad 7 \le U(4)\le 8 .$$
 
----
+The upper bounds are explicit hosts. For $n=3$ there is a five-point poset into which all nineteen three-element orders embed as induced subposets; for $n=4$ there is an eight-point poset that hosts all $219$ four-element orders — a finite check, but a real one, over all $4096$ candidate relations on four points.
 
-## Exactly how much reuse saves
+The lower bounds come from an idea entirely different from counting, and it is the engine of everything in the rest of this article.
 
-The champion theorem says the shared library wins. A separate identity says by how much, and it is exact.
+**The overlap principle.** Suppose $P$ and $Q$ are two $n$-element posets that are *incompatible*: no poset on more than $s$ points embeds as an induced subposet into both. Any host must contain an induced copy of $P$ (occupying $n$ points) and an induced copy of $Q$ (occupying $n$ points), and the two copies can share at most $s$ points — because a shared set of points is an induced subposet of both. By inclusion–exclusion,
+$$N \;\ge\; 2n - s .$$
 
-Split a corpus into $k$ blocks. A **specialist** for block $i$ writes the general core from scratch plus its own private material $\mathrm{priv}(i)$. A **shared library** writes the core once and puts all the private material on top. Assume the private parts are pairwise disjoint and disjoint from the core. Then
+Take $P$ = the $n$-chain $x_1 < x_2 < \dots < x_n$ and $Q$ = the $n$-antichain. Any poset embedding into both must be simultaneously totally ordered and totally unordered, so it has at most one point: $s=1$. Hence
 
-$$\mathrm{cost}(\text{library}) \;+\; k \cdot \mathrm{cost}(\text{core}) \;=\; \sum_{i=1}^{k} \mathrm{cost}(\text{specialist } i) \;+\; \mathrm{cost}(\text{core}).$$
+**Theorem (Linear lower bound).** $U(n) \ge 2n-1$.
 
-Rearranged: the suite of specialists costs exactly $(k-1)$ extra copies of the core. So as soon as $k \geq 2$ and the core is nonempty, the shared library is strictly cheaper, hence strictly fitter, than the pooled suite proving the very same corpus. The saving is linear in the number of clients — which is why libraries pay off slowly at first and then decisively.
+This is sharp for $n \le 3$ — it gives $U(3)\ge 5$, matching the five-point host exactly — and it gives $U(4)\ge 7$.
 
----
+Three posets are better than two. Add $R$ = the disjoint union of two chains, each of about $n/2$ points. A chain sitting inside $R$ must live in one of the two chains, so the chain and $R$ share at most $\lceil n/2 \rceil$ points; the antichain and $R$ share at most $2$ points (one from each chain); the chain and the antichain share at most $1$. Bonferroni's inequality for three sets — $|A \cup B \cup C| \ge |A|+|B|+|C| - |A\cap B| - |A \cap C| - |B \cap C|$ — then yields
 
-## Where the champion stops being canonical
+**Theorem (Three-poset bound).** $U(n) \;\ge\; 3n - \lceil n/2 \rceil - 3$,
 
-Every clean theorem has a boundary, and this one's is instructive.
+which is asymptotically $\tfrac52 n$, beating $2n-1$ for every $n \ge 6$.
 
-The canonical champion argument used a *fixed* proof system: one chosen proof per statement. Real mathematics does not work like that. There are two proofs of quadratic reciprocity before breakfast.
+## Breaking the linear barrier
 
-What happens with alternatives? Consider the minimal example. One statement, two proof routes, each requiring a single item of length one, and the two items are different. Both routes prove the corpus. Both cost $1$. Both have fitness $1$. Their dependency closures are incomparable — neither contains the other — and their intersection is *empty*, so it proves nothing at all.
+All of the above is linear in $n$, while the truth is exponential. Can the overlap method — which never counts posets at all — nevertheless see superlinear growth? The answer is yes, and the trick is to play a whole *geometric family* of posets against each other rather than two or three.
 
-So the covering developments have no least element. There is no canonical champion. The tidy "minimality of the closure" argument evaporates the moment routes branch.
+For a block size $d$, let $C_d$ be the poset on $\{0,1,\dots,n-1\}$ obtained by cutting the line into consecutive blocks of length $d$ and making each block a chain, with no relations between blocks. So $C_1$ is the antichain and $C_n$ is the full chain. The key combinatorial fact is a two-sided squeeze:
 
-What survives is existence, and it survives in the right generality. In a multi-route system, where each statement carries a finite set of alternative proof routes and a development proves a statement if it contains at least one route, one still has:
+**Lemma (Chain-union overlap).** *If $e \ge d$, then any common induced subposet of $C_e$ and $C_d$ has at most $\lceil n/e\rceil \cdot d$ points.*
 
-> **Existence of a minimum-cost cover.** Inside a finite universe that itself covers the corpus, some sub-collection covers the corpus at minimal cost, and it is therefore a fitness maximum among all covering sub-collections.
+The reason is a pigeonhole with two prongs. Such a common subposet meets each of the $\approx n/e$ blocks of $C_e$ in a chain; and each of those chains, being totally ordered, must be carried into a *single* block of $C_d$, which holds at most $d$ points. Multiply.
 
-The champion still exists; it merely stops being computable by taking a closure. What has appeared instead is a weighted set-cover problem in disguise — which is to say, the moment mathematics offers you choices about how to prove things, choosing the cheapest overall library becomes a genuinely combinatorial optimisation problem rather than a matter of following dependencies downhill.
+Now take $n = 4^k$ and the geometric family $C_{4^0}, C_{4^1}, \dots, C_{4^{k-1}}$. Each contributes $n$ host points; the pairwise overlaps sum to at most
+$$\sum_{i<k}\sum_{j<i} 4^{\,k-i}\,4^{\,j} \;\le\; \frac{k\,4^{k}}{3},$$
+using the exact identity $3(1+4+\dots+4^{i-1}) + 1 = 4^{i}$. A Bonferroni bound for $k$ sets — $|\bigcup A_i| \ge \sum |A_i| - \sum_{j<i}|A_i \cap A_j|$ — gives $k\cdot 4^{k} \le N + \tfrac13 k\,4^k$, hence
 
----
+**Theorem (Superlinear lower bound).** *For all $k$,* $\;2k\,4^{k} \le 3\,U(4^{k})$, *and for every $n$,*
+$$n\log_4 n \;\le\; 6\,U(n).$$
+*Consequently $U(n)/n \to \infty$: for every constant $C$ there are arbitrarily large $n$ with $U(n) \ge C n$.*
 
-## Combining libraries: a phase transition
+The base $4$ is not cosmetic. If you run the same argument with ratio $2$ instead of $4$, the geometric series of overlaps grows exactly as fast as the gain from adding a new poset, and the whole bound collapses to something linear. Ratio $2$ is precisely the threshold of the method; anything strictly larger works, and $4$ makes the arithmetic exact.
 
-Now suppose you have two established developments and you want to merge them. Pooling saves the shared mass — that is the inclusion–exclusion identity. But merging is not free: you must write an **adapter layer** of cost $A$ reconciling the two sets of conventions.
+One more structural fact deserves a place. Delete a *maximal* point from an optimal host for the $(n+1)$-element posets and what remains still hosts all $n$-element posets, because every $n$-element poset extends to an $(n+1)$-element poset with an extra point on top, whose copy must use the deleted point last. Hence:
 
-Compare two options for proving the union of the two corpora. Keep them separate, paying $\mathrm{cost}(T) + \mathrm{cost}(U)$ with every shared dependency paid for twice. Or compose, paying $\mathrm{cost}(T \sqcup U) + A$. The inclusion–exclusion identity converts this into a clean threshold:
+**Theorem (Strict monotonicity).** $U(n) < U(n+1)$ *for every $n$; in particular $U$ is injective.*
 
-> **Composition threshold.** Composition strictly increases fitness if and only if $A < \mathrm{shared\ mass}$; it is fitness-neutral if and only if $A = \mathrm{shared\ mass}$; and it strictly decreases fitness if and only if $A > \mathrm{shared\ mass}$.
+## Graphs, regularity, and where the difficulty really lives
 
-There is a sharp critical point, and it sits at a directly measurable quantity: the total length of the material the two developments have in common. Dividing through by the duplicated cost gives the same statement in normalised form — composition pays exactly when the *adapter density* falls below the *dependency density*. Both are dimensionless numbers you can measure on a real corpus.
+There is a bridge from posets to graphs that makes the connection to the regularity lemma visible. The **comparability graph** of a poset joins two distinct points whenever they are comparable. Under this translation, a bipartite poset of shape $(k,l)$ becomes an ordinary bipartite graph on parts of sizes $k$ and $l$, and — this is the point — induced subposets become induced subgraphs. So a universal poset yields, via its comparability graph, a graph containing every $(k,l)$-bipartite graph as an induced subgraph; the counting bound $2^{kl} \le N^{k+l}$ can be re-derived on the graph side without ever mentioning order.
 
-A worked instance makes it concrete. Two developments of four items each, sharing two, every item of length $10$. Separate cost: $80$. Pooled cost: $60$. Shared mass: $20$. With an adapter costing $10$, fitness rises from $4/80$ to $4/70$. With an adapter costing $30$, it falls to $4/90$. At exactly $20$, nothing changes. The transition is a genuine crossing, not a gradual trend.
+And on the graph side the heavy machinery is available. The Szemerédi Regularity Lemma states that for every $\varepsilon > 0$ there is a bound $M(\varepsilon)$ such that every large enough graph admits an equipartition of its vertices into between $m$ and $M(\varepsilon)$ parts, almost all pairs of which are $\varepsilon$-uniform: the edge density between any two large sub-parts is within $\varepsilon$ of the density between the parts themselves. Applied to comparability graphs of posets, it says every large poset can be split into a bounded number of blocks whose mutual comparability patterns look pseudorandom. That is the leverage which converts "a host point can serve many embeddings" from an obstruction into a resource, and it is what powers the passage from the explicit exponent $n/2$ on bipartite posets to the exponent $(1+\eta)n/2$ on all posets.
 
-There is one further effect that eventually swamps the adapter. If the composite proves not the *union* but the *product* of the two corpora — every combination of a fact from one side with a fact from the other, as happens when two theories genuinely interact — then the numerator multiplies while the denominator only adds. Concretely, whenever
+## Why anyone should care
 
-$$\mathrm{cost}(T) + \mathrm{cost}(U) + A \;<\; \mathrm{cost}(T)\cdot|P(U)|,$$
+Universal posets are a problem in *labelling*, and labelling is a practical business.
 
-composition beats the first component outright, *whatever* the adapter costs. Multiplicative growth eventually beats additive cost. This is the formal residue of the observation that fields which fuse — algebraic geometry, analytic number theory — pay a large one-off translation cost and then reap combinatorially many theorems.
+An **adjacency labelling scheme** assigns to each element a short binary string, so that the relation between any two elements can be decided from their two labels alone — no global lookup table. A universal host with $N$ points is exactly a labelling scheme with $\log_2 N$-bit labels: label a point by the host point it maps to, and decide comparability inside the host. Improving the exponent from $n$ to $n/2$ halves the label length. Such schemes let a distributed system answer "does $u$ dominate $v$?" from local data, compress version-control ancestry and taxonomies, and underlie succinct reachability structures.
 
----
+The Boolean-lattice construction is precisely the naive scheme "label each element by the bit-vector of everything below it" — $n$ bits per element. The tagged-neighbourhood host is the observation that in a two-level hierarchy you only need the neighbourhood plus a disambiguating serial number. The deep theorem is the statement that a similar economy is achievable across all hierarchies at once, with about $n/2$ bits.
 
-## Counting how many libraries there are
+And the counting bound is the hard floor: no scheme can beat $n/4$ bits per element, because there are simply too many hierarchies and too few short labels. Somewhere between $n/4$ and $n/2$ lies the truth, and nobody yet knows where.
 
-Behind "candidates multiply" is a combinatorial claim that can be checked exactly. Given a body of items with a dependency structure, how many *usable* sub-libraries does it have — how many dependency-closed subsets?
+## The state of play
 
-Three exact answers.
+Collecting everything:
 
-**Independent parts multiply.** If the items split into two groups $A$ and $B$ with no dependency crossing between them, then the dependency-closed subsets of the whole are exactly the pairs (closed subset of $A$, closed subset of $B$):
+$$\max\!\left(2n-1,\; 3n-\lceil n/2\rceil-3,\; \tfrac{1}{6}n\log_4 n,\; 2^{(n-1)/4}\right) \;\le\; U(n) \;\le\; 2^{n}-1,$$
 
-$$N(A \cup B) = N(A)\cdot N(B).$$
+with $U(0)=0$, $U(1)=1$, $U(2)=3$, $U(3)=5$, $7 \le U(4) \le 8$, and $U$ strictly increasing throughout. The exponential lower bound eventually swamps all the linear and near-linear ones — the crossover happens around $n \approx 25$ — but for small $n$ the structural bounds are the sharp ones, and they are the only bounds that ever produce an *exact* value.
 
-This is a bijection, not an estimate: intersect a closed subset with $A$ and with $B$ to go one way, take the union to go back.
-
-**The free extreme.** If nothing depends on anything, every subset is usable, so $n$ items give exactly $2^n$ usable sub-libraries.
-
-**The rigid extreme.** If the items form a chain — item $i$ depends on item $i-1$ — then a dependency-closed subset must be downward closed, hence an initial segment $\{0, 1, \dots, k-1\}$. There are exactly $n + 1$ of them.
-
-So dependency density collapses the candidate population from $2^n$ to $n+1$: for every $n \geq 2$ the chain has strictly fewer usable sub-libraries than the independent family, and the gap is exponential.
-
-This is the trade-off at the heart of library design stated in exact numbers. Dependencies are what make reuse possible — they are how the core gets shared. They are also what destroy modularity, because each one prunes the tree of things you can extract and use on their own. A body of mathematics can be highly reusable *as a whole* while offering almost nothing usable *in part*. Both extremes are computed here, and every real library lives between them.
-
----
-
-## Valleys, and why fields don't migrate
-
-So far the landscape has been described by its peaks. Its valleys are where the drama is.
-
-Suppose you want to migrate a development from one abstraction layer to another — recast a piece of analysis in measure-theoretic language, say, or rebuild a combinatorial argument algebraically. You do it in small, meaning-preserving steps: a path $w_0, w_1, \dots, w_n$ through the space of developments, each step a bounded refactoring, the mathematical content unchanged throughout.
-
-Two facts about such a path. The first is purely combinatorial: if the endpoints are written against inequivalent interfaces, then some *single* step crosses the boundary. You cannot get from one convention to another by a sequence of steps none of which changes the convention. Obvious, but it localises the problem to a single transition.
-
-The second quantifies the damage. Suppose a state that straddles the boundary must implement both interfaces at once, so its source length is at least $(1+\alpha)$ times the intrinsic size $C$ of the content. Suppose the endpoints are efficient: their length is at most $(1+\beta) C$ with $\beta < \alpha$. Then:
-
-> **Adapter valley.** Every semantics-preserving migration path contains an intermediate state whose length exceeds the smaller endpoint length by at least the fixed positive fraction $\dfrac{\alpha - \beta}{1 + \beta}$ of it.
-
-The overshoot depends only on the two efficiency exponents — not on the length of the path, not on how cleverly you refactor, not on the size of the development. With a crossing state at $1.5\times$ content and endpoints at $1.1\times$, the guaranteed overshoot is $(0.5 - 0.1)/1.1 = 4/11$: any migration must at some point be at least $36\%$ bloated relative to where it started.
-
-That is a *barrier*. And since fitness is inverted cost, a length barrier is a fitness valley. You cannot walk from one convention to another downhill; you must climb out of your own basin first.
-
----
-
-## Three peaks, no summit
-
-Which brings us to the shape of the whole landscape.
-
-Call a development a **strict local maximum** if every neighbour reachable by one bounded refactoring is strictly less fit. The natural way to get one is to be the best in your own style with a neighbourhood that never leaves it:
-
-> **Style-centre theorem.** If a development is strictly optimal among all developments of its own methodological style, and every bounded refactoring preserves style, then it is a strict local maximum.
-
-The value of separating those two hypotheses is that each is independently measurable: "best in style" is a comparison within a class, "style-closed neighbourhood" is a property of the refactoring relation. The hypothesis can even be weakened realistically: boundary crossings *may* be allowed, provided cross-style neighbours are strictly less fit — the adapter valley result is exactly what supplies that. And local maximality is invariant under meaning-preserving renaming, so the notion descends to the quotient in which two developments differing only in names are identified. Nobody's peak is an artefact of notation.
-
-Instantiate this with nine developments of one corpus, three each in algebraic, analytic, and combinatorial style, with measured fitnesses $1, 2, 5 \mid 3, 7, 4 \mid 6, 2, 9$ and refactorings that stay within style. Then the three stylewise winners — the $5$, the $7$, the $9$ — are three *distinct* strict local maxima, one per style. And the first two are not global: $5 < 9$ and $7 < 9$. The landscape is genuinely multi-peaked. There is no path of small improvements from the algebraic peak to the combinatorial one, even though the combinatorial one is better.
-
-If you have ever wondered why two communities can work on the same theorems for decades with incompatible toolkits, each locally unable to improve by adopting the other's methods, this is the geometry of it. Both are right that every small step towards the other side makes things worse. Both are wrong that this settles which peak is higher.
-
----
-
-## The catch: there is no global champion at all
-
-The final result is the one that keeps everything else honest.
-
-Everything above compares developments *on a fixed corpus*. Drop that, and measure raw theorems-per-line over everything expressible, and the whole enterprise collapses. Here is why.
-
-Consider any language of developments in which you can perform **conservative inflation**: state $n$ further consequences of what you have already proved, at *sublinear* marginal source cost — say $\sqrt{n}$ extra lines for $n$ extra statements. This is not a contrived operation; it is what happens whenever a general theorem is instantiated in a hundred special cases, each one line long.
-
-Then raw fitness is unbounded. Given any target $M$, inflate enough and the ratio $\big(\mathrm{count} + n\big) / \big(\mathrm{len} + \sqrt{n}\big)$ exceeds it, because the numerator grows like $n$ and the denominator like $\sqrt{n}$. Hence:
-
-> **No universal maximum without normalisation.** In any language admitting conservative inflation at sublinear marginal cost, raw theorem-per-line fitness has no global maximum.
-
-And — this is the sting — *every one of those record-breaking developments means exactly the same thing as the one it came from*. Conservative inflation, by definition, adds no semantic content. The unbounded family is semantically inert. The fitness diverges to infinity while the mathematics stands perfectly still.
-
-Put beside the finite maximum principle, this is a sharp dichotomy: **maxima exist on every finite normalised comparison class, and never on the full expressible class.** Normalisation is not a technical convenience. It is the entire content of the claim that a champion exists.
-
----
-
-## What this is really about
-
-None of these results tells you which textbook to buy. That is not what they are for.
-
-What they do is convert a perpetual argument into a set of measurements. "Is the general library worth it?" becomes: measure the shared mass, measure the adapter, compare two integers. "Why won't they adopt our methods?" becomes: measure the two efficiency exponents, compute $(\alpha - \beta)/(1+\beta)$, and read off the height of the wall between the camps. "Which library is the best?" becomes: *the best on which corpus, with which dependencies charged, in which bounded universe?* — because without those three answers the question provably has none.
-
-And there is a lesson in the structure of the results themselves. The theorems that came out cleanest — closure minimality, the reuse identity, the composition threshold, the exact counts $2^n$ and $n+1$ — are all *accounting* results. They say what the numbers must be, given the model. The things that stayed hard, and remain conjectural, are all about *choice*: which proof route, which interface, which style. That is where the mathematics stops and the sociology of a discipline begins.
-
-Which is, perhaps, exactly where you would expect the boundary to be.
+The exponent of $U(n)$ is now known to lie between $1/4$ and $1/2$. Which end is the truth? The counting bound is provably lossy in every small case where the answer is known, and the tagged-neighbourhood host achieves exponent $1/2$ on the bipartite family — faint evidence for the upper end. But the honest summary is the one every good open problem deserves: we know the corridor, and we do not know the room.
