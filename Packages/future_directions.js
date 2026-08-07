@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "pyth_factor_hyperbolic_13cb023f",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.97,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
@@ -3749,17 +3749,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8dc4e6e3",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
       "Algebra"
     ],
     "id": "seed_364",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -6736,33 +6737,33 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Deformation of the absolute Galois groups of number fields"
   },
   {
-    "consumed_by_exp_id": "13217ec9",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$' and formalize its key results. Abstract: We study the standard nonuniform arithmetic quotient of the affine Bruhat--Tits building attached to $\\operatorname{PGL}_d(\\mathbb F_q(\\!(t^{-1})\\!))$, with Haar measure normalized so that a maximal compact subgroup has volume one. We first compute its vertex volume in closed product form. The proof is entirely building-theoretic: vertices are parametrized by a dominant sector, their stabilizers are counted exactly, and the resulting sum over block compositions is evaluated by a cut-set recursion. On the same quotient, we introduce a homothety-invariant normalized lattice-minima height $\u03b1$. We determine its exact integrability threshold, proving that $\u03b1$ belongs to $L^r$ precisely for $0<r<d$, and establish a sharp cusp-tail estimate of order $T^{-d}$. The associated positive-moment height zeta function, equivalently the Mellin transform of the cusp-height distribution, converges exactly in the half-plane $\\operatorname{Re}(s)<d$. It admits a meromorphic continuation as a rational func",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0848",
-    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.28433v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-31T05:11:30.572810+00:00",
     "title": "ArXiv paper: Vertex volumes, lattice-minima tails, and height zeta functions for the standard arithmetic quotient of $\\operatorname{PGL}_d$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09b12514",
     "description": "Investigate the ArXiv paper 'Bipartite Extremal Numbers of Trees' and formalize its key results. Abstract: We study a restriction of the classical Erd\u0151s--S\u00f3s problem, the extremal number of trees, to the class of bipartite host graphs, both when only the order of the host is prescribed and when its two part-sizes are fixed. We give natural lower-bound constructions and formulate corresponding linear upper-bound conjectures. We apply a weighted variant of $k$-minimality to prove upper bounds for a broad family of trees including brooms, trees with part-sizes differing by at most one, and all trees on at most 7 vertices, resolving part of a problem of Caro, Patk\u00f3s and Tuza up to additive constants. We also relate the fixed-part extremal number of a tree to the ordinary extremal number, and consider an oriented bipartite extremal function analogous to the Zarankiewicz function.",
     "domains": [
       "Combinatorics",
       "Algebra"
     ],
     "id": "fd_0926",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.29579v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-03T04:05:41.331848+00:00",
     "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
   },
@@ -10028,17 +10029,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
   },
   {
-    "consumed_by_exp_id": "fae53b04",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n- Extend the two-state Cayley\u2013Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point sets and prove bijections between their elements and the corresponding matrix products and traces.\n- Derive formal-power-series identities from the proved recurrences, including the shared characteristic denominator for both parity classes.\n- Formalize the M\u00f6bius recurrence and arctangent closed form for the odd-dimensional series.\n- Identify the dominant real pole under positivity and irreducibility hypotheses and prove the resulting exponential-growth statements.\n- Develop the Jacobi derivative identity for the even cyclic numerator and the corresponding odd cyclic numerator formula.\n",
     "domains": [
       "Cryptography"
     ],
     "id": "fd_0890",
-    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b080b405",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-01T21:17:57.775064+00:00",
     "title": "Future directions from cycle b080b405"
   },

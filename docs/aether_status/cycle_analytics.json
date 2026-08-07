@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T03:26:17.356762+00:00",
+  "last_updated": "2026-08-07T03:15:17.190522+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -49327,8 +49327,8 @@
       "bridge_count": 0,
       "cycle_n": 2,
       "domain": "Probability",
-      "duration_seconds": 10956.196105718613,
-      "end_time": 1786073157.577503,
+      "duration_seconds": 10289.349509239197,
+      "end_time": 1786072490.7309065,
       "files_integrated": 107,
       "job_id": "3744942f",
       "outcome_quality": 0.6546236561723476,
@@ -49360,7 +49360,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 525,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-08-07T03:26:17.150045+00:00",
+      "timestamp": "2026-08-07T03:15:16.931454+00:00",
       "title": "Deepening: Hadwiger's Conjecture"
     },
     {
@@ -49370,8 +49370,8 @@
       "bridge_count": 0,
       "cycle_n": 3,
       "domain": "MachineLearning",
-      "duration_seconds": 10953.906931638718,
-      "end_time": 1786073157.8641908,
+      "duration_seconds": 10287.081501960754,
+      "end_time": 1786072491.0387611,
       "files_integrated": 14,
       "job_id": "d6f1fad6",
       "outcome_quality": 0.0,
@@ -49403,7 +49403,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 148,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-08-07T03:26:17.245578+00:00",
+      "timestamp": "2026-08-07T03:15:17.052293+00:00",
       "title": "The current development proves an exact finite-domain universality result for a"
     }
   ]
