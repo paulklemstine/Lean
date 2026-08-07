@@ -15,7 +15,7 @@
    terms preserve all weak modal observations.
 -/
 
-import Pythagorean.Pythagorean.BoundedBetaDefs
+import Pythagorean.BoundedBetaDefs
 
 /-! ## Auxiliary Lemmas -/
 
@@ -249,6 +249,14 @@ theorem beta_equiv_preserves_weak_modal_properties
   convert beta_equiv_weakBisimilar_toFTS d hβ using 1
 
 
+/-
+NOTE (repair): the block below is a corrupted auto-merged copy of the
+definitions from `Pythagorean/BoundedBetaDefs.lean` (several `match`
+scrutinees, constructor conclusions and existential binders were dropped by the
+auto-dedup step, so it is not valid Lean).  The definitions now live, in
+repaired form, in `Pythagorean.BoundedBetaDefs`, which this file imports.  The
+original text is preserved here inside a comment.
+
 -- !-- Merged from BoundedBetaDefs.lean (auto-dedup) -- !--
 
 # Bounded Beta-Reduction Semantics: Definitions
@@ -384,3 +392,4 @@ def SatisfiesFTS (A : FTS) : A.State → ModalFormula → Prop
   | s, .diamond φ => ∃ s', A.step s s' ∧ SatisfiesFTS A s' φ
 /-- A modal formula holds at the initial state of an FTS. -/
 def HoldsAtInit (A : FTS) (φ : ModalFormula) : Prop :=
+-/

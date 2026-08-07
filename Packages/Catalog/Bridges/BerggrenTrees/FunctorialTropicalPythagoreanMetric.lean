@@ -30,6 +30,7 @@
 
 import Mathlib
 import Bridges.NeuralCoding.FunctorialTropicalPythagorean
+import Bridges.BerggrenTrees.BerggrenBoundaryUltrametric
 
 namespace FunctorialTropicalPythagorean
 

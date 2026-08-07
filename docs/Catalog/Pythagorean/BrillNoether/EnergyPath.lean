@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Catalog.Pythagorean.BrillNoether.EnergyCovering
+import Pythagorean.BrillNoether.EnergyCovering
 
 /-!
 # From the energy form to the sup norm: the path (Cauchy–Schwarz) bridge

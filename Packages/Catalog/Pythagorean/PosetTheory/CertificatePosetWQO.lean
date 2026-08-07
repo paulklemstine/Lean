@@ -1,5 +1,5 @@
 import Mathlib
-import Pythagorean.Pythagorean.SandwichDefs
+import Pythagorean.SandwichDefs
 
 /-!
 # Certificate Poset Well-Quasi-Ordering

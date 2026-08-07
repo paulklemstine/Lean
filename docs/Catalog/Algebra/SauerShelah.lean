@@ -1,5 +1,21 @@
 import Mathlib
 
+open Fin
+
+/-- A family `F` of sets **shatters** a set `A` if every subset of `A` arises as
+`A ∩ S` for some `S ∈ F`. -/
+def Shatters {n : ℕ} (F : Finset (Finset (Fin n))) (A : Finset (Fin n)) : Prop :=
+  ∀ B ⊆ A, ∃ S ∈ F, A ∩ S = B
+
+/-- Drop the last coordinate: keep `i : Fin n` iff `castSucc i ∈ S`. -/
+def proj {n : ℕ} (S : Finset (Fin (n + 1))) : Finset (Fin n) :=
+  Finset.univ.filter fun i => i.castSucc ∈ S
+
+/-- Embed via `castSucc`. -/
+def embed {n : ℕ} (T : Finset (Fin n)) : Finset (Fin (n + 1)) :=
+  T.image Fin.castSucc
+
+
 /-! # CatalogBuild.Algebra.SauerShelah
 
 Auto-generated from theorem catalog database.
@@ -8,37 +24,12 @@ Declarations: 17
 -/
 
 
-/-- A family `F` of sets **shatters** a set `A` if every subset of `A` arises as
-`A ∩ S` for some `S ∈ F`. -/
-def Shatters {n : ℕ} (F : Finset (Finset (Fin n))) (A : Finset (Fin n)) : Prop :=
-  ∀ B ⊆ A, ∃ S ∈ F, A ∩ S = B
-
-
-
-
-/-- Drop the last coordinate: keep `i : Fin n` iff `castSucc i ∈ S`. -/
-def proj {n : ℕ} (S : Finset (Fin (n + 1))) : Finset (Fin n) :=
-  Finset.univ.filter fun i => i.castSucc ∈ S
-
-
-
-
-/-- Embed via `castSucc`. -/
-def embed {n : ℕ} (T : Finset (Fin n)) : Finset (Fin (n + 1)) :=
-  T.image Fin.castSucc
-
 -- ================================================================
 --  Basic proj / embed API
 -- ================================================================
 
 @[simp] lemma mem_proj {n : ℕ} {S : Finset (Fin (n + 1))} {i : Fin n} :
     i ∈ proj S ↔ i.castSucc ∈ S := by simp [proj]
-
-@[simp] lemma mem_embed {n : ℕ} {T : Finset (Fin n)} {i : Fin n} :
-    i.castSucc ∈ embed T ↔ i ∈ T := by
-  simp [embed, Fin.castSucc_injective n |>.eq_iff]
-
-
 
 
 /-- [Section: # CatalogBuild.Algebra.SauerShelah
@@ -50,8 +41,6 @@ lemma last_not_mem_embed {n : ℕ} (T : Finset (Fin n)) :
       simp +decide [ embed ]
 
 
-
-
 /-- [Section: # CatalogBuild.Algebra.SauerShelah
 Auto-generated from theorem catalog database.
 Domain: Algebra
@@ -61,19 +50,13 @@ lemma proj_embed {n : ℕ} (T : Finset (Fin n)) : proj (embed T) = T := by
   simp [proj, embed]
 
 
-
-
 lemma proj_embed_union_last {n : ℕ} (T : Finset (Fin n)) :
     proj (embed T ∪ {Fin.last n}) = T := by
       unfold proj embed; aesop;
 
 
-
-
 lemma embed_card {n : ℕ} (T : Finset (Fin n)) : (embed T).card = T.card := by
   exact Finset.card_image_of_injective _ ( Fin.castSucc_injective _ )
-
-
 
 
 lemma embed_union_last_card {n : ℕ} (T : Finset (Fin n)) :
@@ -81,14 +64,10 @@ lemma embed_union_last_card {n : ℕ} (T : Finset (Fin n)) :
       rw [ Finset.card_union, embed_card ] ; simp +decide [ last_not_mem_embed ]
 
 
-
-
 lemma embed_inter_eq {n : ℕ} (A : Finset (Fin n)) (S : Finset (Fin (n + 1))) :
     embed A ∩ S = embed (A ∩ proj S) := by
       ext x; simp [embed, proj] ;
       grind +ring
-
-
 
 
 lemma eq_embed_proj_of_last_not_mem {n : ℕ} {S : Finset (Fin (n + 1))}
@@ -98,16 +77,12 @@ lemma eq_embed_proj_of_last_not_mem {n : ℕ} {S : Finset (Fin (n + 1))}
       cases x using Fin.lastCases <;> aesop
 
 
-
-
 lemma eq_embed_proj_union_last {n : ℕ} {S : Finset (Fin (n + 1))}
     (h : Fin.last n ∈ S) : S = embed (proj S) ∪ {Fin.last n} := by
-      ext x
-      cases x using Fin.lastCases with
-      | last => simp [h, last_not_mem_embed]
-      | cast i => simp [(Fin.castSucc_lt_last i).ne]
-
-
+      ext x; by_cases hx : x = last n <;> simp_all +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one ] ;
+      · rwa [ show x = last n from Fin.ext hx ];
+      · simp +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one, hx, embed, proj ];
+        exact ⟨ fun hx' => ⟨ ⟨ x, lt_of_le_of_ne ( Fin.le_last _ ) hx ⟩, by simpa [ Fin.ext_iff ] using hx', rfl ⟩, by rintro ⟨ a, ha, ha' ⟩ ; convert ha; aesop ⟩
 
 
 lemma shatters_embed_of_union {n : ℕ} (F : Finset (Finset (Fin (n + 1))))
@@ -116,19 +91,18 @@ lemma shatters_embed_of_union {n : ℕ} (F : Finset (Finset (Fin (n + 1))))
                     (F.filter (Fin.last n ∈ ·)).image proj) A) :
     Shatters F (embed A) := by
       intro B hB
-      have hlast : Fin.last n ∉ B := fun hx => last_not_mem_embed A (hB hx)
-      have hprojB : proj B ⊆ A := by
-        intro i hi
-        rw [mem_proj] at hi
-        exact mem_embed.mp (hB hi)
-      obtain ⟨T, hT, hTeq⟩ := h (proj B) hprojB
-      simp only [Finset.mem_union, Finset.mem_image, Finset.mem_filter] at hT
-      obtain ⟨S, ⟨hSF, _⟩, hSp⟩ | ⟨S, ⟨hSF, _⟩, hSp⟩ := hT
-      all_goals
-        refine ⟨S, hSF, ?_⟩
-        rw [embed_inter_eq, hSp, hTeq, ← eq_embed_proj_of_last_not_mem hlast]
-
-
+      obtain ⟨T, hT⟩ : ∃ T ∈ Finset.image proj {x ∈ F | last n ∉ x} ∪ Finset.image proj {x ∈ F | last n ∈ x}, A ∩ T = proj B := by
+        exact h _ ( Finset.subset_iff.mpr fun i hi => by
+          simp_all +decide [ Finset.subset_iff, proj, embed ];
+          cases hB hi ; aesop );
+      obtain ⟨S, hS⟩ : ∃ S ∈ F, T = proj S := by
+        aesop;
+      use S, hS.left;
+      have h_eq : B = embed (proj B) := by
+        apply eq_embed_proj_of_last_not_mem;
+        intro h_last_in_B; have := hB h_last_in_B; simp_all +decide [ embed ] ;
+      convert embed_inter_eq A S using 1;
+      simpa only [ ← hS.2, hT.2 ] using h_eq
 
 
 lemma shatters_embed_union_last_of_inter {n : ℕ} (F : Finset (Finset (Fin (n + 1))))
@@ -167,8 +141,6 @@ lemma shatters_embed_union_last_of_inter {n : ℕ} (F : Finset (Finset (Fin (n +
         intro a; induction a using Fin.lastCases <;> simp_all +decide [ embed ] ;
 
 
-
-
 lemma card_split {n : ℕ} (F : Finset (Finset (Fin (n + 1)))) :
     F.card = ((F.filter (Fin.last n ∉ ·)).image proj ∪
               (F.filter (Fin.last n ∈ ·)).image proj).card +
@@ -191,8 +163,6 @@ lemma card_split {n : ℕ} (F : Finset (Finset (Fin (n + 1)))) :
                 rw [ ← h_card_F₀, ← h_card_F₁, Finset.card_union_of_disjoint ] ; exact Finset.disjoint_filter.mpr fun _ _ _ _ => by tauto;
 
 
-
-
 lemma binomial_pascal_sum (n d : ℕ) :
     (∑ i ∈ Finset.range (d + 1), n.choose i) +
      ∑ i ∈ Finset.range d, n.choose i =
@@ -202,14 +172,12 @@ lemma binomial_pascal_sum (n d : ℕ) :
       · simp_all +arith +decide [ Nat.choose, Finset.sum_range_succ ]
 
 
-
-
 lemma card_le_one_of_vc_zero {n : ℕ} (F : Finset (Finset (Fin n)))
     (hF : ∀ A, Shatters F A → A.card ≤ 0) : F.card ≤ 1 := by
       contrapose! hF;
       -- Since F has more than one element, there exist S₁ ≠ S₂ ∈ F.
       obtain ⟨S₁, S₂, hS₁, hS₂, hne⟩ : ∃ S₁ S₂ : Finset (Fin n), S₁ ∈ F ∧ S₂ ∈ F ∧ S₁ ≠ S₂ := by
-        exact Finset.one_lt_card_iff.mp hF;
+        exact?;
       -- Since S₁ ≠ S₂, there exists x with x ∈ S₁ and x ∉ S₂ (or vice versa), WLOG x ∈ S₁, x ∉ S₂.
       obtain ⟨x, hx₁, hx₂⟩ : ∃ x : Fin n, x ∈ S₁ ∧ x∉ S₂ ∨ x∉ S₁ ∧ x ∈ S₂ := by
         exact Classical.not_forall_not.1 fun h => hne <| Finset.ext fun x => by by_cases hx₁ : x ∈ S₁ <;> by_cases hx₂ : x ∈ S₂ <;> simpa [ hx₁, hx₂ ] using h x;
@@ -217,8 +185,6 @@ lemma card_le_one_of_vc_zero {n : ℕ} (F : Finset (Finset (Fin n)))
         unfold Shatters; aesop;
       · use {x};
         unfold Shatters; aesop;
-
-
 
 
 /-- **Sauer–Shelah lemma.** A family of subsets of `Fin n` that shatters no set

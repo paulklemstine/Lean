@@ -11,7 +11,7 @@ Extends the untyped lambda calculus from BoundedBetaDefs with:
 These definitions support the finite model property theorems.
 -/
 
-import Pythagorean.Pythagorean.BoundedBetaDefs
+import Pythagorean.BoundedBetaDefs
 
 /-! ## Simple Types -/
 

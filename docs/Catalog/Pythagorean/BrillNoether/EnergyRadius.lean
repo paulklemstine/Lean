@@ -3,9 +3,9 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Catalog.Pythagorean.BrillNoether.Divisors
-import Catalog.Pythagorean.BrillNoether.EnergyCovering
-import Catalog.Pythagorean.BrillNoether.CoveringBridge
+import Pythagorean.BrillNoether.Divisors
+import Pythagorean.BrillNoether.EnergyCovering
+import Pythagorean.BrillNoether.CoveringBridge
 
 /-!
 # An unconditional upper bound for the covering radius in the energy metric

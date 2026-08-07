@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Catalog.Pythagorean.BrillNoether.Divisors
+import Pythagorean.BrillNoether.Divisors
 
 /-!
 # Half-canonical divisors of large rank on regular graphs

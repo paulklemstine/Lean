@@ -21,7 +21,7 @@ resulting fitness change is governed by an exact threshold:
   exhibiting both phases across the threshold.
 -/
 
-import Catalog.Pythagorean.TheoryFitness.Core
+import Pythagorean.TheoryFitness.Core
 
 namespace TheoryFitness
 

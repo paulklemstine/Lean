@@ -20,7 +20,7 @@ the canonical comparison class (core + private material), with an exact formula
 for the saving.
 -/
 
-import Catalog.Pythagorean.TheoryFitness.Core
+import Pythagorean.TheoryFitness.Core
 
 namespace TheoryFitness
 

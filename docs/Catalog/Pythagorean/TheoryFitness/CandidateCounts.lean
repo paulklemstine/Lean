@@ -21,7 +21,7 @@ library.
   multiplicative-reuse phase transition.
 -/
 
-import Catalog.Pythagorean.TheoryFitness.Core
+import Pythagorean.TheoryFitness.Core
 
 namespace TheoryFitness
 

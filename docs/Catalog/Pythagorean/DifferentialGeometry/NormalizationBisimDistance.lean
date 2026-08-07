@@ -26,7 +26,7 @@ resulting distance function satisfies pseudometric axioms.
 -/
 
 import Mathlib
-import Pythagorean.Pythagorean.BoundedBetaDefs
+import Pythagorean.BoundedBetaDefs
 
 open Classical
 

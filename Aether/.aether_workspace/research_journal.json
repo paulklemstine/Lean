@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4ae649eb",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe present development establishes a finite, discrete chain:\n\n1. a pointwise code-length bound on information density;\n2. mutual information bounded by expected description lengt",
-      "quality_score": 0.79196,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-08-02T18:22:37",
-      "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
-    },
-    {
       "cycle_id": "2acb9b42",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n## Scope of the proved connector\n\n`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive axis-aligned boxes of volume one. It connects convex geometry to a",
@@ -499,19 +489,19 @@
       "theorem_count": 182,
       "timestamp": "2026-08-07T05:41:42",
       "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+    },
+    {
+      "cycle_id": "f3cf4755",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nDerived from the three research cycles carried out in\n`Catalog/MachineLearning/GrokkingDelayedTransition/`\n(`SaddleNodeLocal.lean`, `GradientFlowThreshold.lean`, `VectorMargin.lea",
+      "quality_score": 0.7422650000000001,
+      "sorry_count": 2,
+      "theorem_count": 137,
+      "timestamp": "2026-08-07T09:24:12",
+      "title": "The completed formalization deliberately studies the smallest non-trivial model:"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4ecd322f",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nThe following conjectures extend the finite state-sum core formalized in `Catalog/Physics/QuantumGravityTuraevViro.lean`. Each is stated so that a proposed formal development can",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-30T16:58:04",
-      "title": "Quantum Gravity as Topological Quantum Field Theory"
-    },
     {
       "cycle_id": "e1e4ff02",
       "domain": "Applications",
@@ -2501,15 +2491,19 @@
       "theorem_count": 163,
       "timestamp": "2026-08-07T09:22:31",
       "title": "The following conjectures sharpen the boundary of the normalized development in"
+    },
+    {
+      "cycle_id": "f3cf4755",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nDerived from the three research cycles carried out in\n`Catalog/MachineLearning/GrokkingDelayedTransition/`\n(`SaddleNodeLocal.lean`, `GradientFlowThreshold.lean`, `VectorMargin.lea",
+      "quality_score": 0.7422650000000001,
+      "sorry_count": 2,
+      "theorem_count": 137,
+      "timestamp": "2026-08-07T09:24:12",
+      "title": "The completed formalization deliberately studies the smallest non-trivial model:"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a65c164b",
-      "domain": "Algebra",
-      "name": "homOfElt_apply_one",
-      "quality": 0.78643
-    },
     {
       "cycle_id": "6337dbc1",
       "domain": "Bridges",
@@ -2803,17 +2797,16 @@
       "domain": "Geometry",
       "name": "sub_div_le_log_div",
       "quality": 0.73319
+    },
+    {
+      "cycle_id": "f3cf4755",
+      "domain": "MachineLearning",
+      "name": "crossTime_sharp_constant",
+      "quality": 0.7422650000000001
     }
   ],
-  "last_updated": "2026-08-07T09:22:31",
+  "last_updated": "2026-08-07T09:24:12",
   "open_questions": [
-    {
-      "context": "+  sorry; +  sorry; +  sorry",
-      "cycle_id": "dd6a308e",
-      "domain": "Pythagorean",
-      "sorry_count": 13,
-      "timestamp": "2026-07-20T09:41:55"
-    },
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "2f321176",
@@ -3016,6 +3009,13 @@
       "domain": "Cryptography",
       "sorry_count": 2,
       "timestamp": "2026-08-07T05:10:38"
+    },
+    {
+      "context": "sharp constants in place.  Everything is `sorry`-free.; Everything is `sorry`-free.",
+      "cycle_id": "f3cf4755",
+      "domain": "MachineLearning",
+      "sorry_count": 2,
+      "timestamp": "2026-08-07T09:24:12"
     }
   ],
   "research_threads": {
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "afbe2d9b",
-        "quality": 0.7438,
-        "theorems": 9,
-        "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
-      },
-      {
         "cycle_id": "b7ae8967",
         "quality": 0.8002199999999999,
         "theorems": 21,
@@ -3575,6 +3569,12 @@
         "quality": 0.6536503144654089,
         "theorems": 177,
         "title": "The current development proves an exact finite-domain universality result for a"
+      },
+      {
+        "cycle_id": "f3cf4755",
+        "quality": 0.7422650000000001,
+        "theorems": 137,
+        "title": "The completed formalization deliberately studies the smallest non-trivial model:"
       }
     ],
     "Novelty": [

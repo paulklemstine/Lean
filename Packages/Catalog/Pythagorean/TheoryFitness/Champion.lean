@@ -27,7 +27,7 @@ champion is only unique up to cost ties.  What survives is existence:
 attained in the multi-route model, it simply stops being canonical.
 -/
 
-import Catalog.Pythagorean.TheoryFitness.Core
+import Pythagorean.TheoryFitness.Core
 
 namespace TheoryFitness
 
