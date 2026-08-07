@@ -31,9 +31,9 @@ This file continues the study of weak/strong `B_d`-free families begun in
 -/
 
 import Mathlib
-import Bridges.B3FreeFamilies
-import Bridges.B3FreeFamiliesBounds
-import Bridges.B3FreeFamiliesLevels
+import Catalog.Bridges.B3FreeFamilies
+import Catalog.Bridges.B3FreeFamiliesBounds
+import Catalog.Bridges.B3FreeFamiliesLevels
 
 namespace B3Free
 

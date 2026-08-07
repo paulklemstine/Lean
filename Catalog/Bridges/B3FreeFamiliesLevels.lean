@@ -40,7 +40,7 @@ optimal.
 -/
 
 import Mathlib
-import Bridges.B3FreeFamilies
+import Catalog.Bridges.B3FreeFamilies
 
 namespace B3Free
 
