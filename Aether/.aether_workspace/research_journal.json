@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "46cb7ee6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n- Extend `GrowthRank` from three lexicographic levels to recursively generated exponential–logarithmic monomial groups.\n- Construct composition, logarithm, and exponential on suit",
-      "quality_score": 0.7732699999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-30T20:38:20",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
-    {
       "cycle_id": "ae875fd7",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## What is established\n\n`Catalog/Applications/EML/StoneWeierstrassConnector.lean` proves a cross-domain bridge from finite-dimensional topology to exp-log networks:\n\n- a continuou",
@@ -2501,6 +2491,16 @@
       "theorem_count": 557,
       "timestamp": "2026-08-07T16:40:33",
       "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, independent"
+    },
+    {
+      "cycle_id": "af44a08e",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — thread `th_55fc6157`\n\nAll Lean artefacts referenced here live in `Catalog/Computation/` (with the shared base\ndefinitions in `Catalog/Novelty/ThermodynamicsOfProof.lean`) and com",
+      "quality_score": 0.659818701923077,
+      "sorry_count": 0,
+      "theorem_count": 201,
+      "timestamp": "2026-08-07T17:14:16",
+      "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71348
     }
   ],
-  "last_updated": "2026-08-07T16:40:33",
+  "last_updated": "2026-08-07T17:14:16",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "61f6b5cb",
-        "quality": 0.683,
-        "theorems": 33,
-        "title": "Homomorphic Encryption: Computing on Encrypted Data"
-      },
-      {
         "cycle_id": "5814a7d4",
         "quality": 0.74072,
         "theorems": 7,
@@ -3327,6 +3321,12 @@
         "quality": 0.71918,
         "theorems": 186,
         "title": "[Your Title]"
+      },
+      {
+        "cycle_id": "af44a08e",
+        "quality": 0.659818701923077,
+        "theorems": 201,
+        "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
       }
     ],
     "Cryptography": [

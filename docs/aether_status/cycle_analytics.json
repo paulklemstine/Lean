@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T16:40:33.492113+00:00",
+  "last_updated": "2026-08-07T17:14:17.058895+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50375,6 +50375,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-07T16:40:33.358776+00:00",
       "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, independent"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.277,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Computation",
+      "duration_seconds": 3256.0678539276123,
+      "end_time": 1786122840.065056,
+      "files_integrated": 11,
+      "job_id": "af44a08e",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.917,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9321,
+        "novelty": 0.9458,
+        "proof_depth": 0.9262,
+        "usefulness": 0.9631
+      },
+      "quality_score": 0.659818701923077,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786119583.9972022,
+      "strategy_count": 0,
+      "theorem_count": 201,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 158,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-07T17:14:16.924592+00:00",
+      "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
     }
   ]
 }
