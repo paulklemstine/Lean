@@ -484,17 +484,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // Build the wrapped code so the final expression returns the rendered output.
             // Returning the value avoids relying on the global stdout capture, which is
             // racy when several visualizations/demos auto-run concurrently on load.
-            const indentedProcessedCode = processedCode.trim()
-                ? processedCode.split('\n').map(line => '    ' + line).join('\n')
+            const { futureImports, cleanedCode } = extractFutureImports(processedCode);
+            const futureHeader = futureImports ? futureImports + '\n' : '';
+
+            const indentedCleanedCode = cleanedCode.trim()
+                ? cleanedCode.split('\n').map(line => '    ' + line).join('\n')
                 : '    pass';
 
             let fullCode;
             if (isPlotly) {
-                fullCode = `
-import plotly.io as pio
+                fullCode = `${futureHeader}import plotly.io as pio
 import plotly.graph_objects as go
 
-${processedCode}
+${cleanedCode}
 
 _viz_figs_ = [obj for obj in globals().values() if isinstance(obj, go.Figure)]
 if _viz_figs_:
@@ -504,8 +506,7 @@ else:
     raise RuntimeError("No plotly Figure object found. Assign your figure to a variable named 'fig'.")
 `;
             } else {
-                fullCode = `
-import matplotlib
+                fullCode = `${futureHeader}import matplotlib
 matplotlib.use('AGG')
 import matplotlib.pyplot as plt
 import io
@@ -539,7 +540,7 @@ plt.close = _viz_close
 plt.show = _viz_show
 
 try:
-${indentedProcessedCode}
+${indentedCleanedCode}
 finally:
     plt.close = _orig_close
     plt.show = _orig_show
@@ -588,9 +589,6 @@ plt.close('all')
 _viz_result
 `;
             }
-
-            const { futureImports, cleanedCode } = extractFutureImports(fullCode);
-            fullCode = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
 
             // Load all packages detected from imports (numpy, scipy, pandas, etc.)
             await window.Aether.pyodideInstance.loadPackagesFromImports(fullCode);
