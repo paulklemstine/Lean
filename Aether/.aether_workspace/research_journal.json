@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5814a7d4",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `Aₙ² = n",
-      "quality_score": 0.74072,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-08-02T21:20:01",
-      "title": "Sensitivity Conjecture Extensions"
-    },
-    {
       "cycle_id": "064bb153",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Quaternionic Hopf Concurrence\n\n## Result of this cycle\n\nThe new Lean development `Catalog/Geometry/QuaternionicConcurrence.lean` defines\n\n\\[\nH(\\psi)=\\begin{cases}\n0,&\\|\\psi\\|^2=0,",
@@ -499,19 +489,19 @@
       "theorem_count": 186,
       "timestamp": "2026-08-07T11:15:59",
       "title": "[Your Title]"
+    },
+    {
+      "cycle_id": "22e93393",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
+      "quality_score": 0.71348,
+      "sorry_count": 0,
+      "theorem_count": 557,
+      "timestamp": "2026-08-07T15:44:58",
+      "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, independent"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6d7202c5",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nThe following conjectures extend `Catalog/Shared/SizeIndexedDissipation.lean`. Each is stated so that a counterexample consists of a concrete finite family and parameters violatin",
-      "quality_score": 0.73827,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-30T18:57:54",
-      "title": "Deepening: **Conjecture.** Let a family of decision procedures on inputs of length `n` irre"
-    },
     {
       "cycle_id": "177b02a7",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 631,
       "timestamp": "2026-08-07T14:58:13",
       "title": "Hilbert 15: Schubert Calculus Rigorization"
+    },
+    {
+      "cycle_id": "22e93393",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
+      "quality_score": 0.71348,
+      "sorry_count": 0,
+      "theorem_count": 557,
+      "timestamp": "2026-08-07T15:44:58",
+      "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, independent"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3a707635",
-      "domain": "Applications",
-      "name": "coeff_mul_of_natDegree_le",
-      "quality": 0.7555699999999999
-    },
-    {
-      "cycle_id": "3a707635",
-      "domain": "Applications",
-      "name": "coeff_derivative_mul",
-      "quality": 0.7555699999999999
-    },
-    {
-      "cycle_id": "3a707635",
-      "domain": "Applications",
-      "name": "coeff_wronskianNum",
-      "quality": 0.7555699999999999
-    },
     {
       "cycle_id": "6077433a",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "self_mem_alignmentCl",
       "quality": 0.71918
+    },
+    {
+      "cycle_id": "22e93393",
+      "domain": "Combinatorics",
+      "name": "expP_prod",
+      "quality": 0.71348
+    },
+    {
+      "cycle_id": "22e93393",
+      "domain": "Combinatorics",
+      "name": "psi_eq_psiB",
+      "quality": 0.71348
+    },
+    {
+      "cycle_id": "22e93393",
+      "domain": "Combinatorics",
+      "name": "psiSet_empty",
+      "quality": 0.71348
     }
   ],
-  "last_updated": "2026-08-07T14:58:13",
+  "last_updated": "2026-08-07T15:44:58",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "d4159430",
-        "quality": 0.7496799999999999,
-        "theorems": 9,
-        "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
-      },
-      {
         "cycle_id": "2125bb42",
         "quality": 0.71783,
         "theorems": 9,
@@ -3265,6 +3259,12 @@
         "quality": 0.6640958333333333,
         "theorems": 721,
         "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
+      },
+      {
+        "cycle_id": "22e93393",
+        "quality": 0.71348,
+        "theorems": 557,
+        "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, ind"
       }
     ],
     "Computation": [
