@@ -9,6 +9,11 @@ Declarations: 3
 
 noncomputable section
 
+/-- The hyperbolic SPB (relativistic velocity addition) operation
+`spbH u v = (u + v)/(1 + u v)`. -/
+def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
+
+
 /-- [Section: # CatalogBuild.Shared.SpbH_bounded
 Auto-generated from theorem catalog database.
 Domain: Bridges
@@ -30,5 +35,6 @@ theorem spbH_assoc (u v w : ℝ) (huv : u * v ≠ -1) (hvw : v * w ≠ -1)
 /-- Inverse in hyperbolic SPB. -/
 theorem spbH_neg_self (u : ℝ) : spbH u (-u) = 0 := by
   simp [spbH]
+
 
 end

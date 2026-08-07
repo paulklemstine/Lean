@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "00b7234b",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n1. **Fibonacci `B₃` density.** Let `ρFib : BraidGrp 2 →* SU(2)` be obtained from the standard Fibonacci `F`- and `R`-matrices after removing their global phases. Conjecture: `Dens",
-      "quality_score": 0.7997299999999999,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-07-30T18:54:20",
-      "title": "Quantum Topological Phase Computation"
-    },
-    {
       "cycle_id": "15429b4a",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Turán extremizers.** For every integer",
@@ -2501,6 +2491,16 @@
       "theorem_count": 605,
       "timestamp": "2026-08-07T13:46:46",
       "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
+    },
+    {
+      "cycle_id": "8a90ae7b",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nThis file continues the research thread on the Chebotarev geodesic theorem in the non-split\ncase.  It first records the fate of the five conjectures C1–C5 of the previous cycle —",
+      "quality_score": 0.640478157722513,
+      "sorry_count": 0,
+      "theorem_count": 659,
+      "timestamp": "2026-08-07T13:46:54",
+      "title": "Close Proofs: ArXiv paper: Chebotarev geodesic theorem: non-split case"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71918
     }
   ],
-  "last_updated": "2026-08-07T13:46:46",
+  "last_updated": "2026-08-07T13:46:54",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "2acb9b42",
-        "quality": 0.7411399999999999,
-        "theorems": 6,
-        "title": "Bourgain's Slicing Problem"
-      },
-      {
         "cycle_id": "4db4579d",
         "quality": 0.80477,
         "theorems": 26,
@@ -3947,6 +3941,12 @@
         "quality": 0.6858792756539236,
         "theorems": 994,
         "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
+      },
+      {
+        "cycle_id": "8a90ae7b",
+        "quality": 0.640478157722513,
+        "theorems": 659,
+        "title": "Close Proofs: ArXiv paper: Chebotarev geodesic theorem: non-split case"
       }
     ],
     "Tropical": [
