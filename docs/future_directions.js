@@ -6853,17 +6853,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Circular sorting in the alternating group"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4152b805",
     "description": "Provide rigorous foundations for Schubert's enumerative geometry. Formalize intersection theory on Grassmannians and flag varieties, proving Schubert calculus results via modern algebraic geometry.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
     "id": "seed_022",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Hilbert 15: Schubert Calculus Rigorization"
   },
@@ -11569,6 +11570,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-07T05:39:57.983816+00:00",
     "title": "This file is the live end-of-cycle record of the research thread on the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Reciprocal-Zero Harmonics (after cycle 1)\n\nCycle 1 formalised, with complete Lean proofs and no `sorry`, the following: the\nmultiplicity-sensitive, conjugate-symmetric window sum `H(Z,T) = \u03a3_{|Im \u03c1| \u2264 T} 1/\u03c1`; its\nreality under conjugation symmetry; the Vieta identity `H = \u2212P'(0)/P(0)` for full root\nmultisets; rationality of `H` for every rational polynomial; renormalised convergence of the\nconjugate-paired sum under a Riemann\u2013von Mangoldt-type ordinate bound with an explicit\n`1/(a\u00b2N)` truncation error under separation; divergence of the *unpaired* sum; the window\ndichotomy `H(T) = 0 \u21d4 the window contains no zero`; additivity of chord spectra under Cartesian\nproducts of graphs together with the trace law; and complete additivity \u2014 but non-injectivity \u2014\nof the prime-indexed chord statistic.\n\nThe next cycle should attack the following, all falsifiable.\n\n## 1. The renormalisation constant is the Riemann\u2013von Mangoldt main term\n\n**Conjecture.** For the true zeta ordinates, the limit `lim_{T\u2192\u221e} \u03a3_{0<\u03b3\u2264T} 1/(1/4+\u03b3\u00b2)` proved to\nexist in `Convergence.lean` (under the ordinate bound calibrated numerically to `a \u2248 9.79`)\nequals `1 + \u03b3_E/2 \u2212 log(2\u221a\u03c0)`, and the truncation error satisfies the two-sided bound\n`c\u2081 log T / T \u2264 \u03a3_{\u03b3 > T} 1/(1/4+\u03b3\u00b2) \u2264 c\u2082 log T / T` with `c\u2081, c\u2082 \u2192 1/2\u03c0`.\n\n*The key insight is* that the conjugate-paired series is a **positive** series, so Abel summation\nagainst the counting function `N(T)` converts the Riemann\u2013von Mangoldt asymptotic directly into a\ntwo-sided tail estimate, with no cancellation to control.\n\n*Why now?* `tail_bound_of_separated` already gives a one-sided `1/(a\u00b2N)` bound from a telescoping\nargument, and the numerics in `ComputationalEvidence.md` show the true decay is `log T/T`; the\nonly missing ingredient is a formalised Abel-summation lemma against a counting function.\n\n## 2. Rationality of a sub-multiset chord is a Galois-orbit condition\n\n**Conjecture.** Let `P \u2208 \u211a[X]` with `P(0) \u2260 0` and let `S` be a sub-multiset of the complex roots\nof `P`.  Then `\u03a3_{r \u2208 S} 1/r \u2208 \u211a` **iff** `S` is a `\u211a`-rational divisor, i.e. a nonnegative\ninteger combination of full Galois orbits, *except* for the sporadic coincidences produced by\nvanishing partial power sums.  Degree 2 is proved (`quadratic_singleton_chord_rat_iff`); degree 3\nwith Galois group `S\u2083` is the first open case, and `A\u2084`/`S\u2084` quartics the first case where the\nexceptional coincidences can be enumerated.\n\n*The key insight is* that `\u03a3_{r \u2208 S} 1/r` is the value at `0` of the logarithmic derivative of the\nsub-product `\u220f_{r\u2208S}(X\u2212r)`, so rationality of the chord is a statement about the field of\ndefinition of a *factor* of `P`, not about individual roots.\n\n*Why now?* `harmonicSum_eq_neg_deriv_div` makes the chord a coefficient ratio of the sub-product,\nwhich converts the question into one about factorisations over number fields \u2014 exactly the setting\nwhere Lean's `Polynomial`/`IsSplittingField` API is usable.\n\n## 3. Chord spectra of graph covers: a new-factor criterion\n\n**Conjecture.** If `G\u0303 \u2192 G` is a finite regular cover of `(q+1)`-regular graphs with covering\ngroup `\u0393`, then the chord spectrum of `G\u0303` is the disjoint union of the chord spectrum of `G` and\nthe chord spectra of the twisted (Artin\u2013Ihara) factors, and it is rational iff every twisted\nfactor has rational trace and determinant.  Cycle 1 proves the analogous statement for Cartesian\nproducts (`chord_cartesian_add`: chord spectra add as a sumset) and shows the total chord value is\nalways `0` (`total_chord_eq_zero`), so any invariant must be built from the multiset, not its sum.\n\n*The key insight is* that chord value = adjacency eigenvalue (`localFactor_chord`), so operations\non graphs act on chord spectra exactly as they act on adjacency spectra; covers are the first case\nwhere the action is by *induction of representations* rather than by a sumset.\n\n*Why now?* The Cartesian-product case is now a theorem with an explicit eigenvector `v \u2297 w`; the\nsame explicit-eigenvector technique applies verbatim to the regular representation of a cyclic\ncover.\n\n## 4. No completely additive prime-indexed encoding is faithful\n\n**Conjecture.** Every completely additive `f : \u2115_{>0} \u2192 \u211d` determined by prime values\n`f(p) = \u03c6(1/p)` for a fixed continuous `\u03c6` fails to be injective; more precisely, injectivity of a\ncompletely additive `f` forces the values `{f(p)}` to be linearly independent over `\u211a`, which is\nimpossible for any rational-valued rule such as `f(p) = 1/p`.  Cycle 1 proves the failure for the\nprime chord (`primeChord_not_injective`, primitive collision `4 \u2194 27`, family `(4k, 27k)`).\n\n*The key insight is* that a prime-indexed harmonic statistic is a monoid homomorphism from a free\ncommutative monoid of infinite rank into a one-dimensional group; faithfulness is therefore a\n`\u211a`-linear independence statement about the prime values, not an analytic accident.\n\n*Why now?* The exact collision family found computationally and proved in `PrimeChords.lean`\npinpoints the obstruction, and the `\u211a`-linear-independence reformulation is a finite-dimensional\nstatement that Lean's `LinearIndependent` API can express directly.\n\n## 5. Off-line zeros are detected by the window statistic\n\n**Conjecture.** Extend `windowSum_pairedOrdinates_eq_zero_iff` beyond the critical line: for any\nconjugation-symmetric zero multiset contained in the strip `0 < Re \u03c1 < 1`, `Re H(T) > 0` whenever\nthe window is nonempty, with the explicit bound `Re H(T) \u2265 2\u03c3_min/(\u03c3_max\u00b2 + T\u00b2)`.  Consequently a\n*certified numerical upper bound* on `H(T)` would exclude zeros in the window \u2014 a computationally\ncheckable route to zero-free windows.\n\n*The key insight is* that each conjugate pair contributes `2 Re \u03c1/|\u03c1|\u00b2`, which is positive\nthroughout the critical strip, so the statistic can never cancel and its size is a certificate.\n\n*Why now?* `inv_add_conj_inv` already isolates the contribution of a conjugate pair as\n`2 Re \u03c1/|\u03c1|\u00b2`, and the critical-line case is proved; only the uniform bound over the strip\nremains.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1019",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3590d6fa",
+    "status": "available",
+    "timestamp": "2026-08-07T07:08:30.458197+00:00",
+    "title": "Cycle 1 formalised, with complete Lean proofs and no `sorry`, the following: the"
   },
   {
     "consumed_by_exp_id": "",

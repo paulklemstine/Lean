@@ -19397,7 +19397,7 @@
       "source": "",
       "source_exp_id": "2607.29579v1",
       "source_path": "http://arxiv.org/abs/2607.29579v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-03T04:05:41.331848+00:00",
       "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
@@ -29600,11 +29600,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4152b805",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -29617,7 +29617,7 @@
       ],
       "github_issue": 0,
       "id": "seed_022",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-07T07:08:52.553622+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -29632,7 +29632,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Hilbert 15: Schubert Calculus Rigorization"
@@ -36107,6 +36107,7 @@
     "σ_{|im": 1
   },
   "selection_log": [
+    "famous_subtask",
     "famous_subtask"
   ]
 }

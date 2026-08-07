@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "67548200",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe completed development classifies elementary Boolean cellular automata by\n**universal finite-cycle reversibility**: exactly Wolfram rules\n`15, 51, 85, 170, 204, 240` are revers",
-      "quality_score": 0.7916099999999999,
-      "sorry_count": 0,
-      "theorem_count": 34,
-      "timestamp": "2026-07-30T14:40:38",
-      "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-    },
-    {
       "cycle_id": "7edbd52d",
       "domain": "Combinatorics",
       "key_insight": "# Future directions for the union-closed sets formalization\n\nThe unrestricted statement requested in the mission is Frankl's union-closed sets conjecture and remains unresolved. The Lean development t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 182,
       "timestamp": "2026-08-07T05:41:42",
       "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+    },
+    {
+      "cycle_id": "3590d6fa",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Reciprocal-Zero Harmonics (after cycle 1)\n\nCycle 1 formalised, with complete Lean proofs and no `sorry`, the following: the\nmultiplicity-sensitive, conjugate-symmetric window sum",
+      "quality_score": 0.6546970930232558,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-08-07T07:08:34",
+      "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73319
     }
   ],
-  "last_updated": "2026-08-07T05:41:42",
+  "last_updated": "2026-08-07T07:08:34",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "d1f879fc",
-        "quality": 0.76753,
-        "theorems": 13,
-        "title": "Machine Learning Generalization Bounds"
-      },
-      {
         "cycle_id": "bf94368f",
         "quality": 0.80162,
         "theorems": 28,
@@ -3079,6 +3073,12 @@
         "quality": 0.79301,
         "theorems": 36,
         "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
+      },
+      {
+        "cycle_id": "3590d6fa",
+        "quality": 0.6546970930232558,
+        "theorems": 60,
+        "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
       }
     ],
     "Applications": [
