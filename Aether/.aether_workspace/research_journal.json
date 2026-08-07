@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "13e8a4d7",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n1. **Miller-function realization.** Construct the divisor-theoretic Miller function for every nonsingular Mathlib Weierstrass curve over a finite field of characteristic coprime t",
-      "quality_score": 0.8063100000000001,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-07-31T00:21:58",
-      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-    },
-    {
       "cycle_id": "02aa1402",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe formal results locate a sharp logical boundary: forward implication plus verified, coherent consequences does not establish an antecedent. A sound system must add information",
@@ -2501,6 +2491,16 @@
       "theorem_count": 106,
       "timestamp": "2026-08-07T22:03:31",
       "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
+    },
+    {
+      "cycle_id": "0ed998a7",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — after Cycle 4\n\n## Where the thread stands\n\nFive files now carry the three-qubit programme.  All of them are inside the catalog build,\nall are `sorry`-free, and every main theorem",
+      "quality_score": 0.6603294191919192,
+      "sorry_count": 0,
+      "theorem_count": 276,
+      "timestamp": "2026-08-07T22:03:37",
+      "title": "Results of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant."
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-07T22:03:31",
+  "last_updated": "2026-08-07T22:03:37",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "e50f9bec",
-        "quality": 0.78468,
-        "theorems": 30,
-        "title": "Proof Complexity: Resolution and Cutting Planes"
-      },
-      {
         "cycle_id": "e68f39b0",
         "quality": 0.72847,
         "theorems": 9,
@@ -3513,6 +3507,12 @@
         "quality": 0.622,
         "theorems": 131,
         "title": "Constructive Mathematics: Bishop's Analysis"
+      },
+      {
+        "cycle_id": "0ed998a7",
+        "quality": 0.6603294191919192,
+        "theorems": 276,
+        "title": "Results of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant."
       }
     ],
     "MachineLearning": [

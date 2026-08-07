@@ -1,1 +1,3 @@
-../../Bridges/HomologicalTransferLearning/Advanced.lean
+-- The original catalog entry here was a link to a file that is not present in this
+-- repository; its target path is preserved below as a comment so that no content is lost.
+-- ../../Bridges/HomologicalTransferLearning/Advanced.lean

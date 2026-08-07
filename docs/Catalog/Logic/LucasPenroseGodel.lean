@@ -57,7 +57,11 @@ Synthesis (Stage 5): the mind/machine asymmetry is `godel_true` (the mind sees `
   into the impossibility of a sound complete self-referential system.
 -/
 import Mathlib
-import Computation.Computation.SelfModifyingHalt
+-- The module `Computation.Computation.SelfModifyingHalt` referenced here is not present in
+-- this repository, so the single result it supplied (`SelfModHalt.diagonal_no_decider`) is
+-- derived below directly from `lawvere_fixedpoint`, which is exactly the argument the
+-- docstring of `diagonal_no_decider_via_lawvere` describes.
+-- import Computation.Computation.SelfModifyingHalt
 
 open Function
 
@@ -200,9 +204,10 @@ problem and Gödel incompleteness as two faces of one theorem. -/
 theorem diagonal_no_decider_via_lawvere {α : Type*}
     (enum : α → α → Bool) (surj : Function.Surjective enum) :
     ¬ ∃ d : α → α → Bool, ∀ i a, d i a = enum i a := by
-  -- The catalog result and the Lawvere-based argument agree; we invoke the former,
-  -- confirming compatibility of the abstract principle with the computational engine.
-  exact SelfModHalt.diagonal_no_decider enum surj
+  -- A surjective Boolean enumeration is already impossible: Lawvere's fixed point theorem
+  -- would produce a fixed point of Boolean negation.
+  obtain ⟨b, hb⟩ := lawvere_fixedpoint enum (fun g => surj g) not
+  simp at hb
 
 /-- **Boolean Cantor via Lawvere.**  The non-vacuous content underlying the decider
 statement: no type point-surjects onto its own space of Boolean tests.  If it did,
