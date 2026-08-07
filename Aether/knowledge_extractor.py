@@ -1521,15 +1521,24 @@ Research mode: {concept.research_mode}
             "rate limit",
             "429",
             "queue is full",
+            "capacity limit reached",
+            "max_inflight",
+            "at max_inflight",
         ])
 
-    async def _dispatch_to_aristotle(self, job: ResearchJob, max_retries: int = 2) -> str:
+    async def _dispatch_to_aristotle(self, job: ResearchJob, max_retries: int = 2, max_inflight: int = None) -> str:
         """Dispatch the job to Aristotle with retry on transient failures.
 
         Queue-full errors are reported immediately without burning retries,
         so the caller can requeue the job and wait for capacity. Other transient
         errors still retry with escalating backoff.
         """
+        if max_inflight is None:
+            max_inflight = getattr(self, "max_inflight", 9)
+        current_active = await self.get_capacity_used_async()
+        if current_active >= max_inflight:
+            raise RuntimeError(f"Aristotle capacity limit reached ({current_active}/{max_inflight}). Dispatch blocked.")
+
         import aristotlelib.api_request as api_mod
         from aristotlelib import Project
 

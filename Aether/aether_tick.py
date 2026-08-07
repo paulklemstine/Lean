@@ -1134,47 +1134,52 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             if tournament_already_inflight:
                 print(f"[Tournament] Available directions={avail_dirs} > 1000 but tournament job already inflight — skipping.")
             else:
-                dt = DirectionTournament(workspace=extractor.workspace)
-                batch = dt.get_candidate_batch(batch_size=10)
-                if batch and len(batch) >= 5:
-                    print(f"[Tournament] Available directions={avail_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
-                    prompt = dt.build_tournament_prompt(batch, target_winners=2)
-                    # Tournament is allowed to exceed max_inflight by 1 — it's a maintenance job
-                    if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):
-                        import tempfile
-                        with tempfile.TemporaryDirectory() as tmp_dir:
-                            tmp_path = Path(tmp_dir)
-                            (tmp_path / "lakefile.lean").write_text("import Lake\nopen Lake DSL\npackage tournament\n@default_target lean_lib Tournament where srcDir := \".\"")
-                            (tmp_path / "Tournament.lean").write_text("import Mathlib\n-- Direction Tournament Evaluation")
-                            (tmp_path / "TOURNAMENT_PROMPT.md").write_text(prompt)
-                            try:
-                                proj_id = await extractor.aristotle.submit_lean_project_only(
-                                    prompt=prompt,
-                                    project_dir=tmp_path
-                                )
-                                print(f"[Tournament] Successfully queued Aristotle evaluation project: {proj_id}")
-                                # Track tournament job in inflight so results get polled & processed
-                                from knowledge_extractor import ResearchJob, ResearchConcept
-                                tournament_job = ResearchJob(
-                                    job_id=f"tournament_{proj_id[:8]}",
-                                    cycle_n=0,
-                                    concept=ResearchConcept(
-                                        title="Direction Tournament Evaluation",
-                                        domain="meta",
-                                        concept_description="Aristotle evaluates candidate directions for quality pruning",
-                                        mathematical_framing="Direction tournament: select top directions by mathematical merit"
-                                    ),
-                                    prompt=prompt,
-                                    project_id=proj_id,
-                                    status="dispatched",
-                                    dispatch_time=time.time(),
-                                    direction_id="__direction_tournament__",
-                                )
-                                extractor.inflight[proj_id] = tournament_job
-                                extractor._save_inflight()
-                                print(f"[Tournament] Tournament job {proj_id[:8]} added to inflight for polling")
-                            except Exception as sub_err:
-                                print(f"[Tournament] Aristotle submission note: {sub_err}")
+                local_inflight = extractor._count_inflight_dispatched()
+                server_running = await _safe_get_active_jobs_count(extractor.aristotle)
+                current_inflight = max(local_inflight, server_running) if server_running >= 0 else local_inflight
+                if current_inflight >= max_inflight:
+                    print(f"[Tournament] Skipping tournament: at max_inflight ({current_inflight}/{max_inflight})")
+                else:
+                    dt = DirectionTournament(workspace=extractor.workspace)
+                    batch = dt.get_candidate_batch(batch_size=10)
+                    if batch and len(batch) >= 5:
+                        print(f"[Tournament] Available directions={avail_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
+                        prompt = dt.build_tournament_prompt(batch, target_winners=2)
+                        if hasattr(extractor, 'aristotle') and extractor.aristotle and hasattr(extractor.aristotle, 'submit_lean_project_only'):
+                            import tempfile
+                            with tempfile.TemporaryDirectory() as tmp_dir:
+                                tmp_path = Path(tmp_dir)
+                                (tmp_path / "lakefile.lean").write_text("import Lake\nopen Lake DSL\npackage tournament\n@default_target lean_lib Tournament where srcDir := \".\"")
+                                (tmp_path / "Tournament.lean").write_text("import Mathlib\n-- Direction Tournament Evaluation")
+                                (tmp_path / "TOURNAMENT_PROMPT.md").write_text(prompt)
+                                try:
+                                    proj_id = await extractor.aristotle.submit_lean_project_only(
+                                        prompt=prompt,
+                                        project_dir=tmp_path
+                                    )
+                                    print(f"[Tournament] Successfully queued Aristotle evaluation project: {proj_id}")
+                                    # Track tournament job in inflight so results get polled & processed
+                                    from knowledge_extractor import ResearchJob, ResearchConcept
+                                    tournament_job = ResearchJob(
+                                        job_id=f"tournament_{proj_id[:8]}",
+                                        cycle_n=0,
+                                        concept=ResearchConcept(
+                                            title="Direction Tournament Evaluation",
+                                            domain="meta",
+                                            concept_description="Aristotle evaluates candidate directions for quality pruning",
+                                            mathematical_framing="Direction tournament: select top directions by mathematical merit"
+                                        ),
+                                        prompt=prompt,
+                                        project_id=proj_id,
+                                        status="dispatched",
+                                        dispatch_time=time.time(),
+                                        direction_id="__direction_tournament__",
+                                    )
+                                    extractor.inflight[proj_id] = tournament_job
+                                    extractor._save_inflight()
+                                    print(f"[Tournament] Tournament job {proj_id[:8]} added to inflight for polling")
+                                except Exception as sub_err:
+                                    print(f"[Tournament] Aristotle submission note: {sub_err}")
     except Exception as e:
         print(f"[Tournament] Automatic direction tournament check: {e}")
 
@@ -1449,6 +1454,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                             extractor.inflight[job.project_id] = job
                             print(f"[Tick] Dispatched injected issue {job.project_id[:8]}: {job.concept.title[:60]}")
                             _signal_dashboard_update(job.project_id[:8], "dispatched")
+                        elif getattr(job, "status", None) in ("dispatch_queued", "retry_queued"):
+                            print(f"[Tick] Queued injected issue {job.job_id[:8]}: {job.concept.title[:60]} (at max_inflight)")
+                            extractor._save_inflight()
                         else:
                             extractor._release_direction(job)
                             print(f"[Tick] Dispatch failed for injected issue {job.concept.title[:60]}, direction released")
@@ -1490,6 +1498,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     extractor.inflight[job.project_id] = job
                     print(f"[Tick] Dispatched {job.project_id[:8]}: {job.concept.title[:60]}")
                     _signal_dashboard_update(job.project_id[:8], "dispatched")
+                elif getattr(job, "status", None) in ("dispatch_queued", "retry_queued"):
+                    print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
+                    queue_full = True
+                    extractor._save_inflight()
                 else:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
