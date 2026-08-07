@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ef4982e9",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\n1. **Canonical versus merely available topologies.** The upper Alexandrov topology makes every monotone map continuous, hence both adjoints of every Galois connection. A sharper c",
-      "quality_score": 0.78888,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-02T15:29:38",
-      "title": "Bridge: Galois Connections Between Order Theory and Topology"
-    },
-    {
       "cycle_id": "c945ec38",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Finite partition formula.** For every finite pairwise-disjoint family of finite--cofinite\n   events, the probability of its union equals the finite sum of its probabilities.",
@@ -499,19 +489,19 @@
       "theorem_count": 182,
       "timestamp": "2026-08-07T04:13:38",
       "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+    },
+    {
+      "cycle_id": "2c38bc1a",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
+      "quality_score": 0.7055950000000001,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-08-07T04:15:17",
+      "title": "ArXiv paper: Even smaller universal posets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c2653f80",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nThe Lean development proves that `78557` is a Sierpiński number by a complete covering-system certificate: every exponent class modulo `36` receives a proper prime divisor from `{",
-      "quality_score": 0.7720099999999999,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-07-30T03:38:51",
-      "title": "Sierpiński Numbers: Covering Systems"
-    },
     {
       "cycle_id": "3c125e46",
       "domain": "NumberTheory",
@@ -2501,6 +2491,16 @@
       "theorem_count": 182,
       "timestamp": "2026-08-07T04:13:38",
       "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+    },
+    {
+      "cycle_id": "2c38bc1a",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
+      "quality_score": 0.7055950000000001,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-08-07T04:15:17",
+      "title": "ArXiv paper: Even smaller universal posets"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73419
     }
   ],
-  "last_updated": "2026-08-07T04:13:38",
+  "last_updated": "2026-08-07T04:15:17",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "13e8a4d7",
-        "quality": 0.8063100000000001,
-        "theorems": 27,
-        "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-      },
-      {
         "cycle_id": "50db037d",
         "quality": 0.7722199999999999,
         "theorems": 13,
@@ -3388,6 +3382,12 @@
         "cycle_id": "a95dbc85",
         "quality": 0.686,
         "theorems": 112,
+        "title": "ArXiv paper: Even smaller universal posets"
+      },
+      {
+        "cycle_id": "2c38bc1a",
+        "quality": 0.7055950000000001,
+        "theorems": 3,
         "title": "ArXiv paper: Even smaller universal posets"
       }
     ],
