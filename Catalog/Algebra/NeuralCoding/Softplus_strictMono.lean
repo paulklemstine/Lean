@@ -1,7 +1,5 @@
 import Mathlib
 
-open Real
-
 /-! # CatalogBuild.Shared.Softplus_strictMono
 
 Auto-generated from theorem catalog database.
@@ -10,18 +8,6 @@ Declarations: 9
 -/
 
 noncomputable section
-
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- The softplus activation `softplus x = log (1 + exp x)`. -/
-def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)
-
-/-- The logistic sigmoid `σ x = exp x / (1 + exp x)`. -/
-def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
-
-/-- `1 + exp x` is positive. -/
-lemma one_plus_exp_pos (x : ℝ) : (0 : ℝ) < 1 + Real.exp x := by positivity
 
 /-- Softplus is strictly monotone increasing -/
 theorem softplus_strictMono : StrictMono softplus := by
@@ -55,6 +41,21 @@ theorem softplus_differentiable : Differentiable ℝ softplus := by
   · exact differentiable_const 1 |>.add Real.differentiable_exp
   · intro x; exact ne_of_gt (one_plus_exp_pos x)
 
+/-- [Section: # CatalogBuild.Shared.Softplus_differentiable
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 9] -/
+theorem softplus_convex : ConvexOn ℝ Set.univ softplus := by
+  have h_hessian : ∀ x, deriv (deriv softplus) x > 0 := by
+    rw [ show deriv softplus = logisticSigmoid from funext fun x => softplus_deriv x ];
+    unfold logisticSigmoid;
+    exact fun x => by norm_num [ Real.differentiableAt_exp, ne_of_gt ( add_pos zero_lt_one ( Real.exp_pos x ) ) ] ; ring_nf; positivity;
+  apply_rules [ convexOn_of_deriv2_nonneg, convex_univ ];
+  · exact ContinuousOn.log ( continuousOn_const.add ( Real.continuousOn_exp ) ) fun x hx => by positivity;
+  · exact fun x _ => DifferentiableAt.differentiableWithinAt ( softplus_differentiable.differentiableAt );
+  · exact fun x hx => differentiableAt_of_deriv_ne_zero ( ne_of_gt ( h_hessian x ) ) |> DifferentiableAt.differentiableWithinAt;
+  · exact fun x _ => le_of_lt ( h_hessian x )
+
 /-- [Section: # CatalogBuild.Shared.Softplus_convex
 Auto-generated from theorem catalog database.
 Domain: Shared
@@ -73,21 +74,5 @@ theorem softplus_zero : softplus 0 = Real.log 2 := by
 /-- Softplus is monotone increasing -/
 theorem softplus_mono : Monotone softplus :=
   softplus_strictMono.monotone
-
-/-- [Section: # CatalogBuild.Shared.Softplus_differentiable
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 9] -/
-theorem softplus_convex : ConvexOn ℝ Set.univ softplus := by
-  have h_hessian : ∀ x, deriv (deriv softplus) x > 0 := by
-    rw [ show deriv softplus = logisticSigmoid from funext fun x => softplus_deriv x ];
-    unfold logisticSigmoid;
-    exact fun x => by norm_num [ Real.differentiableAt_exp, ne_of_gt ( add_pos zero_lt_one ( Real.exp_pos x ) ) ] ; ring_nf; positivity;
-  apply_rules [ convexOn_of_deriv2_nonneg, convex_univ ];
-  · exact ContinuousOn.log ( continuousOn_const.add ( Real.continuousOn_exp ) ) fun x hx => by positivity;
-  · exact fun x _ => DifferentiableAt.differentiableWithinAt ( softplus_differentiable.differentiableAt );
-  · exact fun x hx => differentiableAt_of_deriv_ne_zero ( ne_of_gt ( h_hessian x ) ) |> DifferentiableAt.differentiableWithinAt;
-  · exact fun x _ => le_of_lt ( h_hessian x )
-
 
 end

@@ -1,7 +1,5 @@
 import Mathlib
 
-open Real
-
 /-! # CatalogBuild.Shared.Spb_zero
 
 Auto-generated from theorem catalog database.
@@ -10,13 +8,6 @@ Declarations: 5
 -/
 
 noncomputable section
-
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- The SPB (stereographic projection bridge) operation
-`spb x y = (x + y) / (1 - x * y)`, i.e. the tangent addition law. -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 /-- [Section: # CatalogBuild.Shared.Spb_zero
 Auto-generated from theorem catalog database.
@@ -46,6 +37,5 @@ theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
   linarith
 
 theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by simp [spb]
-
 
 end

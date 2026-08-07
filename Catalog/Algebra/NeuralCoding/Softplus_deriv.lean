@@ -1,7 +1,5 @@
 import Mathlib
 
-open Real
-
 /-! # CatalogBuild.Shared.Softplus_deriv
 
 Auto-generated from theorem catalog database.
@@ -10,18 +8,6 @@ Declarations: 9
 -/
 
 noncomputable section
-
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- The softplus activation `softplus x = log (1 + exp x)`. -/
-def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)
-
-/-- The logistic sigmoid `σ x = exp x / (1 + exp x)`. -/
-def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
-
-/-- `1 + exp x` is positive. -/
-lemma one_plus_exp_pos (x : ℝ) : (0 : ℝ) < 1 + Real.exp x := by positivity
 
 /-- [Section: # CatalogBuild.Shared.Softplus_convex
 Auto-generated from theorem catalog database.
@@ -88,6 +74,5 @@ theorem softplus_zero : softplus 0 = Real.log 2 := by
 /-- Softplus is monotone increasing -/
 theorem softplus_mono : Monotone softplus :=
   softplus_strictMono.monotone
-
 
 end

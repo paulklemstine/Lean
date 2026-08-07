@@ -7,12 +7,6 @@ Domain: Shared
 Declarations: 5
 -/
 
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- The residue statistic `E N x = N % x` used to define sublevel sets. -/
-def E (N x : ℕ) : ℕ := N % x
-
 /-- [Section: # CatalogBuild.Shared.Sublevel
 Auto-generated from theorem catalog database.
 Domain: Speculative
