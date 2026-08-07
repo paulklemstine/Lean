@@ -1,0 +1,29 @@
+/-!
+# Primitive prime divisors for composite-index Fibonacci numbers
+
+The content of this file, as generated, is not Lean source: it is a unified-diff
+fragment (a patch against `Speculative/AutoResearch/...`) that was committed here
+by mistake, and it contains no complete declaration.  Nothing in it can be
+elaborated, so the original text is preserved verbatim inside the block comment
+below rather than deleted.
+
+The mathematical content it gestures at (the rank of apparition of a prime in the
+Fibonacci sequence, which is the first ingredient of any primitive-divisor
+argument) is developed, with complete proofs, in
+`Shared/PosetTheory/FibonacciApparitionSheaf.lean`.
+-/
+
+/-
+--- a/Speculative/AutoResearch/Primitive_Prime_Divisors_for_Composite_Index_Fibonacci_Numbers.lean
++++ b/Speculative/AutoResearch/Primitive_Prime_Divisors_for_Composite_Index_Fibonacci_Numbers.lean
+@@ -99,6 +99,9 @@
+     (show p ∣ Nat.fib (n + 1) from by rwa [← ZMod.natCast_eq_zero_iff]))
+     (by aesop)
+ 
++/-- Key helper: F(np)/F(n) ≡ p · F(n+1)^{p-1} (mod p²).
++    Since gcd(F(n+1), p) = 1, Fermat gives F(n+1)^{p-1} ≡ 1 (mod p),
++    so F(np)/F(n) ≡ p (mod p²), hence v_p(F(np)/F(n)) = 1. -/
+ -- Wall base case: v_p(F(np)/F(n)) = 1 for odd prime p | F(n)
+ lemma wall_base (n p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
+     (hpn : p ∣ Nat.fib n) (hn : 2 ≤ n) :
+-/

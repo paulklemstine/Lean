@@ -29,7 +29,7 @@
   Concrete `#eval`/`decide` examples exhibit the simplification of a nested
   modus-ponens chain.
 -/
-import Logic.Propositional
+import Logic.ProofTheoryAndLogic.Propositional
 import Shared.TreeComplexity
 
 namespace Learning.ProofRefinement
