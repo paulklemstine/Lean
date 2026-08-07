@@ -484,6 +484,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Build the wrapped code so the final expression returns the rendered output.
             // Returning the value avoids relying on the global stdout capture, which is
             // racy when several visualizations/demos auto-run concurrently on load.
+            const indentedProcessedCode = processedCode.trim()
+                ? processedCode.split('\n').map(line => '    ' + line).join('\n')
+                : '    pass';
+
             let fullCode;
             if (isPlotly) {
                 fullCode = `
@@ -535,7 +539,7 @@ plt.close = _viz_close
 plt.show = _viz_show
 
 try:
-${processedCode}
+${indentedProcessedCode}
 finally:
     plt.close = _orig_close
     plt.show = _orig_show
