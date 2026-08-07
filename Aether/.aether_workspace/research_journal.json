@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "513ffc93",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n1. **Poisson connectivity window.** For every fixed real `c`, if `pₙ = (log n + c)/n`, then the number of isolated vertices in `G(n,pₙ)` converges in distribution to `Poisson(exp(",
-      "quality_score": 0.7676799999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-07-30T22:28:51",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
-    {
       "cycle_id": "e3c425e4",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\n1. **Finite-power integrality certificate.** For every ideal `I : Ideal ℕ` and `r : ℕ`, `r` is integral over `I` (in the nonzero-witness sense formalized here) if and only if ther",
@@ -2501,6 +2491,16 @@
       "theorem_count": 600,
       "timestamp": "2026-08-07T18:08:42",
       "title": "ArXiv paper: The small Davenport constant of the Heisenberg group of order 125"
+    },
+    {
+      "cycle_id": "76abd1f0",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the formal results in\n`Catalog/Physics/Chaos/`. Every Lean file in that directory compiles end-to-end with no\n`sorry` and no ne",
+      "quality_score": 0.6537058069977426,
+      "sorry_count": 0,
+      "theorem_count": 456,
+      "timestamp": "2026-08-07T19:22:32",
+      "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71348
     }
   ],
-  "last_updated": "2026-08-07T18:08:42",
+  "last_updated": "2026-08-07T19:22:32",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "4ecd322f",
-        "quality": 0.686,
-        "theorems": 16,
-        "title": "Quantum Gravity as Topological Quantum Field Theory"
-      },
-      {
         "cycle_id": "726a20a7",
         "quality": 0.73786,
         "theorems": 13,
@@ -3761,6 +3755,12 @@
         "quality": 0.661958698156682,
         "theorems": 605,
         "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
+      },
+      {
+        "cycle_id": "76abd1f0",
+        "quality": 0.6537058069977426,
+        "theorems": 456,
+        "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
       }
     ],
     "Probability": [
