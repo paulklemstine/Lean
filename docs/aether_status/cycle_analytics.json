@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T14:05:26.144722+00:00",
+  "last_updated": "2026-08-07T14:58:14.122459+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50214,6 +50214,7 @@
       "outcome_quality": 0.6640958333333333,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50242,6 +50243,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-07T14:05:26.012440+00:00",
       "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.292,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Geometry",
+      "duration_seconds": 4275.231396436691,
+      "end_time": 1786114667.3992205,
+      "files_integrated": 74,
+      "job_id": "4152b805",
+      "outcome_quality": 0.6697667517006802,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.932,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9555,
+        "novelty": 0.95,
+        "proof_depth": 0.9578,
+        "usefulness": 0.9789
+      },
+      "quality_score": 0.6697667517006802,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786110392.167824,
+      "strategy_count": 0,
+      "theorem_count": 631,
+      "theorem_novelty_disproof": 3,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 552,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-07T14:58:14.018220+00:00",
+      "title": "Hilbert 15: Schubert Calculus Rigorization"
     }
   ]
 }

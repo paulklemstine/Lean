@@ -27,11 +27,11 @@ theorem rapidity_ratio_mul (u v : ℝ) (hu : u ≠ 1) (hv : v ≠ 1)
 /-- Distance from 0 to v equals |ρ(v)|. -/
 theorem hypDist_from_origin (v : ℝ) :
     |rapidity (spbH 0 v)| = |rapidity v| := by
-  rw [spbH_comm]; simp [SPBResearch.spbH]
+  simp [spbH]
 
 /-- Boost composition is bounded. -/
 theorem boost_bounded (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
-    |spbH u v| < 1 := SPBAlgebra.spbH_bounded u v hu hv
+    |spbH u v| < 1 := spbH_bounded u v hu hv
 
 /-- Rapidity additivity when all ratios are positive. -/
 theorem rapidity_additive (u v : ℝ) (hu : u ≠ 1) (hv : v ≠ 1)

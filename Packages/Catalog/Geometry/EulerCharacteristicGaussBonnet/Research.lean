@@ -1,4 +1,4 @@
-import Geometry.GraphTheory.DiscreteGaussBonnet
+import Geometry.DiscreteGaussBonnet
 import Geometry.AbstractAlgebra.EulerCharInclusionExclusion
 
 /-!
