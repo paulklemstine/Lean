@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a1225aa5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe formal results refute the proposed connectedness, local compactness, and contractibility claims for the interval topology. They suggest the following concrete conjectures.\n\n1.",
-      "quality_score": 0.7423299999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T09:50:58",
-      "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
-    },
-    {
       "cycle_id": "1c628216",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal\n   machine, define `K_U(b)` as the least program length decoding to `b`, and derive\n   the Kraft-in",
@@ -2501,6 +2491,16 @@
       "theorem_count": 116,
       "timestamp": "2026-08-07T04:27:57",
       "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
+    },
+    {
+      "cycle_id": "786dcda9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — arithmetic mirror symmetry, after cycle 4\n\nCycle 1 adjudicated the five assigned conjectures and spun off follow-ups A–D.  **Cycle 2\nclosed all four.**  Cycle 3 closed the divisi",
+      "quality_score": 0.6520853,
+      "sorry_count": 0,
+      "theorem_count": 246,
+      "timestamp": "2026-08-07T05:07:18",
+      "title": "The following conjectures are concrete extensions of the proved bridge.  Each is"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73419
     }
   ],
-  "last_updated": "2026-08-07T04:27:57",
+  "last_updated": "2026-08-07T05:07:18",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "17b35eaf",
-        "quality": 0.68012,
-        "theorems": 3,
-        "title": "Temporal Logic of Proofs: When You Prove Something Matters"
-      },
-      {
         "cycle_id": "5c8fc610",
         "quality": 0.67235,
         "theorems": 3,
@@ -3637,6 +3631,12 @@
         "quality": 0.6609054304347827,
         "theorems": 116,
         "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
+      },
+      {
+        "cycle_id": "786dcda9",
+        "quality": 0.6520853,
+        "theorems": 246,
+        "title": "The following conjectures are concrete extensions of the proved bridge.  Each is"
       }
     ],
     "NumberTheory": [
