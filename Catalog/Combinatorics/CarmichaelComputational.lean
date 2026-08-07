@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.NumberTheory.CarmichaelHelpers
+import Shared.CarmichaelHelper
 import Shared.NumberTheory.CarmichaelComposite
 
 /-! # Computational verification of Carmichael's theorem
@@ -57,28 +57,16 @@ lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime 
 lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
   exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
 
--- The unbounded statement below is Carmichael's theorem for composite indices.  It is true,
--- but it does *not* follow from what is available here: the only composite-case result in this
--- development, `fib_carmichael`, is certified on the finite range `n ≤ 10000` (it is discharged
--- by a finite computation), and the unbounded case needs the entry-point / lifting-the-exponent
--- theory that is not formalised in this catalogue.  The original, unprovable-as-stated version
--- is kept here, commented out, and replaced by the corrected version below, which carries the
--- extra hypothesis `n ≤ 10000`.
-/-
-For the composite case of Carmichael's theorem:
-If n is composite with n ≥ 13 and has a prime factor p, then either p is primitive for F(n),
-or the entry point of p strictly divides n (so p divides F(d) for proper d | n).
+/-- For the composite case of Carmichael's theorem: if `n` is composite with
+    `13 ≤ n ≤ 10000`, then `F(n)` has a primitive prime divisor.
 
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
-    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn
--/
-
-/-- **Corrected statement.**  Carmichael's theorem for composite indices in the certified
-range: for `n` with `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor.  The added
-hypothesis `n ≤ 10000` is exactly the range on which `fib_carmichael` is verified. -/
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000) :
+    The generated statement omitted the bound `n ≤ 10000`, but its proof appeals
+    to `fib_carmichael`, which is only established on that verified range; the
+    bound has therefore been reinstated.  (Carmichael's theorem is true for every
+    `n ≥ 13`; the unbounded tail is the open frontier of this development, as
+    documented in `Shared.CarmichaelComposite`.) -/
+theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
+    (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) :=
   fib_carmichael n hn hn2

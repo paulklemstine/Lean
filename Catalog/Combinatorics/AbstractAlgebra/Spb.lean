@@ -12,26 +12,27 @@ noncomputable section
 /-- [Section: ## Core Definitions] -/
 def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
-/-- The SPB matrix `M(a) = [[1, a], [-a, 1]]`. -/
+/-- The cross ratio of four reals, with the denominator that the invariance
+statement below normalises against. -/
+def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
+
+/-- The matrix of the SPB Möbius transformation `x ↦ spb x a`. -/
 def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
 
-/-- The trace of the SPB matrix is `2`. -/
 theorem spbMat_trace (a : ℝ) : (spbMat a).trace = 2 := by
   simp [spbMat, Matrix.trace_fin_two]
   norm_num
 
-/-- The determinant of the SPB matrix is `1 + a ^ 2`. -/
 theorem spbMat_det (a : ℝ) : (spbMat a).det = 1 + a ^ 2 := by
   simp [spbMat, Matrix.det_fin_two]
   ring
 
-/-- The cross ratio of four reals. -/
-def crossRatio (a b c d : ℝ) : ℝ := (a - c) * (b - d) / ((a - d) * (b - c))
-
-/-- Clearing the denominator in the SPB operation. -/
+/-- The Cauchy pull-back identity behind the conformality of the SPB map. -/
 theorem cauchy_pullback (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    spb x a * (1 - x * a) = x + a := by
-  unfold spb; field_simp
+    (1 + spb x a ^ 2) * (1 - x * a) ^ 2 = (1 + x ^ 2) * (1 + a ^ 2) := by
+  unfold spb
+  field_simp
+  ring
 
 /-- [Section: ## Section 24: SPB Linearization Error] -/
 theorem spb_linearization_error (x y : ℝ) (h : 1 - x * y ≠ 0) :
@@ -55,20 +56,13 @@ theorem spb_cross_ratio_invariant (a b c d t : ℝ)
   unfold crossRatio spb;
   rw [ div_eq_div_iff ];
   · grind +splitImp;
-  · unfold spb at *; simp_all +decide [ mul_comm ] ;
+  · unfold spb at *; simp_all +decide
   · assumption
 
 theorem spb_jacobian (x a : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + a ^ 2) / (1 - x * a) ^ 2 =
     (1 + spb x a ^ 2) / (1 + x ^ 2) := by
-  have hx : (1 : ℝ) + x ^ 2 ≠ 0 := by positivity
-  have hd : (1 - x * a) ^ 2 ≠ 0 := pow_ne_zero 2 h
-  have key : 1 + spb x a ^ 2 = (1 + x ^ 2) * (1 + a ^ 2) / (1 - x * a) ^ 2 := by
-    unfold spb
-    field_simp
-    ring
-  rw [key]
-  field_simp
+  rw [ div_eq_div_iff ] <;> cases lt_or_gt_of_ne h <;> nlinarith [ cauchy_pullback x a h ] ;
 
 theorem spb_neg_first (x y : ℝ) : spb (-x) y = -(spb x (-y)) := by unfold spb; ring
 
@@ -126,12 +120,6 @@ theorem spb_three_body (x y z : ℝ) (h : 1 - x * y ≠ 0) :
     (1 - x * y) * (1 - spb x y * z) = 1 - x * y - (x + y) * z := by
   unfold spb; field_simp
 
-/-- [Section: ## Section 12: SPB Symmetries] -/
-theorem spb_odd (x y : ℝ) : spb (-x) (-y) = -spb x y := by unfold spb; ring
-
-/-- [Section: ## Section 36: SPB Negation Symmetry] -/
-theorem spb_neg_comm (x y : ℝ) : -(spb x y) = spb (-x) (-y) := by rw [spb_odd]
-
 /-- [Section: ## Section 18: Involution Classification] -/
 theorem spb_involution_iff (a : ℝ) (h : 1 - a * a ≠ 0) :
     spb a a = 0 ↔ a = 0 := by
@@ -156,6 +144,9 @@ theorem spb_elliptic (a : ℝ) (ha : a ≠ 0) :
     (spbMat a).trace ^ 2 < 4 * (spbMat a).det := by
   have h := spb_discriminant a; nlinarith [mul_self_pos.mpr ha]
 
+/-- [Section: ## Section 12: SPB Symmetries] -/
+theorem spb_odd (x y : ℝ) : spb (-x) (-y) = -spb x y := by unfold spb; ring
+
 /-- [Section: ## Section 17: Fixed Point Theory] -/
 theorem spb_no_fixed_points (a : ℝ) (ha : a ≠ 0) (x : ℝ) (hd : 1 - x * a ≠ 0) :
     spb x a ≠ x := by
@@ -165,5 +156,8 @@ theorem spb_no_fixed_points (a : ℝ) (ha : a ≠ 0) (x : ℝ) (hd : 1 - x * a �
   rcases mul_eq_zero.mp this with h1 | h2
   · exact ha h1
   · nlinarith [sq_nonneg x]
+
+/-- [Section: ## Section 36: SPB Negation Symmetry] -/
+theorem spb_neg_comm (x y : ℝ) : -(spb x y) = spb (-x) (-y) := by rw [spb_odd]
 
 end
