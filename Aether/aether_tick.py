@@ -875,11 +875,12 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             # it defeats the adaptive gate (the old 0.6 default did exactly that).
             phase_b_threshold = max(getattr(extractor, 'phase_b_min_score', 0.25), adaptive)
             phase_a_q = job.quality_score
-            if phase_a_q >= phase_b_threshold and job.result_lean:
+            is_injected = bool(getattr(job, 'github_issue', 0))
+            if (phase_a_q >= phase_b_threshold or is_injected) and (job.result_lean or is_injected):
                 # Phase B will be dispatched right now (within this same tick loop)
                 # Then we wait for Phase B's results in a future tick
-                print(f"[Tick] Phase A Q={phase_a_q:.3f} >= {phase_b_threshold:.3f} threshold (adaptive={adaptive:.3f}) — "
-                      f"dispatching Phase B for {job.job_id[:8]}")
+                reason_str = f"injected issue #{job.github_issue}" if is_injected else f"Phase A Q={phase_a_q:.3f} >= {phase_b_threshold:.3f}"
+                print(f"[Tick] {reason_str} — dispatching Phase B for {job.job_id[:8]}")
                 # Save Phase A quality score
                 job.phase_a_quality_score = phase_a_q
                 # Snapshot Phase A result before dispatching B
@@ -1070,7 +1071,21 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 try:
                     import github_injector
                     if job.status == "integrated":
-                        comment = f"Aether has completed researching this direction!\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}\n\nThe results have been integrated into the Aether Catalog."
+                        pkg_filename = ""
+                        if hasattr(job, "concept") and job.concept:
+                            import re
+                            title = job.concept.title.replace(" ", "_").replace("-", "_").lower()
+                            title = re.sub(r'[^a-z0-9_]', '', title)[:50]
+                            pkg_filename = f"{title}.json"
+                        
+                        pkg_url = f"https://alethean.org/#pkg={pkg_filename}" if pkg_filename else "https://alethean.org"
+                        comment = (
+                            f"Aether has completed Phase B research on this direction!\n\n"
+                            f"**Quality Score**: {job.quality_score:.3f}\n"
+                            f"**Theorems Proven**: {job.theorem_count}\n\n"
+                            f"**Research Package**: [{pkg_url}]({pkg_url})\n\n"
+                            f"The results have been integrated into the Aether Catalog."
+                        )
                     elif job.status == "rejected":
                         comment = f"Aether completed researching this direction, but the results did not meet the quality threshold for integration.\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}"
                     else:
