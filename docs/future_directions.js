@@ -5602,22 +5602,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
   },
   {
-    "consumed_by_exp_id": "6e948588",
-    "description": "Investigate the ArXiv paper 'The small Davenport constant of the Heisenberg group of order 125' and formalize its key results. Abstract: The small Davenport constant $\\mathsf{d}(G)$ of a finite group $G$ is the maximal length of a product-one-free sequence over $G$. For the exponent-$p$ Heisenberg group $H_{p^3}$ of order $p^3$, Godara and Sarkar proved $\\mathsf{d}(H_{27})=6$ and posed $\\mathsf{d}(H_{p^3})=3p-3$ for every odd prime $p$, leaving $p\\ge5$ open. We settle the first open case: $\\mathsf{d}(H_{125})=12$. The lower bound is the explicit product-one-free sequence $x^4y^4v^4$. For the upper bound we record a product-one criterion that reduces the non-commutative problem to additive combinatorics over $\\mathbb{F}_5^2$, and then reduce \"every length-13 sequence has a product-one subsequence\" to a single finite statement -- a spread bound on quotient multisets -- which we verify by an exhaustive, memory-flat search in C, its verdict independently reproduced by a second search with a different pruning strategy. Every auxiliary lemma is machine-checked. The argument is genuinely $p$-specific: we identify the exact ste",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0157",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.14379v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T01:43:06.432576+00:00",
-    "title": "ArXiv paper: The small Davenport constant of the Heisenberg group of order 125"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Beyond the Riemann Hypothesis bounds: A pair-correlation approach to the least prime in arithmetic progression and the smallest quadratic non-residue' and formalize its key results. Abstract: The Generalized Riemann Hypothesis (GRH) has long defined the expected bounds for the smallest prime in an arithmetic progression and the least quadratic non-residue. However, this hypothesis primarily addresses the horizontal location of non-trivial zeros. In this paper, we show that incorporating the vertical spacing--or pair-correlation--of these zeros allows us to surpass these classical bounds. By combining these two zero-distribution perspectives, we establish sharper estimates for both problems under GRH and specific pair-correlation hypotheses, thereby providing a new link between pair-correlation phenomena for Dirichlet L-functions and these two classical problems.",
     "domains": [
@@ -9485,17 +9469,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle c961538a"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "100d7a9d",
     "description": "# Future Directions\n\n1. **Exact finite-event bound for exposed velocities.** For every finite max-plus law `\u03bc` and every velocity `x` exposed by a unique tilt `\u03b8`, there is an integer `N` such that, whenever `n \u2265 N` and some `n`-step path has empirical velocity `x`, the maximum normalized score among all such paths is exactly `-\u03bc.rate x`. A finite law, exposed velocity, and arbitrarily large accessible `n` violating this equality would refute the conjecture.\n\n2. **Tensorization of the rate.** For finite max-plus laws `\u03bc\u2081` and `\u03bc\u2082`, give the product law value `(i,j) \u21a6 \u03bc\u2081.value i + \u03bc\u2082.value j` and weight `(i,j) \u21a6 \u03bc\u2081.weight i + \u03bc\u2082.weight j`. Whenever the three real-valued Legendre suprema are bounded above, its rate satisfies `rateProd (x\u2081 + x\u2082) = inf_y (\u03bc\u2081.rate y + \u03bc\u2082.rate (x\u2081 + x\u2082 - y))`. A finite pair of laws and a point where this infimal-convolution identity fails would refute the conjecture.\n\n3. **Convex-hull domain characterization.** For every finite max-plus law, the affine set defining its real-valued Legendre\u2013Fenchel rate is bounded above at `x` if and only if `x` belongs to the convex hull of the finite set `Set.range \u03bc.value`. Either an exterior point with bounded defining set or an interior point with unbounded defining set would be a counterexample.\n\n4. **Full closed-set upper bound.** For every finite max-plus law and closed set `C \u2286 \u211d`, let `W\u2099(C)` be the maximum normalized score of length-`n` paths whose empirical velocity lies in `C` (with empty events assigned `-\u221e` in an extended-real formulation). Then `limsup (n \u2192 \u221e) W\u2099(C) \u2264 - inf x \u2208 C, \u03bc.rate x`. Any finite law and closed set with a strictly larger limsup would refute the conjecture.\n\n5. **Open-set lower bound under accessibility.** If a finite max-plus law has rational increment values and every increment has finite real weight, then for every open set `G` meeting the convex hull of the increments, the corresponding extended-real event weights satisfy `liminf (n \u2192 \u221e) W\u2099(G) \u2265 - inf x \u2208 G, \u03bc.rate x`. A rational finite law and open interval violating this inequality would refute the conjecture.\n",
     "domains": [
       "Geometry",
       "NumberTheory"
     ],
     "id": "fd_0853",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "02f69ad4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T07:30:51.669151+00:00",
     "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
   },
