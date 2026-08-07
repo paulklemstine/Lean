@@ -7,624 +7,448 @@
 
 ## Abstract
 
-We construct an isometric-flavoured dictionary between the Berggren ternary tree of
-primitive Pythagorean triples and the Poincaré upper half-plane $\mathbb{H}$, and use it to
-settle a family of quantitative questions about the tree's geometry and about the
-algorithmic hope that motivated the construction.
+We construct an isometric-in-spirit dictionary between the Berggren ternary tree of primitive Pythagorean triples and the Poincaré upper half-plane $\mathbb{H}$, and use it to determine, exactly, the geometry of that tree.
 
-Sending the Euclid seed $(m,n)$ of a primitive triple to the point $z(m,n) = (n+i)/m \in \mathbb{H}$,
-we prove the exact identity $\cosh d_{\mathbb{H}}(i, z(m,n)) = (m^2+n^2+1)/(2m)$, in which the
-numerator is the hypotenuse plus one. From it we deduce the *logarithmic trajectory law*:
-every node of the tree, at any depth, lies in the half-open annulus
-$\tfrac12\log c \le d < \tfrac12\log c + \tfrac12\log 2 + o(1)$ of width $\tfrac12\log 2 \approx 0.3466$,
-where $c = m^2+n^2$.
+Writing a primitive triple in Euclid coordinates $(m,n)$, so that $(a,b,c)=(m^2-n^2,2mn,m^2+n^2)$, we attach to it the half-plane point $z(m,n)=(n+i)/m$. The central identity is
+$$\cosh d_{\mathbb H}\big(i, z(m,n)\big) \;=\; \frac{m^2+n^2+1}{2m},$$
+in which the hypotenuse of the triple appears as the numerator of a hyperbolic cosine. From it we derive:
 
-We then analyse the residual $\rho(m,n) = d - \tfrac12\log c$. We prove the exact formula
-$\exp(\rho - \tilde\rho) = \bigl((c+1) + \sqrt{(c+1)^2-4m^2}\bigr)/(2c)$, where
-$\tilde\rho = \tfrac12\log(1+(n/m)^2)$ is the slope model, and derive the two-sided bound
-$n^2/(c^2+n^2) \le \rho - \tilde\rho \le \frac{c+1}{c-1}\cdot n^2/(c^2+n^2)$, pinning the gap to
-$(n^2/c^2)(1+O(1/c))$. Using this sandwich we establish *exact branch monotonicity*: the
-residual is non-decreasing along $B_1$ and non-increasing along $B_3$ with no side condition,
-and along $B_2$ it obeys a complete dichotomy governed by the sign of $m^2 - 2mn - n^2$
-(slope above or below $\sqrt2 - 1$), with no Euclid seed on the threshold. The last
-unresolved case is a Pell family $(m-n)^2 = 2n^2+1$ on which the real relaxation of the
-inequality is false and integrality must be used.
+1. **A sharp logarithmic trajectory law:** $\tfrac12\log c \le d_{\mathbb H}(i,z(m,n)) \le \tfrac12\log(2(c+1))$, with $c=m^2+n^2$. The lower bound is exact; the two bounds differ by less than $\tfrac12\log 2 + 1/(2c)$.
+2. **A complete description of the residual** $\rho = d - \tfrac12\log c$: it equals the *slope model* $\tfrac12\log(1+(n/m)^2)$ up to a gap that we determine by an exact identity and pin between $n^2/c^2$ and $n^2/(c(c-1))$.
+3. **Exact branch monotonicity:** the residual increases along $B_1$ and decreases along $B_3$ unconditionally, and along $B_2$ it moves in the direction dictated by the threshold $m^2 = 2mn+n^2$ (slope $\sqrt2-1$), with no seed on the threshold and no case left open — including a Pell boundary layer $(m-n)^2 = 2n^2+1$ on which the real-variable argument genuinely fails.
+4. **Tree structure:** every Euclid seed is reachable from the root $(2,1)$ at exactly one depth, via an explicit slope trichotomy; depth dominates distance ($2d \le \log 32 + k\log 9$) but is not dominated by it (the left spine has depth $\Theta(\sqrt c)$); reaching size $N$ costs depth exactly $\Theta(\log N)$.
+5. **Ball volume growth $\Theta(e^{2R})$**, proved with a sieve on the lower side, which yields a **no-free-lunch theorem**: although two representations of $N$ as a sum of two squares split $N$ completely by Euler's method, and although colliding nodes are hyperbolic neighbours, the ball guaranteed to contain a collision for $N$ already contains $\asymp N$ nodes. Geodesic-energy search through the Berggren tree cannot beat exhaustive search.
 
-Finally we settle the algorithmic question in the negative and quantitatively. The tree
-is complete and depth is well defined; distance is bounded by depth ($2d \le \log 32 + k\log 9$)
-but depth is *not* bounded by any constant multiple of distance (the left spine has depth
-$k$ and hypotenuse only $2k^2+6k+5$). Two nodes sharing a hypotenuse $N$ split $N$ completely
-by Euler's identity, and such collisions occur at every scale; but the hyperbolic ball of
-radius $R$ contains at least $e^{2R}/300$ nodes, so the search region guaranteed to contain a
-collision for $N$ already has $\asymp N$ elements. Short geodesics; exponentially many of them.
+We also refute a natural continued-fraction law for the depth function.
 
-**Keywords:** Pythagorean triples, Berggren tree, Poincaré half-plane, hyperbolic geometry,
-Euclid parametrisation, Pell equation, integer factorisation, volume growth.
+**Keywords:** Pythagorean triples, Berggren tree, Poincaré half-plane, hyperbolic geometry, Euler factorization, Pell equation, volume growth.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Two objects
+Two classical objects meet in this paper.
 
-The **Berggren tree** enumerates the primitive Pythagorean triples. Writing a triple as a
-column vector $(a,b,c)^{\mathsf T}$ with $a^2+b^2=c^2$, $\gcd(a,b,c)=1$, $b$ even, the three matrices
+The first is the **Berggren tree**. In 1934 B. Berggren observed that the set of primitive Pythagorean triples — coprime $(a,b,c)$ with $a^2+b^2=c^2$, $b$ even — is the vertex set of an infinite ternary tree rooted at $(3,4,5)$, with children generated by three fixed integer matrices. Every primitive triple appears exactly once. The tree has been rediscovered repeatedly and is a standard example of a "free" arithmetic structure.
 
-$$
-B_1 = \begin{pmatrix} 1 & -2 & 2\\ 2 & -1 & 2\\ 2 & -2 & 3\end{pmatrix},\quad
-B_2 = \begin{pmatrix} 1 & 2 & 2\\ 2 & 1 & 2\\ 2 & 2 & 3\end{pmatrix},\quad
-B_3 = \begin{pmatrix} -1 & 2 & 2\\ -2 & 1 & 2\\ -2 & 2 & 3\end{pmatrix}
-$$
+The second is the **Poincaré upper half-plane** $\mathbb H = \{z\in\mathbb C : \operatorname{Im}z>0\}$ with the metric $ds = |dz|/\operatorname{Im}z$, the standard model of the hyperbolic plane and the home of the modular group.
 
-generate every primitive triple from $(3,4,5)^{\mathsf T}$ exactly once. The resulting infinite
-ternary tree is a complete, non-redundant enumeration of an arithmetically defined set.
+The bridge between them is Euclid's parametrization, which converts the three matrices into three affine maps on a pair of integers, and those integers into a point of $\mathbb H$. The purpose of this paper is to compute the resulting geometry to the last digit, and to draw the algorithmic consequence.
 
-The **Poincaré upper half-plane** is $\mathbb{H} = \{z \in \mathbb{C} : \operatorname{Im} z > 0\}$ with the
-Riemannian metric $ds = |dz|/\operatorname{Im} z$, a model of the hyperbolic plane of curvature $-1$.
-Its distance function satisfies
+The algorithmic motivation should be stated frankly, because it partly fails. Euler's factoring method turns two essentially distinct representations $N=a^2+b^2=c^2+d^2$ into a factorization of $N$. Two distinct nodes of the Berggren tree with the same hypotenuse are exactly such a pair. Since (as we prove) every node with hypotenuse $c$ sits at hyperbolic distance $\tfrac12\log c + O(1)$ from the base point, one is tempted to conclude that a collision for $N$ can be found by a walk of length $O(\log N)$, hence that factoring is geometrically cheap. That conclusion is **false**, and we prove it false in two independent ways: the combinatorial depth of a node is not controlled by its distance (§5), and — decisively — the hyperbolic ball of radius $R$ contains $\Theta(e^{2R})$ nodes (§6), so the region guaranteed to contain a collision is as large as $N$ itself.
 
-$$
-\cosh d_{\mathbb{H}}(z_1, z_2) \;=\; 1 + \frac{|z_1 - z_2|^2}{2\,\operatorname{Im}(z_1)\operatorname{Im}(z_2)}. \tag{1.1}
-$$
-
-### 1.2 The motivating hope, and what replaces it
-
-A number $N$ admitting two essentially distinct representations as a sum of two squares is
-composite, and Euler's method extracts a factor from the pair of representations by a single
-$\gcd$. Every node of the Berggren tree carries such a representation, $N = m^2 + n^2$. The tree
-branches threefold, so it reaches "size $3^k$" at depth $k$. It is therefore tempting to
-conjecture that $N$ can be factored by an $O(\log N)$-length search in the tree, guided by some
-geometric energy functional.
-
-We show that this conjecture is *false*, and we identify precisely which parts of the
-underlying intuition are true. The true statements are:
-
-* the hyperbolic **distance** from the base point to a node of hypotenuse $c$ is
-  $\tfrac12\log c + O(1)$, with an explicit window of width $\tfrac12\log 2$;
-* the **depth** at which a node occurs is *not* controlled by its distance: there are nodes
-  of hypotenuse $c$ at depth $\Theta(\sqrt c)$;
-* the **volume** of the hyperbolic ball of radius $R$, measured in nodes, is $\asymp e^{2R}$,
-  so a search region large enough to guarantee a collision for $N$ has $\asymp N$ elements.
-
-The negative results are proved, not merely conjectured; the second is refuted by an explicit
-family (the left spine), the third by a sieve-based lower bound on node counts.
-
-### 1.3 Organisation
-
-Section 2 sets up Euclid seeds and the conjugation of the Berggren matrices. Section 3
-proves the exact distance formula and the logarithmic trajectory law. Section 4 develops the
-residual and its slope model, with the exact gap identity. Section 5 proves exact branch
-monotonicity, including the Pell boundary layer. Section 6 treats the tree structure and the
-depth/distance comparison. Section 7 proves quadratic ball growth. Section 8 gives the
-factorisation payoff and the no-free-lunch conclusion. Section 9 discusses algorithms;
-Section 10 lists open problems.
+What survives is a complete and rather pretty geometric picture, which is the substance of §§2–4.
 
 ---
 
-## 2. Euclid seeds and the tree in seed coordinates
+## 2. Euclid seeds, the Berggren moves, and the half-plane embedding
+
+### 2.1 Seeds
 
 **Definition 2.1 (Euclid seed).** A pair $(m,n)$ of positive integers is a *Euclid seed* if
+$$0 < n < m, \qquad \gcd(m,n)=1, \qquad m+n \text{ odd}.$$
 
-$$0 < n < m, \qquad \gcd(m,n) = 1, \qquad m + n \text{ is odd}.$$
+The map $(m,n)\mapsto (m^2-n^2,\,2mn,\,m^2+n^2)$ is a bijection from Euclid seeds onto primitive Pythagorean triples (with the even leg listed second). We write
+$$c = c(m,n) = m^2+n^2$$
+for the **hypotenuse** and $t = n/m \in (0,1)$ for the **slope**. The root seed is $(2,1)$, corresponding to $(3,4,5)$.
 
-**Definition 2.2 (Euclid parametrisation).** For integers $m,n$ set
-$$T(m,n) \;=\; \bigl(m^2 - n^2,\; 2mn,\; m^2 + n^2\bigr).$$
+**Definition 2.2 (Berggren moves).** The three Berggren matrices
+$$B_1 = \begin{pmatrix}1&-2&2\\2&-1&2\\2&-2&3\end{pmatrix},\quad
+B_2 = \begin{pmatrix}1&2&2\\2&1&2\\2&2&3\end{pmatrix},\quad
+B_3 = \begin{pmatrix}-1&2&2\\-2&1&2\\-2&2&3\end{pmatrix}$$
+act on column triples $(a,b,c)^{\mathsf T}$.
 
-That $T(m,n)$ is a Pythagorean triple is the identity $(m^2-n^2)^2 + (2mn)^2 = (m^2+n^2)^2$.
-Euclid's classical theorem is that $T$ restricts to a bijection between Euclid seeds and
-primitive Pythagorean triples with even second entry. Throughout we call
-$c = c(m,n) = m^2+n^2$ the **hypotenuse** of the seed.
+**Proposition 2.3 (Conjugation to seed coordinates).** For all integers $m,n$,
+$$B_1\cdot(m^2-n^2,2mn,m^2+n^2) = \text{the triple of } (2m-n,\,m),$$
+$$B_2\cdot(m^2-n^2,2mn,m^2+n^2) = \text{the triple of } (2m+n,\,m),$$
+$$B_3\cdot(m^2-n^2,2mn,m^2+n^2) = \text{the triple of } (m+2n,\,n).$$
 
-**Definition 2.3 (Seed moves).**
-$$\sigma_1(m,n) = (2m-n,\, m), \qquad \sigma_2(m,n) = (2m+n,\, m), \qquad \sigma_3(m,n) = (m+2n,\, n).$$
+*Proof.* Each of the nine coordinate identities is a polynomial identity in $m,n$; expand and compare. For instance the first coordinate of $B_1$ applied to the triple is $(m^2-n^2)-2(2mn)+2(m^2+n^2) = 3m^2 - 4mn + n^2 = (2m-n)^2 - m^2$. $\square$
 
-**Theorem 2.4 (Conjugation).** For all integers $m,n$,
-$$B_1\,T(m,n) = T(\sigma_1(m,n)), \qquad B_2\,T(m,n) = T(\sigma_2(m,n)), \qquad B_3\,T(m,n) = T(\sigma_3(m,n)).$$
+We therefore write the moves in seed coordinates:
+$$B_1(m,n)=(2m-n,\,m),\qquad B_2(m,n)=(2m+n,\,m),\qquad B_3(m,n)=(m+2n,\,n).$$
 
-*Proof sketch.* Each of the three assertions is an identity between triples of quadratic
-forms in $m,n$; expanding both sides and comparing coefficients verifies them. For instance
-the first component of $B_1 T(m,n)$ is $(m^2-n^2) - 2(2mn) + 2(m^2+n^2) = 3m^2 - 4mn + n^2$,
-while the first component of $T(2m-n,m)$ is $(2m-n)^2 - m^2 = 3m^2 - 4mn + n^2$. $\square$
+**Proposition 2.4 (The moves preserve seedhood).** If $(m,n)$ is a Euclid seed then so are $B_1(m,n)$, $B_2(m,n)$, $B_3(m,n)$.
 
-**Theorem 2.5 (Seed preservation).** If $(m,n)$ is a Euclid seed then so are $\sigma_1(m,n)$,
-$\sigma_2(m,n)$ and $\sigma_3(m,n)$.
+*Proof sketch.* Positivity and the inequality $n'<m'$ are immediate from $0<n<m$. Parity: each move produces a pair whose coordinate sum changes by an even amount ($2m$, $2m$, and $2n$ respectively, modulo swapping), so oddness of $m+n$ persists. Coprimality: any common divisor of $2m-n$ and $m$ divides $n$, hence divides $\gcd(m,n)=1$; likewise for the other two. $\square$
 
-*Proof sketch.* The inequalities $0 < n' < m'$ and the parity condition are immediate integer
-arithmetic (e.g. for $\sigma_1$: $n < m$ gives $m < 2m-n$, and $(2m-n)+m = 3m-n \equiv m+n \bmod 2$).
-Coprimality uses the following elementary lemma: if $\gcd(b,n)=1$ and $\gcd(a,b) \mid n$ then
-$\gcd(a,b)=1$. For $\sigma_1$, $g = \gcd(2m-n, m)$ divides $2m - (2m-n) = n$, and
-$\gcd(m,n) = 1$, so $g = 1$; the other two cases are identical. $\square$
+In slope coordinates the three moves are the Möbius maps
+$$B_1: t \mapsto \frac{1}{2-t},\qquad B_2: t\mapsto \frac{1}{2+t},\qquad B_3: t\mapsto \frac{t}{1+2t},$$
+which carry $(0,1)$ into $(\tfrac12,1)$, $(\tfrac13,\tfrac12)$, $(0,\tfrac13)$ respectively — a partition of the slope interval that will reappear in §5 as the inverse move.
 
-The root of the tree is $(2,1)$, corresponding to $(3,4,5)$; it is a Euclid seed.
+### 2.2 The embedding
 
-**Slope coordinates.** Write $t = n/m \in (0,1)$ for the slope of a seed. The three moves act
-on the slope by Möbius transformations:
-$$\sigma_1 : t \mapsto \frac{1}{2-t}, \qquad \sigma_2 : t \mapsto \frac{1}{2+t}, \qquad \sigma_3: t \mapsto \frac{t}{1+2t}. \tag{2.1}$$
-The fixed point of $\sigma_2$ on $(0,1)$ is $t^\ast = \sqrt2 - 1$, a fact that will govern all of
-Section 5.
+**Definition 2.5.** For a Euclid seed $(m,n)$ set
+$$z(m,n) \;=\; \frac{n+i}{m} \;=\; \frac{n}{m} + \frac{i}{m} \;\in\; \mathbb H .$$
+The base point is $i$.
 
----
+**Theorem 2.6 (Exact distance formula).** For every $m\ge 1$ and $n\ge 0$,
+$$\cosh d_{\mathbb H}\big(i,\,z(m,n)\big) \;=\; \frac{m^2+n^2+1}{2m} \;=\; \frac{c+1}{2m}.$$
 
-## 3. The hyperbolic embedding
+*Proof.* The half-plane distance satisfies $\cosh d(z,w) = 1 + \dfrac{|z-w|^2}{2\operatorname{Im}z\operatorname{Im}w}$. With $z=i$, $w=(n+i)/m$ we have $\operatorname{Im}w = 1/m$ and $|z-w|^2 = (n/m)^2 + (1-1/m)^2 = \big(n^2+(m-1)^2\big)/m^2$. Hence
+$$\cosh d = 1 + \frac{m}{2}\cdot\frac{n^2+(m-1)^2}{m^2} = \frac{2m+n^2+m^2-2m+1}{2m} = \frac{m^2+n^2+1}{2m}. \qquad\square$$
 
-**Definition 3.1 (Node point).** For a seed $(m,n)$ put
-$$z(m,n) \;=\; \frac{n+i}{m} \;=\; \frac{n}{m} + \frac{i}{m} \;\in\; \mathbb{H}.$$
-The base point is $i$; the root seed $(2,1)$ maps to $(1+i)/2$.
+Two remarks. First, the *hypotenuse* $c=m^2+n^2$ appears although the embedding used only $n/m$ and $1/m$; this is the coincidence that drives the paper. Second, the level sets of the distance are exactly the curves $c+1 = 2m\cosh R$, i.e. circles in the $(m,n)$ plane; this is the geometric content of the volume computation in §6.
 
-**Theorem 3.2 (Exact distance formula).** For every $m > 0$ and every $n \ge 0$,
-$$\cosh d_{\mathbb{H}}\bigl(i,\, z(m,n)\bigr) \;=\; \frac{m^2+n^2+1}{2m} \;=\; \frac{c+1}{2m}.$$
-
-*Proof.* Apply (1.1) with $z_1 = i$ (so $\operatorname{Im} z_1 = 1$) and $z_2 = n/m + i/m$
-(so $\operatorname{Im} z_2 = 1/m$). Then
-$|z_1 - z_2|^2 = (n/m)^2 + (1 - 1/m)^2$, and
-$$1 + \frac{(n/m)^2 + (1-1/m)^2}{2/m} = 1 + \frac{n^2 + (m-1)^2}{2m} = \frac{2m + n^2 + m^2 - 2m + 1}{2m} = \frac{m^2+n^2+1}{2m}. \qquad\square$$
-
-Two structural consequences deserve emphasis. First, the numerator is an *arithmetic*
-invariant — the hypotenuse plus one — while the denominator is $2m$. Second, the level sets
-of the distance from $i$ are exactly the level sets of $(c+1)/(2m)$: two nodes are
-equidistant from the base point iff $(c_1+1)/m_1 = (c_2+1)/m_2$.
-
-**Lemma 3.3 (Logarithmic sandwich).** For $d \ge 0$, $\log(\cosh d) \le d \le \log(2\cosh d)$.
-
-*Proof.* $e^d = \cosh d + \sinh d$ with $0 \le \sinh d \le \cosh d$, hence
-$\cosh d \le e^d \le 2\cosh d$; take logarithms. $\square$
-
-**Theorem 3.4 (Logarithmic trajectory theorem).** For every $(m,n)$ with $0 < n < m$, writing
-$c = m^2+n^2$ and $d = d_{\mathbb{H}}(i, z(m,n))$,
-$$\bigl|\, d - \tfrac12 \log c \,\bigr| \;\le\; \log 2 .$$
-
-*Proof sketch.* Set $A = (c+1)/(2m)$, so $\cosh d = A$. By Lemma 3.3,
-$\log A \le d \le \log(2A)$. Since $n < m$ we have $n^2 + 1 \le m^2$, hence $c + 1 \le 2m^2$ and so
-$(2A)^2 = ((c+1)/m)^2 \le 4c$; this gives $2d \le \log(4c) = 2\log 2 + \log c$. Conversely
-$m^2 \le c$ gives $A^2 = (c+1)^2/(4m^2) \ge (c+1)^2/(4c) \ge c/4$, whence
-$2d \ge 2\log A \ge \log c - 2\log 2$. $\square$
-
-Both halves can be sharpened to essentially optimal form.
-
-**Theorem 3.5 (Sharp trajectory window).** For every seed $(m,n)$,
-$$\tfrac12 \log c \;\le\; d \;\le\; \tfrac12 \log\bigl(2(c+1)\bigr) \;\le\; \tfrac12\log c + \tfrac12\log 2 + \tfrac{1}{2c}.$$
-
-*Proof sketch.* For the lower bound, the auxiliary identity $\cosh(\tfrac12\log c) = (c+1)/(2\sqrt c)$
-combined with $m \le \sqrt c$ gives $\cosh(\tfrac12\log c) \le (c+1)/(2m) = \cosh d$; monotonicity
-of $\cosh$ on $[0,\infty)$ finishes. For the upper bound, $d \le \log(2\cosh d) = \log\bigl((c+1)/m\bigr)$
-and $m \ge \sqrt{(c+1)/2}$ (which is $2m^2 \ge c+1$, i.e. $m^2 \ge n^2+1$) give
-$d \le \tfrac12\log(2(c+1))$. $\square$
-
-Thus every node of the tree lies in a half-open annulus of width $\tfrac12\log 2 \approx 0.3466$,
-independently of its depth and of the size of the triple.
+**Corollary 2.7 (Distinct seeds, distinct points).** $z$ is injective on pairs with $m>0$: the imaginary part recovers $m$ and the real part then recovers $n$.
 
 ---
 
-## 4. The residual and its slope model
+## 3. The logarithmic trajectory law
 
-**Definition 4.1.** The **residual** of a seed is
-$$\rho(m,n) \;=\; d_{\mathbb{H}}\bigl(i, z(m,n)\bigr) - \tfrac12\log\bigl(m^2+n^2\bigr),$$
-and its **slope model** is
-$$\tilde\rho(m,n) \;=\; \tfrac12\log\Bigl(1 + \bigl(\tfrac nm\bigr)^2\Bigr) \;=\; \tfrac12\log c - \log m .$$
+**Lemma 3.1.** For $d\ge0$, $\log\cosh d \le d \le \log(2\cosh d)$.
 
-By Theorem 3.5, $0 \le \rho < \tfrac12\log 2 + o(1)$. Note that $\tilde\rho$ depends only on the slope
-$t = n/m$ and is strictly increasing in $t$ on $(0,1)$, with range $(0, \tfrac12\log 2)$: the observed
-trajectory window is exactly the image of the slope interval under $t \mapsto \tfrac12\log(1+t^2)$.
+*Proof.* $\cosh d \le \cosh d + \sinh d = e^d \le 2\cosh d$, using $0\le\sinh d\le \cosh d$. $\square$
 
-**Theorem 4.2 (Coarse sandwich).** For every seed, $\tilde\rho \le \rho \le \tilde\rho + \log(1 + 1/c)$.
+**Lemma 3.2.** For $c>0$, $\cosh\!\big(\tfrac12\log c\big) = \dfrac{c+1}{2\sqrt c}$.
 
-The upper bound is $\rho - \tilde\rho \le 1/c$. This is qualitatively correct in order of magnitude
-only when the slope is close to $1$; the truth is much smaller for small slopes, as we now show.
+*Proof.* $\cosh(\tfrac12\log c) = \tfrac12(e^{\frac12\log c} + e^{-\frac12\log c}) = \tfrac12(\sqrt c + 1/\sqrt c)$. $\square$
 
-**Theorem 4.3 (Exact gap identity).** Let $(m,n)$ be a seed, $c = m^2+n^2$ and
-$S = \sqrt{(c+1)^2 - 4m^2}$. Then
-$$\exp\bigl(\rho(m,n) - \tilde\rho(m,n)\bigr) \;=\; \frac{(c+1) + S}{2c}. $$
+**Theorem 3.3 (Logarithmic trajectory theorem).** For every Euclid seed $(m,n)$, with $c=m^2+n^2$ and $d = d_{\mathbb H}(i,z(m,n))$,
+$$\big|\,d - \tfrac12\log c\,\big| \;\le\; \log 2.$$
 
-*Proof.* Write $d$ for the distance. From $\cosh d = (c+1)/(2m)$ and $\cosh^2 - \sinh^2 = 1$ with
-$\sinh d \ge 0$ we get $2m\sinh d = \sqrt{(c+1)^2 - 4m^2} = S$. By Definition 4.1 and
-$\tilde\rho = \tfrac12\log c - \log m$,
-$$\rho - \tilde\rho = d - \log c + \log m,$$
-so $\exp(\rho - \tilde\rho) = m\,e^{d}/c = m(\cosh d + \sinh d)/c = \bigl(\tfrac{c+1}{2} + \tfrac S2\bigr)/c$. $\square$
+*Proof sketch.* By Lemma 3.1, $\log\frac{c+1}{2m} \le d \le \log\frac{c+1}{m}$. Since $n<m$ gives $m^2 > c/2$, i.e. $\sqrt{c/2} < m < \sqrt c$, both $\frac{c+1}{2m}$ and $\frac{c+1}{m}$ lie within a factor $2$ of $\sqrt c$, and the claim follows. $\square$
 
-**Theorem 4.4 (Two-sided gap bound).** For every seed, with $c = m^2+n^2$ and $c \ge 5$,
-$$\frac{n^2}{c^2 + n^2} \;\le\; \rho - \tilde\rho \;\le\; \frac{c+1}{c-1}\cdot \frac{n^2}{c^2+n^2}.$$
-In particular $\rho - \tilde\rho = \dfrac{n^2}{c^2}\bigl(1 + O(1/c)\bigr)$ uniformly in the slope.
+The bound is not optimal. Separating the two sides gives the truth.
 
-*Proof sketch.* By Theorem 4.3, $\exp(\rho-\tilde\rho) - 1 = \bigl(S - (c-1)\bigr)/(2c)$. The
-difference $S - (c-1)$ is a difference of two nearly equal quantities; the elementary
-factorisation
-$$\bigl(S - (c-1)\bigr)\bigl(S + (c-1)\bigr) \;=\; S^2 - (c-1)^2 \;=\; (c+1)^2 - 4m^2 - (c-1)^2 \;=\; 4(c-m^2) \;=\; 4n^2$$
-removes the cancellation entirely: $S - (c-1) = 4n^2/\bigl(S + (c-1)\bigr)$. Since
-$c - 1 \le S \le c+1$ (as $4m^2 \ge 4$ and $4m^2 \le 4c$ up to the correction), one has
-$2(c-1) \le S + (c-1) \le 2c$, whence
-$$\frac{n^2}{c^2} \;\le\; \exp(\rho - \tilde\rho) - 1 \;\le\; \frac{n^2}{c(c-1)} .$$
-Converting between $x - 1$ and $\log x$ with $1 - 1/x \le \log x \le x-1$ gives the stated
-bounds with $c^2 + n^2$ in the denominators. $\square$
+**Theorem 3.4 (Sharp lower bound; no additive constant).** For every Euclid seed,
+$$d_{\mathbb H}\big(i,z(m,n)\big) \;\ge\; \tfrac12\log c .$$
 
-**Corollary 4.5 (Comparison with the coarse bound).** The bound of Theorem 4.4 is strictly
-stronger than $\rho - \tilde\rho \le (n^2+1)/\bigl(c(c+1)\bigr)$, and *qualitatively* so: the coarse
-bounds never go below $1/c^2$, while the truth is $n^2/c^2$, an overestimate by a factor
-$\asymp m^2/n^2$ at small slope.
+*Proof.* Since $\cosh$ is increasing on $[0,\infty)$ it suffices, by Theorem 2.6 and Lemma 3.2, to check $\frac{c+1}{2m} \ge \frac{c+1}{2\sqrt c}$, i.e. $m \le \sqrt c$, which is $m^2 \le m^2+n^2$. $\square$
 
-**Example 4.6.** For the seed $(4,1)$, $c=17$. The bound $1/c \approx 0.0588$ and the refinement
-$(n^2+1)/(c(c+1)) = 1/153 \approx 0.006536$ are both far from the truth. Theorem 4.4 gives
-$1/290 \le \rho - \tilde\rho \le 1/272$, i.e. $0.003448 \le \rho - \tilde\rho \le 0.003676$; the exact value is
-$0.0036543\ldots$.
+**Theorem 3.5 (Sharp upper bound).** For every Euclid seed,
+$$d_{\mathbb H}\big(i,z(m,n)\big) \;\le\; \tfrac12\log\big(2(c+1)\big).$$
+
+*Proof.* By Lemma 3.1, $d \le \log\big((c+1)/m\big)$, and $m\ge 1$ together with $m^2\ge (c+1)/2$ — which holds because $n<m$ forces $n^2+1\le m^2$ — gives $(c+1)/m \le \sqrt{2(c+1)}$. $\square$
+
+**Corollary 3.6 (Trajectory window).** Defining the **residual**
+$$\rho(m,n) \;=\; d_{\mathbb H}\big(i,z(m,n)\big) - \tfrac12\log c,$$
+one has
+$$0 \;\le\; \rho(m,n) \;\le\; \tfrac12\log 2 + \tfrac{1}{2c},$$
+so every node lies in a hyperbolic annulus of width $\approx \tfrac12\log 2 = 0.34657\ldots$ about the sphere of radius $\tfrac12\log c$.
+
+Numerically, $\rho(2,1)=0.15770$, $\rho(3,2)=0.20852$, $\rho(7,4)=0.14511$, $\rho(4,1)=0.03397$, $\rho(10,1)=0.00507$ — consistent with the window, and visibly a function of the slope.
 
 ---
 
-## 5. Exact branch monotonicity
+## 4. The residual is (almost exactly) a function of the slope
 
-We ask how $\rho$ behaves along each of the three branches. The slope model answers
-immediately via (2.1), because $\tilde\rho$ is increasing in $t$:
+### 4.1 The slope model and the first sandwich
 
-**Proposition 5.1 (Slope-model monotonicity).** For every seed with slope $t = n/m$:
-$\tilde\rho$ increases under $\sigma_1$ (because $t \le 1/(2-t)$, i.e. $(1-t)^2 \ge 0$); decreases
-under $\sigma_3$ (because $t/(1+2t) \le t$); and decreases under $\sigma_2$ **iff**
-$t \ge 1/(2+t)$, i.e. iff $t \ge \sqrt2 - 1$, i.e. iff $m^2 \le 2mn + n^2$.
+**Definition 4.1.** The **slope model** of the residual is
+$$\rho_{\mathrm{as}}(m,n) \;=\; \tfrac12\log\!\big(1 + t^2\big), \qquad t = n/m .$$
+Equivalently $\rho_{\mathrm{as}} = \tfrac12\log\big(c/m^2\big)$.
 
-The substantive question — recorded as an open problem by the coarse analysis — is whether
-this survives passage to the *exact* hyperbolic distance, since $\rho$ and $\tilde\rho$ differ by a
-term of size $n^2/c^2$ that may be comparable to the predicted change. The answer is yes, in
-all cases.
+**Theorem 4.2 (Residual sandwich).** For every Euclid seed,
+$$\rho_{\mathrm{as}}(m,n) \;\le\; \rho(m,n) \;\le\; \rho_{\mathrm{as}}(m,n) + \log\!\Big(1+\frac1c\Big).$$
 
-### 5.1 Two tools
+*Proof sketch.* Both halves reduce, via $\cosh$-monotonicity and Theorem 2.6, to elementary inequalities between $\frac{c+1}{2m}$ and $\cosh(\tfrac12\log c + \rho_{\mathrm{as}})$; the identities $\cosh\log x = \tfrac12(x+1/x)$ and $\sinh\log x=\tfrac12(x-1/x)$ turn both into polynomial comparisons. $\square$
 
-**Lemma 5.2 (Logarithm beats its chord).** For $A, B > 0$, $\ \dfrac{A-B}{A} \le \log\dfrac AB$.
+So $\rho$ depends on the *shape* $t$ alone, to within $1/c$. In particular $t\mapsto\tfrac12\log(1+t^2)$ maps $(0,1)$ onto $(0,\tfrac12\log 2)$: the trajectory window of Corollary 3.6 is exactly the image of the slope interval, not an artifact of estimation.
 
-*Proof.* $\log(B/A) \le B/A - 1$ is the standard inequality $\log x \le x-1$; negate. $\square$
+### 4.2 The gap, exactly
 
-**Lemma 5.3 (Algebraic slope gap).** For seeds $(m,n)$ and $(m',n')$, put
-$$\mathcal{A} = (m^2+n^2)m'^2, \qquad \mathcal{B} = m^2(m'^2+n'^2).$$
-Then
-$$\tilde\rho(m,n) - \tilde\rho(m',n') \;\ge\; \frac{\mathcal A - \mathcal B}{2\mathcal A}.$$
-No sign hypothesis on $\mathcal A - \mathcal B$ is required.
+Write $\mathrm{gap}(m,n) = \rho(m,n) - \rho_{\mathrm{as}}(m,n) \ge 0$.
 
-*Proof.* $\tilde\rho(m,n) = \tfrac12\log\bigl((m^2+n^2)/m^2\bigr)$, so the difference equals
-$\tfrac12\log(\mathcal A/\mathcal B)$; apply Lemma 5.2. $\square$
+**Theorem 4.3 (Exact gap identity).** Let $S = \sqrt{(c+1)^2 - 4m^2}$ (so $S = 2m\sinh d$). Then
+$$\exp\big(\mathrm{gap}(m,n)\big) \;=\; \frac{(c+1)+S}{2c}.$$
 
-The point of Lemma 5.3 is that in each branch, $\mathcal A - \mathcal B$ **factors**:
+*Proof.* $\rho - \rho_{\mathrm{as}} = d - \tfrac12\log c - \tfrac12\log(c/m^2) = d + \log m - \log c$. By Theorem 2.6, $e^{d} = \cosh d + \sinh d = \frac{(c+1)+S}{2m}$. Multiply by $m/c$. $\square$
 
-| branch | child $(m',n')$ | $\mathcal A - \mathcal B$ |
+**Theorem 4.4 (Two-sided gap bounds).**
+$$\frac{n^2}{c^2} \;\le\; \exp\big(\mathrm{gap}(m,n)\big) - 1 \;\le\; \frac{n^2}{c(c-1)} .$$
+
+*Proof.* By Theorem 4.3, $\exp(\mathrm{gap})-1 = \dfrac{S-(c-1)}{2c}$. The key factorization is
+$$\big(S-(c-1)\big)\big(S+(c-1)\big) = S^2-(c-1)^2 = (c+1)^2-4m^2-(c-1)^2 = 4(c-m^2) = 4n^2,$$
+so $S - (c-1) = \dfrac{4n^2}{S+(c-1)}$. Since $c-1 \le S \le c+1$ (the left inequality is $4n^2\ge0$, the right is $4m^2\ge0$), we get $2(c-1) \le S+(c-1)\le 2c$, whence
+$$\frac{2n^2}{c} \;\le\; S-(c-1) \;\le\; \frac{2n^2}{c-1},$$
+and division by $2c$ finishes. (The stated lower bound $n^2/c^2$ is exactly $\frac{1}{2c}\cdot\frac{2n^2}{c}$; a slightly weaker but equally valid form is $n^2/(c^2+n^2)$ after passing from $e^x-1$ to $x$.) $\square$
+
+**Corollary 4.5 (The gap, to within a factor $(c+1)/(c-1)$).**
+$$\frac{n^2}{c^2+n^2} \;\le\; \mathrm{gap}(m,n) \;\le\; \frac{n^2}{c(c-1)},$$
+so $\mathrm{gap}(m,n) = \dfrac{n^2}{c^2}\big(1+O(1/c)\big)$ uniformly in the slope.
+
+*Proof.* Upper: $x \le e^x - 1$. Lower: $e^x-1\le x/(1-x)$ for $0\le x<1$, applied with $x = \mathrm{gap}$ and the bound of Theorem 4.4. $\square$
+
+This is qualitatively stronger than the $O(1/c)$ of Theorem 4.2: at small slope the true gap is of size $n^2/c^2$, which is smaller by a factor $\asymp m^2/n^2$. For example at $(4,1)$: $c=17$, and Corollary 4.5 gives $1/290 \le \mathrm{gap} \le 1/272$, i.e. $0.003448 \le \mathrm{gap} \le 0.003676$; the true value is $0.0036555\ldots$. The naive $1/c$ bound gives only $0.0588$; an intermediate bound $(n^2+1)/(c(c+1))=1/153=0.00654$ is still off by a factor $1.8$.
+
+### 4.3 Branch monotonicity of the residual
+
+The slope model is easy to differentiate along branches.
+
+**Proposition 4.6 (Slope-model monotonicity).** For every seed:
+$$\rho_{\mathrm{as}}(m,n) \le \rho_{\mathrm{as}}(B_1(m,n)),\qquad \rho_{\mathrm{as}}(B_3(m,n)) \le \rho_{\mathrm{as}}(m,n),$$
+and
+$$\rho_{\mathrm{as}}(B_2(m,n)) \le \rho_{\mathrm{as}}(m,n) \iff m^2 \le 2mn+n^2 \iff t \ge \sqrt2-1 .$$
+
+*Proof.* $\rho_{\mathrm{as}}$ is increasing in $t$. $B_1: t\mapsto 1/(2-t)$ and $1/(2-t)-t = (1-t)^2/(2-t)\ge0$. $B_3: t\mapsto t/(1+2t) \le t$. $B_2: t\mapsto 1/(2+t)$, and $1/(2+t)\le t \iff t^2+2t-1\ge0 \iff t\ge\sqrt2-1$. $\square$
+
+The substantive question — recorded as an open conjecture in earlier work on this thread — is whether these survive the $O(1/c)$ discrepancy between $\rho$ and $\rho_{\mathrm{as}}$, i.e. whether the *exact* hyperbolic residual is monotone. It does, in every case. The proof rests on two elementary tools.
+
+**Lemma 4.7 (Log beats its chord).** For $A,B>0$, $\dfrac{A-B}{A} \le \log\dfrac{A}{B}$.
+
+*Proof.* $\log x \le x-1$ with $x=B/A$ gives $\log(B/A) \le B/A - 1$; negate. $\square$
+
+**Lemma 4.8 (Algebraic slope gap).** For seeds $(m,n)$, $(m',n')$, set $A = c\,m'^2$ and $B = m^2 c'$ where $c=m^2+n^2$, $c'=m'^2+n'^2$. Then
+$$\frac{A-B}{2A} \;\le\; \rho_{\mathrm{as}}(m,n) - \rho_{\mathrm{as}}(m',n').$$
+
+*Proof.* $\rho_{\mathrm{as}}(m,n)-\rho_{\mathrm{as}}(m',n') = \tfrac12\log\big((c/m^2)\big/(c'/m'^2)\big) = \tfrac12\log(A/B)$; apply Lemma 4.7. No sign hypothesis on $A-B$ is needed. $\square$
+
+**Lemma 4.9 (Sharp one-sided sandwich).** $\displaystyle \rho(m,n)-\rho_{\mathrm{as}}(m,n) \le \frac{n^2+1}{c(c+1)}.$
+
+*Proof.* From Theorem 4.3, $\mathrm{gap} = \log\frac{(c+1)+S}{2c}$ with $S = (c+1)\sqrt{1-\frac{4m^2}{(c+1)^2}}$. The estimate $\sqrt{1-x}\le 1-x/2$ gives $S \le (c+1) - \frac{2m^2}{c+1}$, hence
+$$\frac{(c+1)+S}{2c} \;\le\; \frac{(c+1) - \frac{m^2}{c+1}}{c} \;=\; \frac{(c+1)^2-m^2}{c(c+1)} \;=\; 1 + \frac{c+1-m^2}{c(c+1)} \;=\; 1 + \frac{n^2+1}{c(c+1)},$$
+using $c-m^2=n^2$. Now apply $\log(1+u)\le u$. $\square$
+
+Combining Lemmas 4.8 and 4.9 gives the working criterion:
+
+**Proposition 4.10 (Bridge).** If
+$$\frac{A-B}{2A} \;\ge\; \frac{n'^2+1}{c'(c'+1)},$$
+then $\rho(m',n') \le \rho(m,n)$.
+
+For each of the three branches, $A-B$ factors:
+
+| branch | child $(m',n')$ | $A - B \;=\; c\,m'^2 - m^2 c'$ |
 |---|---|---|
-| $\sigma_1$ | $(2m-n,\,m)$ | $(m-n)^2\,(m^2 + 2mn - n^2)$ |
-| $\sigma_2$ | $(2m+n,\,m)$ | $-(2mn + n^2 - m^2)(m+n)^2$ |
-| $\sigma_3$ | $(m+2n,\,n)$ | $4n^3(m+n)$ |
+| $B_1$ | $(2m-n,\,m)$ | $-(m-n)^2\,(m^2+2mn-n^2)$ |
+| $B_2$ | $(2m+n,\,m)$ | $\pm(2mn+n^2-m^2)(m+n)^2$ |
+| $B_3$ | $(m+2n,\,n)$ | $4n^3(m+n)$ |
 
-(The sign convention: for $\sigma_2$ the table gives $\mathcal A - \mathcal B$ for the parent-minus-child
-ordering used below.) In each case one is left with a polynomial inequality in $m, n$, and
-the sharp gap bound of Theorem 4.4 supplies the error term to be beaten.
+(The signs are arranged so that the inequality of Proposition 4.10 is applied in the correct direction; for $B_1$ one compares in the reverse order.)
 
-### 5.2 The unconditional branches
+What remains in each case is a polynomial inequality in $m,n$ subject to $0<n<m$. Substituting $n = a+1$, $m = a+b+2$ with $a,b\ge0$ — which encodes the constraint exactly — turns the $B_1$ and $B_3$ inequalities into statements with all coefficients positive, which is why they hold with no side condition at all.
 
-**Theorem 5.4 ($B_1$: unconditional increase).** For every Euclid seed $(m,n)$,
-$$\rho(m,n) \;\le\; \rho(2m-n,\, m).$$
+**Theorem 4.11 ($B_1$: unconditional increase).** For every Euclid seed,
+$$\rho(m,n) \;\le\; \rho(2m-n,\,m).$$
 
-**Theorem 5.5 ($B_3$: unconditional decrease).** For every Euclid seed $(m,n)$,
-$$\rho(m+2n,\, n) \;\le\; \rho(m,n).$$
+**Theorem 4.12 ($B_3$: unconditional decrease).** For every Euclid seed,
+$$\rho(m+2n,\,n) \;\le\; \rho(m,n).$$
 
-*Proof sketch (both).* Write the target as
-$$\bigl(\tilde\rho_{\text{child}} - \tilde\rho_{\text{parent}}\bigr) \;\ge\; \bigl(\text{gap}_{\text{parent}} - \text{gap}_{\text{child}}\bigr),$$
-bound the left side below by Lemma 5.3 with the factorisation from the table, and bound the
-right side above by the sharp sandwich of Theorem 4.4. What remains is a rational
-inequality in the integers $m > n \ge 1$. Clearing denominators and substituting
-$n = a+1$, $m = a+b+2$ with $a,b \ge 0$ — which is exactly the parametrisation of the region
-$m > n \ge 1$ by non-negative integers — turns each of the two resulting polynomials into one
-with *all coefficients non-negative*. Non-negativity is then immediate, and no side condition
-on the seed is needed. $\square$
+**Theorem 4.13 ($B_2$ above the threshold).** If $m^2 < 2mn+n^2$, then $\rho(2m+n,\,m) \le \rho(m,n)$.
 
-The coefficient-positivity phenomenon is what makes the guard-free statements possible; it
-is a fortunate feature of these particular factorisations rather than a general principle.
+The criterion here is *exactly* the slope-model criterion of Proposition 4.6, with no loss. The reason a strict inequality is no restriction is arithmetic:
 
-### 5.3 The middle branch: a complete dichotomy
+**Lemma 4.14 (No seed on the threshold).** No Euclid seed satisfies $m^2 = 2mn+n^2$.
 
-**Lemma 5.6 (No seed on the threshold).** No Euclid seed satisfies $m^2 = 2mn + n^2$.
+*Proof.* $m^2 = 2mn+n^2$ gives $n \mid m^2$, and $\gcd(m,n)=1$ forces $n=1$, so $m^2-2m-1=0$, which has no integer root. $\square$
 
-*Proof.* The equation is $(m-n)^2 = 2n^2$. If $n \ge 1$ this forces $\sqrt 2 = (m-n)/n$ rational,
-a contradiction. (Equivalently: $n \mid m-n$ so $n \mid m$, and coprimality gives $n=1$, whence
-$(m-1)^2 = 2$, impossible.) $\square$
+**Corollary 4.15.** For a Euclid seed, the exact residual decreases along $B_2$ whenever its slope model does: the two monotonicity questions have the same answer.
 
-**Theorem 5.7 ($B_2$ above the threshold).** If $(m,n)$ is a seed with $m^2 < 2mn + n^2$ then
-$$\rho(2m+n,\, m) \;\le\; \rho(m,n).$$
+The converse direction is harder, and the obstruction is a Pell equation.
 
-**Theorem 5.8 ($B_2$ strictly below the threshold).** If $(m,n)$ is a seed with
-$2mn + n^2 + 2 \le m^2$ then
-$$\rho(m,n) \;\le\; \rho(2m+n,\, m).$$
+**Theorem 4.16 ($B_2$ below the threshold, generic case).** If $2mn+n^2+2 \le m^2$, then $\rho(m,n) \le \rho(2m+n,\,m)$.
 
-The two theorems leave one case: $m^2 = 2mn + n^2 + 1$.
+**Lemma 4.17 (The boundary layer).** The seeds with $n<m$ not covered by Theorems 4.13 and 4.16 are exactly those with $m^2 = 2mn+n^2+1$, equivalently
+$$(m-n)^2 = 2n^2 + 1,$$
+a Pell equation whose solutions are $(m,n) = (5,2),\,(29,12),\,(169,70),\,(985,408),\ldots$
 
-**Lemma 5.9 (The boundary layer is a Pell family).** If $0 < n < m$ and $m^2 = 2mn + n^2 + 1$
-then $(m-n)^2 = 2n^2 + 1$.
+*Proof.* $m^2-2mn-n^2 = 1 \iff (m-n)^2 - 2n^2 = 1$. $\square$
 
-*Proof.* Substitute $m = n + k$: the hypothesis becomes $(n+k)^2 = 2n(n+k) + n^2 + 1$, i.e.
-$k^2 = 2n^2 + 1$. $\square$
+**Theorem 4.18 (The boundary layer, closed).** On the Pell family $(m-n)^2 = 2n^2+1$ one still has $\rho(m,n) \le \rho(2m+n,\,m)$.
 
-The solutions of $k^2 - 2n^2 = 1$ are the classical Pell solutions
-$(k,n) = (3,2), (17,12), (99,70), (577,408), \ldots$, giving the seeds
-$$(m,n) = (5,2),\ (29,12),\ (169,70),\ (985,408),\ \ldots$$
+*Remark 4.19.* Here integrality is genuinely necessary for the argument. Substituting the Pell relation $m^2 = 2mn+n^2+1$ into the sufficient condition of Proposition 4.10 and clearing denominators, the whole statement collapses to
+$$mn\big(28n^4 - 96n^2 - 34\big) \;+\; \big(12n^6 - 30n^4 - 50n^2 - 8\big) \;\ge\; 0,$$
+and both brackets are non-negative *exactly* from $n\ge2$ — which the Pell equation forces, since $n=1$ would require $m^2 = 2m+2$. Relaxed to real $(m,n)$ on the curve, this certificate is **false**: it fails near $(m,n) = (3.8,\,1.48)$, where $28n^4-96n^2-34 \approx -110$. At the smallest member $(5,2)$ the two sides of the polynomial inequality are $42250$ and $42630$, a margin of $0.9\%$. The conclusion itself is comfortable enough: $\rho(5,2) = 0.0790993 < 0.0809221 = \rho(12,5)$, an increase of $2.3\%$; but by $(169,70)$ the relative margin is already down to $0.002\%$.
 
-**Theorem 5.10 (The boundary layer, closed).** For every seed with $m^2 = 2mn + n^2 + 1$,
-$$\rho(m,n) \;\le\; \rho(2m+n,\, m).$$
+**Theorem 4.20 ($B_2$ dichotomy — complete).** For every Euclid seed $(m,n)$, exactly one of the following holds, and each implies the corresponding conclusion:
+- $m^2 < 2mn+n^2$ (slope $> \sqrt2-1$), and then $\rho(2m+n,m) \le \rho(m,n)$;
+- $m^2 > 2mn+n^2$ (slope $< \sqrt2-1$), and then $\rho(m,n) \le \rho(2m+n,m)$.
 
-*Proof sketch.* The real relaxation of the hypothesis is genuinely insufficient here: the
-corresponding inequality for real $m, n$ satisfying $m^2 = 2mn+n^2+1$ **fails** near
-$(m,n) \approx (3.80,\, 1.48)$. The proof therefore uses an integrality consequence of the Pell
-equation. From $k^2 = 2n^2+1$ with $k = m - n \ge 1$ one gets $n \ne 1$ (else $k^2 = 3$), hence
-$n \ge 2$; feeding $n \ge 2$ into the polynomial inequality restores it. At the smallest member,
-$(m,n) = (5,2)$, the margin is only about $0.9\%$. $\square$
+*Proof.* Lemma 4.14 excludes equality. The first case is Theorem 4.13. In the second, either $2mn+n^2+2\le m^2$ (Theorem 4.16) or $m^2 = 2mn+n^2+1$ (Lemma 4.17 and Theorem 4.18). $\square$
 
-**Theorem 5.11 (Exact $B_2$ dichotomy).** For every Euclid seed $(m,n)$:
-$$m^2 < 2mn+n^2 \implies \rho(2m+n,\,m) \le \rho(m,n), \qquad 2mn+n^2 < m^2 \implies \rho(m,n) \le \rho(2m+n,\,m),$$
-and by Lemma 5.6 exactly one of the two hypotheses holds. Consequently the exact hyperbolic
-residual moves along $B_2$ in precisely the direction the slope model predicts, with no case
-left open.
-
-**Example 5.12.** The seed $(4,1)$ has slope $1/4 < \sqrt2 - 1$ and is the smallest seed on the
-"wrong" side. Its $B_2$-child is $(9,4)$, and indeed the exact residual *increases*:
-$\rho(4,1) = 0.033968\ldots < 0.091845\ldots = \rho(9,4)$. By contrast $(3,2)$, with slope $2/3 > \sqrt2-1$,
-has $B_2$-child $(8,3)$ and the residual decreases.
-
-**Example 5.13 (Pell).** For $(5,2)$: $m^2 = 25$ and $2mn+n^2 = 24$, so we are exactly on the
-boundary layer. The $B_2$-child is $(12,5)$, and $\rho(5,2) = 0.079099\ldots \le 0.080922\ldots = \rho(12,5)$,
-in agreement with Theorem 5.10, with the predicted narrow margin.
+Thus for every node of the tree the exact hyperbolic residual moves in exactly the direction the slope model predicts, along all three branches. The smallest seed on the "wrong side" for $B_2$ is $(4,1)$, slope $0.25 < \sqrt2-1$: its $B_2$-child is $(9,4)$, and $\rho(4,1)=0.03397 < 0.09184 = \rho(9,4)$.
 
 ---
 
-## 6. The tree structure and depth versus distance
+## 5. The tree structure of the depth function
 
-**Definition 6.1 (Reachability).** Say $(m,n)$ is *reached at depth $k$* if it is obtained from
-the root $(2,1)$ by exactly $k$ applications of $\sigma_1$, $\sigma_2$, $\sigma_3$ in some order.
+**Definition 5.1.** Write $\mathrm{Reaches}(p,k)$ for "the seed $p$ is obtained from the root $(2,1)$ by exactly $k$ Berggren moves."
 
-**Theorem 6.2 (Soundness).** Every reachable pair is a Euclid seed.
+**Definition 5.2 (Parent).** For a seed $(M,N)$ define
+$$\mathrm{parent}(M,N) = \begin{cases} (M-2N,\;N) & \text{if } M > 3N,\\ (N,\;M-2N) & \text{if } 2N < M \le 3N,\\ (N,\;2N-M) & \text{if } M \le 2N.\end{cases}$$
+Equivalently the slope $N/M$ is compared against the thresholds $\tfrac13$ and $\tfrac12$, selecting the inverse of $B_3$, $B_2$, $B_1$ respectively.
 
-*Proof.* Induction on $k$ using Theorem 2.5, base case $(2,1)$. $\square$
+**Theorem 5.3 (Soundness and completeness).** Every reachable pair is a Euclid seed, and every Euclid seed is reachable.
 
-**Definition 6.3 (Parent map).** For $(M,N)$ with $0 < N < M$ set
-$$\pi(M,N) = \begin{cases} (M - 2N,\; N) & \text{if } 3N < M,\\ (N,\; M-2N) & \text{if } 2N < M \le 3N,\\ (N,\; 2N - M) & \text{if } M \le 2N.\end{cases}$$
+*Proof sketch.* Soundness is Proposition 2.4 by induction. For completeness one checks that $\mathrm{parent}$ inverts the correct move on its region, that it maps seeds other than $(2,1)$ to seeds, and that its first coordinate strictly decreases; strong induction on $m$ then terminates at the root. Two degenerate cases must be excluded arithmetically: $m=2n$ forces $(m,n)=(2,1)$ by coprimality, and $m=3n$ is impossible for a seed (it forces $n=1$, $m=3$, but $m+n=4$ is even). $\square$
 
-The trichotomy is a trichotomy in the slope $N/M$: the intervals $(0,\tfrac13)$, $(\tfrac13,\tfrac12)$,
-$(\tfrac12,1)$ select $\sigma_3$, $\sigma_2$, $\sigma_1$ respectively.
+**Theorem 5.4 (It really is a tree).** A Euclid seed is reachable at exactly one depth. Hence $\mathrm{depth}(m,n)$ is a well-defined function on seeds.
 
-**Theorem 6.4 (Completeness).** $\pi$ inverts each of $\sigma_1,\sigma_2,\sigma_3$ on seeds, and every
-Euclid seed other than $(2,1)$ has $\pi(m,n)$ a Euclid seed with strictly smaller first
-coordinate. Consequently **every** Euclid seed is reachable.
+*Proof sketch.* If $p$ is reachable at depth $k+1$ then $p\neq(2,1)$ and $p$ is a child of $\mathrm{parent}(p)$, which is reachable at depth $k$; induct on $\min(k,j)$. $\square$
 
-*Proof sketch.* The three inversion identities are direct computations combined with the
-observation that the branch conditions are mutually exclusive and exhaustive on the images.
-Strict decrease of the first coordinate gives a well-founded induction; the base case is the
-root. $\square$
+### 5.1 Depth dominates distance
 
-**Theorem 6.5 (Uniqueness of depth).** A seed is reachable at exactly one depth. Hence the
-*depth* function is well defined and the Berggren tree is a tree.
+**Proposition 5.5.** If $\mathrm{Reaches}((m,n),k)$ then $m \le 2\cdot 3^k$, hence $c \le 8\cdot 9^k$ and $\log c \le \log 8 + k\log 9$.
 
-*Proof sketch.* If $(m,n)$ is reachable at depths $k$ and $j$ with $k,j \ge 1$, both derivations
-must end with the same move — the one selected by $\pi$ — and both give the same parent;
-induct. $\square$
+*Proof.* Each move at most triples $m$ (indeed $2m+n < 3m$ and $m+2n<3m$), starting from $m=2$. $\square$
 
-**Theorem 6.6 (Distance is bounded by depth).** If $(m,n)$ is reached at depth $k$ then
-$m \le 2\cdot 3^k$, hence $\log c \le \log 8 + k\log 9$, hence
-$$2\,d_{\mathbb{H}}\bigl(i, z(m,n)\bigr) \;\le\; \log 32 + k\log 9, \qquad\text{i.e.}\qquad \frac{2d - \log 32}{\log 9} \le k .$$
+**Corollary 5.6 (Distance $\lesssim$ depth).** A node at depth $k$ satisfies
+$$2\, d_{\mathbb H}\big(i,z(m,n)\big) \;\le\; \log 32 + k\log 9 .$$
 
-*Proof sketch.* Each move at most triples the first coordinate ($2m+n < 3m$, $m+2n<3m$,
-$2m-n<2m$), giving $m \le 2\cdot 3^k$; then $c = m^2+n^2 \le 2m^2 \le 8\cdot 9^k$, and
-Theorem 3.4 converts the size bound into a distance bound. $\square$
+*Proof.* Theorem 3.5 and Proposition 5.5. $\square$
 
-**Theorem 6.7 (Depth is *not* bounded by distance).** For no constant $C \ge 0$ is it true
-that every reachable seed satisfies $\text{depth} \le C\cdot d_{\mathbb{H}}(i, z)$.
+### 5.2 Distance does not dominate depth
 
-*Proof.* Consider the **left spine**, $s_0 = (2,1)$, $s_{k+1} = \sigma_1(s_k)$. By induction
-$s_k = (k+2,\, k+1)$, so its hypotenuse is
-$$c_k = (k+2)^2 + (k+1)^2 = 2k^2 + 6k + 5,$$
-and its depth is $k$. By Theorem 3.4, $d_k \le \tfrac12\log c_k + \log 2 = O(\log k)$, whereas the
-depth is $k$. Since $k/\log k \to \infty$, no constant $C$ works. Equivalently, this node of
-hypotenuse $c$ sits at depth $k \approx \sqrt{c/2}$. $\square$
+**Definition 5.7 (Left spine).** $\ell_k = B_1^{k}(2,1) = (k+2,\,k+1)$, at depth $k$, with hypotenuse $2k^2+6k+5$.
 
-So the hyperbolic metric compresses the tree exponentially in one direction only:
-$d \lesssim k$, and there is no reverse inequality.
+**Theorem 5.8 (Depth is not $O(1)$ times distance).** For every constant $C\ge0$ there is a node with $C\cdot d_{\mathbb H}(i,z) < \mathrm{depth}$.
 
-**Theorem 6.8 (The middle spine is commensurable).** Let $\mu_0 = (2,1)$, $\mu_{k+1} = \sigma_2(\mu_k)$.
-The first coordinates are the Pell numbers $2, 5, 12, 29, 70, \ldots$; one has
-$\mu_k$'s first coordinate $\ge 2^{k+1}$, hence hypotenuse $\ge 4^{k+1}$, hence
-$$k \log 2 \;\le\; d_{\mathbb{H}}\bigl(i, z(\mu_k)\bigr).$$
-On this branch depth and distance are commensurable in both directions.
+*Proof sketch.* The left-spine node at depth $k$ has $c = 2k^2+6k+5$, so by Theorem 3.3, $d \le \log(k+2)+2$. Choosing $k \ge (2C+3)^2$ makes $C(\log(k+2)+2) < k$, since $\log(k+2) \le 2(\sqrt{k+2}-1)$. $\square$
 
-**Theorem 6.9 (Logarithmic reach).** For every $N \ge 1$ there is a node reachable at depth
-$k = \lfloor \log_2 N\rfloor$ with hypotenuse $\ge N$, and $k\log 2 \le \log N$.
+So along the left spine, depth is $\Theta(\sqrt c)$ while distance is $\Theta(\log c)$: the hyperbolic metric compresses the tree exponentially, and no reverse of Corollary 5.6 can hold.
 
-*Proof.* Take $\mu_k$ with $k = \lfloor\log_2 N\rfloor$: its hypotenuse is at least
-$4^{k+1} \ge 2^{k+1} > N$, and $2^k \le N$ gives $k\log 2 \le \log N$. $\square$
+### 5.3 The middle spine, and the true form of "$O(\log N)$"
 
-Theorems 6.7 and 6.9 together are the exact truth behind the slogan "$O(\log N)$ path
-length": one can *reach* size $N$ in $\Theta(\log N)$ moves, along the fastest-growing spine, but a
-*given* node of size $N$ may sit at depth $\Theta(\sqrt N)$.
+**Definition 5.9 (Middle spine).** $\mu_k = B_2^{k}(2,1)$: $(2,1),(5,2),(12,5),(29,12),(70,29),(169,70),\ldots$ — consecutive Pell numbers. Here $m \ge 2^{k+1}$, so $c \ge 4^{k+1}$.
+
+**Proposition 5.10.** Along the middle spine, $k\log 2 \le d_{\mathbb H}(i, z(\mu_k))$. So on this branch depth and distance are commensurable, and Corollary 5.6 is tight up to constants.
+
+*Remark.* The alternate members of the middle spine, $(5,2),(29,12),(169,70),\ldots$, are precisely the Pell boundary layer $(m-n)^2 = 2n^2+1$ of Lemma 4.17; the interleaved members $(12,5),(70,29),\ldots$ satisfy $(m-n)^2 = 2n^2-1$.
+
+**Theorem 5.11 (Logarithmic reach).** For every $N\ge 1$ there is a Berggren node of hypotenuse at least $N$ at depth $k = \lfloor\log_2 N\rfloor$, and $k\log 2 \le \log N$.
+
+*Proof.* Take $\mu_{\lfloor\log_2 N\rfloor}$; its hypotenuse is at least $4^{\lfloor\log_2N\rfloor+1} \ge 2^{\lfloor\log_2N\rfloor+1} > N$. $\square$
+
+This is the mission statement "$O(\log N)$ path length" in the only form in which it is true: *reaching* size $N$ costs depth $\Theta(\log N)$, even though an arbitrary node of that size can lie at depth $\Theta(\sqrt N)$.
+
+### 5.4 Depth is not a continued-fraction functional
+
+A natural guess is that a Berggren path is the additive continued-fraction algorithm applied to the slope, so that $\mathrm{depth}$ should be proportional to the sum of the partial quotients. Let $\mathrm{cfSum}(n,m)$ denote the sum of the partial quotients of $n/m$.
+
+**Theorem 5.12 (Refutation).** There is no pair of constants $\lambda\ge0$, $C$ with $\big|\mathrm{depth}(m,n) - \lambda\,\mathrm{cfSum}(n,m)\big| \le C$ for all seeds.
+
+*Proof.* The right spine $B_3^k(2,1) = (2k+2,\,1)$ has depth $k$ and $\mathrm{cfSum}(1,2k+2) = 2k+2$. The left spine $\ell_k = (k+2,k+1)$ has depth $k$ and $\mathrm{cfSum}(k+1,k+2) = k+2$. If the law held, then $|k-\lambda(2k+2)|\le C$ and $|k-\lambda(k+2)|\le C$; the combination $2\big(k-\lambda(k+2)\big) - \big(k-\lambda(2k+2)\big) = k - 2\lambda$ forces $k \le 3C+2\lambda$ for every $k$, absurd. $\square$
+
+The structural reason: $B_3$ adds $2$ to $m/n$, costing half a partial quotient per step, whereas $B_1$ accumulates at the parabolic fixed point $t=1$ and costs a whole one.
 
 ---
 
-## 7. Volume growth: the structural obstruction
+## 6. Volume growth, and the no-free-lunch theorem
 
-**Theorem 7.1 (Quadratic ball growth).** For every integer $K \ge 256$, with $R = \log K + 2$,
-there is a set $S$ of at least $e^{2R}/300$ distinct points of $\mathbb{H}$, each of the form $z(m,n)$
-for a Euclid seed $(m,n)$, with $d_{\mathbb{H}}(z, i) \le R$ for all $z \in S$.
+### 6.1 Euler's method and collisions
 
-Since a node of hypotenuse $c$ sits at distance $\approx \tfrac12\log c$, radius $R$ corresponds to
-hypotenuse $\approx e^{2R}$; the theorem therefore says the node count grows like the hypotenuse
-itself, i.e. quadratically in $e^{R}$, not linearly. This is the true order.
+**Theorem 6.1 (Euler two-representation factorization).** If $N$ is odd and $N = a^2+b^2 = c^2+d^2$ with both representations primitive and $\{a,b\}\neq\{c,d\}$, then
+$$\gcd(N,\,ac+bd)\cdot\gcd(N,\,ad+bc) = N,$$
+and both factors are strictly between $1$ and $N$.
 
-*Proof sketch.* The proof is a sieve, because the obstruction is arithmetic. Consider the box
-$$\mathcal{E} = \{m \text{ even} : 2K < m \le 4K\}, \qquad \mathcal{O} = \{n \text{ odd} : 1 \le n \le 2K\},$$
-each of size exactly $K$; every pair in $\mathcal E\times\mathcal O$ automatically satisfies $0<n<m$ and
-$m+n$ odd, so being a Euclid seed reduces to coprimality. One bounds the number of
-non-coprime pairs by summing, over odd $d \ge 3$, the count of pairs divisible by $d$, which is at
-most $(K/d + 1)(K/d + 1)$. Two telescoping estimates control the resulting sums:
-$$\sum_{i<n} \frac{1}{(2i+3)^2} \;\le\; \frac14 - \frac{1}{4n+4}, \qquad \sum_{i<n} \frac{1}{2i+3} \;\le\; \sqrt{2n+1} - 1 .$$
-The first gives $\le K^2/4$ from the main term; the second controls the cross terms as $O(K^{3/2})$,
-negligible for $K \ge 256$. Hence at least $K^2 - \tfrac34 K^2 = K^2/4$ pairs are coprime, i.e. are
-Euclid seeds. Each such seed has $c = m^2+n^2 \le 16K^2 + 4K^2 = 20K^2$ and $m > 2K$, so by
-Theorem 3.4 its distance is at most $\tfrac12\log(20K^2) + \log 2 \le \log K + 2 = R$. Distinct
-seeds give distinct points, since $z(m,n)$ determines $1/m$ and $n/m$. Finally
-$e^{2R} = e^4 K^2 \le 55 K^2$, so $K^2/4 \ge e^{2R}/300$. $\square$
+*Proof sketch.* The identity $(ac+bd)(ad+bc) = (a^2+b^2)cd + (c^2+d^2)ab = N(ab+cd)$ shows $N \mid (ac+bd)(ad+bc)$. Writing $g=\gcd(N,ac+bd)$, $h=\gcd(N,ad+bc)$, one shows $\gcd(g,h)=1$ using oddness of $N$ and primitivity (a common prime would divide both $ac+bd$ and $ad+bc$, hence their sum and difference $(a+b)(c+d)$ and $(a-b)(c-d)$, contradicting primitivity), and $gh \mid N$, $N\mid gh$. Non-triviality follows because $0 < ac+bd < 2N$ and $ac+bd \neq N$ unless the representations coincide. $\square$
 
-**Corollary 7.2 (No free lunch).** Any search strategy that locates a collision for $N$ by
-exhausting the hyperbolic ball guaranteed to contain one must inspect $\asymp N$ nodes. Short
-geodesics do not make the search cheap: the hyperbolic metric compresses distances
-logarithmically but leaves volume — the only quantity a search actually pays for — untouched.
+**Corollary 6.2 (Collisions factor).** Two distinct Euclid seeds with the same hypotenuse $N$ produce a splitting $N = gh$ with $1<g,h<N$.
 
----
+**Corollary 6.3 (Semiprimes split exactly).** If $N=pq$ with $p,q$ prime and two distinct seeds carry hypotenuse $N$, then $\{g,h\} = \{p,q\}$: a single collision fully factors the semiprime.
 
-## 8. The arithmetic payoff, and what remains of the programme
+**Example 6.4.** $65 = 8^2+1^2 = 7^2+4^2$. $\gcd(65,\,8\cdot7+1\cdot4)=\gcd(65,60)=5$ and $\gcd(65,\,8\cdot4+1\cdot7)=\gcd(65,39)=13$.
 
-**Theorem 8.1 (Euler's two-representation factorisation).** Suppose $N = a^2+b^2 = c^2+d^2$
-with $a,b,c,d > 0$ and the two representations essentially distinct (i.e. $\{a,b\} \ne \{c,d\}$).
-Then $\gcd(N,\, ac+bd)$ is a non-trivial divisor of $N$.
+**Theorem 6.5 (Collisions at every scale).** For every $j\ge0$ the seeds
+$$(20j+9,\;10j+2) \quad\text{and}\quad (20j+7,\;10j+6)$$
+are both Euclid seeds with the same hypotenuse $500j^2+400j+85$, and the divisor $\gcd(N, m_1m_2+n_1n_2)$ extracted from the collision equals $5$. Hence the set of hypotenuses carried by two distinct nodes is infinite.
 
-*Proof sketch.* From the two representations, $(ac+bd)(ad+bc) = ac\cdot ad + \ldots$ reorganises via
-the Brahmagupta–Fibonacci identity into $N\cdot(\text{integer})$, so $N \mid (ac+bd)(ad+bc)$. Also
-$0 < ac+bd < N$ (a Cauchy–Schwarz-type bound: $ac+bd \le \sqrt{(a^2+b^2)(c^2+d^2)} = N$, with
-equality only in the degenerate proportional case, excluded by distinctness). Hence
-$\gcd(N, ac+bd)$ is neither $1$ (it would force $N \mid ad+bc$, impossible for the same size
-reason) nor $N$. $\square$
+**Theorem 6.6 (Colliding nodes are neighbours).** If two seeds share the hypotenuse $N$, their distances from the base point differ by at most $2\log 2$; the whole fibre over $N$ lies in an annulus of width $2\log 2$ around the sphere of radius $\tfrac12\log N$.
 
-**Theorem 8.2 (Complete splitting).** If in addition $N$ is odd and both representations are
-primitive, then
-$$\gcd\bigl(N,\, ac+bd\bigr)\cdot\gcd\bigl(N,\, ad+bc\bigr) \;=\; N,$$
-so a single collision produces the full two-factor split $N = g\cdot h$ with $1 < g, h < N$.
+*Proof.* Both distances lie in $[\tfrac12\log N,\ \tfrac12\log N + \log 2]$ by Theorem 3.3. $\square$
 
-**Theorem 8.3 (Collisions factor).** Two distinct Euclid seeds $(m_1,n_1) \ne (m_2,n_2)$ with the
-same hypotenuse $N$ yield $\gcd(N, m_1m_2 + n_1n_2)$ a non-trivial divisor of $N$; consequently
-$N$ is composite.
+Theorems 6.5 and 6.6 are exactly the ingredients that make the geometric factoring heuristic tempting. Here is why it fails.
 
-*Proof sketch.* Distinct coprime seeds cannot be proportional, so the two representations are
-essentially distinct; apply Theorem 8.1. $\square$
+### 6.2 The volume of a hyperbolic ball of nodes
 
-**Example 8.4.** $65 = 8^2 + 1^2 = 7^2 + 4^2$, with $(8,1)$ and $(7,4)$ both Euclid seeds. Then
-$\gcd(65,\, 8\cdot7 + 1\cdot4) = \gcd(65, 60) = 5$, and $65 = 5\cdot 13$. The compositeness of $65$ has
-been deduced from the coincidence of two points on the same hyperbolic level set.
+**Definition 6.7.** $\mathcal B(R) = \{\,z(m,n) : (m,n) \text{ a Euclid seed},\ d_{\mathbb H}(i,z(m,n))\le R\,\}$.
 
-**Theorem 8.5 (Collisions at every scale).** For every $j \ge 0$ the pairs $(20j+9,\, 10j+2)$ and
-$(20j+7,\, 10j+6)$ are distinct Euclid seeds with the same hypotenuse
-$$N_j \;=\; 500j^2 + 400j + 85,$$
-and the divisor extracted from the collision is exactly $5$. Hence the set of hypotenuses
-carried by two distinct nodes is infinite.
+**Theorem 6.8 (Upper bound).** For $R\ge0$, $\#\mathcal B(R) \le 4e^{2R}$.
 
-**Theorem 8.6 (Colliding nodes are neighbours).** If two distinct seeds share the hypotenuse
-$N$, both node points lie on the level set $2m\cosh d = N+1$, and their distances from $i$ differ
-by at most $\log 2$.
+*Proof.* By Theorem 3.4, $d\le R$ forces $c \le e^{2R}$, hence $m,n \le e^{R}$. Set $M=\lfloor e^R\rfloor$; the nodes inject into $\{0,\ldots,M\}^2$, of size $(M+1)^2 \le 4e^{2R}$ since $e^R\ge1$. $\square$
 
-*Proof sketch.* Both distances lie in the window of Theorem 3.5 for the same $c = N$. $\square$
+**Theorem 6.9 (Lower bound; sieve).** For $K\ge 256$, with $R = \log K + 2$,
+$$\#\mathcal B(R) \;\ge\; \frac{e^{2R}}{300}.$$
 
-### 8.1 Energy of trajectories
+*Proof sketch.* Consider the box
+$$\mathcal S_K = \{m \text{ even},\ 2K<m\le 4K\} \times \{n \text{ odd},\ 1\le n\le 2K\},$$
+which contains $K\cdot K = K^2$ pairs, all automatically of opposite parity and with $n<m$. A pair is *bad* if $\gcd(m,n)>1$; then some odd prime, hence some odd $d\ge3$, divides both. The number of $m$ in the even box divisible by odd $d$ is at most $K/d + 1$, and the number of $n$ in the odd box divisible by $d$ is at most $K/d + 1$. Summing over odd $d\in[3,2K]$ and using the telescoping estimates
+$$\sum_{i<n}\frac{1}{(2i+3)^2} \le \frac14, \qquad \sum_{i<n}\frac{1}{2i+3} \le \sqrt{2n+1}-1,$$
+one finds that for $K\ge 256$ the bad pairs number at most $\tfrac34 K^2$, so at least $K^2/4$ seeds survive. Each surviving seed satisfies, by Theorem 2.6,
+$$\cosh d = \frac{m}{2} + \frac{n^2+1}{2m} \;\le\; 2K + \frac{4K^2+1}{4K} \;\le\; 3K + \frac{1}{4K} \;\le\; \frac{e^2 K}{2} \;\le\; \cosh(\log K + 2),$$
+so all lie in $\mathcal B(R)$. Finally $e^{2R} = e^4K^2 \le 55 K^2$, so $K^2/4 \ge e^{2R}/300$. Distinctness of the points is Corollary 2.7. $\square$
 
-**Definition 8.7.** For a finite sequence $z_0, \ldots, z_k$ in $\mathbb{H}$, the discrete length and
-Dirichlet energy are
-$$L = \sum_{i<k} d(z_i, z_{i+1}), \qquad E = \sum_{i<k} d(z_i, z_{i+1})^2 .$$
+**Theorem 6.10 (Volume growth).** $\#\mathcal B(R) = \Theta(e^{2R})$; precisely, $e^{2R}/300 \le \#\mathcal B(R) \le 4e^{2R}$ on the relevant range.
 
-**Theorem 8.8 (Cauchy–Schwarz energy bound).** $L^2 \le k\,E$, hence for $k \ge 1$,
-$$E \;\ge\; \frac{d(z_0, z_k)^2}{k}.$$
-The bound is **sharp**: for every $k \ge 1$ and every $t \ge 0$ there is a $k$-step trajectory (equally
-spaced along a vertical geodesic) with $d(z_0,z_k) = t$ and $E = t^2/k$ exactly.
+Note that $e^{2R}$ is also the growth rate of the hyperbolic *area* of a ball of radius $R$. The Berggren tree is, in this density sense, a uniform net in $\mathbb H$.
 
-**Corollary 8.9 (Berggren trajectory energy).** Any $k$-step trajectory from $i$ to $z(m,n)$ has
-$$E \;\ge\; \frac{\bigl(\tfrac12\log c - \log 2\bigr)^2}{k}.$$
+### 6.3 The no-free-lunch theorem
 
-This makes the geodesic-energy heuristic precise: minimising energy is minimising $d^2/k$, and
-the theorems above show that $d$ is $\tfrac12\log c + O(1)$ while $k$ is uncontrolled from above
-and the search volume is $\asymp c$. The energy functional is well behaved; it simply has no
-algorithmic leverage.
+**Theorem 6.11 (No geodesic shortcut to factoring).** Let $N$ be odd with two primitive representations as a sum of two squares. The smallest hyperbolic ball about $i$ guaranteed to contain both corresponding nodes has radius $R \approx \tfrac12\log N + \log 2$, and therefore contains $\Theta(e^{2R}) = \Theta(N)$ Berggren nodes.
+
+*Proof.* Theorem 6.6 gives the radius; Theorem 6.10 gives the count. $\square$
+
+In other words: the geodesic to a collision is short — length $\tfrac12\log N + O(1)$ — but the number of candidate endpoints at that radius is linear in $N$. The hyperbolic metric compresses the search *space* and the search *target* by the same exponential factor. Combined with Theorem 5.8 (an arbitrary node of hypotenuse $N$ can sit at combinatorial depth $\Theta(\sqrt N)$), this closes off the geodesic-energy approach to factoring in both the metric and the combinatorial category.
+
+### 6.4 Energy, for completeness
+
+**Definition 6.12.** For a discrete trajectory $z_0,\ldots,z_k$ in $\mathbb H$, its length is $L=\sum_{j<k} d(z_j,z_{j+1})$ and its energy is $E = \sum_{j<k} d(z_j,z_{j+1})^2$.
+
+**Theorem 6.13 (Energy lower bound, and its sharpness).** $E \ge d(z_0,z_k)^2/k$, by Cauchy–Schwarz and the triangle inequality. The bound is attained: for every $k\ge1$ and every $t\ge0$ there is a $k$-step trajectory along a vertical geodesic with $d(z_0,z_k)=t$ and $E = t^2/k$ exactly.
+
+*Proof.* $d(z_0,z_k)^2 \le L^2 \le kE$. For sharpness take $z_j = e^{(k-j)t/k}\, i$ on the imaginary axis; consecutive distances are all $t/k$. $\square$
+
+Applied to Berggren trajectories: any $k$-step path from $i$ to a node of hypotenuse $c$ has energy at least $\big(\tfrac12\log c\big)^2/k$. Minimizing energy therefore favours long paths — which is exactly the wrong direction if one wants a short *search*.
 
 ---
 
-## 9. Algorithms
+## 7. Algorithms
 
-Three procedures fall out of the development and are worth recording explicitly.
+Three procedures are implicit in the above and are worth stating.
 
-**Algorithm A (Descent to the root).** Given a Euclid seed $(m,n)$, apply the parent map $\pi$
-of Definition 6.3 repeatedly until $(2,1)$ is reached; the number of steps is the depth, and
-the sequence of branch choices is the address of the node. Correctness is Theorem 6.4 and
-Theorem 6.5. Each step reduces $m$; on the left spine the number of steps is $\Theta(\sqrt c)$ and on
-the middle spine $\Theta(\log c)$, so the worst-case cost is $\Theta(\sqrt c)$ arithmetic operations —
-which is precisely the content of Theorem 6.7.
+**Algorithm A (Descent to the root).** Given a Euclid seed $(m,n)$, compute its depth and its address word in $\{1,2,3\}^*$.
+Repeatedly compare $m$ with $2n$ and $3n$: if $m>3n$ the last move was $B_3$ and the parent is $(m-2n,n)$; if $2n<m\le 3n$ the last move was $B_2$ and the parent is $(n, m-2n)$; if $m\le 2n$ the last move was $B_1$ and the parent is $(n, 2n-m)$. Terminate at $(2,1)$. Since $m$ strictly decreases and drops by at least a factor related to the slope, the loop runs in $O(m)$ steps in the worst case (the left spine) and $O(\log m)$ on the middle spine. This is a Euclid-style algorithm and each step is $O(1)$ arithmetic operations.
 
-**Algorithm B (Residual and branch prediction).** Given $(m,n)$, compute
-$c = m^2+n^2$, $d = \operatorname{arcosh}\bigl((c+1)/(2m)\bigr)$, $\rho = d - \tfrac12\log c$ and
-$\tilde\rho = \tfrac12\log(1 + (n/m)^2)$. Theorem 4.4 certifies $\rho - \tilde\rho \in [\,n^2/(c^2+n^2),\, \tfrac{c+1}{c-1}n^2/(c^2+n^2)\,]$
-without any transcendental evaluation, and Theorem 5.11 predicts the sign of
-$\rho(\sigma_2(m,n)) - \rho(m,n)$ from the single integer comparison $m^2$ versus $2mn+n^2$. The
-prediction is exact for every seed.
+**Algorithm B (Exact node geometry).** Given $(m,n)$, output $c$, $d = \operatorname{arcosh}\!\big((c+1)/(2m)\big)$, the residual $\rho = d-\tfrac12\log c$, the slope model $\tfrac12\log(1+(n/m)^2)$, and the certified gap interval $\big[n^2/(c^2+n^2),\, n^2/(c(c-1))\big]$. Constant time.
 
-**Algorithm C (Collision factoring).** Enumerate the nodes of the tree in order of hypotenuse
-(equivalently, of hyperbolic distance) until two share the target $N$; then output
-$\gcd(N, m_1m_2+n_1n_2)$ and $\gcd(N, m_1n_2+n_1m_2)$. Correctness is Theorems 8.1–8.3. The
-procedure is correct but not fast: by Theorem 7.1 the enumeration must in general reach
-$\asymp N$ nodes. This is the precise sense in which the original programme fails.
+**Algorithm C (Collision factoring).** Given odd $N$, enumerate seeds $(m,n)$ with $m^2+n^2 = N$ (equivalently, for each $m$ with $\sqrt{N/2}<m\le\sqrt N$, test whether $N-m^2$ is a perfect square and the pair is a seed). If two are found, return $\gcd(N, m_1m_2+n_1n_2)$ and $\gcd(N, m_1n_2+n_1m_2)$; their product is $N$. The enumeration is $O(\sqrt N)$, and Theorem 6.11 says the geometry does not improve on this.
 
 ---
 
-## 10. Discussion and open problems
+## 8. Discussion
 
-### 10.1 What the dictionary buys
+The results assemble into a single statement: *the Berggren tree, embedded in $\mathbb H$ by $z(m,n)=(n+i)/m$, has a completely explicit metric geometry.* Radial coordinate: $\tfrac12\log c$ plus a residual confined to $[0,\tfrac12\log2)$. Residual: the slope function $\tfrac12\log(1+t^2)$ plus a gap of size exactly $n^2/c^2\,(1+O(1/c))$. Branch dynamics: $B_1$ up, $B_3$ down, $B_2$ decided by $t \gtrless \sqrt2-1$, with the exact geometry always agreeing with the slope heuristic. Global density: $\Theta(e^{2R})$, matching the ambient volume growth.
 
-The exact formula $\cosh d = (c+1)/(2m)$ is the whole engine. It converts every question about
-the hyperbolic position of a node into a question about the pair $(c, m)$ — that is, about the
-hypotenuse and one leg-parameter of the triple. Level sets of distance become the hyperbolas
-$c + 1 = 2m\cosh R$; balls become discs in the $(m,n)$ plane; the residual becomes a function of
-the slope alone, up to $O(n^2/c^2)$.
+The negative results are, in their way, the sharper contribution. The mission that motivated this development — sub-linear factorization by geodesic energy minimization — is not merely difficult; it is refuted. The refutation is twofold and both halves are quantitative: combinatorial depth is not controlled by hyperbolic distance (left spine: $\Theta(\sqrt c)$ versus $\Theta(\log c)$), and the hyperbolic ball that must contain the collision already contains as many nodes as the number being factored. Neither obstruction is an artifact of a particular search strategy; both are properties of the embedding.
 
-Two aspects seem worth isolating. First, the **rigidity**: the entire, exponentially
-branching, arithmetically wild tree is confined to an annulus of width $\tfrac12\log 2$ around
-$\tfrac12\log c$. Second, the **failure of the algorithmic hope for a geometric reason**:
-hyperbolic space compresses distance logarithmically but *rewards* that compression with
-exponential volume, and volume is what a search pays for.
+It is worth isolating the technical lesson of §4.3. When one wants to prove a monotonicity statement for a transcendental quantity that is known only up to an error term, the naive strategy — bound the model difference below, bound the error above, compare — succeeds or fails depending entirely on the *sharpness* of both bounds. Here the first attempt, with error bound $1/c$, could not reach the boundary; the improved bound $(n^2+1)/(c(c+1))$, obtained from the exact identity by a single application of $\sqrt{1-x}\le 1-x/2$, reduced the open region to a Pell family; and on that family the real-variable statement is *false*, so integrality had to enter. The final margin at $(5,2)$ is $0.9\%$. Boundary layers of this kind are the normal state of affairs, and the exact identity of Theorem 4.3 was what made them tractable.
 
-### 10.2 Open problems
+---
 
-**Exact volume asymptotics.** Let $B(R)$ be the set of Euclid seeds whose node points lie in
-the closed ball of radius $R$ about $i$. We conjecture
-$$\#B(R) \;=\; \frac{\pi + 2}{4\pi^2}\,e^{2R}\bigl(1 + o(1)\bigr) \;=\; 0.130238\ldots \cdot e^{2R}\bigl(1+o(1)\bigr), \qquad R \to \infty,$$
-and consequently that no geodesic-energy search can inspect a $(1-\varepsilon)$-fraction of the
-nodes with hypotenuse $\le N$ in time $N^{o(1)}$. The heuristic behind the constant is exact
-and worth recording. By Theorem 3.2 the ball condition $d \le R$ is precisely
-$$m^2 + n^2 \;\le\; 2m\cosh R - 1,$$
-a Euclidean disc of radius $\sqrt{\cosh^2 R - 1}$ centred at $(\cosh R, 0)$ in the $(m,n)$-plane.
-The seed constraints $0 < n < m$ cut out the part of this disc above the axis and below the
-diagonal: writing $\varrho = \cosh R$, the upper half-disc has area $\tfrac{\pi}{2}\varrho^2$, and the
-line $n = m$ passes at distance $\varrho/\sqrt2$ from the centre, removing a circular segment of
-area $\bigl(\tfrac\pi4 - \tfrac12\bigr)\varrho^2$. The admissible area is therefore
-$\bigl(\tfrac{\pi}{4} + \tfrac12\bigr)\varrho^2$. Among lattice points, the density of pairs that are
-coprime *and* of opposite parity is $\tfrac{6}{\pi^2}\cdot\tfrac23 = \tfrac{4}{\pi^2}$ (of the three
-equally likely residue classes of a coprime pair mod $2$, two have opposite parity). With
-$\varrho^2 \sim e^{2R}/4$ this gives
-$$\#B(R) \;\sim\; \Bigl(\tfrac{\pi}{4}+\tfrac12\Bigr)\cdot\tfrac{4}{\pi^2}\cdot\tfrac{e^{2R}}{4} \;=\; \frac{\pi+2}{4\pi^2}\,e^{2R}.$$
-Direct enumeration agrees to three decimal places already at $R = 4$: the observed ratio
-$\#B(R)/e^{2R}$ is $0.1302, 0.1301, 0.1301$ at $R = 4.0, 4.5, 5.0$. Only the error term requires
-new work; Theorem 7.1 already supplies a matching order of magnitude with an explicit
-constant.
+## 9. Future directions
 
-**Collision radius.** If $N = m_1^2+n_1^2 = m_2^2+n_2^2$ with distinct seeds, then Theorem 8.6
-gives $|d_1 - d_2| \le \log 2$. We conjecture the sharper statement that the hyperbolic distance
-*between the two colliding nodes themselves* is at most $\log N - \log(4m_1m_2) + O(1)$. Both nodes
-lie on the same isohypotenuse level set $2m\cosh d = N+1$, which is an arc of controlled
-hyperbolic diameter; the conjecture asks for that diameter explicitly.
+**Exact volume asymptotics.** We proved $\#\mathcal B(R)=\Theta(e^{2R})$ with explicit but crude constants. The exact leading constant should be computable, since Theorem 2.6 turns the ball condition $d\le R$ into the Euclidean condition
+$$m^2+n^2+1 \le 2m\cosh R, \qquad\text{i.e.}\qquad (m-\cosh R)^2 + n^2 \le \sinh^2 R,$$
+a disc of radius $\sinh R$ centred at $(\cosh R, 0)$. Rescaling by $\cosh R$ it becomes the unit disc centred at $(1,0)$, and intersecting with the seed cone $0<n<m$ leaves a region of area
+$$\frac{\pi}{2} - \Big(\frac{\pi}{4}-\frac12\Big) = \frac{\pi}{4}+\frac12,$$
+the subtracted term being the circular segment cut off by the chord from $(0,0)$ to $(1,1)$, both of which lie on the circle. Euclid seeds have density $4/\pi^2$ among all integer pairs: the coprime density is $6/\pi^2$, and exactly $2/3$ of coprime pairs have opposite parity. Since $\cosh^2 R \sim e^{2R}/4$, the prediction is
+$$\#\mathcal B(R) \;\sim\; \frac{4}{\pi^2}\cdot\frac{e^{2R}}{4}\cdot\Big(\frac{\pi}{4}+\frac12\Big) \;=\; \frac{\pi+2}{4\pi^2}\,e^{2R} \;=\; 0.130237\ldots\, e^{2R}.$$
+Direct enumeration gives ratios $0.12890$, $0.13016$, $0.13012$, $0.13020$, $0.13024$, $0.13024$ at $R=3,\ldots,8$ — striking agreement, but the asymptotic (and in particular the error term, which requires a lattice-point count with a coprimality sieve) remains conjectural.
 
-**Distribution of the residual.** Since $\rho = \tfrac12\log(1+t^2) + (n^2/c^2)(1+O(1/c))$, the
-distribution of the residual over all seeds of hypotenuse $\le X$ is governed by the
-distribution of the slope $t = n/m$ over such seeds. Is the induced measure on $(0, \tfrac12\log 2)$
-absolutely continuous, and what is its density? The Möbius actions (2.1) suggest a
-Gauss-map-like transfer operator analysis.
+**Collision radius, sharpened.** Theorem 6.6 gives $2\log 2$ for the difference of the two distances. The distance between the colliding nodes *themselves* should be at most $\log N - \log(4m_1m_2) + O(1)$, since both lie on the level set $2m\cosh d = N+1$, an arc of controlled hyperbolic diameter.
 
-**Sharper boundary layers.** The dichotomy of Theorem 5.11 is exact, but the proof of the
-Pell case (Theorem 5.10) is ad hoc: it uses $n \ge 2$ forced by $k^2 = 2n^2+1$. Is there a
-uniform argument covering all seeds with $m^2 \ge 2mn+n^2$ at once? Equivalently: is there a
-monotone quantity interpolating between the slope model and the exact residual whose branch
-behaviour is unconditional?
+**Equidistribution.** Do the nodes with hypotenuse in $[N, 2N]$ equidistribute on the corresponding annulus with respect to hyperbolic area? The slope model suggests the angular distribution is governed by the distribution of $n/m$ among seeds, which should be the natural one.
 
-**Higher-dimensional analogues.** Euclid's parametrisation is the $n=2$ case of
-parametrising rational points on quadrics. Does the analogous tree of primitive
-representations $N = x_1^2 + \cdots + x_k^2$ embed in hyperbolic $k$-space with a comparable
-exact distance formula, and does the volume obstruction persist with exponent $k-1$?
+**The residual as a height.** $\rho$ is a bounded, explicitly computable function on the tree that increases along $B_1$ and decreases along $B_3$. It behaves like a Lyapunov function for the tree dynamics. Is there a natural interpretation of $\rho$ as an Arakelov-style local height, and does the exact gap $n^2/c^2$ have an arithmetic meaning?
 
-### 10.3 Conclusion
+**Modular interpretation.** The three Berggren moves are elements of a subgroup of $\mathrm{PGL}_2(\mathbb Z)$ acting on slopes by $t\mapsto 1/(2-t)$, $1/(2+t)$, $t/(1+2t)$. Identifying the precise congruence subgroup, and matching the seed trichotomy against its fundamental domain, would place the whole picture inside modular-curve geometry and might give the equidistribution statement for free.
 
-The programme we set out to test — factor $N$ in $O(\log N)$ steps by minimising geodesic
-energy over the Berggren tree in a hyperbolic model — is refuted, and refuted structurally.
-What replaces it is a precise dictionary: an exact distance formula tying a Riemannian
-invariant to a Pythagorean hypotenuse; a rigidity theorem confining an infinite tree to a
-thin annulus; a residual whose shape is determined by the slope to accuracy $n^2/c^2$; a
-complete, exact dichotomy for how each of the three branches moves that residual, with the
-last case a Pell family that only integrality can close; and a quantitative no-free-lunch
-theorem that explains, in one line of hyperbolic geometry, why the fast algorithm cannot
-exist.
+**Beyond the depth/continued-fraction law.** Theorem 5.12 refutes a single universal proportionality constant. A weighted law, counting a $B_1$-step as one partial quotient and a $B_3$-step as half of one, may well hold; formulating and proving the correct statement is open.
+
+---
+
+## Appendix: numerical table
+
+| seed $(m,n)$ | $c$ | $d$ | $\rho$ | $\tfrac12\log(1+t^2)$ | gap |
+|---|---|---|---|---|---|
+| $(2,1)$ | $5$ | $0.962424$ | $0.157705$ | $0.111572$ | $0.0461329$ |
+| $(3,2)$ | $13$ | $1.490996$ | $0.208522$ | $0.183862$ | $0.0246592$ |
+| $(4,1)$ | $17$ | $1.450575$ | $0.033968$ | $0.030312$ | $0.0036555$ |
+| $(5,2)$ | $29$ | $1.762747$ | $0.079099$ | $0.074210$ | $0.0048893$ |
+| $(7,4)$ | $65$ | $2.232301$ | $0.145107$ | $0.141283$ | $0.0038239$ |
+| $(8,1)$ | $65$ | $2.095186$ | $0.007992$ | $0.007752$ | $0.0002403$ |
+| $(9,4)$ | $97$ | $2.379200$ | $0.091845$ | $0.090131$ | $0.0017138$ |
+| $(12,5)$ | $169$ | $2.645871$ | $0.080922$ | $0.080043$ | $0.0008794$ |
+| $(29,12)$ | $985$ | $3.525494$ | $0.079174$ | $0.079025$ | $0.0001485$ |
+
+All residuals lie in $[0,\tfrac12\log 2) = [0, 0.34657)$, as Corollary 3.6 requires; the two nodes with $c=65$ are the collision that factors $65 = 5\cdot13$; and $(5,2)\to(12,5)$ exhibits the Pell boundary layer, with the residual increasing by only $0.0018$.

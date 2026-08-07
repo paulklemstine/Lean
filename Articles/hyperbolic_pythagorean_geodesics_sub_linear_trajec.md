@@ -1,258 +1,141 @@
-# The Shortcut That Wasn't: Pythagorean Triples on a Hyperbolic Map
+# The Tree of Right Triangles, Drawn on a Hyperbolic Disk
 
-## A tree older than algebra
+## A shape you already know, in a geometry you don't
 
-Every schoolchild meets $3^2 + 4^2 = 5^2$. Fewer meet the astonishing fact that
-*every* primitive Pythagorean triple — every triple $(a,b,c)$ of positive integers
-with $a^2 + b^2 = c^2$ and no common factor — descends from $(3,4,5)$ by a fixed
-recipe, and does so exactly once.
+Every schoolchild meets $3^2 + 4^2 = 5^2$. Fewer people learn the astonishing fact that *all* right triangles with whole-number sides — infinitely many of them — are the descendants of that single triangle, arranged in a perfect family tree.
 
-The recipe is a tree. Each triple has precisely three children, obtained by
-multiplying the column vector $(a,b,c)$ by one of three fixed $3\times 3$ integer
-matrices. Start at $(3,4,5)$; apply the three matrices; you get $(5,12,13)$,
-$(21,20,29)$, $(15,8,17)$. Apply them again, and again. Nothing is ever produced
-twice, and nothing is ever missed. This is *Berggren's tree*, and it is one of the
-most perfect objects in elementary number theory: an infinite ternary tree that
-enumerates a set nobody had a right to expect could be enumerated so cleanly.
+The rule is simple enough to write on a napkin. Take a primitive Pythagorean triple $(a,b,c)$ — three coprime whole numbers with $a^2+b^2=c^2$ — and apply any of three fixed $3\times 3$ integer matrices to it. Out comes another primitive triple. Start at $(3,4,5)$, apply the three matrices, apply them again to each result, and keep going. You get an infinite ternary tree, and — this is the miracle, discovered by B. Berggren in 1934 and rediscovered several times since — **every** primitive Pythagorean triple appears in it, exactly once. Nothing is missed; nothing is repeated.
 
-It is also, for exactly that reason, an object that keeps tempting people into a
-dangerous hope. Pythagorean triples know about factoring. A number $N$ that can be
-written as a sum of two squares in *two essentially different ways* is
-automatically composite — Euler knew this in the 1740s, and his proof gives you a
-factor by computing one greatest common divisor. So if you could navigate
-Berggren's tree cleverly, hunting for two nodes that share a hypotenuse, you would
-be factoring integers. And a tree with three-fold branching reaches depth $k$ nodes
-of size roughly $3^k$ — so surely finding what you want takes only $O(\log N)$ steps?
+$$(3,4,5) \to (5,12,13),\ (21,20,29),\ (15,8,17) \to \cdots$$
 
-This article is about what happens when you put that hope on a map: specifically,
-on the hyperbolic plane. The map turns out to be exquisitely well adapted to the
-tree — so well adapted that it lets us prove, with complete precision, that the
-hope is false, and *why*.
+This article is about what happens when you stop thinking of that tree as a combinatorial object and start thinking of it as a *geometric* one — specifically, when you draw it inside the hyperbolic plane, the strange saddle-shaped world where parallel lines diverge and circles have more area than they ought to. The result is a dictionary in which arithmetic questions about Pythagorean triples become questions about distance, and where a seductive-looking plan for factoring large integers turns out to be exactly, provably, doomed — for a reason that is itself beautiful.
 
-## A change of coordinates, and a change of geometry
+## From triangles to points
 
-The first move is to stop looking at triples and start looking at their
-**Euclid seeds**. Every primitive triple is
-$$(a,b,c) = (m^2 - n^2,\; 2mn,\; m^2+n^2)$$
-for a unique pair $(m,n)$ with $0 < n < m$, $\gcd(m,n) = 1$, and $m+n$ odd. In these
-coordinates, Berggren's three ugly matrices become three beautifully simple linear
-maps:
-$$B_1 : (m,n) \mapsto (2m-n,\, m), \qquad B_2 : (m,n) \mapsto (2m+n,\, m), \qquad B_3 : (m,n) \mapsto (m+2n,\, n).$$
-The root is $(2,1)$, which is $(3,4,5)$. Everything the tree does is now visible in
-two integer coordinates instead of three.
+The first step is a change of coordinates that goes back to Euclid. Every primitive Pythagorean triple can be written
 
-The second move is geometric. Send each seed $(m,n)$ to the point
-$$z(m,n) \;=\; \frac{n + i}{m} \;=\; \frac{n}{m} + \frac{i}{m}$$
-in the **Poincaré upper half-plane** — the upper half of the complex plane, equipped
-with the hyperbolic metric $ds = |dz|/y$ in which vertical distances are measured
-logarithmically and horizontal distances are cheap high up and expensive down near
-the real axis. The natural base point is $i$, and the root seed $(2,1)$ lands at
-$(1+i)/2$.
+$$(a,b,c) = (m^2-n^2,\; 2mn,\; m^2+n^2)$$
 
-Why this point? Because of a small miracle. In the half-plane, the hyperbolic
-distance $d$ between two points $z_1, z_2$ satisfies
-$\cosh d = 1 + \frac{|z_1 - z_2|^2}{2\,\mathrm{Im}(z_1)\,\mathrm{Im}(z_2)}$. Plug in
-$z_1 = i$ and $z_2 = (n+i)/m$, clear denominators, and the mess collapses to
+for a unique pair of whole numbers $(m,n)$ with $0 < n < m$, $\gcd(m,n)=1$, and $m+n$ odd. Call such a pair a **seed**. The triple $(3,4,5)$ has seed $(2,1)$; the triple $(5,12,13)$ has seed $(3,2)$; $(65 = 63^2 + 16^2$'s two friends$)$ have seeds $(8,1)$ and $(7,4)$.
 
-> **Exact Distance Formula.** For any $m > 0$,
-> $$\cosh d\bigl(i,\, z(m,n)\bigr) \;=\; \frac{m^2 + n^2 + 1}{2m}.$$
+In seed coordinates the three Berggren matrices simplify beautifully. They become
 
-The numerator is the *hypotenuse plus one*. The hyperbolic geometry of the
-half-plane has, entirely of its own accord, produced the arithmetic invariant we
-care about.
+$$B_1:(m,n)\mapsto(2m-n,\,m),\qquad B_2:(m,n)\mapsto(2m+n,\,m),\qquad B_3:(m,n)\mapsto(m+2n,\,n).$$
 
-## Every triple is close to the origin
+Three affine maps on a pair of integers. That is the entire tree.
 
-Write $c = m^2 + n^2$ for the hypotenuse. Since $\cosh d \approx \tfrac{1}{2}e^{d}$ for
-large $d$, and since $n < m$ forces $m$ to be within a factor $\sqrt2$ of $\sqrt c$,
-the formula immediately gives:
+Now for the geometry. The **Poincaré upper half-plane** $\mathbb{H}$ is the set of complex numbers with positive imaginary part, equipped with the metric $ds = |dz|/\operatorname{Im} z$ — lengths get magnified as you approach the real axis, so the boundary is infinitely far away. It is the standard playground for hyperbolic geometry, and it is where the modular group $\mathrm{SL}_2(\mathbb{Z})$ lives.
 
-> **Logarithmic Trajectory Theorem.** For every Euclid seed $(m,n)$ with hypotenuse
-> $c = m^2+n^2$,
-> $$\left| \,d\bigl(i, z(m,n)\bigr) - \tfrac12 \log c \,\right| \;\le\; \log 2 .$$
+Send each seed $(m,n)$ to the point
 
-This can be sharpened until almost nothing is left to sharpen. The lower bound
-holds with *no* additive constant at all: $d \ge \tfrac12 \log c$, always. And the
-upper bound is $d \le \tfrac12 \log\bigl(2(c+1)\bigr)$. So every node of the tree,
-no matter how deep, lies in a half-open annulus of width only
-$\tfrac12\log 2 \approx 0.3466$:
-$$\tfrac12 \log c \;\le\; d \;<\; \tfrac12\log c + \tfrac12 \log 2 + o(1).$$
+$$z(m,n) \;=\; \frac{n+i}{m} \;=\; \frac{n}{m} + \frac{i}{m}.$$
 
-This is genuinely striking. The tree branches exponentially, its entries explode in
-size, and yet in hyperbolic terms *nothing goes far away*. A triple with a
-hypotenuse of a trillion sits at distance about $13.8$ from the origin. A triple with
-a hypotenuse of $10^{100}$ sits at distance about $115$. The hyperbolic metric
-compresses the whole arithmetic universe of Pythagorean triples onto a
-logarithmic scale.
+The real part is the *slope* $n/m$ of the seed, a number in $(0,1)$; the imaginary part is $1/m$, so bigger seeds sit closer to the real line. Take the imaginary unit $i$ as the origin of the picture.
+
+## The distance formula, and a small miracle
+
+How far is a node from the origin? The hyperbolic distance in $\mathbb{H}$ obeys
+
+$$\cosh d(z,w) = 1 + \frac{|z-w|^2}{2\,\operatorname{Im}z\,\operatorname{Im}w}.$$
+
+Plug in $z=i$ and $w = (n+i)/m$, turn the crank, and something remarkable falls out:
+
+> **Exact Distance Formula.** For every seed $(m,n)$,
+> $$\cosh d_{\mathbb H}\big(i,\, z(m,n)\big) \;=\; \frac{m^2+n^2+1}{2m}.$$
+
+Look at the numerator. It is $c+1$, where $c=m^2+n^2$ is the **hypotenuse** of the Pythagorean triple. The geometry has no business knowing about the hypotenuse — we defined $z(m,n)$ using $n/m$ and $1/m$, not $m^2+n^2$ — but there it is, sitting in the numerator of a hyperbolic cosine. This one identity is the hinge on which everything else turns.
+
+Because $\cosh d \approx \tfrac12 e^{d}$ for large $d$, and because $(c+1)/(2m)$ is comparable to $\sqrt{c}$ (the seed conditions force $m$ to be within a bounded factor of $\sqrt c$), the formula immediately gives:
+
+> **Logarithmic Trajectory Theorem.** For every seed with hypotenuse $c$,
+> $$\tfrac12 \log c \;\le\; d_{\mathbb H}\big(i,\, z(m,n)\big) \;\le\; \tfrac12\log\big(2(c+1)\big).$$
+
+In words: *every* node of the tree, however deep, sits at hyperbolic distance $\tfrac12\log c + O(1)$ from the origin. The lower bound is exact — no additive slack at all. The upper bound exceeds it by less than $\tfrac12\log 2 \approx 0.3466$, plus a term of size $1/(2c)$ that vanishes.
+
+So the entire infinite, exponentially branching tree of Pythagorean triples is compressed into a thin logarithmic filament. A triple with a hundred-digit hypotenuse is only about $115$ units of hyperbolic distance from $(3,4,5)$.
 
 ## The residual: reading the slope off the geometry
 
-Distance is $\tfrac12 \log c$ plus a bounded correction. What *is* the correction?
-Call it the **residual**,
-$$\rho(m,n) \;=\; d\bigl(i, z(m,n)\bigr) - \tfrac12 \log\bigl(m^2 + n^2\bigr) .$$
-Numerically it wanders around in $[0, 0.347)$ with no obvious pattern — until you
-plot it against the *slope* $t = n/m$, at which point it lies almost perfectly on a
-single curve. That curve is
-$$\tilde\rho(t) \;=\; \tfrac12 \log\bigl(1 + t^2\bigr),$$
-and the "almost" can be made exact. Setting $S = \sqrt{(c+1)^2 - 4m^2}$, one finds the
-clean identity
-$$\exp\bigl(\rho - \tilde\rho\bigr) \;=\; \frac{(c+1) + S}{2c},$$
-and then the elementary factorisation
-$$\bigl(S - (c-1)\bigr)\bigl(S + (c-1)\bigr) \;=\; (c+1)^2 - 4m^2 - (c-1)^2 \;=\; 4\bigl(c - m^2\bigr) \;=\; 4n^2$$
-turns a catastrophic near-cancellation of two almost-equal quantities into a
-harmless quotient. The conclusion is a two-sided bound with no slack left:
+Since the distance is $\tfrac12\log c$ plus a bounded correction, the interesting quantity is the correction itself. Define the **residual**
 
-> **Residual Gap Theorem.** With $c = m^2+n^2$,
-> $$\frac{n^2}{c^2 + n^2} \;\le\; \rho(m,n) - \tilde\rho(n/m) \;\le\; \frac{c+1}{c-1}\cdot\frac{n^2}{c^2+n^2}.$$
-> In particular the gap equals $\dfrac{n^2}{c^2}\bigl(1 + O(1/c)\bigr)$, uniformly in the slope.
+$$\rho(m,n) \;=\; d_{\mathbb H}\big(i,z(m,n)\big) - \tfrac12\log c.$$
 
-For the seed $(4,1)$ this pins the gap between $0.003448$ and $0.003676$; the true
-value is $0.0036543\ldots$. So the residual really is a function of the slope alone,
-to within an error that dies like the square of the hypotenuse.
+The theorem above says $0 \le \rho < \tfrac12\log 2 + o(1)$. What is it *really*?
 
-## What each branch does to the residual
+The answer is startlingly clean. Set $t = n/m$, the slope. Then
 
-Now the tree and the geometry can talk to each other. Each of $B_1, B_2, B_3$
-changes the slope $t = n/m$ in a definite way:
-$$B_1: t \mapsto \frac{1}{2-t}, \qquad B_2 : t \mapsto \frac{1}{2+t}, \qquad B_3 : t \mapsto \frac{t}{1+2t}.$$
-For $B_1$, the inequality $t \le 1/(2-t)$ is just $(1-t)^2 \ge 0$: the slope always goes
-*up*. For $B_3$, dividing by $1 + 2t > 1$ always sends the slope *down*. So on those
-two branches the slope model of the residual is monotone, and for a trivial reason.
+> **Slope Model.** $\rho(m,n) = \tfrac12\log(1+t^2) + \text{(a tiny error)}$, and the error is nonnegative and at most $n^2/\big(c(c-1)\big)$.
 
-$B_2$ is where it gets interesting. The map $t \mapsto 1/(2+t)$ has a fixed point at
-$t = \sqrt2 - 1 \approx 0.4142$: above it the slope decreases, below it the slope
-increases. So $B_2$ is monotone in one direction on some seeds and the other
-direction on others, the dividing line being the algebraic condition
-$m^2 = 2mn + n^2$.
+That is, the residual depends only on the *shape* of the triangle, not its size — up to an error of order $1/c$, the reciprocal of the hypotenuse. And $t\mapsto \tfrac12\log(1+t^2)$ maps $(0,1)$ onto $(0,\tfrac12\log 2)$, which is exactly the window the trajectory theorem predicted. The window is not an artifact of crude estimation; it is the exact image of the slope interval.
 
-But all of this is about the *model* $\tilde\rho$, and the model differs from the
-truth by a term of size $n^2/c^2$. Right at the dividing line, the predicted change
-in the residual is itself tiny — comparably tiny. Does the model's prediction
-survive contact with the exact hyperbolic distance? That is the delicate question,
-and the answer is yes, completely:
+One can go further and write down the error *exactly*. With $S = \sqrt{(c+1)^2-4m^2}$ (which is $2m\sinh d$),
 
-> **Exact Branch Monotonicity.** For *every* Euclid seed $(m,n)$:
-> 1. $\rho(m,n) \le \rho(2m-n,\, m)$ — the residual never decreases along $B_1$;
-> 2. $\rho(m+2n,\, n) \le \rho(m,n)$ — the residual never increases along $B_3$;
-> 3. $\rho(2m+n,\, m) \le \rho(m,n)$ if $m^2 < 2mn + n^2$, and $\rho(m,n) \le \rho(2m+n,\, m)$ if $2mn + n^2 < m^2$.
->
-> Moreover no Euclid seed satisfies $m^2 = 2mn+n^2$ exactly, so clause 3 is a genuine
-> dichotomy with no case left open: the exact residual always moves in the direction
-> the slope model predicts.
+$$\exp\!\Big(\rho(m,n) - \tfrac12\log(1+t^2)\Big) \;=\; \frac{(c+1)+S}{2c}.$$
 
-The reason no seed sits exactly on the line is charming: $m^2 = 2mn+n^2$ means
-$(m-n)^2 = 2n^2$, i.e. $\sqrt 2$ is rational. Coprimality does the rest.
+The gap between the true residual and the slope model is therefore the logarithm of a quantity extremely close to $1$, and the whole difficulty is the near-cancellation in $S - (c-1)$. The trick that dissolves it is a one-line factorization:
 
-The proof of clause 3 has a sting in its tail. It works by bounding the slope gap
-from below by an algebraic quantity and the residual gap from above by another, and
-comparing. For most seeds the comparison holds for *real* $m,n$ and needs no
-arithmetic. But there is a boundary layer: seeds with $m^2 = 2mn + n^2 + 1$, which
-is to say $(m-n)^2 = 2n^2 + 1$ — a **Pell equation**, whose solutions are
-$$(m,n) = (5,2),\ (29,12),\ (169,70),\ (985,408),\ \ldots$$
-On this family the real-variable inequality genuinely *fails* (it breaks down near
-the non-integral point $(m,n) \approx (3.80,\, 1.48)$), and one must use the integrality
-consequence $n \ge 2$ forced by the Pell equation itself. At the smallest member,
-$(5,2)$, the margin of victory is about $0.9\%$. The oldest Diophantine equation in
-the book turns up as the exact obstruction, and closing the gap requires knowing that
-you are standing on integers.
+$$\big(S-(c-1)\big)\big(S+(c-1)\big) = S^2-(c-1)^2 = (c+1)^2-4m^2-(c-1)^2 = 4(c-m^2) = 4n^2.$$
 
-## The hope, and its refutation
+A difference of nearly equal quantities has become a *quotient*, and since $2(c-1)\le S+(c-1)\le 2c$, the gap is pinned between $n^2/c^2$ and $n^2/\big(c(c-1)\big)$ — two bounds within a factor $(c+1)/(c-1)$ of each other. At the seed $(4,1)$, for example, this gives $0.003448 \le \text{gap} \le 0.003676$, bracketing the true value $0.0036555\ldots$ to three digits.
 
-Now back to factoring. Two nodes of the tree with the same hypotenuse $N$ give two
-essentially distinct representations $N = m_1^2+n_1^2 = m_2^2+n_2^2$, and Euler's
-identity converts that into a factorisation. In fact one gets the complete split at
-once: for odd $N$ with both representations primitive,
-$$\gcd\bigl(N,\, m_1m_2 + n_1n_2\bigr)\cdot\gcd\bigl(N,\, m_1n_2 + n_1m_2\bigr) \;=\; N,$$
-with both factors strictly between $1$ and $N$. The smallest instance: $65 = 8^2+1^2 = 7^2+4^2$,
-and $\gcd(65,\, 8\cdot7 + 1\cdot4) = \gcd(65,60) = 5$. The compositeness of $65$ has been
-deduced from a collision of two points in the hyperbolic plane. And such collisions
-are not rare: the seeds $(20j+9,\, 10j+2)$ and $(20j+7,\, 10j+6)$ collide for every
-$j \ge 0$, both with hypotenuse $500j^2 + 400j + 85$, so collisions occur at every scale.
+## Which way does each branch move you?
 
-Better yet, colliding nodes are geometric *neighbours*. Both lie on the level set
-$2m\cosh d = N+1$ — an "isohypotenuse" curve — so their distances from the origin
-differ by at most $\log 2$. Everything the optimist could want: a short trajectory, a
-tight annulus, an arithmetic payoff waiting at every collision.
+Now a natural dynamical question. Each of the three Berggren moves takes a node to a child. Does the child sit *closer* to the ideal $\tfrac12\log c$, or further? Equivalently: does the residual go up or down along $B_1$, $B_2$, $B_3$?
 
-And yet the whole programme dies, for a reason that is itself a theorem.
+For the slope model the answer is easy algebra. $B_1$ sends the slope $t$ to $1/(2-t)$, and $(m-n)^2\ge0$ forces $t \le 1/(2-t)$: the slope increases, so the residual increases. $B_3$ sends $t$ to $t/(1+2t) \le t$: the residual decreases. And $B_2$ sends $t$ to $1/(2+t)$, which is larger or smaller than $t$ depending on which side of $\sqrt2 - 1 = 0.41421\ldots$ the slope sits.
 
-> **Quadratic Ball Growth.** For every $K \ge 256$, the hyperbolic ball of radius
-> $R = \log K + 2$ about the base point $i$ contains at least $e^{2R}/300$ distinct
-> Berggren nodes.
+But the slope model is only accurate to $O(1/c)$ — and the differences we are comparing are themselves $O(1/c)$ or smaller in some regimes. Does the monotonicity survive the error term? This is the boundary-layer question, and it is where the real work lies. The answers:
 
-The exponent is $2R$, not $R$. Since a node of hypotenuse $c$ sits at distance
-$\approx \tfrac12 \log c$, radius $R$ corresponds to hypotenuse $\approx e^{2R}$ — and the
-theorem says the number of nodes inside is of that same order. The ball that is
-*guaranteed* to contain a colliding pair for a target $N$ already contains on the
-order of $N$ nodes.
+> **Branch Monotonicity.** For every seed $(m,n)$, the *exact* hyperbolic residual satisfies
+> $$\rho(m,n) \le \rho(2m-n,\,m) \qquad\text{(the } B_1 \text{ branch always increases it)},$$
+> $$\rho(m+2n,\,n) \le \rho(m,n) \qquad\text{(the } B_3 \text{ branch always decreases it)},$$
+> with no side conditions whatsoever.
 
-This is a no-free-lunch result of a peculiarly satisfying kind. The compression is
-real: distances are logarithmic. But hyperbolic space punishes compression with
-volume. Everything is nearby, and there is an exponential amount of nearby. Short
-geodesics, exponentially many of them.
+> **The $B_2$ Dichotomy.** For every seed, $\rho(2m+n,\,m) \le \rho(m,n)$ if $m^2 < 2mn+n^2$ (slope above $\sqrt2-1$), and $\rho(m,n) \le \rho(2m+n,\,m)$ if $m^2 > 2mn+n^2$. No seed satisfies $m^2 = 2mn+n^2$ — coprimality forbids it — so every seed falls strictly on one side. **The exact residual always moves in exactly the direction the slope model predicts.**
 
-Proving it is harder than it sounds, because the obstruction is arithmetic rather
-than geometric. One must exhibit quadratically many *coprime* pairs of opposite
-parity inside a box — that is, run a sieve. The count works out: in the box of even
-$m \in (2K, 4K]$ and odd $n \in [1,2K]$, at least $K^2/4$ of the $K^2$ pairs are coprime.
+The proof strategy is a pleasant piece of engineering. One bounds the slope-model difference from *below* by an elementary rational function, using only $\log x \ge 1 - 1/x$; then one bounds the residual-versus-slope-model error from *above* by the sharp estimate; then one checks that the first beats the second. For $B_1$ and $B_3$ the resulting polynomial inequalities become *coefficient-positive* after the substitution $n = a+1$, $m = a+b+2$ (which encodes $0<n<m$), which is what makes the guard-free statements possible.
 
-## Depth versus distance
+The $B_2$ case has a genuine hard core. The argument covers everything except the seeds with $m^2 = 2mn + n^2 + 1$ — that is, $(m-n)^2 = 2n^2+1$, a **Pell equation**, whose solutions are $(m,n) = (5,2), (29,12), (169,70), \ldots$. On this thin family the whole question collapses, after substituting the Pell relation, to the single polynomial inequality
+$$mn\big(28n^4-96n^2-34\big) + \big(12n^6-30n^4-50n^2-8\big) \;\ge\; 0,$$
+whose two brackets turn non-negative *exactly* at $n=2$. Read over the real numbers this is false — it fails near $(m,n)=(3.8,1.48)$ — so the proof must use arithmetic: the Pell equation itself forces $n\ge2$, because $n=1$ would need $m^2=2m+2$. At the smallest member $(5,2)$ the two sides are $42250$ and $42630$, a margin of nine parts in a thousand. The boundary layer is real, and it is closed.
 
-There is a last twist, and it is the one that kills the literal "$O(\log N)$ path
-length" slogan. Distance and depth are not the same thing.
+## The factoring dream, and why it fails
 
-Depth is well defined: the tree really is a tree. Every Euclid seed is reachable
-from $(2,1)$, and reachable at exactly one depth — the inverse move is a clean
-trichotomy in the slope, with $n/m \in (\tfrac12,1)$, $(\tfrac13,\tfrac12)$, $(0,\tfrac13)$
-selecting $B_1$, $B_2$, $B_3$ respectively.
+Here is why anyone would care beyond aesthetics. Euler's method of factoring rests on a classical observation: if an odd number $N$ has *two essentially different* representations as a sum of two squares, $N = a^2+b^2 = c^2+d^2$, then $N$ is composite and you can read off its factors:
 
-At depth $k$ one has $m \le 2\cdot 3^k$, hence $\log c \le \log 8 + k\log 9$, hence
-$$2\,d\bigl(i,z\bigr) \;\le\; \log 32 + k \log 9 .$$
-Distance is bounded by depth. Is depth bounded by distance? No — catastrophically
-not. Consider the **left spine**, obtained by applying $B_1$ over and over:
-$$(2,1) \to (3,2) \to (4,3) \to (5,4) \to \cdots$$
-The node at depth $k$ is the seed $(k+2, k+1)$, whose hypotenuse is only
-$2k^2 + 6k + 5$. Its hyperbolic distance from the origin is about $\log k$, but its depth
-is $k \approx \sqrt{c/2}$. There is no constant $C$ with $\text{depth} \le C\cdot\text{distance}$;
-this is not merely unproven, it is false.
+$$\gcd(N,\, ac+bd)\cdot\gcd(N,\, ad+bc) = N,$$
 
-The **middle spine**, generated by $B_2$, behaves oppositely: its first coordinates
-are the Pell numbers $2, 5, 12, 29, 70, \ldots$, the hypotenuse is at least $4^{k+1}$, and
-$k \log 2 \le d$. On this branch, depth and distance are commensurable. And this
-gives the one form of the original slogan that is true:
+with both factors strictly between $1$ and $N$. Try $65 = 8^2+1^2 = 7^2+4^2$: $\gcd(65, 8\cdot7+1\cdot4) = \gcd(65,60) = 5$ and $\gcd(65, 8\cdot4+1\cdot7) = \gcd(65,39) = 13$. Out pops $65 = 5\cdot 13$. If $N=pq$ is a semiprime, this always recovers exactly $p$ and $q$: one collision, complete factorization.
 
-> **Logarithmic Reach.** For every $N \ge 1$ there is a node of the tree at depth
-> $k = \lfloor \log_2 N\rfloor$ whose hypotenuse is at least $N$, and $k \log 2 \le \log N$.
+And *collisions in the tree are exactly such pairs*. Two distinct nodes of the Berggren tree with the same hypotenuse $N$ give two primitive representations of $N$ as a sum of squares, hence a full splitting. Collisions are not rare, either: the two seed families $(20j+9,\,10j+2)$ and $(20j+7,\,10j+6)$ both have hypotenuse $500j^2+400j+85$ for every $j$, so collisions occur at every scale. (For $j=0$ these are $(9,2)$ and $(7,6)$, both with hypotenuse $85$, and the extracted divisor is $5$.)
 
-You can *reach* size $N$ in $\Theta(\log N)$ steps — along the Pell spine, which is
-where the tree grows fastest. What you cannot do is reach a *specified* node in
-$O(\log N)$ steps, because most nodes of size $N$ are not on that spine, and some sit
-at depth $\Theta(\sqrt N)$. And even if you could navigate perfectly, the ball you
-would have to search has volume $\asymp N$.
+So the plan writes itself. Colliding nodes lie at *nearly the same hyperbolic distance* from the origin — within $2\log 2$ of each other, since both distances are $\tfrac12\log N + O(1)$. Every node is only $\tfrac12\log N$ away. Walk out along a short geodesic to radius $\tfrac12\log N$, minimize some energy functional, find the collision, factor $N$. Path length $O(\log N)$: sub-linear, wonderful.
 
-## What the map was really for
+It does not work, and the reason is a theorem.
 
-The programme announced at the outset — factor $N$ in $O(\log N)$ by minimising
-geodesic energy in the Poincaré disk — is dead, and the geometry killed it.
-That is not a disappointment; it is what a good map is for. Before the map, the
-question "can Berggren's tree factor integers quickly?" was a vague hope. After the
-map, it is a precise statement about volume growth in hyperbolic space, and the
-answer is a clean no with a quantitative reason attached.
+> **Ball Volume Growth.** The number of tree nodes inside the hyperbolic ball of radius $R$ about the origin is between $e^{2R}/300$ and $4e^{2R}$.
 
-What survives is arguably more interesting than what was hoped for. There is an
-exact formula, $\cosh d = (c+1)/(2m)$, connecting a Riemannian distance to a
-Pythagorean hypotenuse. There is a rigidity statement — every triple in the universe
-lives in an annulus of width $0.347$ — that turns an unbounded arithmetic object into a
-bounded geometric one. There is a residual that reads off the slope of the triple to
-accuracy $n^2/c^2$. There is a complete dichotomy for how each of the three branches
-moves that residual, valid for the exact hyperbolic metric and not merely for its
-asymptotic model, whose last unresolved case is a Pell family and needs
-integrality to close. And there is a sharp no-free-lunch theorem explaining, in
-purely geometric language, why none of this yields a fast factoring algorithm.
+The lower bound is the hard half: one must exhibit quadratically many *coprime* pairs of opposite parity inside a box, which requires a genuine sieve. (The trick: the box $\{m \text{ even},\, 2K<m\le 4K\}\times\{n\text{ odd},\,1\le n\le 2K\}$ has $K^2$ pairs, and an inclusion–exclusion over odd divisors $d\ge3$, controlled by the telescoping estimates $\sum 1/(2i+3)^2 \le 1/4$ and $\sum 1/(2i+3)\le\sqrt{2n+1}-1$, discards fewer than three quarters of them.) The upper bound is easy from the exact distance formula.
 
-The negative result is the load-bearing one. A conjecture that dies with an
-explicit counterexample — the left spine, depth $k$, hypotenuse $2k^2+6k+5$ — and a
-structural obstruction — exponential volume — has told you something permanent about
-the landscape. The tree is beautiful; the hyperbolic plane is the right place to
-look at it; and the reason integer factorisation is hard survives the change of
-coordinates intact.
+Now count. The ball guaranteed to contain a collision for $N$ has radius $R \approx \tfrac12\log N$, so it contains $\asymp e^{2R} = \asymp N$ nodes. The search region is as large as the number you were trying to factor. Short geodesics, yes — but exponentially many of them. This is a **no-free-lunch theorem**: the hyperbolic metric compresses the tree, but it compresses the haystack and the needle by exactly the same factor.
+
+There is a further, independent obstruction. One might hope that the *combinatorial* depth of a node — the number of Berggren moves needed to reach it — is also $O(\log N)$. It is not. The left spine $(2,1)\to(3,2)\to(4,3)\to\cdots$ reaches depth $k$ with hypotenuse only $2k^2+6k+5$, so depth there is $\Theta(\sqrt{c})$: exponentially worse than the geodesic distance. In the other direction, depth *does* bound the distance: a node at depth $k$ has $m\le 2\cdot 3^k$, hence $2d \le \log 32 + k\log 9$. So distance $\lesssim$ depth, with no reverse inequality. The hyperbolic metric compresses the tree exponentially, and that compression is not something an algorithm can walk along.
+
+The one form in which "$O(\log N)$" survives is this: for every target $N$ there *is* a node of hypotenuse at least $N$ at depth $\lfloor\log_2 N\rfloor$, namely along the middle spine $(2,1)\to(5,2)\to(12,5)\to(29,12)\to\cdots$ (whose entries, pleasingly, are Pell numbers, and whose alternate members are precisely the $B_2$ boundary layer). *Reaching* size $N$ is logarithmically cheap. *Finding a particular node* of size $N$ is not.
+
+## What we are left with
+
+Strip away the failed algorithm and what remains is, I think, more interesting than what was sought. A purely combinatorial object — a ternary tree of integer triples — has been given a metric geometry in which:
+
+- every node's position is known exactly, by a closed formula;
+- the radial coordinate is $\tfrac12\log(\text{hypotenuse})$ to within $\tfrac12\log 2$;
+- the angular information — the residual — is a function of the triangle's *shape* alone, to within $n^2/c^2$, which we can compute both ways;
+- each of the three generators moves you in a determined direction, and the direction is decided by a single quadratic threshold, $\sqrt2-1$;
+- the tree is genuinely a tree (every seed reachable, at exactly one depth, via an explicit descent that reads the slope against the thresholds $1/3$ and $1/2$);
+- and the density of nodes at radius $R$ is $\Theta(e^{2R})$, the exact volume growth rate of the hyperbolic plane itself.
+
+The leading constant even appears to be computable. The distance formula turns the ball $d\le R$ into the Euclidean disc $(m-\cosh R)^2+n^2 \le \sinh^2 R$; intersecting the rescaled unit disc with the wedge $0<n<m$ leaves area $\tfrac{\pi}{4}+\tfrac12$, and seeds have density $4/\pi^2$ among integer pairs (coprime density $6/\pi^2$, times the two thirds of coprime pairs of opposite parity). The prediction is $\#\mathcal B(R) \sim \tfrac{\pi+2}{4\pi^2}e^{2R} = 0.130237\ldots\,e^{2R}$; direct enumeration up to $R=8$ gives $0.13024$. Turning that agreement into a theorem, with an error term, is open.
+
+That last point deserves a final word. The hyperbolic plane's area grows like $e^{2R}$ — that is the defining feature of negative curvature. The Berggren tree, placed in it, has *exactly* the same growth rate. The tree of Pythagorean triples is not merely embeddable in the hyperbolic plane; it is, in a precise density sense, a uniformly distributed net in it. The arithmetic and the geometry have the same volume.
+
+Which is why no clever walk will save you. You cannot outrun the curvature you are standing in.
