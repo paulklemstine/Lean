@@ -15,8 +15,46 @@ of Gaussian curvature values across sample points. This bridges discrete geometr
 -/
 import Mathlib
 import Logic.StrangeLoops.Core
+import Geometry.SplitGeometry
 
-open Real Finset
+open Real Finset SplitGeometry
+
+/-! ## The split curvature and the split divergence
+
+`sechSq` is the metric weight of the split metric (from `Geometry.SplitGeometry`); the *split
+curvature* of a pair of parameters is the difference of the two weights, and the *split
+divergence* is the squared Euclidean distance between the weight vectors. -/
+
+/-- The split curvature `K(x, y) = sech²x - sech²y`. -/
+noncomputable def splitCurvature (x y : ℝ) : ℝ := sechSq x - sechSq y
+
+/-- The split divergence of two points of the split plane. -/
+noncomputable def splitDivergence (p q : ℝ × ℝ) : ℝ :=
+  (sechSq p.1 - sechSq q.1) ^ 2 + (sechSq p.2 - sechSq q.2) ^ 2
+
+/-- `sech² t ≤ 1`, since `cosh t ≥ 1`. -/
+theorem sechSq_le_one (t : ℝ) : sechSq t ≤ 1 := by
+  have h1 : (1 : ℝ) ≤ Real.cosh t ^ 2 := by
+    nlinarith [Real.one_le_cosh t, Real.cosh_pos t]
+  rw [sechSq, div_le_one (by positivity)]
+  exact h1
+
+/-- The split curvature is antisymmetric. -/
+theorem splitCurvature_antisymm (x y : ℝ) : splitCurvature x y = -splitCurvature y x := by
+  unfold splitCurvature; ring
+
+/-- The split curvature vanishes on the diagonal. -/
+theorem splitCurvature_diag (x : ℝ) : splitCurvature x x = 0 := by
+  unfold splitCurvature; ring
+
+/-- The split curvature is bounded by one in absolute value. -/
+theorem splitCurvature_abs_le_one (x y : ℝ) : |splitCurvature x y| ≤ 1 := by
+  have hx1 := sechSq_le_one x
+  have hy1 := sechSq_le_one y
+  have hx0 := sechSq_pos x
+  have hy0 := sechSq_pos y
+  rw [abs_le]
+  constructor <;> · unfold splitCurvature; linarith
 
 /-! ## Curvature Spectrum -/
 
