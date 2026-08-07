@@ -511,6 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     return `plt.subplots(${cleanedArgs})`;
                 }
+            );
             // Fix unbraced \fracXY in LaTeX strings (e.g., \frac12 -> \frac{1}{2})
             processedCode = processedCode.replace(/\\frac([a-zA-Z0-9])([a-zA-Z0-9])/g, '\\frac{$1}{$2}');
 
@@ -557,7 +558,7 @@ try:
             try:
                 return _orig_mathtext_parse(self, s, *args, **kwargs)
             except Exception:
-                cleaned = re.sub(r'\\frac([a-zA-Z0-9])([a-zA-Z0-9])', r'\\frac{\1}{\2}', s)
+                cleaned = re.sub(r'\\\\frac([a-zA-Z0-9])([a-zA-Z0-9])', r'\\\\frac{\\1}{\\2}', s)
                 try:
                     return _orig_mathtext_parse(self, cleaned, *args, **kwargs)
                 except Exception:
