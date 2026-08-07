@@ -2,46 +2,28 @@
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 
-# Necessary-threshold cubic upper bound for ex(n, K_{a,b}, K_{3,t})
+# A cubic upper bound for the generalized Turán problem `ex(n, K_{a,b}, K_{3,t})`
 
-This file formalizes the *upper* half of the generalized Turán statement
-`ex(n, K_{a,b}, K_{3,t}) = Θ(n^3)`:
+For a host graph `G` on `n` vertices which contains no complete bipartite subgraph
+`K_{3,t}` — equivalently, in which every three vertices have at most `t - 1` common
+neighbours — the number of copies of `K_{a,b}` (`a, b ≥ 3`) is `O(n³)`, with an explicit
+constant depending only on `a`, `b` and `t`:
 
-For every `K_{3,t}`-free graph `G` on a finite vertex set, the number of copies of the
-complete bipartite graph `K_{a,b}` (with `3 ≤ a` and `3 ≤ b`) is at most
-`C(n,3) · C(t-1, b) · C(t-1, a-3)`, hence `O(n^3)`.
+`#K_{a,b}-copies ≤ C(t-1, b) · C(t-1, a-3) · n³`.
 
-The argument is a Kővári–Sós–Turán-style double count anchored on a 3-element "core":
-every copy of `K_{a,b}` contains a copy of the `3`-side of `K_{3,t}` inside its `a`-side, and
-`K_{3,t}`-freeness caps every triple's common neighborhood at `t-1`.  This is the elementary
-direction that holds *uniformly at the conjectured necessary threshold* `t = b+1`, for every
-parity of `b` (the parity subtlety in the literature lives entirely in the matching cubic
-*lower-bound* construction).
+The proof is a two-step fibred double count.  A copy is a pair `(A, B)` of vertex sets,
+`|A| = a`, `|B| = b`, complete to each other.
 
-## Catalog connections
-* `Alon-Shikhelman generalized Turán numbers`: `KabCopies` is exactly the counting object whose
-  maximum over `K_{3,t}`-free graphs is `ex(n, K_{a,b}, K_{3,t})`.
-* `Kővári-Sós-Turán theorem`: `cnbhd_card_le` is the common-neighborhood cap that powers the
-  classical KST counting argument, here lifted from edges to `K_{a,b}`-copies.
-* `Janzer-Longbrake-Yepremyan theorem for ex(n,K_{a,b},K_{3,t})`: `KabCopies_cubic_of_K3tFree`
-  is the `O(n^3)` upper bound matching their `Θ(n^3)` result.
+* Choose three vertices `T ⊆ A`.  There are at most `C(n,3) ≤ n³` possibilities.
+* Since every vertex of `B` is a common neighbour of `T`, `B` is a `b`-subset of
+  `cnbhd G T`, a set of size `≤ t - 1` by `K_{3,t}`-freeness: `≤ C(t-1, b)` possibilities.
+* Symmetrically, every vertex of `A \ T` is a common neighbour of `B`, and `B` itself
+  contains a triple, so `cnbhd G B` also has size `≤ t - 1`: `≤ C(t-1, a-3)` possibilities.
 
--- !-- Lab Notes -- !--
-Hypothesis (Hypothesizer): For `K_{3,t}`-free `G`, the number of `K_{a,b}` copies is `O(n^3)`,
-  and crucially the *upper* bound needs only `t ≥ b+1` regardless of the parity of `b`.
-Experiment (Experimenter): Formalized copies as disjoint complete-bipartite pairs `(A,B)`.
-  Built a double count: anchor on a triple `S ⊆ A`; `K_{3,t}`-freeness gives `|N(S)| ≤ t-1`
-  (so `B` lives in a set of size `≤ t-1`), and `|N(B)| ≤ t-1` (so `A \ S` lives in a set of
-  size `≤ t-1`).  The map `(A,B) ↦ (A\S, B)` is injective on the `S`-fiber.
-Analysis (Analyst): The "3" in `n^3` is forced — it is exactly the `3` of `K_{3,t}` — while the
-  remaining `a+b-3` vertices are each pinned into a bounded common neighborhood.  The hypotheses
-  `3 ≤ a` (to extract a triple from `A`) and `3 ≤ b` (to cap `N(B)`) are the genuine load.
-Critique (Critic): `t ≥ b+1` is *not* used by the bound itself (`C(t-1,b)` simply vanishes when
-  `b > t-1`); it is the threshold at which the matching lower bound becomes possible, so we keep
-  it only in the headline `KabCopies_cubic_of_K3tFree`.  No theorem is vacuous: the count is a
-  genuine `Finset.card`, and `K3tFree_iff_CNbound` ties the abstract cap to the honest
-  subgraph-freeness definition.
-Synthesis (PI): A clean, parity-uniform `O(n^3)` upper bound at the necessary threshold.
+The bound follows because a copy is reconstructed from `(T, B, A \ T)`.
+
+The downward closure of this bound under the subgraph order is
+`Probability.GenTuranK3tDownwardClosure`.
 -/
 import Mathlib
 
@@ -51,199 +33,149 @@ namespace GenTuranK3t
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
-/-- Common neighborhood of a finite set `S` of vertices: all vertices adjacent to every vertex
-of `S`. -/
+/-- The common neighbourhood of a vertex set `S`: the vertices adjacent to *every*
+element of `S`. -/
 def cnbhd (G : SimpleGraph V) [DecidableRel G.Adj] (S : Finset V) : Finset V :=
-  univ.filter (fun w => ∀ u ∈ S, G.Adj u w)
+  univ.filter fun w => ∀ u ∈ S, G.Adj u w
 
-@[simp] lemma mem_cnbhd (G : SimpleGraph V) [DecidableRel G.Adj] (S : Finset V) (w : V) :
+@[simp] lemma mem_cnbhd {G : SimpleGraph V} [DecidableRel G.Adj] {S : Finset V} {w : V} :
     w ∈ cnbhd G S ↔ ∀ u ∈ S, G.Adj u w := by
   simp [cnbhd]
 
-/-- The common neighborhood is antitone in the set: adding constraints removes neighbors. -/
-lemma cnbhd_antitone (G : SimpleGraph V) [DecidableRel G.Adj] {S T : Finset V} (h : S ⊆ T) :
-    cnbhd G T ⊆ cnbhd G S := by
+/-- Common neighbourhoods shrink as the set grows. -/
+lemma cnbhd_subset_of_subset {G : SimpleGraph V} [DecidableRel G.Adj] {S S' : Finset V}
+    (h : S' ⊆ S) : cnbhd G S ⊆ cnbhd G S' := by
   intro w hw
   simp only [mem_cnbhd] at *
   exact fun u hu => hw u (h hu)
 
-/-- The set of labelled copies of `K_{a,b}` in `G`: pairs `(A, B)` of disjoint vertex sets of
-sizes `a` and `b` with every `A`–`B` edge present. -/
-def KabCopies (G : SimpleGraph V) [DecidableRel G.Adj] (a b : ℕ) : Finset (Finset V × Finset V) :=
-  (univ.powersetCard a ×ˢ univ.powersetCard b).filter
-    (fun p => Disjoint p.1 p.2 ∧ ∀ u ∈ p.1, ∀ v ∈ p.2, G.Adj u v)
-
-lemma mem_KabCopies (G : SimpleGraph V) [DecidableRel G.Adj] {a b : ℕ}
-    {p : Finset V × Finset V} :
-    p ∈ KabCopies G a b ↔
-      p.1.card = a ∧ p.2.card = b ∧ Disjoint p.1 p.2 ∧ ∀ u ∈ p.1, ∀ v ∈ p.2, G.Adj u v := by
-  simp only [KabCopies, mem_filter, mem_product, mem_powersetCard, subset_univ, true_and]
-  tauto
-
-/-- `K_{3,t}`-freeness, stated via the actual bipartite subgraph: there is no pair of disjoint
-vertex sets of sizes `3` and `t` with all cross edges present. -/
+/-- `G` is `K_{3,t}`-free: no three vertices have `t` common neighbours. -/
 def K3tFree (G : SimpleGraph V) [DecidableRel G.Adj] (t : ℕ) : Prop :=
-  ¬ ∃ A B : Finset V, A.card = 3 ∧ B.card = t ∧ Disjoint A B ∧ ∀ u ∈ A, ∀ v ∈ B, G.Adj u v
+  ∀ S : Finset V, S.card = 3 → (cnbhd G S).card < t
 
-/-- The common-neighborhood reformulation: every triple has at most `t-1` common neighbors. -/
-def CNbound (G : SimpleGraph V) [DecidableRel G.Adj] (t : ℕ) : Prop :=
-  ∀ S : Finset V, S.card = 3 → (cnbhd G S).card ≤ t - 1
+/-- The copies of `K_{a,b}` in `G`: pairs `(A, B)` of vertex sets of sizes `a` and `b`
+that are completely joined to each other. -/
+def KabCopies (G : SimpleGraph V) [DecidableRel G.Adj] (a b : ℕ) :
+    Finset (Finset V × Finset V) :=
+  univ.filter fun P => P.1.card = a ∧ P.2.card = b ∧ ∀ u ∈ P.1, ∀ v ∈ P.2, G.Adj u v
 
-/-- Equivalence of the two formulations of `K_{3,t}`-freeness (for `t ≥ 1`). -/
-theorem K3tFree_iff_CNbound (G : SimpleGraph V) [DecidableRel G.Adj] {t : ℕ} (ht : 1 ≤ t) :
-    K3tFree G t ↔ CNbound G t := by
-  constructor
-  · intro hfree S hS
-    by_contra hcon
-    push_neg at hcon
-    have ht' : t ≤ (cnbhd G S).card := by omega
-    obtain ⟨B, hBsub, hBcard⟩ := Finset.exists_subset_card_eq ht'
-    refine hfree ⟨S, B, hS, hBcard, ?_, ?_⟩
-    · rw [Finset.disjoint_left]
-      intro a haS haB
-      exact G.irrefl ((mem_cnbhd G S a).1 (hBsub haB) a haS)
-    · intro u hu v hv
-      exact (mem_cnbhd G S v).1 (hBsub hv) u hu
-  · intro hcn ⟨A, B, hA, hB, _hdisj, hcomp⟩
-    have hBsub : B ⊆ cnbhd G A := by
-      intro v hv; rw [mem_cnbhd]; intro u hu; exact hcomp u hu v hv
-    have h1 : t ≤ (cnbhd G A).card := by rw [← hB]; exact card_le_card hBsub
-    have h2 := hcn A hA
-    omega
+@[simp] lemma mem_KabCopies {G : SimpleGraph V} [DecidableRel G.Adj] {a b : ℕ}
+    {P : Finset V × Finset V} :
+    P ∈ KabCopies G a b ↔
+      P.1.card = a ∧ P.2.card = b ∧ ∀ u ∈ P.1, ∀ v ∈ P.2, G.Adj u v := by
+  simp [KabCopies]
 
-/-- A triple's common neighborhood, and more generally any set of size `≥ 3`, is capped at
-`t-1` neighbors under the common-neighborhood bound. -/
-lemma cnbhd_card_le (G : SimpleGraph V) [DecidableRel G.Adj] {t : ℕ} (hcn : CNbound G t)
-    {B : Finset V} (hB : 3 ≤ B.card) : (cnbhd G B).card ≤ t - 1 := by
-  obtain ⟨S, hSB, hScard⟩ := Finset.exists_subset_card_eq hB
-  calc (cnbhd G B).card ≤ (cnbhd G S).card := card_le_card (cnbhd_antitone G hSB)
-    _ ≤ t - 1 := hcn S hScard
+/-- A choice of three vertices inside a set of size at least three. -/
+noncomputable def triple (A : Finset V) : Finset V :=
+  if h : 3 ≤ A.card then (Finset.exists_subset_card_eq h).choose else ∅
 
-/-- Filtering size-`n` subsets of `univ` by `⊆ T` recovers the size-`n` subsets of `T`. -/
-lemma powersetCard_filter_subset (n : ℕ) (T : Finset V) :
-    (univ.powersetCard n).filter (fun S => S ⊆ T) = T.powersetCard n := by
-  ext S
-  simp only [mem_filter, mem_powersetCard, subset_univ, true_and]
-  tauto
+lemma triple_subset {A : Finset V} (h : 3 ≤ A.card) : triple A ⊆ A := by
+  rw [triple, dif_pos h]
+  exact (Finset.exists_subset_card_eq h).choose_spec.1
 
-/-- **Core fiber bound.** For a fixed triple `S`, the copies of `K_{a,b}` whose `a`-side
-contains `S` are at most `C(t-1, b) · C(t-1, a-3)` in number.  The proof injects such a copy
-`(A, B)` to the pair `(A \ S, B)`, where `B` ranges over the (size `≤ t-1`) common
-neighborhood of `S` and `A \ S` over the (size `≤ t-1`) common neighborhood of `B`. -/
-lemma fiber_bound (G : SimpleGraph V) [DecidableRel G.Adj] {a b t : ℕ} (hcn : CNbound G t)
-    (hb : 3 ≤ b) {S : Finset V} (hS : S.card = 3) :
-    ((KabCopies G a b).filter (fun p => S ⊆ p.1)).card
-      ≤ (t - 1).choose b * (t - 1).choose (a - 3) := by
-  classical
-  set D : Finset (Finset V × Finset V) :=
-    (cnbhd G S).powersetCard b |>.biUnion
-      (fun B => ((cnbhd G B).powersetCard (a - 3)).image (fun R => (R, B))) with hD
-  have hmaps : Set.MapsTo (fun p : Finset V × Finset V => (p.1 \ S, p.2))
-      ((KabCopies G a b).filter (fun p => S ⊆ p.1)) D := by
-    intro p hp
-    simp only [mem_coe, mem_filter, mem_KabCopies] at hp
-    obtain ⟨⟨hp1, hp2, _hdisj, hcomp⟩, hSsub⟩ := hp
-    show (p.1 \ S, p.2) ∈ D
-    rw [hD]
-    apply Finset.mem_biUnion.mpr
-    refine ⟨p.2, ?_, ?_⟩
-    · rw [mem_powersetCard]
-      refine ⟨?_, hp2⟩
-      intro v hv; rw [mem_cnbhd]; intro u hu; exact hcomp u (hSsub hu) v hv
-    · apply Finset.mem_image.mpr
-      refine ⟨p.1 \ S, ?_, rfl⟩
-      rw [mem_powersetCard]
-      refine ⟨?_, ?_⟩
-      · intro w hw
-        rw [mem_sdiff] at hw
-        rw [mem_cnbhd]; intro v hv; exact (hcomp w hw.1 v hv).symm
-      · rw [card_sdiff_of_subset hSsub, hp1, hS]
-  have hinj : Set.InjOn (fun p : Finset V × Finset V => (p.1 \ S, p.2))
-      ((KabCopies G a b).filter (fun p => S ⊆ p.1)) := by
-    intro p hp q hq hpq
-    simp only [mem_coe, mem_filter] at hp hq
-    simp only [Prod.mk.injEq] at hpq
-    obtain ⟨hpd, hpq2⟩ := hpq
-    have hps : S ⊆ p.1 := hp.2
-    have hqs : S ⊆ q.1 := hq.2
-    have e1 : p.1 = q.1 := by
-      rw [← Finset.sdiff_union_of_subset hps, ← Finset.sdiff_union_of_subset hqs, hpd]
-    exact Prod.ext e1 hpq2
-  calc ((KabCopies G a b).filter (fun p => S ⊆ p.1)).card
-      ≤ D.card := Finset.card_le_card_of_injOn _ hmaps hinj
-    _ ≤ ∑ B ∈ (cnbhd G S).powersetCard b,
-          (((cnbhd G B).powersetCard (a - 3)).image (fun R => (R, B))).card := by
-          rw [hD]; exact Finset.card_biUnion_le
-    _ ≤ ∑ B ∈ (cnbhd G S).powersetCard b, ((cnbhd G B).powersetCard (a - 3)).card := by
-          apply Finset.sum_le_sum; intro B _; exact Finset.card_image_le
-    _ ≤ ∑ B ∈ (cnbhd G S).powersetCard b, (t - 1).choose (a - 3) := by
-          apply Finset.sum_le_sum; intro B hB
-          rw [mem_powersetCard] at hB
-          rw [card_powersetCard]
-          exact Nat.choose_le_choose _ (cnbhd_card_le G hcn (by rw [hB.2]; exact hb))
-    _ = ((cnbhd G S).powersetCard b).card * (t - 1).choose (a - 3) := by
-          rw [Finset.sum_const, smul_eq_mul]
-    _ = (cnbhd G S).card.choose b * (t - 1).choose (a - 3) := by rw [card_powersetCard]
-    _ ≤ (t - 1).choose b * (t - 1).choose (a - 3) := by
-          apply Nat.mul_le_mul_right
-          exact Nat.choose_le_choose _ (cnbhd_card_le G hcn (by rw [hS]))
+lemma card_triple {A : Finset V} (h : 3 ≤ A.card) : (triple A).card = 3 := by
+  rw [triple, dif_pos h]
+  exact (Finset.exists_subset_card_eq h).choose_spec.2
 
-/-- **Double count.** Every copy of `K_{a,b}` (with `3 ≤ a`) is counted at least once when we
-sum, over all triples `S`, the copies whose `a`-side contains `S` — because each `a`-side has
-`C(a,3) ≥ 1` triples. -/
-lemma KabCopies_card_le_sum (G : SimpleGraph V) [DecidableRel G.Adj] {a b : ℕ} (ha : 3 ≤ a) :
-    (KabCopies G a b).card
-      ≤ ∑ S ∈ univ.powersetCard 3, ((KabCopies G a b).filter (fun p => S ⊆ p.1)).card := by
-  calc (KabCopies G a b).card
-      = ∑ _p ∈ KabCopies G a b, 1 := by rw [card_eq_sum_ones]
-    _ ≤ ∑ p ∈ KabCopies G a b, p.1.card.choose 3 := by
-          apply Finset.sum_le_sum; intro p hp
-          rw [mem_KabCopies] at hp
-          rw [hp.1]; exact Nat.choose_pos ha
-    _ = ∑ p ∈ KabCopies G a b, ((univ.powersetCard 3).filter (· ⊆ p.1)).card := by
-          apply Finset.sum_congr rfl; intro p _
-          rw [powersetCard_filter_subset, card_powersetCard]
-    _ = ∑ p ∈ KabCopies G a b, ∑ S ∈ univ.powersetCard 3, (if S ⊆ p.1 then 1 else 0) := by
-          apply Finset.sum_congr rfl; intro p _; rw [Finset.card_filter]
-    _ = ∑ S ∈ univ.powersetCard 3, ∑ p ∈ KabCopies G a b, (if S ⊆ p.1 then 1 else 0) :=
-          Finset.sum_comm
-    _ = ∑ S ∈ univ.powersetCard 3, ((KabCopies G a b).filter (fun p => S ⊆ p.1)).card := by
-          apply Finset.sum_congr rfl; intro S _; rw [Finset.card_filter]
+/-- In a `K_{3,t}`-free graph, any vertex set with at least three elements has at most
+`t - 1` common neighbours. -/
+lemma card_cnbhd_le {G : SimpleGraph V} [DecidableRel G.Adj] {t : ℕ} (hfree : K3tFree G t)
+    {S : Finset V} (hS : 3 ≤ S.card) : (cnbhd G S).card ≤ t - 1 := by
+  obtain ⟨T, hTS, hT3⟩ := Finset.exists_subset_card_eq hS
+  have hlt : (cnbhd G T).card < t := hfree T hT3
+  have hle : (cnbhd G S).card ≤ (cnbhd G T).card :=
+    Finset.card_le_card (cnbhd_subset_of_subset hTS)
+  omega
 
-/-- **Main upper bound.** In any graph satisfying the common-neighborhood bound (i.e.
-`K_{3,t}`-free), the number of copies of `K_{a,b}` with `3 ≤ a` and `3 ≤ b` is at most
-`C(n,3) · C(t-1,b) · C(t-1,a-3)`. -/
-theorem KabCopies_card_le (G : SimpleGraph V) [DecidableRel G.Adj] {a b t : ℕ}
-    (ha : 3 ≤ a) (hb : 3 ≤ b) (hcn : CNbound G t) :
-    (KabCopies G a b).card
-      ≤ (Fintype.card V).choose 3 * ((t - 1).choose b * (t - 1).choose (a - 3)) := by
-  calc (KabCopies G a b).card
-      ≤ ∑ S ∈ univ.powersetCard 3, ((KabCopies G a b).filter (fun p => S ⊆ p.1)).card :=
-        KabCopies_card_le_sum G ha
-    _ ≤ ∑ S ∈ univ.powersetCard 3, (t - 1).choose b * (t - 1).choose (a - 3) := by
-        apply Finset.sum_le_sum; intro S hS
-        rw [mem_powersetCard] at hS
-        exact fiber_bound G hcn hb hS.2
-    _ = (univ.powersetCard 3 : Finset (Finset V)).card
-          * ((t - 1).choose b * (t - 1).choose (a - 3)) := by
-        rw [Finset.sum_const, smul_eq_mul]
-    _ = (Fintype.card V).choose 3 * ((t - 1).choose b * (t - 1).choose (a - 3)) := by
-        rw [card_powersetCard, card_univ]
+/-- **Cubic upper bound for the generalized Turán problem.**  If `G` is `K_{3,t}`-free
+then it has at most `C(t-1, b) · C(t-1, a-3) · n³` copies of `K_{a,b}`.
 
-/-- **Cubic upper bound, stated for `K_{3,t}`-free graphs at the necessary threshold.**
-If `G` is `K_{3,t}`-free with `t ≥ b + 1` (the conjectured necessary threshold), then the
-number of copies of `K_{a,b}` is `O(n^3)`: it is bounded by `C · n^3` with
-`C = C(t-1,b) · C(t-1,a-3)` depending only on `a, b, t`. -/
+(The hypothesis `b + 1 ≤ t` is part of the intended statement — it is what makes the
+bound meaningful, since otherwise `C(t-1,b) = 0` and the conclusion says the graph has
+no copies at all — but the proof below does not need it.) -/
 theorem KabCopies_cubic_of_K3tFree (G : SimpleGraph V) [DecidableRel G.Adj] {a b t : ℕ}
-    (ha : 3 ≤ a) (hb : 3 ≤ b) (hbt : b + 1 ≤ t) (hfree : K3tFree G t) :
+    (ha : 3 ≤ a) (hb : 3 ≤ b) (_hbt : b + 1 ≤ t) (hfree : K3tFree G t) :
     (KabCopies G a b).card
       ≤ ((t - 1).choose b * (t - 1).choose (a - 3)) * (Fintype.card V) ^ 3 := by
-  have hcn : CNbound G t := (K3tFree_iff_CNbound G (by omega)).1 hfree
-  calc (KabCopies G a b).card
-      ≤ (Fintype.card V).choose 3 * ((t - 1).choose b * (t - 1).choose (a - 3)) :=
-        KabCopies_card_le G ha hb hcn
-    _ ≤ (Fintype.card V) ^ 3 * ((t - 1).choose b * (t - 1).choose (a - 3)) := by
-        apply Nat.mul_le_mul_right; exact Nat.choose_le_pow (Fintype.card V) 3
-    _ = ((t - 1).choose b * (t - 1).choose (a - 3)) * (Fintype.card V) ^ 3 := by ring
+  classical
+  -- Step 1: fibre the copies over the chosen triple `T ⊆ A`.
+  have hmaps : ∀ P ∈ KabCopies G a b,
+      triple P.1 ∈ Finset.powersetCard 3 (univ : Finset V) := by
+    intro P hP
+    rw [mem_KabCopies] at hP
+    have h3 : 3 ≤ P.1.card := hP.1 ▸ ha
+    simp [Finset.mem_powersetCard, card_triple h3]
+  have hfibre : ∀ T ∈ Finset.powersetCard 3 (univ : Finset V),
+      ({P ∈ KabCopies G a b | triple P.1 = T}).card
+        ≤ (t - 1).choose b * (t - 1).choose (a - 3) := by
+    intro T _
+    -- Step 2: inside a fibre, fibre again over `B`.
+    have hmaps2 : ∀ P ∈ ({P ∈ KabCopies G a b | triple P.1 = T}),
+        P.2 ∈ Finset.powersetCard b (cnbhd G T) := by
+      intro P hP
+      simp only [Finset.mem_filter, mem_KabCopies] at hP
+      obtain ⟨⟨hA, hB, hadj⟩, hT⟩ := hP
+      have h3 : 3 ≤ P.1.card := hA ▸ ha
+      rw [Finset.mem_powersetCard]
+      refine ⟨fun v hv => ?_, hB⟩
+      rw [mem_cnbhd]
+      intro u hu
+      exact hadj u (triple_subset h3 (hT ▸ hu)) v hv
+    have hfibre2 : ∀ B ∈ Finset.powersetCard b (cnbhd G T),
+        ({P ∈ ({P ∈ KabCopies G a b | triple P.1 = T}) | P.2 = B}).card
+          ≤ (t - 1).choose (a - 3) := by
+      intro B hB
+      rw [Finset.mem_powersetCard] at hB
+      have hBcard : 3 ≤ B.card := hB.2 ▸ hb
+      -- inject `(A, B) ↦ A \ T`
+      have hinj : ((({P ∈ ({P ∈ KabCopies G a b | triple P.1 = T}) | P.2 = B})).card)
+          ≤ (Finset.powersetCard (a - 3) (cnbhd G B)).card := by
+        refine Finset.card_le_card_of_injOn (fun P => P.1 \ T) ?_ ?_
+        · intro P hP
+          simp only [Finset.mem_coe, Finset.mem_filter, mem_KabCopies] at hP
+          obtain ⟨⟨⟨hA, hBc, hadj⟩, hT⟩, hPB⟩ := hP
+          have h3 : 3 ≤ P.1.card := hA ▸ ha
+          have hTA : T ⊆ P.1 := hT ▸ triple_subset h3
+          rw [Finset.mem_coe, Finset.mem_powersetCard]
+          constructor
+          · intro u hu
+            rw [Finset.mem_sdiff] at hu
+            rw [mem_cnbhd]
+            intro v hv
+            exact (hadj u hu.1 v (hPB ▸ hv)).symm
+          · have hTcard : T.card = 3 := hT ▸ card_triple h3
+            rw [Finset.card_sdiff_of_subset hTA, hA, hTcard]
+        · intro P hP Q hQ hPQ
+          simp only [Finset.mem_coe, Finset.mem_filter, mem_KabCopies] at hP hQ
+          obtain ⟨⟨⟨hA, _, _⟩, hT⟩, hPB⟩ := hP
+          obtain ⟨⟨⟨hA', _, _⟩, hT'⟩, hQB⟩ := hQ
+          have h3 : 3 ≤ P.1.card := hA ▸ ha
+          have h3' : 3 ≤ Q.1.card := hA' ▸ ha
+          have hTP : T ⊆ P.1 := hT ▸ triple_subset h3
+          have hTQ : T ⊆ Q.1 := hT' ▸ triple_subset h3'
+          have h1 : P.1 = Q.1 := by
+            have := congrArg (fun s => T ∪ s) hPQ
+            simpa [Finset.union_sdiff_of_subset hTP, Finset.union_sdiff_of_subset hTQ] using this
+          exact Prod.ext h1 (by rw [hPB, hQB])
+      calc ((({P ∈ ({P ∈ KabCopies G a b | triple P.1 = T}) | P.2 = B})).card)
+          ≤ (Finset.powersetCard (a - 3) (cnbhd G B)).card := hinj
+        _ = ((cnbhd G B).card).choose (a - 3) := Finset.card_powersetCard _ _
+        _ ≤ (t - 1).choose (a - 3) :=
+            Nat.choose_le_choose _ (card_cnbhd_le hfree hBcard)
+    have hstep := Finset.card_le_mul_card_image_of_maps_to hmaps2 _ hfibre2
+    have hpow : (Finset.powersetCard b (cnbhd G T)).card ≤ (t - 1).choose b := by
+      rw [Finset.card_powersetCard]
+      exact Nat.choose_le_choose _ (card_cnbhd_le hfree (by
+        rcases Finset.mem_powersetCard.mp ‹T ∈ Finset.powersetCard 3 (univ : Finset V)› with ⟨-, hT3⟩
+        omega))
+    calc ({P ∈ KabCopies G a b | triple P.1 = T}).card
+        ≤ (t - 1).choose (a - 3) * (Finset.powersetCard b (cnbhd G T)).card := hstep
+      _ ≤ (t - 1).choose (a - 3) * (t - 1).choose b := Nat.mul_le_mul_left _ hpow
+      _ = (t - 1).choose b * (t - 1).choose (a - 3) := Nat.mul_comm _ _
+  have hmain := Finset.card_le_mul_card_image_of_maps_to hmaps _ hfibre
+  have hcard : (Finset.powersetCard 3 (univ : Finset V)).card ≤ (Fintype.card V) ^ 3 := by
+    rw [Finset.card_powersetCard, Finset.card_univ]
+    exact Nat.choose_le_pow _ _
+  exact hmain.trans (Nat.mul_le_mul_left _ hcard)
 
 end GenTuranK3t

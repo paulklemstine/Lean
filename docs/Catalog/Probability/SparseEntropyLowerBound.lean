@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Catalog.Probability.NeuralCoding.SparseEntropyBound
+import Probability.SparseEntropyBound
 
 /-!
 # The entropy estimate for sparse neural codes is exact up to `log (N + 1)`
