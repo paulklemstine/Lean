@@ -3,10 +3,10 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Catalog.Pythagorean.BrillNoether.Divisors
-import Catalog.Pythagorean.BrillNoether.Reduced
-import Catalog.Pythagorean.BrillNoether.HalfCanonicalRegular
-import Catalog.Pythagorean.BrillNoether.ResidualDuality
+import Pythagorean.BrillNoether.Divisors
+import Pythagorean.BrillNoether.Reduced
+import Pythagorean.BrillNoether.HalfCanonicalRegular
+import Pythagorean.BrillNoether.ResidualDuality
 
 /-!
 # Set firing and the rank of uniformly positive divisors

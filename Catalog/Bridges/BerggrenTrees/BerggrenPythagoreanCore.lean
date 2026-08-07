@@ -28,6 +28,13 @@ def invB (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*
 /-- Inverse Berggren C -/
 def invC (a b c : ℤ) : ℤ × ℤ × ℤ := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
+/-- The Lorentz quadratic form `a² + b² − c²` of signature `(2,1)`.  A triple is
+Pythagorean exactly when it is a null vector of this form. -/
+def lorentzQ (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
+
+theorem isPythag_iff_lorentzQ_zero (a b c : ℤ) : IsPythag a b c ↔ lorentzQ a b c = 0 := by
+  unfold IsPythag lorentzQ; omega
+
 /-- [Section: # CatalogBuild.Speculative.BerggrenPythagoreanCore
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -50,15 +57,15 @@ theorem bergC_pyth (a b c : ℤ) (h : IsPythag a b c) :
 
 theorem bergA_preserves_Q (a b c : ℤ) :
     lorentzQ (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 = lorentzQ a b c := by
-  unfold lorentzQ bergA; ring
+  simp only [lorentzQ, bergA]; ring
 
 theorem bergB_preserves_Q (a b c : ℤ) :
     lorentzQ (bergB a b c).1 (bergB a b c).2.1 (bergB a b c).2.2 = lorentzQ a b c := by
-  unfold lorentzQ bergB; ring
+  simp only [lorentzQ, bergB]; ring
 
 theorem bergC_preserves_Q (a b c : ℤ) :
     lorentzQ (bergC a b c).1 (bergC a b c).2.1 (bergC a b c).2.2 = lorentzQ a b c := by
-  unfold lorentzQ bergC; ring
+  simp only [lorentzQ, bergC]; ring
 
 def B₁_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
@@ -67,6 +74,15 @@ def B₂_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
 def B₃_mat : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
 
 def QLor : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, -1]
+
+theorem det_B₁ : Matrix.det B₁_mat = 1 := by
+  simp [B₁_mat, Matrix.det_fin_three]
+
+theorem det_B₂ : Matrix.det B₂_mat = -1 := by
+  simp [B₂_mat, Matrix.det_fin_three]
+
+theorem det_B₃ : Matrix.det B₃_mat = 1 := by
+  simp [B₃_mat, Matrix.det_fin_three]
 
 /-- B₁, B₃ are in SO(2,1;ℤ) while B₂ is in O(2,1;ℤ) \ SO(2,1;ℤ) -/
 theorem det_asymmetry : Matrix.det B₁_mat = 1 ∧ Matrix.det B₂_mat = -1 ∧ Matrix.det B₃_mat = 1 :=
@@ -224,6 +240,22 @@ theorem bHyp_increasing (n : ℕ) : bHyp n < bHyp (n + 1) := by
 /-- Steps in the Berggren tree -/
 inductive BerggrenStep where | A | B | C
   deriving DecidableEq, Repr
+
+/-- Applying one Berggren step to a triple. -/
+def applyStep : BerggrenStep → ℤ × ℤ × ℤ → ℤ × ℤ × ℤ
+  | .A, (a, b, c) => bergA a b c
+  | .B, (a, b, c) => bergB a b c
+  | .C, (a, b, c) => bergC a b c
+
+/-- Following a finite path of Berggren steps from the root triple `(3,4,5)`. -/
+def applyPath (path : List BerggrenStep) : ℤ × ℤ × ℤ :=
+  path.foldl (fun t s => applyStep s t) (3, 4, 5)
+
+@[simp] theorem applyPath_nil : applyPath [] = (3, 4, 5) := rfl
+
+theorem applyPath_concat (path : List BerggrenStep) (s : BerggrenStep) :
+    applyPath (path ++ [s]) = applyStep s (applyPath path) := by
+  simp [applyPath]
 
 /-- Any Berggren step preserves the Pythagorean property -/
 theorem step_preserves_pyth (s : BerggrenStep) (a b c : ℤ) (h : IsPythag a b c) :

@@ -3,8 +3,8 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import Mathlib
-import Catalog.Pythagorean.BrillNoether.Divisors
-import Catalog.Pythagorean.BrillNoether.HalfCanonicalRegular
+import Pythagorean.BrillNoether.Divisors
+import Pythagorean.BrillNoether.HalfCanonicalRegular
 
 /-!
 # The residual involution at the half-canonical degree
