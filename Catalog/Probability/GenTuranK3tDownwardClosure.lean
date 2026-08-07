@@ -28,14 +28,11 @@ lemma cnbhd_mono (G G' : SimpleGraph V) [DecidableRel G.Adj] [DecidableRel G'.Ad
   simp only [mem_cnbhd] at *
   exact fun u hu => h (hw u hu)
 
-omit [Fintype V] [DecidableEq V] in
 /-- `K_{3,t}`-freeness is antitone in the subgraph order: a subgraph of a `K_{3,t}`-free graph
 is `K_{3,t}`-free. -/
 lemma K3tFree_anti (G G' : SimpleGraph V) [DecidableRel G.Adj] [DecidableRel G'.Adj]
-    (h : G ≤ G') {t : ℕ} (hfree : K3tFree G' t) : K3tFree G t := by
-  contrapose! hfree
-  unfold K3tFree at *
-  aesop
+    (h : G ≤ G') {t : ℕ} (hfree : K3tFree G' t) : K3tFree G t := fun S hS =>
+  lt_of_le_of_lt (Finset.card_le_card (cnbhd_mono G G' h S)) (hfree S hS)
 
 /-- Common neighborhood sizes are monotone in the subgraph order. -/
 lemma CNbound_anti (G G' : SimpleGraph V) [DecidableRel G.Adj] [DecidableRel G'.Adj]
