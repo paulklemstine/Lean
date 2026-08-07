@@ -1537,6 +1537,13 @@ Research mode: {concept.research_mode}
         original_timeout = api_mod.DEFAULT_TIMEOUT_SECONDS
         api_mod.DEFAULT_TIMEOUT_SECONDS = 300  # 5 minutes
 
+        # Ensure project directory exists on disk (e.g. after recovery from inflight_jobs.json)
+        if not job.project_dir or not Path(job.project_dir).is_dir():
+            print(f"[Dispatch] Rebuilding missing project directory for job {job.job_id[:8]}: {job.project_dir}")
+            job.project_dir = self._build_project_dir(job)
+            if not job.project_dir or not Path(job.project_dir).is_dir():
+                raise ValueError(f"Failed to build project directory for job {job.job_id[:8]}: {job.project_dir}")
+
         # Retain .lake build-cache dirs! The Aristotle SDK automatically strips
         # massive source directories (like packages/mathlib), but keeping the
         # lightweight skeleton structure (e.g., manifest, minimal packages, and
