@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-07T05:23:47Z",
+  "date": "2026-08-07T05:08:59Z",
   "key_results": [
     "Counting lower bound: any host containing all height-two posets with parts of sizes k and l has N points with 2^(kl) <= N^(k+l), giving the logarithmic sandwich (n-1)/4 <= log2 U(n) <= n for every n >= 1",
     "Tagged-neighbourhood host: an explicit poset of size k + 2^k*l contains every (k,l)-height-two poset as an induced subposet, attaining the exponent n/2 on the balanced bipartite class, and the tag coordinate is provably necessary",

@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-07T05:20:35Z",
+  "date": "2026-08-07T05:07:19Z",
   "key_results": [
     "Free Double Cover Theorem: the deck involution (n, e) -> (-n, -e) on oriented integers is fixed-point free, so every fibre of the Mobius quotient map has exactly two points and the Mobius integers are the orbit space of a free Z/2-action.",
     "Structure Theorem: the twisted addition and multiplication make the Mobius integers a commutative ring isomorphic to the ordinary integers, so the half-twist survives only as the two-element unit group; multiplicatively the orientation splits off as a direct factor (polar decomposition).",
