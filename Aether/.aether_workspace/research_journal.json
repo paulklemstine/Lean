@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "883686fe",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\nThe following are concrete conjectures extending the proved exact formula and parity bound.  Here `pₙ` denotes `SymmetricGroupGeneration.symmetricGenProb n`.\n\n1. **Dixon limit for",
-      "quality_score": 0.677,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T06:51:08",
-      "title": "Symmetric Group Generation Probability"
-    },
-    {
       "cycle_id": "a1225aa5",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThe formal results refute the proposed connectedness, local compactness, and contractibility claims for the interval topology. They suggest the following concrete conjectures.\n\n1.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 130,
       "timestamp": "2026-08-07T04:27:51",
       "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
+    },
+    {
+      "cycle_id": "b95b0e68",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nBold, falsifiable conjectures arising from the formalisation of the analytic skeleton of\n*\"On the Second Moment of `L(1/2, As(f) × φ)`\"* in `Catalog/Novelty/AsaiLargeSieve.lean`,",
+      "quality_score": 0.6609054304347827,
+      "sorry_count": 0,
+      "theorem_count": 116,
+      "timestamp": "2026-08-07T04:27:57",
+      "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73419
     }
   ],
-  "last_updated": "2026-08-07T04:27:51",
+  "last_updated": "2026-08-07T04:27:57",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5907c59d",
-        "quality": 0.78678,
-        "theorems": 22,
-        "title": "Emergent Spacetime from Quantum Entanglement"
-      },
-      {
         "cycle_id": "17b35eaf",
         "quality": 0.68012,
         "theorems": 3,
@@ -3637,6 +3631,12 @@
         "quality": 0.6859624765478425,
         "theorems": 1599,
         "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
+      },
+      {
+        "cycle_id": "b95b0e68",
+        "quality": 0.6609054304347827,
+        "theorems": 116,
+        "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
       }
     ],
     "NumberTheory": [

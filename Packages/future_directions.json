@@ -365,11 +365,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2def9e1c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -381,7 +381,7 @@
       ],
       "github_issue": 0,
       "id": "dir_50_12_2be3479c",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-07T04:28:13.222973+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem penrose_singularity_completeness (M : SpacetimeManifold) (h_energy : StrongEnergyCondition M) (h_trapped : HasTrappedSurface M) : IncompleteTimelikeGeodesics M",
       "lineage_refs": [],
@@ -396,7 +396,7 @@
       "source": "",
       "source_exp_id": "batch_50_injection",
       "source_path": "50_new_research_directions.md",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-23T20:05:22.928149+00:00",
       "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
@@ -35980,5 +35980,7 @@
     "whether": 1,
     "years": 1
   },
-  "selection_log": []
+  "selection_log": [
+    "famous_subtask"
+  ]
 }
