@@ -1,113 +1,185 @@
-# Computational Evidence — Fitness Landscapes of Mathematical Theories
+# Computational Evidence — Universal Posets
 
-All numbers below were produced by `#eval` inside the Lean development itself
-(`Catalog/Pythagorean/TheoryFitness/*.lean`), so the model used for the evidence
-is literally the model that the theorems are about.  Each table is followed by
-the theorem in the development that turns the observation into a proof.
+All numbers below were produced by evaluating Lean programs (`#eval`) in this
+project's toolchain.  They are *compiler-evaluated*, not kernel-checked, and are
+therefore reported as **evidence**, not as verified theorems.  Everything that is
+claimed as a theorem lives in `Catalog/Cryptography/UniversalPosets/*.lean` and
+is proved with zero `sorry`s.
 
-## 1. Candidate populations: exact counts of usable sub-libraries
+## 1. Small-case calculations: how many posets are there?
 
-A *usable sub-library* of a library `U` is a subset of `U` closed under direct
-dependencies.  Two extreme dependency structures, `n = 0, …, 8`:
+Enumerating all `R : Fin n → Fin n → Bool` and filtering for reflexive,
+transitive, antisymmetric relations:
 
-| n | independent (`noDeps`) | chain (`chainDeps`) |
-|---|---|---|
-| 0 | 1 | 1 |
-| 1 | 2 | 2 |
-| 2 | 4 | 3 |
-| 3 | 8 | 4 |
-| 4 | 16 | 5 |
-| 5 | 32 | 6 |
-| 6 | 64 | 7 |
-| 7 | 128 | 8 |
-| 8 | 256 | 9 |
+| n | # labelled partial orders on `Fin n` |
+|---|--------------------------------------|
+| 0 | 1    |
+| 1 | 1    |
+| 2 | 3    |
+| 3 | 19   |
+| 4 | 219  |
 
-The two sequences are `2^n` (OEIS **A000079**: 1, 2, 4, 8, 16, 32, 64, 128, 256)
-and `n + 1` (OEIS **A000027** shifted: 1, 2, 3, 4, 5, …).  Both are *proved*
-exactly, not merely observed: `card_closedSubsets_independent`,
-`card_closedSubsets_chain`, and the strict gap `chain_lt_independent`
-(for `n ≥ 2`).  The multiplicativity behind "independent populations multiply"
-is proved by an explicit bijection in `closedSubsets_mul_of_split`.
+## 2. OEIS
 
-## 2. The composition phase transition
+The sequence `1, 1, 3, 19, 219, 4231, …` is **OEIS A001035** (number of partial
+orders on a labelled `n`-set).  Its growth `2^{n²/4 + o(n²)}` is what drives the
+counting lower bound formalised in `Bounds.lean`: a host of `N` points admits at
+most `N^n` induced copies, whence `N ≥ 2^{n/4 - o(n)}`.
 
-Two libraries of four declarations each (uniform source length 10) sharing two
-declarations.  Duplicated cost `80`, pooled cost `60`, shared mass `20`, corpus
-of `4` statements.  Fitness of the composite as a function of the adapter
-charge `A`:
+The formalised proof does not use A001035 itself; instead it uses the explicit
+sub-family of *bipartite* orders (`bipRel`), of which there are exactly `2^{kl}`
+on `k + l` points — a family whose size is provable in a dozen lines rather than
+requiring the asymptotics of A001035.
 
-| A | composed cost | composed fitness | vs duplicated fitness `1/20` |
-|---|---|---|---|
-| 0 | 60 | 1/15 ≈ 0.0667 | gain |
-| 5 | 65 | 4/65 ≈ 0.0615 | gain |
-| 10 | 70 | 2/35 ≈ 0.0571 | gain |
-| 15 | 75 | 4/75 ≈ 0.0533 | gain |
-| **20** | **80** | **1/20 = 0.0500** | **neutral (threshold)** |
-| 25 | 85 | 4/85 ≈ 0.0471 | loss |
-| 30 | 90 | 2/45 ≈ 0.0444 | loss |
+## 3. Exhaustive search for the optimal host `U(n)`
 
-The transition sits exactly at `A = sharedMass = 20`.  This is proved as an
-if-and-only-if in `compose_gain_iff_adapter_lt_shared`, `compose_neutral_iff`,
-`compose_loss_iff`, in normalised density form in `compose_gain_iff_density`,
-and instantiated on this very table in `phaseTransitionUp`,
-`phaseTransitionCritical`, `phaseTransitionDown`.
+`U(n)` = least `N` such that some poset on `N` points contains **all** posets on
+`n` points as induced subposets.  Exhaustive search over all posets on `N`
+points and all maps `Fin n → Fin N`:
 
-## 3. k-fold reuse: library versus a suite of specialists
+| n | N tested | universal host exists? |
+|---|----------|------------------------|
+| 2 | 2        | **no**                 |
+| 2 | 3        | **yes**                |
+| 3 | 4        | **no**                 |
+| 3 | 5        | **yes**                |
 
-Core of cost `100`, private material of cost `10` per specialist:
+Hence, computationally, `U(1) = 1`, `U(2) = 3`, `U(3) = 5`.
 
-| k | shared library | suite of specialists | saving |
-|---|---|---|---|
-| 1 | 110 | 110 | 0 |
-| 2 | 120 | 220 | 100 |
-| 3 | 130 | 330 | 200 |
-| 4 | 140 | 440 | 300 |
-| 5 | 150 | 550 | 400 |
-| 6 | 160 | 660 | 500 |
+* `U(2) = 3` is **proved** in `SmallCases.lean` / `MinSize.lean`
+  (`minUniversalSize_two`).
+* `U(3) = 5` is evidence only: replaying a search over `2^{25}` relations inside
+  the kernel is not feasible, and `native_decide` is excluded by the project's
+  rules.
 
-The saving is exactly `(k − 1) ·` core, as proved by the accounting identity
-`cost_library_add_card_core` and its strict consequences
-`library_cost_lt_specialists`, `library_fitness_gt_specialists`.
+The search was not pushed to `n = 4`: it would require enumerating posets on
+`≥ 6` points, i.e. `2^{36}` candidate relations.
 
-## 4. Counterexample hunt: is raw fitness bounded?
+## 4. Counterexample hunt
 
-In the concrete `sqrtLanguage` (adding `n` independently stated consequences
-costs `Nat.sqrt n` extra lines), starting from the development `(1 theorem,
-1 line)`:
+The universal claims proved in this project were stress-tested before being
+formalised:
 
-| n | count | length | raw fitness |
-|---|---|---|---|
-| 0 | 1 | 1 | 1 |
-| 4 | 5 | 3 | 5/3 ≈ 1.67 |
-| 16 | 17 | 5 | 17/5 = 3.4 |
-| 100 | 101 | 11 | 101/11 ≈ 9.2 |
-| 10 000 | 10 001 | 101 | ≈ 99.0 |
-| 1 000 000 | 1 000 001 | 1001 | ≈ 999.0 |
+* *Is the neighbourhood label alone enough for bipartite posets?*  **No.**  Two
+  top elements with the same down-set need two distinct host points; the search
+  at `n = 3` confirms that dropping the tag coordinate breaks universality.
+  This is formalised as `bipHost_tag_needed`.
+* *Is the counting bound tight?*  **No.**  At `n = 2` counting gives `N ≥ 2`
+  while the truth is `3`; at `n = 3` counting gives `N ≥ 2` while the truth
+  is `5`.  This is the finite shadow of the `n/4` vs `n/2` exponent gap.
+* *Does `BipHost k l` beat the trivial `2^n` host on the full class?*  **No** —
+  it is universal only for the bipartite (height `≤ 2`) subclass.  No claim of
+  full universality is made for it, except at `k = l = 1`, where it is checked
+  directly (`bipHost_one_one_isUniversalHost`).
 
-No maximum was found, and none exists: `no_global_maximum` proves raw fitness is
-unbounded on any language with conservative sublinear inflation, and
-`unbounded_witnesses_are_semantically_inert` proves that every witness in the
-divergent family has *the same semantics* as the development it came from.  The
-hunt for a bounded example therefore fails by theorem, not by sampling.
+## 5. Table: the two exponents
 
-## 5. The three-style landscape
+For `n = 2m` points, writing sizes as `2^{c·n}`:
 
-Measured fitness of nine developments, three per methodological style
-(algebraic `0,1,2`; analytic `3,4,5`; combinatorial `6,7,8`):
+| bound                                    | `c`      | status here |
+|------------------------------------------|----------|-------------|
+| counting lower bound (bipartite family)   | `1/4`    | proved      |
+| explicit host for the balanced bipartite class | `1/2` (+ `log n` factor) | proved |
+| Boolean lattice, full class               | `1`      | proved      |
+| paper's theorem, full class               | `(1+η)/2`| not formalised (needs the regularity machinery) |
 
-```
-style      0  0  0 | 1  1  1 | 2  2  2
-fitness    1  2  5 | 3  7  4 | 6  2  9
-```
+---
 
-Local maxima under style-preserving refactorings: indices `2`, `4`, `8`, one per
-style, with only `8` global.  Proved in `three_style_metastability` and
-`three_style_not_global` via the general `strictLocalMax_of_style_closed`.
+# Second cycle (continuation)
 
-## 6. Adapter valley instance
+## 6. Exact small values, and what is now proved
 
-Migration `A → adapter → B` with content `100`, endpoints of length `110`
-(`1.1`-efficient) and adapter state of length `150` (`1.5 ×` content).
-Guaranteed relative overshoot `(0.5 − 0.1)/1.1 = 4/11 ≈ 0.364`; observed
-overshoot `(150 − 110)/110 = 4/11`.  The bound is therefore *tight* on this
-instance, and is proved in general by `adapter_valley`.
+| `n` | `U(n)` | status |
+|-----|--------|--------|
+| 0   | 0      | proved (`minUniversalSize_zero`) |
+| 1   | 1      | proved (`minUniversalSize_one`) |
+| 2   | 3      | proved (`minUniversalSize_two`) |
+| 3   | 5      | **proved** (`minUniversalSize_three`) — was evidence only in cycle 1 |
+| 4   | 8      | `7 ≤ U(4) ≤ 8` proved (`minUniversalSize_four_bounds`); `U(4) = 8` is evidence only |
+
+## 7. Exhaustive searches performed in this cycle
+
+All searches below were run outside Lean; wherever a *positive* answer was found
+it has been re-verified inside Lean by a kernel `decide` (never `native_decide`),
+so nothing about the external search is trusted.  Negative (nonexistence)
+answers are recorded as evidence only, since replaying them in the kernel is
+infeasible.
+
+* **`n = 3`.**  All `4231` partial orders on five points were enumerated; exactly
+  `300` of them contain all `19` partial orders on three points.  The sparsest
+  such host (five comparable pairs) is the diamond `4 < 2, 3 < 1` together with
+  an isolated point `0`; it is the host `host3Le` formalised in
+  `ExactSmall.lean`, and its universality is re-verified by `decide`.
+  No four-point host exists — this is now *proved* in Lean, without any search,
+  by the chain-versus-antichain argument (`two_mul_sub_one_le_minUniversalSize`).
+
+* **`n = 4`.**  All `96428` naturally labelled seven-point posets (that is, all
+  transitively closed upper-triangular relations on `7` points, which covers
+  every isomorphism class) were enumerated: **none** contains all `16`
+  isomorphism types of four-element posets.  Hence, as evidence, `U(4) ≥ 8`.
+  A randomised search over eight-point posets found hosts; the one used in
+  `FourPoints.lean` is
+
+  ```
+  0 < 1, 3, 4, 5, 6, 7      1 < 5, 6, 7      2 < 7
+  3 < 5, 6, 7               4 < 6            5 < 6
+  ```
+
+  and the kernel verifies that all `219` partial orders on `Fin 4` embed into it
+  as induced subposets, giving the proved bound `U(4) ≤ 8`.
+
+* **Deleting a maximal point.**  For each of the `300` five-point hosts above,
+  deleting a maximal point leaves a four-point poset that is still universal for
+  the two-element posets, as predicted by the argument now formalised as
+  `isUniversalPosetOfSize_pred` (strict monotonicity of `U`).
+
+## 8. The two lower bounds, numerically
+
+`max(3n - ⌈n/2⌉ - 3, 2^{(n-1)/4})` is the best lower bound proved here (the
+first term subsumes `2n-1` from `n = 6` on; both are recorded in
+`linear_lower_bound`).  Values of the linear term:
+`n = 0,…,11 : 0, 1, 3, 5, 7, 9, 12, 14, 17, 19, 22, 24`, which matches the exact
+values `U(0..3) = 0, 1, 3, 5`.  The crossover
+between its two terms:
+
+| `n`  | `2n-1` | `2^{(n-1)/4}` (rounded) | dominant |
+|------|--------|--------------------------|----------|
+| 4    | 7      | 1.7                      | structural |
+| 8    | 15     | 3.4                      | structural |
+| 16   | 31     | 14                       | structural |
+| 20   | 39     | 28                       | structural |
+| 24   | 47     | 56                       | counting |
+| 40   | 79     | 861                      | counting |
+
+So the structural bound is the better one exactly in the range where exact
+values are within reach, which is why it settles `n ≤ 3` and pins `n = 4` to
+two possible values.
+
+## 9. The geometric chain-union family (third cycle)
+
+The superlinear bound of `ChainFamily.lean` uses, for `n = 4^k`, the family
+`blockChains n (4^i)` (`0 ≤ i < k`): the disjoint union of `4^{k-i}` chains of
+length `4^i`.  Its pairwise overlaps and the resulting guarantee
+`U(4^k) ≥ 2k·4^k/3` compared with the linear bound of the previous cycle:
+
+| `k` | `n = 4^k` | family bound `⌊2kn/3⌋` | linear bound `3n − ⌈n/2⌉ − 3` | counting bound `2^{(n−1)/4}` |
+|-----|-----------|------------------------|-------------------------------|------------------------------|
+| 1   | 4         | 2                      | 7                             | 1.7                          |
+| 2   | 16        | 21                     | 37                            | 13.5                         |
+| 3   | 64        | 128                    | 157                           | 5.5·10⁴                      |
+| 4   | 256       | 682                    | 637                           | 1.6·10¹⁹                     |
+| 5   | 1024      | 3413                   | 2557                          | 9.7·10⁷⁶                     |
+| 6   | 4096      | 16384                  | 10237                         | 1.5·10³⁰⁸                    |
+
+So the family bound overtakes every linear bound from `n = 256` on (as it must,
+being `Θ(n log n)`), while the counting bound of `LogBounds.lean` dominates both
+from `n = 24` on.  The interest of the family bound is therefore methodological:
+it measures how far *structural incompatibility* alone can go.
+
+Threshold experiment: repeating the computation with ratio `q` in place of `4`
+(so block sizes `q^i`) gives a guarantee `≈ k·n·(1 − 1/(q−1))`; at `q = 2` the
+factor is `0` — the overlaps exactly consume the gain — and the best constant
+among integer ratios is at `q = 4` (per-`log₂ n` factors `0.455, 0.481, 0.466,
+0.410` for `q = 3, 4, 5, 8`).  Every number in the table above is a value of a
+formula that is *proved* in `ChainFamily.lean`; the ratio comparison is
+arithmetic exploration only and is not formalised.

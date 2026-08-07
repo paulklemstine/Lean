@@ -1,4 +1,4 @@
-import Novelty.Core
+import Novelty.JacobianCore
 
 /-!
 # Counterexample candidates that *fail* the Jacobian hypothesis

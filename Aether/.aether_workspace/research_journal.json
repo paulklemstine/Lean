@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d5c8afaa",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\nThe completed formal development proves a precise theorem at the combinatorial core of tropical hypersurface geometry: when a tropical polynomial is represented by its finite fami",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-07-30T03:36:40",
-      "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
-    },
-    {
       "cycle_id": "6ef427dd",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n- Internalize the construction in a general Cartesian closed category using a point-surjective morphism `A ⟶ B ^ A`, then recover the current theorem by specializing to `Type`.\n-",
@@ -2501,6 +2491,16 @@
       "theorem_count": 666,
       "timestamp": "2026-08-07T03:26:11",
       "title": "Deepening: Hadwiger's Conjecture"
+    },
+    {
+      "cycle_id": "d6f1fad6",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThis cycle turned the seven informal \"future directions\" of the transformer catalog file into\nseven compiling, `sorry`-free Lean developments in\n`Catalog/MachineLearning/Transform",
+      "quality_score": 0.6536503144654089,
+      "sorry_count": 0,
+      "theorem_count": 177,
+      "timestamp": "2026-08-07T03:26:17",
+      "title": "The current development proves an exact finite-domain universality result for a"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7010699999999999
     }
   ],
-  "last_updated": "2026-08-07T03:26:11",
+  "last_updated": "2026-08-07T03:26:17",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "b3e5f77d",
-        "quality": 0.6666666666666667,
-        "theorems": 18,
-        "title": "Rucker: The Lifebox — Information-Theoretic Identity"
-      },
-      {
         "cycle_id": "afbe2d9b",
         "quality": 0.7438,
         "theorems": 9,
@@ -3575,6 +3569,12 @@
         "quality": 0.77257,
         "theorems": 12,
         "title": "Grokking: Phase Transitions in Learning"
+      },
+      {
+        "cycle_id": "d6f1fad6",
+        "quality": 0.6536503144654089,
+        "theorems": 177,
+        "title": "The current development proves an exact finite-domain universality result for a"
       }
     ],
     "Novelty": [
