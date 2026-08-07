@@ -5,36 +5,12 @@ import Mathlib
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 25
-
-Repaired: the supporting definitions (`spbMat`, `crossRatio`) and the auxiliary
-lemmas (`spbMat_trace`, `spbMat_det`, `cauchy_pullback`) were missing from the
-generated file, and several declarations appeared before their dependencies.
 -/
-
-open Matrix
 
 noncomputable section
 
 /-- [Section: ## Core Definitions] -/
 def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
-/-- The SPB matrix `M(a) = [[1, a], [-a, 1]]`. -/
-def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
-
-theorem spbMat_trace (a : ℝ) : (spbMat a).trace = 2 := by
-  simp [spbMat, Matrix.trace_fin_two]
-  norm_num
-
-theorem spbMat_det (a : ℝ) : (spbMat a).det = 1 + a ^ 2 := by
-  simp [spbMat, det_fin_two]; ring
-
-/-- The cross-ratio of four reals. -/
-def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
-
-/-- The SPB map pulls the Cauchy (Poisson) kernel back to itself. -/
-theorem cauchy_pullback (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    (1 + spb x a ^ 2) * (1 - x * a) ^ 2 = (1 + x ^ 2) * (1 + a ^ 2) := by
-  unfold spb; field_simp; ring
 
 /-- [Section: ## Section 24: SPB Linearization Error] -/
 theorem spb_linearization_error (x y : ℝ) (h : 1 - x * y ≠ 0) :
@@ -55,16 +31,16 @@ theorem spb_cross_ratio_invariant (a b c d t : ℝ)
     (hden : (a - d) * (b - c) ≠ 0)
     (hden' : (spb a t - spb d t) * (spb b t - spb c t) ≠ 0) :
     crossRatio (spb a t) (spb b t) (spb c t) (spb d t) = crossRatio a b c d := by
-  unfold crossRatio spb
-  rw [div_eq_div_iff]
-  · grind +splitImp
-  · unfold spb at *; simp_all +decide
+  unfold crossRatio spb;
+  rw [ div_eq_div_iff ];
+  · grind +splitImp;
+  · unfold spb at *; simp_all +decide [ mul_comm ] ;
   · assumption
 
 theorem spb_jacobian (x a : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + a ^ 2) / (1 - x * a) ^ 2 =
     (1 + spb x a ^ 2) / (1 + x ^ 2) := by
-  rw [div_eq_div_iff] <;> cases lt_or_gt_of_ne h <;> nlinarith [cauchy_pullback x a h]
+  rw [ div_eq_div_iff ] <;> cases lt_or_gt_of_ne h <;> nlinarith [ cauchy_pullback x a h ] ;
 
 theorem spb_neg_first (x y : ℝ) : spb (-x) y = -(spb x (-y)) := by unfold spb; ring
 
@@ -97,7 +73,7 @@ theorem spb_zero_left (x : ℝ) : spb 0 x = x := by unfold spb; simp
 
 theorem spb_triple (x : ℝ) (h1 : 1 - x * x ≠ 0) (h2 : 1 - spb x x * x ≠ 0) :
     spb (spb x x) x = (3 * x - x ^ 3) / (1 - 3 * x ^ 2) := by
-  unfold spb
+  unfold spb;
   grind
 
 /-- [Section: ## Section 1: SPB Algebraic Structure] -/
@@ -121,9 +97,6 @@ theorem spb_idempotent_iff (x : ℝ) (h : 1 - x * x ≠ 0) :
 theorem spb_three_body (x y z : ℝ) (h : 1 - x * y ≠ 0) :
     (1 - x * y) * (1 - spb x y * z) = 1 - x * y - (x + y) * z := by
   unfold spb; field_simp
-
-/-- [Section: ## Section 12: SPB Symmetries] -/
-theorem spb_odd (x y : ℝ) : spb (-x) (-y) = -spb x y := by unfold spb; ring
 
 /-- [Section: ## Section 36: SPB Negation Symmetry] -/
 theorem spb_neg_comm (x y : ℝ) : -(spb x y) = spb (-x) (-y) := by rw [spb_odd]
@@ -151,6 +124,9 @@ theorem spb_cancel_right (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 + y ^ 2 ≠ 
 theorem spb_elliptic (a : ℝ) (ha : a ≠ 0) :
     (spbMat a).trace ^ 2 < 4 * (spbMat a).det := by
   have h := spb_discriminant a; nlinarith [mul_self_pos.mpr ha]
+
+/-- [Section: ## Section 12: SPB Symmetries] -/
+theorem spb_odd (x y : ℝ) : spb (-x) (-y) = -spb x y := by unfold spb; ring
 
 /-- [Section: ## Section 17: Fixed Point Theory] -/
 theorem spb_no_fixed_points (a : ℝ) (ha : a ≠ 0) (x : ℝ) (hd : 1 - x * a ≠ 0) :

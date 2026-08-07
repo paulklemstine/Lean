@@ -7,15 +7,7 @@ Domain: Shared
 Declarations: 5
 -/
 
-open Real
-
 noncomputable section
-
-/-- The SPB (Stereographic Projection Bridge) operation.
-`spb x y = (x + y) / (1 - x * y)`
-(Repaired: this definition was missing from the auto-generated file.) -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
 
 /-- [Section: # CatalogBuild.Shared.Spb_zero
 Auto-generated from theorem catalog database.

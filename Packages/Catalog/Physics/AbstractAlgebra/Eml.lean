@@ -9,10 +9,6 @@ Declarations: 17
 
 noncomputable section
 
-/-- The `eml` operation: `eml x y = exp x - log y`.
-(Repaired: this definition was missing from the auto-generated file.) -/
-def eml (x y : ℝ) : ℝ := Real.exp x - Real.log y
-
 /-- [Section: # CatalogBuild.Shared.Eml
 Auto-generated from theorem catalog database.
 Domain: EML

@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelHelper
 import Shared.NumberTheory.CarmichaelComposite
 
 /-! # Computational verification of Carmichael's theorem
@@ -57,7 +57,7 @@ lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime 
 lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
   exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
 
-/- For the composite case of Carmichael's theorem:
+/-- For the composite case of Carmichael's theorem:
     If n is composite with n ≥ 13 and has a prime factor p,
     then either p is primitive for F(n), or the entry point of p
     strictly divides n (so p divides F(d) for proper d | n).
@@ -66,24 +66,7 @@ lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
     completes Carmichael's theorem. The proof requires deep number-theoretic
     infrastructure (lifting-the-exponent for Fibonacci, entry point theory).
     Currently an open formalization challenge. -/
-/- ORIGINAL STATEMENT, retained but commented out.  It asserts Carmichael's primitive
-divisor theorem for *every* composite `n ≥ 13`.  That statement is true mathematically,
-but the only proof available in this catalog is the certified finite range
-`13 ≤ n ≤ 10000` of `fib_carmichael_composite` (verified by computation in
-`Shared.NumberTheory.CarmichaelProof`); the unbounded case is not proved anywhere here,
-and the auxiliary module it was originally derived from is not part of this development.
-
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := ...
--/
-
-/-- **Composite case of Carmichael's theorem, on the certified range.**  This is the
-statement above with the extra hypothesis `n ≤ 10000`, which is exactly the range over
-which the primitive-part computation of `Shared.NumberTheory.CarmichaelProof` certifies
-the result.  The unbounded statement remains open in this development. -/
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
-    (hn_comp : ¬Nat.Prime n) :
-    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) :=
-  fib_carmichael_composite n hn hn2 hn_comp
+      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+  exact fib_carmichael n hn

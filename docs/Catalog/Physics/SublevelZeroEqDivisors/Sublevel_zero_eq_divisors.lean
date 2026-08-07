@@ -7,14 +7,6 @@ Domain: Shared
 Declarations: 3
 -/
 
-/-- The "excess" function: the remainder of `N` modulo `x`.
-(Repaired: this definition was missing from the auto-generated file.) -/
-def E (N x : ℕ) : ℕ := N % x
-
-/-- Sublevel set: the set of x ∈ [1,N] with E(x) ≤ t. -/
-def sublevel_set (N t : ℕ) : Finset ℕ :=
-  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
-
 /-- [Section: # CatalogBuild.Shared.Sublevel_zero_eq_divisors
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -26,6 +18,9 @@ theorem sublevel_zero_eq_divisors (N : ℕ) (hN : 0 < N) :
   simp [sublevel_set];
   exact ⟨ fun h => ⟨ Nat.dvd_of_mod_eq_zero h.2, hN.ne' ⟩, fun h => ⟨ ⟨ Nat.pos_of_dvd_of_pos h.1 hN, Nat.le_of_dvd hN h.1 ⟩, Nat.mod_eq_zero_of_dvd h.1 ⟩ ⟩
 
+/-- Sublevel set: the set of x ∈ [1,N] with E(x) ≤ t. -/
+def sublevel_set (N t : ℕ) : Finset ℕ :=
+  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
 
 /-- [Section: # CatalogBuild.Shared.Sublevel_zero_eq_divisors
 Auto-generated from theorem catalog database.

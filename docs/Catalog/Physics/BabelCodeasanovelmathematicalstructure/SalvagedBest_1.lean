@@ -1,7 +1,1 @@
-/-
-  This file was a symbolic link to `../../Shared/BabelCodeasanovelmathematicalstructure/SalvagedBest.lean`.  Links are not
-  portable in a Lean source tree, so it is replaced by an import of the module it
-  pointed at, which re-exports exactly the same declarations.
--/
-
-import Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest
+../../Shared/BabelCodeasanovelmathematicalstructure/SalvagedBest.lean

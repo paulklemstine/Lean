@@ -7,10 +7,6 @@ Domain: Shared
 Declarations: 1
 -/
 
-/-- A Pythagorean triple (primed catalog variant).
-(Repaired: this definition was missing from the auto-generated file.) -/
-abbrev IsPythTriple' (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
-
 /-- [Section: # CatalogBuild.Shared.Euclid_parametrization
 Auto-generated from theorem catalog database.
 Domain: EML

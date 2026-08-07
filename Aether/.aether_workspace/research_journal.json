@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3c45e0b1",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe formalized uniqueness theorem isolates the combinatorial core of error-correcting Shamir reconstruction. The following are concrete next conjectures.\n\n1. **Sharpness of the de",
-      "quality_score": 0.73575,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-08-02T22:18:45",
-      "title": "1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > "
-    },
-    {
       "cycle_id": "5907c59d",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n- Extend the real coefficient-matrix model to complex amplitudes and prove the same reduced-density and concurrence results.\n- Define von Neumann entropy for finite density matric",
@@ -499,19 +489,19 @@
       "theorem_count": 557,
       "timestamp": "2026-08-07T16:40:33",
       "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, independent"
+    },
+    {
+      "cycle_id": "df8839cd",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m·1) ≤ m(m+3)/2` on `K",
+      "quality_score": 0.71728,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-07T19:26:07",
+      "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "63b75a93",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Molecular Computing Limits\n\n1. **Bimolecular finite-control compilation.** For every finite deterministic transition system, there is a CRN using only reactions with at most two r",
-      "quality_score": 0.76935,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T23:42:04",
-      "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-    },
     {
       "cycle_id": "29953b58",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 152,
       "timestamp": "2026-08-07T19:24:23",
       "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
+    },
+    {
+      "cycle_id": "df8839cd",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m·1) ≤ m(m+3)/2` on `K",
+      "quality_score": 0.71728,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-07T19:26:07",
+      "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6ffc84c2",
-      "domain": "Combinatorics",
-      "name": "unifKey_Iic",
-      "quality": 0.7892299999999999
-    },
-    {
-      "cycle_id": "6ffc84c2",
-      "domain": "Combinatorics",
-      "name": "unifKey_Ioi",
-      "quality": 0.7892299999999999
-    },
-    {
-      "cycle_id": "6ffc84c2",
-      "domain": "Combinatorics",
-      "name": "unifKey_Ioc",
-      "quality": 0.7892299999999999
-    },
     {
       "cycle_id": "e9c14674",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "psiSet_empty",
       "quality": 0.71348
+    },
+    {
+      "cycle_id": "df8839cd",
+      "domain": "Pythagorean",
+      "name": "lap_K",
+      "quality": 0.71728
+    },
+    {
+      "cycle_id": "df8839cd",
+      "domain": "Pythagorean",
+      "name": "linEquiv_effective_iff_K",
+      "quality": 0.71728
+    },
+    {
+      "cycle_id": "df8839cd",
+      "domain": "Pythagorean",
+      "name": "neg_ediv_eq",
+      "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-07T19:24:23",
+  "last_updated": "2026-08-07T19:26:07",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "e771e647",
-        "quality": 0.73183,
-        "theorems": 16,
-        "title": "ArXiv paper: On a character-twisted analogue of Schäffer's equation"
-      },
-      {
         "cycle_id": "a5e9a5f6",
         "quality": 0.699,
         "theorems": 4,
@@ -3885,6 +3879,12 @@
         "quality": 0.6540809924078091,
         "theorems": 1352,
         "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Ent"
+      },
+      {
+        "cycle_id": "df8839cd",
+        "quality": 0.71728,
+        "theorems": 70,
+        "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
       }
     ],
     "Shared": [

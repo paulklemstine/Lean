@@ -7,8 +7,6 @@ Domain: Shared
 Declarations: 8
 -/
 
-open Matrix
-
 noncomputable section
 
 /-- The SPB matrix: M(a) = [[1, a], [-a, 1]]. -/

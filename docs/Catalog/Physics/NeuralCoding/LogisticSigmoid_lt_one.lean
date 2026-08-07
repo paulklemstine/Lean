@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Shared.LogisticSigmoid_lt_one
 
 Auto-generated from theorem catalog database.
@@ -7,29 +5,10 @@ Domain: Shared
 Declarations: 6
 -/
 
+import Mathlib
 
 noncomputable section
 
-/-- The softplus activation `x ↦ log (1 + eˣ)`.  (Restored: the definition was
-missing from this auto-generated file although the theorems below refer to it.) -/
-def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)
-
-/-- Positivity of `1 + eˣ`.  (Restored: used below but missing from this file.) -/
-theorem one_plus_exp_pos (x : ℝ) : 0 < 1 + Real.exp x := by positivity
-
-/-- The logistic sigmoid function S(x) = eˣ / (1 + eˣ), the derivative of softplus -/
-def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
-
-
-
-/-- The logistic sigmoid is strictly positive -/
-lemma logisticSigmoid_pos (x : ℝ) : logisticSigmoid x > 0 := by
-  unfold logisticSigmoid
-  exact div_pos (Real.exp_pos x) (one_plus_exp_pos x)
-
-
-
-end
 /-- The logistic sigmoid is strictly less than 1 -/
 lemma logisticSigmoid_lt_one (x : ℝ) : logisticSigmoid x < 1 := by
   unfold logisticSigmoid
@@ -61,3 +40,19 @@ theorem logisticSigmoid_symmetry (x : ℝ) : logisticSigmoid (-x) = 1 - logistic
   have h2 : (1 : ℝ) + (Real.exp x)⁻¹ > 0 := by positivity
   field_simp
   ring
+
+
+
+/-- The logistic sigmoid function S(x) = eˣ / (1 + eˣ), the derivative of softplus -/
+def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
+
+
+
+/-- The logistic sigmoid is strictly positive -/
+lemma logisticSigmoid_pos (x : ℝ) : logisticSigmoid x > 0 := by
+  unfold logisticSigmoid
+  exact div_pos (Real.exp_pos x) (one_plus_exp_pos x)
+
+
+
+end

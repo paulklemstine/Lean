@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Shared.Sublevel_full
 
 Auto-generated from theorem catalog database.
@@ -7,14 +5,7 @@ Domain: Speculative
 Declarations: 5
 -/
 
-
-/-- The "excess" function: the remainder of `N` modulo `x`.
-(Repaired: this definition was missing from the auto-generated file.) -/
-def E (N x : ℕ) : ℕ := N % x
-
-/-- Sublevel set: the elements of `[1,N]` with `E N x ≤ t`. -/
-def sublevel (N t : ℕ) : Finset ℕ :=
-  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
+import Mathlib
 
 /-- The sublevel set at threshold N-1 is all of [1, N]. -/
 theorem sublevel_full (N : ℕ) (hN : 0 < N) :
@@ -38,6 +29,8 @@ theorem sublevel_mono (N s t : ℕ) (hst : s ≤ t) :
   exact ⟨hx.1, le_trans hx.2 hst⟩
 
 
+def sublevel (N t : ℕ) : Finset ℕ :=
+  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
 
 
 /-- Card of sublevel at 0 equals number of divisors. -/
