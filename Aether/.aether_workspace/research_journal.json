@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a8849f61",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\n## Scope and interpretation\n\nA zero set of a real ReLU network is generally a noncompact real polyhedral\nset, not a smooth projective complex variety. Consequently it does not car",
-      "quality_score": 0.668,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-30T18:53:09",
-      "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-    },
-    {
       "cycle_id": "00b7234b",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\n1. **Fibonacci `B₃` density.** Let `ρFib : BraidGrp 2 →* SU(2)` be obtained from the standard Fibonacci `F`- and `R`-matrices after removing their global phases. Conjecture: `Dens",
@@ -2501,6 +2491,16 @@
       "theorem_count": 186,
       "timestamp": "2026-08-07T11:15:59",
       "title": "[Your Title]"
+    },
+    {
+      "cycle_id": "2def9e1c",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Lorentzian Singularity Theorems\n\nStatus of the formalization in `Catalog/Physics/Spacetime/`.  All eleven files compile\nagainst mathlib4 / Lean 4.28.0 with **zero `sorry`s**, no",
+      "quality_score": 0.661958698156682,
+      "sorry_count": 0,
+      "theorem_count": 605,
+      "timestamp": "2026-08-07T13:46:46",
+      "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71918
     }
   ],
-  "last_updated": "2026-08-07T11:15:59",
+  "last_updated": "2026-08-07T13:46:46",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "e722c646",
-        "quality": 0.7708899999999999,
-        "theorems": 10,
-        "title": "Inverse Stereographic Renormalization Group"
-      },
-      {
         "cycle_id": "4ecd322f",
         "quality": 0.686,
         "theorems": 16,
@@ -3761,6 +3755,12 @@
         "quality": 0.686,
         "theorems": 31,
         "title": "`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by t"
+      },
+      {
+        "cycle_id": "2def9e1c",
+        "quality": 0.661958698156682,
+        "theorems": 605,
+        "title": "Lorentzian-Singularity: Penrose Hawking Singularity Theorem Verification"
       }
     ],
     "Probability": [
