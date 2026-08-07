@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3c125e46",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: EML Algebraic Independence\n\nThe formal development isolates the open input rather than treating transcendence of two factors as sufficient for transcendence of their product. The",
-      "quality_score": 0.73757,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-30T03:39:58",
-      "title": "EML Algebraic Independence: Transcendence Results"
-    },
-    {
       "cycle_id": "d1f879fc",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\nThe following are concrete conjectures extending the proved algebraic bounds. Each is\nfalsifiable by an explicit profile, architecture, or loss distribution violating the\nstated i",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-08-07T04:15:17",
       "title": "ArXiv paper: Even smaller universal posets"
+    },
+    {
+      "cycle_id": "0e033e47",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Bridges/InfiniteCubicMatchings.lean`,\n`…Compactness.lean`, `…Ladder.lean`, `…ParitySharp.lean`, `…Covers.lean`,\n`…PetersenLift.lean`, `…",
+      "quality_score": 0.648859294871795,
+      "sorry_count": 0,
+      "theorem_count": 228,
+      "timestamp": "2026-08-07T04:27:44",
+      "title": "ArXiv paper: On some perfect matching conjectures in infinite, cubic, bridgeless graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73419
     }
   ],
-  "last_updated": "2026-08-07T04:15:17",
+  "last_updated": "2026-08-07T04:27:44",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "18ab6902",
-        "quality": 0.72693,
-        "theorems": 8,
-        "title": "ArXiv paper: Sufficient conditions for $(K_2 \\cup kK_1)$-free graphs to be Hamil"
-      },
-      {
         "cycle_id": "6ef351e2",
         "quality": 0.686,
         "theorems": 145,
@@ -3203,6 +3197,12 @@
         "quality": 0.686,
         "theorems": 118,
         "title": "Existence of δ‑dense sets avoiding large sumsets"
+      },
+      {
+        "cycle_id": "0e033e47",
+        "quality": 0.648859294871795,
+        "theorems": 228,
+        "title": "ArXiv paper: On some perfect matching conjectures in infinite, cubic, bridgeless"
       }
     ],
     "Combinatorics": [
