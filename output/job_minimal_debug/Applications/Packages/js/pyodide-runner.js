@@ -210,86 +210,111 @@ document.addEventListener('DOMContentLoaded', () => {
         return stubs;
     }
 
+    // Single-threaded task queue to prevent concurrent Pyodide / micropip / matplotlib execution deadlocks
+    let _pyodideTaskQueue = Promise.resolve();
+
+    function enqueuePyodideTask(taskFn, timeoutMs = 45000) {
+        const nextTask = _pyodideTaskQueue.then(async () => {
+            let timeoutId;
+            const timeoutPromise = new Promise((_, reject) => {
+                timeoutId = setTimeout(() => {
+                    reject(new Error(`Pyodide execution timed out after ${timeoutMs / 1000}s`));
+                }, timeoutMs);
+            });
+            try {
+                return await Promise.race([taskFn(), timeoutPromise]);
+            } finally {
+                clearTimeout(timeoutId);
+            }
+        });
+
+        _pyodideTaskQueue = nextTask.catch(() => {});
+        return nextTask;
+    }
+
     // Global demo runner used by click handlers and by the Pyodide init auto-run queue.
     window.runDemo = async (runBtn, editor, output) => {
         if (!window.Aether.pyodideInstance) return;
 
         output.classList.remove('hidden');
         output.classList.remove('error');
-        output.textContent = 'Preparing environment...';
+        output.textContent = 'Queued...';
         runBtn.disabled = true;
 
-        let stdout = "";
-        window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
-        window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
+        return enqueuePyodideTask(async () => {
+            output.textContent = 'Preparing environment...';
+            let stdout = "";
+            window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
+            window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
 
-        try {
-            let codeToRun = editor.value;
+            try {
+                let codeToRun = editor.value;
 
-            const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
-            if (localModuleRe.test(codeToRun)) {
-                const moduleCode = buildLocalModuleCode(codeToRun, window.Aether.currentPackage);
-                const localMods = ['algorithms', 'demo'];
-                const lines = codeToRun.split('\n');
-                const filtered = [];
-                let inLocalImport = false;
-                for (const line of lines) {
-                    if (inLocalImport) {
-                        if (line.includes(')')) {
-                            inLocalImport = false;
-                        }
-                        continue;
-                    }
-                    const trimmed = line.trim();
-                    let skip = false;
-                    for (const mod of localMods) {
-                        if (trimmed.startsWith('from ' + mod + ' import ') || trimmed.startsWith('import ' + mod)) {
-                            skip = true;
-                            if (trimmed.includes('(') && !trimmed.includes(')')) {
-                                inLocalImport = true;
+                const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
+                if (localModuleRe.test(codeToRun)) {
+                    const moduleCode = buildLocalModuleCode(codeToRun, window.Aether.currentPackage);
+                    const localMods = ['algorithms', 'demo'];
+                    const lines = codeToRun.split('\n');
+                    const filtered = [];
+                    let inLocalImport = false;
+                    for (const line of lines) {
+                        if (inLocalImport) {
+                            if (line.includes(')')) {
+                                inLocalImport = false;
                             }
-                            break;
+                            continue;
+                        }
+                        const trimmed = line.trim();
+                        let skip = false;
+                        for (const mod of localMods) {
+                            if (trimmed.startsWith('from ' + mod + ' import ') || trimmed.startsWith('import ' + mod)) {
+                                skip = true;
+                                if (trimmed.includes('(') && !trimmed.includes(')')) {
+                                    inLocalImport = true;
+                                }
+                                break;
+                            }
+                        }
+                        if (!skip) {
+                            filtered.push(line);
                         }
                     }
-                    if (!skip) {
-                        filtered.push(line);
+                    codeToRun = moduleCode + '\n' + filtered.join('\n');
+                }
+
+                const { futureImports, cleanedCode } = extractFutureImports(codeToRun);
+                codeToRun = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
+
+                await window.Aether.pyodideInstance.loadPackagesFromImports(codeToRun);
+
+                output.textContent = 'Running...';
+
+                const result = await window.Aether.pyodideInstance.runPythonAsync(codeToRun);
+                if (result !== undefined && result !== null) {
+                    stdout += result + "\n";
+                }
+
+                // Many Aristotle demos define `def main()` guarded by `if __name__ == "__main__":`,
+                // which does not execute under Pyodide's runPythonAsync. Detect that pattern and
+                // append an explicit main() call so the demo actually produces output.
+                const hasMain = /\bdef main\s*\(/.test(editor.value);
+                const hasGuard = /if\s+__name__\s*==\s*['"]__main__['"]/.test(editor.value);
+                if (hasMain && hasGuard) {
+                    try {
+                        await window.Aether.pyodideInstance.runPythonAsync("main()");
+                    } catch (mainErr) {
+                        stdout += "\n" + mainErr.toString();
                     }
                 }
-                codeToRun = moduleCode + '\n' + filtered.join('\n');
+
+                output.textContent = stdout || "Done. (No output)";
+            } catch (err) {
+                output.classList.add('error');
+                output.textContent = stdout + "\n" + err.toString();
+            } finally {
+                runBtn.disabled = false;
             }
-
-            const { futureImports, cleanedCode } = extractFutureImports(codeToRun);
-            codeToRun = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
-
-            await window.Aether.pyodideInstance.loadPackagesFromImports(codeToRun);
-
-            output.textContent = 'Running...';
-
-            const result = await window.Aether.pyodideInstance.runPythonAsync(codeToRun);
-            if (result !== undefined && result !== null) {
-                stdout += result + "\n";
-            }
-
-            // Many Aristotle demos define `def main()` guarded by `if __name__ == "__main__":`,
-            // which does not execute under Pyodide's runPythonAsync. Detect that pattern and
-            // append an explicit main() call so the demo actually produces output.
-            const hasMain = /\bdef main\s*\(/.test(editor.value);
-            const hasGuard = /if\s+__name__\s*==\s*['"]__main__['"]/.test(editor.value);
-            if (hasMain && hasGuard) {
-                try {
-                    await window.Aether.pyodideInstance.runPythonAsync("main()");
-                } catch (mainErr) {
-                    stdout += "\n" + mainErr.toString();
-                }
-            }
-
-            output.textContent = stdout || "Done. (No output)";
-        } catch (err) {
-            output.classList.add('error');
-            output.textContent = stdout + "\n" + err.toString();
-        } finally {
-            runBtn.disabled = false;
-        }
+        });
     };
 
     window.renderInteractiveDemos = function(containerId, items) {
@@ -392,14 +417,21 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const isPlotly = /plotly|go\.Figure|go\.Scatter|go\.Bar|go\.Heatmap|go\.Surface|go\.Contour|px\./.test(code);
-        const isMatplotlib = /matplotlib|plt\./.test(code);
-
         if (buttonEl) {
             buttonEl.disabled = true;
-            buttonEl.textContent = 'Generating...';
+            buttonEl.textContent = 'Queued...';
         }
-        outputContainer.innerHTML = '<div class="viz-loading">Installing packages...</div>';
+        outputContainer.innerHTML = '<div class="viz-loading">Queued visualization...</div>';
+
+        return enqueuePyodideTask(async () => {
+            const isPlotly = /plotly|go\.Figure|go\.Scatter|go\.Bar|go\.Heatmap|go\.Surface|go\.Contour|px\./.test(code);
+            const isMatplotlib = /matplotlib|plt\./.test(code);
+
+            if (buttonEl) {
+                buttonEl.disabled = true;
+                buttonEl.textContent = 'Generating...';
+            }
+            outputContainer.innerHTML = '<div class="viz-loading">Installing packages...</div>';
 
         try {
             // Handle local module imports (algorithms, demo, etc.) by inlining their code
@@ -699,5 +731,6 @@ _viz_result
                 buttonEl.textContent = 'Generate';
             }
         }
+        });
     };
 });
