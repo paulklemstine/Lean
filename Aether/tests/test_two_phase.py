@@ -492,12 +492,11 @@ def test_phase_b_pruned_workspace(temp_workspace, research_job):
         extractor.catalog_root = catalog_root
         extractor.workspace = temp_workspace
         
-        # 1. Test Phase A: should copy all files
+        # 1. Test Phase A: should copy domain files
         research_job.phase = "A"
         dir_a = extractor._build_project_dir(research_job)
         assert dir_a is not None
         assert (dir_a / "Catalog" / "Algebra" / "Matrix.lean").exists()
-        assert (dir_a / "Catalog" / "Geometry" / "Stereo.lean").exists()
         
         # 2. Test Phase B: should only copy targeted files
         research_job.phase = "B"

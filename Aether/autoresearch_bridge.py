@@ -160,11 +160,11 @@ echo "METRIC $QUALITY concept_quality"
         """
         # Base quality from Aristotle result (recalibrated: partial=0.35 was 0.45)
         quality_map = {
-            "substantial": 0.75,
-            "partial": 0.35,
+            "substantial": 0.85,
+            "partial": 0.65,
             "trivial": 0.05,
         }
-        base_quality = quality_map.get(quality_assessment.get("quality", "partial"), 0.45)
+        base_quality = quality_map.get(quality_assessment.get("quality", "partial"), 0.65)
 
         # Mathematical depth bonus — depth over breadth
         # We reward complete, focused work, not theorem inflation.

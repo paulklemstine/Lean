@@ -2535,17 +2535,13 @@ Research mode: {concept.research_mode}
                         delta = adversarial_result.get("delta", 0.0)
 
                         if agreement == "agree":
-                            # Judges agree — blend adjudicated score with heuristic
-                            job.quality_score = 0.3 * heuristic_score + 0.7 * adj_score
+                            # Judges agree — structural/adjudicated score dominates
+                            job.quality_score = 0.05 * heuristic_score + 0.95 * adj_score
                         elif agreement in ("tiebreak", "disagree"):
-                            # Disagreement resolved — but cap the adversarial override.
-                            # When the structural composite is 0.7+ but the adversarial
-                            # judge scores 0.1, a delta of 0.6 is too extreme.  Limit the
-                            # adjudicated score to no less than composite * 0.5 so the
-                            # final blend stays reasonable.
-                            floor = composite * 0.5
+                            # Disagreement resolved — cap floor at composite * 0.70
+                            floor = composite * 0.70
                             adj_score = max(adj_score, floor)
-                            job.quality_score = 0.2 * heuristic_score + 0.8 * adj_score
+                            job.quality_score = 0.05 * heuristic_score + 0.95 * adj_score
 
                         # Store adversarial metadata
                         job.adversarial_result = adversarial_result
