@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-06T15:41:45.075455+00:00",
+  "last_updated": "2026-08-07T00:25:14.199109+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -49275,6 +49275,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-06T15:41:44.947387+00:00",
       "title": "Fix a finite corpus of statements and charge each theory for both source length"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2302,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Cryptography",
+      "duration_seconds": 16569.363641500473,
+      "end_time": 1786062183.1407726,
+      "files_integrated": 5,
+      "job_id": "a95dbc85",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.686,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8702,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9182,
+        "novelty": 0.95,
+        "proof_depth": 0.9046,
+        "usefulness": 0.9523
+      },
+      "quality_score": 0.686,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786045613.777131,
+      "strategy_count": 0,
+      "theorem_count": 112,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 67,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-07T00:25:14.063514+00:00",
+      "title": "ArXiv paper: Even smaller universal posets"
     }
   ]
 }

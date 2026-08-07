@@ -90,4 +90,3 @@ theorem empty_subset_sum (weights : List ℤ) : SubsetSum weights 0 :=
 theorem full_subset_sum (weights : List ℤ) :
     SubsetSum weights (∑ i : Fin weights.length, weights.get i) :=
   ⟨Finset.univ, by simp⟩
-

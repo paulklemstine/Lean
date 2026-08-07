@@ -1,191 +1,236 @@
 import Mathlib
 
 /-!
-# Forcing edges of perfect matchings, via fixed-point-free involutions
+# Möbius integers: construction of `Z̃` and its ring structure
 
-This file develops a small, self-contained theory of **forcing edges** of perfect
-matchings, motivated by the structural theory of *bricks* and *b-invariant edges*
-in matching theory (de Carvalho–Lucchesi–Murty; Lovász).  An edge `e` of a graph
-`G` is a **forcing edge** if there is exactly one perfect matching of `G` that
-contains `e`.  Equivalently, `e = uv` is forcing precisely when the graph obtained
-by deleting `u` and `v` has a *unique* perfect matching — this is the classical
-deletion characterisation, and it is our main theorem (`forcing_iff_unique_deletion`).
+The *Möbius integers* are defined as the set of **oriented integers**
 
-## Model
+```
+Oriented = ℤ × {+1, -1}
+```
 
-A perfect matching of a simple graph `G` is modelled as a **fixed-point-free
-involution** `f : V → V` all of whose swapped pairs `{v, f v}` are edges of `G`
-(`IsPM`).  This turns "the perfect matching containing `uv`" into "the involution
-`f` with `f u = v`", which is very convenient for reasoning about uniqueness.
+modulo the Möbius identification `(n, +1) ~ (-n, -1)`.  Concretely we take the
+kernel setoid of the *signed value* map `value (n, ε) = ε · n` and set
+`MInt = Oriented / ~`.
 
-Deleting the two endpoints `u, v` of an edge is modelled by `IsPMdel`: an
-involution that fixes exactly `u` and `v` and matches every other vertex to a
-neighbour distinct from `u, v`.
+The main results of this file are:
 
-## Main results
+* `Mobius.MInt.deck_involutive`, `Mobius.MInt.deck_no_fixed_point`,
+  `Mobius.MInt.mk_eq_mk_iff_deck`, `Mobius.MInt.fiber_card`:
+  the quotient map `Oriented → MInt` is a genuine free double cover — every
+  fibre has *exactly* two points, exchanged by the fixed-point-free deck
+  involution `τ (n, ε) = (-n, -ε)`.
+* `Mobius.MInt.commRing`: the twisted addition and multiplication (performed
+  through the identification) make `MInt` a commutative ring.
+* `Mobius.MInt.equivZ`: **structure theorem** — `MInt ≃+* ℤ`.  The Möbius band
+  identification collapses the double cover to an ordinary copy of `ℤ`; the
+  orientation survives only as the unit group.
+* `Mobius.MInt.unitsEquivZMod2`: the unit ("orientation") group of `MInt` is
+  cyclic of order two, mirroring `π₁` of the Möbius band.
 
-* `IsPM.apply_ne` — matched partners of interior vertices avoid `u, v`.
-* `restrictPM_isPMdel` / `extendPM_isPM` — the deletion bijection.
-* `uniquePM_all_forcing` — if `G` has a unique perfect matching, every one of its
-  edges is forcing.
-* `forcing_iff_unique_deletion` — **main theorem**: `uv` is forcing iff `uv` is an
-  edge and `G - u - v` has a unique perfect matching.
-* `forcing_comm` — forcing is a symmetric relation on the endpoints.
-
--- !-- Lab Notes -- !--
-Hypothesis (Hypothesizer): The property "`uv` lies in a unique perfect matching"
-should be *local*: it should depend only on the perfect matchings of the graph
-with `u, v` deleted. Concretely, deleting the endpoints of a forcing edge must
-leave a graph with a unique perfect matching, and conversely.
-
-Experiment (Experimenter): Modelling perfect matchings as fixed-point-free
-involutions makes "the matching containing `uv`" literally the constraint
-`f u = v`. The map `f ↦ (f restricted to V \ {u,v})` and its inverse `extend`
-form a bijection between {perfect matchings with `f u = v`} and {perfect matchings
-of the deleted graph}. We verified the bijection laws on paper for the swap/fix
-pattern before formalising.
-
-Analysis (Analyst): The only non-trivial input is that in any perfect matching
-containing `uv`, no interior vertex is matched to `u` or `v` (`IsPM.apply_ne`);
-this is exactly injectivity of the involution. Everything else is bookkeeping of
-the if-then-else definitions of `restrict`/`extend`.
-
-Critique (Critic): The `u ≠ v` side condition is essential; it is supplied for
-free by `G.Adj u v` (loopless graphs). The theorem is non-vacuous: `uniquePM`
-graphs (e.g. a single edge, or a path) exhibit genuine forcing edges.
-
-Synthesis (PI): The deletion characterisation is the engine behind the paper's
-analysis of which b-invariant edges are forcing; here it is captured cleanly and
-proved in full generality (no finiteness assumption).
--- !-- Lab Notes -- !--
+Everything downstream (factorisation theory, spectra, the zeta function) is
+developed in the companion files.
 -/
 
-namespace ForcingEdges
+namespace Mobius
 
-open Function
+/-- An *oriented integer*: a magnitude `n : ℤ` together with an orientation
+(`true` stands for `+1`, `false` for `-1`). -/
+abbrev Oriented : Type := ℤ × Bool
 
-variable {V : Type*}
+/-- The signed value `ε · n` of an oriented integer `(n, ε)`. -/
+def value (a : Oriented) : ℤ := if a.2 then a.1 else -a.1
 
-/-- `f` is a perfect matching of `G`: a fixed-point-free involution whose swapped
-pairs are edges of `G`. -/
-def IsPM (G : SimpleGraph V) (f : V → V) : Prop :=
-  Involutive f ∧ (∀ v, f v ≠ v) ∧ (∀ v, G.Adj v (f v))
+@[simp] theorem value_pos (n : ℤ) : value (n, true) = n := rfl
+@[simp] theorem value_neg (n : ℤ) : value (n, false) = -n := rfl
 
-/-- The edge `uv` is a **forcing edge**: it is an edge, and there is exactly one
-perfect matching of `G` containing it (i.e. one involution `f` with `f u = v`). -/
-def Forcing (G : SimpleGraph V) (u v : V) : Prop :=
-  G.Adj u v ∧ ∃! f, IsPM G f ∧ f u = v
+/-- The Möbius identification: `(n, +1) ~ (-n, -1)`, i.e. two oriented integers
+are identified exactly when they have the same signed value. -/
+instance orientSetoid : Setoid Oriented := Setoid.ker value
 
-/-- `h` is a perfect matching of `G` with the two vertices `u, v` deleted: it fixes
-exactly `u` and `v`, and matches every other vertex to a neighbour `≠ u, v`. -/
-def IsPMdel (G : SimpleGraph V) (u v : V) (h : V → V) : Prop :=
-  Involutive h ∧ h u = u ∧ h v = v ∧
-    ∀ w, w ≠ u → w ≠ v → (h w ≠ w ∧ G.Adj w (h w) ∧ h w ≠ u ∧ h w ≠ v)
+theorem orient_equiv_iff (a b : Oriented) : a ≈ b ↔ value a = value b := Iff.rfl
 
-/-
-In a perfect matching containing the edge `uv`, no interior vertex is matched
-to `u` or to `v`.
+/-- The **Möbius integers** `Z̃`. -/
+def MInt : Type := Quotient orientSetoid
+
+namespace MInt
+
+/-- The class of an oriented integer in `Z̃`. -/
+def mk (a : Oriented) : MInt := Quotient.mk _ a
+
+/-- The signed value of a Möbius integer; well defined by construction. -/
+def toZ : MInt → ℤ := Quotient.lift value fun _ _ h => h
+
+@[simp] theorem toZ_mk (a : Oriented) : toZ (mk a) = value a := rfl
+
+theorem mk_surjective : Function.Surjective mk := Quotient.mk_surjective
+
+theorem toZ_injective : Function.Injective toZ := by
+  intro x y h
+  induction x using Quotient.inductionOn with
+  | _ a =>
+    induction y using Quotient.inductionOn with
+    | _ b => exact Quotient.sound h
+
+theorem toZ_surjective : Function.Surjective toZ := fun n => ⟨mk (n, true), rfl⟩
+
+theorem mk_eq_mk_iff (a b : Oriented) : mk a = mk b ↔ value a = value b :=
+  ⟨fun h => congrArg toZ h, fun h => Quotient.sound h⟩
+
+/-- The defining Möbius identification, in the form `(n, +1) = (-n, -1)`. -/
+@[simp] theorem mk_flip (n : ℤ) : mk (n, true) = mk (-n, false) := by
+  rw [mk_eq_mk_iff]; simp
+
+/-!
+### The double cover `Oriented → MInt`
 -/
-theorem IsPM.apply_ne {G : SimpleGraph V} {f : V → V} (hf : IsPM G f) {u v : V}
-    (huv : f u = v) {w : V} (hwu : w ≠ u) (hwv : w ≠ v) :
-    f w ≠ u ∧ f w ≠ v := by
-  have := hf.1 w; have := hf.1 u; aesop;
 
-/-- Restriction of a matching `f` to the graph with `u, v` deleted: fix `u, v`,
-keep everything else. -/
-def restrictPM [DecidableEq V] (u v : V) (f : V → V) : V → V :=
-  fun w => if w = u then u else if w = v then v else f w
+/-- The deck transformation of the cover `Oriented → MInt`: reverse the
+orientation and negate the magnitude. -/
+def deck (a : Oriented) : Oriented := (-a.1, !a.2)
 
-/-- Extension of a deleted matching `h` back to `G` by swapping `u ↔ v`. -/
-def extendPM [DecidableEq V] (u v : V) (h : V → V) : V → V :=
-  fun w => if w = u then v else if w = v then u else h w
+theorem deck_involutive : Function.Involutive deck := by
+  rintro ⟨n, e⟩; simp [deck]
 
-theorem restrictPM_isPMdel [DecidableEq V] {G : SimpleGraph V} {f : V → V}
-    (hf : IsPM G f) {u v : V} (huv : f u = v) (hne : u ≠ v) :
-    IsPMdel G u v (restrictPM u v f) := by
-  have := hf.1;
-  refine' ⟨ _, _, _, _ ⟩ <;> simp_all +decide [ Involutive, restrictPM ];
-  · grind +ring;
-  · exact fun w hwu hwv => ⟨ hf.2.1 w, hf.2.2 w, by have := IsPM.apply_ne hf huv hwu hwv; tauto, by have := IsPM.apply_ne hf huv hwu hwv; tauto ⟩
+theorem deck_no_fixed_point (a : Oriented) : deck a ≠ a := by
+  obtain ⟨n, e⟩ := a
+  cases e <;> simp [deck]
 
-theorem extendPM_isPM [DecidableEq V] {G : SimpleGraph V} {u v : V} {h : V → V}
-    (hh : IsPMdel G u v h) (hadj : G.Adj u v) :
-    IsPM G (extendPM u v h) ∧ extendPM u v h u = v := by
-  constructor;
-  · refine' ⟨ _, _, _ ⟩;
-    · intro w; unfold extendPM; by_cases hwu : w = u <;> by_cases hwv : w = v <;> simp +decide [ * ] ;
-      have := hh.2.2.2 w hwu hwv; split_ifs <;> simp_all +decide ;
-      exact hh.1 _;
-    · intro w; cases eq_or_ne w u <;> cases eq_or_ne w v <;> simp_all +decide [ extendPM ] ;
-      · grind +splitImp;
-      · grind;
-      · exact hh.2.2.2 w ‹_› ‹_› |>.1;
-    · intro w; by_cases hwu : w = u <;> by_cases hwv : w = v <;> simp_all +decide [ extendPM ] ;
-      · exact hadj.symm;
-      · exact hh.2.2.2 w hwu hwv |>.2.1;
-  · unfold extendPM; aesop;
+@[simp] theorem mk_deck (a : Oriented) : mk (deck a) = mk a := by
+  obtain ⟨n, e⟩ := a
+  cases e <;> rw [mk_eq_mk_iff] <;> simp [deck, value]
 
-theorem restrictPM_extendPM [DecidableEq V] {G : SimpleGraph V} {u v : V} {h : V → V}
-    (hh : IsPMdel G u v h) (hne : u ≠ v) :
-    restrictPM u v (extendPM u v h) = h := by
-  funext w; cases eq_or_ne w u <;> cases eq_or_ne w v <;> simp_all +decide [ restrictPM, extendPM ] ;
-  · exact hh.2.1.symm;
-  · exact hh.2.2.1.symm
+/-- Two oriented integers have the same class iff they are equal or swapped by
+the deck transformation: the cover is exactly two-to-one. -/
+theorem mk_eq_mk_iff_deck (a b : Oriented) : mk a = mk b ↔ b = a ∨ b = deck a := by
+  constructor
+  · intro h
+    rw [mk_eq_mk_iff] at h
+    obtain ⟨n, e⟩ := a
+    obtain ⟨m, f⟩ := b
+    cases e <;> cases f <;> simp [value, deck] at h ⊢ <;> omega
+  · rintro (rfl | rfl) <;> simp
 
-theorem extendPM_restrictPM [DecidableEq V] {G : SimpleGraph V} {f : V → V}
-    (hf : IsPM G f) {u v : V} (huv : f u = v) (hne : u ≠ v) :
-    extendPM u v (restrictPM u v f) = f := by
-  funext w; by_cases hw : w = u <;> by_cases hw' : w = v <;> simp_all +decide [ extendPM, restrictPM ] ;
-  have := hf.1 u; aesop;
+/-- Every fibre of the covering map `Oriented → MInt` has exactly two points. -/
+theorem fiber_card (x : MInt) : {a : Oriented | mk a = x}.ncard = 2 := by
+  obtain ⟨a, rfl⟩ := mk_surjective x
+  have hset : {b : Oriented | mk b = mk a} = {a, deck a} := by
+    ext b
+    simp only [Set.mem_setOf_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
+    constructor
+    · intro hb; exact (mk_eq_mk_iff_deck a b).1 hb.symm
+    · rintro (rfl | rfl) <;> simp
+  rw [hset, Set.ncard_pair (fun h => deck_no_fixed_point a h.symm)]
 
-/-
-**Deletion characterisation of forcing edges.**  The edge `uv` is a forcing
-edge of `G` iff `uv ∈ E(G)` and the graph with `u, v` deleted has a *unique*
-perfect matching.
+/-!
+### Twisted arithmetic
+
+Addition and multiplication are performed *through* the identification: the
+representatives are pushed to their signed values, combined there, and the
+result is given the positive orientation.
 -/
-theorem forcing_iff_unique_deletion [DecidableEq V] (G : SimpleGraph V) (u v : V) :
-    Forcing G u v ↔ G.Adj u v ∧ ∃! h, IsPMdel G u v h := by
-  constructor <;> intro h;
-  · obtain ⟨hadj, f₀, hf₀⟩ := h;
-    refine' ⟨ hadj, restrictPM u v f₀, _, _ ⟩;
-    · exact restrictPM_isPMdel hf₀.1.1 hf₀.1.2 hadj.ne;
-    · intro h hh;
-      have := hf₀.2 ( extendPM u v h ) ?_;
-      · rw [ ← this, restrictPM_extendPM hh hadj.ne ];
-      · exact extendPM_isPM hh hadj;
-  · obtain ⟨hadj, ⟨h₀, ⟨hpmdel₀, huniq⟩⟩⟩ := h;
-    use hadj;
-    use extendPM u v h₀;
-    constructor;
-    · exact extendPM_isPM hpmdel₀ hadj;
-    · intro f hf;
-      rw [ ← huniq ( restrictPM u v f ) ( restrictPM_isPMdel hf.1 hf.2 ( hadj.ne ) ), extendPM_restrictPM hf.1 hf.2 ( hadj.ne ) ]
 
-/-
-If `G` has a unique perfect matching `f₀`, then every edge `{v, f₀ v}` of that
-matching is a forcing edge.
+instance : Zero MInt := ⟨mk (0, true)⟩
+instance : One MInt := ⟨mk (1, true)⟩
+instance : Add MInt := ⟨fun x y => mk (toZ x + toZ y, true)⟩
+instance : Mul MInt := ⟨fun x y => mk (toZ x * toZ y, true)⟩
+instance : Neg MInt := ⟨fun x => mk (-toZ x, true)⟩
+instance : Sub MInt := ⟨fun x y => mk (toZ x - toZ y, true)⟩
+instance : SMul ℕ MInt := ⟨fun n x => mk ((n : ℤ) * toZ x, true)⟩
+instance : SMul ℤ MInt := ⟨fun n x => mk (n * toZ x, true)⟩
+instance : Pow MInt ℕ := ⟨fun x n => mk (toZ x ^ n, true)⟩
+instance : NatCast MInt := ⟨fun n => mk ((n : ℤ), true)⟩
+instance : IntCast MInt := ⟨fun n => mk (n, true)⟩
+
+@[simp] theorem toZ_zero : toZ 0 = 0 := rfl
+@[simp] theorem toZ_one : toZ 1 = 1 := rfl
+@[simp] theorem toZ_add (x y : MInt) : toZ (x + y) = toZ x + toZ y := rfl
+@[simp] theorem toZ_mul (x y : MInt) : toZ (x * y) = toZ x * toZ y := rfl
+@[simp] theorem toZ_neg (x : MInt) : toZ (-x) = -toZ x := rfl
+@[simp] theorem toZ_sub (x y : MInt) : toZ (x - y) = toZ x - toZ y := rfl
+@[simp] theorem toZ_pow (x : MInt) (n : ℕ) : toZ (x ^ n) = toZ x ^ n := rfl
+@[simp] theorem toZ_intCast (n : ℤ) : toZ (n : MInt) = n := rfl
+@[simp] theorem toZ_natCast (n : ℕ) : toZ (n : MInt) = n := rfl
+
+/-- The twisted operations satisfy all the commutative ring axioms. -/
+instance commRing : CommRing MInt :=
+  toZ_injective.commRing toZ rfl rfl (fun _ _ => rfl) (fun _ _ => rfl)
+    (fun _ => rfl) (fun _ _ => rfl)
+    (fun n x => by change ((n : ℤ) * toZ x) = n • toZ x; rw [nsmul_eq_mul])
+    (fun n x => by change (n * toZ x) = n • toZ x; rw [zsmul_eq_mul, Int.cast_id])
+    (fun _ _ => rfl) (fun _ => rfl) (fun _ => rfl)
+
+/-- **Structure theorem.**  The Möbius integers form a ring isomorphic to `ℤ`:
+the twist is invisible to the ring structure, and only survives in the
+orientation (unit) data. -/
+def equivZ : MInt ≃+* ℤ where
+  toFun := toZ
+  invFun := fun n => mk (n, true)
+  left_inv := by intro x; apply toZ_injective; rfl
+  right_inv := fun _ => rfl
+  map_add' := fun _ _ => rfl
+  map_mul' := fun _ _ => rfl
+
+@[simp] theorem equivZ_apply (x : MInt) : equivZ x = toZ x := rfl
+@[simp] theorem equivZ_symm_apply (n : ℤ) : equivZ.symm n = mk (n, true) := rfl
+
+theorem toZ_eq_zero_iff (x : MInt) : toZ x = 0 ↔ x = 0 :=
+  ⟨fun h => toZ_injective (by simpa using h), fun h => by simp [h]⟩
+
+instance : IsDomain MInt :=
+  Function.Injective.isDomain (equivZ : MInt →+* ℤ) toZ_injective
+
+instance : IsPrincipalIdealRing MInt :=
+  IsPrincipalIdealRing.of_surjective (equivZ.symm : ℤ →+* MInt) equivZ.symm.surjective
+
+/-!
+### Orientation reversal and the unit group
 -/
-theorem uniquePM_all_forcing {G : SimpleGraph V} {f₀ : V → V} (hpm : IsPM G f₀)
-    (huniq : ∀ g, IsPM G g → g = f₀) (v : V) : Forcing G v (f₀ v) := by
-  constructor;
-  · exact hpm.2.2 v;
-  · exact ⟨ f₀, ⟨ hpm, rfl ⟩, fun g hg => huniq g hg.1 ⟩
 
-/-
-Forcing is symmetric in the two endpoints of the edge.
--/
-theorem forcing_comm {G : SimpleGraph V} {u v : V} :
-    Forcing G u v ↔ Forcing G v u := by
-  by_cases h : ∃! f, IsPM G f ∧ f u = v <;> simp_all +decide [ Forcing ];
-  · obtain ⟨ f, hf, hf' ⟩ := h;
-    refine' ⟨ fun h => ⟨ h.symm, f, ⟨ hf.1, _ ⟩, _ ⟩, _ ⟩;
-    · have := hf.1.1 u; aesop;
-    · intro g hg; specialize hf' g; simp_all +decide [ IsPM ] ;
-      exact hf' ( by have := hg.1.1 v; aesop );
-    · exact fun h => h.1.symm;
-  · exact fun _ => fun ⟨ f, hf1, hf2 ⟩ => h ⟨ f, by
-      exact ⟨ hf1.1, by simpa [ hf1.2 ] using hf1.1.1 v ⟩, by
-      intro g hg; have := hf2 g; simp_all +decide [ IsPM ] ;
-      exact hf2 g hg.1.1 hg.1.2.1 hg.1.2.2 ( by have := hg.1.1 u; aesop ) ⟩
+/-- Orientation reversal on `Z̃` is exactly ring-theoretic negation. -/
+theorem mk_orientation_reverse (n : ℤ) (e : Bool) : mk (n, !e) = -mk (n, e) := by
+  apply toZ_injective
+  cases e <;> simp [value]
 
-end ForcingEdges
+/-- A Möbius integer is a unit iff it is `±1`. -/
+theorem isUnit_iff (x : MInt) : IsUnit x ↔ x = 1 ∨ x = -1 := by
+  constructor
+  · intro h
+    have hu : IsUnit (toZ x) := (equivZ : MInt →+* ℤ).isUnit_map h
+    rcases Int.isUnit_iff.1 hu with h1 | h1
+    · exact Or.inl (toZ_injective (by simpa using h1))
+    · exact Or.inr (toZ_injective (by simpa using h1))
+  · rintro (rfl | rfl)
+    · exact isUnit_one
+    · exact isUnit_one.neg
+
+/-- The orientation of a unit, as an element of `ZMod 2`. -/
+def unitOrientation (u : MIntˣ) : ZMod 2 := if toZ (u : MInt) = 1 then 0 else 1
+
+theorem units_eq_one_or (u : MIntˣ) : u = 1 ∨ u = -1 := by
+  rcases (isUnit_iff (u : MInt)).1 u.isUnit with h | h
+  · exact Or.inl (Units.ext h)
+  · exact Or.inr (Units.ext (by simpa using h))
+
+theorem neg_one_ne_one : (-1 : MInt) ≠ 1 := by
+  intro h
+  have := congrArg toZ h
+  simp at this
+
+/-- **The orientation group.**  The units of `Z̃` form a cyclic group of order
+two — the `ℤ/2` of the Möbius double cover. -/
+def unitsEquivZMod2 : MIntˣ ≃* Multiplicative (ZMod 2) where
+  toFun u := Multiplicative.ofAdd (unitOrientation u)
+  invFun a := if Multiplicative.toAdd a = 0 then 1 else -1
+  left_inv u := by
+    rcases units_eq_one_or u with rfl | rfl <;>
+      simp [unitOrientation, Units.val_neg, show ((1 : ZMod 2) = 0) = False by simp]
+  right_inv a := by
+    fin_cases a <;> simp [unitOrientation]
+  map_mul' u v := by
+    rcases units_eq_one_or u with rfl | rfl <;> rcases units_eq_one_or v with rfl | rfl <;>
+      simp only [unitOrientation, ← ofAdd_add, Units.val_one, Units.val_neg, toZ_one, toZ_neg,
+        neg_mul, neg_neg, one_mul, mul_one] <;> decide
+
+end MInt
+end Mobius
