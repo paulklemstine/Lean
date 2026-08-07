@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bd7b389e",
-      "domain": "Probability",
-      "key_insight": "# EML information geometry: results and future directions\n\n## Formal results\n\nThe new self-contained module `Catalog/Probability/EMLInformationGeometryDeepening.lean`\nstudies the normalized finite mod",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-07-30T16:57:57",
-      "title": "Deepening: EML Information Geometry: Fisher Information of exp-log Models"
-    },
-    {
       "cycle_id": "4ecd322f",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nThe following conjectures extend the finite state-sum core formalized in `Catalog/Physics/QuantumGravityTuraevViro.lean`. Each is stated so that a proposed formal development can",
@@ -2501,6 +2491,16 @@
       "theorem_count": 1352,
       "timestamp": "2026-08-07T09:22:25",
       "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
+    },
+    {
+      "cycle_id": "c29c7fbe",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\nDerived from the results proved in\n\n* `Catalog/Geometry/RischResidueLiouville.lean`\n* `Catalog/Geometry/RischSplitIntegration.lean`\n* `Catalog/Geometry/RischGaussianObstruction.le",
+      "quality_score": 0.657274625691032,
+      "sorry_count": 0,
+      "theorem_count": 163,
+      "timestamp": "2026-08-07T09:22:31",
+      "title": "The following conjectures sharpen the boundary of the normalized development in"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73319
     }
   ],
-  "last_updated": "2026-08-07T09:22:25",
+  "last_updated": "2026-08-07T09:22:31",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "064bb153",
-        "quality": 0.75976,
-        "theorems": 12,
-        "title": "There exists a canonically normalized real-valued functional on the quaternionic"
-      },
-      {
         "cycle_id": "f15cd85a",
         "quality": 0.76837,
         "theorems": 14,
@@ -3451,6 +3445,12 @@
         "quality": 0.73319,
         "theorems": 182,
         "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
+      },
+      {
+        "cycle_id": "c29c7fbe",
+        "quality": 0.657274625691032,
+        "theorems": 163,
+        "title": "The following conjectures sharpen the boundary of the normalized development in"
       }
     ],
     "Logic": [

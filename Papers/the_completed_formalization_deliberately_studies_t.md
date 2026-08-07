@@ -1,213 +1,348 @@
-# Computational evidence
+# Two Laws of Delayed Generalization
 
-All numbers below were produced with `#eval` inside this project's Lean
-toolchain (IEEE `Float` arithmetic, so they are indicative rather than
-certified; every *claim* that they motivate is proved exactly in the `.lean`
-files listed at the end).
+### A guided tour of why learning systems wait, and exactly how long
 
-## 1. Weight-decayed gradient flow and the derived delay
+---
 
-Model: `w'(t) = s - λ w`, `w(t) = s/λ + (w₀ - s/λ)e^{-λt}`, activation
-threshold `θ`, derived delay `crossTime = λ⁻¹ log((s/λ - w₀)/(s/λ - θ))`.
+## 1. The flat line
 
-With `λ = 0.5`, `s = 1` (so `s/λ = 2`), `w₀ = 0`, `θ = 1.9`:
+Train a small network on modular arithmetic. Within a few hundred steps it has memorized
+the training set perfectly — nothing left to learn there. And on held-out data it stays at
+chance. Not for a hundred more steps: for a hundred *thousand* more. Then, over a short
+window, the test accuracy climbs almost vertically to near-perfect.
 
-| quantity | value |
-|---|---|
-| `crossTime` | `5.991465` |
-| `w(5.98)` | `1.899425` (below `θ`) |
-| `w(6.00)` | `1.900426` (above `θ`) |
+The phenomenon is called **grokking**, and it raises two separate questions.
 
-The trajectory crosses `θ` exactly at `crossTime`, as `wdFlow_gt_threshold_iff`
-asserts.
+- **Why is the transition sharp?** Why doesn't generalization creep in gradually?
+- **How long is the wait?** What sets the length of the flat stretch, and what makes it
+  explode?
 
-## 2. Divergence of the delay at the critical weight decay
+This page answers both, in models small enough that every claim is a theorem. The punchline
+is quantitative: the wait obeys exactly **two** laws, with two exact constants — $1/\lambda_c$
+and $\pi$ — and near a critical point one of them always wins.
 
-Fix `s = 1`, `θ = 1`, `w₀ = 0`, so `λ_c = s/θ = 1`.
+---
 
-| `λ` | `crossTime(λ)` |
-|---|---|
-| `0.9` | `2.558428` |
-| `0.99` | `4.651687` |
-| `0.999` | `6.914670` |
-| `0.9999` | `9.211261` |
+## 2. The smallest thing that can grok
 
-The delay grows like `log(1/(λ_c - λ))`: increments of `≈ 2.30 = log 10` per
-decade. This is the numerical signature of
-`crossTime_diverges_at_criticality`, and matches the exact lower bound
-`crossTime ≥ λ⁻¹ log((θ - w₀)/(s/λ - θ))`.
+Strip away the transformers. Take a two-layer rectifier network of hidden width $m$:
 
-## 3. Discrete weight-decayed gradient descent
+$$N(x) \;=\; c \;+\; \sum_{j=1}^{m} a_j \, \mathrm{ReLU}\!\big(\langle W_j, x\rangle + b_j\big),
+\qquad \mathrm{ReLU}(u) = \max(u,0),$$
 
-`w_{k+1} = w_k - η(λ w_k - s)` with `η = 0.1`, `λ = 0.5`, `s = 1`, `w₀ = 0`;
-compared against the closed form `s/λ + (w₀ - s/λ)(1-ηλ)^k`.
+and instead of a fixed input, feed it a **ray**: pick a direction $p$ and watch
+$t \mapsto N(tp)$ as $t$ grows. Writing $g_j = \langle W_j, p\rangle$ for the *signal* that
+direction $p$ delivers to hidden unit $j$, this is
 
-| `k` | recursion | closed form |
-|---|---|---|
-| `20` | `1.283028` | `1.283028` |
-| `50` | `1.846110` | `1.846110` |
+$$R(t) \;=\; c + \sum_{j=1}^m a_j\,\mathrm{ReLU}\big(t\,g_j + b_j\big).$$
 
-Exact agreement, matching `gdSeq_closed_form`.
+Suppose $c < 0$ — the network's default answer is "no". Suppose the hidden biases satisfy
+$b_j \le 0$, so units start silent, and the output weights satisfy $a_j \ge 0$, so no unit can
+argue against another. Then $R$ is continuous, non-decreasing, starts negative, and eventually
+goes positive.
 
-Crossing step for `θ = 1.9`: the first `k` with `w_k > 1.9` is **59**, while the
-proved lower bound `log((s/λ-θ)/(s/λ-w₀))/log(1-ηλ)` evaluates to `58.403975`.
-The bound in `gd_delay_lower_bound` is therefore tight to one step here.
+> **Sharp Threshold Theorem.** A monotone continuous $f$ with $f(0) < 0$ that is positive
+> somewhere has a **unique** $\tau \ge 0$ with $f \le 0$ on $(-\infty,\tau]$ and $f > 0$ on
+> $(\tau,\infty)$.
 
-## 4. Margin of the vector-valued example network
+<details>
+<summary><b>Click to reveal the proof (three lines)</b></summary>
 
-Two-point test set (positive point of signal `+1`, negative point of signal
-`-1`), output bias `-1`; worst-case margin `min(-1 + relu t, 1 - relu(-t))`:
+Let $F = \{t : f(t) \le 0\}$. Monotonicity makes $F$ a down-set containing $0$ and bounded
+above by any $T$ with $f(T) > 0$, so $\tau = \sup F$ exists and is $\ge 0$. For $t < \tau$ pick
+$u \in F$ with $t < u$; then $f(t) \le f(u) \le 0$, and continuity gives $f(\tau) \le 0$. For
+$t > \tau$, $t \notin F$, so $f(t) > 0$. Uniqueness: two thresholds $\tau < \tau'$ would force
+$f(\tau')$ to be both $> 0$ and $\le 0$. $\blacksquare$
+</details>
 
-| `t` | `0.5` | `0.9` | `1.0` | `1.1` | `2.0` |
-|---|---|---|---|---|---|
-| margin | `-0.5` | `-0.1` | `0.0` | `0.1` | `1.0` |
+That is one output. Real generalization is a *worst case* over a test set. Give $n$ labelled
+points $p_k$ with labels $y_k \in \{\pm 1\}$, define the signed scores $s_k(t) = y_k R_{p_k}(t)$
+and the margin $M(t) = \min_k s_k(t)$. A finite minimum of monotone continuous functions is
+monotone and continuous, so the margin inherits a sharp threshold too.
 
-Sign change exactly at `t = 1`, confirming `exMargin_threshold_one`
-(margin `≤ 0` for `t ≤ 1`, `> 0` for `t > 1`).
+> **Delayed Margin Positivity.** Under the sign conditions above, with negative-class points
+> leaving every hidden unit silent and positive-class points exciting at least one, there is a
+> single $\tau \ge 0$ such that the *whole* test set is misclassified-or-tied for $t \le \tau$
+> and the *whole* test set is classified correctly with strictly positive margin for $t > \tau$.
 
-## 5. Counterexample hunt for the robustness claim
+Worst-case aggregation does not smear the transition. The entire test set flips at one instant.
 
-Perturbed field `g(x) = (μ - x²) + ε sin(10x)` with `μ = 1`, `ε = 0.2`
-(so `‖g - snField μ‖_∞ ≤ ε < μ`, a genuinely non-polynomial perturbation):
+---
 
-| `x` | `-1.1` | `-1.0` | `-0.9` | `0.9` | `1.0` | `1.1` |
-|---|---|---|---|---|---|---|
-| `g(x)` | `-0.010002` | `0.108804` | `0.107576` | `0.272424` | `-0.108804` | `-0.409998` |
+## 3. Delay = prejudice ÷ evidence
 
-Sign changes occur in `(-1.1, -1.0)` and `(0.9, 1.0)`: two equilibria survive,
-one negative and one positive, and both satisfy `|x² - μ| ≤ ε`
-(`x ∈ [0.894, 1.095]` in modulus). No counterexample to
-`perturbed_two_equilibria` / `perturbed_zero_near_branch` was found in this or
-in the sampled family `ε ∈ {0.05, 0.1, 0.2}`.
+We can compute $\tau$. Let $S = \sum_j a_j g_j$ be the **total signal**. Because ReLU is
+dominated by its own linearization when biases are non-positive, $R(t) \le c + tS$, so nothing
+can be positive before $t = |c|/S$. Conversely a single active unit $j_0$ forces positivity by
+$(|c|/a_{j_0} - b_{j_0})/g_{j_0}$. Hence the **delay sandwich**
 
-## 6. Delay scaling with signal strength
+$$\frac{|c|}{\sum_j a_j g_j} \;\le\; \tau \;\le\; \frac{|c|/a_{j_0} - b_{j_0}}{g_{j_0}},$$
 
-Single-unit score `-1 + relu(t·s)` has threshold `1/s`:
+and when the hidden biases vanish it collapses to the exact identity
 
-| `s` | `1` | `0.5` | `0.1` | `0.01` |
-|---|---|---|---|---|
-| delay | `1` | `2` | `10` | `100` |
+$$\boxed{\;\tau = \frac{|c|}{S}\;}$$
 
-Inverse-signal scaling, matching the exact sandwich
-`|c|/S ≤ τ ≤ (|c|/a_{j₀} - b_{j₀})/g_{j₀}` (`delay_scaling_sandwich`) and the
-unbounded train/test delay ratio (`grokking_ratio_unbounded`).
+Read it: **delay equals prejudice divided by evidence.** The output bias $|c|$ is how much the
+network insists on "no"; the total signal $S$ is how fast the data argues otherwise.
 
-## 7. Bottleneck passage time below the bifurcation (cycle 3)
+An immediate corollary is a **width law**. With $m$ identical units of output weight $A$ and
+signal $g$, $\tau(m) = |c|/(mAg)$, so $m\,\tau(m)$ is a constant. And it survives randomness:
+if the units are i.i.d. with integrable per-unit signal $Y$ of positive mean, then by the strong
+law of large numbers
 
-Explicit Riccati solution `x(t) = -k tan(kt)` of `x' = μ - x²` with `μ = -k²`;
-passage time from `x = +1` to `x = -1` is `2 arctan(1/k)/k`.
+$$m\,\tau_m \;\longrightarrow\; \frac{|c|}{\mathbb{E}[Y]}\qquad\text{almost surely.}$$
 
-| `k = √(-μ)` | passage time | bound `π/(2k)` |
-|---|---|---|
-| `0.1` | `29.42` | `15.71` |
-| `0.01` | `312.16` | `157.08` |
-| `0.001` | `3139.59` | `1570.80` |
+Wider networks grok sooner, at exactly rate $1/m$, with a constant you can name.
 
-Each tenfold decrease of `k` multiplies the passage time by ten: the delay
-scales as `|μ|^{-1/2}`, exactly as the proved bound
-`π/(2√(-μ)) ≤ passageTime` (`bottleneck_delay_inverse_sqrt`).  Contrast §2,
-where the weight-decay delay diverges only logarithmically — the two mechanisms
-have different, empirically distinguishable exponents.
+{{algorithm:0}}
 
-## No OEIS entry
+---
 
-No integer sequence arises in this project (all objects are real-analytic), so
-an OEIS search is not applicable.
+## 4. Can a network un-grok? Play with it
 
-## Where the corresponding theorems live
+Once the transition happens, is it permanent? With non-negative output weights, yes — and the
+reason is geometric rather than dynamical. Each $t \mapsto \mathrm{ReLU}(tg_j + b_j)$ is a
+maximum of two affine functions, hence **convex**; a non-negative combination of convex
+functions is convex; and a sublevel set of a convex function in one variable is an **interval**.
+So the failure set $\{t : R(t) \le 0\}$ is an interval: you fail, then you succeed, and never
+fail again. Call it **tropical rigidity** — it is exactly the piecewise-linear, max-plus
+structure of a positively-weighted rectifier layer that forbids relapse.
 
-* `Catalog/MachineLearning/GrokkingDelayedTransition/GradientFlowThreshold.lean`
-  (§1, §2, §3)
-* `Catalog/MachineLearning/GrokkingDelayedTransition/VectorMargin.lean`
-  (§4, §6)
-* `Catalog/MachineLearning/GrokkingDelayedTransition/SaddleNodeLocal.lean` (§5)
+Drop the sign condition and it shatters. In the widget below, start with the *positive preset*
+and confirm that the shaded failure region is a single block no matter how you move the sliders.
+Then hit *hat*: one output weight becomes $-2$, and the network groks at $t = 1/2$ and
+**un-groks** at $t = 3/2$. Then hit *comb*: the tents repeat, and so do the relapses.
 
-## 8. Cycle-4 data: the three sub-conjectures (N1)–(N3)
+{{interactive_demo:2}}
 
-The rational quantities in the tables below were produced with `#eval` in Lean
-(exact rational arithmetic); the two logarithms in §8.1 are evaluated
-numerically to three decimals.  Each table is matched by a theorem in
-`Catalog/MachineLearning/GrokkingDelayedTransition/NextCycle.lean`.
+<details>
+<summary><b>The precise statements</b></summary>
 
-### 8.1 Divergence of the delay along `λ ↑ λ_c` (N1)
+The width-3 **hat network**
+$$H(t) = -\tfrac12 + \mathrm{ReLU}(t) - 2\,\mathrm{ReLU}(t-1) + \mathrm{ReLU}(t-2)$$
+is a triangular tent of height $1$ peaking at $t = 1$, and its failure set is *exactly*
+$(-\infty,\tfrac12] \cup [\tfrac32,\infty)$ — provably not convex.
 
-With `s = θ = 1` (so `λ_c = 1`) and `w₀ = 0`, the log-argument of `crossTime` is
-`(s/λ - w₀)/(s/λ - θ)`:
+Gluing $k$ tents side by side, tent $i$ supported on $[2i, 2i+2]$ with peak $1$ at $2i+1$, and
+keeping the output bias $-\tfrac12$, produces an honest two-layer ReLU network of width $3k$
+that fails at every even integer $0, 2, \dots, 2k$ and succeeds at every odd integer below $2k$.
+Its failure set therefore has **at least $k+1$ connected components**: the number of relapses
+grows *linearly in the width*. Sign structure in the output layer buys the ability to
+understand, forget, and re-understand, arbitrarily many times.
+</details>
 
-| `λ` | `0.9` | `0.99` | `0.999` |
+---
+
+## 5. Where the wait actually comes from
+
+So far the delay was baked into the geometry. In a real experiment it is produced by
+optimization. Here is the smallest honest model.
+
+Give a single weight $w$ the ridge loss $L_\lambda(w) = \frac{\lambda}{2}w^2 - s\,w$, where $s>0$
+is the data drive and $\lambda>0$ is weight decay. Gradient flow $\dot w = s - \lambda w$ has the
+exact solution
+
+$$w(t) = \frac{s}{\lambda} + \Big(w_0 - \frac{s}{\lambda}\Big)e^{-\lambda t},$$
+
+which climbs strictly toward the regularized optimum $s/\lambda$ and never reaches it. A
+downstream rectifier fires only once $w$ exceeds an activation threshold $\theta$, so
+
+$$\tau(\lambda) = \frac{1}{\lambda}\,\log\!\frac{s/\lambda - w_0}{\,s/\lambda - \theta\,}.$$
+
+Now stare at the denominator. Set
+
+$$\mu(\lambda) = \frac{s}{\lambda} - \theta, \qquad \lambda_c = \frac{s}{\theta}.$$
+
+The threshold gets crossed **if and only if** $\mu(\lambda) > 0$, i.e. iff $\lambda < \lambda_c$.
+Too much regularization and the network never groks — not late, *never*. This is a genuine phase
+transition in a hyperparameter, and $\mu$ is its order parameter.
+
+Turn the weight-decay dial yourself. Watch the plateau lengthen, then watch the transition
+vanish entirely as you cross $\lambda_c$.
+
+{{interactive_demo:0}}
+
+{{algorithm:1}}
+
+---
+
+## 6. The other way to be slow: ghosts
+
+There is a second, entirely different mechanism, and it is the classical picture of a
+**saddle-node bifurcation**. Consider
+
+$$\dot x = \mu - x^2.$$
+
+For $\mu > 0$ there are two equilibria $\pm\sqrt\mu$: the upper is stable
+($\partial_x = -2\sqrt\mu < 0$), the lower unstable ($+2\sqrt\mu > 0$). At $\mu = 0$ they collide
+and annihilate. Below, there is nothing left to rest on — and yet the flow *crawls*, squeezing
+through the ghost of the vanished pair.
+
+The Riccati equation is solved exactly by $x(t) = -k\tan(kt)$ with $k = \sqrt{-\mu}$, and the
+time to fall from $+A$ to $-A$ is
+
+$$T(k,A) = \frac{2\arctan(A/k)}{k}.$$
+
+Drag $\mu$ across zero in the widget and watch a delay appear from an absence. Then drag the
+observation level $A$ across two orders of magnitude and watch the normalized product barely
+move — that level-independence is the signature of a genuine bottleneck.
+
+{{interactive_demo:1}}
+
+<details>
+<summary><b>The full local theory: nondegeneracy, stability, energy, robustness</b></summary>
+
+**Nondegeneracy.** At $(\mu,x) = (0,0)$ the field $f_\mu(x) = \mu - x^2$ satisfies
+$f_0(0) = 0$, $\partial_x f_0(0) = 0$, $\partial_\mu f = 1 \ne 0$, $\partial_{xx} f = -2 \ne 0$ —
+precisely the classical saddle-node conditions.
+
+**Nonlinear (not merely linear) stability.** Along any solution,
+$\frac{d}{dt}(x-\sqrt\mu)^2 = -2(x-\sqrt\mu)^2(x+\sqrt\mu)$, strictly negative whenever
+$x > -\sqrt\mu$ and $x \ne \sqrt\mu$; mirroring gives
+$\frac{d}{dt}(x+\sqrt\mu)^2 = -2(x+\sqrt\mu)^2(x-\sqrt\mu) > 0$ below the stable branch.
+
+**Energy.** Both branches are critical points of the cubic $V_\mu(x) = \frac{x^3}{3} - \mu x$,
+whose negative gradient is the flow. The exact factorization
+$V_\mu(x) - V_\mu(\sqrt\mu) = \frac13 (x-\sqrt\mu)^2(x+2\sqrt\mu)$ shows $+\sqrt\mu$ is a strict
+local minimum; mirrored, $-\sqrt\mu$ is a strict local maximum. For $\mu < 0$, $V_\mu$ has no
+critical point at all.
+
+**Robustness.** For any continuous $g$ with $|g(x) - (\mu - x^2)| \le \varepsilon$ everywhere:
+if $0 < \varepsilon < \mu$ then $g$ still has two zeros, one negative and one positive; every
+zero satisfies $|x^2 - \mu| \le \varepsilon$, so it sits near a true branch; and if
+$\mu < -\varepsilon$ then $g$ has no zero. The whole bifurcation diagram is stable under uniform
+perturbations, so none of this is an artifact of the exact quadratic.
+</details>
+
+---
+
+## 7. The main event: two exact constants
+
+Both laws can be pinned down to their leading constants. This is the heart of the matter.
+
+> **Law I (relaxation).** As $\lambda \uparrow \lambda_c$,
+> $$\frac{\tau(\lambda)}{\log(1/\mu(\lambda))} \;\longrightarrow\; \frac{\theta}{s} = \frac{1}{\lambda_c},
+> \qquad\text{i.e.}\qquad \tau \sim \frac{1}{\lambda_c}\log\frac{1}{\mu}.$$
+
+> **Law II (bottleneck).** For every observation level $A > 0$,
+> $$\sqrt{|\mu|}\;T\big(\sqrt{|\mu|}, A\big) \;\longrightarrow\; \pi,
+> \qquad\text{i.e.}\qquad T \sim \pi\,|\mu|^{-1/2}.$$
+
+<details>
+<summary><b>Why 1/λ<sub>c</sub>?  A separation of scales.</b></summary>
+
+Split the logarithm:
+$$\tau(\lambda) = \frac{1}{\lambda}\Big[\log\big(s/\lambda - w_0\big) + \log\big(1/\mu\big)\Big].$$
+As $\lambda \uparrow \lambda_c$ we have $s/\lambda \to \theta$, so the first term converges to the
+*finite* number $\log(\theta - w_0)$ while the second diverges. Dividing by $\log(1/\mu)$ kills
+the bounded part and leaves $1/\lambda \to 1/\lambda_c$. The delay is a bounded contribution
+(how far the initial weight starts from the threshold) plus a divergent one (how close the
+regularized optimum is to the threshold); only the second survives normalization.
+</details>
+
+<details>
+<summary><b>Why exactly π, and why doesn't A appear?</b></summary>
+
+Multiply through: $k\,T(k,A) = 2\arctan(A/k)$ — an *exact identity*, not an approximation. As
+$k \downarrow 0$ with $A$ fixed, $A/k \to \infty$ and $\arctan \to \pi/2$, so the product tends to
+$\pi$. The level $A$ has vanished from the limit because asymptotically **all** of the time is
+spent in an arbitrarily small neighbourhood of the ghost equilibrium; widening the observation
+window adds only $O(1)$. Level-independence is what distinguishes a bottleneck from an ordinary
+transit.
+</details>
+
+Two exponents, two constants:
+
+| Mechanism | Delay law | Sharp constant | Log–log signature |
 |---|---|---|---|
-| log-argument | `10` | `100` | `1000` |
-| `crossTime = λ⁻¹ log(·)` | `2.558` | `4.652` | `6.914` |
+| Threshold relaxation | $\tau \sim \lambda_c^{-1}\log(1/\mu)$ | $1/\lambda_c = \theta/s$ | slope $\approx 0$, curved |
+| Saddle-node bottleneck | $T \sim \pi\,\mu^{-1/2}$ | $\pi$ | slope exactly $-1/2$ |
 
-The delay grows like `log(1/(λ_c - λ))` and is unbounded — the numerical
-counterpart of `crossTime_tendsto_atTop`.
+{{visualization:0}}
 
-### 8.2 Exact `1/m` width law (N2)
+---
 
-Symmetric width-`m` network with `A = g = 1`, `c = -1`, zero hidden biases;
-`τ(m) = |c|/(m A g)`:
+## 8. Who wins?
 
-| `m` | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
-|---|---|---|---|---|---|---|---|---|
-| `τ(m)` | `1` | `1/2` | `1/3` | `1/4` | `1/5` | `1/6` | `1/7` | `1/8` |
-| `m·τ(m)` | `1` | `1` | `1` | `1` | `1` | `1` | `1` | `1` |
+If a system has both mechanisms available, which delay do you actually observe? The answer is
+decisive. Because $\sqrt\mu\,\log(1/\mu) \to 0$ as $\mu \downarrow 0$ — the logarithm is slower
+than *every* inverse power —
 
-`m·τ(m)` is constant, exactly as `symNet_delay_width_law` asserts.
+$$\frac{K\log(D/\mu)}{\pi/(2\sqrt\mu)} \;\longrightarrow\; 0 \qquad(\mu \downarrow 0)$$
 
-### 8.3 Grok, un-grok: the hat network (N3)
+for every $K$ and every $D>0$; and quantitatively, for any $K, D, A > 0$ there is a whole
+neighbourhood of criticality on which $K\log(D/\mu) < T(\sqrt\mu, A)$.
 
-`hatNet t = -1/2 + relu t - 2 relu(t-1) + relu(t-2)`, tabulated on a quarter-integer
-grid (`fail` = `hatNet t ≤ 0`):
+**The bottleneck always wins, eventually.** No matter how large you make the constant in front
+of the logarithm — try it in the widget above by cranking $K$ — the crossing point merely moves;
+the verdict does not change.
 
-| `t` | `0` | `1/4` | `1/2` | `3/4` | `1` | `5/4` | `3/2` | `7/4` | `2` | `3` | `4` |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| `hatNet t` | `-1/2` | `-1/4` | `0` | `1/4` | `1/2` | `1/4` | `0` | `-1/4` | `-1/2` | `-1/2` | `-1/2` |
-| fail | yes | yes | yes | no | no | no | yes | yes | yes | yes | yes |
+That is what makes the theory testable. Sweep the control parameter in a grokking experiment,
+plot the delay against the distance to criticality on log–log axes, and read the slope: $-1/2$
+means a saddle-node bottleneck; a curved line with no power-law slope means simple threshold
+relaxation. Because both constants are known, the identification is *calibrated*, not merely
+qualitative.
 
-The failure set is `(-∞, 1/2] ∪ [3/2, ∞)`: two components, so it is not an
-interval — the counterexample hunt for the converse of the convexity theorem
-succeeded (`hatNet_failure_set`, `hatNet_failure_not_convex`).
+{{algorithm:2}}
 
-## 9. Cycle 3 evidence (`WidthLawsAndRelapses.lean`)
+{{demo:1}}
 
-All tables below were produced with `#eval` on exact rationals (or `Float`
-where a logarithm is involved) before the corresponding theorem was formalized.
+---
 
-### 9.1 Comb of hat units: linearly many relapses (M2)
+## 9. Grokking as a window
 
-`combNet 3 t = -1/2 + Σ_{i<3} bump i t`, `bump i t = relu(t-2i) - 2relu(t-2i-1)
-+ relu(t-2i-2)`, on a half-integer grid:
+One last piece makes it concrete. Take the tiny network $N(t) = -1 + \mathrm{ReLU}(tp)$ with two
+training points of signals $2$ and $-1$ and a test point of weak signal $1/2$. The training set
+is perfectly classified once $t > 1/2$; the test point only once $t > 2$. The set of times where
+training error is already zero but test error is still positive is *exactly* the interval
+$(1/2, 2]$ — sharp on both sides.
 
-| `t` | `0` | `1/2` | `1` | `3/2` | `2` | `5/2` | `3` | `7/2` | `4` | `9/2` | `5` | `11/2` | `6` | `13/2` | `7` |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `combNet 3 t` | `-1/2` | `0` | `1/2` | `0` | `-1/2` | `0` | `1/2` | `0` | `-1/2` | `0` | `1/2` | `0` | `-1/2` | `-1/2` | `-1/2` |
+And the window has no universal bound. A single unit with signal strength $\sigma$ has delay
+exactly $1/\sigma$; fixing the training signal and shrinking the test signal makes the ratio
+(test delay)/(train delay) exceed any prescribed $R$, while both transitions stay sharp. **The
+gap between memorizing and understanding is set purely by how weakly the test distribution
+excites the features the training data built.**
 
-The failure set `{t : combNet 3 t ≤ 0}` is
-`(-∞,1/2] ∪ [3/2,5/2] ∪ [7/2,9/2] ∪ [11/2,∞)`: four components for width
-`3·3 = 9`, matching the proved lower bound `k+1 = 4`
-(`combNet_failure_components_card`).  So relapses grow linearly in the width.
+Nor is any of it fragile. If a perturbed trajectory stays uniformly within $\varepsilon$ of a
+clean one that is non-positive before $\tau$ and grows at rate at least $\kappa$ after it, then
+the perturbed trajectory is still $\le \varepsilon$ before $\tau$ and strictly positive after
+$\tau + \varepsilon/\kappa$. That displacement bound is *attained exactly*, by the constant
+perturbation $-\varepsilon$. Noise delays grokking by a computable amount; it never abolishes it.
 
-### 9.2 The width law under a non-i.i.d. but Cesàro-convergent signal (M1)
+{{visualization:1}}
 
-Unit signals `u j = 1 + (j mod 3)`, so `S_m/m → 2` and `c = -1`:
+---
 
-| `m` | 10 | 100 | 1000 | 10000 |
-|---|---|---|---|---|
-| `S_m/m` | `19/10` | `199/100` | `1999/1000` | `19999/10000` |
-| `m·τ_m` | `10/19` | `100/199` | `1000/1999` | `10000/19999` |
+## 10. Run everything
 
-`m·τ_m → 1/2 = |c|/L`, exactly the limit proved in `unitDelay_width_law`.
-(The i.i.d. case is `iid_width_law_ae`, via the strong law of large numbers.)
+Every claim above is checked numerically in the following self-contained program: the sharp
+thresholds, the sandwich, the exact $|c|/S$ delay, the $1/m$ width law and its almost-sure
+version, tropical rigidity and the comb's relapses, the exact crossing law and criticality test,
+both sharp constants, the dominance of the bottleneck, the $(1/2, 2]$ window, the unbounded
+grokking ratio, and the exactness of the $\varepsilon/\kappa$ displacement.
 
-### 9.3 Exponent competition: logarithm versus inverse square root (M3)
+{{demo:0}}
 
-`K = D = 1`; the relaxation bound `log(1/μ)` against the bottleneck bound
-`π/(2√μ)`:
+---
 
-| `μ` | `1e-1` | `1e-2` | `1e-3` | `1e-4` | `1e-6` | `1e-8` |
-|---|---|---|---|---|---|---|
-| `log(1/μ)` | `2.30` | `4.61` | `6.91` | `9.21` | `13.82` | `18.42` |
-| `π/(2√μ)` | `4.97` | `15.71` | `49.67` | `157.08` | `1570.80` | `15707.96` |
+## 11. What the flat line was really telling you
 
-The ratio diverges; no counterexample to the eventual domination was found, and
-the domination is now a theorem (`log_delay_lt_bottleneck_delay`).
+Underneath the plateau, something is always moving — smoothly, monotonically. A weight climbing
+an exponential toward its regularized optimum. A state crawling through the remnant of a pair of
+equilibria that no longer exist. The output looks frozen because a rectifier is clipping the
+news, or because a margin is still on the wrong side of zero. Understanding is not arriving
+suddenly; it is arriving continuously, and only *becoming visible* suddenly.
+
+The practical edge: if delay is prejudice over evidence, then to grok sooner you widen the
+network, strengthen the features, or weaken the default answer — with returns of exactly $1/m$,
+exactly $1/S$, exactly $|c|$. If the delay diverges as you raise regularization, there is a real
+critical value beyond which the transition never happens. And if you want to know *which* kind of
+slowness you are fighting, measure the exponent.
+
+Further reading on the surrounding ideas:
+[grokking](https://en.wikipedia.org/wiki/Grokking_(machine_learning)),
+[saddle-node bifurcation](https://en.wikipedia.org/wiki/Saddle-node_bifurcation),
+[Riccati equation](https://en.wikipedia.org/wiki/Riccati_equation),
+[rectifier (neural networks)](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)),
+[tropical geometry](https://en.wikipedia.org/wiki/Tropical_geometry),
+[law of large numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers).
