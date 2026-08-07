@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-07T05:22:10Z",
+  "date": "2026-08-07T05:40:03Z",
   "key_results": [
     "Exact Distance Formula: the hyperbolic distance d from the base point i to the node z(m,n) = (n+i)/m of a primitive Pythagorean triple satisfies cosh d = (m^2 + n^2 + 1)/(2m), so the hypotenuse of the triple appears as the numerator of a hyperbolic cosine.",
     "Logarithmic Trajectory Theorem, in sharp form: every node with hypotenuse c lies at distance between (1/2) log c and (1/2) log(2(c+1)) from the base point, so the residual d - (1/2) log c is confined to an interval of width (1/2) log 2.",
