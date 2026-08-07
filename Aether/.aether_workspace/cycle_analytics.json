@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T19:26:07.863449+00:00",
+  "last_updated": "2026-08-07T21:06:35.649336+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50478,6 +50478,7 @@
       "outcome_quality": 0.6537058069977426,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50521,6 +50522,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50637,6 +50639,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-07T19:26:07.732225+00:00",
       "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2538,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Algebra",
+      "duration_seconds": 5982.937067747116,
+      "end_time": 1786136785.6936975,
+      "files_integrated": 2,
+      "job_id": "ab157807",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8938,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8983,
+        "novelty": 0.9214,
+        "proof_depth": 0.8883,
+        "usefulness": 0.9442
+      },
+      "quality_score": 0.6443439147018031,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786130802.7566297,
+      "strategy_count": 0,
+      "theorem_count": 56,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 43,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-07T21:06:35.525928+00:00",
+      "title": "The formal results show that a scalar missing rate and feature count do not dete"
     }
   ]
 }

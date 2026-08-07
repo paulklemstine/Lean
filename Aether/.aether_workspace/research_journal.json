@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "29953b58",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n1. **Ramified fiber classification.** For every field of characteristic other than two and every nonzero `x` with `x² = 1`, prove that the complete fiber of `radicalTwoEval` above",
-      "quality_score": 0.6988599999999999,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-31T00:06:23",
-      "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
-    },
-    {
       "cycle_id": "3811f14c",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nThe following conjectures use the energy from\n`Catalog/NumberTheory/PythagoreanEnergySpectrum.lean`. Each is concrete and\nfalsifiable by finite computation at any fixed bound.\n\n1.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 70,
       "timestamp": "2026-08-07T19:26:07",
       "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
+    },
+    {
+      "cycle_id": "ab157807",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThis cycle settled three of the five conjectures inherited by the thread, over\nan arbitrary field and with arbitrary linear restriction maps\n(`Catalog/Algebra/DataSheafCohomology.",
+      "quality_score": 0.6443439147018031,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-07T21:06:35",
+      "title": "The formal results show that a scalar missing rate and feature count do not dete"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-07T19:26:07",
+  "last_updated": "2026-08-07T21:06:35",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "0fbfba35",
-        "quality": 0.7781,
-        "theorems": 13,
-        "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
-      },
-      {
         "cycle_id": "8eaed4e7",
         "quality": 0.692,
         "theorems": 6,
@@ -3079,6 +3073,12 @@
         "quality": 0.6542925496031746,
         "theorems": 600,
         "title": "ArXiv paper: The small Davenport constant of the Heisenberg group of order 125"
+      },
+      {
+        "cycle_id": "ab157807",
+        "quality": 0.6443439147018031,
+        "theorems": 56,
+        "title": "The formal results show that a scalar missing rate and feature count do not dete"
       }
     ],
     "Applications": [
