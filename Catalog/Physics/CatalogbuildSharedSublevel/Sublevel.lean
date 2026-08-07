@@ -7,10 +7,6 @@ Domain: Shared
 Declarations: 5
 -/
 
-/-- The "excess" function: the remainder of `N` modulo `x`.
-(Repaired: this definition was missing from the auto-generated file.) -/
-def E (N x : ℕ) : ℕ := N % x
-
 /-- [Section: # CatalogBuild.Shared.Sublevel
 Auto-generated from theorem catalog database.
 Domain: Speculative

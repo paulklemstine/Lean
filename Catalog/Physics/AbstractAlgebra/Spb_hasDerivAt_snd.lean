@@ -7,30 +7,7 @@ Domain: Shared
 Declarations: 8
 -/
 
-open Real
-
 noncomputable section
-
-/-- The SPB (Stereographic Projection Bridge) operation.
-(Repaired: this definition, together with `spb_zero_left`, `spb_zero_right` and
-`tan_add_eq_spb`, was missing from the auto-generated file.) -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
-theorem spb_zero_left (x : ℝ) : spb 0 x = x := by simp [spb]
-
-theorem spb_zero_right (x : ℝ) : spb x 0 = x := by simp [spb]
-
-/-- The tangent addition formula is exactly the SPB operation. -/
-theorem tan_add_eq_spb (a b : ℝ) (ha : cos a ≠ 0) (hb : cos b ≠ 0) :
-    tan (a + b) = spb (tan a) (tan b) := by
-  have ta : tan a = sin a / cos a := Real.tan_eq_sin_div_cos a
-  have tb : tan b = sin b / cos b := Real.tan_eq_sin_div_cos b
-  have h1 : tan a + tan b = sin (a + b) / (cos a * cos b) := by
-    rw [ta, tb, Real.sin_add]; field_simp
-  have h2 : 1 - tan a * tan b = cos (a + b) / (cos a * cos b) := by
-    rw [ta, tb, Real.cos_add]; field_simp
-  rw [spb, h1, h2, div_div_div_cancel_right₀ (mul_ne_zero ha hb), Real.tan_eq_sin_div_cos]
-
 
 /-- [Section: # CatalogBuild.Shared.Spb_hasDerivAt_snd
 Auto-generated from theorem catalog database.
