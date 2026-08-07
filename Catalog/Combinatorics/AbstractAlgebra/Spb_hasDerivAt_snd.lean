@@ -8,23 +8,21 @@ Domain: Shared
 Declarations: 8
 -/
 
-open Real
-
 noncomputable section
 
-/-- The tangent addition formula, phrased through the SPB operation. -/
+/-- The tangent addition formula in SPB form. -/
 theorem tan_add_eq_spb (a b : ℝ) (ha : Real.cos a ≠ 0) (hb : Real.cos b ≠ 0) :
     Real.tan (a + b) = spb (Real.tan a) (Real.tan b) := by
+  have hkey : 1 - Real.tan a * Real.tan b
+      = Real.cos (a + b) / (Real.cos a * Real.cos b) := by
+    rw [Real.cos_add, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos]
+    field_simp
   unfold spb
-  rw [Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos,
-    Real.sin_add, Real.cos_add]
-  rcases eq_or_ne (Real.cos a * Real.cos b - Real.sin a * Real.sin b) 0 with h | h
-  · rw [h, div_zero]
-    have : 1 - Real.sin a / Real.cos a * (Real.sin b / Real.cos b) = 0 := by
-      field_simp
-      linarith [h]
-    rw [this, div_zero]
-  · field_simp
+  rcases eq_or_ne (Real.cos (a + b)) 0 with h | h
+  · rw [Real.tan_eq_sin_div_cos, h, div_zero, hkey, h, zero_div, div_zero]
+  · rw [hkey, Real.tan_eq_sin_div_cos a, Real.tan_eq_sin_div_cos b,
+      Real.tan_eq_sin_div_cos (a + b), Real.sin_add]
+    field_simp
 
 /-- [Section: # CatalogBuild.Shared.Spb_hasDerivAt_snd
 Auto-generated from theorem catalog database.
@@ -46,7 +44,7 @@ Declarations: 8] -/
 theorem spb_hasDerivAt_fst (x y : ℝ) (h : 1 - x * y ≠ 0) :
     HasDerivAt (fun x' => spb x' y) ((1 + y ^ 2) / (1 - x * y) ^ 2) x := by
   unfold spb
-  convert HasDerivAt.div ( HasDerivAt.add ( hasDerivAt_id x ) ( hasDerivAt_const _ _ ) ) ( HasDerivAt.sub ( hasDerivAt_const _ _ ) ( hasDerivAt_mul_const y ) ) h using 1 ; ring_nf;
+  convert HasDerivAt.div ( HasDerivAt.add ( hasDerivAt_id x ) ( hasDerivAt_const _ _ ) ) ( HasDerivAt.sub ( hasDerivAt_const _ _ ) ( hasDerivAt_mul_const y ) ) h using 1 ; ring;
   norm_num ; ring
 
 /-- SPB with 1: spb(x, 1) = (x+1)/(1-x). -/

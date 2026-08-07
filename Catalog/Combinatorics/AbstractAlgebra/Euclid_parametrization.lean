@@ -7,7 +7,7 @@ Domain: Shared
 Declarations: 1
 -/
 
-/-- `IsPythTriple' a b c` says that `(a, b, c)` is a Pythagorean triple. -/
+/-- `(a, b, c)` is a Pythagorean triple. -/
 def IsPythTriple' (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
 
 /-- [Section: # CatalogBuild.Shared.Euclid_parametrization

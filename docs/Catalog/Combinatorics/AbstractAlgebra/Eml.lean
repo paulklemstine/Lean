@@ -9,7 +9,7 @@ Declarations: 17
 
 noncomputable section
 
-/-- The EML (exp-minus-log) binary operation `eml x y = eˣ - log y`. -/
+/-- The EML (exp-minus-log) binary operation. -/
 def eml (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 /-- [Section: # CatalogBuild.Shared.Eml
@@ -67,7 +67,7 @@ theorem eml_left_division_domain (a b x : ℝ) (ha : 0 < a) (h : eml x a = b) :
     0 < b + Real.log a := by
   exact h.symm ▸ by unfold eml; linarith [ Real.exp_pos x, Real.log_le_sub_one_of_pos ha ] ;
 
-theorem eml_complexity_exp (x : ℝ) : eml x 1 = Real.exp x := by
+theorem eml_complexity_exp : eml x 1 = Real.exp x := by
   unfold eml; norm_num;
 
 theorem eml_subtraction (a b : ℝ) (ha : 0 < a) :

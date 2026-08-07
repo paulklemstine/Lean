@@ -1,5 +1,4 @@
 import Mathlib
-import Shared.OnePlusExpPos.One_plus_exp_pos
 
 /-! # CatalogBuild.Shared.LogisticSigmoid
 
@@ -7,12 +6,17 @@ Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 6
 
-The declarations below were reordered so that each one only refers to
-previously introduced results, and the import supplying `one_plus_exp_pos`
-was restored.
+The generated source referred to a positivity lemma `one_plus_exp_pos` that was
+never stated and listed `logisticSigmoid_pos` after the lemma using it; both are
+corrected here.  This module is the canonical home of the sigmoid lemmas.
 -/
 
 noncomputable section
+
+/-- The denominator `1 + eˣ` of the logistic sigmoid is positive. -/
+lemma one_plus_exp_pos (x : ℝ) : (0 : ℝ) < 1 + Real.exp x := by
+  have := Real.exp_pos x
+  linarith
 
 /-- The logistic sigmoid function S(x) = eˣ / (1 + eˣ), the derivative of softplus -/
 def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)

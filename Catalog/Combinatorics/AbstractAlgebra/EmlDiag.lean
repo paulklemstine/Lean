@@ -7,11 +7,11 @@ Domain: Shared
 Declarations: 3
 -/
 
-open Set
-
 noncomputable section
 
-/-- The diagonal of the EML operation, `emlDiag z = e^z - log z`. -/
+open Set
+
+/-- The EML diagonal `d(z) = exp z - log z`. -/
 def emlDiag (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 /-- [Section: # CatalogBuild.Shared.EmlDiag
