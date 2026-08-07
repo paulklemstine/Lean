@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T07:08:34.897876+00:00",
+  "last_updated": "2026-08-07T08:07:28.312283+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -49862,6 +49862,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -49890,6 +49891,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-07T07:08:34.763685+00:00",
       "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2749,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Algebra",
+      "duration_seconds": 3537.5828902721405,
+      "end_time": 1786090031.537865,
+      "files_integrated": 16,
+      "job_id": "8dc4e6e3",
+      "outcome_quality": 0.6583992433823346,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.9149,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9321,
+        "novelty": 0.9226,
+        "proof_depth": 0.9361,
+        "usefulness": 0.9681
+      },
+      "quality_score": 0.6583992433823346,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786086493.9549747,
+      "strategy_count": 0,
+      "theorem_count": 196,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 174,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-07T08:07:28.184253+00:00",
+      "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
     }
   ]
 }

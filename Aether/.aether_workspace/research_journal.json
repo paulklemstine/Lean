@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7edbd52d",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions for the union-closed sets formalization\n\nThe unrestricted statement requested in the mission is Frankl's union-closed sets conjecture and remains unresolved. The Lean development t",
-      "quality_score": 0.78958,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-30T14:41:47",
-      "title": "Frankl's Union-Closed Conjecture"
-    },
-    {
       "cycle_id": "bf94368f",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\n## Corrected mathematical status\n\nThe proposed powers-of-two family is a **strictly descending**, separated\nfiltration, not an ascending chain.  The formal development proves this",
@@ -2501,6 +2491,16 @@
       "theorem_count": 60,
       "timestamp": "2026-08-07T07:08:34",
       "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
+    },
+    {
+      "cycle_id": "8dc4e6e3",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — tropical linear algebra\n\nThis file is the live research thread of the project.  The Lean development lives in\n`Catalog/Algebra/TropicalLinearAlgebra/` and every result cited belo",
+      "quality_score": 0.6583992433823346,
+      "sorry_count": 0,
+      "theorem_count": 196,
+      "timestamp": "2026-08-07T08:07:25",
+      "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73319
     }
   ],
-  "last_updated": "2026-08-07T07:08:34",
+  "last_updated": "2026-08-07T08:07:25",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "bf94368f",
-        "quality": 0.80162,
-        "theorems": 28,
-        "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
-      },
-      {
         "cycle_id": "85fa434c",
         "quality": 0.73204,
         "theorems": 7,
@@ -3079,6 +3073,12 @@
         "quality": 0.6546970930232558,
         "theorems": 60,
         "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
+      },
+      {
+        "cycle_id": "8dc4e6e3",
+        "quality": 0.6583992433823346,
+        "theorems": 196,
+        "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
       }
     ],
     "Applications": [
