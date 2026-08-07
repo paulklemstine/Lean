@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b0710fef",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) ≤ N^k` is robust and directly yields the\n`log₂ N` bits-per-spike ceiling. A sharper next theorem is\n\n`b",
-      "quality_score": 0.7679199999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-02T17:26:14",
-      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-    },
-    {
       "cycle_id": "4ae649eb",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nThe present development establishes a finite, discrete chain:\n\n1. a pointwise code-length bound on information density;\n2. mutual information bounded by expected description lengt",
@@ -499,19 +489,19 @@
       "theorem_count": 134,
       "timestamp": "2026-08-07T05:10:38",
       "title": "ArXiv paper: Even smaller universal posets"
+    },
+    {
+      "cycle_id": "b2707824",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Geometry/HyperbolicBerggrenGeodesics.lean`.\n\n## What survived, what failed\n\n**Survived (proved, 0 sorries).**\nThe Berg",
+      "quality_score": 0.73319,
+      "sorry_count": 0,
+      "theorem_count": 182,
+      "timestamp": "2026-08-07T05:41:42",
+      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "593a0386",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **Sharp two-sided summand asymptotics.** For every `k : ℕ`, prove\n   `1 / (2 * (k + 2 : ℝ)^2) ≤ gammaTerm k` in addition to the formalized upper\n   bound `gammaTerm k ≤ 1 / (2",
-      "quality_score": 0.7903499999999999,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-30T12:14:19",
-      "title": "Deepening: Euler-Mascheroni Constant: Irrationality Approaches"
-    },
     {
       "cycle_id": "67548200",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 30,
       "timestamp": "2026-08-07T05:40:02",
       "title": "Black-Hole-Entropy: Bekenstein-Hawking Metric Area Law Proof"
+    },
+    {
+      "cycle_id": "b2707824",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Geometry/HyperbolicBerggrenGeodesics.lean`.\n\n## What survived, what failed\n\n**Survived (proved, 0 sorries).**\nThe Berg",
+      "quality_score": 0.73319,
+      "sorry_count": 0,
+      "theorem_count": 182,
+      "timestamp": "2026-08-07T05:41:42",
+      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a65c164b",
-      "domain": "Algebra",
-      "name": "ext_int_eq_zero",
-      "quality": 0.78643
-    },
     {
       "cycle_id": "a65c164b",
       "domain": "Algebra",
@@ -2803,9 +2797,15 @@
       "domain": "Cryptography",
       "name": "inducedEmbedding_of_isUniversalHost",
       "quality": 0.7003711194029851
+    },
+    {
+      "cycle_id": "b2707824",
+      "domain": "Geometry",
+      "name": "sub_div_le_log_div",
+      "quality": 0.73319
     }
   ],
-  "last_updated": "2026-08-07T05:40:02",
+  "last_updated": "2026-08-07T05:41:42",
   "open_questions": [
     {
       "context": "+  sorry; +  sorry; +  sorry",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "01a8c97a",
-        "quality": 0.72854,
-        "theorems": 15,
-        "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
-      },
-      {
         "cycle_id": "064bb153",
         "quality": 0.75976,
         "theorems": 12,
@@ -3443,6 +3437,12 @@
       {
         "cycle_id": "b2707824",
         "quality": 0.73419,
+        "theorems": 182,
+        "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
+      },
+      {
+        "cycle_id": "b2707824",
+        "quality": 0.73319,
         "theorems": 182,
         "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
       },
