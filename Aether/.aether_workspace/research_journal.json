@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "15429b4a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nThe following concrete statements are natural next targets. Each is falsifiable as a precise finite or asymptotic claim.\n\n1. **Stability for Turán extremizers.** For every integer",
-      "quality_score": 0.73393,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-30T18:55:31",
-      "title": "Extremal Graph Theory: Turán and Szemerédi"
-    },
-    {
       "cycle_id": "726a20a7",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nThe Lean development proves an abstract energy estimate, the final measure-theoretic reduction behind an ε-regularity argument, and exact finite-mode energy exchange. It does **no",
@@ -2501,6 +2491,16 @@
       "theorem_count": 659,
       "timestamp": "2026-08-07T13:46:54",
       "title": "Close Proofs: ArXiv paper: Chebotarev geodesic theorem: non-split case"
+    },
+    {
+      "cycle_id": "09b12514",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Combinatorics/BipartiteExtremalTrees.lean`,\n`Catalog/Combinatorics/BipartiteExtremalTreesFixedParts.lean` and\n`Catalog/Combinatorics/Bip",
+      "quality_score": 0.6640958333333333,
+      "sorry_count": 0,
+      "theorem_count": 721,
+      "timestamp": "2026-08-07T14:05:25",
+      "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71918
     }
   ],
-  "last_updated": "2026-08-07T13:46:54",
+  "last_updated": "2026-08-07T14:05:25",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "ed94092b",
-        "quality": 0.7667599999999999,
-        "theorems": 16,
-        "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
-      },
-      {
         "cycle_id": "d4159430",
         "quality": 0.7496799999999999,
         "theorems": 9,
@@ -3265,6 +3259,12 @@
         "quality": 0.7010699999999999,
         "theorems": 34,
         "title": "Concrete, falsifiable conjectures arising from the formalization in"
+      },
+      {
+        "cycle_id": "09b12514",
+        "quality": 0.6640958333333333,
+        "theorems": 721,
+        "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
       }
     ],
     "Computation": [

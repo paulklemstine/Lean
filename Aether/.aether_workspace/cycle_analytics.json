@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T13:46:54.949698+00:00",
+  "last_updated": "2026-08-07T14:05:26.144722+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50126,6 +50126,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50169,6 +50170,7 @@
       "outcome_quality": 0.640478157722513,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50197,6 +50199,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-07T13:46:54.818310+00:00",
       "title": "Close Proofs: ArXiv paper: Chebotarev geodesic theorem: non-split case"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2835,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Combinatorics",
+      "duration_seconds": 7205.4888796806335,
+      "end_time": 1786111510.4718351,
+      "files_integrated": 53,
+      "job_id": "09b12514",
+      "outcome_quality": 0.6640958333333333,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.9235,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9418,
+        "novelty": 0.95,
+        "proof_depth": 0.9383,
+        "usefulness": 0.9691
+      },
+      "quality_score": 0.6640958333333333,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786104304.9829555,
+      "strategy_count": 0,
+      "theorem_count": 721,
+      "theorem_novelty_disproof": 6,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 593,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-07T14:05:26.012440+00:00",
+      "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
     }
   ]
 }
