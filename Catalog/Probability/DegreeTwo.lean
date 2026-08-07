@@ -1,4 +1,4 @@
-import Novelty.Core
+import Novelty.JacobianCore
 
 /-!
 # The Jacobian Conjecture for triangular degree-2 maps (all dimensions)
