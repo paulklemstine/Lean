@@ -479,7 +479,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     return `plt.subplots(${cleanedArgs})`;
                 }
-            );
+            // Fix unbraced \fracXY in LaTeX strings (e.g., \frac12 -> \frac{1}{2})
+            processedCode = processedCode.replace(/\\frac([a-zA-Z0-9])([a-zA-Z0-9])/g, '\\frac{$1}{$2}');
 
             // Build the wrapped code so the final expression returns the rendered output.
             // Returning the value avoids relying on the global stdout capture, which is
@@ -512,6 +513,30 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import os
+import re
+
+# Patch matplotlib MathTextParser to handle malformed LaTeX (e.g. unbraced \\frac) gracefully
+try:
+    import matplotlib.mathtext as _mathtext
+    if hasattr(_mathtext, 'MathTextParser') and not hasattr(_mathtext, '_aether_patched'):
+        _mathtext._aether_patched = True
+        _orig_mathtext_parse = _mathtext.MathTextParser.parse
+        def _safe_mathtext_parse(self, s, *args, **kwargs):
+            try:
+                return _orig_mathtext_parse(self, s, *args, **kwargs)
+            except Exception:
+                cleaned = re.sub(r'\\frac([a-zA-Z0-9])([a-zA-Z0-9])', r'\\frac{\1}{\2}', s)
+                try:
+                    return _orig_mathtext_parse(self, cleaned, *args, **kwargs)
+                except Exception:
+                    plain = s.replace('$', '')
+                    try:
+                        return _orig_mathtext_parse(self, plain, *args, **kwargs)
+                    except Exception:
+                        return _orig_mathtext_parse(self, 'text', *args, **kwargs)
+        _mathtext.MathTextParser.parse = _safe_mathtext_parse
+except Exception:
+    pass
 
 # Record initial files in working directory so we can detect any images saved to disk
 _initial_files = set(os.listdir('.'))
