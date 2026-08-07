@@ -1,27 +1,6 @@
 import Computation.ReversibleSortingBennett
 import Computation.FactorialNumberSystem
 
-/-- Number of terminal transcripts. -/
-def leaves : ComparisonTree → ℕ
-  | leaf => 1
-  | branch l r => leaves l + leaves r
-
-/-- Worst-case number of comparisons. -/
-def height : ComparisonTree → ℕ
-  | leaf => 0
-  | branch l r => 1 + max (height l) (height r)
-
-/-- Insert `r` redundant comparison levels above a tree. -/
-def pad : ℕ → ComparisonTree → ComparisonTree
-  | 0, t => t
-  | r + 1, t => branch (pad r t) (pad r t)
-
-/-- A comparison-tree shape can distinguish all orderings of `n` distinct items when it
-has at least `n!` terminal transcripts. -/
-def SortsOrderings (t : ComparisonTree) (n : ℕ) : Prop :=
-  n.factorial ≤ t.leaves
-
-
 /-!
 # Sorting: decision-tree entropy, reversible history, and Landauer work
 
@@ -48,6 +27,20 @@ inductive ComparisonTree where
 
 namespace ComparisonTree
 
+/-- Number of terminal transcripts. -/
+def leaves : ComparisonTree → ℕ
+  | leaf => 1
+  | branch l r => leaves l + leaves r
+
+/-- Worst-case number of comparisons. -/
+def height : ComparisonTree → ℕ
+  | leaf => 0
+  | branch l r => 1 + max (height l) (height r)
+
+/-- Insert `r` redundant comparison levels above a tree. -/
+def pad : ℕ → ComparisonTree → ComparisonTree
+  | 0, t => t
+  | r + 1, t => branch (pad r t) (pad r t)
 
 /-
 A binary tree of height `h` has at most `2^h` terminal transcripts.
@@ -82,6 +75,10 @@ theorem leaves_le_pad (r : ℕ) (t : ComparisonTree) :
 
 end ComparisonTree
 
+/-- A comparison-tree shape can distinguish all orderings of `n` distinct items when it
+has at least `n!` terminal transcripts. -/
+def SortsOrderings (t : ComparisonTree) (n : ℕ) : Prop :=
+  n.factorial ≤ t.leaves
 
 /-
 **Exact information lower bound.** Every comparison tree capable of distinguishing
@@ -101,6 +98,16 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
     SortsOrderings (t.pad r) n ∧ (t.pad r).height = r + t.height := by
       exact ⟨ le_trans hs ( ComparisonTree.leaves_le_pad r t ), ComparisonTree.height_pad r t ⟩
 
+/-- `sorting_info_erased` from `Computation.ReversibleSortingBennett` carries the
+hypothesis `1 ≤ n`; the degenerate case `n = 0` also holds (both sides are `0`),
+so the identity is available unconditionally. -/
+theorem sorting_info_erased_all (n : ℕ) :
+    infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · unfold infoErased sortingFunction
+    norm_num [Fintype.card_perm]
+  · exact sorting_info_erased n hn
+
 /-
 **Three-way factorial synthesis.** A correct comparison tree obeys the entropy lower
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
@@ -114,10 +121,9 @@ theorem factorial_controls_comparisons_entropy_and_history
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · convert sorting_info_erased n;
-      · convert sorting_history_lower_bound n Aux e hc using 1;
-        simp +decide [ Fintype.card_perm ]
+      refine ⟨comparison_lower_bound t n hs, sorting_info_erased_all n, ?_⟩
+      convert sorting_history_lower_bound n Aux e hc using 1
+      simp +decide [ Fintype.card_perm ]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
@@ -126,8 +132,10 @@ the change of base in `log₂(n!)`.
 -/
 theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      convert congr_arg _ ( sorting_info_erased n ) using 1;
-      unfold landauerCost; rw [ Real.logb ] ; ring; norm_num;
+      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+      unfold landauerGap landauerCost
+      rw [sorting_info_erased_all n, Real.logb]
+      field_simp
 
 /-
 The Landauer work assigned to irreversible sorting is unchanged when redundant
