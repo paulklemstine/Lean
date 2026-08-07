@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.NeuralCoding.DeligneBoundGL2
+import Novelty.DeligneBoundGL2
 
 /-!
 # Arithmetic Mirror Symmetry III — the Calabi–Yau zeta function and its modularity
