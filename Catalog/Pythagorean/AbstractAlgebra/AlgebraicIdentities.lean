@@ -1,14 +1,31 @@
 import Mathlib
-import Logic.StrangeLoops.Core
 
 /-! # CatalogBuild.Pythagorean.AlgebraicIdentities
 
-Auto-generated from theorem catalog database.
-Domain: Pythagorean
-Declarations: 12
+Algebraic identities for the circular and hyperbolic "special Pythagorean
+brackets"
+
+* `spb  x y = (x + y) / (1 - x*y)` — the tangent addition law,
+* `spbH x y = (x + y) / (1 + x*y)` — the relativistic velocity addition law.
+
+The two definitions were previously expected from an external module that is no
+longer part of the catalogue; they are supplied here so that the file is
+self-contained and compiles.
 -/
 
 noncomputable section
+
+namespace SPBResearch
+
+/-- Circular special Pythagorean bracket (tangent addition law). -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+
+/-- Hyperbolic special Pythagorean bracket (velocity addition law). -/
+def spbH (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
+
+end SPBResearch
+
+open SPBResearch
 
 /-- (1-xy)²(1+spb(x,y)²) = (1+x²)(1+y²). -/
 theorem norm_identity (x y : ℝ) (h : 1 - x * y ≠ 0) :
@@ -68,7 +85,7 @@ theorem spb_reciprocal (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) (h : x * y ≠ 
   ring
 
 /-- spb(a,b) ∈ ℤ iff (1-ab) | (a+b). -/
-theorem spb_integer_criterion (a b : ℤ) (h : 1 - a * b ≠ 0) :
+theorem spb_integer_criterion (a b : ℤ) :
     (1 - a * b) ∣ (a + b) ↔ ∃ q : ℤ, a + b = q * (1 - a * b) := by
   exact dvd_iff_exists_eq_mul_left
 

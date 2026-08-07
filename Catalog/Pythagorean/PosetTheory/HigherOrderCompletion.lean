@@ -1,6 +1,6 @@
 import Mathlib
-import Pythagorean.PosetTheory.HOCriticalPairs
-import Pythagorean.PosetTheory.ConcreteTermAlgebra
+import Pythagorean.HOCriticalPairs
+import Pythagorean.ConcreteTermAlgebra
 
 /-!
 # Higher-Order Completion Modulo β: Bounded Confluence Certificates

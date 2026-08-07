@@ -23,7 +23,7 @@ A concrete language with marginal cost `Nat.sqrt` is provided
 (`sqrtLanguage`), so the hypotheses are not vacuous.
 -/
 
-import Catalog.Pythagorean.TheoryFitness.Core
+import Pythagorean.TheoryFitness.Core
 
 namespace TheoryFitness
 

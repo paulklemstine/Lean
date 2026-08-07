@@ -23,7 +23,7 @@ canonical forms, program equivalence, model checking, proof theory, behavioral i
 -/
 
 import Pythagorean.GraphTheory.STLCDefs
-import Pythagorean.Pythagorean.BoundedBetaDefs
+import Pythagorean.BoundedBetaDefs
 
 /-! ## Normalization Hypotheses -/
 
