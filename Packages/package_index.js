@@ -14142,7 +14142,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-10T07:49:38Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 292,
       "id": "deepening_the_zeta_function_of_a_graph_number_theo",
       "primary_domain": "Bridges",
       "priority_score": 0.85,
@@ -14346,7 +14346,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-10T17:55:55Z",
       "domain": "Shared",
-      "hue": 90,
+      "hue": 92,
       "id": "that_the_zero_dimensional_persistent_homology_of_t",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -14502,7 +14502,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T06:39:26Z",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 91,
       "id": "upper_bound_conjecture_for_the_cake_balancing_rati",
       "primary_domain": "Bridges",
       "priority_score": 0.78,
@@ -14538,7 +14538,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T07:12:42Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 275,
       "id": "deepening_dream_logic_non_monotone_reasoning_where",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -14574,7 +14574,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T08:02:34Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 270,
       "id": "close_proofs_digital_immortality_can_a_mind_be_enc",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -14670,7 +14670,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T11:42:21Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 292,
       "id": "deepening_counterfactual_number_theory_what_if_pri",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -14718,7 +14718,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T14:11:17Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 92,
       "id": "deepening_aboriginal_kinship_as_group_theory_dream",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -14730,7 +14730,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T14:27:59Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 92,
       "id": "the_mega_sphere_all_dimensions_at_once",
       "primary_domain": "Bridges",
       "priority_score": 0.8,
@@ -14742,7 +14742,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T15:33:13Z",
       "domain": "Novelty",
-      "hue": 275,
+      "hue": 90,
       "id": "speculative_mathematics_as_a_phase_transition",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -14754,7 +14754,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T15:33:26Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 100,
       "id": "deepening_causal_loops_in_category_theory_when_com",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -14814,7 +14814,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-11T18:53:56Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 90,
       "id": "deepening_the_fractal_dimension_of_mathematical_tr",
       "primary_domain": "Algebra",
       "priority_score": 0.83,
@@ -14910,7 +14910,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-12T02:10:40Z",
       "domain": "Tropical",
-      "hue": 101,
+      "hue": 91,
       "id": "hofstadter_fluid_concepts_and_creative_analogies__",
       "primary_domain": "Tropical",
       "priority_score": 0.78,
@@ -15042,7 +15042,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-12T09:01:40Z",
       "domain": "MachineLearning",
-      "hue": 91,
+      "hue": 270,
       "id": "whites_quadratic_exchange_conjecture_part_3",
       "primary_domain": "MachineLearning",
       "priority_score": 0.78,
@@ -15090,7 +15090,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-12T10:44:11Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 89,
       "id": "deepening_the_p_vs_np_of_sudoku_phase_transitions_",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -15198,7 +15198,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-12T13:53:30Z",
       "domain": "Applications",
-      "hue": 280,
+      "hue": 90,
       "id": "deepening_neuralcodinglean_builds_a_self_contained",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -15306,7 +15306,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-12T16:46:00Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 272,
       "id": "bruhat_order_preserves_closure_relations_for_b_orb",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -15330,7 +15330,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-12T16:46:35Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "this_cycle_deepens_the_formalization_of_dungs_abst",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -15606,7 +15606,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-12T23:51:59Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 100,
       "id": "that_a_type_which_fully_quantifies_over_itself_",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -15618,7 +15618,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-13T00:09:46Z",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 91,
       "id": "deepening_the_opposite_semicube_helly_property_cha",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -15642,7 +15642,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-13T01:05:49Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 90,
       "id": "the_optimal_portion_ratio__equals_1__",
       "primary_domain": "Bridges",
       "priority_score": 0.78,
@@ -15690,7 +15690,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-13T02:01:17Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 270,
       "id": "these_conjectures_grow_out_of_the_cycles_core_find",
       "primary_domain": "Bridges",
       "priority_score": 0.72,
@@ -15786,7 +15786,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-13T04:46:11Z",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 90,
       "id": "deepening_the_uncanny_valley_of_mathematics_when_p",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -15858,7 +15858,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-13T06:44:26Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 95,
       "id": "deepening_stone_duality_for_machine_learning_neura",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -16086,7 +16086,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-13T12:34:58Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 91,
       "id": "full_brouwers_laplacian_conjecture_equality_charac",
       "primary_domain": "Bridges",
       "priority_score": 0.72,
@@ -16146,7 +16146,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-13T14:01:47Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 292,
       "id": "deepening_edge_spectral_supersaturation_for_triang",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -16374,7 +16374,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-13T20:48:09Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 281,
       "id": "close_proofs_the_uncanny_valley_of_mathematics_whe",
       "primary_domain": "Bridges",
       "priority_score": 0.78,
@@ -16818,7 +16818,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-14T10:25:34Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 271,
       "id": "limit_distribution_of_descendants_in_random_d_dags",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -17022,7 +17022,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-14T17:47:05Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 271,
       "id": "deepening_consciousness_as_emergent_fixed_point",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -17046,7 +17046,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-14T18:39:17Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 92,
       "id": "this_cycle_formalizes_in_lean_4_with_mathlib_the_c",
       "primary_domain": "Bridges",
       "priority_score": 0.82,
@@ -17058,7 +17058,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-14T19:15:33Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 272,
       "id": "this_cycle_isolated_a_single_scalar_invariant__the",
       "primary_domain": "Bridges",
       "priority_score": 0.83,
@@ -17334,7 +17334,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-15T01:49:34Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 272,
       "id": "deepening_asymptotic_clique_to_clique_density_boun",
       "primary_domain": "Bridges",
       "priority_score": 0.86,
@@ -17346,7 +17346,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-15T02:11:14Z",
       "domain": "Computation",
-      "hue": 91,
+      "hue": 90,
       "id": "two_parameter_picture_of_witness_complexity_for_th",
       "primary_domain": "Computation",
       "priority_score": 0.91,
@@ -17682,7 +17682,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-16T05:48:55Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 271,
       "id": "arxiv_paper_learning_the_graphical_nature_of_symme",
       "primary_domain": "Bridges",
       "priority_score": 0.76,
@@ -17790,7 +17790,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-17T07:48:35Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 292,
       "id": "arxiv_paper_limit_laws_for_component_pruned_sparse",
       "primary_domain": "Algebra",
       "priority_score": 0.6,
@@ -17898,7 +17898,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-17T18:03:21Z",
       "domain": "Speculative",
-      "hue": 270,
+      "hue": 92,
       "id": "holographic_primes_the_prime_number_adscft_corresp",
       "primary_domain": "Speculative",
       "priority_score": 0.72,
@@ -17910,7 +17910,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-18T00:42:36Z",
       "domain": "Algebra",
-      "hue": 275,
+      "hue": 271,
       "id": "quantum_surreal_numbers_superposition_of_all_real_",
       "primary_domain": "Algebra",
       "priority_score": 0.71,
@@ -17970,7 +17970,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-18T06:56:43Z",
       "domain": "NumberTheory",
-      "hue": 91,
+      "hue": 272,
       "id": "godels_casino_incomplete_but_winnable_games",
       "primary_domain": "Bridges",
       "priority_score": 0.75,
@@ -17982,7 +17982,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-18T07:29:08Z",
       "domain": "Speculative",
-      "hue": 270,
+      "hue": 91,
       "id": "the_l_function_oracle_what_if_we_could_compute_l_f",
       "primary_domain": "Speculative",
       "priority_score": 0.76,
@@ -18210,7 +18210,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-18T17:57:25Z",
       "domain": "Shared",
-      "hue": 271,
+      "hue": 314,
       "id": "stochastic_galois_theory_random_permutations_have_",
       "primary_domain": "Bridges",
       "priority_score": 0.74,
@@ -18318,7 +18318,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-19T00:44:59Z",
       "domain": "Shared",
-      "hue": 271,
+      "hue": 91,
       "id": "quantum_error_correction_from_homological_algebra_",
       "primary_domain": "Bridges",
       "priority_score": 0.75,
@@ -18366,7 +18366,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-19T03:20:27Z",
       "domain": "Computation",
-      "hue": 270,
+      "hue": 91,
       "id": "crystallographic_groups_and_music_the_17_wallpaper",
       "primary_domain": "Computation",
       "priority_score": 0.72,
@@ -18438,7 +18438,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-19T05:56:21Z",
       "domain": "Computation",
-      "hue": 272,
+      "hue": 90,
       "id": "categorification_of_entropy_the_information_loss_o",
       "primary_domain": "Computation",
       "priority_score": 0.74,
@@ -18474,7 +18474,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-19T08:57:22Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 92,
       "id": "the_uncanny_valley_of_mathematics_when_proofs_are_",
       "primary_domain": "Bridges",
       "priority_score": 0.72,
@@ -18594,7 +18594,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-19T20:08:36Z",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 91,
       "id": "hypercomputation_computing_the_uncomputable",
       "primary_domain": "Computation",
       "priority_score": 0.77,
@@ -18894,7 +18894,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-21T16:49:58Z",
       "domain": "Shared",
-      "hue": 92,
+      "hue": 271,
       "id": "speculative_theorems_as_phase_transitions_in_proof",
       "primary_domain": "Bridges",
       "priority_score": 0.75,
@@ -18906,7 +18906,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-21T18:47:54Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "rucker_infinity_and_the_mind__formalizing_differen",
       "primary_domain": "Bridges",
       "priority_score": 0.76,
@@ -18930,7 +18930,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-21T20:46:05Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 271,
       "id": "speculative_tropical_mathematics_of_social_choice",
       "primary_domain": "Algebra",
       "priority_score": 0.75,
@@ -19086,7 +19086,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-22T14:29:59Z",
       "domain": "NumberTheory",
-      "hue": 270,
+      "hue": 91,
       "id": "moonshot_the_mathematics_of_dysons_intelligence_ex",
       "primary_domain": "Bridges",
       "priority_score": 0.75,
@@ -19170,7 +19170,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-23T18:46:01Z",
       "domain": "Logic",
-      "hue": 275,
+      "hue": 271,
       "id": "deepening_1_repair_the_definition_before_studying_",
       "primary_domain": "Logic",
       "priority_score": 0.77,
@@ -19194,7 +19194,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-23T20:28:39Z",
       "domain": "Physics",
-      "hue": 92,
+      "hue": 270,
       "id": "arxiv_paper_on_matrix_product_factorization_in_ass",
       "primary_domain": "Physics",
       "priority_score": 0.7,
@@ -19230,7 +19230,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-24T17:59:51Z",
       "domain": "Logic",
-      "hue": 270,
+      "hue": 271,
       "id": "close_proofs_cellular_automata_at_the_ordinals_tra",
       "primary_domain": "Logic",
       "priority_score": 0.6,
@@ -19254,7 +19254,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-24T19:54:27Z",
       "domain": "Physics",
-      "hue": 90,
+      "hue": 270,
       "id": "cybernetic_symbiosis_optimal_co_evolution_bounds_o",
       "primary_domain": "Physics",
       "priority_score": 0.55,
@@ -19302,7 +19302,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-24T21:32:16Z",
       "domain": "Speculative",
-      "hue": 91,
+      "hue": 270,
       "id": "taxicab_number_generalizations_hardy_ramanujan_num",
       "primary_domain": "Speculative",
       "priority_score": 0.63498,
@@ -19314,7 +19314,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-24T23:24:15Z",
       "domain": "Pythagorean",
-      "hue": 91,
+      "hue": 271,
       "id": "heegner163lean_gives_a_kernel_checked_elementary_c",
       "primary_domain": "Pythagorean",
       "priority_score": 0.63,
@@ -19326,7 +19326,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-24T23:24:22Z",
       "domain": "Logic",
-      "hue": 90,
+      "hue": 270,
       "id": "quantum_random_walks_on_cayley_graphs_spectral_gap",
       "primary_domain": "Logic",
       "priority_score": 0.58,
@@ -19338,7 +19338,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-24T23:24:27Z",
       "domain": "Speculative",
-      "hue": 271,
+      "hue": 270,
       "id": "happy_end_problem",
       "primary_domain": "Speculative",
       "priority_score": 0.75,
@@ -19422,7 +19422,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-25T09:20:53Z",
       "domain": "Bridges",
-      "hue": 179,
+      "hue": 101,
       "id": "conjecture_for_compact_metric_cognitive_systems_re",
       "primary_domain": "Bridges",
       "priority_score": 0.75,
@@ -19470,7 +19470,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-25T14:09:52Z",
       "domain": "Cryptography",
-      "hue": 270,
+      "hue": 179,
       "id": "pac_bayes_generalization_bounds",
       "primary_domain": "Cryptography",
       "priority_score": 0.7,
@@ -19650,7 +19650,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-26T00:21:36Z",
       "domain": "Logic",
-      "hue": 91,
+      "hue": 90,
       "id": "zero_knowledge_theorem_proving_i_can_prove_fermats",
       "primary_domain": "Logic",
       "priority_score": 0.71,
@@ -19830,7 +19830,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-28T12:19:57Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 95,
       "id": "cellular_automata_as_algebraic_geometry_wolframs_r",
       "primary_domain": "Bridges",
       "priority_score": 0.7097100000000001,
@@ -19926,7 +19926,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-28T18:56:09Z",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 275,
       "id": "reflective_type_theory_proving_things_about_provin",
       "primary_domain": "Computation",
       "priority_score": 0.7662,
@@ -19998,7 +19998,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-29T06:53:53Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 90,
       "id": "game_of_life_universality",
       "primary_domain": "Bridges",
       "priority_score": 0.81107,
@@ -20058,7 +20058,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-29T12:31:29Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 272,
       "id": "the_combinatorics_of_compiler_optimization_registe",
       "primary_domain": "Bridges",
       "priority_score": 0.8022499999999999,
@@ -20370,7 +20370,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-30T18:54:21Z",
       "domain": "Combinatorics",
-      "hue": 270,
+      "hue": 90,
       "id": "extremal_graph_theory_turn_and_szemerdi",
       "primary_domain": "Bridges",
       "priority_score": 0.73393,
@@ -20454,7 +20454,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-31T00:06:27Z",
       "domain": "NumberTheory",
-      "hue": 101,
+      "hue": 292,
       "id": "close_proofs_pythagorean_energy_spectrum_gradient_",
       "primary_domain": "Bridges",
       "priority_score": 0.7326499999999999,
@@ -20478,7 +20478,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-07-31T04:00:42Z",
       "domain": "Combinatorics",
-      "hue": 314,
+      "hue": 271,
       "id": "erds_faber_lovsz_conjecture",
       "primary_domain": "Bridges",
       "priority_score": 0.76494,
@@ -20862,7 +20862,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-08-01T18:20:14Z",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 270,
       "id": "deepening_galois_theory_of_cellular_automata_which",
       "primary_domain": "Bridges",
       "priority_score": 0.78251,
@@ -21042,7 +21042,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-08-02T09:32:16Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 270,
       "id": "cosmic_horror_geometry_non_euclidean_spatial_invar",
       "primary_domain": "Geometry",
       "priority_score": 0.72854,
@@ -21162,7 +21162,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-08-02T22:17:04Z",
       "domain": "Geometry",
-      "hue": 280,
+      "hue": 91,
       "id": "there_exists_a_canonically_normalized_real_valued_",
       "primary_domain": "Geometry",
       "priority_score": 0.75976,

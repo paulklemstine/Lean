@@ -62,7 +62,7 @@
     },
     {
       "id": "equivalence_of_vanishing_cyclically_covering_codim",
-      "title": "The Covering–Coding Bridge: Vanishing Cyclic Covering Codimension and Full-Weight Cyclic Codes",
+      "title": "The Covering\u2013Coding Bridge: Vanishing Cyclic Covering Codimension and Full-Weight Cyclic Codes",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -107,7 +107,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-10T07:49:38Z",
-      "hue": 272,
+      "hue": 292,
       "quality_score": 0.85
     },
     {
@@ -277,7 +277,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-10T17:55:55Z",
-      "hue": 90,
+      "hue": 92,
       "quality_score": 0.82
     },
     {
@@ -372,7 +372,7 @@
     },
     {
       "id": "improved_adhesion_bound_in_coarse_block_cutvertex_",
-      "title": "Improved Adhesion Bound in Coarse Block–Cutvertex Tree-Decompositions",
+      "title": "Improved Adhesion Bound in Coarse Block\u2013Cutvertex Tree-Decompositions",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -407,7 +407,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-11T06:39:26Z",
-      "hue": 95,
+      "hue": 91,
       "quality_score": 0.78
     },
     {
@@ -437,7 +437,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-11T07:12:42Z",
-      "hue": 270,
+      "hue": 275,
       "quality_score": 0.83
     },
     {
@@ -467,7 +467,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-11T08:02:34Z",
-      "hue": 91,
+      "hue": 270,
       "quality_score": 0.83
     },
     {
@@ -547,7 +547,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-11T11:42:21Z",
-      "hue": 270,
+      "hue": 292,
       "quality_score": 0.82
     },
     {
@@ -587,7 +587,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-11T14:11:17Z",
-      "hue": 270,
+      "hue": 92,
       "quality_score": 0.83
     },
     {
@@ -597,7 +597,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-11T14:27:59Z",
-      "hue": 90,
+      "hue": 92,
       "quality_score": 0.8
     },
     {
@@ -607,7 +607,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-11T15:33:13Z",
-      "hue": 275,
+      "hue": 90,
       "quality_score": 0.82
     },
     {
@@ -617,7 +617,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-11T15:33:26Z",
-      "hue": 90,
+      "hue": 100,
       "quality_score": 0.83
     },
     {
@@ -667,7 +667,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-07-11T18:53:56Z",
-      "hue": 271,
+      "hue": 90,
       "quality_score": 0.83
     },
     {
@@ -702,7 +702,7 @@
     },
     {
       "id": "this_project_builds_a_self_contained_machine_check",
-      "title": "Negative-Dimensional Topology: The Euler Characteristic, Poincaré Duality, and a Refined Invariant",
+      "title": "Negative-Dimensional Topology: The Euler Characteristic, Poincar\u00e9 Duality, and a Refined Invariant",
       "domain": "Algebra",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
@@ -747,7 +747,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-07-12T02:10:40Z",
-      "hue": 101,
+      "hue": 91,
       "quality_score": 0.78
     },
     {
@@ -857,7 +857,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-07-12T09:01:40Z",
-      "hue": 91,
+      "hue": 270,
       "quality_score": 0.78
     },
     {
@@ -897,7 +897,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-12T10:44:11Z",
-      "hue": 270,
+      "hue": 89,
       "quality_score": 0.82
     },
     {
@@ -987,7 +987,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-12T13:53:30Z",
-      "hue": 280,
+      "hue": 90,
       "quality_score": 0.83
     },
     {
@@ -1077,7 +1077,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-12T16:46:00Z",
-      "hue": 90,
+      "hue": 272,
       "quality_score": 0.82
     },
     {
@@ -1097,7 +1097,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-12T16:46:35Z",
-      "hue": 270,
+      "hue": 91,
       "quality_score": 0.82
     },
     {
@@ -1292,7 +1292,7 @@
     },
     {
       "id": "deepening_this_cycle_deepens_the_probabilistic_met",
-      "title": "Property B: Two-Colorability of Sparse Uniform Hypergraphs and the Erdős Bound m(k) ≥ 2^{k-1}",
+      "title": "Property B: Two-Colorability of Sparse Uniform Hypergraphs and the Erd\u0151s Bound m(k) \u2265 2^{k-1}",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -1327,7 +1327,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-12T23:51:59Z",
-      "hue": 270,
+      "hue": 100,
       "quality_score": 0.82
     },
     {
@@ -1337,12 +1337,12 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-13T00:09:46Z",
-      "hue": 92,
+      "hue": 91,
       "quality_score": 0.83
     },
     {
       "id": "close_proofs_siegel_weil_identity_for_the_e_lattic",
-      "title": "The Siegel–Weil Identity for the E8 Lattice Theta Series",
+      "title": "The Siegel\u2013Weil Identity for the E8 Lattice Theta Series",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -1352,12 +1352,12 @@
     },
     {
       "id": "the_optimal_portion_ratio__equals_1__",
-      "title": "The Optimal Portion Ratio μ₂ = 1 + ρ",
+      "title": "The Optimal Portion Ratio \u03bc\u2082 = 1 + \u03c1",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-13T01:05:49Z",
-      "hue": 91,
+      "hue": 90,
       "quality_score": 0.78
     },
     {
@@ -1372,7 +1372,7 @@
     },
     {
       "id": "generalized_giampietro_darmon_factorization_for_ar",
-      "title": "Generalized Giampietro–Darmon Factorization for Arbitrary Genus",
+      "title": "Generalized Giampietro\u2013Darmon Factorization for Arbitrary Genus",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -1397,7 +1397,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-13T02:01:17Z",
-      "hue": 90,
+      "hue": 270,
       "quality_score": 0.72
     },
     {
@@ -1477,7 +1477,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-13T04:46:11Z",
-      "hue": 272,
+      "hue": 90,
       "quality_score": 0.83
     },
     {
@@ -1537,7 +1537,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-13T06:44:26Z",
-      "hue": 271,
+      "hue": 95,
       "quality_score": 0.82
     },
     {
@@ -1612,7 +1612,7 @@
     },
     {
       "id": "hirzebruchriemannroch_identity_for_the_integral_ta",
-      "title": "Hirzebruch–Riemann–Roch Identity for the Integral Tangent Class of the Boolean Matroid",
+      "title": "Hirzebruch\u2013Riemann\u2013Roch Identity for the Integral Tangent Class of the Boolean Matroid",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -1727,7 +1727,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-13T12:34:58Z",
-      "hue": 270,
+      "hue": 91,
       "quality_score": 0.72
     },
     {
@@ -1777,7 +1777,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-13T14:01:47Z",
-      "hue": 270,
+      "hue": 292,
       "quality_score": 0.83
     },
     {
@@ -1852,7 +1852,7 @@
     },
     {
       "id": "sharp_lower_bounds_for_sumsets_in_l_balls_in_",
-      "title": "Sharp Lower Bounds for Sumsets in L₁ Balls in ℤᵈ",
+      "title": "Sharp Lower Bounds for Sumsets in L\u2081 Balls in \u2124\u1d48",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -1967,7 +1967,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-13T20:48:09Z",
-      "hue": 91,
+      "hue": 281,
       "quality_score": 0.78
     },
     {
@@ -2112,7 +2112,7 @@
     },
     {
       "id": "this_cycle_established_unconditionally_the_constru",
-      "title": "The Suspension Tower of Free ℤ₂-Complexes and an Iterated Borsuk–Ulam Obstruction",
+      "title": "The Suspension Tower of Free \u2124\u2082-Complexes and an Iterated Borsuk\u2013Ulam Obstruction",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -2162,7 +2162,7 @@
     },
     {
       "id": "close_proofs_this_cycle_established_unconditionall",
-      "title": "The Z₂-Coindex Under Suspension: A Constructive Lower-Bound Theory for Free Z₂-Complexes",
+      "title": "The Z\u2082-Coindex Under Suspension: A Constructive Lower-Bound Theory for Free Z\u2082-Complexes",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -2337,7 +2337,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-14T10:25:34Z",
-      "hue": 92,
+      "hue": 271,
       "quality_score": 0.82
     },
     {
@@ -2452,7 +2452,7 @@
     },
     {
       "id": "this_cycle_formalized_in_hoggatttotalslean_the_sha",
-      "title": "The Möbius Discriminant: A Sign-Indexed Trichotomy for Log-Behavior of Combinatorial Totals",
+      "title": "The M\u00f6bius Discriminant: A Sign-Indexed Trichotomy for Log-Behavior of Combinatorial Totals",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -2507,7 +2507,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-14T17:47:05Z",
-      "hue": 270,
+      "hue": 271,
       "quality_score": 0.83
     },
     {
@@ -2527,7 +2527,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-14T18:39:17Z",
-      "hue": 91,
+      "hue": 92,
       "quality_score": 0.82
     },
     {
@@ -2537,12 +2537,12 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-14T19:15:33Z",
-      "hue": 90,
+      "hue": 272,
       "quality_score": 0.83
     },
     {
       "id": "colorful_carathodory_theorem_for_spanning_k_trees_",
-      "title": "Colorful Carathéodory over Spanning k-Trees: Polynomial-Size Witnesses",
+      "title": "Colorful Carath\u00e9odory over Spanning k-Trees: Polynomial-Size Witnesses",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -2582,7 +2582,7 @@
     },
     {
       "id": "deepening_this_cycle_isolated_a_single_scalar_inva",
-      "title": "The Möbius Discriminant: A Scalar Invariant for Log-Convexity and Hankel Dynamics of Recurrence Sequences",
+      "title": "The M\u00f6bius Discriminant: A Scalar Invariant for Log-Convexity and Hankel Dynamics of Recurrence Sequences",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -2682,7 +2682,7 @@
     },
     {
       "id": "close_proofs_constructive_lower_bound_half_of_the_",
-      "title": "Finite Join Laws for the ℤ₂ Co-Index",
+      "title": "Finite Join Laws for the \u2124\u2082 Co-Index",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -2752,7 +2752,7 @@
     },
     {
       "id": "deepening_this_project_formalizes_a_cross_domain_c",
-      "title": "Extremal Rigidity in Vietoris–Rips Clique Counts",
+      "title": "Extremal Rigidity in Vietoris\u2013Rips Clique Counts",
       "domain": "Algebra",
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
@@ -2767,7 +2767,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-15T01:49:34Z",
-      "hue": 90,
+      "hue": 272,
       "quality_score": 0.86
     },
     {
@@ -2777,7 +2777,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-07-15T02:11:14Z",
-      "hue": 91,
+      "hue": 90,
       "quality_score": 0.91
     },
     {
@@ -2882,7 +2882,7 @@
     },
     {
       "id": "deepening_the_optimal_portion_ratio__equals_1__",
-      "title": "The Cake–Plastic Spectral Bridge",
+      "title": "The Cake\u2013Plastic Spectral Bridge",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -3057,7 +3057,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-16T05:48:55Z",
-      "hue": 91,
+      "hue": 271,
       "quality_score": 0.76
     },
     {
@@ -3147,7 +3147,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-07-17T07:48:35Z",
-      "hue": 90,
+      "hue": 292,
       "quality_score": 0.6
     },
     {
@@ -3237,7 +3237,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-07-17T18:03:21Z",
-      "hue": 270,
+      "hue": 92,
       "quality_score": 0.72
     },
     {
@@ -3247,7 +3247,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-07-18T00:42:36Z",
-      "hue": 275,
+      "hue": 271,
       "quality_score": 0.71
     },
     {
@@ -3262,7 +3262,7 @@
     },
     {
       "id": "arithmetic_on_the_moebius_band_a_number_system_wit",
-      "title": "Arithmetic on the Möbius Band: Quotient Obstructions and a Graded Repair",
+      "title": "Arithmetic on the M\u00f6bius Band: Quotient Obstructions and a Graded Repair",
       "domain": "Geometry",
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
@@ -3292,12 +3292,12 @@
     },
     {
       "id": "godels_casino_incomplete_but_winnable_games",
-      "title": "Gödel’s Casino: Incomplete but Winnable Games?",
+      "title": "G\u00f6del\u2019s Casino: Incomplete but Winnable Games?",
       "domain": "NumberTheory",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-18T06:56:43Z",
-      "hue": 91,
+      "hue": 272,
       "quality_score": 0.75
     },
     {
@@ -3307,7 +3307,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-07-18T07:29:08Z",
-      "hue": 270,
+      "hue": 91,
       "quality_score": 0.76
     },
     {
@@ -3352,7 +3352,7 @@
     },
     {
       "id": "infinite_chess_checkmate_in_omega_moves",
-      "title": "Infinite Chess: Exact Transfinite Game Values Through ω^ω",
+      "title": "Infinite Chess: Exact Transfinite Game Values Through \u03c9^\u03c9",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -3372,7 +3372,7 @@
     },
     {
       "id": "hilberts_hotel_for_primes_an_infinite_hotel_where_",
-      "title": "Hilbert’s Hotel for Primes: Dense Asymptotically Invisible Rearrangements",
+      "title": "Hilbert\u2019s Hotel for Primes: Dense Asymptotically Invisible Rearrangements",
       "domain": "Pythagorean",
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
@@ -3382,7 +3382,7 @@
     },
     {
       "id": "erdos_renyi_on_acid_random_graphs_that_hallucinate",
-      "title": "Erdős–Rényi on Acid: Phase Locking in Complex-Weighted Random Graphs",
+      "title": "Erd\u0151s\u2013R\u00e9nyi on Acid: Phase Locking in Complex-Weighted Random Graphs",
       "domain": "Logic",
       "primary_domain": "Logic",
       "shape": "star_of_david",
@@ -3402,7 +3402,7 @@
     },
     {
       "id": "the_mathematics_of_jigsaw_puzzles_np_completeness_",
-      "title": "Logic in Every Piece: Exact Solution Spaces and Tab–Blank Symmetry",
+      "title": "Logic in Every Piece: Exact Solution Spaces and Tab\u2013Blank Symmetry",
       "domain": "Shared",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -3497,7 +3497,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-18T17:57:25Z",
-      "hue": 271,
+      "hue": 314,
       "quality_score": 0.74
     },
     {
@@ -3587,7 +3587,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-19T00:44:59Z",
-      "hue": 271,
+      "hue": 91,
       "quality_score": 0.75
     },
     {
@@ -3627,7 +3627,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-07-19T03:20:27Z",
-      "hue": 270,
+      "hue": 91,
       "quality_score": 0.72
     },
     {
@@ -3687,7 +3687,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-07-19T05:56:21Z",
-      "hue": 272,
+      "hue": 90,
       "quality_score": 0.74
     },
     {
@@ -3717,7 +3717,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-19T08:57:22Z",
-      "hue": 91,
+      "hue": 92,
       "quality_score": 0.72
     },
     {
@@ -3817,7 +3817,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-07-19T20:08:36Z",
-      "hue": 90,
+      "hue": 91,
       "quality_score": 0.77
     },
     {
@@ -3852,7 +3852,7 @@
     },
     {
       "id": "time_travel_consistency_novikovs_principle_as_a_fi",
-      "title": "Time Travel Consistency: Novikov’s Principle as a Fixed-Point Theorem",
+      "title": "Time Travel Consistency: Novikov\u2019s Principle as a Fixed-Point Theorem",
       "domain": "Pythagorean",
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
@@ -3942,7 +3942,7 @@
     },
     {
       "id": "deepening_godels_casino_incomplete_but_winnable_ga",
-      "title": "Gödel’s Casino: Exact Value, Regret, and No-Free-Lunch Laws",
+      "title": "G\u00f6del\u2019s Casino: Exact Value, Regret, and No-Free-Lunch Laws",
       "domain": "Shared",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -3952,7 +3952,7 @@
     },
     {
       "id": "deepening_quantum_random_walks_on_cayley_graphs_sp",
-      "title": "Exact Cesàro Equilibria for Periodic Quantum Walks",
+      "title": "Exact Ces\u00e0ro Equilibria for Periodic Quantum Walks",
       "domain": "Combinatorics",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -4067,7 +4067,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-21T16:49:58Z",
-      "hue": 92,
+      "hue": 271,
       "quality_score": 0.75
     },
     {
@@ -4077,12 +4077,12 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-21T18:47:54Z",
-      "hue": 270,
+      "hue": 91,
       "quality_score": 0.76
     },
     {
       "id": "rucker_the_fourth_dimension_as_a_mathematical_play",
-      "title": "Rucker’s Fourth Dimension: Hopf Circles and Geometric Symmetry",
+      "title": "Rucker\u2019s Fourth Dimension: Hopf Circles and Geometric Symmetry",
       "domain": "Shared",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -4097,7 +4097,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-07-21T20:46:05Z",
-      "hue": 270,
+      "hue": 271,
       "quality_score": 0.75
     },
     {
@@ -4227,7 +4227,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-22T14:29:59Z",
-      "hue": 270,
+      "hue": 91,
       "quality_score": 0.75
     },
     {
@@ -4262,7 +4262,7 @@
     },
     {
       "id": "arxiv_paper_a_few_remarks_on_the_baez_duarte_crite",
-      "title": "Finite Geometric Mixtures in the Báez–Duarte Transform",
+      "title": "Finite Geometric Mixtures in the B\u00e1ez\u2013Duarte Transform",
       "domain": "Computation",
       "primary_domain": "Computation",
       "shape": "cube",
@@ -4297,7 +4297,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-07-23T18:46:01Z",
-      "hue": 275,
+      "hue": 271,
       "quality_score": 0.77
     },
     {
@@ -4317,7 +4317,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-07-23T20:28:39Z",
-      "hue": 92,
+      "hue": 270,
       "quality_score": 0.7
     },
     {
@@ -4347,7 +4347,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-07-24T17:59:51Z",
-      "hue": 270,
+      "hue": 271,
       "quality_score": 0.6
     },
     {
@@ -4367,7 +4367,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-07-24T19:54:27Z",
-      "hue": 90,
+      "hue": 270,
       "quality_score": 0.55
     },
     {
@@ -4407,7 +4407,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-07-24T21:32:16Z",
-      "hue": 91,
+      "hue": 270,
       "quality_score": 0.63498
     },
     {
@@ -4417,7 +4417,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-07-24T23:24:15Z",
-      "hue": 91,
+      "hue": 271,
       "quality_score": 0.63
     },
     {
@@ -4427,7 +4427,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-07-24T23:24:22Z",
-      "hue": 90,
+      "hue": 270,
       "quality_score": 0.58
     },
     {
@@ -4437,7 +4437,7 @@
       "primary_domain": "Speculative",
       "shape": "pentagonal_prism",
       "date": "2026-07-24T23:24:27Z",
-      "hue": 271,
+      "hue": 270,
       "quality_score": 0.75
     },
     {
@@ -4507,7 +4507,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-25T09:20:53Z",
-      "hue": 179,
+      "hue": 101,
       "quality_score": 0.75
     },
     {
@@ -4542,12 +4542,12 @@
     },
     {
       "id": "pac_bayes_generalization_bounds",
-      "title": "Finite PAC–Bayes Bounds and Gaussian Perturbation Certificates",
+      "title": "Finite PAC\u2013Bayes Bounds and Gaussian Perturbation Certificates",
       "domain": "Cryptography",
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-07-25T14:09:52Z",
-      "hue": 270,
+      "hue": 179,
       "quality_score": 0.7
     },
     {
@@ -4592,7 +4592,7 @@
     },
     {
       "id": "eml_differential_algebra_closure_properties",
-      "title": "Differential Closure of Rational Exponential–Logarithmic Expressions",
+      "title": "Differential Closure of Rational Exponential\u2013Logarithmic Expressions",
       "domain": "Cryptography",
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
@@ -4652,7 +4652,7 @@
     },
     {
       "id": "beals_conjecture",
-      "title": "Prime-Support Reductions for Beal’s Conjecture",
+      "title": "Prime-Support Reductions for Beal\u2019s Conjecture",
       "domain": "NumberTheory",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -4697,7 +4697,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-07-26T00:21:36Z",
-      "hue": 91,
+      "hue": 90,
       "quality_score": 0.71
     },
     {
@@ -4722,7 +4722,7 @@
     },
     {
       "id": "eml_differential_calculus_chain_rules_for_exp_log_",
-      "title": "Differential Structure of Exponential–Logarithmic Products",
+      "title": "Differential Structure of Exponential\u2013Logarithmic Products",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -4742,7 +4742,7 @@
     },
     {
       "id": "graph_coloring_chromatic_polynomial_theory",
-      "title": "Chromatic Counting by Deletion–Contraction",
+      "title": "Chromatic Counting by Deletion\u2013Contraction",
       "domain": "Shared",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -4752,7 +4752,7 @@
     },
     {
       "id": "the_mathematics_of_deja_vu_fixed_points_in_conscio",
-      "title": "The Mathematics of Déjà Vu: Recurrence, Observation, and Incidence",
+      "title": "The Mathematics of D\u00e9j\u00e0 Vu: Recurrence, Observation, and Incidence",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -4847,12 +4847,12 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-28T12:19:57Z",
-      "hue": 90,
+      "hue": 95,
       "quality_score": 0.7097100000000001
     },
     {
       "id": "the_monster_groups_secret_message_moonshine_beyond",
-      "title": "The Monster's Secret Message: A Character–Orbit Bridge Beyond the j-Function",
+      "title": "The Monster's Secret Message: A Character\u2013Orbit Bridge Beyond the j-Function",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -4922,12 +4922,12 @@
     },
     {
       "id": "reflective_type_theory_proving_things_about_provin",
-      "title": "Reflective Type Theory: Provability, Self-Reference, and the Modal μ-Calculus",
+      "title": "Reflective Type Theory: Provability, Self-Reference, and the Modal \u03bc-Calculus",
       "domain": "Computation",
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-07-28T18:56:09Z",
-      "hue": 90,
+      "hue": 275,
       "quality_score": 0.7662
     },
     {
@@ -4962,7 +4962,7 @@
     },
     {
       "id": "jacobian_conjecture",
-      "title": "The Affine Jacobian–Weyl Bridge",
+      "title": "The Affine Jacobian\u2013Weyl Bridge",
       "domain": "Geometry",
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
@@ -4982,12 +4982,12 @@
     },
     {
       "id": "game_of_life_universality",
-      "title": "Finite Causal Cones in Conway’s Game of Life",
+      "title": "Finite Causal Cones in Conway\u2019s Game of Life",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-29T06:53:53Z",
-      "hue": 272,
+      "hue": 90,
       "quality_score": 0.81107
     },
     {
@@ -5022,7 +5022,7 @@
     },
     {
       "id": "logic_physics_bridge_consistency_of_physical_theor",
-      "title": "Consistency of Physical Theories: A Logic–Physics Bridge",
+      "title": "Consistency of Physical Theories: A Logic\u2013Physics Bridge",
       "domain": "Bridges",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5037,7 +5037,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-29T12:31:29Z",
-      "hue": 271,
+      "hue": 272,
       "quality_score": 0.8022499999999999
     },
     {
@@ -5082,7 +5082,7 @@
     },
     {
       "id": "tropical_neural_duality_between_tropical_polynomia",
-      "title": "Tropical–Neural Duality: Exact ReLU Networks as Tropical Rational Functions",
+      "title": "Tropical\u2013Neural Duality: Exact ReLU Networks as Tropical Rational Functions",
       "domain": "Logic",
       "primary_domain": "Logic",
       "shape": "star_of_david",
@@ -5102,7 +5102,7 @@
     },
     {
       "id": "renormalization_group_flow_wilsons_epsilon_expansi",
-      "title": "Wilson’s Epsilon Expansion and the Interacting Fixed Point Below Four Dimensions",
+      "title": "Wilson\u2019s Epsilon Expansion and the Interacting Fixed Point Below Four Dimensions",
       "domain": "Physics",
       "primary_domain": "Physics",
       "shape": "diamond",
@@ -5142,7 +5142,7 @@
     },
     {
       "id": "eml_information_geometry_fisher_information_of_exp",
-      "title": "The Invisible Scale: Fisher Degeneracy in Normalized Exp–Log Models",
+      "title": "The Invisible Scale: Fisher Degeneracy in Normalized Exp\u2013Log Models",
       "domain": "Probability",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5152,7 +5152,7 @@
     },
     {
       "id": "euler_mascheroni_constant_irrationality_approaches",
-      "title": "The Euler–Mascheroni Constant as Accumulated Information Divergence",
+      "title": "The Euler\u2013Mascheroni Constant as Accumulated Information Divergence",
       "domain": "Shared",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5172,7 +5172,7 @@
     },
     {
       "id": "sierpiski_numbers_covering_systems",
-      "title": "A Period-36 Covering Certificate for the Sierpiński Number 78557",
+      "title": "A Period-36 Covering Certificate for the Sierpi\u0144ski Number 78557",
       "domain": "Computation",
       "primary_domain": "Computation",
       "shape": "cube",
@@ -5182,7 +5182,7 @@
     },
     {
       "id": "eml_algebraic_independence_transcendence_results",
-      "title": "Algebraic Independence of Exponential–Logarithmic Special Values",
+      "title": "Algebraic Independence of Exponential\u2013Logarithmic Special Values",
       "domain": "NumberTheory",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5232,7 +5232,7 @@
     },
     {
       "id": "deepening_euler_mascheroni_constant_irrationality_",
-      "title": "The Euler–Mascheroni Constant as Accumulated Information Divergence",
+      "title": "The Euler\u2013Mascheroni Constant as Accumulated Information Divergence",
       "domain": "Shared",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5297,12 +5297,12 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-30T18:54:21Z",
-      "hue": 270,
+      "hue": 90,
       "quality_score": 0.73393
     },
     {
       "id": "navier_stokes_existence_and_smoothness",
-      "title": "Concentration, Partial Regularity, and Conservative Energy Transfer in Navier–Stokes Flow",
+      "title": "Concentration, Partial Regularity, and Conservative Energy Transfer in Navier\u2013Stokes Flow",
       "domain": "Physics",
       "primary_domain": "Physics",
       "shape": "diamond",
@@ -5342,7 +5342,7 @@
     },
     {
       "id": "bsd_conjecture_rank_computability",
-      "title": "Certified Mordell–Weil Rank from Finite Descent Presentations",
+      "title": "Certified Mordell\u2013Weil Rank from Finite Descent Presentations",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5367,7 +5367,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-31T00:06:27Z",
-      "hue": 101,
+      "hue": 292,
       "quality_score": 0.7326499999999999
     },
     {
@@ -5387,7 +5387,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-07-31T04:00:42Z",
-      "hue": 314,
+      "hue": 271,
       "quality_score": 0.76494
     },
     {
@@ -5402,7 +5402,7 @@
     },
     {
       "id": "arxiv_paper_adjacency_degree_algebras_and_spectral",
-      "title": "Adjacency–Degree Moments and Three-Star Homomorphisms",
+      "title": "Adjacency\u2013Degree Moments and Three-Star Homomorphisms",
       "domain": "Bridges",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5512,7 +5512,7 @@
     },
     {
       "id": "eml_quantum_activation_functions",
-      "title": "Unitarity Obstructions for Quantum Exponential–Logarithm Activations",
+      "title": "Unitarity Obstructions for Quantum Exponential\u2013Logarithm Activations",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5522,7 +5522,7 @@
     },
     {
       "id": "hadwigers_conjecture",
-      "title": "Hidden Complete Networks: Hadwiger’s Conjecture and the Wagner Bridge",
+      "title": "Hidden Complete Networks: Hadwiger\u2019s Conjecture and the Wagner Bridge",
       "domain": "Geometry",
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
@@ -5542,7 +5542,7 @@
     },
     {
       "id": "eml_universal_approximation_density_of_eml_functio",
-      "title": "Universal Approximation by Exponential–Field Function Algebras",
+      "title": "Universal Approximation by Exponential\u2013Field Function Algebras",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5562,7 +5562,7 @@
     },
     {
       "id": "asymptotic_brill_noether_existence_for_random_regu",
-      "title": "Square-Root Certificates for Half-Canonical Brill–Noether Existence on Regular Graphs",
+      "title": "Square-Root Certificates for Half-Canonical Brill\u2013Noether Existence on Regular Graphs",
       "domain": "Bridges",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5602,7 +5602,7 @@
     },
     {
       "id": "eml_number_theory_transcendence_and_algebraic_inde",
-      "title": "Generated Exponential–Logarithmic Numbers and Conditional Transcendence",
+      "title": "Generated Exponential\u2013Logarithmic Numbers and Conditional Transcendence",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5652,7 +5652,7 @@
     },
     {
       "id": "ml_universal_approximation_width_vs_depth_trade_of",
-      "title": "Exact Width–Depth Trade-offs in ReLU Region Capacity",
+      "title": "Exact Width\u2013Depth Trade-offs in ReLU Region Capacity",
       "domain": "MachineLearning",
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
@@ -5707,7 +5707,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-08-01T18:20:14Z",
-      "hue": 92,
+      "hue": 270,
       "quality_score": 0.78251
     },
     {
@@ -5722,7 +5722,7 @@
     },
     {
       "id": "tropical_intersection_theory",
-      "title": "Finite Tropical Intersections and the Bézout Product",
+      "title": "Finite Tropical Intersections and the B\u00e9zout Product",
       "domain": "Tropical",
       "primary_domain": "Tropical",
       "shape": "star",
@@ -5752,7 +5752,7 @@
     },
     {
       "id": "tropical_scheme_theory_groebner_bases_over_the_tro",
-      "title": "Finite-Test Gröbner Bases for Tropical Polynomial Semimodules",
+      "title": "Finite-Test Gr\u00f6bner Bases for Tropical Polynomial Semimodules",
       "domain": "Tropical",
       "primary_domain": "Tropical",
       "shape": "star",
@@ -5802,7 +5802,7 @@
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
-      "title": "Exact Single-Operator Compilation for Exponential–Logarithmic Expressions",
+      "title": "Exact Single-Operator Compilation for Exponential\u2013Logarithmic Expressions",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5832,7 +5832,7 @@
     },
     {
       "id": "eml_interpolation_theory_stone_weierstrass_for_exp",
-      "title": "EML Interpolation Theory: Stone–Weierstrass Approximation for Exp–Log Networks",
+      "title": "EML Interpolation Theory: Stone\u2013Weierstrass Approximation for Exp\u2013Log Networks",
       "domain": "Bridges",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5857,7 +5857,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-08-02T09:32:16Z",
-      "hue": 90,
+      "hue": 270,
       "quality_score": 0.72854
     },
     {
@@ -5882,7 +5882,7 @@
     },
     {
       "id": "earlier_cycles_settled_the_deterministic_game_comp",
-      "title": "Gödel’s Casino: Asymmetric Odds, Randomization, and the Value of Abstention",
+      "title": "G\u00f6del\u2019s Casino: Asymmetric Odds, Randomization, and the Value of Abstention",
       "domain": "Logic",
       "primary_domain": "Logic",
       "shape": "star_of_david",
@@ -5902,7 +5902,7 @@
     },
     {
       "id": "deepening_non_archimedean_probability_via_surreal_",
-      "title": "Infinitesimal Point Masses on the Finite–Cofinite Algebra",
+      "title": "Infinitesimal Point Masses on the Finite\u2013Cofinite Algebra",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -5957,7 +5957,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-08-02T22:17:04Z",
-      "hue": 280,
+      "hue": 91,
       "quality_score": 0.75976
     },
     {
@@ -6042,7 +6042,7 @@
     },
     {
       "id": "wall_sun_sun_primes",
-      "title": "Wall–Sun–Sun Primes: Fibonacci Divisibility Beyond the First Prime Factor",
+      "title": "Wall\u2013Sun\u2013Sun Primes: Fibonacci Divisibility Beyond the First Prime Factor",
       "domain": "NumberTheory",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -6092,7 +6092,7 @@
     },
     {
       "id": "eml_integration_in_finite_terms_the_risch_algorith",
-      "title": "Integration in Finite Terms for Rational–Exponential Normal Forms",
+      "title": "Integration in Finite Terms for Rational\u2013Exponential Normal Forms",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -6112,7 +6112,7 @@
     },
     {
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
-      "title": "Overlap Moments and Phase Transitions in Erdős–Rényi Random Graphs",
+      "title": "Overlap Moments and Phase Transitions in Erd\u0151s\u2013R\u00e9nyi Random Graphs",
       "domain": "Probability",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -6142,7 +6142,7 @@
     },
     {
       "id": "1_mixed_area_bzout_for_two_balanced_plane_tropical",
-      "title": "The Missing Half in Tropical Mixed-Area Bézout Formulas",
+      "title": "The Missing Half in Tropical Mixed-Area B\u00e9zout Formulas",
       "domain": "Tropical",
       "primary_domain": "Tropical",
       "shape": "star",
@@ -6302,7 +6302,7 @@
     },
     {
       "id": "eml_activation_monotonicity_global_convexity_condi",
-      "title": "The Sharpness Dial: Exact Convexity and Monotonicity Domains for Exponential–Logarithmic Activations, and their Dequantization to Tropical Addition",
+      "title": "The Sharpness Dial: Exact Convexity and Monotonicity Domains for Exponential\u2013Logarithmic Activations, and their Dequantization to Tropical Addition",
       "domain": "Applications",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -6432,7 +6432,7 @@
     },
     {
       "id": "mobius_arithmetic_number_theory_on_the_mobius_band",
-      "title": "Möbius Arithmetic: Orientation Twists of the Integers, Their Spectra, and Their Zeta Functions",
+      "title": "M\u00f6bius Arithmetic: Orientation Twists of the Integers, Their Spectra, and Their Zeta Functions",
       "domain": "NumberTheory",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
@@ -7588,7 +7588,7 @@
       "source": "this_cycle_deepens_the_formalization_of_dungs_abst",
       "target": "deepening_this_cycle_deepens_the_formalization_of_",
       "strength": 1.0,
-      "label": "C1 / C2 — the odd cycle refutations",
+      "label": "C1 / C2 \u2014 the odd cycle refutations",
       "type": "provenance"
     },
     {
