@@ -1827,7 +1827,7 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "id": "push_6ffc84c2_3b046f07",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8892299999999999,
     "research_mode": "team",
     "source_exp_id": "6ffc84c2",
