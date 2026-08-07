@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Shared.SpbHyp_comm
 
 Auto-generated from theorem catalog database.
@@ -7,10 +5,9 @@ Domain: EML
 Declarations: 6
 -/
 
-noncomputable section
+import Mathlib
 
-/-- The hyperbolic SPB (Einstein velocity addition). -/
-def spbHyp (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
+noncomputable section
 
 /-- Hyperbolic SPB is commutative. -/
 theorem spbHyp_comm (x y : ℝ) : spbHyp x y = spbHyp y x := by
@@ -27,6 +24,10 @@ theorem spbHyp_tanh_add (α β : ℝ) :
   unfold spbHyp;
   rw [ Real.tanh_eq_sinh_div_cosh, Real.tanh_eq_sinh_div_cosh, Real.tanh_eq_sinh_div_cosh, Real.sinh_add, Real.cosh_add ];
   field_simp
+
+
+/-- The hyperbolic SPB (Einstein velocity addition). -/
+def spbHyp (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 
 theorem spbHyp_subluminal (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :

@@ -1,13 +1,3 @@
-/-
-  NOTE.  This file is a salvaged *fragment*: it has no imports, no opening `namespace
-  BabelCode` (only a closing `end BabelCode`), and it refers to `Volume`, `IsBabelCode`,
-  `hammingBall` and `column_disagreement_bound`, none of which are defined here or in any
-  module of this development.  As it stands it cannot elaborate, so the whole fragment is
-  preserved verbatim inside the comment below rather than deleted; restoring the missing
-  definitions module will make it compile again.
--/
-
-/-
 theorem plotkin_bound {A L d : ℕ} (hA : 1 ≤ A) (hd : 1 ≤ d)
     (hPlotkin : L * (A - 1) < d * A)
     (C : Finset (Volume A L)) (hC : IsBabelCode C d) :
@@ -146,5 +136,4 @@ end BabelCode
    forms a lattice. The meet is intersection (with adjusted distance), the join
    requires recomputing minimum distance. *Testable*: enumerate all BabelCodes
    over {0,1}^3 and verify the lattice axioms.
--/
 -/

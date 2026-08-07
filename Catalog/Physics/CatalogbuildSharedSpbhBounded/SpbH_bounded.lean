@@ -9,11 +9,6 @@ Declarations: 3
 
 noncomputable section
 
-/-- Hyperbolic SPB (relativistic velocity addition): `spbH u v = (u + v) / (1 + u * v)`.
-(Repaired: this definition was missing from the auto-generated file.) -/
-def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
-
-
 /-- [Section: # CatalogBuild.Shared.SpbH_bounded
 Auto-generated from theorem catalog database.
 Domain: Bridges
