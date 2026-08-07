@@ -98,14 +98,13 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
     SortsOrderings (t.pad r) n ∧ (t.pad r).height = r + t.height := by
       exact ⟨ le_trans hs ( ComparisonTree.leaves_le_pad r t ), ComparisonTree.height_pad r t ⟩
 
-/-- `sorting_info_erased` from `Computation.ReversibleSortingBennett` carries the
-hypothesis `1 ≤ n`; the degenerate case `n = 0` also holds (both sides are `0`),
-so the identity is available unconditionally. -/
-theorem sorting_info_erased_all (n : ℕ) :
-    infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
+/-- The imported `sorting_info_erased` carries the hypothesis `1 ≤ n`; it is in fact
+unnecessary, because `Equiv.Perm (Fin n)` is nonempty for every `n`.  We record the
+unconditional form so that the statements below keep their original generality. -/
+theorem infoErased_sortingFunction (n : ℕ) :
+    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
-  · unfold infoErased sortingFunction
-    norm_num [Fintype.card_perm]
+  · simp [infoErased, sortingFunction, Fintype.card_perm]
   · exact sorting_info_erased n hn
 
 /-
@@ -121,9 +120,10 @@ theorem factorial_controls_comparisons_entropy_and_history
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine ⟨comparison_lower_bound t n hs, sorting_info_erased_all n, ?_⟩
-      convert sorting_history_lower_bound n Aux e hc using 1
-      simp +decide [ Fintype.card_perm ]
+      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
+      · exact infoErased_sortingFunction n;
+      · convert sorting_history_lower_bound n Aux e hc using 1;
+        simp +decide [ Fintype.card_perm ]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
@@ -132,9 +132,9 @@ the change of base in `log₂(n!)`.
 -/
 theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
       unfold landauerGap landauerCost
-      rw [sorting_info_erased_all n, Real.logb]
+      rw [ infoErased_sortingFunction n, Real.logb ]
+      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
       field_simp
 
 /-
