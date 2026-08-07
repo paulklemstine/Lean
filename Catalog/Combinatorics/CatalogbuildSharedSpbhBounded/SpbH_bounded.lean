@@ -9,9 +9,7 @@ Declarations: 3
 
 noncomputable section
 
-/-- The hyperbolic SPB operation (Einstein velocity addition), the operation the theorems of
-this file are about.  Its definition was missing from the auto-generated file; it is the same
-operation as `spbHyp` in `Shared.CatalogbuildSharedSpbhyp.SpbHyp`. -/
+/-- The hyperbolic SPB (Einstein velocity addition). -/
 def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
 
 /-- [Section: # CatalogBuild.Shared.SpbH_bounded

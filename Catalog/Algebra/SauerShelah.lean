@@ -7,8 +7,8 @@ Domain: Algebra
 Declarations: 17
 -/
 
-
 open Fin
+
 
 /-- A family `F` of sets **shatters** a set `A` if every subset of `A` arises as
 `A ∩ S` for some `S ∈ F`. -/
@@ -208,7 +208,7 @@ lemma card_le_one_of_vc_zero {n : ℕ} (F : Finset (Finset (Fin n)))
       contrapose! hF;
       -- Since F has more than one element, there exist S₁ ≠ S₂ ∈ F.
       obtain ⟨S₁, S₂, hS₁, hS₂, hne⟩ : ∃ S₁ S₂ : Finset (Fin n), S₁ ∈ F ∧ S₂ ∈ F ∧ S₁ ≠ S₂ := by
-        exact Finset.one_lt_card_iff.mp hF;
+        exact?;
       -- Since S₁ ≠ S₂, there exists x with x ∈ S₁ and x ∉ S₂ (or vice versa), WLOG x ∈ S₁, x ∉ S₂.
       obtain ⟨x, hx₁, hx₂⟩ : ∃ x : Fin n, x ∈ S₁ ∧ x∉ S₂ ∨ x∉ S₁ ∧ x ∈ S₂ := by
         exact Classical.not_forall_not.1 fun h => hne <| Finset.ext fun x => by by_cases hx₁ : x ∈ S₁ <;> by_cases hx₂ : x ∈ S₂ <;> simpa [ hx₁, hx₂ ] using h x;
@@ -238,7 +238,7 @@ theorem sauer_shelah : ∀ (n d : ℕ) (F : Finset (Finset (Fin n))),
     | succ d =>
       set F₀ := (F.filter (Fin.last n ∉ ·)).image proj
       set F₁ := (F.filter (Fin.last n ∈ ·)).image proj
-      have hsplit : F.card = (F₀ ∪ F₁).card + (F₀ ∩ F₁).card := card_split F
+      have hsplit := card_split F
       have hvc₀ : ∀ A, Shatters (F₀ ∪ F₁) A → A.card ≤ d + 1 := fun A hA => by
         have := hF _ (shatters_embed_of_union F hA); rwa [embed_card] at this
       have hvc₁ : ∀ A, Shatters (F₀ ∩ F₁) A → A.card ≤ d := fun A hA => by
@@ -247,4 +247,4 @@ theorem sauer_shelah : ∀ (n d : ℕ) (F : Finset (Finset (Fin n))),
       have h_union := ih (d + 1) (F₀ ∪ F₁) hvc₀
       have h_inter := ih d (F₀ ∩ F₁) hvc₁
       have hpascal := binomial_pascal_sum n (d + 1)
-      omega
+      linarith
