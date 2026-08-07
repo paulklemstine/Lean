@@ -47,7 +47,7 @@ Synthesis (Stage 5):
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Probability.FilteredColimitArity
+import Probability.PosetTheory.FilteredColimitArity
 
 open scoped BigOperators
 

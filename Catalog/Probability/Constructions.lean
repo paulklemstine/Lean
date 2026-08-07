@@ -36,7 +36,7 @@
     the general conjecture (left as a future direction).
 -/
 import Mathlib
-import Probability.Defs
+import Probability.PackingIsolation.Defs
 
 open Finset SimpleGraph
 

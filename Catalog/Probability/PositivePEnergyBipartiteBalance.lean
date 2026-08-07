@@ -35,7 +35,7 @@ a triangle `K_3` with spectrum `{2,-1,-1}`, has `E_p^+ ≠ E_p^-`), so the theor
 Synthesis: bipartite balance is an involution theorem; the path is one instance among many.
 -/
 import Mathlib
-import Probability.PositivePEnergyPathMinimal
+import Probability.LFunctions.PositivePEnergyPathMinimal
 
 open Real Finset
 

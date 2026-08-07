@@ -1,4 +1,4 @@
-import Novelty.JacobianCore
+import Novelty.Core
 
 /-!
 # A verified degree-3 Druzkowski cubic-linear automorphism
