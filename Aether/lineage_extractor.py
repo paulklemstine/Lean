@@ -291,6 +291,7 @@ def build_lineage(packages_dir):
             "shape": shape,
             "date": pkg.get("date", ""),
             "hue": slug_to_hue(slug),
+            "quality_score": pkg.get("quality_score"),
         })
 
     # ── Phase 1: Provenance-based edges (factual, from source_exp_ids) ──

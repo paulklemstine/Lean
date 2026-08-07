@@ -232,7 +232,7 @@ def update_index():
         # Look up quality score by exp_id
         exp_id = data.get("exp_id", "")
         qs_entry = quality_scores.get(exp_id, None) if exp_id else None
-        quality_score = qs_entry["quality_score"] if qs_entry else None
+        quality_score = (qs_entry["quality_score"] if qs_entry else None) or data.get("quality_score", None)
         quality_label = qs_entry["quality"] if qs_entry else "unrated"
         # Compute quality tier: gold (Q>=0.9), silver (Q>=0.7), bronze (Q<0.7)
         if quality_score is None:
