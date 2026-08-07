@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2acb9b42",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## Scope of the proved connector\n\n`BourgainSlicingConnector.lean` proves a complete slicing theorem for positive axis-aligned boxes of volume one. It connects convex geometry to a",
-      "quality_score": 0.7411399999999999,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-08-02T18:23:58",
-      "title": "Bourgain's Slicing Problem"
-    },
-    {
       "cycle_id": "5814a7d4",
       "domain": "Computation",
       "key_insight": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `Aₙ² = n",
@@ -499,19 +489,19 @@
       "theorem_count": 137,
       "timestamp": "2026-08-07T09:24:12",
       "title": "The completed formalization deliberately studies the smallest non-trivial model:"
+    },
+    {
+      "cycle_id": "14cda033",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nBold, falsifiable conjectures growing out of the eight research cycles in\n\n* `Catalog/Computation/BerggrenHyperbolicGeodesics.lean` (cycle 1: the metric/arithmetic dictionary),\n*",
+      "quality_score": 0.71918,
+      "sorry_count": 0,
+      "theorem_count": 186,
+      "timestamp": "2026-08-07T11:15:59",
+      "title": "[Your Title]"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e1e4ff02",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n1. **Derive the tropical model from finite-temperature EML training.** Define a\n   log-sum-exp-smoothed neuron with scale parameter and prove convergence of its\n   losses and grad",
-      "quality_score": 0.76074,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T17:59:48",
-      "title": "EML Training Dynamics as Tropical Gradient Flow"
-    },
     {
       "cycle_id": "a8849f61",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 137,
       "timestamp": "2026-08-07T09:24:12",
       "title": "The completed formalization deliberately studies the smallest non-trivial model:"
+    },
+    {
+      "cycle_id": "14cda033",
+      "domain": "Computation",
+      "key_insight": "# Future directions\n\nBold, falsifiable conjectures growing out of the eight research cycles in\n\n* `Catalog/Computation/BerggrenHyperbolicGeodesics.lean` (cycle 1: the metric/arithmetic dictionary),\n*",
+      "quality_score": 0.71918,
+      "sorry_count": 0,
+      "theorem_count": 186,
+      "timestamp": "2026-08-07T11:15:59",
+      "title": "[Your Title]"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6337dbc1",
-      "domain": "Bridges",
-      "name": "for",
-      "quality": 0.78433
-    },
-    {
-      "cycle_id": "6337dbc1",
-      "domain": "Bridges",
-      "name": "basePath_self",
-      "quality": 0.78433
-    },
-    {
-      "cycle_id": "6337dbc1",
-      "domain": "Bridges",
-      "name": "loopOf_hom",
-      "quality": 0.78433
-    },
     {
       "cycle_id": "3a707635",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "crossTime_sharp_constant",
       "quality": 0.7422650000000001
+    },
+    {
+      "cycle_id": "14cda033",
+      "domain": "Computation",
+      "name": "alignment_iff_ratConic",
+      "quality": 0.71918
+    },
+    {
+      "cycle_id": "14cda033",
+      "domain": "Computation",
+      "name": "alignmentClass_eq_ratConic",
+      "quality": 0.71918
+    },
+    {
+      "cycle_id": "14cda033",
+      "domain": "Computation",
+      "name": "self_mem_alignmentCl",
+      "quality": 0.71918
     }
   ],
-  "last_updated": "2026-08-07T09:24:12",
+  "last_updated": "2026-08-07T11:15:59",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "6c98f572",
-        "quality": 0.80505,
-        "theorems": 21,
-        "title": "Bridge: Fourier Analysis as a Functor"
-      },
-      {
         "cycle_id": "61f6b5cb",
         "quality": 0.683,
         "theorems": 33,
@@ -3327,6 +3321,12 @@
         "quality": 0.646,
         "theorems": 1088,
         "title": "Deepening: Bridge: Fourier Analysis as a Functor"
+      },
+      {
+        "cycle_id": "14cda033",
+        "quality": 0.71918,
+        "theorems": 186,
+        "title": "[Your Title]"
       }
     ],
     "Cryptography": [
