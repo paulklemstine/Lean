@@ -45,7 +45,6 @@ def pad : ℕ → ComparisonTree → ComparisonTree
 /-
 A binary tree of height `h` has at most `2^h` terminal transcripts.
 -/
-
 theorem leaves_le_two_pow_height (t : ComparisonTree) :
     leaves t ≤ 2 ^ height t := by
       induction' t with l r ihl ihr;
@@ -59,7 +58,6 @@ theorem leaves_le_two_pow_height (t : ComparisonTree) :
 /-
 Padding adds an arbitrary number of comparisons to every execution.
 -/
-
 theorem height_pad (r : ℕ) (t : ComparisonTree) :
     height (pad r t) = r + height t := by
       induction' r with r ih generalizing t <;> simp_all +arith +decide;
@@ -69,7 +67,6 @@ theorem height_pad (r : ℕ) (t : ComparisonTree) :
 /-
 Padding never decreases the number of available transcripts.
 -/
-
 theorem leaves_le_pad (r : ℕ) (t : ComparisonTree) :
     leaves t ≤ leaves (pad r t) := by
       induction' r with r ih generalizing t;
@@ -77,14 +74,6 @@ theorem leaves_le_pad (r : ℕ) (t : ComparisonTree) :
       · exact le_trans ( ih t ) ( by exact le_add_of_nonneg_left ( Nat.zero_le _ ) )
 
 end ComparisonTree
-
-/-- The information erased by sorting `n` elements equals `log₂(n!)`, for every `n`
-(including `n = 0`, which the library version excludes). -/
-theorem sorting_info_erased_all (n : ℕ) :
-    infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
-  unfold infoErased sortingFunction
-  norm_num [Fintype.card_perm]
-  rw [Finset.image_const] <;> aesop
 
 /-- A comparison-tree shape can distinguish all orderings of `n` distinct items when it
 has at least `n!` terminal transcripts. -/
@@ -95,7 +84,6 @@ def SortsOrderings (t : ComparisonTree) (n : ℕ) : Prop :=
 **Exact information lower bound.** Every comparison tree capable of distinguishing
 all `n!` orderings has worst-case height at least `⌈log₂(n!)⌉`.
 -/
-
 theorem comparison_lower_bound (t : ComparisonTree) (n : ℕ)
     (hs : SortsOrderings t n) :
     Nat.clog 2 n.factorial ≤ t.height := by
@@ -105,7 +93,6 @@ theorem comparison_lower_bound (t : ComparisonTree) (n : ℕ)
 Redundant comparisons can increase worst-case comparison count arbitrarily while
 preserving the ability to sort the same inputs.
 -/
-
 theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
     (hs : SortsOrderings t n) :
     SortsOrderings (t.pad r) n ∧ (t.pad r).height = r + t.height := by
@@ -116,6 +103,14 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
 implementation needs at least `n!` history states.
 -/
+/-- `sorting_info_erased` of `Computation.ReversibleSortingBennett` assumes `1 ≤ n`; the
+statement is in fact true for `n = 0` as well (both sides vanish), which is what the theorems
+below need. -/
+theorem sorting_info_erased_all (n : ℕ) :
+    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · simp [infoErased, sortingFunction]
+  · exact sorting_info_erased n hn
 
 theorem factorial_controls_comparisons_entropy_and_history
     (t : ComparisonTree) (n : ℕ) (hs : SortsOrderings t n)
@@ -125,22 +120,20 @@ theorem factorial_controls_comparisons_entropy_and_history
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · exact sorting_info_erased_all n
-      · convert sorting_history_lower_bound n Aux e hc using 1;
-        simp +decide [ Fintype.card_perm ]
+      refine ⟨comparison_lower_bound t n hs, sorting_info_erased_all n, ?_⟩
+      convert sorting_history_lower_bound n Aux e hc using 1
+      simp +decide [ Fintype.card_perm ]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
 input permutation costs `kT · log(n!)`.  The factor `log 2` in the per-bit cost cancels
 the change of base in `log₂(n!)`.
 -/
-
 theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+      have h2 : Real.log 2 ≠ 0 := (Real.log_pos (by norm_num)).ne'
       unfold landauerGap landauerCost
-      rw [sorting_info_erased_all, Real.logb]
+      rw [sorting_info_erased_all n, Real.logb]
       field_simp
 
 /-
@@ -148,7 +141,6 @@ The Landauer work assigned to irreversible sorting is unchanged when redundant
 comparison levels are inserted.  Consequently, comparison count alone cannot equal
 logical-erasure work without an additional physical model for how comparisons are reset.
 -/
-
 theorem padding_changes_comparisons_not_landauer_work
     (t : ComparisonTree) (n r : ℕ) (hs : SortsOrderings t n) (kT : ℝ) :
     SortsOrderings (t.pad r) n ∧
@@ -175,6 +167,5 @@ theorem padding_changes_comparisons_not_landauer_work
 -- constrains comparison depth and reversible history, whereas actual dissipation depends
 -- on which information is eventually erased and on the physical implementation.
 -- !-- end Lab Notes -- !--
-
 
 end SortingEntropyWork
