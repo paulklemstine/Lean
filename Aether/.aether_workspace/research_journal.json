@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1c628216",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n1. **Machine-relative prefix complexity.** Fix a concrete prefix-free universal\n   machine, define `K_U(b)` as the least program length decoding to `b`, and derive\n   the Kraft-in",
-      "quality_score": 0.76172,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-30T09:52:06",
-      "title": "Borges' Library of Babel: Combinatorics of Everything"
-    },
-    {
       "cycle_id": "3308088b",
       "domain": "Geometry",
       "key_insight": "# Future directions\n\nThe completed development proves finite normalized max-plus tropical\nCarathéodory in `Catalog/Tropical/TropicalConvexity/Caratheodory.lean`, including\nsingleton membership, monoto",
@@ -2501,6 +2491,16 @@
       "theorem_count": 246,
       "timestamp": "2026-08-07T05:07:18",
       "title": "The following conjectures are concrete extensions of the proved bridge.  Each is"
+    },
+    {
+      "cycle_id": "8d2025bd",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — Möbius arithmetic\n\nThis file is the live research thread of the project.  Part I records the state\nof the five conjectures posed after cycle 1; three of them have since been\nsett",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 225,
+      "timestamp": "2026-08-07T05:08:58",
+      "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73419
     }
   ],
-  "last_updated": "2026-08-07T05:07:18",
+  "last_updated": "2026-08-07T05:08:58",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "3811f14c",
-        "quality": 0.7326499999999999,
-        "theorems": 11,
-        "title": "Close Proofs: Pythagorean-Energy-Spectrum: Gradient Descent Factoring on the Ber"
-      },
-      {
         "cycle_id": "972f5eac",
         "quality": 0.77705,
         "theorems": 17,
@@ -3699,6 +3693,12 @@
         "quality": 0.686,
         "theorems": 78,
         "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
+      },
+      {
+        "cycle_id": "8d2025bd",
+        "quality": 0.627125,
+        "theorems": 225,
+        "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
       }
     ],
     "Physics": [
