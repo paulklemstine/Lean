@@ -9,34 +9,6 @@ Declarations: 8
 
 noncomputable section
 
-
-/-! ### Definitions restored for this auto-generated fragment -/
-
-/-- The SPB (stereographic projection bridge) operation
-`spb x y = (x + y) / (1 - x * y)`, i.e. the tangent addition law. -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
-/-- Zero is a right identity for SPB. -/
-theorem spb_zero_right (x : ℝ) : spb x 0 = x := by simp [spb]
-
-/-- Zero is a left identity for SPB. -/
-theorem spb_zero_left (x : ℝ) : spb 0 x = x := by simp [spb]
-
-/-- The tangent addition law expressed through `spb`. -/
-theorem tan_add_eq_spb (a b : ℝ) (ha : Real.cos a ≠ 0) (hb : Real.cos b ≠ 0) :
-    Real.tan (a + b) = spb (Real.tan a) (Real.tan b) := by
-  unfold spb
-  rw [Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos,
-    Real.sin_add, Real.cos_add]
-  rcases eq_or_ne (Real.cos a * Real.cos b - Real.sin a * Real.sin b) 0 with h | h
-  · rw [h]
-    have h2 : 1 - Real.sin a / Real.cos a * (Real.sin b / Real.cos b) = 0 := by
-      field_simp
-      linarith [h]
-    rw [h2]
-    simp
-  · field_simp
-
 /-- [Section: # CatalogBuild.Shared.Spb_hasDerivAt_snd
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -87,6 +59,5 @@ theorem spb_deriv_fst_pos (y : ℝ) (d : ℝ) (hd : d ≠ 0) :
   apply div_pos
   · linarith [sq_nonneg y]
   · positivity
-
 
 end
