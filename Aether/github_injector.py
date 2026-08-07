@@ -50,9 +50,21 @@ def inject_directions_into_memory(workspace_path: Path):
     if not issues:
         return 0
 
-    fd_file = workspace_path / "future_directions.json"
-    if not fd_file.exists():
-        print(f"[GitHub Injector] Warning: {fd_file} does not exist.")
+    candidates = [
+        workspace_path / "future_directions.json",
+        workspace_path / "Packages" / "future_directions.json",
+        workspace_path.parent / "Packages" / "future_directions.json",
+        workspace_path.parent.parent / "Packages" / "future_directions.json",
+        Path("Packages/future_directions.json"),
+    ]
+    fd_file = None
+    for candidate in candidates:
+        if candidate.exists():
+            fd_file = candidate
+            break
+
+    if not fd_file:
+        print(f"[GitHub Injector] Warning: could not locate future_directions.json.")
         return 0
 
     try:
