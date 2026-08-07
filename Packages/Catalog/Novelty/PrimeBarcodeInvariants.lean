@@ -66,7 +66,7 @@ the cumulative histogram of prime gaps.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Novelty.NumberTheory.PrimePersistentHomology
+import Novelty.PrimePersistentHomology
 
 open scoped Classical
 

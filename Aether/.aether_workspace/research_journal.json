@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c945ec38",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Finite partition formula.** For every finite pairwise-disjoint family of finite--cofinite\n   events, the probability of its union equals the finite sum of its probabilities.",
-      "quality_score": 0.77894,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-02T17:24:52",
-      "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
-    },
-    {
       "cycle_id": "b0710fef",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) ≤ N^k` is robust and directly yields the\n`log₂ N` bits-per-spike ceiling. A sharper next theorem is\n\n`b",
@@ -499,19 +489,19 @@
       "theorem_count": 3,
       "timestamp": "2026-08-07T04:15:17",
       "title": "ArXiv paper: Even smaller universal posets"
+    },
+    {
+      "cycle_id": "2c38bc1a",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
+      "quality_score": 0.7003711194029851,
+      "sorry_count": 2,
+      "theorem_count": 134,
+      "timestamp": "2026-08-07T05:10:38",
+      "title": "ArXiv paper: Even smaller universal posets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3308088b",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe completed development proves finite normalized max-plus tropical\nCarathéodory in `Catalog/Tropical/TropicalConvexity/Caratheodory.lean`, including\nsingleton membership, monoto",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-07-30T12:12:00",
-      "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
-    },
     {
       "cycle_id": "72d619d5",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 225,
       "timestamp": "2026-08-07T05:08:58",
       "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
+    },
+    {
+      "cycle_id": "2c38bc1a",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
+      "quality_score": 0.7003711194029851,
+      "sorry_count": 2,
+      "theorem_count": 134,
+      "timestamp": "2026-08-07T05:10:38",
+      "title": "ArXiv paper: Even smaller universal posets"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "94d22408",
-      "domain": "Pythagorean",
-      "name": "sub_pow_mem_span_of_mem_adjoin",
-      "quality": 0.7906299999999999
-    },
-    {
-      "cycle_id": "94d22408",
-      "domain": "Pythagorean",
-      "name": "sub_pow_mem_span_of_adjoin_eq_top",
-      "quality": 0.7906299999999999
-    },
-    {
-      "cycle_id": "a65c164b",
-      "domain": "Algebra",
-      "name": "ext_zmod_eq_zero",
-      "quality": 0.78643
-    },
     {
       "cycle_id": "a65c164b",
       "domain": "Algebra",
@@ -2803,17 +2785,28 @@
       "domain": "Geometry",
       "name": "sub_div_le_log_div",
       "quality": 0.73419
+    },
+    {
+      "cycle_id": "2c38bc1a",
+      "domain": "Cryptography",
+      "name": "says",
+      "quality": 0.7003711194029851
+    },
+    {
+      "cycle_id": "2c38bc1a",
+      "domain": "Cryptography",
+      "name": "injective_of_universal_witness",
+      "quality": 0.7003711194029851
+    },
+    {
+      "cycle_id": "2c38bc1a",
+      "domain": "Cryptography",
+      "name": "inducedEmbedding_of_isUniversalHost",
+      "quality": 0.7003711194029851
     }
   ],
-  "last_updated": "2026-08-07T05:08:58",
+  "last_updated": "2026-08-07T05:10:38",
   "open_questions": [
-    {
-      "context": "-  sorry; -  sorry; -  sorry",
-      "cycle_id": "955187b3",
-      "domain": "Novelty",
-      "sorry_count": 13,
-      "timestamp": "2026-07-20T09:41:49"
-    },
     {
       "context": "+  sorry; +  sorry; +  sorry",
       "cycle_id": "dd6a308e",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 2,
       "timestamp": "2026-08-06T12:26:25"
+    },
+    {
+      "context": "`sorry` is used to pretend otherwise.; both directions.  No `native_decide`, no `sorry`.",
+      "cycle_id": "2c38bc1a",
+      "domain": "Cryptography",
+      "sorry_count": 2,
+      "timestamp": "2026-08-07T05:10:38"
     }
   ],
   "research_threads": {
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "50db037d",
-        "quality": 0.7722199999999999,
-        "theorems": 13,
-        "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-      },
-      {
         "cycle_id": "03b10997",
         "quality": 0.7701199999999999,
         "theorems": 17,
@@ -3388,6 +3382,12 @@
         "cycle_id": "2c38bc1a",
         "quality": 0.7055950000000001,
         "theorems": 3,
+        "title": "ArXiv paper: Even smaller universal posets"
+      },
+      {
+        "cycle_id": "2c38bc1a",
+        "quality": 0.7003711194029851,
+        "theorems": 134,
         "title": "ArXiv paper: Even smaller universal posets"
       }
     ],
