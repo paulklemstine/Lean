@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Catalog.Novelty.NeuralCoding
+import Novelty.NeuralCoding
 
 /-!
 # Neural codes over a finite alphabet: capacity, energy classes and noisy decoding
