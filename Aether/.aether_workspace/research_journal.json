@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2996b72f",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n## Result established\n\n`Catalog/Shared/EulerMascheroniInformationBridge.lean` proves a connector between\nanalytic number theory and information theory:\n\n\\[\n\\gamma=\\sum_{k=0}^{\\inf",
-      "quality_score": 0.77621,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-07-30T00:20:57",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "d5c8afaa",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\nThe completed formal development proves a precise theorem at the combinatorial core of tropical hypersurface geometry: when a tropical polynomial is represented by its finite fami",
@@ -2501,6 +2491,16 @@
       "theorem_count": 112,
       "timestamp": "2026-08-07T00:25:12",
       "title": "ArXiv paper: Even smaller universal posets"
+    },
+    {
+      "cycle_id": "3744942f",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Hadwiger's Conjecture (cycle v19c, continuation pass)\n\nWhat is now formalised (all statements below are `sorry`-free theorems in\n`Catalog/Probability/Hadwiger*.lean`):\n\n* transit",
+      "quality_score": 0.6546236561723476,
+      "sorry_count": 0,
+      "theorem_count": 666,
+      "timestamp": "2026-08-07T03:15:10",
+      "title": "Deepening: Hadwiger's Conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7010699999999999
     }
   ],
-  "last_updated": "2026-08-07T00:25:12",
+  "last_updated": "2026-08-07T03:15:10",
   "open_questions": [
     {
       "context": "-  sorry; -  sorry; -  sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "70779ff4",
-        "quality": 0.7678799999999999,
-        "theorems": 4,
-        "title": "Normality of Mathematical Constants"
-      },
-      {
         "cycle_id": "c961538a",
         "quality": 0.686,
         "theorems": 35,
@@ -3823,6 +3817,12 @@
         "quality": 0.6545542168674698,
         "theorems": 166,
         "title": "Future directions from cycle 6622cac1"
+      },
+      {
+        "cycle_id": "3744942f",
+        "quality": 0.6546236561723476,
+        "theorems": 666,
+        "title": "Deepening: Hadwiger's Conjecture"
       }
     ],
     "Pythagorean": [
