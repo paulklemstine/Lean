@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5907c59d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n- Extend the real coefficient-matrix model to complex amplitudes and prove the same reduced-density and concurrence results.\n- Define von Neumann entropy for finite density matric",
-      "quality_score": 0.78678,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-08-02T22:19:35",
-      "title": "Emergent Spacetime from Quantum Entanglement"
-    },
-    {
       "cycle_id": "f15cd85a",
       "domain": "Geometry",
       "key_insight": "# Future directions\n\n## What is formalized\n\n`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained\nformal development with no assumption that a perfect cuboid exists:\n\n1. def",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-07T19:26:07",
       "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
+    },
+    {
+      "cycle_id": "339ae990",
+      "domain": "Novelty",
+      "key_insight": "# Future directions (next cycle)\n\nThis cycle closed all five directions carried over from the previous cycle; the\nresults live in `Catalog/Novelty/EulerMascheroniSharpTails.lean` and are proved\nwithou",
+      "quality_score": 0.71899,
+      "sorry_count": 0,
+      "theorem_count": 50,
+      "timestamp": "2026-08-08T14:58:45",
+      "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c961538a",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n- The exact connective constant of the square lattice is not known. The proposed value `(2 + √2) / 2` is ruled out in `Catalog/Tropical/SAW/ConnectiveConstant.lean`, since it is s",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-07-31T06:33:29",
-      "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
-    },
     {
       "cycle_id": "02f69ad4",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 555,
       "timestamp": "2026-08-08T14:03:57",
       "title": "ArXiv paper: Solomon zeta functions over arithmetic orders"
+    },
+    {
+      "cycle_id": "339ae990",
+      "domain": "Novelty",
+      "key_insight": "# Future directions (next cycle)\n\nThis cycle closed all five directions carried over from the previous cycle; the\nresults live in `Catalog/Novelty/EulerMascheroniSharpTails.lean` and are proved\nwithou",
+      "quality_score": 0.71899,
+      "sorry_count": 0,
+      "theorem_count": 50,
+      "timestamp": "2026-08-08T14:58:45",
+      "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e9c14674",
-      "domain": "Shared",
-      "name": "sqdist_comm",
-      "quality": 0.78349
-    },
-    {
-      "cycle_id": "e9c14674",
-      "domain": "Shared",
-      "name": "sqdist_nonneg",
-      "quality": 0.78349
-    },
-    {
-      "cycle_id": "e9c14674",
-      "domain": "Shared",
-      "name": "gilbert_adj_iff",
-      "quality": 0.78349
-    },
     {
       "cycle_id": "5357ee14",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "neg_ediv_eq",
       "quality": 0.71728
+    },
+    {
+      "cycle_id": "339ae990",
+      "domain": "Novelty",
+      "name": "harmonic_fifteen",
+      "quality": 0.71899
+    },
+    {
+      "cycle_id": "339ae990",
+      "domain": "Novelty",
+      "name": "log_sixteen",
+      "quality": 0.71899
+    },
+    {
+      "cycle_id": "339ae990",
+      "domain": "Novelty",
+      "name": "eulerMascheroniSeq_fifteen",
+      "quality": 0.71899
     }
   ],
-  "last_updated": "2026-08-08T14:03:57",
+  "last_updated": "2026-08-08T14:58:45",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b20da64b",
-        "quality": 0.686,
-        "theorems": 213,
-        "title": "Integrated Information via Tensor Networks"
-      },
-      {
         "cycle_id": "716ebed1",
         "quality": 0.686,
         "theorems": 123,
@@ -3637,6 +3631,12 @@
         "quality": 0.6544111491354468,
         "theorems": 239,
         "title": "This project formalises a chain of results about snakes (chordless induced"
+      },
+      {
+        "cycle_id": "339ae990",
+        "quality": 0.71899,
+        "theorems": 50,
+        "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
       }
     ],
     "NumberTheory": [

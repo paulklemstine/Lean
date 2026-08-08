@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-08T14:04:00.213756+00:00",
+  "last_updated": "2026-08-08T14:58:46.209902+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -51050,6 +51050,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -51078,6 +51079,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-08T14:04:00.079650+00:00",
       "title": "ArXiv paper: Solomon zeta functions over arithmetic orders"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1283,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Novelty",
+      "duration_seconds": 3177.032775402069,
+      "end_time": 1786201016.9662852,
+      "files_integrated": 4,
+      "job_id": "339ae990",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.7246900000000001,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7683,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7386,
+        "novelty": 0.77,
+        "proof_depth": 0.7251,
+        "usefulness": 0.8625
+      },
+      "quality_score": 0.71899,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786197839.9335098,
+      "strategy_count": 0,
+      "theorem_count": 50,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 50,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-08T14:58:46.069421+00:00",
+      "title": "Sharp two-sided summand asymptotics.: For every `k : \u2115`, prove"
     }
   ]
 }
