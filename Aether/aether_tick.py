@@ -84,6 +84,38 @@ def _load_env_file():
                 if k and k not in os.environ:
                     os.environ[k] = v
 
+def _close_github_issue_if_needed(job):
+    """Close the GitHub issue associated with an injected direction when it finishes or integrates."""
+    if getattr(job, 'github_issue', None):
+        try:
+            import github_injector
+            st = getattr(job, 'status', '')
+            if st in ("integrated", "completed") or getattr(job, 'phase', '') == "complete":
+                pkg_filename = ""
+                if hasattr(job, "concept") and job.concept:
+                    import re
+                    title = job.concept.title.replace(" ", "_").replace("-", "_").lower()
+                    title = re.sub(r'[^a-z0-9_]', '', title)[:50]
+                    pkg_filename = f"{title}.json"
+                
+                pkg_url = f"https://raw.githubusercontent.com/paulklemstine/Lean/master/Packages/{pkg_filename}" if pkg_filename else ""
+                comment = (
+                    f"### Aether Research Results\n\n"
+                    f"**Direction**: {getattr(job.concept, 'title', 'Injected Direction')}\n"
+                    f"**Quality Score**: {job.quality_score:.3f}\n"
+                    f"**Theorems Proven**: {job.theorem_count}\n\n"
+                    f"**Research Package**: [{pkg_url}]({pkg_url})\n\n"
+                    f"The results have been integrated into the Aether Catalog."
+                )
+            elif st == "rejected":
+                comment = f"Aether completed researching this direction, but the results did not meet the quality threshold for integration.\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}"
+            else:
+                comment = f"Aether encountered an error or failed to process this direction.\n\n**Status**: {st}\n**Error**: {getattr(job, 'error_message', 'Unknown error')}"
+            
+            github_injector.close_injected_direction_with_comment(job.github_issue, comment)
+        except Exception as e:
+            print(f"[Tick] Failed to close GitHub issue {job.github_issue}: {e}")
+
 _load_env_file()
 
 
@@ -926,6 +958,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         print(f"[Tick] Integrated {job.job_id[:8]}: score={job.quality_score:.3f}, "
               f"files={job.files_integrated}, theorems={job.theorem_count}")
 
+        # Close GitHub issue if this job was an injected direction
+        _close_github_issue_if_needed(job)
+
         # Immediately remove from inflight — don't wait for the end-of-tick prune.
         # The Sonic cycle bug was caused by integrated jobs accumulating in
         # inflight_jobs.json, leading the stale-recovery to think directions
@@ -1066,35 +1101,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         for pid in stale_keys:
             job = extractor.inflight[pid]
             
-            # --- NEW: Close GitHub injected issue if completed ---
-            if getattr(job, 'github_issue', None):
-                try:
-                    import github_injector
-                    if job.status == "integrated":
-                        pkg_filename = ""
-                        if hasattr(job, "concept") and job.concept:
-                            import re
-                            title = job.concept.title.replace(" ", "_").replace("-", "_").lower()
-                            title = re.sub(r'[^a-z0-9_]', '', title)[:50]
-                            pkg_filename = f"{title}.json"
-                        
-                        pkg_url = f"https://alethean.org/#pkg={pkg_filename}" if pkg_filename else "https://alethean.org"
-                        comment = (
-                            f"Aether has completed Phase B research on this direction!\n\n"
-                            f"**Quality Score**: {job.quality_score:.3f}\n"
-                            f"**Theorems Proven**: {job.theorem_count}\n\n"
-                            f"**Research Package**: [{pkg_url}]({pkg_url})\n\n"
-                            f"The results have been integrated into the Aether Catalog."
-                        )
-                    elif job.status == "rejected":
-                        comment = f"Aether completed researching this direction, but the results did not meet the quality threshold for integration.\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}"
-                    else:
-                        comment = f"Aether encountered an error or failed to process this direction.\n\n**Status**: {job.status}\n**Error**: {getattr(job, 'error_message', 'Unknown error')}"
-                    
-                    github_injector.close_injected_direction_with_comment(job.github_issue, comment)
-                except Exception as e:
-                    print(f"[Tick] Failed to close GitHub issue {job.github_issue}: {e}")
-            # -----------------------------------------------------
+            # Close GitHub issue if this job was an injected direction
+            _close_github_issue_if_needed(job)
 
             if job.project_dir and Path(job.project_dir).exists():
                 try:
