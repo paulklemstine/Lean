@@ -10725,11 +10725,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6ee73e48",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -10742,7 +10742,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0492",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-08T09:07:16.290024+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -10757,7 +10757,7 @@
       "source": "",
       "source_exp_id": "53d02dfc",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/53d02dfc",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_ec36dbec",
       "timestamp": "2026-07-19T20:44:15.853692+00:00",
       "title": "**Conjecture.** A reflective fixed-point code admits a monotone interpretation i"
@@ -36327,6 +36327,7 @@
     "abduction_followup",
     "famous_subtask",
     "famous_subtask",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }

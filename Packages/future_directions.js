@@ -8115,17 +8115,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** Let a real polynomial causal return map preserve a closed interv"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ee73e48",
     "description": "# Future Directions: Reflective Type Theory\n\n## 1. Positivity as the exact semantic frontier\n\n**Conjecture.** A reflective fixed-point code admits a monotone interpretation in every complete Heyting algebra if and only if each occurrence of its bound variable has positive variance. Moreover, failure of positivity is witnessed by a two-element algebra.\n\nThe key insight is that the same variance discipline governing recursive types also governs Knaster\u2013Tarski semantics for self-referential provability. **Why now?** The syntax\u2013semantics boundary is explicit: unrestricted codes have been separated from the guarded fragment, making both directions of the criterion testable.\n\n## 2. Minimal-frame classification of uniterated provability\n\n**Conjecture.** Up to bounded morphism, every finite pointed model satisfying `\u25a1P \u2227 \u00ac\u25a1\u25a1P` contains the pointed two-edge chain as a generated quotient; in particular, three worlds are minimal when seriality is imposed at the distinguished world and its successor.\n\nThe key insight is that failure of axiom 4 must expose a composable pair of accessibility edges whose composite edge is absent. **Why now?** An explicit minimal witness and the universal transitivity obstruction provide the two extremal cases needed for a structural classification.\n\n## 3. Conservative embedding of dependent type theory\n\n**Conjecture.** Adding positive reflective fixed points to an intensional dependent type theory with normalization preserves canonicity for closed natural-number terms and is conservative over judgments not containing reflection or fixed points.\n\nThe key insight is to stratify reduction so that ordinary dependent computation cannot inspect reflective evidence, while guarded unfolding remains productive. **Why now?** The syntactic proper-extension theorem isolates the new constructors; the next test is whether their operational rules preserve the metatheory of the embedded fragment.\n\n## 4. Alternation depth versus reflection depth\n\n**Conjecture.** On finite transitive converse-well-founded frames, modal fixed-point alternation depth is bounded above by reflective proof depth plus frame height, and this bound is asymptotically sharp.\n\nThe key insight is that transitivity collapses repeated boxes while fixed-point alternation consumes ordinal rank. **Why now?** The frame boundary for iterated provability and the exact grammar translation make both complexity measures simultaneously available.\n\n## 5. Diagonal incompleteness from internal fixed points\n\n**Conjecture.** Every sound reflective theory able to represent substitution and a guarded negative fixed point contains a closed proposition that is true and unprovable, without postulating an external diagonal operator.\n\nThe key insight is that the diagonal sentence should be synthesized from the fixed-point constructor itself once substitution is representable. **Why now?** The external diagonal theorem establishes the logical endpoint, while the modal fixed-point grammar identifies the missing internal construction precisely.\n",
     "domains": [
       "Logic",
       "Algebra"
     ],
     "id": "fd_0492",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "53d02dfc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T20:44:15.853692+00:00",
     "title": "**Conjecture.** A reflective fixed-point code admits a monotone interpretation i"
   },
