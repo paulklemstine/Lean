@@ -9,7 +9,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1033",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -2638,17 +2638,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fermat's Last Theorem for Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec3dc5ba",
     "description": "Formalize Stone duality: the category of Boolean algebras is dual to the category of Stone spaces. Prove that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space. Bridge this to logic: a theory T in propositional logic corresponds to the Boolean algebra of sentences modulo T-provability, whose Stone space is the space of models.",
     "domains": [
       "Bridges",
       "Logic"
     ],
     "id": "seed_349",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bridge: Stone Duality as a Bridge Between Logic and Topology"
   },
@@ -3874,7 +3875,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "24f861df",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
     "domains": [
       "Tropical",
@@ -3882,11 +3883,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "fd_0692",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T14:34:16.697843+00:00",
     "title": "Tropical Convexity and Linear Programming"
   },
