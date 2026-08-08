@@ -1,261 +1,221 @@
-"""Numerical demonstrations of chip-firing divisor foundations.
-
-This script reproduces, on concrete finite simple graphs, the two main
-theorems of the accompanying paper:
-
-  * Theorem 3.2 (`deg_lap_eq_zero`):  sum_v lap(f)(v) = 0  for every integer
-    vertex labelling f.  Equivalently, firing preserves the degree of a divisor.
-
-  * Theorem 3.3 (`deg_canonicalDivisor_eq_two_genus_sub_two`):
-    sum_v K(v) = 2g - 2, where K(v) = deg(v) - 2 and g = |E| - |V| + 1.
-
-Every graph is encoded as a finite simple graph (symmetric, irreflexive
-adjacency).  All functions are self-contained and type-hinted.
-
-Run:  python demo.py
-"""
-
-from __future__ import annotations
-
-from itertools import combinations
-from typing import Dict, List, Set, Tuple
-import random
-
-# A finite simple graph: vertices are ints 0..n-1; edges are a set of
-# unordered pairs (i, j) with i < j.
-Graph = Tuple[int, Set[Tuple[int, int]]]
-
-
-def neighbors(graph: Graph, v: int) -> List[int]:
-    """Return the list of neighbors of vertex v (adjacency is symmetric)."""
-    _, edges = graph
-    result: List[int] = []
-    for a, b in edges:
-        if a == v:
-            result.append(b)
-        elif b == v:
-            result.append(a)
-    return result
-
-
-def vertex_degree(graph: Graph, v: int) -> int:
-    """Number of edges incident to v."""
-    return len(neighbors(graph, v))
-
-
-def divisor_degree(divisor: Dict[int, int]) -> int:
-    """deg D = sum_v D(v)."""
-    return sum(divisor.values())
-
-
-def laplacian(graph: Graph, f: Dict[int, int]) -> Dict[int, int]:
-    """lap f (v) = sum_{w ~ v} (f(v) - f(w))."""
-    n, _ = graph
-    return {v: sum(f[v] - f[w] for w in neighbors(graph, v)) for v in range(n)}
-
-
-def canonical_divisor(graph: Graph) -> Dict[int, int]:
-    """K(v) = deg(v) - 2."""
-    n, _ = graph
-    return {v: vertex_degree(graph, v) - 2 for v in range(n)}
-
-
-def genus(graph: Graph) -> int:
-    """g = |E| - |V| + 1."""
-    n, edges = graph
-    return len(edges) - n + 1
-
-
-def fire(graph: Graph, divisor: Dict[int, int], f: Dict[int, int]) -> Dict[int, int]:
-    """Apply the firing pattern f to a divisor: D' = D + lap f."""
-    lap = laplacian(graph, f)
-    return {v: divisor[v] + lap[v] for v in divisor}
-
-
-# ---- Graph constructors -----------------------------------------------------
-
-def complete_graph(n: int) -> Graph:
-    """K_n: every pair of distinct vertices adjacent."""
-    return n, {(i, j) for i, j in combinations(range(n), 2)}
-
-
-def cycle_graph(n: int) -> Graph:
-    """C_n: a single n-cycle (n >= 3)."""
-    edges = {(min(i, (i + 1) % n), max(i, (i + 1) % n)) for i in range(n)}
-    return n, edges
-
-
-def path_graph(n: int) -> Graph:
-    """P_n: a path on n vertices."""
-    return n, {(i, i + 1) for i in range(n - 1)}
-
-
-def random_connected_graph(n: int, extra_edges: int, seed: int) -> Graph:
-    """A random connected simple graph: a random spanning tree plus extra edges."""
-    rng = random.Random(seed)
-    verts = list(range(n))
-    rng.shuffle(verts)
-    edges: Set[Tuple[int, int]] = set()
-    for k in range(1, n):  # random tree
-        j = verts[k]
-        i = verts[rng.randrange(k)]
-        edges.add((min(i, j), max(i, j)))
-    all_pairs = [(i, j) for i, j in combinations(range(n), 2)]
-    rng.shuffle(all_pairs)
-    for pair in all_pairs:
-        if len(edges) >= (n - 1) + extra_edges:
-            break
-        edges.add(pair)
-    return n, edges
-
-
-# ---- Theorem checks ---------------------------------------------------------
-
-def check_laplacian_degree_zero(graph: Graph, f: Dict[int, int]) -> int:
-    """Return sum_v lap f(v); Theorem 3.2 says it is 0."""
-    return divisor_degree(laplacian(graph, f))
-
-
-def check_canonical_genus(graph: Graph) -> Tuple[int, int]:
-    """Return (sum_v K(v), 2g - 2); Theorem 3.3 says they are equal."""
-    return divisor_degree(canonical_divisor(graph)), 2 * genus(graph) - 2
-
-
-def random_labelling(n: int, seed: int, lo: int = -5, hi: int = 5) -> Dict[int, int]:
-    rng = random.Random(seed)
-    return {v: rng.randint(lo, hi) for v in range(n)}
-
-
-# ---- Demonstration ----------------------------------------------------------
-
-def main() -> None:
-    print("=" * 70)
-    print("Chip-Firing Divisor Theory: numerical verification of the two laws")
-    print("=" * 70)
-
-    named: List[Tuple[str, Graph]] = [
-        ("Triangle  C_3", cycle_graph(3)),
-        ("Path      P_3", path_graph(3)),
-        ("Cycle     C_5", cycle_graph(5)),
-        ("Complete  K_4", complete_graph(4)),
-        ("Complete  K_5", complete_graph(5)),
-        ("Petersen-ish random", random_connected_graph(10, 5, seed=7)),
-    ]
-
-    print("\n--- Theorem 3.3:  sum_v K(v) = 2g - 2 ---")
-    print(f"{'graph':22} {'|V|':>4} {'|E|':>4} {'g':>4} {'deg K':>7} {'2g-2':>7}  ok")
-    for name, g in named:
-        n, edges = g
-        sumK, target = check_canonical_genus(g)
-        ok = (sumK == target)
-        print(f"{name:22} {n:>4} {len(edges):>4} {genus(g):>4} "
-              f"{sumK:>7} {target:>7}  {ok}")
-        assert ok, f"canonical genus law failed on {name}"
-
-    print("\n--- Theorem 3.2:  sum_v lap f(v) = 0  (firing conserves degree) ---")
-    print(f"{'graph':22} {'seed':>5} {'deg(lap f)':>11} {'deg D : deg D-fired':>20}  ok")
-    for name, g in named:
-        n, edges = g
-        for seed in (1, 2, 3):
-            f = random_labelling(n, seed)
-            lap_deg = check_laplacian_degree_zero(g, f)
-            # also confirm a concrete divisor keeps its degree after firing
-            d = random_labelling(n, seed + 100)
-            d_fired = fire(g, d, f)
-            same_deg = (divisor_degree(d) == divisor_degree(d_fired))
-            ok = (lap_deg == 0) and same_deg
-            print(f"{name:22} {seed:>5} {lap_deg:>11} "
-                  f"{str(divisor_degree(d)) + ' = ' + str(divisor_degree(d_fired)):>15}  {ok}")
-            assert ok, f"degree conservation failed on {name}"
-
-    print("\n--- Detailed example: firing one vertex of the triangle ---")
-    tri = cycle_graph(3)
-    f = {0: 1, 1: 0, 2: 0}
-    print(f"firing pattern f = {f}")
-    print(f"lap f          = {laplacian(tri, f)}   (sum = {check_laplacian_degree_zero(tri, f)})")
-    K = canonical_divisor(tri)
-    print(f"canonical K    = {K}   (sum = {divisor_degree(K)},  2g-2 = {2*genus(tri)-2})")
-
-    print("\nAll assertions passed: both foundational laws hold on every example.")
-
-
-if __name__ == "__main__":
-    main()
-
-
-"""Visualization of chip-firing: a divisor before and after a firing move,
-with degree conservation displayed.
-
-Generates a matplotlib figure showing a small graph, the chip values at each
-vertex before and after firing a chosen vertex, and confirms the total chip
-count (degree) is unchanged --- a picture of Theorem 3.2 (deg_lap_eq_zero).
-
-Run:  python visualization.py   (writes chipfiring_demo.png)
-"""
-
-from __future__ import annotations
-
-from typing import Dict, List, Tuple
-import math
-
-import matplotlib.pyplot as plt
-
-
-def cycle_positions(n: int) -> Dict[int, Tuple[float, float]]:
-    """Place n vertices evenly on a circle."""
-    return {
-        v: (math.cos(2 * math.pi * v / n), math.sin(2 * math.pi * v / n))
-        for v in range(n)
-    }
-
-
-def laplacian(adj: Dict[int, List[int]], f: Dict[int, int]) -> Dict[int, int]:
-    """lap f (v) = sum_{w ~ v} (f(v) - f(w))."""
-    return {v: sum(f[v] - f[w] for w in adj[v]) for v in adj}
-
-
-def draw(ax, pos, adj, divisor, title: str) -> None:
-    for v, nbrs in adj.items():
-        for w in nbrs:
-            if v < w:
-                x = [pos[v][0], pos[w][0]]
-                y = [pos[v][1], pos[w][1]]
-                ax.plot(x, y, color="#888", zorder=1, linewidth=1.5)
-    for v, (x, y) in pos.items():
-        val = divisor[v]
-        color = "#2a9d8f" if val >= 0 else "#e76f51"
-        ax.scatter([x], [y], s=1400, color=color, zorder=2, edgecolors="black")
-        ax.text(x, y, f"{val:+d}", ha="center", va="center",
-                color="white", fontsize=14, fontweight="bold", zorder=3)
-    ax.set_title(f"{title}\ndegree = {sum(divisor.values())}", fontsize=12)
-    ax.set_aspect("equal")
-    ax.axis("off")
-    ax.set_xlim(-1.4, 1.4)
-    ax.set_ylim(-1.4, 1.4)
-
-
-def main() -> None:
-    n = 5
-    adj: Dict[int, List[int]] = {v: [(v - 1) % n, (v + 1) % n] for v in range(n)}
-    pos = cycle_positions(n)
-
-    divisor: Dict[int, int] = {0: 3, 1: -1, 2: 0, 3: 1, 4: -1}
-    fire_vertex = 0
-    f = {v: (1 if v == fire_vertex else 0) for v in range(n)}
-    lap = laplacian(adj, f)
-    fired = {v: divisor[v] + lap[v] for v in range(n)}
-
-    fig, axes = plt.subplots(1, 2, figsize=(11, 5.5))
-    draw(axes[0], pos, adj, divisor, "Before firing vertex 0")
-    draw(axes[1], pos, adj, fired, "After firing vertex 0")
-    fig.suptitle("Chip-Firing on the 5-cycle: degree is conserved (Theorem 3.2)",
-                 fontsize=14, fontweight="bold")
-    fig.tight_layout()
-    fig.savefig("chipfiring_demo.png", dpi=140)
-    print("wrote chipfiring_demo.png")
-    print(f"degree before = {sum(divisor.values())}, "
-          f"degree after = {sum(fired.values())}")
-
-
-if __name__ == "__main__":
-    main()
+import itertools
+from collections import deque
+
+def complete(n): return [[j for j in range(n) if j!=i] for i in range(n)]
+def cycle(n): return [[(i-1)%n,(i+1)%n] for i in range(n)]
+def path(n): return [[j for j in [i-1,i+1] if 0<=j<n] for i in range(n)]
+def star(n): return [[j for j in range(1,n)] if i==0 else [0] for i in range(n)]
+def theta():  # two vertices joined by 3 paths of length 2 -> genus 2
+    # vertices: 0,1 hubs; 2,3,4 midpoints
+    return [[2,3,4],[2,3,4],[0,1],[0,1],[0,1]]
+def petersen():
+    outer=[(i,(i+1)%5) for i in range(5)]
+    spokes=[(i,i+5) for i in range(5)]
+    inner=[(5+i,5+(i+2)%5) for i in range(5)]
+    adj=[[] for _ in range(10)]
+    for a,b in outer+spokes+inner: adj[a].append(b); adj[b].append(a)
+    return adj
+
+def edges(adj): return sum(len(a) for a in adj)//2
+def genus(adj): return edges(adj)-len(adj)+1
+def canonical(adj): return [len(a)-2 for a in adj]
+
+def dists(adj,q):
+    n=len(adj); d=[-1]*n; d[q]=0; Q=deque([q])
+    while Q:
+        v=Q.popleft()
+        for w in adj[v]:
+            if d[w]<0: d[w]=d[v]+1; Q.append(w)
+    return d
+
+def qreduce(adj,D,q):
+    n=len(adj); D=list(D); d=dists(adj,q)
+    for i in range(max(d),0,-1):
+        S=set(v for v in range(n) if d[v]>=i)
+        guard=0
+        while any(D[v]<0 for v in range(n) if d[v]==i):
+            guard+=1
+            if guard>10**6: raise Exception("stage1 diverged")
+            for v in list(S):
+                gain=sum(1 for w in adj[v] if w not in S)
+                D[v]+=gain
+            for v in range(n):
+                if v not in S:
+                    D[v]-=sum(1 for w in adj[v] if w in S)
+    while True:
+        burnt={q}; changed=True
+        while changed:
+            changed=False
+            for v in range(n):
+                if v in burnt: continue
+                if D[v] < sum(1 for w in adj[v] if w in burnt):
+                    burnt.add(v); changed=True
+        S=set(v for v in range(n) if v not in burnt)
+        if not S: break
+        for v in list(S):
+            D[v]-=sum(1 for w in adj[v] if w not in S)
+        for v in range(n):
+            if v not in S:
+                D[v]+=sum(1 for w in adj[v] if w in S)
+    return D
+
+def winnable(adj,D,q=0):
+    return qreduce(adj,D,q)[0 if q==0 else q][0] if False else qreduce(adj,D,q)[q]>=0
+
+def effectives(n,k):
+    if n==1: yield [k]; return
+    for first in range(k+1):
+        for rest in effectives(n-1,k-first): yield [first]+rest
+
+def rank(adj,D):
+    n=len(adj)
+    if not winnable(adj,list(D)): return -1
+    k=0
+    while True:
+        k+=1
+        if all(winnable(adj,[D[i]-E[i] for i in range(n)]) for E in effectives(n,k)):
+            continue
+        return k-1
+
+names={}
+for n in [2,3,4,5,6]: names[f"K_{n}"]=complete(n)
+for n in [3,4,5,6]: names[f"C_{n}"]=cycle(n)
+for n in [2,3,4,5]: names[f"P_{n}"]=path(n)
+names["Star_5"]=star(5); names["Theta_3"]=theta(); names["Petersen"]=petersen()
+
+print("== Table 1: genus, canonical degree, and rank of K ==")
+print(f"{'graph':10}{'|V|':>4}{'|E|':>4}{'g':>4}{'degK':>6}{'r(K)':>6}{'g-1':>5}")
+for nm,adj in names.items():
+    K=canonical(adj); g=genus(adj)
+    rk = rank(adj,K) if len(adj)<=6 else "-"
+    print(f"{nm:10}{len(adj):>4}{edges(adj):>4}{g:>4}{sum(K):>6}{str(rk):>6}{g-1:>5}")
+
+print()
+print("== Table 2: exhaustive Riemann-Roch check  r(D)-r(K-D) = deg D - g + 1 ==")
+for nm in ["K_3","K_4","C_3","C_4","P_3","P_4","Theta_3"]:
+    adj=names[nm]; g=genus(adj); K=canonical(adj); n=len(adj); bad=0; tot=0
+    rng=range(-2,4)
+    for D in itertools.product(rng,repeat=n):
+        tot+=1
+        if rank(adj,list(D))-rank(adj,[K[i]-D[i] for i in range(n)]) != sum(D)-g+1: bad+=1
+    print(f"  {nm:9} divisors tested {tot:6d}   RR violations = {bad}")
+
+print()
+print("== Table 3: nu_t on K_n for the standard ordering t(i)=i  (nu(i)=i-1) ==")
+for n in [2,3,4,5,6]:
+    adj=complete(n); nu=[i-1 for i in range(n)]
+    print(f"  K_{n}: nu = {str(nu):20} deg(nu) = {sum(nu):3}  g-1 = {genus(adj)-1:3}  rank = {rank(adj,nu):3}  winnable = {winnable(adj,nu)}")
+
+print()
+print("== Table 4: Clifford  2 r(D) <= deg D  on special divisors ==")
+for nm in ["K_4","C_5","Theta_3"]:
+    adj=names[nm]; K=canonical(adj); n=len(adj); bad=0; best=None
+    for D in itertools.product(range(-1,4),repeat=n):
+        rD=rank(adj,list(D)); rKD=rank(adj,[K[i]-D[i] for i in range(n)])
+        if rD>=0 and rKD>=0:
+            if 2*rD>sum(D): bad+=1
+            if best is None or 2*rD-sum(D)>best[0]: best=(2*rD-sum(D),list(D),rD,sum(D))
+    print(f"  {nm:9} violations = {bad}, extremal 2r-deg = {best[0]} at D={best[1]} (r={best[2]}, deg={best[3]})")
+
+print()
+print("== Table 5: number of degree-(g-1) non-winnable classes vs spanning trees ==")
+from fractions import Fraction
+def spanning_trees(adj):
+    n=len(adj)
+    M=[[ (len(adj[i]) if i==j else -sum(1 for w in adj[i] if w==j)) for j in range(1,n)] for i in range(1,n)]
+    M=[[Fraction(x) for x in r] for r in M]; det=Fraction(1)
+    for i in range(len(M)):
+        p=next((r for r in range(i,len(M)) if M[r][i]!=0),None)
+        if p is None: return 0
+        if p!=i: M[i],M[p]=M[p],M[i]; det=-det
+        det*=M[i][i]; piv=M[i][i]
+        for r in range(i+1,len(M)):
+            f=M[r][i]/piv
+            for c in range(i,len(M)): M[r][c]-=f*M[i][c]
+    return int(det)
+names["K_6"]=complete(6)
+for nm in ["K_3","K_4","K_5","K_6","C_4","C_5","Theta_3"]:
+    adj=names[nm]; n=len(adj); g=genus(adj)
+    # count q-reduced divisors of degree g-1 that are non-winnable, q=0
+    cnt=0
+    if g-1>=0 and n<=6:
+        # enumerate q-reduced reps: D(v)>=0 for v!=0, and D(0) determined by degree
+        # non-winnable iff D(0) < 0 after reduction; enumerate all D with D(v) in [0, deg v] for v != 0
+        for tail in itertools.product(*[range(0,n) for v in range(1,n)]):
+            D=[g-1-sum(tail)]+list(tail)
+            R=qreduce(adj,D,0)
+            if R[0]<0 and R[1:]==list(tail): cnt+=1
+    print(f"  {nm:9} g = {g:2}, spanning trees = {spanning_trees(adj):4}, non-winnable 0-reduced deg-(g-1) reps = {cnt}")
+
+
+print()
+print("== Table 6 (control): Riemann-Roch FAILS on a disconnected graph ==")
+def components(adj):
+    n=len(adj); seen=[False]*n; comps=[]
+    for v in range(n):
+        if seen[v]: continue
+        c=[]; st=[v]; seen[v]=True
+        while st:
+            x=st.pop(); c.append(x)
+            for w in adj[x]:
+                if not seen[w]: seen[w]=True; st.append(w)
+        comps.append(sorted(c))
+    return comps
+
+def winnable_gen(adj,D):
+    for c in components(adj):
+        idx={v:i for i,v in enumerate(c)}
+        sub=[[idx[w] for w in adj[v]] for v in c]
+        if not winnable(sub,[D[v] for v in c]): return False
+    return True
+
+def rank_gen(adj,D):
+    n=len(adj)
+    if not winnable_gen(adj,list(D)): return -1
+    k=0
+    while True:
+        k+=1
+        if all(winnable_gen(adj,[D[i]-E[i] for i in range(n)]) for E in effectives(n,k)):
+            continue
+        return k-1
+
+adj=[[1],[0],[3],[2]]   # two disjoint edges 2K_2
+g=genus(adj); K=canonical(adj); n=4; bad=0; tot=0
+for D in itertools.product(range(-2,3),repeat=n):
+    tot+=1
+    if rank_gen(adj,list(D))-rank_gen(adj,[K[i]-D[i] for i in range(n)]) != sum(D)-g+1: bad+=1
+print(f"  2K_2 (disconnected): |V|=4 |E|=2 g={g}; divisors tested {tot}, RR violations = {bad}")
+
+print()
+print("== Table 7: gonality  gon(G) = min { deg D : r(D) >= 1 }  (brute force over effective D) ==")
+def gonality(adj):
+    n=len(adj)
+    d=0
+    while d<=4*n:
+        for D in effectives(n,d):
+            if rank(adj,list(D))>=1: return d
+        d+=1
+    return None
+print(f"{'graph':10}{'|V|':>4}{'g':>4}{'gon':>5}{'g+1':>5}{'floor((g+3)/2)':>16}")
+for nm in ["K_2","K_3","K_4","K_5","C_3","C_4","C_5","C_6","P_2","P_3","P_4","P_5","Star_5","Theta_3"]:
+    adj=names[nm]; g=genus(adj)
+    print(f"{nm:10}{len(adj):>4}{g:>4}{gonality(adj):>5}{g+1:>5}{(g+3)//2:>16}")
+
+print()
+print("== Table 8: |Jac(G)| (0-reduced divisors of degree 0) vs spanning trees and the proved bound ==")
+def jacobian_order(adj):
+    n=len(adj)
+    cnt=0
+    for tail in itertools.product(*[range(0,len(adj[v])) for v in range(1,n)]):
+        D=[-sum(tail)]+list(tail)
+        if qreduce(adj,list(D),0)==D: cnt+=1
+    return cnt
+def degree_bound(adj):
+    b=1
+    for v in range(1,len(adj)): b*=len(adj[v])
+    return b
+print(f"{'graph':10}{'|V|':>4}{'g':>4}{'|Jac|':>7}{'tau(G)':>8}{'prod deg':>10}{'hyperelliptic':>15}")
+for nm in ["K_2","K_3","K_4","K_5","C_3","C_4","C_5","C_6","P_3","P_4","Star_5","Theta_3"]:
+    adj=names[nm]; g=genus(adj); j=jacobian_order(adj); t=spanning_trees(adj)
+    hyp = "yes" if (g>=1 and gonality(adj)==2) else "no"
+    print(f"{nm:10}{len(adj):>4}{g:>4}{j:>7}{t:>8}{degree_bound(adj):>10}{hyp:>15}")
