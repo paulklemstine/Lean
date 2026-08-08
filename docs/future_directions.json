@@ -13101,11 +13101,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b191f479",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13118,7 +13118,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0638",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-08T22:54:10.773712+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13133,7 +13133,7 @@
       "source": "",
       "source_exp_id": "b853373a",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/b853373a_retry1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_6021048b",
       "timestamp": "2026-07-24T06:47:58.579997+00:00",
       "title": "Cross-domain bridge in"
@@ -35685,7 +35685,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ff90f26d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35712,7 +35712,7 @@
       "source": "",
       "source_exp_id": "43d8701a",
       "source_path": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-08-06T19:01:43.955990+00:00",
       "title": "Close Proofs: Arithmetized QFT reflection.: Construct an explicit recursively enumer"
@@ -36317,7 +36317,6 @@
     "worlds": 1
   },
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "famous_subtask",
     "famous_subtask",
@@ -36336,6 +36335,7 @@
     "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
-    "cross_domain_bridge"
+    "cross_domain_bridge",
+    "abduction_followup"
   ]
 }

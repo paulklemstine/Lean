@@ -8775,17 +8775,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b191f479",
     "description": "# Future Directions\n\nThis cycle proved a cross-domain bridge in\n`Catalog/Bridges/CopwinKnasterTarski.lean`:\n\n> The kernel produced by finite cop-win pruning (a contracting, monotone update\n> `F : Finset \u03b1 \u2192 Finset \u03b1`) equals \u2014 after coercion \u2014 the Knaster\u2013Tarski\n> greatest fixed point `OrderHom.gfp (G F S)` of an associated monotone\n> endomorphism of the complete lattice `Set \u03b1`. Moreover this abstract greatest\n> fixed point is *computed* by the concrete pruning loop within `|S|` rounds\n> (`gfp_computed_by_finite_iteration`).\n\nThis connects **finite combinatorics / algorithm termination** with\n**order-theoretic fixed-point theory (Knaster\u2013Tarski)**.\n\n## Natural extensions\n\n1. **Least fixed points and the dual game.** Mirror the development with\n   *expanding* monotone updates and `OrderHom.lfp`, modeling saturation-style\n   algorithms (adding candidates until closure). The dual bridge\n   `lfp = \u2191(closure kernel)` should follow the same pattern.\n\n2. **Well-founded infinite candidate spaces.** Replace `Finset \u03b1` by a\n   candidate space with a well-founded strict-subset relation. The termination\n   argument uses only strict cardinality descent; a well-founded ranking should\n   recover a transfinite stabilization ordinal and a bridge to `gfp` on the\n   ambient complete lattice.\n\n3. **Quantitative round complexity.** The `|S|` bound is sharp for one-deletion\n   updates but loose for realistic cop-win pruning. Bounding the number of\n   *effective* rounds by structural graph parameters (treewidth, cop number)\n   would sharpen the algorithmic side.\n\n4. **Product / multi-cop games.** Extend to product state spaces modeling the\n   `k`-cop game directly, and show the kernel corresponds to the set of\n   `k`-cop-win positions, connecting the fixed-point bridge to pursuit-evasion\n   semantics.\n\n5. **Effectivity of `gfp`.** `OrderHom.gfp` is noncomputable; the bridge already\n   supplies an explicit finite computation. Packaging this as a verified\n   executable decision procedure for membership in `gfp` is a concrete\n   software-verification target.\n",
     "domains": [
       "Computation",
       "Bridges"
     ],
     "id": "fd_0638",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b853373a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T06:47:58.579997+00:00",
     "title": "Cross-domain bridge in"
   },
@@ -11727,17 +11728,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Let a compact smooth submanifold have reach at least `\u03c4`, and let a fi"
   },
   {
-    "consumed_by_exp_id": "ff90f26d",
+    "consumed_by_exp_id": "",
     "description": "Cycle 43d8701a (Q=0.686) proved 1673 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT\u2080` and an interpretation in arithmetic such that PA proves `Con(QFT\u2080) \u2192 Con",
     "domains": [
       "Novelty"
     ],
     "id": "sorry_fill_43d8701a_b40afbc6",
-    "phase": "A",
     "priority_score": 0.735964136282128,
     "research_mode": "team",
     "source_exp_id": "43d8701a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-06T19:01:43.955990+00:00",
     "title": "Close Proofs: Arithmetized QFT reflection.: Construct an explicit recursively enumer"
   },
