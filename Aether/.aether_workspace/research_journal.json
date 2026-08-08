@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1fc64f82",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Higher-dimensional finite projective spaces.** Define `TP^n_fin` as the\n   quotient of `ℝ^(n+1)` by diagonal translation, choose a normalization, and\n   test whether analogou",
-      "quality_score": 0.79392,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-07-31T04:25:29",
-      "title": "Inverse Stereographic Tropical Lift"
-    },
-    {
       "cycle_id": "77d39a70",
       "domain": "Physics",
       "key_insight": "# Future directions\n\nThe completed connector identifies the matrix word `A D A` with both the third\nraw moment of the degree distribution and the number of homomorphisms from the\nthree-leaf star. The",
@@ -2501,6 +2491,16 @@
       "theorem_count": 394,
       "timestamp": "2026-08-08T04:36:04",
       "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
+    },
+    {
+      "cycle_id": "436f9275",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Sums of Three Cubes\n\nThe cycle closed the \"local half\" of the problem completely: `x³ + y³ + z³ = n` is solvable\nmodulo every modulus, and has `ℤ_p`-points for every prime `p`, e",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 164,
+      "timestamp": "2026-08-08T05:07:29",
+      "title": "Deepening: Sums of Three Cubes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-08T04:36:04",
+  "last_updated": "2026-08-08T05:07:29",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "c961538a",
-        "quality": 0.686,
-        "theorems": 35,
-        "title": "Close Proofs: Self-Avoiding Walk: Connective Constant"
-      },
-      {
         "cycle_id": "02f69ad4",
         "quality": 0.686,
         "theorems": 43,
@@ -3823,6 +3817,12 @@
         "quality": 0.6546236561723476,
         "theorems": 666,
         "title": "Deepening: Hadwiger's Conjecture"
+      },
+      {
+        "cycle_id": "436f9275",
+        "quality": 0.627125,
+        "theorems": 164,
+        "title": "Deepening: Sums of Three Cubes"
       }
     ],
     "Pythagorean": [
