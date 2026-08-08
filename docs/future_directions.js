@@ -4928,17 +4928,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Neighborhood Complexity and Radius-1 Merge-Width in Monadically Dependent Graph Classes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df5599ce",
     "description": "Investigate the ArXiv paper 'Overfull Conjecture for graphs with maximum degree 4' and formalize its key results. Abstract: Let $G$ be a simple graph with maximum degree $\u0394(G)$. The graph $G$ is overfull if $\\left|E(G)\\right|> \u0394(G)\\lfloor |V(G)|/2\\rfloor$. In 1986, Chetwynd and Hilton proposed the Overfull Conjecture: If $G$ is a simple graph with $\u0394(G)>\\frac{|V(G)|}{3}$, then $G$ is a Class $2$ graph if and only if $G$ contains an overfull subgraph $H$ with $\u0394(H)=\u0394(G)$. In this paper, we give a proof of this conjecture for graphs with maximum degree $4$.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
     "id": "fd_0087",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.10947v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T14:24:51.157046+00:00",
     "title": "ArXiv paper: Overfull Conjecture for graphs with maximum degree 4"
   },
