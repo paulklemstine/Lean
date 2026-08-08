@@ -1957,11 +1957,16 @@ Research mode: {concept.research_mode}
                 content = "\n".join(leans)
                 if not content.strip():
                     return False
-                if re.findall(r'\bsorry\b', content):
+                # Strip block comments (/- ... -/) and line comments (-- ...) to avoid
+                # false positive truncation signals on docstrings / comments.
+                code_only = re.sub(r'/-\s*[\s\S]*?-\/', '', content)
+                code_only = re.sub(r'--.*$', '', code_only, flags=re.MULTILINE)
+
+                if re.findall(r'\bsorry\b', code_only):
                     return True
                 if content.count("/-") > content.count("-/"):
                     return True
-                lines = [l for l in content.splitlines() if l.strip()]
+                lines = [l for l in code_only.splitlines() if l.strip()]
                 if lines:
                     last = lines[-1].strip()
                     if (re.match(r'^(theorem|lemma|def|structure|instance|abbrev)\b', last)
