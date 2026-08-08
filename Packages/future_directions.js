@@ -1780,18 +1780,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory to HoTT Bridge: Univalent Foundations for Proof Transfer"
   },
   {
-    "consumed_by_exp_id": "ad055c8e",
+    "consumed_by_exp_id": "",
     "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
     "domains": [
       "Tropical",
       "Algebra"
     ],
     "id": "seed_318",
-    "phase": "A",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
   },
@@ -3277,17 +3276,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
   {
-    "consumed_by_exp_id": "8c5da2ce",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 6a88207a (Q=0.750), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynam",
     "domains": [
       "Novelty"
     ],
     "id": "push_6a88207a_4a7af066",
-    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "6a88207a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-26T05:37:18.961896+00:00",
     "title": "Deepening: The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
@@ -3768,17 +3766,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Fermat's Last Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2321b1a5",
     "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
     "domains": [
       "Cryptography",
       "Computation"
     ],
     "id": "seed_307",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Secure Multi-Party Computation: Theoretical Foundations"
   },
