@@ -11,7 +11,8 @@ This file formalizes the Sheffer algebra and proves key closure properties.
 -/
 
 import Mathlib
--- import ShefferAI.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic  -- (missing upstream module; replaced by the line below)
+import MachineLearning.ShefferFunction.Lean.SoftplusBasic
 
 open Real
 
