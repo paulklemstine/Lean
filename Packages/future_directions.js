@@ -1331,16 +1331,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical-Eigenvalue: Min-Plus Matrix Spectral Radius Equivalence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "777a2c04",
     "description": "Formally proves lower bounds on error thresholds for topological surface codes under depolarizing noise models.",
     "domains": [
       "Physics"
     ],
     "id": "dir_50_41_eca20dfc",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.351664+00:00",
     "title": "Quantum-Codes: Surface Code Fault-Tolerance Threshold Verification"
   },
