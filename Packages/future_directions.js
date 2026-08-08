@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "344e2e8a",
+    "consumed_by_exp_id": "43794e5a",
     "description": "In Pascal\u2019s triangle, each number is the sum of the two above it. Obviously, the infinite pyramid contains an infinite number of 1s, but most numbers appear surprisingly seldom:\n\n2 appears just once.\n3, 4, 5, and all odd primes appear exactly twice.\n6 appears three times.\nInfinitely many numbers appear exactly six times, but we don\u2019t know whether any appear exactly five or seven times.\n3003 appears eight times, possibly the only such specimen.\nIn 1971, Berkeley mathematician David Singmaster suggested that there may be a finite upper bound on the number of times that any number can appear (apart from 1). But that remains an unsolved problem.\n\nExplore and explain these results.",
     "domains": [
       "Novelty"
@@ -1810,16 +1810,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Frankl's Union-Closed Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12386b8a",
     "description": "Building on cycle b080b405 (Q=0.789), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple n",
     "domains": [
       "Cryptography"
     ],
     "id": "push_b080b405_eeb26716",
+    "phase": "A",
     "priority_score": 0.8891599999999998,
     "research_mode": "team",
     "source_exp_id": "b080b405",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T21:18:01.345323+00:00",
     "title": "Deepening: ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart s"
   },
