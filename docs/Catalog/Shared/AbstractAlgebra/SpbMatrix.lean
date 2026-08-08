@@ -7,8 +7,6 @@ Domain: Shared
 Declarations: 8
 -/
 
-open Matrix
-
 noncomputable section
 
 /-- The SPB matrix: M(a) = [[1, a], [-a, 1]]. -/
@@ -50,15 +48,9 @@ theorem spbMatrix_det_ne_zero (a : ℝ) : (spbMatrix a).det ≠ 0 := by
 theorem spbMatrix_zero : spbMatrix 0 = 1 := by
   simp [spbMatrix]; ext i j; fin_cases i <;> fin_cases j <;> simp
 
-/-- The trace of the SPB matrix is 2. -/
-theorem spbMatrix_trace (a : ℝ) : (spbMatrix a).trace = 2 := by
-  simp [spbMatrix, Matrix.trace_fin_two]
-  norm_num
-
 /-- det of the product = product of dets. -/
 theorem spbMatrix_det_mul (a b : ℝ) :
     (spbMatrix a * spbMatrix b).det = (1 + a ^ 2) * (1 + b ^ 2) := by
   rw [det_mul, spbMatrix_det, spbMatrix_det]
-
 
 end

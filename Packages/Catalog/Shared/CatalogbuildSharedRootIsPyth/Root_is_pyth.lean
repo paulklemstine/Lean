@@ -1,5 +1,4 @@
 import Mathlib
-import Shared.CatalogbuildSharedIspythtriple.IsPythTriple
 
 /-! # CatalogBuild.Shared.Root_is_pyth
 

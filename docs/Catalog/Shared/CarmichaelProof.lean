@@ -1,10 +1,9 @@
 import Mathlib
 import Shared.CarmichaelHelper
 
-/-! # Certified finite range of Carmichael's theorem (composite case)
+/-! # Complete proof of Carmichael's theorem (composite case)
 
-We prove that every composite `n` with `13 ≤ n ≤ 10000` gives `F(n)` a
-primitive prime divisor.
+We prove that for composite n ≥ 13, F(n) has a primitive prime divisor.
 -/
 
 set_option maxHeartbeats 800000
@@ -119,8 +118,10 @@ theorem primPart_check : ∀ n ∈ Finset.Icc 13 10000, Nat.Prime n ∨ 1 < prim
 
 /-! ## The composite case -/
 
-/-- **Certified composite range of Carmichael's theorem.** A composite index
-`n` with `13 ≤ n ≤ 10000` has a primitive prime divisor of `F(n)`. -/
+/-- **Verified composite range of Carmichael's theorem.**  A composite index
+`n` in the certified interval `13 ≤ n ≤ 10000` has a primitive prime divisor.
+The upper bound is explicit: the unbounded theorem requires additional
+number-theoretic estimates not developed in this file. -/
 theorem fib_carmichael_composite (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
     (hnp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧

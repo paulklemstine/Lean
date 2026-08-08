@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "275a5749",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **Executable encoder.** Package the well-founded existence proof as a computable `encode : ℤ → List Bool`, then prove both round trips and derive certified addition and multipl",
-      "quality_score": 0.75115,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-07-31T06:08:11",
-      "title": "Deepening: Moonshot: Alien Number Systems — Mathematics Beyond Base-10"
-    },
-    {
       "cycle_id": "c961538a",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\n- The exact connective constant of the square lattice is not known. The proposed value `(2 + √2) / 2` is ruled out in `Catalog/Tropical/SAW/ConnectiveConstant.lean`, since it is s",
@@ -2501,6 +2491,16 @@
       "theorem_count": 239,
       "timestamp": "2026-08-08T07:22:43",
       "title": "This project formalises a chain of results about snakes (chordless induced"
+    },
+    {
+      "cycle_id": "5e2efbe9",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nThe formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable library\n`Shared/SolomonZeta/`) now contains, all machine-checked and free of `sorry`:\n\n* the effectiv",
+      "quality_score": 0.6514402131782946,
+      "sorry_count": 0,
+      "theorem_count": 555,
+      "timestamp": "2026-08-08T14:03:57",
+      "title": "ArXiv paper: Solomon zeta functions over arithmetic orders"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-08T07:22:43",
+  "last_updated": "2026-08-08T14:03:57",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "4db4579d",
-        "quality": 0.80477,
-        "theorems": 26,
-        "title": "Bridge: Category Theory as Universal Language for Mathematics"
-      },
-      {
         "cycle_id": "28c84414",
         "quality": 0.73729,
         "theorems": 10,
@@ -3947,6 +3941,12 @@
         "quality": 0.640478157722513,
         "theorems": 659,
         "title": "Close Proofs: ArXiv paper: Chebotarev geodesic theorem: non-split case"
+      },
+      {
+        "cycle_id": "5e2efbe9",
+        "quality": 0.6514402131782946,
+        "theorems": 555,
+        "title": "ArXiv paper: Solomon zeta functions over arithmetic orders"
       }
     ],
     "Tropical": [

@@ -610,16 +610,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML-Transfinite-Depth: Convergence of Infinite-Layer EML Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82caef98",
     "description": "Formalizes the behavior of EML networks near parameter values triggering essential mathematical singularities in exp-log space.",
     "domains": [
       "Applications"
     ],
     "id": "scifi_50_44_69cc17c3",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:58.975851+00:00",
     "title": "EML-Activation-Singularity: Essential Singularity Phase Transitions in EML Layers"
   },
@@ -4972,21 +4973,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-16T04:27:14.823265+00:00",
     "title": "ArXiv paper: Graph Puzzles III.1: A Proof of Sabidussi's Compatibility Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "9f5195bd",
-    "description": "Investigate the ArXiv paper 'On some structural properties of graphs with non-negative resistance curvature' and formalize its key results. Abstract: A graph is called resistance nonnegative (RN), respectively resistance positive (RP), if it admits positive edge weights such that all vertex resistance curvatures are nonnegative, respectively positive. In this paper, we study the structure of RN and RP graphs in relation to toughness, traceability, and Cartesian products. First, we disprove a conjecture of Fiedler and answer a question of Devriendt in the negative by constructing, for every $n\\ge 11$, an $n$-vertex $1$-tough graph that is not RN. Second, we show that RP graphs need not be traceable by proving that the Thomassen $34$-graph is RP but not traceable. Finally, we resolve a conjecture of Devriendt on grid graphs by proving that all Cartesian products of paths are RN.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0098",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.13169v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-16T04:43:23.081658+00:00",
-    "title": "ArXiv paper: On some structural properties of graphs with non-negative resistance curvature"
   },
   {
     "consumed_by_exp_id": "",
@@ -11667,6 +11653,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-08T07:22:38.540703+00:00",
     "title": "All Lean files of this thread live in `Catalog/Novelty/` (plus the base chain in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable library\n`Shared/SolomonZeta/`) now contains, all machine-checked and free of `sorry`:\n\n* the effective coefficient formula\n  `#Aut(X) \u00b7 #{N \u2264 M : M/N \u2245 X} = \u03a3_{Y \u2264 X} \u03bc(Y, X) \u00b7 #Hom(M, Y)`\n  (`autCard_mul_quotIsoCount_eq_mobiusWeight`), with M\u00f6bius invariance under order isomorphisms\n  (`mu_orderIso`) and the coprime Euler factorization (`mobiusWeight_prod_of_coprime`);\n* **[settled this cycle, was C1/C3]** the Gaussian-binomial evaluation for elementary abelian\n  quotient types: `#GL_d(\ud835\udd3d_p) \u00b7 #{N \u2264 \u2124\u207f : \u2124\u207f/N \u2245 (\u2124/p)^d} = \u220f_{i<d}(p\u207f - p^i)`\n  (`card_GL_mul_quotIsoCount_elementaryAbelian`, `mobiusWeight_elementaryAbelian`), proved from a\n  rank duality between spanning columns and independent rows\n  (`span_cols_eq_top_iff_linearIndependent_rows`);\n* **[settled this cycle, was C2]** the full cyclic formula\n  `\u03c6(m) \u00b7 #{N \u2264 \u2124\u207f : \u2124\u207f/N \u2245 \u2124/m} = \u03a3_{d \u2223 m} \u03bc(d)\u00b7(m/d)\u207f = J_n(m)`\n  (`totient_mul_quotIsoCount_zmod_eq_jordan`), i.e. the incidence-algebra M\u00f6bius function of the\n  submodule poset is carried onto the arithmetic M\u00f6bius function\n  (`solomonCyclicCoeff_eq_moebius_mul_pow`);\n* **[new]** the local (Nakayama) collapse over a commutative local order with finite residue\n  field `k`, `q = #k`: for every finite `R`-module `X`,\n  `\u03a3_{Y \u2264 X} \u03bc(Y, X)\u00b7#Hom(R\u207f, Y) = (\u220f_{i<d}(q\u207f - q^i)) \u00b7 #(\ud835\udd2aX)\u207f`, `d = dim_k X/\ud835\udd2aX`\n  (`mobiusWeight_free_local`), hence the coefficient of a free lattice depends on the quotient\n  type only through `(#\ud835\udd2aX, dim_k X/\ud835\udd2aX)` (`autCard_mul_quotIsoCount_free_local_congr`);\n* **[new]** its specialisation to the maximal order `\u2124_p` of `\u211a_p`\n  (`autCard_mul_quotIsoCount_padic_free`);\n* **[new]** Hall's formula over `\u2124`: for an arbitrary finite abelian `p`-group `X` of exponent\n  dividing `p\u1d49`, `#Aut(X)\u00b7#{N \u2264 \u2124\u207f : \u2124\u207f/N \u2245 X} = (\u220f_{i<d}(p\u207f - p^i))\u00b7#(pX)\u207f`\n  (`autCard_mul_quotIsoCount_pGroup`), via a nilpotent-ideal Nakayama lemma\n  (`eq_top_of_sup_smul_eq_top`) that dispenses with the local hypothesis.\n\nThe record below states what was closed this cycle (D1) and the four conjectures that remain\nopen; each is phrased so that a formal proof (or a counterexample) is a well-defined Lean goal\non top of the verified machinery above.\n\n---\n\n## D1 (settled). Hall's formula for arbitrary finite abelian `p`-groups\n\n**Theorem** (`autCard_mul_quotIsoCount_pGroup`, `Catalog/Shared/SolomonZeta/AbelianPGroup.lean`).\nFor a finite abelian `p`-group `X` of exponent dividing `p\u1d49` and every `n`,\n`#Aut(X) \u00b7 #{N \u2264 \u2124\u207f : \u2124\u207f/N \u2245 X} = (\u220f_{i<d}(p\u207f - p^i)) \u00b7 #(pX)\u207f`, `d = dim_{\ud835\udd3d_p} X/pX`.\nSo the weighted coefficient depends on the isomorphism type of `X` only through the pair\n`(#pX, dim_{\ud835\udd3d_p} X/pX)`; for `X` of type `\u03bb` this is `p^{n(|\u03bb|-d)}\u00b7\u220f_{i<d}(p\u207f - p^i)`.\n\n*The key insight was* that the Nakayama step needs no local ring: if an ideal `I` satisfies\n`I\u1d49\u00b7X = 0` and `Y + I\u00b7X = X`, then `Y = X` (`eq_top_of_sup_smul_eq_top`), so the M\u00f6bius sum over\nthe submodule poset of `X` collapses to the Frattini quotient `X/pX` rescaled by `#(pX)\u207f`.\n\n*Remaining sub-conjecture.* Identify `#pX = p^{|\u03bb|-d}` and `d = #parts(\u03bb)` for `X` presented as\n`\u220f \u2124/p^{\u03bb\u1d62}`, turning the theorem into the classical statement in terms of partitions, and\ndeduce the global (all primes at once) formula by the verified Euler factorization.\n\n## D2. Group rings over `\u2124_p` are local for `p`-groups\n\n**Conjecture.** For a finite `p`-group `G` the group ring `\u039b = \u2124_p[G]` is a (noncommutative in\ngeneral, commutative for `G` abelian) local ring with residue field `\ud835\udd3d_p`, and consequently the\nformula `mobiusWeight_free_local` applies verbatim to free `\u039b`-lattices; in particular for\n`\u039b = \u2124_p[\u2124/p\u2124]` one obtains\n`#Aut(X)\u00b7#{N \u2264 \u039b\u207f : \u039b\u207f/N \u2245 X} = (\u220f_{i<d}(p\u207f - p^i))\u00b7#(\ud835\udd2aX)\u207f` for every finite `\u039b`-module `X`.\n\n*The key insight is* that the augmentation ideal of `\ud835\udd3d_p[G]` is nilpotent for a `p`-group, so\n`\u039b/p\u039b` is local and `\u039b` \u2014 being module-finite over the complete local ring `\u2124_p` \u2014 inherits\nlocality; the Nakayama counting argument formalized here never used commutativity beyond the\n`Submodule.restrictScalars` bookkeeping.\n\n*Why now?* The counting engine is finished and ring-agnostic; the only missing ingredient is a\nformal proof that `\ud835\udd3d_p[G]` is local for `p`-groups, which is a self-contained nilpotence\nstatement about the augmentation ideal.\n\n## D3. Non-free lattices over `\u2124_p[\u2124/p\u2124]`\n\n**Conjecture.** For `\u039b = \u2124_p[\u2124/p\u2124]` and *any* `\u039b`-lattice `M` (including the non-projective\nones), the M\u00f6bius weight `\u03a3_{Y \u2264 X} \u03bc(Y,X)\u00b7#Hom(M,Y)` is a \u2124-linear combination, with\ncoefficients independent of `X`, of the three \"free-like\" weights attached to the indecomposable\nlattices `\u2124_p`, `\u2124_p[\u03b6_p]` and `\u039b`; hence the Solomon zeta function of `M` is an explicit\nrational function in `p^{-s}` whose numerator degree is bounded by the number of indecomposable\nsummands of `M`.\n\n*The key insight is* that `#Hom(M, Y)` is additive in `M` along direct sums, so the whole M\u00f6bius\nweight is additive in the *multiplicative* sense: `mobiusWeight` for `M = \u2295M\u1d62` factors through\nthe multiset of `#Hom(M\u1d62, Y)`, and the classification of `\u039b`-lattices into three indecomposables\nturns this into a finite computation.\n\n*Why now?* `mobiusWeight` is already known here to be a poset invariant of `X`\n(`mobiusWeight_congr_right`) and a Hom-count of `M`, so the remaining input is the (finite)\nrepresentation theory of `\u039b`, not any new analytic machinery.\n\n## D4. Rationality of the refined generating function\n\n**Conjecture.** Fix a commutative local order `R` with finite residue field and a rank `n`. Then\n`\u03a3_X mobiusWeight R (R\u207f) X \u00b7 T^{v(X)}`, summed over isomorphism classes of finite quotient\ntypes weighted by the length `v(X)`, is a rational function of `T` with denominator\n`\u220f_{i=0}^{n-1}(1 - q\u2071T)`, and the quotient by the maximal-order zeta function is a polynomial\nwith nonnegative integer coefficients.\n\n*The key insight is* that the local formula proved here makes every coefficient a product of a\nGaussian-binomial numerator and a power of `#\ud835\udd2aX`, so the generating function is a finite sum of\ngeometric series indexed by the residual dimension `d \u2264 n`.\n\n*Why now?* Coefficientwise integrality (`mobiusWeight`), nonnegativity (`mobiusWeight_nonneg`)\nand `#Aut`-divisibility (`autCard_dvd_mobiusWeight`) are theorems; only the formal-power-series\nbookkeeping and the finiteness of the set of quotient types of bounded length remain.\n\n## D5. A M\u00f6bius-theoretic characterisation of freeness\n\n**Conjecture.** Let `R` be a commutative local ring with finite residue field and `M` a finite\n`R`-module. Then `M` is free of rank `n` **iff** for every finite `R`-module `X` the M\u00f6bius\nweight `\u03a3_{Y \u2264 X} \u03bc(Y,X)\u00b7#Hom(M,Y)` equals `#(\ud835\udd2aX)\u207f \u00b7 \u220f_{i<d}(q\u207f - q^i)` with\n`d = dim_k X/\ud835\udd2aX`; a single well-chosen `X` (of residual dimension `n+1`) already suffices.\n\n*The key insight is* that the local formula shows the free lattices realise the *maximal*\npossible M\u00f6bius weights, and the vanishing criterion `mobiusWeight_eq_zero_iff` identifies the\nminimal number of generators as the first index where the weight becomes nonzero; combining the\ntwo turns the weight sequence into a complete invariant of freeness.\n\n*Why now?* Both halves \u2014 the closed formula for free lattices and the generation-number\ncriterion \u2014 are now theorems in this development, so the conjecture is a matter of assembling\nthem and controlling the \"only if\" direction by a counting argument on `Hom(M, k)`.\n\n### Settled in earlier cycles\n\nThe vanishing criterion `mobiusWeight_eq_zero_iff` (the least `n` for which\n`\u03a3_{Y \u2264 X} \u03bc(Y,X)|Y|\u207f \u2260 0` is exactly the minimal number of generators of `X`) and the coprime\nEuler factorization `mobiusWeight_prod_of_coprime` were proved in the previous cycle; the\nprime-power chain collapse `\u03c6(p\u1d49)\u00b7#{\u2026} = (p\u1d49)\u207f - (p^{e-1})\u207f` is\n`totient_mul_quotIsoCount_zmod_prime_pow`.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1049",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5e2efbe9",
+    "status": "available",
+    "timestamp": "2026-08-08T14:03:50.682048+00:00",
+    "title": "The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
   },
   {
     "consumed_by_exp_id": "",
