@@ -10,19 +10,22 @@ Declarations: 8
 
 noncomputable section
 
-/-- The tangent addition formula in SPB form. -/
+/-- The tangent addition formula, in `spb` form.  (No hypothesis on `cos (a + b)`
+is needed: when `cos (a + b) = 0` both sides equal the junk value `0`.) -/
 theorem tan_add_eq_spb (a b : ℝ) (ha : Real.cos a ≠ 0) (hb : Real.cos b ≠ 0) :
     Real.tan (a + b) = spb (Real.tan a) (Real.tan b) := by
-  have hkey : 1 - Real.tan a * Real.tan b
-      = Real.cos (a + b) / (Real.cos a * Real.cos b) := by
-    rw [Real.cos_add, Real.tan_eq_sin_div_cos, Real.tan_eq_sin_div_cos]
+  have hab : Real.cos a * Real.cos b ≠ 0 := mul_ne_zero ha hb
+  have h1 : Real.tan a + Real.tan b
+      = (Real.sin a * Real.cos b + Real.cos a * Real.sin b) / (Real.cos a * Real.cos b) := by
+    simp only [Real.tan_eq_sin_div_cos]
+    field_simp
+  have h2 : 1 - Real.tan a * Real.tan b
+      = (Real.cos a * Real.cos b - Real.sin a * Real.sin b) / (Real.cos a * Real.cos b) := by
+    simp only [Real.tan_eq_sin_div_cos]
     field_simp
   unfold spb
-  rcases eq_or_ne (Real.cos (a + b)) 0 with h | h
-  · rw [Real.tan_eq_sin_div_cos, h, div_zero, hkey, h, zero_div, div_zero]
-  · rw [hkey, Real.tan_eq_sin_div_cos a, Real.tan_eq_sin_div_cos b,
-      Real.tan_eq_sin_div_cos (a + b), Real.sin_add]
-    field_simp
+  rw [h1, h2, div_div_div_cancel_right₀, Real.tan_eq_sin_div_cos, Real.sin_add, Real.cos_add]
+  exact hab
 
 /-- [Section: # CatalogBuild.Shared.Spb_hasDerivAt_snd
 Auto-generated from theorem catalog database.
@@ -74,5 +77,7 @@ theorem spb_deriv_fst_pos (y : ℝ) (d : ℝ) (hd : d ≠ 0) :
   apply div_pos
   · linarith [sq_nonneg y]
   · positivity
+
+
 
 end

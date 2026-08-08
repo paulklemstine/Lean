@@ -57,14 +57,15 @@ lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime 
 lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
   exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
 
-/-- For the composite case of Carmichael's theorem: if `n` is composite with
-    `13 ≤ n ≤ 10000`, then `F(n)` has a primitive prime divisor.
+/-- For the composite case of Carmichael's theorem:
+    if `n` is composite and `13 ≤ n ≤ 10000`, then `F(n)` has a primitive prime
+    divisor.
 
-    The generated statement omitted the bound `n ≤ 10000`, but its proof appeals
-    to `fib_carmichael`, which is only established on that verified range; the
-    bound has therefore been reinstated.  (Carmichael's theorem is true for every
-    `n ≥ 13`; the unbounded tail is the open frontier of this development, as
-    documented in `Shared.CarmichaelComposite`.) -/
+    The original catalog statement omitted the upper bound `n ≤ 10000`, but the
+    available composite-case input (`fib_carmichael`) is only certified
+    on that range, so the bound has been added to the statement.  The unbounded
+    tail `n > 10000` is the quantitative core of Carmichael's theorem and remains
+    open in this development. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧

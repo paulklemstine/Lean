@@ -1,4 +1,5 @@
 import Mathlib
+import Shared.One_plus_exp_pos
 
 /-! # CatalogBuild.Shared.LogisticSigmoid
 
@@ -6,26 +7,14 @@ Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 6
 
-The generated source referred to a positivity lemma `one_plus_exp_pos` that was
-never stated and listed `logisticSigmoid_pos` after the lemma using it; both are
-corrected here.  This module is the canonical home of the sigmoid lemmas.
+The declarations below have been reordered into dependency order (and the
+missing `one_plus_exp_pos` import added) so that the file elaborates.
 -/
 
 noncomputable section
 
-/-- The denominator `1 + eˣ` of the logistic sigmoid is positive. -/
-lemma one_plus_exp_pos (x : ℝ) : (0 : ℝ) < 1 + Real.exp x := by
-  have := Real.exp_pos x
-  linarith
-
 /-- The logistic sigmoid function S(x) = eˣ / (1 + eˣ), the derivative of softplus -/
 def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
-
-/-- Sigmoid at zero equals 1/2 -/
-theorem logisticSigmoid_zero : logisticSigmoid 0 = 1 / 2 := by
-  unfold logisticSigmoid
-  simp [Real.exp_zero]
-  ring
 
 /-- The logistic sigmoid is strictly positive -/
 lemma logisticSigmoid_pos (x : ℝ) : logisticSigmoid x > 0 := by
@@ -41,6 +30,12 @@ lemma logisticSigmoid_lt_one (x : ℝ) : logisticSigmoid x < 1 := by
 /-- Logistic sigmoid is between 0 and 1 -/
 lemma logisticSigmoid_mem_Ioo (x : ℝ) : logisticSigmoid x ∈ Set.Ioo (0 : ℝ) 1 :=
   ⟨logisticSigmoid_pos x, logisticSigmoid_lt_one x⟩
+
+/-- Sigmoid at zero equals 1/2 -/
+theorem logisticSigmoid_zero : logisticSigmoid 0 = 1 / 2 := by
+  unfold logisticSigmoid
+  simp [Real.exp_zero]
+  ring
 
 /-- Sigmoid symmetry: S(-x) = 1 - S(x) -/
 theorem logisticSigmoid_symmetry (x : ℝ) : logisticSigmoid (-x) = 1 - logisticSigmoid x := by

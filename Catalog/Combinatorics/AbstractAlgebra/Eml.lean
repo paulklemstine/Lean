@@ -9,7 +9,7 @@ Declarations: 17
 
 noncomputable section
 
-/-- The EML (exp-minus-log) binary operation. -/
+/-- The EML ("exp minus log") binary operation `eml x y = exp x - log y`. -/
 def eml (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 /-- [Section: # CatalogBuild.Shared.Eml
@@ -88,5 +88,7 @@ theorem eml_geodesic_y_verify (C k t : ℝ) (hC : 0 < C) :
     let y'' := C * k ^ 2 * Real.exp (k * t)
     y'' - y' ^ 2 / y = 0 := by
   grind
+
+
 
 end

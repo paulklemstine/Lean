@@ -8,9 +8,9 @@ Domain: Shared
 Declarations: 5
 -/
 
-noncomputable section
-
 open Real
+
+noncomputable section
 
 /-- [Section: # CatalogBuild.Shared.Spb_zero
 Auto-generated from theorem catalog database.
@@ -40,5 +40,6 @@ theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
   linarith
 
 theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by simp [spb]
+
 
 end
