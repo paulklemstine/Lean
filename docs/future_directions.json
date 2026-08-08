@@ -3882,11 +3882,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9f5195bd",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3898,7 +3898,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0098",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-08T10:58:24.184275+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -3913,7 +3913,7 @@
       "source": "",
       "source_exp_id": "2607.13169v1",
       "source_path": "http://arxiv.org/abs/2607.13169v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T04:43:23.081658+00:00",
       "title": "ArXiv paper: On some structural properties of graphs with non-negative resistance curvature"
@@ -30341,7 +30341,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "cab2c5d9",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30369,7 +30369,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "",
       "title": "Lehmer's Mahler Measure Problem"
@@ -36330,6 +36330,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "famous_subtask",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }

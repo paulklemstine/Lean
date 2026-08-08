@@ -4976,16 +4976,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Graph Puzzles III.1: A Proof of Sabidussi's Compatibility Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9f5195bd",
     "description": "Investigate the ArXiv paper 'On some structural properties of graphs with non-negative resistance curvature' and formalize its key results. Abstract: A graph is called resistance nonnegative (RN), respectively resistance positive (RP), if it admits positive edge weights such that all vertex resistance curvatures are nonnegative, respectively positive. In this paper, we study the structure of RN and RP graphs in relation to toughness, traceability, and Cartesian products. First, we disprove a conjecture of Fiedler and answer a question of Devriendt in the negative by constructing, for every $n\\ge 11$, an $n$-vertex $1$-tough graph that is not RN. Second, we show that RP graphs need not be traceable by proving that the Thomassen $34$-graph is RP but not traceable. Finally, we resolve a conjecture of Devriendt on grid graphs by proving that all Cartesian products of paths are RN.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_0098",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T04:43:23.081658+00:00",
     "title": "ArXiv paper: On some structural properties of graphs with non-negative resistance curvature"
   },
@@ -6769,18 +6770,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The completed formalization deliberately studies the smallest non-triv"
   },
   {
-    "consumed_by_exp_id": "cab2c5d9",
+    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "seed_026",
-    "phase": "A",
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Lehmer's Mahler Measure Problem"
   },
