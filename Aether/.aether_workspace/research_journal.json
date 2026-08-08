@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7c352e1f",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nThe formal results show that a scalar missing rate and feature count do not determine first cohomology: restriction-map ranks and overlap incidence are essential. The following co",
-      "quality_score": 0.80603,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-07-31T06:05:27",
-      "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
-    },
-    {
       "cycle_id": "70779ff4",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\n1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b`\n   cylinder intervals imply interval equidistribution of `fract (b^n x)`, first for\n   `b`-adic i",
@@ -2501,6 +2491,16 @@
       "theorem_count": 81,
       "timestamp": "2026-08-08T05:09:12",
       "title": "strange lines and curves on a plot the berggren primitive pythagorean tree"
+    },
+    {
+      "cycle_id": "fdb5367b",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — EML exp–log duality\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Probability/EMLExpLogDuality.lean` and\n`Catalog/Probability/EMLScaling",
+      "quality_score": 0.6513313973675711,
+      "sorry_count": 0,
+      "theorem_count": 165,
+      "timestamp": "2026-08-08T06:04:26",
+      "title": "EML-ExpLog-Duality: Isomorphism Between EML Functional Spaces and Lie Groups"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-08T05:09:12",
+  "last_updated": "2026-08-08T06:04:26",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "02f69ad4",
-        "quality": 0.686,
-        "theorems": 43,
-        "title": "Idempotent Probability: Large Deviations"
-      },
-      {
         "cycle_id": "645d6476",
         "quality": 0.686,
         "theorems": 38,
@@ -3823,6 +3817,12 @@
         "quality": 0.627125,
         "theorems": 164,
         "title": "Deepening: Sums of Three Cubes"
+      },
+      {
+        "cycle_id": "fdb5367b",
+        "quality": 0.6513313973675711,
+        "theorems": 165,
+        "title": "EML-ExpLog-Duality: Isomorphism Between EML Functional Spaces and Lie Groups"
       }
     ],
     "Pythagorean": [

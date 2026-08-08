@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-08T05:09:13.293791+00:00",
+  "last_updated": "2026-08-08T06:04:26.756402+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50874,6 +50874,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50946,6 +50947,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-08T05:09:13.153315+00:00",
       "title": "strange lines and curves on a plot the berggren primitive pythagorean tree"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2643,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 22087.779096364975,
+      "end_time": 1786169055.0912838,
+      "files_integrated": 6,
+      "job_id": "fdb5367b",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.9043,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9114,
+        "novelty": 0.9469,
+        "proof_depth": 0.8962,
+        "usefulness": 0.9481
+      },
+      "quality_score": 0.6513313973675711,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786146967.3121874,
+      "strategy_count": 0,
+      "theorem_count": 165,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 116,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-08T06:04:26.612157+00:00",
+      "title": "EML-ExpLog-Duality: Isomorphism Between EML Functional Spaces and Lie Groups"
     }
   ]
 }
