@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-08T06:04:26.756402+00:00",
+  "last_updated": "2026-08-08T07:22:44.000147+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50962,6 +50962,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50990,6 +50991,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-08T06:04:26.612157+00:00",
       "title": "EML-ExpLog-Duality: Isomorphism Between EML Functional Spaces and Lie Groups"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2689,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Novelty",
+      "duration_seconds": 15258.915341854095,
+      "end_time": 1786173747.854233,
+      "files_integrated": 16,
+      "job_id": "3f42ae3f",
+      "outcome_quality": 0.6544111491354468,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.9089,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9184,
+        "novelty": 0.95,
+        "proof_depth": 0.9048,
+        "usefulness": 0.9524
+      },
+      "quality_score": 0.6544111491354468,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786158488.9388912,
+      "strategy_count": 0,
+      "theorem_count": 239,
+      "theorem_novelty_disproof": 4,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 195,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-08T07:22:43.859556+00:00",
+      "title": "This project formalises a chain of results about snakes (chordless induced"
     }
   ]
 }

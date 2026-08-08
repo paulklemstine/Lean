@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "70779ff4",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b`\n   cylinder intervals imply interval equidistribution of `fract (b^n x)`, first for\n   `b`-adic i",
-      "quality_score": 0.7678799999999999,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-31T06:06:59",
-      "title": "Normality of Mathematical Constants"
-    },
-    {
       "cycle_id": "275a5749",
       "domain": "Shared",
       "key_insight": "# Future directions\n\n1. **Executable encoder.** Package the well-founded existence proof as a computable `encode : ℤ → List Bool`, then prove both round trips and derive certified addition and multipl",
@@ -2501,6 +2491,16 @@
       "theorem_count": 165,
       "timestamp": "2026-08-08T06:04:26",
       "title": "EML-ExpLog-Duality: Isomorphism Between EML Functional Spaces and Lie Groups"
+    },
+    {
+      "cycle_id": "3f42ae3f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — snakes and coils in the hypercube (cycle 4)\n\nAll Lean files of this thread live in `Catalog/Novelty/` (plus the base chain in\n`Catalog/Computation/SnakeInTheBox.lean` and `Catalo",
+      "quality_score": 0.6544111491354468,
+      "sorry_count": 0,
+      "theorem_count": 239,
+      "timestamp": "2026-08-08T07:22:43",
+      "title": "This project formalises a chain of results about snakes (chordless induced"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-08T06:04:26",
+  "last_updated": "2026-08-08T07:22:43",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c0621a16",
-        "quality": 0.686,
-        "theorems": 33,
-        "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-      },
-      {
         "cycle_id": "b20da64b",
         "quality": 0.686,
         "theorems": 213,
@@ -3637,6 +3631,12 @@
         "quality": 0.6599028963414636,
         "theorems": 106,
         "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
+      },
+      {
+        "cycle_id": "3f42ae3f",
+        "quality": 0.6544111491354468,
+        "theorems": 239,
+        "title": "This project formalises a chain of results about snakes (chordless induced"
       }
     ],
     "NumberTheory": [
