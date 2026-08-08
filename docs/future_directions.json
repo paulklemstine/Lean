@@ -3150,11 +3150,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f8b9ae36",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3167,7 +3167,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0073",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-08T21:07:09.520935+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -3182,7 +3182,7 @@
       "source": "",
       "source_exp_id": "2607.11499v1",
       "source_path": "http://arxiv.org/abs/2607.11499v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T10:38:16.188646+00:00",
       "title": "ArXiv paper: Arithmetic Properties for $k$-Color Analogue of Simultaneously $s$-Regular and $t$-Distinct Partitions"
@@ -36318,7 +36318,6 @@
   },
   "selection_log": [
     "famous_subtask",
-    "famous_subtask",
     "abduction_followup",
     "cross_domain_bridge",
     "abduction_followup",
@@ -36336,6 +36335,7 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
