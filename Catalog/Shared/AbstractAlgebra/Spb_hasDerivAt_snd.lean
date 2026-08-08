@@ -1,5 +1,4 @@
 import Mathlib
-import Shared.AbstractAlgebra.Spb
 
 /-! # CatalogBuild.Shared.Spb_hasDerivAt_snd
 
@@ -9,23 +8,6 @@ Declarations: 8
 -/
 
 noncomputable section
-
-/-- The tangent addition formula, in `spb` form.  (No hypothesis on `cos (a + b)`
-is needed: when `cos (a + b) = 0` both sides equal the junk value `0`.) -/
-theorem tan_add_eq_spb (a b : ℝ) (ha : Real.cos a ≠ 0) (hb : Real.cos b ≠ 0) :
-    Real.tan (a + b) = spb (Real.tan a) (Real.tan b) := by
-  have hab : Real.cos a * Real.cos b ≠ 0 := mul_ne_zero ha hb
-  have h1 : Real.tan a + Real.tan b
-      = (Real.sin a * Real.cos b + Real.cos a * Real.sin b) / (Real.cos a * Real.cos b) := by
-    simp only [Real.tan_eq_sin_div_cos]
-    field_simp
-  have h2 : 1 - Real.tan a * Real.tan b
-      = (Real.cos a * Real.cos b - Real.sin a * Real.sin b) / (Real.cos a * Real.cos b) := by
-    simp only [Real.tan_eq_sin_div_cos]
-    field_simp
-  unfold spb
-  rw [h1, h2, div_div_div_cancel_right₀, Real.tan_eq_sin_div_cos, Real.sin_add, Real.cos_add]
-  exact hab
 
 /-- [Section: # CatalogBuild.Shared.Spb_hasDerivAt_snd
 Auto-generated from theorem catalog database.
@@ -77,7 +59,5 @@ theorem spb_deriv_fst_pos (y : ℝ) (d : ℝ) (hd : d ≠ 0) :
   apply div_pos
   · linarith [sq_nonneg y]
   · positivity
-
-
 
 end
