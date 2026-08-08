@@ -21,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "28a3243b",
+    "consumed_by_exp_id": "d35c3739",
     "description": "Investigate and formalize exact point-counting bounds and modular arithmetic invariants for elliptic curves over prime fields F_p in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -11253,7 +11253,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68307a40",
     "description": "# Future directions\n\nThe formalization makes the speculative claim precise for a finite formal library: gravitational weight is the number of direct users, proof length is a natural-number cost, and dependency reachability induces an Alexandrov topology. In that topology, density is exactly dependency-cofinality: every theorem must support a theorem in the distinguished class.\n\nFurther work could:\n\n1. Extract dependency graphs and kernel-term sizes from concrete Lean environments, then evaluate weight and proof-length thresholds empirically.\n2. Replace direct-user weight by transitive influence, discounted path counts, centrality, or downstream declaration counts and compare the resulting notions.\n3. Study invariance under refactoring. Adding wrapper lemmas can change both dependency counts and proof lengths, so a robust statistic should quotient or penalize such transformations.\n4. Identify structural hypotheses on library growth that imply dependency-cofinality of short, high-weight declarations.\n5. Test bounded charging maps in real libraries. The proved counting theorem shows that a ten-to-one charging certificate is sufficient for a ten-percent lower bound.\n6. Develop asymptotic versions for increasing sequences of finite libraries, using lower density rather than a fixed finite proportion.\n\nThe unconditional ten-percent prediction cannot hold for arbitrary formal libraries: the verified edgeless ten-theorem library has no theorem of positive weight. Any empirical or universal replacement therefore needs explicit assumptions on dependency structure and threshold choice.",
     "domain_bridges": [],
     "domains": [
@@ -11266,7 +11266,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "95b84694",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T14:31:37.953468+00:00",
     "title": "The formalization makes the speculative claim precise for a finite formal librar"
   },
