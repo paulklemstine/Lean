@@ -33,6 +33,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "strange lines and curves on a plot the berggren primitive pythagorean tree"
   },
   {
+    "consumed_by_exp_id": "28a3243b",
+    "description": "Investigate and formalize exact point-counting bounds and modular arithmetic invariants for elliptic curves over prime fields F_p in Lean 4.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1043",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-08T03:08:28.808522+00:00",
+    "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -2892,23 +2907,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697830+00:00",
     "title": "Universal Approximation: Quantitative Bounds"
-  },
-  {
-    "consumed_by_exp_id": "52a6f28b",
-    "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Combinatorics"
-    ],
-    "id": "fd_0691",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-24T14:34:16.697841+00:00",
-    "title": "Tropical Curves and Chip-Firing Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -6825,17 +6823,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The completed formalization deliberately studies the smallest non-triv"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cab2c5d9",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "seed_026",
+    "phase": "A",
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Lehmer's Mahler Measure Problem"
   },
@@ -11647,6 +11646,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-07T22:03:33.323079+00:00",
     "title": "Five files now carry the three-qubit programme.  All of them are inside the cata"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tropical Curves, Chip-Firing, and Riemann\u2013Roch\n\nThe formalization in `Catalog/Combinatorics/TropicalRiemannRoch/` now contains a complete,\n`sorry`-free chain\n\n```\nLaplacian / linear equivalence  \u2192  q-reduced divisors (existence + uniqueness)\n      \u2192  acyclic-orientation divisors \u03bd_t  \u2192  Baker\u2013Norine dichotomy\n      \u2192  Riemann\u2013Roch  r(D) - r(K-D) = deg D - g + 1\n      \u2192  Riemann inequality, r(K) = g-1, Clifford, tropical corollaries\n      \u2192  top-degree rigidity  \u2192  exactly n! maximal non-winnable classes on K_{n+1}\n      \u2192  gonality: gon \u2264 g+1, gon(tree) = 1, gon = 2 in genus 1, gon(K_n) = n-1\n      \u2192  Picard group and Jacobian: Pic \u2245 \u2124 \u00d7 Jac, |Jac| finite, |Jac| = 1 \u27fa tree\n      \u2192  hyperelliptic graphs: hyperelliptic \u27fa gon = 2, Clifford sharp, K_n (n \u2265 4) is not\n```\n\n**Closed during the latest cycle.** Two new files were added, both `sorry`-free.\n\n*`Jacobian.lean`* packages the theory into its group-theoretic form. The principal divisors\nform the subgroup `TropicalRR.principal` (the image of the Laplacian), `TropicalRR.Pic` is the\nquotient, the degree descends to `TropicalRR.degPic`, and `TropicalRR.Jac` is its kernel.\nThe results proved are: uniqueness of the reduced representative in the sharp\n`\u2203!` form (`TropicalRR.exists_unique_qreduced`); the bijection\n`TropicalRR.jacEquivQReduced` between `Jac G` and the `q`-reduced divisors of degree `0`;\nthe bound `D v < deg v` at every `v \u2260 q` in a `q`-reduced divisor\n(`TropicalRR.QReduced.lt_degree`), hence finiteness of the Jacobian\n(`TropicalRR.finite_jac`) together with the explicit estimate\n`|Jac G| \u2264 \u220f_{v \u2260 q} deg v` (`TropicalRR.card_jac_le_prod_degree`); the degree-shift\nequivalence showing that the number of `q`-reduced divisors of degree `d` is `|Jac G|` for\n**every** `d` (`TropicalRR.card_qredDeg`); the splitting `Pic G \u2245 \u2124 \u00d7 Jac G`\n(`TropicalRR.picEquivProdJac`); and the classification\n`|Jac G| = 1 \u27fa G` is a tree (`TropicalRR.card_jac_eq_one_iff_isTree`,\n`TropicalRR.jac_subsingleton_iff_isTree`), whose nontriviality half produces an explicit\nnonzero class `\u03bd_t \u2212 (g\u22121)\u00b7q` out of the rank `\u22121` orientation divisors.\n\n*`Hyperelliptic.lean`* settles the \"easy half\" of Conjecture 5 below.  On a connected graph of\npositive genus every degree-two divisor has rank at most one\n(`TropicalRR.rank_le_one_of_degD_two`, proved by feeding `K \u2212 D` to Clifford), so a\nhyperelliptic graph carries a divisor with `r(D) = 1` and `2 r(D) = deg D = 2`\n(`TropicalRR.clifford_equality_of_hyperelliptic`) \u2014 Clifford's bound is attained. Moreover\nhyperellipticity is exactly gonality two (`TropicalRR.hyperelliptic_iff_gonality_eq_two`),\nevery genus-one graph is hyperelliptic, and `K_n` is **not** hyperelliptic for `n \u2265 4`\n(`TropicalRR.not_hyperelliptic_top`), while `K_3` is.\n\n**Closed during the previous cycles.** `gon(K_n) = n \u2212 1` (`TropicalRR.gonality_top`), the\ncount of exactly `n!` maximal non-winnable classes on `K_{n+1}`\n(`TropicalRR.ncard_maximal_nonwinnable_completeGraph`) and the top-degree rigidity statement\n`TropicalRR.eq_nu_of_qreduced_of_degD` behind it.\n\nThe conjectures below are the remaining open ends. Each is falsifiable: a single\ncounterexample graph, or a Lean proof, settles it.\n\n---\n\n## Conjecture 1 (Orientation count for arbitrary graphs)\n\n**Statement.** For every connected graph `G` and every base vertex `q`, the number of\n`q`-reduced non-winnable divisors of degree `g - 1` equals the number of acyclic orientations\nof `G` with unique source `q`. Equivalently, the map `t \u21a6 \u03bd_t` induces a bijection from\nacyclic orientations with unique source `q` onto that set of divisors.\n\n**Evidence.** Proved for complete graphs\n(`TropicalRR.ncard_maximal_nonwinnable_completeGraph`, count `n!` on `K_{n+1}`). Verified\ncomputationally for `C_4` (3), `C_5` (4) and `\u0398_3` (7); see `ComputationalEvidence.md`,\nTable 5.\n\n**The key insight is** that the surjectivity half is already a theorem for arbitrary graphs \u2014\n`TropicalRR.eq_nu_of_qreduced_of_degD` says every such divisor *is* a `\u03bd_t` \u2014 so the whole\nconjecture reduces to injectivity, i.e. to showing that two orientations giving the same\ndivisor are the same orientation. On `K_n` this was proved via uniqueness of the `q`-reduced\nrepresentative; for a general graph the in-degree sequence does not determine the orientation,\nso the correct statement must quotient by orientations with the same divisor.\n\n**Why now?** Half the bijection is formalized and the other half is a purely combinatorial\nstatement about acyclic orientations with no chip-firing content. This is the cheapest\nremaining structural theorem in the file.\n\n---\n\n## Conjecture 2 (Chip-firing proof of Kirchhoff's matrix\u2013tree theorem)\n\n**Statement.** For a connected `G` with base vertex `q`, `|Jac(G)| = \u03c4(G)`, the number of\nspanning trees of `G`; equivalently, the `q`-reduced divisors of any fixed degree are in\nbijection with the spanning trees, so the matrix\u2013tree theorem is a corollary of the theory of\n`q`-reduced divisors.\n\n**Status.** The \"canonical representatives\" half is now a theorem. `TropicalRR.card_qredDeg`\nsays the number of `q`-reduced divisors of degree `d` equals `|Jac G|` for every `d`, and\n`TropicalRR.finite_jac` plus `TropicalRR.card_jac_le_prod_degree` give finiteness with the\nexplicit bound `|Jac G| \u2264 \u220f_{v \u2260 q} deg v`. What remains is to identify that common\ncardinality with `\u03c4(G)`.\n\n**Evidence.** `ComputationalEvidence.md`, Table 5: the total number of degree-`(g-1)` classes\nmatches `\u03c4(G)` for `K_3` (3), `K_4` (16), `K_5` (125), `K_6` (1296), `C_4` (4), `C_5` (5) and\n`\u0398_3` (12). Note that the proved bound `\u220f_{v \u2260 q} deg v` gives `(n-1)^{n-1}` on `K_n`, which\nis strictly weaker than the true `n^{n-2}` for `n \u2265 4` \u2014 the gap is exactly the parking-function\ncount.\n\n**The key insight is** that uniqueness of the `q`-reduced representative already gives a\ncanonical set of coset representatives for the Jacobian, so the matrix\u2013tree theorem becomes a\n*bijective* statement (`q`-reduced divisors \u2194 spanning trees, via the burning bijection)\nrather than a determinantal one, and needs no linear algebra at all.\n\n**Why now?** With `TropicalRR.jacEquivQReduced` and `TropicalRR.card_qredDeg` in place, the\nremaining work is a purely combinatorial bijection: Dhar's burning algorithm turns a\n`q`-reduced divisor into a spanning tree, and the inverse is the standard external-activity\nconstruction.\n\n---\n\n## Conjecture 3 (Gonality and Brill\u2013Noether for graphs)\n\n**Statement.** Define the gonality `gon(G)` as the least degree of a divisor of rank `\u2265 1`.\nThen `gon(G) \u2264 \u230a(g+3)/2\u230b` for every connected graph `G`, and more generally the Brill\u2013Noether\nexistence bound holds: if `\u03c1 = g - (r+1)(g - d + r) \u2265 0` then `G` carries a divisor of degree\n`d` and rank `\u2265 r`.\n\n**Status.** The definition and the coarse bounds are formalized: `TropicalRR.gonality`,\n`TropicalRR.one_le_gonality`, `TropicalRR.gonality_le_genus_add_one` (`gon \u2264 g + 1`),\n`TropicalRR.gonality_eq_one_of_isTree`, `TropicalRR.gonality_eq_two_of_genus_one` and\n`TropicalRR.gonality_top` (`gon(K_n) = n - 1`); the gonality-two case is now completely\nunderstood through `TropicalRR.hyperelliptic_iff_gonality_eq_two`. What remains open is the\n*sharp* bound `gon(G) \u2264 \u230a(g+3)/2\u230b` for arbitrary `G`, and the full Brill\u2013Noether existence\nstatement.\n\n**Evidence.** With `g = C(n,2) - n + 1` one has `\u230a(g+3)/2\u230b = n - 1` exactly for `n \u2264 5` and\n`\u230a(g+3)/2\u230b > n - 1` for `n \u2265 6`, so the proved value `gon(K_n) = n - 1` meets the sharp\nbound with equality in the small cases and is strictly below it afterwards. The other tested\ngraphs also satisfy it (`gon(C_n) = 2`, `gon(tree) = 1`).\n\n**The key insight is** that the Brill\u2013Noether bound for graphs is *not* a shadow of the\nalgebraic-geometry statement but a purely combinatorial consequence of an averaging argument\nover the `n!` orderings \u2014 precisely the family of divisors that an earlier cycle showed to be\n*exactly* the maximal non-winnable classes on `K_n`, which is what makes the averaging count\ncorrect rather than merely an upper estimate.\n\n**Why now?** All ingredients (`nu`, `degD_nu`, `nu_not_winnable`, `exists_nu_dominating`,\n`eq_nu_of_qreduced_of_degD`, `rank`) exist and are proved. The gonality bound is a well-posed\nfinite statement: a counterexample would be a single graph with `gon(G) > \u230a(g+3)/2\u230b`.\n\n---\n\n## Conjecture 4 (Metric refinement: the rank is a genuine tropical invariant)\n\n**Statement.** For a metric graph `(G, l)` with rational edge lengths, the tropical rank of a\n`\u211a`-divisor is computed by subdividing edges: if every length is `1/N` for a common `N`, the\ntropical rank of `D` on `(G, l)` equals the Baker\u2013Norine rank of the pullback of `D` to the\n`N`-fold subdivision of `G`. Hence `r(D) - r(K-D) = deg D - g + 1` holds verbatim for metric\ngraphs, and the genus is a metric-independent invariant.\n\n**Evidence.** `TropicalRR.tropical_riemann_roch` already proves the formula for the\ncombinatorial model of any tropical curve, and `TropicalRR.totalLength_unit` shows the genus is\nrecovered from the total length in the unit-length case. Subdivision does not change the\ngenus: subdividing one edge adds one vertex and one edge.\n\n**The key insight is** that the specialization from metric to combinatorial Riemann\u2013Roch is a\n*stability* statement \u2014 the rank is constant under refinement of the model \u2014 so the metric\ntheorem needs no new chip-firing argument, only a proof that rank is invariant under edge\nsubdivision.\n\n**Why now?** Subdivision invariance is a finite, purely graph-theoretic statement about the\nLaplacian, and the whole rank API (`rank_ge_iff`, `rank_eq_neg_one_iff`,\n`winnable_iff_qreduced`, `rank_linEquiv`) is in place to state and attack it. This is the\nshortest route from the present combinatorial theory to genuinely metric tropical geometry.\n\n---\n\n## Conjecture 5 (Clifford is sharp exactly on hyperelliptic graphs)\n\n**Statement.** Equality `2 r(D) = deg D` holds for some special divisor `D` with\n`0 < r(D) < g - 1` if and only if `G` is hyperelliptic.\n\n**Status \u2014 one direction proved.** `TropicalRR.clifford_equality_of_hyperelliptic` shows that a\nhyperelliptic graph carries a divisor with `deg D = 2`, `r(D) = 1` and therefore\n`2 r(D) = deg D`; the accompanying `TropicalRR.rank_le_one_of_degD_two` shows the rank cannot\nbe larger, so the equality case is exact rather than accidental. The open direction is the\nconverse: an extremal special divisor forces `gon(G) = 2`.\n\n**Evidence.** `TropicalRR.clifford` proves the inequality; `TropicalRR.not_hyperelliptic_top`\nshows `K_n` for `n \u2265 4` is not hyperelliptic, so on those graphs the conjecture predicts that\n*no* non-degenerate extremal divisor exists \u2014 a concrete falsifiable prediction, since a single\nextremal divisor on `K_5` would refute it.\n\n**The key insight is** that the proof of Clifford given here goes through *superadditivity of\nthe rank* (`TropicalRR.rank_superadditive`), and equality in a superadditivity statement is\nexactly a rigidity condition \u2014 the same phenomenon that made\n`TropicalRR.eq_nu_of_qreduced_of_degD` work \u2014 so the hyperelliptic classification should fall\nout of tracking the equality case through the existing proof.\n\n**Why now?** `rank_superadditive`, `clifford`, `rank_le_one_of_degD_two` and the gonality\ncharacterization of hyperellipticity are all formalized, so the converse direction is the only\nmissing step.\n\n---\n\n## Four concrete next-cycle sub-conjectures\n\n1. **(C1a)** Two acyclic orientations of a connected `G` with the same unique source `q` and\n   the same in-degree divisor `\u03bd_t` differ by a sequence of cycle reversals that fix all\n   in-degrees; on `K_n` there are none, which is why the count is exactly `(n-1)!`.\n2. **(C2a)** `|Jac(K_n)| = n^{n-2}`: the `0`-reduced divisors of degree `0` on `K_n` are\n   exactly the parking functions on `n - 1` letters. The proved bound\n   `|Jac| \u2264 \u220f_{v \u2260 q} deg v = (n-1)^{n-1}` is the trivial estimate that this conjecture\n   sharpens; note `n^{n-2} - (n-1)!` is then the number of *winnable* degree-`(g-1)` classes\n   (`1, 10, 101, 1176` for `n = 3,4,5,6`, matching Table 5).\n3. **(C3a)** The sharp gonality bound `gon(G) \u2264 \u230a(g+3)/2\u230b` should follow from the same\n   `q`-reduced counting used for `gon(K_n) = n - 1`: a divisor of degree `\u230a(g+3)/2\u230b` whose\n   `q`-reduced representative is not concentrated at `q` must cover every vertex. The complete\n   graphs show the bound is attained exactly for `n \u2264 5`, which is the natural first test case.\n4. **(C4a)** Subdividing a single edge of `G` changes neither the genus nor the rank of the\n   pullback of any divisor supported away from that edge; combined with\n   `TropicalRR.picEquivProdJac` this would give `Jac(G) \u2245 Jac(G')` for the subdivision `G'`,\n   an invariance statement testable on `C_3 \u2192 C_4 \u2192 C_5` where `|Jac| = 3, 4, 5`.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1042",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "52a6f28b",
+    "status": "available",
+    "timestamp": "2026-08-08T03:08:13.029566+00:00",
+    "title": "The formalization in `Catalog/Combinatorics/TropicalRiemannRoch/` now contains a"
   },
   {
     "consumed_by_exp_id": "",

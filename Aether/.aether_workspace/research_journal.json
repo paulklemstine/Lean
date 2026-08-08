@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "02aa1402",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe formal results locate a sharp logical boundary: forward implication plus verified, coherent consequences does not establish an antecedent. A sound system must add information",
-      "quality_score": 0.72637,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-07-31T03:29:57",
-      "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
-    },
-    {
       "cycle_id": "343eb494",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n- Formalize the full Erdős–Faber–Lovász theorem for finite linear hypergraphs with `k` edges of size `k`, using the rainbow-edge formulation in `Combinatorics/ErdosFaberLovasz.lea",
@@ -2501,6 +2491,16 @@
       "theorem_count": 276,
       "timestamp": "2026-08-07T22:03:37",
       "title": "Results of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant."
+    },
+    {
+      "cycle_id": "52a6f28b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Tropical Curves, Chip-Firing, and Riemann–Roch\n\nThe formalization in `Catalog/Combinatorics/TropicalRiemannRoch/` now contains a complete,\n`sorry`-free chain\n\n```\nLaplacian / lin",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 193,
+      "timestamp": "2026-08-08T03:08:17",
+      "title": "Tropical Curves and Chip-Firing Games"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-07T22:03:37",
+  "last_updated": "2026-08-08T03:08:17",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "bae1175e",
-        "quality": 0.7559799999999999,
-        "theorems": 13,
-        "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
-      },
-      {
         "cycle_id": "a08998f9",
         "quality": 0.686,
         "theorems": 41,
@@ -3265,6 +3259,12 @@
         "quality": 0.71348,
         "theorems": 557,
         "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, ind"
+      },
+      {
+        "cycle_id": "52a6f28b",
+        "quality": 0.627125,
+        "theorems": 193,
+        "title": "Tropical Curves and Chip-Firing Games"
       }
     ],
     "Computation": [

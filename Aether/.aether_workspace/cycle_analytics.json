@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-07T22:03:38.432425+00:00",
+  "last_updated": "2026-08-08T03:08:18.115247+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -50698,6 +50698,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50741,6 +50742,7 @@
       "outcome_quality": 0.6603294191919192,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality_near_miss",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -50769,6 +50771,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-07T22:03:38.254236+00:00",
       "title": "Results of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant."
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2148,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Combinatorics",
+      "duration_seconds": 3602.994497537613,
+      "end_time": 1786158484.50587,
+      "files_integrated": 13,
+      "job_id": "52a6f28b",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.6,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8548,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8314,
+        "novelty": 0.95,
+        "proof_depth": 0.7806,
+        "usefulness": 0.8903
+      },
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786154881.5113726,
+      "strategy_count": 0,
+      "theorem_count": 193,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 151,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-08T03:08:17.978164+00:00",
+      "title": "Tropical Curves and Chip-Firing Games"
     }
   ]
 }
