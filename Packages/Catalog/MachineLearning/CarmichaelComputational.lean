@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelHelper
 import Shared.NumberTheory.CarmichaelProof
 
 /-! # Computational verification of Carmichael's theorem
@@ -57,34 +57,24 @@ lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime 
 lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
   exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
 
-/- Original docstring, retained:
-    For the composite case of Carmichael's theorem:
-    If n is composite with n ≥ 13 and has a prime factor p,
-    then either p is primitive for F(n), or the entry point of p
-    strictly divides n (so p divides F(d) for proper d | n).
-
-    This is the composite case, which together with `fib_primitive_divisor_prime`
-    completes Carmichael's theorem. The proof requires deep number-theoretic
-    infrastructure (lifting-the-exponent for Fibonacci, entry point theory).
-    Currently an open formalization challenge.
-
-The statement below, as originally written, does not follow from the available
-input: `fib_carmichael_composite` (in `Shared.NumberTheory.CarmichaelProof`) is
-proved only on the verified range `13 ≤ n ≤ 10000`, and the unrestricted
-composite case of Carmichael's theorem is precisely the open frontier that the
-docstring itself describes.  The original text is kept here for reference, and a
-corrected, guarded version follows.
+/- The composite case of Carmichael's theorem was stated here without a range
+restriction, and "proved" by an application of `fib_carmichael_composite` that does not
+typecheck, since that theorem is only available on the verified range `13 ≤ n ≤ 10000`:
 
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
   exact fib_carmichael_composite n hn hn_comp
--/
 
-/-- **Composite case of Carmichael's theorem, on the verified range.**  This is
-the corrected form of the statement above: the extra hypothesis `n ≤ 10000` is
-the range on which `fib_carmichael_composite` is available.  Removing it is
-equivalent to the open composite case of Carmichael's theorem. -/
+The unrestricted statement is Carmichael's primitive divisor theorem, which is true but
+whose proof needs Lucas-sequence machinery (a lower bound on the primitive part
+`Φ_n(α, β)`) that is not available here.  The guarded version below is what the catalog
+actually proves. -/
+
+/-- **Carmichael's theorem, composite-index case, on the verified range.**  For composite
+`n` with `13 ≤ n ≤ 10000` the Fibonacci number `F n` has a primitive prime divisor.  This
+is the guarded form of the statement: together with `fib_primitive_divisor_prime` (the
+prime-index case, valid for all `n ≥ 13`) it gives Carmichael's theorem on that range. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧

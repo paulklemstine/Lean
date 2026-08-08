@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "77d39a70",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\nThe completed connector identifies the matrix word `A D A` with both the third\nraw moment of the degree distribution and the number of homomorphisms from the\nthree-leaf star. The",
-      "quality_score": 0.76844,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-07-31T05:11:22",
-      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-    },
-    {
       "cycle_id": "7c352e1f",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nThe formal results show that a scalar missing rate and feature count do not determine first cohomology: restriction-map ranks and overlap incidence are essential. The following co",
@@ -2501,6 +2491,16 @@
       "theorem_count": 164,
       "timestamp": "2026-08-08T05:07:29",
       "title": "Deepening: Sums of Three Cubes"
+    },
+    {
+      "cycle_id": "221c30c4",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions: the boundary geometry of the Berggren tree\n\nThis is the final version of the research thread's open problems, after three cycles.\nNotation follows `Catalog/MachineLearning/Berggre",
+      "quality_score": 0.6272308571428571,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-08-08T05:09:12",
+      "title": "strange lines and curves on a plot the berggren primitive pythagorean tree"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-08T05:07:29",
+  "last_updated": "2026-08-08T05:09:12",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "a8849f61",
-        "quality": 0.668,
-        "theorems": 21,
-        "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-      },
-      {
         "cycle_id": "ee0c99e7",
         "quality": 0.80029,
         "theorems": 21,
@@ -3575,6 +3569,12 @@
         "quality": 0.6592476265822785,
         "theorems": 394,
         "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
+      },
+      {
+        "cycle_id": "221c30c4",
+        "quality": 0.6272308571428571,
+        "theorems": 81,
+        "title": "strange lines and curves on a plot the berggren primitive pythagorean tree"
       }
     ],
     "Novelty": [
