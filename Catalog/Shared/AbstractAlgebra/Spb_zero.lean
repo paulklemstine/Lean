@@ -1,5 +1,4 @@
 import Mathlib
-import Shared.AbstractAlgebra.Spb
 
 /-! # CatalogBuild.Shared.Spb_zero
 
@@ -7,8 +6,6 @@ Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 5
 -/
-
-open Real
 
 noncomputable section
 
@@ -40,6 +37,5 @@ theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
   linarith
 
 theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by simp [spb]
-
 
 end
