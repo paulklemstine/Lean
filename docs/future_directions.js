@@ -3873,7 +3873,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24f861df",
     "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
     "domains": [
       "Tropical",
@@ -3881,10 +3881,11 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "fd_0692",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697843+00:00",
     "title": "Tropical Convexity and Linear Programming"
   },
