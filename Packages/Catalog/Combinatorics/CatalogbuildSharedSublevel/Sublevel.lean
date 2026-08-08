@@ -1,25 +1,17 @@
 import Mathlib
+import Shared.CatalogbuildSharedE.E
 
 /-! # CatalogBuild.Shared.Sublevel
 
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 5
-
-The generated source referred to an undefined function `E N x`; from the way it
-is used (`Nat.dvd_of_mod_eq_zero`, `Nat.mod_eq_zero_of_dvd`, and
-`Nat.mod_lt`) it is the remainder `N % x`, which is restored below.  The
-declarations are also placed in a namespace so that they cannot clash with the
-identically named ones in `Shared.SublevelZeroEqDivisors.Sublevel_zero_eq_divisors`.
 -/
 
-namespace CatalogSublevel
-
-/-- The defect function: the remainder of `N` on division by `x`.  It vanishes
-exactly on the divisors of `N`. -/
-def E (N x : ℕ) : ℕ := N % x
-
-/-- Sublevel set: the elements of `[1, N]` whose defect is at most `t`. -/
+/-- [Section: # CatalogBuild.Shared.Sublevel
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 5] -/
 def sublevel (N t : ℕ) : Finset ℕ :=
   (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
 
@@ -64,5 +56,3 @@ theorem sublevel_zero_is_divisors (N : ℕ) (hN : 0 < N) :
     exact ⟨hx, Nat.dvd_of_mod_eq_zero hmod⟩
   · rintro ⟨hx, hdvd⟩
     exact ⟨hx, Nat.mod_eq_zero_of_dvd hdvd⟩
-
-end CatalogSublevel

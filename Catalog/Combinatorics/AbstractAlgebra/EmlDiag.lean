@@ -7,11 +7,11 @@ Domain: Shared
 Declarations: 3
 -/
 
-noncomputable section
-
 open Set
 
-/-- The EML diagonal `d(z) = exp z - log z`. -/
+noncomputable section
+
+/-- The EML diagonal function `d(z) = exp z - log z`. -/
 def emlDiag (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 /-- [Section: # CatalogBuild.Shared.EmlDiag
@@ -55,5 +55,7 @@ theorem emlDiag_gt (z : ℝ) : emlDiag z > z := by
     have := Real.add_one_le_exp ( z - 1 );
     rw [ show z = 1 + ( z - 1 ) by ring, Real.exp_add ];
     nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 + ( z - 1 ) ) ]
+
+
 
 end

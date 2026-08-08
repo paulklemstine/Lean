@@ -610,17 +610,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML-Transfinite-Depth: Convergence of Infinite-Layer EML Networks"
   },
   {
-    "consumed_by_exp_id": "82caef98",
+    "consumed_by_exp_id": "",
     "description": "Formalizes the behavior of EML networks near parameter values triggering essential mathematical singularities in exp-log space.",
     "domains": [
       "Applications"
     ],
     "id": "scifi_50_44_69cc17c3",
-    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:07:58.975851+00:00",
     "title": "EML-Activation-Singularity: Essential Singularity Phase Transitions in EML Layers"
   },
@@ -2049,17 +2048,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab1e59df",
     "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
     "domains": [
       "NumberTheory",
       "Computation"
     ],
     "id": "fd_0652",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697745+00:00",
     "title": "Primality Testing: Miller-Rabin and AKS Formalization"
   },

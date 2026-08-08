@@ -1,7 +1,8 @@
-/-
-This file is an alias for `Shared.CrossDomainBridges`
-(originally recorded as the relative path `../../Shared/CrossDomainBridges.lean`).
-It re-exports that module so that the alias compiles.
--/
-
 import Shared.CrossDomainBridges
+
+/-!
+# Cross-domain bridges (re-export)
+
+This module previously contained only a stray relative path pointing at
+`Shared/CrossDomainBridges.lean`; it is turned into a genuine re-export of that module.
+-/

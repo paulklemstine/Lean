@@ -826,7 +826,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "82caef98",
+    "consumed_by_exp_id": "",
     "description": "Formalizes the behavior of EML networks near parameter values triggering essential mathematical singularities in exp-log space.",
     "domain_bridges": [],
     "domains": [
@@ -838,7 +838,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:07:58.975851+00:00",
     "title": "EML-Activation-Singularity: Essential Singularity Phase Transitions in EML Layers"
   },
@@ -2767,7 +2767,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab1e59df",
     "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES ∈ P. Construct efficient modular arithmetic tactics for Lean.",
     "domain_bridges": [],
     "domains": [
@@ -2780,7 +2780,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697745+00:00",
     "title": "Primality Testing: Miller-Rabin and AKS Formalization"
   },
