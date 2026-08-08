@@ -21,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "d35c3739",
+    "consumed_by_exp_id": "10332a1b",
     "description": "Investigate and formalize exact point-counting bounds and modular arithmetic invariants for elliptic curves over prime fields F_p in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -15748,7 +15748,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff90f26d",
     "description": "Cycle 43d8701a (Q=0.686) proved 1673 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT₀` and an interpretation in arithmetic such that PA proves `Con(QFT₀) → Con",
     "domain_bridges": [],
     "domains": [
@@ -15760,7 +15760,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "43d8701a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-06T19:01:43.955990+00:00",
     "title": "Close Proofs: Arithmetized QFT reflection.: Construct an explicit recursively enumer"
   },

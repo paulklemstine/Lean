@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "occurrences of certain numbers in pascals triangle"
   },
   {
-    "consumed_by_exp_id": "d35c3739",
+    "consumed_by_exp_id": "10332a1b",
     "description": "Investigate and formalize exact point-counting bounds and modular arithmetic invariants for elliptic curves over prime fields F_p in Lean 4.",
     "domains": [
       "Novelty"
@@ -11712,16 +11712,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Let a compact smooth submanifold have reach at least `\u03c4`, and let a fi"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff90f26d",
     "description": "Cycle 43d8701a (Q=0.686) proved 1673 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n1. **Arithmetized QFT reflection.** Construct an explicit recursively enumerable first-order theory `QFT\u2080` and an interpretation in arithmetic such that PA proves `Con(QFT\u2080) \u2192 Con",
     "domains": [
       "Novelty"
     ],
     "id": "sorry_fill_43d8701a_b40afbc6",
+    "phase": "A",
     "priority_score": 0.735964136282128,
     "research_mode": "team",
     "source_exp_id": "43d8701a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-06T19:01:43.955990+00:00",
     "title": "Close Proofs: Arithmetized QFT reflection.: Construct an explicit recursively enumer"
   },
