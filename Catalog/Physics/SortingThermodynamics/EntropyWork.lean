@@ -98,13 +98,9 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
     SortsOrderings (t.pad r) n ∧ (t.pad r).height = r + t.height := by
       exact ⟨ le_trans hs ( ComparisonTree.leaves_le_pad r t ), ComparisonTree.height_pad r t ⟩
 
-/-
-The catalog's `sorting_info_erased` is stated for `1 ≤ n`.  The hypothesis is in fact
-unnecessary: the sorting map is the constant map to `Unit`, whose image is a singleton
-for every `n` (the permutation group is never empty), so the erased information is
-`log₂ |Perm (Fin n)| = log₂ (n!)` unconditionally.  We record the unconditional form,
-which is what the statements below need.
--/
+/-- The information erased by sorting, with no lower bound on `n`: the catalog
+lemma `sorting_info_erased` assumes `1 ≤ n`, but the identity also holds at
+`n = 0` because `Equiv.Perm (Fin 0)` is still nonempty. -/
 theorem sorting_info_erased_all (n : ℕ) :
     infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
   unfold infoErased sortingFunction
@@ -125,7 +121,7 @@ theorem factorial_controls_comparisons_entropy_and_history
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
       refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · exact sorting_info_erased_all n;
+      · exact sorting_info_erased_all n
       · convert sorting_history_lower_bound n Aux e hc using 1;
         simp +decide [ Fintype.card_perm ]
 
@@ -137,7 +133,8 @@ the change of base in `log₂(n!)`.
 theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
       have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
-      rw [landauerGap, landauerCost, sorting_info_erased_all n, Real.logb]
+      unfold landauerGap landauerCost
+      rw [sorting_info_erased_all n, Real.logb]
       field_simp
 
 /-

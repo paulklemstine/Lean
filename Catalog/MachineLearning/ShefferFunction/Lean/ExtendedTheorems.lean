@@ -17,17 +17,12 @@ New formally verified theorems extending the Sheffer function program to 90+ res
 -/
 
 import Mathlib
--- import ShefferAI.Lean.SoftplusBasic  -- (missing upstream module; replaced by the line below)
-import MachineLearning.ShefferFunction.Lean.SoftplusBasic
+-- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
--- The four upstream `ShefferAI.Lean.*` modules below are absent from this repository;
--- the results actually used from them (scalar closure and the Lipschitz barrier) are
--- provided by `ShefferFoundations`.
--- import ShefferAI.Lean.UniversalApproximation
--- import ShefferAI.Lean.FutureTheorems
--- import ShefferAI.Lean.AdvancedTheorems
--- import ShefferAI.Lean.NewTheorems
-import MachineLearning.ShefferFunction.Lean.ShefferFoundations
+-- (module absent from this repository)import ShefferAI.Lean.UniversalApproximation
+-- (module absent from this repository)import ShefferAI.Lean.FutureTheorems
+-- (module absent from this repository)import ShefferAI.Lean.AdvancedTheorems
+-- (module absent from this repository)import ShefferAI.Lean.NewTheorems
 
 open Real
 
