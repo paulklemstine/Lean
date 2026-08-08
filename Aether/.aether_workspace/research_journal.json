@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "343eb494",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n- Formalize the full Erdős–Faber–Lovász theorem for finite linear hypergraphs with `k` edges of size `k`, using the rainbow-edge formulation in `Combinatorics/ErdosFaberLovasz.lea",
-      "quality_score": 0.76494,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-31T04:01:28",
-      "title": "Erdős-Faber-Lovász Conjecture"
-    },
-    {
       "cycle_id": "1fc64f82",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n1. **Higher-dimensional finite projective spaces.** Define `TP^n_fin` as the\n   quotient of `ℝ^(n+1)` by diagonal translation, choose a normalization, and\n   test whether analogou",
@@ -2501,6 +2491,16 @@
       "theorem_count": 193,
       "timestamp": "2026-08-08T03:08:17",
       "title": "Tropical Curves and Chip-Firing Games"
+    },
+    {
+      "cycle_id": "8643e3f8",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Exact Piecewise-Linear Partition Bounds for ReLU Networks\n\nThe formal development in `Catalog/MachineLearning/ReLUPartition/` establishes,\nwith 0 sorries and only the standard ax",
+      "quality_score": 0.6592476265822785,
+      "sorry_count": 0,
+      "theorem_count": 394,
+      "timestamp": "2026-08-08T04:36:04",
+      "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71728
     }
   ],
-  "last_updated": "2026-08-08T03:08:17",
+  "last_updated": "2026-08-08T04:36:04",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "b7ae8967",
-        "quality": 0.8002199999999999,
-        "theorems": 21,
-        "title": "Attention is All You Need: Formalizing Transformer Architecture"
-      },
-      {
         "cycle_id": "a8849f61",
         "quality": 0.668,
         "theorems": 21,
@@ -3575,6 +3569,12 @@
         "quality": 0.7422650000000001,
         "theorems": 137,
         "title": "The completed formalization deliberately studies the smallest non-trivial model:"
+      },
+      {
+        "cycle_id": "8643e3f8",
+        "quality": 0.6592476265822785,
+        "theorems": 394,
+        "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
       }
     ],
     "Novelty": [

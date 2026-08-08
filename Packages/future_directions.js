@@ -24,7 +24,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1034",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -1177,21 +1177,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Complexity: BQP Separation Bounds relative to Random Oracles"
   },
   {
-    "consumed_by_exp_id": "8643e3f8",
-    "description": "Computes exact maximum region count formulas for depth-L ReLU neural network input space partitioning.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "dir_50_21_95017769",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:05:23.373381+00:00",
-    "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves exponential decay rate bounds on the singular values of Softmax self-attention matrices in deep Transformer layers.",
     "domains": [
@@ -1824,17 +1809,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory to HoTT Bridge: Univalent Foundations for Proof Transfer"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad055c8e",
     "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
     "domains": [
       "Tropical",
       "Algebra"
     ],
     "id": "seed_318",
+    "phase": "A",
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
   },
@@ -11662,6 +11648,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-08T03:08:13.029566+00:00",
     "title": "The formalization in `Catalog/Combinatorics/TropicalRiemannRoch/` now contains a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Exact Piecewise-Linear Partition Bounds for ReLU Networks\n\nThe formal development in `Catalog/MachineLearning/ReLUPartition/` establishes,\nwith 0 sorries and only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`):\n\n**One layer \u2014 the exact maximum.**\n\n* `regionCount_le_schlafli` \u2014 one ReLU layer of `n` neurons on `\u211d^d` realises at\n  most `\u2211_{k \u2264 d} C(n,k)` activation patterns (Sauer\u2013Shelah route, through a\n  Radon-type obstruction giving VC dimension `\u2264 d`);\n* `maximum_regionCount` \u2014 that bound is **attained**, by the moment-curve family,\n  so `\u2211_{k \u2264 d} C(n,k)` is the exact maximum (`IsGreatest`);\n* `vcDim_regions_momentFamily` \u2014 the associated set system has VC dimension\n  exactly `min n d`;\n* `regionCount_recurrence` \u2014 a Zaslavsky-style deletion\u2013restriction recurrence.\n\n**Depth \u2014 bounds, geometry and an exact example.**\n\n* `card_netRegions_le` \u2014 a depth-`L`, width-`w` net on `\u211d^d` has at most\n  `(\u2211_{k \u2264 d} C(w,k))^L` cells;\n* `convex_netCell` **(new, this cycle)** \u2014 every activation cell of a deep ReLU\n  network is **convex**, since the cell is exactly the intersection over layers\n  of the cells of the affinized single-layer families (`netCell_eq_iInter`);\n* `netCell_ordConnected_one` **(new, this cycle)** \u2014 in dimension one that\n  becomes: every cell is an **interval** of the line;\n* `two_pow_le_card_netRegions_sawNet` and `shallow_width_ge_of_matching` \u2014 the\n  depth-`L` width-two sawtooth has at least `2^L` cells, so a single layer\n  matching it needs `\u2265 2^L \u2212 1` neurons;\n* `card_loudRegions_sawNet` \u2014 the sawtooth has precisely `2^L` cells on which no\n  layer is silent, one per binary tent itinerary;\n* `card_netRegions_sawNet_exact` \u2014 the *exact* cell count of the sawtooth\n  network,\n  ```\n    #(sawNet.netRegions L)  =  5 \u00b7 2^{L\u22122} + 1        (L \u2265 2),\n  ```\n  proved by classifying the degenerate pattern words completely\n  (`card_degenRegions_sawNet`: exactly `2^{L\u22122} + 1` cells have a silent layer),\n  with the exact doubling recurrence `card(L+1) = 2\u00b7card(L) \u2212 1` and the\n  sharpened separation `shallow_width_ge_of_matching_exact` (`5\u00b72^{L\u22122}` neurons)\n  as consequences.\n\n**The sampling gap \u2014 the former Conjecture 3, now closed.**\n\n* `abs_sub_sawOrbit_eq` **(new, this cycle)** \u2014 an expansion law: two inputs that\n  share a *nonsilent* pattern prefix of length `n` have orbits separated by\n  exactly the factor `2^n`;\n* `sigma_degenerate_singleton` **(new)** \u2014 hence every degenerate cell other than\n  the two extreme ones is a **single point**: a dying orbit is pinned to `1/2`\n  exactly, and the expansion law forbids two preimages;\n* `exists_open_interval_loud` **(new)** \u2014 conversely every one of the `2^L`\n  itineraries is realised on a whole open interval, obtained by pulling an\n  interval back through the inverse tent branches;\n* `card_openRegions_sawNet` **(new)** \u2014 the exact **generic** cell count\n  ```\n    #(openRegions L)  =  2^L + 2 ,\n  ```\n  the `2^L` itineraries plus the two unbounded cells `t < 0` and `t > 1`;\n* `card_openRegions_lt_card_netRegions` and\n  `card_openRegions_eq_card_netRegions_two` **(new)** \u2014 the pointwise count\n  strictly exceeds the generic one from depth `3` on, but the two **coincide at\n  depth 2**; the original conjecture asserted strictness for all `L \u2265 2` and\n  needed this correction;\n* `tendsto_pointwise_div_open` **(new)** \u2014 the ratio of the two counts tends to\n  `5/4`: asymptotically a fifth of the pointwise cells is invisible to any\n  sampling scheme.\n\nThe conjectures below are what the surviving structure and the data in\n`ComputationalEvidence.md` point at next.  All are falsifiable by a single\nexplicit network.\n\n---\n\n## Conjecture 1 (Geometric-sum law in dimension one)\n\nFor every width `w \u2265 1` and depth `L \u2265 1`, the maximum number of activation\ncells of a depth-`L`, width-`w` ReLU network on `\u211d` is exactly\n\n```\n  \u03a3_{k = 0}^{L} w^k  =  (w^{L+1} \u2212 1) / (w \u2212 1),\n```\n\nstrictly below the product bound `(w + 1)^L` for `L \u2265 2`.\n\n*The key insight is* that in dimension one a cell is an **interval** \u2014 now a\ntheorem, `netCell_ordConnected_one` \u2014 so the cell count of a depth-`l` net is\nliterally *one more than the number of jump points* of its pattern map.  The\ncrude recursion `B_{l+1} \u2264 (w+1)B_l` (which integrates to the product bound)\ncounts a fresh zero crossing for every neuron on every interval, but a\npre-activation entering a piece clipped to zero is *constant* there and cannot\ncross; charging that loss once per layer gives `B_{l+1} \u2264 w\u00b7B_l + 1`, which\nintegrates to the geometric sum.\n\n*Why now?* All three ingredients are formal: `maximum_regionCount` settles the\nbase case `L = 1` (`w + 1`), `card_netRegions_le` supplies the scaffolding, and\n`netCell_ordConnected_one` supplies the interval structure that turns cell\ncounting into breakpoint counting.  Hand computation at `w = 2, L = 2` already\nconfirms the predicted value `7` against the product bound `9`, because a sum of\ntwo ReLUs plus a constant is piecewise linear with three pieces whose slopes\ncannot alternate in sign.  The exact sawtooth count `5\u00b72^{L\u22122}+1` sits *strictly\nbelow* the conjectured maximum `2^{L+1} \u2212 1` (`11 < 15` at `L = 3`), so the\nsawtooth is **not** extremal: the conjecture predicts a genuinely different\noptimiser, a sharp and testable prediction.\n\n*Falsification*: exhibit a width-2 depth-3 network on `\u211d` with `\u2265 16` cells.\n\n---\n\n## Conjecture 2 (The `w`-ary sawtooth: exact count for every width)\n\nLet `sawNet_w` be the width-`w` network on `\u211d` whose repeated layer realises the\n`w`-fold tent map (the piecewise-linear map with `w` full branches on `[0,1]`).\nThen for every `L \u2265 2`\n\n```\n  #(sawNet_w.netRegions L)  =  w^L + (w^{L\u22122} \u2212 1)/(w \u2212 1) + 2,\n```\n\nand its *generic* count is exactly `w^L + 2`.\n\n*The key insight is* that our classification of the sawtooth's cells splits into\na *loud* part, counted by the symbolic dynamics of the map (`w^L` itineraries),\nand a *degenerate* part, counted by the free prefixes of orbits that fall onto\nthe fixed point `0`; the second count is a geometric sum in `w` because a\ndegenerate orbit is pinned two steps before it dies, and only its prefix is free.\nThe generic half of the prediction is the cleaner one: the pinned cells are\nsingle points for every `w`, by the `w`-ary expansion law.\n\n*Why now?* Both halves are formalised for `w = 2` (`card_loudRegions_sawNet`,\n`card_degenRegions_sawNet`, `card_openRegions_sawNet`) and the proofs are written\nin terms of the scalar orbit `sawOrbit`, the pinning lemma\n`layerPattern_sawNet_eq_empty_iff` and the expansion law `abs_sub_sawOrbit_eq`,\nall of which have verbatim `w`-ary analogues; the only genuinely new ingredient\nis the `w`-ary version of `exists_itinerary_endpoint`.\n\n*Falsification*: enumerate the cells of the width-3 depth-3 ternary sawtooth; the\nconjecture predicts `27 + 1 + 2 = 30` pointwise and `29` generic.\n\n---\n\n## Conjecture 3 (The sampling gap is a general phenomenon)\n\nFor *every* ReLU network on `\u211d^d`, the cells invisible to sampling are exactly\nthose whose affine hull is a proper subspace, and their number is bounded by the\nnumber of full-dimensional cells times a constant depending only on `d`.  For\none-dimensional networks the sharp constant is `1/4`:\n\n```\n  #(pointwise cells)  \u2264  (5/4) \u00b7 #(generic cells) ,\n```\n\nwith equality asymptotically attained by the sawtooth.\n\n*The key insight is* that `convex_netCell` makes every cell a convex set, so\n\"invisible\" is the same as \"empty interior\", i.e. \"contained in a hyperplane\";\nthe sawtooth computation `card_openRegions_sawNet` shows that the extreme case is\ndriven by orbits that hit a breakpoint exactly, and each such orbit is pinned by\nthe expansion law, so degenerate cells cannot outnumber generic ones.\n\n*Why now?* The `d = 1` numerator and denominator are both exact theorems this\ncycle (`card_netRegions_sawNet_exact`, `card_openRegions_sawNet`), the ratio\nstatement `tendsto_pointwise_div_open` shows `5/4` is attained in the limit, and\n`convex_netCell` gives the general-dimension definition of \"generic cell\" for\nfree.  What remains is the inequality itself.\n\n*Falsification*: a one-dimensional network whose pointwise count exceeds `5/4`\ntimes its generic count.\n\n---\n\n## Conjecture 4 (Product bound tight only in the \"wide\" regime)\n\nThe depth-`L` product bound `(\u2211_{k \u2264 d} C(w,k))^L` is attained if and only if\n`w \u2264 d` \u2014 i.e. exactly when a layer can shatter its own neuron set, so that\n`\u2211_{k \u2264 d} C(w,k) = 2^w`.\n\n*The key insight is* that the product bound is proved by treating each layer's\npattern as *free* given the previous ones, and freedom is available precisely\nwhen the layer's set system is the full power set; as soon as `d < w` the\nSauer\u2013Shelah deficiency `2^w \u2212 \u2211_{k \u2264 d} C(w,k) > 0` (already formalised as\n`schlafli_lt_two_pow`) propagates multiplicatively into a strict loss.\n\n*Why now?* Both halves of the dichotomy have formal handles in place:\n`schlafli_eq_two_pow` / `schlafli_lt_two_pow` for the arithmetic, and\n`card_netRegions_le` for the bound itself; and the exact sawtooth count gives the\nfirst *quantitative* instance of the failure in the narrow regime\n(`d = 1 < 2 = w`, true count `5\u00b72^{L\u22122}+1` versus product bound `3^L`,\n`card_netRegions_sawNet_lt_three_pow`).\n\n*Falsification*: a network with `d < w` attaining `(\u2211_{k \u2264 d} C(w,k))^L` for some\n`L \u2265 2`.\n\n---\n\n## Conjecture 5 (Depth hierarchy is strict at every level)\n\nFor every `L`, there is a depth-`(L+1)`, width-two network on `\u211d` whose cell\ncount cannot be matched by any depth-`L` network of width `w \u2264 2^{L/2}`.  In\nparticular the family of functions computable with `O(L)` cells is a strictly\nincreasing hierarchy in `L`, not merely in \"shallow vs deep\".\n\n*The key insight is* that iterating the tent map multiplies the itinerary count\nby exactly `2` per layer \u2014 a theorem in the sharp form\n`card(L+1) = 2\u00b7card(L) \u2212 1` \u2014 while any depth-`L` network is capped by\nConjecture 1's geometric sum `\u2211_{k \u2264 L} w^k`, so a *single* extra layer already\nbeats a polynomial widening of the shallower net.\n\n*Why now?* `shallow_width_ge_of_matching_exact` proves the `L` versus `1` case\nunconditionally and with the optimal constant `5\u00b72^{L\u22122}`; upgrading `1` to a\ngeneral depth needs precisely the improved upper bound of Conjecture 1, whose\nmissing structural ingredient (interval cells) is now available as\n`netCell_ordConnected_one`.  Conjectures 1 and 5 therefore form a two-step\nprogramme whose first step is a concrete, self-contained recursion lemma.\n\n*Falsification*: a depth-`L` width-`2^{L/2}` network matching the depth-`(L+1)`\nsawtooth cell count.\n",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_1044",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8643e3f8",
+    "status": "available",
+    "timestamp": "2026-08-08T04:35:59.343982+00:00",
+    "title": "The formal development in `Catalog/MachineLearning/ReLUPartition/` establishes,"
   },
   {
     "consumed_by_exp_id": "",
