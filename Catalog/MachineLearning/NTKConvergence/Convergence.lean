@@ -1,5 +1,8 @@
 import Mathlib
-import MachineLearning.TropicalNTKDynamics
+-- The module `MachineLearning.TropicalNTKDynamics` is referenced by the original
+-- catalog export but is absent from this repository.  The two predicates and the
+-- one lemma that this file used from it are reconstructed below, so that the file
+-- is self-contained and compiles.
 
 /-!
 # Neural Tangent Kernel Convergence
@@ -133,6 +136,31 @@ theorem architecture_universality_on_trajectory
         _ = residualIterate (frozenKernelStep K₂ η) r₀ n -
             η • K₂ (residualIterate (frozenKernelStep K₂ η) r₀ n) := by
               rw [hagrees n]
+
+namespace TropicalKernelDynamics
+
+/-- Two parameter vectors lie in the same tropical cell when the cell-labelling
+map does not separate them. -/
+def SameTropicalCell {P : ℕ} {C : Type*} (cellOf : (Fin P → ℝ) → C)
+    (x y : Fin P → ℝ) : Prop := cellOf x = cellOf y
+
+/-- A kernel map is cell-wise constant when it factors through the cell
+labelling. -/
+def IsCellwiseConstant {P N : ℕ} {C : Type*} (cellOf : (Fin P → ℝ) → C)
+    (K : (Fin P → ℝ) → Matrix (Fin N) (Fin N) ℝ) : Prop :=
+  ∀ x y, cellOf x = cellOf y → K x = K y
+
+/-- **Cell invariance freezes the kernel.**  A trajectory that stays inside one
+tropical cell up to time `T` sees a constant cell-wise constant kernel. -/
+theorem tropical_lazy_training_of_cell_invariance {P N : ℕ} {C : Type*}
+    (cellOf : (Fin P → ℝ) → C) (traj : ℝ → (Fin P → ℝ))
+    (K : (Fin P → ℝ) → Matrix (Fin N) (Fin N) ℝ) (T : ℝ) (_hT : 0 < T)
+    (hcell : ∀ t, 0 ≤ t → t < T → SameTropicalCell cellOf (traj t) (traj 0))
+    (hK : IsCellwiseConstant cellOf K) :
+    ∀ t, 0 ≤ t → t < T → K (traj t) = K (traj 0) :=
+  fun t ht0 htT => hK _ _ (hcell t ht0 htT)
+
+end TropicalKernelDynamics
 
 /-- The tropical cell criterion supplies a concrete source of frozen kernels:
 a trajectory confined to one cell has a constant NTK matrix. -/
