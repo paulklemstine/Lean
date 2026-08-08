@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "02f69ad4",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n1. **Exact finite-event bound for exposed velocities.** For every finite max-plus law `μ` and every velocity `x` exposed by a unique tilt `θ`, there is an integer `N` such that, w",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 43,
-      "timestamp": "2026-07-31T07:20:56",
-      "title": "Idempotent Probability: Large Deviations"
-    },
-    {
       "cycle_id": "50db037d",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\n1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > 0`, and any `t - 1` distinct nonzero evaluation points, conditioning a uniformly sampled degree-`<",
@@ -2501,6 +2491,16 @@
       "theorem_count": 50,
       "timestamp": "2026-08-08T14:58:45",
       "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
+    },
+    {
+      "cycle_id": "344e2e8a",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — Singmaster's problem\n\nDerived from the analysis and adversarial review of the results now formalised in\n\n* `Catalog/Combinatorics/SingmasterOccurrences.lean`\n* `Catalog/Combinato",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 585,
+      "timestamp": "2026-08-08T21:54:19",
+      "title": "occurrences of certain numbers in pascals triangle"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71899
     }
   ],
-  "last_updated": "2026-08-08T14:58:45",
+  "last_updated": "2026-08-08T21:54:19",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "a08998f9",
-        "quality": 0.686,
-        "theorems": 41,
-        "title": "1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-numb"
-      },
-      {
         "cycle_id": "caed44fe",
         "quality": 0.686,
         "theorems": 121,
@@ -3265,6 +3259,12 @@
         "quality": 0.627125,
         "theorems": 193,
         "title": "Tropical Curves and Chip-Firing Games"
+      },
+      {
+        "cycle_id": "344e2e8a",
+        "quality": 0.627125,
+        "theorems": 585,
+        "title": "occurrences of certain numbers in pascals triangle"
       }
     ],
     "Computation": [

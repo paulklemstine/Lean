@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-08T14:58:46.209902+00:00",
+  "last_updated": "2026-08-08T21:54:20.048880+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -51123,6 +51123,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-08T14:58:46.069421+00:00",
       "title": "Sharp two-sided summand asymptotics.: For every `k : \u2115`, prove"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2161,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Combinatorics",
+      "duration_seconds": 3447.526759624481,
+      "end_time": 1786225949.8070931,
+      "files_integrated": 4,
+      "job_id": "344e2e8a",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.6467246499208861,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8561,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8998,
+        "novelty": 0.95,
+        "proof_depth": 0.8783,
+        "usefulness": 0.9391
+      },
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786222502.2803335,
+      "strategy_count": 0,
+      "theorem_count": 585,
+      "theorem_novelty_disproof": 4,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 495,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-08T21:54:19.906161+00:00",
+      "title": "occurrences of certain numbers in pascals triangle"
     }
   ]
 }
