@@ -2182,18 +2182,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Sheaf Theory: Gluing Data on Spheres"
   },
   {
-    "consumed_by_exp_id": "051d3d69",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
       "Computation"
     ],
     "id": "seed_229",
-    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -3558,17 +3557,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18da0edb",
     "description": "Prove special cases of Beal's conjecture (A^x + B^y = C^z with x,y,z > 2 implies gcd(A,B,C) > 1). Verify computationally for all values up to 1000. Prove the conjecture when one of x,y,z equals 3 and the other two are at most 5.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
     "id": "seed_341",
+    "phase": "A",
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Beal's Conjecture: Computational Evidence and Special Cases"
   },
