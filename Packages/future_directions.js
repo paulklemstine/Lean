@@ -1825,17 +1825,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Frankl's Union-Closed Conjecture"
   },
   {
-    "consumed_by_exp_id": "12386b8a",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b080b405 (Q=0.789), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple n",
     "domains": [
       "Cryptography"
     ],
     "id": "push_b080b405_eeb26716",
-    "phase": "A",
     "priority_score": 0.8891599999999998,
     "research_mode": "team",
     "source_exp_id": "b080b405",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-01T21:18:01.345323+00:00",
     "title": "Deepening: ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart s"
   },
@@ -4056,17 +4055,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Diffie-Hellman"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac58042b",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
       "MachineLearning",
       "Computation"
     ],
     "id": "seed_332",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
