@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-09T14:26:18Z",
+  "date": "2026-08-09T14:11:04Z",
   "key_results": [
     "Characterization of contractive idempotent Schur multipliers: a boolean matrix has factorization norm at most 1 if and only if it is a blow-up of a partial identity matrix, if and only if it is row rigid (any two rows sharing a 1 in a common column are equal).",
     "The factorization norm of the 2x2 triangular truth matrix [[1,1],[1,0]] is exactly 2√3/3, certified by an explicit planar factorization with four vectors at consecutive 30-degree angles and by a matching two-term sum-of-squares dual certificate.",

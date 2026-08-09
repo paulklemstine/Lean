@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-09T14:22:50Z",
+  "date": "2026-08-09T14:07:39Z",
   "key_results": [
     "Counting formula: the number of points of y^2 = x^3 + ax + b over a finite field with q elements is exactly q + 1 + S(a,b), where S(a,b) is the quadratic character sum of the cubic, so the trace of Frobenius equals -S(a,b)",
     "Two-torsion parity criterion: a nonsingular short Weierstrass curve has an even number of points if and only if its cubic has a root in the field, supported by the dichotomy that such a cubic has 0, 1 or 3 roots but never exactly 2",

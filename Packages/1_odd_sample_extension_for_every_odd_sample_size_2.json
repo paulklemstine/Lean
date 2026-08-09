@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-09T14:24:34Z",
+  "date": "2026-08-09T14:09:22Z",
   "key_results": [
     "Counting mechanism for the tropical L1 loss: moving the parameter across a pivot changes the loss at a rate equal to the imbalance between the sample blocks on either side, with equality on any slab that crosses no data point, so no constant in the theory can be improved.",
     "Odd-sample median theorem: for 2k+1 sorted samples the loss obeys L(m) + |theta - m| <= L(theta) at the sample median m, so the median is the unique empirical-risk minimizer.",

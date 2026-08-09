@@ -9,7 +9,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1033",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -1935,16 +1935,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Emergent Spacetime from Quantum Entanglement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49760281",
     "description": "Building on cycle 1a03af4c (Q=0.787), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Bridges"
     ],
     "id": "push_1a03af4c_793f10c7",
+    "phase": "A",
     "priority_score": 0.88657,
     "research_mode": "team",
     "source_exp_id": "1a03af4c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-29T06:53:52.425249+00:00",
     "title": "Deepening: Langlands Program: Functoriality"
   },
@@ -9725,17 +9726,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The following conjectures extend the finite-test Gr\u00f6bner theory formalized in `C"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a48893f0",
     "description": "# Information Geometry: Results and Future Directions\n\n## Formal results\n\nThe new Lean development is in `Catalog/Probability/InformationGeometryContrarian.lean`.\nIt proves the following finite-dimensional statements.\n\n1. **Fisher covariance geometry.** The Fisher matrix associated with centered\n   sufficient statistics is a weighted Gram matrix. Its quadratic form is the\n   expectation of a squared directional score, is positive semidefinite for\n   nonnegative weights, and\u2014under full support\u2014has an exact pointwise nullspace\n   characterization.\n\n2. **Geometric Cram\u00e9r\u2013Rao bound.** For every tangent direction, squared\n   estimator sensitivity is at most estimator variance times the Fisher squared\n   length of that direction. This is the multiparameter directional form of the\n   Cram\u00e9r\u2013Rao inequality.\n\n3. **Canonical alpha-connections.** Lower-index natural-coordinate coefficients\n   are defined by `((1 - \u03b1) / 2) C`, where `C` is the Amari\u2013Chentsov cubic\n   tensor. The development proves e-flatness at `\u03b1 = 1`, the dual\n   expectation-coordinate m-flatness at `\u03b1 = -1`, opposite-alpha duality, and\n   the Levi\u2013Civita midpoint identity.\n\n4. **A sharp obstruction.** If a component of the cubic tensor is nonzero and\n   the corresponding natural-coordinate alpha coefficient vanishes, then\n   necessarily `\u03b1 = 1`.\n\n5. **A conjecture disproved.** The pre-existing assertion that every arbitrary\n   connection carrying the label `\u03b1 = 1` must have zero Christoffel symbols is\n   false already in dimension one. A constant nonzero Christoffel symbol gives\n   a formal counterexample. Flatness belongs to the canonical exponential-family\n   construction, not to an unrestricted connection merely tagged by alpha.\n\n## Exact small-case evidence\n\nThe Lean file computes an asymmetric Bernoulli example exactly. For\n`P(1) = 1/4` and indicator sufficient statistic:\n\n| quantity | exact value |\n|---|---:|\n| Fisher variance | `3/16` |\n| centered cubic score moment | `3/32` |\n\nSince the cubic moment is nonzero, the natural-coordinate alpha coefficient\nvanishes if and only if `\u03b1 = 1`. These calculations are kernel-checked theorems,\nnot floating-point experiments. No integer sequence arises, so an OEIS search\nis not applicable.\n\n## Verification status\n\n`Probability.InformationGeometryContrarian` builds end-to-end from the\n`Catalog` project root. The development contains complete proof terms for every\ntheorem and no `sorry` or `admit`; the checked theorems use only Lean's standard\nlogical axioms (`propext`, `Classical.choice`, and `Quot.sound`) where needed.\n\n## Future directions\n\n- Connect the abstract centered feature model directly to derivatives of a\n  finite log-partition function, proving that its Hessian is the Fisher matrix\n  and its third derivative is the cubic tensor.\n- Define affine connections as covariant derivatives and prove zero curvature,\n  rather than only vanishing coefficients in the distinguished coordinate\n  systems.\n- Formalize the Legendre transform between natural and expectation parameters,\n  including invertibility assumptions, to package dually flatness as a global\n  geometric structure.\n- Upgrade the scalar directional Cram\u00e9r\u2013Rao inequality to a matrix inequality\n  using an inverse positive-definite Fisher matrix, and characterize equality\n  by efficient score estimators.\n- Extend from finite sample spaces to dominated measure models, with explicit\n  hypotheses justifying differentiation under the integral sign.\n- Prove the KL/Bregman identity for finite exponential families and derive the\n  Fisher metric as its second-order differential.\n",
     "domains": [
       "Geometry",
       "Logic"
     ],
     "id": "fd_0893",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "645d6476",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T23:21:33.627345+00:00",
     "title": "The new Lean development is in `Catalog/Probability/InformationGeometryContraria"
   },
