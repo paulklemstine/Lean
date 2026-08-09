@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "occurrences of certain numbers in pascals triangle"
   },
   {
-    "consumed_by_exp_id": "10332a1b",
+    "consumed_by_exp_id": "a4da1781",
     "description": "Investigate and formalize exact point-counting bounds and modular arithmetic invariants for elliptic curves over prime fields F_p in Lean 4.",
     "domains": [
       "Novelty"
@@ -2063,18 +2063,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
   {
-    "consumed_by_exp_id": "ab1e59df",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
     "domains": [
       "NumberTheory",
       "Computation"
     ],
     "id": "fd_0652",
-    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T14:34:16.697745+00:00",
     "title": "Primality Testing: Miller-Rabin and AKS Formalization"
   },
@@ -2655,18 +2654,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fermat's Last Theorem for Polynomials"
   },
   {
-    "consumed_by_exp_id": "ec3dc5ba",
+    "consumed_by_exp_id": "",
     "description": "Formalize Stone duality: the category of Boolean algebras is dual to the category of Stone spaces. Prove that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space. Bridge this to logic: a theory T in propositional logic corresponds to the Boolean algebra of sentences modulo T-provability, whose Stone space is the space of models.",
     "domains": [
       "Bridges",
       "Logic"
     ],
     "id": "seed_349",
-    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Bridge: Stone Duality as a Bridge Between Logic and Topology"
   },
@@ -2987,7 +2985,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Riemann-Roch Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e650362d",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -2995,10 +2993,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_074",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
   },
@@ -8793,18 +8792,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `Catalog/Pythagorean/PythagoreanEnergySpectrum.lean` proves, with no"
   },
   {
-    "consumed_by_exp_id": "b191f479",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThis cycle proved a cross-domain bridge in\n`Catalog/Bridges/CopwinKnasterTarski.lean`:\n\n> The kernel produced by finite cop-win pruning (a contracting, monotone update\n> `F : Finset \u03b1 \u2192 Finset \u03b1`) equals \u2014 after coercion \u2014 the Knaster\u2013Tarski\n> greatest fixed point `OrderHom.gfp (G F S)` of an associated monotone\n> endomorphism of the complete lattice `Set \u03b1`. Moreover this abstract greatest\n> fixed point is *computed* by the concrete pruning loop within `|S|` rounds\n> (`gfp_computed_by_finite_iteration`).\n\nThis connects **finite combinatorics / algorithm termination** with\n**order-theoretic fixed-point theory (Knaster\u2013Tarski)**.\n\n## Natural extensions\n\n1. **Least fixed points and the dual game.** Mirror the development with\n   *expanding* monotone updates and `OrderHom.lfp`, modeling saturation-style\n   algorithms (adding candidates until closure). The dual bridge\n   `lfp = \u2191(closure kernel)` should follow the same pattern.\n\n2. **Well-founded infinite candidate spaces.** Replace `Finset \u03b1` by a\n   candidate space with a well-founded strict-subset relation. The termination\n   argument uses only strict cardinality descent; a well-founded ranking should\n   recover a transfinite stabilization ordinal and a bridge to `gfp` on the\n   ambient complete lattice.\n\n3. **Quantitative round complexity.** The `|S|` bound is sharp for one-deletion\n   updates but loose for realistic cop-win pruning. Bounding the number of\n   *effective* rounds by structural graph parameters (treewidth, cop number)\n   would sharpen the algorithmic side.\n\n4. **Product / multi-cop games.** Extend to product state spaces modeling the\n   `k`-cop game directly, and show the kernel corresponds to the set of\n   `k`-cop-win positions, connecting the fixed-point bridge to pursuit-evasion\n   semantics.\n\n5. **Effectivity of `gfp`.** `OrderHom.gfp` is noncomputable; the bridge already\n   supplies an explicit finite computation. Packaging this as a verified\n   executable decision procedure for membership in `gfp` is a concrete\n   software-verification target.\n",
     "domains": [
       "Computation",
       "Bridges"
     ],
     "id": "fd_0638",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b853373a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T06:47:58.579997+00:00",
     "title": "Cross-domain bridge in"
   },
@@ -8869,18 +8867,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The results established here pin down the *sharp linear* growth of iterated"
   },
   {
-    "consumed_by_exp_id": "dd007662",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `608`, split as\n`303` positive and `305` negative \u2014 turns a heuristic bounded test into a proven finite\nstatement, wired to the uniform local color dictionary `\u03c7_D(p) = (D/p)`. The following\nconjectures extend that arithmetic layer.\n\n## 1. The counting function is asymptotically `6/\u03c0\u00b2 \u00b7 N` per sign\n\n**Conjecture.** Let `F\u207a(N)` and `F\u207b(N)` count fundamental discriminants in `(0, N]` and\n`[-N, 0)` respectively. Then both `F\u207a(N)/N` and `F\u207b(N)/N` converge to `6/\u03c0\u00b2`, and the exact\nvalue at `N = 1000` (`303` and `305`) already sits within the expected error band.\n\n*The key insight is* that fundamental discriminants are governed by a squarefree sieve on a\nfixed union of residue classes modulo `16`, so their density is the squarefree density `6/\u03c0\u00b2`\ndistributed evenly across the admissible classes.\n\n*Why now?* The predicate is now decidable and its finite counts are certified, so the density\nclaim can be tested against exact data at successively larger bounds and then attacked with a\nsquarefree-density argument rather than assumed.\n\n## 2. Sign symmetry is a lower-order phenomenon\n\n**Conjecture.** The discrepancy `F\u207a(N) \u2212 F\u207b(N)` is bounded in absolute value by a slowly\ngrowing function (conjecturally `O(\u221aN)`), so the two signs stay nearly balanced; at `N = 1000`\nthe discrepancy is only `2`.\n\n*The key insight is* that the sign of a fundamental discriminant is decoupled from its\nsquarefree class structure except through the single congruence that distinguishes\n`D \u2261 1 (mod 4)` from `D = 4m`, making a large systematic imbalance impossible.\n\n*Why now?* With both signed counts certified, the discrepancy can be tabulated exactly and its\ngrowth rate probed empirically before a proof is attempted.\n\n## 3. Tame ramification characterises the odd branch\n\n**Established.** A fundamental discriminant is squarefree if and only if it lies in the\n`D \u2261 1 (mod 4)` branch: the even branch always carries a factor of `4`, so the prime `2`\nramifies wildly there, while the odd branch is squarefree and hence tamely ramified at every\nodd prime divisor.\n\n**Conjecture (remaining refinement).** This branch dichotomy upgrades to a prime-by-prime\nstatement: for every fundamental discriminant, the primes that ramify tamely (dividing `D`\nexactly once) are precisely the odd prime divisors, with the prime `2` the unique wildly\nramifying prime, occurring exactly in the `D = 4m` branch.\n\n*The key insight is* that the factor of `4` in the even branch is the sole obstruction to\nsquarefreeness, so squarefreeness is a clean binary invariant separating the two branches.\n\n*Why now?* The local color dictionary already detects ramification (color `0`) uniformly; the\ntame/wild distinction is the missing refinement that upgrades \"ramified\" to a prime-by-prime\nstatement, and the odd branch has just been shown to be squarefree.\n\n## 4. The census determines the field census bijectively\n\n**Conjecture.** The map sending a fundamental discriminant `D` to the quadratic field\n`\u211a(\u221aD)` is a bijection onto the set of quadratic fields; hence the count `608` equals the\nnumber of quadratic fields `\u211a(\u221ad)` whose discriminant has absolute value at most `1000`.\n\n*The key insight is* that a quadratic field is determined by its discriminant, and every\nfundamental discriminant arises from exactly one field, so counting discriminants counts\nfields with no double-counting.\n\n*Why now?* The discriminant side of this bijection is now enumerated and certified; only the\nfield-theoretic uniqueness statement remains, making the correspondence a concrete finite\ntarget rather than an asymptotic one.\n",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0644",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b519e277",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T14:20:04.417073+00:00",
     "title": "The certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `6"
   },
