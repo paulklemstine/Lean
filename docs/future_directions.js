@@ -1606,16 +1606,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ebc27a78",
     "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
     "domains": [
       "MachineLearning"
     ],
     "id": "push_4ae649eb_c81b44fe",
+    "phase": "A",
     "priority_score": 0.89196,
     "research_mode": "team",
     "source_exp_id": "4ae649eb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T18:22:37.383512+00:00",
     "title": "Deepening: PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
@@ -5479,7 +5480,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean"
     ],
     "id": "fd_0156",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14517v1",
