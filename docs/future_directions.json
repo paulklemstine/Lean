@@ -1325,11 +1325,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7e32c5ba",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -1341,7 +1341,7 @@
       ],
       "github_issue": 0,
       "id": "dir_50_49_004a41c5",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-09T13:23:08.152095+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alon_boppana_eigenvalue_bound (G : Graph) (h_reg : IsDRegular G d) : SecondEigenvalue G ≥ 2 * Real.sqrt (d - 1) - SmallO 1",
       "lineage_refs": [],
@@ -1356,7 +1356,7 @@
       "source": "",
       "source_exp_id": "batch_50_injection",
       "source_path": "50_new_research_directions.md",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-23T20:05:24.752657+00:00",
       "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
@@ -36389,7 +36389,6 @@
     "√(2n+1": 1
   },
   "selection_log": [
-    "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
     "famous_subtask",
@@ -36408,6 +36407,7 @@
     "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
-    "abduction_followup"
+    "abduction_followup",
+    "famous_subtask"
   ]
 }

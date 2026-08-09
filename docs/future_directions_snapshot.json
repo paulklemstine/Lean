@@ -1915,7 +1915,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e32c5ba",
     "description": "Proves the Alon-Boppana theorem establishing lower bounds λ_2 ≥ 2√(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
     "domain_bridges": [],
     "domains": [
@@ -1927,7 +1927,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.752657+00:00",
     "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
   },

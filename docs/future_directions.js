@@ -24,7 +24,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1043",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -39,7 +39,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1052",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -1415,16 +1415,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Capacity: Quantum Channel Coherent Information Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e32c5ba",
     "description": "Proves the Alon-Boppana theorem establishing lower bounds \u03bb_2 \u2265 2\u221a(d-1) - o(1) for the second largest eigenvalue of d-regular graphs.",
     "domains": [
       "Combinatorics"
     ],
     "id": "dir_50_49_004a41c5",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.752657+00:00",
     "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
   },
@@ -5583,7 +5584,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "fd_0164",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14316v1",
@@ -9734,7 +9735,7 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "id": "fd_0889",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3cce8c08",
