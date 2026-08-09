@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f74f568d",
     "description": "In Pascal\u2019s triangle, each number is the sum of the two above it. Obviously, the infinite pyramid contains an infinite number of 1s, but most numbers appear surprisingly seldom:\n\n2 appears just once.\n3, 4, 5, and all odd primes appear exactly twice.\n6 appears three times.\nInfinitely many numbers appear exactly six times, but we don\u2019t know whether any appear exactly five or seven times.\n3003 appears eight times, possibly the only such specimen.\nIn 1971, Berkeley mathematician David Singmaster suggested that there may be a finite upper bound on the number of times that any number can appear (apart from 1). But that remains an unsolved problem.\n\nExplore and explain these results.",
     "domains": [
       "Novelty"
@@ -2592,17 +2592,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9dbd7360",
     "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
     "domains": [
       "Physics",
       "Computation"
     ],
     "id": "seed_309",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
