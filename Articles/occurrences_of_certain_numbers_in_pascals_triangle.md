@@ -1,154 +1,183 @@
 # The Loneliest Numbers in Pascal's Triangle
 
-## A triangle full of strangers
+Draw the triangle. Put a $1$ at the top, a $1$ at each end of every row, and make every other entry the sum of the two numbers leaning over it. You get the most famous array in mathematics:
 
-Draw the first dozen rows of Pascal's triangle — each number the sum of the two above it — and stare at them for a while. The border is a wall of $1$s. Just inside it runs the sequence of counting numbers $1, 2, 3, 4, 5, \dots$, then the triangular numbers $1, 3, 6, 10, 15, \dots$, then the tetrahedral numbers, and so on. Every whole number $t \ge 2$ appears somewhere: it sits in position $(t, 1)$, since $\binom{t}{1} = t$, and again, mirrored, at $(t, t-1)$.
+$$
+\begin{array}{ccccccccc}
+ & & & & 1 & & & & \\
+ & & & 1 & & 1 & & & \\
+ & & 1 & & 2 & & 1 & & \\
+ & 1 & & 3 & & 3 & & 1 & \\
+1 & & 4 & & 6 & & 4 & & 1
+\end{array}
+$$
 
-So every number appears **at least twice**. The astonishing empirical fact is that almost every number appears **exactly** twice.
+Its entries are the binomial coefficients $\binom{n}{k}$: row $n$, position $k$, counting the ways to choose $k$ things out of $n$. Every schoolchild meets it; every combinatorialist lives in it.
 
-Let $N(t)$ denote the *multiplicity* of $t$: the number of pairs $(n,k)$ with $0 \le k \le n$ and $\binom{n}{k} = t$. Then:
+Now ask a question that sounds childish and turns out to be brutally hard. **Pick a number. How many times does it appear?**
 
-- $N(2) = 1$. The number $2$ is unique: its two "border" copies coincide, since $\binom{2}{1} = 2$ is the only place it ever occurs.
-- $N(3) = N(4) = N(5) = 2$, and $N(p) = 2$ for every prime $p \ge 5$.
-- $N(6) = 3$, because $6 = \binom{4}{2}$ sits exactly in the middle of row $4$, where its mirror image is itself.
-- $N(10) = N(15) = N(21) = 4$: these numbers are both "triangular" and "linear", e.g. $10 = \binom{5}{2} = \binom{5}{3}$.
-- $N(120) = N(210) = N(1540) = 6$, and infinitely many numbers have multiplicity at least $6$.
-- $N(3003) = 8$ — and $3003$ is the only number ever found with eight occurrences.
+The $1$s are cheating: every row begins and ends with one, so $1$ appears infinitely often. Set it aside. Then the arithmetic becomes strange and beautiful:
 
-Nobody has ever exhibited a number with multiplicity $5$ or $7$. Nobody has ever exhibited a number with multiplicity $9$ or more. In 1971 David Singmaster asked the obvious question and could not answer it: **is there an absolute upper bound on $N(t)$?** More than half a century later, the question is still open. The best anyone can prove unconditionally is that $N(t)$ grows no faster than roughly $\log t / \log\log t$; the truth is almost certainly that $N(t) \le 8$ always.
+- $2$ appears **once**, at the apex of its own row.
+- $3$, $4$, $5$, $7$, $11$, $13$, $\dots$ — every prime, and plenty of composites — appear **exactly twice**, as $\binom{t}{1}$ and $\binom{t}{t-1}$.
+- $6$ appears **three** times: $\binom{4}{2}$ joins the pair $\binom{6}{1}, \binom{6}{5}$.
+- $10$ appears **four** times: $\binom{5}{2} = \binom{5}{3} = 10$ as well as $\binom{10}{1}, \binom{10}{9}$.
+- $120$ appears **six** times: $\binom{10}{3}, \binom{10}{7}, \binom{16}{2}, \binom{16}{14}, \binom{120}{1}, \binom{120}{119}$.
+- $3003$ appears **eight** times, the current world record: $\binom{14}{6}, \binom{14}{8}, \binom{15}{5}, \binom{15}{10}, \binom{78}{2}, \binom{78}{76}, \binom{3003}{1}, \binom{3003}{3002}$.
 
-This article is about what *can* be proved. It turns out that a surprising amount of structure hides behind the mystery: a hidden reflection symmetry that forces multiplicities to be nearly even; a hierarchy of theorems saying that repetitive numbers must be built out of astonishingly small primes; a counting argument showing that the exceptional numbers are vanishingly rare; and — the most beautiful result of all — a **complete classification** of one important source of repetition, in which the Fibonacci numbers make an unannounced appearance and everything is glued together by a 340-year-old identity of Cassini.
+And nobody has ever found a number appearing exactly five times, or exactly seven, or nine, or more than eight. In 1971 David Singmaster asked the question everybody now asks: **is there an absolute ceiling?** Is there a constant $C$ such that no number other than $1$ ever appears more than $C$ times? Singmaster guessed yes — perhaps even $C = 8$, or $C = 10$. Fifty years later this is still open.
 
-## Why every number appears twice, and why the count is almost always even
+What follows is a tour of what *can* be proved, and of two theorems that pin down the phenomenon far more tightly than a first look suggests: a **smoothness hierarchy** saying that repetition forces a number to be built out of tiny primes, and a **complete classification** of the mechanism that produces the six-fold repetitions — a mechanism that turns out to be governed, exactly and with no exceptions, by the Fibonacci numbers.
 
-Two structural facts organise everything.
+---
 
-**The mirror.** Pascal's triangle is left-right symmetric: $\binom{n}{k} = \binom{n}{n-k}$. So occurrences come in pairs, *except* for those sitting exactly on the central axis, where $n = 2k$.
+## The multiplicity function, and why it is finite
 
-**The trivial pair.** Every $t \ge 2$ occupies the positions $(t,1)$ and $(t,t-1)$, which are distinct.
+Write $N(t)$ for the number of positions $(n,k)$ with $0 \le k \le n$ and $\binom{n}{k} = t$. For $t \ge 2$ this is a finite number, and the reason is a two-line argument worth savouring, because everything else in this story is a refinement of it.
 
-Combining these, and calling an occurrence *left-interior* when it satisfies $2 \le k$ and $2k < n$ — that is, genuinely inside the triangle and strictly to the left of the axis — we get the **reflection decomposition**:
+Suppose $\binom{n}{k} = t$ with $2 \le k \le n-2$ — call this an *interior* occurrence, one that is not on the two outer diagonals. Pascal's rows increase towards the middle, so
+$$
+\binom{n}{2} \le \binom{n}{k} = t,
+\qquad\text{i.e.}\qquad
+n(n-1) \le 2t .
+$$
+The row index is at most about $\sqrt{2t}$. Meanwhile $2^{k} \le \binom{n}{k} = t$ whenever $2k \le n$, so the column index is at most $\log_2 t$. Every interior occurrence of $t$ therefore lives in a box of size roughly $\sqrt{2t} \times \log_2 t$. Finitely many boxes, finitely many occurrences. Combined with the fact that each column can host at most one row (entries strictly increase down a fixed column), this already gives the classical bound
+$$
+N(t) \;\le\; 2\log_2 t .
+$$
 
-$$N(t) \;=\; 2 \;+\; 2\,L(t) \;+\; Z(t), \qquad Z(t) \in \{0,1\},$$
+That is the crude ceiling everybody starts with. It is enormously far from the truth — for $t = 3003$ it permits $22$ occurrences and the real answer is $8$ — but it is unconditional and elementary, and it can be sharpened.
 
-where $L(t)$ counts the left-interior occurrences and $Z(t)$ counts the central ones. That $Z(t) \le 1$ is because a value can sit on the central axis at most once: the central binomial coefficients $\binom{2c}{c}$ are strictly increasing in $c$.
+**A better logarithmic ceiling.** The estimate $2^{k} \le \binom{n}{k}$ throws away most of the size of a binomial coefficient. The genuinely smallest entry with folded column index $b$ (where "folded" means $b = \min(k, n-k)$, since $\binom{n}{k} = \binom{n}{n-k}$) is the central coefficient $\binom{2b}{b}$, which is about $4^{b}/\sqrt{b}$, not $2^{b}$. And a free pigeonhole argument delivers a usable version of that: the $2b+1$ entries of row $2b$ sum to $4^{b}$ and none exceeds the middle one, so
+$$
+4^{b} \le (2b+1)\binom{2b}{b}.
+$$
+Feeding this into the counting argument replaces powers of two by powers of four and halves the leading constant:
 
-Read that formula again: **multiplicity is even unless the number is a central binomial coefficient.** This is why the odd multiplicities are so scarce. $N(6) = 3$ because $6 = \binom{4}{2}$; $N(20) = 3$ because $20 = \binom{6}{3}$; $N(70) = 3$ because $70 = \binom{8}{4}$. If you want an odd multiplicity, you must be a central binomial coefficient, and there is only one of you per row. An exhaustive scan up to ten million bears this out with startling precision: the *only* numbers of odd multiplicity below $10^7$ are $6, 20, 70, 252, 924, 3432, 12870, 48620, 184756, 705432, 2704156$ — precisely the list $\binom{4}{2}, \binom{6}{3}, \binom{8}{4}, \dots$ of central binomial coefficients, each with multiplicity exactly three.
+> **Theorem (sharpened logarithmic bound).** For every $t \ge 2$,
+> $$N(t) \;\le\; \log_2\!\big((2\log_2 t + 1)\,t\big) \;\le\; \log_2 t + \log_2(2\log_2 t + 1) + 1 .$$
+> In particular $N(t) < 2\log_2 t$ as soon as $t \ge 2^{16}$.
 
-An immediate consequence: to get $N(t) = 5$, a number would have to be a central binomial coefficient *and* have exactly two other left-interior occurrences. To get $N(t) = 7$, three. No such number is known, and the conjecture that none exists is now a concrete Diophantine statement about equations of the form $\binom{2c}{c} = \binom{n}{k}$ with $k < c$.
+For $t = 3003$ the ceiling drops from $22$ to $16$; for $t < 10^{6}$, from $38$ to $25$. The leading constant is now $1$, which is exactly what the heuristic "one new column per power of four" predicts. It is still infinitely far from a *constant* bound, but it is the correct elementary shape.
 
-## Big prime factors are fatal
+---
 
-Here is the first hard theorem, and it comes from crossing two utterly different pieces of information.
+## Repetition forces smoothness
 
-*Geometry.* Suppose $\binom{n}{k} = t$ with $2 \le k \le n-2$ — a genuinely interior occurrence. Rows of Pascal's triangle increase towards the middle, so $\binom{n}{2} \le \binom{n}{k} = t$, that is
-$$n(n-1) \le 2t.$$
-The row index of an interior occurrence is at most about $\sqrt{2t}$. Interior occurrences of a number are confined to a tiny corner of the triangle.
+Here is the observation that changes the character of the problem. Look again at the record holders: $6 = 2\cdot 3$, $10 = 2 \cdot 5$, $120 = 2^3\cdot 3\cdot 5$, $3003 = 3\cdot 7\cdot 11\cdot 13$. Small primes only. That is not an accident.
 
-*Arithmetic.* Every binomial coefficient $\binom{n}{k}$ divides $n!$. Hence every prime dividing $\binom{n}{k}$ is at most $n$.
+Combine the two facts we already have. If $\binom{n}{k} = t$ is an interior occurrence, then $n(n-1) \le 2t$ — the row is small. On the other hand $\binom{n}{k}$ divides $n!$, so *every prime factor of $t$ is at most $n$*. Chain them:
 
-Put the two together. If $p$ is a prime factor of $t$ and $t$ has *any* interior occurrence, then $p \le n$ and therefore
-$$p(p-1) \le n(n-1) \le 2t.$$
+> **Smoothness Theorem.** If $t \ge 3$ occurs three or more times in Pascal's triangle, then every prime factor $p$ of $t$ satisfies
+> $$p(p-1) \le 2t, \qquad\text{hence}\qquad p \le \sqrt{2t} + 1 .$$
 
-**Smoothness Theorem.** *If $N(t) \ge 3$ then every prime factor $p$ of $t$ satisfies $p(p-1) \le 2t$; equivalently $p \le \sqrt{2t} + 1$.*
+Contrapositively: *a number with one large prime factor occurs exactly twice.* If $t \ge 3$ has a prime factor $p$ with $p(p-1) > 2t$, then $N(t) = 2$, full stop. This one statement subsumes a whole zoo of facts. Every prime $p \ge 5$ occurs exactly twice (take $p$ itself as the large factor). So does $2p$ for every prime $p \ge 7$ — note the two exceptions $2\cdot 3 = 6$ and $2\cdot 5 = 10$ at the very bottom, precisely where the inequality fails. More generally $N(c\,p) = 2$ for every $c \ge 1$ and every prime $p > 2c+1$. Since there are infinitely many primes, **every divisibility class contains infinitely many numbers of multiplicity exactly two**: no matter which $c$ you fix, infinitely many multiples of $c$ appear precisely twice.
 
-Contrapositively: **any number with a prime factor larger than about $\sqrt{2t}$ occurs exactly twice.** This single criterion sweeps up enormous swathes of the integers. It instantly re-proves that every prime $p \ge 5$ occurs exactly twice; it shows that $2p$ occurs exactly twice for every prime $p \ge 7$ (though $2\cdot 3 = 6$ and $2 \cdot 5 = 10$ escape, with multiplicities $3$ and $4$); and more generally, for any fixed $c \ge 1$ and any prime $p > 2c+1$, the number $cp$ occurs exactly twice. Since there are infinitely many primes, **every divisibility class contains infinitely many numbers of multiplicity exactly two**: no matter what multiple of $17$, or of $10^{100}$, you demand, there are infinitely many of them that appear only twice.
+And the theorem has an infinite tower of floors above it. To occur $2m+2$ times, a number needs $m$ genuinely interior occurrences to the left of centre. Distinct interior occurrences sit in distinct columns — a fixed column's entries strictly increase as you go down — so those $m$ columns, all at least $2$, cannot all be small: some occurrence must sit in a column $k \ge m+1$. Now repeat the chaining, but with $\binom{n}{m+1}$ in place of $\binom{n}{2}$:
 
-## The hierarchy: more repetitions, smaller primes
+> **Smoothness Hierarchy.** If $t$ occurs at least $2m+2$ times, then every prime factor $p$ of $t$ satisfies
+> $$\binom{p}{\,m+1\,} \le t, \qquad\text{equivalently}\qquad (p-m)^{m+1} \le (m+1)!\,t .$$
 
-The Smoothness Theorem is only the first rung of a ladder. Push the counting harder.
+Unwind the levels. Multiplicity $\ge 4$ means $p \lesssim \sqrt{2t}$; multiplicity $\ge 6$ means $p(p-1)(p-2) \le 6t$, so $p \lesssim (6t)^{1/3}$; multiplicity $\ge 8$ means $p \lesssim (24t)^{1/4}$. A number that repeats a lot must be **extraordinarily smooth** — assembled almost entirely from primes below a small root of itself.
 
-If $N(t) \ge 2m+2$, then the reflection decomposition forces at least $m$ left-interior occurrences. Distinct interior occurrences of the same value must lie in distinct columns (in a fixed column $k \ge 2$ the entries $\binom{n}{k}$ strictly increase with $n$, so a value determines its row). Those $m$ distinct columns are all at least $2$, so at least one of them is $\ge m+1$. Now repeat the geometry-meets-arithmetic trick, but with $\binom{n}{m+1}$ in place of $\binom{n}{2}$:
+Test it on the champion. Since $3003$ occurs eight times, the level $m=3$ applies: every prime factor $p$ of $3003$ must satisfy $\binom{p}{4} \le 3003$. Now $\binom{18}{4} = 3060 > 3003$, so no prime factor can reach $18$: every prime dividing $3003$ is at most $17$. And indeed $3003 = 3\cdot 7\cdot 11\cdot 13$, with largest factor $13$, just under the wire. The theorem *sees* the structure of Singmaster's record holder.
 
-**Smoothness Hierarchy.** *If $N(t) \ge 2m+2$, then every prime factor $p$ of $t$ satisfies*
-$$\binom{p}{m+1} \le t, \qquad\text{and quantitatively}\qquad (p-m)^{m+1} \le (m+1)!\,t.$$
+This is why a proof of Singmaster's conjecture feels tantalisingly close. Smoothness fights against size: to be $t^{1/(m+1)}$-smooth, a number of size $t$ must be a product of *many* small primes, and there are only so many small primes to go around. Making that tension quantitative is, essentially, the open problem.
 
-So a number occurring six times is essentially $t^{1/3}$-smooth; a number occurring eight times is essentially $t^{1/4}$-smooth; and a number occurring $2m+2$ times has all its prime factors below roughly $((m+1)!\,t)^{1/(m+1)}$. **The more often a number repeats, the more it must be built out of tiny primes.**
+---
 
-Watch this bite on the champion. Since $N(3003) = 8 = 2\cdot 3 + 2$, the hierarchy at $m = 3$ says every prime factor $p$ of $3003$ obeys $\binom{p}{4} \le 3003$. Now $\binom{18}{4} = 3060 > 3003$, so no prime factor of $3003$ can be $18$ or larger. And indeed
-$$3003 = 3 \cdot 7 \cdot 11 \cdot 13,$$
-a product of four primes all under $18$, sitting right at the ceiling the theorem permits. The champion of Pascal's triangle is not a random number: it is exactly as smooth as it is forced to be.
+## Almost every number appears exactly twice
 
-The same counting gives a **growth threshold**: if $N(t) \ge 2m+2$, then $t \ge \binom{2m+3}{m+1}$. Multiplicity is expensive — you need to be big to afford it.
+Whatever the true ceiling is, the *typical* behaviour can be settled completely, and the same geometry does it. A number $t \le X$ with $N(t) \ge 3$ must have an interior occurrence $\binom{n}{k}$ with $2 \le k$ and $2k \le n$. Then $n \le \sqrt{2X}+1$ and $k \le \log_2 X$: all such $t$ are values of $\binom{n}{k}$ on one explicit rectangular box of positions. Counting the box:
 
-## How big must you be? The sharp thresholds
+> **Counting Theorem.** For every $X$,
+> $$\#\{\,t \le X : N(t) \ge 3\,\} \;\le\; \big(\sqrt{2X}+2\big)\big(\log_2 X + 1\big) .$$
+> Consequently, for every constant $c$ there is a threshold beyond which fewer than $X/c$ of the integers up to $X$ occur three or more times: **the integers of multiplicity exactly two have density one.**
 
-The general threshold $t \ge \binom{2m+3}{m+1}$ says $t \ge 126$ for eight occurrences. The truth is far larger, and it can be pinned down exactly.
+Below $10^{6}$ the bound permits $28\,320$ exceptional numbers; the true count is $1\,732$ — about one integer in six hundred. The full census below a million is startlingly lopsided: $998\,266$ numbers occur exactly twice, $1\,715$ occur four times, ten occur three times, six occur six times ($120$, $210$, $1540$, $7140$, $11628$, $24310$), and exactly one occurs eight times. Five, seven, and nine or more: never. Repetition in Pascal's triangle is a measure-zero phenomenon: the triangle is, overwhelmingly, a list of distinct numbers with each one duplicated on the two outer diagonals and nowhere else.
 
-**Sharp Thresholds.** *The smallest number occurring at least three times is $6$; at least four times, $10$; at least six times, $120$; at least eight times, $3003$.*
+---
 
-These are not brute-force verifications over a search range; they are consequences of the *shape* of the required occurrences. For example, six occurrences force two left-interior occurrences $\binom{n}{j} = \binom{m}{k} = t$ in distinct columns $2 \le j < k$. If $k \ge 4$ then, by unimodality along rows, $t \ge \binom{9}{4} = 126$. Otherwise $k = 3$ and $j = 2$, so $t$ must be simultaneously a tetrahedral-type number $\binom{m}{3}$ with $m \ge 7$ and a triangular number $\binom{n}{2}$. There are only three candidates below $120$ — namely $35$, $56$, $84$ — and none of them is triangular. Hence $t \ge 120$. Since $120 = \binom{10}{3} = \binom{16}{2}$ really does occur six times, $120$ is *least*. The same descent, one level deeper (three interior columns instead of two), yields $3003$.
+## How early can a multiplicity appear?
 
-## The exceptional numbers are vanishingly rare
+The classical specimens $6, 10, 120, 3003$ are famous as *examples*. It is a sharper — and more useful — statement that they are the **first** examples.
 
-Even without knowing whether $N$ is bounded, one can prove that the *typical* behaviour is settled.
+> **Sharp Thresholds.** Among integers $t \ge 2$:
+> - $6$ is the smallest with $N(t) \ge 3$;
+> - $10$ is the smallest with $N(t) \ge 4$;
+> - $120$ is the smallest with $N(t) \ge 6$;
+> - $3003$ is the smallest with $N(t) \ge 8$.
+>
+> More generally, $N(t) \ge 2m+2$ forces $t \ge \binom{2m+3}{m+1}$.
 
-An interior occurrence $\binom{n}{k} = t \le X$ has $n \le \sqrt{2X}+1$ (row bound, as above) and $2^k \le \binom{n}{k} = t \le X$, so $k \le \log_2 X$. Every $t \le X$ with $N(t) \ge 3$ is therefore a value of $\binom{n}{k}$ on an explicit rectangle of admissible $(n,k)$. Counting the rectangle:
+The general bound is soft — it gives only $t \ge 10, 35, 126$ for multiplicities $4, 6, 8$ — while the sharp values are $10, 120, 3003$. The gap is where the real arithmetic lives. Take the multiplicity-six threshold. Six occurrences force two interior occurrences $\binom{n}{j} = \binom{m}{k} = t$ in distinct columns $2 \le j < k$. If $k \ge 4$, unimodality alone gives $t \ge \binom{9}{4} = 126$. Otherwise $k = 3$ and $j = 2$, so $t$ must be simultaneously a triangular number $\binom{n}{2}$ and a "tetrahedral-type" number $\binom{m}{3}$ with $m \ge 7$; the only candidates below $120$ are $35, 56, 84$, and none of them is triangular. Hence $t \ge 120$ — a genuine two-parameter descent with a three-number residue, not a blind search.
 
-**Counting Bound.** *The number of $t \le X$ with $N(t) \ge 3$ is at most $(\sqrt{2X}+2)(\log_2 X + 1)$.*
+The multiplicity-eight threshold runs the same descent one level deeper: eight occurrences force *three* interior columns, so the largest is at least $4$; unimodality then caps that column at $6$ and both rows at $78$, and inside that small box no coincidence $\binom{n}{j} = \binom{m}{k}$ below $3003$ survives. (The box is not empty of near-misses: $210 = \binom{10}{4} = \binom{21}{2}$ has one smaller column and is eliminated only by the demand for a *second* one.)
 
-Since $\sqrt{X}\log X = o(X)$, the numbers of multiplicity exactly $2$ have **density one**: for every constant $c$, once $X$ is large enough, $c \cdot \#\{t \le X : N(t) \ge 3\} \le X$. Numerically the bound gives $28{,}320$ exceptional numbers below $10^6$; the true count is $1{,}732$. Being interesting in Pascal's triangle is a measure-zero occupation.
+---
 
-There is also a sharpened *universal* bound. The classical elementary estimate uses $2^k \le \binom{n}{k}$ to get $N(t) \le 2\log_2 t$. But $2^k$ is a wasteful lower bound: the smallest entry in column $k$ (once folded to the left half) is the central binomial coefficient $\binom{2k}{k} \approx 4^k/\sqrt{k}$. Pigeonhole on row $2k$ — the $2k+1$ entries sum to $4^k$ and none exceeds the central one — gives $4^k \le (2k+1)\binom{2k}{k}$ for free, and running the same argument yields
+## The Fibonacci machine behind the sixes
 
-$$N(t) \;\le\; \log_2\!\big((2\log_2 t + 1)\,t\big) \;\le\; \log_2 t + \log_2(2\log_2 t + 1) + 1,$$
+Where do the numbers with six occurrences come from? There is a single elegant mechanism, and it is the most surprising part of the story.
 
-halving the leading constant. For $t = 3003$ the classical bound gives $22$ and this one gives $16$; below $10^6$ they give $38$ and $25$. It becomes strictly better than $2\log_2 t$ from $t \ge 2^{16}$ onwards.
+A generic number $t$ with one interior occurrence $\binom{n}{k}$ has four positions: $\binom{t}{1}$, $\binom{t}{t-1}$, $\binom{n}{k}$, $\binom{n}{n-k}$. To get six, you need a *second* interior occurrence. The cheapest way for nature to arrange one is an **adjacent repetition**: a value that reappears one row higher and one column to the right,
+$$
+\binom{n}{k} = \binom{n-1}{k+1}.
+$$
+The first instance is $\binom{15}{5} = \binom{14}{6} = 3003$ — the very coincidence that makes $3003$ the record holder. Any adjacent repetition instantly yields six positions: the two outer ones, the mirror pair in row $n$, and the mirror pair in row $n-1$.
 
-## The Fibonacci mechanism — and a complete answer
+Which pairs $(n,k)$ do this? Clearing factorials in the two Pascal recurrences turns the question into pure arithmetic:
 
-Now for the jewel.
+> **Dictionary.** For $1 \le k$ and $k+2 \le n$,
+> $$\binom{n}{k} = \binom{n-1}{k+1} \iff n(k+1) = (n-k)(n-k-1).$$
 
-Where do the numbers with six occurrences come from? One prolific mechanism is an **adjacent repetition**: a value that reappears one row higher and one column to the right,
-$$\binom{n}{k} = \binom{n-1}{k+1}.$$
-Because of the mirror, such a coincidence produces *four* interior positions instead of two, plus the two border copies: multiplicity at least six. The classic example is
-$$\binom{15}{5} = \binom{14}{6} = 3003,$$
-which is exactly why $3003$ is the champion — it stacks an adjacent repetition on top of a triangular coincidence $3003 = \binom{78}{2}$.
+Now substitute. Write $u = n-k$ for the "gap", and set $N = 5n+1$, $U = 5u-3$. The quadratic condition becomes
+$$
+N^2 - NU - U^2 = -5 ,
+$$
+the **norm form of the golden ratio field** $\mathbb{Q}(\sqrt5)$ — the very same form whose $\pm 1$ solutions are consecutive Fibonacci numbers. And its $\pm 5$ solutions can be classified outright, by an old and completely elementary trick: the descent $(x,y) \mapsto (y, x-y)$ sends a solution to a solution, flips the sign of the form, and strictly decreases the first coordinate. Run it downhill and every solution funnels to the same bottom, $(x,y) = (1,2) = (L_1, L_0)$. Run it uphill and you generate the Lucas numbers $2, 1, 3, 4, 7, 11, 18, 29, 47, 76, 123, \dots$ (same rule as Fibonacci, different start).
 
-Singmaster observed that adjacent repetitions come in an infinite Fibonacci-indexed family:
-$$n = F_{2i+4}F_{2i+5}, \qquad k = F_{2i+2}F_{2i+5},$$
-giving $(n,k) = (15,5), (104,39), (714,272), (4895, 1869), (33552, 12815), \dots$ — so there are infinitely many numbers of multiplicity at least six.
+> **Theorem (all solutions of the norm form).** Every pair of natural numbers with $x^2 - xy - y^2 = \pm 5$ is a pair of consecutive Lucas numbers $(L_{i+1}, L_i)$, with the sign alternating: $L_{i+1}^2 - L_{i+1}L_i - L_i^2 = 5(-1)^{i+1}$.
 
-The natural question is whether these are *all* of them. The answer is yes, and here is the argument.
+A little congruence bookkeeping — the Lucas sequence is $2, 1, 3, 4$ modulo $5$ with period four, so the divisibility conditions hidden in $N = 5n+1$ and $U = 5u-3$ select exactly one index in four — completes the classification:
 
-**Step 1: clear the factorials.** For $1 \le k$ and $k+2 \le n$,
-$$\binom{n}{k} = \binom{n-1}{k+1} \iff n(k+1) = (n-k)(n-k-1).$$
-The combinatorial coincidence is a quadratic Diophantine equation.
+> **Classification of adjacent repetitions.** For $1 \le k$ and $k+2 \le n$, the identity $\binom{n}{k} = \binom{n-1}{k+1}$ holds **if and only if**
+> $$5n+1 = L_{4j+9} \quad\text{and}\quad 5(n-k) = L_{4j+8}+3$$
+> for some $j \ge 0$.
 
-**Step 2: complete the square.** Write $u = n-k$ for the "gap". The substitution $N = 5n+1$, $U = 5u-3$ turns the equation into
-$$N^2 - NU - U^2 = -5.$$
-This is a norm-form equation for the quadratic field $\mathbb{Q}(\sqrt 5)$ — the home field of the golden ratio.
+Every index $j$ really does produce a solution, so there are infinitely many of them, and their values are unbounded. That is the classical source of infinitely many numbers occurring at least six times.
 
-**Step 3: descend.** All natural-number solutions of $x^2 - xy - y^2 = \pm 5$ can be found by an unconditional Vieta-style descent $(x,y) \mapsto (y, x-y)$, which flips the sign of the form and strictly decreases the solution. The descent bottoms out at $(x,y) = (1,2) = (L_1, L_0)$. Therefore **every solution is a pair of consecutive Lucas numbers**
-$$L_0, L_1, L_2, \dots = 2, 1, 3, 4, 7, 11, 18, 29, 47, 76, \dots$$
-A period-four congruence modulo $5$ then selects which indices are admissible.
+The Lucas description is complete, but there is a second, older-looking face of the same family, and the two can be identified exactly. The bridge is **Cassini's identity**, the little gem $F_{a+1}^2 - F_aF_{a+2} = (-1)^a$, which drives a simultaneous induction proving the dictionary
+$$
+L_{2a} = 5F_a^2 + 2(-1)^a, \qquad L_{2a+1} = 5F_aF_{a+1} + (-1)^a .
+$$
+Setting $a = 2i+4$ converts the Lucas parametrisation into a Fibonacci one, and the classification takes its final, memorable form:
 
-**Step 4: read off the classification.**
+> **The Fibonacci family is complete.** For $1 \le k$ and $k+2 \le n$,
+> $$\binom{n}{k} = \binom{n-1}{k+1} \iff (n,k) = \big(F_{2i+4}F_{2i+5},\; F_{2i+2}F_{2i+5}\big) \text{ for some } i \ge 0 .$$
 
-**Classification of Adjacent Repetitions (Lucas form).** *For $1 \le k$ and $k+2 \le n$, the identity $\binom{n}{k} = \binom{n-1}{k+1}$ holds if and only if there is an index $j$ with*
-$$5n + 1 = L_{4j+9} \quad\text{and}\quad 5(n-k) = L_{4j+8} + 3.$$
+There are no others. None. The complete list of adjacent repetitions in Pascal's triangle begins
+$$
+(15,5),\quad (104,39),\quad (714,272),\quad (4895,1869),\quad \dots
+$$
+and continues forever along the Fibonacci numbers and nowhere else. The classical family, known since Singmaster's era to *contain* solutions, is now known to contain *all* of them.
 
-Check $j = 0$: $L_9 = 76 = 5\cdot 15 + 1$ and $L_8 + 3 = 47 + 3 = 50 = 5 \cdot 10$, giving $(n,k) = (15,5)$. Check $j=1$: $L_{13} = 521 = 5 \cdot 104 + 1$, giving $(104, 39)$.
+Two corollaries are worth stating. First, the column of an adjacent repetition is a fixed proportion of its row: the Diophantine equation forces $n < 4(k+1)$, and asymptotically $k/n \to (3-\sqrt5)/2 \approx 0.382$ — the golden ratio, again, controlling where in the triangle these coincidences may sit. Second, and this explains a famous empirical fact: **only the first member of the family has a value below a million**, and that value is $\binom{15}{5} = 3003$. The next one, $\binom{104}{39}$, has $29$ digits. That is the structural reason $3003$ reigns as the most repetitive number below $10^{6}$ — not luck, but the exponential growth of the Fibonacci numbers.
 
-**Step 5: identify the two descriptions.** The Lucas answer and Singmaster's Fibonacci answer must be the same list — but proving it requires a dictionary between the two sequences:
-$$L_{2a} = 5F_a^2 + 2(-1)^a, \qquad L_{2a+1} = 5F_aF_{a+1} + (-1)^a.$$
-These two identities are proved by a single simultaneous induction whose inductive step is precisely **Cassini's identity**
-$$F_{a+1}^2 - F_a F_{a+2} = (-1)^a,$$
-the 1680 observation that consecutive Fibonacci numbers miss being a perfect rectangle by exactly one. (It is the identity behind the famous "missing square" dissection puzzle, where an $8\times 8$ square is cut and reassembled into a $5 \times 13$ rectangle, gaining a unit of area out of nowhere: $8^2 = 64$, $5 \cdot 13 = 65$.)
+---
 
-Feeding $a = 2i+4$ into the dictionary converts the Lucas certificate into the Fibonacci one, and we obtain:
+## What is still missing
 
-**Completeness of the Fibonacci Family.** *For $1 \le k$ and $k+2 \le n$,*
-$$\binom{n}{k} = \binom{n-1}{k+1} \iff (n,k) = \big(F_{2i+4}F_{2i+5},\; F_{2i+2}F_{2i+5}\big) \text{ for some } i \ge 0.$$
+Put the pieces together and the picture is sharp everywhere except at the one point that matters. We know almost every number occurs exactly twice. We know that occurring often forces extreme smoothness, at every level of an infinite hierarchy. We know the smallest number of each small multiplicity — $6, 10, 120, 3003$ — and we know the *entire* infinite family of adjacent repetitions that manufactures multiplicity six.
 
-So the complete list of adjacent repetitions in Pascal's triangle is
-$$(15,5),\ (104,39),\ (714,272),\ (4895,1869),\ (33552,12815),\ \dots$$
-and nothing else, ever. In particular $(15,5)$ and $(104,39)$ are the only ones with $n \le 700$, and — a striking corollary — **$3003$ is the only value below one million produced by an adjacent repetition**: the next one, $\binom{104}{39}$, already has $29$ digits.
+What we do not know is a constant. Singmaster's conjecture — that $N(t)$ is bounded — remains open, and so do the sharper folklore versions: that no number occurs exactly five or exactly seven times, and that $3003$ is the unique number occurring eight times.
 
-## What remains
+The odd multiplicities have a pretty reduction. Occurrences come in mirror pairs $\binom{n}{k} = \binom{n}{n-k}$, so
+$$
+N(t) = 2 + 2\cdot\#\{\text{left-interior occurrences}\} + \#\{\text{central occurrences}\},
+$$
+and a value can be central — $t = \binom{2c}{c}$ — for at most one $c$. Odd multiplicity therefore *requires* $t$ to be a central binomial coefficient. "No number occurs exactly five times" is thus equivalent to: no central binomial coefficient $\binom{2c}{c}$ has exactly one further non-central interior occurrence. That is a Diophantine question of exactly the same shape as the one the golden-ratio descent solved completely — which is precisely what makes it look attackable.
 
-The pieces now assembled look tantalisingly close to a proof of Singmaster's conjecture. On one side, high multiplicity forces extreme smoothness: $N(t) \ge 2m+2$ makes $t$ essentially $t^{1/(m+1)}$-smooth. On the other, a number built entirely out of primes below $t^{1/(m+1)}$ needs *many* prime factors — of order $\log t / \log\log t$ of them — and each of those factors imposes its own constraint. Closing the gap between "too smooth to exist" and "exists" is the remaining challenge, and it would deliver the conjectured bound $N(t) \le 8$ with equality only at $t = 3003$.
+And for the grand conjecture, the shape of an eventual proof is visible: multiplicity at least $2m+2$ forces $\binom{p}{m+1} \le t$ for every prime $p \mid t$, so $t$ must be $t^{1/(m+1)}$-smooth; but building an integer of size $t$ out of primes below $t^{1/(m+1)}$ requires at least about $\log t/\log\log t$ prime factors, and each of them costs size. Somewhere in the collision between "smooth enough" and "large enough" lies the constant Singmaster asked for in 1971.
 
-Meanwhile the odd multiplicities have been reduced to a single clean question. Since $N(t)$ is even unless $t$ is a central binomial coefficient, ruling out multiplicity $5$ and $7$ amounts to showing that no central binomial coefficient $\binom{2c}{c}$ has two (or three) further non-central representations. That is a Diophantine problem of exactly the same species as the adjacent-repetition equation — the one that yielded completely to descent and Lucas numbers. The template exists. Someone should run it.
-
-Pascal's triangle is the friendliest object in mathematics: a child can build it. Yet ask it a simple question — *how often does a given number appear?* — and it answers with quadratic fields, Fibonacci recursions, Cassini's identity, and a conjecture that has stood since 1971. That is the joy of it. The triangle is infinite; the numbers in it are lonely; and $3003$, which manages to be a border number, a triangular number, a tetrahedral-adjacent number, and the smallest number ever to appear eight times, remains, so far as anyone knows, entirely alone at the top.
+Until someone finds it, the triangle keeps its small secret: a number chosen at random appears twice, a rare number appears three, four or six times, exactly one known number appears eight times — and five and seven, so far as anyone can tell, never happen at all.
