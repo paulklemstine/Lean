@@ -3815,17 +3815,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8bf8084",
     "description": "Formalize Lob's theorem as a fixed-point result: if PA proves \u25a1A \u2192 A then PA proves A. Bridge this to category theory: the modal logic GL (Godel-Lob) is the internal logic of the category of provability predicates. Prove that Solovay's completeness theorem for GL follows from the diagonal lemma.",
     "domains": [
       "Bridges",
       "Logic"
     ],
     "id": "seed_353",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bridge: Logic of Provability and Fixed Points in Arithmetic"
   },
