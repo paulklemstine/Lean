@@ -1801,15 +1801,15 @@ Research mode: {concept.research_mode}
                     job.status = "idle_pending"
                     completed.append(job)
                 elif status == "RUNNING":
-                    # 1-hour stall finish handler:
-                    # If a job has been running for >= 1 hour (3600s), call ask("finish") on Aristotle,
+                    # 4-hour stall finish handler:
+                    # If a job has been running for >= 4 hours (14400s), call ask("finish") on Aristotle,
                     # mark the job as completed, and process research package files like a finished job.
                     age_seconds = (now - job.dispatch_time) if getattr(job, "dispatch_time", None) else 0.0
                     age_min = age_seconds / 60.0
                     last_cont = getattr(job, "last_stall_continue_time", 0.0)
 
-                    if age_seconds >= 3600.0 and (now - last_cont) >= 3600.0:
-                        print(f"[Poll] {pid[:8]} STALL DETECTED: RUNNING for {age_min:.0f}min (>= 1h) — injecting 'finish' instruction and marking completed")
+                    if age_seconds >= 14400.0 and (now - last_cont) >= 14400.0:
+                        print(f"[Poll] {pid[:8]} STALL DETECTED: RUNNING for {age_min:.0f}min (>= 4h) — injecting 'finish' instruction and marking completed")
                         try:
                             if hasattr(self, "aristotle") and self.aristotle and hasattr(self.aristotle, "resume_project"):
                                 _tid = await self.aristotle.resume_project(pid, "finish")

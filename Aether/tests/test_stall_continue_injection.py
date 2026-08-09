@@ -10,7 +10,7 @@ from knowledge_extractor import KnowledgeExtractor, ResearchJob, ResearchConcept
 
 @pytest.mark.asyncio
 async def test_stall_finish_injection(tmp_path):
-    """Verify that jobs running for >= 1 hour get 'finish' injected via ask() and are completed."""
+    """Verify that jobs running for >= 4 hours get 'finish' injected via ask() and are completed."""
     config = {"autoresearch": {"max_inflight": 9}, "workspace": str(tmp_path)}
     extractor = KnowledgeExtractor(config=config)
     extractor.workspace = tmp_path
@@ -25,8 +25,8 @@ async def test_stall_finish_injection(tmp_path):
     mock_aristotle.resume_project = AsyncMock(return_value="task_cont_123")
     extractor.aristotle = mock_aristotle
 
-    # Create a job dispatched 65 minutes ago (3900 seconds)
-    dispatch_time = time.time() - 3900.0
+    # Create a job dispatched 4.5 hours ago (16200 seconds)
+    dispatch_time = time.time() - 16200.0
     job = ResearchJob(
         job_id="test_stalled_job",
         cycle_n=1,
