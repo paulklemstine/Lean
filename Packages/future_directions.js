@@ -1503,7 +1503,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
   {
-    "consumed_by_exp_id": "d72ad94a",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
       "Physics",
@@ -1511,11 +1511,10 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "seed_102",
-    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -2530,7 +2529,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "702ab564",
     "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
     "domains": [
       "Tropical",
@@ -2538,10 +2537,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_050",
+    "phase": "A",
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tropical Satake Isomorphism for GL_n"
   },
