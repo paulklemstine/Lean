@@ -1912,7 +1912,7 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "push_1a03af4c_793f10c7",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.88657,
     "research_mode": "team",
     "source_exp_id": "1a03af4c",
@@ -11810,16 +11810,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "edb06f42",
     "description": "Cycle 50f62832 (Q=0.680) proved 11 theorems in Bridges but left 13 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Map prime numbers to harmonic overtones using the Riemann zeta function's non-trivial zeros. Define: the 'harmonic' of a number n is the sum of 1/\u03c1 for each zero \u03c1 with |Im(\u03c1)| \u2264 n. Prove: the harmoni",
     "domains": [
       "Bridges"
     ],
     "id": "sorry_fill_50f62832_62fb1d41",
+    "phase": "A",
     "priority_score": 0.7300000000000001,
     "research_mode": "team",
     "source_exp_id": "50f62832",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T09:41:43.432388+00:00",
     "title": "Close Proofs: Speculative: Number Theory as Music Theory"
   },
