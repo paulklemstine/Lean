@@ -585,22 +585,32 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
     novelty_slots: number of dispatch slots reserved for novelty/wild directions
     """
-    # 0. Server-side capacity check: query Aristotle for real active job count.
-    # The local inflight_jobs.json can be stale (e.g. after crash, or when CI
-    # runs on a different machine).  The server count is the ground truth.
+    # 1. Poll inflight jobs first to update completed/IDLE jobs and refresh local status
+    try:
+        completed_jobs = await extractor.poll_inflight_jobs()
+    except Exception as poll_e:
+        print(f"[Tick] Error polling inflight jobs: {poll_e}")
+        completed_jobs = []
+
+    # 2. Ground-truth capacity check: query Aristotle server for active job count
     server_count_at_start = await _safe_get_active_jobs_count(extractor.aristotle)
     local_count_at_start = extractor._count_inflight_dispatched()
-    effective_count = max(local_count_at_start, server_count_at_start) if server_count_at_start >= 0 else local_count_at_start
+    effective_count = server_count_at_start if server_count_at_start >= 0 else local_count_at_start
+
+    queued_count = len([
+        j for j in extractor.inflight.values()
+        if getattr(j, "status", None) in ("dispatch_queued", "retry_queued", "queued")
+    ])
+
+    print(f"[Tick] Job memory: {len(extractor.inflight)} total jobs tracked ({effective_count} active on Aristotle server, {queued_count} queued locally)")
+
     if effective_count > max_inflight:
         print(f"[Guard] WARNING: {effective_count} active jobs detected (local={local_count_at_start}, "
               f"server={server_count_at_start}) exceeds max_inflight={max_inflight}. "
-              f"Will poll/integrate but skip ALL new dispatching this tick.")
+              f"Will integrate completed jobs but skip ALL new dispatching this tick.")
     elif server_count_at_start >= 0 and server_count_at_start != local_count_at_start:
-        print(f"[Guard] Local tracking ({local_count_at_start}) differs from server ({server_count_at_start}); "
-              f"using max={effective_count} for capacity decisions")
-
-    # 1. Poll inflight jobs
-
+        print(f"[Guard] Local tracking ({local_count_at_start}) synced with server ({server_count_at_start}); "
+              f"using server_active={effective_count} for capacity decisions")
 
     # Recover stale in_progress directions (e.g., from crashed ticks)
     from research_memory import FutureDirectionsManager
@@ -673,13 +683,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             fd_manager._save()
             print(f"[Tick] Auto-refilled {added} novelty directions (was {available_novelty})")
 
-    inflight_count = len(extractor.inflight)
-    print(f"[Tick] {inflight_count} inflight jobs")
-
-    completed_jobs = []
-    if inflight_count > 0:
-        completed_jobs = await extractor.poll_all()
-        print(f"[Tick] {len(completed_jobs)} jobs completed since last tick")
+    print(f"[Tick] {len(completed_jobs)} jobs completed since last tick")
 
     # Recover already-completed jobs that weren't integrated (e.g., after restart)
     recovered = [j for j in extractor.inflight.values()
