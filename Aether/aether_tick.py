@@ -587,7 +587,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     """
     # 1. Poll inflight jobs first to update completed/IDLE jobs and refresh local status
     try:
-        completed_jobs = await extractor.poll_inflight_jobs()
+        completed_jobs = await extractor.poll_all()
     except Exception as poll_e:
         print(f"[Tick] Error polling inflight jobs: {poll_e}")
         completed_jobs = []
