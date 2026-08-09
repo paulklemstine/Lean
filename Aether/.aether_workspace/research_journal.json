@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "06b881ae",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n## Scope and computational-evidence justification\n\nA separate computational-evidence stage was not used. The results developed here are exact\nsymbolic identities over the real and",
-      "quality_score": 0.78433,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-08-03T04:05:34",
-      "title": "Inverse Stereographic Neural Field Theory"
-    },
-    {
       "cycle_id": "ab554343",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause–effect repertoires, and divergence-based informati",
@@ -499,19 +489,19 @@
       "theorem_count": 85,
       "timestamp": "2026-08-09T15:01:26",
       "title": "occurrences of certain numbers in pascals triangle"
+    },
+    {
+      "cycle_id": "08217b91",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
+      "quality_score": 0.746255,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-08-09T15:02:31",
+      "title": "occurrences of certain numbers in pascals triangle"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0fbfba35",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nThe following concrete conjectures isolate extensions not established by the present formalization.\n\n1. **Full analytic leading-pole theorem.** For every irreducible crystallograp",
-      "quality_score": 0.7781,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-31T10:11:09",
-      "title": "ArXiv paper: A universal leading-residue formula for Witten zeta functions"
-    },
     {
       "cycle_id": "9d058f1b",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 85,
       "timestamp": "2026-08-09T15:01:26",
       "title": "occurrences of certain numbers in pascals triangle"
+    },
+    {
+      "cycle_id": "08217b91",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
+      "quality_score": 0.746255,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-08-09T15:02:31",
+      "title": "occurrences of certain numbers in pascals triangle"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "413bc2f0",
-      "domain": "Logic",
-      "name": "sgn_neg",
-      "quality": 0.7947599999999999
-    },
-    {
-      "cycle_id": "413bc2f0",
-      "domain": "Logic",
-      "name": "abs_sgn",
-      "quality": 0.7947599999999999
-    },
-    {
-      "cycle_id": "413bc2f0",
-      "domain": "Logic",
-      "name": "sgn_sq",
-      "quality": 0.7947599999999999
-    },
     {
       "cycle_id": "713730e2",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "luc_two_mul",
       "quality": 0.748155
+    },
+    {
+      "cycle_id": "08217b91",
+      "domain": "Novelty",
+      "name": "fib_cassini",
+      "quality": 0.746255
+    },
+    {
+      "cycle_id": "08217b91",
+      "domain": "Novelty",
+      "name": "luc_two_mul_and_succ",
+      "quality": 0.746255
+    },
+    {
+      "cycle_id": "08217b91",
+      "domain": "Novelty",
+      "name": "luc_two_mul",
+      "quality": 0.746255
     }
   ],
-  "last_updated": "2026-08-09T15:01:26",
+  "last_updated": "2026-08-09T15:02:31",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "43d8701a",
-        "quality": 0.6859624765478425,
-        "theorems": 1599,
-        "title": "Arithmetized QFT reflection.: Construct an explicit recursively enumerable"
-      },
-      {
         "cycle_id": "b95b0e68",
         "quality": 0.6609054304347827,
         "theorems": 116,
@@ -3635,6 +3629,12 @@
       {
         "cycle_id": "08217b91",
         "quality": 0.748155,
+        "theorems": 85,
+        "title": "occurrences of certain numbers in pascals triangle"
+      },
+      {
+        "cycle_id": "08217b91",
+        "quality": 0.746255,
         "theorems": 85,
         "title": "occurrences of certain numbers in pascals triangle"
       }
