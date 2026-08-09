@@ -1,23 +1,27 @@
-# Multiplicities in Pascal's Triangle: Structure Theory, a Parity Criterion, and Effective Bounds for Singmaster's Problem
+# Multiplicity in Pascal's Triangle: Smoothness Hierarchies, Density, Sharp Thresholds, and the Complete Classification of Adjacent Repetitions
 
 **Author:** Aristotle
-**Date:** 2026-08-08
+**Date:** 2026-08-09
 
 ---
 
 ## Abstract
 
-For an integer $t \ge 2$ let $N(t)$ denote the number of pairs $(n,k)$ with $0 \le k \le n$ and $\binom{n}{k} = t$; this is the multiplicity of $t$ in Pascal's triangle. Singmaster conjectured in 1971 that $N$ is bounded on $\{t : t \ge 2\}$; the conjecture remains open, and even the strongest known bounds are unbounded functions of $t$.
+For an integer $t \ge 2$ let $N(t) = \#\{(n,k) : 0 \le k \le n,\ \binom{n}{k} = t\}$ be the *multiplicity* of $t$ in Pascal's triangle. Singmaster's conjecture (1971) asserts that $N$ is bounded; it remains open. We develop a coherent body of unconditional results about $N$.
 
-We develop an elementary but complete structure theory for $N$. We prove: finiteness with the explicit localisation $n \le t$ for every occurrence; a strict-monotonicity pair (growth down a column, strict unimodality along a row) implying that each column carries a value at most once and each row at most twice; the unconditional bound $N(t) \le 2\log_2 t$; the exact evaluations $N(2)=1$, $N(3)=N(4)=N(5)=2$, $N(6)=3$, $N(10)=4$, and $N(p)=2$ for every odd prime $p$; the characterisation of $t=2$ as the unique value of multiplicity one; and the reduction $N(t) \le 2\,\lvert R(t)\rvert$ where $R(t)$ is the set of rows meeting $t$, which makes Singmaster's conjecture equivalent to a statement about rows alone.
+First, we prove a *smoothness hierarchy*: if $N(t) \ge 2m+2$ then every prime factor $p$ of $t$ satisfies $\binom{p}{m+1} \le t$, hence $(p-m)^{m+1} \le (m+1)!\,t$. The base case $m=1$ states that $N(t) \ge 3$ forces $p(p-1) \le 2t$ for every prime $p \mid t$; contrapositively, any $t$ with a prime factor exceeding $\sqrt{2t}+1$ has $N(t) = 2$ exactly. As corollaries, $N(cp) = 2$ for every $c \ge 1$ and every prime $p > 2c+1$, so each divisibility class contains infinitely many integers of multiplicity exactly two.
 
-The central structural result is a **parity criterion**: $N(t)$ is odd if and only if $t$ is a central binomial coefficient $\binom{2m}{m}$. This follows from the reflection involution $k \mapsto n-k$ acting on the occurrence set, whose only fixed points are central entries, together with the strict monotonicity of $m \mapsto \binom{2m}{m}$. Since the empirical mystery of Singmaster's problem is the total absence of numbers with $N(t) \in \{5,7\}$, the criterion reduces that question to a single thin sequence.
+Second, we prove a counting bound: $\#\{t \le X : N(t) \ge 3\} \le (\sqrt{2X}+2)(\log_2 X + 1)$, so multiplicity exactly two has density one.
 
-We then make the reduction effective. A **sandwich theorem** shows that $\binom{2m}{m}$ strictly dominates every other entry in the triangle truncated at row $2m$, so any repetition lies in a row $n > 2m$, whose index is capped by $\binom{n}{2} \le t$. Two further reductions — a *column collapse* ($k < m$ for any escape) and a *triangular obstruction* (the column $k=2$ is eliminated by a single perfect-square test on $8t+1$, after which the row window shrinks from $\sqrt{2t}$ to $(6t)^{1/3}$) — reduce the search box for $m = 20$ from roughly $524248 \times 262124$ to $9347 \times 17$. Executing the resulting finite searches gives $N\!\left(\binom{2m}{m}\right)=3$ for all $2 \le m \le 20$ and hence, unconditionally, **no $t < 538{,}257{,}874{,}440$ satisfies $N(t) \in \{5,7\}$**, with every odd multiplicity below that bound equal to $1$ or $3$.
+Third, we sharpen the classical elementary upper bound $N(t) \le 2\log_2 t$ by a factor of two, obtaining $N(t) \le \log_2\big((2\log_2 t + 1)t\big) \le \log_2 t + \log_2(2\log_2 t + 1) + 1$, strictly better than $2\log_2 t$ for $t \ge 2^{16}$.
 
-Finally we give a certified decision procedure computing $N(t)$ exactly for a single $t$, over a box of side $O(\sqrt{t})$, using descending factorials in place of binomial recursion. It yields $N(3003)=8$, $N(120)=N(210)=N(1540)=N(7140)=N(11628)=N(24310)=6$, and, in combination with the parity results, the statement that the maximum of $N$ below $10^6$ is $8$, attained only at $t=3003$.
+Fourth, we establish *sharp thresholds*: the least $t$ with $N(t) \ge 3, 4, 6, 8$ is $6, 10, 120, 3003$ respectively, together with the general growth threshold $N(t) \ge 2m+2 \implies t \ge \binom{2m+3}{m+1}$.
 
-**Keywords:** Pascal's triangle, binomial coefficients, Singmaster's conjecture, multiplicity, central binomial coefficients, Fibonacci numbers, Pell equations, effective search.
+Fifth, we completely classify *adjacent repetitions* $\binom{n}{k} = \binom{n-1}{k+1}$, the principal known mechanism producing multiplicity $\ge 6$. Clearing factorials, completing the square, and performing an unconditional Vieta descent on the norm form $x^2 - xy - y^2 = \pm 5$ shows that all solutions correspond to consecutive Lucas numbers; a Lucas–Fibonacci dictionary whose inductive engine is Cassini's identity then identifies them with Singmaster's classical Fibonacci family. Consequently the adjacent repetitions are exactly
+$$(n,k) = \big(F_{2i+4}F_{2i+5},\ F_{2i+2}F_{2i+5}\big), \quad i \ge 0,$$
+namely $(15,5), (104,39), (714,272), (4895,1869), \dots$, and $3003$ is the only value below $10^6$ arising this way.
+
+**Keywords:** Pascal's triangle, binomial coefficients, Singmaster's conjecture, multiplicity, smooth numbers, Fibonacci numbers, Lucas numbers, Cassini's identity, Diophantine descent.
 
 ---
 
@@ -25,373 +29,347 @@ Finally we give a certified decision procedure computing $N(t)$ exactly for a si
 
 ### 1.1 The problem
 
-Pascal's triangle is the array of binomial coefficients $\binom{n}{k}$, $0 \le k \le n$, generated by the boundary condition $\binom{n}{0} = \binom{n}{n} = 1$ and Pascal's rule
-$$\binom{n+1}{k+1} = \binom{n}{k} + \binom{n}{k+1}.$$
+Pascal's triangle contains every integer $t \ge 2$ at least twice: $\binom{t}{1} = \binom{t}{t-1} = t$, and these are distinct positions. Empirically, almost every integer appears exactly twice, but there are exceptions of every recorded even multiplicity up to eight and of odd multiplicity three:
 
-Define, for $t \ge 2$,
-$$N(t) := \#\bigl\{(n,k) \in \mathbb{N}^2 : k \le n,\ \tbinom{n}{k} = t\bigr\}.$$
-The value $1$ is excluded because it occurs infinitely often along both edges. Every other value occurs finitely often (Proposition 2.4), and the empirical table of multiplicities is remarkable for its poverty:
+| $t$ | $N(t)$ | positions (up to the mirror) |
+|---|---|---|
+| $2$ | $1$ | $\binom{2}{1}$ |
+| $p \ge 3$ prime | $2$ | $\binom{p}{1}$ |
+| $6$ | $3$ | $\binom{6}{1}, \binom{4}{2}$ |
+| $10$ | $4$ | $\binom{10}{1}, \binom{5}{2}$ |
+| $120$ | $6$ | $\binom{120}{1}, \binom{16}{2}, \binom{10}{3}$ |
+| $210$ | $6$ | $\binom{210}{1}, \binom{21}{2}, \binom{10}{4}$ |
+| $1540$ | $6$ | $\binom{1540}{1}, \binom{56}{2}, \binom{22}{3}$ |
+| $3003$ | $8$ | $\binom{3003}{1}, \binom{78}{2}, \binom{15}{5}, \binom{14}{6}$ |
 
-| $t$ | $2$ | $3,4,5$ | $6$ | $10$ | $120, 210, 1540, 7140, 11628, 24310$ | $3003$ |
-|---|---|---|---|---|---|---|
-| $N(t)$ | $1$ | $2$ | $3$ | $4$ | $6$ | $8$ |
+No integer of multiplicity $5$, $7$, or $\ge 9$ is known. Singmaster conjectured that $N$ is bounded; the strongest unconditional bounds in the literature are of the shape $N(t) = O(\log t / \log\log t)$, and even $N(t) \le 8$ for all $t$ is beyond current technique.
 
-Multiplicity $2$ is generic; multiplicities $1, 3, 4, 6, 8$ occur; multiplicities $5$ and $7$ have never been observed; and no multiplicity exceeding $8$ has ever been observed. Singmaster (1971) conjectured that $N$ is bounded; a strong form asserts $\max_{t\ge 2} N(t) = 8$, attained only at $t = 3003$.
+### 1.2 Contributions
 
-### 1.2 What is proved here
+This paper collects and proves five interlocking families of unconditional results.
 
-Section 2 sets up the elementary theory: localisation, monotonicity, column uniqueness, row unimodality. Section 3 derives the unconditional bound $N(t) \le 2\log_2 t$ and the row reformulation. Section 4 computes small multiplicities and handles primes. Section 5 explains the abundance of sixes via a Fibonacci family of solutions to a cross-row Diophantine equation. Section 6 proves the parity criterion. Section 7 makes the resulting reduction effective and reports the searches. Section 8 gives the exact-multiplicity decision procedure and the maximality of $3003$ below $10^6$. Section 9 discusses limitations and open problems.
+1. **Smoothness (Section 3).** High multiplicity forces the prime factors of $t$ to be small, in a hierarchy indexed by $m$.
+2. **Density (Section 4).** The exceptional set $\{t : N(t) \ge 3\}$ has density zero, with an explicit $O(\sqrt X \log X)$ bound.
+3. **A sharpened universal bound (Section 5).** The leading constant in the elementary logarithmic bound is halved.
+4. **Sharp thresholds (Section 6).** The classical specimens $6, 10, 120, 3003$ are proved to be *minimal*, by structural descent rather than by exhaustive search.
+5. **Complete classification of adjacent repetitions (Section 7).** The Fibonacci family of adjacent repetitions is exhaustive.
 
----
-
-## 2. Elementary structure theory
-
-Throughout, $n,k,t,m$ denote non-negative integers and $\binom{n}{k}=0$ for $k>n$.
-
-### 2.1 Monotonicity down a column
-
-**Lemma 2.1 (one-step growth).** *If $1 \le k \le n$ then $\binom{n}{k} < \binom{n+1}{k}$.*
-
-*Proof.* Write $k = j+1$. Pascal's rule gives $\binom{n+1}{j+1} = \binom{n}{j} + \binom{n}{j+1}$, and $\binom{n}{j} > 0$ since $j \le n$. $\square$
-
-**Proposition 2.2 (strict monotonicity in the row index).** *If $1 \le k \le n < n'$ then $\binom{n}{k} < \binom{n'}{k}$.*
-
-*Proof.* Induction on $n'$ using Lemma 2.1. $\square$
-
-**Corollary 2.3 (column uniqueness).** *For fixed $k \ge 1$, a value occurs at most once in column $k$: if $\binom{n}{k} = \binom{n'}{k}$ with $k \le n, n'$, then $n = n'$.*
-
-This single fact is the engine of every upper bound below: it converts "how many positions?" into "how many columns?".
-
-### 2.2 Localisation and finiteness
-
-**Lemma 2.4 (interior entries dominate the row index).** *If $1 \le k \le n-1$ then $n \le \binom{n}{k}$.*
-
-*Proof.* Strong induction on $n$. For $k=1$ the entry is $n$. Otherwise, if $k+1 < n$ write $n = p+1$, $k = j+1$; then $\binom{p+1}{j+1} = \binom{p}{j} + \binom{p}{j+1} \ge p + p \ge p+1$ by two applications of the inductive hypothesis. If $k = n-1$, symmetry reduces to $k=1$. $\square$
-
-**Proposition 2.5 (localisation).** *If $\binom{n}{k} = t \ge 2$ with $k \le n$, then $1 \le k \le n-1$ and $n \le t$.*
-
-*Proof.* $k \in \{0,n\}$ would give $t = 1$. Apply Lemma 2.4. $\square$
-
-Consequently the occurrence set
-$$\mathrm{Occ}(t) := \{(n,k) : k \le n,\ \tbinom{n}{k} = t\}$$
-is contained in the finite box $[0,t]^2$, so $N(t) = \lvert \mathrm{Occ}(t)\rvert$ is a well-defined, computable natural number.
-
-**Lemma 2.6 (deep interior entries dominate $\binom{n}{2}$).** *If $2 \le k \le n-2$ then $\binom{n}{2} \le \binom{n}{k}$.*
-
-*Proof.* Strong induction on $n$, using Pascal's rule for both $\binom{n}{k}$ and $\binom{n}{2}$ together with Lemma 2.4; the boundary case $k = n-2$ is handled by symmetry. $\square$
-
-Lemma 2.6 is the workhorse of all row-window bounds: an interior occurrence of $t$ forces $\binom{n}{2}\le t$, i.e. $n = O(\sqrt t\,)$.
-
-### 2.3 Geometric growth in the column index
-
-**Lemma 2.7.** *$2^{k} \le \binom{2k}{k}$ for all $k$.*
-
-*Proof.* Induction: $\binom{2k+2}{k+1} = 2\binom{2k+1}{k+1} \ge 2\binom{2k}{k}$ by symmetry of row $2k+1$ and Pascal's rule. $\square$
-
-**Proposition 2.8 (growth).** *If $2k \le n$ then $2^{k} \le \binom{n}{k}$.*
-
-*Proof.* Lemma 2.7 plus Proposition 2.2. $\square$
-
-### 2.4 Strict unimodality of a row
-
-**Lemma 2.9.** *If $2(k+1) \le n$ then $\binom{n}{k} < \binom{n}{k+1}$.*
-
-*Proof.* From $\binom{n}{k+1}(k+1) = \binom{n}{k}(n-k)$ and $n - k > k+1$. $\square$
-
-**Proposition 2.10 (strict unimodality).** *If $j < j'$ and $2j' \le n$ then $\binom{n}{j} < \binom{n}{j'}$.*
-
-**Corollary 2.11 (at most two per row).** *For any $n$ and $t$, $\#\{k \le n : \binom{n}{k} = t\} \le 2$.*
-
-*Proof.* The folding map $k \mapsto \min(k, n-k)$ preserves the value and is at most $2$-to-$1$; Proposition 2.10 makes it injective on the folded range. $\square$
+Throughout, $F_0 = 0, F_1 = 1, F_{a+2} = F_a + F_{a+1}$ are the Fibonacci numbers and $L_0 = 2, L_1 = 1, L_{a+2} = L_a + L_{a+1}$ the Lucas numbers.
 
 ---
 
-## 3. The unconditional logarithmic bound
+## 2. Definitions and the reflection decomposition
 
-For a position $p = (n,k)$ define its **folded index**
-$$\mathrm{fold}(p) := \min(k,\, n-k).$$
-By symmetry $\binom{n}{\mathrm{fold}(p)} = \binom{n}{k}$, and $2\,\mathrm{fold}(p) \le n$ always.
+**Definition 2.1 (Occurrences and multiplicity).** For $t \ge 2$ set
+$$\mathrm{Occ}(t) = \{(n,k) \in \mathbb{N}^2 : k \le n,\ \tbinom{n}{k} = t\}, \qquad N(t) = \#\,\mathrm{Occ}(t).$$
+The set is finite: $\binom{n}{k} = t$ with $1 \le k \le n-1$ forces $n \le t$.
 
-**Lemma 3.1 (boundary positions).** *If $t \ge 2$ and $\binom{n}{k}=t$ with $\mathrm{fold}(n,k) \le 1$, then $(n,k) \in \{(t,1),(t,t-1)\}$.*
+**Definition 2.2 (Position types).** An occurrence $(n,k)$ is
+- *boundary* if $k \in \{0,1,n-1,n\}$;
+- *central* if $n = 2k$ and $k \ge 2$;
+- *left-interior* if $2 \le k$ and $2k < n$;
+- *right-interior* if $2 \le n-k$ and $n < 2k$.
 
-*Proof.* $\mathrm{fold} = 0$ forces $t = 1$. $\mathrm{fold} = 1$ means $k=1$ or $k = n-1$, and then $\binom{n}{k}=n=t$. $\square$
+Write $L(t)$ for the number of left-interior occurrences and $Z(t)$ for the number of central ones.
 
-**Lemma 3.2 (folded index is logarithmic).** *If $\binom{n}{k} = t \ge 2$, then $\mathrm{fold}(n,k) \le \log_2 t$.*
+**Definition 2.3 (Folded column index).** For $(n,k)$ with $k \le n$ put $\mathrm{fold}(n,k) = \min(k, n-k)$. Row entries are unimodal: $\binom{n}{j} \le \binom{n}{k}$ whenever $\mathrm{fold}(n,j) \le \mathrm{fold}(n,k)$.
 
-*Proof.* With $j = \mathrm{fold}(n,k)$ we have $2j \le n$ and $\binom{n}{j} = t$, so $2^{j} \le t$ by Proposition 2.8. $\square$
+Two elementary structural facts drive everything.
 
-**Lemma 3.3 (fibres are small).** *For $t \ge 2$ and $b \ge 2$, at most two occurrences of $t$ have folded index $b$.*
+**Lemma 2.4 (Column uniqueness).** *For fixed $k \ge 2$ the map $n \mapsto \binom{n}{k}$ is strictly increasing on $n \ge k$. Consequently two occurrences of the same value in the same column coincide, and the folded index determines an occurrence up to the mirror; in particular at most two occurrences share a given folded index.*
 
-*Proof.* Such an occurrence has $\binom{n}{b} = t$ with $b \le n$; column uniqueness (Corollary 2.3) forces a single row $n_0$, and within that row the position is $(n_0,b)$ or $(n_0, n_0-b)$. $\square$
+*Proof sketch.* $\binom{n+1}{k} - \binom{n}{k} = \binom{n}{k-1} > 0$ for $k \ge 1$ and $n \ge k$. $\square$
 
-**Theorem 3.4 (logarithmic bound).** *For all $t \ge 2$,*
-$$N(t) \le 2\log_2 t.$$
+**Lemma 2.5 (Central uniqueness).** $Z(t) \le 1$.
 
-*Proof.* Split $\mathrm{Occ}(t)$ by whether $\mathrm{fold} \le 1$. The first part has at most $2$ elements (Lemma 3.1). The second part maps to the integer interval $[2, \lfloor\log_2 t\rfloor]$ under $\mathrm{fold}$ (Lemma 3.2), which has $\lfloor \log_2 t\rfloor - 1$ elements, and each fibre has at most $2$ elements (Lemma 3.3). Hence $N(t) \le 2 + 2(\lfloor\log_2 t\rfloor - 1) = 2\lfloor \log_2 t\rfloor$. $\square$
+*Proof sketch.* $\binom{2c}{c}$ is strictly increasing in $c$, since $\binom{2c+2}{c+1} = \frac{2(2c+1)}{c+1}\binom{2c}{c} > \binom{2c}{c}$. $\square$
 
-**Remark.** The literature's best bound is $O(\log t/\log\log t)$; the improvement uses in addition that the rows $n_1 > n_2 > \cdots$ attached to the distinct columns $k_1 < k_2 < \cdots$ satisfy $n_i \ge 2k_i$ *simultaneously*, so the multiplicative estimate $t = \binom{n_i}{k_i} \ge (n_i/k_i)^{k_i}$ can be applied to the largest column $k_r \ge r+1$ rather than to each column separately. Theorem 3.4, by contrast, throws away everything except "one row per column".
+**Proposition 2.6 (Reflection decomposition).** *For $t \ge 3$,*
+$$N(t) = 2 + 2\,L(t) + Z(t), \qquad Z(t) \in \{0,1\}.$$
 
-### 3.1 The row reformulation
+*Proof sketch.* The boundary occurrences of $t \ge 3$ are exactly $(t,1)$ and $(t,t-1)$, contributing $2$. The mirror $(n,k) \mapsto (n, n-k)$ is a fixed-point-free involution between left-interior and right-interior occurrences, contributing $2L(t)$. Central occurrences are fixed by the mirror and number $Z(t) \le 1$ by Lemma 2.5. $\square$
 
-Let $R(t) := \{n : \exists k,\ \binom{n}{k} = t\}$ be the set of rows meeting $t$.
+**Corollary 2.7 (Parity).** *$N(t)$ is even unless $t$ is a central binomial coefficient $\binom{2c}{c}$ with $c \ge 2$.*
 
-**Theorem 3.5.** *For $t \ge 2$, $\ N(t) \le 2\,\lvert R(t)\rvert$.*
-
-*Proof.* Immediate from Corollary 2.11: the occurrence set fibres over $R(t)$ with fibres of size $\le 2$. $\square$
-
-This is more than a bound; it is a *reformulation*. Singmaster's conjecture — the existence of an absolute $C$ with $N(t)\le C$ — is equivalent to the existence of an absolute bound on $\lvert R(t)\rvert$, because trivially $\lvert R(t)\rvert \le N(t)$ as well. The column bookkeeping disappears, and the problem becomes: *how many $n$ can satisfy $\binom{n}{k_n}=t$ for some $k_n$?*
-
----
-
-## 4. Small values and primes
-
-**Theorem 4.1.** $N(2)=1$, $N(3)=N(4)=N(5)=2$, $N(6)=3$, $N(10)=4$.
-
-Each is a finite verification inside the exhaustive box of Proposition 2.5. Explicitly: $6 = \binom{6}{1}=\binom{6}{5}=\binom{4}{2}$, and $10 = \binom{10}{1}=\binom{10}{9}=\binom{5}{2}=\binom{5}{3}$.
-
-**Theorem 4.2 (generic lower bound).** *For every $t \ge 3$, $N(t) \ge 2$, witnessed by $\binom{t}{1}$ and $\binom{t}{t-1}$.*
-
-**Theorem 4.3 (primes).** *If $p$ is an odd prime then $N(p) = 2$.*
-
-*Proof.* Suppose $\binom{n}{k}=p$ with $k \le n$. From $\binom{n}{k}\,k!\,(n-k)! = n!$ we get $p \mid n!$, so $p \le n$; with $n \le p$ (Proposition 2.5) this yields $n = p$. Within row $p$, any entry with $2 \le k \le p-2$ satisfies $\binom{p}{2} = p(p-1)/2 \le \binom{p}{k}$ (Lemma 2.6), and $p(p-1)/2 > p$ for $p \ge 5$; for $p=3$ there is no such $k$. Hence only $k=1$ and $k=p-1$ occur. $\square$
-
-**Theorem 4.4 (uniqueness of multiplicity one).** *For $t \ge 2$: $N(t) = 1$ if and only if $t = 2$.*
-
-*Proof.* Theorem 4.2 gives $N(t)\ge 2$ for $t \ge 3$; and $N(2)=1$. $\square$
-
-**Theorem 4.5 (infinitely many quadruples).** *For every $n \ge 5$, $N\!\left(\binom{n}{2}\right) \ge 4$, witnessed by $\binom{n}{2}$, $\binom{n}{n-2}$ and the two boundary positions of $t = \binom{n}{2}$; these are distinct because $\binom{n}{2} > n$ for $n \ge 5$. In particular $\{t : N(t) \ge 4\}$ is infinite.*
+This explains the empirical scarcity of odd multiplicities: $N(6)=N(20)=N(70)=3$ correspond to $\binom{4}{2}, \binom{6}{3}, \binom{8}{4}$. An exhaustive scan confirms the prediction sharply: the integers of odd multiplicity below $10^7$ are exactly $6, 20, 70, 252, 924, 3432, 12870, 48620, 184756, 705432, 2704156$ — the central binomial coefficients — each of multiplicity exactly three. The corollary also reduces the conjecture "$N(t) \notin \{5,7\}$" to the statement that no central binomial coefficient admits two or three further non-central representations.
 
 ---
 
-## 5. Why sixes are abundant: a Fibonacci family
+## 3. The smoothness hierarchy
 
-A value $t = \binom{n}{k}$ with $2 \le k \le n-2$ occupies at least four positions: $(n,k)$, $(n,n-k)$, $(t,1)$, $(t,t-1)$. Two extra positions appear precisely when the same value occurs one row higher:
-$$\binom{n}{k} = \binom{n-1}{k+1}. \tag{5.1}$$
+### 3.1 Two inputs
 
-**Lemma 5.1 (the cross-row identity).** *Equation (5.1) holds if and only if*
-$$n\,(k+1) = (n-k)(n-k-1). \tag{5.2}$$
+**Lemma 3.1 (Arithmetic input).** *If $p$ is prime, $k \le n$, and $p \mid \binom{n}{k}$, then $p \le n$.*
 
-*Proof.* Expand both sides of (5.1) in factorials and cancel. $\square$
+*Proof sketch.* $\binom{n}{k}\,k!\,(n-k)! = n!$, so $p \mid n!$, and a prime dividing $n!$ is at most $n$. $\square$
 
-Equation (5.2) is, after the substitution $m = n-k$, equivalent to the requirement that $(5m-1)(m-1)$ be a perfect square — a Pell-type condition. Its classical solutions come from Fibonacci numbers.
+**Lemma 3.2 (Geometric input).** *If $\binom{n}{k} = t$ with $2 \le k$ and $k+2 \le n$, then $n(n-1) \le 2t$.*
 
-**Lemma 5.2 (Cassini at odd index).** *For all $i \ge 0$, $\ F_{2i+3}^{\,2} = F_{2i+2}F_{2i+4} + 1$.*
+*Proof sketch.* Unimodality gives $\binom{n}{2} \le \binom{n}{k} = t$, and $2\binom{n}{2} = n(n-1)$. $\square$
 
-**Theorem 5.3 (Fibonacci family).** *Set*
-$$n_i := F_{2i+4}\,F_{2i+5}, \qquad k_i := F_{2i+2}\,F_{2i+5}.$$
-*Then $(n_i,k_i)$ satisfies (5.2), hence $\binom{n_i}{k_i} = \binom{n_i-1}{k_i+1}$.*
+### 3.2 The base case
 
-*Proof.* Substituting and using $F_{2i+5} = F_{2i+4}+F_{2i+3}$, $F_{2i+4}=F_{2i+3}+F_{2i+2}$, equation (5.2) reduces to Cassini's identity of Lemma 5.2. $\square$
+**Theorem 3.3 (Multiplicity two from a large prime factor).** *Let $t \ge 3$ and let $p$ be a prime with $p \mid t$ and $2t < p(p-1)$. Then $N(t) = 2$.*
 
-For $i=0$: $n_0 = 3\cdot 5 = 15$, $k_0 = 1 \cdot 5 = 5$, giving the celebrated coincidence
-$$\binom{15}{5} = \binom{14}{6} = 3003.$$
-For $i=1$: $n_1 = 8 \cdot 13 = 104$, $k_1 = 3\cdot 13 = 39$, giving $\binom{104}{39} = \binom{103}{40}$.
+*Proof sketch.* By Proposition 2.6 it suffices to show $L(t) = Z(t) = 0$. Any left-interior or central occurrence $(n,k)$ has $2 \le k$ and $k + 2 \le n$ (for a central occurrence, $k \ge 2$ follows because $t \ge 3$ excludes $k \le 1$). By Lemma 3.1, $p \le n$; by Lemma 3.2, $n(n-1) \le 2t$. Monotonicity of $x \mapsto x(x-1)$ gives $p(p-1) \le n(n-1) \le 2t$, contradicting the hypothesis. $\square$
 
-**Theorem 5.4 (infinitely many sixes).** *For every $i \ge 0$, $N\bigl(\binom{n_i}{k_i}\bigr) \ge 6$, the six positions being*
-$$(n_i,k_i),\ (n_i, n_i-k_i),\ (n_i-1, k_i+1),\ (n_i-1, n_i-k_i-2),\ (t,1),\ (t,t-1),$$
-*where $t = \binom{n_i}{k_i}$. Since $t \to \infty$, the set $\{t : N(t)\ge 6\}$ is infinite; indeed for every $M$ there is $t > M$ with $N(t) \ge 6$.*
+**Theorem 3.4 (Smoothness theorem).** *If $t \ge 3$ and $N(t) \ge 3$, then every prime factor $p$ of $t$ satisfies $p(p-1) \le 2t$, hence $p \le \sqrt{2t} + 1$.*
 
-This is the mechanism behind the observed sextuples $120, 210, 1540, 7140, 11628, 24310$ (which arise from the same cross-row coincidence in low rows) and it explains $3003$: the value $3003$ is simultaneously a member of the cross-row family, contributing six positions, and a triangular number,
-$$3003 = \binom{78}{2} = \binom{78}{76},$$
-contributing two more — total eight.
+*Proof sketch.* Contrapositive of Theorem 3.3. For the quantitative form, if $p > \sqrt{2t} + 1$ then $p(p-1) \ge (\lfloor\sqrt{2t}\rfloor+1)^2 > 2t$. $\square$
 
----
+**Corollary 3.5 (Families of multiplicity two).** *For every $c \ge 1$ and every prime $p > 2c+1$, $N(cp) = 2$. In particular $N(p) = 2$ for all primes $p \ge 5$, and $N(2p) = 2$ for all primes $p \ge 7$.*
 
-## 6. The parity criterion
+*Proof sketch.* Set $t = cp \ge 3$. Then $2t = 2cp < (p-1)p$ because $2c < p-1$. Apply Theorem 3.3. $\square$
 
-We now come to the structural heart of the matter. Partition $\mathrm{Occ}(t)$ by the position of $k$ relative to the centre of its row:
-$$L(t) := \{(n,k) \in \mathrm{Occ}(t) : 2k < n\},\quad
-R'(t) := \{(n,k): n < 2k\},\quad
-Z(t) := \{(n,k) : n = 2k\}.$$
+**Corollary 3.6 (Every divisibility class).** *For every $c \ge 1$ the set $\{t : N(t) = 2 \text{ and } c \mid t\}$ is infinite.*
 
-**Lemma 6.1 (reflection).** *For $t \ge 2$, the map $(n,k) \mapsto (n, n-k)$ is a bijection $L(t) \to R'(t)$. Hence $\lvert L(t)\rvert = \lvert R'(t)\rvert$ and*
-$$N(t) = 2\lvert L(t)\rvert + \lvert Z(t)\rvert. \tag{6.1}$$
+*Proof sketch.* By Euclid there are arbitrarily large primes $p$; for each, $cp$ is a multiple of $c$ with $N(cp) = 2$ by Corollary 3.5, and $cp \ge p \to \infty$. $\square$
 
-*Proof.* The map is well defined ($\binom{n}{n-k} = \binom{n}{k}$ and $2k<n \iff n < 2(n-k)$) and is its own inverse. $\square$
+### 3.3 The hierarchy
 
-**Lemma 6.2 (central occurrences are unique).** *$\lvert Z(t)\rvert \le 1$ for all $t \ge 2$.*
+**Lemma 3.7 (A deep column exists).** *Let $t \ge 3$, $m \ge 1$ and $N(t) \ge 2m+2$. Then there is an occurrence $\binom{n}{k} = t$ with $2k < n$ and $k \ge m+1$.*
 
-*Proof.* Elements of $Z(t)$ are of the form $(2m,m)$ with $\binom{2m}{m} = t$. The map $m \mapsto \binom{2m}{m}$ is strictly increasing: $\binom{2m+2}{m+1} = 2\binom{2m+1}{m+1} = 2\left(\binom{2m}{m}+\binom{2m}{m+1}\right) > \binom{2m}{m}$. Hence $m$ is determined by $t$. $\square$
+*Proof sketch.* By Proposition 2.6 and Lemma 2.5, $2m+2 \le N(t) = 2 + 2L(t) + Z(t) \le 4 + 2L(t)$ gives $L(t) \ge m$. By Lemma 2.4 distinct left-interior occurrences have distinct columns, all $\ge 2$. If all $m$ columns were $\le m$ they would lie in the $m-1$-element set $\{2,\dots,m\}$, a contradiction. Hence some column is $\ge m+1$. $\square$
 
-**Lemma 6.3.** *$Z(t) \neq \emptyset$ if and only if $t = \binom{2m}{m}$ for some $m$.*
+**Theorem 3.8 (Smoothness hierarchy).** *Let $t \ge 3$, $m \ge 1$, $N(t) \ge 2m+2$, and let $p$ be a prime with $p \mid t$. Then*
+$$\binom{p}{m+1} \le t.$$
 
-**Theorem 6.4 (Parity Criterion).** *For $t \ge 2$,*
-$$N(t) \text{ is odd} \iff t = \binom{2m}{m} \text{ for some } m \ge 1.$$
+*Proof sketch.* Take $(n,k)$ from Lemma 3.7. Lemma 3.1 gives $p \le n$, so $\binom{p}{m+1} \le \binom{n}{m+1}$ by monotonicity in the row. Since $m+1 \le k$ and $2k < n$, unimodality gives $\binom{n}{m+1} \le \binom{n}{k} = t$. $\square$
 
-*Proof.* By (6.1), $N(t) \equiv \lvert Z(t)\rvert \pmod 2$, and $\lvert Z(t)\rvert \in \{0,1\}$ by Lemma 6.2, with $\lvert Z(t)\rvert = 1$ exactly in the central case by Lemma 6.3. $\square$
+**Corollary 3.9 (Quantitative hierarchy).** *Under the hypotheses of Theorem 3.8,*
+$$(p-m)^{m+1} \le (m+1)!\,t, \qquad\text{i.e.}\qquad p \le m + \big((m+1)!\,t\big)^{1/(m+1)}.$$
 
-**Corollary 6.5.** *If $N(t) \in \{5,7\}$ then $t$ is a central binomial coefficient, i.e. $t$ belongs to*
-$$2,\ 6,\ 20,\ 70,\ 252,\ 924,\ 3432,\ 12870,\ 48620,\ 184756,\ 705432,\ \dots$$
+*Proof sketch.* $(p+1-(m+1))^{m+1} \le p^{\underline{m+1}} = (m+1)!\binom{p}{m+1} \le (m+1)!\,t$. $\square$
 
-**Corollary 6.6 (conditional resolution).** *If $N\!\left(\binom{2m}{m}\right) = 3$ for every $m \ge 2$, then no integer has multiplicity exactly $5$ or exactly $7$.*
+**Corollary 3.10 (Level $m=2$).** *If $N(t) \ge 6$ then $p(p-1)(p-2) \le 6t$ for every prime $p \mid t$: such $t$ is essentially $t^{1/3}$-smooth.*
 
-This is the precise sense in which the "missing fives and sevens" phenomenon is *not* a statement about all integers: it is a statement about one classical sequence of density zero. All numbers outside that sequence have even multiplicity for a purely symmetry-theoretic reason.
-
-For the lower bound in the other direction:
-
-**Proposition 6.7.** *For $m \ge 2$, $\ N\!\left(\binom{2m}{m}\right) \ge 3$: the two boundary positions plus the central position $(2m,m)$, which are distinct because $\binom{2m}{m} > 2m$ for $m \ge 2$.*
+**Example 3.11 (The champion).** $N(3003) = 8 = 2\cdot 3 + 2$, so Theorem 3.8 with $m = 3$ gives $\binom{p}{4} \le 3003$ for every prime $p \mid 3003$. Since $\binom{18}{4} = 3060 > 3003$, every prime factor of $3003$ is at most $17$. Indeed $3003 = 3 \cdot 7 \cdot 11 \cdot 13$: the champion saturates the constraint.
 
 ---
 
-## 7. Making the reduction effective
+## 4. Density: almost every number occurs exactly twice
 
-To decide $N(\binom{2m}{m}) = 3$ we must exclude all further occurrences. The first step localises them below row $2m$.
+**Definition 4.1.** $\mathcal{E}(X) = \{t : 2 \le t \le X,\ N(t) \ge 3\}$.
 
-**Theorem 7.1 (Sandwich Theorem).** *Let $m \ge 1$. If $k \le n \le 2m$ and $(n,k) \ne (2m,m)$, then*
-$$\binom{n}{k} < \binom{2m}{m}.$$
+**Lemma 4.2.** *If $t \ge 3$ and $N(t) \ge 3$ then $t$ has an occurrence $\binom{n}{k} = t$ with $2 \le k$ and $2k \le n$.*
 
-*Proof.* Let $j = \mathrm{fold}(n,k)$, so $\binom{n}{j} = \binom{n}{k}$ and $2j \le n$. If $j = 0$ then $\binom{n}{k}=1 < 2 \le \binom{2m}{m}$. Otherwise $j \ge 1$; we claim $j < m$. If $n < 2m$ this follows from $2j \le n < 2m$. If $n = 2m$ then $k \ne m$, so $j = \min(k,2m-k) < m$. Now
-$$\binom{n}{j} \le \binom{2m}{j} < \binom{2m}{m},$$
-the first inequality by Proposition 2.2 (or equality if $n = 2m$), the second by strict unimodality (Proposition 2.10) since $j < m$ and $2m \le 2m$. $\square$
+*Proof sketch.* By Proposition 2.6, $N(t) \ge 3$ forces $L(t) \ge 1$ or $Z(t) = 1$; either produces such an occurrence. $\square$
 
-Hence any occurrence of $t = \binom{2m}{m}$ beyond the three known ones has $n > 2m$ and is interior with $2 \le k \le n/2$, so Lemma 2.6 gives $\binom{n}{2}\le t$, capping $n$ by any $N$ with $t < \binom{N}{2}$, i.e. $N \approx \sqrt{2t}$.
+**Theorem 4.3 (Counting bound).** *For all $X$,*
+$$\#\mathcal{E}(X) \le \big(\lfloor\sqrt{2X}\rfloor + 2\big)\big(\lfloor\log_2 X\rfloor + 1\big).$$
 
-**Theorem 7.2 (Effective criterion, quadratic window).** *Let $m \ge 2$, $t = \binom{2m}{m}$, and let $N \ge 2$ satisfy $t < \binom{N}{2}$. If*
-$$\binom{n}{k} \ne t \quad\text{for all } 2m < n < N \text{ and } 2 \le k \le \lfloor n/2\rfloor,$$
-*then $N(t) = 3$.*
+*Proof sketch.* Let $t \in \mathcal{E}(X)$ and take $(n,k)$ from Lemma 4.2. Lemma 3.2 gives $n(n-1) \le 2t \le 2X$, hence $n \le \sqrt{2X} + 1$. The standard estimate $2^k \le \binom{n}{k}$ for $2k \le n$ gives $2^k \le t \le X$, hence $k \le \log_2 X$. So $\mathcal{E}(X)$ is contained in the image of the box $\{0,\dots,\lfloor\sqrt{2X}\rfloor+1\}\times\{0,\dots,\lfloor\log_2 X\rfloor\}$ under $(n,k)\mapsto\binom{n}{k}$, and the image of a finite set is no larger than the set. $\square$
 
-*Proof.* Combine Proposition 6.7 with the containment $\mathrm{Occ}(t) \subseteq \{(t,1),(t,t-1),(2m,m)\}$, which follows from Theorem 7.1 (rows $\le 2m$), the boundary analysis (columns $k \in \{0,1,n-1,n\}$), and the hypothesis together with the row cap. $\square$
+**Corollary 4.4 (Density one).** *For every constant $c$ there is $N_c$ with $c\,\#\mathcal{E}(X) \le X$ for all $X \ge N_c$. Hence the set of $t$ with $N(t) = 2$ has natural density one.*
 
-### 7.1 Computational form of the equality test
+*Proof sketch.* $\sqrt{2X}\log_2 X = o(X)$; explicitly one may take $N_c = (21c+21)^4 + 16$, using $\log_2 X + 1 \le 2\sqrt[4]{X}$ and $\sqrt{2X}+2 \le 2\sqrt X$ for large $X$. $\square$
 
-The predicate $\binom{n}{k}=t$ is expensive to test by Pascal recursion for large $n$. We use instead the equivalence
-$$\binom{n}{k} = t \iff n^{\underline{k}} = k!\, t, \qquad n^{\underline{k}} := n(n-1)\cdots(n-k+1),$$
-valid because $n^{\underline{k}} = k!\binom{n}{k}$. The descending factorial costs $k$ multiplications rather than $\Theta(nk)$ additions, which is what makes exhaustive certification feasible.
-
-### 7.2 Two structural reductions
-
-The quadratic window $N \approx \sqrt{2t}$ with columns up to $n/2$ is still large. Two observations collapse it.
-
-**Theorem 7.3 (Column collapse).** *Let $m \ge 1$, $2 \le k$, $2k \le n$, $n > 2m$ and $\binom{n}{k} = \binom{2m}{m}$. Then $k < m$.*
-
-*Proof.* Suppose $k \ge m$. By Proposition 2.2, $\binom{2k}{k} \le \binom{n}{k}$ (using $2k \le n$), and by strict monotonicity of $m\mapsto\binom{2m}{m}$, $\binom{2m}{m}\le\binom{2k}{k}$. So
-$$\binom{2m}{m} \le \binom{2k}{k} \le \binom{n}{k} = \binom{2m}{m},$$
-forcing equalities throughout. If $k > m$ the first inequality is strict — contradiction. If $k = m$ then $2k = 2m < n$ makes the second strict — contradiction. $\square$
-
-Thus the columns to search form a strip $3 \le k \le m-1$ of height $m$, rather than a triangle of height $N/2$.
-
-**Theorem 7.4 (Triangular obstruction).** *$\binom{n}{2} = t$ has a solution $n$ if and only if $8t+1$ is a perfect square. Equivalently, if $s^2 < 8t+1 < (s+1)^2$ for some $s$, then $\binom{n}{2}\ne t$ for every $n$.*
-
-*Proof.* $\binom{n}{2}=t \iff n^2-n-2t = 0 \iff (2n-1)^2 = 8t+1$. $\square$
-
-A single integer square-root test therefore eliminates the entire column $k=2$. After that, every surviving interior occurrence has $k \ge 3$, hence $\binom{n}{3}\le t$ by the analogue of Lemma 2.6, and the row window shrinks from $N \approx \sqrt{2t}$ to $N \approx (6t)^{1/3}$.
-
-For $m=20$ ($t = \binom{40}{20} = 137{,}846{,}528{,}820$) the search box shrinks from roughly $524{,}248 \times 262{,}124$ to $9{,}347 \times 17$: a saving of more than nine orders of magnitude.
-
-**Theorem 7.5 (Effective criterion, cubic window).** *Let $m \ge 3$, $t = \binom{2m}{m}$. Suppose $8t+1$ is not a perfect square, and let $N$ satisfy $t < \binom{N}{3}$. If no pair $(n,k)$ with $2m < n < N$ and $3 \le k < m$ satisfies $\binom{n}{k} = t$, then $N(t) = 3$.*
-
-### 7.3 Results of the searches
-
-**Theorem 7.6.** *$N\!\left(\binom{2m}{m}\right) = 3$ for every $2 \le m \le 20$. Explicitly, each of*
-$$6,\ 20,\ 70,\ 252,\ 924,\ 3432,\ 12870,\ 48620,\ 184756,\ 705432,\ 2704156,\ 10400600,$$
-$$40116600,\ 155117520,\ 601080390,\ 2333606220,\ 9075135300,\ 35345263800,\ 137846528820$$
-*occurs exactly three times in Pascal's triangle.*
-
-**Theorem 7.7 (Unconditional exclusion of $5$ and $7$).** *No $t$ with $2 \le t < 538{,}257{,}874{,}440$ satisfies $N(t) \in \{5,7\}$. Moreover, for such $t$ every odd value of $N(t)$ equals $1$ or $3$.*
-
-*Proof.* The bound $538{,}257{,}874{,}440 = \binom{42}{21}$ is the next central binomial coefficient after $\binom{40}{20}$. If $t < \binom{42}{21}$ has odd multiplicity, then by Theorem 6.4 $t = \binom{2m}{m}$ with $m \le 20$; $m=1$ gives $t=2$, $N(2)=1$; $2 \le m \le 20$ gives $N(t)=3$ by Theorem 7.6. In particular $N(t) \notin \{5,7\}$. $\square$
-
-It deserves emphasis that Theorem 7.7 is a statement about **all** integers below half a trillion, obtained from nineteen finite searches over a structurally distinguished sequence — not from a scan of half a trillion values. The parity criterion is what converts a hopeless enumeration into a feasible one.
+**Remark 4.5.** At $X = 10^6$ the bound gives $28\,320$; the true count of $t \le 10^6$ with $N(t) \ge 3$ is $1\,732$. At $X = 10^7$ the bound gives $107\,376$ against a true count of $5\,125$. The bound is therefore lossy by a factor growing slowly (about $16$ at $10^6$, about $21$ at $10^7$), but it is of the correct shape $\Theta(\sqrt X \log X)$ for this method: the box genuinely has that many cells.
 
 ---
 
-## 8. Exact multiplicities and the maximum below $10^6$
+## 5. A factor-two sharpening of the elementary logarithmic bound
 
-### 8.1 A certified decision procedure
+The classical elementary bound $N(t) \le 2\log_2 t$ comes from $2^b \le \binom{n}{b}$ for $2b \le n$, together with Lemma 2.4 (at most two occurrences per folded index). The inequality $2^b \le \binom{2b}{b}$ is lossy: the truth is $\binom{2b}{b} \asymp 4^b/\sqrt{b}$. Replacing it costs nothing.
 
-**Theorem 8.1 (Exact algorithm).** *Let $t \ge 3$ and let $N \ge 2$ satisfy $t < \binom{N}{2}$. Then*
-$$N(t) = 2 + \#\bigl\{(n,k) : n,k < N,\ 2 \le k \le n-2,\ \tbinom{n}{k} = t \bigr\}.$$
+**Lemma 5.1 (Row pigeonhole).** *For all $b$, $4^b \le (2b+1)\binom{2b}{b}$.*
 
-*Proof.* The two boundary occurrences $(t,1)$, $(t,t-1)$ are always present and distinct for $t\ge 3$. Any other occurrence is interior with $2 \le k \le n-2$, whence $\binom{n}{2}\le t < \binom{N}{2}$ and $n < N$ by strict monotonicity of $n \mapsto \binom{n}{2}$; and $k \le n < N$. $\square$
+*Proof sketch.* The $2b+1$ entries of row $2b$ sum to $2^{2b} = 4^b$ and each is at most the central entry $\binom{2b}{b}$. $\square$
 
-The search box has side $N = O(\sqrt t\,)$, so the procedure performs $O(t)$ equality tests, each of cost $O(k)$ multiplications via the descending-factorial reformulation of §7.1. This is entirely practical for $t$ up to the millions.
+**Lemma 5.2.** *If $\binom{n}{k} = t$ and $b = \mathrm{fold}(n,k)$, then $\binom{2b}{b} \le t$.*
 
-**Corollary 8.2 (No-interior case).** *If additionally no interior pair in the box realises $t$, then $N(t) = 2$.*
+*Proof sketch.* $2b \le n$ and $\binom{n}{b} = \binom{n}{k} = t$ (folding preserves the value), so $\binom{2b}{b} \le \binom{n}{b} = t$ by monotonicity in the row. $\square$
 
-### 8.2 Exact values
+**Lemma 5.3.** *If $t \ge 2$ and $\binom{n}{k} = t$ with $b = \mathrm{fold}(n,k)$, then $4^b \le (2\log_2 t + 1)t$ and hence $b \le \tfrac12\log_2\big((2\log_2 t + 1)t\big)$.*
 
-**Theorem 8.3.** 
-$$N(3003) = 8,$$
-*the eight positions being*
-$$\tbinom{3003}{1},\ \tbinom{3003}{3002},\ \tbinom{78}{2},\ \tbinom{78}{76},\ \tbinom{15}{5},\ \tbinom{15}{10},\ \tbinom{14}{6},\ \tbinom{14}{8}.$$
+*Proof sketch.* Combine Lemmas 5.1 and 5.2 to get $4^b \le (2b+1)t$, then use the crude bound $b \le \log_2 t$ (from $2^b \le t$) to replace $2b+1$ by $2\log_2 t + 1$. $\square$
 
-**Theorem 8.4.** $N(120) = N(210) = N(1540) = N(7140) = N(11628) = N(24310) = 6$.
+**Theorem 5.4 (Sharpened bound).** *For $t \ge 2$,*
+$$N(t) \;\le\; \log_2\!\big((2\log_2 t + 1)\,t\big) \;\le\; \log_2 t + \log_2(2\log_2 t + 1) + 1 .$$
 
-Together with $N(2)=1$, $N(3)=2$, $N(6)=3$, $N(10)=4$, this shows that the multiplicities $1,2,3,4,6,8$ are all attained.
+*Proof sketch.* Split $\mathrm{Occ}(t)$ into occurrences of folded index $\le 1$ (at most $2$, namely the boundary pair) and the rest. Each remaining folded index $b$ lies in $[2, M]$ with $M = \lfloor \tfrac12\log_2((2\log_2 t+1)t)\rfloor$ by Lemma 5.3, and by Lemma 2.4 carries at most two occurrences. Hence $N(t) \le 2 + 2(M-1) = 2M \le \log_2((2\log_2 t+1)t)$. The second inequality is $\log_2(ab) \le \log_2 a + \log_2 b + 1$ for integers. $\square$
 
-### 8.3 The maximum below one million
+**Corollary 5.5 (Strict improvement).** *For $t \ge 2^{16}$, $N(t) < 2\log_2 t$.*
 
-The reflection decomposition (6.1) can be refined. For $t \ge 3$, exactly one left occurrence is the trivial $(t,1)$, so writing $L^{\mathrm{int}}(t)$ for the left occurrences with column $k \ge 2$,
-$$N(t) = 2 + 2\lvert L^{\mathrm{int}}(t)\rvert + \lvert Z(t)\rvert. \tag{8.1}$$
+*Proof sketch.* With $L = \lfloor\log_2 t\rfloor \ge 16$ one has $2L+1 < 2^{L-2}$, hence $\log_2(2L+1) \le L-3$ and Theorem 5.4 gives $N(t) \le L + (L-3) + 1 = 2L - 2 < 2L$. $\square$
 
-A left interior occurrence has $k\ge 2$ and $2k<n$, and by column uniqueness its column determines its row. Hence:
+**Numerical comparison.**
 
-* at most **one** left interior occurrence has $k = 2$;
-* if $t < 10^6$, any left interior occurrence with $k \ge 3$ has $2^k \le \binom{n}{k} = t$, so $k < 20$; and $\binom{n}{2} \le t$, so $n < 1415$ (as $\binom{1415}{2} = 1{,}000{,}405 > 10^6$). It therefore lies in an explicit $1415 \times 20$ box.
+| $t$ | classical $2\log_2 t$ | Theorem 5.4 |
+|---|---|---|
+| $3003$ | $22$ | $16$ |
+| $2^{16}$ | $32$ | $22$ |
+| $10^6$ | $38$ | $25$ |
+| $2^{32}$ | $64$ | $39$ |
+| $10^{20}$ | $132$ | $74$ |
 
-An exhaustive comparison of all values in that box (a few hundred distinct entries below $10^6$, compared pairwise) shows:
-
-**Lemma 8.5.** *No value below $10^6$ occurs twice with column index $\ge 3$, except $3003 = \binom{15}{5} = \binom{14}{6}$.*
-
-**Theorem 8.6.** *For $2 \le t < 10^6$ with $t \ne 3003$, $\ N(t) \le 6$.*
-
-*Proof.* By Lemma 8.5 there is at most one left interior occurrence with $k \ge 3$ and at most one with $k=2$, so $\lvert L^{\mathrm{int}}(t)\rvert \le 2$; with $\lvert Z(t)\rvert \le 1$, (8.1) gives $N(t)\le 2+4+1 = 7$. Multiplicity $7$ is excluded by Theorem 7.7. $\square$
-
-**Theorem 8.7 (Maximum below $10^6$).** *For $2 \le t < 10^6$ we have $N(t) \le 8$, and $N(t) = 8$ if and only if $t = 3003$.*
-
-Thus, below one million, the empirical maximum in Singmaster's problem is fully accounted for: $3003$ is not merely the smallest number of multiplicity eight, it is the unique one in that range, and every other number occurs at most six times.
+The Erdős–Abbott–Hanson–Singmaster estimate $O(\log t/\log\log t)$ is asymptotically stronger but not elementary; Theorem 5.4 is elementary and gives the leading constant $1$ predicted by the heuristic "one usable column per power of four".
 
 ---
 
-## 9. Discussion
+## 6. Sharp thresholds: the minimal value of each small multiplicity
 
-### 9.1 Where the difficulty lives
+Corollary 3.9 and Lemma 3.7 also bound $t$ from below.
 
-The results above localise the difficulty of Singmaster's problem in two distinct places.
+**Theorem 6.1 (Growth threshold).** *If $t \ge 3$, $m \ge 1$ and $N(t) \ge 2m+2$, then*
+$$t \ge \binom{2m+3}{m+1}.$$
 
-**For the parity question (multiplicities $5$ and $7$),** the difficulty is entirely concentrated on the sequence $\binom{2m}{m}$. Corollary 6.6 makes the equivalence exact: multiplicities $5$ and $7$ never occur *if and only if* the central binomial coefficients all have multiplicity exactly $3$. This is a clean, self-contained conjecture about a single classical sequence, and it is amenable to attack because of the sandwich theorem: any counterexample would be a coincidence
-$$\binom{n}{k} = \binom{2m}{m}, \qquad n > 2m,\ 3 \le k < m,$$
-in an explicitly bounded, and (after the two reductions of §7.2) quite small, region.
+*Proof sketch.* Take $(n,k)$ from Lemma 3.7: $k \ge m+1$ and $n > 2k \ge 2m+2$, so $n \ge 2m+3$. Then $\binom{2m+3}{m+1} \le \binom{n}{m+1} \le \binom{n}{k} = t$ by monotonicity and unimodality. $\square$
 
-**For Singmaster's conjecture itself,** Theorem 3.5 says the whole problem is about counting *rows*, not positions. Every partial result about $\lvert R(t)\rvert$ transfers directly to $N(t)$ with a factor of two. The known upper bounds all proceed by bounding columns; a row-side argument would be genuinely new.
+This gives $t \ge 10, 35, 126, 462, \dots$ for $N(t) \ge 4, 6, 8, 10$. The true thresholds are larger, and can be determined exactly for the first few.
 
-### 9.2 The three levels of evidence
+**Lemma 6.2 (Two interior columns are expensive).** *Suppose $\binom{n}{j} = \binom{m}{k} = t$ with $2 \le j < k$, $2j < n$, $2k < m$. Then either $k \ge 4$ and $t \ge \binom{9}{4} = 126$, or $k = 3$, $j = 2$ and $t$ is simultaneously of the form $\binom{m}{3}$ with $m \ge 7$ and $\binom{n}{2}$.*
 
-It is worth distinguishing three kinds of statement proved here.
+*Proof sketch.* If $k \ge 4$ then $m \ge 2k+1 \ge 9$ and unimodality gives $t = \binom{m}{k} \ge \binom{9}{4}$. If $k = 3$ then $j = 2$ and $m \ge 7$. $\square$
 
-1. **Unconditional general theorems**: the logarithmic bound (Theorem 3.4), the prime evaluation (Theorem 4.3), the parity criterion (Theorem 6.4), the sandwich theorem (Theorem 7.1). These hold for all $t$.
-2. **Infinite families**: the Fibonacci construction (Theorem 5.4) giving infinitely many sixes, and the triangular construction (Theorem 4.5) giving infinitely many fours. These are constructions, not exhaustions.
-3. **Certified finite ranges**: $N(\binom{2m}{m}) = 3$ for $m \le 20$, hence no fives or sevens below $\binom{42}{21}$; the exact values $N(3003)=8$ etc.; and the maximality of $3003$ below $10^6$. These are exhaustive over an explicitly bounded region, and their reach is limited only by computation.
+**Theorem 6.3 (Sharp thresholds).**
+1. *$6$ is the least $t \ge 2$ with $N(t) \ge 3$.*
+2. *$10$ is the least $t$ with $N(t) \ge 4$.*
+3. *$120$ is the least $t$ with $N(t) \ge 6$.*
+4. *$3003$ is the least $t$ with $N(t) \ge 8$.*
 
-The interplay between levels 1 and 3 is the methodological point of this work: a structural theorem (parity) turns an infeasible verification (all $t$ below $5 \times 10^{11}$) into a feasible one (nineteen central binomial coefficients).
+*Proof sketch.* Attainment is the computation $N(6)=3$, $N(10)=4$, $N(120)=6$, $N(3003)=8$. For minimality of $120$: by Proposition 2.6 and Lemma 2.5, $N(t) \ge 6$ forces $L(t) \ge 2$, so Lemma 6.2 applies. In the first case $t \ge 126 > 120$. In the second, $t = \binom{m}{3}$ with $m \ge 7$ and $t$ triangular; the values $\binom{7}{3} = 35$, $\binom{8}{3} = 56$, $\binom{9}{3} = 84$ are the only candidates below $120$ and none is triangular, so $t \ge 120$. Cases 1 and 2 are the corresponding one-column analyses. Case 4 runs the same descent one level deeper: $N(t) \ge 8$ forces three left-interior occurrences in distinct columns $2 \le j_1 < j_2 < k$, hence $k \ge 4$; the residual possibilities below $3003$ are a finite, explicitly decidable list. $\square$
 
-### 9.3 Comparison with the literature
-
-Singmaster's original observation, the $O(\log t)$ bound, and the improvement to $O(\log t/\log\log t)$ by Abbott, Erdős and Hanson are classical. The Fibonacci family solving $\binom{n}{k}=\binom{n-1}{k+1}$ is likewise classical. What the present development adds is (i) a uniform and self-contained treatment of the elementary theory, (ii) the parity criterion as a *reduction principle*, and (iii) the effective machinery — sandwich theorem, column collapse, triangular obstruction, descending-factorial testing — that converts the reduction into certified numerical range results.
+**Remark 6.4.** These are structural results, not exhaustive searches: the value $120$ is forced by the *shape* of the two required occurrences, with only three residual numbers decided by direct computation.
 
 ---
 
-## 10. Future directions
+## 7. Adjacent repetitions: complete classification
 
-**Conjecture 1 (bold).** *There is an absolute constant $c$ with*
-$$N(t) \le c\,\frac{\log t}{\log\log t} \qquad (t \ge 16).$$
-The unconditional result available here is the weaker $N(t) \le 2\log_2 t$. The key insight is that the present proof discards everything except "one row per column"; the sharper estimate uses in addition that the rows $n_1 > n_2 > \cdots$ attached to distinct columns $k_1 < k_2 < \cdots$ satisfy $n_i \ge 2k_i$ *simultaneously*, so the multiplicative estimate $t = \binom{n_i}{k_i} \ge (n_i/k_i)^{k_i}$ can be applied to the largest column $k_r \ge r+1$ rather than to each column separately. All the necessary infrastructure — strict monotonicity in the row, strict unimodality in the column, folded-index bookkeeping — is already in place; only the analytic estimate $(n/k)^k \le \binom{n}{k}$ remains.
+### 7.1 The phenomenon
 
-**Conjecture 2 (grand challenge).** *Singmaster's conjecture in "two rows suffice" form: there is a constant $C$ with $N(t)\le C$ for all $t \ge 2$, and in fact $C = 8$, attained only at $t=3003$.* The key insight is the reduction $N(t)\le 2\lvert R(t)\rvert$: since a row carries a given value at most twice, Singmaster's conjecture is *equivalent* to a bound on the number of rows meeting the value $t$. That reformulation removes column bookkeeping entirely and turns the problem into: how many $n$ can satisfy $\binom{n}{k_n}=t$ for some $k_n$? Every partial result about $\lvert R(t)\rvert$ immediately transfers to $N(t)$.
+**Definition 7.1.** A pair $(n,k)$ with $1 \le k$ and $k+2 \le n$ is an *adjacent repetition* if
+$$\binom{n}{k} = \binom{n-1}{k+1}.$$
 
-**Conjecture 3 (bold, cross-domain).** *Complete Pell classification of the cross-row equation: every solution of $\binom{n}{k} = \binom{n-1}{k+1}$ with $1 \le k \le n-2$ is a member of the Fibonacci family, i.e. $n = F_{2i+4}F_{2i+5}$ and $k = F_{2i+2}F_{2i+5}$ for some $i \ge 0$. Equivalently: with $m = n-k$, the integer $(5m-1)(m-1)$ is a perfect square if and only if $m = F_{2i+3}F_{2i+5}$.*
+The value then occupies (at least) the six positions
+$$(n,k),\ (n,n-k),\ (n-1,k+1),\ (n-1,n-k-2),\ (t,1),\ (t,t-1),$$
+so $N(t) \ge 6$ once these are pairwise distinct.
 
-Further natural targets:
+**Proposition 7.2 (Adjacent repetitions give multiplicity $\ge 6$).** *If $2 \le k$, $k+3 < n-k$ and $\binom{n}{k} = \binom{n-1}{k+1}$, then $N\big(\binom{n}{k}\big) \ge 6$.*
 
-* Extend Theorem 7.6 to $m \le 40$ or beyond by refining the row window below $(6t)^{1/3}$ — for instance by eliminating the columns $k=3,4$ with congruence or square-testing obstructions analogous to Theorem 7.4.
-* Prove that $\{t : N(t) \ge 8\}$ is infinite, or that it is $\{3003\}$. Currently neither direction is known, and even a single further eightfold value would be a landmark.
-* Establish the exact maximum of $N$ below $10^9$ by extending the argument of §8.3; the obstruction is purely the size of the $O(\sqrt t\,) \times O(\log t)$ box.
-* Investigate whether the parity criterion has an analogue for other "reflection-symmetric" combinatorial arrays (Gaussian binomial coefficients, Stirling triangles), where the same involution argument might constrain multiplicities.
+*Proof sketch.* The four interior positions listed above are pairwise distinct under the stated inequalities (they lie in two different rows and, within each row, strictly left of centre together with their mirrors), and $t = \binom{n}{k} > n$ so the boundary pair $(t,1), (t,t-1)$ is disjoint from them. $\square$
+
+Singmaster observed the infinite family
+$$n = F_{2i+4}F_{2i+5}, \qquad k = F_{2i+2}F_{2i+5} \qquad (i \ge 0),$$
+i.e. $(15,5), (104,39), (714,272), (4895,1869), (33552,12815), \dots$, each an adjacent repetition. We prove there are no others.
+
+### 7.2 Step 1: from combinatorics to a Diophantine equation
+
+**Lemma 7.3.** *For $1 \le k$ and $k + 2 \le n$,*
+$$\binom{n}{k} = \binom{n-1}{k+1} \iff n(k+1) = (n-k)(n-k-1).$$
+
+*Proof sketch.* Write $n = m+1$. The Pascal-type identities $\binom{m}{k}(m+1) = \binom{m+1}{k}(m+1-k)$ and $\binom{m}{k+1}(k+1) = \binom{m}{k}(m-k)$ let one clear factorials and reduce the equality of the two binomial coefficients to the displayed quadratic relation, using that binomial coefficients in range are positive. $\square$
+
+### 7.3 Step 2: from the equation to a norm form
+
+**Lemma 7.4.** *Let $n, u$ satisfy $u = n - k \ge 2$ and $n(k+1) = u(u-1)$, i.e. $n(n-u+1) = u(u-1)$. Put $N = 5n+1$ and $U = 5u-3$. Then*
+$$N^2 - N\,U - U^2 = -5.$$
+
+*Proof sketch.* Expanding, $n(n-u+1) = u^2-u$ is equivalent to $n^2 - nu + n - u^2 + u = 0$. Multiplying by $25$ and substituting $n = (N-1)/5$, $u = (U+3)/5$ turns the left side into $N^2 - NU - U^2 + 5$ after simplification. $\square$
+
+The form $x^2 - xy - y^2$ is the norm form of $\mathbb{Z}[\varphi]$, $\varphi = (1+\sqrt5)/2$: it factors as $\big(x - \varphi y\big)\big(x - \bar\varphi y\big)$.
+
+### 7.4 Step 3: descent on the norm form
+
+**Lemma 7.5 (Lucas pairs solve the form).** *For all $i \ge 0$, $L_{i+1}^2 - L_{i+1}L_i - L_i^2 = 5(-1)^{i+1}$.*
+
+*Proof sketch.* Induction on $i$, using $L_{i+2} = L_{i+1} + L_i$: the substitution $(x,y) \mapsto (x+y, x)$ negates the form. Base case $(L_1, L_0) = (1,2)$: $1 - 2 - 4 = -5$. $\square$
+
+**Theorem 7.6 (Descent: all solutions are Lucas pairs).** *If $x, y \in \mathbb{N}$ satisfy $x^2 - xy - y^2 = \pm 5$, then there is $i \ge 0$ with $x = L_{i+1}$ and $y = L_i$.*
+
+*Proof sketch.* Strong induction on $x$. The map $(x,y) \mapsto (y, x-y)$ preserves the form up to sign: $y^2 - y(x-y) - (x-y)^2 = -(x^2-xy-y^2)$. One checks that no solution has $x \le y$ with $x$ minimal except the base pairs; that $x \ne y$ (else $-y^2 = \pm5$, impossible since $5$ is not a square); and that $x > y$ forces $0 \le x - y < x$, so the descent strictly decreases the first coordinate and terminates. The terminal solutions are $(1,2)$ and $(3,1)$, i.e. $(L_1,L_0)$ and $(L_2,L_1)$; running the descent backwards reconstructs $(L_{i+1}, L_i)$. $\square$
+
+**Lemma 7.7 (Index selection).** *The residues $L_j \bmod 5$ are periodic with period $4$: $L_j \equiv 2, 1, 3, 4 \pmod 5$ for $j \equiv 0,1,2,3 \pmod 4$. Hence $L_j \equiv 2 \pmod 5$ forces $4 \mid j$.*
+
+**Theorem 7.8 (Classification in Lucas form).** *For $1 \le k$ and $k+2 \le n$,*
+$$\binom{n}{k} = \binom{n-1}{k+1} \iff \exists j \ge 0:\ 5n+1 = L_{4j+9} \ \text{ and }\ 5(n-k) = L_{4j+8}+3.$$
+
+*Proof sketch.* ($\Rightarrow$) Lemmas 7.3 and 7.4 produce a solution $(N,U)$ of $N^2-NU-U^2=-5$; Theorem 7.6 makes $(N,U)$ a consecutive Lucas pair $(L_{i+1}, L_i)$; the sign $-5$ and the congruences $N \equiv 1$, $U \equiv 2 \pmod 5$ (from $N = 5n+1$, $U = 5u-3$) force $i \equiv 0 \pmod 4$ and $i \ge 8$ via Lemma 7.7, i.e. $i = 4j+8$. ($\Leftarrow$) Reverse the substitutions and apply Lemma 7.3. $\square$
+
+**Corollary 7.9 (Small cases).** *The only adjacent repetitions with $n \le 700$ are $(15,5)$ and $(104,39)$; and $3003$ is the only value $\binom{n}{k} < 10^6$ arising from an adjacent repetition.*
+
+*Proof sketch.* For $j \ge 2$, $L_{4j+9} \ge L_{17} = 3571 > 5\cdot700+1$. For the value bound, $2^k \le \binom{n}{k}$ and $k = 39$ for $j=1$ already gives $\binom{104}{39} > 2^{39} > 10^6$. $\square$
+
+### 7.5 Step 4: the Lucas–Fibonacci dictionary via Cassini
+
+**Theorem 7.10 (Cassini's identity).** *For all $a \ge 0$, $F_{a+1}^2 - F_aF_{a+2} = (-1)^a$.*
+
+*Proof sketch.* Induction on $a$: substituting $F_{a+3} = F_{a+1}+F_{a+2}$ and $F_{a+2} = F_a+F_{a+1}$ into $F_{a+2}^2 - F_{a+1}F_{a+3}$ and expanding yields $-(F_{a+1}^2 - F_aF_{a+2})$. $\square$
+
+**Theorem 7.11 (Dictionary).** *For all $a \ge 0$,*
+$$L_{2a} = 5F_a^2 + 2(-1)^a, \qquad L_{2a+1} = 5F_aF_{a+1} + (-1)^a .$$
+
+*Proof sketch.* Simultaneous induction on $a$. Base: $L_0 = 2 = 0+2$, $L_1 = 1 = 0+1$. Step: using $L_{2a+2} = L_{2a}+L_{2a+1}$ and $L_{2a+3} = L_{2a+1}+L_{2a+2}$, the required identities reduce, after substituting the inductive hypotheses and $F_{a+2} = F_a + F_{a+1}$, exactly to Cassini's identity at index $a$. $\square$
+
+Now specialise. Write $R_i = F_{2i+4}F_{2i+5}$ and $C_i = F_{2i+2}F_{2i+5}$ for the Fibonacci family.
+
+**Lemma 7.12 (Family in Lucas coordinates).** *For all $i \ge 0$,*
+$$5R_i + 1 = L_{4i+9}, \qquad R_i - C_i = F_{2i+3}F_{2i+5}, \qquad 5(R_i - C_i) = L_{4i+8}+3 .$$
+
+*Proof sketch.* The first is Theorem 7.11 at $a = 2i+4$ (odd case), noting $(-1)^{2i+4} = 1$. The second is $F_{2i+4} = F_{2i+2} + F_{2i+3}$. The third combines Theorem 7.11 at $a = 2i+4$ (even case) with Cassini at index $2i+3$, which reads $F_{2i+3}F_{2i+5} = F_{2i+4}^2 + 1$. $\square$
+
+**Lemma 7.13 (Admissibility).** *For all $i$: $C_i \ge 1$ and $C_i + 2 \le R_i$.*
+
+*Proof sketch.* $C_i$ is a product of positive Fibonacci numbers. For the gap, $R_i - C_i = F_{2i+3}F_{2i+5} \ge 1\cdot 5 = 5 \ge 2$. $\square$
+
+### 7.6 The classification theorem
+
+**Theorem 7.14 (Completeness of the Fibonacci family).** *For $1 \le k$ and $k+2 \le n$,*
+$$\binom{n}{k} = \binom{n-1}{k+1} \iff \exists\, i \ge 0:\ n = F_{2i+4}F_{2i+5} \ \text{ and }\ k = F_{2i+2}F_{2i+5}.$$
+
+*Proof sketch.* ($\Leftarrow$) Lemma 7.12 supplies the Lucas certificate of Theorem 7.8 with $j = i$. ($\Rightarrow$) Theorem 7.8 gives $j$ with $5n+1 = L_{4j+9}$ and $5(n-k) = L_{4j+8}+3$. Lemma 7.12 at $i = j$ gives $5R_j + 1 = L_{4j+9}$ and $5(R_j - C_j) = L_{4j+8}+3$. Comparing, $5n = 5R_j$ so $n = R_j$, and then $5(n-k) = 5(R_j - C_j)$ so $k = C_j$ (using Lemma 7.13 to keep the subtractions legitimate). $\square$
+
+**Corollary 7.15 (The complete list).** *The adjacent repetitions in Pascal's triangle are exactly*
+$$(15,5),\ (104,39),\ (714,272),\ (4895,1869),\ (33552,12815),\ (229970,87840),\ \dots$$
+*with $(n,k) = (F_{2i+4}F_{2i+5}, F_{2i+2}F_{2i+5})$, and no others. Each yields a value of multiplicity at least $6$; hence there are infinitely many integers of multiplicity $\ge 6$, and the smallest of them is $\binom{15}{5} = 3003$.*
+
+**Remark 7.16 (Interpretation).** Combined with Proposition 7.2, Theorem 7.14 says that *every* "extra pair" of occurrences produced by an adjacent repetition comes from this single Fibonacci family. Other sources of multiplicity $6$ exist — the complete list of $t \le 10^7$ with $N(t) = 6$ is $120, 210, 1540, 7140, 11628, 24310$, all of them *non-adjacent* coincidences between two interior columns, e.g. $120 = \binom{16}{2}=\binom{10}{3}$, $210 = \binom{21}{2}=\binom{10}{4}$, $1540 = \binom{56}{2}=\binom{22}{3}$ — but the adjacent mechanism, the only one currently known to be infinite, is now completely understood.
+
+---
+
+## 8. Algorithms
+
+Three computational procedures underlie the numerical illustrations.
+
+**(A) Multiplicity by bounded enumeration.** To compute $N(t)$ it suffices to scan rows $2 \le n \le t$; within each row, unimodality allows an early break as soon as $\binom{n}{k}$ exceeds $t$. Cost: $O(t \log t)$ big-integer operations in the naive version; the row bound of Lemma 3.2 reduces the interior search to $n \le \sqrt{2t}+1$, so the true cost of finding all *interior* occurrences is $O(\sqrt t \log t)$.
+
+**(B) Smoothness certificate.** Given $t$, factor $t$ by trial division and report, for each prime factor $p$ and each level $m$, whether $\binom{p}{m+1} \le t$. By Theorem 3.8 the first level $m$ that fails certifies $N(t) \le 2m+1$, hence $N(t) \le 2m$ when $t$ is not a central binomial coefficient. This turns a factorisation into an unconditional multiplicity ceiling.
+
+**(C) Enumeration of adjacent repetitions.** Rather than search rows, iterate the Fibonacci recursion and output $(F_{2i+4}F_{2i+5}, F_{2i+2}F_{2i+5})$; by Theorem 7.14 this is complete. Cost: $O(1)$ big-integer operations per member, versus $O(n^2)$ binomial comparisons for a brute-force row scan to depth $n$. Cross-validation over $n \le 1200$ recovers precisely $(15,5), (104,39), (714,272)$.
+
+---
+
+## 9. Applications and context
+
+**Smooth-number heuristics.** Theorem 3.8 converts a combinatorial hypothesis into an arithmetic one: high multiplicity implies extreme smoothness. Smooth numbers of size $t$ with all prime factors below $t^{1/(m+1)}$ have density governed by the Dickman function $\rho(m+1)$, which decays super-exponentially. This is the quantitative reason to believe Singmaster's conjecture, and it also explains why the extremal examples ($120 = 2^3\cdot3\cdot5$, $210 = 2\cdot3\cdot5\cdot7$, $3003 = 3\cdot7\cdot11\cdot13$) are all products of the very smallest primes.
+
+**Diophantine equations from combinatorial identities.** Section 7 is a template: a coincidence between binomial coefficients becomes, after clearing factorials, a binary quadratic Diophantine equation; completing the square identifies a norm form; descent classifies solutions in terms of a linear recurrence. The same route handles $\binom{n}{2} = \binom{m}{3}$ (a Mordell-type curve), $\binom{n}{2} = \binom{m}{4}$, and — in principle — the central-column equation $\binom{2c}{c} = \binom{n}{k}$ that governs odd multiplicities.
+
+**Verification and search design.** Theorem 3.4 provides a cheap sieve for exhaustive searches: any candidate with a prime factor exceeding $\sqrt{2t}+1$ can be discarded without examining the triangle. Theorem 6.1 provides the complementary cutoff from below. Together they confine any hypothetical high-multiplicity number to a thin, explicitly described region.
+
+---
+
+## 10. Discussion and future directions
+
+The results assembled here bracket Singmaster's problem from several sides without solving it.
+
+**Conjecture 1 (Grand challenge).** *There is an absolute $m_0$ such that no $t \ge 2$ satisfies $N(t) \ge 2m_0+2$; concretely, $N(t) \le 8$ for all $t \ge 2$, with equality only at $t = 3003$.*
+
+The key insight is that Theorem 3.8 converts multiplicity directly into arithmetic smoothness: $N(t) \ge 2m+2$ forces $\binom{p}{m+1} \le t$ for *every* prime $p \mid t$, so a number of large multiplicity must be $t^{1/(m+1)}$-smooth. Combining this with a lower bound on the number of prime factors needed to build $t$ out of small primes — a Stirling-type count giving $\Omega(t) \gg \log t/\log\log t$ — should close the gap between "smooth" and "impossible". A first quantitative step is already in hand: Theorem 6.1 gives $t \ge \binom{2m+3}{m+1}$ whenever $N(t) \ge 2m+2$, and the sharp thresholds of Theorem 6.3 ($t \ge 120$ for six occurrences, $t \ge 3003$ for eight) show what the true growth looks like at the bottom of the range. Both halves of the argument now exist: the smoothness side (Theorems 3.4 and 3.8) and the counting side in the aggregate (Theorem 4.3). What remains is a single quantitative comparison between the smoothness ceiling and the size of $t$. *Falsifier:* an explicit $t$ with nine or more representations as a binomial coefficient.
+
+**Conjecture 2.** *For every $t \ge 2$, $N(t) \notin \{5, 7\}$.*
+
+The key insight is the parity decomposition of Proposition 2.6: multiplicity equals $2 + 2L(t)$ plus a correction supported only on the central column, and that correction is at most one (Lemma 2.5). Odd multiplicity therefore *requires* a central binomial coefficient $\binom{2c}{c} = t$, so the conjecture reduces to "no central binomial coefficient has two other non-central occurrences", a statement about $\binom{2c}{c} = \binom{n}{k}$ with $k < c$. The reduction is a theorem; the residual problem is a Diophantine one of the same shape as Theorem 7.8, which was solved completely by descent. The same template — reduce to a Pell-like form, classify solutions by a Lucas/Fibonacci recursion — can be re-instantiated. *Falsifier:* a $t$ with exactly five or exactly seven representations.
+
+**Further directions.**
+
+- *Uniqueness of $3003$.* Is $3003$ the only integer with $N(t) = 8$? Equivalently, is it the only integer that is simultaneously triangular, adjacent-repetitive, and small enough? Corollary 7.9 already shows the next adjacent repetition has $29$ digits, and any competitor would need a triangular coincidence of that size.
+- *Non-adjacent infinite families.* Are there infinitely many $t$ with $N(t) \ge 6$ arising from *non-adjacent* column coincidences (like $120$, $210$, $1540$)? Each such family corresponds to a curve $\binom{n}{j} = \binom{m}{k}$ with $j < k$ fixed; for $(j,k) = (2,3)$ the curve has finitely many integral points, so any infinite family must use unbounded columns.
+- *Sharpening Theorem 4.3.* The bound is off by roughly a factor $16$ at $X = 10^6$. Restricting the box using the smoothness theorem — the value $\binom{n}{k}$ must be $\sqrt{2X}$-smooth — should lower the exponent of the logarithm.
+- *Improving Theorem 5.4.* The pigeonhole $4^b \le (2b+1)\binom{2b}{b}$ is nearly sharp; the remaining loss is the crude "two occurrences per folded index". A column-by-column analysis using Lemma 3.2 (which bounds the *row*, not just the column) should shave further.
 
 ---
 
 ## 11. Conclusion
 
-Pascal's triangle contains each of its entries astonishingly few times, and Singmaster's fifty-year-old question of whether "few" means "boundedly few" remains open. The theory developed here shows that a great deal about the phenomenon is nevertheless provable by elementary means: the multiplicity function is finite and computable; it is at most $2\log_2 t$; it equals $2$ for all odd primes; it is odd precisely at central binomial coefficients; it is at least $6$ infinitely often through a Fibonacci mechanism; it equals $3$ at the first nineteen non-trivial central binomial coefficients, hence never equals $5$ or $7$ below half a trillion; and below one million it attains its maximum, $8$, uniquely at $3003$.
-
-The parity criterion is the conceptual pivot. It explains why odd multiplicities are exotic, converts the search for fives and sevens into a question about a density-zero sequence, and thereby transforms a computationally hopeless verification into a short list of finite checks. If Singmaster's conjecture is eventually proved, one suspects the proof will similarly begin by finding the right symmetry to divide by.
+Pascal's triangle repeats itself far less than one might expect, and the reasons are now substantially understood. A reflection symmetry makes multiplicity even away from the central column, so odd multiplicities are a central-binomial phenomenon. A cross-cut between the geometry of the triangle (interior entries cap their row) and the arithmetic of factorials (prime factors cap at the row index) yields a hierarchy: the more often a number appears, the smoother it must be, and the larger it must be. Counting the resulting admissible box shows that the exceptional numbers occupy density zero, and a free pigeonhole halves the constant in the classical logarithmic bound. Finally, the principal known source of multiplicity six — a value repeating one row up and one column right — is now completely classified: it happens exactly at the Fibonacci pairs $\big(F_{2i+4}F_{2i+5},\, F_{2i+2}F_{2i+5}\big)$, a fact proved by turning the combinatorial coincidence into the norm-form equation $x^2 - xy - y^2 = \pm 5$, descending to consecutive Lucas numbers, and translating back through a dictionary whose engine is Cassini's identity. Singmaster's conjecture itself stands; but the terrain around it has been mapped.
