@@ -2200,17 +2200,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Sheaf Theory: Gluing Data on Spheres"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51322821",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
       "Computation"
     ],
     "id": "seed_229",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Learning with Errors: Hardness Reductions"
   },
