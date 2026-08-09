@@ -1246,16 +1246,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML-Information-Capacity: Shannon Entropy Limits of Single-Neuron EML Units"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "611582f9",
     "description": "Formally proves upper bounds on ciphertext noise growth during homomorphic evaluation and bootstrapping steps in BGV/BFV FHE schemes.",
     "domains": [
       "Cryptography"
     ],
     "id": "dir_50_32_8f1806ba",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:23.912412+00:00",
     "title": "FHE-Noise-Growth: Exact Noise Accumulation Bounds in Bootstrapped FHE"
   },
@@ -1606,17 +1607,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
   },
   {
-    "consumed_by_exp_id": "ebc27a78",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
     "domains": [
       "MachineLearning"
     ],
     "id": "push_4ae649eb_c81b44fe",
-    "phase": "A",
     "priority_score": 0.89196,
     "research_mode": "team",
     "source_exp_id": "4ae649eb",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-02T18:22:37.383512+00:00",
     "title": "Deepening: PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
@@ -7019,17 +7019,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** There is a uniform certificate language for standard completed L"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1dce8e4b",
     "description": "# Future directions\n\n1. Define periodic left and right shifts explicitly and derive the Rule 110 singleton theorem as a concrete corollary of `rule110_fixedPoints_card_of_right_transitive`.\n2. Replace Boolean algebraic normal forms by polynomials in `MvPolynomial (Fin n) (ZMod 2)` and prove equality of polynomial evaluation with the global update map.\n3. Specify the fixed-point coordinate ring using both update equations and Boolean relations `x_i^2 - x_i`; study its Krull dimension separately from its number of `GF(2)`-rational points.\n4. Formalize all 256 rule tables from rule numbers and prove that rule-number decoding is a bijection with `LocalRule`.\n5. Compute fixed-point counts for every rule and bounded array size inside Lean, then compare those finite invariants with a precisely encoded Wolfram classification. Any correlation claim should state the boundary convention, size range, statistic, and classification data explicitly.\n6. Study periodic orbits of length greater than one. Turing universality concerns unbounded spacetime evolution, so orbit structure and simulation embeddings are more relevant invariants than fixed points alone.\n7. Formulate any sheaf construction explicitly: give the site, topology, restriction maps, and intended theorem relating global sections to configurations before comparing section structure across rules.\n",
     "domains": [
       "Algebra",
       "Computation"
     ],
     "id": "fd_0295",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "71fc60c7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-18T09:05:12.698273+00:00",
     "title": "Define periodic left and right shifts explicitly and derive the Rule 110 sing"
   },
@@ -11576,18 +11577,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the analysis and adversarial review of the results now formalised i"
   },
   {
-    "consumed_by_exp_id": "357b9cdf",
+    "consumed_by_exp_id": "",
     "description": "# Future directions after cycle IX (the silver growth rate)\n\nCycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles against\nMathlib, **0 sorries**, axioms `propext`, `Classical.choice`, `Quot.sound` only).\n\n## What this cycle established\n\n* **`dist_window_log_fst`** \u2014 for every Euclid seed, `log m \u2264 d(i, z(m,n)) \u2264 log m + log 2`.\n  The hyperbolic position of a node is the logarithm of its *first seed coordinate*, to\n  within `log 2`.  This replaces the `\u00bd log c` coordinate of cycles I\u2013II by the one that\n  the Berggren moves act on linearly, and it is what makes the growth analysis below\n  possible.\n* **The silver potential.**  `\u03a6(m,n) = m + (\u221a2 \u2212 1) n` satisfies `\u03a6(B_i v) \u2264 (1+\u221a2) \u03a6(v)`\n  for all three moves and every seed (`pot_seedL_le`, `pot_seedR_le`), with *equality* for\n  the middle move (`pot_seedM_eq`).  Hence `\u03a6 \u2264 (1+\u221a2)^{k+1}` at depth `k`\n  (`reaches_pot_le`), and numerically the bound is attained at every depth.\n* **`dist_le_silver_depth`** \u2014 the sharp upper envelope `d \u2264 (k+1) log(1+\u221a2) + log 2`,\n  improving cycle VIII's `d \u2264 k log 3 + (5/2) log 2`; and **`mspine_dist_ge_silver`** \u2014\n  `d \u2265 (k+1) log(1+\u221a2) \u2212 \u00bd log 2` along the Pell spine.  Together\n  (`berggren_metric_growth_exponent`, `mspine_rate_tendsto_silver`) they identify the\n  metric growth exponent of the Berggren tree as **exactly `log(1+\u221a2) = 0.88137\u2026`**, the\n  logarithm of the silver ratio, strictly between `log 2` and `log 3`.\n* **Conjecture H2 is refuted, twice.**  `rspine_rate_tendsto_zero`: the pure-`B\u2083` path uses\n  the parabolic move `B\u2081` *never*, and still `d/k \u2192 0`; so `B\u2081` is not the only source of\n  the depth\u2013distance mismatch.  `no_path_attains_log_three`: no path whatever attains the\n  rate `log 3`, since `log(1+\u221a2) < log 3` with a uniform gap.  The correct trichotomy is\n  `pure_spine_rate_trichotomy`: `B\u2081 \u2192 0`, `B\u2082 \u2192 log(1+\u221a2)`, `B\u2083 \u2192 0`.\n* **The corrected positive statement** (`berggren_word_two_sided`,\n  `rate_ge_of_middle_frequency`): in terms of the labelling word `w`,\n  `(#B\u2082(w) + 1) log 2 \u2264 d \u2264 (|w| + 1) log(1+\u221a2) + log 2`.  The *middle* move is the only\n  universal expander (`run_fst_ge_two_pow`), so a positive rate is forced exactly by a\n  positive frequency of `B\u2082`.\n* **The optimal depth of a hypotenuse** (`depth_ge_of_hypot`, `exists_depth_reach_silver`):\n  a node of hypotenuse `\u2265 N` requires depth `\u2265 (log N \u2212 log 2)/(2 log(1+\u221a2)) \u2212 1`, and the\n  Pell spine achieves depth `\u2264 (log N + log 2)/(2 log(1+\u221a2))`.  The minimal depth at which\n  hypotenuse `N` appears is therefore `log N/(2 log(1+\u221a2)) + O(1)` \u2014 the mission's\n  \"`O(log N)` path length\" in its final, constant-sharp form.\n\n## Three bold, falsifiable next-cycle conjectures\n\n### I1. The metric growth spectrum of the Berggren tree is the full interval `[0, log(1+\u221a2)]`\nFor every `r \u2208 [0, log(1+\u221a2)]` there is an infinite Berggren path whose nodes satisfy\n`d(i, z_k)/k \u2192 r`, and the limit exists for every path whose letter frequencies converge;\nmoreover `r` is a continuous, strictly increasing function of the asymptotic `B\u2082`-frequency\nalong `B\u2081`-free paths, with `r = 0` exactly for the paths of `B\u2082`-density zero and\n`r = log(1+\u221a2)` exactly for the pure-`B\u2082` path.\n*The key insight is* that `dist_window_log_fst` turns `d/k` into `(log m)/k`, i.e. into a\nBirkhoff average of `log(expansion factor)` along the slope dynamics `x = m/n`, where\n`B\u2081 : x \u21a6 2 \u2212 1/x` is parabolic (zero expansion at its fixed point `x = 1`),\n`B\u2083 : x \u21a6 x + 2` is parabolic at infinity (zero asymptotic expansion), and only\n`B\u2082 : x \u21a6 2 + 1/x` has a hyperbolic fixed point `x = 1 + \u221a2` of expansion `1 + \u221a2` \u2014\nso the spectrum is the closure of the set of Birkhoff averages of a piecewise-smooth\ncocycle, and interpolation between `0` and the maximum is achieved by mixing `B\u2082` blocks\nwith long `B\u2083` blocks in prescribed proportion.\n*Why now?*  The two extreme values are theorems of this cycle (`pure_spine_rate_trichotomy`,\n`berggren_metric_growth_exponent`); building an intermediate rate needs only the explicit\nword `((B\u2082)^a (B\u2083)^b)^\u221e` and the elementary two-sided estimates already formalised for `m`.\n\n### I2. The silver bound is exact: `max_{depth k} \u03a6 = (1+\u221a2)^{k+1}` for every `k`\nThe inequality `reaches_pot_le` is an equality on the Pell spine, i.e.\n`\u03a6(mspine k) = (1+\u221a2)^{k+1}` (proved, `mspine_pot_eq`), and no other node of depth `k` has\nlarger potential; consequently `max_{depth k} m = (1+\u221a2)^{k+1}/\u221a2 \u00b7 (1 + o(1))`, and the\nextremal node at each depth is unique.\n*The key insight is* that the potential is *strictly* contracted by `B\u2081` and `B\u2083` \u2014 the\nslack is `(\u221a2 \u2212 1)(m \u2212 n)` for `B\u2083` and `n(2 \u2212 \u221a2) \u2212 (\u221a2 \u2212 1)(m \u2212 n)`-type for `B\u2081` \u2014 so\nany word containing a non-`B\u2082` letter loses a definite multiplicative factor, which can be\nmade quantitative by tracking the slope.\n*Why now?*  The numerics in `ComputationalEvidence.md` \u00a72 show `max \u03a6 / \u03bb^{k+1} = 1.00000`\nat every depth `\u2264 12` with the maximiser always the pure-`B\u2082` word; the strict-contraction\nlemmas are one `nlinarith` away from the ones already proved.\n\n### I3. Collisions cost depth: a colliding pair for `N` needs total depth `\u2265 c log N`\nIf two distinct Berggren nodes share hypotenuse `N`, then the *sum* of their depths is at\nleast `(log N)/(log(1+\u221a2)) \u2212 O(1)`, and there are semiprimes `N = pq` for which one of the\ntwo colliding nodes has depth `\u2265 N^{1/2 \u2212 o(1)}` \u2014 so the \"short certificate, expensive\nsearch\" dichotomy of cycles I\u2013VIII survives at the level of the tree, not merely of the\nmetric.\n*The key insight is* that `depth_ge_of_hypot` converts each node's hypotenuse into a depth\nlower bound with the *sharp* constant `1/(2 log(1+\u221a2))`, applied to both members of the\ncollision; while the second half is the pure-`B\u2083` phenomenon of this cycle \u2014 a lopsided\nrepresentation `N = m\u00b2 + n\u00b2` with `n` small has slope `n/m \u2192 0`, and the slope dynamics\nreaches such nodes only through `\u0398(m/n)` parabolic steps.\n*Why now?*  Cycle II's `exists_collision_gt` provides the explicit family\n`(20j+9, 10j+2)`, `(20j+7, 10j+6)`, whose slopes tend to `1/2` and `1/3` respectively \u2014\nprecisely the two walls of the trichotomy in `parentSeed` \u2014 so the depths of that family\ncan be computed in closed form and tested against the conjecture immediately.\n",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "fd_1053",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "97241621",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-09T13:09:55.047281+00:00",
     "title": "Cycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles agai"
   },
