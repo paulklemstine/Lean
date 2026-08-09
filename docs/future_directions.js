@@ -9848,17 +9848,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supp"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9a3a87cb",
     "description": "# Future directions\n\n- Prove the converse regularity criterion, completing Proposition 24: an operation is regular when its commutative image equals its diagonal image. A useful route is to construct an inner inverse of the pairmorph transformation that remains equivariant under pair reversal.\n- Characterize principal left ideals by pairmorph image and diagonal image, and principal right ideals by pairmorph kernel.\n- Bundle binary operations with the magma product as a `Monoid`, and express pairmorph as an equivalence with reversal-equivariant transformations under composition.\n- Complete the classification of the center, including the hypothesis on the cardinality of the underlying type and the exceptional small cases.\n- For finite types, formalize the paper's exact enumerations of idempotent and regular elements and verify initial values inside Lean.\n",
     "domains": [
       "Algebra",
       "Tropical"
     ],
     "id": "fd_0904",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e801d98f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T09:32:10.774782+00:00",
     "title": "Future directions from cycle e801d98f"
   },
