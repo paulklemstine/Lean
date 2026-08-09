@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "76a9f834",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V → [0,1]`, and `p ∈ [0,1]`, the probability that\n   `siteThresholdConfig key p = η`",
-      "quality_score": 0.7250399999999999,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-08-03T00:23:20",
-      "title": "`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,"
-    },
-    {
       "cycle_id": "5bb368e2",
       "domain": "NumberTheory",
       "key_insight": "# Wall–Sun–Sun Primes: Results and Future Directions\n\n## Status of the requested existence claim\n\nThe requested theorem cannot presently be supplied faithfully: existence of a Wall–Sun–Sun\nprime is an",
@@ -499,19 +489,19 @@
       "theorem_count": 92,
       "timestamp": "2026-08-09T14:24:33",
       "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
+    },
+    {
+      "cycle_id": "1f345ab3",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L¹` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
+      "quality_score": 0.73286,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-08-09T14:26:17",
+      "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0f63237d",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThe current formalization establishes the foundational connector between tropical corner loci and scheme-theoretic bend equations, together with a semiring-valued sheaf and its fu",
-      "quality_score": 0.7743899999999999,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-07-31T09:24:21",
-      "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
-    },
     {
       "cycle_id": "78bbd545",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 92,
       "timestamp": "2026-08-09T14:24:33",
       "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
+    },
+    {
+      "cycle_id": "1f345ab3",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L¹` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
+      "quality_score": 0.73286,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-08-09T14:26:17",
+      "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "08d2b371",
-      "domain": "Bridges",
-      "name": "of",
-      "quality": 0.79196
-    },
-    {
-      "cycle_id": "08d2b371",
-      "domain": "Bridges",
-      "name": "card_hEnd_units_cyclicModel",
-      "quality": 0.79196
-    },
-    {
-      "cycle_id": "08d2b371",
-      "domain": "Bridges",
-      "name": "card_hEnd_units_cyclicModel_two",
-      "quality": 0.79196
-    },
     {
       "cycle_id": "785c09ab",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "hasse_F7",
       "quality": 0.71196
+    },
+    {
+      "cycle_id": "1f345ab3",
+      "domain": "Tropical",
+      "name": "sep_minimizes_iff_coordinatewise",
+      "quality": 0.73286
+    },
+    {
+      "cycle_id": "1f345ab3",
+      "domain": "Tropical",
+      "name": "box_minimizes_iff_mem_box",
+      "quality": 0.73286
+    },
+    {
+      "cycle_id": "1f345ab3",
+      "domain": "Tropical",
+      "name": "boxStep_iterate_apply",
+      "quality": 0.73286
     }
   ],
-  "last_updated": "2026-08-09T14:24:33",
+  "last_updated": "2026-08-09T14:26:17",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "e3c425e4",
-        "quality": 0.7868499999999999,
-        "theorems": 16,
-        "title": "ArXiv paper: The Arithmetic of Semirings Part I: Ideals"
-      },
-      {
         "cycle_id": "1fc64f82",
         "quality": 0.79392,
         "theorems": 15,
@@ -4009,6 +4003,12 @@
         "quality": 0.7857999999999999,
         "theorems": 85,
         "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
+      },
+      {
+        "cycle_id": "1f345ab3",
+        "quality": 0.73286,
+        "theorems": 96,
+        "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
       }
     ]
   }
