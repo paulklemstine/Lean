@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c7c1ec6d",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nThe scalar-log unit-circle conjecture is now proved with a certified parameter\ninterval `[1/2, 3]`. The proof also establishes symmetry: every positive\nsolution has a negative sol",
-      "quality_score": 0.7667599999999999,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-08-02T23:23:50",
-      "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
-    },
-    {
       "cycle_id": "d7c83314",
       "domain": "NumberTheory",
       "key_insight": "# Future directions\n\n## Verified outcome of this phase\n\nThe formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lean`\nproves the finite-measure packing principle and specializes i",
@@ -499,19 +489,19 @@
       "theorem_count": 49,
       "timestamp": "2026-08-09T13:09:59",
       "title": "Derived from the analysis and adversarial review of"
+    },
+    {
+      "cycle_id": "36710bef",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## What is now settled\n\nThe previous cycle left six open directions. Five of them are now proved\noutright, and the sixth is settled in part together with an explicit\nobstruction t",
+      "quality_score": 0.7451150000000001,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-08-09T13:11:42",
+      "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a5e9a5f6",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\n- Formalize continuous cohomology of profinite groups with finite discrete modules and lift the finite-group averaging theorem to the paper's vanishing result for pro-prime-to-`ℓ`",
-      "quality_score": 0.699,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-07-31T08:23:27",
-      "title": "ArXiv paper: Greenberg's $μ=0$ conjecture for lisse sheaves over global function fields"
-    },
     {
       "cycle_id": "972f5eac",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 49,
       "timestamp": "2026-08-09T13:09:59",
       "title": "Derived from the analysis and adversarial review of"
+    },
+    {
+      "cycle_id": "36710bef",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\n## What is now settled\n\nThe previous cycle left six open directions. Five of them are now proved\noutright, and the sixth is settled in part together with an explicit\nobstruction t",
+      "quality_score": 0.7451150000000001,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-08-09T13:11:42",
+      "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8dd43c13",
-      "domain": "Applications",
-      "name": "one_add_exp_pos",
-      "quality": 0.79294
-    },
-    {
-      "cycle_id": "8dd43c13",
-      "domain": "Applications",
-      "name": "logistic_pos",
-      "quality": 0.79294
-    },
-    {
-      "cycle_id": "8dd43c13",
-      "domain": "Applications",
-      "name": "logistic_lt_one",
-      "quality": 0.79294
-    },
     {
       "cycle_id": "63e5c24f",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "sqrt_two_bounds",
       "quality": 0.743405
+    },
+    {
+      "cycle_id": "36710bef",
+      "domain": "NumberTheory",
+      "name": "smul_one_mem_unitary",
+      "quality": 0.7451150000000001
+    },
+    {
+      "cycle_id": "36710bef",
+      "domain": "NumberTheory",
+      "name": "norm_polarUnit",
+      "quality": 0.7451150000000001
+    },
+    {
+      "cycle_id": "36710bef",
+      "domain": "NumberTheory",
+      "name": "arctan_le_self",
+      "quality": 0.7451150000000001
     }
   ],
-  "last_updated": "2026-08-09T13:09:59",
+  "last_updated": "2026-08-09T13:11:42",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "972f5eac",
-        "quality": 0.77705,
-        "theorems": 17,
-        "title": "Sums of Three Cubes"
-      },
-      {
         "cycle_id": "7726ff6e",
         "quality": 0.686,
         "theorems": 15,
@@ -3699,6 +3693,12 @@
         "quality": 0.627125,
         "theorems": 225,
         "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
+      },
+      {
+        "cycle_id": "36710bef",
+        "quality": 0.7451150000000001,
+        "theorems": 43,
+        "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
       }
     ],
     "Physics": [
