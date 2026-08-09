@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d7c83314",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## Verified outcome of this phase\n\nThe formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lean`\nproves the finite-measure packing principle and specializes i",
-      "quality_score": 0.7814599999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-03T00:21:55",
-      "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
-    },
-    {
       "cycle_id": "76a9f834",
       "domain": "Cryptography",
       "key_insight": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V → [0,1]`, and `p ∈ [0,1]`, the probability that\n   `siteThresholdConfig key p = η`",
@@ -499,19 +489,19 @@
       "theorem_count": 43,
       "timestamp": "2026-08-09T13:11:42",
       "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
+    },
+    {
+      "cycle_id": "48492a97",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`χ = qu",
+      "quality_score": 0.71196,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-08-09T14:09:21",
+      "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "972f5eac",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nThe formal development proves the complete local classification modulo nine:\n`x³+y³+z³=k` is soluble over `Z/9Z` exactly when `k` is not congruent to `4`\nor `5`. It deliberately d",
-      "quality_score": 0.77705,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-31T09:23:08",
-      "title": "Sums of Three Cubes"
-    },
     {
       "cycle_id": "0f63237d",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 43,
       "timestamp": "2026-08-09T13:11:42",
       "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
+    },
+    {
+      "cycle_id": "48492a97",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`χ = qu",
+      "quality_score": 0.71196,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-08-09T14:09:21",
+      "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "63e5c24f",
-      "domain": "Computation",
-      "name": "rotWeight_isPrimitiveRoot",
-      "quality": 0.7934299999999999
-    },
-    {
-      "cycle_id": "63e5c24f",
-      "domain": "Computation",
-      "name": "norm_rotWeight",
-      "quality": 0.7934299999999999
-    },
-    {
-      "cycle_id": "63e5c24f",
-      "domain": "Computation",
-      "name": "rotWeight_pow_eq_one_iff",
-      "quality": 0.7934299999999999
-    },
     {
       "cycle_id": "08d2b371",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "arctan_le_self",
       "quality": 0.7451150000000001
+    },
+    {
+      "cycle_id": "48492a97",
+      "domain": "Combinatorics",
+      "name": "is",
+      "quality": 0.71196
+    },
+    {
+      "cycle_id": "48492a97",
+      "domain": "Combinatorics",
+      "name": "hasse_F5",
+      "quality": 0.71196
+    },
+    {
+      "cycle_id": "48492a97",
+      "domain": "Combinatorics",
+      "name": "hasse_F7",
+      "quality": 0.71196
     }
   ],
-  "last_updated": "2026-08-09T13:11:42",
+  "last_updated": "2026-08-09T14:09:21",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "caed44fe",
-        "quality": 0.686,
-        "theorems": 121,
-        "title": "`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-conta"
-      },
-      {
         "cycle_id": "6ffc84c2",
         "quality": 0.7892299999999999,
         "theorems": 114,
@@ -3265,6 +3259,12 @@
         "quality": 0.627125,
         "theorems": 585,
         "title": "occurrences of certain numbers in pascals triangle"
+      },
+      {
+        "cycle_id": "48492a97",
+        "quality": 0.71196,
+        "theorems": 92,
+        "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
       }
     ],
     "Computation": [
