@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-09T15:02:31.944812+00:00",
+  "last_updated": "2026-08-09T17:55:19.513700+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -51475,6 +51475,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-09T15:02:31.840447+00:00",
       "title": "occurrences of certain numbers in pascals triangle"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1159,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 6,
+      "domain": "Novelty",
+      "duration_seconds": 3811.6334965229034,
+      "end_time": 1786298025.0200093,
+      "files_integrated": 4,
+      "job_id": "e870e995",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.718325,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7559,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.709,
+        "novelty": 0.9413,
+        "proof_depth": 0.6094,
+        "usefulness": 0.7797
+      },
+      "quality_score": 0.7131,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786294213.3865128,
+      "strategy_count": 0,
+      "theorem_count": 87,
+      "theorem_novelty_disproof": 4,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 77,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-09T17:55:19.401923+00:00",
+      "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ab554343",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause–effect repertoires, and divergence-based informati",
-      "quality_score": 0.79623,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-08-03T08:05:21",
-      "title": "Consciousness as Integrated Information"
-    },
-    {
       "cycle_id": "4db4579d",
       "domain": "Shared",
       "key_insight": "# Future directions\n\n1. **Subobject-frame realization.** For every Mathlib category `C` equipped with finite limits,\n   arbitrary coproducts satisfying the Grothendieck-topos axioms, and a subobject c",
@@ -499,19 +489,19 @@
       "theorem_count": 85,
       "timestamp": "2026-08-09T15:02:31",
       "title": "occurrences of certain numbers in pascals triangle"
+    },
+    {
+      "cycle_id": "e870e995",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= α ·` degree, `α > 0`) on the cohomology of a bi",
+      "quality_score": 0.7131,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-09T17:55:19",
+      "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9d058f1b",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThe explicit `Bool` witness shows that moving from `Prop`-valued to data-valued\nfibers avoids collapse, but it also raises the question of how restrictive the\nnew equation really",
-      "quality_score": 0.74478,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-31T14:49:23",
-      "title": "The exact proposed fixed-point equation was formalized in"
-    },
     {
       "cycle_id": "8fe295b2",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 85,
       "timestamp": "2026-08-09T15:02:31",
       "title": "occurrences of certain numbers in pascals triangle"
+    },
+    {
+      "cycle_id": "e870e995",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= α ·` degree, `α > 0`) on the cohomology of a bi",
+      "quality_score": 0.7131,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-09T17:55:19",
+      "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "713730e2",
-      "domain": "Pythagorean",
-      "name": "lap_single",
-      "quality": 0.78748
-    },
-    {
-      "cycle_id": "713730e2",
-      "domain": "Pythagorean",
-      "name": "rankAtLeast_add_of_forall_le",
-      "quality": 0.78748
-    },
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
-      "name": "castLat_subset_iff",
-      "quality": 0.79707
-    },
     {
       "cycle_id": "39ee2889",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "luc_two_mul",
       "quality": 0.746255
+    },
+    {
+      "cycle_id": "e870e995",
+      "domain": "Novelty",
+      "name": "d_mul_eq_zero",
+      "quality": 0.7131
+    },
+    {
+      "cycle_id": "e870e995",
+      "domain": "Novelty",
+      "name": "cocycle_mul_coboundary",
+      "quality": 0.7131
+    },
+    {
+      "cycle_id": "e870e995",
+      "domain": "Novelty",
+      "name": "coboundary_mul_cocycle",
+      "quality": 0.7131
     }
   ],
-  "last_updated": "2026-08-09T15:02:31",
+  "last_updated": "2026-08-09T17:55:19",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b95b0e68",
-        "quality": 0.6609054304347827,
-        "theorems": 116,
-        "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
-      },
-      {
         "cycle_id": "786dcda9",
         "quality": 0.6520853,
         "theorems": 246,
@@ -3637,6 +3631,12 @@
         "quality": 0.746255,
         "theorems": 85,
         "title": "occurrences of certain numbers in pascals triangle"
+      },
+      {
+        "cycle_id": "e870e995",
+        "quality": 0.7131,
+        "theorems": 87,
+        "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy"
       }
     ],
     "NumberTheory": [
