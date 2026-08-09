@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f15cd85a",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\n## What is formalized\n\n`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained\nformal development with no assumption that a perfect cuboid exists:\n\n1. def",
-      "quality_score": 0.76837,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-02T22:20:26",
-      "title": "Perfect Cuboid (Euler Brick)"
-    },
-    {
       "cycle_id": "c7c1ec6d",
       "domain": "NumberTheory",
       "key_insight": "# Future directions\n\nThe scalar-log unit-circle conjecture is now proved with a certified parameter\ninterval `[1/2, 3]`. The proof also establishes symmetry: every positive\nsolution has a negative sol",
@@ -499,19 +489,19 @@
       "theorem_count": 50,
       "timestamp": "2026-08-08T14:58:45",
       "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
+    },
+    {
+      "cycle_id": "97241621",
+      "domain": "Novelty",
+      "key_insight": "# Future directions after cycle IX (the silver growth rate)\n\nCycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles against\nMathlib, **0 sorries**, axioms `propext`, `Classical.ch",
+      "quality_score": 0.743405,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-08-09T13:09:59",
+      "title": "Derived from the analysis and adversarial review of"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "50db037d",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\n1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > 0`, and any `t - 1` distinct nonzero evaluation points, conditioning a uniformly sampled degree-`<",
-      "quality_score": 0.7722199999999999,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-07-31T08:23:20",
-      "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-    },
     {
       "cycle_id": "a5e9a5f6",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 585,
       "timestamp": "2026-08-08T21:54:19",
       "title": "occurrences of certain numbers in pascals triangle"
+    },
+    {
+      "cycle_id": "97241621",
+      "domain": "Novelty",
+      "key_insight": "# Future directions after cycle IX (the silver growth rate)\n\nCycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles against\nMathlib, **0 sorries**, axioms `propext`, `Classical.ch",
+      "quality_score": 0.743405,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-08-09T13:09:59",
+      "title": "Derived from the analysis and adversarial review of"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5357ee14",
-      "domain": "Shared",
-      "name": "eq_or_eq_opposite",
-      "quality": 0.79609
-    },
-    {
-      "cycle_id": "5357ee14",
-      "domain": "Shared",
-      "name": "Consistent",
-      "quality": 0.79609
-    },
-    {
-      "cycle_id": "5357ee14",
-      "domain": "Shared",
-      "name": "revise_comm_of_ne_atom",
-      "quality": 0.79609
-    },
     {
       "cycle_id": "8dd43c13",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "eulerMascheroniSeq_fifteen",
       "quality": 0.71899
+    },
+    {
+      "cycle_id": "97241621",
+      "domain": "Novelty",
+      "name": "dist_window_log_fst",
+      "quality": 0.743405
+    },
+    {
+      "cycle_id": "97241621",
+      "domain": "Novelty",
+      "name": "sqrt_two_sq",
+      "quality": 0.743405
+    },
+    {
+      "cycle_id": "97241621",
+      "domain": "Novelty",
+      "name": "sqrt_two_bounds",
+      "quality": 0.743405
     }
   ],
-  "last_updated": "2026-08-08T21:54:19",
+  "last_updated": "2026-08-09T13:09:59",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "716ebed1",
-        "quality": 0.686,
-        "theorems": 123,
-        "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theore"
-      },
-      {
         "cycle_id": "66bb09ac",
         "quality": 0.686,
         "theorems": 128,
@@ -3637,6 +3631,12 @@
         "quality": 0.71899,
         "theorems": 50,
         "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
+      },
+      {
+        "cycle_id": "97241621",
+        "quality": 0.743405,
+        "theorems": 49,
+        "title": "Derived from the analysis and adversarial review of"
       }
     ],
     "NumberTheory": [
