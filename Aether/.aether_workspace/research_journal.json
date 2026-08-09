@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4db4579d",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **Subobject-frame realization.** For every Mathlib category `C` equipped with finite limits,\n   arbitrary coproducts satisfying the Grothendieck-topos axioms, and a subobject c",
-      "quality_score": 0.80477,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-08-03T08:07:06",
-      "title": "Bridge: Category Theory as Universal Language for Mathematics"
-    },
-    {
       "cycle_id": "362b8901",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe following conjectures sharpen the boundary of the normalized development in\n`Catalog/Applications/EML/RischAlgorithm.lean`. Each is intended as a concrete,\nfalsifiable extensi",
@@ -499,19 +489,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-09T17:55:19",
       "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
+    },
+    {
+      "cycle_id": "0dcd87ee",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` — the private\n  rate–distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
+      "quality_score": 0.751005,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-08-09T19:10:06",
+      "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8fe295b2",
-      "domain": "Applications",
-      "key_insight": "# Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsicall",
-      "quality_score": 0.7712399999999999,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-07-31T18:56:28",
-      "title": "EML Quantum Activation Functions"
-    },
     {
       "cycle_id": "1cf3185d",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-09T17:55:19",
       "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
+    },
+    {
+      "cycle_id": "0dcd87ee",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` — the private\n  rate–distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
+      "quality_score": 0.751005,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-08-09T19:10:06",
+      "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
-      "name": "last_not_mem_castLat",
-      "quality": 0.79707
-    },
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
-      "name": "liftUp_subset_iff",
-      "quality": 0.79707
-    },
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
-      "name": "castLat_subset_iff",
-      "quality": 0.7010699999999999
-    },
     {
       "cycle_id": "39ee2889",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "coboundary_mul_cocycle",
       "quality": 0.7131
+    },
+    {
+      "cycle_id": "0dcd87ee",
+      "domain": "Combinatorics",
+      "name": "is",
+      "quality": 0.751005
+    },
+    {
+      "cycle_id": "0dcd87ee",
+      "domain": "Combinatorics",
+      "name": "of",
+      "quality": 0.751005
+    },
+    {
+      "cycle_id": "0dcd87ee",
+      "domain": "Combinatorics",
+      "name": "mass_good_le_rate_mul_ballMass",
+      "quality": 0.751005
     }
   ],
-  "last_updated": "2026-08-09T17:55:19",
+  "last_updated": "2026-08-09T19:10:06",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "6ffc84c2",
-        "quality": 0.7892299999999999,
-        "theorems": 114,
-        "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
-      },
-      {
         "cycle_id": "2d9904f9",
         "quality": 0.686,
         "theorems": 91,
@@ -3265,6 +3259,12 @@
         "quality": 0.71196,
         "theorems": 92,
         "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
+      },
+      {
+        "cycle_id": "0dcd87ee",
+        "quality": 0.751005,
+        "theorems": 67,
+        "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
       }
     ],
     "Computation": [
