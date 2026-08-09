@@ -85,36 +85,67 @@ def _load_env_file():
                     os.environ[k] = v
 
 def _close_github_issue_if_needed(job):
-    """Close the GitHub issue associated with an injected direction when it finishes or integrates."""
-    if getattr(job, 'github_issue', None):
-        try:
-            import github_injector
-            st = getattr(job, 'status', '')
-            if st in ("integrated", "completed") or getattr(job, 'phase', '') == "complete":
-                pkg_filename = ""
-                if hasattr(job, "concept") and job.concept:
-                    import re
-                    title = job.concept.title.replace(" ", "_").replace("-", "_").lower()
-                    title = re.sub(r'[^a-z0-9_]', '', title)[:50]
-                    pkg_filename = f"{title}.json"
-                
-                pkg_url = f"https://raw.githubusercontent.com/paulklemstine/Lean/master/Packages/{pkg_filename}" if pkg_filename else ""
-                comment = (
-                    f"### Aether Research Results\n\n"
-                    f"**Direction**: {getattr(job.concept, 'title', 'Injected Direction')}\n"
-                    f"**Quality Score**: {job.quality_score:.3f}\n"
-                    f"**Theorems Proven**: {job.theorem_count}\n\n"
-                    f"**Research Package**: [{pkg_url}]({pkg_url})\n\n"
-                    f"The results have been integrated into the Aether Catalog."
-                )
-            elif st == "rejected":
-                comment = f"Aether completed researching this direction, but the results did not meet the quality threshold for integration.\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}"
-            else:
-                comment = f"Aether encountered an error or failed to process this direction.\n\n**Status**: {st}\n**Error**: {getattr(job, 'error_message', 'Unknown error')}"
+    """Close the GitHub issue associated with an injected direction when it reaches terminal completion."""
+    issue_num = getattr(job, 'github_issue', None)
+    if not issue_num:
+        return
+
+    st = getattr(job, 'status', '')
+    phase = getattr(job, 'phase', '')
+
+    # DO NOT close issues for active or queued jobs!
+    if st in ("dispatch_queued", "retry_queued", "queued", "preparing", "dispatched", "B_dispatched"):
+        return
+
+    try:
+        import github_injector
+        if phase == "complete" or st == "integrated":
+            # Search Packages/ for the actual generated JSON package
+            from pathlib import Path
+            pkgs_dir = Path(__file__).parent.parent / "Packages"
+            actual_pkg_filename = ""
+            if pkgs_dir.exists():
+                job_slug = job.job_id[:8] if hasattr(job, 'job_id') else ""
+                for pkg_file in pkgs_dir.glob("*.json"):
+                    if pkg_file.name in ("index.json", "lineage.json", "future_directions.json", "future_directions_snapshot.json"):
+                        continue
+                    if job_slug and job_slug in pkg_file.name:
+                        actual_pkg_filename = pkg_file.name
+                        break
+                    if hasattr(job, "concept") and job.concept and job.concept.title:
+                        title_clean = job.concept.title.replace(" ", "_").replace("-", "_").lower()[:30]
+                        if title_clean in pkg_file.name.lower():
+                            actual_pkg_filename = pkg_file.name
+                            break
             
-            github_injector.close_injected_direction_with_comment(job.github_issue, comment)
-        except Exception as e:
-            print(f"[Tick] Failed to close GitHub issue {job.github_issue}: {e}")
+            if not actual_pkg_filename and hasattr(job, "concept") and job.concept and job.concept.title:
+                import re
+                title = job.concept.title.replace(" ", "_").replace("-", "_").lower()
+                title = re.sub(r'[^a-z0-9_]', '', title)[:50]
+                actual_pkg_filename = f"{title}.json"
+
+            pkg_raw_url = f"https://raw.githubusercontent.com/paulklemstine/Lean/master/Packages/{actual_pkg_filename}" if actual_pkg_filename else ""
+            pkg_web_url = f"https://alethean.org/#pkg={actual_pkg_filename}" if actual_pkg_filename else ""
+            
+            comment = (
+                f"### Aether Research Results\n\n"
+                f"**Direction**: {getattr(job.concept, 'title', 'Injected Direction')}\n"
+                f"**Quality Score**: {job.quality_score:.3f}\n"
+                f"**Theorems Proven**: {job.theorem_count}\n\n"
+                f"**Research Package (JSON)**: [{actual_pkg_filename}]({pkg_raw_url})\n"
+                f"**Alethean Web App**: [{pkg_web_url}]({pkg_web_url})\n\n"
+                f"The formalizations, research article, paper, and interactive visualization demo have all been integrated into the Aether Catalog."
+            )
+        elif st == "rejected":
+            comment = f"Aether completed researching this direction, but the results did not meet the quality threshold for integration.\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}"
+        elif st in ("failed", "error"):
+            comment = f"Aether encountered an unrecoverable error while processing this direction.\n\n**Status**: {st}\n**Error**: {getattr(job, 'error_message', 'Unknown error')}"
+        else:
+            return
+
+        github_injector.close_injected_direction_with_comment(issue_num, comment)
+    except Exception as e:
+        print(f"[Tick] Failed to close GitHub issue {issue_num}: {e}")
 
 _load_env_file()
 
