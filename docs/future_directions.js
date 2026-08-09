@@ -6656,17 +6656,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Combinatorial and algebraic proofs of Keller's $A_2\\square A_2$ $q$-dilogarithm identity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "15462074",
     "description": "Investigate the ArXiv paper 'Chebotarev geodesic theorem: non-split case' and formalize its key results. Abstract: We study the prime geodesic theorem for congruence subgroups of indefinite quaternion orders. We prove that the geodesic analogue of the Chebotarev density theorem for these groups holds with exponent $25/36 + \\varepsilon$. In particular, we deduce that the prime geodesic theorem holds with exponent $25/36 + \\varepsilon$ for any congruence subgroup of any indefinite quaternion order over $\\mathbb{Q}$. The idea of the proof is to reduce the problem to the split case, which has been handled previously by the author.",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "fd_0992",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2608.04923v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-06T03:47:39.444312+00:00",
     "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
   },

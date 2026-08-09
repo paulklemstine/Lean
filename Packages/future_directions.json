@@ -21580,11 +21580,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "15462074",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -21597,7 +21597,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0992",
-      "last_attempt_time": "2026-08-06T06:55:27.138301+00:00",
+      "last_attempt_time": "2026-08-09T04:44:24.799699+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -21612,7 +21612,7 @@
       "source": "",
       "source_exp_id": "2608.04923v1",
       "source_path": "http://arxiv.org/abs/2608.04923v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-06T03:47:39.444312+00:00",
       "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
@@ -36248,6 +36248,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
