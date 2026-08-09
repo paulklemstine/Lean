@@ -1801,24 +1801,34 @@ Research mode: {concept.research_mode}
                     job.status = "idle_pending"
                     completed.append(job)
                 elif status == "RUNNING":
-                    # 1-hour stall continue-injection handler:
-                    # If a job has been running for >= 1 hour (3600s) and hasn't been
-                    # injected with "continue" in the last hour, call ask("continue") on Aristotle.
+                    # 1-hour stall finish handler:
+                    # If a job has been running for >= 1 hour (3600s), call ask("finish") on Aristotle,
+                    # mark the job as completed, and process research package files like a finished job.
                     age_seconds = (now - job.dispatch_time) if getattr(job, "dispatch_time", None) else 0.0
                     age_min = age_seconds / 60.0
                     last_cont = getattr(job, "last_stall_continue_time", 0.0)
 
                     if age_seconds >= 3600.0 and (now - last_cont) >= 3600.0:
-                        print(f"[Poll] {pid[:8]} STALL DETECTED: RUNNING for {age_min:.0f}min (>= 1h) — injecting 'continue' instruction via ask()")
+                        print(f"[Poll] {pid[:8]} STALL DETECTED: RUNNING for {age_min:.0f}min (>= 1h) — injecting 'finish' instruction and marking completed")
                         try:
                             if hasattr(self, "aristotle") and self.aristotle and hasattr(self.aristotle, "resume_project"):
-                                _tid = await self.aristotle.resume_project(pid, "continue")
-                                job.last_stall_continue_time = now
-                                job.dispatch_time = now  # Reset wall-clock timer for next 1h window
-                                job.resume_count = getattr(job, "resume_count", 0) + 1
-                                print(f"[Poll] {pid[:8]} Successfully injected 'continue' instruction (new task: {_tid[:8] if _tid else 'ok'})")
+                                _tid = await self.aristotle.resume_project(pid, "finish")
+                                print(f"[Poll] {pid[:8]} Injected 'finish' instruction (task: {_tid[:8] if _tid else 'ok'})")
                         except Exception as _ce:
-                            print(f"[Poll] {pid[:8]} Failed to inject 'continue' instruction: {_ce}")
+                            print(f"[Poll] {pid[:8]} Failed to inject 'finish' instruction: {_ce}")
+
+                        job.last_stall_continue_time = now
+                        job.status = "completed"
+                        job.complete_time = time.time()
+                        try:
+                            rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                            rlog.record_completion(
+                                status="COMPLETED_STALL_FINISH", percent=percent, has_files=has_files,
+                            )
+                        except Exception:
+                            pass
+                        completed.append(job)
+                        continue
 
                     # Secondary checkpoint-based stall signal. The authoritative
                     # wall-clock cap is applied above (before polling), so this

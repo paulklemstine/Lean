@@ -9,8 +9,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from knowledge_extractor import KnowledgeExtractor, ResearchJob, ResearchConcept
 
 @pytest.mark.asyncio
-async def test_stall_continue_injection(tmp_path):
-    """Verify that jobs running for >= 1 hour get 'continue' injected via ask()."""
+async def test_stall_finish_injection(tmp_path):
+    """Verify that jobs running for >= 1 hour get 'finish' injected via ask() and are completed."""
     config = {"autoresearch": {"max_inflight": 9}, "workspace": str(tmp_path)}
     extractor = KnowledgeExtractor(config=config)
     extractor.workspace = tmp_path
@@ -48,12 +48,11 @@ async def test_stall_continue_injection(tmp_path):
     # Call poll_all()
     completed = await extractor.poll_all()
 
-    # Verify resume_project was called with "continue"
-    mock_aristotle.resume_project.assert_called_once_with("proj_stall_123", "continue")
+    # Verify resume_project was called with "finish"
+    mock_aristotle.resume_project.assert_called_once_with("proj_stall_123", "finish")
 
-    # Verify job attributes updated
+    # Verify job attributes updated and job is marked completed
     assert hasattr(job, "last_stall_continue_time")
     assert job.last_stall_continue_time > 0
-    assert job.resume_count == 1
-    # Dispatch time reset so the next 1h window starts
-    assert job.dispatch_time > dispatch_time
+    assert job.status == "completed"
+    assert job in completed
