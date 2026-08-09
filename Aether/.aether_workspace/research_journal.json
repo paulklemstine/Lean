@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5bb368e2",
-      "domain": "NumberTheory",
-      "key_insight": "# Wall–Sun–Sun Primes: Results and Future Directions\n\n## Status of the requested existence claim\n\nThe requested theorem cannot presently be supplied faithfully: existence of a Wall–Sun–Sun\nprime is an",
-      "quality_score": 0.7482099999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-03T00:24:45",
-      "title": "Wall-Sun-Sun Primes"
-    },
-    {
       "cycle_id": "bffb7591",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\nThe Lean development proves the sharp deterministic cardinal-growth obstruction and a linear-threshold avoidance theorem.  The following are concrete conjectures extending it.\n\n1.",
@@ -499,19 +489,19 @@
       "theorem_count": 96,
       "timestamp": "2026-08-09T14:11:03",
       "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
+    },
+    {
+      "cycle_id": "756b62a7",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nDerived from the formalization in `Catalog/Pythagorean/SchurIdempotentGammaTwo.lean`, `SchurIdempotentGap.lean`,\n`SchurIdempotentAlgebra.lean` and `SchurIdempotentEQCost.lean`.\n\nW",
+      "quality_score": 0.7084450000000001,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-08-09T14:12:45",
+      "title": "ArXiv paper: Towards a characterization of idempotent Schur multipliers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "78bbd545",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Kapranov reverse inclusion for Laurent hypersurfaces.** For an algebraically closed, complete, nontrivially valued field and every finite Laurent polynomial with nonzero coef",
-      "quality_score": 0.7874099999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-07-31T10:08:45",
-      "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-    },
     {
       "cycle_id": "fb6f9bc5",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 96,
       "timestamp": "2026-08-09T14:11:03",
       "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
+    },
+    {
+      "cycle_id": "756b62a7",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nDerived from the formalization in `Catalog/Pythagorean/SchurIdempotentGammaTwo.lean`, `SchurIdempotentGap.lean`,\n`SchurIdempotentAlgebra.lean` and `SchurIdempotentEQCost.lean`.\n\nW",
+      "quality_score": 0.7084450000000001,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-08-09T14:12:45",
+      "title": "ArXiv paper: Towards a characterization of idempotent Schur multipliers"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "785c09ab",
-      "domain": "Tropical",
-      "name": "mem_decisiveSet_iff",
-      "quality": 0.7857999999999999
-    },
-    {
-      "cycle_id": "785c09ab",
-      "domain": "Tropical",
-      "name": "decisiveSet_subset",
-      "quality": 0.7857999999999999
-    },
-    {
-      "cycle_id": "785c09ab",
-      "domain": "Tropical",
-      "name": "decisiveSet_nonempty",
-      "quality": 0.7857999999999999
-    },
     {
       "cycle_id": "9f1ee483",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "boxStep_iterate_apply",
       "quality": 0.73286
+    },
+    {
+      "cycle_id": "756b62a7",
+      "domain": "Pythagorean",
+      "name": "sum_finProd",
+      "quality": 0.7084450000000001
+    },
+    {
+      "cycle_id": "756b62a7",
+      "domain": "Pythagorean",
+      "name": "GammaTwoLE",
+      "quality": 0.7084450000000001
+    },
+    {
+      "cycle_id": "756b62a7",
+      "domain": "Pythagorean",
+      "name": "IsBlowUp",
+      "quality": 0.7084450000000001
     }
   ],
-  "last_updated": "2026-08-09T14:11:03",
+  "last_updated": "2026-08-09T14:12:45",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "a5e9a5f6",
-        "quality": 0.699,
-        "theorems": 4,
-        "title": "ArXiv paper: Greenberg's $μ=0$ conjecture for lisse sheaves over global function"
-      },
-      {
         "cycle_id": "bffb7591",
         "quality": 0.77061,
         "theorems": 9,
@@ -3885,6 +3879,12 @@
         "quality": 0.71728,
         "theorems": 70,
         "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
+      },
+      {
+        "cycle_id": "756b62a7",
+        "quality": 0.7084450000000001,
+        "theorems": 86,
+        "title": "ArXiv paper: Towards a characterization of idempotent Schur multipliers"
       }
     ],
     "Shared": [
