@@ -12868,7 +12868,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b8bd03e1",
     "description": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone does not guarantee robustness under finite deletion.\n\n## 1. Ordered-block criterion from the paper\n\nFormalize the paper's more general criterion before specializing to dyadic blocks. A useful interface should include:\n\n- a sequence of finite, pairwise ordered blocks of natural numbers;\n- lower bounds on each block's cardinality;\n- hypotheses controlling gaps or overlap of attainable subset-sum intervals;\n- a conclusion phrased as `StronglyComplete`.\n\nThis is likely the most reusable route to the headline theorem.\n\n## 2. Dyadic specialization\n\nDefine\n\n`dyadicBlock A k = A ∩ Set.Ioc (2^k) (2^(k+1))`\n\nand formalize the eventual six-elements-per-block condition. Once the ordered-block theorem is available, prove the dyadic result by checking its structural hypotheses.\n\n## 3. Analytic divergence hypothesis\n\nIntroduce distance to the nearest integer using the existing circle/quotient or `Int.fract` infrastructure, and formalize the condition\n\n`∀ θ : ℝ, θ ∉ Set.range ((↑) : ℤ → ℝ) → ∑' a, ... = ∞`\n\nwith a nonnegative extended-real sum (`ℝ≥0∞`) if that gives the cleanest notion of divergence. Care is needed because the paper writes a sum indexed by a set rather than a sequence.\n\n## 4. Monotonicity and tails\n\nUseful intermediate results include:\n\n- every superset of a complete set is complete;\n- every superset of a strongly complete set is strongly complete;\n- finite changes preserve strong completeness (already proved here);\n- a set is strongly complete iff every finite initial segment can be deleted while retaining completeness.\n\nThe final equivalence turns arbitrary finite deletions into canonical initial-segment deletions and may simplify the paper's argument.\n\n## 5. Further contrarian tests\n\nInvestigate and either prove or refute:\n\n1. If `A` is complete and contains infinitely many odd elements, then `A` is strongly complete.\n2. If every residue class modulo every `m ≥ 2` contains infinitely many elements of `A`, then completeness implies strong completeness.\n3. Six elements in each sufficiently large dyadic block can be reduced to five if the analytic divergence hypothesis is strengthened quantitatively.\n\nThe first conjecture is especially suspect: parity is only one possible finite-deletion obstruction, and analogous obstructions modulo larger integers should be searched for.\n\n## 6. Exact correspondence with the source\n\nA later phase should pin the paper's bibliographic version and translate its named propositions in proof order, recording exactly which assumptions are used in each result. This file deliberately focuses on foundational consequences and a contrarian counterexample rather than claiming a complete formalization of the analytic headline theorem.\n",
     "domain_bridges": [],
     "domains": [
@@ -12881,7 +12881,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "cb10fc42",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T09:31:22.032828+00:00",
     "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
   },

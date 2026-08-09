@@ -16994,11 +16994,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b8bd03e1",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -17011,7 +17011,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0876",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-09T01:12:04.792292+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -17026,7 +17026,7 @@
       "source": "",
       "source_exp_id": "cb10fc42",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/cb10fc42",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_20f13f16",
       "timestamp": "2026-08-01T09:31:22.032828+00:00",
       "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
@@ -36243,6 +36243,7 @@
   "recent_theme_keywords": {},
   "selection_log": [
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "abduction_followup"
   ]
 }
