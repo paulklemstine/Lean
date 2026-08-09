@@ -3663,7 +3663,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Geometry: Brunn-Minkowski Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25e6e318",
     "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
     "domains": [
       "MachineLearning",
@@ -3671,10 +3671,11 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "fd_0686",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697834+00:00",
     "title": "Attention Mechanisms: Mathematical Properties"
   },
