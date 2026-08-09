@@ -11473,7 +11473,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "10484db6",
     "description": "# Future directions\n\n1. Replace natural-number theorem codes by a concrete recursively enumerable syntax for first-order set theory, with a proof-checking predicate and explicit enumeration of derivations.\n2. Separate theorems, true sentences, and semantic predicates. The present diagonal barrier concerns all `ℕ → Prop`; transferring it to arithmetic truth requires a satisfaction relation and a formal undefinability theorem.\n3. Formalize incompleteness with the hypotheses it actually needs: effective axiomatizability, consistency or soundness, and enough represented arithmetic. A discovery-rate bound alone has no Gödel consequence.\n4. Generalize `finite_corpus_common_deadline` to compact topological families and compare genuine compactness with the invalid inference from finite proofs to a finite deadline for infinitely many theorems.\n5. Add resource costs for proof search and verification, rather than only counting output. A Bekenstein-style model should specify a time horizon, operations per step, memory, and whether the cap is instantaneous or cumulative.\n6. Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batches using prefix sums.\n7. Replace classical `Prop` predicates in the semantic diagonal theorem by computable Boolean predicates. The naive diagonal is then computable only relative to a sufficiently strong evaluator, leading naturally to Turing jumps and oracle-relative discovery.\n",
     "domain_bridges": [],
     "domains": [
@@ -11486,7 +11486,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "227d6015",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T14:30:03.550639+00:00",
     "title": "Replace natural-number theorem codes by a concrete recursively enumerable syn"
   },

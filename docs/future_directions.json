@@ -12159,11 +12159,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "10484db6",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12176,7 +12176,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0602",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-09T12:07:35.507518+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -12191,7 +12191,7 @@
       "source": "",
       "source_exp_id": "227d6015",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/227d6015",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_204477ed",
       "timestamp": "2026-07-22T14:30:03.550639+00:00",
       "title": "Replace natural-number theorem codes by a concrete recursively enumerable syn"
@@ -36242,7 +36242,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
     "famous_subtask",
@@ -36261,6 +36260,7 @@
     "cross_domain_bridge",
     "abduction_followup",
     "cross_domain_bridge",
-    "famous_subtask"
+    "famous_subtask",
+    "abduction_followup"
   ]
 }
