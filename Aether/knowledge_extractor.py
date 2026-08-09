@@ -379,7 +379,7 @@ class KnowledgeExtractor:
 
         n = len(records)
         cache_bucket = n // 10
-        cache_version = 2  # bump when the formula/clamp changes
+        cache_version = 3  # bump when the formula/clamp changes
         try:
             if cache_path.exists():
                 cache = _json.loads(cache_path.read_text())
@@ -390,13 +390,12 @@ class KnowledgeExtractor:
         except Exception:
             pass
 
-        # p70 of the most recent Phase A scores (up to 50) -> top 30% gate.
+        # p50 (median) of the most recent Phase A scores (up to 50) -> top 50% gate.
         recent = sorted(scores[-50:])
-        p70_idx = int(0.70 * (len(recent) - 1))
-        threshold = recent[p70_idx]
-        # Clamp to [0.25, 0.70] — never gate so low we package junk, nor
-        # so high we stall when scores cluster high.
-        threshold = max(0.25, min(0.70, threshold))
+        p50_idx = int(0.50 * (len(recent) - 1))
+        threshold = recent[p50_idx]
+        # Clamp to [0.25, 0.55] — ensure high quality math cycles (>=0.55) get packaged
+        threshold = max(0.25, min(0.55, threshold))
 
         try:
             cache_path.write_text(_json.dumps({

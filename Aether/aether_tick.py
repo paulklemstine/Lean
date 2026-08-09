@@ -1338,7 +1338,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     # 3. Retry or dispatch any queued jobs first, before discovering new directions.
     queued_jobs = [j for j in extractor.inflight.values() if j.status in ("retry_queued", "dispatch_queued")]
     if queued_jobs:
-        queued_jobs.sort(key=lambda j: getattr(j, "retry_queued_time", 0.0))
+        # Prioritize Phase B packaging jobs (phase == "B") over Phase A discovery
+        queued_jobs.sort(key=lambda j: (0 if getattr(j, "phase", "") == "B" else 1, getattr(j, "retry_queued_time", 0.0)))
         server_running = await _safe_get_active_jobs_count(extractor.aristotle)
     else:
         server_running = -1
