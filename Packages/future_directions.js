@@ -3330,17 +3330,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Rucker: The Lifebox \u2014 Information-Theoretic Identity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1af4a850",
     "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
     "domains": [
       "NumberTheory",
       "Computation"
     ],
     "id": "seed_006",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Collatz Conjecture"
   },
