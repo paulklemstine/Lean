@@ -1252,7 +1252,7 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "id": "dir_50_32_8f1806ba",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
@@ -4784,17 +4784,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Two local zero-sum problems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a28cff8c",
     "description": "Investigate the ArXiv paper 'Zero-one laws for uniform approximation via Gaussian and Eisenstein integers' and formalize its key results. Abstract: We establish two distinct zero-one laws for the uniform Diophantine approximation of complex numbers by quotients of Gaussian integers and by quotients of Eisenstein integers. Using tools from homogeneous dynamics, we study this problem by reducing to a shrinking target problem on certain homogeneous spaces of $\\mathrm{SL}_2(\\mathbb{C})$. The main novel ingredients include measure estimates on a certain family of neighborhoods of the corresponding critical loci, as well as new disjointness statements to control the short-range mixing contribution. Due to the different nature of the critical loci in the Gaussian and Eisenstein cases, these measure estimates are obtained by rather different arguments.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0080",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T12:28:46.578649+00:00",
     "title": "ArXiv paper: Zero-one laws for uniform approximation via Gaussian and Eisenstein integers"
   },

@@ -3355,11 +3355,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a28cff8c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3372,7 +3372,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0080",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-09T22:08:33.707207+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -3387,7 +3387,7 @@
       "source": "",
       "source_exp_id": "2607.11178v1",
       "source_path": "http://arxiv.org/abs/2607.11178v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T12:28:46.578649+00:00",
       "title": "ArXiv paper: Zero-one laws for uniform approximation via Gaussian and Eisenstein integers"
@@ -36439,6 +36439,7 @@
     "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
