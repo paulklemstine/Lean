@@ -2907,11 +2907,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4f37c17f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -2923,7 +2923,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0068",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-10T05:02:22.667652+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -2938,7 +2938,7 @@
       "source": "",
       "source_exp_id": "2607.12090v1",
       "source_path": "http://arxiv.org/abs/2607.12090v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T07:08:32.831275+00:00",
       "title": "ArXiv paper: Induced-Minor-Closed Classes have Linear, Square-Root, or Sub-Polynomial Tree-Independence"
@@ -36490,6 +36490,7 @@
     "abduction_followup",
     "cross_domain_bridge",
     "famous_subtask",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
