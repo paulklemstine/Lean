@@ -9371,17 +9371,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The following concrete conjectures isolate extensions not established by the pre"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c70abb4",
     "description": "# Future Directions\n\nThe explicit `Bool` witness shows that moving from `Prop`-valued to data-valued\nfibers avoids collapse, but it also raises the question of how restrictive the\nnew equation really is.  The following conjectures are concrete and\nfalsifiable.\n\n1. **Finite existence for every positive cardinality.** For every natural number\n   `n > 0`, there are a finite type `T` with `Fintype.card T = n` and a family\n   `F : T \u2192 Type` such that `T \u2243 ((x : T) \u2192 F x)`, with all fibers finite.\n   A proposed witness puts an `n`-element fiber at one chosen point and singleton\n   fibers elsewhere.\n\n2. **Genuinely dependent solutions at every nontrivial finite cardinality.** For\n   every `n \u2265 2`, the witnesses in Conjecture 1 can be chosen with two fibers of\n   unequal cardinality.  Hence the family cannot be pointwise equivalent to a\n   constant family.\n\n3. **Prime-cardinality classification.** If `T` is finite of prime cardinality\n   `p`, every finite family `F` satisfying `T \u2243 ((x : T) \u2192 F x)` has exactly one\n   fiber of cardinality `p` and every other fiber has cardinality `1`.\n   This should follow from the proved product-cardinality equation and prime\n   factorization.\n\n4. **Constant finite fibers are trivial.** If finite nonempty `T` and finite `A`\n   satisfy `T \u2243 (T \u2192 A)`, then either `T` is a singleton or `A` is a singleton.\n   Equivalently, the finite cardinal equation `n = a^n` has no solution with\n   `n \u2265 2` and `a \u2265 2`.\n\n5. **Decidable inhabited types admit a concentrated solution.** Every inhabited\n   type with decidable equality is `DataConscious`, witnessed by concentrating\n   all data in the fiber over one distinguished point and assigning `Unit` to\n   every other fiber.  Proving this uniformly requires a dependent equivalence\n   that transports along equality tests.\n",
     "domains": [
       "NumberTheory",
       "Logic"
     ],
     "id": "fd_0861",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "9d058f1b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T14:49:18.640191+00:00",
     "title": "The explicit `Bool` witness shows that moving from `Prop`-valued to data-valued"
   },
