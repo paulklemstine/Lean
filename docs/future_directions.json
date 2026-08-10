@@ -20519,7 +20519,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "cfdac411",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -20547,7 +20547,7 @@
       "source": "",
       "source_exp_id": "8dd43c13",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/8dd43c13",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "th_f4e52c48",
       "timestamp": "2026-08-05T12:25:54.180391+00:00",
       "title": "The file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:"

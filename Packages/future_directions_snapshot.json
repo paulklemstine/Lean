@@ -14284,7 +14284,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cfdac411",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(x) = a x + log(1 + e^{bx})`;\n* strict convexity on all of `ℝ` for every `b ≠ 0` (`emlAct_strictConvexOn`);\n* the sharp monotonicity criterion `StrictMono E_{a,b} ↔ 0 ≤ a` for `b > 0`\n  (`emlAct_strictMono_iff`), with the failure for `a < 0` proved via the\n  derivative limit at `−∞`;\n* that log-sum-exp `x ⊕_b y = (1/b) log(e^{bx} + e^{by})` is exactly commutative,\n  associative and distributive over `+`, with idempotency defect exactly\n  `log 2 / b` (`lse_self`);\n* the sharp sandwich `max x y < x ⊕_b y ≤ max x y + log 2 / b` and the\n  resulting convergence to tropical (max-plus, resp. min-plus via Mathlib's\n  `Tropical`) addition as `b → ∞`;\n* the bridge theorem `eml_activation_tropical_bridge` tying the convex-analytic\n  and tropical pictures together.\n\nNatural continuations:\n\n1. **`n`-ary and measure-theoretic log-sum-exp.** Replace the binary `⊕_b` by\n   `(1/b) log ∑_{i<n} e^{b x_i}` and by `(1/b) log ∫ e^{b f} dμ`; the sandwich\n   becomes `max ≤ · ≤ max + log n / b` (resp. essential supremum), giving\n   `L^p → L^∞` style dequantization statements.\n\n2. **Strict convexity as a function of two variables.** Prove that\n   `(x,y) ↦ x ⊕_b y` is convex but not strictly convex, being affine along the\n   diagonal `x = y` (`lse_self` already gives the diagonal restriction exactly);\n   the tropical limit `max` is convex and affine on each of two half-planes.\n\n3. **Tropical semiring structure as a Lean instance.** Endow `ℝ` with the\n   `b`-deformed operations `(⊕_b, +)` as a genuine `Semiring` instance\n   transported along `x ↦ e^{bx}` from `ℝ_{>0}`, and formalize the statement\n   that these semirings converge (in the sense of Gromov–Hausdorff or of\n   pointwise convergence of structure maps) to `Tropical ℝ`.\n\n4. **Tropical polynomials from neural networks.** A ReLU network computes a\n   tropical rational function; the `b`-smoothed network computes a\n   log-sum-exp expression. Quantifying the uniform distance between a smoothed\n   network of depth `d` and its tropical limit (an `O(d · log(width)/b)` bound)\n   would extend the bridge theorem from one neuron to a whole architecture.\n\n5. **Sharp monotonicity domains for other EML activations.** The same analysis\n   applies to `x·σ(bx)` (Swish/SiLU), `x·tanh(log(1+e^{bx}))` (Mish) and\n   `a x + (1/b) log cosh(bx)`; each has an exact parameter domain of\n   monotonicity/convexity, and each degenerates to a piecewise-linear tropical\n   expression as `b → ∞`.\n\n6. **Rate optimality.** Prove that `log 2 / b` cannot be replaced by\n   `c / b` with `c < log 2`, and study the second-order expansion\n   `x ⊕_b y = max x y + (1/b) log(1 + e^{-b|x-y|})`.\n",
     "domain_bridges": [],
     "domains": [
@@ -14297,7 +14297,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "8dd43c13",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-05T12:25:54.180391+00:00",
     "title": "The file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:"
   },
