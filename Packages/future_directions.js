@@ -10613,17 +10613,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cfdac411",
     "description": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(x) = a x + log(1 + e^{bx})`;\n* strict convexity on all of `\u211d` for every `b \u2260 0` (`emlAct_strictConvexOn`);\n* the sharp monotonicity criterion `StrictMono E_{a,b} \u2194 0 \u2264 a` for `b > 0`\n  (`emlAct_strictMono_iff`), with the failure for `a < 0` proved via the\n  derivative limit at `\u2212\u221e`;\n* that log-sum-exp `x \u2295_b y = (1/b) log(e^{bx} + e^{by})` is exactly commutative,\n  associative and distributive over `+`, with idempotency defect exactly\n  `log 2 / b` (`lse_self`);\n* the sharp sandwich `max x y < x \u2295_b y \u2264 max x y + log 2 / b` and the\n  resulting convergence to tropical (max-plus, resp. min-plus via Mathlib's\n  `Tropical`) addition as `b \u2192 \u221e`;\n* the bridge theorem `eml_activation_tropical_bridge` tying the convex-analytic\n  and tropical pictures together.\n\nNatural continuations:\n\n1. **`n`-ary and measure-theoretic log-sum-exp.** Replace the binary `\u2295_b` by\n   `(1/b) log \u2211_{i<n} e^{b x_i}` and by `(1/b) log \u222b e^{b f} d\u03bc`; the sandwich\n   becomes `max \u2264 \u00b7 \u2264 max + log n / b` (resp. essential supremum), giving\n   `L^p \u2192 L^\u221e` style dequantization statements.\n\n2. **Strict convexity as a function of two variables.** Prove that\n   `(x,y) \u21a6 x \u2295_b y` is convex but not strictly convex, being affine along the\n   diagonal `x = y` (`lse_self` already gives the diagonal restriction exactly);\n   the tropical limit `max` is convex and affine on each of two half-planes.\n\n3. **Tropical semiring structure as a Lean instance.** Endow `\u211d` with the\n   `b`-deformed operations `(\u2295_b, +)` as a genuine `Semiring` instance\n   transported along `x \u21a6 e^{bx}` from `\u211d_{>0}`, and formalize the statement\n   that these semirings converge (in the sense of Gromov\u2013Hausdorff or of\n   pointwise convergence of structure maps) to `Tropical \u211d`.\n\n4. **Tropical polynomials from neural networks.** A ReLU network computes a\n   tropical rational function; the `b`-smoothed network computes a\n   log-sum-exp expression. Quantifying the uniform distance between a smoothed\n   network of depth `d` and its tropical limit (an `O(d \u00b7 log(width)/b)` bound)\n   would extend the bridge theorem from one neuron to a whole architecture.\n\n5. **Sharp monotonicity domains for other EML activations.** The same analysis\n   applies to `x\u00b7\u03c3(bx)` (Swish/SiLU), `x\u00b7tanh(log(1+e^{bx}))` (Mish) and\n   `a x + (1/b) log cosh(bx)`; each has an exact parameter domain of\n   monotonicity/convexity, and each degenerates to a piecewise-linear tropical\n   expression as `b \u2192 \u221e`.\n\n6. **Rate optimality.** Prove that `log 2 / b` cannot be replaced by\n   `c / b` with `c < log 2`, and study the second-order expansion\n   `x \u2295_b y = max x y + (1/b) log(1 + e^{-b|x-y|})`.\n",
     "domains": [
       "Tropical",
       "Geometry"
     ],
     "id": "fd_0972",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "8dd43c13",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-05T12:25:54.180391+00:00",
     "title": "The file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:"
   },

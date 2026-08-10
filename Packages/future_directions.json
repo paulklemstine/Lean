@@ -20515,11 +20515,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cfdac411",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -20532,7 +20532,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0972",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-10T12:13:11.553772+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -20547,7 +20547,7 @@
       "source": "",
       "source_exp_id": "8dd43c13",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/8dd43c13",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_f4e52c48",
       "timestamp": "2026-08-05T12:25:54.180391+00:00",
       "title": "The file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:"
@@ -36512,7 +36512,6 @@
     "§§2–4": 1
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
@@ -36531,6 +36530,7 @@
     "abduction_followup",
     "abduction_followup",
     "famous_subtask",
+    "abduction_followup",
     "abduction_followup"
   ]
 }
