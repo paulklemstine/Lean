@@ -10220,17 +10220,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal development establishes the exact finite-dimensional permutation symm"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea1c2aa0",
     "description": "# Future Directions\n\n- Construct the Khovanov chain groups and signed cube differential over an arbitrary coefficient ring, then prove `d\u00b2 = 0` from commuting square faces.\n- Refine the generator-level graded Euler calculation to finitely supported bigraded modules and prove that taking homology preserves the graded Euler characteristic.\n- Formalize Reidemeister chain maps and chain homotopies, yielding invariance of Khovanov homology under all three Reidemeister moves.\n- Connect the Jones state-sum normalization here to the oriented Kauffman-bracket normalization, including writhe shifts.\n- Extend the rank-two Frobenius-algebra development to linear maps and tensor powers rather than basis-level tables.\n",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_0935",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "38046e56",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-03T15:28:35.317033+00:00",
     "title": "Future directions from cycle 38046e56"
   },
