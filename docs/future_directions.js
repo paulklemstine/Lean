@@ -783,16 +783,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d69d6f65",
     "description": "Building on cycle be8c4b71 (Q=0.808), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rat",
     "domains": [
       "Applications"
     ],
     "id": "push_be8c4b71_70184c1e",
+    "phase": "A",
     "priority_score": 0.9084800000000001,
     "research_mode": "team",
     "source_exp_id": "be8c4b71",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T09:31:08.650268+00:00",
     "title": "Deepening: EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -1218,17 +1219,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML-Single-Operator: Universal Functional Completeness of EML Neuron Activation"
   },
   {
-    "consumed_by_exp_id": "87d4a74c",
+    "consumed_by_exp_id": "",
     "description": "Calculates exact maximum Lyapunov exponents for recurrent EML systems, establishing non-exploding gradient guarantees.",
     "domains": [
       "Applications"
     ],
     "id": "dir_50_29_16df38e4",
-    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:05:23.764849+00:00",
     "title": "EML-Dynamical-Stability: Lyapunnov Exponents for Recurrent EML Architectures"
   },
@@ -2184,18 +2184,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
   {
-    "consumed_by_exp_id": "2cbd561b",
+    "consumed_by_exp_id": "",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domains": [
       "Physics",
       "Computation"
     ],
     "id": "seed_314",
-    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
@@ -5504,18 +5503,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Beyond the Riemann Hypothesis bounds: A pair-correlation approach to the least prime in arithmetic progression and the smallest quadratic non-residue"
   },
   {
-    "consumed_by_exp_id": "95eee3df",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Semitotal domination in unit disk graphs' and formalize its key results. Abstract: A set $S \\subseteq V$ is called a {\\em semitotal dominating set} of $G=(V,E)$ if every vertex in $V \\setminus S$ is adjacent to at least one vertex in $S$, and every vertex in $S$ is within distance 2 of another vertex in $S$. The corresponding decision problem is NP-complete even for unit disk graphs. In this paper, we present a 5-factor approximation algorithm for the Minimum Semitotal Domination problem on unit disk graphs in the graph-based input model. The algorithm processes the layers of a Breadth-First-Search tree and constructs a maximal independent set whose vertices satisfy the semitotal condition. For a graph with $n$ vertices and $m$ edges, the algorithm runs in $O(n + m)$ time, and hence in $O(n^2)$ time in the worst case. This improves the previously known 5.75-approximation algorithm with $O(n^3)$ running time.",
     "domains": [
       "Computation",
       "MachineLearning"
     ],
     "id": "fd_0159",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14467v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T02:17:28.732470+00:00",
     "title": "ArXiv paper: Semitotal domination in unit disk graphs"
   },
@@ -8221,18 +8219,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle f2b328a7"
   },
   {
-    "consumed_by_exp_id": "19e9e2bf",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Results established\n\nThe accompanying Lean development proves the finite algebraic core of homological quantum error correction over `\ud835\udd3d\u2082`.\n\n1. **Cellular CSS codes are chain complexes.** For `C\u2082 \u2192 C\u2081 \u2192 C\u2080`, boundaries lie in cycles, so nonzero classes in `ker d\u2081 / im d\u2082` represent logical operators.\n2. **Distance equals the combinatorial one-systole.** The operational spectrum of undetectable non-stabilizer errors is proved extensionally equal to the spectrum of non-boundary cellular cycles. Their infima are therefore equal. If first homology is nonzero, the minimum is attained and strictly positive.\n3. **Surface homology.** The minimal cellular model of a closed orientable genus-`g` surface has binary first-homology rank `2g`; the torus specialization has rank two.\n4. **A contrarian disproof.** Abstract homology rank does not determine distance. For every positive genus and every proposed bound, a positive weight model on the same rank-`2g` binary homology can have larger distance; the same rank also admits distance one. Consequently an `O(\u221ag)` distance statement cannot follow from genus or abstract `H\u2081` alone. A metric, cellulation, bounded local geometry, and a relation between genus and block length are indispensable.\n\nThe disproof is deliberately scoped: its weighted-homology models satisfy positivity and zero-weight axioms, but are not claimed to arise from bounded-degree local cellulations. It refutes only a deduction from homology rank alone, not geometric systolic bounds under additional hypotheses.\n\n## Concise evidence and counterexample hunt\n\nThe formal family gives stronger evidence than a finite sample: for every `g > 0`, the minimal model has rank `2g` and distance `1`, while the uniform model has distance any prescribed `d > 0`. Representative instances are:\n\n| genus `g` | homology rank `2g` | minimal-model distance | alternative allowed distances |\n|---:|---:|---:|---:|\n| 1 | 2 | 1 | every positive `d` |\n| 2 | 4 | 1 | every positive `d` |\n| 3 | 6 | 1 | every positive `d` |\n| 4 | 8 | 1 | every positive `d` |\n| 5 | 10 | 1 | every positive `d` |\n\nThus the universal genus-only prediction already fails at fixed genus: two models with identical homology rank can have distances `1` and `d` for arbitrary `d > 1`. No OEIS search is applicable because the construction realizes an arbitrary prescribed positive sequence rather than selecting a canonical integer sequence. A plot would likewise be misleading: at each positive genus the attainable abstract weights are unbounded vertically.\n\n## Next formal targets\n\n1. **Geometric cellulations.** Add finite 2-dimensional CW or simplicial complexes, incidence maps, edge lengths, bounded face size, and bounded vertex degree. Prove that the present `CellularCode` is induced by their cellular chain complex.\n2. **Primal and dual distances.** A quantum CSS code has both `Z` and `X` distances. Define the dual cochain complex and prove total code distance is the minimum of primal and dual systoles.\n3. **Toric grids.** Formalize the `L \u00d7 L` square torus and prove parameters `[[2L\u00b2, 2, L]]`, including a lower bound showing every nontrivial primal or dual cycle uses at least `L` edges.\n4. **Color codes.** Represent a 3-colorable 2-complex and identify the relevant logical spaces. Ordinary `H\u2081` alone may not capture all color-code structure; formalization should determine the exact additional coloring data.\n5. **Algebraic varieties.** Define codes from dual graphs, incidence complexes, or \u00e9tale/cohomological data of varieties. The present development does not yet connect arbitrary algebraic varieties to physical local stabilizer codes.\n6. **Correct asymptotic variables.** Replace the unsupported genus-only `O(\u221ag)` claim by bounds involving block length `n`, area, injectivity radius, and bounded local geometry. Determine hypotheses under which `d = O(\u221an)` or hyperbolic-surface tradeoffs can be proved.\n7. **Probability layer.** Add independent Pauli noise, syndrome distributions, decoders, and logical failure probability. Prove threshold statements only after fixing a concrete growing family and decoder.\n",
     "domains": [
       "Geometry",
       "Algebra"
     ],
     "id": "fd_0531",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "fc320765",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-20T23:22:19.709040+00:00",
     "title": "The accompanying Lean development proves the finite algebraic core of homologica"
   },
@@ -11418,18 +11415,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
   },
   {
-    "consumed_by_exp_id": "06481f94",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m\u00b71) \u2264 m(m+3)/2` on `K\u2099` was proved\n(the staircase obstruction `not_rankAtLeast_const_K`), while the best available\n*lower* bounds were `3m \u2212 1` (one-shot set firing) and `2m + \u230am\u00b2/4\u230b` (one-shot\nthreshold firing) \u2014 both off by a factor two in the quadratic term.\n\n**That conjecture is now a theorem.**  `CompleteGraphExactRank.lean` proves\n\n* `rankAtLeast_const_K` \u2014 on `K\u2099` with `n \u2265 m + 2` the constant divisor `m` has\n  Baker\u2013Norine rank at least `m(m+3)/2`, hence\n* `rank_const_K` / `rankBN_const_K` \u2014 **rank exactly `m(m+3)/2`**, independent of\n  `n`, the first exact rank formula in this development for an infinite family of\n  divisors of unbounded rank;\n* `rank_const_K_gt_threshold_bound` \u2014 for `m \u2265 3` the truth strictly exceeds every\n  bound obtainable from a *single* threshold firing, so the passage from one\n  firing to a whole firing vector is unavoidable;\n* `linEquiv_effective_iff_K` \u2014 the engine: on `K\u2099` a divisor `D` is equivalent to\n  an effective divisor **iff** some integer shift `s` satisfies\n  `\u2211_v \u2308(s \u2212 D v)/n\u2309 \u2264 s`;\n* `linEquiv_effective_of_genus_le_deg_K` / `rankAtLeast_of_genus_add_le_deg_K` \u2014\n  **Riemann's inequality on `K\u2099`**, proved from scratch (not assumed): every divisor\n  of degree `\u2265 g` is equivalent to an effective one, hence `r(D) \u2265 deg D \u2212 g`.  The\n  proof averages the criterion over a complete residue window of shifts, using\n  Hermite's identity `\u2211_{s<n} \u230a(z+s)/n\u230b = z`; the bound is sharp\n  (`exists_deg_genus_sub_one_not_effective_K`);\n* `thetaChar_halfCanonical_K_odd`, `rank_thetaChar_K_odd_ge_regularity`,\n  `four_mul_rank_gt_genus_K_odd` \u2014 on `K_{2m+3}` the constant divisor `m` is a\n  theta characteristic of degree `g \u2212 1` whose rank is exactly `m(m+3)/2`; it beats\n  the universal half-canonical bound `k \u2212 1` for `m \u2265 3` and satisfies `4r > g`.\n\nThe mechanism worth remembering: on `K\u2099` the Laplacian is `f \u21a6 n f \u2212 (\u2211f)\u00b71`, so a\nfiring move is a *single* integer vector rather than a sequence of set firings, and\nthe whole existence question collapses to the one-parameter optimisation above.\nThe optimal threshold is found by a fixed-point argument: the least `t` with\n`T(t) \u2264 t` automatically satisfies `T(t) = t`, and a counting identity for\n`\u2211_{j<m} \u2308(a\u2212j)/n\u2309` shows such a `t` must exist below the staircase degree.\n\n---\n\n## 1. The maximum rank at the half-canonical degree on `K\u2099`\n\n**Conjecture.** For every `n` the maximum of the Baker\u2013Norine rank over all divisor\nclasses of degree `d` on `K\u2099` is attained at the *concentrated* divisor `d\u00b7q`, and\nequals `a(a+1)/2 + min(b, a)` where `d = a(n\u22121) + b`, `0 \u2264 b \u2264 n\u22122`.  At `d = g\u22121`\nthis makes the sequence of maxima `0, 0, 2, 2, 5, 5, 9, 9, 14, 14, \u2026` (A000096 with\neach term doubled), so `K\u2099` attains `k \u2212 1 = n \u2212 2` **only** for `n = 7`.\n\n*The key insight is* that the deficiency `d(D) = min_s (\u2211_v \u2308(s \u2212 D v)/n\u2309 \u2212 s)`\nsupplied by `linEquiv_effective_iff_K` is a *concave-like* functional of the\nmultiset of values of `D`: spreading chips out can only create more distinct\nresidues mod `n`, and each distinct residue costs one unit of ceiling, so the\nextremal configuration is the maximally concentrated one.\n\n*Why now.*  With the effectivity criterion proved, the conjecture is no longer a\nstatement about chip-firing sequences but about an explicit ceiling sum, testable in\n`O(n)` per class.  The exhaustive data (all `262144` classes on `K\u2088`, \u00a71 of\n`ComputationalEvidence.md`) agree, and both endpoints of the conjecture are now\ntheorems for the uniform family (`rankBN_const_K` gives the value at `a`-flat\ndivisors).  A proof would turn `N\u2080(5) > 6` and `N\u2080(7) > 8` into theorems and hence\nshow that the hypothesis \"`k \u2265 6`, `k \u2260 7`\" of the uniform half-canonical theorem is\n*necessary*.\n\n## 2. Staircases are the only obstructions\n\n**Conjecture.** For every divisor `D` on `K\u2099` and every `r`, if `r(D) < r` then the\nfailure is witnessed by a *monotone staircase*: there is an effective divisor `E` of\ndegree `r` whose value multiset is `{c, c\u22121, \u2026}` in the sorted order of `D` (at most\n`n` such `E` up to relabelling) with `D \u2212 E` not equivalent to an effective divisor.\nConsequently the rank of a divisor on `K\u2099` is computable in `O(n log n)`.\n\n*The key insight is* that the deficiency `d` is monotone under the dominance order\non sorted value vectors, so among all test divisors of a fixed degree the ones\nmaximising `d(D \u2212 E)` are the extreme points of the dominance order \u2014 exactly the\nstaircases, which is why the single explicit divisor `stairE` already realises the\nupper bound `m(m+3)/2`.\n\n*Why now.*  `stairE`/`isReduced_stairF` show a staircase realises the obstruction for\nuniform `D`, and the `K\u2088` computation of \u00a71 found that a filter using only the `22`\nmonotone staircase test divisors of degree `6` already eliminated all but `28` of\nthe `262144` classes \u2014 no non-staircase witness was ever needed.  Proving this would\ngive the first polynomial-time *certified* rank algorithm for a nontrivial family.\n\n## 3. Iterated firing: the true one-shot ceiling for general graphs\n\n**Conjecture.** On any graph of minimum degree `k`, a divisor with `m \u2265 1` chips at\nevery vertex has rank at least `min(m(m+3)/2, m + k)`, and this is sharp: complete\ngraphs attain the first term and `k`-regular graphs of large girth the second.\n\n*The key insight is* that the complete-graph proof fires the nested chain of\nthreshold sets `S_t = {v : E v \u2265 t}` *simultaneously*, as one Laplacian vector\n`f = u \u2212 1` with `u_v = \u2308(E v \u2212 (m \u2212 t))/n\u2309`; on a general graph the same vector is\nstill available, and the only thing that changes is that `outdeg(S_t, v)` replaces\nthe constant `n \u2212 |S_t|`, which the minimum-degree hypothesis controls from below.\n\n*Why now.*  The target value is no longer a guess: `rankBN_const_K` proves it is\nattained, and `rank_const_K_gt_threshold_bound` proves the previously available\none-shot bound `2m + \u230am\u00b2/4\u230b` is strictly smaller for every `m \u2265 3`.  So the\nconjecture is exactly the statement that the complete-graph mechanism is universal,\nand its first open case, `m = 3` (`9` versus the proved `8`), is a finite check on\nsmall `k`-regular graphs.\n\n## 4. Complete graphs maximise the half-canonical rank\n\n**Conjecture.** Among all simple `k`-regular graphs, `K_{k+1}` maximises the rank at\nthe half-canonical degree `g \u2212 1`, the maximum being `((k+1)\u00b2 \u2212 9)/8` for even `k`\n(where `K_{k+1}` has an odd number of vertices and a constant theta characteristic).\nIn particular the half-canonical rank of a `k`-regular graph is `O(k\u00b2)` and the\n`\u0398(k\u00b2)` scale is achieved.\n\n*The key insight is* that rank at a fixed degree measures how *short* the Laplacian\nlattice's covering vectors are, and the complete graph has the densest possible\nLaplacian lattice for its degree \u2014 its lattice is a scaled copy of the root lattice\n`A_{n\u22121}`, whose covering radius is the smallest among all `n`-vertex graph\nLaplacians.\n\n*Why now.*  `four_mul_rank_gt_genus_K_odd` proves `4r > g` on `K_{2m+3}`, i.e. the\nhalf-canonical rank there is a *positive proportion of the genus*, while the\nBrill\u2013Noether heuristic predicts `r \u2248 \u221ag` and the previous cycle's universal theorem\nonly gives `k \u2212 1`.  The gap between `k \u2212 1` and `k\u00b2/8` is now a proved fact rather\nthan a numerical observation, and the conjecture asserts the upper end of that range\nis the truth.\n\n## 5. The residual degrees `k = 5` and `k = 7`\n\n**Conjecture.** `N\u2080(5) > 6` and `N\u2080(7) > 8` \u2014 no `5`-regular graph on `6` vertices\nand no `7`-regular graph on `8` vertices carries a divisor of degree `g \u2212 1` of rank\n`k \u2212 1` \u2014 while both thresholds are finite and at most `2k + 7`.\n\n*The key insight is* that the two residual degrees are exactly those where\n`m = \u230a(k\u22122)/2\u230b \u2208 {1, 2}`, i.e. where the now-proved exact value `m(m+3)/2 \u2208 {2, 5}`\nof the uniform witness is *below* `k \u2212 1`; for every larger `m` the quadratic growth\nof `m(m+3)/2` overtakes the linear `k \u2212 1`, which is precisely why `k \u2265 6, k \u2260 7`\nwas provable and these two were not.\n\n*Why now.*  `rank_thetaChar_K_odd_ge_regularity` makes the crossover explicit:\n`m(m+3)/2 \u2265 2m + 1 = k \u2212 1` exactly when `m \u2265 2`, with equality at `m = 2` (`k = 6`,\n`K\u2087`) \u2014 so `K\u2087` is the unique tight case, and `K\u2086`, `K\u2088` fail by exactly the amount\nthe formula predicts (`2 < 4` and `5 < 6`).  Combined with Conjecture 1 this becomes\na theorem, and the remaining content is the *existence* of the finite thresholds,\nfor which the `bnNumber_regular_pos_iff` criterion already gives the linear scale.\n",
     "domains": [
       "Combinatorics",
       "Pythagorean"
     ],
     "id": "fd_1038",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "df8839cd",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-07T19:26:02.964665+00:00",
     "title": "The previous cycle left the exact rank of a uniform divisor on a complete graph "
   },
