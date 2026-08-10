@@ -12712,7 +12712,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3a98ed22",
     "description": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, and\n- `g ≤ (C_k rank(D)+1)^2`.\n\nOnce this square-root rank certificate is available, the Lean theorem\n`squareRootRankCertificate_implies_scaledExistence` supplies the requested\ndivisor for every half-canonical Brill–Noether-admissible rank simultaneously.\n\nNatural next steps are:\n\n1. Formalize finite connected simple regular graphs and prove\n   `2(g-1)=n(k-2)` from the handshaking lemma.\n2. Connect a graph's Laplacian energy pairing and covering radius to an\n   explicit chip-firing divisor rank lower bound.\n3. Derive the needed covering-radius estimate from a Cheeger or spectral-gap\n   hypothesis.\n4. Import a random-regular-graph expansion theorem and lift the pointwise\n   connector through the corresponding probability measure.\n5. Optimize the resulting constant `C_k`; the present connector intentionally\n   separates this analytic optimization from the Brill–Noether arithmetic.\n",
     "domain_bridges": [],
     "domains": [
@@ -12725,7 +12725,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "e86cdc26",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T23:26:30.110033+00:00",
     "title": "The formal connector isolates a concrete target for the asymptotic random"
   },
