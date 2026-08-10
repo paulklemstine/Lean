@@ -2212,7 +2212,6 @@ def rebuild_commit_push() -> bool:
             "Aether/.aether_workspace/cycle_analytics.json",
             "Aether/.aether_workspace/research_journal.json",
             "Aether/.aether_workspace/research_threads.json",
-            "Aether/.aether_workspace/inflight_jobs.json",
             "Aether/.aether_workspace/insights.json",
             "Aether/.aether_workspace/tick_counter.json",
             "Aether/.aether_workspace/exp_id_map.json",
