@@ -22,7 +22,6 @@ __pycache__/
 /Aether/.aether_workspace/*.log
 /Aether/.aether_workspace/aether_tick.lock
 /Aether/.aether_workspace/pollinations_api_key
-/Aether/.aether_workspace/inflight_jobs.json
 /Aether/.aether_workspace/*_backup.json
 /Aether/.aether_workspace/*.pre-refill.json
 /Aether/*.log

@@ -386,9 +386,12 @@ class FutureDirectionsManager:
         repo_root = self.workspace.parent.parent
         pkg_file = repo_root / "Packages" / "future_directions.json"
         ws_pkg_file = self.workspace / "Packages" / "future_directions.json"
+        ws_parent_pkg = self.workspace.parent / "Packages" / "future_directions.json"
         ws_file = self.workspace / "future_directions.json"
         if ws_pkg_file.exists():
             self._file = ws_pkg_file
+        elif ws_parent_pkg.exists():
+            self._file = ws_parent_pkg
         elif ws_file.exists():
             self._file = ws_file
         else:
@@ -572,6 +575,7 @@ class FutureDirectionsManager:
 
     def _save(self) -> None:
         self.workspace.mkdir(parents=True, exist_ok=True)
+        self._file.parent.mkdir(parents=True, exist_ok=True)
         # Auto-archive completed directions if they exceed retention limit (50)
         completed_count = len([d for d in self._directions if d.status == "completed"])
         if completed_count > 50:

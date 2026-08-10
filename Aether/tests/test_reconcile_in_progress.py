@@ -6,6 +6,7 @@ in_progress must reflect the true state of active inflight jobs at tick end:
   keyed by retry_of) -> in_progress
 - a stale in_progress with no active job is left untouched (recover_stale handles it)
 """
+import json
 from research_memory import FutureDirection, FutureDirectionsManager
 
 
@@ -19,10 +20,17 @@ def _dir(did, title, desc, consumed_by, status):
     return d
 
 
-def test_reconcile_in_progress_matches_active_jobs(tmp_path):
+def _make_mgr(tmp_path):
+    pkg_dir = tmp_path / "Packages"
+    pkg_dir.mkdir(parents=True, exist_ok=True)
+    (pkg_dir / "future_directions.json").write_text(json.dumps({"directions": []}))
     ws = tmp_path / "ws"
-    ws.mkdir()
-    mgr = FutureDirectionsManager(ws)
+    ws.mkdir(exist_ok=True)
+    return FutureDirectionsManager(ws)
+
+
+def test_reconcile_in_progress_matches_active_jobs(tmp_path):
+    mgr = _make_mgr(tmp_path)
 
     # d1: consumed by jobA (a 'preparing' job) but status left 'available' (the gap)
     d1 = _dir("d1", "Preparing job direction",
@@ -43,11 +51,13 @@ def test_reconcile_in_progress_matches_active_jobs(tmp_path):
 
     # active jobs: jobA (preparing, key=jobA), jobB (retry_of=jobB_orig, key=jobB_orig), jobC. jobD NOT active.
     active_keys = {"jobA", "jobB_orig", "jobC"}
-    n = mgr.reconcile_in_progress(active_keys)
+    by_id = {d.id: d.status for d in mgr._directions}
+    assert by_id["d1"] == "available", "precondition"
+    assert by_id["d2"] == "completed", "precondition"
 
+    n = mgr.reconcile_in_progress(active_keys)
     assert n == 2, f"expected 2 reconciled (d1, d2), got {n}"
-    # Check in-memory state (a fresh FutureDirectionsManager would run recover_stale_directions
-    # on load and reset stale in_progress, which is the correct separate behavior).
+
     by_id = {d.id: d.status for d in mgr._directions}
     assert by_id["d1"] == "in_progress", "preparing job's direction must be reconciled to in_progress"
     assert by_id["d2"] == "in_progress", "retrying job's direction must be reconciled to in_progress"
@@ -57,8 +67,7 @@ def test_reconcile_in_progress_matches_active_jobs(tmp_path):
 
 def test_reconcile_in_progress_noop_when_clean(tmp_path):
     """If all active jobs' directions are already in_progress, reconcile changes nothing."""
-    ws = tmp_path / "ws"; ws.mkdir()
-    mgr = FutureDirectionsManager(ws)
+    mgr = _make_mgr(tmp_path)
     d = _dir("d1", "Already active", "unique zz yy xx ww vv uu tt ss rr qq pp oo nn.", "jobA", "in_progress")
     mgr._directions.append(d); mgr._save()
     n = mgr.reconcile_in_progress({"jobA"})
