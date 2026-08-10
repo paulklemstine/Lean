@@ -3315,11 +3315,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0e9a0b68",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3331,7 +3331,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0079",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-10T16:19:27.417163+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -3346,7 +3346,7 @@
       "source": "",
       "source_exp_id": "2607.11313v1",
       "source_path": "http://arxiv.org/abs/2607.11313v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T12:11:54.864256+00:00",
       "title": "ArXiv paper: Two local zero-sum problems"
@@ -3846,7 +3846,7 @@
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "9e598fa1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3874,7 +3874,7 @@
       "source": "",
       "source_exp_id": "2607.13159v1",
       "source_path": "http://arxiv.org/abs/2607.13159v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-16T04:59:11.546572+00:00",
       "title": "ArXiv paper: Beyond Mock Modularity: Elliptic Corrections for Higher Dyson Ranks"
@@ -16632,7 +16632,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3a98ed22",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16660,7 +16660,7 @@
       "source": "",
       "source_exp_id": "e86cdc26",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/e86cdc26",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "th_ff2444c9",
       "timestamp": "2026-07-31T23:26:30.110033+00:00",
       "title": "The formal connector isolates a concrete target for the asymptotic random"
@@ -36405,6 +36405,7 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }

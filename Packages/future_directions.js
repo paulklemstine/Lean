@@ -4769,16 +4769,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Bounded-Support Additive Latin Transversals via Color-Counted Matching"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e9a0b68",
     "description": "Investigate the ArXiv paper 'Two local zero-sum problems' and formalize its key results. Abstract: In the present paper, we investigate two local zero-sum problems. Let $n,k\\ge 2$. We denote by $\\mathsf{D}^*(n,nk)$ (resp. $\u03b7^{*}(n,nk)$) the smallest positive integer $\\ell$ (if exists) such that, from any given $\\ell$ integers not divisible by $n$, one can select some (resp. at most $n$) of them whose sum is divisible by $n$ but not by $nk$. We prove that both $\\mathsf{D}^*(n,nk)$ and $\u03b7^{*}(n,nk)$ are equal to $2n-1$ if $\\mathrm{rad}(n) \\mid \\mathrm{rad}(k)$ and infinite otherwise. The corresponding inverse problem is also determined. We denote by $\\mathsf{D}_n^{\\times}$ (resp. $\u03b7_n^{\\times}$) the smallest positive integer $\\ell$ such that, from any given $\\ell$ integers coprime to $n$, one can select some (resp. at most $n$) of them whose sum $\u03c3$ satisfies $\\gcd(\u03c3, n^2)=n$. We prove that $\\mathsf{D}_n^{\\times}=\u03b7_n^{\\times}=2n-1$ if $n$ is a prime power, and determine its inverse problem.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_0079",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11313v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T12:11:54.864256+00:00",
     "title": "ArXiv paper: Two local zero-sum problems"
   },
@@ -4958,18 +4959,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Graph Puzzles III.1: A Proof of Sabidussi's Compatibility Conjecture"
   },
   {
-    "consumed_by_exp_id": "9e598fa1",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Beyond Mock Modularity: Elliptic Corrections for Higher Dyson Ranks' and formalize its key results. Abstract: When $m = 1$, the Dyson rank generating function is a classical bridge between partition theory, Ramanujan's mock theta functions, and the theory of harmonic Maass forms and nonholomorphic Jacobi forms. The rank is a statistic on partitions, and the higher Dyson systems, for $m \\geq 2$, are a natural multivariable refinement of it, combining $m$ graded rank contributions. Unlike the classical case, these higher systems are not expected to fit the mock-modular framework, which raises the question of what analytic structure governs them. We show that their root-of-unity specializations carry a hidden elliptic structure. A finite $q$-difference recurrence produces an explicit polynomial obstruction to the expected index $m$ elliptic transformation law, and because the obstruction is finite, its partial fractions canonically determine finitely many Appell--Lerch correction terms that remove it. The corrected functions satisfy a twisted index $m$ elliptic law; a natural translation removes ",
     "domains": [
       "Algebra",
       "Bridges"
     ],
     "id": "fd_0099",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13159v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T04:59:11.546572+00:00",
     "title": "ArXiv paper: Beyond Mock Modularity: Elliptic Corrections for Higher Dyson Ranks"
   },
@@ -9446,18 +9446,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "1. **Constructive multivariate rates.** Refine the qualitative Stone\u2013Weierstrass"
   },
   {
-    "consumed_by_exp_id": "3a98ed22",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) \u2264 C_k (g-1)`, and\n- `g \u2264 (C_k rank(D)+1)^2`.\n\nOnce this square-root rank certificate is available, the Lean theorem\n`squareRootRankCertificate_implies_scaledExistence` supplies the requested\ndivisor for every half-canonical Brill\u2013Noether-admissible rank simultaneously.\n\nNatural next steps are:\n\n1. Formalize finite connected simple regular graphs and prove\n   `2(g-1)=n(k-2)` from the handshaking lemma.\n2. Connect a graph's Laplacian energy pairing and covering radius to an\n   explicit chip-firing divisor rank lower bound.\n3. Derive the needed covering-radius estimate from a Cheeger or spectral-gap\n   hypothesis.\n4. Import a random-regular-graph expansion theorem and lift the pointwise\n   connector through the corresponding probability measure.\n5. Optimize the resulting constant `C_k`; the present connector intentionally\n   separates this analytic optimization from the Brill\u2013Noether arithmetic.\n",
     "domains": [
       "Computation",
       "Physics"
     ],
     "id": "fd_0869",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e86cdc26",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-31T23:26:30.110033+00:00",
     "title": "The formal connector isolates a concrete target for the asymptotic random"
   },
