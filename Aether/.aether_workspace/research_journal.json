@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "362b8901",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe following conjectures sharpen the boundary of the normalized development in\n`Catalog/Applications/EML/RischAlgorithm.lean`. Each is intended as a concrete,\nfalsifiable extensi",
-      "quality_score": 0.7657699999999998,
-      "sorry_count": 0,
-      "theorem_count": 44,
-      "timestamp": "2026-08-03T11:53:32",
-      "title": "EML Integration in Finite Terms: The Risch Algorithm"
-    },
-    {
       "cycle_id": "2125bb42",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For ev",
@@ -499,19 +489,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-09T19:10:06",
       "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
+    },
+    {
+      "cycle_id": "78f0a7c3",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions after cycle XI (density of the metric growth spectrum)\n\nCycle XI is `Catalog/NumberTheory/BerggrenSpectrumDense.lean`, built on cycle X's\n`Catalog/NumberTheory/BerggrenSilverExtrem",
+      "quality_score": 0.740175,
+      "sorry_count": 0,
+      "theorem_count": 142,
+      "timestamp": "2026-08-10T02:43:52",
+      "title": "Cycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles agai"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1cf3185d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n1. **Branch-set minor transitivity.** Prove that for all simple graphs `G`, `H`, and `K`, `IsMinor G H → IsMinor H K → IsMinor G K`. This is falsifiable directly against the branc",
-      "quality_score": 0.8116299999999999,
-      "sorry_count": 0,
-      "theorem_count": 60,
-      "timestamp": "2026-07-31T18:57:42",
-      "title": "Hadwiger's Conjecture"
-    },
     {
       "cycle_id": "aeb64258",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-09T19:10:06",
       "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
+    },
+    {
+      "cycle_id": "78f0a7c3",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions after cycle XI (density of the metric growth spectrum)\n\nCycle XI is `Catalog/NumberTheory/BerggrenSpectrumDense.lean`, built on cycle X's\n`Catalog/NumberTheory/BerggrenSilverExtrem",
+      "quality_score": 0.740175,
+      "sorry_count": 0,
+      "theorem_count": 142,
+      "timestamp": "2026-08-10T02:43:52",
+      "title": "Cycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles agai"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
-      "name": "last_not_mem_castLat",
-      "quality": 0.7010699999999999
-    },
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
-      "name": "liftUp_subset_iff",
-      "quality": 0.7010699999999999
-    },
-    {
-      "cycle_id": "b2707824",
-      "domain": "Geometry",
-      "name": "sub_div_le_log_div",
-      "quality": 0.73419
-    },
     {
       "cycle_id": "2c38bc1a",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "mass_good_le_rate_mul_ballMass",
       "quality": 0.751005
+    },
+    {
+      "cycle_id": "78f0a7c3",
+      "domain": "NumberTheory",
+      "name": "wdist_ge_log",
+      "quality": 0.740175
+    },
+    {
+      "cycle_id": "78f0a7c3",
+      "domain": "NumberTheory",
+      "name": "wdist_le_log",
+      "quality": 0.740175
+    },
+    {
+      "cycle_id": "78f0a7c3",
+      "domain": "NumberTheory",
+      "name": "wordA_length",
+      "quality": 0.740175
     }
   ],
-  "last_updated": "2026-08-09T19:10:06",
+  "last_updated": "2026-08-10T02:43:52",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "7726ff6e",
-        "quality": 0.686,
-        "theorems": 15,
-        "title": "1. **Converse criterion.** Prove that uniform frequencies of all aligned base-`b"
-      },
-      {
         "cycle_id": "b58f013e",
         "quality": 0.6972499999999999,
         "theorems": 10,
@@ -3699,6 +3693,12 @@
         "quality": 0.7451150000000001,
         "theorems": 43,
         "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
+      },
+      {
+        "cycle_id": "78f0a7c3",
+        "quality": 0.740175,
+        "theorems": 142,
+        "title": "Cycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles agai"
       }
     ],
     "Physics": [

@@ -8983,6 +8983,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Maximizing Algebraic Connectivity with $2(n-2)$ Edges: The Large Vertex Number Case' and formalize its key results. Abstract: Kolokolnikov conjectured that, among finite simple graphs on $n$ vertices with exactly $2(n-2)$ edges, the complete bipartite graph $K_{2,n-2}$ maximizes algebraic connectivity. We prove the conjectured statement for every $n\\ge123$: every such graph has algebraic connectivity at most $2$, while $K_{2,n-2}$ attains $2$. The proof begins with explicit Rayleigh-quotient certificates that exclude several local configurations from a hypothetical counterexample. A global degree count then controls the number and total excess of vertices of degree at least $5$ and bounds the edge excess of the subgraph induced by vertices of degree at most $4$. A Moore-type breadth-first-search criterion uses this excess to guarantee a short cycle, while a spectral criterion excludes cycles in the same length range. An explicit arithmetic estimate shows that the two criteria apply simultaneously once $n\\ge123$. A Lean formalization covering every $n\\ge4$, including the complementary range $4\\le n\\le122$, has",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1062",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.07360v1",
+    "status": "available",
+    "timestamp": "2026-08-10T02:43:57.346919+00:00",
+    "title": "ArXiv paper: Maximizing Algebraic Connectivity with $2(n-2)$ Edges: The Large Vertex Number Case"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On the size of $(K_{t_1}, \\ldots, K_{t_k})$-co-critical graphs' and formalize its key results. Abstract: Given integers $k\\ge2$ and $t_1, \\ldots, t_k\\ge2$, we write $G \\rightarrow (K_{t_1}, \\ldots, K_{t_k})$ if every $k$-coloring of the edges of a graph $G$ contains a monochromatic copy of $K_{t_i}$ in color $i$ for some $i\\in\\{1, \\ldots, k\\}$. A non-complete graph $G$ is $(K_{t_1}, \\ldots, K_{t_k})$-co-critical if $G \\nrightarrow (K_{t_1}, \\ldots, K_{t_k})$, but $G+e\\rightarrow (K_{t_1}, \\ldots, K_{t_k})$ for every edge $e\\notin E(G)$. Let $r=R(K_{t_1}, \\ldots, K_{t_k})$ denote the Ramsey number. In 1987, Hanson and Toft conjectured that every $(K_{t_1}, \\ldots, K_{t_k})$-co-critical graph $G$ on $n\\ge r$ vertices satisfies \\[|E(G)|\\ge (r-2)n- \\binom{r- 1}{2}.\\] This bound is best possible for every $n\\ge r$. More recently, the present author conjectured that every such graph has minimum degree at least $r-2$. Using the $q$-neighbor bootstrap percolation closure method, here we prove that the Hanson-Toft Conjecture holds asymptotically, provided that the minimum-degree conjecture is true",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_1063",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.07422v1",
+    "status": "available",
+    "timestamp": "2026-08-10T02:44:00.886859+00:00",
+    "title": "ArXiv paper: On the size of $(K_{t_1}, \\ldots, K_{t_k})$-co-critical graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
     "domain_bridges": [],
     "domains": [
@@ -15567,26 +15607,6 @@
     "status": "available",
     "timestamp": "2026-08-08T21:54:14.748942+00:00",
     "title": "Derived from the analysis and adversarial review of the results now formalised i"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "78f0a7c3",
-    "description": "# Future directions after cycle IX (the silver growth rate)\n\nCycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles against\nMathlib, **0 sorries**, axioms `propext`, `Classical.choice`, `Quot.sound` only).\n\n## What this cycle established\n\n* **`dist_window_log_fst`** — for every Euclid seed, `log m ≤ d(i, z(m,n)) ≤ log m + log 2`.\n  The hyperbolic position of a node is the logarithm of its *first seed coordinate*, to\n  within `log 2`.  This replaces the `½ log c` coordinate of cycles I–II by the one that\n  the Berggren moves act on linearly, and it is what makes the growth analysis below\n  possible.\n* **The silver potential.**  `Φ(m,n) = m + (√2 − 1) n` satisfies `Φ(B_i v) ≤ (1+√2) Φ(v)`\n  for all three moves and every seed (`pot_seedL_le`, `pot_seedR_le`), with *equality* for\n  the middle move (`pot_seedM_eq`).  Hence `Φ ≤ (1+√2)^{k+1}` at depth `k`\n  (`reaches_pot_le`), and numerically the bound is attained at every depth.\n* **`dist_le_silver_depth`** — the sharp upper envelope `d ≤ (k+1) log(1+√2) + log 2`,\n  improving cycle VIII's `d ≤ k log 3 + (5/2) log 2`; and **`mspine_dist_ge_silver`** —\n  `d ≥ (k+1) log(1+√2) − ½ log 2` along the Pell spine.  Together\n  (`berggren_metric_growth_exponent`, `mspine_rate_tendsto_silver`) they identify the\n  metric growth exponent of the Berggren tree as **exactly `log(1+√2) = 0.88137…`**, the\n  logarithm of the silver ratio, strictly between `log 2` and `log 3`.\n* **Conjecture H2 is refuted, twice.**  `rspine_rate_tendsto_zero`: the pure-`B₃` path uses\n  the parabolic move `B₁` *never*, and still `d/k → 0`; so `B₁` is not the only source of\n  the depth–distance mismatch.  `no_path_attains_log_three`: no path whatever attains the\n  rate `log 3`, since `log(1+√2) < log 3` with a uniform gap.  The correct trichotomy is\n  `pure_spine_rate_trichotomy`: `B₁ → 0`, `B₂ → log(1+√2)`, `B₃ → 0`.\n* **The corrected positive statement** (`berggren_word_two_sided`,\n  `rate_ge_of_middle_frequency`): in terms of the labelling word `w`,\n  `(#B₂(w) + 1) log 2 ≤ d ≤ (|w| + 1) log(1+√2) + log 2`.  The *middle* move is the only\n  universal expander (`run_fst_ge_two_pow`), so a positive rate is forced exactly by a\n  positive frequency of `B₂`.\n* **The optimal depth of a hypotenuse** (`depth_ge_of_hypot`, `exists_depth_reach_silver`):\n  a node of hypotenuse `≥ N` requires depth `≥ (log N − log 2)/(2 log(1+√2)) − 1`, and the\n  Pell spine achieves depth `≤ (log N + log 2)/(2 log(1+√2))`.  The minimal depth at which\n  hypotenuse `N` appears is therefore `log N/(2 log(1+√2)) + O(1)` — the mission's\n  \"`O(log N)` path length\" in its final, constant-sharp form.\n\n## Three bold, falsifiable next-cycle conjectures\n\n### I1. The metric growth spectrum of the Berggren tree is the full interval `[0, log(1+√2)]`\nFor every `r ∈ [0, log(1+√2)]` there is an infinite Berggren path whose nodes satisfy\n`d(i, z_k)/k → r`, and the limit exists for every path whose letter frequencies converge;\nmoreover `r` is a continuous, strictly increasing function of the asymptotic `B₂`-frequency\nalong `B₁`-free paths, with `r = 0` exactly for the paths of `B₂`-density zero and\n`r = log(1+√2)` exactly for the pure-`B₂` path.\n*The key insight is* that `dist_window_log_fst` turns `d/k` into `(log m)/k`, i.e. into a\nBirkhoff average of `log(expansion factor)` along the slope dynamics `x = m/n`, where\n`B₁ : x ↦ 2 − 1/x` is parabolic (zero expansion at its fixed point `x = 1`),\n`B₃ : x ↦ x + 2` is parabolic at infinity (zero asymptotic expansion), and only\n`B₂ : x ↦ 2 + 1/x` has a hyperbolic fixed point `x = 1 + √2` of expansion `1 + √2` —\nso the spectrum is the closure of the set of Birkhoff averages of a piecewise-smooth\ncocycle, and interpolation between `0` and the maximum is achieved by mixing `B₂` blocks\nwith long `B₃` blocks in prescribed proportion.\n*Why now?*  The two extreme values are theorems of this cycle (`pure_spine_rate_trichotomy`,\n`berggren_metric_growth_exponent`); building an intermediate rate needs only the explicit\nword `((B₂)^a (B₃)^b)^∞` and the elementary two-sided estimates already formalised for `m`.\n\n### I2. The silver bound is exact: `max_{depth k} Φ = (1+√2)^{k+1}` for every `k`\nThe inequality `reaches_pot_le` is an equality on the Pell spine, i.e.\n`Φ(mspine k) = (1+√2)^{k+1}` (proved, `mspine_pot_eq`), and no other node of depth `k` has\nlarger potential; consequently `max_{depth k} m = (1+√2)^{k+1}/√2 · (1 + o(1))`, and the\nextremal node at each depth is unique.\n*The key insight is* that the potential is *strictly* contracted by `B₁` and `B₃` — the\nslack is `(√2 − 1)(m − n)` for `B₃` and `n(2 − √2) − (√2 − 1)(m − n)`-type for `B₁` — so\nany word containing a non-`B₂` letter loses a definite multiplicative factor, which can be\nmade quantitative by tracking the slope.\n*Why now?*  The numerics in `ComputationalEvidence.md` §2 show `max Φ / λ^{k+1} = 1.00000`\nat every depth `≤ 12` with the maximiser always the pure-`B₂` word; the strict-contraction\nlemmas are one `nlinarith` away from the ones already proved.\n\n### I3. Collisions cost depth: a colliding pair for `N` needs total depth `≥ c log N`\nIf two distinct Berggren nodes share hypotenuse `N`, then the *sum* of their depths is at\nleast `(log N)/(log(1+√2)) − O(1)`, and there are semiprimes `N = pq` for which one of the\ntwo colliding nodes has depth `≥ N^{1/2 − o(1)}` — so the \"short certificate, expensive\nsearch\" dichotomy of cycles I–VIII survives at the level of the tree, not merely of the\nmetric.\n*The key insight is* that `depth_ge_of_hypot` converts each node's hypotenuse into a depth\nlower bound with the *sharp* constant `1/(2 log(1+√2))`, applied to both members of the\ncollision; while the second half is the pure-`B₃` phenomenon of this cycle — a lopsided\nrepresentation `N = m² + n²` with `n` small has slope `n/m → 0`, and the slope dynamics\nreaches such nodes only through `Θ(m/n)` parabolic steps.\n*Why now?*  Cycle II's `exists_collision_gt` provides the explicit family\n`(20j+9, 10j+2)`, `(20j+7, 10j+6)`, whose slopes tend to `1/2` and `1/3` respectively —\nprecisely the two walls of the trichotomy in `parentSeed` — so the depths of that family\ncan be computed in closed form and tested against the conjecture immediately.\n",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "fd_1053",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "97241621",
-    "status": "in_progress",
-    "timestamp": "2026-08-09T13:09:55.047281+00:00",
-    "title": "Cycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles agai"
   },
   {
     "ambition_level": "extension",
