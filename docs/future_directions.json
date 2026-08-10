@@ -3842,11 +3842,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9e598fa1",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3859,7 +3859,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0099",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-10T12:03:03.807477+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -3874,7 +3874,7 @@
       "source": "",
       "source_exp_id": "2607.13159v1",
       "source_path": "http://arxiv.org/abs/2607.13159v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T04:59:11.546572+00:00",
       "title": "ArXiv paper: Beyond Mock Modularity: Elliptic Corrections for Higher Dyson Ranks"
@@ -36512,7 +36512,6 @@
     "§§2–4": 1
   },
   "selection_log": [
-    "abduction_followup",
     "cross_domain_bridge",
     "famous_subtask",
     "abduction_followup",
@@ -36531,6 +36530,7 @@
     "abduction_followup",
     "abduction_followup",
     "famous_subtask",
-    "abduction_followup"
+    "abduction_followup",
+    "cross_domain_bridge"
   ]
 }
