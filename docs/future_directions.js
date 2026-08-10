@@ -783,17 +783,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "d69d6f65",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle be8c4b71 (Q=0.808), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rat",
     "domains": [
       "Applications"
     ],
     "id": "push_be8c4b71_70184c1e",
-    "phase": "A",
     "priority_score": 0.9084800000000001,
     "research_mode": "team",
     "source_exp_id": "be8c4b71",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-02T09:31:08.650268+00:00",
     "title": "Deepening: EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -2636,16 +2635,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Perfect Cuboid (Euler Brick)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0311161a",
     "description": "Building on cycle c7c1ec6d (Q=0.767), which proved 8 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H\u2082 = 0` produces zero.  They also\nshow that unitary output forc",
     "domains": [
       "NumberTheory"
     ],
     "id": "push_c7c1ec6d_44e7b8d0",
+    "phase": "A",
     "priority_score": 0.8667599999999999,
     "research_mode": "team",
     "source_exp_id": "c7c1ec6d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T23:23:50.647036+00:00",
     "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
   },
