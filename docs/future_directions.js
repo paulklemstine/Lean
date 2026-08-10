@@ -3073,16 +3073,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Consciousness as Integrated Information: Mathematical Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2c070abd",
     "description": "Building on cycle 8fa54bf5 (Q=0.760), which proved 20 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a tropical analogue of Helly's theorem: characterize when tropical convex sets have non-empty intersection. Formalize tropical convex hulls and their connection to optimization.",
     "domains": [
       "Tropical"
     ],
     "id": "push_8fa54bf5_0d1affa2",
+    "phase": "A",
     "priority_score": 0.8597999999999998,
     "research_mode": "team",
     "source_exp_id": "8fa54bf5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-03T23:30:55.056594+00:00",
     "title": "Deepening: Tropical Convexity and Helly Theorem"
   },
@@ -6024,16 +6025,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Constant in Dense Set Without Large Sumsets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23bf86f8",
     "description": "The exact asymptotic growth of T_k = \u0398(k\u00b2 log k) with computable constants. Specifically, there exist positive constants c\u2081, c\u2082 such that lim inf (T_k / (k\u00b2 log k)) \u2265 c\u2081 and lim sup (T_k / (k\u00b2 log k)) \u2264 c\u2082, and the optimal values satisfy 0.1 \u2264 c\u2081 \u2264 c\u2082 \u2264 10.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_0219",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15116v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T12:55:09.512961+00:00",
     "title": "Rainbow Arithmetic Progression Threshold Conjecture"
   },
