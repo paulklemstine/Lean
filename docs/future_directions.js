@@ -783,16 +783,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d69d6f65",
     "description": "Building on cycle be8c4b71 (Q=0.808), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rat",
     "domains": [
       "Applications"
     ],
     "id": "push_be8c4b71_70184c1e",
+    "phase": "A",
     "priority_score": 0.9084800000000001,
     "research_mode": "team",
     "source_exp_id": "be8c4b71",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T09:31:08.650268+00:00",
     "title": "Deepening: EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
