@@ -314,6 +314,8 @@ class KnowledgeExtractor:
         try:
             data = json.loads(path.read_text())
             for pid, d in data.items():
+                if d.get('status') in ('failed', 'integrated', 'rejected'):
+                    continue
                 concept_dict = d.pop('concept', {})
                 concept = ResearchConcept(**concept_dict)
                 d['concept'] = concept
@@ -1707,6 +1709,16 @@ Research mode: {concept.research_mode}
                 has_files = result.get("has_files", False)
                 is_complete = result.get("complete", False)
                 percent = result.get("percent_complete", 0) or 0
+
+                if status == "error" or result.get("error"):
+                    err_msg = str(result.get("error", "API error"))
+                    print(f"[Poll] {pid[:8]} API ERROR: {err_msg}")
+                    job.status = "failed"
+                    job.error_message = f"API error: {err_msg}"
+                    self.failed_count += 1
+                    self._release_direction(job)
+                    completed.append(job)
+                    continue
 
                 # Capture reasoning checkpoint and enforce timeouts
                 try:

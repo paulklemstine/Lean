@@ -797,17 +797,14 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                         job.integrated_paths = (job.integrated_paths or []) + [p]
 
         if job.error_message:
-            print(f"[Tick] Extract failed: {job.error_message}")
-            # Auth errors (403/401) mean we can never download this project's
-            # results — it belongs to a different account. Mark as failed and
-            # release the future direction so it can be retried.
-            if "authentication error" in job.error_message or "403" in job.error_message or "401" in job.error_message:
-                print(f"[Tick] Auth error on {job.job_id[:8]} — releasing direction")
-                extractor._release_direction(job)
-                # Remove from inflight so we don't keep retrying
-                if job.project_id in extractor.inflight:
-                    del extractor.inflight[job.project_id]
-                extractor.failed_count += 1
+            print(f"[Tick] Job failed: {job.error_message}")
+            extractor._release_direction(job)
+            if job.project_id and job.project_id in extractor.inflight:
+                del extractor.inflight[job.project_id]
+            if job.job_id and job.job_id in extractor.inflight:
+                del extractor.inflight[job.job_id]
+            extractor._save_inflight()
+            extractor.failed_count += 1
             continue
 
         # ── End-of-Thought Continuation Prod ──
