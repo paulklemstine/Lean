@@ -4591,10 +4591,7 @@ Research mode: {concept.research_mode}
     # ==================================================================
 
     def _release_direction(self, job: ResearchJob) -> None:
-        """Mark the future direction consumed by a failed job as terminal failed.
-
-        Directions are no longer retried; a failed job consumes the direction once.
-        """
+        """Reset the future direction consumed by a failed job back to available status."""
         if not job.job_id:
             return
         if hasattr(self, 'locked_titles') and job.concept:
@@ -4602,14 +4599,11 @@ Research mode: {concept.research_mode}
         try:
             from research_memory import FutureDirectionsManager
             fd_manager = FutureDirectionsManager(self.workspace)
-            for d in fd_manager._directions:
-                if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                    fd_manager.mark_direction_failed(d.id)
-                    print(f"[Tick] Direction {d.id} marked failed (no retry): {d.title[:50]}")
-                    break
+            fd_manager.release_consumed_direction(job.job_id)
+            print(f"[Tick] Reset direction back to available for failed job {job.job_id[:8]}")
             self._terminate_thread_for_job(job, "job_failed")
         except Exception as e:
-            print(f"[Tick] Warning: could not mark direction failed: {e}")
+            print(f"[Tick] Warning: could not reset direction back to available: {e}")
 
     def _release_direction_back_to_available(self, job: ResearchJob) -> None:
         """Release the direction consumed by this job back to the available pool.
