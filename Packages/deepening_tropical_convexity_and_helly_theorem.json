@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-11T00:14:07Z",
+  "date": "2026-08-10T23:58:46Z",
   "key_results": [
     "Tropical Cramer dependence theorem: any d+1 vectors of R^d are tropically dependent, with witnessing weights given by the tropical determinants of the row-deleted minors, so that every coordinate maximum is attained at least twice",
     "Tropical Helly theorem with Helly number exactly d for tropical cones in R^d, together with an explicit extremal family of d cones any d-1 of which meet while the whole family does not",

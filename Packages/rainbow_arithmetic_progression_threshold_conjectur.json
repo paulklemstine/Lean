@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-11T00:15:52Z",
+  "date": "2026-08-11T00:00:00Z",
   "key_results": [
     "Exact binomial moment identity: for every order r, the sum over all words of length m over an N-letter alphabet of the binomial coefficient of the missed-letter count choose r equals C(N,r)(N-r)^m",
     "Sharp window for the full-spectrum threshold: |T - N log N| <= N log 2 + log N + 1 for every alphabet with N >= 2 letters, from a first-moment union bound and a second-moment Cauchy-Schwarz obstruction",

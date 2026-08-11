@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-11T00:17:40.341207+00:00",
+  "last_updated": "2026-08-11T00:01:15.508763+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -51814,8 +51814,8 @@
       "bridge_count": 0,
       "cycle_n": 2,
       "domain": "Tropical",
-      "duration_seconds": 3553.1747381687164,
-      "end_time": 1786407236.9414337,
+      "duration_seconds": 2634.6323885917664,
+      "end_time": 1786406318.399084,
       "files_integrated": 4,
       "job_id": "2c070abd",
       "outcome_quality": 0.627125,
@@ -51848,7 +51848,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 52,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-08-11T00:17:40.083943+00:00",
+      "timestamp": "2026-08-11T00:01:15.274383+00:00",
       "title": "Deepening: Tropical Convexity and Helly Theorem"
     },
     {
@@ -51858,8 +51858,8 @@
       "bridge_count": 0,
       "cycle_n": 3,
       "domain": "Shared",
-      "duration_seconds": 3550.4626049995422,
-      "end_time": 1786407237.3383172,
+      "duration_seconds": 2631.983772754669,
+      "end_time": 1786406318.859485,
       "files_integrated": 4,
       "job_id": "23bf86f8",
       "outcome_quality": 0.0,
@@ -51892,7 +51892,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 53,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-08-11T00:17:40.202899+00:00",
+      "timestamp": "2026-08-11T00:01:15.382189+00:00",
       "title": "Rainbow Arithmetic Progression Threshold Conjecture"
     }
   ]

@@ -9,7 +9,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1065",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -231,16 +231,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "SCP-Containment-Topology: Non-Euclidean Geometric Lock for Anomalous Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de149d0f",
     "description": "Formalizes conditions where two spatially separated identical agents undergo instant state-space synchronization upon observing identical environmental stimuli.",
     "domains": [
       "Logic"
     ],
     "id": "scifi_50_15_e4106456",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:57.541980+00:00",
     "title": "Doppelg\u00e4nger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
   },
@@ -6722,16 +6723,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lehmer's Mahler Measure Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94177336",
     "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
     "domains": [
       "Applications"
     ],
     "id": "sorry_fill_1003d095_00485697",
+    "phase": "A",
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "1003d095",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T18:04:18.998094+00:00",
     "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
@@ -9867,7 +9869,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "fd_0905",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "01a8c97a",
@@ -10443,17 +10445,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Lean development consists of three files, all of which compile with no `sorr"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e69eca5d",
     "description": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinatorics/HarrisFKGThresholdCoupling.lean` contain complete Lean 4\nproofs (no `sorry`, only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`) of the following.\n\n* `keyMeasure_thresholdFiber` \u2014 the finite-key probability formula\n  `P(siteThresholdConfig key p = \u03b7) = p^{|open \u03b7|}(1-p)^{|closed \u03b7|}` for the\n  product of uniform `[0,1]` keys on any finite index type;\n* `keyMeasure_eventKeys` \u2014 the key measure of an arbitrary event equals its\n  Bernoulli polynomial `bernProb p A`;\n* `keyMeasure_eventKeys_mono`, `bernProb_mono`, `crossing_prob_mono` \u2014\n  monotonicity in `p` for increasing events, in particular for horizontal\n  crossings of the `n \u00d7 n` grid;\n* `keyMeasure_eventKeys_strictMono`, `bernProb_strictMono`,\n  `crossing_prob_strictMono`, `crossing_bernProb_strictMono` \u2014 strict\n  monotonicity on `(0,1)` for nondegenerate increasing events and for grid\n  crossings;\n* `hasDerivAt_bernProb`, `deriv_bernProb`, `deriv_bernProb_pos_iff`,\n  `deriv_bernProb_pos` \u2014 the finite Russo formula and the characterization of\n  strict positivity of the derivative;\n* `bond_keyMeasure_thresholdFiber`, `bond_keyMeasure_eventKeys`,\n  `bond_connected_prob_mono` \u2014 the bond analogue on `Sym2 V`;\n* **new:** `weight_inf_mul_weight_sup` (log-supermodularity of the Bernoulli\n  weight), `bernProb_harris` and `keyMeasure_harris` (the Harris/FKG inequality\n  `P(A)P(B) \u2264 P(A \u2229 B)` for increasing events, in polynomial and in key-measure\n  form), `bernProb_harris_compl` (increasing versus decreasing negative\n  correlation), `bernProb_harris_biInter` and `bernProb_harris_biInter_compl`\n  (finite families), `bernProb_biUnion_ge` (product form of the square-root\n  trick), and the grid instances `crossing_harris`,\n  `crossing_harris_open_site`.\n\nConjecture 4 of the previous cycle (the finite Harris inequality) is therefore\nnow a theorem.  The list below is the updated set of falsifiable conjectures.\n\n## Conjecture 1 (size of the Russo derivative for grid crossings)\n\nLet `\u03b8_n(p)` be the horizontal crossing probability of the `n \u00d7 n` grid, so that\n`\u03b8_n'(p) = \u2211_v P_p(v pivotal)` by `deriv_bernProb`.  Conjecture: the sequence\n`\u03b8_n'(1/2)` is strictly increasing in `n` and satisfies `\u03b8_n'(1/2) \u2264 n` for all\n`n \u2265 1`.  Enumeration gives `\u03b8_1'(1/2) = 1`, `\u03b8_2'(1/2) = 3/2`,\n`\u03b8_3'(1/2) = 961/512 \u2248 1.879`.  Either half is refuted by a single computed\nvalue.\n\n## Conjecture 2 (self-duality defect and decay of the crossing density)\n\nWith `\u03b8_n` as above, `\u03b8_n(1/2) < 1/2` for every `n \u2265 2`, the sequence\n`\u03b8_n(1/2)` is strictly decreasing and tends to `0`, and the unique root\n`p_n \u2208 (0,1)` of `\u03b8_n(p) = 1/2` satisfies `p_n > 1/2`.  Enumeration gives\n`\u03b8_1(1/2) = 1/2`, `\u03b8_2(1/2) = 7/16`, `\u03b8_3(1/2) = 197/512`.  A single computed\npair with `\u03b8_{n+1}(1/2) \u2265 \u03b8_n(1/2)` refutes the monotonicity half.\n\n## Conjecture 3 (strict Harris correlation for grid crossings)\n\nThe Harris inequality `crossing_harris_open_site`,\n`p \u00b7 \u03b8_n(p) \u2264 P_p(crossing \u2229 {v open})`, is *strict* for every `n \u2265 2`, every\nsite `v` of the `n \u00d7 n` grid and every `p \u2208 (0,1)`.  Enumeration at `n = 2`,\n`p = 1/2` gives `P = 5/16 > 7/32 = p \u00b7 \u03b8_2(1/2)`.  Conjecturally the defect\n`P_p(crossing \u2229 {v open}) - p\u00b7\u03b8_n(p)` is maximal, for fixed `n` and `p = 1/2`,\nat a corner site.  Both halves are refuted by a single enumerated grid.\n\n## Conjecture 4 (BK inequality on a finite site set)\n\nFor increasing events `A, B \u2286 (\u03b9 \u2192 Bool)` on a finite site set, let `A \u2218 B` be\nthe event that `A` and `B` occur on disjoint sets of open sites.  Then\n\n`bernProb p (A \u2218 B) \u2264 bernProb p A * bernProb p B` for all `p \u2208 [0,1]`.\n\nThis is the van den Berg\u2013Kesten inequality, the natural counterpart to the\nHarris inequality now proved.  Together with `bernProb_harris` it would pin the\ncorrelation of increasing events between the two matching bounds.  It is\nfalsifiable on any explicit finite site set.\n\n## Conjecture 5 (bond\u2013site domination on the same key space)\n\nFor a finite graph `G` and vertices `u, v`, using the *same* index type\n`Sym2 V` for bond keys and `V` for site keys, the bond connection probability\ndominates the site connection probability of the line graph:\n\n`bernProb p {\u03c9 | BondConnected G \u03c9 u v} \u2265 bernProb p {\u03b7 | SiteConnected (lineGraph G) \u03b7 e f}`\n\nfor all `p \u2208 [0,1]` and all edges `e \u220b u`, `f \u220b v`.  This is a finite,\ncheckable statement (both sides are explicit polynomials for small graphs) and\nwould give a formal counterpart of the classical \"bond percolates at least as\neasily as site percolation\" heuristic.\n",
     "domains": [
       "Computation",
       "Logic"
     ],
     "id": "fd_0963",
+    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "6ffc84c2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-05T06:52:34.895974+00:00",
     "title": "`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,"
   },
