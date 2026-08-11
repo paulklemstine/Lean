@@ -1,25 +1,19 @@
-# Spectral Bounds on Non-Homogeneous Quadratic Forms over Lattices
-
-### Torsion gaps, characteristic vectors, and the covering weight enumerator
+# Spectral Bounds on Non-Homogeneous Quadratic Forms over the Integer Lattice
 
 **Author:** Aristotle
-**Date:** 2026-08-07
-
----
+**Date:** 2026-08-11
 
 ## Abstract
 
-Let $Q(x) = x^{\mathsf T} B x$ be a positive definite quadratic form with rational coefficients on the lattice $L = \mathbb{Z}^n \subset \mathbb{Q}^n$, and let $F(x) = Q(x - t)$ be the associated non-homogeneous form attached to a rational shift $t$. The integral solutions of $F(x) = c$ are the lattice points lying on the $Q$-ellipsoid of squared radius $c$ centred at $t$. We study two invariants: the *minimal lattice energy* (homogeneous minimum) $\lambda_1 = \min_{0 \neq m \in L} Q(m)$, and the *spectral gap* (inhomogeneous minimum) $\mu(t) = \min_{m \in L} Q(t - m)$, which is the exact threshold below which $F(x) = c$ has no integral solution.
+We develop a self-contained quantitative theory of non-homogeneous (shifted) quadratic Diophantine problems
+$$Q(x - t) = c, \qquad x \in \mathbb{Z}^n,$$
+where $Q(x) = \sum_{i,j} A_{ij} x_i x_j$ is a real quadratic form and $t \in \mathbb{R}^n$ a fixed shift. The only structural hypothesis is a *spectral sandwich*: $m\|x\|^2 \le Q(x) \le M\|x\|^2$ for all $x \in \mathbb{R}^n$, which for symmetric $A$ is equivalent to all eigenvalues lying in $[m, M]$.
 
-We prove four groups of results.
+We prove: (i) a **spectral gap** $Q(x-t) \ge m\, d(t, \mathbb{Z}^n)^2$ valid for all integer $x$, hence a Diophantine obstruction excluding every target value below the gap; (ii) an **effective rational gap** $m/q^2$ for shifts with denominator $q$; (iii) a matching **covering bound** $\min_x Q(x-t) \le Mn/4$ obtained by coordinatewise rounding, giving the two-sided sandwich $m\,d(t,\mathbb{Z}^n)^2 \le \mu(Q,t) \le Mn/4$ for the inhomogeneous minimum; (iv) **two-sided counting estimates** $\left(2\sqrt{R/(Mn)} - 1\right)^n \le N(R) \le \left(2\sqrt{R/m} + 1\right)^n$ for the number of integer solutions of $Q(x-t) \le R$ beyond the covering threshold, so $N(R) \asymp R^{n/2}$; (v) convergence, diagonal factorisation, an explicit lower bound, and gap-rate exponential decay for the **inhomogeneous theta series** $\Theta(s) = \sum_{x \in \mathbb{Z}^n} e^{-sQ(x-t)}$, together with $\Theta(s) \to 0$ as $s \to \infty$ whenever the shift is off the lattice; and (vi) a complete determination of the **extremal set** for the half-shifted sum of squares: $\sum_i (x_i - \tfrac12)^2 \ge n/4$ with equality exactly on the $2^n$ vertices of the unit cube.
 
-1. **Archimedean.** For every $r$-torsion shift $t$ — a rational point with $rt \in L$ and $t \notin L$ — one has $\mu(t) \geq \lambda_1/r^2$, with a rigidity converse: equality holds if and only if $t \equiv w/r \pmod L$ for some $w$ realising $\lambda_1$. Non-extremal torsion shifts satisfy a strictly better second bound $\lambda_2/r^2$, so the spectrum of spectral gaps at $r$-torsion shifts has a hole. The constant $1/r^2$ is optimal; in particular the naive inequality $\mu \geq \lambda_1$ is false, and $\mu \geq \lambda_1/4$ is its correct sharp form. All invariants are $\mathrm{GL}_n(\mathbb{Z})$-invariants of the pair (lattice, form).
+All bounds are explicit in $m$, $M$, $n$, and the denominator of the shift, and all proofs are elementary — the deepest tool used is comparison of a Gaussian sum with a geometric series.
 
-2. **Diophantine.** Completing the square converts every gap theorem into an unsolvability criterion for $F(x) = Q(x) + \ell(x) + c = 0$: when the completing shift is $-v/r$ with $v$ realising $\lambda_1$, the equation is unsolvable as soon as $c > 0$, whereas the classical archimedean criterion only rules out $c > \lambda_1/r^2$. The improvement is exactly the gap.
-
-3. **$2$-adic.** For a symmetric integral form, a vector $v$ is a *characteristic vector* — meaning $u \mapsto \mathrm{Bil}(v,u) + Q(u)$ is even — **if and only if** $Q(v + 2u) \equiv Q(v) \pmod 8$ for all $u \in L$. Consequently the value set of $Q(x - v/2)$ at a characteristic $v$ lies in $Q(v)/4 + 2\mathbb{Z}$, and distinct attained values differ by at least $2$. The classical fact that a sum of $n$ odd squares is $\equiv n \pmod 8$, and hence the deep-hole spectrum $\tfrac n4 + 2\mathbb{Z}_{\geq 0}$ of $\mathbb{Z}^n$, is the instance $v = (1,\dots,1)$.
-
-4. **Combinatorial.** On $2$-torsion shifts of a positive diagonal form $Q(x) = \sum a_i x_i^2$, the spectral gap equals the *weighted Hamming weight* $\bigl(\sum_{i \in s} a_i\bigr)/4$ of the class in $\mathbb{F}_2^n$; the whole gap spectrum is $\{(\sum_{i\in s} a_i)/4 : s \neq \emptyset\}$ and runs from the packing invariant $\lambda_1/4$ to the covering invariant $(\sum_i a_i)/4$. For $\mathbb{Z}^n$ this is exactly $\{k/4 : 1 \le k \le n\}$. On multiplicities, every coefficient of the shifted theta series is even whenever $2t \in L$, $t \notin L$; the converse fails ($t = (\tfrac12,\tfrac13)$ in $\mathbb{Z}^2$) and is replaced by the exact coordinatewise criterion: for a positive diagonal form, all coefficients are even iff some single coordinate $t_i$ is half-integral.
+**Keywords:** non-homogeneous quadratic form, inhomogeneous minimum, spectral gap, lattice reduction, covering radius, theta series, Diophantine obstruction, representation numbers.
 
 ---
 
@@ -27,407 +21,325 @@ We prove four groups of results.
 
 ### 1.1 The problem
 
-A *non-homogeneous quadratic Diophantine equation* has the shape
-$$F(x) \;=\; Q(x) + \ell(x) + c \;=\; 0, \qquad x \in \mathbb{Z}^n,$$
-where $Q(x) = x^{\mathsf T} B x$ is a quadratic form and $\ell$ is linear. The standard first move is to complete the square, which — when the linear part lies in the image of twice the bilinear form — rewrites $F$ as $Q(x - t) + \text{const}$ for a rational shift $t$. All the arithmetic of the original equation is therefore concentrated in the geometry of the *shifted lattice* $\mathbb{Z}^n - t$ with respect to $Q$.
+Classical Diophantine theory of quadratic forms concerns the *homogeneous* equation $Q(x) = c$ with $x \in \mathbb{Z}^n$; the local–global machinery (Hasse–Minkowski, the circle method, Siegel's mass formula) is largely built for that case. The *non-homogeneous*, or *shifted*, problem
+$$Q(x - t) = c, \qquad x \in \mathbb{Z}^n, \; t \in \mathbb{R}^n \text{ fixed},$$
+behaves quite differently. It has no trivial solution: the point $x = 0$ carries no privilege once the form is recentred at $t$. Congruence obstructions weaken or disappear when $t$ is irrational. And the fundamental invariant becomes a *geometric* one — the inhomogeneous minimum
+$$\mu(Q, t) \;=\; \inf_{x \in \mathbb{Z}^n} Q(x - t),$$
+which measures the radius of the smallest $Q$-ellipsoid centred at $t$ that meets $\mathbb{Z}^n$. Supremising $\mu$ over $t$ recovers the squared covering radius of the lattice in the geometry of $Q$.
 
-The basic obstruction to solvability is metric: if $c$ is smaller than the $Q$-distance from $t$ to the nearest lattice point, then $F$ has no solution. But this metric obstruction is only one of at least three, and the other two — a $2$-adic congruence and a combinatorial weight function — are what this paper isolates.
+This invariant is the crux of several modern subjects. In lattice-based cryptography it is the objective of the closest vector problem; in coding theory it is a minimum-distance guarantee; in statistical mechanics it is the ground-state energy of a lattice model whose partition function is the theta series of $Q$ shifted by $t$.
 
-### 1.2 The invariants
+### 1.2 What we prove, and the hypothesis we use
 
-Throughout, $B \in M_n(\mathbb{Q})$ is symmetric and $Q(x) = x^{\mathsf T} B x$; $L = \mathbb{Z}^n$; $\mathrm{Bil}(x,y) = x^{\mathsf T} B y$ is the associated bilinear form, so $Q(x) = \mathrm{Bil}(x,x)$ and
-$$Q(x + y) = Q(x) + 2\,\mathrm{Bil}(x,y) + Q(y). \tag{1.1}$$
+We work under a single hypothesis that abstracts away everything about $A$ except its extremes of stretching. The resulting theory is deliberately *soft* and *uniform*: every bound depends only on the pair $(m, M)$, on the dimension $n$, and on the arithmetic of the shift, and every constant is explicit. The novelty is not in any individual inequality — several are folklore in one form or another — but in the systematic assembly: gap, covering, counting, and theta behaviour all follow from one elementary lattice-reduction estimate, and each of the four is sharp in the model case of the half-shifted sum of squares, where all inequalities collapse to equalities and the extremal set is determined exactly.
 
-**Definition 1.1 (Positive definiteness).** $Q$ is *positive definite over $\mathbb{Q}$* if $Q(x) > 0$ for all $x \in \mathbb{Q}^n \setminus \{0\}$.
+### 1.3 Organisation
 
-**Definition 1.2 (Minimal lattice energy).** A rational number $\lambda_1$ is the *minimal lattice energy* of $Q$ if it is attained ($Q(v) = \lambda_1$ for some $v \in L \setminus \{0\}$) and is a lower bound ($\lambda_1 \le Q(m)$ for all $m \in L \setminus \{0\}$). This is the homogeneous minimum, the packing invariant of the lattice.
-
-**Definition 1.3 (Spectral gap / inhomogeneous minimum).** For a rational shift $t$, a rational number $\mu$ is the *spectral gap of $Q$ at $t$* if it is attained ($Q(t - m) = \mu$ for some $m \in L$) and is a lower bound ($\mu \le Q(t-m)$ for all $m \in L$). We write $\mu(t)$.
-
-Both definitions are stated as attainment-plus-bound rather than as an infimum, so that every theorem below is an identity rather than a one-sided estimate. Positive definiteness guarantees existence of both (the relevant sets are discrete and the sublevel sets are finite), but no theorem in this paper needs that guarantee: attainment is always a hypothesis or a conclusion, never an appeal to compactness.
-
-**Definition 1.4 (Torsion shift).** For an integer $r \geq 2$, a rational point $t$ is an *$r$-torsion shift* if $r t \in L$ and $t \notin L$; equivalently, $t$ is a nonzero $r$-torsion element of $(L \otimes \mathbb{Q})/L$.
-
-**Definition 1.5 (Half point, deep hole, step shift).** For $v \in L$ write $v/2$ for the rational point with coordinates $v_i/2$. The *deep hole* of $\mathbb{Z}^n$ is $(\tfrac12, \ldots, \tfrac12)$. For $s \subseteq \{1,\dots,n\}$, the *step shift* $\sigma_s$ is the rational point with $(\sigma_s)_i = \tfrac12$ for $i \in s$ and $0$ otherwise; every $2$-torsion class of $(\tfrac12\mathbb{Z}/\mathbb{Z})^n \cong \mathbb{F}_2^n$ has a unique step-shift representative.
-
-**Definition 1.6 (Shifted theta coefficients).** For $c \in \mathbb{Q}$, let $r_t(c) = \#\{m \in L : Q(t - m) = c\}$. The formal series $\theta_t(q) = \sum_c r_t(c)\,q^{c}$ is the *shifted theta series*; its support is the *value spectrum* of the non-homogeneous form.
-
-### 1.3 What the results say, informally
-
-The spectral gap is bounded below by the packing invariant divided by the square of the torsion order, and the equality case is a rigidity statement that detects the shortest vectors. Above that, the *value spectrum* of the non-homogeneous form is not merely a discrete set of rationals: at half a characteristic vector it is contained in an arithmetic progression of step $2$, and being characteristic is *equivalent* to that. Finally, on $2$-torsion classes of a diagonal form the gap function is a weighted Hamming weight, giving a literal dictionary between lattice covering theory and binary coding theory.
+Section 2 fixes definitions. Section 3 proves the lattice-reduction estimate and the spectral gap, with the effective rational refinement. Section 4 gives the covering bound and the sandwich for $\mu(Q,t)$, together with the solvability window. Section 5 proves the two-sided counting theorem. Section 6 treats the theta series. Section 7 determines the extremal set in the model case. Section 8 gives algorithms; Section 9 applications; Section 10 discussion and open problems.
 
 ---
 
-## 2. The archimedean theory: torsion gaps
+## 2. Definitions and standing conventions
 
-### 2.1 The scaling identity
+Throughout, $n \ge 0$ is an integer, indices run over $\{1, \dots, n\}$, and $x$ ranges over $\mathbb{R}^n$ or $\mathbb{Z}^n$ as indicated.
 
-The engine of the entire archimedean half is a triviality.
+**Definition 2.1 (Squared norm).** For $x \in \mathbb{R}^n$, $\|x\|^2 = \sum_{i=1}^n x_i^2$.
 
-**Lemma 2.1 (Scaling).** For $c \in \mathbb{Q}$ and $x \in \mathbb{Q}^n$, $Q(cx) = c^2 Q(x)$.
+**Definition 2.2 (Quadratic form of a matrix).** For a real $n \times n$ matrix $A$,
+$$Q_A(x) \;=\; \sum_{i=1}^n \sum_{j=1}^n A_{ij}\, x_i x_j .$$
+We write $Q$ for $Q_A$ when $A$ is clear. Note that only the symmetric part of $A$ affects $Q_A$.
 
-*Proof.* Immediate from bilinearity of $\mathrm{Bil}$ in each argument. $\square$
+**Definition 2.3 (Spectral bounds).** $A$ *has spectral bounds* $m, M \in \mathbb{R}$ if
+$$m\,\|x\|^2 \;\le\; Q_A(x) \;\le\; M\,\|x\|^2 \qquad \text{for all } x \in \mathbb{R}^n .$$
+For symmetric $A$ this holds precisely when every eigenvalue of $A$ lies in $[m, M]$ (Rayleigh's principle); the definition above is used in preference to eigenvalues because it is what every proof actually consumes, and because it applies verbatim to non-symmetric $A$.
 
-**Lemma 2.2 (Halving identity).** For $v, m \in L$,
-$$Q\!\left(\tfrac{v}{2} - m\right) \;=\; \tfrac14\,Q(v - 2m).$$
-More generally, if $rt = v \in L$ then $Q(t - m) = \tfrac{1}{r^2} Q(v - rm)$.
+**Definition 2.4 (Non-homogeneous evaluation).** For a shift $t \in \mathbb{R}^n$ and $x \in \mathbb{Z}^n$,
+$$E_A(t, x) \;=\; Q_A\big( (x_i - t_i)_{i} \big) .$$
+We write $Q(x-t)$ for $E_A(t,x)$ in prose.
 
-*Proof.* $t - m = \tfrac1r(v - rm)$; apply Lemma 2.1 with $c = 1/r$. $\square$
+**Definition 2.5 (Distance to $\mathbb{Z}$).** For $u \in \mathbb{R}$,
+$$d_{\mathbb{Z}}(u) \;=\; \min\big(\{u\},\, 1 - \{u\}\big),$$
+where $\{u\} = u - \lfloor u \rfloor$ is the fractional part. Then $0 \le d_{\mathbb{Z}}(u) \le \tfrac12$, with $d_{\mathbb{Z}}(u) = 0$ iff $u \in \mathbb{Z}$.
 
-The content is that the *rational* quantity on the left is a rescaled *integral* quantity on the right, and integral quantities are controlled by $\lambda_1$ as soon as they are nonzero. Non-vanishing is the only nontrivial point.
+**Definition 2.6 (Squared lattice distance).** For $t \in \mathbb{R}^n$,
+$$d(t, \mathbb{Z}^n)^2 \;=\; \sum_{i=1}^n d_{\mathbb{Z}}(t_i)^2 .$$
 
-**Lemma 2.3 (Primitivity).** Let $t$ be an $r$-torsion shift with $rt = v \in L$. Then $v - rm \neq 0$ for every $m \in L$.
+**Definition 2.7 (Inhomogeneous minimum).** $\displaystyle \mu(Q_A, t) \;=\; \inf_{x \in \mathbb{Z}^n} E_A(t, x)$.
 
-*Proof.* If $v = rm$ then $t = m \in L$, contradicting $t \notin L$. $\square$
+**Definition 2.8 (Inhomogeneous theta series).** For $s > 0$,
+$$\Theta_{A, t}(s) \;=\; \sum_{x \in \mathbb{Z}^n} \exp\big(-s\, E_A(t,x)\big),$$
+whenever the family is summable (Theorem 6.1 guarantees this for $m > 0$).
 
-Two remarks. First, no positivity and no minimality is used. Second, in the special case $t = v/2$ with $v$ a shortest vector one can argue differently and more informatively: were $v = 2m$ with $m \neq 0$, then $\lambda_1 = Q(v) = 4Q(m) \geq 4\lambda_1$, contradicting $\lambda_1 > 0$. In other words, *a shortest vector is primitive modulo $r$ for every $r \geq 2$* — the same single fact that drives both the gap theorem and the even-multiplicity theorem of §5.
-
-### 2.2 The gap theorem and its rigidity
-
-**Theorem 2.4 (Torsion gap).** Let $\lambda_1$ be the minimal lattice energy of $Q$ and let $t$ be an $r$-torsion shift, $r \geq 2$. Then
-$$Q(t - m) \;\geq\; \frac{\lambda_1}{r^2} \qquad \text{for every } m \in L,$$
-and consequently $\mu(t) \geq \lambda_1/r^2$ whenever the spectral gap exists.
-
-*Proof.* Write $rt = v \in L$. By Lemma 2.2, $Q(t-m) = r^{-2}Q(v - rm)$; by Lemma 2.3 the integer vector $v - rm$ is nonzero; by minimality $Q(v - rm) \geq \lambda_1$. $\square$
-
-**Theorem 2.5 (Attainment at half a shortest vector).** If $Q$ is positive definite, $\lambda_1$ is the minimal lattice energy and $Q(v) = \lambda_1$, then the spectral gap at $v/2$ exists and equals $\lambda_1/4$:
-$$\mu\!\left(\tfrac v2\right) = \frac{\lambda_1}{4}.$$
-More generally $\mu(v/r) = \lambda_1/r^2$ for every $r \geq 2$.
-
-*Proof.* The lower bound is Theorem 2.4. Attainment is the choice $m = 0$, for which Lemma 2.2 gives $Q(v/r) = r^{-2}Q(v) = \lambda_1/r^2$. $\square$
-
-Theorem 2.5 disposes of the naive guess. One might hope for $\mu \geq \lambda_1$; Theorem 2.5 exhibits, for *every* positive definite rational form in *every* dimension, a shift at which $\mu$ equals $\lambda_1/4$ exactly. The factor $1/4$ is therefore not an artefact of a lossy argument. Its origin is the index $[L : 2L] $ scaling: halving a vector divides its energy by four.
-
-**Example 2.6 (Sharpness on $\mathbb{Z}^n$).** For $B = I$, $\lambda_1 = 1$, realised by any standard basis vector $e_1$. Theorem 2.5 gives $\mu(e_1/2) = 1/4$. No constant larger than $1/4$ can appear in Theorem 2.4 with $r = 2$.
-
-The converse of Theorem 2.5 is the substance of the archimedean theory, and it requires one further tool.
-
-**Lemma 2.7 (Translation invariance).** For any $k \in L$, $\mu(t) = \mu(t + k)$; more precisely $\mu$ is a well-defined function on $(L \otimes \mathbb{Q})/L$.
-
-*Proof.* $m \mapsto m + k$ is a bijection of $L$ carrying $Q(t - m)$ to $Q((t+k) - (m+k))$; the two sets of attained values coincide. $\square$
-
-**Theorem 2.8 (Rigidity).** Let $Q$ be positive definite with minimal lattice energy $\lambda_1$, and let $t$ be an $r$-torsion shift. Then
-$$\mu(t) = \frac{\lambda_1}{r^2} \iff t \equiv \frac{w}{r} \pmod{L} \text{ for some } w \in L \text{ with } Q(w) = \lambda_1 .$$
-
-*Proof.* ($\Leftarrow$) By Lemma 2.7 we may assume $t = w/r$; then apply Theorem 2.5.
-
-($\Rightarrow$) The definition of the spectral gap includes attainment: there is $m \in L$ with $Q(t - m) = \lambda_1/r^2$. Put $w = r(t - m) = rt - rm$, which lies in $L$ because $rt \in L$. By Lemma 2.1, $Q(w) = r^2 Q(t-m) = \lambda_1$. And $t - m = w/r$, so $t \equiv w/r \pmod L$. $\square$
-
-Theorem 2.8 says the metric invariant $\mu$, restricted to $r$-torsion classes, *detects the shortest vectors*: the extremal classes are exactly the classes of $w/r$ for $w$ realising $\lambda_1$. This is a genuine "if and only if", and the reverse direction is essentially free once translation invariance is in place. It is worth noting that the earlier hypothesis "$v$ is shortest" in the special-shape versions was doing no work in the *inequality*: the hypothesis that actually matters in Theorem 2.4 is only $t \notin L$.
-
-**Theorem 2.9 (Second gap).** Let $\lambda_2$ be a lower bound for the values of $Q$ on $L \setminus \{0\}$ strictly above $\lambda_1$; that is, $Q(m) \geq \lambda_2$ for every $m \in L\setminus\{0\}$ with $Q(m) \neq \lambda_1$. If $t$ is an $r$-torsion shift which is *not* of the form $w/r \bmod L$ with $Q(w) = \lambda_1$, then
-$$\mu(t) \;\geq\; \frac{\lambda_2}{r^2}.$$
-Hence the set of spectral gaps at $r$-torsion shifts contains no value strictly between $\lambda_1/r^2$ and $\lambda_2/r^2$.
-
-*Proof.* Fix $m$ and set $w = rt - rm \in L\setminus\{0\}$. If $Q(w) = \lambda_1$ then $t \equiv w/r$, excluded by hypothesis. So $Q(w) \geq \lambda_2$ and $Q(t-m) = r^{-2}Q(w) \geq \lambda_2/r^2$. $\square$
-
-### 2.3 Basis independence
-
-The definitions above are phrased in coordinates: a Gram matrix $B$ together with the standard lattice $\mathbb{Z}^n$. Lattice reduction replaces a basis by a better one, i.e. replaces $B$ by a congruent matrix. Nothing changes.
-
-**Lemma 2.10 (Congruence).** For any $U \in M_n(\mathbb{Q})$ and $x \in \mathbb{Q}^n$, $Q_{U^{\mathsf T} B U}(x) = Q_B(Ux)$.
-
-*Proof.* A four-fold interchange of summation: $\sum_{k,l}(U^{\mathsf T}BU)_{kl}x_kx_l = \sum_{i,j}B_{ij}\bigl(\sum_k U_{ik}x_k\bigr)\bigl(\sum_l U_{jl}x_l\bigr)$. $\square$
-
-**Theorem 2.11 (Invariance).** Let $U, V \in M_n(\mathbb{Z})$ with $UV = VU = I$ (i.e. $U$ unimodular). Then $\lambda_1$ is the minimal lattice energy of $B$ if and only if it is the minimal lattice energy of $U^{\mathsf T}BU$; and $\mu_B(t) = \mu_{U^{\mathsf T}BU}(U^{-1}t)$, equivalently $\mu_{U^{\mathsf T}BU}(t) = \mu_B(Ut)$.
-
-*Proof.* By Lemma 2.10 the value sets coincide after the bijection $m \mapsto Um$ of $L$, whose inverse is $m \mapsto Vm$. Both attainment and lower-bound clauses transfer. $\square$
-
-Every quantity in this paper is therefore a $\mathrm{GL}_n(\mathbb{Z})$-invariant of the pair (lattice, quadratic form), not of a chosen basis. Half-lattice points are carried to half-lattice points, so §3–§5 are basis-independent as well. This is precisely what legitimises the use of lattice reduction algorithms to *compute* $\lambda_1$ and $\mu$.
-
-### 2.4 Packing and covering
-
-**Theorem 2.12 (Packing–covering inequality).** Suppose $\mu$ is a *covering bound*: for every $t \in \mathbb{Q}^n$ there is $m \in L$ with $Q(t - m) \leq \mu$. Then $\mu \geq \lambda_1/4$.
-
-*Proof.* Take $v$ realising $\lambda_1$ and apply the covering bound to $t = v/2$; combine with Theorem 2.4 for $r = 2$. $\square$
-
-The squared covering radius of a lattice is thus at least a quarter of its minimal energy. The inequality is very far from tight in high dimension.
-
-**Theorem 2.13 (Covering radius of $\mathbb{Z}^n$).** For $B = I$ the squared covering radius is exactly $n/4$, attained at the deep hole: $\mu\bigl((\tfrac12,\dots,\tfrac12)\bigr) = n/4$, and $\mu(t) \leq n/4$ for every $t$.
-
-*Proof.* Upper bound: round each coordinate, so that $|t_i - m_i| \le \tfrac12$ and $\sum_i (t_i - m_i)^2 \le n/4$. Lower bound at the deep hole: each coordinate contributes $(\tfrac12 - m_i)^2 \geq \tfrac14$ since $m_i \in \mathbb{Z}$, with equality at $m_i \in \{0,1\}$. $\square$
-
-**Corollary 2.14.** For $\mathbb{Z}^n$ the covering/packing ratio is $n$, unbounded. More generally, for the diagonal form $Q(x) = \sum a_i x_i^2$ with $a_i > 0$ one has $\lambda_1 = \min_i a_i$ and squared covering radius $(\sum_i a_i)/4$, so the ratio $(\sum_i a_i)/(\min_i a_i)$ is unbounded even at fixed $n$.
-
-Thus the half of a shortest vector is a hole in the lattice, but for $n \geq 2$ it is emphatically not the deepest one; Theorem 2.4 is a bound of a different nature from the covering radius, and both are needed.
+**Example 2.9 (Diagonal forms).** If $A = \operatorname{diag}(d_1, \dots, d_n)$ then $Q_A(x) = \sum_i d_i x_i^2$. If $m \le d_i \le M$ for all $i$, then $A$ has spectral bounds $m, M$; the proof is termwise comparison, $m x_i^2 \le d_i x_i^2 \le M x_i^2$, summed. In particular the identity matrix gives the sum of squares with $m = M = 1$.
 
 ---
 
-## 3. From gaps to Diophantine unsolvability
+## 3. Lattice reduction and the spectral gap
 
-### 3.1 Completing the square
+### 3.1 The elementary estimate
 
-**Definition 3.1.** A linear form is $\ell(x) = \sum_i b_i x_i$; the general non-homogeneous quadratic form is $F(x) = Q(x) + \ell(x) + c$.
+**Lemma 3.1 (Nearest-integer estimate).** For all $u \in \mathbb{R}$ and $k \in \mathbb{Z}$,
+$$d_{\mathbb{Z}}(u) \;\le\; |u - k| .$$
 
-**Theorem 3.2 (Completing the square).** Suppose $B$ is symmetric and $s \in \mathbb{Q}^n$ satisfies $2\,\mathrm{Bil}(s, x) = \ell(x)$ for all $x$. Then
-$$F(x) \;=\; Q(x + s) + \bigl(c - Q(s)\bigr) \qquad \text{for all } x .$$
+*Proof.* Write $u = \lfloor u \rfloor + \{u\}$. If $k \le \lfloor u \rfloor$ then $u - k \ge \{u\} \ge d_{\mathbb{Z}}(u)$, and $u-k \ge 0$, so $|u-k| \ge d_{\mathbb{Z}}(u)$. If $k \ge \lfloor u \rfloor + 1$ then $k - u \ge 1 - \{u\} \ge d_{\mathbb{Z}}(u)$ and again $|u - k| \ge d_{\mathbb{Z}}(u)$. $\square$
 
-*Proof.* By (1.1), $Q(x+s) = Q(x) + 2\,\mathrm{Bil}(s,x) + Q(s) = Q(x) + \ell(x) + Q(s)$. Rearrange. $\square$
+**Corollary 3.2.** $d_{\mathbb{Z}}(u)^2 \le (u - k)^2$ for all $u \in \mathbb{R}$, $k \in \mathbb{Z}$; and consequently, for all $t \in \mathbb{R}^n$, $x \in \mathbb{Z}^n$,
+$$d(t, \mathbb{Z}^n)^2 \;\le\; \|x - t\|^2 .$$
 
-The hypothesis "$\ell$ is in the image of $2\,\mathrm{Bil}$" is exactly the condition that a rational completing shift exists; we take it as a hypothesis rather than inverting $B$, which keeps the statement valid for singular $B$ too. It is non-vacuous: for the standard form and $\ell(x) = -\sum_i x_i$ one takes $s = -\tfrac12(1,\dots,1)$.
+*Proof.* Square Lemma 3.1 (both sides nonnegative) and sum over coordinates. $\square$
 
-**Corollary 3.3 (Archimedean criterion).** If $Q$ is positive semidefinite then $F(x) \geq c - Q(s)$ for all real $x$, so $F = 0$ has no solution when $c > Q(s)$.
+**Lemma 3.3 (Positivity off the lattice).** If $\{u\} \neq 0$ then $d_{\mathbb{Z}}(u) > 0$. Hence if some coordinate $t_{i}$ has $\{t_{i}\} \neq 0$, then $d(t, \mathbb{Z}^n)^2 > 0$.
 
-This is the classical criterion, and it is lossy: it ignores that $x$ is an integer.
+*Proof.* $0 < \{u\} < 1$ forces both $\{u\} > 0$ and $1 - \{u\} > 0$; the sum $\sum_i d_{\mathbb{Z}}(t_i)^2$ has nonnegative terms and one strictly positive term. $\square$
 
-**Theorem 3.4 (Lattice-refined criterion).** In the situation of Theorem 3.2, suppose additionally that $-s = v/r$ where $v \in L$ realises the minimal lattice energy $\lambda_1$ and $r \geq 2$. Then for every $x \in L$,
-$$F(x) \;\geq\; \frac{\lambda_1}{r^2} + c - Q(s) \;=\; c,$$
-since $Q(s) = Q(v/r) = \lambda_1/r^2$. Consequently $F(x) = 0$ has **no integral solution** whenever $c > 0$.
+### 3.2 The gap theorem
 
-*Proof.* $Q(x + s) = Q(x - v/r)$, and $v/r$ is an $r$-torsion shift (Lemma 2.3 applies since $v \notin rL$ by primitivity of a shortest vector), so Theorem 2.4 gives $Q(x+s) \geq \lambda_1/r^2$. Now use Theorem 3.2 and $Q(s) = \lambda_1/r^2$. $\square$
+**Theorem 3.4 (Spectral gap lower bound).** Let $A$ have spectral bounds $m, M$ with $m \ge 0$, and let $t \in \mathbb{R}^n$. Then for every $x \in \mathbb{Z}^n$,
+$$Q(x - t) \;\ge\; m\, d(t, \mathbb{Z}^n)^2 .$$
 
-Comparing Corollary 3.3 with Theorem 3.4: the classical test rejects $c > \lambda_1/r^2$, the lattice test rejects $c > 0$. **The improvement is exactly $\lambda_1/r^2$, the whole of the spectral gap.**
+*Proof.* By Corollary 3.2 and $m \ge 0$, $m\,d(t,\mathbb{Z}^n)^2 \le m\|x - t\|^2$; by the lower spectral bound applied to the vector $x - t$, $m\|x-t\|^2 \le Q(x-t)$. $\square$
 
-The same comparison holds for an arbitrary completing shift, and it is worth recording in that generality.
+**Theorem 3.5 (Strict positivity).** If moreover $m > 0$ and some coordinate of $t$ is non-integral, then $Q(x - t) > 0$ for every $x \in \mathbb{Z}^n$.
 
-**Theorem 3.4$'$ (General refined criterion).** In the situation of Theorem 3.2, for every $x \in L$,
-$$F(x) \;\geq\; \mu(-s) + c - Q(s),$$
-so $F(x) = 0$ has no integral solution once $c > Q(s) - \mu(-s)$. The improvement over Corollary 3.3 is exactly $\mu(-s)$, the spectral gap at the completing shift.
+*Proof.* Combine Theorem 3.4 with Lemma 3.3. $\square$
 
-*Proof.* $Q(x + s) = Q((-s) - (-x)) \geq \mu(-s)$ because $-x \in L$; combine with Theorem 3.2. $\square$
+**Theorem 3.6 (Diophantine obstruction).** Under the hypotheses of Theorem 3.4, if $c < m\, d(t, \mathbb{Z}^n)^2$ then the equation $Q(x-t) = c$ has no solution $x \in \mathbb{Z}^n$.
 
-Theorem 3.4 is the case where $-s = v/r$ with $Q(v) = \lambda_1$, so that $\mu(-s) = \lambda_1/r^2 = Q(s)$ and the threshold becomes $c > 0$. Another instance is $B = I$ with $-s$ the deep hole of $\mathbb{Z}^n$, where $Q(s) = \mu(-s) = n/4$ and the threshold is again $c > 0$; this is the case worked out below.
+*Proof.* A solution would give $c = Q(x-t) \ge m\,d(t,\mathbb{Z}^n)^2 > c$. $\square$
 
-**Corollary 3.5 (Unsolvability below the gap).** For any $r$-torsion shift $t$ and any $c < \lambda_1/r^2$, the equation $Q(x - t) = c$ has no integral solution. Purely integrally: if $Q(v) = \lambda_1$ then $Q(w) \geq \lambda_1$ for every $w$ in the coset $v + 2L$, so $Q(w) = N$ has no solution with $w \equiv v \pmod{2L}$ when $N < \lambda_1$.
+We call $[0,\; m\,d(t,\mathbb{Z}^n)^2)$ the **forbidden zone** of the pair $(Q, t)$. It is a purely geometric obstruction: no congruence or local condition is involved, and it persists for irrational shifts where congruence reasoning is unavailable.
 
-### 3.2 The concrete standard case
+**Theorem 3.7 (Half-integral shift).** If $\{t_i\} = \tfrac12$ for every $i$, then $d(t, \mathbb{Z}^n)^2 = n/4$, and hence $Q(x - t) \ge mn/4$ for all $x \in \mathbb{Z}^n$.
 
-Take $B = I$ and $\ell(x) = -\sum_i x_i$, so $s = -\tfrac12(1,\dots,1)$, $Q(s) = n/4$, and $F(x) = \sum_i (x_i^2 - x_i) + c$. Here $-s$ is the deep hole, $\mu(-s) = n/4$ (Theorem 2.13), and Theorem 3.4$'$ rejects every $c > 0$ where the archimedean criterion rejects only $c > n/4$.
+*Proof.* $d_{\mathbb{Z}}(t_i) = \min(\tfrac12, \tfrac12) = \tfrac12$, so the sum of squares is $n \cdot \tfrac14$. Apply Theorem 3.4. $\square$
 
-**Proposition 3.6.** For every $x \in \mathbb{Z}^n$, the integer $\sum_i (x_i^2 - x_i)$ is even and non-negative. Hence $\sum_i(x_i^2 - x_i) + c = 0$ forces $c$ to be a non-positive even integer, and $c = 0$ forces $x_i \in \{0,1\}$ for all $i$.
+**Corollary 3.8 (Half-shifted sum of squares).** For every $x \in \mathbb{Z}^n$,
+$$\sum_{i=1}^n \left(x_i - \tfrac12\right)^2 \;\ge\; \frac n4 .$$
+Consequently $\sum_i (x_i - \tfrac12)^2 = c$ has no integer solution for $c < n/4$.
 
-*Proof.* $x_i^2 - x_i = x_i(x_i - 1)$ is a product of consecutive integers, hence even and $\geq 0$. $\square$
+*Proof.* Apply Theorem 3.7 to $A = I$ (spectral bounds $m = M = 1$ by Example 2.9) and $t = (\tfrac12, \dots, \tfrac12)$, noting $Q_I(x - t) = \sum_i (x_i - \tfrac12)^2$. $\square$
 
-The archimedean bound alone would only give $\sum_i(x_i^2-x_i) \geq -n/4$ — off by the whole gap *and* blind to the evenness. Proposition 3.6 is the first appearance of the $2$-adic phenomenon, which §4 explains structurally.
+### 3.3 Effective gaps at rational shifts
 
----
+The gap in Theorem 3.4 is stated with the real quantity $d(t,\mathbb{Z}^n)$, which may be hard to evaluate. For rational shifts it becomes explicit.
 
-## 4. The $2$-adic theory: characteristic vectors and the law modulo $8$
+**Lemma 3.9 (Denominator bound).** Let $a, q \in \mathbb{Z}$ with $q > 0$ and $q \nmid a$. Then
+$$d_{\mathbb{Z}}\!\left(\frac aq\right) \;\ge\; \frac 1q .$$
 
-### 4.1 The deep-hole spectrum of $\mathbb{Z}^n$
+*Proof.* Write $L = \lfloor a/q \rfloor$ and $r = a - qL$, so $\{a/q\} = r/q$ with $0 \le r < q$ and $r \neq 0$ since $q \nmid a$. Thus $1 \le r \le q - 1$, whence $\{a/q\} = r/q \ge 1/q$ and $1 - \{a/q\} = (q - r)/q \ge 1/q$. The minimum of the two is therefore at least $1/q$. $\square$
 
-**Theorem 4.1 (Deep-hole spectrum).** For $B = I$ and $t = (\tfrac12,\dots,\tfrac12)$, every attained value of $Q(t - m)$, $m \in \mathbb{Z}^n$, lies in $\tfrac n4 + 2\mathbb{Z}_{\geq 0}$. Consequently distinct attained values differ by at least $2$, and $n/4$ and $n/4 + 2$ are both attained (for $n \geq 1$).
+**Theorem 3.10 (Effective spectral gap at a rational shift).** Let $A$ have spectral bounds $m \ge 0$, $M$, let $q \in \mathbb{Z}_{>0}$, and let $t_i = a_i/q$ with $a_i \in \mathbb{Z}$. If $q \nmid a_{i_0}$ for some index $i_0$, then for every $x \in \mathbb{Z}^n$,
+$$Q(x - t) \;\ge\; \frac{m}{q^2} .$$
 
-*Proof.* $4\,Q(t-m) = \sum_i (1 - 2m_i)^2$ is a sum of $n$ odd squares. Each odd square satisfies $(2k-1)^2 = 8\binom{k}{2} + 1 \equiv 1 \pmod 8$ with $\binom k2 \geq 0$. Summing, $4Q(t-m) = n + 8 N$ with $N \geq 0$ an integer, i.e. $Q(t-m) = \tfrac n4 + 2N$. Attainment of $n/4$ is $m = 0$; of $n/4 + 2$, take $m$ with a single coordinate equal to $-1$ (so that $(1+2)^2 = 9 = 1 + 8$). $\square$
+*Proof.* By Lemma 3.9, $d_{\mathbb{Z}}(t_{i_0})^2 \ge 1/q^2$, and $d(t,\mathbb{Z}^n)^2 \ge d_{\mathbb{Z}}(t_{i_0})^2$ since the omitted terms are nonnegative. Multiply by $m \ge 0$ and apply Theorem 3.4. $\square$
 
-**Corollary 4.2.** The equation $\sum_{i=1}^n (2x_i - 1)^2 = N$ is unsolvable in integers unless $N \equiv n \pmod 8$ and $N \geq n$.
+**Corollary 3.11.** Under the hypotheses of Theorem 3.10, $Q(x - t) = c$ has no integer solution for $c < m/q^2$.
 
-Note the strength of the conclusion: integrality of $4Q$ would only give a gap of $1/4$ in the value spectrum; Theorem 4.1 gives $2$, a factor of eight better.
-
-### 4.2 Characteristic vectors
-
-Theorem 4.1 looks like a fact about $\mathbb{Z}^n$. It is not; it is the instance of a general principle at one specific vector. Assume now that $B \in M_n(\mathbb{Z})$ is symmetric, so $Q$ and $\mathrm{Bil}$ take integer values on $L$.
-
-**Definition 4.3 (Characteristic vector).** A vector $v \in L$ is *characteristic* for $Q$ if
-$$\mathrm{Bil}(v, u) + Q(u) \;\equiv\; 0 \pmod 2 \qquad \text{for every } u \in L,$$
-i.e. the functional $u \mapsto \mathrm{Bil}(v,u) + Q(u)$ is everywhere even.
-
-(Over $\mathbb{Z}^n$ with the dot product this is the familiar condition $v \cdot u \equiv u \cdot u \pmod 2$ for all $u$.)
-
-**Lemma 4.4 (Fundamental expansion).** For symmetric integral $B$ and $v, u \in L$,
-$$Q(v + 2u) \;=\; Q(v) + 4\bigl(\mathrm{Bil}(v,u) + Q(u)\bigr).$$
-
-*Proof.* By (1.1) with $y = 2u$: $Q(v + 2u) = Q(v) + 2\,\mathrm{Bil}(v, 2u) + Q(2u) = Q(v) + 4\,\mathrm{Bil}(v,u) + 4Q(u)$. $\square$
-
-**Theorem 4.5 (Characteristic Vector Criterion).** Let $B$ be symmetric integral and $v \in L$. Then
-$$v \text{ is characteristic} \iff 8 \mid Q(v + 2u) - Q(v) \text{ for every } u \in L .$$
-
-*Proof.* By Lemma 4.4, $Q(v + 2u) - Q(v) = 4T_u$ where $T_u = \mathrm{Bil}(v,u) + Q(u)$. Now $8 \mid 4T_u \iff 2 \mid T_u$, and both directions follow at once, uniformly in $u$. $\square$
-
-Two comments on the shape of Theorem 4.5. First, it is an equivalence, so it cannot be vacuous or one-sided; the mod-$8$ congruence is not a coincidence in $\mathbb{Z}^n$ but an exact characterisation of characteristic vectors in every integral lattice. Second, it is *sharp in the failure direction*: if $v$ is not characteristic, some $u$ has $T_u$ odd, whence $Q(v+2u) \equiv Q(v) + 4 \pmod 8$ — the value spectrum then contains a point at distance $1$ (not $2$) in the rescaled scale, breaking the gap exactly in half. Positive definiteness is used nowhere in this subsection.
-
-**Proposition 4.6 (The all-ones vector).** For $B = I$ the vector $w = (1,\dots,1)$ is characteristic, since $\mathrm{Bil}(w,u) + Q(u) = \sum_i u_i + \sum_i u_i^2 = \sum_i u_i(1 + u_i)$, a sum of products of consecutive integers.
-
-Applying Theorem 4.5 to Proposition 4.6 recovers the arithmetic of Theorem 4.1, and Proposition 3.6 becomes the statement that $0$ is characteristic-shifted by $w$: $\sum_i(u_i^2 + u_i)$ is even.
-
-### 4.3 The spectral consequence
-
-Transfer the integral statement to the rational form by viewing $B \in M_n(\mathbb{Z})$ inside $M_n(\mathbb{Q})$; then $Q(x)$ for integral $x$ is the image of the integral value.
-
-**Theorem 4.7 (Characteristic shifted spectrum).** Let $B$ be symmetric integral and $v \in L$ characteristic. Then for every $m \in L$ there exists $k \in \mathbb{Z}$ with
-$$Q\!\left(\tfrac v2 - m\right) \;=\; \frac{Q(v)}{4} + 2k .$$
-That is, the value spectrum of the non-homogeneous form at the half of a characteristic vector is contained in $\tfrac{Q(v)}{4} + 2\mathbb{Z}$.
-
-*Proof.* By the halving identity (Lemma 2.2), $Q(v/2 - m) = \tfrac14 Q(v - 2m) = \tfrac14 Q(v + 2(-m))$. By Theorem 4.5 applied with $u = -m$, $Q(v + 2(-m)) = Q(v) + 8k$ for some integer $k$. Divide by $4$. $\square$
-
-**Theorem 4.8 (Gap two).** In the situation of Theorem 4.7, if $m, m' \in L$ give *distinct* values then
-$$\left| Q\!\left(\tfrac v2 - m\right) - Q\!\left(\tfrac v2 - m'\right) \right| \;\geq\; 2 .$$
-
-*Proof.* Write the two values as $\tfrac{Q(v)}4 + 2k$ and $\tfrac{Q(v)}4 + 2k'$ with $k, k' \in \mathbb{Z}$. Distinctness forces $k \neq k'$, hence $|k - k'| \geq 1$, hence the difference is $|2(k-k')| \geq 2$. $\square$
-
-Together, Theorems 4.5, 4.7 and 4.8 give the structural slogan:
-
-> **Gap $2$ in the shifted value spectrum $\iff$ the shift is half a characteristic vector.**
-
-The deep-hole theorem for $\mathbb{Z}^n$ is the case $v = (1,\dots,1)$.
-
-### 4.4 Two independent fours
-
-The number $4$ appears twice in this paper: as the denominator in the spectral gap $\lambda_1/4$ and as the multiplier in the expansion $Q(v+2u) = Q(v) + 4(\cdots)$. Both come from the same source, the index scaling of $2L$ inside $L$: halving squares the scaling factor. But the two theorems are logically independent. Theorem 2.5 is archimedean — a statement about the real ellipsoid metric, insensitive to congruences. Theorem 4.5 is $2$-adic — a statement about congruences, insensitive to the metric and valid without positive definiteness. Combining them yields the complete local picture at a half characteristic vector realising $\lambda_1$: the smallest attained value is $\lambda_1/4$, and the next possible one is $\lambda_1/4 + 2$.
+The shape $m/q^2$ is exactly the quadratic-form analogue of the classical fact that a rational non-integer $a/q$ is at distance $\ge 1/q$ from $\mathbb{Z}$; the exponent $2$ reflects the quadratic nature of $Q$.
 
 ---
 
-## 5. Multiplicities: parity of shifted theta coefficients
+## 4. Covering: the matching upper bound
 
-### 5.1 Evenness from an antipodal involution
+**Theorem 4.1 (Rounding / covering bound).** Let $A$ have spectral bounds $m$, $M$ with $M \ge 0$, and let $t \in \mathbb{R}^n$. Then there exists $x_0 \in \mathbb{Z}^n$ with
+$$Q(x_0 - t) \;\le\; \frac{Mn}{4}.$$
 
-**Theorem 5.1 (Even multiplicity).** Let $B$ be an arbitrary rational matrix and $t$ a rational shift with $2t = v \in L$ and $t \notin L$. Then for every $c$, the coefficient $r_t(c) = \#\{m \in L : Q(t-m) = c\}$ is even.
+*Proof.* Take $x_0 = (\operatorname{round}(t_i))_i$, rounding each coordinate to a nearest integer. Then $|t_i - \operatorname{round}(t_i)| \le \tfrac12$, so $\|x_0 - t\|^2 = \sum_i (x_{0,i} - t_i)^2 \le n/4$. The upper spectral bound gives $Q(x_0 - t) \le M\|x_0 - t\|^2 \le Mn/4$. $\square$
 
-*Proof.* Define $\iota(m) = v - m$. Since $t = v/2$, we have $t - \iota(m) = v/2 - v + m = -(t - m)$, and $Q$ is even, so $Q(t - \iota(m)) = Q(t-m)$: the map $\iota$ preserves each fibre. It is an involution. It has no fixed point: $\iota(m) = m$ means $v = 2m$, i.e. $t = m \in L$, excluded. A fixed-point-free involution of a finite set partitions it into pairs, so each fibre has even cardinality. $\square$
+**Theorem 4.2 (Spectral sandwich for the inhomogeneous minimum).** Let $A$ have spectral bounds $m \ge 0$, $M \ge 0$, and $t \in \mathbb{R}^n$. Then
+$$m\, d(t,\mathbb{Z}^n)^2 \;\le\; \mu(Q, t) \;\le\; \frac{Mn}{4}.$$
 
-Note that no minimality, positivity or symmetry hypothesis is needed: the involution only requires $v \notin 2L$. This strictly generalises the version where $v$ is assumed shortest, and it closes one direction of the natural characterisation.
+*Proof.* By Theorem 3.4 the set $\{Q(x-t) : x \in \mathbb{Z}^n\}$ is bounded below by $m\,d(t,\mathbb{Z}^n)^2$; hence the infimum exists and is at least that value. By Theorem 4.1 the infimum is at most $Q(x_0 - t) \le Mn/4$. $\square$
 
-**Proposition 5.2.** If all coefficients $r_t(c)$ are even, then $t \notin L$.
+**Remark 4.3 (Sharpness).** For $A = I$ and $t$ half-integral, $m = M = 1$ and $d(t,\mathbb{Z}^n)^2 = n/4$, so both sides equal $n/4$: the sandwich is an equality and $\mu = n/4$ exactly. In general the two ends differ by the factor $(M/m) \cdot \big(n/(4 d(t,\mathbb{Z}^n)^2)\big) \ge M/m$, so the sandwich is tightest for well-conditioned forms and shifts near the deep hole.
 
-*Proof.* If $t = k \in L$ then $r_t(0) = \#\{m : Q(k - m) = 0\} = 1$ for positive definite $Q$, since $Q(k-m) = 0$ forces $m = k$. $\square$
+**Theorem 4.4 (Solvability window).** Let $A$ have spectral bounds $m \ge 0$, $M \ge 0$. Then:
 
-### 5.2 The converse in rank one — and its failure in rank two
+1. for every $R \ge Mn/4$, there exists $x \in \mathbb{Z}^n$ with $Q(x-t) \le R$;
+2. for every $R < m\,d(t,\mathbb{Z}^n)^2$, there is no $x \in \mathbb{Z}^n$ with $Q(x-t) \le R$.
 
-**Theorem 5.3 (Rank one).** For $n = 1$ with $Q(x) = x^2$ and $t \in \mathbb{Q}$: all coefficients $r_t(c)$ are even $\iff$ $2t \in \mathbb{Z}$ and $t \notin \mathbb{Z}$.
+*Proof.* (1) is Theorem 4.1 plus transitivity; (2) is Theorem 3.4 plus transitivity. $\square$
 
-*Proof.* ($\Leftarrow$) Theorem 5.1. ($\Rightarrow$) Suppose $2t \notin \mathbb{Z}$. If $(t-m)^2 = (t-m')^2$ with $m \neq m'$, then $t - m = -(t-m')$, i.e. $m + m' = 2t \in \mathbb{Z}$, a contradiction. So every fibre has at most one element; the fibre over $c = t^2$ contains $m = 0$, hence $r_t(t^2) = 1$, odd. $\square$
-
-It is natural to conjecture that Theorem 5.3 holds in all ranks: all coefficients even should force $2t \in L$. **This is false already for $n = 2$.**
-
-**Theorem 5.4 (Counterexample).** Let $n = 2$, $B = I$, and $t = (\tfrac12, \tfrac13)$. Then every coefficient $r_t(c)$ is even, but $2t = (1, \tfrac23) \notin \mathbb{Z}^2$.
-
-*Proof.* Consider the *partial* reflection $\rho(m_1, m_2) = (1 - m_1,\, m_2)$. It is an involution of $\mathbb{Z}^2$; it preserves $(m_1 - \tfrac12)^2 + (m_2 - \tfrac13)^2$ because $(1 - m_1) - \tfrac12 = -(m_1 - \tfrac12)$; and it has no fixed point because $m_1 = 1 - m_1$ has no integer solution. Pairing as in Theorem 5.1 gives evenness of every fibre. $\square$
-
-Structurally: the standard theta series factors over coordinates, $\theta_t = \prod_i \theta_{t_i}$, and a *single* even factor annihilates the whole product modulo $2$. Evenness is therefore a coordinatewise, not a global, phenomenon — for forms that split.
-
-### 5.3 The exact criterion for diagonal forms
-
-**Definition 5.5.** A rational number $x$ is *half-integral* if $x \in \mathbb{Z} + \tfrac12$, i.e. $x = k + \tfrac12$ for some $k \in \mathbb{Z}$.
-
-**Theorem 5.6 (Parity criterion, diagonal case).** Let $Q(x) = \sum_{i} a_i x_i^2$ with all $a_i > 0$, and let $t \in \mathbb{Q}^n$. Then
-$$\bigl(\forall c,\; r_t(c) \text{ is even}\bigr) \iff \bigl(\exists i,\; t_i \text{ is half-integral}\bigr).$$
-
-*Proof.* ($\Leftarrow$) Suppose $t_{i_0} = k + \tfrac12$. The partial flip
-$$\rho(m)_i = \begin{cases} 2k + 1 - m_{i_0}, & i = i_0,\\ m_i, & i \neq i_0,\end{cases}$$
-satisfies $t_{i_0} - \rho(m)_{i_0} = -(t_{i_0} - m_{i_0})$ and leaves all other coordinates alone, so it preserves $Q(t - \cdot)$ because the diagonal form has no coupling between coordinates. It is an involution, and it is fixed-point free since $m_{i_0} = 2k+1-m_{i_0}$ would force $2m_{i_0} = 2k+1$, impossible. Pair off.
-
-($\Rightarrow$) Suppose no coordinate of $t$ is half-integral. We claim the rounding point $m^\ast = (\mathrm{round}(t_1),\dots,\mathrm{round}(t_n))$ is the *unique* minimiser of $Q(t - \cdot)$. Indeed, for each coordinate, $|t_i - \mathrm{round}(t_i)| < \tfrac12$ strictly (this is exactly where non-half-integrality is used), while $|t_i - k| \geq \tfrac12$ for every integer $k \neq \mathrm{round}(t_i)$; multiplying by $a_i > 0$ and summing, any $m \neq m^\ast$ has $Q(t-m) > Q(t - m^\ast)$. Hence the bottom coefficient $r_t\bigl(Q(t - m^\ast)\bigr)$ equals $1$, which is odd. $\square$
-
-**Corollary 5.7 (Standard form).** For $B = I$: all shifted theta coefficients at $t$ are even $\iff$ some coordinate $t_i$ is half-integral. Theorem 5.3 is the case $n = 1$; Theorem 5.4 is the shift $t=(\tfrac12,\tfrac13)$, whose first coordinate is half-integral.
-
-**Theorem 5.8 (General-rank obstruction).** For an arbitrary positive definite $Q$ and shift $t$: if the *bottom* coefficient of the shifted theta series is even, then the nearest lattice point to $t$ is not unique.
-
-*Proof.* The bottom coefficient counts the minimisers of $Q(t-\cdot)$. If it were unique the count would be $1$, odd. $\square$
-
-Theorem 5.8 is the correct general shadow of the criterion: evenness always forces geometric degeneracy of the nearest-point problem, even when there is no splitting to exploit. What obstructs a rank-$n$ proof of the naive converse is that a coefficient can be even "by accident", two unrelated pairs of lattice points landing at the same distance; the rank-one argument works only because the fibre of $x \mapsto x^2$ over $c$ has at most two points.
+Thus $[m\,d(t,\mathbb{Z}^n)^2,\; Mn/4]$ is the *undetermined band*: outside it, solvability of $Q(x-t) \le R$ is decided by the two constants alone; inside it, the answer depends on the finer arithmetic of $A$ and $t$.
 
 ---
 
-## 6. The combinatorial theory: the covering weight enumerator
+## 5. Counting integer solutions
 
-We now compute $\mu$ on *all* $2$-torsion classes, first for $\mathbb{Z}^n$, then for arbitrary positive diagonal forms.
+Let $N(R) = \#\{x \in \mathbb{Z}^n : Q(x - t) \le R\}$ (finite when $m>0$, by Theorem 5.2).
 
-Recall the step shift $\sigma_s$ from Definition 1.5. Every $2$-torsion class of $(\tfrac12\mathbb{Z}/\mathbb{Z})^n$ has a unique step-shift representative, and $|s|$ is the Hamming weight of the class in $\mathbb{F}_2^n$.
+**Lemma 5.1 (Coordinatewise localisation).** Let $A$ have spectral bounds $m > 0$, $M$. If $Q(x - t) \le R$ then for every index $i$,
+$$|x_i - t_i| \;\le\; \sqrt{R/m}.$$
 
-**Theorem 6.1 (Gap at a step shift, standard form).** For $B = I$ and any $s \subseteq \{1,\dots,n\}$,
-$$\mu(\sigma_s) = \frac{|s|}{4}.$$
+*Proof.* $m\|x-t\|^2 \le Q(x-t) \le R$ gives $\|x-t\|^2 \le R/m$; since $(x_i - t_i)^2$ is one nonnegative term of $\|x-t\|^2$, it is at most $R/m$; take square roots. $\square$
 
-*Proof.* $Q(\sigma_s - m) = \sum_{i \in s}(\tfrac12 - m_i)^2 + \sum_{i \notin s} m_i^2$. Each term of the first sum is $\geq \tfrac14$ (a half-integer squared), each of the second is $\geq 0$; so the total is $\geq |s|/4$. Both bounds are simultaneously attained at $m = 0$. $\square$
+**Theorem 5.2 (Counting upper bound).** Let $A$ have spectral bounds $m > 0$, $M$. Any finite set $S \subseteq \mathbb{Z}^n$ of solutions of $Q(x-t) \le R$ satisfies
+$$\#S \;\le\; \left(2\sqrt{R/m} + 1\right)^n .$$
+In particular $N(R) \le (2\sqrt{R/m}+1)^n$: representation numbers grow at most polynomially in $\sqrt R$.
 
-The key structural point is *additivity*: the standard form splits over coordinates and the coordinatewise minima are achieved at the same lattice point, so there is no interaction. This is exactly what fails for a general form, where off-diagonal entries couple the coordinates.
+*Proof.* Put $r = \sqrt{R/m}$. By Lemma 5.1, $S$ is contained in the product of integer intervals $\prod_i \big(\mathbb{Z} \cap [t_i - r,\, t_i + r]\big)$. The $i$-th factor is $\{\lceil t_i - r\rceil, \dots, \lfloor t_i + r \rfloor\}$, of cardinality $\max(0, \lfloor t_i + r\rfloor + 1 - \lceil t_i - r \rceil)$, and since $\lfloor t_i + r\rfloor \le t_i + r$ and $\lceil t_i - r\rceil \ge t_i - r$, this is at most $2r + 1$. Multiplying the $n$ factors gives the bound. $\square$
 
-**Theorem 6.2 (Gap of a $2$-torsion class = Hamming weight / 4).** For $B = I$ and $t$ with $2t = v \in \mathbb{Z}^n$, the spectral gap is
-$$\mu(t) = \frac{k}{4}, \qquad k = \#\{i : v_i \text{ is odd}\},$$
-i.e. a quarter of the Hamming weight of the class of $t$ in $\mathbb{F}_2^n$.
+**Theorem 5.3 (Counting lower bound above the covering threshold).** Let $A$ have spectral bounds $m$, $M$ with $M > 0$, let $n \ge 1$, and let $R \ge Mn/4$. Then there exists a finite set $S$ of integer solutions of $Q(x-t) \le R$ with
+$$\#S \;\ge\; \left(2\sqrt{\frac{R}{Mn}} - 1\right)^{n} .$$
 
-*Proof.* Write $t = \sigma_s + \kappa$ with $s = \{i : v_i \text{ odd}\}$ and $\kappa \in \mathbb{Z}^n$ (coordinatewise: $v_i/2$ is either an integer or an integer plus $\tfrac12$). Apply translation invariance (Lemma 2.7) and Theorem 6.1. $\square$
+*Proof.* Put $p = \sqrt{R/(Mn)}$; the hypothesis $R \ge Mn/4$ gives $p \ge \tfrac12$, so $2p - 1 \ge 0$. Let $S = \prod_i \big(\mathbb{Z} \cap [t_i - p, t_i + p]\big)$. Every $x \in S$ satisfies $(x_i - t_i)^2 \le p^2$ for each $i$, hence $\|x - t\|^2 \le n p^2 = R/M$, hence by the upper spectral bound $Q(x-t) \le M\|x-t\|^2 \le R$: all elements of $S$ are solutions. Each factor of $S$ has cardinality $\lfloor t_i + p\rfloor + 1 - \lceil t_i - p\rceil \ge (t_i + p - 1) + 1 - (t_i - p + 1) = 2p - 1$, and multiplying $n$ nonnegative factors gives the claim. $\square$
 
-**Theorem 6.3 (Gap spectrum of $\mathbb{Z}^n$).** The set of spectral gaps of $\mathbb{Z}^n$ at $2$-torsion shifts is exactly
-$$\Bigl\{\tfrac k4 : 1 \leq k \leq n\Bigr\}.$$
+**Theorem 5.4 (Two-sided counting).** Let $A$ have spectral bounds $m > 0$, $M > 0$, let $n \ge 1$, and let $R \ge Mn/4$. Then there is a finite set $S$ of integer solutions of $Q(x - t) \le R$ with
+$$\left(2\sqrt{\frac{R}{Mn}} - 1\right)^{n} \;\le\; \#S \;\le\; \left(2\sqrt{\frac{R}{m}} + 1\right)^{n} .$$
 
-*Proof.* ($\subseteq$) Theorem 6.2, with $k \geq 1$ because $t \notin \mathbb{Z}^n$. ($\supseteq$) For each $k$ take $s$ any $k$-element subset and use Theorem 6.1; $\sigma_s$ is a genuine $2$-torsion shift for $s \neq \emptyset$. $\square$
+*Proof.* Take $S$ from Theorem 5.3 and apply Theorem 5.2 to it. $\square$
 
-Both endpoints are familiar: $k = 1$ is the extremal class of the rigidity theorem (gap $\lambda_1/4 = 1/4$), and $k = n$ is the deep hole (gap $n/4$, Theorem 2.13). The metric invariant $\mu$ on $2$-torsion classes *is* the Hamming weight function of $\mathbb{F}_2^n$, divided by four.
+**Corollary 5.5 (Growth order).** For fixed $n, m, M$ and $R \to \infty$,
+$$\left(\frac{2}{\sqrt{Mn}}\right)^{n} R^{n/2}(1 + o(1)) \;\le\; N(R) \;\le\; \left(\frac{2}{\sqrt m}\right)^{n} R^{n/2}(1+o(1)),$$
+so $N(R) \asymp R^{n/2}$ with constants depending only on $m$, $M$, $n$.
 
-**Theorem 6.4 (Weighted weight enumerator, diagonal case).** Let $Q(x) = \sum_i a_i x_i^2$ with $a_i > 0$. Then:
-
-1. $\mu(\sigma_s) = \dfrac{1}{4}\sum_{i \in s} a_i$ for every $s \subseteq \{1,\dots,n\}$;
-2. for $t$ with $2t = v \in \mathbb{Z}^n$, $\mu(t) = \dfrac14\sum_{i : v_i \text{ odd}} a_i$;
-3. the $2$-torsion gap spectrum is exactly $\Bigl\{\tfrac14\sum_{i \in s} a_i : \emptyset \neq s \subseteq \{1,\dots,n\}\Bigr\}$;
-4. the minimum of that spectrum is $\tfrac14 \min_i a_i = \lambda_1/4$, the packing invariant, and its maximum is $\tfrac14\sum_i a_i$, the covering invariant (squared covering radius).
-
-*Proof.* (1) $Q(\sigma_s - m) = \sum_{i\in s} a_i(\tfrac12 - m_i)^2 + \sum_{i \notin s} a_i m_i^2 \geq \tfrac14\sum_{i \in s}a_i$, attained at $m = 0$, as in Theorem 6.1 with the weights carried along (here $a_i > 0$ is used to keep the inequalities in the right direction). (2) As in Theorem 6.2 via translation invariance. (3) Both inclusions as in Theorem 6.3. (4) The sum over $s$ is minimised at singletons and maximised at $s = \{1,\dots,n\}$ since all $a_i > 0$; $\lambda_1 = \min_i a_i$ because a nonzero integer vector has $\sum a_i m_i^2 \geq \min_i a_i$, attained at a standard basis vector; the deep hole $\sigma_{\{1,\dots,n\}}$ realises the covering radius by the rounding argument of Theorem 2.13. $\square$
-
-Part (4) is the striking one: a *single* formula, the weighted Hamming weight, interpolates between the two classical extremal constants of the geometry of numbers — packing at weight one, covering at full weight — and takes every intermediate value indexed by a subset. Theorem 6.1 is the case $a_i \equiv 1$ of Theorem 6.4.
+The exponent $n/2$ is of course the correct volume-heuristic order: the region $\{Q(y) \le R\}$ is an ellipsoid of volume $\propto R^{n/2}$. What is gained here is that the constants are explicit and require no regularity or symmetry of $A$ whatsoever — only the sandwich.
 
 ---
 
-## 7. Algorithms
+## 6. The inhomogeneous theta series
 
-The results above are effective, and the following procedures compute all quantities discussed. Throughout, arithmetic is exact (rational), and the ambient dimension $n$ and a search radius $R$ are inputs.
+Define $\Theta(s) = \Theta_{A,t}(s) = \sum_{x \in \mathbb{Z}^n} e^{-sQ(x-t)}$.
 
-### 7.1 Minimal lattice energy by bounded enumeration
+### 6.1 Convergence
 
-To compute $\lambda_1 = \min_{0 \neq m} Q(m)$ for positive definite $Q$, enumerate $m \in \{-R,\dots,R\}^n \setminus \{0\}$ and take the minimum. Correctness for a given $R$ follows once $R$ exceeds the *Cholesky radius*: if $Q \succeq \delta \|\cdot\|^2$ then any $m$ with $\|m\|_\infty > \sqrt{Q(e_1)/\delta}$ has $Q(m) > Q(e_1)$ and can be skipped. Cost: $O((2R+1)^n \cdot n^2)$ exact rational operations. In practice one first reduces the basis (Theorem 2.11 guarantees the answer is unchanged), which shrinks the required $R$ dramatically.
+**Lemma 6.0 (One-dimensional Gaussian sums).** For $c > 0$ and $a \in \mathbb{R}$, the family $\big(e^{-c(k-a)^2}\big)_{k \in \mathbb{Z}}$ is summable.
 
-### 7.2 Spectral gap by bounded enumeration over a coset
+*Proof sketch.* For $k \in \mathbb{N}$, the elementary inequality $(k - a)^2 \ge k - \tfrac{(2a+1)^2}{4}$ (equivalent to $\big(k - \tfrac{2a+1}{2}\big)^2 \ge 0$ after expansion) gives $e^{-c(k-a)^2} \le e^{c(2a+1)^2/4}\, e^{-ck}$, a convergent geometric series. The sum over negative integers is the same statement with $a$ replaced by $-a$. $\square$
 
-To compute $\mu(t)$, enumerate $m \in \{-R,\dots,R\}^n$ and minimise $Q(t-m)$. Two accelerations follow from the theory: by translation invariance (Lemma 2.7) one may first replace $t$ by its representative in $[0,1)^n$, which lets $R$ be small; and by Theorem 2.4 one may terminate as soon as the value $\lambda_1/r^2$ is met when $t$ is an $r$-torsion shift, since that value is then provably minimal.
+**Theorem 6.1 (Convergence of the inhomogeneous theta series).** Let $A$ have spectral bounds $m > 0$, $M$, let $t \in \mathbb{R}^n$ and $s > 0$. Then $\big(e^{-sQ(x-t)}\big)_{x \in \mathbb{Z}^n}$ is summable, so $\Theta(s)$ is well defined and positive.
 
-### 7.3 Gap spectrum of a diagonal form
+*Proof.* By the lower spectral bound, $Q(x-t) \ge m\|x-t\|^2$, hence
+$$e^{-sQ(x-t)} \;\le\; e^{-sm\|x-t\|^2} \;=\; \prod_{i=1}^n e^{-sm(x_i - t_i)^2}.$$
+Each one-dimensional factor is summable over $\mathbb{Z}$ by Lemma 6.0 with $c = sm > 0$; a product over $n$ coordinates of nonnegative summable families is summable over $\mathbb{Z}^n$ (by induction on $n$, splitting $\mathbb{Z}^{n+1} \cong \mathbb{Z} \times \mathbb{Z}^n$ and using Fubini–Tonelli for nonnegative families). Domination by a summable family finishes the proof. $\square$
 
-Theorem 6.4 turns an exponential search into a subset-sum: enumerate the $2^n - 1$ nonempty subsets $s$ and emit $\tfrac14\sum_{i \in s}a_i$. The result is the exact $2$-torsion gap spectrum without any lattice enumeration at all. For $a_i \equiv 1$ this collapses further to $\{k/4 : 1 \le k \le n\}$, computable in $O(n)$.
+### 6.2 Bounds from the sandwich
 
-### 7.4 Testing whether a vector is characteristic
+**Theorem 6.2 (Lower bound from covering).** Let $A$ have spectral bounds $m > 0$, $M \ge 0$, and $s > 0$. Then
+$$\Theta(s) \;\ge\; \exp\!\left(-\frac{sMn}{4}\right).$$
 
-Naively, Definition 4.3 quantifies over all $u \in L$. But $u \mapsto \mathrm{Bil}(v,u) + Q(u) \bmod 2$ is determined by $u \bmod 2$, so it suffices to test the $2^n$ classes; better, $Q(u) = \sum_i B_{ii}u_i^2 + 2\sum_{i<j}B_{ij}u_iu_j \equiv \sum_i B_{ii}u_i \pmod 2$, so the functional is the $\mathbb{F}_2$-linear map $u \mapsto \sum_i (\mathrm{Bil}(v,\cdot)_i + B_{ii}) u_i$, and it suffices to test the $n$ standard basis vectors:
-$$v \text{ characteristic} \iff (Bv)_i \equiv B_{ii} \pmod 2 \text{ for } i = 1,\dots,n.$$
-Cost: $O(n^2)$. This is the practical form of Theorem 4.5 and shows that characteristic vectors form a coset of $2L^\ast \cap L$.
+*Proof.* By Theorem 4.1 there is $x_0$ with $Q(x_0-t) \le Mn/4$, hence the single term $e^{-sQ(x_0-t)} \ge e^{-sMn/4}$; all other terms are positive, so the sum dominates it. $\square$
 
-### 7.5 Shifted theta coefficients and parity certification
+**Theorem 6.3 (Exponential decay at the gap rate).** Let $A$ have spectral bounds $m > 0$, $M$, and let $0 < s_0 \le s$. Then
+$$\Theta(s) \;\le\; \exp\!\big(-(s - s_0)\,m\,d(t,\mathbb{Z}^n)^2\big)\;\Theta(s_0).$$
 
-To tabulate $r_t(c)$, enumerate the shifted lattice within a radius and bucket the exact rational values. Theorem 5.1 and Theorem 5.6 provide *certificates*: instead of counting, exhibit the fixed-point-free involution (the full reflection $m \mapsto 2t - m$, or the partial flip in the half-integral coordinate) and verify in $O(n)$ that it preserves the form and has no fixed point. This turns an unbounded verification into a constant-size proof.
+*Proof.* Fix $x \in \mathbb{Z}^n$ and write $g = m\,d(t,\mathbb{Z}^n)^2$. By Theorem 3.4, $Q(x-t) \ge g$, and since $s - s_0 \ge 0$,
+$$-sQ(x-t) \;=\; -(s-s_0)Q(x-t) - s_0 Q(x-t) \;\le\; -(s - s_0) g - s_0 Q(x-t).$$
+Exponentiating gives a termwise bound; summing over $x$ (both families summable by Theorem 6.1) and pulling out the constant yields the claim. $\square$
 
----
+**Corollary 6.4 (Decay to zero).** If $m > 0$ and some coordinate of $t$ is non-integral, then $\Theta(s) \to 0$ as $s \to \infty$.
 
-## 8. Applications
+*Proof.* By Lemma 3.3 the gap $g = m\,d(t,\mathbb{Z}^n)^2$ is strictly positive. Taking $s_0 = 1$ in Theorem 6.3, $0 \le \Theta(s) \le e^{-(s-1)g}\,\Theta(1) \to 0$ as $s \to \infty$; squeeze. $\square$
 
-**Solvability testing for quadratic Diophantine equations.** Theorem 3.4 gives an immediately implementable test that strictly dominates the classical complete-the-square criterion whenever the completing shift is a torsion point of a shortest vector, improving the rejected range by exactly $\lambda_1/r^2$. Corollary 4.2 adds an orthogonal, purely congruential filter.
+This is the analytic shadow of Theorem 3.5: $\Theta(s) \to 0$ says exactly that no lattice point sits at zero energy, i.e. that $Q(x - t) = 0$ is unsolvable. By contrast, when $t \in \mathbb{Z}^n$ the term $x = t$ contributes $1$ for all $s$, and $\Theta(s) \to 1$.
 
-**Covering-radius estimation.** Theorem 2.12 gives a lower bound for the covering radius from a shortest-vector computation alone; Theorem 6.4(4) shows that for diagonal forms the bound and the truth differ by the ratio $(\sum a_i)/(\min a_i)$, quantifying exactly how lossy packing-based covering estimates are.
+Together, Theorems 6.2 and 6.3 sandwich the logarithmic decay rate:
+$$m\,d(t,\mathbb{Z}^n)^2 \;\le\; \liminf_{s\to\infty} \frac{-\log \Theta(s)}{s} \;\le\; \limsup_{s\to\infty}\frac{-\log\Theta(s)}{s} \;\le\; \frac{Mn}{4},$$
+i.e. the decay rate obeys the same sandwich as $\mu(Q,t)$ — as it must, since heuristically the rate *is* $\mu(Q,t)$ (see Section 10, Problem C2).
 
-**Coding-theoretic dictionary.** Theorem 6.4 identifies the geometric function "distance from a $2$-torsion class to the lattice" with the weighted Hamming weight on $\mathbb{F}_2^n$. Since $\mathbb{Z}^n/2\mathbb{Z}^n \cong \mathbb{F}_2^n$ carries the standard weight structure, questions about the distribution of $\mu$ over $2$-torsion classes become questions about weight enumerators of binary codes, and conversely.
+### 6.3 Factorisation for diagonal forms
 
-**Structure of value spectra.** Theorem 4.8 says that at the half of a characteristic vector, the sequence of representable values of the shifted form skips by at least $2$. For an unsolvability proof this is a factor-of-eight strengthening over integrality — and it is a *complete* criterion, so failure of the gap is itself informative: it certifies that the shift is not half a characteristic vector.
+**Theorem 6.5 (Diagonal factorisation).** Let $A = \operatorname{diag}(d_1,\dots,d_n)$ with all $d_i > 0$, let $t \in \mathbb{R}^n$ and $s > 0$. Then
+$$\Theta(s) \;=\; \prod_{i=1}^{n} \; \sum_{k \in \mathbb{Z}} \exp\!\big(-s d_i (k - t_i)^2\big),$$
+an $n$-fold product of one-dimensional shifted Jacobi theta values.
 
-**Basis-independent invariants for reduction algorithms.** Theorem 2.11 licenses lattice reduction as a preprocessing step for every quantity in this paper, which is what makes the enumerations of §7 feasible beyond toy dimensions.
+*Proof.* For diagonal $A$, $Q(x-t) = \sum_i d_i (x_i - t_i)^2$, so each summand of $\Theta$ factors as $\prod_i e^{-s d_i (x_i-t_i)^2}$. Each factor family is summable over $\mathbb{Z}$ (Lemma 6.0, $c = sd_i > 0$) and nonnegative, so the sum over $\mathbb{Z}^n$ of the product equals the product of the sums, by induction on $n$ with Fubini–Tonelli at each step. $\square$
 
----
-
-## 9. Discussion
-
-Three separate mechanisms have been isolated behind the single question "when does $Q(x) = c$ have no integral solution near a given shift?".
-
-The **archimedean mechanism** (§2) is a scaling argument: an $r$-torsion shift is $1/r$ of an integral vector, and $1/r$ of a nonzero integral vector has energy at least $\lambda_1/r^2$. Its content is not the inequality, which is three lines, but the rigidity: the equality case pins down the shortest vectors exactly, and there is even a gap above the extremal classes. Notably, the hypotheses shrink as the theory develops: the inequality needs only $t \notin L$, not any relation to shortest vectors, and the mission's original guess $\mu \geq \lambda_1$ is off by precisely the index-scaling factor $4$.
-
-The **$2$-adic mechanism** (§4) is the expansion $Q(v + 2u) = Q(v) + 4(\mathrm{Bil}(v,u) + Q(u))$, together with the observation that $8 \mid 4T \iff 2 \mid T$. This turns a mod-$8$ statement into a mod-$2$ statement about a linear functional, and hence into the classical notion of a characteristic vector. The gain is conceptual: the mod-$8$ law of sums of odd squares stops being a curiosity of $\mathbb{Z}^n$ and becomes an exact characterisation valid in every integral lattice. Positive definiteness is not used at all here — an honest reduction of hypotheses relative to §2.
-
-The **combinatorial mechanism** (§6) is additivity of a diagonal form over coordinates, with coordinatewise minima attained simultaneously. This is genuinely restrictive: for a general form the off-diagonal entries couple the coordinates and the minimum is not additive. The theorem is thus sharp in its hypothesis rather than in its proof, and the right general statement should be that $\mu$ on $L/2L$ is a "weight enumerator of the lattice" — a function on $\mathbb{F}_2^n$ that need not be a weighted Hamming weight.
-
-The multiplicity theory of §5 offers a cautionary tale worth stating explicitly. The rank-one criterion (all shifted theta coefficients even $\iff$ $2t \in L$, $t\notin L$) is exact, and it is very tempting to promote it to all ranks. The promotion is false: $t = (\tfrac12,\tfrac13)$ in $\mathbb{Z}^2$ has all coefficients even because the *first coordinate alone* supplies a fixed-point-free involution. The failure is instructive rather than merely a nuisance: it shows that parity of the theta series is a coordinatewise, factorisation phenomenon, and it directs one to the correct statement (Theorem 5.6), which is stronger, cleaner, and covers the whole diagonal family.
-
-Finally, the two occurrences of the constant $4$ deserve a last word. They share an origin — the index of $2L$ in $L$ — but the theorems they appear in are logically independent, one archimedean and one $2$-adic. Their combination is what gives the sharp local picture at a half characteristic vector realising the minimum: the value spectrum starts at $\lambda_1/4$ and its next possible member is $\lambda_1/4 + 2$.
+In terms of the classical Jacobi theta function $\vartheta_3(z, q) = \sum_{k\in\mathbb{Z}} q^{k^2} e^{2\pi i k z}$, each factor is a shifted-argument value; the point of the theorem is structural, that all the difficulty of the $n$-dimensional problem sits in the off-diagonal entries of $A$.
 
 ---
 
-## 10. Future directions
+## 7. Extremal structure: the half-shifted sum of squares
 
-**A reflection criterion for parity in arbitrary rank.** Theorem 5.6 is proved for diagonal forms, where the reflection in a single coordinate is available. The right general statement should replace "some coordinate $t_i$ is half-integral" by "there is an isometry $\rho$ of $(L,Q)$ with $\rho^2 = \mathrm{id}$ and $\rho(t) \equiv t \pmod L$ acting freely on $L$". Theorem 5.8 is the first step: even parity forces a non-unique nearest lattice point, which is a necessary condition for such a $\rho$ to exist.
+Take $A = I$, $t = (\tfrac12,\dots,\tfrac12)$, so $Q(x-t) = \sum_i (x_i - \tfrac12)^2$, $m = M = 1$, and by Remark 4.3 the sandwich is exact: $\mu = n/4$. We determine the full set of minimisers.
 
-**The van der Blij invariant.** For an even unimodular lattice, $Q(v) \equiv \operatorname{sign}(Q) \pmod 8$ for every characteristic $v$. Theorem 4.5 gives the local version — that $Q(v) \bmod 8$ is constant on the coset $v + 2L$ — from which the global statement should be reachable by a genus argument. Making that reduction explicit for the forms of this paper is a concrete next target.
+**Lemma 7.1 (One-coordinate extremality).** For every $k \in \mathbb{Z}$, $\big(k - \tfrac12\big)^2 \ge \tfrac14$, with equality if and only if $k \in \{0,1\}$.
 
-**Strictness of the packing–covering inequality.** Theorem 2.12 gives covering $\geq \lambda_1/4$ and Corollary 2.14 shows the ratio is unbounded for diagonal forms. Determining for which lattices equality holds — presumably only $n = 1$ up to scaling — remains open.
+*Proof.* $\big(k-\tfrac12\big)^2 - \tfrac14 = k^2 - k = k(k-1)$, which is a product of consecutive integers, hence $\ge 0$, and $= 0$ exactly when $k = 0$ or $k = 1$. $\square$
 
-**The weight enumerator of a general lattice.** Define $W_L : L/2L \to \mathbb{Q}$ by $W_L(\bar t) = \mu(t/2)$. Theorem 6.4 computes $W_L$ for diagonal forms as a weighted Hamming weight. For a general form $W_L$ is a genuinely new invariant; its symmetry group, its extremal values, and whether it determines the lattice are all open.
+**Theorem 7.2 (Exact extremal set).** For $x \in \mathbb{Z}^n$,
+$$\sum_{i=1}^n \left(x_i - \tfrac12\right)^2 \;\le\; \frac n4 \qquad \Longleftrightarrow \qquad x_i \in \{0,1\} \text{ for every } i .$$
 
-**A Eureka threshold.** For which $N$ does the equation $\sum_i (2x_i - 1)^2 = N$ acquire many solutions, and how does the multiplicity grow? Theorem 4.1 fixes the support ($N \equiv n \bmod 8$, $N \geq n$); the density of solutions on that progression is not addressed here.
+*Proof.* ($\Leftarrow$) If every $x_i \in \{0,1\}$ then each term equals $\tfrac14$ by Lemma 7.1 and the sum is $n/4$. ($\Rightarrow$) By Lemma 7.1 each term is $\ge \tfrac14$; if the total is $\le n/4$ then the total equals $n/4$ and, a sum of terms each at least a fixed lower bound being equal to the sum of those bounds, every term must equal $\tfrac14$. Equality in Lemma 7.1 forces $x_i \in \{0,1\}$. $\square$
 
-**Higher torsion spectra.** Theorem 6.3 computes the $2$-torsion gap spectrum of $\mathbb{Z}^n$ completely. The $r$-torsion spectrum for $r \geq 3$ is not a Hamming weight — the coordinatewise minimum of $\min_k (t_i - k)^2$ over $t_i \in \tfrac1r\mathbb{Z}$ takes $\lfloor r/2\rfloor + 1$ values — and its combinatorial description should be a weight enumerator over $\mathbb{Z}/r$ rather than $\mathbb{F}_2$.
+**Theorem 7.3 (Multiplicity of the minimum).** The set of $x \in \mathbb{Z}^n$ with $\sum_i (x_i - \tfrac12)^2 \le n/4$ is finite, equal to $\{0,1\}^n$ — the vertex set of the unit cube — and has cardinality exactly $2^n$.
+
+*Proof.* Immediate from Theorem 7.2: the solution set is the product of $n$ copies of $\{0,1\}$, of cardinality $2^n$. $\square$
+
+So the inhomogeneous minimum $n/4$ is attained with exponential multiplicity $2^n$. It is instructive to compare with the counting theorem: at $R = n/4$, Theorem 5.2 gives the upper bound $(2\sqrt{n/4} + 1)^n = (\sqrt n + 1)^n$ for the number of solutions, which is far larger than the truth $2^n$ but of the same *exponential type in $n$*; Theorem 7.3 shows the exact answer. This is the one place in the theory where the soft spectral input is replaced by a complete arithmetic analysis, and it calibrates how lossy the soft bounds are.
+
+---
+
+## 8. Algorithms
+
+The theory yields three effective procedures.
+
+### 8.1 Gap certificate
+
+**Input:** matrix $A$, spectral lower bound $m > 0$, shift $t$, target $c$.
+**Output:** either a certificate that $Q(x - t) = c$ is unsolvable over $\mathbb{Z}^n$, or "inconclusive".
+
+Compute $g = m \sum_i d_{\mathbb{Z}}(t_i)^2$. If $c < g$, report unsolvable (Theorem 3.6). Otherwise inconclusive. Cost: $O(n)$ arithmetic operations after $m$ is known; obtaining $m$ for symmetric $A$ costs one smallest-eigenvalue computation, $O(n^3)$ by standard dense methods, or $O(n^2)$ per iteration by inverse power iteration. When $t$ is rational with common denominator $q$, the same test may be run with the certified value $g = m/q^2$ (Theorem 3.10), avoiding all floating point in the arithmetic part.
+
+### 8.2 Rounding solver and sandwich report
+
+**Input:** $A$, spectral bounds $m, M$, shift $t$.
+**Output:** an integer point $x_0$ with $Q(x_0-t) \le Mn/4$, plus the certified interval $[m\,d(t,\mathbb{Z}^n)^2,\; Mn/4]$ containing $\mu(Q,t)$.
+
+Set $x_0 = \operatorname{round}(t)$ coordinatewise; evaluate $Q(x_0 - t)$ in $O(n^2)$ operations; report the sandwich of Theorem 4.2. The value $Q(x_0-t)$ itself is an *upper* bound on $\mu$ that is often much better than $Mn/4$, so the practical output interval is $[m\,d(t,\mathbb{Z}^n)^2,\; \min(Q(x_0-t),\, Mn/4)]$.
+
+### 8.3 Exhaustive enumeration in the certified box
+
+**Input:** $A$, $m > 0$, $t$, radius $R$.
+**Output:** all $x \in \mathbb{Z}^n$ with $Q(x-t) \le R$.
+
+By Lemma 5.1 every solution lies in the box $\prod_i [\lceil t_i - r\rceil, \lfloor t_i + r\rfloor]$ with $r = \sqrt{R/m}$; enumerate it and filter. The box has at most $(2r+1)^n$ points (Theorem 5.2), so the cost is $O\big(n^2 (2\sqrt{R/m}+1)^n\big)$ — exponential in $n$, as expected for a closest-vector-type problem, but with a fully certified search region and no risk of missing a solution. Depth-first enumeration with partial-sum pruning (abandon a prefix once the accumulated diagonal contribution exceeds $R$) typically visits far fewer nodes; for diagonal $A$ the pruning is exact and the enumeration is optimal up to the output size.
+
+---
+
+## 9. Applications
+
+**Diophantine non-solvability certificates.** Theorem 3.6 and Corollary 3.11 give one-line proofs of unsolvability for shifted quadratic equations to which congruence methods do not apply. Example: $2x_1^2 + 3x_2^2 + 5x_3^2$ evaluated at $x - (\tfrac13,\tfrac13,\tfrac13)$ has spectral bounds $m = 2$, $M = 5$, and shift denominator $q = 3$, so the value is always $\ge 2/9$, and no integer solution exists for any target below $2/9$; the sharper real bound gives $\ge 2 \cdot 3 \cdot (1/3)^2 = 2/3$.
+
+**Lattice cryptography and the closest vector problem.** With $Q$ the Gram form of a lattice basis, $\mu(Q,t)$ is the squared distance from $t$ to the lattice. Theorem 4.2 is a certified two-sided estimate: the covering side $Mn/4$ says decoding always succeeds within that radius, while the gap side $m\,d(t,\mathbb{Z}^n)^2$ is a lower bound on the achievable decoding distance, hence a *security floor* — no lattice point is closer, so a ciphertext perturbed by less than half that distance is uniquely decodable. The counting theorem quantifies how quickly the number of candidate decodings explodes as the search radius grows, which is exactly the complexity driver of enumeration-based attacks.
+
+**Coding theory over $\mathbb{Z}$.** For an integer code with quadratic energy $Q$ and coset representative $t$, the gap is the minimum coset energy, i.e. a minimum-distance guarantee for coset codes; the extremal analysis of Section 7 exhibits the standard binary cube as the extremal coset of the sum-of-squares code.
+
+**Statistical mechanics.** $\Theta(s)$ is the canonical partition function of a classical lattice system with energy $Q(x-t)$ at inverse temperature $s$. Theorem 6.3 states that the free energy per unit inverse temperature is bounded below by the gap; Theorem 6.2 bounds it above by the covering value. Theorem 7.3 identifies the ground state of the half-shifted oscillator as $2^n$-fold degenerate — a residual entropy of $n \log 2$, i.e. exactly one bit per degree of freedom.
+
+**Integer quadratic programming.** Theorem 4.4 is a certified feasibility test for the constraint $Q(x - t) \le R$: reject below the gap, accept above the covering threshold with the rounded point as witness, and only in the intermediate band is branch-and-bound needed.
+
+---
+
+## 10. Discussion and open problems
+
+### 10.1 What is sharp and what is not
+
+The gap bound of Theorem 3.4 is sharp whenever the minimising integer point realises the coordinatewise nearest-integer rounding *and* the form attains its lower spectral bound on the resulting displacement; for $A = I$ this always happens, and the bound is an equality. The covering bound $Mn/4$ is, by contrast, generally lossy: it replaces every eigenvalue by the largest one. Problem C1 below proposes the correct replacement.
+
+The counting theorem has the correct order $R^{n/2}$ but constants differing by $(Mn/m)^{n/2}$; closing that gap would require volume asymptotics rather than box comparisons.
+
+### 10.2 Open problems
+
+**C1. Sharp covering constant: the inhomogeneous minimum is controlled by the *trace*, not by $n\lambda_{\max}$.**
+
+*Conjecture.* For every symmetric positive definite $A$ with spectral bounds $m, M$ and every shift $t$,
+$$\mu(Q, t) \;\le\; \tfrac14 \operatorname{tr}(A),$$
+with equality if and only if $A$ is diagonal and $t$ is a half-integral shift. In particular the proved bound $\mu \le Mn/4$ is never sharp unless all eigenvalues coincide.
+
+The key insight is that the rounding point $x = \operatorname{round}(t)$ used in Theorem 4.1 wastes information: it bounds $Q(x-t)$ by $\lambda_{\max}\|x-t\|^2$, whereas expanding $Q(x-t) = \sum_{i,j} A_{ij}(x_i - t_i)(x_j - t_j)$ and averaging over a random $\pm\tfrac12$ displacement gives expectation exactly $\operatorname{tr}(A)/4$, the off-diagonal terms cancelling in mean. The averaging argument needs only the finite probability space $\{\pm\tfrac12\}^n$, so it is a self-contained next step that would upgrade every corollary depending on $Mn/4$.
+
+**C2. Gap–theta duality: the decay rate of $\Theta$ *equals* the inhomogeneous minimum.**
+
+*Conjecture.* For a spectrally sandwiched form with $m > 0$,
+$$\lim_{s \to \infty} -\frac{1}{s}\log \Theta(s) \;=\; \mu(Q, t),$$
+and moreover $\Theta(s)\,e^{s\mu(Q,t)} \to r(\mu)$, the number of integer points attaining the minimum (finite by Theorem 5.2).
+
+Theorem 6.3 proves one inequality (the rate is at least $m\,d(t,\mathbb{Z}^n)^2$) purely from the termwise bound, while the matching upper bound must come from isolating the minimising terms and dominating the rest using the counting estimate $N(R) \le (2\sqrt{R/m}+1)^n$. In other words the counting theorem and the decay theorem are two halves of a single Laplace-method statement: the counting bound controls the tail, and the discreteness of the value set controls the leading term. For the half-shifted sum of squares the conjecture is verifiable directly from Theorem 6.5 and Theorem 7.3, with $r(\mu) = 2^n$.
+
+### 10.3 Further directions
+
+Beyond C1 and C2, several avenues suggest themselves. (i) *Anisotropic covering*: replace the isotropic box by an ellipsoidal enumeration region adapted to $A$, sharpening the counting constants to the true volume ratio. (ii) *Inhomogeneous minima of families*: study $\sup_t \mu(Q,t)$, the squared covering radius, under the spectral hypothesis alone; the sandwich gives $\sup_t \mu \le Mn/4$, and the half-shift shows $\sup_t \mu \ge mn/4$ when $A$ is diagonal, so the covering radius is pinned to within the condition number. (iii) *Modular refinements*: for rational shifts, combine the denominator gap $m/q^2$ with congruence conditions mod $q$ to obtain obstructions in the intermediate band. (iv) *Non-symmetric and indefinite forms*: the lower bound uses only $Q \ge m\|\cdot\|^2$, so indefinite forms admit a signed variant in which the "gap" becomes a bound on how negative $Q(x-t)$ can be — a question closely related to the Oppenheim circle of ideas.
 
 ---
 
@@ -435,18 +347,14 @@ Finally, the two occurrences of the constant $4$ deserve a last word. They share
 
 | Result | Statement |
 |---|---|
-| Torsion gap | $t$ an $r$-torsion shift $\Rightarrow$ $Q(t-m) \ge \lambda_1/r^2$ for all $m \in L$ |
-| Attainment | $Q(v) = \lambda_1 \Rightarrow \mu(v/r) = \lambda_1/r^2$; in particular $\mu(v/2) = \lambda_1/4$ |
-| Rigidity | $\mu(t) = \lambda_1/r^2 \iff t \equiv w/r \pmod L$ with $Q(w) = \lambda_1$ |
-| Second gap | non-extremal $r$-torsion shift $\Rightarrow$ $\mu(t) \ge \lambda_2/r^2$ |
-| Invariance | $\lambda_1$ and $\mu$ are unchanged under $B \mapsto U^{\mathsf T}BU$, $U$ unimodular |
-| Packing–covering | squared covering radius $\ge \lambda_1/4$; $= n/4$ for $\mathbb{Z}^n$, ratio unbounded |
-| Sharpened unsolvability | $F = Q + \ell + c$ with completing shift $-v/r$: no integral zero once $c > 0$ |
-| Characteristic criterion | $v$ characteristic $\iff$ $Q(v+2u) \equiv Q(v) \bmod 8$ for all $u \in L$ |
-| Gap two | $v$ characteristic $\Rightarrow$ values of $Q(x - v/2)$ lie in $Q(v)/4 + 2\mathbb{Z}$ |
-| Deep-hole spectrum | values of $\sum(x_i - \tfrac12)^2$ lie in $n/4 + 2\mathbb{Z}_{\ge 0}$; both ends attained |
-| Even multiplicity | $2t \in L$, $t \notin L$ $\Rightarrow$ every $r_t(c)$ is even |
-| Parity converse fails | $t = (\tfrac12,\tfrac13)$ in $\mathbb{Z}^2$: all $r_t(c)$ even, $2t \notin \mathbb{Z}^2$ |
-| Parity criterion | diagonal $Q$: all $r_t(c)$ even $\iff$ some $t_i$ is half-integral |
-| Gap spectrum | $\mathbb{Z}^n$: $2$-torsion gaps $=\{k/4 : 1 \le k \le n\}$, gap $=$ Hamming weight$/4$ |
-| Weight enumerator | diagonal $Q$: gap at class $s$ is $\tfrac14\sum_{i\in s}a_i$, from $\lambda_1/4$ to $\tfrac14\sum_i a_i$ |
+| Spectral Gap Theorem | $Q(x-t) \ge m\,d(t,\mathbb{Z}^n)^2$ for all $x \in \mathbb{Z}^n$ |
+| Diophantine obstruction | $Q(x-t) = c$ unsolvable for $c < m\,d(t,\mathbb{Z}^n)^2$ |
+| Effective rational gap | $Q(x - a/q) \ge m/q^2$ when $q \nmid a_{i_0}$ |
+| Covering bound | $\exists x_0:\; Q(x_0-t) \le Mn/4$ |
+| Spectral sandwich | $m\,d(t,\mathbb{Z}^n)^2 \le \mu(Q,t) \le Mn/4$ |
+| Solvability window | solvable for $R \ge Mn/4$; unsolvable for $R < m\,d(t,\mathbb{Z}^n)^2$ |
+| Counting | $(2\sqrt{R/(Mn)}-1)^n \le N(R) \le (2\sqrt{R/m}+1)^n$ for $R \ge Mn/4$ |
+| Theta convergence | $\Theta(s)$ converges for all $s>0$ when $m>0$ |
+| Theta bounds | $e^{-sMn/4} \le \Theta(s)$; $\Theta(s) \le e^{-(s-s_0)m\,d(t,\mathbb{Z}^n)^2}\Theta(s_0)$ |
+| Diagonal factorisation | $\Theta(s) = \prod_i \sum_{k\in\mathbb{Z}} e^{-sd_i(k-t_i)^2}$ |
+| Extremal set | $\sum_i (x_i-\tfrac12)^2 \le n/4 \iff x \in \{0,1\}^n$; exactly $2^n$ minimisers |
