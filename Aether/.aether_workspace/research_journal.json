@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7b912198",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## What the formal result establishes\n\n`Catalog/Novelty/SurrealFiniteCofiniteProbability.lean` constructs a concrete Conway surreal\n\n\\[\n\\varepsilon=\\{0\\mid 1,1/2,1/4,\\ldots\\}\n\\]",
-      "quality_score": 0.7734099999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-01T23:23:00",
-      "title": "Non-Archimedean Probability via Surreal Numbers"
-    },
-    {
       "cycle_id": "d333f65d",
       "domain": "Probability",
       "key_insight": "# Future directions\n\n## What is established\n\n`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,\nself-contained results for a triangular face:\n\n1. the three-site crossing probabi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 115,
       "timestamp": "2026-08-11T19:28:43",
       "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
+    },
+    {
+      "cycle_id": "ea50968d",
+      "domain": "Algebra",
+      "key_insight": "# Future directions (thread `th_ac518134`, cycle 3)\n\nThis cycle proved, in `Catalog/Algebra/`:\n\n* **`DepthDominationCriterion.lean`** — a tag-indexed criterion `DepthDominates` for\n  inclusion of the",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-08-11T19:30:13",
+      "title": "Derived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.le"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7419800000000001
     }
   ],
-  "last_updated": "2026-08-11T19:28:43",
+  "last_updated": "2026-08-11T19:30:13",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "ffa9af78",
-        "quality": 0.74086,
-        "theorems": 12,
-        "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
-      },
-      {
         "cycle_id": "e4843e14",
         "quality": 0.7439399999999999,
         "theorems": 8,
@@ -3079,6 +3073,12 @@
         "quality": 0.627125,
         "theorems": 74,
         "title": "ArXiv paper: The chain replacement of a poset flow"
+      },
+      {
+        "cycle_id": "ea50968d",
+        "quality": 0.627125,
+        "theorems": 81,
+        "title": "Derived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.le"
       }
     ],
     "Applications": [
