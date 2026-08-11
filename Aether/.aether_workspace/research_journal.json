@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8fa54bf5",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d → ℝ` whose every subfamily of cardinality at",
-      "quality_score": 0.7597999999999998,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-08-03T23:30:54",
-      "title": "Tropical Convexity and Helly Theorem"
-    },
-    {
       "cycle_id": "87f6aef5",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\nThe completed development proves perfect honest-verifier zero knowledge for the opened colour pair, exact perfect completeness, a one-round soundness bound, and independent repeti",
@@ -499,19 +489,19 @@
       "theorem_count": 43,
       "timestamp": "2026-08-11T10:24:47",
       "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
+    },
+    {
+      "cycle_id": "f2796053",
+      "domain": "Logic",
+      "key_insight": "# Future Directions (cycle 1, thread th_ed2afa00)\n\nDerived from the verified results in `Catalog/Logic/GEBGradedLawvere.lean`:\ngraded (partial) universality, the obstruction spectrum\n(`representable ⟺",
+      "quality_score": 0.743025,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-11T10:26:39",
+      "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "74a8a74b",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n* Package `hypergeometricCoeff` as a `PowerSeries ℂ` and derive the displayed\n  coefficient operator from formal differentiation and multiplication by `X`.\n* Prove convergence for",
-      "quality_score": 0.69669,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-08-01T18:22:59",
-      "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
-    },
     {
       "cycle_id": "9fb19498",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 43,
       "timestamp": "2026-08-11T10:24:47",
       "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
+    },
+    {
+      "cycle_id": "f2796053",
+      "domain": "Logic",
+      "key_insight": "# Future Directions (cycle 1, thread th_ed2afa00)\n\nDerived from the verified results in `Catalog/Logic/GEBGradedLawvere.lean`:\ngraded (partial) universality, the obstruction spectrum\n(`representable ⟺",
+      "quality_score": 0.743025,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-11T10:26:39",
+      "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "48492a97",
-      "domain": "Combinatorics",
-      "name": "hasse_F7",
-      "quality": 0.71196
-    },
-    {
-      "cycle_id": "1f345ab3",
-      "domain": "Tropical",
-      "name": "sep_minimizes_iff_coordinatewise",
-      "quality": 0.73286
-    },
-    {
-      "cycle_id": "1f345ab3",
-      "domain": "Tropical",
-      "name": "box_minimizes_iff_mem_box",
-      "quality": 0.73286
-    },
     {
       "cycle_id": "1f345ab3",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "hasSpectralBounds_one",
       "quality": 0.71215
+    },
+    {
+      "cycle_id": "f2796053",
+      "domain": "Logic",
+      "name": "of",
+      "quality": 0.743025
+    },
+    {
+      "cycle_id": "f2796053",
+      "domain": "Logic",
+      "name": "of",
+      "quality": 0.743025
+    },
+    {
+      "cycle_id": "f2796053",
+      "domain": "Logic",
+      "name": "and",
+      "quality": 0.743025
     }
   ],
-  "last_updated": "2026-08-11T10:24:47",
+  "last_updated": "2026-08-11T10:26:39",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "576be6d2",
-        "quality": 0.75955,
-        "theorems": 6,
-        "title": "Self-Modifying Research via Reflective Type Theory"
-      },
-      {
         "cycle_id": "9d058f1b",
         "quality": 0.74478,
         "theorems": 9,
@@ -3513,6 +3507,12 @@
         "quality": 0.683555,
         "theorems": 149,
         "title": "`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,"
+      },
+      {
+        "cycle_id": "f2796053",
+        "quality": 0.743025,
+        "theorems": 62,
+        "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
       }
     ],
     "MachineLearning": [
