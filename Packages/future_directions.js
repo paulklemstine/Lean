@@ -6391,17 +6391,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On Diophantine equations over the integer rings of quadratic fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5e69d5d2",
     "description": "Investigate the ArXiv paper 'Combinatorial and algebraic proofs of Keller's $A_2\\square A_2$ $q$-dilogarithm identity' and formalize its key results. Abstract: The classical Durfee-square argument gives a combinatorial proof of the pentagon identity for the quantum dilogarithm. Just as the pentagon identity is associated with the $A_2$ quiver, Keller's identity is associated with the square-product quiver $A_2\\square A_2$. Previous proofs of Keller's identity use cluster categories or spectral sequences in rapid-decay equivariant cohomology. We give three proofs of Keller's identity: a generating-function proof, an explicit weight-preserving bijection on colored partitions, and a standard-monomial proof using a four-colored arc algebra. Their common mechanism is an iterated Durfee decomposition: two possible pairings give horizontal and vertical decompositions, while a third binary step accounts for the coupling factor. These constructions provide a ``superpotential analogue'' of the Durfee-square argument.",
     "domains": [
       "Algebra",
       "Combinatorics"
     ],
     "id": "fd_0991",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2608.05057v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-06T03:47:36.177153+00:00",
     "title": "ArXiv paper: Combinatorial and algebraic proofs of Keller's $A_2\\square A_2$ $q$-dilogarithm identity"
   },
