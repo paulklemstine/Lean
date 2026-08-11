@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a65c164b",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nConcrete, falsifiable conjectures suggested by the formalisation in\n`Catalog/Algebra/DerivedFunctors/`. Each one is stated so that a single Lean statement would\nsettle it, and eac",
-      "quality_score": 0.78643,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-04T12:27:50",
-      "title": "Homological Algebra: Derived Functors"
-    },
-    {
       "cycle_id": "6337dbc1",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) — connected groupoids\n  (models of `K(G,1)`) are classifie",
@@ -499,19 +489,19 @@
       "theorem_count": 115,
       "timestamp": "2026-08-11T19:28:43",
       "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
+    },
+    {
+      "cycle_id": "832153cb",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Diophantine-Lattice Spectral Bounds (after cycle 11)\n\nCycles 10–11 closed three standing conjectures of the thread.  What is proved (all `sorry`-free,\nin `Catalog/Physics/Diophan",
+      "quality_score": 0.715855,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-11T19:31:44",
+      "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d333f65d",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n## What is established\n\n`Catalog/Probability/PercolationThreshold.lean` proves a chain of finite,\nself-contained results for a triangular face:\n\n1. the three-site crossing probabi",
-      "quality_score": 0.76111,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-08-01T23:24:18",
-      "title": "Percolation Threshold"
-    },
     {
       "cycle_id": "316f6446",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-11T19:30:13",
       "title": "Derived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.le"
+    },
+    {
+      "cycle_id": "832153cb",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Diophantine-Lattice Spectral Bounds (after cycle 11)\n\nCycles 10–11 closed three standing conjectures of the thread.  What is proved (all `sorry`-free,\nin `Catalog/Physics/Diophan",
+      "quality_score": 0.715855,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-11T19:31:44",
+      "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "name": "luc_two_mul",
-      "quality": 0.746255
-    },
-    {
-      "cycle_id": "e870e995",
-      "domain": "Novelty",
-      "name": "d_mul_eq_zero",
-      "quality": 0.7131
-    },
-    {
-      "cycle_id": "e870e995",
-      "domain": "Novelty",
-      "name": "cocycle_mul_coboundary",
-      "quality": 0.7131
-    },
     {
       "cycle_id": "e870e995",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "IsCentral",
       "quality": 0.7419800000000001
+    },
+    {
+      "cycle_id": "832153cb",
+      "domain": "Physics",
+      "name": "form_binMat",
+      "quality": 0.715855
+    },
+    {
+      "cycle_id": "832153cb",
+      "domain": "Physics",
+      "name": "binMat_value",
+      "quality": 0.715855
+    },
+    {
+      "cycle_id": "832153cb",
+      "domain": "Physics",
+      "name": "bq_half",
+      "quality": 0.715855
     }
   ],
-  "last_updated": "2026-08-11T19:30:13",
+  "last_updated": "2026-08-11T19:31:44",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "77d39a70",
-        "quality": 0.76844,
-        "theorems": 7,
-        "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-      },
-      {
         "cycle_id": "647e3d96",
         "quality": 0.7752299999999999,
         "theorems": 10,
@@ -3761,6 +3755,12 @@
         "quality": 0.627125,
         "theorems": 163,
         "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
+      },
+      {
+        "cycle_id": "832153cb",
+        "quality": 0.715855,
+        "theorems": 101,
+        "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
       }
     ],
     "Probability": [

@@ -295,7 +295,7 @@
       "depth_estimate": 3,
       "description": "Establishes a non-zero spectrum lower bound for the quantum Yang-Mills Hamiltonian on four-dimensional spherical manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -335,7 +335,7 @@
       "depth_estimate": 3,
       "description": "Proves the Kolmogorov-Arnold-Moser (KAM) theorem on the persistence of quasi-periodic invariant tori under small Hamiltonian perturbations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -375,7 +375,7 @@
       "depth_estimate": 3,
       "description": "Constructs an explicit non-trivial Hilbert space operator model satisfying the Wightman axioms for self-interacting scalar quantum fields in two dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -1095,7 +1095,7 @@
       "depth_estimate": 3,
       "description": "Formally proves lower bounds on error thresholds for topological surface codes under depolarizing noise models.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -1135,7 +1135,7 @@
       "depth_estimate": 3,
       "description": "Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -1175,7 +1175,7 @@
       "depth_estimate": 3,
       "description": "Proves Hastings' theorem establishing efficient Matrix Product State (MPS) approximations for ground states of gapped 1D quantum spin chains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -1215,7 +1215,7 @@
       "depth_estimate": 3,
       "description": "Proves necessary and sufficient conditions for quantum EPR steering under uncharacterized local measurements.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -1255,7 +1255,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Lloyd-Shor-Devetak (LSD) theorem for quantum channel capacity defined by regularized coherent information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -2107,7 +2107,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=α(G)+1$, where $α(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics"
       ],
@@ -11834,7 +11834,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions: Spectral Extremal Problems with Intersecting Forbidden Cycles\n\n## 1. Stability of the universal-vertex outerplanar construction\n\n**Conjecture.** For every fixed pair `l ≥ k ≥ 3`, every sufficiently large outerplanar `C_{k,l}`-free graph whose spectral radius is within `o(n^{-1/2})` of the optimum can be transformed into the corresponding extremal universal-vertex construction by changing `o(n)` edges.\n\nThe key insight is that near equality in the adjacency-matrix energy estimate should force the Perron vector to concentrate around a bounded dominating core, while outerplanarity constrains the remaining vertices to path-like pieces.\n\n**Why now?** The edge-to-spectrum bridge isolates the analytic loss precisely, making it possible to separate quantitative eigenvector stability from the forbidden-cycle decomposition.\n\n## 2. A bounded-core theorem for planar forbidden-cycle extremizers\n\n**Conjecture.** For fixed `l ≥ k ≥ 3`, every sufficiently large planar `C_{k,l}`-free spectral extremizer has a dominating core of size at most two, and deletion of that core leaves a graph of uniformly bounded maximum degree whose nontrivial components belong to a finite family determined by `k` and `l`.\n\nThe key insight is that the two-vertex core in the classical planar join construction is not merely an example: concentration of spectral mass and exclusion of two cycles sharing a vertex should make every larger high-weight core combinatorially unstable.\n\n**Why now?** A bounded-core formulation converts an asymptotic spectral problem into a finite structural classification and directly suggests the finite list of local replacements needed for a proof.\n\n## 3. Spectral supersaturation for intersecting cycles\n\n**Conjecture.** For each fixed `l ≥ k ≥ 3`, there are positive constants `a_{k,l}` and `b_{k,l}` such that every sufficiently large planar graph with spectral radius exceeding the `C_{k,l}`-free optimum by `ε n^{-1/2}` contains at least `a_{k,l} ε n - b_{k,l}` copies of `C_{k,l}`.\n\nThe key insight is that excess Rayleigh mass should be convertible into many local augmentations around high-weight vertices, and each augmentation either improves the candidate extremizer or creates an intersecting pair of cycles.\n\n**Why now?** The baseline square-root estimate identifies the natural normalization for spectral excess, while recent structural extremal results indicate which local configurations should witness supersaturation.\n\n## 4. A minor-closed spectral compactness principle\n\n**Conjecture.** Let `𝒢` be a proper minor-closed graph class and let `F` be a fixed connected graph with a cut vertex lying on two cycles. If the `F`-free spectral extremizers in `𝒢` have unbounded order, then after deleting a bounded dominating set their component types converge to a finite periodic family under path concatenation.\n\nThe key insight is that separator structure in minor-closed classes should interact with Perron-vector localization to reduce global optimization to a finite-state transfer problem along bounded-width pieces.\n\n**Why now?** Intersecting-cycle exclusions provide the simplest nontrivial test case where separator topology, spectral concentration, and finite-state path structure all appear simultaneously.\n\n## 5. Sharpness criterion for the Frobenius edge bound\n\n**Conjecture.** Within any fixed proper minor-closed class, a sequence of connected graphs can asymptotically attain `ρ(G)^2 = 2|E(G)|` only if all but `o(|E(G)|)` edges are incident with a vertex set of bounded size.\n\nThe key insight is that near equality in rowwise Cauchy–Schwarz forces adjacency rows carrying Perron mass to become nearly parallel, which in a sparse simple graph should be possible only through concentration around a small core.\n\n**Why now?** This criterion would turn the elementary analytic inequality into a structural stability engine applicable beyond planar and outerplanar graphs.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Physics"
@@ -12038,7 +12038,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Universal pentagon theorem.** The concrete 5-cycle instance is now formalized in\n   `Core.lean` (`Pentagon.pentagon_mpf`, `Pentagon.pentagon_valency_restriction`), giving\n   an explicit nontrivial factorization `A₁ A₂ = J - I` with `2 * 2 = 5 - 1`. The\n   remaining step is the *converse*: extend `complement_valency_restriction` with the\n   loopless, symmetric, association-scheme intersection-number hypotheses and prove that\n   any nontrivial factorization of `J-I` forces five vertices and two valency-two factors.\n2. **Spectral criterion.** Develop the simultaneous diagonalization of the Bose–Mesner\n   algebra and prove the coordinatewise eigenvalue criterion\n   `theta_S(j) * theta_T(j) = theta_U(j)`.\n3. **Rank obstruction.** Combine the spectral criterion with rank inequalities for\n   matrix products. Formalize the extremal equality case in which every nonzero target\n   eigenvalue is `±k(U)`, and connect this to bipartiteness.\n4. **Two-class classification.** Encode strongly regular graph parameters and derive the\n   parameter equations imposed by an MPF, culminating in the `C₅` classification.\n5. **P-polynomial schemes.** Formalize the distance-regular three-term recurrence for\n   `A₁ Aᵢ` and classify when all coefficients are zero or one with loopless support.\n6. **Hamming schemes.** Define Hamming-distance relations on `Fin d → Fin q`, prove their\n   intersection-number formula, and formalize the binary identity\n   `A₁ A_d = A_{d-1}` together with the nonexistence result for `q > 2`.\n7. **Rectangular and directed extensions.** The unique-witness criterion in `Core.lean`\n   does not require symmetry. It can support analogous results for coherent\n   configurations, directed relations, and incidence matrices of finite geometries.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Physics"
@@ -13185,7 +13185,7 @@
       "depth_estimate": 3,
       "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Analysis",
         "Physics"
@@ -16056,7 +16056,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, and\n- `g ≤ (C_k rank(D)+1)^2`.\n\nOnce this square-root rank certificate is available, the Lean theorem\n`squareRootRankCertificate_implies_scaledExistence` supplies the requested\ndivisor for every half-canonical Brill–Noether-admissible rank simultaneously.\n\nNatural next steps are:\n\n1. Formalize finite connected simple regular graphs and prove\n   `2(g-1)=n(k-2)` from the handshaking lemma.\n2. Connect a graph's Laplacian energy pairing and covering radius to an\n   explicit chip-firing divisor rank lower bound.\n3. Derive the needed covering-radius estimate from a Cheeger or spectral-gap\n   hypothesis.\n4. Import a random-regular-graph expansion theorem and lift the pointwise\n   connector through the corresponding probability measure.\n5. Optimize the resulting constant `C_k`; the present connector intentionally\n   separates this analytic optimization from the Brill–Noether arithmetic.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation",
         "Physics"
@@ -17732,7 +17732,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n- Extend the real coefficient-matrix model to complex amplitudes and prove the same reduced-density and concurrence results.\n- Define von Neumann entropy for finite density matrices and derive the Bell-pair entropy values from the spectrum of the reduced states rather than recording entropy data directly.\n- Generalize the two-boundary cut reconstruction theorem to weighted trees, where all edge weights are recovered from a sufficiently rich family of boundary cut entropies.\n- Formalize tensor-network isometries for a finite holographic code and prove reconstruction of bulk operators from complementary boundary regions.\n- Relate positive mutual information to connectivity in a larger graph model and characterize which entropy vectors arise from nonnegative weighted cuts.\n- Add dynamical operations such as entanglement swapping and prove the corresponding composition law for reconstructed throats.\n- The present result is a finite algebraic toy model: it does not assert the physical ER=EPR conjecture for general quantum field theories or dynamical spacetimes. A fuller treatment would require operator algebras, continuum limits, Lorentzian geometry, and gravitational dynamics.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Physics"
@@ -18059,7 +18059,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For every `n > 0` and every real `r ≠ 0` with `r² = n`, the images of `positiveSpectralPart n r` and `negativeSpectralPart n r` each have real vector-space dimension `2^(n-1)`.\n\n2. **Characteristic polynomial.** After representing `signedAdj n` as an endomorphism of the finite-dimensional space `Cube n → ℝ`, its characteristic polynomial is `(X^2 - n)^(2^(n-1))` for every `n > 0`.\n\n3. **Trace cancellation under restriction.** For every nonempty proper vertex subset `S` of `Cube n`, the principal restriction of the canonical signed adjacency matrix has trace zero; moreover, if `|S| > 2^(n-1)`, that restriction has a positive eigenvalue at least `1`.\n\n4. **Face-cancellation characterization.** A symmetric `{−1,1}` edge signing of the Boolean cube has adjacency square equal to `nI` if and only if the product of its four edge signs around every two-dimensional face is `−1`.\n\n5. **Switching uniqueness.** Any two symmetric cube-edge signings satisfying the negative face-product condition differ by vertex switching: there is a vertex labeling by `{−1,1}` whose endpoint products transform one signing into the other.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -20107,7 +20107,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThis project formalises a bridge between three areas that are usually kept apart:\n\n* **combinatorics of permutations** (inversions, adjacent transpositions, sign-reversing\n  involutions),\n* **noncommutative algebra / quantum groups** (Manin's right-quantum relations, the\n  algebra `M_q(2)` and its quantum determinant),\n* **linear algebra** (the determinant and its alternating property).\n\nThe two Lean files are self-contained (they import only Mathlib) and contain no `sorry`.\n\n## What is proved\n\n`Physics/QuantumCayleyDeterminant.lean`\n\n* `cdet` — the Cayley (column-ordered) determinant over an arbitrary, possibly noncommutative,\n  ring, defined through `List.prod` so that the order of the factors is part of the data.\n* `IsRightQuantum` — Manin's relations, with `IsRightQuantum.cross'` the unrestricted\n  symmetric form and `IsRightQuantum.submatrix_col` stability under column permutations.\n* `cdet_swap_adjacent_cols` — an adjacent column swap negates `cdet`.  The proof is a\n  sign-reversing involution `σ ↦ σ·s` on `Perm (Fin n)`, where the crossing relation is exactly\n  what makes each orbit cancel.\n* `cdet_col_perm` — the full alternating property `cdet (A ∘ τ) = sgn τ • cdet A`, obtained by\n  induction along the generation of the symmetric group by adjacent transpositions.\n* `cdet_add_self_eq_zero_of_col_eq`, `cdet_eq_zero_of_col_eq` — two equal columns kill the\n  determinant (in a ring without additive `2`-torsion).\n* `cdet_row_perm` — the row version, valid with no hypothesis at all.\n* `invCount`, `invCount_mul_swap`, `invCount_eq_zero_iff`, `sign_eq_neg_one_pow_invCount` —\n  the inversion statistic and the identification of the sign homomorphism with the parity of\n  the number of inversions.\n* `qcdet`, `IsQRightQuantum`, `qcdet_swap_adjacent_cols` — the `q`-deformed theory: an adjacent\n  column swap multiplies the `q`-Cayley determinant by `-q⁻¹`.  `qcdet_one_eq_cdet` recovers\n  the undeformed statement at `q = 1`.\n* `cdet_eq_det`, `isRightQuantum_of_comm`, `det_col_perm_of_cdet` — the bridge to Mathlib's\n  commutative determinant, of which the noncommutative theorem is a strict generalisation.\n* Concrete `2 × 2` evaluations, noncommutative examples, and a verified counterexample showing\n  the right-quantum hypothesis cannot be dropped.\n\n`Physics/QuantumGroupDeterminant.lean`\n\n* `IsQuantumMatrixTwo` — the defining relations of `M_q(2)` in hypothesis form (any ring that\n  is an algebra over a commutative ring `K`, any invertible `q : Kˣ`).\n* `qdet_comm_a/b/c/d`, `qdet_central`, `qdet_mem_centralizer` — the quantum determinant\n  `ad - q⁻¹ bc` is central, in fact central for the whole subring generated by the entries.\n* `qdet_eq_qCayley` — the quantum determinant is the `q`-Cayley determinant of `!![a,b;c,d]`.\n* `entries_commute_of_q_eq_one` — at `q = 1` the relations collapse to commutativity.\n\n## Natural next steps\n\n1. **Full column antisymmetry in the `q`-case.**  For `q ≠ 1` an adjacent swap multiplies\n   `qcdet` by `-q⁻¹`, but a general column permutation is not simply `(-q⁻¹)^{ℓ(τ)}` times the\n   original, because the swapped matrix satisfies the relations with `q` replaced by `q⁻¹` in\n   the affected pair.  Working out the exact cocycle (presumably `(-q⁻¹)^{inv τ}` after a\n   suitable multiparameter bookkeeping) would give the `q`-analogue of `cdet_col_perm`.\n\n2. **Multiparameter deformations.**  Chan–Pak also treat matrices with a parameter `q_{kl}`\n   attached to each pair of columns.  The involution used here is local (it touches only two\n   adjacent columns), so it should adapt verbatim once the weight of a permutation is defined\n   as a product over inversions of the corresponding `q_{kl}`.\n\n3. **Cayley = Moore determinant.**  The heart of the Chan–Pak paper is a bijective proof that\n   for right-quantum matrices the Cayley determinant coincides with the Moore determinant (and\n   with Valiant's determinant).  Our `cword_split_pair` lemma, which factors a column word\n   around two adjacent positions, is the natural starting point for such word manipulations.\n\n4. **Mahajan–Vinay and algebraic branching programs.**  The paper's polynomial-time algorithm\n   comes from the clow-sequence expansion of the determinant.  Formalising\n   `det A = ∑_{clow sequences} (-1)^{n+k} weight` (a sign-reversing involution on clow\n   sequences) would be a substantial and independently valuable addition: it connects graph\n   walks with determinants, and combined with item 3 gives the polynomial-size ABP for the\n   Cayley determinant of a right-quantum matrix.\n\n5. **Laplace expansion and Cramer-type identities.**  `cdet` satisfies a cofactor expansion\n   along the first column for *any* matrix; for right-quantum matrices one expects the full\n   set of quantum Cramer identities and a quantum Jacobi ratio theorem.\n\n6. **`sign_eq_neg_one_pow_invCount` for Mathlib.**  The identification of `Equiv.Perm.sign`\n   with the parity of `invCount` is stated here for `Fin n` and proved from scratch; a\n   polished version (together with `∑_{σ} q^{inv σ} = [n]_q!`) would be a reasonable Mathlib\n   contribution.\n\n7. **Higher quantum groups.**  Centrality of `det_q` is proved here for `M_q(2)`.  The same\n   hypothesis-style approach should scale to `M_q(n)` once the `q`-Cayley determinant is known\n   to be alternating in both rows and columns.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -20846,7 +20846,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nFour Lean files now carry the fluctuation-theoretic side of this thread.  All of them\ncompile against Lean 4.28 / Mathlib with no `sorry`, no stubbed signature and only the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n* `Catalog/Computation/FluctuationRobustDemon.lean` — the finite Jarzynski/Crooks model and\n  the **independent** concentration bound\n  `P( ∑_{i<n} W_i ≤ n·w ) ≤ exp( -n·β·(ΔF - w) )` (`FluctDemon.deficit_concentration`).\n* `Catalog/Computation/AdaptiveFluctuationDemon.lean` — the **adaptive** version.  An\n  adaptive demon is a fixed-depth decision tree of work systems\n  (`FluctDemon.AdaptiveDemon`); if each stage dissipates at least `ΔF` in the sense\n  `⟨e^{-βW}⟩ ≤ e^{-βΔF}`, then `P( total work over n stages ≤ t ) ≤ exp( -β·(n·ΔF - t) )`\n  (`FluctDemon.adaptive_deficit_bound_of_dissipative`).\n* `Catalog/Computation/StoppingTimeDemon.lean` — the **stopping-time** version.  A\n  `FluctDemon.StoppingDemon` may halt at any node, so the number of erasure stages `N` is a\n  random variable and the depth index is only an a priori horizon.  Proved:\n\n  ```\n  P( total work ≤ t  and  N ≥ m )   ≤  exp( -β·(m·ΔF - t) )      stopping_deficit_bound\n  P( total work ≤ w·N and N ≥ m )   ≤  exp( -m·β·(ΔF - w) )      stopping_rate_deficit_bound\n  ΔF · E[N]                         ≤  E[total work]              stopping_wald\n  ```\n\n  together with the reliability bound `m ≤ log(1/δ)/(β(ΔF-w))`\n  (`FluctDemon.stopping_reliability_bound`), the vanishing of the success probability\n  (`FluctDemon.stopping_deficit_tendsto_zero`), and two non-vacuity witnesses: `coinStop`\n  (random horizon, `E[N] = 3/2`, exact sub-threshold probability `1/4` against the bound\n  `4/9`, strict Wald slack `(3/4)log(4/3)/β`) and the unbounded-horizon family `geoStop`\n  whose exact sub-threshold probability is `(1/2)^n` at every horizon `n`, against the\n  bound `(2/3)^n`.\n\n* `Catalog/Computation/CrooksCompleteness.lean` (this cycle) — the **converse direction** of\n  the model.  Conjecture 4 of the previous cycle (\"Crooks-completeness of the finite\n  model\") is resolved affirmatively, and in a stronger form than conjectured:\n\n  ```\n  Jarzynski β ΔF S  ↔  ∃ C : CrooksPair β ΔF Ω, C.fwd = S      jarzynski_iff_exists_crooks\n  ```\n\n  The partner lives on the *same* outcome space and the time reversal `flip` may be\n  prescribed arbitrarily (`FluctDemon.reverseSystem`, `FluctDemon.crooksCompletion`); it is\n  unique given `(fwd, flip)` (`FluctDemon.crooks_rev_unique`); it charges the time reverse\n  of every outcome the forward protocol charges (`FluctDemon.reverseSystem_prob_pos`), so\n  the conjectured obstruction (\"an outcome of zero forward and nonzero reverse\n  probability\") is vacuous (`FluctDemon.no_jarzynski_system_lacks_crooks_partner`).  In\n  addition:\n\n  ```\n  Jarzynski β (-ΔF) C.rev                                        crooks_rev_jarzynski\n  CrooksPair.reverse : CrooksPair β ΔF Ω → CrooksPair β (-ΔF) Ω  (an involution)\n  P( W ≤ w )  ≤  e^{-β(ΔF-w)} · (reverse mass of the reversed event)\n                                                                 crooks_deficit_le_rev\n  ```\n\n  the last being a strict sharpening of the one-shot Chernoff bound\n  (`FluctDemon.crooks_deficit_strict`).  Non-vacuity: for the catalog's `coinDemon` the\n  reverse protocol is `(q(true), q(false)) = (1/4, 3/4)` and the sharpened bound is\n  *exactly attained*, `e^{-β(ΔF-w)}·(3/4) = (2/3)(3/4) = 1/2 = P(W ≤ w)`\n  (`FluctDemon.coinCrooks_sharpened_bound_eq`), against the unsharpened value `2/3`.\n\n  The moral of the cycle: in the finite model, Jarzynski compliance and Crooks compliance\n  carry *the same information*; the reversal is free data, and what genuinely constrains a\n  demon beyond `⟨e^{-βW}⟩ = e^{-βΔF}` is the reverse mass of the deficit event.\n\nThe conjectures below are what remains open, restated against this baseline.\n\n---\n\n## 1. Exact large-deviation rate and the equality case\n\n**Conjecture.** For a fixed finite-outcome protocol `S` obeying Jarzynski at cost `ΔF`,\n\n```\nlim_{n→∞} -(1/n) log P( ∑ W_i ≤ n·w )  =  I_S(w)  ≥  β (ΔF - w),\n```\n\nwhere `I_S` is the Legendre transform of `Λ_S(λ) = log ⟨e^{λ W}⟩`, and equality\n`I_S(w) = β(ΔF - w)` holds **iff** the sub-threshold mass of `S` sits at the single work\nvalue `w` (the \"all-or-nothing\" protocol).\n\n*Status.* `FluctDemon.single_deficit_bound` gives `≥` at `n = 1`, and the new\n`FluctDemon.crooks_deficit_le_rev` identifies the exact one-shot slack: the bound is\n`e^{-β(ΔF-w)}·m_rev(w)` with `m_rev(w)` the reverse mass of the time-reversed deficit\nevent, and this is attained with equality for `coinDemon` at `w = ΔF - log(3/2)/β`.  So the\nsharpened one-shot statement is tight; the open content is now purely the `n → ∞`\ntensorisation of the factor `m_rev(w)`, which we conjecture contributes the missing\n`I_S(w) - β(ΔF - w)`.\n\n*Falsifiable:* a two- or three-outcome protocol with `I_S(w) = β(ΔF-w)` whose sub-threshold\nmass is spread over two distinct work values; equivalently, one whose reverse mass\n`m_rev(w)^n` fails to capture the `n`-fold slack.\n\n## 2. Almost-surely finite demons with no horizon at all\n\n**Conjecture.** Let a demon be an infinite decision tree with an almost surely finite\nstopping time `N` (rather than a tree of some finite depth `n`), every node dissipative at\n`ΔF`.  Then the three displayed stopping-time bounds hold verbatim, and moreover\n`E[total work] ≥ ΔF·E[N]` requires no integrability hypothesis beyond `E[N] < ∞`.\n\nThe stopping-time theorem covers every tree of *some* finite depth, uniformly in that\ndepth, which already forces the conclusion for the truncations `N ∧ n` of an infinite tree.\nThe open content is the passage to the limit: is `lim_n E[W_{N∧n}] = E[W_N]`, or can a\ndemon smuggle work into the tail?  We expect uniform integrability to fail exactly when\n`E[N] = ∞`, which would make this the horizon-free counterpart of the `T → 0` analysis in\n§5.\n\n*Falsifiable:* an infinite tree, all nodes Jarzynski compliant, with `E[N] < ∞` and\n`E[total work] < ΔF·E[N]`.\n\n## 3. Erasure-count lower bound for reusable workspace\n\n**Conjecture.** Fix a family of decision processes whose size-`n` instance discards `b(n)`\nbits in the sense of the catalog's size-indexed dissipation theory.  Then every\nimplementation reusing a workspace of `s(n)` cells performs at least `b(n) - O(s(n))`\ndissipative stages, hence by `FluctDemon.stopping_reliability_bound` no implementation can\nspend below `(1-ε)·b(n)·k_B T log 2` with probability `Ω(1)` unless `b(n) = O(s(n) + log n)`.\n\nThe thermodynamic half is proved in the form the computational half needs: the reliability\nbound is stated for a *random* number of stages, so an implementation whose number of\nerasures depends on the instance is covered.  The open content is the *identification\nstep*: which reuse patterns of a polynomial-time workspace force stages that are genuinely\ndissipative at the Landauer value, rather than merely logically irreversible?\n\n*Falsifiable:* a polynomial-time family with `b(n) = n`, workspace `s(n) = O(log n)`, and a\nconstant-probability sub-Landauer implementation.\n\n## 4. Rigidity of the time reversal: self-dual Crooks pairs\n\nCrooks-completeness shows that the reversal `flip` is *free data* — every Jarzynski system\nadmits a partner for every `flip`, even the identity.  A physically meaningful reversal must\ntherefore be pinned down by an extra axiom, and the natural one is self-duality.\n\n**Conjecture.** Call a Crooks pair *self-dual* if `flip` is an involution, `rev = fwd` as\nwork systems, and `ΔF = 0`.  Then a finite work system `S = (p, W)` is the forward half of a\nself-dual pair **iff** there is an involution `flip` with `W ∘ flip = -W` and\n`p(ω) = e^{βW(ω)} p(flip ω)` for all `ω`; and every such `S` has `⟨W⟩ ≥ 0` with equality iff\n`W ≡ 0`.  Consequently the self-dual systems are exactly the equilibrium (zero-free-energy,\ndetailed-balanced) protocols, and no demon is self-dual at `ΔF > 0`.\n\n*Status.* The \"only if\" direction is immediate from `FluctDemon.crooks_rev_prob_eq`; the\ncontent is the converse construction and the equality case, which should follow from the\nproved `FluctDemon.crooks_rev_jarzynski` applied to `CrooksPair.reverse` together with\n`FluctDemon.meanWork_ge_of_jarzynski` at both `ΔF` and `-ΔF`.\n\n*Falsifiable:* a self-dual pair with `ΔF > 0`, or a work system satisfying the displayed\ndetailed-balance identity with `⟨W⟩ < 0`.\n\n## 5. Zero-temperature degeneration of the exponent\n\n**Conjecture.** As `β → ∞` with `ΔF = k_B T log 2` fixed at the Landauer value, the exponent\n`β(ΔF - w)` tends to `-βw`, so the bound is vacuous for every fixed `w > 0` and informative\nonly for `w ≤ 0`.  Consequently an apparent zero-work erasing demon obtained in the `T → 0`\nlimit must have diverging resources: with `w = 0`, `FluctDemon.stopping_reliability_bound`\ngives `m ≤ log(1/δ)/log 2`, a *`β`-independent constant* on the number of erasures the\ndemon can complete at fixed success probability — and by `FluctDemon.stopping_wald` the\nexpected work still grows like `ΔF·E[N]`, so the only escape is `E[N] → ∞`.\n\nThis turns the \"Zero-Temperature Boundary Classification\" conjecture of the original\ndirection into a quantitative dichotomy: at `T → 0` the loophole closes as a divergence of\nthe *resource* `E[N]`, not of the exponent.\n\n*Falsifiable:* a family of finite stopping strategies, parameterised by `β`, with `w = 0`,\n`ΔF = k_B T log 2`, deficit probability bounded below, bounded `E[N]`, and outcome-space\nsize `O(poly)`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation",
         "Physics",
@@ -20974,7 +20974,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nFour Lean files now carry the fluctuation-theoretic side of this thread.  All of them\ncompile against Lean 4.28 / Mathlib with no `sorry`, no stubbed signature and only the\nstandard axioms `propext`, `Classical.choice`, `Quot.sound`.\n\n* `Catalog/Computation/FluctuationRobustDemon.lean` — the finite Jarzynski/Crooks model and\n  the **independent** concentration bound\n  `P( ∑_{i<n} W_i ≤ n·w ) ≤ exp( -n·β·(ΔF - w) )` (`FluctDemon.deficit_concentration`).\n* `Catalog/Computation/AdaptiveFluctuationDemon.lean` — the **adaptive** version.  An\n  adaptive demon is a fixed-depth decision tree of work systems\n  (`FluctDemon.AdaptiveDemon`); if each stage dissipates at least `ΔF` in the sense\n  `⟨e^{-βW}⟩ ≤ e^{-βΔF}`, then `P( total work over n stages ≤ t ) ≤ exp( -β·(n·ΔF - t) )`\n  (`FluctDemon.adaptive_deficit_bound_of_dissipative`).\n* `Catalog/Computation/StoppingTimeDemon.lean` — the **stopping-time** version.  A\n  `FluctDemon.StoppingDemon` may halt at any node, so the number of erasure stages `N` is a\n  random variable and the depth index is only an a priori horizon.  Proved:\n\n  ```\n  P( total work ≤ t  and  N ≥ m )   ≤  exp( -β·(m·ΔF - t) )      stopping_deficit_bound\n  P( total work ≤ w·N and N ≥ m )   ≤  exp( -m·β·(ΔF - w) )      stopping_rate_deficit_bound\n  ΔF · E[N]                         ≤  E[total work]              stopping_wald\n  ```\n\n  together with the reliability bound `m ≤ log(1/δ)/(β(ΔF-w))`\n  (`FluctDemon.stopping_reliability_bound`), the vanishing of the success probability\n  (`FluctDemon.stopping_deficit_tendsto_zero`), and two non-vacuity witnesses: `coinStop`\n  (random horizon, `E[N] = 3/2`, exact sub-threshold probability `1/4` against the bound\n  `4/9`, strict Wald slack `(3/4)log(4/3)/β`) and the unbounded-horizon family `geoStop`\n  whose exact sub-threshold probability is `(1/2)^n` at every horizon `n`, against the\n  bound `(2/3)^n`.\n\n* `Catalog/Computation/CrooksCompleteness.lean` (this cycle) — the **converse direction** of\n  the model.  Conjecture 4 of the previous cycle (\"Crooks-completeness of the finite\n  model\") is resolved affirmatively, and in a stronger form than conjectured:\n\n  ```\n  Jarzynski β ΔF S  ↔  ∃ C : CrooksPair β ΔF Ω, C.fwd = S      jarzynski_iff_exists_crooks\n  ```\n\n  The partner lives on the *same* outcome space and the time reversal `flip` may be\n  prescribed arbitrarily (`FluctDemon.reverseSystem`, `FluctDemon.crooksCompletion`); it is\n  unique given `(fwd, flip)` (`FluctDemon.crooks_rev_unique`); it charges the time reverse\n  of every outcome the forward protocol charges (`FluctDemon.reverseSystem_prob_pos`), so\n  the conjectured obstruction (\"an outcome of zero forward and nonzero reverse\n  probability\") is vacuous (`FluctDemon.no_jarzynski_system_lacks_crooks_partner`).  In\n  addition:\n\n  ```\n  Jarzynski β (-ΔF) C.rev                                        crooks_rev_jarzynski\n  CrooksPair.reverse : CrooksPair β ΔF Ω → CrooksPair β (-ΔF) Ω  (an involution)\n  P( W ≤ w )  ≤  e^{-β(ΔF-w)} · (reverse mass of the reversed event)\n                                                                 crooks_deficit_le_rev\n  ```\n\n  the last being a strict sharpening of the one-shot Chernoff bound\n  (`FluctDemon.crooks_deficit_strict`).  Non-vacuity: for the catalog's `coinDemon` the\n  reverse protocol is `(q(true), q(false)) = (1/4, 3/4)` and the sharpened bound is\n  *exactly attained*, `e^{-β(ΔF-w)}·(3/4) = (2/3)(3/4) = 1/2 = P(W ≤ w)`\n  (`FluctDemon.coinCrooks_sharpened_bound_eq`), against the unsharpened value `2/3`.\n\n  The moral of the cycle: in the finite model, Jarzynski compliance and Crooks compliance\n  carry *the same information*; the reversal is free data, and what genuinely constrains a\n  demon beyond `⟨e^{-βW}⟩ = e^{-βΔF}` is the reverse mass of the deficit event.\n\nThe conjectures below are what remains open, restated against this baseline.\n\n---\n\n## 1. Exact large-deviation rate and the equality case\n\n**Conjecture.** For a fixed finite-outcome protocol `S` obeying Jarzynski at cost `ΔF`,\n\n```\nlim_{n→∞} -(1/n) log P( ∑ W_i ≤ n·w )  =  I_S(w)  ≥  β (ΔF - w),\n```\n\nwhere `I_S` is the Legendre transform of `Λ_S(λ) = log ⟨e^{λ W}⟩`, and equality\n`I_S(w) = β(ΔF - w)` holds **iff** the sub-threshold mass of `S` sits at the single work\nvalue `w` (the \"all-or-nothing\" protocol).\n\n*Status.* `FluctDemon.single_deficit_bound` gives `≥` at `n = 1`, and the new\n`FluctDemon.crooks_deficit_le_rev` identifies the exact one-shot slack: the bound is\n`e^{-β(ΔF-w)}·m_rev(w)` with `m_rev(w)` the reverse mass of the time-reversed deficit\nevent, and this is attained with equality for `coinDemon` at `w = ΔF - log(3/2)/β`.  So the\nsharpened one-shot statement is tight; the open content is now purely the `n → ∞`\ntensorisation of the factor `m_rev(w)`, which we conjecture contributes the missing\n`I_S(w) - β(ΔF - w)`.\n\n*Falsifiable:* a two- or three-outcome protocol with `I_S(w) = β(ΔF-w)` whose sub-threshold\nmass is spread over two distinct work values; equivalently, one whose reverse mass\n`m_rev(w)^n` fails to capture the `n`-fold slack.\n\n## 2. Almost-surely finite demons with no horizon at all\n\n**Conjecture.** Let a demon be an infinite decision tree with an almost surely finite\nstopping time `N` (rather than a tree of some finite depth `n`), every node dissipative at\n`ΔF`.  Then the three displayed stopping-time bounds hold verbatim, and moreover\n`E[total work] ≥ ΔF·E[N]` requires no integrability hypothesis beyond `E[N] < ∞`.\n\nThe stopping-time theorem covers every tree of *some* finite depth, uniformly in that\ndepth, which already forces the conclusion for the truncations `N ∧ n` of an infinite tree.\nThe open content is the passage to the limit: is `lim_n E[W_{N∧n}] = E[W_N]`, or can a\ndemon smuggle work into the tail?  We expect uniform integrability to fail exactly when\n`E[N] = ∞`, which would make this the horizon-free counterpart of the `T → 0` analysis in\n§5.\n\n*Falsifiable:* an infinite tree, all nodes Jarzynski compliant, with `E[N] < ∞` and\n`E[total work] < ΔF·E[N]`.\n\n## 3. Erasure-count lower bound for reusable workspace\n\n**Conjecture.** Fix a family of decision processes whose size-`n` instance discards `b(n)`\nbits in the sense of the catalog's size-indexed dissipation theory.  Then every\nimplementation reusing a workspace of `s(n)` cells performs at least `b(n) - O(s(n))`\ndissipative stages, hence by `FluctDemon.stopping_reliability_bound` no implementation can\nspend below `(1-ε)·b(n)·k_B T log 2` with probability `Ω(1)` unless `b(n) = O(s(n) + log n)`.\n\nThe thermodynamic half is proved in the form the computational half needs: the reliability\nbound is stated for a *random* number of stages, so an implementation whose number of\nerasures depends on the instance is covered.  The open content is the *identification\nstep*: which reuse patterns of a polynomial-time workspace force stages that are genuinely\ndissipative at the Landauer value, rather than merely logically irreversible?\n\n*Falsifiable:* a polynomial-time family with `b(n) = n`, workspace `s(n) = O(log n)`, and a\nconstant-probability sub-Landauer implementation.\n\n## 4. Rigidity of the time reversal: self-dual Crooks pairs\n\nCrooks-completeness shows that the reversal `flip` is *free data* — every Jarzynski system\nadmits a partner for every `flip`, even the identity.  A physically meaningful reversal must\ntherefore be pinned down by an extra axiom, and the natural one is self-duality.\n\n**Conjecture.** Call a Crooks pair *self-dual* if `flip` is an involution, `rev = fwd` as\nwork systems, and `ΔF = 0`.  Then a finite work system `S = (p, W)` is the forward half of a\nself-dual pair **iff** there is an involution `flip` with `W ∘ flip = -W` and\n`p(ω) = e^{βW(ω)} p(flip ω)` for all `ω`; and every such `S` has `⟨W⟩ ≥ 0` with equality iff\n`W ≡ 0`.  Consequently the self-dual systems are exactly the equilibrium (zero-free-energy,\ndetailed-balanced) protocols, and no demon is self-dual at `ΔF > 0`.\n\n*Status.* The \"only if\" direction is immediate from `FluctDemon.crooks_rev_prob_eq`; the\ncontent is the converse construction and the equality case, which should follow from the\nproved `FluctDemon.crooks_rev_jarzynski` applied to `CrooksPair.reverse` together with\n`FluctDemon.meanWork_ge_of_jarzynski` at both `ΔF` and `-ΔF`.\n\n*Falsifiable:* a self-dual pair with `ΔF > 0`, or a work system satisfying the displayed\ndetailed-balance identity with `⟨W⟩ < 0`.\n\n## 5. Zero-temperature degeneration of the exponent\n\n**Conjecture.** As `β → ∞` with `ΔF = k_B T log 2` fixed at the Landauer value, the exponent\n`β(ΔF - w)` tends to `-βw`, so the bound is vacuous for every fixed `w > 0` and informative\nonly for `w ≤ 0`.  Consequently an apparent zero-work erasing demon obtained in the `T → 0`\nlimit must have diverging resources: with `w = 0`, `FluctDemon.stopping_reliability_bound`\ngives `m ≤ log(1/δ)/log 2`, a *`β`-independent constant* on the number of erasures the\ndemon can complete at fixed success probability — and by `FluctDemon.stopping_wald` the\nexpected work still grows like `ΔF·E[N]`, so the only escape is `E[N] → ∞`.\n\nThis turns the \"Zero-Temperature Boundary Classification\" conjecture of the original\ndirection into a quantitative dichotomy: at `T → 0` the loophole closes as a divergence of\nthe *resource* `E[N]`, not of the exponent.\n\n*Falsifiable:* a family of finite stopping strategies, parameterised by `β`, with `w = 0`,\n`ΔF = k_B T log 2`, deficit probability bounded below, bounded `E[N]`, and outcome-space\nsize `O(poly)`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Computation",
         "Physics",
@@ -21631,7 +21631,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThis file is the live end-of-cycle record of the research thread on the\nBekenstein–Hawking area law from microstate counting.  It states what the previous cycles\nconjectured, what the present cycle **closed** (or **refuted**), and the falsifiable\nconjectures that remain, each phrased so that it can be entered directly as a Lean statement\nabout the objects already formalised in\n\n* `Catalog/Novelty/BekensteinHawkingAreaLaw.lean`\n* `Catalog/Novelty/BekensteinHawkingProjectionConstraint.lean`\n* `Catalog/Novelty/BekensteinHawkingUniversality.lean`\n* `Catalog/Novelty/BekensteinHawkingThermodynamics.lean`\n* `Catalog/Novelty/BekensteinHawkingCharacteristicRoot.lean`\n* `Catalog/Novelty/BekensteinHawkingCharacteristicRootGeneral.lean`\n* `Catalog/Novelty/BekensteinHawkingDensityRigidity.lean`\n* `Catalog/Novelty/BekensteinHawkingEnsembles.lean`\n* `Catalog/Novelty/BekensteinHawkingHagedornPole.lean`      *(this cycle)*\n* `Catalog/Novelty/BekensteinHawkingTruncationRate.lean`    *(this cycle)*\n* `Catalog/Novelty/BekensteinHawkingProjectionSharp.lean`\n* `Catalog/Novelty/BekensteinHawkingThirdCumulant.lean`     *(this cycle)*\n* `Catalog/Novelty/BekensteinHawkingNoLogCorrection.lean`   *(this cycle)*\n\nNotation: `W(A) = hStates A` is the unconstrained microstate count of a horizon of area `A`,\n`D(A,M) = hStatesProj A M` its projection-sector occupations, `Z(A) = hStatesSinglet A` the\ncount obeying the projection (Gauss) constraint, `gW deg A` the count in the general puncture\nmodel with degeneracy function `deg`, `s = 2 + √2` the growth rate, `λ = log s = entropyDensity`\nthe entropy density and `x_c = 1/s` the Hagedorn fugacity.\n\n---\n\n## Closed in earlier cycles\n\n* **The characteristic root determines the density.**  `gEntropy_eq_neg_log_charRoot` (finite\n  support) and `gEntropy_eq_neg_log_charRoot_general` (arbitrary support): any positive `r`\n  with `∑_{k≥1} deg(k) r^k = 1` forces the entropy density to be `-log r`.\n* **Barbero–Immirzi rigidity.**  `gDensity_strict_mono_general`: a pointwise increase of the\n  degeneracies, strict anywhere, strictly increases the density and hence the area quantum.\n* **No volume law / the degenerate boundary case.**  `gDensity_pos_iff`: the density is `> 0`\n  iff the model is not the unique degenerate one.\n* **Ensemble inequivalence (qualitative).**  `partitionFunction_tendsto_atTop` and\n  `meanArea_tendsto_atTop`.\n\n## Closed in the two most recent cycles\n\n* **Next-cycle sub-conjecture 3 (third cumulant at the Hagedorn point).**  Closed exactly.\n  The third moment is again rational,\n  `∑_A A³ W(A) x^A = 2x(1+12x-20x²+20x⁴-16x⁵)/(2x²-4x+1)⁴`\n  (`areaCubeWeighted_closed_form`, from `∑ n³ r^n = r(1+4r+r²)/(1-r)⁴`), hence\n  `κ₃(x) = 2x(1+5x-36x²+56x³-4x⁴-36x⁵+16x⁶)/((2x²-4x+1)³(1-x)³)`\n  (`areaThirdCumulant_closed_form`).  The pole at `x_c` has order exactly **three** with\n  residue exactly `2 x_c³ = 2!·x_c³` (`areaThirdCumulant_pole_residue`), and `κ₃` is strictly\n  positive throughout the subcritical range (`areaThirdCumulant_pos`): the horizon-area\n  distribution is right-skewed at every temperature below the Hagedorn point, and the skewness\n  diverges there (`areaThirdCumulant_tendsto_atTop`).  Together with the two earlier residues\n  this verifies `κ_m ~ (m-1)!·x_c^m/(x_c-x)^m` for `m = 1, 2, 3`.\n* **Conjecture 5, unconstrained half (no polynomial correction).**  Closed for the concrete\n  model with an explicit exponential error term: with `θ = (2-√2)/(2+√2) < 1`,\n  `W(A)/s^A = (1+√2)/4 + specB·θ^A` exactly (`hStates_div_pow_eq`), so\n  `|W(A)/s^A - (1+√2)/4| ≤ ((√2-1)/4)·θ^A` (`hStates_div_pow_sub_abs_le`) and\n  `S(A) - λA → log((1+√2)/4)` (`entropy_sub_area_law_tendsto`).  The unconstrained entropy\n  therefore has **no** `log A` term at all: any such correction must be produced by the\n  projection (Gauss) constraint, which sharpens the dichotomy asserted in Conjecture 1.\n\n* **Conjecture 2 (order of the Hagedorn pole and sign of the specific heat).**  Closed, with\n  exact residues.  The canonical moments are rational functions of the fugacity:\n  `∑_A A W(A) x^A = 2x(1-x)/(2x²-4x+1)²` (`areaWeighted_closed_form`),\n  `∑_A A² W(A) x^A = 2x(4x³-6x²+2x+1)/(2x²-4x+1)³` (`areaSqWeighted_closed_form`), hence\n  `⟨A⟩(x) = 2x/((2x²-4x+1)(1-x))` (`meanArea_closed_form`) and\n  `Var(x) = 2x(4x³-6x²+1)/((2x²-4x+1)²(1-x)²)` (`areaVariance_closed_form`).  Therefore the\n  mean area has a **simple** pole with residue exactly `x_c` (`meanArea_pole_residue`:\n  `(x_c-x)⟨A⟩ → x_c`), the variance a pole of order exactly **two** with residue `x_c²`\n  (`areaVariance_pole_residue`), and the variance — the specific heat up to `β²` — is\n  strictly positive on the whole subcritical range (`areaVariance_pos`) while diverging at\n  the transition (`areaVariance_tendsto_atTop`).  The moments were obtained without\n  differentiating any power series: the spectral decomposition\n  `W(A) = a s^A + b t^A` of the exact closed form reduces everything to\n  `∑ n r^n` and `∑ n² r^n`.\n* **Conjecture 4 (a computable finite certificate for the area quantum).**  Closed with\n  explicit constants: for `deg k ≤ B^k` and characteristic root `r` with `Br < 1`,\n  `0 ≤ L - L_K ≤ (B/(1-Br))·(Br)^K` (`density_truncation_rate`), whence\n  `density_truncation_tendsto`.  For the concrete ABCK model this reads\n  `0 ≤ log(2+√2) - L_K ≤ 4.83·(0.586)^K` (`entropyDensity_truncation_rate`).  The mechanism:\n  the characteristic tail is geometric (`charTail_le`) and the *linear* term of the truncated\n  characteristic function converts a tail bound into a bound on the displacement of the root\n  (`charRoot_trunc_sub_le`).\n* **Sub-conjecture 1 (unimodality) — refuted as stated, and superseded.**\n  `hStatesProj_not_le_singlet` shows `D(A,M) ≤ D(A,0)` is false: at `A = 1` the sector\n  `M = 1` is occupied while `D(1,0) = 0`, because the parity superselection rule\n  `hStatesSinglet_odd` empties the constrained sector in odd area.  The improvement that\n  unimodality was supposed to buy is nevertheless obtained, by a different route: summing the\n  concatenation injection over *all* sectors at once gives `∑_M D(A,M)² ≤ Z(2A)`\n  (`sum_sq_hStatesProj_le_singlet`), and Cauchy–Schwarz against the fibrewise decomposition\n  `W(A) = ∑_M D(A,M)` yields `W(A)² ≤ (2A+1)·Z(2A)` (`hStates_sq_le_singlet_sharp`) and the\n  entropy defect `≤ log 4 + log(2A+1)` (`singlet_entropy_defect_le_sharp`) — the `log A + O(1)`\n  bound, halving the gap to Conjecture 1.\n\n---\n\n## Conjecture 1 (logarithmic correction with coefficient exactly 1/2)\n\nThere is a constant `C > 0` with `Z(2n) ~ C · s^{2n} / √(2n)`, equivalently\n`log Z(A) = λ A - (1/2) log A + O(1)` along even `A`.\n\n*Status*: the defect is now bracketed between `0` and `log 4 + log(2A+1)`\n(`singlet_entropy_defect_le_sharp`), i.e. between `0` and `log A + O(1)`; the numerics of\n`ComputationalEvidence.md` single out the slope `1/2`.\n\n**The key insight is** that Cauchy–Schwarz is tight exactly when the profile `M ↦ D(A,M)` is\nflat, while it is in fact bell-shaped of width `√A`: replacing the Cauchy–Schwarz step by a\n*local* central limit theorem for the sum of independent bounded symmetric lattice variables\nconditioned on the total area should turn `∑_M D(A,M)² ≤ Z(2A)` into an asymptotic equality\n`∑_M D(A,M)² ≍ W(A)²/(σ√A)` and give the constant `1/2`.\n\n**Why now?** The two remaining ingredients are already in place: the exact closed form of `W`,\nwhich supplies the renewal asymptotics, and the fibrewise decomposition with its symmetry.\nThe intermediate step below (even-area unimodality) is the qualitative shadow of the same\nlocal limit theorem and is a natural first target.\n\n---\n\n## Conjecture 2 (unimodality within the parity class)\n\nFor even `A`, `D(A,M) ≤ D(A,0)` for all `M`; more strongly, `M ↦ D(A, 2M)` is log-concave.\n\n*Status*: the unrestricted statement is **false** (`hStatesProj_not_le_singlet`); the\nparity-restricted statement is supported by the profiles computed in\n`ComputationalEvidence.md` (`A = 2, 4, 6`).\n\n**The key insight is** that after the change of variable `M_i ↦ X_i = (M_i + k_i)/2` every\npuncture contributes a *uniform* distribution on `{0, …, k_i}`, all on the same lattice `ℤ`:\neach such sequence is log-concave with no internal zeros, so its convolution is log-concave\nby the Cauchy-product theorem, and a sum over configurations of log-concave sequences that\nare symmetric about the common centre `A/2` is unimodal about that centre.  The parity\nobstruction disappears precisely because the change of variable is a bijection onto `ℤ`.\n\n**Why now?** The change of variable is definable from `mem_horizonStates_iff`, which already\ncharacterises the configurations exactly; the missing ingredient is the (Mathlib-absent)\ntheory of log-concave integer sequences, which is a self-contained and reusable piece of\ncombinatorics.\n\n---\n\n## Conjecture 3 (rigidity for the constrained ensemble)\n\nEquip the general model with symmetric integer labels `L_k = -L_k ⊆ [-k,k]`, `|L_k| = deg k`,\nand let `gZ deg n` count the configurations of area `n` with `∑ M = 0`.  Then\n`log (gZ deg (2n))/(2n) → L`, the *same* `L` as for `gW`, and `L > 0` under exactly the same\ncombinatorial condition as in `gDensity_pos_iff`.\n\n*Status*: proved for the concrete model (`singlet_entropy_area_law`); open in general.\n\n**The key insight is** that the three ingredients of the concrete proof — the flip involution\n`M ↦ -M`, the concatenation injection, and now the summed Cauchy–Schwarz step — are\n*model-independent*: they use only the symmetry of the label set and the additivity of area\nand projection, so the whole argument should transfer verbatim once the general model carries\nsymmetric labels.\n\n**Why now?** `gStates` and the concrete constrained model share their combinatorial core, and\nthis cycle's `sum_sq_hStatesProj_le_singlet` isolated the only step that used the concrete\nlabels.  What is missing is the common abstraction, not a new idea.\n\n---\n\n## Conjecture 4 (the sharp truncation rate)\n\nThe bound `L - L_K ≤ (B/(1-Br))(Br)^K` is not optimal: the true rate is governed by the root\nitself, `L - L_K = Θ(K r^K)` (for the concrete model, `Θ(K x_c^K)`), not by `(Br)^K`.\n\n*Status*: the upper bound `(Br)^K` is proved (`density_truncation_rate`); the numerics of\n`ComputationalEvidence.md` §10 show an observed decay `≈ 0.327^K`, matching\n`r(K+3)/(K+2)` with `r = x_c = 0.2929` rather than `2x_c = 0.586`.\n\n**The key insight is** that the tail `∑_{k>K} deg(k) r^k` is dominated by its *first* term\n`deg(K+1) r^{K+1}`, whose polynomial degeneracy factor `deg(K+1) = K+2` is exactly the source\nof the linear prefactor; the crude comparison with `B^k` throws away that structure.  A\nmatching lower bound follows from the strict monotonicity of the characteristic function at\nthe root, which is already formalised (`charPoly_strictMonoOn`).\n\n**Why now?** All the analytic ingredients are proved; only a two-sided estimate of the first\ntail term against `f'(r)` is missing, and both quantities are explicit.\n\n---\n\n## Conjecture 5 (a spectral / Perron form of the area law)\n\nLet `T` be the companion matrix of the renewal recursion `a_{n+1} = ∑_k deg(k) a_{n+1-k}` of a\nfinitely supported model.  Then `e^L` is the Perron root of `T`, it is simple and strictly\ndominant, and `W(A) = C e^{LA}(1 + O(θ^A))` with `θ < 1`: **no polynomial correction survives\nin the unconstrained ensemble**, in sharp contrast with the `-(1/2) log A` conjectured for the\nconstrained one.\n\n*Status*: proved for the concrete model — `hStates_div_pow_eq` gives the exact two-term\nexpansion, `hStates_div_pow_sub_abs_le` the error `((√2-1)/4)·θ^A` with `θ = (2-√2)/(2+√2)`,\nand `entropy_sub_area_law_tendsto` the resulting constant subleading term; open in general.\n\n**The key insight is** that the characteristic equation `∑_k deg(k) x^k = 1` is the reciprocal\nof the characteristic polynomial of `T`, so the root proved here to control the density is\nexactly the reciprocal Perron root: the analytic and the combinatorial descriptions of the\ndensity are the same object seen from two sides.  This cycle's exact rational moments are the\n`K = 1` shadow of that statement — the poles of `∑ W(A)x^A` are precisely the reciprocal\neigenvalues.\n\n**Why now?** `gEntropy_eq_neg_log_charRoot` supplies the Perron-root identification, and the\npresent cycle shows what the spectral decomposition buys once it is available (all canonical\nmoments in closed form).  The missing step is Perron–Frobenius simplicity.\n\n---\n\n## Three concrete next-cycle sub-conjectures\n\n1. **Log-concavity of the uniform convolution.**  The convolution of two log-concave finitely\n   supported sequences of nonnegative integers with no internal zeros is log-concave.  (The\n   combinatorial core of Conjecture 2, and reusable well beyond this thread.)\n2. **Sharp truncation constant.**  `lim_K (L - L_K)/(K r^K)` exists in `(0, ∞)` for the\n   concrete model (the effective content of Conjecture 4).\n3. **All cumulants at the Hagedorn point.**  `(x_c - x)^m·κ_m(x) → (m-1)!·x_c^m` for every\n   `m ≥ 1`: the pole order of the `m`-th cumulant is exactly `m`.  The cases `m = 1, 2, 3` are\n   now proved (`meanArea_pole_residue`, `areaVariance_pole_residue`,\n   `areaThirdCumulant_pole_residue`); the uniform statement would identify the full singular\n   structure of the horizon free energy as `log Z(x) = -log(x_c - x) + O(1)`, i.e. an exactly\n   logarithmic free energy at the transition.  The key insight is that all three residues come\n   from a single simple pole of `Z` at `x_c`: `(x d/dx)^m log Z` differentiates only the factor\n   `-log(x_c - x)` to leading order, and that factor is now available in closed form.\n4. **The constrained subleading term.**  Combining `entropy_sub_area_law_tendsto` (no `log A`\n   in the unconstrained count) with `singlet_entropy_defect_le_sharp` (`≤ log A + O(1)`), the\n   whole logarithmic correction is the projection defect: `λ·2n - log Z(2n) - (1/2) log n`\n   is bounded.  This isolates Conjecture 1 into a single local-central-limit statement about\n   the profile `M ↦ D(A,M)`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics",
         "Combinatorics"
@@ -21918,7 +21918,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Lorentzian Singularity Theorems\n\nStatus of the formalization in `Catalog/Physics/Spacetime/`.  All eleven files compile\nagainst mathlib4 / Lean 4.28.0 with **zero `sorry`s**, no added axioms and no\n`native_decide`; every main theorem was axiom-checked and depends only on `propext`,\n`Classical.choice`, `Quot.sound`.\n\n* `RaychaudhuriFocusing.lean` — fencing lemma, integrated Raychaudhuri inequality, Penrose\n  bound `m/|θ₀|`, sharp Riccati comparison, energy-defect threshold.\n* `PenroseHawkingSingularity.lean` — `GeodesicCongruence` and `TrappedSurface` structures,\n  uniform incompleteness bound, time-reversed (Big Bang) statement, non-vacuity witnesses.\n* `MyersFocusing.lean` — Prüfer phase-angle argument, Lorentzian Bonnet–Myers bound\n  `π√(m/ε)` with *no* trapping hypothesis, sharpness via the exact `tan` solution.\n* `JacobiConjugatePoints.lean` — Jacobi fields, conjugate-point existence, the\n  Riccati ↔ Sturm–Liouville bridge, an independent Wronskian proof of `π√(m/ε)`.\n* `AveragedEnergyFocusing.lean` — quantitative ANEC bound `L ≤ (m/a)(π + D/a)` and its\n  integral form, specializing back to Bonnet–Myers.\n* `TrappedSurfaceThresholds.lean` — sharp logarithmic focusing time and the\n  above-threshold / at-threshold dichotomy.\n* `FocusingRigidity.lean` — the equality case of both comparison theorems:\n  `eq_affine_of_saturated_growth`, `riccati_rigidity`, `prufer_rigidity`, their congruence\n  forms, the strictness corollary `lt_riccati_of_defect`, and satisfiability witnesses.\n* `SturmOscillation.lean` — `sturm_positive_interval_length`,\n  `exists_zero_of_long_interval` and `sturm_oscillation_count` (at least `n` conjugate\n  points once `T > n·π√(m/ε)`), with the sine model as witness.\n* **`AlmostRigidity.lean` (this cycle)** — the *quantitative* rigidity layer:\n  `penrose_stability` (`P t₀ ≤ δ/(1 - δU)²`), `penrose_weighted_stability`\n  (`W t₀ ≤ δU²` for the weighted defect `∫ p/θ²`, with **no** smallness hypothesis on `δ`),\n  `penrose_rigidity_of_stability`, `myers_phase_stability`, the congruence forms with the\n  accumulated defect written as `∫₀^{t₀}(σ² + Ric)` — unweighted\n  (`accumulated_defect_le_of_almost_saturated`) and weighted\n  (`weighted_defect_le_of_almost_saturated`) — and `penrose_stability_witness` (an explicit\n  subsolution with a strictly positive defect, so the hypotheses are non-vacuous).\n* **`SharpOscillation.lean` (this cycle)** — the sharp conjugate-point spacing:\n  `nonpos_of_length_pi` (closed-interval Wronskian obstruction),\n  `exists_zero_Ioc_of_length_ge` (a zero in `(a, c]` as soon as `c - a ≥ π√(m/ε)`),\n  `sturm_oscillation_count_sharp`, `sturm_zero_count_floor` (at least\n  `⌊T/(π√(m/ε))⌋` conjugate points) and `cos_model_positive_of_short_interval`\n  (optimality of the threshold from the other side).\n* **`EnergyShortfall.lean` (this cycle)** — `myers_bound_with_shortfall`:\n  `L ≤ π√(m/ε) + D/ε` where `D` bounds the accumulated shortfall `∫(ε - Ric)⁺`;\n  `shortfall_bound_recovers_myers` (the `D = 0` case is exactly Bonnet–Myers) and\n  `localized_violation_bound` (a violation of depth `c` and duration `τ` delays focusing\n  by at most `(1 + c/ε)τ`).\n\n**Resolved this cycle.**  *Conjecture D* (almost-rigidity) is now a theorem in both\nframeworks, with an explicit constant that the numerics of `ComputationalEvidence.md §6`\nshow to be asymptotically attained; the *upper half of Conjecture D′* is settled as well —\nthe weighted defect obeys `≤ δU²` unconditionally, which identifies the smallness\nhypothesis `δU < 1` of the unweighted statement as an artefact of the weight.  The *counting half of Conjecture C* is settled in its\nsharp form: the non-strict length hypothesis `c - a ≥ π√(m/ε)` suffices, the zero can be\nplaced in the half-open interval, and the exact floor count follows; the threshold is\npinned from below by the explicit positive cosine solution.  *Conjecture B* is answered\nquantitatively in the regime where the pointwise floor is combined with a bounded\naccumulated shortfall: the degradation of the Bonnet–Myers constant is `+D/ε`, additive\nand linear, and no obstruction survives for finite `D` — the obstruction of\n`no_focusing_at_threshold` reappears only when the shortfall grows linearly in the affine\nparameter.\n\nThe following conjectures are the live thread for the next cycle.\n\n---\n\n## Conjecture A (Optimal scale selection in the ANEC bound)\n\nFor a defect rate whose budget at scale `a` grows sublinearly, `Q(t) ≤ D₀ + κ t^α`\n(`0 ≤ α < 1`), the family of bounds `L ≤ (m/a)(π + Q(L)/a)` proved in `anec_domain_bound`,\noptimized over the free scale `a > 0`, yields `L ≤ C(m, α)·(D₀ + κ L^α)^{1/(1-α)}`, and\nthe envelope is attained by an explicit oscillating curvature profile.\n\n**The key insight is** that the scale `a` in the Prüfer angle is a genuinely free\nparameter: the theorem is a one-parameter *family* of bounds and the physics lies in its\nenvelope, not in any single member — `EnergyShortfall.lean` is the special case `a = √(mε)`\nand already shows how much the right choice of scale buys.\n\n**Why now?** `anec_domain_bound` takes `a` as an argument and\n`myers_bound_with_shortfall` demonstrates the pattern for one fixed scale; the remaining\nstep is to minimize a smooth function of one variable and to build the matching profile\nfrom the `tanSol` / `riccatiSol` blocks already formalized.\n\n**Falsifiable by:** a defect profile with sublinear budget whose exact blow-up time\nexceeds the optimized envelope.\n\n---\n\n## Conjecture B′ (Sharp constant for the shortfall correction)\n\nThe additive correction in `myers_bound_with_shortfall` is not optimal: the sharp bound is\n`L ≤ π√(m/ε) + f(D/ε)` with `f(x) < x` for `x > 0`, `f(x)/x → 1` as `x → 0⁺`, and `f`\ndetermined by the extremal profile that places the whole shortfall where the Prüfer phase\nmoves slowest (i.e. where `|θ|` is largest).\n\n**The key insight is** that the shortfall is charged at the *worst-case* weight\n`a/(a² + θ²) ≤ 1/a` in the phase estimate, whereas an actual profile pays the true weight;\nthe deficit between the two is exactly the gap seen numerically in\n`ComputationalEvidence.md §7`, where the proved bound over-estimates the blow-up time by a\nfactor of about two.\n\n**Why now?** The weighted form of the estimate is already isolated inside\n`arctan_expansion_decay_with_defect`, and `myers_phase_stability` shows how to keep the\nweight `a/(a² + θ²)` rather than discarding it — the same bookkeeping applied to the\nshortfall gives a variational problem in one function.\n\n**Falsifiable by:** a curvature profile with shortfall `D` whose blow-up time exceeds\n`π√(m/ε) + f(D/ε)` for the candidate `f`.\n\n---\n\n## Conjecture C′ (Equality case of the oscillation count)\n\n`sturm_zero_count_floor` is sharp for `k ≡ ε/m`.  Conjecture: it is *only* sharp there —\nif a solution of `y'' = -k y` with `k ≥ ε/m` on `[0, T]`, `T = n·π√(m/ε)`, has exactly `n`\nzeros in `(0, T]`, then `k ≡ ε/m` on `[0, T]` and `y` is the sine model up to scale and\nsign; moreover a `δ`-approximate version holds, with `∫(k - ε/m)` controlled by the\nexcess of `T` over the last zero.\n\n**The key insight is** that the Wronskian comparison of `nonpos_of_length_pi` degenerates\nto an equality exactly when `y'' + (ε/m) y ≡ 0` on the block, so rigidity propagates block\nby block, and the stability layer of `AlmostRigidity.lean` supplies the `δ`-version of\n\"a non-negative quantity has zero integral\".\n\n**Why now?** The two ingredients — the sharp block statement and the quantitative\nequality principle — are both formalized in this cycle; what is missing is only the\nbookkeeping that concatenates the blocks through a focal point.\n\n**Falsifiable by:** a non-constant `k ≥ ε/m` whose solution still has exactly\n`⌊T/(π√(m/ε))⌋` zeros on an interval where the floor is attained.\n\n---\n\n## Conjecture D′ (Stability with the defect measured in the affine, not weighted, norm)\n\n`penrose_stability` bounds the *unweighted* accumulated defect `∫ p` in terms of `δ`, at\nthe price of the constant `1/(1 - δU)²` that blows up as `δ → 1/|θ_model(t₀)|`.\nThe upper half of this conjecture is now **proved**: `penrose_weighted_stability` and its\ncongruence form `weighted_defect_le_of_almost_saturated` give\n`∫₀^{t₀} p/θ² ≤ δ·U²` with no smallness hypothesis on `δ` at all.  What remains open is the\n*matching lower bound*: that for every `δ ≥ 0` there is an admissible subsolution attaining\n`∫₀^{t₀} p/θ² = δ·U²` (equivalently, that the extremal profile concentrates the whole\ndefect at the endpoint `t₀`), which would make the constant `U²` sharp and turn the\nestimate into an equality characterisation.\n\n**The key insight is** that `1/θ - t/m` is monotone with margin exactly `p/θ²`, so the\nweighted defect — and not the defect itself — is the quantity the comparison controls; the\nunweighted statement is a corollary that costs precisely the range of `θ`.\n\n**Why now?** The upper bound is in place, so the remaining work is purely constructive:\nthe `riccatiSol` / `tanSol` building blocks already formalized supply the candidate\nextremal profiles, and the numerics of `ComputationalEvidence.md §6` (second table) show\nthe ratio approaching `1` as the defect is concentrated near `t₀`.\n\n**Falsifiable by:** a uniform gap — a constant `c < 1` such that every admissible\nsubsolution satisfies `∫ p/θ² ≤ c·δU²` — which would refute sharpness.  (The reverse\ninequality `∫ p/θ² > δU²` is now excluded by theorem.)\n\n---\n\n## Conjecture E (From congruences to spacetimes)\n\nThe structures `GeodesicCongruence`, `TrappedSurface` and `JacobiField` formalized here\nare exactly the data induced by a smooth Lorentzian manifold satisfying the null energy\ncondition along a null generator of a trapped surface; consequently every bound, every\nrigidity statement *and every stability estimate* proved here upgrades, with no new\nanalysis, to genuine null geodesic incompleteness — and to the classical rigidity\nconclusion \"the extremal spacetime is the constant-curvature model\" — once the index-form\nmachinery is available.\n\n**The key insight is** that all of the analytic content of the Penrose–Hawking theorems is\nthe one-dimensional comparison theory established in this project; the differential\ngeometry only supplies the Raychaudhuri equation as an *instance* of the structures.\n\n**Why now?** Mathlib has semi-Riemannian metrics and geodesics but no Raychaudhuri\nequation; the missing step is a single lemma deriving the equation for the second\nfundamental form of a null hypersurface, after which every theorem here applies verbatim.\n\n**Falsifiable by:** discovering that the induced expansion of a null congruence fails one\nof the structure's hypotheses (e.g. differentiability of `θ` on a half-open affine\ninterval) in a physically relevant example.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Geometry"
@@ -22325,7 +22325,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nDerived from the analysis and adversarial review of the formal results in\n`Catalog/Physics/Chaos/`. Every Lean file in that directory compiles end-to-end with no\n`sorry` and no new axioms. Each conjecture below is stated so that it can be refuted by a\nsingle counterexample or settled by a Lean proof.\n\n## What is now established (context)\n\nLinear/spectral layer (`ThreeBodyLagrange.lean`):\n\n* An **explicit** unstable characteristic root of the Routh quartic\n  `z⁴ + ω²z² + (27/4)Kω⁴`, real part `ω·σ(K)`, `σ(K) = ½√(√(27K) − 1)`.\n* The spectrum is *exactly* `{±ω σ(K)}` (each with multiplicity two), so `ωσ(K)` is the\n  maximal Lyapunov exponent of the linearised flow, and the spectrum sums to zero\n  (symplectic pairing).\n* Sharp Routh threshold `K = 1/27` (dichotomy: exponent `0` below, `> 0` above), equal\n  masses maximise `K` (`K ≤ 1/3`), and `λ_max = ω/√2` exactly for equal masses.\n\nGlobal layer (`ThreeBodyVirial.lean`): virial identity, Lagrange–Jacobi `Ï = 4T − 2U`,\nenergy conservation, positive-energy escape.\n\nEntropy layer (`EntropyLyapunov.lean`): the Ruelle bridge `h_KS ≤ Σλᵢ⁺ ≤ d λ_max`, hence\n`λ_max ≥ h_KS/d`, plus the entropy of the full `N`-shift.\n\nNew in this cycle (`ChaosExtensions.lean`), closing three conjectures of the previous\ncycle:\n\n* **Mass majorisation (old Conjecture 3).** `routhParam_robin_hood`: a Robin Hood transfer\n  strictly increases `K`; `routhParam_lt_third_of_ne` and\n  `lagrangeExponent_lt_equalMass_of_ne`: unless the three masses are exactly equal, the\n  growth rate is *strictly* below `√2/2`. The equal-mass system is therefore the **unique**\n  maximiser of the Lagrange exponent.\n* **Concavity (old sub-conjecture 1).** `lagrangeExponent_concaveOn`: `σ` is concave on\n  `[1/27, ∞)` (with the midpoint form `lagrangeExponent_midpoint_concave`), so averaging\n  two mass distributions never decreases the growth rate.\n* **Symplectic Ruelle bound (old Conjecture 5).** `SymplecticRuelleData` carries the\n  Hamiltonian pairing; `two_mul_card_pos_le` shows at most half of the exponents are\n  positive, giving `2 h_KS ≤ d λ_max`, i.e. `λ_max ≥ 2h_KS/d`. For the Lagrange spectrum\n  this improves `λ_max ≥ h_KS/4` to `λ_max ≥ h_KS/2`.\n* **Zero-energy escape (the `E = 0` half of old Conjecture 4).** `strictly_convex_escape`\n  (a general convexity lemma) plus positivity of the potential gives\n  `nonneg_energy_escape`: at `E ≥ 0` the moment of inertia tends to `+∞` in forward or in\n  backward time, and hence `bounded_motion_energy_neg`: every eternally bounded three-body\n  motion has **strictly negative** energy.\n* **Lyapunov time in closed form.** `equalMass_lyapunovTime_eq`:\n  `T_λ = √2·log(Δ/δ₀)/ω`.\n\nCollinear layer, new in this cycle (`EulerCollinear.lean`), settling — and partly\ncorrecting — old Conjecture 5:\n\n* The collinear (Euler) variational quartic\n  `z⁴ + (2 − A)z² + (1 + A − 2A²)` is factored exactly whenever its discriminant\n  `A(9A − 8)` is nonnegative (`eulerChar_factorization`), with roots\n  `u± = ((A − 2) ± √(A(9A − 8)))/2` in `u = z²`.\n* **Trichotomy** (`euler_instability_iff`): for `A > 0` a growing mode exists **iff**\n  `A ∉ [8/9, 1]`. Above the window (`A > 1`) the unstable root is *real*,\n  `σ_E(A) = √u₊ > 0` (`euler_unstable_above_one`, `euler_char_root`), so the collinear\n  instability is a pure saddle rather than the oscillatory quadruplet of the equilateral\n  case; below the window (`0 < A < 8/9`) the discriminant is negative and the four roots\n  form a complex quadruplet (`euler_unstable_below`); inside the window every root is\n  purely imaginary (`euler_stable_window`) and every mode has exponent `0`.\n* `euler_unstable_mode` produces a genuine solution of the collinear variational equation\n  with Lyapunov exponent exactly `ω σ_E(A) > 0`; `euler_root_re_le` shows this is the\n  maximal exponent; `eulerExponent_strictMonoOn` gives strict monotonicity in `A` above\n  the window; `euler_entropy_le` and `euler_entropy_div_two_le_maxExp` give the entropy\n  consequences through the symplectic Ruelle interface.\n* **Correction to old Conjecture 5.** The \"no threshold at all\" claim is *false* at the\n  level of the parametrised quartic: the closed window `[8/9, 1]` is a genuine spectral\n  stability band. What survives is the conditional statement: *whenever the Euler\n  parameter exceeds `1`*, the collinear configuration is unstable, with no further\n  threshold and a real growth rate. The remaining physical input is Conjecture 5′ below.\n\nThe remaining conjectures below are the ones the current cycle did *not* settle.\n\n## Conjecture 1 (Nonlinear persistence of the Lagrange exponent)\n\nFor the *full nonlinear* planar equal-mass three-body flow there is a neighbourhood `U`\nof the Lagrange homographic solution and a set of initial conditions of positive Liouville\nmeasure in `U` whose maximal Lyapunov exponent is at least `(1−ε)·ω/√2` for every `ε > 0`\nand `U` small enough.\n\n*The key insight is* that the exact spectrum `{±ωσ, ±ωσ}` has **no neutral directions\ntransverse to the symplectic pairing**, so the hyperbolic splitting is uniform on a\nneighbourhood and cone-field/Hadamard–Perron arguments should transport the linear rate to\nthe nonlinear flow without any small-divisor loss.\n\n*Why now?* The linear rate is available in closed form with a machine-checked sharpness\nstatement (`equalMass_rate_is_maximal`), which is exactly the input a formalised cone-field\ncriterion needs; the missing ingredient is a Lean formalisation of the stable manifold\ntheorem for a hyperbolic periodic orbit.\n\n## Conjecture 2 (Entropy–exponent saturation for the equilateral family)\n\nFor the equal-mass Lagrange relative equilibrium the Kolmogorov–Sinai entropy of any\ninvariant measure supported in a sufficiently small neighbourhood satisfies\n`h_KS ≤ √2·ω` with equality **only** for measures supported on the unstable manifold; in\nparticular the Pesin equality `h = Σλᵢ⁺` fails strictly for every ergodic measure carried\nby a neighbourhood of the relative equilibrium other than the Dirac measure at it.\n\n*The key insight is* that `Σλᵢ⁺ = 2ωσ = √2 ω` is attained by a *two*-dimensional unstable\nbundle whose two exponents coincide, so any measure with positive entropy must spread over\na bundle that the symplectic pairing forces to be partially contracting.\n\n*Why now?* `Chaos.equalMass_entropy_le` already caps the entropy by `√2 ω` and\n`SymplecticRuelleData` now carries the pairing as a field, so the Ruelle side is formal;\nwhat remains is a Pesin-side inequality on the same interface.\n\n## Conjecture 3 (Strict Schur concavity, quantitative form)\n\nThe Robin Hood inequality proved here can be sharpened to an explicit modulus: for masses\nsumming to `M` with `K > 1/27`,\n`σ(K(m + t·(e_i − e_j))) − σ(K(m)) ≥ c(K)·t·(m_j − m_i − t)/M²` for an explicit\n`c(K) > 0` on compact subsets of `(1/27, 1/3]`; consequently `σ ∘ K` is strictly\nSchur-concave with a quantitative modulus of concavity, and the concavity now proved\n(`lagrangeExponent_concaveOn`) upgrades to *strict* concavity on `(1/27, ∞)`.\n\n*The key insight is* that `K` is the second elementary symmetric polynomial up to\nnormalisation, and that the two nested square roots in `σ` are each concave increasing,\nso the only obstruction to a quantitative statement is a lower bound on the derivative of\n`t ↦ √(√t − 1)` away from the threshold.\n\n*Why now?* `routhParam_robin_hood`, `lagrangeExponent_strictMono` and\n`lagrangeExponent_concaveOn` reduce the claim to a one-variable derivative estimate,\nwhich existing Mathlib calculus handles directly.\n\n## Conjecture 4 (Sundman rate at zero energy)\n\nAt `E = 0` with nonzero angular momentum the escape proved in `nonneg_energy_escape` is\n*linear*: `I(t) = Θ(t)` rather than `Θ(t²)`. Equivalently, `İ` converges to a finite\nnonzero limit, and the quadratic rate of `positive_energy_escape` degenerates exactly at\nthe threshold `E = 0`.\n\n*The key insight is* that at `E = 0` the Lagrange–Jacobi identity reads `Ï = 2U > 0` with\n`U → 0`, so convexity survives but the second derivative is not bounded below; the rate is\nthen governed by the Sundman inequality relating `İ²`, `I`, the energy and the angular\nmomentum, rather than by a constant lower bound on `Ï`.\n\n*Why now?* The identity `Ï = 4E + 2U`, the convexity machinery\n(`tangent_line_lower_bound`, `strictly_convex_escape`) and the escape statement are all\nformal; what is missing is a formal Sundman inequality, an elementary Cauchy–Schwarz\nargument on the angular momentum.\n\n## Conjecture 5′ (The Euler parameter always exceeds one)\n\nFor every triple of positive masses and every root of Euler's quintic (i.e. every\ncollinear relative equilibrium of the three masses) the Euler parameter `A` — the\ndimensionless ratio appearing in the collinear variational quartic — satisfies `A > 1`,\nwith `A = 7` exactly in the equal-mass symmetric configuration. Combined with the\nmachine-checked `euler_unstable_above_one` and `euler_root_re_le`, this would upgrade the\nconditional trichotomy of `EulerCollinear.lean` to the unconditional statement that *every*\ncollinear three-body relative equilibrium is exponentially unstable with a real growth\nrate `ω σ_E(A)`, and (via `eulerExponent_strictMonoOn`) that the equal-mass collinear\nconfiguration is *not* the most unstable one.\n\n*The key insight is* that `A` is a positively weighted average of `r⁻³` over the three\npairs, normalised by the mean motion of the configuration, so `A > 1` is a statement that\nthe internal tidal frequency dominates the orbital frequency — a strict Chebyshev-type\ninequality between two weighted power means of the mutual distances, which is exactly the\nkind of inequality already handled in `ChaosExtensions.lean` for the Routh parameter.\n\n*Why now?* The purely spectral half of the problem is now formal and sharp: the stability\nwindow `[8/9, 1]` is proved, the unstable root above it is explicit, and the sharpness\nstatement is machine-checked, so all that is missing is the algebraic bound `A > 1` on the\nroots of Euler's quintic — a one-variable real-algebraic inequality.\n\n## Next-cycle sub-conjectures (concrete, immediately testable)\n\n1. `σ` is *strictly* concave on `(1/27, 1/3]`, and it degenerates at the threshold with\n   exponent `1/4`: `σ(1/27 + h) ≍ c·h^{1/4}` as `h ↓ 0`.\n2. The symplectic bound `λ_max ≥ 2h_KS/d` is attained only by data with exactly `d/2`\n   equal positive exponents; every other symplectic spectrum satisfies a strict\n   inequality.\n3. For equal masses the predictability horizon is two-sided: there is a matching *upper*\n   bound `T ≤ √2·log(Δ/δ₀)/ω + C` for the first time a `δ₀`-perturbation reaches scale\n   `Δ`, i.e. about `0.22` orbital periods per e-folding is both necessary and sufficient.\n4. The collinear growth rate dominates the equilateral one whenever both are defined:\n   `σ_E(A) > σ(K)` for every collinear/equilateral pair arising from the same three\n   masses, so collinear relative equilibria are always the more chaotic of the two\n   families. (`eulerExponent_strictMonoOn` and `lagrangeExponent_strictMono` reduce this\n   to a comparison of the two mass functionals `A` and `K`.)\n5. The collinear stability window `[8/9, 1]`, proved here to be exactly the set of\n   spectrally stable parameters, is *never* realised by a Newtonian collinear\n   configuration but *is* realised by an inverse-power potential `r^{-p}` for some\n   `p < 1`; the value `p = 1` is the exact boundary of collinear stability.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -22908,7 +22908,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7516700000000001,
       "parent_direction": "",
       "priority_score": 0.75,
       "proof_strategy": "",
@@ -22919,7 +22919,7 @@
       "source": "",
       "source_exp_id": "5e2efbe9",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/5e2efbe9",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "th_a80b2906",
       "timestamp": "2026-08-08T14:03:50.682048+00:00",
       "title": "The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
@@ -24125,7 +24125,7 @@
       "depth_estimate": 3,
       "description": "# Future directions — adjacency-degree algebras and moment rigidity\n\nThe formal development lives in `Catalog/Physics/AdjacencyDegree/` (13 files, all compiling,\nno `sorry`, axioms `propext`, `Classical.choice`, `Quot.sound` only).  What is *proved* there:\n\n* the cyclic module `M_G = 𝓐(G)𝟏` sits inside the orbit module `U_G`, and equals the span of\n  `𝟏` exactly for regular graphs (`Basic.lean`);\n* word moments `𝟏ᵀ w(A,D) 𝟏` are isomorphism invariants and are degree-decorated caterpillar\n  homomorphism counts (`Moments.lean`, `Caterpillar.lean`);\n* moment equality forces equality of the degree distribution, of the joint degree\n  distribution, and — the general form — of **every** degree-decorated walk count\n  (`DegreeRecovery.lean`, `EdgeStatistics.lean`, `WalkStatistics.lean`);\n* conversely those walk counts recover all the moments, so the two invariants have exactly the\n  same strength (`CaterpillarRigidity.lean`);\n* moments only see the colour-refinement quotient (`Equitable.lean`, `Quotient.lean`), hence\n  fail on regular graphs (`RegularFailure.lean`) and already on a connected non-regular\n  six-vertex pair (`SixVertexWitness.lean`);\n* `M_G = U_G` for stars and for degree-transitive graphs (`OrbitEquality.lean`), and the\n  `J`-ideal moments factorise (`Synthesis.lean`).\n\nThe following conjectures are the natural next targets.  Each is falsifiable: a single\ncounterexample refutes it, and each is stated so that a Lean formalisation can be attempted\ndirectly against the definitions already in the catalog.\n\n---\n\n## Conjecture 1 (McKay's principal form). Moments determine every tree.\n\nIf `T₁`, `T₂` are trees with `wordMoment T₁ w = wordMoment T₂ w` for all words `w` in `{A, D}`,\nthen `T₁ ≃g T₂`.\n\n*Status.* Proved here for stars (`starGraph_iso_of_moments`); verified by exhaustive\nenumeration for all trees on at most 9 vertices (`ComputationalEvidence.md`, exploratory).\n\n*The key insight is* that by `CaterpillarRigidity.wordMoment_eq_iff_degWalkCount_eq` the moment\ninvariant is exactly the family of degree-decorated caterpillar counts, so the statement is a\npurely combinatorial reconstruction problem: rebuild a tree from the number of walks realising\neach prescribed degree pattern, peeling leaves by their decorated pattern multiplicities.\n\n*Why now?* The reduction from linear algebra to walk counts is now a theorem rather than a\nheuristic, and the leaf-peeling induction needs no new analytic input — only the counts that\nare already proved to be invariants.\n\n---\n\n## Conjecture 2 (Forest module identity). `M_G = U_G` for every forest.\n\nFor every forest `F`, the cyclic module `cyclicModule F` coincides with the orbit module\n`orbitModule F`.\n\n*Status.* Proved here for stars and for degree-transitive graphs; the general forest case is\nopen in this development.\n\n*The key insight is* that in a forest the iterated degree refinement (`Equitable.lean`) already\nstabilises at the automorphism-orbit partition, so the inclusion `M_G ≤ U_G` proved in\n`cyclicModule_le_orbitModule` should be reversible by exhibiting, for each orbit, an explicit\npolynomial in `A` and `D` whose value on `𝟏` is the orbit indicator — a construction that\n`degIndicator_mem_cyclicModule` already carries out one degree class at a time.\n\n*Why now?* The inclusion and the degree-class indicators are formalised, so only the\nrefinement-stabilises-at-orbits step is missing, and it is exactly the acyclicity input.\n\n---\n\n## Conjecture 3 (Exact characterisation). Moment equality ⇔ common colour-refinement quotient.\n\nTwo graphs on the same number of vertices have equal adjacency-degree word moments **iff** their\ncolour-refinement (1-WL) quotients, weighted by class sizes, are isomorphic.\n\n*Status.* The \"if\" direction is proved (`Quotient.wordMoment_eq_of_quot_eq`); the \"only if\"\ndirection is open.\n\n*The key insight is* that the moments are linear functionals of the quotient data, and the\nquotient matrix has full-rank Krylov structure on the class-size vector, so recovering the\nquotient from the moments should be a finite-dimensional moment problem for a nonnegative\nmatrix pencil rather than a graph-theoretic argument.\n\n*Why now?* Both sides of the equivalence are already definable in the catalog\n(`quotAdj`, `quotDeg`, `classSize`), so the conjecture is a statement about existing objects\nand any counterexample is a finite, checkable pair.\n\n---\n\n## Conjecture 4 (Minimal order of failure). Six is the exact threshold.\n\nEvery pair of non-isomorphic connected graphs on at most five vertices is separated by the\nadjacency-degree moments, and six is therefore the minimal order at which the invariant fails\nfor connected graphs (a witness on six vertices is proved here).\n\n*Status.* The six-vertex failure is proved in Lean (`moment_failure_connected_nonregular`); the\n`n ≤ 5` separation is exploratory only.\n\n*The key insight is* that on at most five vertices the colour-refinement quotient of a\nconnected graph already has as many classes as the automorphism orbits, so by Conjecture 3's\nproved direction the invariant is complete there; the statement is a finite verification that\ncan be discharged by `decide` over a suitable encoding.\n\n*Why now?* The infrastructure to state and check it — `quotAdj`, `degWalkCount`, decidable\nsix-vertex graphs — is in place, and the finiteness makes it a genuine test of the\ndecidability route rather than of the theory.\n\n---\n\n## Conjecture 5 (Quotient algebra is a full matrix algebra). Tree orbit quotients.\n\nFor a tree `T` with orbit quotient of size `k`, the algebra induced by `𝓐(T)` on the orbit\nquotient is the full matrix algebra `M_k(ℝ)`, and consequently the ideal `𝓐(T) J 𝓐(T)` acts on\n`M_T` as its full endomorphism algebra.\n\n*Status.* The scalar shadow of this — the factorisation\n`moment (X * J * Y) = moment X * moment Y` (`Synthesis.moment_mul_J_mul`) — is proved; the\nalgebra statement is open.\n\n*The key insight is* that the quotient of a tree carries a distance-graded filtration with\none-dimensional graded pieces, so the images of `A` and `D` generate a matrix algebra by a\nJacobson-density argument, with the `J`-ideal supplying the rank-one elements.\n\n*Why now?* `moment_mul_J_mul` already isolates the rank-one behaviour of `J` at the level of\nmoments, which is exactly the input a density argument needs, and the quotient objects are\nformalised.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -24248,7 +24248,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` — limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discriminator, `L²` mean;\n* `Catalog/Novelty/CollatzSpectralUniform.lean` — explicit `O((1+|ω| log N)/N)`\n  error bound, uniform convergence on compact frequency sets, and the\n  density-zero blindness no-go;\n* `Catalog/Novelty/CollatzSpectralResonance.lean` — arithmetic of the resonance\n  sets and pairwise separation of the three classical multipliers.\n\nWhat this cycle settled. The one-step phase `T(n)/n` splits into a constant even\nbranch `1/2` and an odd branch `a + 1/n`; the odd perturbation `1/n` is summable\nafter Cesàro averaging, so `F_N(ω)/N → (e(ω/2)+e(aω))/2` with modulus\n`|cos(π(a−½)ω)|`.  Every question about \"cancellation for the `an+1` map at a\nfixed frequency\" is therefore *completely answered* at the level of the one-step\nsum, and the answer contains no dynamical information whatsoever\n(`spectral_blind_to_finite_modification`).  The following conjectures push into\nthe regimes where information can survive.\n\n---\n\n## Conjecture 1 (Second-order spectral law: the `log N` term is a genuine invariant)\n\nFor every `a ≥ 1` and every `ω ≠ 0`,\n`F a ω N − N · limitAmp a ω − c(a,ω) · log N` converges as `N → ∞`, with\n`c(a,ω) = π i ω e(aω)` (the coefficient produced by the odd-branch expansion\n`e(ω/n) = 1 + 2πiω/n + O(ω²/n²)` summed against the odd harmonic series).\nEquivalently, `(F a ω N − N·limitAmp a ω)/log N → c(a,ω)`.\n\n**The key insight is** that the first-order term erases the multiplier's\narithmetic (it depends only on `e(aω)` through a modulus that is a single\ncosine), while the *second*-order term is an honest half-harmonic sum whose\ncoefficient is linear in `ω` and carries the branch phase `e(aω)` undamped —\nso the subleading spectrum sees strictly more than the leading one.\n\n**Why now?** `norm_F_div_sub_limitAmp_le` already isolates the deviation sum\n`Σ dseq` and bounds it by `2π|ω|(1+log N)`; the conjecture asserts that this\nbound is attained with an explicit constant.  The Lean infrastructure\n(`dseq_eq`, `sum_one_div_le_one_add_log`) needs only a matching *lower* bound\nplus `Real.log` asymptotics for the odd harmonic sum, both of which are in reach\nof the existing `harmonic` API.\n\n---\n\n## Conjecture 2 (Iterated transforms are not blind)\n\nDefine the `m`-step transform `F^{(m)} a ω N = Σ_{n≤N} e(ω · T_a^m(n)/n)`.\nThen for each fixed `m`, `F^{(m)} a ω N / N` converges to an explicit finite\ncombination `Σ_{j} 2^{−m} · (multiplicity) · e(ω · r_j)`, where `r_j` ranges over\nthe finitely many limiting `m`-step ratios `a^{k} / 2^{m−k}` (`k` = number of odd\nsteps), weighted by the density of residue classes mod `2^m` following that\nparity pattern.  Moreover, for `m ≥ 2` the resonance set of `F^{(m)}` is **not**\na coset of a lattice, and its zero set determines `a` uniquely.\n\n**The key insight is** that one step gives two branches and hence a cosine, i.e.\none Diophantine condition; `m` steps give `2^m` branches with ratios\n`a^k/2^{m−k}`, so the limiting amplitude becomes an exponential polynomial in\n`ω` whose zero set is an intersection of many conditions — rigid enough to\nrecover `a`, and no longer invariant under sparse modification of the map.\n\n**Why now?** The proof template is exactly the one verified here: split by the\nparity pattern of the first `m` steps (a residue class mod `2^m` of known\ndensity), show the ratio converges on each class, and Cesàro-average.\n`summand_eq` + `dseq_eq` + `Filter.Tendsto.cesaro_smul` generalize verbatim.\n\n---\n\n## Conjecture 3 (A density-zero blindness threshold)\n\n`spectral_blind_to_density_zero` is sharp in the following strong sense: for\nevery function `h : ℕ → ℝ` with `h N / N → 0` and `h N → ∞` there exist a\nmultiplier `a` and a modification of `ratio a` supported on a set `S` with\n`#(S ∩ [1,N]) ≍ h N` such that the modified transform still satisfies\n`F̃/N → limitAmp a ω` for all `ω`, yet the modified map has an orbit structure\n(e.g. an extra cycle of length `≍ h N` at scale `N`) that differs from the\noriginal.  Conversely, any modification on a set of positive upper density\nchanges the limit for a set of frequencies of positive measure.\n\n**The key insight is** that \"invisible to the normalized spectrum\" is exactly\n\"supported on a density-zero set\", so the spectral method has a precise\ninformation-theoretic ceiling: it can only ever certify statements that are\nthemselves invariant under density-zero surgery — and cycle existence is not.\n\n**Why now?** The forward half is already proved (`norm_Fgen_sub_le` gives the\n`2·#S/N` bound, which is the whole content).  The converse needs a lower bound\non `‖Σ_{k ∈ S} (e(ω r₁) − e(ω r₂))‖` after averaging in `ω`, i.e. a Plancherel\nargument on `[0,2]` for which `meanSquare_limitAmp` is the model computation.\n\n---\n\n## Conjecture 4 (Resonance sets classify the multiplier, and pairwise\nintersections are governed by `gcd(2a−1, 2b−1)`)\n\nFor all `a, b ≥ 1`, the common resonance set\n`R a ∩ R b = {ω : (2a−1)ω and (2b−1)ω are both odd integers}` equals\n`{ω = (2m+1)·g / ((2a−1)(2b−1)/g') ...}` — precisely, writing\n`d = gcd(2a−1, 2b−1)`, `R a ∩ R b = (d / ((2a−1)(2b−1))) · (2ℤ+1) ∩ R a`, and in\nparticular `R a ∩ R b ⊆ 2ℤ+1` exactly when `d = 1`.  Hence `R a = R b` iff\n`a = b`, and the map `a ↦ R a` is a complete invariant of the multiplier.\n\n**The key insight is** that the resonance sets are cosets of the lattices\n`(1/(2a−1))(2ℤ+1)`, so their intersection theory is pure elementary number\ntheory of the odd numbers `2a−1` — an arithmetic invariant hiding inside a\npurely analytic (Fourier) statistic.\n\n**Why now?** The three instances `d = gcd(5,9) = gcd(5,13) = gcd(9,13) = 1` are\nalready proved in `common_resonance_three_five`, `common_resonance_three_seven`,\n`common_resonance_five_seven`, each via a two-line `omega` certificate.  The\ngeneral statement is the same argument with `d` carried symbolically, and\n`limitAmp_eq_zero_iff` reduces it entirely to `ℤ`.\n\n---\n\n## Conjecture 5 (Orbit transforms: a genuine spectral–dynamical bridge)\n\nLet `σ(n)` be the stopping time of `n` under `T_3` and define the *orbit\ntransform* `G ω N = Σ_{n≤N} e(ω σ(n)/log n)`.  Then `G ω N / N` converges for\nevery `ω` to the characteristic function of the limiting distribution of\n`σ(n)/log n`, and the Collatz conjecture restricted to `[1,N]` is *equivalent*\nto `σ` being everywhere finite, i.e. to `G` being well defined — whereas no\nstatement about `F a ω N` has this property (by Conjecture 3 / the proved\nblindness theorem).\n\n**The key insight is** that spectral information about a dynamical system can\nonly be dynamical if the *phase itself* is an orbit functional; replacing the\none-step ratio `T(n)/n` by the normalized stopping time turns the transform into\nthe characteristic function of the (conjecturally log-normal) stopping-time\ndistribution, where cancellation genuinely encodes orbit behaviour.\n\n**Why now?** The present cycle proves the negative half rigorously — the\none-step transform is provably blind — which is precisely the justification for\nmoving the phase from one step to the whole orbit.  The positive half is a\nLévy-continuity statement, and Mathlib now has the characteristic-function and\nweak-convergence API needed to state it.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -24807,6 +24807,47 @@
       "thread_id": "th_ee7c54e2",
       "timestamp": "2026-08-11T19:31:40.495558+00:00",
       "title": "Cycles 10–11 closed three standing conjectures of the thread.  What is proved (a"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions (Solomon zeta functions over arithmetic orders)\n\n## What this cycle added\n\nAll statements below are machine-checked and free of `sorry`; they live in\n`Catalog/NumberTheory/` and build on the verified machinery of `Catalog/Shared/SolomonZeta/`.\n\n* **Locality ascent** (`Catalog/NumberTheory/SolomonZetaLocalityAscent.lean`).  Let `R` be a\n  commutative local ring and `Λ` a module-finite commutative `R`-algebra.  If `Λ` has a maximal\n  ideal `J` such that every element of `J` has a power in `𝔪_R·Λ`, then `Λ` is local with\n  `𝔪_Λ = J` (`isLocalRing_of_isMaximal_of_pow_mem`).  This replaces the nilpotence hypothesis of\n  the previous cycle's `isLocalRing_of_isMaximal_of_nil` by *nilpotence modulo `𝔪_R Λ`*, the\n  missing invertibility being supplied by Nakayama's lemma\n  (`isUnit_of_span_sup_map_maximalIdeal_eq_top`).\n\n* **Conjecture D2, settled for abelian `G`** (`SolomonZetaPadicGroupRing.lean`).  For a finite\n  commutative group `G` of exponent dividing `pᵉ`, the group ring `ℤ_p[G]` is local\n  (`isLocalRing_padicMonoidAlgebra`) with maximal ideal the preimage of `pℤ_p` under the\n  augmentation and residue field `𝔽_p` (`residueFieldPadicMonoidAlgebraEquiv`).  Consequently\n  the local Solomon formula applies verbatim to free `ℤ_p[G]`-lattices:\n  `#Aut(X)·#{N ≤ Λⁿ : Λⁿ/N ≅ X} = (∏_{i<d}(pⁿ − p^i))·#(𝔪X)ⁿ`\n  (`autCard_mul_quotIsoCount_padicMonoidAlgebra_free`), in particular for `Λ = ℤ_p[ℤ/pℤ]`\n  (`autCard_mul_quotIsoCount_padicCyclic_free`).  The bridge is the coefficientwise reduction\n  `ℤ_p[G] → 𝔽_p[G]`, whose kernel lies in `p·ℤ_p[G]`.\n\n* **Conjecture D5, settled in corrected form** (`SolomonZetaFreenessCriterion.lean`).  For `R`\n  noetherian local with finite residue field and all `R/𝔪ʲ` finite, a finitely generated\n  `R`-module `M` is free of rank `n` **iff** `Σ_{Y ≤ X} μ(Y,X)·#Hom(M,Y) = (∏_{i<d}(qⁿ − q^i))·#(𝔪X)ⁿ`\n  for every finite quotient type `X` (`nonempty_linearEquiv_free_iff_mobiusWeight_eq`, and\n  `..._padic` over `ℤ_p`).  The engine is a *counting rigidity*\n  (`ker_le_ker_of_card_surj_eq`): composition with a surjection `π : Rⁿ ↠ M` embeds surjections\n  `M ↠ X` into surjections `Rⁿ ↠ X`, so equality of counts forces every surjection `Rⁿ ↠ X` to\n  kill `ker π`; taking `X = Rⁿ/𝔪ʲRⁿ` and Krull's intersection theorem gives `ker π = 0`.\n  Two by-products: free lattices *maximise* the weights (`mobiusWeight_le_freeMobiusWeight`),\n  and the conjecture's claim that one test space of residual dimension `n+1` suffices is\n  **false** (`mobiusWeight_residue_pi_succ_insufficient`: over `ℤ_p`, `M = 𝔽_p` passes the test\n  at `(𝔽_p)²` but is not free of rank one).\n\n* **D2 ∧ D5: a counting criterion for freeness over the order `ℤ_p[G]`**\n  (`SolomonZetaGroupRingFreeness.lean`).  The two results above combine, the missing link being\n  that `Λ = ℤ_p[G]` is noetherian because it is module-finite over `ℤ_p`\n  (`isNoetherianRing_padicMonoidAlgebra`), together with the fact that a noetherian local ring\n  with finite residue field automatically has all `R/𝔪ʲ` finite\n  (`finite_quotient_maximalIdeal_pow`, giving the hypothesis-free\n  `nonempty_linearEquiv_free_iff_mobiusWeight_eq_of_isNoetherianRing`).  Outcome: a finitely\n  generated `Λ`-module `M` is free of rank `n` **iff** for every finite `Λ`-module `X`,\n  `Σ_{Y ≤ X} μ(Y,X)·#Hom(M,Y) = (∏_{i<d}(pⁿ − p^i))·#(𝔪X)ⁿ`\n  (`nonempty_linearEquiv_free_iff_mobiusWeight_eq_padicMonoidAlgebra`, and\n  `..._padicCyclic` for `Λ = ℤ_p[ℤ/pℤ]`).  So over a non-maximal, non-domain arithmetic order\n  the Solomon coefficients already separate the free lattices from all other lattices.\n\n* **Input to D3** (`SolomonZetaDirectSum.lean`).  Hom-counts are multiplicative along finite\n  direct sums (`card_hom_pi`), so the Möbius weight of `⊕Mᵢ` is `Σ_Y μ(Y,X)·∏ᵢ #Hom(Mᵢ,Y)`\n  (`mobiusWeight_pi`), and the weight depends on the source only through its Hom-count function\n  (`mobiusWeight_congr_of_card_hom_eq`).\n\n---\n\n## E1. Noncommutative locality ascent and `ℤ_p[G]` for nonabelian `p`-groups\n\n**Conjecture.** The ascent theorem holds verbatim for a module-finite (possibly noncommutative)\n`R`-algebra `Λ` over a commutative local ring `R`: if `Λ/𝔪_RΛ` is local (equivalently, its\nnon-units form a two-sided ideal) then `Λ` is local, and hence `ℤ_p[G]` is local for *every*\nfinite `p`-group `G`, with residue field `𝔽_p`.  The counting formula\n`#Aut(X)·#{N ≤ Λⁿ : Λⁿ/N ≅ X} = (∏_{i<d}(pⁿ − p^i))·#(𝔪X)ⁿ` then holds for all finite\n`Λ`-modules `X`.\n\n*The key insight is* that nothing in the proof formalised here used commutativity except the\n`Ideal.span {x}` bookkeeping: replacing principal ideals by the left ideal `Λx` and Nakayama by\nits module form over the *central* subring `R` leaves the argument intact, while the nilpotence\nof the augmentation ideal of `𝔽_p[G]` is a statement about a nilpotent normal `p`-subgroup that\nholds without commutativity.\n\n*Why now?* The commutative case is finished (`isLocalRing_padicMonoidAlgebra`) and the counting\nengine never used commutativity beyond `Submodule.restrictScalars` bookkeeping; what is missing\nis the one-sided form of the Nakayama step and a \"non-units form an ideal\" formulation of\nlocality for noncommutative `Λ`.\n\n## E2. The weight sequence is a complete invariant of the isomorphism class\n\n**Conjecture.** Let `R` be noetherian local with finite residue field and all `R/𝔪ʲ` finite.\nTwo finitely generated `R`-modules `M`, `M'` are isomorphic **iff** `mobiusWeight R M X =\nmobiusWeight R M' X` for every finite `R`-module `X`; equivalently, `#Hom(M,X) = #Hom(M',X)` for\nall finite `X` implies `M ≅ M'`.\n\n*The key insight is* that the counting rigidity proved this cycle already shows the free case:\nequality of the surjection counts forces one surjection to factor through the other, and\n`Hom(M, R/𝔪ʲ)`-counts recover the elementary divisors of the torsion part by a Möbius inversion\nover `j`.  Making this precise means running the rigidity argument with `Rⁿ` replaced by an\narbitrary `M'`, i.e. proving that the two induced embeddings of surjection sets are mutually\ninverse.\n\n*Why now?* `ker_le_ker_of_card_surj_eq` is stated for an arbitrary surjection source, so the\nonly new ingredient is a symmetric version and a Krull-intersection step on both sides.\n\n## E3. Rationality of the refined generating function (D4, refocused)\n\n**Conjecture.** For `R = ℤ_p` and a rank `n`, the series `Σ_j c_j T^j` with\n`c_j = Σ_{X : length j} mobiusWeight R (Rⁿ) X / #Aut X` is a rational function of `T` with\ndenominator `∏_{i=0}^{n-1}(1 − p^i T)`.\n\n*The key insight is* that the local formula makes `mobiusWeight R (Rⁿ) X` depend on `X` only\nthrough `(#𝔪X, dim_k X/𝔪X)`, so summing over isomorphism classes of length `j` becomes a sum\nover partitions of `j` weighted by Hall's `#pX = p^{|λ|−d}` — a finite sum of geometric series\nindexed by `d ≤ n`.\n\n*Why now?* The two hard inputs are theorems here: the closed formula for the coefficients and,\nfrom the previous cycle, Hall's formula in partition form\n(`autCard_mul_quotIsoCount_partition`).  What remains is the bookkeeping of the set of\nisomorphism classes of finite `ℤ_p`-modules of bounded length, i.e. a bijection with partitions.\n\n## E4. Non-free lattices over `ℤ_p[ℤ/pℤ]` (D3, sharpened)\n\n**Conjecture.** For `Λ = ℤ_p[ℤ/pℤ]` every `Λ`-lattice `M` decomposes as\n`M ≅ ℤ_p^a ⊕ ℤ_p[ζ_p]^b ⊕ Λ^c`, and therefore\n`mobiusWeight Λ M X = Σ_{Y ≤ X} μ(Y,X)·#Hom(ℤ_p,Y)^a·#Hom(ℤ_p[ζ_p],Y)^b·#Hom(Λ,Y)^c`; the\nSolomon zeta function of `M` is a rational function of `p^{-s}` whose numerator degree is\nbounded by `a + b + c`.\n\n*The key insight is* that `mobiusWeight_pi` (proved this cycle) already reduces the weight of a\ndirect sum to the Hom-count functions of the summands, so the remaining input is purely the\nclassification of `Λ`-lattices into three indecomposables — a finite computation with the pullback\nsquare `Λ = ℤ_p ×_{𝔽_p} ℤ_p[ζ_p]`.\n\n*Why now?* The additive/multiplicative reduction is done and ring-agnostic; the classification\nis a self-contained statement about a fibre product of two discrete valuation rings.\n\n## E5. A Möbius characterisation of projectivity over non-local orders\n\n**Conjecture.** Let `Λ` be an order in a semisimple algebra over `ℚ_p` and `M` a `Λ`-lattice.\nThen `M` is projective of constant local rank `n` **iff** for every finite `Λ`-module `X`\n`mobiusWeight Λ M X` equals the product over the local factors of the free weights computed\nhere; and in general `mobiusWeight Λ M X ≤ ∏ (free weights)` with equality iff `M` is projective.\n\n*The key insight is* the maximality theorem proved this cycle\n(`mobiusWeight_le_freeMobiusWeight`): the free weight is an upper bound realised exactly by the\nmodules whose surjection sets are as large as possible, and projectivity is precisely local\nfreeness, which the counting rigidity can be applied to one maximal ideal at a time.\n\n*Why now?* Maximality and the local characterisation of freeness are theorems; what is needed\nis a semilocal version of the Nakayama step, i.e. the same argument with `𝔪` replaced by the\nJacobson radical of `Λ`.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_1096",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5ac3c62c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/5ac3c62c",
+      "status": "available",
+      "thread_id": "th_a80b2906",
+      "timestamp": "2026-08-11T19:33:11.488684+00:00",
+      "title": "All statements below are machine-checked and free of `sorry`; they live in"
     },
     {
       "ambition_level": "extension",
@@ -26182,7 +26223,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 647e3d96 (Q=0.775), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -27742,7 +27783,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -27782,7 +27823,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -28212,46 +28253,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f14ecb01",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle f7f562cc (Q=0.783), which proved 23 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
-      "domains": [
-        "Probability"
-      ],
-      "github_issue": 0,
-      "id": "push_f7f562cc_9afd87aa",
-      "last_attempt_time": "2026-08-05T09:57:29.233710+00:00",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.686,
-      "parent_direction": "",
-      "priority_score": 0.88272,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source": "",
-      "source_exp_id": "f7f562cc",
-      "source_path": "Random Graphs: Erdős-Rényi Threshold Phenomena",
-      "status": "completed",
-      "thread_id": "",
-      "timestamp": "2026-08-03T15:25:39.323194+00:00",
-      "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
       "category": "",
@@ -28467,7 +28468,7 @@
       "domain_bridges": [
         "Pythagorean <-> Physics"
       ],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -28508,7 +28509,7 @@
       "depth_estimate": 3,
       "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -28548,7 +28549,7 @@
       "depth_estimate": 3,
       "description": "Derives non-signaling boundary conditions allowing superluminal tachyon pulses to modulate past quantum states without triggering fatal temporal paradoxes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -28588,7 +28589,7 @@
       "depth_estimate": 3,
       "description": "Proves that entropy strictly decreases along retro-geodesics within intense Kerr black hole ergospheres.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -28708,7 +28709,7 @@
       "depth_estimate": 3,
       "description": "Derives upper bound on thermodynamic energy extraction from mega-scale orbital solar collection swarms encircling main-sequence stars.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -28748,7 +28749,7 @@
       "depth_estimate": 3,
       "description": "Proves exact minimum exotic negative energy density requirements necessary to maintain a stable superluminal Alcubierre warp bubble without collapse.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -29028,7 +29029,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Giulio Tononi's Integrated Information Theory (Phi) as a continuous scalar field over spacetime manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -29308,7 +29309,7 @@
       "depth_estimate": 3,
       "description": "Formalizes theoretical probability bounds for macroscopic quantum tunneling between decohered Everett multiverse branches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -29348,7 +29349,7 @@
       "depth_estimate": 3,
       "description": "Calculates maximum divergence rate of macroscopic physical observables following a single quantum measurement event.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -29388,7 +29389,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Ekpyrotic universe model where big bang singularities are produced by periodic collisions of 4D branes in 5D bulk space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -29428,7 +29429,7 @@
       "depth_estimate": 3,
       "description": "Proves the mathematical signature of gravitational energy leaking from our universe into neighboring extra-dimensional branes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -29508,7 +29509,7 @@
       "depth_estimate": 3,
       "description": "Proves the existence of a non-zero net directional force generated by asymmetric Casimir cavity geometry in quantum vacuum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -29588,7 +29589,7 @@
       "depth_estimate": 3,
       "description": "Formally proves that Hawking radiation carries complete quantum information out of an evaporating black hole via subtle page curve correlations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -36215,7 +36216,7 @@
       "depth_estimate": 3,
       "description": "Cycle c6b3a18e (Q=0.629) proved 102 theorems in Physics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Physics"
       ],
@@ -36444,7 +36445,7 @@
   ],
   "pruned": [],
   "recent_domain_counts": {
-    "Algebra": 11,
+    "Algebra": 12,
     "Bridges": 1,
     "Combinatorics": 2,
     "Computation": 6,
@@ -36452,112 +36453,112 @@
     "Logic": 4,
     "MachineLearning": 3,
     "Novelty": 2,
-    "NumberTheory": 1,
+    "NumberTheory": 2,
     "Physics": 4,
     "Pythagorean": 3,
     "Tropical": 2
   },
   "recent_theme_keywords": {
-    "*conjecture": 1,
-    "`(1/2": 1,
-    "`posdef_congr`": 1,
-    "`two_torsion_gap_eq_card`": 1,
+    "**theorem**": 1,
+    "`#(𝔪x)ⁿ": 1,
+    "`catalog/shared/solomonzeta/abelianpgroup.lean`": 1,
+    "`mu_orderiso`": 1,
+    "`λ`-lattices": 1,
     "abstract": 2,
     "account": 3,
-    "averages": 1,
+    "applies": 1,
     "binary": 2,
     "boundary": 6,
-    "bounded": 5,
+    "bounded": 6,
     "bounds": 4,
+    "buildable": 1,
     "building": 4,
-    "class": 1,
-    "classical": 1,
+    "classical": 2,
     "compare": 3,
+    "complete": 1,
     "concrete": 3,
-    "conjecture": 10,
+    "conjecture": 11,
     "consequences": 2,
     "constant": 5,
+    "controlling": 1,
     "counted": 2,
     "deepening": 4,
     "deeper": 4,
     "define": 9,
-    "determines": 1,
     "different": 3,
-    "diophantine-lattice": 1,
-    "direction": 5,
-    "directions": 13,
+    "direction": 6,
+    "directions": 14,
+    "duality": 1,
     "equivalence": 6,
     "equivalent": 5,
-    "eureka": 1,
-    "explicit": 7,
+    "explicit": 8,
     "extend": 4,
     "falsifiable": 4,
     "family": 2,
-    "finite": 13,
+    "finite": 14,
     "fixed-point": 2,
     "formalize": 5,
     "formalizing": 2,
     "functions": 4,
-    "future": 13,
-    "gauss's": 1,
-    "general": 6,
-    "genuinely": 1,
-    "geometric": 3,
-    "global": 2,
-    "hexagonal": 1,
+    "future": 14,
+    "general": 7,
+    "generators": 1,
+    "geometric": 4,
+    "global": 3,
+    "halves": 1,
     "hierarchy": 3,
-    "insight": 5,
-    "integer": 4,
-    "invariance": 5,
+    "ingredient": 1,
+    "insight": 6,
+    "integer": 5,
+    "invariance": 6,
     "investigate": 7,
+    "library": 1,
+    "locality": 1,
     "making": 3,
-    "manipulation": 1,
     "matrix": 2,
-    "missing": 1,
+    "maximal": 1,
+    "mirrored": 1,
+    "missing": 2,
     "natural": 5,
-    "normal": 1,
-    "numbers": 1,
     "object": 4,
     "original": 4,
     "points": 4,
     "positive": 4,
     "precisely": 6,
-    "proved": 10,
+    "proved": 11,
     "proves": 4,
-    "quarter": 1,
+    "qⁱt)`": 1,
     "rather": 9,
-    "recovered": 1,
-    "reduced": 1,
-    "remaining": 5,
+    "remaining": 6,
     "replace": 4,
     "result": 8,
     "resulting": 4,
     "results": 2,
     "reverse": 2,
-    "rigidity": 1,
-    "second": 1,
+    "self-contained": 1,
     "separately": 2,
     "separation": 2,
-    "sequence": 2,
-    "series": 1,
+    "sequence": 3,
+    "series": 2,
     "setting": 4,
+    "settled": 1,
+    "solomon": 1,
     "sorries": 4,
     "spectrum": 2,
-    "standard": 1,
     "strongest": 4,
     "structural": 4,
     "structure": 4,
     "suggesting": 3,
+    "summed": 1,
     "supplies": 4,
     "system": 3,
-    "theorem": 13,
-    "theorems": 4,
-    "threshold": 1,
+    "theorem": 14,
+    "theorems": 5,
     "universality": 2,
-    "weight": 1,
-    "whether": 1,
+    "weight": 2,
     "within": 3,
-    "λ₁(q)/4`": 1
+    "x/𝔪x)`": 1,
+    "ℤ/p^{λᵢ}`": 1
   },
   "selection_log": [
     "abduction_followup",
