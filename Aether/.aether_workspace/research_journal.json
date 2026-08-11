@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c0a515f0",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## Outcome\n\nThe unrestricted conjecture is false. `CertifiedRobustness.lean` gives a\nkernel-checked counterexample: the degree-one cellular cohomology of the\nconstant real sheaf o",
-      "quality_score": 0.7776099999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-01T14:04:22",
-      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-    },
-    {
       "cycle_id": "9cde2d61",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThe following conjectures are concrete continuations of `Catalog/Novelty/NonstandardArithmetic.lean`.\nEach can be falsified by exhibiting an ultrafilter, formula, or hypernatural",
@@ -2501,6 +2491,16 @@
       "theorem_count": 119,
       "timestamp": "2026-08-11T07:49:22",
       "title": "**Conjecture.** For every finite relational signature and finite model, there is"
+    },
+    {
+      "cycle_id": "a55e871b",
+      "domain": "Physics",
+      "key_insight": "# Future directions — adjacency-degree algebras and moment rigidity\n\nThe formal development lives in `Catalog/Physics/AdjacencyDegree/` (13 files, all compiling,\nno `sorry`, axioms `propext`, `Classic",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 163,
+      "timestamp": "2026-08-11T07:51:10",
+      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.718325
     }
   ],
-  "last_updated": "2026-08-11T07:49:22",
+  "last_updated": "2026-08-11T07:51:10",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "726a20a7",
-        "quality": 0.73786,
-        "theorems": 13,
-        "title": "Navier-Stokes Existence and Smoothness"
-      },
-      {
         "cycle_id": "77d39a70",
         "quality": 0.76844,
         "theorems": 7,
@@ -3761,6 +3755,12 @@
         "quality": 0.6537058069977426,
         "theorems": 456,
         "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
+      },
+      {
+        "cycle_id": "a55e871b",
+        "quality": 0.627125,
+        "theorems": 163,
+        "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
       }
     ],
     "Probability": [
