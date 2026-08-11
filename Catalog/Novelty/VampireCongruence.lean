@@ -1,4 +1,4 @@
-import Novelty.NumberTheory.VampireNumbers
+import Novelty.VampireNumbers
 
 /-!
 # The Unit Reformulation of the Vampire Law

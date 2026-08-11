@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Aristotle (Harmonic)
 -/
 import Mathlib
-import Novelty.GraphTheory.Z2CoindexJoin
+import Novelty.Z2CoindexJoin
 
 /-!
 # The multi-join law for the ℤ₂-coindex

@@ -42,7 +42,7 @@ Synthesis (PI): The clean separation — `f` bounded, mean-relaxation zero — p
   difficulty as a realizability lower bound, recorded in `FUTURE_DIRECTIONS.md`.
 -/
 import Mathlib
-import Novelty.CellularAutomata.RedBlueStarS21Profile
+import Novelty.RedBlueStarS21Profile
 
 namespace RedBlueStarS21
 

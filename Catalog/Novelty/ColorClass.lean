@@ -1,4 +1,4 @@
-import Catalog.Novelty.TotalRainbowForest.Defs
+import Novelty.Defs
 
 /-!
 # The colour-class (forest) characterisation of total rainbow forests

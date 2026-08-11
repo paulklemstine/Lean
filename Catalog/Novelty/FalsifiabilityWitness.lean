@@ -20,8 +20,8 @@ Together these show the spectral/eigenvalue constraint is not cosmetic: it is th
 exact dividing line of the bound.
 -/
 import Mathlib
-import Novelty.HegedusSpectral.SpectralBound
-import Novelty.HegedusSpectral.EquiangularFisher
+import Novelty.SpectralBound
+import Novelty.EquiangularFisher
 
 open Matrix
 

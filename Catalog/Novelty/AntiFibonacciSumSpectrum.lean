@@ -1,4 +1,4 @@
-import Catalog.Novelty.Basic
+import Novelty.Basic
 
 /-!
 # The Anti-Fibonacci Sequence — Partial Sums and the Square Spectrum

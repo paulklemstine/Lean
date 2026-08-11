@@ -1,6 +1,6 @@
 import Mathlib
 import Shared.CarmichaelHelper
-import Shared.CarmichaelProof
+import Shared.NumberTheory.CarmichaelProof
 
 /-! # Carmichael's theorem for Fibonacci numbers: assembling the two cases
 
@@ -27,4 +27,4 @@ theorem fib_carmichael (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000) :
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
   by_cases hp : Nat.Prime n
   · exact fib_primitive_divisor_prime n hn hp
-  · exact fib_carmichael_composite n hn hupper hp
+  · exact fib_carmichael_composite n hn hn2 hp

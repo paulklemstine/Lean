@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.MindToolsTranslations
+import Novelty.MindToolsTranslations
 
 /-!
 # Conservativity, faithfulness, and reflection-style strict extensions

@@ -1,4 +1,4 @@
-import Catalog.Novelty.CircuitComplexity.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # The CLIQUE function and a monotone size lower bound
@@ -72,10 +72,38 @@ one.
 -/
 theorem cliqueFn_two_dependsOn (e : Sym2 (Fin m)) (he : ¬ e.IsDiag) :
     MCircuit.DependsOn (cliqueFn m 2) e := by
-  refine' ⟨ fun _ => Bool.false, _ ⟩ ; simp +decide [ cliqueFn ];
-  rcases e with ⟨ u, v ⟩ ; simp_all +decide [ Function.update_apply ];
-  push_neg;
-  refine Or.inl ⟨ ⟨ { u, v }, ?_, ?_ ⟩, ?_ ⟩ <;> simp_all +decide [ Finset.card_eq_two ]
+  classical
+  refine ⟨fun _ => false, ?_⟩
+  obtain ⟨u, v⟩ := e
+  have huv : u ≠ v := by
+    intro h
+    exact he (by simp [h])
+  have hfalse : cliqueFn m 2 (Function.update (fun _ => false) (Sym2.mk (u, v)) false)
+      = false := by
+    have hconst : Function.update (fun _ : Sym2 (Fin m) => false) (Sym2.mk (u, v)) false
+        = fun _ => false := Function.update_eq_self _ _
+    rw [hconst]
+    simp only [cliqueFn, decide_eq_false_iff_not]
+    rintro ⟨S, hcard, hS⟩
+    obtain ⟨a, b, hab, rfl⟩ := Finset.card_eq_two.mp hcard
+    have := hS a (by simp) b (by simp) hab
+    simp at this
+  have htrue : cliqueFn m 2 (Function.update (fun _ => false) (Sym2.mk (u, v)) true)
+      = true := by
+    simp only [cliqueFn, decide_eq_true_eq]
+    refine ⟨{u, v}, Finset.card_pair huv, ?_⟩
+    intro a ha b hb hab
+    simp only [Finset.mem_insert, Finset.mem_singleton] at ha hb
+    have hedge : Sym2.mk (a, b) = Sym2.mk (u, v) := by
+      rcases ha with rfl | rfl <;> rcases hb with rfl | rfl
+      · exact absurd rfl hab
+      · rfl
+      · exact Sym2.eq_swap
+      · exact absurd rfl hab
+    rw [hedge]
+    simp
+  rw [hfalse, htrue]
+  simp
 
 /-
 The number of non-loop edges on `Fin m` equals `m.choose 2`.
@@ -93,10 +121,9 @@ computes the 2-CLIQUE function on `Fin m` has size at least `m.choose 2`.
 theorem clique2_size_ge_choose (C : MCircuit (Sym2 (Fin m)))
     (hC : ∀ g, C.eval g = cliqueFn m 2 g) :
     m.choose 2 ≤ C.size := by
-  rw [ ← card_offDiag_eq_choose ];
-  apply MCircuit.card_le_size_of_relevant;
-  intro e he;
-  obtain ⟨ x, hx ⟩ := cliqueFn_two_dependsOn e ( by simpa using he );
-  exact ⟨ x, by aesop ⟩
+  rw [← card_offDiag_eq_choose]
+  refine MCircuit.card_le_size_of_relevant C (cliqueFn m 2) hC _ ?_
+  intro e he
+  exact cliqueFn_two_dependsOn e (by simpa using he)
 
 end CircuitComplexity

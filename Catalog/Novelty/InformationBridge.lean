@@ -1,6 +1,6 @@
 import Mathlib
 import Logic.GraphTheory.Defs
-import Novelty.GraphTheory.Structure
+import Novelty.Structure
 import Computation.TropicalAlgebra.Circuits
 
 /-!

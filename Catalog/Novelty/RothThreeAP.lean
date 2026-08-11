@@ -19,7 +19,7 @@ additive energy is essentially that of a Sidon set
 (`card_sq_le_of_addEnergy_le`).
 -/
 import Mathlib
-import Combinatorics.KnotAndBraidTheory.FourierFiniteGroups
+import Novelty.FourierFiniteGroups
 
 namespace Catalog.Combinatorics.ExtremalGraphTheory
 

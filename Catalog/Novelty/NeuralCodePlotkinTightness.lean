@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.NeuralCodeCapacityBounds
+import Novelty.NeuralCodeCapacityBounds
 
 /-!
 # Neural Coding: tightness of the Plotkin bound (Hadamard populations)

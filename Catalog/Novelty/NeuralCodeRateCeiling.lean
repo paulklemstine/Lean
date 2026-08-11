@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.NeuralCodeCapacityBounds
+import Novelty.NeuralCodeCapacityBounds
 
 /-!
 # Neural Coding: the Sphere-Packing Rate Ceiling
