@@ -1,109 +1,171 @@
-# The Star Map Hidden Inside Pythagoras
+# The Pythagorean Star Map
 
-*How the oldest theorem in mathematics draws a picture of the rational numbers — and why the picture is made of fans*
+*What happens when you plot every right triangle in the hyperbolic plane*
 
 ---
 
-## A picture that shouldn't be there
+## A picture that shouldn't be so tidy
 
-Every schoolchild meets the triple $(3,4,5)$: three whole numbers with $3^2 + 4^2 = 5^2$. Fewer meet the fact that all of them — $(5,12,13)$, $(8,15,17)$, $(20,21,29)$, and infinitely many more — can be grown from that single seed by three simple rules, each triple sprouting exactly three children, forever, with no triple ever appearing twice. This infinite ternary tree of *primitive Pythagorean triples* has been rediscovered so many times that it has half a dozen names; we will call it the **Berggren tree**, after the Swedish mathematician who described it in 1934.
+Start with something everyone learns at school: the right triangles with whole-number sides. $3,4,5$. Then $5,12,13$. Then $8,15,17$, $7,24,25$, $20,21,29$. There are infinitely many of them, and if you throw out the ones that are just scaled copies of smaller ones, you are left with the *primitive* Pythagorean triples — an infinite, ragged-looking list of integer triples $(A,B,C)$ with $A^2+B^2=C^2$.
 
-A tree of numbers is an abstract thing. But there is a way to *see* it. Euclid, two millennia earlier, had already shown that every primitive triple comes from a pair of whole numbers $(m,n)$ with $0 < n < m$, no common factor, and opposite parity, via
-$$(a,b,c) = (m^2 - n^2,\ 2mn,\ m^2 + n^2).$$
-So instead of drawing triples, draw their **seeds** $(m,n)$. And instead of plotting them on ordinary graph paper, plot each seed as the complex number
-$$z(m,n) \;=\; \frac{n + i}{m} \;=\; \frac{n}{m} \;+\; \frac{i}{m},$$
-a point in the upper half of the complex plane. Its horizontal position is the ratio $n/m$; its height is $1/m$, so big seeds sit low and small seeds sit high.
+Now do something that a Greek geometer would not have thought of. Every primitive triple comes from a pair of whole numbers by Euclid's ancient recipe:
+$$A = m^2-n^2, \qquad B = 2mn, \qquad C = m^2+n^2,$$
+where $m>n>0$ share no common factor and are of opposite parity — one even, one odd. Call such a pair $(m,n)$ a *seed*. The seed $(2,1)$ gives $(3,4,5)$; the seed $(3,2)$ gives $(5,12,13)$; the seed $(4,1)$ gives $(15,8,17)$. Every primitive triple comes from exactly one seed.
 
-Do this for every seed with $m$ up to a few hundred, and something startling happens. The points do not form a haze. They form **stars**: sharp, straight rays fanning out from points on the bottom edge of the picture. There is an obvious fan at $0$ and another at $1$. Look harder and there are fans at $0.5$, at $0.333\ldots$, at $0.2$, at $0.4$ — apparently at every fraction, each fan a little fainter and a little narrower than the last.
+A seed is just two numbers, so we can plot it as a point. But instead of plotting $(m,n)$ on ordinary graph paper, plot the complex number
+$$z(m,n) \;=\; \frac{n+i}{m} \;=\; \frac{n}{m} + \frac{i}{m}.$$
+Horizontally this places the triangle at the ratio $n/m$, its *slope*; vertically at the height $1/m$, so bigger triangles sink towards the horizontal axis. And then declare that the upper half of the plane is not flat but *hyperbolic*: distances near the bottom edge are stretched enormously, so that the horizontal axis is infinitely far away — it is a horizon, not an edge. This is the Poincaré half-plane, the workhorse model of the non-Euclidean geometry that Bolyai and Lobachevsky discovered and Poincaré made concrete.
 
-Why should adding up squares of whole numbers produce a fireworks display? That is the question this article answers. The short version: the picture is *exactly* a picture of the rational numbers, drawn by Pythagoras, and every visible feature of it is a theorem.
+Plot a few thousand triangles this way and you expect a fog of dots. What you get instead is a **star map**. Straight lines fan out from the point $0$ on the horizon. Another fan blazes at $1$. Look closer and there are fans at $0.5$, at $0.333\ldots$, at $0.2$, at $0.4$ — smaller, tighter, but unmistakably there. A single white ray strides out from the centre in even, purposeful steps.
 
-## The right place to draw
+None of this is an accident of the drawing. Every one of those features is a theorem, and this article explains them.
 
-The upper half-plane is not just a convenient sheet of paper. Equipped with the length element $ds = |dz|/\operatorname{Im} z$ — distances get cheaper the higher you go — it is the **Poincaré half-plane**, the standard model of hyperbolic geometry. In it, "straight lines" (geodesics) are vertical rays and semicircles meeting the real axis at right angles. The real axis itself is the *ideal boundary*, infinitely far away in every hyperbolic sense, yet visible at the bottom of the page.
+---
 
-Hyperbolic geometry is the natural home for this embedding because it makes the arithmetic legible. For instance, the hyperbolic distance from the base point $i$ to a node satisfies the exact identity
-$$\cosh d\big(i,\ z(m,n)\big) \;=\; \frac{m^2 + n^2 + 1}{2m} \;=\; \frac{c+1}{2m},$$
-where $c = m^2+n^2$ is the *hypotenuse* of the triple. The hypotenuse appears out of nowhere: the embedding only used $n/m$ and $1/m$, yet the hyperbolic radius knows the third side of the triangle. It follows that
-$$\tfrac12 \log c \;\le\; d\big(i, z(m,n)\big) \;\le\; \tfrac12 \log\big(2(c+1)\big),$$
-so a node's distance from the centre is $\tfrac12\log c$ to within an additive $\log 2$. The picture is organised into shells by hypotenuse.
+## The first surprise: the hypotenuse is a distance
 
-That explains the radial coordinate. It does not explain the fans.
+Before the fans, one clean fact sets the stage. Take the point $i$ (the seed of nothing in particular; it is just the natural centre of the picture) and measure the hyperbolic distance from $i$ to the node of the seed $(m,n)$. Hyperbolic distance is defined by a rather forbidding integral, but here it collapses to arithmetic:
+$$\cosh\big(\text{distance from } i \text{ to } z(m,n)\big) \;=\; \frac{m^2+n^2+1}{2m}.$$
+The numerator is the hypotenuse $C = m^2+n^2$, plus one. The hypotenuse of the triangle, a quantity built from the *squares* of the seed coordinates, appears as the hyperbolic cosine of a distance — even though the embedding only ever used $n/m$ and $1/m$.
 
-## Charge: one integer per fraction
+The consequence is a law of the picture: the distance out from the centre is
+$$\tfrac12\log C \;+\; \text{a small correction, always between } 0 \text{ and } 0.3466.$$
+Triangles with hypotenuse near $C$ all live in a thin annulus at radius $\tfrac12\log C$. The radial coordinate of the star map is, essentially, the logarithm of the hypotenuse.
 
-Fix a fraction $p/q$ in lowest terms, thought of as a point on the bottom edge. Give each seed $(m,n)$ an integer, its **charge at $p/q$**:
-$$\chi \;=\; p\,m - q\,n.$$
+That settles *how far out*. The interesting question is *in which direction* — and that is where the fans live.
 
-Now a one-line computation:
-$$\frac{p}{q} - \frac{n}{m} \;=\; \frac{pm - qn}{qm} \;=\; \frac{\chi}{q} \cdot \frac{1}{m}.$$
-The left side is the horizontal offset of the node from $p/q$; the far right is $\chi/q$ times the node's height. In other words:
+---
 
-> **Every seed of charge $\chi$ lies on the straight Euclidean line through the boundary point $p/q$ of slope $q/\chi$.**
+## The charge: one integer that explains a ray
 
-That is the whole phenomenon. The fan at $p/q$ is the family of these lines, one for each integer charge; the visible rays are the *level sets of the charge*. There is nothing special about $0$ or $1$: **every rational boundary point carries a fan.** The stars at $0$ and $1$ are simply the charges $-n$ and $m-n$, the cases $q = 1$.
+Pick a rational number on the horizon and write it in lowest terms as $p/q$: perhaps $0 = 0/1$, or $1 = 1/1$, or $1/2$, or $1/3$. Now attach to each seed $(m,n)$ a single whole number, which we will call its **charge at $p/q$**:
+$$\chi \;=\; pm - qn.$$
 
-The lines are not hyperbolic straight lines — a Euclidean line hitting the boundary at an angle is not a geodesic. They are the next best thing, **hypercycles**: curves of constant distance from a geodesic. The precise statement is that a node of charge $\chi$ at $p/q$ sits at hyperbolic distance exactly
-$$\operatorname{arsinh}\!\left(\frac{|\chi|}{q}\right)$$
-from the vertical geodesic rising out of $p/q$. The charge is not just a label; it is a *width*, measured in hyperbolic units. A fan is a discrete ladder of hypercycles at the heights $\operatorname{arsinh}(1/q), \operatorname{arsinh}(2/q), \operatorname{arsinh}(3/q), \ldots$
+That is the whole idea. Everything follows from it.
 
-## Half the rays are switched off — and parity decides which
+**First, the charge draws a line.** A short computation gives
+$$\frac{p}{q} - \frac{n}{m} \;=\; \frac{\chi}{q}\cdot\frac{1}{m},$$
+which says: *horizontal displacement from $p/q$ equals $\chi/q$ times the height*. That is the equation of a straight ray emanating from the boundary point $p/q$ with fixed slope. Every seed with the same charge lies on the same ray, and different charges give different rays. **The radial lines of the star map are the level sets of the charge.** The whole fan at $p/q$ is the family of rays, one per integer value of $\chi$, and its angular spacing is set by $1/q$.
 
-Here the arithmetic bites. A Euclid seed must have $m+n$ odd. Suppose $p$ and $q$ are *both* odd — the fractions $1/3$, $1/5$, $3/5$, $1/1$. Then
-$$\chi = pm - qn \equiv m - n \equiv m + n \equiv 1 \pmod 2,$$
-so **every charge at such a point is odd**. Half the rays of the fan carry no node whatsoever. The fan at $1/3$ has rays of charge $\pm1, \pm3, \pm5,\ldots$ and empty slots at $\pm 2, \pm 4, \ldots$
+**Second, those rays are geometrically real.** A Euclidean straight ray from a boundary point is *not* a hyperbolic straight line — the true straight lines here are vertical rays and semicircles meeting the horizon at right angles. But there is an exact hyperbolic meaning, and it is even better. The distance from the node of charge $\chi$ to the vertical line rising out of $p/q$ is
+$$\operatorname{arsinh}\frac{|\chi|}{q},$$
+a number that depends on the node *only through its charge*. Curves at a constant distance from a straight line are called **hypercycles** — in ordinary flat geometry they would just be parallel lines, but hyperbolic geometry has no parallels in that sense, and hypercycles are genuinely curved objects. So each ray of the fan is a hypercycle, and the fan is a discrete ladder of hypercycles at the heights $\operatorname{arsinh}(1/q), \operatorname{arsinh}(2/q), \operatorname{arsinh}(3/q),\ldots$
 
-If instead $p+q$ is odd — $1/2$, $1/4$, $2/5$, and $0/1$ — no such obstruction exists, and it turns out that *every* integer charge is realised, by infinitely many nodes. That is the harder half of the story, and it is settled by a change of variables. Because $p/q$ is in lowest terms one can pick integers $a,b$ with $pb - qa = 1$, and then the general solution of $pm - qn = k$ is
-$$(m,n) \;=\; (kb + sq,\ ka + sp), \qquad s \in \mathbb{Z}.$$
-This substitution has determinant $1$: it is a change of basis of the integer lattice. So it converts every arithmetic property of the *node* $(m,n)$ into an arithmetic property of the *pair* $(k, s)$ — most importantly, $m$ and $n$ are coprime exactly when $k$ and $s$ are, and $m+n = k(a+b) + s(p+q)$, an explicit linear function of the parameter. Choosing $s$ in a suitable residue class and large enough produces a genuine Euclid seed of the demanded charge, of arbitrarily large size.
+The charge is thus a *conserved quantity with a metric meaning*: it is a hyperbolic width, measured in rungs of a ladder whose spacing depends on the denominator of the star's centre.
 
-Putting the two halves together gives a complete description of every fan in the picture:
+---
 
-> **Realisation Theorem.** For a fraction $p/q$ strictly between $0$ and $1$ in lowest terms, the set of charges realised by Euclid seeds is *all* of $\mathbb{Z}$ when $p+q$ is odd, and *exactly the odd integers* when $p+q$ is even. Every realised ray carries infinitely many nodes.
+## Missing rays: a fan can be half empty
 
-There is a pretty corollary about the *axis* of a fan — the ray of charge $0$, the vertical geodesic over $p/q$ itself. A seed has charge $0$ precisely when $pm = qn$, which for a primitive seed forces $(m,n) = (q,p)$: at most one node in the whole tree can sit on the axis of a given star, and it does so exactly when $p+q$ is odd. At $p/q = 1/2$ that unique node is $(2,1)$ — the root of the entire Berggren tree, the seed of $(3,4,5)$. The tree's origin sits precisely on the centre line of the fan at $0.5$.
+Here is where the arithmetic starts to bite. Look at the fan at $1/3$. Its rays should sit at charges $\ldots,-2,-1,0,1,2,\ldots$. Enumerate the seeds and you find charges $\pm1,\pm3,\pm5,\pm7,\ldots$ — and never an even one. **Half the fan is switched off.**
 
-## Why you only see a handful of fans
+The reason is a one-line parity argument. A seed has $m+n$ odd, so exactly one of $m,n$ is even. If $p$ and $q$ are both odd, then $pm-qn$ is (even $-$ odd) or (odd $-$ even), and either way it is odd. So:
 
-If every rational carries a fan, why does the picture show a dozen and not a continuum? Because fans have *width*, and width is inversely proportional to the denominator.
+> **If $p$ and $q$ are both odd, every seed has odd charge at $p/q$, and the even rays of that fan are empty.**
 
-At plot height $y$, two nodes whose charges at $p/q$ differ by $d$ are separated horizontally by exactly $|d|\,y/q$. So adjacent rays of the fan at $p/q$ are $y/q$ apart. If your plot resolves features of size $\varepsilon$, the fan at $p/q$ is visible as a fan — rather than as an indistinguishable smear — precisely when
-$$\frac{y}{q} \ \ge\ \varepsilon, \qquad\text{i.e.}\qquad q \ \le\ \frac{y}{\varepsilon}.$$
+The condition "$p$ and $q$ both odd" is the same as "$p+q$ even". And when $p+q$ is odd there is no obstruction at all: every integer charge occurs. So the fans come in exactly two flavours:
 
-That is a *geometric* criterion converted into a purely *arithmetic* one: the visible star centres are exactly the fractions of denominator at most $Q = \lfloor y/\varepsilon\rfloor$ — the **Farey fractions of level $Q$**. Their number in $(0,1]$ is
-$$\sum_{q=1}^{Q} \varphi(q),$$
-where $\varphi$ is Euler's totient function. At height $y = 0.5$ with a resolution of one part in ten, $Q = 5$ and the count is $1+1+2+2+4 = 10$: the centres $1/1$, $1/2$, $1/3$, $2/3$, $1/4$, $3/4$, $1/5$, $2/5$, $3/5$, $4/5$ — precisely the fans one sees. The visual impression of "a star at $0.2$ but not at $0.19$" is the Farey sequence made visible.
+* **Full fans** ($p+q$ odd): $0$, $1/2$, $1/4$, $2/5$, $3/4$, … Every integer charge is realised.
+* **Half fans** ($p+q$ even): $1$, $1/3$, $1/5$, $3/5$, $3/7$, … Only odd charges are realised.
 
-## The innermost ray is a best approximation
+This explains something that had been a curiosity about the two most obvious fans in the picture. The fan at $0$ realises every charge; the fan at $1$ realises only the odd ones. The two most conspicuous features of the star map are not mirror images of each other — and now we know why: $0 = 0/1$ has $p+q$ odd, and $1 = 1/1$ has $p+q$ even.
 
-The identity $\;n/m - p/q = -\chi/(qm)\;$ says something more than "the charge draws a line". It says the charge *measures how well $p/q$ approximates the node's slope*. Small charge means good approximation. The innermost rays of a fan, $|\chi| = 1$, consist of the nodes whose slope is a **Farey neighbour** of $p/q$: a unimodular partner, $qn - pm = \pm 1$.
+### The hole in the middle
 
-Farey's classical theorem then guarantees that such a pair is unimprovable: if $qn - pm = 1$ then no fraction of denominator less than $q+m$ lies strictly between $p/q$ and $n/m$, and the bound is sharp because the mediant $(p+n)/(q+m)$ sits right there in the gap. So the brightest spokes of each fan are exactly the tree's best rational approximations to the fan's centre.
+There is a companion fact about the central ray of a fan — the ray of charge $0$, which is the vertical straight line rising out of $p/q$. It can carry at most one node, and only one candidate ever qualifies: the seed $(q,p)$, the star's own centre read backwards. That pair is a genuine seed exactly when $p+q$ is odd.
 
-And the relation is reciprocal. Every seed $(m,n)$ with $m \ge 2$ is a Farey neighbour of *two* distinct fractions of denominator smaller than $m$, one on each side — one with charge $+1$, one with charge $-1$. **Every node of the tree is an innermost spoke of at least two of the visible fans.** No point in the star map is a bystander.
+So a full fan has a bright node sitting exactly on its axis, and a half fan has a **hole** there. And the axis node of the fan at $1/2$ is the seed $(2,1)$: the triple $(3,4,5)$, the root of the entire tree of Pythagorean triples, the first right triangle anybody ever learns. The fan you notice at $0.5$ in the picture is centred on the origin of the whole structure.
 
-## How thin is a spoke?
+Conversely, every unobstructed ray really is populated — and infinitely so. There is a slick way to see this. Choose whole numbers $a,b$ with $pb-qa=1$ (possible exactly because $p/q$ is in lowest terms) and set
+$$(m,n) \;=\; (kb+sq,\ ka+sp).$$
+As the parameter $s$ runs over the integers, this runs over *all* integer pairs of charge $k$ — and because the substitution has determinant $1$, it carries the arithmetic of $(m,n)$ faithfully onto the arithmetic of the pair $(k,s)$: the two coordinates $m,n$ share no factor exactly when $k$ and $s$ share no factor. The forbidding condition "$m$ and $n$ coprime, of opposite parity" turns into a transparent condition on $s$. Choose $s$ large, coprime to $k$, in the right parity class, and you have your node.
 
-A ray of large charge is infinite but sparse, and the sparsity is measured by a totient. Along a ray at an odd/odd rational with odd charge $k$, the unimodular parameter $s$ produces a genuine seed exactly when $\gcd(|k|, s) = 1$ — the parity condition is automatic, so coprimality is the *only* obstruction. Counting coprime residues in a window then gives:
+---
 
-> **Totient density law.** In any window of $2|k|$ consecutive parameters (past an explicit starting bound), the ray of charge $k$ carries exactly $2\varphi(|k|)$ nodes.
+## How thick is a ray? Ask Euler
 
-So a spoke has arithmetic density $\varphi(|k|)/|k|$. The spoke of charge $1$ is completely full; the spoke of charge $3$ is two-thirds full; the spoke of charge $15$ is only $8/15$ full and looks visibly dotted. Rays of highly composite charge are the faint ones. Direct enumeration confirms the law: on the fan at $1/3$, counting seeds with $m \le 20000$ gives densities $0.9999$ for $k=1$ and $0.6666$ for $k=3$, against the predicted $1$ and $2/3$.
+A ray is infinite. But it is not uniformly dense along its length, and the pattern of gaps is a beautiful piece of classical number theory.
 
-## The tree shuffles the fans
+Fix a fan at an odd/odd rational — the fan at $1/3$, say — and fix an odd charge $k$. Walk along the ray by increasing the parameter $s$. Which values of $s$ give genuine seeds? By the dictionary above: exactly those coprime to $|k|$. And how many integers in a stretch of consecutive integers are coprime to a fixed number $K$? That is precisely the question Euler's totient function $\varphi$ answers. In any window of $2K$ consecutive integers there are exactly $2\varphi(K)$ coprime to $K$. Hence:
 
-The last surprise is that the three growth rules of the tree do not merely move nodes around — they move *whole fans*. Written on seeds, the rules are
-$$B_1(m,n) = (2m-n,\ m), \qquad B_2(m,n) = (2m+n,\ m), \qquad B_3(m,n) = (m+2n,\ n),$$
-and each has a shadow acting on the pair $(p,q)$ that labels a fan:
-$$B_1:\ (p,q) \mapsto (2p-q,\ p), \qquad B_2:\ (p,q)\mapsto (2p-q,\ -p), \qquad B_3:\ (p,q)\mapsto(p,\ q-2p),$$
-in such a way that the charge is preserved exactly: the charge of a moved node at the old fan equals the charge of the original node at the new fan. Charge is a conserved quantity of the tree, provided you let the fan move with it.
+> **Totient density law.** On the ray of odd charge $k$, every window of $2|k|$ consecutive parameters contains exactly $2\varphi(|k|)$ nodes. The ray has arithmetic density $\varphi(|k|)/|k|$.
 
-Two consequences. First, no rational is exceptional — the system of fans is permuted by the tree, so what is true of one fan is true of its whole orbit. In fact the fan at $k/(k+1)$ is carried onto the fan at $0$ by applying $B_1$ exactly $k$ times: infinitely many of the fans you can see are one and the same fan, transported.
+Concretely: the innermost ray, charge $1$, is completely full — density $1$. The ray of charge $3$ has density $2/3$. The ray of charge $5$: $4/5$. The ray of charge $15$: $8/15$, barely half. And this is *visible*. In a high-resolution rendering, rays of prime charge look like solid lines of light, while rays of highly composite charge look perceptibly dotted. The multiplicative structure of the ray's *label* has become an optical property of the ray.
 
-Second — and this is the punchline of the whole picture — the parity of $p+q$ is *invariant* under transport. No word in the three rules can ever turn an odd-sum fan into an even-sum fan. The fan at $0$ (all charges) and the fan at $1$ (odd charges only) therefore lie in genuinely different classes, and the visual asymmetry between the two most conspicuous stars in the picture is permanent, not an accident of where we chose to root the tree.
+There is a refinement, too. Splitting the window by the parity of the parameter gives $\varphi(2K)$ nodes in one class and $2\varphi(K)-\varphi(2K)$ in the other — which, for odd $K$, is $\varphi(K)$ in each. The two halves of a ray are exactly equally populated.
 
-## What the picture is
+---
 
-Step back. A tree of Pythagorean triples, plotted through a two-thousand-year-old parametrisation into a nineteenth-century geometry, produces a star map whose every feature turns out to be an exact statement about the rationals: a fan at each fraction, indexed by an integer charge that is simultaneously a hyperbolic width; half the rays extinguished by a parity rule that no growth of the tree can violate; a visibility threshold that reproduces the Farey sequence; innermost spokes that are best rational approximations; spoke densities counted by Euler's totient; and a global symmetry that permutes the fans while conserving the charge.
+## Why the charge is really about approximation
 
-The picture, in other words, is not a picture *of* Pythagorean triples. It is a picture of the rational numbers, and the triples are the ink.
+Rewrite the ray identity one more way:
+$$\frac{n}{m} - \frac{p}{q} \;=\; -\frac{\chi}{qm}.$$
+The charge is the numerator of the error in approximating the slope $n/m$ by the fraction $p/q$. Small charge means good approximation, in exactly the scale-invariant sense that number theorists care about. The rays of the fan at $p/q$ are the *levels of approximation quality*:
+$$\Big|\frac{n}{m}-\frac{p}{q}\Big| \le \frac{K}{qm} \quad\Longleftrightarrow\quad |\chi| \le K.$$
+
+The innermost ray, $|\chi| = 1$, is therefore the set of nodes whose slope is a **Farey neighbour** of $p/q$ — the unimodular partners, the fractions from which $p/q$ is separated by exactly $1/(qm)$ and by nothing simpler. Farey's classical theorem then says something strong: if $p/q$ and $n/m$ are Farey neighbours, no fraction of denominator smaller than $q+m$ can be squeezed strictly between them, and the mediant $(p+n)/(q+m)$ shows the bound cannot be improved.
+
+So the innermost spoke of every fan is a chain of best approximations to the fan's centre. And — this is the fact that puts the whole star system beyond suspicion of being a decorative coincidence — **every node of the tree lies on the innermost spoke of two different fans**, one on each side, both of denominator smaller than the node's own $m$. There are no leftover points. The star map is not a few bright fans over a generic haze; it is fans all the way down, and every triangle in the picture is an innermost, best-approximating node of two of them.
+
+---
+
+## Why you see only a handful of fans
+
+If every rational carries a fan, and rationals are dense, why isn't the picture a uniform smear?
+
+Because of resolution. Two adjacent rays of the fan at $p/q$ — charges $k$ and $k+1$ — are separated, at plot height $y$, by exactly
+$$\frac{y}{q}.$$
+The gap depends on nothing but the denominator. A fan at a fraction with $q=2$ has rays a quarter of the frame apart at mid-height; a fan at a fraction with $q=100$ has rays five thousandths of the frame apart and dissolves into a blur.
+
+So at a given plotting resolution $\varepsilon$, the fans you can actually resolve are exactly those with
+$$q \;\le\; \frac{y}{\varepsilon},$$
+and the visible star centres are precisely the **Farey fractions** of level $Q = \lfloor y/\varepsilon\rfloor$ — all fractions in lowest terms with denominator at most $Q$. There are $\varphi(1)+\varphi(2)+\cdots+\varphi(Q)$ of them between $0$ and $1$.
+
+Put in numbers: at mid-height with a resolution of one part in ten, $Q=5$ and there are exactly ten resolvable centres in $(0,1]$:
+$$\tfrac11,\ \tfrac12,\ \tfrac13,\ \tfrac23,\ \tfrac14,\ \tfrac34,\ \tfrac15,\ \tfrac25,\ \tfrac35,\ \tfrac45,$$
+plus the centre at $0$ itself. That is exactly the list of fans the eye picks out — $0$, $1$, $0.5$, $0.333$, $0.2$ and their companions. Sharpen the resolution tenfold and $Q$ jumps to $50$, and the number of visible fans jumps to $774$. The count grows like $Q^2$ (with the classical constant $3/\pi^2 \approx 0.304$), so **doubling your resolution roughly quadruples the number of stars you can see.** The star map has no finest scale; it is a Farey structure, revealing more of itself the closer you look.
+
+---
+
+## The tree moves the stars
+
+One more layer. The Pythagorean triples are not merely a set; they form a *tree*. Berggren showed in 1934 that three fixed integer transformations, applied over and over starting from $(3,4,5)$, generate every primitive triple exactly once — no repeats, no omissions. In the seed coordinates the three moves are wonderfully simple:
+$$B_1(m,n)=(2m-n,\,m), \qquad B_2(m,n)=(2m+n,\,m), \qquad B_3(m,n)=(m+2n,\,n).$$
+
+What do these do to the fans? They *transport* them. Each move comes with a linear transformation on the star parameter $(p,q)$:
+$$T_1(p,q) = (2p-q,\,p),\qquad T_2(p,q)=(2p-q,\,-p),\qquad T_3(p,q)=(p,\,q-2p),$$
+and the charge is exactly conserved:
+$$\chi_{p/q}\big(B_i(m,n)\big) \;=\; \chi_{T_i(p,q)}(m,n).$$
+Moving a node by a tree step is the same as moving the fan by the corresponding linear step. The fans are not independent objects sitting at unrelated rationals; the tree action shuffles them among each other, which is the deep reason no rational boundary point is special.
+
+Two consequences.
+
+**A permanent asymmetry.** Every one of the three transports preserves the parity of $p+q$ — check: $(2p-q)+p = 3p-q$, $(2p-q)-p = p-q$, $p+(q-2p) = q-p$, all of the same parity as $p+q$. So the full fans and the half fans lie in *different* classes, and no sequence of tree moves, however long, can ever carry the fan at $0$ onto the fan at $1$. Their visual difference is not an artefact of where we chose to root the tree. It is permanent.
+
+**Infinitely many fans are one fan.** Take the "ladder" of fractions $1/2,\ 2/3,\ 3/4,\ 4/5,\ldots$, marching towards $1$. One application of $T_1$ walks the ladder down a rung — $T_1(k+1,k+2) = (k,k+1)$ — so the word $B_1^{\,k}$ carries the fan at $k/(k+1)$ exactly onto the fan at $0$. All the fans on that ladder are copies of the same fan, seen from different depths of the tree. Each of them is a full fan (since $k+(k+1)$ is odd), and none of them is ever a copy of the fan at $1$.
+
+---
+
+## The single ray
+
+One last feature of the picture deserves mention, because it is the only one that is not a fan. Among the three moves, $B_1$ and $B_3$ are *parabolic* on the boundary: they slide the slope towards the rational tips $1$ and $0$ ever more slowly, so their orbits are exactly the rays we have been discussing, gliding tangentially into the horizon with steps that shrink to nothing.
+
+The middle move $B_2$ is different. On slopes it acts as $t\mapsto 1/(2+t)$, whose fixed point is $\sqrt2-1$ — an irrational number, so not a star centre at all. Iterating $B_2$ from the root gives the seeds
+$$(2,1),\ (5,2),\ (12,5),\ (29,12),\ (70,29),\ (169,70),\ \ldots$$
+whose entries are consecutive Pell numbers. This orbit is a genuine hyperbolic geodesic, traversed at a constant pace: the step lengths converge to
+$$\log(1+\sqrt2) \;=\; 0.881373\ldots,$$
+the logarithm of the *silver ratio*, the quiet cousin of the golden ratio that governs $\sqrt2$ the way the golden ratio governs $\sqrt5$. Measured numerically, the successive steps along this spine are $0.9624$, $0.8838$, $0.8838$, $0.8814$, $0.8814$, $0.8814$ — converging fast.
+
+So the picture contains exactly two dynamical regimes: infinitely many families of rays whose steps die away as they slide into rational tips, and one lone geodesic marching off at constant speed toward an irrational one.
+
+---
+
+## What the star map is telling us
+
+Step back and the whole picture resolves into a single sentence: *the angular structure of the Pythagorean triples, seen hyperbolically, is the Farey structure of the rationals.*
+
+The radial coordinate is the logarithm of the hypotenuse. The angular coordinate is organised by a family of fans, one per rational boundary point, each fan a discrete ladder of hypercycles indexed by an integer charge. Whether a fan is full or half empty is decided by a single parity bit. How thickly a given ray is populated is decided by Euler's totient function applied to the charge. Which fans you can see is decided by the Farey level of your resolution. And the tree itself acts on the collection of fans by integer linear maps, shuffling them while preserving both the charges and the parity bit.
+
+There is something satisfying in how completely arithmetic the answers are. Almost every quantity here is *exact*: the distance to the centre, the distance to the axis of a fan, the ray spacing, the node count in a window. The reason is that the embedding hides nothing — the imaginary part is $1/m$ and the real part is $n/m$, so the seed is visible in the coordinates, and every hyperbolic invariant is a rational function of the two integers with a single $\operatorname{arsinh}$ or $\operatorname{arcosh}$ wrapped around it, which monotonicity strips away.
+
+And that, in the end, is the pleasure of the object. A schoolroom fact — the integer right triangles — placed in the geometry of Bolyai and Lobachevsky, produces a picture whose every line, gap, and brightness is a piece of elementary number theory made visible: parity, coprimality, totients, and Farey fractions, drawn in light on the hyperbolic plane.
