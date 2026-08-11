@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ee0c99e7",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe Lean development proves exact results for an explicit region-capacity model.  The following are concrete extensions that would connect those combinatorial bounds to analytic a",
-      "quality_score": 0.80029,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-01T11:45:24",
-      "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-    },
-    {
       "cycle_id": "febd9c83",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Sharpness of Prime-to-Characteristic Averaging\n\n## Contrarian conjecture tested\n\nA tempting strengthening of the finite-group averaging theorem is:\n\n> **Unconditional averaging co",
@@ -2501,6 +2491,16 @@
       "theorem_count": 52,
       "timestamp": "2026-08-11T06:17:22",
       "title": "**Conjecture.** For a comparator network implemented by reversible gates with a"
+    },
+    {
+      "cycle_id": "0dad7f8d",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nThe formalisation in `Catalog/Algebra/PosetFlow/` develops the combinatorial core of\n*the chain replacement of a poset flow*: the refinement poset `ChainFrom x y` of\nstrictly incr",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-11T07:47:33",
+      "title": "ArXiv paper: The chain replacement of a poset flow"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71196
     }
   ],
-  "last_updated": "2026-08-11T06:17:22",
+  "last_updated": "2026-08-11T07:47:33",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "8eaed4e7",
-        "quality": 0.692,
-        "theorems": 6,
-        "title": "**Conjecture.** For every fixed uniformity `r ≥ 3`, there are infinitely many pa"
-      },
-      {
         "cycle_id": "ffa9af78",
         "quality": 0.74086,
         "theorems": 12,
@@ -3079,6 +3073,12 @@
         "quality": 0.6443439147018031,
         "theorems": 56,
         "title": "The formal results show that a scalar missing rate and feature count do not dete"
+      },
+      {
+        "cycle_id": "0dad7f8d",
+        "quality": 0.627125,
+        "theorems": 74,
+        "title": "ArXiv paper: The chain replacement of a poset flow"
       }
     ],
     "Applications": [
