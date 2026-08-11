@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cb10fc42",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone do",
-      "quality_score": 0.7388999999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-01T09:31:25",
-      "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
-    },
-    {
       "cycle_id": "0e1eb0cb",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equival",
@@ -2501,6 +2491,16 @@
       "theorem_count": 40,
       "timestamp": "2026-08-11T06:13:48",
       "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
+    },
+    {
+      "cycle_id": "fadf9a22",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from this cycle's formalization in\n\n* `Catalog/Combinatorics/B3FreeKSperner.lean` — the Lubell function, Erdős' `k`-Sperner\n  theorem, th",
+      "quality_score": 0.6286056450320513,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-08-11T06:15:35",
+      "title": "Deepening: Concrete, falsifiable conjectures arising from the formalization in"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.747205
     }
   ],
-  "last_updated": "2026-08-11T06:13:48",
+  "last_updated": "2026-08-11T06:15:35",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3208,12 +3208,6 @@
     "Combinatorics": [
       {
         "cycle_id": "39ee2889",
-        "quality": 0.79707,
-        "theorems": 34,
-        "title": "Concrete, falsifiable conjectures arising from the formalization in"
-      },
-      {
-        "cycle_id": "39ee2889",
         "quality": 0.7010699999999999,
         "theorems": 34,
         "title": "Concrete, falsifiable conjectures arising from the formalization in"
@@ -3265,6 +3259,12 @@
         "quality": 0.747205,
         "theorems": 40,
         "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
+      },
+      {
+        "cycle_id": "fadf9a22",
+        "quality": 0.6286056450320513,
+        "theorems": 106,
+        "title": "Deepening: Concrete, falsifiable conjectures arising from the formalization in"
       }
     ],
     "Computation": [
