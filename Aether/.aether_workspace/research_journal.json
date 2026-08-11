@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "28c84414",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `Cᵒᵖ ⥤+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   r",
-      "quality_score": 0.73729,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-03T23:29:51",
-      "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
-    },
-    {
       "cycle_id": "8fa54bf5",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d → ℝ` whose every subfamily of cardinality at",
@@ -499,19 +489,19 @@
       "theorem_count": 47,
       "timestamp": "2026-08-11T09:24:03",
       "title": "Future directions from cycle 4c2c71e5"
+    },
+    {
+      "cycle_id": "c56f6a79",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Diophantine–Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms\n\nAll conjectures below are falsifiable statements about the objects formalised in\n`Catalog/Applications/Di",
+      "quality_score": 0.71215,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-08-11T10:24:47",
+      "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6c98f572",
-      "domain": "Computation",
-      "key_insight": "# Future Directions: Fourier Analysis as a Functor\n\n## What this phase establishes\n\n`Catalog/Bridges/FourierAsFunctor.lean` proves a self-contained finite-coordinate model of the requested bridge.\n\n1.",
-      "quality_score": 0.80505,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-01T18:22:53",
-      "title": "Bridge: Fourier Analysis as a Functor"
-    },
     {
       "cycle_id": "74a8a74b",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 143,
       "timestamp": "2026-08-11T10:22:55",
       "title": "Algorithmic-Immune-System: Autonomous Code Parasite Neutralization"
+    },
+    {
+      "cycle_id": "c56f6a79",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Diophantine–Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms\n\nAll conjectures below are falsifiable statements about the objects formalised in\n`Catalog/Applications/Di",
+      "quality_score": 0.71215,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-08-11T10:24:47",
+      "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "36710bef",
-      "domain": "NumberTheory",
-      "name": "arctan_le_self",
-      "quality": 0.7451150000000001
-    },
-    {
-      "cycle_id": "48492a97",
-      "domain": "Combinatorics",
-      "name": "is",
-      "quality": 0.71196
-    },
-    {
-      "cycle_id": "48492a97",
-      "domain": "Combinatorics",
-      "name": "hasse_F5",
-      "quality": 0.71196
-    },
     {
       "cycle_id": "48492a97",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "norm_E",
       "quality": 0.741695
+    },
+    {
+      "cycle_id": "c56f6a79",
+      "domain": "Applications",
+      "name": "QF_diagonal",
+      "quality": 0.71215
+    },
+    {
+      "cycle_id": "c56f6a79",
+      "domain": "Applications",
+      "name": "hasSpectralBounds_diagonal",
+      "quality": 0.71215
+    },
+    {
+      "cycle_id": "c56f6a79",
+      "domain": "Applications",
+      "name": "hasSpectralBounds_one",
+      "quality": 0.71215
     }
   ],
-  "last_updated": "2026-08-11T10:22:55",
+  "last_updated": "2026-08-11T10:24:47",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3cce8c08",
-        "quality": 0.76564,
-        "theorems": 19,
-        "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
-      },
-      {
         "cycle_id": "18622a4a",
         "quality": 0.77537,
         "theorems": 22,
@@ -3141,6 +3135,12 @@
         "quality": 0.6348185595414201,
         "theorems": 96,
         "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem "
+      },
+      {
+        "cycle_id": "c56f6a79",
+        "quality": 0.71215,
+        "theorems": 43,
+        "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
       }
     ],
     "Bridges": [
