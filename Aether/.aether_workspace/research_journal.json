@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "87f6aef5",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nThe completed development proves perfect honest-verifier zero knowledge for the opened colour pair, exact perfect completeness, a one-round soundness bound, and independent repeti",
-      "quality_score": 0.76207,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-04T01:19:29",
-      "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
-    },
-    {
       "cycle_id": "bae1175e",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nThe following are concrete conjectures suggested by the formal metric/counting bridge.\n\n1. **Periodic-coordinate dimension formula.** For every `m > 0` and every set of residues `",
@@ -499,19 +489,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-11T10:26:39",
       "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
+    },
+    {
+      "cycle_id": "30b679f8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nConjectures distilled from the formalization of *Various Bialgebras of\nRepresentative Functions on Free Monoids* carried out in `Catalog/Novelty/`\n(`FreeMonoidShuffle`, `FreeMonoi",
+      "quality_score": 0.7355200000000001,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-11T15:25:21",
+      "title": "ArXiv paper: Various Bialgebras Of Representative Functions On Free Monoids"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9fb19498",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton polygons are lattice polygons `P` and `Q`, the stable intersection number equals `area(P + Q) - area(",
-      "quality_score": 0.79021,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-01T19:43:11",
-      "title": "Tropical Intersection Theory"
-    },
     {
       "cycle_id": "3cce8c08",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-11T10:26:39",
       "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
+    },
+    {
+      "cycle_id": "30b679f8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nConjectures distilled from the formalization of *Various Bialgebras of\nRepresentative Functions on Free Monoids* carried out in `Catalog/Novelty/`\n(`FreeMonoidShuffle`, `FreeMonoi",
+      "quality_score": 0.7355200000000001,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-11T15:25:21",
+      "title": "ArXiv paper: Various Bialgebras Of Representative Functions On Free Monoids"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1f345ab3",
-      "domain": "Tropical",
-      "name": "boxStep_iterate_apply",
-      "quality": 0.73286
-    },
-    {
-      "cycle_id": "756b62a7",
-      "domain": "Pythagorean",
-      "name": "sum_finProd",
-      "quality": 0.7084450000000001
-    },
-    {
-      "cycle_id": "756b62a7",
-      "domain": "Pythagorean",
-      "name": "GammaTwoLE",
-      "quality": 0.7084450000000001
-    },
     {
       "cycle_id": "756b62a7",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "and",
       "quality": 0.743025
+    },
+    {
+      "cycle_id": "30b679f8",
+      "domain": "Novelty",
+      "name": "sum_map_ite_count",
+      "quality": 0.7355200000000001
+    },
+    {
+      "cycle_id": "30b679f8",
+      "domain": "Novelty",
+      "name": "count_map_eq_sum_ite",
+      "quality": 0.7355200000000001
+    },
+    {
+      "cycle_id": "30b679f8",
+      "domain": "Novelty",
+      "name": "prodsum",
+      "quality": 0.7355200000000001
     }
   ],
-  "last_updated": "2026-08-11T10:26:39",
+  "last_updated": "2026-08-11T15:25:21",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "558c6b54",
-        "quality": 0.6345760413043479,
-        "theorems": 152,
-        "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
-      },
-      {
         "cycle_id": "100d7a9d",
         "quality": 0.6599028963414636,
         "theorems": 106,
@@ -3637,6 +3631,12 @@
         "quality": 0.741695,
         "theorems": 47,
         "title": "Future directions from cycle 4c2c71e5"
+      },
+      {
+        "cycle_id": "30b679f8",
+        "quality": 0.7355200000000001,
+        "theorems": 87,
+        "title": "ArXiv paper: Various Bialgebras Of Representative Functions On Free Monoids"
       }
     ],
     "NumberTheory": [
