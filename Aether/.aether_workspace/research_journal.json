@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "03b10997",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThe present development verifies algebraic search-to-decision ingredients, finite-distribution hybrid bounds for IND-CPA and post-compromise security, reconciliation inequalities,",
-      "quality_score": 0.7701199999999999,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-07-31T20:49:43",
-      "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
-    },
-    {
       "cycle_id": "4be361b7",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\n- Package the finite Fisher form as a Mathlib `InnerProductSpace` on the tangent hyperplane of the open probability simplex.\n- Formalize differentiability of parameterized statist",
@@ -2501,6 +2491,16 @@
       "theorem_count": 119,
       "timestamp": "2026-08-10T05:02:08",
       "title": "Pythagorean triplet tree on Poincare half plane: lines and stars and curves"
+    },
+    {
+      "cycle_id": "2c070abd",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Tropical Convexity, Helly and Optimization\n\nThis cycle proved, with zero `sorry`s:\n\n* the **tropical Cramer dependence theorem** (`trop_dependence_fin`): any `d + 1`\n  vectors of",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-10T23:59:59",
+      "title": "Deepening: Tropical Convexity and Helly Theorem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.740175
     }
   ],
-  "last_updated": "2026-08-10T05:02:08",
+  "last_updated": "2026-08-10T23:59:59",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "1fc64f82",
-        "quality": 0.79392,
-        "theorems": 15,
-        "title": "Inverse Stereographic Tropical Lift"
-      },
-      {
         "cycle_id": "0f63237d",
         "quality": 0.7743899999999999,
         "theorems": 22,
@@ -4009,6 +4003,12 @@
         "quality": 0.73286,
         "theorems": 96,
         "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
+      },
+      {
+        "cycle_id": "2c070abd",
+        "quality": 0.627125,
+        "theorems": 68,
+        "title": "Deepening: Tropical Convexity and Helly Theorem"
       }
     ]
   }
