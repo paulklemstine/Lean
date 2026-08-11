@@ -3280,18 +3280,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Amoebas and Ronkin Functions"
   },
   {
-    "consumed_by_exp_id": "434afe25",
+    "consumed_by_exp_id": "",
     "description": "Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categories.",
     "domains": [
       "Bridges",
       "Physics"
     ],
     "id": "seed_351",
-    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
   },
@@ -6043,18 +6042,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings"
   },
   {
-    "consumed_by_exp_id": "008e5e52",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities' and formalize its key results. Abstract: We prove that every connected simple graph of bounded degree satisfying the classical dimension-free Bakry--\u00c9mery condition $\\mathrm{CD}(0,\\infty)$ for the unnormalised Laplacian is volume doubling and supports, at all integer graph scales, a scale-invariant $L^2$-Poincar\u00e9 inequality with dilation two, with constants depending only on the maximum degree. This settles the polynomial-growth conjecture of Cushing, Liu, and Peyerimhoff in a stronger form. The main novelty is a dimension-free adaptation of the graph-theoretic modified nonlinear heat-flow method introduced by M\u00fcnch and extended to infinite weighted graphs by Pajot and Russ: point-mass consequences of $\u0393_2\\geq0$ and positive-resolvent smoothing replace any global $\\mathrm{CD}(0,n)$ reduction, while diffusive exit-time control and finite-volume localisation yield the Poincar\u00e9 inequality.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
     "id": "fd_0500",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15522v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-20T03:35:25.814685+00:00",
     "title": "ArXiv paper: Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities"
   },
@@ -8079,17 +8077,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Let `A` be an abelian group and let the `n`th stage be `A^{n+1}`, with bonding m"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6db0a277",
     "description": "# Future Directions: Thermodynamics of Mathematical Proof\n\n## 1. Fiber-entropy law for proof normalization\n\nFor every finite terminating normalization system equipped with a probability law on proof terms, the minimum expected irreversible work of normalization equals the expected logarithm of the normalization-fiber size precisely when the conditional law is uniform on each fiber; otherwise the fiber logarithm is a strict upper bound on the Shannon entropy destroyed.\n\nThe key insight is that normalization is a many-to-one map, so its thermodynamic cost should be controlled by conditional entropy rather than raw term count. **Why now?** Exact finite multiplicities and the one-bit Landauer unit are available, making the equality and strictness cases sharply testable on concrete rewrite systems.\n\n## 2. Bennett tradeoff for theorem verification\n\nThere exists a family of finite proof systems for which reversible verification using subexponential auxiliary space necessarily incurs superlinear recomputation time, while irreversible linear-time verification destroys a linear number of transcript bits.\n\nThe key insight is that preserving a verifier transcript avoids erasure but forces a pebbling tradeoff between retained checkpoints and recomputation. **Why now?** The adversarial coverage theorem isolates the information that a verifier must distinguish; adding reversible pebble games can turn this static obstruction into a time-space-energy tradeoff.\n\n## 3. Exponential normalization fibers with short conclusions\n\nThere exists a finitely presented, strongly normalizing proof calculus containing conclusions of length `O(n)` whose shortest normal proofs have `2^n` distinct bounded-length preimages under normalization.\n\nThe key insight is that exponentially many bureaucratic derivations may collapse to one canonical proof even when the theorem and its normal proof remain short. **Why now?** The present binary derivation family supplies the target multiplicity, while an explicit normalization calculus would replace the abstract selection model by a semantic proof transformation.\n\n## 4. Kolmogorov-incompressible proof families\n\nFor infinitely many lengths `n`, some valid proof object of length `n` has prefix-free description complexity at least `n - O(1)`, and every universal verifier that reconstructs such a proof from a shorter certificate must acquire the missing information through either its input transcript or irreversible state changes.\n\nThe key insight is that finite pigeonhole incompressibility should persist under universal prefix-free coding and constrain where verification information can enter. **Why now?** Strict finite compression has already been excluded at each fixed depth; the next test is to obtain a machine-invariant asymptotic formulation with explicit additive constants.\n\n## 5. Compositional Landauer accounting\n\nFor independent proof obligations, minimum erasure work is additive, whereas shared lemmas reduce total work by exactly the mutual information between the obligations' proof distributions.\n\nThe key insight is that lemma reuse acts as statistical dependence, converting the gap between separate and joint verification costs into mutual information. **Why now?** Candidate-space products already produce additive logarithmic counts, and the entropy-loss identity provides a direct route from that combinatorics to a quantitative thermodynamic prediction.\n",
     "domains": [
       "Computation",
       "Physics"
     ],
     "id": "fd_0537",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "fbb9076c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T00:19:42.257809+00:00",
     "title": "For every finite terminating normalization system equipped with a probability la"
   },
@@ -8708,17 +8707,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The present development supplies two self-contained Lean modules for the request"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b1761bc",
     "description": "# Future Directions\n\nThe following are concrete conjectures extending the formal model in `Catalog/Novelty/ImmortalityGame.lean`. Each has a definite Lean statement and can be proved or refuted independently.\n\n1. **Finite iteration of bounded nondeterministic refinement.** Define `nondetExtIter : \u2115 \u2192 SurvivalGame \u2192 SurvivalGame` by iteration of `nondetExt`. For every `k : \u2115`,\n   ```lean\n   (nondetExtIter k finiteGame).value = \u03c9 ^ (k + 1)\n   ```\n   where the natural exponent is coerced to an ordinal as required by the API.\n\n2. **Exact finite-level hierarchy.** For all natural numbers `j < k`, the `j`-fold refined finite game cannot force the survival value of the `k`-fold refined game:\n   ```lean\n   \u00ac (nondetExtIter j finiteGame).MortalForces\n       ((nondetExtIter k finiteGame).value)\n   ```\n\n3. **Embedding characterization of bounded-depth clocks.** For every survival game `G` and natural number `k`, if the moments of `G` order-embed into the `k`-fold lexicographic natural-number clock, then\n   ```lean\n   G.value \u2264 \u03c9 ^ k\n   ```\n   (with the base clock chosen so that `k = 1` recovers `value_le_omega_of_embeds_nat`). Conversely, every game whose value is at most `\u03c9 ^ k` admits such an order embedding.\n\n4. **The finite-refinement limit is `\u03c9^\u03c9`.** If the clocks at all finite refinement depths are combined by an ordinal sum or an equivalent dependent lexicographic construction, the resulting survival value is exactly\n   ```lean\n   \u03c9 ^ \u03c9\n   ```\n   and it strictly exceeds every finite refinement value.\n\n5. **Faithful monotone ITTM-clock realization.** There is a monotone transfinite transition system with an explicit limit rule whose reachable-time well-order is isomorphic to `nondetGame.Moment`; consequently its closure ordinal is exactly `\u03c9\u00b2`, no stage below `\u03c9\u00b2` is terminal, and stage `\u03c9\u00b2` is terminal.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
     "id": "fd_0785",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "87772396",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-27T10:29:10.836905+00:00",
     "title": "The following are concrete conjectures extending the formal model in `Catalog/No"
   },
@@ -10713,7 +10713,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the five Lean files of this thread, all of which compile against"
   },
   {
-    "consumed_by_exp_id": "76069036",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nDerived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.lean`,\n`Catalog/Novelty/ConsistencyTransferSharpness.lean`,\n`Catalog/Novelty/HeightSpectrumTransfer.lean`,\n`Catalog/Novelty/TransferPreorderRealization.lean` and\n`Catalog/Novelty/PhysicalCountermodelCompleteness.lean`.  Each conjecture is\nstated so that a single verified Lean object refutes it.\n\n## 1. Exact reflection strength of the interpretation axiom\n\nThe explicit arithmetic `PAsys pa qft` proves `Con(QFT\u2080) \u2192 Con(PA)` from the single\ninterpretation axiom `\u25a1_pa \u22a5 \u2192 \u25a1_qft \u22a5`.\n\n**Conjecture.**  Over the GL calculus `Thm pa Ax`, the reflection sentence\n`Con(qft) \u2192 Con(pa)` is derivable from an axiom set `Ax` consisting of *boxed-falsum\nimplications only* if and only if `Ax` already contains (or derives) the transfer\nimplication `\u25a1_pa \u22a5 \u2192 \u25a1_qft \u22a5`.\n\n*Falsified by* an axiom set of that shape, plus a derivation of the reflection\nsentence, together with a GL model validating `Ax` in which `\u25a1_pa \u22a5 \u2192 \u25a1_qft \u22a5` fails.\n\n## 2. Depth-graded failure of reflection\n\n`capSysN n` is consistent, minimally sound, and refutes the uniform reflection rule\nexactly at iteration depth `n`: it proves `\u25a1^{n+1}\u22a5` and refutes `\u25a1^n \u22a5`.\n\n**Conjecture (depth-graded reflection hierarchy).**  For every `n \u2265 1` the *restricted*\nreflection rule \"`\u22a2 \u25a1 \u03c6` implies `\u22a2 \u03c6` for all `\u03c6` of box-depth `< n`\" holds in\n`capSysN n`, while it fails at depth `n`.  Hence 1-consistency stratifies into a\nstrictly increasing chain of conditions, each strictly stronger than the minimal\nsoundness condition `\u22ac \u25a1\u22a5` that is *equivalent* to the negative independence half.\n\n*Falsified by* a formula of box-depth `< n` provably boxed but unprovable in\n`capSysN n`, or by a proof that the depth-`n` rule holds.\n\n## 3. Beyond the resolved one-sided transfer question\n\n*Status: the previous conjecture of this section is now a theorem.*  In\n`Catalog/Novelty/ConsistencyTransferSharpness.lean` the tag-sensitive Kripke\nsemantics `satC` yields an explicit consistent GL theory `sepSys u` with tags `u \u2260 t`\nproving `Con u \u2192 Con t` in which `Con t` is independent while `Con u` is refuted\n(`one_sided_transfer_insufficient`, `mutual_transfer_not_weakenable`).  The exact\nrepair is also proved: one-sided transfer *plus* minimal soundness at the source tag\nrestores independence (`one_sided_transfer_with_min_soundness`), and minimal soundness\ncannot be dropped (`min_soundness_hypothesis_necessary`).\n\n*Status: the height-spectrum conjecture previously listed here is now settled \u2014 and it\nwas **false**.*  `Catalog/Novelty/HeightSpectrumTransfer.lean` computes the spectrum\nexactly:\n\n* `capC_Con_independent_iff` : `Independent (capC c N) (Con i) \u2194 1 \u2264 c i \u2227 1 \u2264 N`,\n  so the conjectured upper constraint `c i \u2264 N` is spurious\n  (`height_spectrum_conjecture_false`);\n* `capC_transfer_iff` : `Provable (capC c N) (imp (Con i) (Con j)) \u2194 min N (c i) \u2264 c j`,\n  so the conjectured description `c i \u2264 c j \u2228 c i = 0` is too narrow\n  (`transfer_spectrum_conjecture_false`).\n\nThe correct invariant is the *truncated* height `min N (c i)`: mutual transfer holds\niff `min N (c i) = min N (c j)` (`capC_mutual_transfer_iff`), which by\n`capC_mutual_transfer_forces_simultaneous_independence` gives an explicit non-vacuous\nfamily of instances of `independence_transfer`.  That invariant is moreover\n**complete** \u2014 `provable_capC_congr_of_min_eq`: height functions with the same\ntruncation `min N \u2218 c` generate the very same theory \u2014 and the transfer relation\n`i \u227c j :\u2194 Provable (capC c N) (Con i \u2192 Con j)` is always a total preorder\n(`capC_transfer_total_preorder`).\n\n*Status: the realization conjecture previously listed here is now a theorem \u2014 and it\nwas **true**.*  `Catalog/Novelty/TransferPreorderRealization.lean` proves the exact\ncharacterization of the realizable consistency-strength preorders:\n\n* `transfer_preorder_characterization` : a relation `R` on tags is the provable-transfer\n  relation `TransferRel c N` of some height function `c` **iff** `R` is transitive,\n  total, and has no strict chain of length `N + 1` (`HasChainTo R (N+1) i`);\n* `totalPreorder_iff_rank_representation` : equivalently, `R i j \u2194 h i \u2264 h j` for some\n  `h` bounded by `N` \u2014 the rank function `rank R N` (the longest strict chain ending at\n  a tag) is such an `h`, so the realizing theory is the explicit `capC (rank R N) N`\n  (`transfer_preorder_summary`, which also records that it is consistent and GL);\n* `transfer_pigeonhole` : among any `N + 2` tags two are transfer-equivalent, so at most\n  `N + 1` strengths are separated, and `transfer_linear_order_realized` shows the bound\n  is attained.\n\nSection \u00a76 of the same file explains the invariant: the truncated height is exactly the\n*depth of provable inconsistency*, `Provable (capC c N) (\u25a1_i^k \u22a5) \u2194 1 \u2264 k \u2227 min N (c i) < k`\n(`capC_provable_boxPow_bot_iff`), and the transfer spectrum for all iterated boxed falsa\nis computed in `capC_boxPow_transfer_iff`.\n\nTwo further facts about the *depth vector* `d c N i := min N (c i)` are proved there:\nit is a complete invariant in the strong sense that different depth vectors give\ndifferent theories (`capC_ne_of_min_ne`, converse of `provable_capC_congr_of_min_eq`),\nbut the inclusion order between these theories is **not** the pointwise order on depth\nvectors \u2014 `theory_inclusion_not_pointwise` exhibits `N = 1`, `d = (0, 1, 1, \u2026) \u2264\nd' = (1, 1, \u2026)` with `\u25a1_0 \u22a5 \u2192 \u25a1_1 \u22a5` provable for `d'` and refuted for `d`.\n\n**Conjecture (order-preservation criterion for inclusion).**  For truncated depth\nvectors `d = min N \u2218 c` and `d' = min N \u2218 c'`, the inclusion\n`Provable (capC c' N) a \u2192 Provable (capC c N) a` holds for **every** formula `a` iff\n\n1. `d i \u2264 d' i` for every tag `i`  (depths may only increase), *and*\n2. `d' i \u2264 d' j \u2192 d i \u2264 d j` for all tags `i, j`  (the relative order of the depths is\n   not disturbed).\n\nCondition 1 alone is provably insufficient (`theory_inclusion_not_pointwise`, in which\ncondition 2 fails); condition 1 alone is necessary because\n`capC_provable_boxPow_bot_iff` reads the depths off the iterated boxed falsa.\n\n*Falsified by* a pair `(c, c')` satisfying 1 and 2 together with a formula provable for\n`c'` but not for `c`, or by a pair violating 1 or 2 whose theories are nevertheless\nincluded.\n\n## 4. Realizability gap for finitely presented operational semantics\n\nThe two-state switch is nonempty, finite, fully sound, and refutes\n\"consistent \u27f9 realizable\" with the finite constraint set `{on, off}`.\n\n**Conjecture (no finite completeness).**  Every finitely presented operational\nsemantics (finite world type, decidable satisfaction) whose language contains at\nleast two mutually exclusive observation constraints is incomplete for the\nassumption-plus-ex-falso proof system: some finite consistent constraint set has no\nrealization.\n\n*Falsified by* a finite, decidable semantics with mutually exclusive observables in\nwhich every consistent finite constraint set is realizable.\n\n## 5. Sharpness of the completeness boundary\n\n`consistency_equivalence_iff` characterizes the coincidence of mathematical and\nphysical consistency as `FalsumSound \u2227 Complete`, and\n`equivalence_without_full_soundness` shows full soundness is *not* implied by the\nboundary.\n\n**Conjecture (boundary rigidity).**  There is no semantic condition `C` strictly\nbetween falsum-soundness and full soundness such that `C \u2227 Complete` is *equivalent*\nto the consistency biconditional for every proof system: any such `C` must already be\nimplied by falsum-soundness on complete semantics.\n\n*Falsified by* a condition `C`, a complete falsum-sound semantics violating `C`\n(showing `C` is strictly stronger), together with a proof that `C \u2227 Complete` is\nstill equivalent to the biconditional.\n",
     "domains": [
       "Logic",
@@ -10722,11 +10722,10 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "id": "fd_1001",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "43d8701a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-06T19:01:34.949435+00:00",
     "title": "Derived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.le"
   },
