@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bae1175e",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe following are concrete conjectures suggested by the formal metric/counting bridge.\n\n1. **Periodic-coordinate dimension formula.** For every `m > 0` and every set of residues `",
-      "quality_score": 0.7559799999999999,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-08-04T01:20:58",
-      "title": "Close Proofs: The Fractal Dimension of Mathematical Truth"
-    },
-    {
       "cycle_id": "94d22408",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\nDerived from the formal development in `Catalog/Pythagorean/NumberTheory/`\n(`CyclotomicFrobenius.lean`, `HilbertClassField.lean`).\n\n## What this cycle established\n\nThe previous cy",
@@ -499,19 +489,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-11T15:25:21",
       "title": "ArXiv paper: Various Bialgebras Of Representative Functions On Free Monoids"
+    },
+    {
+      "cycle_id": "a062ecaf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Strange Attractors as Algebraic Objects\n\nDerived from the analysis and adversarial review of this research thread.\n\n## What is established\n\n**Structure.** The orbit space of any",
+      "quality_score": 0.7526200000000001,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-11T16:22:30",
+      "title": "Deepening: Strange Attractors as Algebraic Objects"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b080b405",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n- Extend the two-state Cayley–Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point",
-      "quality_score": 0.7891599999999999,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-08-01T21:18:01",
-      "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series"
-    },
     {
       "cycle_id": "0f65effc",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 82,
       "timestamp": "2026-08-11T15:26:33",
       "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
+    },
+    {
+      "cycle_id": "a062ecaf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Strange Attractors as Algebraic Objects\n\nDerived from the analysis and adversarial review of this research thread.\n\n## What is established\n\n**Structure.** The orbit space of any",
+      "quality_score": 0.7526200000000001,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-11T16:22:30",
+      "title": "Deepening: Strange Attractors as Algebraic Objects"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "756b62a7",
-      "domain": "Pythagorean",
-      "name": "IsBlowUp",
-      "quality": 0.7084450000000001
-    },
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "name": "fib_cassini",
-      "quality": 0.748155
-    },
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "name": "luc_two_mul_and_succ",
-      "quality": 0.748155
-    },
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "prodsum",
       "quality": 0.7355200000000001
+    },
+    {
+      "cycle_id": "a062ecaf",
+      "domain": "Novelty",
+      "name": "and_gate_tt",
+      "quality": 0.7526200000000001
+    },
+    {
+      "cycle_id": "a062ecaf",
+      "domain": "Novelty",
+      "name": "and_gate_tf",
+      "quality": 0.7526200000000001
+    },
+    {
+      "cycle_id": "a062ecaf",
+      "domain": "Novelty",
+      "name": "and_gate_ft",
+      "quality": 0.7526200000000001
     }
   ],
-  "last_updated": "2026-08-11T15:26:33",
+  "last_updated": "2026-08-11T16:22:30",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "100d7a9d",
-        "quality": 0.6599028963414636,
-        "theorems": 106,
-        "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
-      },
-      {
         "cycle_id": "3f42ae3f",
         "quality": 0.6544111491354468,
         "theorems": 239,
@@ -3637,6 +3631,12 @@
         "quality": 0.7355200000000001,
         "theorems": 87,
         "title": "ArXiv paper: Various Bialgebras Of Representative Functions On Free Monoids"
+      },
+      {
+        "cycle_id": "a062ecaf",
+        "quality": 0.7526200000000001,
+        "theorems": 15,
+        "title": "Deepening: Strange Attractors as Algebraic Objects"
       }
     ],
     "NumberTheory": [
