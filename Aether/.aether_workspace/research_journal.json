@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6337dbc1",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) — connected groupoids\n  (models of `K(G,1)`) are classifie",
-      "quality_score": 0.78433,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-08-04T20:08:49",
-      "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-    },
-    {
       "cycle_id": "3a707635",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe three files\n\n* `Catalog/Applications/EML/EMLDifferentialEquations.lean`\n* `Catalog/Applications/EML/AiryRationalObstruction.lean`\n* `Catalog/Applications/EML/AiryKovacicCaseTw",
@@ -499,19 +489,19 @@
       "theorem_count": 101,
       "timestamp": "2026-08-11T19:31:44",
       "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
+    },
+    {
+      "cycle_id": "5ac3c62c",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions (Solomon zeta functions over arithmetic orders)\n\n## What this cycle added\n\nAll statements below are machine-checked and free of `sorry`; they live in\n`Catalog/NumberTheory/` and bu",
+      "quality_score": 0.7516700000000001,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-08-11T19:33:15",
+      "title": "The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "316f6446",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\n1. **Continuous time.** Replace finite sums by interval integrals and derive the same\n   information-adjusted extraction bound from an almost-everywhere differential energy\n   bal",
-      "quality_score": 0.8021799999999999,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-08-01T23:25:37",
-      "title": "Deepening: Zero-Point-Harvesting: Thermodynamic Upper Bound for Vacuum Energy Extraction"
-    },
     {
       "cycle_id": "8eaed4e7",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 101,
       "timestamp": "2026-08-11T19:31:44",
       "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
+    },
+    {
+      "cycle_id": "5ac3c62c",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions (Solomon zeta functions over arithmetic orders)\n\n## What this cycle added\n\nAll statements below are machine-checked and free of `sorry`; they live in\n`Catalog/NumberTheory/` and bu",
+      "quality_score": 0.7516700000000001,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-08-11T19:33:15",
+      "title": "The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e870e995",
-      "domain": "Novelty",
-      "name": "coboundary_mul_cocycle",
-      "quality": 0.7131
-    },
-    {
-      "cycle_id": "0dcd87ee",
-      "domain": "Combinatorics",
-      "name": "is",
-      "quality": 0.751005
-    },
-    {
-      "cycle_id": "0dcd87ee",
-      "domain": "Combinatorics",
-      "name": "of",
-      "quality": 0.751005
-    },
     {
       "cycle_id": "0dcd87ee",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "bq_half",
       "quality": 0.715855
+    },
+    {
+      "cycle_id": "5ac3c62c",
+      "domain": "NumberTheory",
+      "name": "card_hom_pi",
+      "quality": 0.7516700000000001
+    },
+    {
+      "cycle_id": "5ac3c62c",
+      "domain": "NumberTheory",
+      "name": "mobiusWeight_pi",
+      "quality": 0.7516700000000001
+    },
+    {
+      "cycle_id": "5ac3c62c",
+      "domain": "NumberTheory",
+      "name": "mobiusWeight_congr_of_card_hom_eq",
+      "quality": 0.7516700000000001
     }
   ],
-  "last_updated": "2026-08-11T19:31:44",
+  "last_updated": "2026-08-11T19:33:15",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "c7c1ec6d",
-        "quality": 0.7667599999999999,
-        "theorems": 8,
-        "title": "The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
-      },
-      {
         "cycle_id": "d7c83314",
         "quality": 0.7814599999999999,
         "theorems": 11,
@@ -3699,6 +3693,12 @@
         "quality": 0.627125,
         "theorems": 119,
         "title": "Pythagorean triplet tree on Poincare half plane: lines and stars and curves"
+      },
+      {
+        "cycle_id": "5ac3c62c",
+        "quality": 0.7516700000000001,
+        "theorems": 39,
+        "title": "The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
       }
     ],
     "Physics": [
