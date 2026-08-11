@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "66e718fe",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Retrocausal Proof Theory\n\nThe formal results in `Catalog/Novelty/RetrocausalProofTheory.lean` separate two claims: verified forward consequences alone cannot establish an antecede",
-      "quality_score": 0.8129599999999999,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-08-01T17:25:26",
-      "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
-    },
-    {
       "cycle_id": "a7f30302",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n1. **Sharp obstruction period for elementary rules.** Determine whether cycle\n   length 4 is necessary in `reversible_small_cycles_iff`: specifically, test\n   and prove or refute",
@@ -2501,6 +2491,16 @@
       "theorem_count": 47,
       "timestamp": "2026-08-11T09:24:03",
       "title": "Future directions from cycle 4c2c71e5"
+    },
+    {
+      "cycle_id": "c31d2b69",
+      "domain": "Computation",
+      "key_insight": "# Future directions (Cycle 2, thread th_3b515382)\n\nCycle 2 delivered, with complete Lean proofs and no `sorry`:\n\n* explicit periodic left/right shifts, translation equivariance of every elementary\n  r",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 150,
+      "timestamp": "2026-08-11T10:21:03",
+      "title": "Define periodic left and right shifts explicitly and derive the Rule 110 sing"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.741695
     }
   ],
-  "last_updated": "2026-08-11T09:24:03",
+  "last_updated": "2026-08-11T10:21:03",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "5814a7d4",
-        "quality": 0.74072,
-        "theorems": 7,
-        "title": "Sensitivity Conjecture Extensions"
-      },
-      {
         "cycle_id": "eb6ff95e",
         "quality": 0.7944100000000001,
         "theorems": 17,
@@ -3327,6 +3321,12 @@
         "quality": 0.659818701923077,
         "theorems": 201,
         "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
+      },
+      {
+        "cycle_id": "c31d2b69",
+        "quality": 0.627125,
+        "theorems": 150,
+        "title": "Define periodic left and right shifts explicitly and derive the Rule 110 sing"
       }
     ],
     "Cryptography": [
