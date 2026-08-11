@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eb6ff95e",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tensor `ψ : Fin 2 → Fin 2 → Fin 2 → ℂ`, the convex-roof squared concurrences of its `AB` and `AC` reduc",
-      "quality_score": 0.7944100000000001,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-08-03T17:32:21",
-      "title": "Quantum Information: No-Cloning and Teleportation"
-    },
-    {
       "cycle_id": "18ab6902",
       "domain": "Bridges",
       "key_insight": "# Future directions\n\n## Completed foundation\n\n`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-contained,\nsorry-free treatment of the paper's forbidden induced configuration.",
@@ -499,19 +489,19 @@
       "theorem_count": 40,
       "timestamp": "2026-08-11T06:13:48",
       "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
+    },
+    {
+      "cycle_id": "610f4688",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions (cycle 1 of thread th_2130c620)\n\nThe five conjectures inherited from cycle 0 have now been formalised and proved in a precise\nmodel (see `Catalog/Novelty/MultiwaySortingRadix.lean`",
+      "quality_score": 0.71196,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-08-11T06:17:22",
+      "title": "**Conjecture.** For a comparator network implemented by reversible gates with a"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0e1eb0cb",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **Component-count lineality conjecture.** For every finite loopless matroid `M`, the dimension of `BergmanLineality M` restricted to the ground set equals the number of equival",
-      "quality_score": 0.80043,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-08-01T11:44:09",
-      "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
-    },
     {
       "cycle_id": "ee0c99e7",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 106,
       "timestamp": "2026-08-11T06:15:35",
       "title": "Deepening: Concrete, falsifiable conjectures arising from the formalization in"
+    },
+    {
+      "cycle_id": "610f4688",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions (cycle 1 of thread th_2130c620)\n\nThe five conjectures inherited from cycle 0 have now been formalised and proved in a precise\nmodel (see `Catalog/Novelty/MultiwaySortingRadix.lean`",
+      "quality_score": 0.71196,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-08-11T06:17:22",
+      "title": "**Conjecture.** For a comparator network implemented by reversible gates with a"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "22e93393",
-      "domain": "Combinatorics",
-      "name": "psiSet_empty",
-      "quality": 0.71348
-    },
-    {
-      "cycle_id": "df8839cd",
-      "domain": "Pythagorean",
-      "name": "lap_K",
-      "quality": 0.71728
-    },
-    {
-      "cycle_id": "df8839cd",
-      "domain": "Pythagorean",
-      "name": "linEquiv_effective_iff_K",
-      "quality": 0.71728
-    },
     {
       "cycle_id": "df8839cd",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "StronglyComplete",
       "quality": 0.747205
+    },
+    {
+      "cycle_id": "610f4688",
+      "domain": "Novelty",
+      "name": "card_transcript",
+      "quality": 0.71196
+    },
+    {
+      "cycle_id": "610f4688",
+      "domain": "Novelty",
+      "name": "Sorter",
+      "quality": 0.71196
+    },
+    {
+      "cycle_id": "610f4688",
+      "domain": "Novelty",
+      "name": "Sorter",
+      "quality": 0.71196
     }
   ],
-  "last_updated": "2026-08-11T06:15:35",
+  "last_updated": "2026-08-11T06:17:22",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "786dcda9",
-        "quality": 0.6520853,
-        "theorems": 246,
-        "title": "The following conjectures are concrete extensions of the proved bridge.  Each is"
-      },
-      {
         "cycle_id": "edfd57dd",
         "quality": 0.627125,
         "theorems": 30,
@@ -3637,6 +3631,12 @@
         "quality": 0.7131,
         "theorems": 87,
         "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy"
+      },
+      {
+        "cycle_id": "610f4688",
+        "quality": 0.71196,
+        "theorems": 52,
+        "title": "**Conjecture.** For a comparator network implemented by reversible gates with a"
       }
     ],
     "NumberTheory": [
