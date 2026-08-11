@@ -1,113 +1,94 @@
-# Computational Evidence — Diophantine-Lattice Spectral Bounds
+# Computational Evidence — Diophantine–Lattice Spectral Bounds
 
-All computations below were run in Lean 4 (`#eval`, exact rational arithmetic) before any
-proof was attempted; they are what selected the final theorem statements.
+All numbers below were produced by Lean `#eval` computations (exact rational
+arithmetic for the counting data, `Float` for the theta data).  They are
+exploratory: they motivated the theorems, and every claim that is asserted as a
+*result* is proved in `Catalog/Applications/DiophantineLatticeSpectral.lean`
+without `sorry`.
 
-## 1. Shifted (deep-hole) spectrum of `ℤⁿ` with the standard form
+## 1. Test object
 
-For `t = (1/2, …, 1/2)` and `m ∈ {-2,…,2}ⁿ` we tabulated the *integral* quantity
-`4·Q(t − m) = Σ (1 − 2mᵢ)²`:
+The extremal half-shift instance of the theory: `A = I`, `t = (1/2, …, 1/2)`,
+so `Q(x − t) = ∑ᵢ (xᵢ − 1/2)²` with spectral bounds `m = M = 1` and
+`d(t, ℤⁿ)² = n/4`.
 
-| `n` | observed value set of `4·Q(t−m)` |
-|---|---|
-| 0 | `{0}` |
-| 1 | `{1, 9, 25}` |
-| 2 | `{2, 10, 18, 26, 34, 50}` |
-| 3 | `{3, 11, 19, 27, 35, 43, 51, 59, 75}` |
-| 4 | `{4, 12, 20, 28, 36, 44, 52, 60, 68, 76, 84, 100}` |
+## 2. Counting function `N(R) = #{x ∈ ℤⁿ : ∑ (xᵢ − 1/2)² ≤ R}`
 
-Two exact patterns, both later proved:
+(computed over the box `|xᵢ| ≤ 8` for `n ≤ 2` and `|xᵢ| ≤ 6` for `n = 3`, which
+contains all solutions in the listed range)
 
-* every value is `≡ n (mod 8)` — so the shifted theta series of `ℤⁿ` at its deep hole is
-  supported on `n/4 + 2ℤ≥0`: a **spectral gap of exactly 2** between consecutive
-  admissible values (`deepHole_spectrum`, `deepHole_gap_two`);
-* the minimum is exactly `n`, i.e. `Q(t−m) ≥ n/4` with equality at `m = 0`
-  (`deepHole_isInhomMin`), giving covering radius² `= n/4` together with the rounding
-  upper bound (`standard_covering_le`).
+| `n` | `R = n/4 − 0.01` | `R = n/4` | `R = 1` | `R = 4` | `R = 9` |
+|-----|------------------|-----------|---------|---------|---------|
+| 1   | 0                | 2         | 2       | 4       | 6       |
+| 2   | 0                | 4         | 4       | 12      | 32      |
+| 3   | 0                | 8         | 8       | 32      | 136     |
 
-Note this immediately falsifies the naive guess "the shifted spectrum is `n/4 + ℤ≥0`":
-odd gaps never occur.
+Observations.
 
-## 2. Counterexample hunt for the packing–covering bound
+* `N(R) = 0` for every `R < n/4`: the **spectral gap** `m·d(t,ℤⁿ)² = n/4` is
+  attained and no integer point lies below it (proved: `spectral_gap_lower`,
+  `sum_sq_half_shift_ge`, `no_integer_solution_below_gap`).
+* `N(n/4) = 2ⁿ`: the minimum is attained exactly at the `2ⁿ` vertices
+  `xᵢ ∈ {0,1}`, matching the covering bound `M·n/4` (proved as an upper bound:
+  `exists_le_covering`, `inhomMin_sandwich`).  The exact multiplicity `2ⁿ` and
+  the exact description of the extremal set as the vertex set of the unit cube
+  are *proved*: `Cycle4.half_shift_solution_iff`,
+  `Cycle4.half_shift_minimizer_count`.
 
-For positive-definite binary forms `Q(x,y) = a x² + b x y + c y²` we computed
-`λ₁ = min_{m≠0} Q(m)`, a shortest vector `v`, and `μ = min_{m∈ℤ²} Q(v/2 − m)`
-over the box `[-5,5]²`:
+## 3. Two-sided counting bounds
 
-| `(a,b,c)` | `λ₁` | `μ` at `v/2` | `μ − λ₁/4` |
-|---|---|---|---|
-| `(1,0,1)` | 1 | 1/4 | 0 |
-| `(1,1,1)` | 1 | 1/4 | 0 |
-| `(2,1,3)` | 2 | 1/2 | 0 |
-| `(1,0,5)` | 1 | 1/4 | 0 |
-| `(3,2,7)` | 3 | 3/4 | 0 |
-| `(5,4,9)` | 5 | 5/4 | 0 |
+Proved bounds: `(2√(R/(M·n)) − 1)ⁿ ≤ N(R) ≤ (2√(R/m) + 1)ⁿ` (the lower bound for
+`R ≥ M·n/4`).  With `m = M = 1`:
 
-No counterexample to `μ ≥ λ₁/4` was found, and in **every** sample the inequality was an
-*equality*. That observation upgraded the intended inequality
-(`SpectralGap ≥ MinLatticeEnergy/4`) to the sharp identity
-`half_shortest_isInhomMin : μ(v/2) = λ₁/4`, which is what the Lean file proves in
-arbitrary dimension for arbitrary positive-definite rational forms.
+| `n` | `R` | lower bound | `N(R)` | upper bound |
+|-----|-----|-------------|--------|-------------|
+| 2   | 1   | 0.17        | 4      | 9           |
+| 2   | 4   | 3.34        | 12     | 25          |
+| 2   | 9   | 10.51       | 32     | 49          |
+| 3   | 4   | 2.25        | 32     | 125         |
+| 3   | 9   | 14.96       | 136    | 343         |
 
-## 3. Where the mission's literal stub fails
+No violation was found; both inequalities are of the correct order `R^{n/2}`,
+with the constants losing the factor `n^{-n/2}` on the lower side (the box vs.
+ball discrepancy).
 
-The stub `SpectralGap Q c ≥ MinLatticeEnergy Q` (unnormalised) is *false*: the table above
-shows `μ = λ₁/4 < λ₁` whenever `λ₁ > 0`. The factor `1/4` is not cosmetic — it is forced by
-the `2`-torsion of `L/2L`, and §2 shows it cannot be improved.
+## 4. Theta series and the gap decay rate
 
-## 4. Gaps at general torsion shifts (cycles 6–8)
+`Θ(s) = ∑_{k∈ℤ} exp(−s (k − 1/2)²)` (truncated at `|k| ≤ 20`, error `< 10⁻¹⁰⁰`):
 
-Exact rational enumeration of `μ(t) = min_{m ∈ [-3,3]ⁿ} Σ (tᵢ − mᵢ)²` for the standard form:
+| `s` | `Θ(s)` | gap bound `exp(−(s−1)/4)·Θ(1)` |
+|-----|--------|-------------------------------|
+| 1   | 1.77227 | 1.77227 |
+| 2   | 1.23529 | 1.38025 |
+| 4   | 0.73601 | 0.83716 |
+| 8   | 0.27067 | 0.30797 |
 
-| `t` | `μ(t)` | predicted |
-|---|---|---|
-| `(0,0)` | `0` | `t ∈ L`, no gap |
-| `(1/2,0)`, `(0,1/2)` | `1/4` | `λ₁/4`, extremal `2`-torsion shift |
-| `(1/2,1/2)` | `1/2` | Hamming weight `2`, so `2/4` |
-| `(1/2,1/2,0)` | `1/2` | weight `2` |
-| `(1/2,1/2,1/2)` | `3/4` | weight `3` (deep hole of `ℤ³`) |
-| `(3/2,5/2)` | `1/2` | weight `2`: only the class mod `L` matters |
-| `(1/3)` | `1/9` | `λ₁/r²` with `r = 3`, extremal |
-| `(1/3,1/3)` | `2/9` | **not** extremal: `λ₂/r² = 2/9` |
+The proved estimate `Θ(s) ≤ exp(−(s − s₀)·m·d(t,ℤⁿ)²)·Θ(s₀)` (`theta_decay`)
+holds in every sample and is tight to within ~12%: the exponential rate `1/4`
+of the decay is exactly the spectral gap, and `Θ(s) → 0` (`theta_tendsto_zero`).
 
-Two exact patterns, both now proved:
+## 5. Counterexample hunt
 
-* the gap at a `2`-torsion shift depends only on its class in `𝔽₂ⁿ` and equals a quarter of the
-  Hamming weight of that class (`two_torsion_gap_eq_card`, `gap_spectrum_eq`);
-* a torsion shift that is not congruent to `w/r` with `w` shortest jumps to the *next* value of
-  the homogeneous form, e.g. `2/9` rather than `1/9` above (`torsion_shift_second_gap`).
+* Exhaustive rational check (exact `ℚ` arithmetic): for every `1 ≤ q ≤ 12` and
+  every `|a| ≤ 40` with `q ∤ a`, the bound `d(a/q, ℤ) ≥ 1/q` (`distZ_rat_ge`)
+  holds; equality occurs at `a = 1`, `q ≥ 2`.
+* The naive strengthening "`N(R) ≥ (2√(R/M) − 1)ⁿ`" (dropping the `n` inside the
+  square root) is **false**, as an explicit counterexample search shows: for
+  `n = 2, m = M = 1` and the half-shift,
 
-No counterexample to `μ(t) ≥ λ₁/r²` was found in any of the samples, in accordance with
-`torsion_shift_gap_ge`.
+  | `R` | `N(R)` | `(2√R − 1)²` |
+  |-----|--------|--------------|
+  | 25  | 80     | 81           |
+  | 49  | 156    | 169          |
+  | 100 | 316    | 361          |
 
-## 5. Cycle 9: weighted gaps, and the counterexample to the parity conjecture
+  The reason is geometric: a ball of radius `√R` cannot contain a cube of side
+  `2√R`.  This is exactly why the proved lower bound
+  (`Cycle3.exists_many_solutions`) carries the extra `1/n` inside the square
+  root — the inscribed cube has half-side `√(R/(M·n))`.
 
-### 5a. Diagonal weight enumerator
+## 6. OEIS
 
-For `Q(x,y) = 2x² + 5y²` we computed `μ(t) = min_{m ∈ [-3,3]²} Q(t − m)` exactly:
-
-| `t` | `μ(t)` | predicted `(Σ_{i ∈ s} aᵢ)/4` |
-|---|---|---|
-| `(1/2, 0)` | `1/2` | `s = {1}`, `2/4` |
-| `(0, 1/2)` | `5/4` | `s = {2}`, `5/4` |
-| `(1/2, 1/2)` | `7/4` | `s = {1,2}`, `(2+5)/4` |
-| `(3/2, 5/2)` | `7/4` | same class mod `L`, so same value |
-
-This is exactly the weighted Hamming law, now proved as `diagonal_stepShift_isInhomMin`,
-`diagonal_two_torsion_gap_eq` and `diagonal_gap_spectrum_eq` (sub-conjecture D1 confirmed).
-
-### 5b. Counterexample hunt for Conjecture A (parity ⟹ `2`-torsion)
-
-Exact shell counts `r_t(c) = #{m ∈ ℤ² : |t − m|² = c}` for the standard form (box `[-5,5]²`,
-values listed up to a cutoff below which the box is complete):
-
-| `t` | first shells `(c, r_t(c))` | all even? | `2t ∈ ℤ²`? |
-|---|---|---|---|
-| `(1/2, 1/2)` | `(1/2, 4)`, `(5/2, 8)` | yes | yes |
-| `(1/3, 1/3)` | `(2/9, 1)`, `(5/9, 2)`, `(8/9, 1)` | **no** | no |
-| `(1/2, 1/3)` | `(13/36, 2)`, `(25/36, 2)`, `(73/36, 2)`, `(85/36, 2)` | **yes** | **no** |
-
-The last row **refutes Conjecture A**: all coefficients are even although `2t = (1, 2/3) ∉ ℤ²`
-(theorem `parity_conjecture_false`).  The middle row shows the mechanism of the corrected
-criterion: with no half-integral coordinate the *minimal* shell is a single point
-(`2/9` with multiplicity `1`), which is the content of `diagonal_min_shell_unique`.
+No OEIS lookup was performed (the working environment is offline), so no OEIS
+identifiers are claimed for the sequences `2, 4, 8, …` (minimum multiplicities)
+or `2, 4, 6, …` / `4, 12, 32` (counting values).

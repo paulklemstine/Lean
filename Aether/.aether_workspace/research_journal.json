@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f8e43caa",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nThe completed formalization deliberately studies the smallest non-trivial model:\na width-one scalar two-layer ReLU network with an explicit time-dependent input,\ntogether with the",
-      "quality_score": 0.77257,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-08-03T23:28:48",
-      "title": "Grokking: Phase Transitions in Learning"
-    },
-    {
       "cycle_id": "28c84414",
       "domain": "Shared",
       "key_insight": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `Cᵒᵖ ⥤+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   r",
@@ -499,19 +489,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-11T07:52:58",
       "title": "Deepening: Attention is All You Need: Formalizing Transformer Architecture"
+    },
+    {
+      "cycle_id": "3bb7c316",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` — limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discr",
+      "quality_score": 0.741695,
+      "sorry_count": 0,
+      "theorem_count": 47,
+      "timestamp": "2026-08-11T09:24:03",
+      "title": "Future directions from cycle 4c2c71e5"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "647e3d96",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nThe Lean development proves statements inside a precise topological observer model. The following conjectures are concrete extensions of that model and do not assert an empirical",
-      "quality_score": 0.7752299999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-01T17:24:08",
-      "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
-    },
     {
       "cycle_id": "66e718fe",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 87,
       "timestamp": "2026-08-11T07:54:47",
       "title": "State the CSS dictionary with two classical codes precisely.: The mission"
+    },
+    {
+      "cycle_id": "3bb7c316",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` — limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discr",
+      "quality_score": 0.741695,
+      "sorry_count": 0,
+      "theorem_count": 47,
+      "timestamp": "2026-08-11T09:24:03",
+      "title": "Future directions from cycle 4c2c71e5"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "97241621",
-      "domain": "Novelty",
-      "name": "sqrt_two_bounds",
-      "quality": 0.743405
-    },
-    {
-      "cycle_id": "36710bef",
-      "domain": "NumberTheory",
-      "name": "smul_one_mem_unitary",
-      "quality": 0.7451150000000001
-    },
-    {
-      "cycle_id": "36710bef",
-      "domain": "NumberTheory",
-      "name": "norm_polarUnit",
-      "quality": 0.7451150000000001
-    },
     {
       "cycle_id": "36710bef",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "continuous_permAct",
       "quality": 0.7456849999999999
+    },
+    {
+      "cycle_id": "3bb7c316",
+      "domain": "Novelty",
+      "name": "E_add",
+      "quality": 0.741695
+    },
+    {
+      "cycle_id": "3bb7c316",
+      "domain": "Novelty",
+      "name": "E_zero",
+      "quality": 0.741695
+    },
+    {
+      "cycle_id": "3bb7c316",
+      "domain": "Novelty",
+      "name": "norm_E",
+      "quality": 0.741695
     }
   ],
-  "last_updated": "2026-08-11T07:54:47",
+  "last_updated": "2026-08-11T09:24:03",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "edfd57dd",
-        "quality": 0.627125,
-        "theorems": 30,
-        "title": "Black-Hole-Entropy: Bekenstein-Hawking Metric Area Law Proof"
-      },
-      {
         "cycle_id": "558c6b54",
         "quality": 0.6345760413043479,
         "theorems": 152,
@@ -3637,6 +3631,12 @@
         "quality": 0.71196,
         "theorems": 52,
         "title": "**Conjecture.** For a comparator network implemented by reversible gates with a"
+      },
+      {
+        "cycle_id": "3bb7c316",
+        "quality": 0.741695,
+        "theorems": 47,
+        "title": "Future directions from cycle 4c2c71e5"
       }
     ],
     "NumberTheory": [
