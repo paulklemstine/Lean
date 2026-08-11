@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0f65effc",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThe following conjectures extend the finite-test Gröbner theory formalized in `Catalog/Tropical/GroebnerBases.lean`. Each is stated so that a finite counterexample or a formal pro",
-      "quality_score": 0.7809699999999999,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-08-01T22:20:25",
-      "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
-    },
-    {
       "cycle_id": "d4159430",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-08-11T16:22:30",
       "title": "Deepening: Strange Attractors as Algebraic Objects"
+    },
+    {
+      "cycle_id": "ea23936f",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the tropical scheme/Gröbner thread by adding the *matroidal*\nlayer that the previous cycle's purely submodule-theoretic notion of tropical\nideal was missing: t",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-08-11T16:24:20",
+      "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7526200000000001
     }
   ],
-  "last_updated": "2026-08-11T16:22:30",
+  "last_updated": "2026-08-11T16:24:20",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "0f63237d",
-        "quality": 0.7743899999999999,
-        "theorems": 22,
-        "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
-      },
-      {
         "cycle_id": "78bbd545",
         "quality": 0.7874099999999999,
         "theorems": 10,
@@ -4009,6 +4003,12 @@
         "quality": 0.627125,
         "theorems": 68,
         "title": "Deepening: Tropical Convexity and Helly Theorem"
+      },
+      {
+        "cycle_id": "ea23936f",
+        "quality": 0.627125,
+        "theorems": 96,
+        "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
       }
     ]
   }
