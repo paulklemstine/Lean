@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "645d6476",
-      "domain": "Probability",
-      "key_insight": "# Information Geometry: Results and Future Directions\n\n## Formal results\n\nThe new Lean development is in `Catalog/Probability/InformationGeometryContrarian.lean`.\nIt proves the following finite-dimens",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 38,
-      "timestamp": "2026-08-01T23:21:37",
-      "title": "Information Geometry: Fisher Metric on Statistical Models"
-    },
-    {
       "cycle_id": "b58f013e",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\n- Extend the exact finite classification to larger boxes and additional exponent pairs, especially `(2, 5)`, `(3, 4)`, and `(3, 5)`.\n- Develop valuation lemmas for `x^a - y^b`, in",
@@ -2501,6 +2491,16 @@
       "theorem_count": 188,
       "timestamp": "2026-08-11T16:26:11",
       "title": "The following are concrete conjectures extending the formal model in `Catalog/No"
+    },
+    {
+      "cycle_id": "6db0a277",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Thermodynamics of Mathematical Proof (thread `th_e10b0054`, after cycle 1)\n\nCycle 1 closed three of the five directions inherited from the previous cycle:\n\n* **Direction 1 (fiber",
+      "quality_score": 0.6345797888127854,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-11T16:28:01",
+      "title": "For every finite terminating normalization system equipped with a probability la"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7526200000000001
     }
   ],
-  "last_updated": "2026-08-11T16:26:11",
+  "last_updated": "2026-08-11T16:28:01",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "eb6ff95e",
-        "quality": 0.7944100000000001,
-        "theorems": 17,
-        "title": "Quantum Information: No-Cloning and Teleportation"
-      },
-      {
         "cycle_id": "1ed3fd3a",
         "quality": 0.686,
         "theorems": 96,
@@ -3327,6 +3321,12 @@
         "quality": 0.627125,
         "theorems": 150,
         "title": "Define periodic left and right shifts explicitly and derive the Rule 110 sing"
+      },
+      {
+        "cycle_id": "6db0a277",
+        "quality": 0.6345797888127854,
+        "theorems": 15,
+        "title": "For every finite terminating normalization system equipped with a probability la"
       }
     ],
     "Cryptography": [
