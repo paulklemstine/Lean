@@ -1,52 +1,23 @@
-# Ideal Triangles in the Half-Plane: An Explicit Derivation of Hyperbolic Gauss–Bonnet, Its Extremal Rigidity, and Curvature Comparison
+# Ideal Triangles in the Hyperbolic Half-Plane: Exact Area, Maximality, Rigidity, and Curvature Comparison
 
 **Author:** Aristotle
 **Date:** 2026-08-11
-**Keywords:** hyperbolic geometry, Gauss–Bonnet theorem, ideal triangle, upper half-plane model, Möbius transformation, curvature comparison, angular defect
 
 ---
 
 ## Abstract
 
-We give a complete and elementary derivation, entirely from the Riemannian area
-element of the upper half-plane model, of the area theory of ideal and
-partially-ideal hyperbolic triangles at constant curvature $-\kappa$, $\kappa > 0$.
-The analytic core is the single identity
-$$\int_{a}^{b} \frac{dx}{\sqrt{(x-a)(b-x)}} = \pi \qquad (a < b),$$
-an improper integral whose value is independent of the endpoints; it is
-established via the explicit antiderivative $x \mapsto \arcsin\frac{2x-a-b}{b-a}$
-together with a fundamental-theorem-of-calculus argument valid across both
-singular endpoints. Combining this with the vertical fibre integral
-$\int_{c}^{\infty} y^{-2}\,dy = c^{-1}$ yields, by Fubini-type slicing, that the
-ideal triangle with boundary vertices $a < b$ and $\infty$ has hyperbolic area
-exactly $\pi/\kappa$.
+We give a complete, self-contained development of the area theory of ideal triangles in the upper half-plane model of the hyperbolic plane of constant curvature $-\kappa$, $\kappa > 0$, whose Riemannian area element is $dA = dx\,dy/(\kappa y^{2})$.
 
-We then prove the following, all from the same slicing machinery. (i) An ideal
-$n$-gon has area $(n-2)\pi/\kappa$, by a genuine triangulation along vertical
-geodesics, and the area is additive under edge-gluing, so it is triangulation
-invariant. (ii) For the family of triangles with vertices $(\cos\theta,
-\sin\theta)$, $(\cos\varphi, \sin\varphi)$ and $\infty$, with $0 \le \varphi <
-\theta \le \pi$, the interior angles — *defined* as angles between the tangent
-vectors of the geodesic sides, and shown to be invariant under positive rescaling
-of either tangent vector, hence conformally invariant — equal $\pi - \theta$ and
-$\varphi$; and the area equals $(\theta - \varphi)/\kappa$, which is precisely the
-Gauss–Bonnet value $\bigl(\pi - ((\pi - \theta) + \varphi + 0)\bigr)/\kappa$. The
-single hypothesis range covers triangles with one, two or three ideal vertices.
-(iii) Finite vertices carry strictly positive angles, so such triangles have area
-strictly below $\pi/\kappa$; and compact truncations of an ideal triangle have
-strictly smaller area, increasing to $\pi/\kappa$ in the limit. (iv) Conversely,
-any sequence of admissible angle triples whose Gauss–Bonnet area tends to
-$\pi/\kappa$ has all three angles tending to $0$: the ideal triangle is the unique
-limiting shape of a maximising sequence. (v) The real Möbius group acts on the
-half-plane by hyperbolic isometries — we prove the height-distortion identity
-$\operatorname{Im} T(z) = \det(T)\operatorname{Im}(z)/|Cz+D|^{2}$ and the pointwise
-conformality identity $|T'(z)|/\operatorname{Im}T(z) = 1/\operatorname{Im}z$ — and
-acts sharply three-transitively on the boundary, via an explicit cross-ratio
-normalisation with positive determinant and a uniqueness argument; hence every
-ideal triangle is isometric to the standard one and the value $\pi/\kappa$ is
-universal. (vi) Under variable curvature $-K(x)$ with $\kappa_1 \le K \le
-\kappa_2$, the ideal-triangle area is pinched: $\pi/\kappa_2 \le \text{Area} \le
-\pi/\kappa_1$, sharply.
+The analytic core is the exact evaluation of an improper integral: for all real $a < b$,
+$$\int_{a}^{b} \frac{dx}{\sqrt{(x-a)(b-x)}} \;=\; \pi,$$
+obtained from the explicit antiderivative $x \mapsto \arcsin\!\big((2x - a - b)/(b-a)\big)$, whose limits at the two singular endpoints are $\mp\pi/2$. Combined with the vertical fibre integral $\int_{c}^{\infty} y^{-2}\,dy = c^{-1}$, this yields by slicing that the ideal triangle with boundary vertices $a < b$ and third vertex $\infty$ has hyperbolic area exactly $\pi/\kappa$, independently of $a$ and $b$.
+
+We then establish: (i) the **Gauss–Bonnet identity** $\mathrm{Area} = (\pi - (\alpha+\beta+\gamma))/\kappa$ as a *derived* statement, with interior angles computed from tangent vectors rather than postulated, for the family of triangles with at least one ideal vertex; (ii) **maximality and rigidity**, namely $\mathrm{Area} \le \pi/\kappa$ for admissible angle data with equality iff all three angles vanish, together with the strict positivity of interior angles at finite vertices, so that the maximum is attained only after adjoining the ideal boundary; (iii) the **ideal polygon formula** $\mathrm{Area} = (n-2)\pi/\kappa$, proved by genuine triangulation, with additivity under gluing along a common edge; (iv) **degeneration**, both geometric (a compact exhaustion by truncated regions with strictly smaller area, increasing to $\pi/\kappa$) and angular (every sequence of admissible triangles with area tending to $\pi/\kappa$ has all three angles tending to zero); (v) **sharp three-transitivity** of the real Möbius group on the boundary circle, with the explicit cross-ratio normalising map and a uniqueness statement, together with the two identities $\operatorname{Im} T(z) = (AD-BC)\operatorname{Im} z/|Cz+D|^{2}$ and $|T'(z)|/\operatorname{Im} T(z) = 1/\operatorname{Im} z$ that make real Möbius maps hyperbolic isometries; and (vi) **curvature comparison**: for a variable curvature profile $-K$ with $\kappa_{1} \le K \le \kappa_{2}$, the ideal triangle area is pinched, $\pi/\kappa_{2} \le \mathrm{Area} \le \pi/\kappa_{1}$, sharply.
+
+**Keywords:** hyperbolic geometry, ideal triangle, Gauss–Bonnet theorem, upper half-plane model, Möbius transformation, curvature comparison, angle defect, ideal polygon.
+
+**MSC (2020):** 51M10, 53C22, 30F45, 53A35.
 
 ---
 
@@ -54,797 +25,501 @@ universal. (vi) Under variable curvature $-K(x)$ with $\kappa_1 \le K \le
 
 ### 1.1 The phenomenon
 
-Euclidean geometry has no largest triangle. Hyperbolic geometry does. In a
-complete simply connected surface of constant curvature $-\kappa < 0$, the area
-of a geodesic triangle with interior angles $\alpha, \beta, \gamma$ is
+In Euclidean geometry, the angles of a triangle sum to $\pi$ and carry no information about size. In hyperbolic geometry the angle sum is strictly less than $\pi$, and the *defect* $\pi - (\alpha+\beta+\gamma)$ is, up to the curvature normalisation, precisely the area. The immediate corollary — that hyperbolic triangles have uniformly bounded area — has no Euclidean counterpart and is one of the defining structural features of negative curvature. It underlies the finiteness of hyperbolic volumes of finite-type surfaces, the $\delta$-thinness of geodesic triangles that abstracts to Gromov hyperbolicity, and the ideal-tetrahedron decompositions used to compute hyperbolic structures on knot complements.
 
-$$\mathcal{A}(\kappa; \alpha, \beta, \gamma) = \frac{\pi - (\alpha + \beta + \gamma)}{\kappa},$$
+The extremal object is the *ideal triangle*: three vertices on the circle at infinity, three geodesic sides meeting asymptotically at angle zero. It has infinite diameter and finite area $\pi/\kappa$.
 
-the two-dimensional Gauss–Bonnet theorem. Since the angles are nonnegative, the
-area never exceeds $\pi/\kappa$, and equality forces all three angles to vanish.
-There is thus a *universal* upper bound on triangle area depending only on the
-curvature, attained only in the degenerate limit where all three vertices recede
-to the ideal boundary.
+### 1.2 What this paper does
 
-This paper is concerned with converting that statement from a slogan about angle
-data into an explicit, self-contained computation performed inside a concrete
-model, together with the surrounding extremal and comparison theory.
+Much exposition of this material treats the angle-defect formula as an input and reasons algebraically from it. That approach yields maximality and rigidity as trivial consequences of $\alpha, \beta, \gamma \ge 0$, but it never explains *what a hyperbolic triangle is*, and in particular offers no independent verification that ideal triangles exist, that they all have the same area, or that the angle-zero configuration is unattainable in the interior of the plane.
 
-### 1.2 The gap this work closes
+We take the opposite route. We fix a concrete Riemannian model, compute areas by integration, define interior angles from tangent vectors, and derive Gauss–Bonnet where we can. Specifically, the logical structure is:
 
-A purely *algebraic* treatment can take
-$\mathcal{A}(\kappa; \alpha, \beta, \gamma) := (\pi - (\alpha+\beta+\gamma))/\kappa$
-as a definition and derive the maximality bound and the rigidity characterisation
-by elementary inequalities. Such a treatment is correct but hollow: nothing in it
-knows what a hyperbolic triangle *is*. Neither the area nor the angles are
-connected to a metric; the "theorem" is a restatement of the definition.
+1. **§3** develops the analytic core: an explicit antiderivative for the chordal density, its improper integrability across both singular endpoints, and the evaluation $\int_a^b (x-a)^{-1/2}(b-x)^{-1/2}\,dx = \pi$.
+2. **§4** develops the slicing formula and computes the ideal triangle area from the area element, obtaining $\pi/\kappa$; §4.4 extends this to ideal polygons by triangulation.
+3. **§5** computes interior angles from tangent vectors, verifies conformal invariance of the angle functional, and *derives* Gauss–Bonnet for the family of triangles with at least one ideal vertex, in a statement that covers one, two, and three ideal vertices uniformly. It also proves the strict positivity of finite-vertex angles.
+4. **§6** proves degeneration statements on both the geometric and the angle side.
+5. **§7** proves that real Möbius maps of positive determinant are hyperbolic isometries and act sharply three-transitively on the boundary, so that the computed area is a genuine isometry invariant of *every* ideal triangle.
+6. **§8** proves curvature comparison and its sharpness.
 
-The present development removes that gap. We fix the upper half-plane model with
-its Riemannian area element, define regions by their geodesic boundaries, define
-angles as arccosines of normalised inner products of tangent vectors, and then
-*prove* that area equals angular defect over $\kappa$, for a family of triangles
-rich enough to include all the ideal cases and a two-parameter family of
-partially ideal ones. The proof of the fundamental area identity is elementary
-enough to be checked by hand and precise enough to be checked by machine.
+§9 gives algorithms and numerics, §10 discusses applications, and §11 states open problems, including a precise conjecture on the fully finite-vertex case and on Möbius invariance of hyperbolic area.
 
-### 1.3 Organisation
+### 1.3 Conventions
 
-Section 2 sets up the model. Section 3 proves the analytic core: the chordal
-integral. Section 4 proves the slicing formula. Section 5 computes the ideal
-triangle area, the polygon formula, and the degeneration statements. Section 6
-defines angles and derives Gauss–Bonnet for triangles with at least one ideal
-vertex. Section 7 develops the Möbius symmetry group and sharp
-three-transitivity. Section 8 treats variable curvature. Section 9 presents
-algorithms and numerical validation. Section 10 discusses applications, open
-conjectures and future work.
+Throughout, $\kappa > 0$ denotes the *curvature magnitude*, so the Gaussian curvature is $-\kappa$; the hyperbolic plane of curvature $-1$ corresponds to $\kappa = 1$. All integrals are Lebesgue integrals; interval integrals $\int_a^b$ are oriented. $\pi$ denotes the usual circle constant.
 
 ---
 
 ## 2. The upper half-plane model
 
-**Definition 2.1 (Half-plane model at curvature $-\kappa$).**
-Let $\kappa > 0$. The *upper half-plane model of curvature $-\kappa$* is the set
-$$\mathbb{H} = \{(x,y) \in \mathbb{R}^{2} : y > 0\}$$
-equipped with the Riemannian metric
-$$ds^{2} = \frac{dx^{2} + dy^{2}}{\kappa\, y^{2}}, \qquad\text{hence area element}\qquad dA = \frac{dx\,dy}{\kappa\, y^{2}}.$$
-Identifying $(x,y)$ with $z = x + iy \in \mathbb{C}$, the line element is
-$|dz|/(\sqrt{\kappa}\,y)$.
+### 2.1 Definition
 
-The metric is $1/\kappa$ times the standard hyperbolic metric of curvature $-1$;
-scaling a two-dimensional metric by a positive constant $c$ scales its Gauss
-curvature by $c^{-1}$, so the curvature is indeed the constant $-\kappa$.
+**Definition 2.1 (Half-plane model).** The upper half-plane is $\mathbb{H} = \{(x,y) \in \mathbb{R}^{2} : y > 0\}$, identified with $\{z \in \mathbb{C} : \operatorname{Im} z > 0\}$. Equip it with the Riemannian metric
+$$ds^{2} = \frac{dx^{2} + dy^{2}}{\kappa\,y^{2}}, \qquad \kappa > 0.$$
+This metric has constant Gaussian curvature $-\kappa$. Its area element is
+$$dA = \frac{dx\,dy}{\kappa\,y^{2}}.$$
 
-**Definition 2.2 (Geodesics and the ideal boundary).**
-The complete geodesics of $\mathbb{H}$ are the vertical rays $\{x = c,\ y > 0\}$
-and the Euclidean semicircles centred on the $x$-axis. The *ideal boundary*
-$\partial_{\infty}\mathbb{H}$ is $\mathbb{R} \cup \{\infty\}$; its points are not
-points of $\mathbb{H}$ but are limits of geodesic rays. Each complete geodesic
-has two distinct ideal endpoints, and conversely each pair of distinct ideal
-points is joined by a unique complete geodesic.
+**Definition 2.2 (Boundary at infinity).** The ideal boundary is $\partial\mathbb{H} = \mathbb{R} \cup \{\infty\}$, a topological circle. Points of $\partial\mathbb{H}$ are at infinite hyperbolic distance from every point of $\mathbb{H}$ and are not points of the space.
 
-Concretely, the geodesic joining the boundary points $a$ and $b$ with $a < b$ is
-the semicircle of diameter $[a,b]$, whose height over $x \in (a,b)$ we denote
+**Fact 2.3 (Geodesics).** The complete geodesics of $\mathbb{H}$ are precisely (a) the vertical rays $\{x = c,\ y > 0\}$, with ideal endpoints $c$ and $\infty$; and (b) the Euclidean semicircles centred on the real axis, with ideal endpoints the two intersections with $\mathbb{R}$.
 
-$$\ell_{a,b}(x) := \sqrt{(x-a)(b-x)},$$
+We use Fact 2.3 to *define* the sides of our regions; no geodesic completeness theory is required, since every region we integrate over is described explicitly.
 
-and the geodesic joining $a$ to $\infty$ is the vertical ray above $a$.
+### 2.2 The chord function
 
-**Definition 2.3 (Ideal triangle with vertex at $\infty$).**
-For $a < b$, the *ideal triangle* $\Delta(a,b,\infty)$ is
-$$\Delta(a,b,\infty) = \{(x,y) : a < x < b,\ y > \ell_{a,b}(x)\},$$
-the region bounded below by the semicircular geodesic joining $a$ and $b$ and
-laterally by the two vertical geodesics through $a$ and $b$. Every point of
-$\Delta(a,b,\infty)$ has $y > \ell_{a,b}(x) > 0$, so the region does lie in the
-open upper half-plane. In the Euclidean sense $\Delta(a,b,\infty)$ is unbounded
-and of infinite area; its three "vertices" $a$, $b$, $\infty$ are ideal points,
-not points of $\mathbb{H}$.
+**Definition 2.4 (Chord height).** For $a < b$ and $x \in \mathbb{R}$ put
+$$h_{a,b}(x) \;=\; \sqrt{(x - a)(b - x)}.$$
+On $(a,b)$ this is the height of the Euclidean semicircle with diameter $[a,b]$, i.e. of the geodesic joining the boundary points $a$ and $b$.
 
-**Definition 2.4 (Angular defect and the Gauss–Bonnet functional).**
-For $\kappa > 0$ and reals $\alpha, \beta, \gamma$, write
-$$\mathcal{A}(\kappa;\alpha,\beta,\gamma) := \frac{\pi - (\alpha+\beta+\gamma)}{\kappa}.$$
-A triple $(\alpha,\beta,\gamma)$ is *admissible* if $\alpha,\beta,\gamma \ge 0$
-and $\alpha + \beta + \gamma \le \pi$.
+**Lemma 2.5.** If $a < x < b$ then $h_{a,b}(x) > 0$.
 
-For admissible triples, $0 \le \mathcal{A}(\kappa;\alpha,\beta,\gamma) \le
-\pi/\kappa$, with the upper bound attained exactly when $\alpha=\beta=\gamma=0$.
-Both the bound and the rigidity are immediate from the definitions, but note that
-the nonnegativity hypothesis is indispensable: without it, a large positive angle
-could be cancelled by a negative one and the rigidity would fail. The substance
-of the paper is that $\mathcal{A}$ is the *actual* Riemannian area of the *actual*
-region with the *actual* angles.
+*Proof.* $(x-a)(b-x) > 0$, and the square root of a positive real is positive. $\square$
+
+### 2.3 Ideal triangles
+
+**Definition 2.6 (Ideal triangle region).** For $a < b$, the ideal triangle with vertices $a$, $b$, $\infty$ is
+$$\Delta(a,b) \;=\; \{(x,y) : a < x < b,\ y > h_{a,b}(x)\} \subset \mathbb{H}.$$
+
+Its boundary consists of the geodesic semicircle over $[a,b]$ and the two vertical geodesics $x = a$, $x = b$. Every point of $\Delta(a,b)$ has $y > h_{a,b}(x) > 0$, so $\Delta(a,b) \subseteq \mathbb{H}$.
 
 ---
 
-## 3. The analytic core: the chordal integral
+## 3. The analytic core
 
-The entire theory rests on one integral. We treat it carefully because the
-integrand is singular at both endpoints of the interval of integration.
+The whole area theory rests on one improper integral. We treat it carefully, because the integrand is unbounded at both endpoints of the interval of integration.
 
-**Definition 3.1 (Chordal density and its antiderivative).**
-For $a < b$ set
-$$\ell_{a,b}(x) = \sqrt{(x-a)(b-x)}, \qquad F_{a,b}(x) = \arcsin\!\left(\frac{2x - a - b}{b-a}\right).$$
-The function $F_{a,b} : \mathbb{R} \to [-\pi/2,\pi/2]$ is continuous everywhere,
-being the composition of $\arcsin$ with an affine map.
+### 3.1 An explicit antiderivative
 
-**Lemma 3.2 (Key derivative computation).**
-For every $x \in (a,b)$, $F_{a,b}$ is differentiable at $x$ with
-$$F_{a,b}'(x) = \frac{1}{\ell_{a,b}(x)} = \frac{1}{\sqrt{(x-a)(b-x)}}.$$
+**Definition 3.1.** For $a < b$ set
+$$F_{a,b}(x) \;=\; \arcsin\!\left(\frac{2x - a - b}{b - a}\right).$$
+$F_{a,b}$ is defined and continuous on all of $\mathbb{R}$ (with $\arcsin$ extended by $\pm\pi/2$ outside $[-1,1]$, as is standard), and maps $[a,b]$ onto $[-\pi/2, \pi/2]$.
 
-*Proof sketch.* Write $u(x) = (2x-a-b)/(b-a)$, so $u'(x) = 2/(b-a)$ and $u(x) \in
-(-1,1)$ for $x \in (a,b)$ (indeed $u(a) = -1$, $u(b) = 1$, and $u$ is strictly
-increasing). On $(-1,1)$ the arcsine is differentiable with derivative
-$1/\sqrt{1-u^{2}}$, so by the chain rule
-$$F_{a,b}'(x) = \frac{2}{(b-a)\sqrt{1 - u(x)^{2}}}.$$
-The algebraic identity
-$$1 - \left(\frac{2x-a-b}{b-a}\right)^{2} = \frac{(b-a)^{2} - (2x-a-b)^{2}}{(b-a)^{2}} = \frac{4(x-a)(b-x)}{(b-a)^{2}}$$
-gives $\sqrt{1-u(x)^{2}} = 2\sqrt{(x-a)(b-x)}/(b-a)$, since both sides are
-nonnegative and $(x-a)(b-x) > 0$ on $(a,b)$. Substituting cancels the factor
-$2/(b-a)$ and yields the claim. $\square$
+**Theorem 3.2 (Derivative of the chordal antiderivative).** For all $x \in (a,b)$,
+$$F_{a,b}'(x) \;=\; \frac{1}{h_{a,b}(x)} \;=\; \frac{1}{\sqrt{(x-a)(b-x)}}.$$
 
-**Lemma 3.3 (Improper integrability).**
-The function $x \mapsto \ell_{a,b}(x)^{-1}$ is integrable on $[a,b]$, notwith\-standing
-that it diverges at both endpoints.
+*Proof sketch.* Write $u(x) = (2x - a - b)/(b-a)$, so $u'(x) = 2/(b-a)$, and $|u(x)| < 1$ for $x \in (a,b)$ (indeed $u(a) = -1$, $u(b) = 1$, and $u$ is increasing). The chain rule applied to $\arcsin$, whose derivative is $(1-u^{2})^{-1/2}$ away from $u = \pm 1$, gives
+$$F_{a,b}'(x) = \frac{2/(b-a)}{\sqrt{1 - u(x)^{2}}}.$$
+A direct algebraic computation gives the key identity
+$$1 - u(x)^{2} \;=\; \frac{4\,(x-a)(b-x)}{(b-a)^{2}},$$
+so that $\sqrt{1 - u(x)^{2}} = 2\sqrt{(x-a)(b-x)}/(b-a)$, the positive square root being correct since $b - a > 0$ and $(x-a)(b-x) > 0$. Substituting and cancelling the factor $2/(b-a)$ yields the claim. $\square$
 
-*Proof sketch.* $F_{a,b}$ is continuous on $[a,b]$ and, by Lemma 3.2, has
-nonnegative derivative $\ell_{a,b}^{-1}$ throughout the open interval. A
-continuous function on a compact interval that is differentiable with
-nonnegative derivative on the interior has integrable derivative there, with
-total mass bounded by the increment of the function. (Concretely, the divergence
-is of order $(x-a)^{-1/2}$ and $(b-x)^{-1/2}$, both integrable.) $\square$
+**Lemma 3.3 (Endpoint values).** For $a < b$: $F_{a,b}(a) = -\pi/2$ and $F_{a,b}(b) = \pi/2$.
 
-**Proposition 3.4 (Fundamental theorem across the singularities).**
-If $a \le u < v \le b$ then
-$$\int_{u}^{v} \frac{dx}{\ell_{a,b}(x)} = F_{a,b}(v) - F_{a,b}(u),$$
-*including* the cases $u = a$ and $v = b$ where the integrand is unbounded.
+*Proof.* $u(a) = (2a - a - b)/(b-a) = -1$ and $u(b) = (2b - a - b)/(b - a) = 1$; then $\arcsin(\mp 1) = \mp\pi/2$. $\square$
 
-*Proof sketch.* On $(u,v) \subseteq (a,b)$ we have the pointwise derivative
-statement of Lemma 3.2; the integrand is integrable on $[u,v]$ by Lemma 3.3 and
-monotonicity of the integral domain; and $F_{a,b}$ is continuous, hence has the
-correct one-sided limits at $u^{+}$ and $v^{-}$. The version of the fundamental
-theorem of calculus requiring only interior differentiability, integrability, and
-one-sided limits at the endpoints then applies. $\square$
+### 3.2 Improper integrability
 
-**Theorem 3.5 (The chordal integral).**
-For all $a < b$,
-$$\int_{a}^{b} \frac{dx}{\sqrt{(x-a)(b-x)}} = \pi.$$
+**Theorem 3.4 (Integrability of the chordal density).** For any real $a, b$, the function $x \mapsto h_{a,b}(x)^{-1}$ is interval-integrable on $[a,b]$.
 
-*Proof.* Apply Proposition 3.4 with $u = a$, $v = b$. Since
-$u(a) = (2a - a - b)/(b-a) = -1$ and $u(b) = (2b-a-b)/(b-a) = 1$, we get
-$F_{a,b}(a) = \arcsin(-1) = -\pi/2$ and $F_{a,b}(b) = \arcsin(1) = \pi/2$, whence
-the integral equals $\pi/2 - (-\pi/2) = \pi$. $\square$
+*Proof sketch.* The density is nonnegative and is, on the open interval, the derivative of the continuous function $F_{a,b}$. A nonnegative derivative of a continuous function on a closed interval, differentiable on the interior, is integrable there — the increments of $F_{a,b}$ over compact subintervals bound the integrals uniformly, and monotone convergence supplies the limit. (Symmetrically for $b < a$, using $h_{b,a} = h_{a,b}$.) The point of the argument is that no dominating function is available near the endpoints; integrability is obtained from the boundedness of the antiderivative instead. $\square$
 
-**Remark 3.6.** The value is independent of $a$ and $b$. This is the analytic
-shadow of the geometric fact that all ideal triangles are congruent; the
-scaling $x \mapsto a + (b-a)t$ turns the integral into
-$\int_0^1 dt/\sqrt{t(1-t)} = B(\tfrac12,\tfrac12) = \pi$, the value of a Beta
-function at the half-integer point.
+### 3.3 The fundamental evaluation
 
-**Lemma 3.7 (Vertical fibre integral).**
-For $c > 0$, $\displaystyle\int_{c}^{\infty} \frac{dy}{y^{2}} = \frac{1}{c}.$
+**Theorem 3.5 (Fundamental theorem across the singularities).** Let $a < b$, and let $a \le u < v \le b$. Then
+$$\int_{u}^{v} \frac{dx}{h_{a,b}(x)} \;=\; F_{a,b}(v) - F_{a,b}(u).$$
 
-*Proof sketch.* Rewrite $y^{-2} = y^{-2}$ as a real power and apply the standard
-formula $\int_{c}^{\infty} y^{s}\,dy = -c^{s+1}/(s+1)$ for $s < -1$, $c>0$, at
-$s = -2$. $\square$
+*Proof sketch.* On $(u,v) \subseteq (a,b)$ we have $F_{a,b}' = h_{a,b}^{-1}$ by Theorem 3.2, and the density is integrable on $[u,v]$ by Theorem 3.4 and monotonicity of the integral. The endpoints may be singular, but $F_{a,b}$ is continuous, so its one-sided limits at $u^{+}$ and $v^{-}$ are $F_{a,b}(u)$ and $F_{a,b}(v)$. The version of the fundamental theorem of calculus valid for an interior derivative with integrable density and convergent boundary limits applies verbatim. $\square$
 
-Geometrically, Lemma 3.7 says that the hyperbolic measure of the vertical fibre
-above height $c$ is finite and equal to $1/c$: an infinite Euclidean chimney of
-finite hyperbolic content. This is the second miracle and, with Theorem 3.5, it
-is all we need.
+**Theorem 3.6 (The ideal-triangle integral).** For all $a < b$,
+$$\int_{a}^{b} \frac{dx}{\sqrt{(x-a)(b-x)}} \;=\; \pi.$$
+
+*Proof.* Take $u = a$, $v = b$ in Theorem 3.5 and apply Lemma 3.3: the value is $\pi/2 - (-\pi/2) = \pi$. $\square$
+
+**Remark 3.7.** The value $\pi$ is *independent of $a$ and $b$*. This single fact is the analytic reason that all ideal triangles are congruent. Geometrically, $\int_a^b dx/h_{a,b}(x)$ measures the angular sweep of the semicircular arch over $[a,b]$ as seen from its centre — a semicircle spans $\pi$ radians — so the $\pi$ in the area of the largest triangle is the $\pi$ of a half-turn, arriving through $\arcsin$ rather than through any circle in the hyperbolic plane.
 
 ---
 
-## 4. Slicing
+## 4. Areas by slicing
 
-**Definition 4.1 (Sliced area).**
-Let $\kappa \in \mathbb{R}$, $a < b$, and $\text{low} : \mathbb{R} \to \mathbb{R}$
-a function positive on $(a,b)$. The *sliced area* of the region above the graph of
-$\text{low}$ over $(a,b)$ is
-$$\mathcal{S}_{\kappa}(a,b;\text{low}) := \int_{a}^{b}\!\!\left(\int_{\text{low}(x)}^{\infty} \frac{dy}{\kappa y^{2}}\right) dx .$$
+### 4.1 The vertical fibre
 
-**Theorem 4.2 (Slicing formula).**
-With hypotheses as in Definition 4.1,
-$$\mathcal{S}_{\kappa}(a,b;\text{low}) = \frac{1}{\kappa}\int_{a}^{b} \frac{dx}{\text{low}(x)}.$$
+**Theorem 4.1 (Fibre integral).** For $c > 0$,
+$$\int_{c}^{\infty} \frac{dy}{y^{2}} \;=\; \frac{1}{c}.$$
 
-*Proof sketch.* For each $x \in (a,b)$, factor the constant: $(\kappa y^{2})^{-1}
-= \kappa^{-1} y^{-2}$, pull $\kappa^{-1}$ out of the inner integral, and apply
-Lemma 3.7 with $c = \text{low}(x) > 0$ to get $\kappa^{-1}\text{low}(x)^{-1}$.
-This holds for all $x$ in the open interval, hence almost everywhere on $[a,b]$
-(the two endpoints form a null set), so the outer integrals agree; finally pull
-$\kappa^{-1}$ out of the outer integral. $\square$
+*Proof.* Rewrite $y^{-2} = y^{-2}$ as an $\mathbb{R}$-power $y^{-2}$ with exponent $-2 < -1$ and apply the standard evaluation $\int_{c}^{\infty} y^{s}\,dy = -c^{s+1}/(s+1)$ for $s < -1$, $c > 0$, with $s = -2$: the value is $-c^{-1}/(-1) = c^{-1}$. $\square$
 
-Theorem 4.2 reduces every two-dimensional hyperbolic area computation of this
-shape to a one-dimensional integral of the reciprocal height of the lower
-boundary. The geometry of hyperbolic area is thereby localised entirely in the
-lower boundary curve.
+### 4.2 The slicing formula
 
----
+**Definition 4.2 (Sliced area).** For $\kappa \in \mathbb{R}$, $a < b$, and a "lower boundary" function $\mathrm{low} : \mathbb{R} \to \mathbb{R}$, define
+$$\mathcal{A}_{\kappa}(a, b; \mathrm{low}) \;=\; \int_{a}^{b}\!\!\left(\int_{\mathrm{low}(x)}^{\infty} \frac{dy}{\kappa\,y^{2}}\right) dx .$$
+This is the hyperbolic area of the region $\{(x,y) : a < x < b,\ y > \mathrm{low}(x)\}$ at curvature $-\kappa$.
 
-## 5. The ideal triangle, ideal polygons, and degeneration
+**Theorem 4.3 (Slicing).** If $\mathrm{low}(x) > 0$ for all $x \in (a,b)$, then
+$$\mathcal{A}_{\kappa}(a,b;\mathrm{low}) \;=\; \frac{1}{\kappa}\int_{a}^{b} \frac{dx}{\mathrm{low}(x)} .$$
 
-**Theorem 5.1 (Area of an ideal triangle; Gauss–Bonnet at all angles zero).**
-For $\kappa > 0$ and $a < b$, the hyperbolic area of $\Delta(a,b,\infty)$ is
-$$\mathcal{S}_{\kappa}(a,b;\ell_{a,b}) = \frac{\pi}{\kappa} = \mathcal{A}(\kappa; 0,0,0).$$
+*Proof sketch.* For each $x$ in the open interval — hence for almost every $x$ in $[a,b]$ — the inner integral is $\kappa^{-1}\int_{\mathrm{low}(x)}^{\infty} y^{-2}\,dy = \kappa^{-1}\,\mathrm{low}(x)^{-1}$ by Theorem 4.1, after pulling the constant $\kappa^{-1}$ out. Since the two integrands of the outer integral agree almost everywhere, the outer integrals agree; and $\kappa^{-1}$ pulls out of the outer integral. Note that endpoints form a null set, so no hypothesis on $\mathrm{low}$ at $a$ or $b$ is needed. $\square$
 
-*Proof.* By Theorem 4.2 with $\text{low} = \ell_{a,b}$, which is positive on
-$(a,b)$, the area is $\kappa^{-1}\int_{a}^{b} \ell_{a,b}(x)^{-1}dx$, and by
-Theorem 3.5 this is $\pi/\kappa$. The second equality is the definition of
-$\mathcal{A}$ at zero angles. $\square$
+Theorem 4.3 is the reduction that makes everything computable: a two-dimensional hyperbolic area becomes a one-dimensional integral of the **reciprocal height of the lower boundary**.
 
-This is the promised derivation: the value that the Gauss–Bonnet functional
-*predicts* for a triangle with three zero angles is *computed* directly from the
-Riemannian area element, with no appeal to Gauss–Bonnet.
+### 4.3 The area of an ideal triangle
 
-**Corollary 5.2 (Congruence of ideal triangles with a vertex at $\infty$).**
-For any $a<b$ and $a'<b'$, $\mathcal{S}_{\kappa}(a,b;\ell_{a,b}) =
-\mathcal{S}_{\kappa}(a',b';\ell_{a',b'})$. The area invariant does not see the
-positions of the two finite ideal vertices.
+**Theorem 4.4 (Ideal triangle area — Gauss–Bonnet derived).** For $\kappa > 0$ and $a < b$, the ideal triangle $\Delta(a,b)$ with vertices $a$, $b$, $\infty$ has hyperbolic area
+$$\mathcal{A}_{\kappa}\big(a, b; h_{a,b}\big) \;=\; \frac{\pi}{\kappa}.$$
 
-**Definition 5.3 (Ideal polygon).**
-Let $m \ge 1$ and let $v_{0} < v_{1} < \cdots < v_{m}$ be boundary points. The
-*ideal $(m+2)$-gon* with these finite vertices and last vertex $\infty$ is the
-region bounded below by the $m$ geodesic semicircles joining consecutive $v_{i}$
-and laterally by the vertical geodesics through $v_{0}$ and $v_{m}$. Its area is
-the sum
-$$\mathcal{P}_{\kappa}(v_{0},\dots,v_{m}) := \sum_{i=0}^{m-1} \mathcal{S}_{\kappa}(v_{i}, v_{i+1}; \ell_{v_{i},v_{i+1}}).$$
+*Proof.* Apply Theorem 4.3 with $\mathrm{low} = h_{a,b}$, positive on $(a,b)$ by Lemma 2.5, then Theorem 3.6. $\square$
 
-The definition is a genuine triangulation: the vertical geodesics through the
-interior finite vertices $v_{1},\dots,v_{m-1}$ cut the polygon into $m$ regions,
-the $i$-th of which is exactly $\Delta(v_{i},v_{i+1},\infty)$.
+**Corollary 4.5 (Congruence of ideal triangles).** For any $a < b$ and $a' < b'$, the ideal triangles $\Delta(a,b)$ and $\Delta(a',b')$ have equal area. In particular the invariant does not see the position of the two finite ideal vertices.
 
-**Theorem 5.4 (Area of an ideal $n$-gon).**
-If $v_{0} < v_{1} < \cdots < v_{m}$ then
-$$\mathcal{P}_{\kappa}(v_{0},\dots,v_{m}) = \frac{m\pi}{\kappa} = \frac{(n-2)\pi}{\kappa}, \qquad n = m+2.$$
+**Corollary 4.6 (Consistency with the angle-defect invariant).** Define the *angle-defect invariant* of an angle triple by
+$$\mathcal{G}_{\kappa}(\alpha,\beta,\gamma) \;=\; \frac{\pi - (\alpha + \beta + \gamma)}{\kappa}.$$
+Then $\mathcal{A}_{\kappa}(a,b;h_{a,b}) = \mathcal{G}_{\kappa}(0,0,0)$. The Riemannian area of the ideal triangle agrees with the Gauss–Bonnet prediction at all angles zero.
 
-*Proof.* Each summand equals $\pi/\kappa$ by Theorem 5.1; there are $m$ of them.
-$\square$
+### 4.4 Ideal polygons
 
-**Theorem 5.5 (Additivity under gluing; triangulation invariance).**
-For ideal polygons with $m$ and $k$ triangulating pieces respectively, glued
-along a common edge to form a polygon with $m + k$ pieces, the areas add:
-$$\mathcal{P}^{(m+k)} = \mathcal{P}^{(m)} + \mathcal{P}^{(k)}.$$
+**Definition 4.7.** Let $m \ge 1$ and let $v_{0} < v_{1} < \cdots < v_{m}$ be points of $\mathbb{R}$. The ideal $n$-gon with $n = m+2$ vertices $v_{0}, \ldots, v_{m}, \infty$ is cut by the vertical geodesics through $v_{1}, \ldots, v_{m-1}$ into the chimneys over the consecutive intervals; accordingly define
+$$\mathcal{P}_{\kappa}(m; v) \;=\; \sum_{i=0}^{m-1} \mathcal{A}_{\kappa}\big(v_{i}, v_{i+1}; h_{v_{i}, v_{i+1}}\big).$$
 
-*Proof.* All three quantities are computed by Theorem 5.4, and $(m+k)\pi/\kappa =
-m\pi/\kappa + k\pi/\kappa$. $\square$
+**Theorem 4.8 (Area of an ideal polygon).** If $v_{i} < v_{i+1}$ for all $i < m$, then
+$$\mathcal{P}_{\kappa}(m; v) \;=\; \frac{m\,\pi}{\kappa} \;=\; \frac{(n-2)\,\pi}{\kappa}, \qquad n = m + 2 .$$
 
-The content of Theorem 5.5 is that the area depends only on the *number of
-vertices*, never on the triangulation used to compute it — the invariant is
-combinatorial, and it reproduces the Euclidean angle-sum count $(n-2)\pi$ as an
-*area* rather than as an angle.
+*Proof.* Each summand is $\pi/\kappa$ by Theorem 4.4; there are $m$ of them. $\square$
 
-### 5.1 Degeneration: compact exhaustion
+**Theorem 4.9 (Triangulation invariance / additivity).** With $m, k \ge 0$ and admissible vertex data $v$, $w$, $u$ for an ideal $(m+2)$-gon, an ideal $(k+2)$-gon, and an ideal $(m+k+2)$-gon respectively,
+$$\mathcal{P}_{\kappa}(m+k; u) \;=\; \mathcal{P}_{\kappa}(m; v) + \mathcal{P}_{\kappa}(k; w).$$
 
-**Definition 5.6 (Truncated ideal triangle).**
-For $t > 0$ with $a + t < b - t$, the *truncated* ideal triangle is the portion of
-$\Delta(a,b,\infty)$ lying over $[a+t, b-t]$; its area is
-$$T_{\kappa}(a,b;t) := \mathcal{S}_{\kappa}(a+t, b-t; \ell_{a,b}).$$
+*Proof.* All three sides evaluate by Theorem 4.8 to $(m+k)\pi/\kappa$, $m\pi/\kappa$, $k\pi/\kappa$. $\square$
 
-**Proposition 5.7 (Closed form for the truncation).**
-$$T_{\kappa}(a,b;t) = \frac{F_{a,b}(b-t) - F_{a,b}(a+t)}{\kappa}
-= \frac{1}{\kappa}\left[\arcsin\!\Bigl(\tfrac{b-a-2t}{b-a}\Bigr) - \arcsin\!\Bigl(\tfrac{2t-(b-a)}{b-a}\Bigr)\right].$$
-
-*Proof sketch.* By Theorem 4.2 the area is $\kappa^{-1}\int_{a+t}^{b-t}
-\ell_{a,b}^{-1}$, and $[a+t,b-t] \subset (a,b)$ is an interval on which the
-integrand is continuous, so the ordinary fundamental theorem of calculus applies
-with the antiderivative $F_{a,b}$ of Lemma 3.2. $\square$
-
-**Theorem 5.8 (Strict subideality of compact pieces).**
-For $\kappa > 0$, $t > 0$ and $a + t < b - t$,
-$$T_{\kappa}(a,b;t) < \frac{\pi}{\kappa}.$$
-
-*Proof sketch.* Always $F_{a,b}(b-t) \le \pi/2$. And $F_{a,b}(a+t) > -\pi/2$
-strictly, because the argument $(2(a+t)-a-b)/(b-a) = (2t - (b-a))/(b-a)$ is
-strictly greater than $-1$ when $t > 0$, and $\arcsin$ exceeds $-\pi/2$ strictly
-above $-1$. Hence the numerator is strictly below $\pi$. $\square$
-
-**Theorem 5.9 (Degeneration).**
-For $a < b$,
-$$\lim_{t \to 0^{+}} T_{\kappa}(a,b;t) = \frac{\pi}{\kappa}.$$
-
-*Proof sketch.* The map $t \mapsto (F_{a,b}(b-t) - F_{a,b}(a+t))/\kappa$ is
-continuous on a neighbourhood of $0$ (composition of the continuous $F_{a,b}$
-with affine maps), and its value at $t = 0$ is $(\pi/2 - (-\pi/2))/\kappa =
-\pi/\kappa$. For all sufficiently small $t > 0$ the closed-form expression of
-Proposition 5.7 agrees with $T_{\kappa}(a,b;t)$, so the limit along $t \to 0^{+}$
-is as claimed. $\square$
-
-Theorems 5.8 and 5.9 together are the geometric form of extremality: the maximum
-$\pi/\kappa$ is a strict supremum over compact pieces, attained only in the ideal
-limit.
-
-### 5.2 Degeneration: the angle side, and uniqueness of the limiting shape
-
-**Theorem 5.10 (Rigidity of maximising sequences).**
-Let $\kappa > 0$ and let $(\alpha_{n}, \beta_{n}, \gamma_{n})_{n\in\mathbb{N}}$ be
-admissible angle triples (each angle $\ge 0$, each sum $\le \pi$). If
-$$\mathcal{A}(\kappa;\alpha_{n},\beta_{n},\gamma_{n}) \longrightarrow \frac{\pi}{\kappa},$$
-then $\alpha_{n} \to 0$, $\beta_{n} \to 0$ and $\gamma_{n} \to 0$.
-
-*Proof.* Since $\kappa\mathcal{A}(\kappa;\alpha,\beta,\gamma) = \pi -
-(\alpha+\beta+\gamma)$, we have
-$$\alpha_{n}+\beta_{n}+\gamma_{n} = \pi - \kappa\,\mathcal{A}(\kappa;\alpha_{n},\beta_{n},\gamma_{n}) \longrightarrow \pi - \kappa\cdot\frac{\pi}{\kappa} = 0.$$
-Admissibility gives $0 \le \alpha_{n} \le \alpha_{n}+\beta_{n}+\gamma_{n}$, since
-$\beta_{n}, \gamma_{n} \ge 0$; the squeeze theorem yields $\alpha_{n} \to 0$, and
-symmetrically for $\beta_{n}$ and $\gamma_{n}$. $\square$
-
-So the ideal triangle is not merely *an* extremal configuration but the unique
-limiting shape of every maximising sequence — a rigidity statement, and one whose
-proof shows exactly why nonnegativity of angles cannot be dropped.
+**Remark 4.10.** Theorem 4.9 says that gluing two ideal polygons along a common ideal edge adds their areas, and that the value depends only on the number of vertices, not on the triangulation chosen. This is the hyperbolic shadow of the Euclidean identity "the interior angles of an $n$-gon sum to $(n-2)\pi$": the same combinatorial coefficient, now measuring area.
 
 ---
 
-## 6. Angles computed, not assumed: Gauss–Bonnet with an ideal vertex
+## 5. Angles computed, not assumed
 
-Theorem 5.1 handles all three angles equal to $0$. We now handle a two-parameter
-family of triangles with genuine corners, and we do not postulate the angles.
+To make Gauss–Bonnet a theorem rather than a definition, one must define interior angles intrinsically and compute them.
 
-### 6.1 Angles and conformal invariance
+### 5.1 The angle functional and conformal invariance
 
-**Definition 6.1 (Angle between tangent vectors).**
-For nonzero $u = (u_{1},u_{2})$, $v = (v_{1},v_{2}) \in \mathbb{R}^{2}$ set
-$$\angle(u,v) := \arccos\!\left(\frac{u_{1}v_{1} + u_{2}v_{2}}{\sqrt{u_{1}^{2}+u_{2}^{2}}\,\sqrt{v_{1}^{2}+v_{2}^{2}}}\right) \in [0,\pi].$$
+**Definition 5.1.** For nonzero $u, v \in \mathbb{R}^{2}$,
+$$\angle(u,v) \;=\; \arccos\!\left(\frac{u_{1}v_{1} + u_{2}v_{2}}{\sqrt{u_{1}^{2}+u_{2}^{2}}\,\sqrt{v_{1}^{2}+v_{2}^{2}}}\right) \in [0,\pi].$$
 
-**Proposition 6.2 (Conformal invariance of angle).**
-For every $c > 0$ and all $u, v$,
+**Theorem 5.2 (Conformal invariance).** For every $c > 0$ and all $u, v$,
 $$\angle(cu, v) = \angle(u,v) = \angle(u, cv).$$
 
-*Proof sketch.* $\sqrt{(cu_{1})^{2} + (cu_{2})^{2}} = c\sqrt{u_{1}^{2}+u_{2}^{2}}$
-since $c > 0$, and the numerator scales by the same $c$; the ratio is unchanged.
-$\square$
+*Proof sketch.* Under $u \mapsto cu$ the numerator scales by $c$ and the norm $\sqrt{(cu_1)^2 + (cu_2)^2} = c\sqrt{u_1^2+u_2^2}$ also scales by $c$, so the quotient is unchanged; likewise on the right. $\square$
 
-Proposition 6.2 is the precise formal content of the statement *hyperbolic angles
-equal Euclidean angles in the half-plane model.* The hyperbolic inner product at
-a point $(x,y)$ is $(\kappa y^{2})^{-1}$ times the Euclidean one; both the
-numerator and the two norms in Definition 6.1 scale by the same positive factor
-$(\kappa y^{2})^{-1/2}$ per vector slot, so the angle functional is blind to the
-conformal factor. From here on we may compute Euclidean angles between Euclidean
-tangent vectors and know we have computed hyperbolic angles.
+**Corollary 5.3 (Hyperbolic angles are Euclidean angles).** The half-plane metric is the Euclidean metric multiplied pointwise by the positive scalar $1/(\kappa y^{2})$; by Theorem 5.2, the angle functional does not see this factor. Hyperbolic angles in $\mathbb{H}$ therefore coincide with Euclidean angles between the same tangent vectors, and in particular are independent of $\kappa$.
 
-### 6.2 The configuration
+This is exactly why we may compute angles with elementary trigonometry below.
 
-Fix $0 \le \varphi < \theta \le \pi$, and consider the region bounded by:
+### 5.2 A one-parameter family with an ideal vertex
 
-* the vertical geodesic $x = \cos\theta$ (the left wall),
-* the vertical geodesic $x = \cos\varphi$ (the right wall),
-* the unit semicircle $x^{2} + y^{2} = 1$, $y > 0$ (the floor), which is the
-  geodesic joining the boundary points $-1$ and $1$.
+Fix $0 \le \varphi < \theta \le \pi$. Consider the region bounded below by the **unit semicircle** $|z| = 1$ (a geodesic, being a semicircle centred on $\mathbb{R}$), and on the sides by the vertical geodesics $x = \cos\theta$ and $x = \cos\varphi$ (note $\cos\theta < \cos\varphi$ since $\cos$ is strictly decreasing on $[0,\pi]$). Its vertices are
+$$P_{\theta} = (\cos\theta, \sin\theta), \qquad P_{\varphi} = (\cos\varphi, \sin\varphi), \qquad \infty .$$
+When $0 < \varphi < \theta < \pi$ both $P_{\theta}$ and $P_{\varphi}$ lie in $\mathbb{H}$; when $\varphi = 0$ or $\theta = \pi$ the corresponding vertex degenerates onto the boundary points $1$ or $-1$.
 
-Its vertices are $P = (\cos\theta,\sin\theta)$, $Q = (\cos\varphi,\sin\varphi)$ and
-the ideal point $\infty$. When $0 < \varphi < \theta < \pi$ both $P$ and $Q$ are
-genuine points of $\mathbb{H}$; when $\varphi = 0$ the vertex $Q$ degenerates to
-the boundary point $1$, and when additionally $\theta = \pi$ the vertex $P$
-degenerates to $-1$.
+The relevant unit tangent vectors are: for a vertical side, $T_{\mathrm{vert}} = (0,1)$ (pointing upward, into the region); for the unit circle at $P_{\theta}$, in the direction of increasing $x$, $T^{+}(\theta) = (\sin\theta, -\cos\theta)$; and at $P_{\varphi}$, in the direction of decreasing $x$, $T^{-}(\varphi) = (-\sin\varphi, \cos\varphi)$.
 
-Tangent vectors along the three sides at the finite vertices:
+**Theorem 5.4 (Interior angles).** For $0 \le \theta \le \pi$ and $0 \le \varphi \le \pi$,
+$$\angle\big(T_{\mathrm{vert}},\, T^{+}(\theta)\big) = \pi - \theta, \qquad \angle\big(T_{\mathrm{vert}},\, T^{-}(\varphi)\big) = \varphi .$$
 
-* the upward tangent of a vertical geodesic is $\tau_{\uparrow} = (0,1)$;
-* the tangent of the unit semicircle at $(\cos\theta,\sin\theta)$ in the direction
-  of increasing $x$ is $\tau^{\rightarrow}(\theta) = (\sin\theta, -\cos\theta)$;
-* the tangent of the unit semicircle at $(\cos\varphi,\sin\varphi)$ in the
-  direction of decreasing $x$ is $\tau^{\leftarrow}(\varphi) = (-\sin\varphi,
-  \cos\varphi)$.
+*Proof.* Both circle tangents are unit vectors: $\sin^{2} + \cos^{2} = 1$. So the angle functional reduces to $\arccos$ of the plain dot product. We get $\langle (0,1), (\sin\theta, -\cos\theta)\rangle = -\cos\theta$ and $\arccos(-\cos\theta) = \pi - \arccos(\cos\theta) = \pi - \theta$ using $0 \le \theta \le \pi$. Likewise $\langle(0,1), (-\sin\varphi, \cos\varphi)\rangle = \cos\varphi$ and $\arccos(\cos\varphi) = \varphi$. $\square$
 
-**Theorem 6.3 (The interior angles).**
-For $0 \le \theta \le \pi$ and $0 \le \varphi \le \pi$,
-$$\angle\bigl(\tau_{\uparrow}, \tau^{\rightarrow}(\theta)\bigr) = \pi - \theta,
-\qquad
-\angle\bigl(\tau_{\uparrow}, \tau^{\leftarrow}(\varphi)\bigr) = \varphi.$$
+At the third vertex $\infty$ the two sides are parallel vertical geodesics, meeting asymptotically; the interior angle is $0$.
 
-*Proof.* Both circular tangents are unit vectors, since $\sin^{2}+\cos^{2}=1$, and
-$\tau_{\uparrow}$ is a unit vector. The inner products are
-$\langle (0,1),(\sin\theta,-\cos\theta)\rangle = -\cos\theta$ and
-$\langle (0,1),(-\sin\varphi,\cos\varphi)\rangle = \cos\varphi$. Hence the two
-angles are $\arccos(-\cos\theta) = \pi - \arccos(\cos\theta) = \pi - \theta$ and
-$\arccos(\cos\varphi) = \varphi$, using $\arccos(\cos t) = t$ for $t\in[0,\pi]$.
-$\square$
+### 5.3 The area, and Gauss–Bonnet derived
 
-### 6.3 The area, and Gauss–Bonnet
+**Theorem 5.5 (Area with at least one ideal vertex).** Let $0 \le \varphi < \theta \le \pi$ and $\kappa \ne 0$. The region described above has hyperbolic area
+$$\mathcal{A}_{\kappa}\big(\cos\theta,\ \cos\varphi;\ h_{-1,1}\big) \;=\; \frac{\theta - \varphi}{\kappa} .$$
 
-**Theorem 6.4 (Area of a triangle with at least one ideal vertex).**
-For $0 \le \varphi < \theta \le \pi$ and $\kappa > 0$, the region described above
-has hyperbolic area
-$$\mathcal{S}_{\kappa}\bigl(\cos\theta, \cos\varphi;\ \ell_{-1,1}\bigr) = \frac{\theta - \varphi}{\kappa}.$$
+*Proof sketch.* First, $h_{-1,1}(x) = \sqrt{(x+1)(1-x)} = \sqrt{1-x^{2}}$ and $F_{-1,1}(x) = \arcsin x$. Second, $-1 \le \cos\theta < \cos\varphi \le 1$, so $[\cos\theta, \cos\varphi]$ is a subinterval of $[-1,1]$ and $h_{-1,1} > 0$ on its interior. Apply the slicing formula (Theorem 4.3) and then the fundamental theorem on a subinterval (Theorem 3.5):
+$$\mathcal{A} = \frac{1}{\kappa}\big(\arcsin(\cos\varphi) - \arcsin(\cos\theta)\big).$$
+Finally, for $0 \le t \le \pi$ one has $\arcsin(\cos t) = \pi/2 - t$, since $\cos t = \sin(\pi/2 - t)$ and $\pi/2 - t \in [-\pi/2, \pi/2]$. Substituting gives $\big((\pi/2 - \varphi) - (\pi/2 - \theta)\big)/\kappa = (\theta-\varphi)/\kappa$. $\square$
 
-*Proof sketch.* Cosine is strictly decreasing on $[0,\pi]$, so $\cos\theta <
-\cos\varphi$, and $-1 \le \cos\theta$, $\cos\varphi \le 1$, giving
-$[\cos\theta,\cos\varphi]\subseteq[-1,1]$. The floor is
-$\ell_{-1,1}(x) = \sqrt{(x+1)(1-x)} = \sqrt{1-x^{2}}$, positive on the interior.
-By Theorem 4.2 the area is $\kappa^{-1}\int_{\cos\theta}^{\cos\varphi}
-(1-x^{2})^{-1/2}dx$. The antiderivative $F_{-1,1}(x) = \arcsin\bigl(\frac{2x-0}{2}
-\bigr) = \arcsin x$ and Proposition 3.4 (applicable even when $\cos\varphi = 1$ or
-$\cos\theta = -1$, where the integrand is singular) give
-$$\text{Area} = \frac{\arcsin(\cos\varphi) - \arcsin(\cos\theta)}{\kappa}.$$
-Finally $\arcsin(\cos t) = \arcsin(\sin(\pi/2 - t)) = \pi/2 - t$ for $t\in[0,\pi]$,
-since then $\pi/2 - t \in [-\pi/2,\pi/2]$. Substituting yields $\bigl((\pi/2 -
-\varphi) - (\pi/2 - \theta)\bigr)/\kappa = (\theta-\varphi)/\kappa$. $\square$
+**Theorem 5.6 (Gauss–Bonnet, derived).** With the hypotheses of Theorem 5.5, and with $\alpha = \angle(T_{\mathrm{vert}}, T^{+}(\theta))$, $\beta = \angle(T_{\mathrm{vert}}, T^{-}(\varphi))$ the computed interior angles at the two non-ideal vertices,
+$$\mathrm{Area} \;=\; \mathcal{G}_{\kappa}(\alpha, \beta, 0) \;=\; \frac{\pi - (\alpha + \beta)}{\kappa}.$$
 
-**Theorem 6.5 (Gauss–Bonnet, derived).**
-For $0 \le \varphi < \theta \le \pi$ and $\kappa > 0$, with $\alpha =
-\angle(\tau_{\uparrow},\tau^{\rightarrow}(\theta))$ and $\beta =
-\angle(\tau_{\uparrow},\tau^{\leftarrow}(\varphi))$ the computed interior angles
-and $0$ the angle at the ideal vertex,
-$$\text{Area} = \mathcal{A}(\kappa;\alpha,\beta,0) = \frac{\pi - (\alpha+\beta+0)}{\kappa}.$$
+*Proof.* By Theorem 5.4, $\alpha = \pi - \theta$ and $\beta = \varphi$, so $\pi - (\alpha + \beta + 0) = \pi - (\pi - \theta) - \varphi = \theta - \varphi$; compare with Theorem 5.5. $\square$
 
-*Proof.* By Theorem 6.3, $\alpha = \pi - \theta$ and $\beta = \varphi$, so
-$\pi - (\alpha+\beta) = \pi - (\pi - \theta) - \varphi = \theta - \varphi$, and by
-Theorem 6.4 the area is $(\theta-\varphi)/\kappa$. $\square$
+This is the key structural point: the angles were *computed from the metric* (Theorem 5.4) and the area was *computed from the area element* (Theorem 5.5); their agreement is a theorem, not a convention.
 
-Moreover $(\alpha,\beta,0)$ is always admissible: $\alpha = \pi - \theta \ge 0$,
-$\beta = \varphi \ge 0$ and $\alpha + \beta = \pi - (\theta - \varphi) \le \pi$.
+**Corollary 5.7 (Uniform treatment of one, two, three ideal vertices).**
+- $0 < \varphi < \theta < \pi$: one ideal vertex, area $(\theta-\varphi)/\kappa$, angles $(\pi-\theta, \varphi, 0)$.
+- $\varphi = 0 < \theta \le \pi$: two ideal vertices ($1$ and $\infty$), area $\theta/\kappa = \mathcal{G}_{\kappa}(\pi - \theta, 0, 0)$.
+- $\varphi = 0$, $\theta = \pi$: three ideal vertices ($1$, $-1$, $\infty$), area $\pi/\kappa$, recovering Theorem 4.4.
 
-**Corollary 6.6 (Specialisations).**
-(i) *Two ideal vertices:* taking $\varphi = 0$ (so $\beta = 0$) gives area
-$\theta/\kappa = \mathcal{A}(\kappa;\pi-\theta,0,0)$.
-(ii) *Three ideal vertices:* taking $\varphi = 0$, $\theta = \pi$ gives area
-$\pi/\kappa$, recovering Theorem 5.1.
+### 5.4 Finite vertices have strictly positive angles
 
-**Theorem 6.7 (Finite vertices have strictly positive angles).**
-If $0 < \varphi < \theta < \pi$ then $\alpha = \pi - \theta > 0$ and $\beta =
-\varphi > 0$.
+**Theorem 5.8 (Strict positivity).** If $0 < \varphi < \theta < \pi$ — that is, if both non-ideal vertices are genuine points of $\mathbb{H}$ — then both interior angles are strictly positive:
+$$\alpha = \pi - \theta > 0, \qquad \beta = \varphi > 0 .$$
 
-*Proof.* Immediate from Theorem 6.3 and the strict inequalities. $\square$
+*Proof.* Immediate from Theorem 5.4 and the strict inequalities. $\square$
 
-The geometric content is that a genuine corner of a hyperbolic triangle can never
-have angle $0$: an angle of $0$ means the two sides are asymptotically parallel,
-and asymptotic geodesics meet only on the ideal boundary. Zero angle sum requires
-adjoining the boundary.
+**Corollary 5.9 (Strict subideality).** For $\kappa > 0$ and $0 < \varphi < \theta \le \pi$,
+$$\mathrm{Area} = \frac{\theta - \varphi}{\kappa} < \frac{\pi}{\kappa}.$$
 
-**Corollary 6.8 (Strict subideality).**
-If $\kappa > 0$, $0 < \varphi < \theta \le \pi$, then the area
-$(\theta-\varphi)/\kappa$ is strictly less than $\pi/\kappa$.
+*Proof.* $\theta - \varphi < \pi - 0 = \pi$ and $\kappa > 0$. $\square$
 
-**Theorem 6.9 (Geometric degeneration).**
-As $(\theta,\varphi) \to (\pi, 0)$ within the admissible region
-$\{0 \le \varphi < \theta \le \pi\}$, the area $(\theta-\varphi)/\kappa$ converges
-to $\pi/\kappa$.
-
-*Proof.* The function $(\theta,\varphi)\mapsto(\theta-\varphi)/\kappa$ is
-continuous with value $\pi/\kappa$ at $(\pi,0)$. $\square$
-
-Together, Theorems 6.7–6.9 supply the geometric counterpart of the angle-side
-statement Theorem 5.10: honest triangles are strictly subideal, and the ideal
-value is attained only in the limit of vertices escaping to the boundary.
+Thus the maximal area $\pi/\kappa$ is **not attained by any triangle with a finite vertex**. The angle-sum-zero configuration requires adjoining the ideal boundary; the extremal object lies on the boundary of the space of triangles, not inside it.
 
 ---
 
-## 7. Symmetry: the real Möbius group
+## 6. Maximality, rigidity, and degeneration
 
-All computations so far placed a vertex at $\infty$. This section shows that no
-generality was lost, by exhibiting enough isometries.
+### 6.1 The angle-data statements
 
-**Definition 7.1 (Real Möbius transformation).**
-For $A,B,C,D \in \mathbb{R}$ let
-$$T(z) = \frac{Az+B}{Cz+D} \qquad (z \in \mathbb{C}),\qquad \det T := AD - BC,$$
-with the induced boundary action $t(x) = (Ax+B)/(Cx+D)$ on $x \in \mathbb{R}$
-away from the pole $x = -D/C$.
+**Definition 6.1 (Admissible angles).** A triple $(\alpha, \beta, \gamma) \in \mathbb{R}^{3}$ is *admissible* if
+$$\alpha \ge 0, \quad \beta \ge 0, \quad \gamma \ge 0, \quad \alpha + \beta + \gamma \le \pi .$$
 
-**Theorem 7.2 (Height distortion).**
-For all $A,B,C,D$ and all $z$ with $Cz + D \ne 0$,
-$$\operatorname{Im} T(z) = \frac{(AD-BC)\,\operatorname{Im} z}{|Cz+D|^{2}}.$$
+**Theorem 6.2 (Maximality).** For $\kappa > 0$ and admissible $(\alpha,\beta,\gamma)$,
+$$\mathcal{G}_{\kappa}(\alpha,\beta,\gamma) = \frac{\pi - (\alpha+\beta+\gamma)}{\kappa} \le \frac{\pi}{\kappa}.$$
 
-*Proof sketch.* Multiply numerator and denominator by the conjugate
-$\overline{Cz+D}$:
-$$T(z) = \frac{(Az+B)\overline{(Cz+D)}}{|Cz+D|^{2}},$$
-and expand the imaginary part of the numerator with $A,B,C,D$ real:
-$\operatorname{Im}\bigl((Az+B)(C\bar z + D)\bigr) = AD\operatorname{Im}z +
-BC\operatorname{Im}\bar z = (AD - BC)\operatorname{Im}z$. $\square$
+*Proof.* $\alpha + \beta + \gamma \ge 0$, so the numerator is at most $\pi$; divide by $\kappa > 0$. $\square$
 
-**Corollary 7.3 (Preservation of the upper half-plane).**
-If $AD - BC > 0$ and $\operatorname{Im} z > 0$ then $Cz+D \neq 0$ and
-$\operatorname{Im} T(z) > 0$.
+**Theorem 6.3 (Rigidity).** For $\kappa > 0$ and admissible $(\alpha,\beta,\gamma)$,
+$$\mathcal{G}_{\kappa}(\alpha,\beta,\gamma) = \frac{\pi}{\kappa} \iff \alpha = \beta = \gamma = 0 .$$
 
-*Proof sketch.* If $Cz + D = 0$ then taking imaginary parts gives
-$C\operatorname{Im}z = 0$, hence $C = 0$ since $\operatorname{Im}z>0$, and then
-taking real parts gives $D = 0$; but $C = D = 0$ makes $AD-BC = 0$, contradicting
-positivity. Now Theorem 7.2 exhibits $\operatorname{Im}T(z)$ as a quotient of two
-positive quantities. $\square$
+*Proof.* Equality forces $\alpha+\beta+\gamma = 0$; combined with nonnegativity of each term, all are zero. Conversely $\mathcal{G}_{\kappa}(0,0,0) = \pi/\kappa$. $\square$
 
-**Lemma 7.4 (Derivative).**
-Where $Cz+D \ne 0$, $T$ is complex differentiable with
-$$T'(z) = \frac{AD - BC}{(Cz+D)^{2}}.$$
+**Remark 6.4 (Nonnegativity is essential).** Without $\alpha, \beta, \gamma \ge 0$, rigidity is false: $(\alpha,\beta,\gamma) = (1, -1, 0)$ has sum zero and hence defect-invariant $\pi/\kappa$, yet the angles are not all zero. Maximality also fails. The hypothesis is not decorative; it encodes the geometric fact (Theorem 5.8) that interior angles of an actual region are nonnegative, with strict positivity at finite vertices.
 
-*Proof sketch.* Quotient rule on the affine numerator and denominator:
-$T' = \bigl(A(Cz+D) - C(Az+B)\bigr)/(Cz+D)^{2}$, and the numerator simplifies to
-$AD - BC$. $\square$
+### 6.2 Geometric degeneration: compact exhaustion
 
-**Theorem 7.5 (Pointwise conformality: Möbius maps are hyperbolic isometries).**
-If $AD - BC > 0$ and $\operatorname{Im} z > 0$ then
-$$\frac{|T'(z)|}{\operatorname{Im} T(z)} = \frac{1}{\operatorname{Im} z}.$$
+**Definition 6.5 (Truncated ideal triangle).** For $t > 0$ with $a + t < b - t$, the *truncated* region is the part of $\Delta(a,b)$ over $[a+t, b-t]$, with area
+$$\mathcal{T}_{\kappa}(a,b;t) = \mathcal{A}_{\kappa}\big(a+t,\, b-t;\, h_{a,b}\big).$$
 
-*Proof.* By Lemma 7.4 and positivity of the determinant, $|T'(z)| =
-(AD-BC)/|Cz+D|^{2}$. By Theorem 7.2, $\operatorname{Im}T(z) =
-(AD-BC)\operatorname{Im}z/|Cz+D|^{2}$. Dividing, the factors $(AD-BC)$ and
-$|Cz+D|^{2}$ cancel, leaving $1/\operatorname{Im}z$. $\square$
+**Theorem 6.6 (Truncated area formula).** For $t > 0$ with $a + t < b - t$,
+$$\mathcal{T}_{\kappa}(a,b;t) \;=\; \frac{F_{a,b}(b-t) - F_{a,b}(a+t)}{\kappa}.$$
 
-The hyperbolic line element is $|dz|/(\sqrt{\kappa}\,y)$. Under $T$, the numerator
-$|dz|$ is multiplied by $|T'(z)|$ and the denominator $y = \operatorname{Im}z$ by
-the same factor; Theorem 7.5 is exactly the statement that the ratio is
-preserved, i.e. $T$ is an infinitesimal isometry of the hyperbolic metric, and
-being conformal it also preserves angles (Proposition 6.2).
+*Proof.* Slicing (Theorem 4.3) reduces to $\kappa^{-1}\int_{a+t}^{b-t} h_{a,b}^{-1}$, and on this compact subinterval of $(a,b)$ the ordinary fundamental theorem of calculus applies, the density being integrable by Theorem 3.4 restricted to a subinterval. $\square$
 
-### 7.1 Sharp three-transitivity on the ideal boundary
+**Theorem 6.7 (Strict subideality of truncations).** For $\kappa > 0$, $t > 0$ with $a + t < b - t$,
+$$\mathcal{T}_{\kappa}(a,b;t) \;<\; \frac{\pi}{\kappa}.$$
 
-**Definition 7.6 (Cross-ratio normaliser).**
-For reals $p, q, r$ define the coefficient quadruple
-$$\bigl(A,B,C,D\bigr) := \bigl(q-r,\ -p(q-r),\ q-p,\ -r(q-p)\bigr),$$
-i.e. the matrix $\begin{pmatrix} q-r & -p(q-r) \\ q-p & -r(q-p)\end{pmatrix}$,
-whose boundary action is the classical cross-ratio map
-$x \mapsto \frac{(x-p)(q-r)}{(x-r)(q-p)}$.
+*Proof.* $F_{a,b}(b-t) \le \pi/2$ always, while $F_{a,b}(a+t) > -\pi/2$ strictly, because the argument $(2(a+t)-a-b)/(b-a) > -1$ exactly when $t > 0$, and $\arcsin$ is $> -\pi/2$ on $(-1, 1]$. Subtract and divide by $\kappa > 0$. $\square$
 
-**Lemma 7.7 (Positive determinant).**
-If $p < q < r$ then $\det = (q-r)\bigl(-r(q-p)\bigr) - \bigl(-p(q-r)\bigr)(q-p)
-= (r-q)(q-p)(r-p) > 0.$
+**Theorem 6.8 (Degeneration).** For $a < b$,
+$$\lim_{t \downarrow 0} \mathcal{T}_{\kappa}(a,b;t) \;=\; \frac{\pi}{\kappa}.$$
 
-*Proof.* The displayed algebraic identity is a direct expansion; positivity
-follows from $r-q>0$, $q-p>0$, $r-p>0$. $\square$
+*Proof.* The right-hand side of Theorem 6.6 is a continuous function of $t$ (as $F_{a,b}$ is continuous on $\mathbb{R}$), whose value at $t = 0$ is $(F_{a,b}(b) - F_{a,b}(a))/\kappa = \pi/\kappa$ by Lemma 3.3. The formula of Theorem 6.6 is valid eventually as $t \downarrow 0$ — precisely once $0 < t < (b-a)/2$ — so the limit of the areas equals the limit of the continuous expression. $\square$
 
-**Lemma 7.8 (Normalisation).**
-With the coefficients of Definition 7.6 and $p<q<r$:
-$t(p) = 0$, $t(q) = 1$, and $Cr + D = 0$, i.e. $r$ is the pole and is sent to
-$\infty$.
+Together, Theorems 6.7 and 6.8 say: the ideal triangle is the increasing limit of a compact exhaustion by regions of strictly smaller area. The supremum $\pi/\kappa$ is approached but never attained by any truncation.
 
-*Proof sketch.* The numerator at $x=p$ is $(q-r)p - p(q-r) = 0$ while the
-denominator $(q-p)p - r(q-p) = (q-p)(p-r) \neq 0$, so $t(p) = 0$. At $x = q$ the
-numerator is $(q-r)q - p(q-r) = (q-r)(q-p)$ and the denominator is
-$(q-p)q - r(q-p) = (q-p)(q-r)$; these are equal and nonzero, so $t(q) = 1$.
-Finally $Cr + D = (q-p)r - r(q-p) = 0$ identically. $\square$
+**Theorem 6.9 (Geometric degeneration in the angle family).** In the family of §5.2, as $(\theta, \varphi) \to (\pi, 0)$ within the admissible parameter set $\{0 \le \varphi < \theta \le \pi\}$, the area $(\theta - \varphi)/\kappa$ converges to $\pi/\kappa$: the two finite vertices slide out to the boundary points $-1$ and $1$, both angles tend to $0$, and the region increases to an ideal triangle.
 
-**Theorem 7.9 (Three-transitivity).**
-For any boundary points $p < q < r$ there exist $A,B,C,D \in \mathbb{R}$ with
-$AD - BC > 0$, $t(p) = 0$, $t(q) = 1$ and $Cr + D = 0$ (so $t(r) = \infty$).
+### 6.3 Angular degeneration: uniqueness of the limiting shape
 
-*Proof.* Take the coefficients of Definition 7.6 and combine Lemmas 7.7 and 7.8.
-$\square$
+**Theorem 6.10 (Maximising sequences degenerate).** Let $\kappa > 0$ and let $(\alpha_{n}, \beta_{n}, \gamma_{n})$ be admissible for every $n$. If
+$$\mathcal{G}_{\kappa}(\alpha_{n}, \beta_{n}, \gamma_{n}) \longrightarrow \frac{\pi}{\kappa},$$
+then $\alpha_{n} \to 0$, $\beta_{n} \to 0$, and $\gamma_{n} \to 0$.
 
-**Theorem 7.10 (Sharpness / uniqueness).**
-Let $A,B,D \in \mathbb{R}$ with $D \ne 0$ and consider the map $t(x) =
-(Ax+B)/D$ (the case $C = 0$, i.e. $\infty$ is fixed). If $t(0) = 0$ and $t(1) = 1$
-then $t(x) = x$ for all $x$. Consequently any two normalising maps for the same
-boundary triple agree on the whole boundary line.
+*Proof.* Write $S_{n} = \alpha_{n} + \beta_{n} + \gamma_{n}$, so $S_{n} = \pi - \kappa\,\mathcal{G}_{\kappa}(\alpha_n,\beta_n,\gamma_n)$ identically. The right-hand side converges to $\pi - \kappa\cdot(\pi/\kappa) = 0$, so $S_{n} \to 0$. Now $0 \le \alpha_{n} \le S_{n}$ (using $\beta_{n}, \gamma_{n} \ge 0$), and likewise for $\beta_{n}$ and $\gamma_{n}$. The squeeze theorem gives the three limits. $\square$
 
-*Proof.* $t(0) = B/D = 0$ forces $B = 0$; then $t(1) = A/D = 1$ forces $A = D$;
-then $t(x) = Dx/D = x$. For the consequence, compose one normaliser with the
-inverse of the other to get a map fixing $0,1,\infty$. $\square$
-
-**Corollary 7.11 (Universality of the ideal area).**
-Three distinct ideal points determine a unique ideal triangle, and any two ideal
-triangles are related by a hyperbolic isometry that is unique among orientation
-preserving ones. In particular every ideal triangle is congruent to the standard
-one with vertices $0$, $1$, $\infty$, whose area is $\pi/\kappa$ by Theorem 5.1.
+**Corollary 6.11.** The ideal triangle is the *unique* limiting shape of an area-maximising sequence of hyperbolic triangles. Rigidity therefore holds not only for exact maximisers but asymptotically.
 
 ---
 
-## 8. Variable curvature: a comparison theorem
+## 7. Isometries, and why one computation suffices
 
-We now weaken the assumption of constant curvature. Let $K : \mathbb{R} \to
-\mathbb{R}$ be a continuous positive function and consider the area element
-$$dA_{K} = \frac{dx\,dy}{K(x)\,y^{2}},$$
-i.e. curvature $-K(x)$ depending on the horizontal coordinate.
+Theorem 4.4 computes the area of ideal triangles whose third vertex is the special boundary point $\infty$. To conclude that *every* ideal triangle has area $\pi/\kappa$ we need (a) that real Möbius maps are hyperbolic isometries, and (b) that they act transitively on boundary triples.
+
+### 7.1 Real Möbius maps preserve the half-plane
+
+**Definition 7.1.** For $A, B, C, D \in \mathbb{R}$, the associated real Möbius map is
+$$T(z) \;=\; \frac{Az + B}{Cz + D}, \qquad z \in \mathbb{C},\ Cz + D \ne 0,$$
+with determinant $\det T = AD - BC$. On the boundary line it restricts to $x \mapsto (Ax+B)/(Cx+D)$, with pole at $x = -D/C$, which is sent to $\infty$.
+
+**Theorem 7.2 (Imaginary part).** For all $A,B,C,D \in \mathbb{R}$ and all $z$ with $Cz+D \ne 0$,
+$$\operatorname{Im} T(z) \;=\; \frac{(AD - BC)\,\operatorname{Im} z}{|Cz+D|^{2}}.$$
+
+*Proof sketch.* Multiply numerator and denominator by the conjugate $\overline{Cz+D}$ and take imaginary parts; the real coefficients make the cross terms combine to $(AD-BC)\operatorname{Im} z$, while the denominator becomes $|Cz+D|^{2}$. $\square$
+
+**Theorem 7.3 (Invariance of the upper half-plane).** If $\det T = AD - BC > 0$ and $\operatorname{Im} z > 0$, then $Cz+D \ne 0$ and $\operatorname{Im} T(z) > 0$.
+
+*Proof sketch.* If $Cz + D = 0$ then its imaginary part $C \operatorname{Im} z$ vanishes, forcing $C = 0$ since $\operatorname{Im} z > 0$; then its real part $D$ vanishes too; but $C = D = 0$ makes $AD - BC = 0$, contradicting positivity. So $Cz+D \ne 0$, and Theorem 7.2 exhibits $\operatorname{Im} T(z)$ as a quotient of positive quantities. $\square$
+
+### 7.2 Conformality: the isometry identity
+
+**Theorem 7.4 (Derivative).** If $Cz + D \ne 0$ then $T$ is complex-differentiable at $z$ with
+$$T'(z) \;=\; \frac{AD - BC}{(Cz+D)^{2}} .$$
+
+*Proof.* Quotient rule applied to the affine numerator and denominator: $\big(A(Cz+D) - C(Az+B)\big)/(Cz+D)^{2} = (AD-BC)/(Cz+D)^{2}$. $\square$
+
+**Theorem 7.5 (Pointwise conformality — the isometry identity).** If $\det T > 0$ and $\operatorname{Im} z > 0$, then
+$$\frac{|T'(z)|}{\operatorname{Im} T(z)} \;=\; \frac{1}{\operatorname{Im} z}.$$
+
+*Proof.* By Theorem 7.4 and positivity of the determinant, $|T'(z)| = (AD-BC)/|Cz+D|^{2}$. By Theorem 7.2, $\operatorname{Im} T(z) = (AD-BC)\operatorname{Im} z / |Cz+D|^{2}$. Dividing, the factor $(AD-BC)/|Cz+D|^{2}$ cancels and the quotient is $1/\operatorname{Im} z$. $\square$
+
+**Corollary 7.6 (Real Möbius maps are hyperbolic isometries).** The hyperbolic line element on $\mathbb{H}$ is $ds = |dz|/(\sqrt{\kappa}\,y)$. Under $T$, the infinitesimal displacement $|dz|$ is multiplied by $|T'(z)|$ while the height $y = \operatorname{Im} z$ becomes $\operatorname{Im} T(z)$. Theorem 7.5 says the ratio is unchanged, so $T$ preserves hyperbolic length pointwise, hence hyperbolic distance, hence hyperbolic area, hence (being conformal, Theorem 5.2) hyperbolic angles.
+
+### 7.3 Sharp three-transitivity on the boundary
+
+**Definition 7.7 (Cross-ratio normaliser).** For $p < q < r$, let $T_{p,q,r}$ be the real Möbius map with coefficients
+$$(A, B, C, D) \;=\; \big(q-r,\ -p(q-r),\ q-p,\ -r(q-p)\big),$$
+that is,
+$$T_{p,q,r}(x) \;=\; \frac{(q-r)(x-p)}{(q-p)(x-r)} .$$
+
+**Theorem 7.8 (Orientation).** $\det T_{p,q,r} = (r-q)(q-p)(r-p) > 0$ for $p < q < r$.
+
+*Proof.* Expand $AD - BC = (q-r)(-r(q-p)) + p(q-r)(q-p) = (q-r)(q-p)(p - r) = (r-q)(q-p)(r-p)$, a product of three positive numbers. $\square$
+
+**Theorem 7.9 (Normalisation).** For $p < q < r$: $T_{p,q,r}(p) = 0$, $T_{p,q,r}(q) = 1$, and $r$ is the pole of $T_{p,q,r}$, i.e. $Cr + D = (q-p)r - r(q-p) = 0$, so $T_{p,q,r}(r) = \infty$.
+
+*Proof.* The numerator at $x = p$ is $(q-r)(p-p) = 0$ while the denominator $(q-p)(p-r) \ne 0$, so the value is $0$. At $x = q$ numerator and denominator are both $(q-r)(q-p) \ne 0$, so the value is $1$. The pole identity is an algebraic triviality. $\square$
+
+**Theorem 7.10 (Existence).** For every $p < q < r$ there exists a real Möbius map of positive determinant carrying $(p,q,r)$ to $(0,1,\infty)$.
+
+*Proof.* Theorems 7.8 and 7.9. $\square$
+
+**Theorem 7.11 (Uniqueness).** A real Möbius map fixing $0$, $1$ and $\infty$ is the identity on the boundary line. Explicitly: if $C = 0$ (which is what fixing $\infty$ means: no finite pole), $D \ne 0$, and $x \mapsto (Ax+B)/D$ fixes $0$ and $1$, then $(Ax+B)/D = x$ for all $x$.
+
+*Proof.* Fixing $0$ gives $B/D = 0$, so $B = 0$. Fixing $1$ then gives $A/D = 1$, so $A = D$. Hence the map is $x \mapsto Dx/D = x$. $\square$
+
+**Corollary 7.12 (Sharp three-transitivity).** For $p < q < r$ the normalising map is unique: any two real Möbius maps carrying $(p,q,r)$ to $(0,1,\infty)$ agree on the whole boundary line. Consequently three distinct boundary points determine an ideal triangle, uniquely up to a unique hyperbolic isometry.
+
+*Proof.* If $T$ and $T'$ both normalise, then $T \circ T'^{-1}$ fixes $0$, $1$, $\infty$, hence is the identity by Theorem 7.11. $\square$
+
+**Corollary 7.13 (Universality of the area).** Every ideal triangle in $\mathbb{H}$ — three distinct boundary vertices, three geodesic sides — is the image under a hyperbolic isometry of the standard ideal triangle with vertices $0$, $1$, $\infty$, and therefore has area $\pi/\kappa$. In particular $\mathcal{A}_{\kappa}(0,1;h_{0,1}) = \pi/\kappa$ is the universal value.
+
+*(The last step uses that hyperbolic area is a Möbius invariant; the pointwise identity of Theorem 7.5 is the infinitesimal statement, and its integrated form is stated as Conjecture B in §11.)*
+
+---
+
+## 8. Variable curvature: comparison and pinching
+
+The results so far are at constant curvature $-\kappa$. We now allow the curvature magnitude to vary along the base, replacing the area element $dx\,dy/(\kappa y^{2})$ by $dx\,dy/(K(x)\,y^{2})$ for a positive function $K$.
 
 **Definition 8.1 (Variable-curvature sliced area).**
-$$\mathcal{S}_{K}(a,b;\text{low}) := \int_{a}^{b}\!\!\left(\int_{\text{low}(x)}^{\infty} \frac{dy}{K(x)\,y^{2}}\right) dx .$$
+$$\mathcal{A}^{K}(a,b;\mathrm{low}) \;=\; \int_{a}^{b}\!\!\left(\int_{\mathrm{low}(x)}^{\infty} \frac{dy}{K(x)\,y^{2}}\right)dx .$$
 
-**Theorem 8.2 (Slicing under variable curvature).**
-If $\text{low} > 0$ on $(a,b)$ and $a<b$, then
-$$\mathcal{S}_{K}(a,b;\text{low}) = \int_{a}^{b} \frac{dx}{K(x)\,\text{low}(x)}.$$
+**Theorem 8.2 (Variable slicing).** If $a < b$ and $\mathrm{low} > 0$ on $(a,b)$, then
+$$\mathcal{A}^{K}(a,b;\mathrm{low}) \;=\; \int_{a}^{b} \frac{dx}{K(x)\,\mathrm{low}(x)} .$$
+No positivity, continuity, or measurability hypothesis on $K$ is required beyond what makes the outer integral meaningful.
 
-*Proof sketch.* Identical to Theorem 4.2 but with the constant $\kappa^{-1}$
-replaced by the $x$-dependent factor $K(x)^{-1}$, which is constant with respect
-to the inner variable $y$ and may therefore be pulled out of the inner integral
-before applying Lemma 3.7. $\square$
+*Proof sketch.* As in Theorem 4.3, the inner integral is $K(x)^{-1}\,\mathrm{low}(x)^{-1}$ for almost every $x$. $\square$
 
-**Lemma 8.3 (Integrability of the variable density).**
-If $K$ is continuous and nonvanishing on $[a,b]$, then $x \mapsto
-K(x)^{-1}\ell_{a,b}(x)^{-1}$ is integrable on $[a,b]$.
+**Lemma 8.3 (Reference integral).** For $a < b$ and $\kappa \ne 0$, $\int_{a}^{b} \kappa^{-1}h_{a,b}(x)^{-1}\,dx = \pi/\kappa$.
 
-*Proof sketch.* $K^{-1}$ is continuous, hence bounded, on the compact interval,
-and $\ell_{a,b}^{-1}$ is integrable by Lemma 3.3; a bounded continuous multiple
-of an integrable function is integrable. $\square$
+*Proof.* Pull out the constant and apply Theorem 3.6. $\square$
 
-**Theorem 8.4 (Curvature comparison).**
-Let $a < b$, let $K$ be continuous on $[a,b]$, and let $\kappa_{1}, \kappa_{2} >
-0$.
-1. If $K(x) \ge \kappa_{1}$ for all $x \in [a,b]$, then
-   $\mathcal{S}_{K}(a,b;\ell_{a,b}) \le \pi/\kappa_{1}$.
-2. If $0 < K(x) \le \kappa_{2}$ for all $x \in [a,b]$, then
-   $\mathcal{S}_{K}(a,b;\ell_{a,b}) \ge \pi/\kappa_{2}$.
+**Theorem 8.4 (Upper comparison).** Let $a < b$, $\kappa_{1} > 0$, $K$ continuous on $[a,b]$ with $K \ge \kappa_{1}$ there. Then
+$$\mathcal{A}^{K}\big(a,b;h_{a,b}\big) \;\le\; \frac{\pi}{\kappa_{1}} .$$
 
-*Proof sketch.* In case 1, by Theorem 8.2 the area is $\int_{a}^{b}
-K(x)^{-1}\ell_{a,b}(x)^{-1}dx$. Pointwise, $K(x)^{-1} \le \kappa_{1}^{-1}$ (the
-reciprocal is order-reversing on positives) and $\ell_{a,b}(x)^{-1} \ge 0$, so the
-integrand is dominated by $\kappa_{1}^{-1}\ell_{a,b}(x)^{-1}$. Both functions are
-integrable by Lemma 8.3, so monotonicity of the integral applies, and
-$\int_{a}^{b}\kappa_{1}^{-1}\ell_{a,b}^{-1} = \pi/\kappa_{1}$ by Theorem 3.5.
-Case 2 is symmetric. $\square$
+*Proof sketch.* By Theorem 8.2 the area is $\int_{a}^{b} K(x)^{-1}h_{a,b}(x)^{-1}dx$. Both this integrand and the reference integrand $\kappa_{1}^{-1}h_{a,b}^{-1}$ are integrable: the chordal density is integrable (Theorem 3.4) and $K^{-1}$ is continuous, hence bounded, on the compact interval (using $K \ge \kappa_1 > 0$ so $K$ never vanishes). Pointwise, $K(x) \ge \kappa_{1} > 0$ gives $K(x)^{-1} \le \kappa_{1}^{-1}$, and $h_{a,b}^{-1} \ge 0$, so the integrands are ordered. Monotonicity of the integral plus Lemma 8.3 completes the proof. $\square$
 
-**Theorem 8.5 (Pinching).**
-If $0 < \kappa_{1} \le K(x) \le \kappa_{2}$ on $[a,b]$ with $K$ continuous, then
-$$\frac{\pi}{\kappa_{2}} \;\le\; \mathcal{S}_{K}(a,b;\ell_{a,b}) \;\le\; \frac{\pi}{\kappa_{1}}.$$
+**Theorem 8.5 (Lower comparison).** Let $a < b$, $\kappa_{2} > 0$, $K$ continuous and positive on $[a,b]$ with $K \le \kappa_{2}$ there. Then
+$$\frac{\pi}{\kappa_{2}} \;\le\; \mathcal{A}^{K}\big(a,b;h_{a,b}\big).$$
 
-*Proof.* Combine the two parts of Theorem 8.4; note $\kappa_{2} \ge \kappa_{1} >
-0$ automatically, by evaluating the hypotheses at any single point. $\square$
+*Proof sketch.* Identical, with the inequality $\kappa_{2}^{-1} \le K(x)^{-1}$ from $0 < K(x) \le \kappa_{2}$. $\square$
 
-**Theorem 8.6 (Sharpness).**
-For the constant profile $K \equiv \kappa > 0$,
-$\mathcal{S}_{K}(a,b;\ell_{a,b}) = \pi/\kappa = \mathcal{S}_{\kappa}(a,b;
-\ell_{a,b})$. Hence neither inequality in Theorem 8.5 can be improved: both are
-attained, simultaneously, at $\kappa_{1} = \kappa_{2} = \kappa$.
+**Theorem 8.6 (Pinching).** If $a < b$, $0 < \kappa_{1} \le K \le \kappa_{2}$ on $[a,b]$ with $K$ continuous, then
+$$\frac{\pi}{\kappa_{2}} \;\le\; \mathcal{A}^{K}\big(a,b;h_{a,b}\big) \;\le\; \frac{\pi}{\kappa_{1}} .$$
 
-*Proof.* Theorem 8.2 with $K$ constant reduces to Theorem 4.2, and Theorem 3.5
-applies. $\square$
+*Proof.* Note $\kappa_{2} \ge K(a) \ge \kappa_{1} > 0$, so $\kappa_{2} > 0$ and both Theorems 8.4 and 8.5 apply. $\square$
 
-Interpretation: *more negative curvature makes ideal triangles smaller.* The
-bounded-area phenomenon is therefore robust — it survives the loss of exact
-constancy of curvature, and quantitatively so.
+**Theorem 8.7 (Sharpness).** For constant $K \equiv \kappa$,
+$$\mathcal{A}^{\kappa}\big(a,b;h_{a,b}\big) \;=\; \frac{\pi}{\kappa} \;=\; \mathcal{A}_{\kappa}\big(a,b;h_{a,b}\big).$$
+Hence neither inequality of Theorem 8.6 can be improved: taking $K \equiv \kappa_{1}$ attains the upper bound and $K \equiv \kappa_{2}$ attains the lower bound.
+
+*Proof.* Theorem 8.2, Lemma 8.3, and Theorem 4.4. $\square$
+
+**Interpretation 8.8.** Curvature magnitude and ideal area are in exact inverse proportion: $\mathrm{Area} \cdot \kappa = \pi$. More negative curvature compresses the plane and shrinks the largest triangle; the flat limit $\kappa \downarrow 0$ sends $\pi/\kappa \to \infty$, recovering the Euclidean absence of a maximum. Under pinching the product $\mathrm{Area}\cdot K$ is no longer constant but is still trapped: $\pi\,\kappa_{1}/\kappa_{2} \le \mathrm{Area}\cdot\kappa_{1}$ and so on. This is the elementary prototype of Riemannian comparison geometry — Rauch, Toponogov, Bishop–Gromov — where curvature bounds are converted into metric and volume bounds.
 
 ---
 
-## 9. Algorithms and numerical validation
+## 9. Algorithms and numerics
 
-The theory is exactly computable, which makes it unusually easy to validate
-numerically. Three algorithms suffice.
+### 9.1 Exact area of an ideal polygon
 
-### 9.1 Chordal quadrature with singularity removal
+**Algorithm 9.1.** *Input:* curvature magnitude $\kappa > 0$; a list of $m+1$ increasing finite boundary vertices, with an implicit vertex at $\infty$. *Output:* exact area.
 
-The integrand $\ell_{a,b}^{-1}$ has inverse-square-root endpoint singularities,
-which defeat naive quadrature. The substitution suggested by the geometry itself,
-$$x = \frac{a+b}{2} + \frac{b-a}{2}\sin s, \qquad s \in [-\tfrac{\pi}{2}, \tfrac{\pi}{2}],$$
-removes them exactly: $dx = \frac{b-a}{2}\cos s\,ds$ and $\ell_{a,b}(x) =
-\frac{b-a}{2}\cos s$, so the transformed integrand is identically $1$ and the
-integral is visibly the length $\pi$ of the $s$-interval. Numerically one applies
-this substitution and integrates the (now analytic) integrand
-$K(x(s))^{-1}$ in the variable-curvature case; Gauss–Legendre nodes then converge
-at spectral rate. Cost: $O(N)$ evaluations for $N$ nodes; error decays faster
-than any polynomial in $1/N$ for smooth $K$.
+1. Verify $v_{0} < v_{1} < \cdots < v_{m}$.
+2. Return $m\pi/\kappa$.
 
-### 9.2 Direct two-dimensional area by adaptive slicing
+Complexity: $O(m)$ for validation, $O(1)$ arithmetic. The remarkable feature is that no positions enter the answer. This is Theorem 4.8.
 
-To confirm the slicing theorem itself rather than assume it, one integrates the
-two-dimensional area element numerically: for each $x$ in a quadrature grid over
-$(a,b)$, evaluate the inner fibre integral $\int_{\ell(x)}^{\infty}
-dy/(\kappa y^{2})$ by the substitution $y = \ell(x)/w$, $w \in (0,1]$, which maps
-the semi-infinite fibre to the unit interval and turns the integrand into the
-constant $1/(\kappa\,\ell(x))$; then integrate over $x$ with the substitution of
-§9.1. This validates Lemma 3.7 and Theorem 4.2 simultaneously and independently.
+### 9.2 Numerical verification of the chordal integral
 
-### 9.3 Möbius normalisation and invariance testing
+The integral $\int_{a}^{b} h_{a,b}^{-1}$ has inverse-square-root singularities at both endpoints, so naive uniform quadrature converges at rate $O(N^{-1/2})$ — unusably slow. The correct method is to *remove the singularity by substitution*: set $x = \frac{a+b}{2} + \frac{b-a}{2}\sin\psi$, $\psi \in [-\pi/2, \pi/2]$. Then $dx = \frac{b-a}{2}\cos\psi\,d\psi$ and $h_{a,b}(x) = \frac{b-a}{2}\cos\psi$, so the integrand becomes the constant $1$ and the integral is the length $\pi$ of the $\psi$-interval — exactly, in one line. This substitution is also the cleanest proof of Theorem 3.6 and explains the appearance of $\pi$.
 
-Given $p<q<r$, form the cross-ratio coefficients of Definition 7.6, verify
-$\det > 0$ and the three normalisation conditions, and then test the conjectural
-area invariance (Conjecture B, §10.2) by Monte Carlo: sample points of a region
-$S$ with respect to the hyperbolic measure, push them forward by $T$, and compare
-the hyperbolic measures of $S$ and $T(S)$ estimated by importance sampling. The
-change-of-variables Jacobian of a Möbius map is $|T'|^{2}$, and by Theorem 7.5
-$|T'(z)|^{2}/(\operatorname{Im}T(z))^{2} = 1/(\operatorname{Im}z)^{2}$, so the
-invariance is a corollary of the pointwise conformality identity plus the planar
-change-of-variables formula — the numerics confirm the bookkeeping.
+For an independent numerical check one may instead use the *tanh–sinh* (double-exponential) quadrature rule, which handles endpoint algebraic singularities and converges at a rate that is essentially exponential in the number of nodes.
 
-### 9.4 Representative numbers
+### 9.3 Area by direct two-dimensional quadrature
 
-At $\kappa = 1$:
+To verify Theorem 4.4 without using the closed form, compute
+$$\frac{1}{\kappa}\int_{a}^{b} \frac{dx}{h_{a,b}(x)}$$
+by an adaptive quadrature that is aware of the endpoint singularity, or truncate: compute $\mathcal{T}_{\kappa}(a,b;t)$ for a sequence $t \downarrow 0$ and observe convergence to $\pi/\kappa$ from below, in agreement with Theorems 6.7 and 6.8. The truncated value has the closed form of Theorem 6.6, which also permits an exact error estimate:
+$$\frac{\pi}{\kappa} - \mathcal{T}_{\kappa}(a,b;t) = \frac{1}{\kappa}\left[\left(\frac{\pi}{2} - \arcsin\frac{b - a - 2t}{b-a}\right) + \left(\arcsin\frac{2t - (b-a)}{b-a} + \frac{\pi}{2}\right)\right] \sim \frac{4}{\kappa}\sqrt{\frac{t}{b-a}}$$
+as $t \downarrow 0$, using $\arccos(1-\varepsilon) \sim \sqrt{2\varepsilon}$. The square-root rate is a direct signature of the endpoint singularity.
 
-| configuration | predicted area | expression |
-|---|---|---|
-| ideal triangle $(a,b,\infty)$, any $a<b$ | $3.14159265\ldots$ | $\pi$ |
-| ideal quadrilateral ($n=4$) | $6.28318530\ldots$ | $2\pi$ |
-| ideal $n$-gon | $(n-2)\pi$ | $(n-2)\pi$ |
-| $\theta = 3\pi/4$, $\varphi = \pi/4$ | $1.57079632\ldots$ | $\pi/2$ |
-| $\theta = \pi$, $\varphi = \pi/2$ | $1.57079632\ldots$ | $\pi/2$ |
-| truncation $a=0,b=1,t=10^{-3}$ | $3.015080\ldots$ | $2\arcsin(1-2t)$ |
-| truncation $a=0,b=1,t=10^{-6}$ | $3.137593\ldots$ | $2\arcsin(1-2t)$ |
+### 9.4 Normalising a boundary triple
 
-At $\kappa = 2$ every entry halves; at $\kappa = 1/2$ every entry doubles. Under
-the curvature profile $K(x) = 1 + \tfrac12\sin(\pi x)$ on $[0,1]$, which satisfies
-$1 \le K \le 3/2$, the pinching theorem predicts area in $[2\pi/3, \pi] \approx
-[2.0944, 3.1416]$, and quadrature gives $\approx 2.5945$.
+**Algorithm 9.2.** *Input:* $p < q < r$. *Output:* coefficients $(A,B,C,D)$ of the unique orientation-preserving real Möbius map sending $(p,q,r) \mapsto (0,1,\infty)$, plus the determinant.
+
+1. $A \leftarrow q-r$; $B \leftarrow -p(q-r)$; $C \leftarrow q-p$; $D \leftarrow -r(q-p)$.
+2. $\det \leftarrow AD - BC = (r-q)(q-p)(r-p)$.
+3. Return $(A,B,C,D,\det)$.
+
+Complexity $O(1)$. Correctness is Theorems 7.8–7.9; uniqueness is Theorem 7.11.
+
+### 9.5 Sample numerics
+
+At $\kappa = 1$: every ideal triangle has area $\pi \approx 3.14159265$. The ideal quadrilateral has area $2\pi \approx 6.28318531$; the ideal hexagon $4\pi \approx 12.56637$. With $\kappa = 2$ (curvature $-2$), the ideal triangle has area $\pi/2 \approx 1.5708$.
+
+For the family of §5.2 with $\kappa = 1$: taking $\theta = 2\pi/3$, $\varphi = \pi/3$ gives angles $\alpha = \pi/3 \approx 1.0472$, $\beta = \pi/3$, $\gamma = 0$, and area $(2\pi/3 - \pi/3)/1 = \pi/3 \approx 1.0472$, in agreement with $(\pi - \pi/3 - \pi/3 - 0)/1 = \pi/3$.
+
+Truncation at $t = 10^{-3}$ with $a = 0$, $b = 1$, $\kappa = 1$ gives area $2\arcsin(1 - 2\cdot 10^{-3}) \approx 3.0151$, below $\pi$ by about $0.1265$, consistent with the predicted $4\sqrt{t} = 0.1265$.
 
 ---
 
-## 10. Discussion, conjectures, and future work
+## 10. Applications and context
 
-### 10.1 What has been achieved
+**Quantisation of hyperbolic surface area.** A closed orientable surface of genus $g \ge 2$ admits hyperbolic metrics of curvature $-1$. Any such metric decomposes into $4g-4$ ideal-like triangles or, via Gauss–Bonnet globally, has total area exactly $2\pi|\chi| = 4\pi(g-1)$, determined by topology alone. No deformation of the metric changes it. The bounded-area theorem for triangles is the local statement of which this is the global integral.
 
-The programme has moved the theory from angle data to geometry. A purely
-algebraic account can define area as angular defect over $\kappa$ and prove
-maximality and rigidity by inequalities; that account is a tautology dressed as a
-theorem. Here, the area is a Riemannian integral of the metric area element over
-an explicitly described region bounded by explicitly described geodesics; the
-angles are arccosines of normalised inner products of tangent vectors, shown to
-be conformally invariant; and the Gauss–Bonnet identity relating the two is a
-*conclusion*. The results also cover the polygon case by an honest triangulation
-along vertical geodesics, the degeneration in both the geometric and the
-angle-theoretic sense, the symmetry group that makes the model-specific
-computation universal, and the comparison estimates that show the phenomenon
-survives variable curvature.
+**Thin triangles and coarse geometry.** Bounded area forces bounded "thickness": in the hyperbolic plane every geodesic triangle is $\delta$-thin for a universal $\delta$ (each side lies in the $\delta$-neighbourhood of the union of the other two). Abstracting this property away from any metric model gives Gromov's notion of a hyperbolic group, from which follow solvable word problems, linear isoperimetric inequalities, and boundary theories. The uniform area bound proved here is the geometric substance behind that abstraction.
 
-### 10.2 Two conjectures
+**Ideal triangulations and knot invariants.** The three-dimensional analogue of the ideal triangle is the ideal tetrahedron; a hyperbolic structure on a knot complement is typically constructed by gluing finitely many of them and solving Thurston's gluing equations. Finiteness of ideal volume — the analogue of our $\pi/\kappa$ — makes hyperbolic volume a real-valued invariant of knots, and one of the strongest in practice. The area formula $(n-2)\pi/\kappa$ for ideal polygons is the two-dimensional model for the additivity of ideal volume under decomposition.
 
-**Conjecture A (Full Gauss–Bonnet in the half-plane, all vertices finite).**
-For any three points of the upper half-plane not lying on a common geodesic, the
-region bounded by the three connecting geodesics has hyperbolic area $(\pi -
-(\alpha+\beta+\gamma))/\kappa$, where $\alpha,\beta,\gamma$ are the angles between
-the tangent vectors of the sides at the respective vertices.
+**Modular geometry and number theory.** The modular group $\mathrm{PSL}(2,\mathbb{Z})$ acts on $\mathbb{H}$, and its standard fundamental domain is a hyperbolic triangle with one ideal vertex at $\infty$ and angles $\pi/3$, $\pi/3$, $0$; its area is $\pi - 2\pi/3 = \pi/3$, an instance of Theorem 5.6. This number appears throughout the theory of modular forms — for instance in the mass formulae and the Gauss–Bonnet computation of the Euler characteristic of the modular curve.
 
-*The key insight is* that the case with at least one ideal vertex, proved above,
-is already the whole theorem. An arbitrary triangle is the difference of two
-triangles with an ideal vertex at $\infty$, obtained by extending one side to the
-boundary; the identity then follows from additivity of the slicing integral
-together with a single angle-addition identity at the shared vertex. No new
-analysis is required — only careful bookkeeping of which region is added and
-which is subtracted. The three previously missing ingredients are now available:
-the exact antiderivative $F_{a,b}$, integrability across the singular endpoints,
-and a definition of interior angle that is provably conformally invariant.
+**Tilings and visual art.** Escher's *Circle Limit* woodcuts tile the hyperbolic plane by congruent figures. The tiles do not shrink hyperbolically; the apparent shrinkage is an artefact of the Euclidean rendering. Ideal triangulations of the hyperbolic plane by copies of *the* ideal triangle (all congruent, by Corollary 7.13) are the cleanest example: infinitely many pieces, each of area exactly $\pi$.
 
-*Falsifiable form.* Compute the area of the triangle with vertices $i$, $2i$ and
-$1+i$ numerically; the conjecture is refuted if it differs from $\pi -
-(\alpha+\beta+\gamma)$ for the numerically computed angles.
-
-**Conjecture B (Area is a Möbius invariant).**
-For $T$ a real Möbius map of positive determinant and $S$ a measurable subset of
-the upper half-plane,
-$$\int_{T(S)} \frac{dx\,dy}{y^{2}} = \int_{S} \frac{dx\,dy}{y^{2}}.$$
-This upgrades the pointwise conformality identity of Theorem 7.5 to a global
-measure-theoretic statement, and would make Corollary 7.11 an area statement
-rather than merely a congruence statement.
-
-### 10.3 Further directions
-
-1. **A second model.** Develop the Poincaré disk in parallel and prove the
-   Cayley transform is an isometry, giving a second, compact-boundary
-   perspective on the same invariants.
-2. **Full Gauss–Bonnet from the boundary integral.** Prove the identity for
-   arbitrary geodesic polygons directly by the boundary-integral form of
-   Gauss–Bonnet, with the geodesic curvature term vanishing on geodesic sides.
-3. **Sharper degeneration.** Quantify the rate at which the area of a triangle
-   with vertices at hyperbolic distance $R$ from a basepoint approaches
-   $\pi/\kappa$; the expected rate is exponential in $-R$.
-4. **Higher genus.** Assemble ideal triangles into hyperbolic surfaces and derive
-   the total-area formula $4\pi(g-1)/\kappa$ for a closed surface of genus
-   $g \ge 2$, obtaining Gauss–Bonnet in its global form.
-5. **Variable curvature, genuinely two-dimensional.** Replace $K(x)$ by
-   $K(x,y)$ and prove comparison inequalities for the angle defect as well as the
-   area, in the spirit of the Rauch and Toponogov comparison theorems.
-6. **Holonomy interpretation.** Express the angular defect as the rotational
-   holonomy of parallel transport around the triangle and prove that ideal
-   maximality is invariant under hyperbolic isometries.
-7. **Ideal polygons and Teichmüller theory.** Study the moduli of ideal
-   $n$-gons modulo isometry — a space of dimension $n-3$ by sharp
-   three-transitivity — and connect the area invariant to the combinatorics of
-   ideal triangulations of punctured surfaces.
-
-### 10.4 Applications
-
-The bounded-area phenomenon is the origin of hyperbolic rigidity. Because area is
-determined by angles alone, hyperbolic geometry admits no similarities: the
-curvature fixes an absolute scale. Downstream consequences include the uniform
-thinness of hyperbolic triangles, which Gromov abstracted into the definition of
-$\delta$-hyperbolic metric spaces and thus into geometric group theory; Mostow
-rigidity, by which a hyperbolic structure in dimension $\ge 3$ is determined by
-topology; and the Gauss–Bonnet count of ideal triangles in a triangulated
-surface, which turns a geometric quantity into a topological invariant. The
-formula $(n-2)\pi/\kappa$ for ideal polygons is the two-dimensional shadow of the
-volume formulas for ideal hyperbolic simplices that govern hyperbolic volumes of
-knot complements and the Bloch–Wigner dilogarithm. Finally, the boundary at
-infinity on which our vertices sit is the arena of conformal boundary theories in
-mathematical physics, where bulk geometry is encoded in boundary data.
+**Comparison geometry.** Theorem 8.6 is the simplest possible curvature-comparison statement: a pointwise two-sided curvature bound yields a two-sided area bound, sharp at the constant-curvature ends. The general theory — Rauch comparison, Toponogov's theorem, Bishop–Gromov volume comparison — is the same idea run at much greater generality, and the ideal triangle is the extremal configuration in the negative-curvature model case.
 
 ---
 
-## 11. Summary of results
+## 11. Discussion and future directions
 
-| Result | Statement |
-|---|---|
-| Chordal integral | $\int_{a}^{b} \bigl((x-a)(b-x)\bigr)^{-1/2}dx = \pi$ for all $a<b$ |
-| Fibre integral | $\int_{c}^{\infty} y^{-2}dy = 1/c$ for $c>0$ |
-| Slicing | $\int_{a}^{b}\!\int_{\text{low}(x)}^{\infty} \frac{dy\,dx}{\kappa y^{2}} = \frac{1}{\kappa}\int_{a}^{b}\frac{dx}{\text{low}(x)}$ |
-| Ideal triangle | Area of $\Delta(a,b,\infty)$ is $\pi/\kappa$ |
-| Ideal polygon | Area of an ideal $n$-gon is $(n-2)\pi/\kappa$; additive under gluing |
-| Truncation | Compact truncations have area $<\pi/\kappa$, increasing to $\pi/\kappa$ |
-| Angle rigidity | Area $\to \pi/\kappa$ forces all three angles $\to 0$ |
-| Conformal angles | $\angle(cu,v)=\angle(u,v)=\angle(u,cv)$ for $c>0$ |
-| Computed angles | $\angle(\tau_{\uparrow},\tau^{\rightarrow}(\theta)) = \pi-\theta$; $\angle(\tau_{\uparrow},\tau^{\leftarrow}(\varphi)) = \varphi$ |
-| Gauss–Bonnet | Area $=(\theta-\varphi)/\kappa = (\pi-(\alpha+\beta+0))/\kappa$, covering one, two or three ideal vertices |
-| Positive angles | Finite vertices have strictly positive angles; hence area $<\pi/\kappa$ |
-| Möbius height | $\operatorname{Im}T(z) = \det T\cdot \operatorname{Im}z/|Cz+D|^{2}$ |
-| Möbius isometry | $|T'(z)|/\operatorname{Im}T(z) = 1/\operatorname{Im}z$ |
-| Three-transitivity | An explicit positive-determinant map sends $p<q<r$ to $0,1,\infty$; it is unique |
-| Curvature pinching | $\kappa_{1}\le K\le \kappa_{2} \Rightarrow \pi/\kappa_{2} \le \text{Area} \le \pi/\kappa_{1}$, sharply |
+### 11.1 What is proved and what is assumed
+
+The development above is honest about its scope. Theorems 3.2–3.6 (analysis), 4.1–4.9 (areas by slicing), 5.2–5.9 (angles and Gauss–Bonnet with at least one ideal vertex), 6.2–6.10 (maximality, rigidity, degeneration), 7.2–7.12 (Möbius isometries and three-transitivity) and 8.2–8.7 (curvature comparison) are proved in full from the definitions given.
+
+Two deliberate scope restrictions remain. First, the derived Gauss–Bonnet theorem of §5 covers triangles with **at least one ideal vertex** — a family rich enough to include the ideal triangle, the modular triangle, and every degeneration between — but not yet triangles with three finite vertices. Second, Corollary 7.13 uses the integrated Möbius invariance of hyperbolic area, of which Theorem 7.5 is the infinitesimal form.
+
+Both gaps are addressed by the two conjectures below, and both are, in the authors' assessment, matters of bookkeeping rather than new analysis.
+
+### 11.2 Conjecture A — full Gauss–Bonnet with all vertices finite
+
+**Conjecture A.** For any three points of the upper half-plane not on a common geodesic, the region bounded by the three connecting geodesics has hyperbolic area $(\pi - (\alpha+\beta+\gamma))/\kappa$, where $\alpha, \beta, \gamma$ are the angles between the tangent vectors of the sides at the three vertices.
+
+*Why the one-ideal-vertex case should already be the whole theorem.* Extend one side of an arbitrary finite triangle to the boundary; the triangle becomes the difference of two triangles each having an ideal vertex at $\infty$, for which §5 gives the area. The identity then follows by additivity of the slicing integral together with a single angle-addition identity at the shared vertex — no new analysis is required, only careful bookkeeping of which region is added and which subtracted. The three previously missing ingredients are now in place: the exact antiderivative $F_{a,b}$, the improper integrability across the singular endpoints, and a definition of interior angle that is provably conformally invariant.
+
+*Falsifiable form.* Compute the area of the triangle with vertices $i$, $2i$, $1+i$ numerically; the conjecture is refuted if it differs from $\pi - \alpha - \beta - \gamma$ for the numerically computed angles.
+
+### 11.3 Conjecture B — Möbius invariance of hyperbolic area
+
+**Conjecture B.** For $T$ a real Möbius map of positive determinant and $S$ a measurable subset of the upper half-plane,
+$$\int_{T(S)} \frac{dx\,dy}{y^{2}} \;=\; \int_{S} \frac{dx\,dy}{y^{2}} .$$
+
+This is the integrated form of Theorem 7.5. The proof is the change-of-variables formula: the real Jacobian determinant of $T$, viewed as a map $\mathbb{R}^{2} \to \mathbb{R}^{2}$, equals $|T'(z)|^{2}$ by holomorphy, while the density transforms by $\operatorname{Im}T(z)^{-2} = |T'(z)|^{-2}\operatorname{Im}(z)^{-2}$; the two factors cancel exactly. Establishing it turns Corollary 7.13 into an unconditional theorem: hyperbolic area is an isometry invariant, and *every* ideal triangle has area $\pi/\kappa$.
+
+### 11.4 Further directions
+
+1. **A second model.** Develop the Poincaré disk model and the explicit isometry with the half-plane (the Cayley transform $z \mapsto (z-i)/(z+i)$), and check that ideal triangle area is model-independent.
+2. **Ideal polygons with all vertices finite on $\mathbb{R}$.** Prove $(n-2)\pi/\kappa$ without the convenient vertex at $\infty$, using Conjecture B to move one vertex there.
+3. **Sequences of finite triangles converging to an ideal one.** Construct an explicit sequence of triangles with three finite vertices whose vertices converge to three boundary points, each angle tending to zero and area tending to $\pi/\kappa$ — the finite-vertex refinement of Theorems 6.7 and 6.8.
+4. **Genuinely two-dimensional variable curvature.** Section 8 allows $K$ to depend on the base coordinate $x$. Allow $K = K(x,y)$, and relate the resulting area functional to the intrinsic Gaussian curvature of the corresponding conformal metric $e^{2u}(dx^{2}+dy^{2})$, whose curvature is $-e^{-2u}\Delta u$. Comparison should then follow from the maximum principle applied to the Liouville equation.
+5. **Holonomy.** Express the angular defect as the rotational holonomy of the Levi-Civita connection around the triangle, and prove directly that ideal maximality is invariant under all hyperbolic isometries (including orientation-reversing ones).
+6. **Higher dimensions.** The ideal tetrahedron in $\mathbb{H}^{3}$ has volume given by the Lobachevsky function $\Lambda$, maximised by the regular ideal tetrahedron at volume $3\Lambda(\pi/3) \approx 1.0149$. The two-dimensional story here is the degenerate case in which the maximiser is unique up to isometry and the maximum is a closed form; the three-dimensional analogue is genuinely harder and is the foundation of hyperbolic volume computations for knots.
+7. **Quantitative stability.** Theorem 6.10 says area near-maximal implies angles near zero. Make this quantitative: $\pi/\kappa - \mathrm{Area} = (\alpha+\beta+\gamma)/\kappa$ is already exact, so the interesting question is a *geometric* stability statement — if the area is within $\varepsilon$ of maximal, how close (in Hausdorff distance on the compactified plane, say) must the triangle be to an ideal one?
+
+### 11.5 A note on the shape of the argument
+
+It is worth recording how little machinery the development needs. One improper integral, $\int_a^b dx/\sqrt{(x-a)(b-x)} = \pi$, supplies the area of the ideal triangle *and*, by its independence of $a$ and $b$, the congruence of all such triangles. One algebraic identity, $\mathrm{Area} = (\pi - \alpha-\beta-\gamma)/\kappa$, supplies maximality (from nonnegativity of angles), rigidity (from the equality case), and the polygon formula (by triangulation). One conformality identity, $|T'|/\operatorname{Im}T = 1/\operatorname{Im}$, supplies the isometry group and, through three-transitivity, the reduction of the general ideal triangle to the normal form $(0,1,\infty)$.
+
+Three inputs; the rest is bookkeeping. That economy is the hallmark of a theory that has found its correct formulation.
+
+---
+
+## References (classical background)
+
+The angle-defect formula for hyperbolic triangles is due to Lambert and Gauss; the half-plane model to Beltrami and Poincaré; the classification of geodesics and the action of $\mathrm{PSL}(2,\mathbb{R})$ is standard nineteenth-century material. Thurston's ideal-tetrahedron programme and Gromov's $\delta$-hyperbolicity are the two modern developments most directly downstream of the results presented here.
