@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "94d22408",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the formal development in `Catalog/Pythagorean/NumberTheory/`\n(`CyclotomicFrobenius.lean`, `HilbertClassField.lean`).\n\n## What this cycle established\n\nThe previous cy",
-      "quality_score": 0.7906299999999999,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-08-04T03:45:32",
-      "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
-    },
-    {
       "cycle_id": "a65c164b",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\nConcrete, falsifiable conjectures suggested by the formalisation in\n`Catalog/Algebra/DerivedFunctors/`. Each one is stated so that a single Lean statement would\nsettle it, and eac",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-08-11T16:22:30",
       "title": "Deepening: Strange Attractors as Algebraic Objects"
+    },
+    {
+      "cycle_id": "b7dba88e",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
+      "quality_score": 0.7419800000000001,
+      "sorry_count": 0,
+      "theorem_count": 115,
+      "timestamp": "2026-08-11T19:28:43",
+      "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b58f013e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\n- Extend the exact finite classification to larger boxes and additional exponent pairs, especially `(2, 5)`, `(3, 4)`, and `(3, 5)`.\n- Develop valuation lemmas for `x^a - y^b`, in",
-      "quality_score": 0.6972499999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-01T23:21:41",
-      "title": "Catalan's Conjecture Generalizations"
-    },
     {
       "cycle_id": "7b912198",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-08-11T16:28:01",
       "title": "For every finite terminating normalization system equipped with a probability la"
+    },
+    {
+      "cycle_id": "b7dba88e",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
+      "quality_score": 0.7419800000000001,
+      "sorry_count": 0,
+      "theorem_count": 115,
+      "timestamp": "2026-08-11T19:28:43",
+      "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "name": "luc_two_mul",
-      "quality": 0.748155
-    },
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "name": "fib_cassini",
-      "quality": 0.746255
-    },
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "name": "luc_two_mul_and_succ",
-      "quality": 0.746255
-    },
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "and_gate_ft",
       "quality": 0.7526200000000001
+    },
+    {
+      "cycle_id": "b7dba88e",
+      "domain": "Tropical",
+      "name": "isCentral_leftZero",
+      "quality": 0.7419800000000001
+    },
+    {
+      "cycle_id": "b7dba88e",
+      "domain": "Tropical",
+      "name": "isCentral_rightZero",
+      "quality": 0.7419800000000001
+    },
+    {
+      "cycle_id": "b7dba88e",
+      "domain": "Tropical",
+      "name": "IsCentral",
+      "quality": 0.7419800000000001
     }
   ],
-  "last_updated": "2026-08-11T16:28:01",
+  "last_updated": "2026-08-11T19:28:43",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "78bbd545",
-        "quality": 0.7874099999999999,
-        "theorems": 10,
-        "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-      },
-      {
         "cycle_id": "0e1eb0cb",
         "quality": 0.80043,
         "theorems": 26,
@@ -4009,6 +4003,12 @@
         "quality": 0.627125,
         "theorems": 96,
         "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
+      },
+      {
+        "cycle_id": "b7dba88e",
+        "quality": 0.7419800000000001,
+        "theorems": 115,
+        "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
       }
     ]
   }
