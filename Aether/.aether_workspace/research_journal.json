@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e4843e14",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThe proposed mixed-area formula needs a normalization correction. For standard degree triangles, normalized lattice area satisfies\n\n\\[\nA((d+e)\\Delta)-A(d\\Delta)-A(e\\Delta)=2de.\n\\]",
-      "quality_score": 0.7439399999999999,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-08-03T17:30:50",
-      "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
-    },
-    {
       "cycle_id": "eb6ff95e",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\n1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tensor `ψ : Fin 2 → Fin 2 → Fin 2 → ℂ`, the convex-roof squared concurrences of its `AB` and `AC` reduc",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-11T04:50:50",
       "title": "Let two prefix-free encodings of the same deductive system translate into one an"
+    },
+    {
+      "cycle_id": "d1971d75",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — strongly complete sets (thread th_20f13f16, cycle 2)\n\nThis cycle added two files to the catalog:\n\n* `Catalog/Combinatorics/StronglyCompleteBlocks.lean` — monotonicity, the initia",
+      "quality_score": 0.747205,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-08-11T06:13:48",
+      "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ed94092b",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nThe complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` reduces complement-closed reconstruction questions to either member of each complementary pair. Conc",
-      "quality_score": 0.7667599999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-08-01T09:30:07",
-      "title": "The general reconstruction conjecture remains open. The formal results in `Catal"
-    },
     {
       "cycle_id": "cb10fc42",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-11T04:50:50",
       "title": "Let two prefix-free encodings of the same deductive system translate into one an"
+    },
+    {
+      "cycle_id": "d1971d75",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — strongly complete sets (thread th_20f13f16, cycle 2)\n\nThis cycle added two files to the catalog:\n\n* `Catalog/Combinatorics/StronglyCompleteBlocks.lean` — monotonicity, the initia",
+      "quality_score": 0.747205,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-08-11T06:13:48",
+      "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "22e93393",
-      "domain": "Combinatorics",
-      "name": "psiSet_empty",
-      "quality": 0.71348
-    },
-    {
-      "cycle_id": "22e93393",
-      "domain": "Combinatorics",
-      "name": "expP_prod",
-      "quality": 0.71348
-    },
-    {
-      "cycle_id": "22e93393",
-      "domain": "Combinatorics",
-      "name": "psi_eq_psiB",
-      "quality": 0.71348
-    },
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "lengths",
       "quality": 0.727445
+    },
+    {
+      "cycle_id": "d1971d75",
+      "domain": "Combinatorics",
+      "name": "IsSubsetSum",
+      "quality": 0.747205
+    },
+    {
+      "cycle_id": "d1971d75",
+      "domain": "Combinatorics",
+      "name": "Complete",
+      "quality": 0.747205
+    },
+    {
+      "cycle_id": "d1971d75",
+      "domain": "Combinatorics",
+      "name": "StronglyComplete",
+      "quality": 0.747205
     }
   ],
-  "last_updated": "2026-08-11T04:50:50",
+  "last_updated": "2026-08-11T06:13:48",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "2d9904f9",
-        "quality": 0.686,
-        "theorems": 91,
-        "title": "1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tens"
-      },
-      {
         "cycle_id": "39ee2889",
         "quality": 0.79707,
         "theorems": 34,
@@ -3265,6 +3259,12 @@
         "quality": 0.751005,
         "theorems": 67,
         "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
+      },
+      {
+        "cycle_id": "d1971d75",
+        "quality": 0.747205,
+        "theorems": 40,
+        "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
       }
     ],
     "Computation": [
