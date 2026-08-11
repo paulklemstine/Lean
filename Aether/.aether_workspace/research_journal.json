@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f7f562cc",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n1. **Poisson isolated-vertex limit in the connectivity window.** For every fixed `c : ℝ`, if `I_n` is the isolated-vertex count in `G(n, (log n + c)/n)`, then for every fixed `k :",
-      "quality_score": 0.78272,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-08-03T15:25:39",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
-    {
       "cycle_id": "a60d1c49",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nThe formal development establishes the exact finite-dimensional permutation symmetry and\nprobabilistic normalization laws of standard scaled dot-product softmax attention. Natural",
@@ -499,19 +489,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-11T01:12:41",
       "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
+      "quality_score": 0.71609,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-11T02:41:06",
+      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "788947d7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n1. **Concrete Schanuel specialization.** Prove that the finite-family formulation `EMLTranscendence.SchanuelConjecture` implies `EMLTranscendence.ConcreteSchanuelSpecialization`.",
-      "quality_score": 0.7986800000000001,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-08-01T04:21:45",
-      "title": "EML Number Theory: Transcendence and Algebraic Independence"
-    },
     {
       "cycle_id": "04022a5b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 96,
       "timestamp": "2026-08-11T02:39:19",
       "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
+      "quality_score": 0.71609,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-11T02:41:06",
+      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b2707824",
-      "domain": "Geometry",
-      "name": "sub_div_le_log_div",
-      "quality": 0.73319
-    },
-    {
-      "cycle_id": "f3cf4755",
-      "domain": "MachineLearning",
-      "name": "crossTime_sharp_constant",
-      "quality": 0.7422650000000001
-    },
-    {
-      "cycle_id": "14cda033",
-      "domain": "Computation",
-      "name": "alignment_iff_ratConic",
-      "quality": 0.71918
-    },
     {
       "cycle_id": "14cda033",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "hasDerivAt_mobiusC",
       "quality": 0.71709
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "name": "mobius_im",
+      "quality": 0.71609
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "name": "mobius_mapsTo_upperHalfPlane",
+      "quality": 0.71609
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "name": "hasDerivAt_mobiusC",
+      "quality": 0.71609
     }
   ],
-  "last_updated": "2026-08-11T02:39:19",
+  "last_updated": "2026-08-11T02:41:06",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "1d44d635",
-        "quality": 0.686,
-        "theorems": 162,
-        "title": "ArXiv paper: Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algor"
-      },
-      {
         "cycle_id": "6077433a",
         "quality": 0.78776,
         "theorems": 87,
@@ -3449,6 +3443,12 @@
       {
         "cycle_id": "4c1e8096",
         "quality": 0.71709,
+        "theorems": 59,
+        "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+      },
+      {
+        "cycle_id": "4c1e8096",
+        "quality": 0.71609,
         "theorems": 59,
         "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
       }

@@ -216,21 +216,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "SCP-Containment-Topology: Non-Euclidean Geometric Lock for Anomalous Objects"
   },
   {
-    "consumed_by_exp_id": "de149d0f",
-    "description": "Formalizes conditions where two spatially separated identical agents undergo instant state-space synchronization upon observing identical environmental stimuli.",
-    "domains": [
-      "Logic"
-    ],
-    "id": "scifi_50_15_e4106456",
-    "phase": "A",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
-    "timestamp": "2026-07-23T20:07:57.541980+00:00",
-    "title": "Doppelg\u00e4nger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Proves the exact critical agent density threshold at which individual autonomous agents undergo a phase transition into a unified high-order consciousness.",
     "domains": [
@@ -1521,16 +1506,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fadf9a22",
     "description": "Building on cycle 39ee2889 (Q=0.797), which proved 34 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\nConcrete, falsifiable conjectures arising from the formalization in\n\n* `Catalog/Bridges/B3FreeFamilies.lean` \u2014 framework of weak/strong `P`-free families,\n  layers, `e(P)`, `La(n,P)`, `La*(n,P)`, Sperner;\n* `Catalog/Bridges/B3FreeFamiliesBounds.lean` \u2014 maximality of layer famili",
     "domains": [
       "Combinatorics"
     ],
     "id": "push_39ee2889_03a0eba5",
+    "phase": "A",
     "priority_score": 0.8970699999999999,
     "research_mode": "team",
     "source_exp_id": "39ee2889",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-06T07:55:36.068811+00:00",
     "title": "Deepening: Concrete, falsifiable conjectures arising from the formalization in"
   },
@@ -2620,17 +2606,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Perfect Cuboid (Euler Brick)"
   },
   {
-    "consumed_by_exp_id": "0311161a",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c7c1ec6d (Q=0.767), which proved 8 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H\u2082 = 0` produces zero.  They also\nshow that unitary output forc",
     "domains": [
       "NumberTheory"
     ],
     "id": "push_c7c1ec6d_44e7b8d0",
-    "phase": "A",
     "priority_score": 0.8667599999999999,
     "research_mode": "team",
     "source_exp_id": "c7c1ec6d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-02T23:23:50.647036+00:00",
     "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
   },
@@ -4080,17 +4065,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dad7f8d",
     "description": "Investigate the ArXiv paper 'The chain replacement of a poset flow' and formalize its key results. Abstract: We introduce the chain replacement of a poset flow: it is obtained by considering the simplicial nerves of the posets of strictly increasing chains in the given poset, ordered by refinement. It maps finite posets to q-cofibrant flows and inclusions of finite posets to q-cofibrations. Using the combinatorial properties of the chain replacement, we prove that pushouts along the chain replacement of an order-reflecting inclusion of finite posets preserve spaces of execution paths. By introducing the Hurewicz model structure on flows (or H-model structure), we deduce the same property for any q-cofibrant replacement of an order-reflecting inclusion of finite posets.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_0016",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.11639v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T08:21:53.852514+00:00",
     "title": "ArXiv paper: The chain replacement of a poset flow"
   },
@@ -6277,17 +6263,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Fatness and Flatness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a55e871b",
     "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
     "domains": [
       "Algebra",
       "Physics"
     ],
     "id": "fd_0776",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.21494v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-26T23:29:22.547061+00:00",
     "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
   },
@@ -6621,6 +6608,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Varieties with prescribed fundamental group schemes' and formalize its key results. Abstract: We study the realization problem for Tannakian fundamental group schemes: given an affine $k$-group scheme $G$, when does there exist a smooth projective connected pointed $k$-variety $(X,x)$ whose fundamental group scheme is isomorphic to $G$? We establish exact sequences for fundamental group schemes associated with principal bundles, and combine them with a Godeaux--Serre construction and Lefschetz-type theorems. As applications, we show that every finite \u00e9tale $k$-group scheme is realized as the $S$-, Nori, and extended Nori fundamental group scheme of a smooth projective variety, while every finite constant group scheme is realized as the $F$- and \u00e9tale variants.11",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1070",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.09757v1",
+    "status": "available",
+    "timestamp": "2026-08-11T02:41:11.318115+00:00",
+    "title": "ArXiv paper: Varieties with prescribed fundamental group schemes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A proof of a conjecture on permutation polynomials' and formalize its key results. Abstract: In this paper, we use finite fields and linear algebra methods to resolve a conjecture by T. Zhang, L. Zheng, H. Wang, J. Peng and Y. Li (Finite Fields Appl. 110 (2026) 102743) concerning permutation pentanomials.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1071",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.09754v1",
+    "status": "available",
+    "timestamp": "2026-08-11T02:41:14.845758+00:00",
+    "title": "ArXiv paper: A proof of a conjecture on permutation polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
     "domains": [
       "Geometry",
@@ -6706,21 +6723,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Lehmer's Mahler Measure Problem"
-  },
-  {
-    "consumed_by_exp_id": "94177336",
-    "description": "Cycle 1003d095 (Q=0.740) proved 0 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_1003d095_00485697",
-    "phase": "A",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "1003d095",
-    "status": "in_progress",
-    "timestamp": "2026-07-17T18:04:18.998094+00:00",
-    "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
   },
   {
     "consumed_by_exp_id": "",
@@ -7499,17 +7501,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "State the CSS dictionary with two classical codes precisely.: The mission"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "610f4688",
     "description": "# Future Directions\n\n## 1. Physical comparison gates with explicit reset registers\n\n**Conjecture.** For a comparator network implemented by reversible gates with a designated\nreset protocol, the minimum dissipated work is governed by the conditional entropy of the\ncomparison transcript given the sorted output, rather than by the transcript length.\n\nThe key insight is that repeated comparisons can be logically correlated, so only the\nunrecoverable part of their joint transcript should incur a Landauer cost. **Why now?** The\nfactorial lower bound and the redundant-padding counterexample isolate precisely the missing\ningredient: an explicit account of which transcript registers are reset.\n\n## 2. Tight entropy-sensitive sorting under nonuniform priors\n\n**Conjecture.** For every distribution on permutations, there is a comparison sorter whose\nexpected comparison count is within an additive constant times `n` of the Shannon entropy,\nand whose reversible history can be compressed to the same scale.\n\nThe key insight is that factorial entropy is merely the uniform-prior case; biased input\norders should admit both shorter decision paths and smaller retained histories. **Why now?**\nThe present synthesis separates worst-case tree capacity from erased information, making a\nprior-sensitive formulation both natural and experimentally testable.\n\n## 3. A thermodynamic direct-sum theorem for independent sorting tasks\n\n**Conjecture.** Sorting independent blocks has additive minimum logical-erasure work, while\nany reversible implementation requires a history space whose cardinality is the product of\nthe block factorials; equality should characterize protocols with no cross-block garbage.\n\nThe key insight is that entropy adds while reversible state counts multiply, suggesting a\nsharp bridge between product decision trees and tensorized thermodynamic resources. **Why\nnow?** Existing composition and history-space results provide the one-block ingredients,\nwhile the equality case remains open and falsifiable on small block systems.\n\n## 4. Fluctuation penalty above the sorting Landauer bound\n\n**Conjecture.** In a finite-time stochastic implementation of irreversible sorting, any\nnonconstant work distribution on the support forces expected work strictly above\n`kT log(n!)`, with a quantitative excess controlled by a divergence between forward and\nreverse sorting trajectories.\n\nThe key insight is that logical entropy supplies only the quasistatic baseline; strict\nconvexity should convert work fluctuations into a positive surcharge. **Why now?** The exact\nfactorial baseline is available, so simulations can test candidate divergence bounds\nwithout ambiguity about the equilibrium term.\n\n## 5. Multiway comparisons and optimal radix\n\n**Conjecture.** If each query has at most `q` outcomes, every sorter requires depth at least\n`\u2308log_q(n!)\u2309`; under a physical model charging `kT log q` per fully erased query register,\nthe ideal total work remains `kT log(n!)`, independent of `q`.\n\nThe key insight is that changing query radix trades depth against information per query but\nshould not alter the reversible information balance. **Why now?** The binary theorem exposes\nthe exact structural argument, and small multiway trees can immediately test sharpness and\nequality conditions.\n",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
     "id": "fd_0375",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "7bc47166",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T01:02:40.371534+00:00",
     "title": "**Conjecture.** For a comparator network implemented by reversible gates with a"
   },
@@ -9460,17 +9463,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The complement-deck equivalence in `Catalog/Combinatorics/Reconstruction.lean` r"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1971d75",
     "description": "# Future directions\n\nThe accompanying Lean file establishes the basic definitions, finite-perturbation invariance of strong completeness, and a sharp elementary warning: ordinary completeness alone does not guarantee robustness under finite deletion.\n\n## 1. Ordered-block criterion from the paper\n\nFormalize the paper's more general criterion before specializing to dyadic blocks. A useful interface should include:\n\n- a sequence of finite, pairwise ordered blocks of natural numbers;\n- lower bounds on each block's cardinality;\n- hypotheses controlling gaps or overlap of attainable subset-sum intervals;\n- a conclusion phrased as `StronglyComplete`.\n\nThis is likely the most reusable route to the headline theorem.\n\n## 2. Dyadic specialization\n\nDefine\n\n`dyadicBlock A k = A \u2229 Set.Ioc (2^k) (2^(k+1))`\n\nand formalize the eventual six-elements-per-block condition. Once the ordered-block theorem is available, prove the dyadic result by checking its structural hypotheses.\n\n## 3. Analytic divergence hypothesis\n\nIntroduce distance to the nearest integer using the existing circle/quotient or `Int.fract` infrastructure, and formalize the condition\n\n`\u2200 \u03b8 : \u211d, \u03b8 \u2209 Set.range ((\u2191) : \u2124 \u2192 \u211d) \u2192 \u2211' a, ... = \u221e`\n\nwith a nonnegative extended-real sum (`\u211d\u22650\u221e`) if that gives the cleanest notion of divergence. Care is needed because the paper writes a sum indexed by a set rather than a sequence.\n\n## 4. Monotonicity and tails\n\nUseful intermediate results include:\n\n- every superset of a complete set is complete;\n- every superset of a strongly complete set is strongly complete;\n- finite changes preserve strong completeness (already proved here);\n- a set is strongly complete iff every finite initial segment can be deleted while retaining completeness.\n\nThe final equivalence turns arbitrary finite deletions into canonical initial-segment deletions and may simplify the paper's argument.\n\n## 5. Further contrarian tests\n\nInvestigate and either prove or refute:\n\n1. If `A` is complete and contains infinitely many odd elements, then `A` is strongly complete.\n2. If every residue class modulo every `m \u2265 2` contains infinitely many elements of `A`, then completeness implies strong completeness.\n3. Six elements in each sufficiently large dyadic block can be reduced to five if the analytic divergence hypothesis is strengthened quantitatively.\n\nThe first conjecture is especially suspect: parity is only one possible finite-deletion obstruction, and analogous obstructions modulo larger integers should be searched for.\n\n## 6. Exact correspondence with the source\n\nA later phase should pin the paper's bibliographic version and translate its named propositions in proof order, recording exactly which assumptions are used in each result. This file deliberately focuses on foundational consequences and a contrarian counterexample rather than claiming a complete formalization of the analytic headline theorem.\n",
     "domains": [
       "Combinatorics",
       "Bridges"
     ],
     "id": "fd_0876",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "cb10fc42",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T09:31:22.032828+00:00",
     "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
   },
@@ -10397,22 +10401,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:00.867073+00:00",
     "title": "The Lean development consists of three files, all of which compile with no `sorr"
-  },
-  {
-    "consumed_by_exp_id": "e69eca5d",
-    "description": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinatorics/HarrisFKGThresholdCoupling.lean` contain complete Lean 4\nproofs (no `sorry`, only the standard axioms `propext`, `Classical.choice`,\n`Quot.sound`) of the following.\n\n* `keyMeasure_thresholdFiber` \u2014 the finite-key probability formula\n  `P(siteThresholdConfig key p = \u03b7) = p^{|open \u03b7|}(1-p)^{|closed \u03b7|}` for the\n  product of uniform `[0,1]` keys on any finite index type;\n* `keyMeasure_eventKeys` \u2014 the key measure of an arbitrary event equals its\n  Bernoulli polynomial `bernProb p A`;\n* `keyMeasure_eventKeys_mono`, `bernProb_mono`, `crossing_prob_mono` \u2014\n  monotonicity in `p` for increasing events, in particular for horizontal\n  crossings of the `n \u00d7 n` grid;\n* `keyMeasure_eventKeys_strictMono`, `bernProb_strictMono`,\n  `crossing_prob_strictMono`, `crossing_bernProb_strictMono` \u2014 strict\n  monotonicity on `(0,1)` for nondegenerate increasing events and for grid\n  crossings;\n* `hasDerivAt_bernProb`, `deriv_bernProb`, `deriv_bernProb_pos_iff`,\n  `deriv_bernProb_pos` \u2014 the finite Russo formula and the characterization of\n  strict positivity of the derivative;\n* `bond_keyMeasure_thresholdFiber`, `bond_keyMeasure_eventKeys`,\n  `bond_connected_prob_mono` \u2014 the bond analogue on `Sym2 V`;\n* **new:** `weight_inf_mul_weight_sup` (log-supermodularity of the Bernoulli\n  weight), `bernProb_harris` and `keyMeasure_harris` (the Harris/FKG inequality\n  `P(A)P(B) \u2264 P(A \u2229 B)` for increasing events, in polynomial and in key-measure\n  form), `bernProb_harris_compl` (increasing versus decreasing negative\n  correlation), `bernProb_harris_biInter` and `bernProb_harris_biInter_compl`\n  (finite families), `bernProb_biUnion_ge` (product form of the square-root\n  trick), and the grid instances `crossing_harris`,\n  `crossing_harris_open_site`.\n\nConjecture 4 of the previous cycle (the finite Harris inequality) is therefore\nnow a theorem.  The list below is the updated set of falsifiable conjectures.\n\n## Conjecture 1 (size of the Russo derivative for grid crossings)\n\nLet `\u03b8_n(p)` be the horizontal crossing probability of the `n \u00d7 n` grid, so that\n`\u03b8_n'(p) = \u2211_v P_p(v pivotal)` by `deriv_bernProb`.  Conjecture: the sequence\n`\u03b8_n'(1/2)` is strictly increasing in `n` and satisfies `\u03b8_n'(1/2) \u2264 n` for all\n`n \u2265 1`.  Enumeration gives `\u03b8_1'(1/2) = 1`, `\u03b8_2'(1/2) = 3/2`,\n`\u03b8_3'(1/2) = 961/512 \u2248 1.879`.  Either half is refuted by a single computed\nvalue.\n\n## Conjecture 2 (self-duality defect and decay of the crossing density)\n\nWith `\u03b8_n` as above, `\u03b8_n(1/2) < 1/2` for every `n \u2265 2`, the sequence\n`\u03b8_n(1/2)` is strictly decreasing and tends to `0`, and the unique root\n`p_n \u2208 (0,1)` of `\u03b8_n(p) = 1/2` satisfies `p_n > 1/2`.  Enumeration gives\n`\u03b8_1(1/2) = 1/2`, `\u03b8_2(1/2) = 7/16`, `\u03b8_3(1/2) = 197/512`.  A single computed\npair with `\u03b8_{n+1}(1/2) \u2265 \u03b8_n(1/2)` refutes the monotonicity half.\n\n## Conjecture 3 (strict Harris correlation for grid crossings)\n\nThe Harris inequality `crossing_harris_open_site`,\n`p \u00b7 \u03b8_n(p) \u2264 P_p(crossing \u2229 {v open})`, is *strict* for every `n \u2265 2`, every\nsite `v` of the `n \u00d7 n` grid and every `p \u2208 (0,1)`.  Enumeration at `n = 2`,\n`p = 1/2` gives `P = 5/16 > 7/32 = p \u00b7 \u03b8_2(1/2)`.  Conjecturally the defect\n`P_p(crossing \u2229 {v open}) - p\u00b7\u03b8_n(p)` is maximal, for fixed `n` and `p = 1/2`,\nat a corner site.  Both halves are refuted by a single enumerated grid.\n\n## Conjecture 4 (BK inequality on a finite site set)\n\nFor increasing events `A, B \u2286 (\u03b9 \u2192 Bool)` on a finite site set, let `A \u2218 B` be\nthe event that `A` and `B` occur on disjoint sets of open sites.  Then\n\n`bernProb p (A \u2218 B) \u2264 bernProb p A * bernProb p B` for all `p \u2208 [0,1]`.\n\nThis is the van den Berg\u2013Kesten inequality, the natural counterpart to the\nHarris inequality now proved.  Together with `bernProb_harris` it would pin the\ncorrelation of increasing events between the two matching bounds.  It is\nfalsifiable on any explicit finite site set.\n\n## Conjecture 5 (bond\u2013site domination on the same key space)\n\nFor a finite graph `G` and vertices `u, v`, using the *same* index type\n`Sym2 V` for bond keys and `V` for site keys, the bond connection probability\ndominates the site connection probability of the line graph:\n\n`bernProb p {\u03c9 | BondConnected G \u03c9 u v} \u2265 bernProb p {\u03b7 | SiteConnected (lineGraph G) \u03b7 e f}`\n\nfor all `p \u2208 [0,1]` and all edges `e \u220b u`, `f \u220b v`.  This is a finite,\ncheckable statement (both sides are explicit polynomials for small graphs) and\nwould give a formal counterpart of the classical \"bond percolates at least as\neasily as site percolation\" heuristic.\n",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0963",
-    "phase": "B",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6ffc84c2",
-    "status": "in_progress",
-    "timestamp": "2026-08-05T06:52:34.895974+00:00",
-    "title": "`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,"
   },
   {
     "consumed_by_exp_id": "",
