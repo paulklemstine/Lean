@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4be361b7",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n- Package the finite Fisher form as a Mathlib `InnerProductSpace` on the tangent hyperplane of the open probability simplex.\n- Formalize differentiability of parameterized statist",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 305,
-      "timestamp": "2026-07-31T22:23:42",
-      "title": "Close Proofs: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
-    },
-    {
       "cycle_id": "61e33133",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n1. **Constructive multivariate rates.** Refine the qualitative Stone–Weierstrass result into an explicit approximation operator on `[0,1]^n`, with error controlled by a modulus of",
@@ -2501,6 +2491,16 @@
       "theorem_count": 68,
       "timestamp": "2026-08-11T00:15:51",
       "title": "Deepening: Tropical Convexity and Helly Theorem"
+    },
+    {
+      "cycle_id": "23bf86f8",
+      "domain": "Shared",
+      "key_insight": "# FUTURE DIRECTIONS — rainbow arithmetic-progression thresholds\n\nAll conjectures below are falsifiable, are stated for the objects formalised in\n`Catalog/Shared/RainbowAP*.lean`, and are *strictly str",
+      "quality_score": 0.6376340955882351,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-11T00:17:36",
+      "title": "Rainbow Arithmetic Progression Threshold Conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.740175
     }
   ],
-  "last_updated": "2026-08-11T00:15:51",
+  "last_updated": "2026-08-11T00:17:36",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "28c84414",
-        "quality": 0.73729,
-        "theorems": 10,
-        "title": "Deepening: Bridge: Category Theory as Universal Language for Mathematics"
-      },
-      {
         "cycle_id": "87f6aef5",
         "quality": 0.76207,
         "theorems": 10,
@@ -3947,6 +3941,12 @@
         "quality": 0.6514402131782946,
         "theorems": 555,
         "title": "ArXiv paper: Solomon zeta functions over arithmetic orders"
+      },
+      {
+        "cycle_id": "23bf86f8",
+        "quality": 0.6376340955882351,
+        "theorems": 61,
+        "title": "Rainbow Arithmetic Progression Threshold Conjecture"
       }
     ],
     "Tropical": [
