@@ -1919,16 +1919,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Spectral Graph Theory Meets Network Robustness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea23936f",
     "description": "Building on cycle 0f65effc (Q=0.781), which proved 24 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
     "domains": [
       "Tropical"
     ],
     "id": "push_0f65effc_9500e21d",
+    "phase": "A",
     "priority_score": 0.8809699999999999,
     "research_mode": "team",
     "source_exp_id": "0f65effc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-01T22:20:25.477720+00:00",
     "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
@@ -3866,17 +3867,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Proof Compression: Proofs on Spheres"
   },
   {
-    "consumed_by_exp_id": "7d0e79f3",
+    "consumed_by_exp_id": "",
     "description": "Determine all integer solutions to n! + 1 = m\u00b2. Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
     "domains": [
       "NumberTheory"
     ],
     "id": "seed_206",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Brocard's Problem: n! + 1 = m\u00b2"
   },
@@ -8886,18 +8886,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "For the split metric"
   },
   {
-    "consumed_by_exp_id": "7d691cb5",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n1. **Characterize safe degree-based spilling.** Identify graph classes or additional local\n   conditions under which deleting a maximum-degree vertex minimizes the register deficit.\n   Trees, threshold graphs, and subclasses of chordal graphs are natural first cases.\n\n2. **Formalize weighted spill cost.** Replace the one-vertex feasibility model by a cost\n   function on variables and minimize total cost subject to `k`-colourability of the induced\n   graph on unspilled vertices. The counterexample shows that degree alone cannot solve this\n   optimization problem.\n\n3. **Connect perfect elimination orders to SSA construction.** The present theorem assumes a\n   chordal graph via an explicit perfect elimination order. A compiler-facing development\n   could define dominance, SSA live ranges, and prove that the resulting interference graph\n   admits such an order.\n\n4. **Certified greedy allocation.** Extract an executable colouring algorithm from a perfect\n   elimination ordering and prove that it uses exactly the clique number of registers.\n\n5. **Spill lower bounds from cliques.** For a budget `k`, formalize that every clique of size\n   `m > k` forces at least `m-k` spills from that clique, then compare this lower bound with\n   optimal weighted spilling.\n\n6. **Minimal counterexamples.** Exhaustively classify the smallest chordal graphs for which a\n   maximum-degree spill fails, with the exhaustive search reflected by a kernel-checked finite\n   theorem rather than an external computation.\n\n7. **Correct the empirical target.** For SSA/chordal interference graphs, test `\u03c7 = \u03c9`, not\n   `\u03c7 = max(\u0394+1,\u03c9)`. Record maximum degree separately as a general upper-bound parameter; it\n   does not determine the exact chromatic number.\n",
     "domains": [
       "Algebra",
       "Computation"
     ],
     "id": "fd_0815",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "687f4282",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-29T12:32:29.148991+00:00",
     "title": "Characterize safe degree-based spilling.: Identify graph classes or additi"
   },
@@ -9767,17 +9766,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "1. **Finite partition formula.** For every finite pairwise-disjoint family of fi"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24c228d9",
     "description": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) \u2264 N^k` is robust and directly yields the\n`log\u2082 N` bits-per-spike ceiling. A sharper next theorem is\n\n`binom(N,k) \u2264 (e N / k)^k`,\n\nfollowed by two-sided estimates from Stirling's formula. For a fixed active\nfraction `k \u2248 \u03c1N`, this should connect sparse neural capacity to binary entropy:\n\n`log\u2082 binom(N,\u03c1N) \u2248 N H\u2082(\u03c1)`.\n\nThat formulation would quantify one-percent coding precisely rather than merely\nsubstituting `k = N/100` into a polynomial bound.\n\n## 2. Cumulative energy budgets\n\n`card_budgetCodebook` gives the exact lower-binomial sum\n`\u2211_{j\u2264k} binom(N,j)`. Useful follow-up bounds include\n\n- `\u2211_{j\u2264k} binom(N,j) \u2264 (k+1) N^k` for `1 \u2264 k \u2264 N`,\n- entropy bounds for `k \u2264 N/2`, and\n- comparison of exact-energy and at-most-energy codebooks.\n\nThese would turn the exact combinatorial identity into practical capacity\nestimates for variable spike counts.\n\n## 3. Noise robustness versus metabolic energy\n\nCombine sparse layers with Hamming-distance constraints. The resulting question\nis the maximum cardinality of a constant-weight binary code with prescribed\nminimum distance. Formal targets include Johnson-type and sphere-packing bounds,\nand explicit constructions showing when sparse representations remain robust to\nneuron flips.\n\n## 4. Population precision from probability theory\n\nThe existing population result models the variance law algebraically. A deeper\nformalization would define independent random neural responses, prove the\nvariance of their average, and derive concentration or confidence-interval\nbounds. Extensions could cover heterogeneous variances, correlated neurons,\nand optimal weighted decoding.\n\n## 5. Nonlinear neural manifolds\n\nThe current dimension theorem treats activity as the range of a linear map from\nbehavioral coordinates. A nonlinear version should formalize a smooth map from\na `d`-dimensional behavioral manifold into neural state space and prove that an\nimmersed image has dimension at most `d`. Rank bounds on the derivative are a\nnatural first bridge.\n\n## 6. Efficient decoding\n\nCapacity alone does not provide a decoder. Future work could define encoders and\ndecoders for one-hot, constant-weight, and error-correcting sparse codes, prove\nround-trip correctness, and compare decoding complexity with energy and noise\ntolerance.\n",
     "domains": [
       "Algebra",
       "Computation"
     ],
     "id": "fd_0912",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b0710fef",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T17:26:10.653419+00:00",
     "title": "The proved bound `binom(N,k) \u2264 N^k` is robust and directly yields the"
   },
