@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d4159430",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\n1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-number function `R`, prove that there are constants `q : ℝ` and `k₀ : ℕ` with `0 < q`, `q < 1`, and",
-      "quality_score": 0.7496799999999999,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-08-01T22:21:43",
-      "title": "Ramsey-Bounds: Exponential Bounds for Diagonal Ramsey Numbers"
-    },
-    {
       "cycle_id": "645d6476",
       "domain": "Probability",
       "key_insight": "# Information Geometry: Results and Future Directions\n\n## Formal results\n\nThe new Lean development is in `Catalog/Probability/InformationGeometryContrarian.lean`.\nIt proves the following finite-dimens",
@@ -2501,6 +2491,16 @@
       "theorem_count": 96,
       "timestamp": "2026-08-11T16:24:20",
       "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
+    },
+    {
+      "cycle_id": "5b1761bc",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThe five conjectures posed for this cycle are now theorems (see\n`Catalog/Logic/ImmortalityHierarchy.lean`, `Catalog/Logic/ImmortalityITTMClock.lean`,\n`Catalog/Logic/ImmortalityStr",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 188,
+      "timestamp": "2026-08-11T16:26:11",
+      "title": "The following are concrete conjectures extending the formal model in `Catalog/No"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7526200000000001
     }
   ],
-  "last_updated": "2026-08-11T16:24:20",
+  "last_updated": "2026-08-11T16:26:11",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "9d058f1b",
-        "quality": 0.74478,
-        "theorems": 9,
-        "title": "The exact proposed fixed-point equation was formalized in"
-      },
-      {
         "cycle_id": "cb10fc42",
         "quality": 0.7388999999999999,
         "theorems": 10,
@@ -3513,6 +3507,12 @@
         "quality": 0.743025,
         "theorems": 62,
         "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
+      },
+      {
+        "cycle_id": "5b1761bc",
+        "quality": 0.627125,
+        "theorems": 188,
+        "title": "The following are concrete conjectures extending the formal model in `Catalog/No"
       }
     ],
     "MachineLearning": [
