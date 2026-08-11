@@ -2988,7 +2988,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "497b7d69",
     "description": "Building on cycle 50db037d (Q=0.772), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial",
     "domain_bridges": [],
     "domains": [
@@ -3000,7 +3000,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "50db037d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-31T08:23:20.837940+00:00",
     "title": "Deepening: Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },

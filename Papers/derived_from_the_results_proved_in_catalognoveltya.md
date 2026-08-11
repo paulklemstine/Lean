@@ -1,127 +1,101 @@
-# Computational evidence
+# Computational evidence (thread `th_ac518134`, cycle 3)
 
-All experiments below were run before the corresponding Lean formalization, on the
-same finite objects that the theorems describe.  Every claim that survived the
-experiments is now a machine-checked theorem in `Catalog/Combinatorics/`; the
-experiments themselves are *not* proofs and are reported only as the evidence that
-guided the statements.
+Every number below was produced by `#eval` on the catalog's own semantics (`satC` for
+the tag-sensitive models, `satV` for the valuated models introduced this cycle), inside
+Lean 4 / Mathlib.  These are *exploratory* computations on finite formula samples: they
+are not proofs, and the verified artifacts of this cycle are the sorry-free theorems in
+`Catalog/Algebra/DepthDominationCriterion.lean` and
+`Catalog/Algebra/ReflectionDepthSpectrum.lean`.
 
----
+## 1. Inclusion of tag-sensitive theories, and the exact threshold `N ≤ 1`
 
-## 1. Inclusion of finite-height tag-sensitive theories
-(`Catalog/Combinatorics/DepthVectorInclusion.lean`)
+Setting: two tags, height bound `N`, height functions with values in `{0, …, N + 2}`
+(so `(N+3)²` height functions and `(N+3)⁴` ordered pairs).  Semantic inclusion
+`T(c') ⊆ T(c)` was approximated by brute force over a sample of **676 formulas** — all
+formulas generated from `⊥` by three rounds of `□₀ ·`, `□₁ ·`, `· → ·`.
 
-Objects: height functions `c : tags → ℕ` on two tags, the tag-sensitive Kripke
-semantics `satC c` (world `m` sees `n` iff `n < m` and `m ≤ c i`), and the theory
-`capC c N` of formulas valid at the worlds `0, …, N`.
+Mismatches between a criterion and the sampled inclusion:
 
-### 1a. Formula sweep (misleading, kept as a caution)
+| `N` | pairs tested | conjectured criterion (pointwise + order preservation) | exact criterion `DepthDominates` |
+|---|---|---|---|
+| 0 | 81 | 0 | 0 |
+| 1 | 256 | 0 | 0 |
+| 2 | 625 | **24** | 0 |
+| 3 | 1296 | 82 | 6 |
 
-All 746 formulas of size ≤ 6 over two tags, for `N ≤ 3` and heights ≤ `N + 2`.
-Comparing "inclusion of theories restricted to these formulas" with the level
-agreement criterion produced 50 apparent mismatches, e.g. `N = 2`, `d = (0,1)`,
-`d' = (1,2)`.  Hand analysis of that case produced the separating formula
+Reading of the table.
 
-```
-□₀⊥ → (¬□₁⊥ → ¬□₁²⊥)          (13 nodes)
-```
+* `N = 0, 1`: the conjectured criterion is never wrong — this is the positive half of
+  the theorem `conjecturedCriterion_sufficient_iff_le_one` (for `N ≤ 1` the conjecture
+  is *true*).
+* `N = 2`: the conjectured criterion first fails, on 24 pairs; the smallest depth
+  vectors involved are `d = (0,1)`, `d' = (1,2)` — the witness formalized as
+  `inclusion_order_criterion_false`, with separating formula
+  `liftWitness 0 1 1 = □₀⊥ → (¬□₁⊥ → ¬□₁□₁⊥)`.  Together with the previous row this
+  pins the threshold at exactly `N = 2`.
+* `N = 3`: the 6 residual mismatches of the *exact* criterion are an artefact of the
+  formula sample, not a counterexample.  All of them reduce to the two depth-vector
+  pairs `((1,2),(2,3))` and `((2,1),(3,2))`, where the criterion (correctly) says "not
+  included" while no formula of the sample separates the theories: the discriminator
+  needed there has box depth `4`, beyond the sample.  These are precisely the pairs of
+  the counterexample used at height `3` in `Combinatorics/DepthVectorInclusion.lean`.
 
-which is far outside the enumerated size range.  Conclusion: brute-force formula
-sweeps of feasible size are *not* a reliable test here; the discriminators have the
-nested "guard + depth probe" shape.
+## 2. The reflection depth of the block theories
 
-### 1b. Bisimulation sweep (decisive)
+Setting: the block models introduced this cycle, `satV (blockVal w)` on the worlds
+`0, …, n`, one tag, one atom.  For each `(n, w)` with `w ≤ n ≤ 5` the largest `d ≤ 7`
+was computed for which the depth-restricted reflection rule ("`⊢ □a` implies `⊢ a` for
+all `a` of box depth `< d`") holds on a sample of **82 formulas** (all formulas built
+from `⊥, atom 0` by two rounds of `□ ·`, `· → ·`, together with the probes `□^k(atom 0)`
+and the boxed falsa `□^k ⊥` for `k ≤ 6`).
 
-For two tags, `N = 0, 1, 2, 3, 4` and all heights ≤ `N + 2`, the greatest bisimulation
-between the finite pointed models was computed by partition refinement (bisimilarity
-= modal equivalence for these image-finite models), and inclusion of the theories was
-read off as "every world of the small model is bisimilar to some world of the large
-model".
+| `n \ w` | 0 | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|---|
+| 0 | 0 | | | | | |
+| 1 | 1 | 0 | | | | |
+| 2 | 2 | 1 | 0 | | | |
+| 3 | 3 | 2 | 1 | 0 | | |
+| 4 | 4 | 3 | 2 | 1 | 0 | |
+| 5 | 5 | 4 | 3 | 2 | 1 | 0 |
 
-| N | height range | pairs tested | mismatches with the level-agreement criterion |
-|---|--------------|--------------|-----------------------------------------------|
-| 0 | 0–2          | 81           | 0 |
-| 1 | 0–3          | 256          | 0 |
-| 2 | 0–4          | 625          | 0 |
-| 3 | 0–5          | 1296         | 0 |
-| 4 | 0–6          | 2401         | 0 |
+All **21** measured values agree with `n - w`, the value proved in
+`spectrumSys_depthReflection_iff`.  (With a sample containing no probe the same sweep
+saturates at the sample's maximal box depth for the small-`w` entries — the probes
+`□^k(atom 0)` are exactly the missing witnesses, which is what suggested them as the
+right family.)
 
-This is the evidence for `capC_inclusion_iff`.
+In the same sweep the provable iterated boxed falsa were computed:
 
-### 1c. The counterexample to the conjectured criterion
+| `n` | `{k ≤ 6 : ⊢ □^k ⊥}` for every `w ≤ n` |
+|---|---|
+| 0 | `{1,2,3,4,5,6}` |
+| 1 | `{2,3,4,5,6}` |
+| 2 | `{3,4,5,6}` |
+| 3 | `{4,5,6}` |
+| 4 | `{5,6}` |
 
-`N = 3`, `c = (1, 2, 1, 1, …)`, `c' = (2, 3, 2, 2, …)`, formula
-`wit = □₁³⊥ → (¬□₁²⊥ → ¬□₀²⊥)`:
+i.e. `{k : k > n}` regardless of `w`.  This is the computational form of
+`provable_spectrumSys_boxPow_bot`, and it is what makes
+`reflection_depth_not_determined_by_inconsistency_spectrum` possible: along a row of the
+first table the reflection depth ranges over all of `0, …, n` while the inconsistency
+spectrum is constant.
 
-```
-truth of wit at worlds 0,1,2,3 under c' : True  True  True  True     (provable)
-truth of wit at worlds 0,1,2,3 under c  : True  True  False True     (refuted)
-conjectured condition 1 (pointwise depth growth)  : True
-conjectured condition 2 (order preservation)      : True
-```
+## 3. Sequences / OEIS
 
-Formalized as `inclusion_criterion_conjecture_false`.
+The only integer sequences appearing are `N + 1` (the length of a maximal inclusion
+chain, `theoryIncl_pigeonhole`) and `n + 1` (the number of pairwise distinct block
+theories of height `n`, `spectrumSys_shift_injective`).  Both are trivial, so no OEIS
+lookup applies.
 
----
+## 4. Counterexample hunt
 
-## 2. Box depth on the standard frame
-(`Catalog/Combinatorics/BoxDepthReflection.lean`)
+The universal claims proved this cycle were each tested for counterexamples before being
+formalized:
 
-All 2074 formulas of size ≤ 7 and box depth ≤ 3 over two tags, evaluated at the worlds
-`m ≤ 6` of the standard frame `(ℕ, <)`:
-
-* violations of `sat m a = sat (min m (boxDepth a)) a` : **0**;
-* smallest formula separating world `n-1` from world `n`:
-
-  | n | separator | box depth |
-  |---|-----------|-----------|
-  | 1 | `□⊥`      | 1 |
-  | 2 | `□□⊥`     | 2 |
-  | 3 | `□□□⊥`    | 3 |
-
-So the only obstruction to depth-`d` reflection at height `n` is the iterated boxed
-falsum `□ⁿ⊥`, which is exactly what `capSysN_depthReflection_iff` says.
-
----
-
-## 3. Reflection strength versus graph reachability
-(`Catalog/Combinatorics/TransferReachability.lean`)
-
-All 512 digraphs on three tags.  For each digraph `E` and each source `i`, the
-two-world model `capC c 1` with `c t = 0` iff `t` is reachable from `i` was built and
-checked:
-
-* every axiom `□_s⊥ → □_t⊥` (`s → t` an edge) valid in the model: **512/512 digraphs,
-  all sources**;
-* the set of transfer implications valid in the model equals the reflexive–transitive
-  closure of `E` at that source: **0 mismatches**.
-
-This is the countermodel construction used in `reach_of_thm`.
-
----
-
-## 4. Completeness of assumption-plus-ex-falso semantics
-(`Catalog/Combinatorics/AssumptionCompleteness.lean`)
-
-All satisfaction tables with `w ≤ 4` worlds and `n ≤ 4` observables — 74 954 tables.
-
-| tested claim | violations |
-|--------------|-----------|
-| complete ⟺ some world satisfies all observables ("omni-world") | 0 |
-| size of the smallest unrealizable consistent set = `min over worlds (#observables the world fails)` | **42 058** (false) |
-| size of the smallest unrealizable consistent set = transversal number of the hypergraph of world-complements | 0 |
-
-Observed sizes of minimal witnesses: every value `1, …, n` occurs, the value `n` being
-attained by the "each world misses exactly one observable" table.  That table is the
-family `missSem k` of the Lean file, and the two surviving claims are
-`assumption_complete_iff`, `unrealizable_iff_transversal` and `missSem_helly`.
-
----
-
-### Reproduction
-
-The experiments are short self-contained scripts (formula enumeration, partition
-refinement for bisimilarity, and exhaustive table enumeration) over the same finite
-data described above; they use only the Python standard library.  Their role in this
-project was hypothesis selection: everything asserted as a result is proved in Lean
-without `sorry`.
+* `levelAgree_iff_depthDominates` — checked on all `(N+3)⁴` pairs of height functions on
+  two tags for `N ≤ 4`: `0` mismatches between the two criteria (they agree as Boolean
+  predicates, which is what the theorem asserts).
+* `spectrumSys_depthReflection_iff` — the sweep of §2; no `(n, w)` with `w ≤ n ≤ 5`
+  deviates from `n - w`.
+* `spectrumSys_eq_iff` (rigidity) — for `n ≤ 4` and all `w, w' ≤ n` the sampled theories
+  of `(n, w)` and `(n, w')` coincide only when `w = w'`, as the theorem predicts.
