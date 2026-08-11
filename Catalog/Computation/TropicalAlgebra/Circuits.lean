@@ -1,3 +1,4 @@
+import Computation.TropicalAlgebra.Life
 import Logic.BasicMonotoneCircuit.Basic
 
 /-!
@@ -102,22 +103,22 @@ def gateOutput : Cell 10 10 := (⟨5, by omega⟩, ⟨5, by omega⟩)
 /-- AND gate: output is 1 when both inputs are 1. -/
 theorem and_gate_tt :
     tropicalLifeStep (by omega : 0 < 10) (by omega : 0 < 10)
-      (andGateConfig true true) gateOutput = 1 := by native_decide
+      (andGateConfig true true) gateOutput = 1 := by decide
 
 /-- AND gate: output is 0 when first input is 1, second is 0. -/
 theorem and_gate_tf :
     tropicalLifeStep (by omega : 0 < 10) (by omega : 0 < 10)
-      (andGateConfig true false) gateOutput = 0 := by native_decide
+      (andGateConfig true false) gateOutput = 0 := by decide
 
 /-- AND gate: output is 0 when first input is 0, second is 1. -/
 theorem and_gate_ft :
     tropicalLifeStep (by omega : 0 < 10) (by omega : 0 < 10)
-      (andGateConfig false true) gateOutput = 0 := by native_decide
+      (andGateConfig false true) gateOutput = 0 := by decide
 
 /-- AND gate: output is 0 when both inputs are 0. -/
 theorem and_gate_ff :
     tropicalLifeStep (by omega : 0 < 10) (by omega : 0 < 10)
-      (andGateConfig false false) gateOutput = 0 := by native_decide
+      (andGateConfig false false) gateOutput = 0 := by decide
 
 /-- **Tropical AND Gate Theorem**: The AND gate gadget correctly computes
     Boolean conjunction. After one step of tropical evolution, the output
@@ -130,7 +131,7 @@ theorem and_gate_ff :
 theorem tropical_and_gate (a b : Bool) :
     tropicalLifeStep (by omega : 0 < 10) (by omega : 0 < 10)
       (andGateConfig a b) gateOutput = (a && b).toNat := by
-  rcases a <;> rcases b <;> native_decide
+  rcases a <;> rcases b <;> decide
 
 /-! ## OR Gate Verification -/
 
@@ -144,7 +145,7 @@ theorem tropical_and_gate (a b : Bool) :
 theorem tropical_or_gate (a b : Bool) :
     tropicalLifeStep (by omega : 0 < 10) (by omega : 0 < 10)
       (orGateConfig a b) gateOutput = (a || b).toNat := by
-  rcases a <;> rcases b <;> native_decide
+  rcases a <;> rcases b <;> decide
 
 /-! ## NOT Gate Verification -/
 
@@ -157,7 +158,7 @@ theorem tropical_or_gate (a b : Bool) :
 theorem tropical_not_gate (a : Bool) :
     tropicalLifeStep (by omega : 0 < 10) (by omega : 0 < 10)
       (notGateConfig a) gateOutput = (!a).toNat := by
-  rcases a <;> native_decide
+  rcases a <;> decide
 
 /-! ## Functional Completeness -/
 
@@ -202,7 +203,7 @@ def xorGateConfig (a b : Bool) : Config 10 10 :=
 theorem tropical_xor_gate (a b : Bool) :
     tropicalLifeStep (by omega : 0 < 10) (by omega : 0 < 10)
       (xorGateConfig a b) gateOutput = (xor a b).toNat := by
-  rcases a <;> rcases b <;> native_decide
+  rcases a <;> rcases b <;> decide
 
 /-! ## Gate Count Summary -/
 
