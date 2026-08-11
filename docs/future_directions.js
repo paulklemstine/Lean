@@ -866,16 +866,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bbe180d",
     "description": "Building on cycle b7ae8967 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
     "domains": [
       "MachineLearning"
     ],
     "id": "push_b7ae8967_8a97b54d",
+    "phase": "A",
     "priority_score": 0.9002199999999999,
     "research_mode": "team",
     "source_exp_id": "b7ae8967",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-28T17:01:26.465710+00:00",
     "title": "Deepening: Attention is All You Need: Formalizing Transformer Architecture"
   },
@@ -6638,6 +6639,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Superlinear Lower Bounds for Monochromatic Path Partitions' and formalize its key results. Abstract: In 1989, Gy\u00e1rf\u00e1s conjectured that the vertex set of every $r$-edge-coloured complete graph can be partitioned into at most $r$ vertex-disjoint monochromatic paths. Erd\u0151s, Gy\u00e1rf\u00e1s, and Pyber subsequently proposed the analogous conjecture for monochromatic cycles. Pokrovskiy proved Gy\u00e1rf\u00e1s's conjecture for $r=3$, while disproving the conjecture of Erd\u0151s, Gy\u00e1rf\u00e1s, and Pyber for every $r\\ge3$ by constructing colourings that require at least $r+1$ monochromatic cycles. In this paper, we disprove Gy\u00e1rf\u00e1s's conjecture in a quantitatively strong superlinear form: for every sufficiently large $r$, there exists an $r$-edge-coloured complete graph that requires at least $(1-o(1))r\\log\\log r$ vertex-disjoint monochromatic paths. Consequently, the monochromatic cycle-partition number is also superlinear in $r$. Our construction also extends to the balanced bipartite setting, disproving a conjecture of Pokrovskiy.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_1072",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.09895v1",
+    "status": "available",
+    "timestamp": "2026-08-11T04:51:04.771040+00:00",
+    "title": "ArXiv paper: Superlinear Lower Bounds for Monochromatic Path Partitions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Maximizing the algebraic connectivity of graphs of given order and size: a proof of a conjecture of Kolokolnikov' and formalize its key results. Abstract: The algebraic connectivity of a graph $G$ is a well studied graph invariant that is related to other properties of the graph such as connectivity and expansion. Given $n$ and $m$, $\u03b1(n,m)$ is the maximum algebraic connectivity of a graph with $n$ vertices with $m$ edges. In 2015, Kolokolnikov conjectured that $\u03b1(n,2n-4)=2$ for $n\\geq 3$, and verified this claim computationally for $n \\le 12$. In this paper, we prove Kolokolnikov's conjecture.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1073",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.09879v1",
+    "status": "available",
+    "timestamp": "2026-08-11T04:51:07.853525+00:00",
+    "title": "ArXiv paper: Maximizing the algebraic connectivity of graphs of given order and size: a proof of a conjecture of Kolokolnikov"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Tropical geometry replaces + with max and * with +. Stereographic projection maps spheres to planes. What is the tropical stereographic projection? Define it as: map a tropical point (x1 + ... + xn) on the tropical projective space to a tropical hyperplane via an analogous pole construction. Conjecture: The tropical stereographic projection is a tropical rational function of degree 2 (a tropical Mobius transformation). Test: construct it explicitly for TP^1 -> TR^1 and prove it is a tropical homeomorphism. Impact: connects tropical geometry and conformal geometry.",
     "domains": [
       "Geometry",
@@ -7486,17 +7517,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** There are explicit integers `q`, `n\u2080`, and a rational constant `"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb9255eb",
     "description": "# Future directions\n\n1. **State the CSS dictionary with two classical codes precisely.**  The mission's\n   expression `C\u2081/C\u2082` requires `C\u2082 \u2286 C\u2081`, while the usual CSS commutation condition\n   is formulated using orthogonal complements.  A future development should give\n   the exact equivalence between parity-check matrices, a length-two chain complex,\n   and the resulting stabilizer group.\n\n2. **Separate simplicial, cellular, and graph models.**  The present formalization\n   proves the chain-complex dimension theorem over any field.  Realizing every\n   binary CSS chain complex by a *simplicial complex with its standard incidence\n   maps* is a substantially stronger representability claim and should not be\n   conflated with merely viewing matrices as abstract differentials.  Determine\n   necessary and sufficient representability conditions, or produce a minimal\n   counterexample.\n\n3. **Formalize CSS distance, not only graph girth.**  Introduce Hamming weight on\n   finite binary cochains and define primal and dual logical distances as minima\n   over nonzero homology and cohomology classes.  Prove the standard\n   `min(systole, cosystole)` theorem under explicit finiteness and nondegeneracy\n   assumptions.  This will prevent the primal girth from being mistaken for the\n   complete quantum distance.\n\n4. **Construct the actual hypercube incidence complex.**  The bridge theorem in\n   `HypercubeCounterexample.lean` is parameterized by dimensions, connectedness,\n   and a zero 2-boundary.  Define oriented edges and the boundary matrix over\n   `ZMod 2`, prove its rank is `2^n-1`, and instantiate the theorem directly.\n\n5. **Test other meanings of \u201chypercube complex.\u201d**  The cube graph, the filled\n   cubical `n`-ball, its boundary sphere, and periodic cubical tori have different\n   homology.  Formalizing all four would isolate which object, if any, could have\n   motivated a one-logical-qubit assertion.\n\n6. **Add quantum-code bounds with the correct block length.**  Compare the proved\n   parameters against the quantum Singleton bound using the number of physical\n   edge qubits `N=n\u00b72^(n-1)`, rather than using the cube dimension `n` as though it\n   were block length.\n",
     "domains": [
       "Geometry",
       "Algebra"
     ],
     "id": "fd_0372",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "cf73743c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T00:45:01.733642+00:00",
     "title": "State the CSS dictionary with two classical codes precisely.: The mission"
   },
@@ -10016,17 +10048,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle 5907c59d"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8a73e82a",
     "description": "# Future directions\n\n## What is formalized\n\n`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained\nformal development with no assumption that a perfect cuboid exists:\n\n1. definitions of natural perfect squares, Euler bricks, and perfect cuboids;\n2. verification of the `(44,117,240)` Euler brick and a proof that its squared\n   space diagonal `73225` is not a square;\n3. scaling theorems for Euler bricks and hypothetical perfect cuboids;\n4. the exact diagonal-cone reduction\n   `a\u00b2 + b\u00b2 + c\u00b2 = 2d\u00b2`, together with its converse under the three face\n   equations;\n5. normalization to the affine quadric `w\u00b2 = u\u00b2 + v\u00b2 - 1`;\n6. a two-parameter rational parametrization of that quadric and a completeness\n   theorem away from the base point `(1,0,0)`.\n\nThe last item sharpens the surface connection: the ambient quadric itself is\nrational, so the hard arithmetic is not finding rational points on the\nquadric, but imposing the additional simultaneous-square constraints that\nrecover three rational edges and the omitted face diagonal.\n\n## Next formal targets\n\n### 1. Encode all square constraints in parameter space\n\nSubstitute the proved formulas\n\n`u = (p\u00b2-q\u00b2-1)/(1+p\u00b2-q\u00b2)`,\n`v = -2p/(1+p\u00b2-q\u00b2)`, and\n`w = -2q/(1+p\u00b2-q\u00b2)`\n\ninto `u\u00b2-1`, `v\u00b2-1`, and `u\u00b2+v\u00b2-2`.  A perfect cuboid requires each relevant\nexpression to be a rational square.  Clearing denominators should produce an\nexplicit intersection of quartic equations in `(p,q)` and auxiliary square\nroots.  Formalizing this equivalence would give a concrete Diophantine model\nsuitable for descent or congruence arguments.\n\n### 2. Primitive reduction\n\nProve that any positive perfect cuboid can be divided by the gcd of its edges\nto obtain a primitive one, while retaining integral face and space diagonals.\nThis needs a careful divisibility result showing that the common edge gcd also\ndivides every diagonal.  Once established, searches and modular obstructions\ncan be restricted to primitive tuples.\n\n### 3. Congruence obstructions\n\nDevelop reusable square-residue lemmas modulo `4`, `8`, `16`, `3`, and `5`, then\nprove classical necessary conditions on primitive Euler bricks and perfect\ncuboids.  Promising goals include parity restrictions on edges and forced prime\ndivisors of products of edges.  These results narrow computational searches\nwithout pretending to settle existence.\n\n### 4. Certified bounded search\n\nDefine a Boolean square test and enumerate ordered positive triples up to a\nmoderate bound.  Prove the search correct by reflection, then state a Lean\ntheorem that no perfect cuboid occurs in the checked box.  Separate the\nmathematical correctness proof of the checker from the evaluated bound so the\nresult remains maintainable.\n\n### 5. Other near-miss families\n\nFormalize parametric Euler-brick constructions rather than only scaling a\nsingle example.  For each family, derive the polynomial governing the space\ndiagonal and investigate when it can be a square.  A useful endpoint is a map\nfrom a family to a curve (often quartic, potentially transformed to an elliptic\ncurve) whose rational points correspond exactly to perfect members of that\nfamily.\n\n## Scope warning\n\nThe existence of a perfect cuboid remains unresolved here.  The proved results\nsupply exact reductions, certified examples, and a complete parametrization of\none ambient algebraic surface; they do not assert existence or nonexistence of\na perfect cuboid.\n",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_0919",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "f15cd85a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T22:20:23.526453+00:00",
     "title": "`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained"
   },

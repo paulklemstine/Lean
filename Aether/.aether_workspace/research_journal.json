@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "38046e56",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n- Construct the Khovanov chain groups and signed cube differential over an arbitrary coefficient ring, then prove `d² = 0` from commuting square faces.\n- Refine the generator-leve",
-      "quality_score": 0.77922,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-03T15:28:39",
-      "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
-    },
-    {
       "cycle_id": "e4843e14",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\nThe proposed mixed-area formula needs a normalization correction. For standard degree triangles, normalized lattice area satisfies\n\n\\[\nA((d+e)\\Delta)-A(d\\Delta)-A(e\\Delta)=2de.\n\\]",
@@ -499,19 +489,19 @@
       "theorem_count": 95,
       "timestamp": "2026-08-11T04:49:02",
       "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincare half plane"
+    },
+    {
+      "cycle_id": "2c80b5b7",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces (next cycle)\n\nThis cycle settled three of the five directions carried over from the previous\none, and it refuted the first of them in the",
+      "quality_score": 0.727445,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-11T04:50:50",
+      "title": "Let two prefix-free encodings of the same deductive system translate into one an"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d58932ad",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nThe formal development shows that the proposed endpoint-independent formula is false, while the catalog's endpoint-dependent conformal weight exactly transports chordal Vietoris–R",
-      "quality_score": 0.7725,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-08-01T06:48:10",
-      "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
-    },
     {
       "cycle_id": "ed94092b",
       "domain": "Combinatorics",
@@ -2501,15 +2491,19 @@
       "theorem_count": 95,
       "timestamp": "2026-08-11T04:49:02",
       "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincare half plane"
+    },
+    {
+      "cycle_id": "2c80b5b7",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces (next cycle)\n\nThis cycle settled three of the five directions carried over from the previous\none, and it refuted the first of them in the",
+      "quality_score": 0.727445,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-11T04:50:50",
+      "title": "Let two prefix-free encodings of the same deductive system translate into one an"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "22e93393",
-      "domain": "Combinatorics",
-      "name": "psi_eq_psiB",
-      "quality": 0.71348
-    },
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
@@ -2803,9 +2797,15 @@
       "domain": "Cryptography",
       "name": "isCoprime_ray_iff",
       "quality": 0.720175
+    },
+    {
+      "cycle_id": "2c80b5b7",
+      "domain": "Shared",
+      "name": "lengths",
+      "quality": 0.727445
     }
   ],
-  "last_updated": "2026-08-11T04:49:02",
+  "last_updated": "2026-08-11T04:50:50",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "87f6aef5",
-        "quality": 0.76207,
-        "theorems": 10,
-        "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
-      },
-      {
         "cycle_id": "e9c14674",
         "quality": 0.78349,
         "theorems": 71,
@@ -3947,6 +3941,12 @@
         "quality": 0.6376340955882351,
         "theorems": 61,
         "title": "Rainbow Arithmetic Progression Threshold Conjecture"
+      },
+      {
+        "cycle_id": "2c80b5b7",
+        "quality": 0.727445,
+        "theorems": 55,
+        "title": "Let two prefix-free encodings of the same deductive system translate into one an"
       }
     ],
     "Tropical": [
