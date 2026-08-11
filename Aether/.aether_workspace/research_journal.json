@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a60d1c49",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe formal development establishes the exact finite-dimensional permutation symmetry and\nprobabilistic normalization laws of standard scaled dot-product softmax attention. Natural",
-      "quality_score": 0.78167,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-08-03T15:27:09",
-      "title": "ML Attention Mechanism: Formal Properties of Transformers"
-    },
-    {
       "cycle_id": "38046e56",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n- Construct the Khovanov chain groups and signed cube differential over an arbitrary coefficient ring, then prove `d² = 0` from commuting square faces.\n- Refine the generator-leve",
@@ -499,19 +489,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-11T02:41:06",
       "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+    },
+    {
+      "cycle_id": "6b69485b",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: the radial lines of the Berggren star map\n\nThe formal results in `Catalog/Cryptography/BerggrenStars/` settle the *local* question that\nmotivated this cycle — why radial lines app",
+      "quality_score": 0.720175,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-08-11T04:49:02",
+      "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincare half plane"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "04022a5b",
-      "domain": "Novelty",
-      "key_insight": "# Molecular Computing Limits v26 — Results and Future Directions\n\n## Formal results\n\n`MolecularComputingLimitsV26.lean` is self-contained and proves the following claims.\n\n### Proved\n\n1. **Exact compi",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-01T06:47:29",
-      "title": "Moonshot: Nanotechnology Computation — Molecular Computing Limits"
-    },
     {
       "cycle_id": "d58932ad",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-11T02:41:06",
       "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+    },
+    {
+      "cycle_id": "6b69485b",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: the radial lines of the Berggren star map\n\nThe formal results in `Catalog/Cryptography/BerggrenStars/` settle the *local* question that\nmotivated this cycle — why radial lines app",
+      "quality_score": 0.720175,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-08-11T04:49:02",
+      "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincare half plane"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "14cda033",
-      "domain": "Computation",
-      "name": "alignmentClass_eq_ratConic",
-      "quality": 0.71918
-    },
-    {
-      "cycle_id": "14cda033",
-      "domain": "Computation",
-      "name": "self_mem_alignmentCl",
-      "quality": 0.71918
-    },
-    {
-      "cycle_id": "22e93393",
-      "domain": "Combinatorics",
-      "name": "expP_prod",
-      "quality": 0.71348
-    },
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "hasDerivAt_mobiusC",
       "quality": 0.71609
+    },
+    {
+      "cycle_id": "6b69485b",
+      "domain": "Cryptography",
+      "name": "ray_param_eq",
+      "quality": 0.720175
+    },
+    {
+      "cycle_id": "6b69485b",
+      "domain": "Cryptography",
+      "name": "sum_eq_ray",
+      "quality": 0.720175
+    },
+    {
+      "cycle_id": "6b69485b",
+      "domain": "Cryptography",
+      "name": "isCoprime_ray_iff",
+      "quality": 0.720175
     }
   ],
-  "last_updated": "2026-08-11T02:41:06",
+  "last_updated": "2026-08-11T04:49:02",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "b080b405",
-        "quality": 0.7891599999999999,
-        "theorems": 13,
-        "title": "ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart s"
-      },
-      {
         "cycle_id": "2bc344f1",
         "quality": 0.80715,
         "theorems": 20,
@@ -3389,6 +3383,12 @@
         "quality": 0.6539737559241706,
         "theorems": 324,
         "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
+      },
+      {
+        "cycle_id": "6b69485b",
+        "quality": 0.720175,
+        "theorems": 95,
+        "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincar"
       }
     ],
     "Geometry": [
