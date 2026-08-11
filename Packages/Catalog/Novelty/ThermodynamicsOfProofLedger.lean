@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.InformationTheory.ThermodynamicsOfProof
+import Novelty.ThermodynamicsOfProof
 
 /-!
 # Thermodynamics of Mathematical Proof — the Clausius/second-law ledger

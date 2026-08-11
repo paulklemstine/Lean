@@ -48,7 +48,6 @@ explained by one-triple collision probability alone.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Probability.ProbabilityAndStochastics.CherryConfiguration
 
 open scoped BigOperators
 

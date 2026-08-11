@@ -1,4 +1,4 @@
-import Catalog.Novelty.CircuitComplexity.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # The approximation method for monotone circuit lower bounds
@@ -127,24 +127,73 @@ theorem approx_error_bound
     (hδ : ∀ g : (ι → Bool) → Bool, (T.filter (fun x => R g x ≠ g x)).card ≤ δ)
     (C : MCircuit ι) :
     (T.filter (fun x => C.eval x ≠ approxEval R C x)).card ≤ C.numGates * δ := by
-  induction' C with i a b ih_a ih_b generalizing T <;> simp_all +decide;
-  · -- Apply the union bound to the three sets.
-    have h_union_bound : (T.filter (fun x => ¬(a.eval x && b.eval x) = R (fun z => approxEval R a z && approxEval R b z) x)).card ≤
-      (T.filter (fun x => ¬a.eval x = approxEval R a x)).card +
-      (T.filter (fun x => ¬b.eval x = approxEval R b x)).card +
-      (T.filter (fun x => ¬R (fun z => approxEval R a z && approxEval R b z) x = (approxEval R a x && approxEval R b x))).card := by
-        rw [ Finset.card_filter, Finset.card_filter, Finset.card_filter, Finset.card_filter ];
-        rw [ ← Finset.sum_add_distrib, ← Finset.sum_add_distrib ];
-        gcongr ; aesop;
-    linarith [ ih_a T hδ, ih_b T hδ, hδ ( fun z => approxEval R a z && approxEval R b z ) ];
-  · rename_i a b ha hb;
-    -- Let's simplify the goal using the fact that multiplication by a constant out of the set does not change the cardinality.
-    suffices h_simp : (Finset.filter (fun x => ¬(a.eval x || b.eval x) = R (fun z => approxEval R a z || approxEval R b z) x) T).card ≤ (Finset.filter (fun x => ¬a.eval x = approxEval R a x) T).card + (Finset.filter (fun x => ¬b.eval x = approxEval R b x) T).card + (Finset.filter (fun x => ¬R (fun z => approxEval R a z || approxEval R b z) x = (approxEval R a x || approxEval R b x)) T).card by
-      linarith [ ha T hδ, hb T hδ, hδ ( fun z => approxEval R a z || approxEval R b z ) ];
-    rw [ Finset.card_filter, Finset.card_filter, Finset.card_filter, Finset.card_filter ];
-    rw [ ← Finset.sum_add_distrib, ← Finset.sum_add_distrib ];
-    gcongr ; simp_all +decide [ eq_comm ];
-    grind
+  classical
+  induction C with
+  | var i => simp [eval]
+  | top => simp [eval]
+  | bot => simp [eval]
+  | and a b iha ihb =>
+      set g : (ι → Bool) → Bool := fun z => approxEval R a z && approxEval R b z with hg
+      have hsub : T.filter (fun x => (and a b).eval x ≠ approxEval R (and a b) x) ⊆
+          ((T.filter (fun x => a.eval x ≠ approxEval R a x)) ∪
+            (T.filter (fun x => b.eval x ≠ approxEval R b x))) ∪
+          T.filter (fun x => R g x ≠ g x) := by
+        intro x hx
+        simp only [Finset.mem_filter, Finset.mem_union] at hx ⊢
+        obtain ⟨hxT, hne⟩ := hx
+        by_cases h1 : a.eval x = approxEval R a x
+        · by_cases h2 : b.eval x = approxEval R b x
+          · refine Or.inr ⟨hxT, ?_⟩
+            intro hR
+            apply hne
+            show (a.eval x && b.eval x) = R g x
+            rw [hR, hg, h1, h2]
+          · exact Or.inl (Or.inr ⟨hxT, h2⟩)
+        · exact Or.inl (Or.inl ⟨hxT, h1⟩)
+      have hcard := Finset.card_le_card hsub
+      have hu1 := Finset.card_union_le
+        ((T.filter (fun x => a.eval x ≠ approxEval R a x)) ∪
+          (T.filter (fun x => b.eval x ≠ approxEval R b x)))
+        (T.filter (fun x => R g x ≠ g x))
+      have hu2 := Finset.card_union_le
+        (T.filter (fun x => a.eval x ≠ approxEval R a x))
+        (T.filter (fun x => b.eval x ≠ approxEval R b x))
+      have h3 := hδ g
+      have hmul : (and a b).numGates * δ = a.numGates * δ + b.numGates * δ + δ := by
+        simp only [numGates_and]
+        ring
+      omega
+  | or a b iha ihb =>
+      set g : (ι → Bool) → Bool := fun z => approxEval R a z || approxEval R b z with hg
+      have hsub : T.filter (fun x => (or a b).eval x ≠ approxEval R (or a b) x) ⊆
+          ((T.filter (fun x => a.eval x ≠ approxEval R a x)) ∪
+            (T.filter (fun x => b.eval x ≠ approxEval R b x))) ∪
+          T.filter (fun x => R g x ≠ g x) := by
+        intro x hx
+        simp only [Finset.mem_filter, Finset.mem_union] at hx ⊢
+        obtain ⟨hxT, hne⟩ := hx
+        by_cases h1 : a.eval x = approxEval R a x
+        · by_cases h2 : b.eval x = approxEval R b x
+          · refine Or.inr ⟨hxT, ?_⟩
+            intro hR
+            apply hne
+            show (a.eval x || b.eval x) = R g x
+            rw [hR, hg, h1, h2]
+          · exact Or.inl (Or.inr ⟨hxT, h2⟩)
+        · exact Or.inl (Or.inl ⟨hxT, h1⟩)
+      have hcard := Finset.card_le_card hsub
+      have hu1 := Finset.card_union_le
+        ((T.filter (fun x => a.eval x ≠ approxEval R a x)) ∪
+          (T.filter (fun x => b.eval x ≠ approxEval R b x)))
+        (T.filter (fun x => R g x ≠ g x))
+      have hu2 := Finset.card_union_le
+        (T.filter (fun x => a.eval x ≠ approxEval R a x))
+        (T.filter (fun x => b.eval x ≠ approxEval R b x))
+      have h3 := hδ g
+      have hmul : (or a b).numGates * δ = a.numGates * δ + b.numGates * δ + δ := by
+        simp only [numGates_or]
+        ring
+      omega
 
 /-
 **The approximation-method size lower bound.**  If, on top of the per-gate

@@ -1,5 +1,6 @@
-import Catalog.Applications.Core
-import Catalog.Novelty.AgreementSubtreesMultiple
+import Novelty.Core
+import Mathlib
+import Novelty.AgreementSubtreesMultiple
 
 /-!
 # Counting restrictions and the tower behind multiple-tree agreement subtrees

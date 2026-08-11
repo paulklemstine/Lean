@@ -1,4 +1,4 @@
-import Catalog.Novelty.AntiFibonacci.Basic
+import Novelty.Basic
 
 /-!
 # The Anti-Fibonacci Sequence — Asymptotics and Golden-Ratio Avoidance

@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Logic.MindTools
+import Logic.MindTools
 
 /-!
 # Resource-bounded apprehension: unconditional mind tools

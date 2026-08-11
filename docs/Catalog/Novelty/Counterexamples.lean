@@ -1,4 +1,5 @@
 import Novelty.JacobianConjecture.Core
+import Mathlib
 
 /-!
 # Counterexample candidates that *fail* the Jacobian hypothesis

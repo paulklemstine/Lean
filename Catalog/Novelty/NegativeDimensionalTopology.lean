@@ -1,6 +1,6 @@
 import Mathlib
-import NumberTheory.AbstractAlgebra.CharacterFourier
-import Novelty.GraphTheory.Z2CoindexSuspensionTower
+import Novelty.CharacterFourier
+import Novelty.Z2CoindexSuspensionTower
 
 /-!
 # Negative-dimensional cellular pro-spectra

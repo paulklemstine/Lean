@@ -1,4 +1,4 @@
-import Catalog.Novelty.CollatzSpectralNormalized
+import Novelty.CollatzSpectralNormalized
 
 /-!
 # The arithmetic of the resonance sets of the `a n + 1` maps

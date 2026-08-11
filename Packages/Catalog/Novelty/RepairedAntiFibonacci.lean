@@ -1,5 +1,4 @@
 import Mathlib
-import Bridges.NumberTheory.AntiFibonacci
 
 /-!
 # Global additive avoidance as a repaired anti-Fibonacci rule

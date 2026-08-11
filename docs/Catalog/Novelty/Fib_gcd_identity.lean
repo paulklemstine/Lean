@@ -1,7 +1,6 @@
 import Mathlib
 import Speculative.AbstractAlgebra.PisanoPeriodFactoring
 import Shared.NumberTheory.CarmichaelProof
-import Shared.NumberTheory.CarmichaelHelper
 
 /-! # CatalogBuild.Shared.Fib_gcd_identity
 

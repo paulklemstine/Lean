@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.CoherenceFromThinness.ThinMonoidal
+import Novelty.ThinMonoidal
 
 /-!
 # A concrete non-strict monoidal category: parenthesization trees

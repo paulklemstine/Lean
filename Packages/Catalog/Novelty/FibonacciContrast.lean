@@ -1,5 +1,5 @@
-import Catalog.Novelty.AntiFibonacci.Basic
-import Catalog.Novelty.RiordanRowSumFibonacci
+import Novelty.Basic
+import Novelty.RiordanRowSumFibonacci
 
 /-!
 # Anti-Fibonacci vs. Fibonacci — Exponential Domination

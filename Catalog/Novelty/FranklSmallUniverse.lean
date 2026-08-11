@@ -1,4 +1,4 @@
-import Novelty.PosetTheory.FranklUnionClosed
+import Novelty.FranklUnionClosed
 
 /-!
 # Frankl's conjecture for a three-element universe

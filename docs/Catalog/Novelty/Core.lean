@@ -174,4 +174,4 @@ theorem oneTree_agreementThreshold_iff {N n : ℕ} :
     subst i
     rfl
 
-end JacobianConjecture
+end AgreementSubtrees

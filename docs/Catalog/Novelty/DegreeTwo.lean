@@ -1,4 +1,5 @@
 import Novelty.JacobianConjecture.Core
+import Mathlib
 
 /-!
 # The Jacobian Conjecture for triangular degree-2 maps (all dimensions)

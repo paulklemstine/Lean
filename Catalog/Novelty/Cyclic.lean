@@ -1,4 +1,4 @@
-import StableKneserResearch.Coloring
+import Novelty.Coloring
 
 /-!
 # Cyclic stability and the stable Kneser upper coloring

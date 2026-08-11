@@ -47,9 +47,7 @@ Synthesis (PI): admissibility (input) + liminf reduction (output) + Selberg weig
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Novelty.NumberTheory.Admissible
-import Novelty.NumberTheory.BoundedGaps
-import NumberTheory.NeuralCoding.SelbergSieveWeight
+import Novelty.Admissible
 
 namespace TwinPrimeGaps
 

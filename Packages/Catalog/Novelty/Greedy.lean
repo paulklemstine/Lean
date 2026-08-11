@@ -20,7 +20,6 @@ time; when colouring a vertex `w`, at most `deg w < k` colours are forbidden by
 already-coloured neighbours, so a colour remains available in its list of size `≥ k`.
 -/
 import Mathlib
-import Catalog.Combinatorics.ListChoosability.Defs
 
 open SimpleGraph Finset
 

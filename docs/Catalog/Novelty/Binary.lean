@@ -43,7 +43,7 @@ Critique    : `decide` is used only for the finite verification of a *single*
 Synthesis   : The binary world realises the general girth bound sharply and
               exhibits the first nontrivial cyclic families.
 -/
-import Novelty.CycleFamilies.General
+import Novelty.General
 
 open SimpleGraph Finset
 

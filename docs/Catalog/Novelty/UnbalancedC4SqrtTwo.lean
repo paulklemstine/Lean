@@ -29,7 +29,7 @@ Bilu–Linial existence theorem, that:
 This is a self-contained companion to `Novelty/SignedGraphSpectralEquality.lean`.
 -/
 import Mathlib
-import Novelty.GraphTheory.SignedGraphSpectralEquality
+import Novelty.SignedGraphSpectralEquality
 
 open Matrix
 

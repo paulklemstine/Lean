@@ -22,8 +22,8 @@ This **bridges two catalog domains**: it reuses the combinatorial vocabulary of
 families of finite sets) and the spectral machinery of `SpectralBound.lean`.
 -/
 import Mathlib
-import Novelty.GraphTheory.SpectralBound
-import Novelty.NeuralCoding.CrossIntersectingProductBound
+import Novelty.SpectralBound
+import Novelty.CrossIntersectingProductBound
 
 open Matrix
 

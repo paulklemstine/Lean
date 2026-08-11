@@ -1,4 +1,4 @@
-import MachineLearning.DejaVu.CognitiveDynamics
+import Mathlib
 
 /-!
 # Recurrence, continuity, and the limits of the déjà-vu analogy

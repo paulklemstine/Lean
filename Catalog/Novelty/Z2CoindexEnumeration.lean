@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Aristotle (Harmonic)
 -/
 import Mathlib
-import Novelty.GraphTheory.Z2CoindexSuspensionTower
+import Novelty.Z2CoindexSuspensionTower
 
 /-!
 # Exact enumeration of ℤ₂-maps between combinatorial spheres

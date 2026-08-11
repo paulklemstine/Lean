@@ -1,4 +1,4 @@
-import Catalog.Bridges.ProofSearchFractalDimension
+import Bridges.ProofSearchFractalDimension
 
 /-!
 # Calibrating proof-search dimension

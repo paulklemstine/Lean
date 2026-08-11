@@ -43,7 +43,7 @@ work.
 -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Catalog.Novelty.CyclotomicGL1Langlands
+import Novelty.CyclotomicGL1Langlands
 
 open Polynomial CyclotomicGL1
 

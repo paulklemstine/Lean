@@ -1,6 +1,6 @@
-import Novelty.PosetTheory.Packing
-import Novelty.RamseyTheory.Coloring
-import Novelty.RamseyTheory.Cyclic
+import Novelty.Packing
+import Novelty.Coloring
+import Novelty.Cyclic
 import Logic.RootedPathIrregularity.Contrarian
 
 /-!

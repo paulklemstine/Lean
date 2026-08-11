@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.NeuralCoding.NeuralCoding
+import Novelty.NeuralCoding
 
 /-!
 # Stone Duality for Neural Networks: Activation Patterns as a Boolean Algebra

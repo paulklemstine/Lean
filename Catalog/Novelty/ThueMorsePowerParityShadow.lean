@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.NumberTheory.ThueMorsePowerValuation
+import Novelty.ThueMorsePowerValuation
 
 /-!
 # The parity shadow of Thue–Morse convolution powers

@@ -1,6 +1,6 @@
 import Mathlib
-import Novelty.PosetTheory.WallMengerSubwall
-import Novelty.QuantumSystems.Connectivity
+import Novelty.WallMengerSubwall
+import Novelty.Connectivity
 
 /-!
 # Bridge: vertex `k`-connectivity feeds the packing side of the wall–Menger duality

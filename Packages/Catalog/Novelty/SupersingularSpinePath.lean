@@ -3,7 +3,7 @@ Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Probability.PosetTheory.SupersingularLambdaMu
+import Novelty.SupersingularLambdaMu
 
 /-!
 # The spine of the supersingular `2`-isogeny graph: metric structure of its path components

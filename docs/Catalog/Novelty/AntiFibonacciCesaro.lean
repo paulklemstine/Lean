@@ -1,4 +1,4 @@
-import Catalog.Novelty.AntiFibonacciSumSpectrum
+import Novelty.AntiFibonacciSumSpectrum
 
 /-!
 # The Anti-Fibonacci Sequence — Cubic Cesàro Growth of the Partial Sums

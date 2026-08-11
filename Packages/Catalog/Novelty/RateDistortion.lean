@@ -66,7 +66,6 @@ exact Hamming-ball volume formula, and then lifts the bit bound from snapshots t
 dynamic histories.
 -/
 import Mathlib
-import Computation.Computation.HammingBallVolume
 
 open Function Finset
 

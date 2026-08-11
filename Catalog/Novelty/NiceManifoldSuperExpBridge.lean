@@ -1,6 +1,6 @@
 import Mathlib
-import Novelty.DifferentialGeometry.SuperExponential
-import Novelty.DifferentialGeometry.NiceManifoldGoodCount
+import Novelty.SuperExponential
+import Novelty.NiceManifoldGoodCount
 
 /-!
 # A bridge: the good-manifold count is exponential but *not* super-exponential

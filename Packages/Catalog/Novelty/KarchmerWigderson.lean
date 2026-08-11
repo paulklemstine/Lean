@@ -1,4 +1,4 @@
-import Catalog.Novelty.CircuitComplexity.Basic
+import Logic.BasicMonotoneCircuit.Basic
 
 /-!
 # The Karchmer–Wigderson connection (upper-bound direction)
@@ -79,12 +79,32 @@ def kwCost : MCircuit ι → (ι → Bool) → (ι → Bool) → ℕ
 theorem kwFind_spec (C : MCircuit ι) {x y : ι → Bool}
     (hx : C.eval x = true) (hy : C.eval y = false) :
     ∃ i, kwFind C x y = some i ∧ x i = true ∧ y i = false := by
-  induction' C with a b ha hb generalizing x y;
-  · exact ⟨ a, rfl, hx, hy ⟩;
-  · cases hy;
-  · cases hx;
-  · by_cases h : b.eval y = false <;> simp_all +decide [ MCircuit.kwFind ];
-  · unfold MCircuit.kwFind; aesop;
+  induction C generalizing x y with
+  | var i => exact ⟨i, rfl, hx, hy⟩
+  | top => simp [MCircuit.eval] at hy
+  | bot => simp [MCircuit.eval] at hx
+  | and a b iha ihb =>
+      have hxab : a.eval x = true ∧ b.eval x = true := by
+        simpa [MCircuit.eval, Bool.and_eq_true] using hx
+      by_cases h : a.eval y = false
+      · simpa [kwFind, h] using iha hxab.1 h
+      · have ha : a.eval y = true := by simpa using h
+        have hby : b.eval y = false := by
+          have hand : (a.eval y && b.eval y) = false := by simpa [MCircuit.eval] using hy
+          rw [ha] at hand
+          simpa using hand
+        simpa [kwFind, h] using ihb hxab.2 hby
+  | or a b iha ihb =>
+      have hyab : a.eval y = false ∧ b.eval y = false := by
+        simpa [MCircuit.eval, Bool.or_eq_false_iff] using hy
+      by_cases h : a.eval x = true
+      · simpa [kwFind, h] using iha h hyab.1
+      · have hax : a.eval x = false := by simpa using h
+        have hbx : b.eval x = true := by
+          have hor : (a.eval x || b.eval x) = true := by simpa [MCircuit.eval] using hx
+          rw [hax] at hor
+          simpa using hor
+        simpa [kwFind, h] using ihb hbx hyab.2
 
 /-
 **The protocol cost is at most the depth.**  This is the upper-bound half of

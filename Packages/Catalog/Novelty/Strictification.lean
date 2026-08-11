@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.GraphTheory.ParenTree
+import Novelty.ParenTree
 
 /-!
 # Strictification: collapsing the loops

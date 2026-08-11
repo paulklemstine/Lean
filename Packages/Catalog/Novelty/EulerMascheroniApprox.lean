@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.EulerMascheroniSeries
+import Novelty.EulerMascheroniSeries
 
 /-!
 # Quantitative bracketing and convergence order for the Euler–Mascheroni constant

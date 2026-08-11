@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.NumberTheory.WangStripeAperiodicity
+import Novelty.WangStripeAperiodicity
 
 /-!
 # A Diophantine condition on quadratic irrationals forcing Wang-stripe aperiodicity

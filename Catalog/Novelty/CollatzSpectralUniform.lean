@@ -1,4 +1,4 @@
-import Catalog.Novelty.CollatzSpectralNormalized
+import Novelty.CollatzSpectralNormalized
 
 /-!
 # Uniform quantitative estimates and the blindness of one-step spectra

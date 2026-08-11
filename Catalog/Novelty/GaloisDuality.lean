@@ -53,7 +53,7 @@ side is self-dual, finite, abelian, and cyclic at primes — anchored to the cat
 `NumberTheoryBridge.totient_prime`.
 -/
 import Mathlib
-import Catalog.Bridges.NumberTheoryBridge
+import Bridges.NumberTheoryBridge
 
 open Polynomial
 

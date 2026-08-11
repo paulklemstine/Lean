@@ -1,4 +1,5 @@
-import Catalog.Applications.Core
+import Novelty.Core
+import Mathlib
 
 /-!
 # Multiple agreement subtrees: gluing, counting, and threshold transfer

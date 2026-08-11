@@ -1,4 +1,4 @@
-import StableKneserResearch.Cyclic
+import Novelty.Cyclic
 
 /-!
 # Contrarian tests for stable Kneser colourings

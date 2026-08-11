@@ -31,8 +31,8 @@ Synthesis (PI): Confirms `S_{2,1}` lives strictly inside the `β ≤ 1/2` regime
   thresholds bound from above; the `β > 1/2` half-range must be a different (complement) story.
 -/
 import Mathlib
-import Novelty.CellularAutomata.RedBlueStarS21Profile
-import Novelty.GameTheory.C5Threshold
+import Novelty.RedBlueStarS21Profile
+import Novelty.C5Threshold
 
 namespace RedBlueStarS21
 

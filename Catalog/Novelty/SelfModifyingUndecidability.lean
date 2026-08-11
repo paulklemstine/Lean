@@ -1,4 +1,3 @@
-import Computation.Computation.SelfModifyingHalt
 import Mathlib.Computability.Reduce
 
 /-!

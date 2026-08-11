@@ -23,7 +23,7 @@ correlation kernels in general:
   an honest determinantal point process.
 -/
 import Mathlib
-import Catalog.Novelty.RandomMatrices.AiryODE
+import Novelty.AiryODE
 
 open Filter Topology RealInnerProductSpace
 

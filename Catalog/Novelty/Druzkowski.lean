@@ -1,4 +1,5 @@
 import Novelty.JacobianConjecture.Core
+import Mathlib
 
 /-!
 # A verified degree-3 Druzkowski cubic-linear automorphism

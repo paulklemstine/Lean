@@ -1,6 +1,6 @@
 import Mathlib
-import Novelty.OptimalTransport.Kantorovich
-import Novelty.OptimalTransport.Brenier
+import Novelty.Kantorovich
+import Novelty.Brenier
 
 /-!
 # Bridging Brenier and Kantorovich: the monotone permutation plan is optimal

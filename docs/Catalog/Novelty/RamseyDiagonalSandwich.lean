@@ -25,7 +25,6 @@ which the diagonal Ramsey number is sandwiched between two exponentials of `m`.
 -/
 
 import Mathlib
-import Applications.RamseyDiagonalBound
 import Novelty.RamseyProbabilisticLowerBound
 
 open scoped Classical

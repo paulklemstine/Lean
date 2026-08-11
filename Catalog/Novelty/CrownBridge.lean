@@ -41,8 +41,8 @@ CRITIQUE (Critic): does the bridge truly use the catalog?  Yes —
 `crownAltCount_tendsto_atTop` is proved from `crown_strictAltCycle_card_lower`.
 -/
 import Mathlib
-import Novelty.SCD.SuperExponential
-import Novelty.SCD.SymmetricChainCount
+import Novelty.SuperExponential
+import Novelty.SymmetricChainCount
 import Novelty.AlternatingCyclePosetLowerBound
 
 open Finset Filter Topology AlternatingCyclePoset

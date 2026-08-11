@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.MindToolsBoundedApprehension
+import Novelty.MindToolsBoundedApprehension
 
 /-!
 # A coded calculus with derivation trees: unconditional mind tools, concretely

@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.MindToolsBoundedApprehension
+import Novelty.MindToolsBoundedApprehension
 
 /-!
 # Translations between proof systems, tight pigeonhole codes, and large antichains

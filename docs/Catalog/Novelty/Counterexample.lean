@@ -23,7 +23,6 @@ Main results:
                         : there is a graph that is 2-colourable but not 2-choosable.
 -/
 import Mathlib
-import Catalog.Combinatorics.ListChoosability.Defs
 
 open SimpleGraph Finset
 

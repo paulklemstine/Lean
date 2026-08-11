@@ -70,7 +70,7 @@ Synthesis (PI):
   witness that these are independent, refuting the conjectured metrizability barrier.
 -/
 import Mathlib
-import Catalog.Novelty.PhantomTopology
+import Novelty.PhantomTopology
 
 open Set TopologicalSpace
 

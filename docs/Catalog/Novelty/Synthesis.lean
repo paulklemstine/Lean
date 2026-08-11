@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.RamseyTheory.RamseyProbabilisticLowerBound
+import Novelty.RamseyProbabilisticLowerBound
 
 /-!
 # Finite avoidance, Ramsey counting, and Turán extremality

@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.DifferentialGeometry.CoverDichotomyCount
+import Novelty.CoverDichotomyCount
 
 /-!
 # Kruskal rank of manifold data and the Cover dichotomy bound

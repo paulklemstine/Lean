@@ -49,7 +49,7 @@ SYNTHESIS (PI): combine `factorial_le_numSCD` with `SuperExp.of_eventually_le`
 (from `SuperExponential.lean`) and `factorial_superexp`.
 -/
 import Mathlib
-import Novelty.DifferentialGeometry.SuperExponential
+import Novelty.SuperExponential
 
 open Finset
 

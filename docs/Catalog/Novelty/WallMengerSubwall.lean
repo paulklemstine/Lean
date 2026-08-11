@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.GraphTheory.WallMengerCore
+import Novelty.WallMengerCore
 
 /-!
 # The linear-in-`r` subwall pigeonhole and the one-set wall–Menger dichotomy
