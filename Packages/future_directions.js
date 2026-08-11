@@ -328,16 +328,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Biological-Neural-Virus: Zero-Day Optogenetic Code Exploits"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d369115",
     "description": "Proves that an automated code immune system can detect and isolate arbitrary unknown malicious self-modifying AST mutations.",
     "domains": [
       "Computation"
     ],
     "id": "scifi_50_25_7b48bc2f",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:58.034919+00:00",
     "title": "Algorithmic-Immune-System: Autonomous Code Parasite Neutralization"
   },
@@ -866,21 +867,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "5bbe180d",
-    "description": "Building on cycle b7ae8967 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_b7ae8967_8a97b54d",
-    "phase": "A",
-    "priority_score": 0.9002199999999999,
-    "research_mode": "team",
-    "source_exp_id": "b7ae8967",
-    "status": "in_progress",
-    "timestamp": "2026-07-28T17:01:26.465710+00:00",
-    "title": "Deepening: Attention is All You Need: Formalizing Transformer Architecture"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle e86cdc26 (Q=0.800), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k \u2265 5, there exists a constant C_k > 0 such that for a uniformly random simple k-regular graph G on n vertices (with n \u2192 \u221e through admissible values), with probability tending to 1, G satisfies the following asymptotic Brill-Noether existence property at half-canonical degree: for ",
     "domains": [
@@ -895,16 +881,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical D"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c56f6a79",
     "description": "Establishes spectral gap bounds for integer solutions to non-homogeneous quadratic forms using lattice reduction and theta series expansion.",
     "domains": [
       "NumberTheory"
     ],
     "id": "dir_50_01_6e769e03",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:22.341698+00:00",
     "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
   },
@@ -3086,16 +3073,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Logic-Physics Bridge: Consistency of Physical Theories"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a062ecaf",
     "description": "Building on cycle 83a0d4e2 (Q=0.751), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects \u2014 not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare it",
     "domains": [
       "Novelty"
     ],
     "id": "push_83a0d4e2_a214c9df",
+    "phase": "A",
     "priority_score": 0.8510099999999999,
     "research_mode": "team",
     "source_exp_id": "83a0d4e2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-28T22:26:29.395154+00:00",
     "title": "Deepening: Strange Attractors as Algebraic Objects"
   },
@@ -3906,16 +3894,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Proof Compression: Proofs on Spheres"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d0e79f3",
     "description": "Determine all integer solutions to n! + 1 = m\u00b2. Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
     "domains": [
       "NumberTheory"
     ],
     "id": "seed_206",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Brocard's Problem: n! + 1 = m\u00b2"
   },
@@ -4050,22 +4039,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-15T07:46:57.950799+00:00",
     "title": "ArXiv paper: Quantum Latin Squares of Order Six with Cardinalities Nineteen, Twenty-One, and Twenty-Three"
-  },
-  {
-    "consumed_by_exp_id": "0dad7f8d",
-    "description": "Investigate the ArXiv paper 'The chain replacement of a poset flow' and formalize its key results. Abstract: We introduce the chain replacement of a poset flow: it is obtained by considering the simplicial nerves of the posets of strictly increasing chains in the given poset, ordered by refinement. It maps finite posets to q-cofibrant flows and inclusions of finite posets to q-cofibrations. Using the combinatorial properties of the chain replacement, we prove that pushouts along the chain replacement of an order-reflecting inclusion of finite posets preserve spaces of execution paths. By introducing the Hurewicz model structure on flows (or H-model structure), we deduce the same property for any q-cofibrant replacement of an order-reflecting inclusion of finite posets.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0016",
-    "phase": "B",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.11639v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-15T08:21:53.852514+00:00",
-    "title": "ArXiv paper: The chain replacement of a poset flow"
   },
   {
     "consumed_by_exp_id": "",
@@ -6098,17 +6071,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "008e5e52",
     "description": "Investigate the ArXiv paper 'Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities' and formalize its key results. Abstract: We prove that every connected simple graph of bounded degree satisfying the classical dimension-free Bakry--\u00c9mery condition $\\mathrm{CD}(0,\\infty)$ for the unnormalised Laplacian is volume doubling and supports, at all integer graph scales, a scale-invariant $L^2$-Poincar\u00e9 inequality with dilation two, with constants depending only on the maximum degree. This settles the polynomial-growth conjecture of Cushing, Liu, and Peyerimhoff in a stronger form. The main novelty is a dimension-free adaptation of the graph-theoretic modified nonlinear heat-flow method introduced by M\u00fcnch and extended to infinite weighted graphs by Pajot and Russ: point-mass consequences of $\u0393_2\\geq0$ and positive-resolvent smoothing replace any global $\\mathrm{CD}(0,n)$ reduction, while diffusive exit-time control and finite-volume localisation yield the Poincar\u00e9 inequality.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
     "id": "fd_0500",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.15522v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T03:35:25.814685+00:00",
     "title": "ArXiv paper: Nonnegative Bakry--\u00c9mery Curvature on Bounded-Degree Graphs Implies Volume Doubling and Poincar\u00e9 Inequalities"
   },
@@ -6248,22 +6222,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T01:27:44.981428+00:00",
     "title": "ArXiv paper: Fatness and Flatness"
-  },
-  {
-    "consumed_by_exp_id": "a55e871b",
-    "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0776",
-    "phase": "A",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.21494v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-26T23:29:22.547061+00:00",
-    "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -7504,22 +7462,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** There are explicit integers `q`, `n\u2080`, and a rational constant `"
   },
   {
-    "consumed_by_exp_id": "fb9255eb",
-    "description": "# Future directions\n\n1. **State the CSS dictionary with two classical codes precisely.**  The mission's\n   expression `C\u2081/C\u2082` requires `C\u2082 \u2286 C\u2081`, while the usual CSS commutation condition\n   is formulated using orthogonal complements.  A future development should give\n   the exact equivalence between parity-check matrices, a length-two chain complex,\n   and the resulting stabilizer group.\n\n2. **Separate simplicial, cellular, and graph models.**  The present formalization\n   proves the chain-complex dimension theorem over any field.  Realizing every\n   binary CSS chain complex by a *simplicial complex with its standard incidence\n   maps* is a substantially stronger representability claim and should not be\n   conflated with merely viewing matrices as abstract differentials.  Determine\n   necessary and sufficient representability conditions, or produce a minimal\n   counterexample.\n\n3. **Formalize CSS distance, not only graph girth.**  Introduce Hamming weight on\n   finite binary cochains and define primal and dual logical distances as minima\n   over nonzero homology and cohomology classes.  Prove the standard\n   `min(systole, cosystole)` theorem under explicit finiteness and nondegeneracy\n   assumptions.  This will prevent the primal girth from being mistaken for the\n   complete quantum distance.\n\n4. **Construct the actual hypercube incidence complex.**  The bridge theorem in\n   `HypercubeCounterexample.lean` is parameterized by dimensions, connectedness,\n   and a zero 2-boundary.  Define oriented edges and the boundary matrix over\n   `ZMod 2`, prove its rank is `2^n-1`, and instantiate the theorem directly.\n\n5. **Test other meanings of \u201chypercube complex.\u201d**  The cube graph, the filled\n   cubical `n`-ball, its boundary sphere, and periodic cubical tori have different\n   homology.  Formalizing all four would isolate which object, if any, could have\n   motivated a one-logical-qubit assertion.\n\n6. **Add quantum-code bounds with the correct block length.**  Compare the proved\n   parameters against the quantum Singleton bound using the number of physical\n   edge qubits `N=n\u00b72^(n-1)`, rather than using the cube dimension `n` as though it\n   were block length.\n",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_0372",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "cf73743c",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T00:45:01.733642+00:00",
-    "title": "State the CSS dictionary with two classical codes precisely.: The mission"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## What this phase establishes\n\nThe Lean development proves two foundational chains:\n\n1. `Sperner1D.lean` proves the parity form of one-dimensional Sperner, derives existence of a fully coloured edge from that parity theorem, and then proves oriented crossing, discrete intermediate-value, and discrete approximate fixed-point results.\n2. `Nash.lean` defines finite two-player games and mixed Nash equilibrium, proves linearity in mixed strategies, derives the pure-deviation criterion, certifies two standard equilibria, and completely classifies the equilibrium of Matching Pennies as the unique uniform profile.\n\nThe Matching Pennies classification is a formal \u201cfind all equilibria\u201d result for one nontrivial 2\u00d72 game, rather than merely checking a candidate.\n\n## Corrections needed in the proposed construction\n\nThe proposed coloring cannot literally color a vertex by \u201cplayer `i` if player `i`\u2019s best response is strategy `i`.\u201d Players and strategies are different index types, and the product of players\u2019 mixed-strategy simplices is generally not the simplex on the Cartesian product of pure-strategy profiles. Its dimension is\n\n`sum_i (|S_i| - 1)`,\n\nwhereas the simplex of distributions on `S_1 \u00d7 ... \u00d7 S_n` has dimension\n\n`product_i |S_i| - 1`.\n\nThese spaces represent different objects: independent mixed profiles versus arbitrary correlated distributions. A valid Sperner proof must triangulate the product polytope (or identify it with a suitable simplex/polytope construction), define one label per coordinate/deviation direction, and verify the boundary condition.\n\nA fully labelled cell at mesh size `\u03b4` supplies an approximate fixed point only after proving quantitative continuity bounds for the chosen best-response displacement map. Best-response selections are discontinuous, so the usual route is to apply Sperner to a continuous Brouwer map such as a Nash adjustment map, not directly to an arbitrary selected best response.\n\nFinally, neither the stated `O(N^n)` complexity nor the claim that one triangulation run finds *all* equilibria follows from Sperner\u2019s existence lemma. These require separate algorithmic and output-completeness proofs; equilibrium continua also make literal finite enumeration impossible without a symbolic representation.\n\n## Next formal milestones\n\n1. Define finite `n`-player games and the product of mixed-strategy simplices using finitely supported probability vectors.\n2. Generalize the pure-deviation theorem from two players to finitely many players.\n3. Define the continuous Nash adjustment map\n   `T(x)_{i,s} \u221d x_{i,s} + max(0, u_i(s,x_{-i}) - u_i(x))`\n   and prove that its fixed points are exactly Nash equilibria.\n4. Formalize triangulations and Sperner labelings first for a triangle, then for arbitrary finite simplices.\n5. Prove the mesh-diameter estimate turning a fully labelled simplex for `T` into an `\u03b5`-fixed point.\n6. Use compactness of the finite-dimensional strategy polytope to pass from `\u03b5 \u2192 0` to an exact fixed point.\n7. Specify a finite triangulation-search algorithm and prove soundness (every reported cell yields an approximation) separately from completeness or complexity.\n8. Extend the exact 2\u00d72 analysis beyond Matching Pennies, including degenerate games with line segments or continua of equilibria.\n\nThe most immediate reusable step is the many-player pure-deviation principle: it is finite, algebraic, and independent of the missing high-dimensional triangulation infrastructure.\n",
     "domains": [
@@ -7849,22 +7791,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-19T10:24:17.342209+00:00",
     "title": "Formalize finite strict preference orders and social welfare functions for at"
-  },
-  {
-    "consumed_by_exp_id": "04a5f386",
-    "description": "# Future Directions: Structural Equivalence and Meaning\n\n## 1. Orbit-complete observational languages\n\n**Conjecture.** For every finite relational signature and finite model, there is a finite modal language with graded modalities whose theories classify pointed models exactly up to isomorphism; moreover, the least required modal depth is bounded by the number of worlds and is attained by an infinite family.\n\nThe key insight is that truth invariance supplies one direction automatically, while finite characteristic formulas may provide the converse and quantify the observational cost of recovering structure.\n\n**Why now?** The transport theorem isolates the exact induction principle that a characteristic-formula construction must reverse, and finite models make the depth bound falsifiable by exhaustive families.\n\n## 2. Coherent analogy networks and holonomy\n\n**Conjecture.** A finite network of structural analogies admits a globally consistent assignment of meanings precisely when its interpretation transport has trivial holonomy around every cycle; it suffices to test a cycle basis of the underlying graph.\n\nThe key insight is that conjugation turns analogies into groupoid arrows, so disagreement after traversing a loop is the natural obstruction to global semantic coherence.\n\n**Why now?** Coordinate transport and composition are established at the arrow level, leaving a sharply specified passage from individual analogies to network-level obstructions.\n\n## 3. Quantitative Copycat stability\n\n**Conjecture.** For finite probabilistic transition systems, an \u03b5-approximate structural analogy transports every modal formula of depth `d` with truth-probability error at most `d\u03b5`, and this linear bound is sharp.\n\nThe key insight is that the modal induction used for exact invariance should accumulate local correspondence defects once per nested transition observation.\n\n**Why now?** Exact transport identifies the proof architecture and the modal box as the sole error-propagating case, making both the bound and candidate extremal examples concrete.\n\n## 4. Definability boundary for external interpretations\n\n**Conjecture.** An external interpretation is recoverable from structural truth exactly when it is constant on automorphism orbits and definable in the invariant language; for finite models, orbit constancy alone is sufficient after adding bounded counting modalities.\n\nThe key insight is that the meaning-collision example fails precisely because the interpretation does not factor through structural equivalence, suggesting orbit descent as the necessary condition and definability as the sufficient one.\n\n**Why now?** The collision theorem provides the negative half of a classification problem, while finite orbit decompositions offer a direct route to testing the proposed converse.\n\n## 5. Bisimulation versus isomorphism as semantic resolution\n\n**Conjecture.** On image-finite transition systems, every interpretation invariant under all modal observations factors through bisimulation classes, but need not factor through isomorphism classes; the gap is characterized by multiplicity-sensitive observations.\n\nThe key insight is that different observational languages induce different notions of sameness, with ordinary modal truth naturally aligned to behavior rather than literal structural identity.\n\n**Why now?** Structural truth transport and existing depth-bounded behavioral equivalences can be compared within one framework, exposing a testable hierarchy from renaming invariance to bisimulation invariance.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0447",
-    "phase": "A",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "198023c0",
-    "status": "in_progress",
-    "timestamp": "2026-07-19T11:15:54.327812+00:00",
-    "title": "**Conjecture.** For every finite relational signature and finite model, there is"
   },
   {
     "consumed_by_exp_id": "",
@@ -8302,17 +8228,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2796053",
     "description": "# Future Directions\n\n## 1. A syntactic GEB equivalence preserving substitution\n\nConstruct explicit formal, graphical, and contrapuntal syntax categories whose morphisms encode substitution, visual completion, and reversible musical transformation. Conjecture that a nontrivial full subcategory of each admits equivalences preserving a common self-application operation, and that the resulting diagonal witnesses agree under those equivalences.\n\nThe key insight is that preservation of a binary evaluation table, rather than a bare bijection of artifacts, is exactly what makes fixed points transport.\n\nWhy now? The conditional transport theorem isolates the complete interface that concrete domain models must implement, while the failed bare-bijection conjecture identifies the principal obstruction.\n\n## 2. Choice independence from unique semantic fixed points\n\nConjecture that if every endomorphism in a designated semantic class has at most one fixed point, then all diagonal codes for the same endomorphism yield one common value, even when the codes themselves are unrelated by a domain isomorphism. Seek natural ordered or metric semantic domains where this uniqueness follows from contraction or guardedness.\n\nThe key insight is that the present construction separates two sources of ambiguity: presentation transport is canonical, but arbitrary universal codes need not choose the same fixed point.\n\nWhy now? The fixed-point factorization proves invariance along structure-preserving maps and precisely exposes uniqueness as the missing hypothesis for global code independence.\n\n## 3. A graded Lawvere theorem for partial universality\n\nDefine a hierarchy in which an evaluation table represents only predicates of bounded syntactic, geometric, or musical complexity. Conjecture that diagonal fixed points persist exactly when the represented class is closed under composition with the chosen semantic endomorphism and under diagonal evaluation. Determine the minimal closure axioms and exhibit sharp finite counterexamples when either closure condition is removed.\n\nThe key insight is that full surjectivity is stronger than the diagonal proof uses; only representability of a particular composite is essential.\n\nWhy now? Boolean universality is impossible, so a graded theory of representable fragments offers a testable route to concrete finite models without weakening the fixed-point mechanism into metaphor.\n\n## 4. Obstruction spectra for finite semantic domains\n\nFor each finite semantic set `B`, classify the largest family of endomorphisms `F \u2286 (B \u2192 B)` for which a single presentation can represent every diagonal composite associated with `F`. Conjecture that maximal families are controlled by the directed graph of fixed points of the transformation monoid generated by `F`.\n\nThe key insight is that Boolean negation fails because it is fixed-point-free, suggesting that obstruction is governed by transformation-monoid structure rather than cardinality alone.\n\nWhy now? The universal Boolean impossibility theorem supplies the first sharp negative case, and finite transformation monoids make exhaustive testing and structural classification feasible.\n\n## 5. Naturality under weaker simulations\n\nReplace evaluation-preserving equivalences by retractions, embeddings, or bisimulations. Conjecture that embeddings preserve fixed points in one direction, retractions lift them under an explicit coherence law, and bisimulations preserve only observational equivalence of `Y` values rather than literal equality.\n\nThe key insight is that exact isomorphism yields equality because both arguments of evaluation are preserved simultaneously; weakening either preservation law should produce a graded notion of fixed-point transport.\n\nWhy now? The current naturality theorem gives the strongest endpoint, from which each coherence condition can be removed independently and tested by counterexample.\n",
     "domains": [
       "Computation",
       "Logic"
     ],
     "id": "fd_0575",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "a4c98532",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T22:19:18.490628+00:00",
     "title": "Construct explicit formal, graphical, and contrapuntal syntax categories whose m"
   },
@@ -10004,18 +9931,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Future directions from cycle 5907c59d"
   },
   {
-    "consumed_by_exp_id": "8a73e82a",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## What is formalized\n\n`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained\nformal development with no assumption that a perfect cuboid exists:\n\n1. definitions of natural perfect squares, Euler bricks, and perfect cuboids;\n2. verification of the `(44,117,240)` Euler brick and a proof that its squared\n   space diagonal `73225` is not a square;\n3. scaling theorems for Euler bricks and hypothetical perfect cuboids;\n4. the exact diagonal-cone reduction\n   `a\u00b2 + b\u00b2 + c\u00b2 = 2d\u00b2`, together with its converse under the three face\n   equations;\n5. normalization to the affine quadric `w\u00b2 = u\u00b2 + v\u00b2 - 1`;\n6. a two-parameter rational parametrization of that quadric and a completeness\n   theorem away from the base point `(1,0,0)`.\n\nThe last item sharpens the surface connection: the ambient quadric itself is\nrational, so the hard arithmetic is not finding rational points on the\nquadric, but imposing the additional simultaneous-square constraints that\nrecover three rational edges and the omitted face diagonal.\n\n## Next formal targets\n\n### 1. Encode all square constraints in parameter space\n\nSubstitute the proved formulas\n\n`u = (p\u00b2-q\u00b2-1)/(1+p\u00b2-q\u00b2)`,\n`v = -2p/(1+p\u00b2-q\u00b2)`, and\n`w = -2q/(1+p\u00b2-q\u00b2)`\n\ninto `u\u00b2-1`, `v\u00b2-1`, and `u\u00b2+v\u00b2-2`.  A perfect cuboid requires each relevant\nexpression to be a rational square.  Clearing denominators should produce an\nexplicit intersection of quartic equations in `(p,q)` and auxiliary square\nroots.  Formalizing this equivalence would give a concrete Diophantine model\nsuitable for descent or congruence arguments.\n\n### 2. Primitive reduction\n\nProve that any positive perfect cuboid can be divided by the gcd of its edges\nto obtain a primitive one, while retaining integral face and space diagonals.\nThis needs a careful divisibility result showing that the common edge gcd also\ndivides every diagonal.  Once established, searches and modular obstructions\ncan be restricted to primitive tuples.\n\n### 3. Congruence obstructions\n\nDevelop reusable square-residue lemmas modulo `4`, `8`, `16`, `3`, and `5`, then\nprove classical necessary conditions on primitive Euler bricks and perfect\ncuboids.  Promising goals include parity restrictions on edges and forced prime\ndivisors of products of edges.  These results narrow computational searches\nwithout pretending to settle existence.\n\n### 4. Certified bounded search\n\nDefine a Boolean square test and enumerate ordered positive triples up to a\nmoderate bound.  Prove the search correct by reflection, then state a Lean\ntheorem that no perfect cuboid occurs in the checked box.  Separate the\nmathematical correctness proof of the checker from the evaluated bound so the\nresult remains maintainable.\n\n### 5. Other near-miss families\n\nFormalize parametric Euler-brick constructions rather than only scaling a\nsingle example.  For each family, derive the polynomial governing the space\ndiagonal and investigate when it can be a square.  A useful endpoint is a map\nfrom a family to a curve (often quartic, potentially transformed to an elliptic\ncurve) whose rational points correspond exactly to perfect members of that\nfamily.\n\n## Scope warning\n\nThe existence of a perfect cuboid remains unresolved here.  The proved results\nsupply exact reductions, certified examples, and a complete parametrization of\none ambient algebraic surface; they do not assert existence or nonexistence of\na perfect cuboid.\n",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_0919",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "f15cd85a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-02T22:20:23.526453+00:00",
     "title": "`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained"
   },
@@ -11747,6 +11673,81 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-11T06:17:18.383355+00:00",
     "title": "The five conjectures inherited from cycle 0 have now been formalised and proved "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe formalisation in `Catalog/Algebra/PosetFlow/` develops the combinatorial core of\n*the chain replacement of a poset flow*: the refinement poset `ChainFrom x y` of\nstrictly increasing chains, its cone structure, the concatenation (flow composition)\nlaw, the behaviour under order-reflecting inclusions, and the Euler-characteristic\ninvariants (Philip Hall's theorem, the M\u00f6bius function as reduced Euler\ncharacteristic of an open interval).\n\nThe following conjectures are the concrete next steps suggested by what the\nformalisation established \u2014 and by what it could *not* yet reach.\n\n---\n\n## Conjecture 1 (Nerve contractibility upgrade)\n\n*For every finite poset `R` with a cone point, the simplicial nerve of `R`\n(`CategoryTheory.nerve` of `R` viewed as a category) is a contractible simplicial\nset; consequently, for `x \u2264 y` in a finite poset, the nerve of `ChainFrom x y` is\ncontractible and the chain replacement of a poset flow is a genuine q-cofibrant\nreplacement.*\n\nThe key insight is that the involution `C \u21a6 C \u25b3 {z}` that proves the vanishing of\nthe alternating face sum (`alternatingSum_orderComplex_eq_zero_of_conePoint`) is the\nshadow of an explicit simplicial homotopy `\u0394\u00b9 \u00d7 N(R) \u2192 N(R)` contracting `N(R)` onto\nthe cone point, so the numerical statement already proved is the Euler\ncharacteristic of a homotopy that can be written down face by face.\n\nWhy now? Mathlib now has `SSet`, `nerve`, and simplicial homotopies, so the\ncontracting homotopy can be defined directly and its two ends identified; the\ncombinatorial bookkeeping \u2014 precisely the chain manipulations proved here \u2014 is the\npart that usually blocks such a formalisation, and it is now available.\n\nFalsifiable: exhibiting a finite poset with a cone point whose nerve has a\nnontrivial homotopy group would refute it.\n\n---\n\n## Conjecture 2 (Fibrewise product formula for the trace)\n\n*Let `f : P \u21aao Q` be order-reflecting and `x y : P`. For every `D : ChainFrom x y`\nthe fibre `{E : ChainFrom (f x) (f y) // trace f E = D}` is isomorphic, as a poset,\nto the product over the covering pairs `(u, v)` of `D` of the posets of chains from\n`f u` to `f v` whose interior misses the image of `P`.*\n\nThe key insight is that the Galois coinsertion `chainGaloisCoinsertion` already\nsplits the chain poset of `Q` into a lower set (the image of `P`) and its\ncomplement, and the two-step version of the splitting is exactly the order\nisomorphism `chainSplitOrderIso`; the general statement should follow by induction\non the cardinality of `D` using that isomorphism at each cut point.\n\nWhy now? Both halves of the induction are formalised and sorry-free, so the only\nmissing ingredient is an indexing scheme for covering pairs of a finite chain \u2014\nroutine but currently absent.\n\nFalsifiable: a finite order-reflecting inclusion and a chain `D` where the fibre has\na cardinality different from the product would refute it.\n\n---\n\n## Conjecture 3 (M\u00f6bius vanishing from local cones is not exhaustive)\n\n*The vanishing criterion `mu_eq_zero_of_conePoint_openInterval` is strictly weaker\nthan the vanishing of `\u03bc`: there exist finite posets with `\u03bc(x, y) = 0` where the\nopen interval `(x, y)` has no cone point, but every such interval has a\n\"contractible-but-not-conical\" order complex; equivalently, for finite posets the\nimplication \"`\u03bc(x,y) = 0` \u27f9 `\u0394(x,y)` is `\u2124`-acyclic\" is **false**.*\n\nThe key insight is that `\u03bc(x, y)` sees only the Euler characteristic, so any interval\nwhose order complex has cancelling homology in different degrees (the smallest\ncandidates come from triangulations of the dunce hat or from the poset of a\nnon-shellable complex) will have `\u03bc = 0` without being acyclic.\n\nWhy now? The bridge `alternatingSum_openInterval_eq_neg_mu` between `\u03bc` and the\norder complex is now formal, so the search for a separating example is a finite,\ndecidable computation over small posets that can be run inside Lean.\n\nFalsifiable by construction: exhibit and verify one explicit finite poset.\n\n---\n\n## Conjecture 4 (Homotopy-invariance of the Galois coinsertion)\n\n*If `l : A \u2192 B` and `u : B \u2192 A` form a Galois (co)insertion between finite posets,\nthen the induced maps of order complexes are homotopy inverse; in particular the\nalternating face sums of `A` and `B` agree.*\n\nThe key insight is the classical fact that adjoint monotone maps are homotopic to\neach other through the unit/counit, so `l` and `u` induce mutually inverse maps up\nto homotopy; the Euler-characteristic consequence is a purely combinatorial identity\nthat should be provable by the same involution technique used in this development.\n\nWhy now? `chainGaloisCoinsertion` supplies a large and natural family of examples\n(one for each order-reflecting inclusion of finite posets and each pair of points),\nso the statement can be stress-tested computationally before being proved.\n\nFalsifiable: two finite posets in Galois coinsertion with different alternating face\nsums.\n\n---\n\n## Conjecture 5 (Ordered-Bell asymptotics of the chain replacement)\n\n*For the Boolean lattice `B\u2099`, the number of elements of `ChainFrom \u22a5 \u22a4` is the\nordered Bell number `a\u2099` (OEIS A000670), and more generally for any finite poset `P`\nthe total number of chains is `\u2211_{x \u2264 y} |ChainFrom x y| = \u2211_{k} c_k`, whose\nalternating version is `-\u2211_{x \u2264 y} \u03bc(x, y)`; hence the \"size\" of the chain\nreplacement of a poset flow is controlled by the M\u00f6bius invariant of the poset.*\n\nThe key insight is that Hall's theorem, now formal, converts every counting\nstatement about chains into a statement about the incidence algebra, where\nmultiplicative structure (products of posets, `mu_prod_mu`) is available.\n\nWhy now? The evidence file already exhibits the values `1, 3, 13` for `n = 1, 2, 3`,\nmatching A000670, and Mathlib's incidence algebra provides the product formulas\nneeded for an inductive proof.\n\nFalsifiable: a value of `|ChainFrom \u22a5 \u22a4|` for some `B\u2099` differing from `a\u2099`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1077",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0dad7f8d",
+    "status": "available",
+    "timestamp": "2026-08-11T07:47:28.740771+00:00",
+    "title": "The formalisation in `Catalog/Algebra/PosetFlow/` develops the combinatorial cor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions (thread th_ffe6cbbf)\n\nState of the thread after the present cycle.  Every statement marked \"**settled**\"\nis a sorry-free Lean 4 theorem in `Catalog/Probability/`, checked against the\nproject's Mathlib pin; the main theorems depend only on `propext`,\n`Classical.choice`, `Quot.sound`.\n\n## What is settled\n\n* **Quantitative Copycat stability.** The exact modulus is *geometric*, not linear:\n  `|\u27e6\u03c6\u27e7_M s \u2212 \u27e6\u03c6\u27e7_N (f s)| \u2264 1 \u2212 (1\u2212\u03b5)^{depth \u03c6}` (`PModalStructure.transport_le`),\n  attained by an explicit two-state leaking family (`Sharp.transport_eq`).  The\n  conjectured linear bound `d\u00b7\u03b5` follows but is never attained for `d \u2265 2`\n  (`linear_bound_not_attained`), while being sharp to first order in `\u03b5`\n  (`linear_bound_first_order_sharp`).\n* **Groupoid structure.** Approximate analogies compose with additive total variation\n  defect (`ApproxAnalogy.refl/symm/comp`, `overlapDefect_eq_half_l1`), with a\n  semantic holonomy bound for two-step loops (`holonomy_bound`).\n* **Networks.** Along a chain of analogies with local defects `\u03b5_i` the defects add\n  and the transport modulus is `1 \u2212 (1 \u2212 \u03a3_{i<k} \u03b5_i)^d`\n  (`Network.network_transport_le`); for a cycle this bounds the semantic holonomy\n  (`Network.loop_holonomy_bound`), exact cycles have trivial holonomy\n  (`Network.loop_holonomy_trivial`), and any meaning factoring through the modal\n  theory of a world is globally coherent around an exact cycle\n  (`Network.meaning_invariant_of_trivial_holonomy`).\n* **Approximate Hennessy\u2013Milner.** For nominal structures the naming bijection is\n  forced (`Resolution.nominal_analogy_eq`); `\u03b7`-agreement on the depth-one fragment\n  yields an `(n\u03b7/2)`-approximate analogy (`Resolution.nominalApproxAnalogy`) and\n  hence the modulus `1 \u2212 (1 \u2212 n\u03b7/2)^d` (`Resolution.nominal_approx_transport`), with\n  the dimension factor `n/2` optimal (`Resolution.HMSharp.hm_sharp`).\n* **Resolution gap.** Two 2-world systems are modally identical but admit no analogy\n  of defect `< 1` (`Resolution.resolution_gap`).\n\n### Settled this cycle\n\n* **The analogy distance is an attained metric** (`Catalog/Probability/AnalogyMetric.lean`).\n  `analogyDist M N` \u2014 the least defect of an approximate structural analogy \u2014 is\n  realized as a minimum over the finitely many atom-preserving renamings\n  (`optimalAnalogy`), so `\u2203 ApproxAnalogy M N \u03b5 \u2194 analogyDist M N \u2264 \u03b5`\n  (`analogyDist_le_iff`).  It satisfies the metric axioms (`analogyDist_self`,\n  `analogyDist_comm`, `analogyDist_triangle`, all read off from the groupoid\n  operations), lies in `[0,1]` (`analogyDist_mem_Icc`), and its zero set is exactly\n  isomorphism (`analogyDist_eq_zero_iff`), so it is a genuine metric on isomorphism\n  classes.  Depth-`d` truth probabilities are `1 \u2212 (1 \u2212 d(M,N))^d`-continuous with\n  the optimal renaming (`optimal_transport_le`), and the constant is exact:\n  `Sharp.dist_eq` computes `d(exactSys, leakySys \u03b5) = \u03b5` for the extremal family,\n  which attains the modulus.  This closes Conjecture 3 of the previous cycle.\n* **Graded modalities do not close the resolution gap** \u2014 a *refutation*\n  (`Catalog/Probability/GradedResolution.lean`).  With the counting semantics\n  `gsat` (\"at least `k` successors of positive probability satisfy `\u03c6`\"), graded\n  truth is invariant under exact analogies (`gsat_transport`), but it is *blind on\n  deterministic systems*: any two deterministic constant-atom systems, on arbitrary\n  finite world sets and with arbitrary successor functions, satisfy exactly the same\n  graded formulas at every pair of worlds (`det_graded_iff`).  Hence \"two self-loops\"\n  and \"one 2-cycle\" are graded-equivalent yet non-isomorphic (`gap_persists`): a\n  finite language of graded modalities does **not** classify finite pointed models up\n  to isomorphism, refuting Conjecture 1 of the root direction and the `k = 1`\n  separation claim of Conjecture 4.  What does separate the pair is the\n  self-reference observation `0 < step s s` (`loopObs`), which is itself invariant\n  under exact analogies (`loopObs_transport`, `loop_separates`) \u2014 the missing\n  resolution is a fixed-point phenomenon, not a multiplicity phenomenon.\n\n## Next falsifiable steps\n\n### 1. Fixed-point rank is the right resolution dial\n\n**Conjecture.** Extend the graded language by the observations `loop_m` = \"the\n`m`-step return probability at the current world is positive\", `m \u2265 1`.  Then for\ndeterministic finite systems the resulting language classifies pointed systems up to\nisomorphism, the level `m` is needed exactly for systems whose reachable cycle has\nlength `m`, and the resulting hierarchy is strict at every level.\n\nThe key insight is that `det_graded_iff` shows counting successors carries no\ninformation in the deterministic world, while `loop_separates` shows a single\nself-reference observation already splits the smallest confused pair; the invariant\nthat survives is the cycle type of the successor function.\n\n**Why now?** Both endpoints are theorems: blindness of grading at every level and\nseparation by the `m = 1` loop observation, so only the uniform construction and the\nstrictness examples remain.\n\n### 2. `analogyDist` is a *geodesic* metric, and the modulus is exactly its arc length\n\n**Conjecture.** On finite probabilistic systems with a fixed world set and fixed\nvaluation, `analogyDist` is a geodesic metric: for every pair `M, N` and every\n`\u03b8 \u2208 [0,1]` there is `K` with `d(M,K) = \u03b8\u00b7d(M,N)` and `d(K,N) = (1\u2212\u03b8)\u00b7d(M,N)`;\nmoreover the transport modulus `1 \u2212 (1\u2212\u03b5)^d` is exactly the arc length of the induced\npath in the space of depth-`d` observation vectors.\n\nThe key insight is that `analogyDist` is a max over worlds of total variation\ndistances, and total variation interpolates linearly along kernel segments\n`(1\u2212\u03b8)\u00b7step_M + \u03b8\u00b7step_N`, so the optimal renaming can be kept fixed along the whole\nsegment.\n\n**Why now?** `analogyDist_le_iff` makes the distance a minimum over a finite set, so\ncandidate geodesics can be exhibited concretely, and `analogyDist_triangle` supplies\nthe inequality that a geodesic must saturate.\n\n### 3. The distance is computable, and the optimal renaming is not always unique\n\n**Conjecture.** `analogyDist` is computable in time `O(n! \u00b7 n\u00b2)` and no better in\ngeneral: deciding `analogyDist M N \u2264 \u03b5` is as hard as graph isomorphism for the\n`0/1`-valued kernels, while for kernels with pairwise distinct row profiles the\noptimal renaming is unique and computable in `O(n\u00b2 log n)`.\n\nThe key insight is that `analogyDist_eq_zero_iff` identifies the zero set with\nisomorphism, so any subexponential algorithm would give a subexponential\nisomorphism test for the corresponding digraphs; conversely distinct row profiles pin\nthe renaming exactly as the nominal atoms do in `Resolution.nominal_analogy_eq`.\n\n**Why now?** The distance is now a finite minimum with a proven characterization of\nits zero set, which is precisely the reduction interface needed.\n\n### 4. Networks: the sharp per-cycle constant is sub-additive\n\n**Conjecture.** For a cycle of analogies with local defects `\u03b5_e`, the sharp holonomy\nconstant is strictly below `1 \u2212 (1 \u2212 \u03a3_e \u03b5_e)^d` whenever two consecutive defects are\nsupported on overlapping world pairs, and equals it exactly when the supports are\npairwise disjoint; `analogyDist` of the composite is then the correct sharp constant.\n\nThe key insight is that `Network.chainAnalogy` adds total variation defects, which is\ntight only for disjointly supported defects, and `analogyDist` now provides the\n*exact* composite defect against which additivity can be measured.\n\n**Why now?** With `analogyDist` available, the conjecture becomes the concrete\nstatement `analogyDist M K \u2264 analogyDist M N + analogyDist N K` with an explicit\ndescription of the equality case \u2014 a finite, checkable condition.\n\n### 5. Quantitative graded transport\n\n**Conjecture.** Graded truth is *not* stable: for every `\u03b5 > 0` there are systems at\nanalogy distance `\u03b5` whose graded theories differ already at grade `1` and depth `1`;\nbut the *\u03b5-relaxed* graded modality \"at least `k` successors of probability `> \u03b5`\nsatisfy `\u03c6`\" is transported along \u03b5-approximate analogies with no error at all.\n\nThe key insight is that positivity of a transition is a discontinuous functional of\nthe kernel, so exact grading cannot be stable, while thresholding at the defect level\nrestores invariance because a defect of `\u03b5` can move at most `\u03b5` of mass.\n\n**Why now?** `gsat_transport` proves the exact (`\u03b5 = 0`) case, and the total variation\nidentity `overlapDefect_eq_half_l1` gives the precise mass-movement budget needed for\nthe thresholded version.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1078",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "04a5f386",
+    "status": "available",
+    "timestamp": "2026-08-11T07:49:17.748601+00:00",
+    "title": "State of the thread after the present cycle.  Every statement marked \"**settled*"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 adjacency-degree algebras and moment rigidity\n\nThe formal development lives in `Catalog/Physics/AdjacencyDegree/` (13 files, all compiling,\nno `sorry`, axioms `propext`, `Classical.choice`, `Quot.sound` only).  What is *proved* there:\n\n* the cyclic module `M_G = \ud835\udcd0(G)\ud835\udfcf` sits inside the orbit module `U_G`, and equals the span of\n  `\ud835\udfcf` exactly for regular graphs (`Basic.lean`);\n* word moments `\ud835\udfcf\u1d40 w(A,D) \ud835\udfcf` are isomorphism invariants and are degree-decorated caterpillar\n  homomorphism counts (`Moments.lean`, `Caterpillar.lean`);\n* moment equality forces equality of the degree distribution, of the joint degree\n  distribution, and \u2014 the general form \u2014 of **every** degree-decorated walk count\n  (`DegreeRecovery.lean`, `EdgeStatistics.lean`, `WalkStatistics.lean`);\n* conversely those walk counts recover all the moments, so the two invariants have exactly the\n  same strength (`CaterpillarRigidity.lean`);\n* moments only see the colour-refinement quotient (`Equitable.lean`, `Quotient.lean`), hence\n  fail on regular graphs (`RegularFailure.lean`) and already on a connected non-regular\n  six-vertex pair (`SixVertexWitness.lean`);\n* `M_G = U_G` for stars and for degree-transitive graphs (`OrbitEquality.lean`), and the\n  `J`-ideal moments factorise (`Synthesis.lean`).\n\nThe following conjectures are the natural next targets.  Each is falsifiable: a single\ncounterexample refutes it, and each is stated so that a Lean formalisation can be attempted\ndirectly against the definitions already in the catalog.\n\n---\n\n## Conjecture 1 (McKay's principal form). Moments determine every tree.\n\nIf `T\u2081`, `T\u2082` are trees with `wordMoment T\u2081 w = wordMoment T\u2082 w` for all words `w` in `{A, D}`,\nthen `T\u2081 \u2243g T\u2082`.\n\n*Status.* Proved here for stars (`starGraph_iso_of_moments`); verified by exhaustive\nenumeration for all trees on at most 9 vertices (`ComputationalEvidence.md`, exploratory).\n\n*The key insight is* that by `CaterpillarRigidity.wordMoment_eq_iff_degWalkCount_eq` the moment\ninvariant is exactly the family of degree-decorated caterpillar counts, so the statement is a\npurely combinatorial reconstruction problem: rebuild a tree from the number of walks realising\neach prescribed degree pattern, peeling leaves by their decorated pattern multiplicities.\n\n*Why now?* The reduction from linear algebra to walk counts is now a theorem rather than a\nheuristic, and the leaf-peeling induction needs no new analytic input \u2014 only the counts that\nare already proved to be invariants.\n\n---\n\n## Conjecture 2 (Forest module identity). `M_G = U_G` for every forest.\n\nFor every forest `F`, the cyclic module `cyclicModule F` coincides with the orbit module\n`orbitModule F`.\n\n*Status.* Proved here for stars and for degree-transitive graphs; the general forest case is\nopen in this development.\n\n*The key insight is* that in a forest the iterated degree refinement (`Equitable.lean`) already\nstabilises at the automorphism-orbit partition, so the inclusion `M_G \u2264 U_G` proved in\n`cyclicModule_le_orbitModule` should be reversible by exhibiting, for each orbit, an explicit\npolynomial in `A` and `D` whose value on `\ud835\udfcf` is the orbit indicator \u2014 a construction that\n`degIndicator_mem_cyclicModule` already carries out one degree class at a time.\n\n*Why now?* The inclusion and the degree-class indicators are formalised, so only the\nrefinement-stabilises-at-orbits step is missing, and it is exactly the acyclicity input.\n\n---\n\n## Conjecture 3 (Exact characterisation). Moment equality \u21d4 common colour-refinement quotient.\n\nTwo graphs on the same number of vertices have equal adjacency-degree word moments **iff** their\ncolour-refinement (1-WL) quotients, weighted by class sizes, are isomorphic.\n\n*Status.* The \"if\" direction is proved (`Quotient.wordMoment_eq_of_quot_eq`); the \"only if\"\ndirection is open.\n\n*The key insight is* that the moments are linear functionals of the quotient data, and the\nquotient matrix has full-rank Krylov structure on the class-size vector, so recovering the\nquotient from the moments should be a finite-dimensional moment problem for a nonnegative\nmatrix pencil rather than a graph-theoretic argument.\n\n*Why now?* Both sides of the equivalence are already definable in the catalog\n(`quotAdj`, `quotDeg`, `classSize`), so the conjecture is a statement about existing objects\nand any counterexample is a finite, checkable pair.\n\n---\n\n## Conjecture 4 (Minimal order of failure). Six is the exact threshold.\n\nEvery pair of non-isomorphic connected graphs on at most five vertices is separated by the\nadjacency-degree moments, and six is therefore the minimal order at which the invariant fails\nfor connected graphs (a witness on six vertices is proved here).\n\n*Status.* The six-vertex failure is proved in Lean (`moment_failure_connected_nonregular`); the\n`n \u2264 5` separation is exploratory only.\n\n*The key insight is* that on at most five vertices the colour-refinement quotient of a\nconnected graph already has as many classes as the automorphism orbits, so by Conjecture 3's\nproved direction the invariant is complete there; the statement is a finite verification that\ncan be discharged by `decide` over a suitable encoding.\n\n*Why now?* The infrastructure to state and check it \u2014 `quotAdj`, `degWalkCount`, decidable\nsix-vertex graphs \u2014 is in place, and the finiteness makes it a genuine test of the\ndecidability route rather than of the theory.\n\n---\n\n## Conjecture 5 (Quotient algebra is a full matrix algebra). Tree orbit quotients.\n\nFor a tree `T` with orbit quotient of size `k`, the algebra induced by `\ud835\udcd0(T)` on the orbit\nquotient is the full matrix algebra `M_k(\u211d)`, and consequently the ideal `\ud835\udcd0(T) J \ud835\udcd0(T)` acts on\n`M_T` as its full endomorphism algebra.\n\n*Status.* The scalar shadow of this \u2014 the factorisation\n`moment (X * J * Y) = moment X * moment Y` (`Synthesis.moment_mul_J_mul`) \u2014 is proved; the\nalgebra statement is open.\n\n*The key insight is* that the quotient of a tree carries a distance-graded filtration with\none-dimensional graded pieces, so the images of `A` and `D` generate a matrix algebra by a\nJacobson-density argument, with the `J`-ideal supplying the rank-one elements.\n\n*Why now?* `moment_mul_J_mul` already isolates the rank-one behaviour of `J` at the level of\nmoments, which is exactly the input a density argument needs, and the quotient objects are\nformalised.\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1079",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a55e871b",
+    "status": "available",
+    "timestamp": "2026-08-11T07:51:05.664871+00:00",
+    "title": "The formal development lives in `Catalog/Physics/AdjacencyDegree/` (13 files, al"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: bold, testable conjectures from the symmetry dichotomy\n\nThe cycle established, in\n`Catalog/MachineLearning/TransformerUniversality/PermutationDichotomy.lean` (0 sorries):\n\n* `group_uniform_universal` \u2014 for **any** finite group `\u0393` of token symmetries, the\n  `\u0393`-invariant part of the attention algebra is uniformly dense in the `\u0393`-invariant continuous\n  functionals on compact saturated domains (specializations: `symmetric_uniform_universal` for\n  the full symmetric group, `shift_uniform_universal` for cyclic/relative symmetry);\n* `equivariant_uniform_universal` \u2014 the exact converse in the sequence-to-sequence setting:\n  symmetric attention, queried through the marked-token encoding, is a universal approximator of\n  the continuous `\u0393`-equivariant maps, and the constructed heads are exactly equivariant;\n* `equivariant_iff_exists_marked_invariant` \u2014 a representation theorem: continuous equivariant\n  sequence-to-sequence maps are *exactly* the marked-token evaluations of continuous invariant\n  functionals;\n* `orbit_barrier_lower` / `orbit_barrier_attained` / `symmetry_barrier_position_read` \u2014 the\n  obstruction is *sharp*: the optimal invariant error on an orbit equals exactly half the orbit\n  oscillation, and reading an absolute position costs at least `1/2`;\n* `positional_restores_universality` / `positional_seq2seq_universality` \u2014 one-hot positional\n  encodings remove the obstruction completely, via an explicit invariant continuous decoder.\n\nBelow are the follow-up conjectures, ranked by expected impact.\n\n## C1. Head-count law: the symmetric approximant needs only orbit-many heads, not `|\u0393|`-many\n\n**Conjecture.** For every `\u0393`-invariant `g \u2208 C(K, \u211d)` and `\u03b5 > 0`, there is a `\u0393`-invariant\nelement of `attentionAlgebra` that `\u03b5`-approximates `g` and is a sum of at most\n`poly(dim, 1/\u03b5)` products of readouts \u2014 in particular independent of `|\u0393| = n!`, which is what\nthe averaging proof of `group_uniform_universal` currently spends.\n\n*The key insight is* that averaging over `\u0393` is a *projection*, not a construction: the invariant\nsubalgebra is already generated by the multisymmetric power sums `x \u21a6 \u2211_i \u220f_a (x_i a)^{e_a}`,\neach of which is a **single** product of readouts, so the group sum can be eliminated in favour\nof a generating set of size polynomial in the feature dimension and the degree.\n\n*Why now?* The stability lemma `attentionAlgebra_compPerm_mem` plus the sharp barrier give both\nhalves needed to measure such a bound: any candidate generating set can be tested against the\n`1/2` barrier of `symmetry_barrier_position_read`, so the conjecture is falsifiable by an\nexplicit finite computation at small `|\u03b9|`.\n\n## C2. Softmax realizability: every element of the attention algebra is a limit of genuine\nsoftmax transformer blocks\n\n**Conjecture.** The uniform closure on compacta of finite compositions of *softmax* attention\nlayers with residual connections and coordinatewise multiplicative gating contains\n`attentionAlgebra`, with an explicit inverse-temperature schedule `\u03b2(\u03b5) = O(log(1/\u03b5))`.\n\n*The key insight is* that `softmaxHeadRead_zero_scores` already realizes a linear readout as a\nzero-score softmax head, and the exponential concentration bound of `SoftmaxLookup.lean`\n(`sum_weight_erase_le`) controls the deviation of a finite-`\u03b2` head from a hard selection, so\nproducts of readouts should be reachable by stacking two layers with logarithmically scaled\nscores.\n\n*Why now?* Both ingredients are already formalized in this catalog; the missing step is a single\ncomposition estimate, so the conjecture can be attacked directly and refuted by an explicit\ntwo-token counterexample if the residual structure is insufficient.\n\n## C3. Symmetry-group determination: the invariance group of a trained architecture is\nrecoverable from finitely many queries\n\n**Conjecture.** For a model `p` in `attentionAlgebra \u03b9 \u03ba`, the subgroup\n`{\u03c3 : p \u2218 permAct \u03c3 = p}` is determined by the values of `p` on the orbit of a single generic\nsequence, and equals the stabilizer of the positional encoding in the sense of\n`PositionalSymmetry.posStab`.\n\n*The key insight is* that `orbit_barrier_lower` converts symmetry detection into an\napproximation-error measurement: a non-symmetry of `p` shows up as a nonzero orbit oscillation,\nwhich is exactly the quantity the sharp barrier measures.\n\n*Why now?* The barrier is now known to be an equality, not just an inequality, so orbit\noscillation is a *complete* invariant rather than a one-sided test.\n\n## C4. Quantized-domain phase transition between exact and approximate universality\n\n**Conjecture.** On the `N`-quantized cube of sequences, the minimal number of heads of an exact\nsymmetric model interpolating an invariant target grows like `\u0398(N^{|\u03b9|\u00b7|\u03ba|}/|\u0393|)`, while the\nnumber needed for `\u03b5`-approximation of a Lipschitz target grows like `\u0398((L/\u03b5)^{|\u03b9||\u03ba|}/|\u0393|)`;\nin particular exact interpolation and uniform approximation have the *same* exponent but differ\nby the symmetry factor `|\u0393|`.\n\n*The key insight is* that the group-averaging step divides the effective domain by the orbit\nsize, so both counting problems descend to the orbit space, where the finite lookup theorem of\n`TransformerArchitecture.lean` and the separation lower bound of `FiniteLookupSeparation.lean`\napply verbatim.\n\n*Why now?* The orbit-space picture only became available with `SaturatedUnder` and the averaging\nargument proved this cycle; the statement is a finite counting claim, hence decidable at small\nparameters.\n\n## C5. Beyond finite groups: compact symmetry groups and continuous positional encodings\n\n**Conjecture.** `group_uniform_universal` remains true when the finite group `\u0393` is replaced by a\ncompact group acting continuously on the position space (e.g. rotations of a circular position\nencoding), with Haar averaging in place of the finite sum, and the barrier becomes half the\noscillation over the (now compact) orbit.\n\n*The key insight is* that the only property of `\u0393` used in the proof is that averaging is a\nbounded projection onto the invariants that preserves the subalgebra \u2014 a property Haar measure\nsupplies for compact groups.\n\n*Why now?* The proof of `symmetrize_error` isolates exactly this projection property, so\nreplacing `\u2211_{g \u2208 \u0393} / |\u0393|` by `\u222b d\u03bc` is a localized change; a counterexample would have to come\nfrom failure of subalgebra stability, which is testable on the rotation group of a 4-token ring.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_1080",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5bbe180d",
+    "status": "available",
+    "timestamp": "2026-08-11T07:52:53.676708+00:00",
+    "title": "The cycle established, in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions (thread `th_576aa37a`, cycle 1)\n\nThis cycle closed four of the six targets left by cycle 0 \u2014 the CSS dictionary\n(`Catalog/Geometry/CSSDictionary.lean`), CSS distance\n(`Catalog/Geometry/CSSDistance.lean`), the actual hypercube incidence complex\n(`Catalog/Geometry/HypercubeIncidence.lean`, with the bridge theorem now\ninstantiated unconditionally), the graph/complex separation\n(`Catalog/Geometry/GraphRepresentability.lean`), and the Singleton comparison at\nthe correct block length `N = n\u00b72\u207f\u207b\u00b9`.  The Steane code\n(`Catalog/Geometry/SteaneCode.lean`) certifies the framework end to end:\n`[[7,1,3]]`.\n\nTwo facts drive everything below.  (i) The hypercube homological code has\n**distance 1** although its graph has girth 4: a graph code has no `Z`-checks,\nso its primal distance is the least weight of a *non-cut*, which is 1 whenever\nthe graph is bridgeless.  (ii) A graph incidence matrix always satisfies the\nall-ones relation, so `rank < #V`; independence of the `X`-checks is an absolute\nobstruction to a graph model.\n\n## Conjecture 1 (bridgeless \u27fa distance one, for all graph codes)\n\nFor a finite graph `G` with incidence matrix `\u2202\u2081` over `\ud835\udd3d\u2082` and no `Z`-checks,\n`cssDistance = 1` **iff** `G` has no bridge, and `cssDistance = 2` iff `G` has a\nbridge but no two parallel bridges (with the convention that isolated vertices\nare discarded).\n\n*The key insight is* that in a graph code the primal distance is not a systole\nat all but a **co-systole of the cut matroid**: `dX` is the minimum size of a\nnon-cut, i.e. the girth of the *bond matroid*, which equals `1` exactly when no\nsingle edge is a bond.  *Why now?*  `HypercubeDistanceOne.lean` proves the\nhypercube instance by exhibiting a square through a chosen edge; the only input\nwas \"the edge lies on a cycle\", which is precisely bridgelessness, so the\ngeneral statement is within reach of the same argument.\n\n## Conjecture 2 (weight profile characterises representability)\n\nA binary matrix `M` is the incidence matrix of a `k`-dimensional simplicial\nboundary map iff every column has weight exactly `k+1` **and** the \"all-ones on\neach `(k\u22121)`-face\" relations hold; for `k = 1` this reduces to: `M` is a graph\nincidence matrix iff every column has weight `2`.  Consequently a binary CSS\ncomplex is graph-representable iff `H_X` admits a column-weight-two form, and\nthe rank bound `rank H_X + 1 \u2264 #rows` is necessary but **not** sufficient.\n\n*The key insight is* that the parity obstruction proved in\n`GraphRepresentability.lean` is only the degree-`0` shadow of a whole family of\nweight constraints, one per skeleton dimension.  *Why now?*  We already have the\nnecessary direction and two counterexamples (`steaneH`, the `1\u00d71` identity); the\nmissing content is a normal-form algorithm turning a column-weight-two matrix\ninto an explicit graph.\n\n## Conjecture 3 (no expander-free distance growth)\n\nFor every family of graph codes (`d\u2082 = 0`) the distance is bounded by a\nconstant, while `k` grows linearly in `N`; hence **no** one-dimensional complex\nachieves `k\u00b7d\u00b2 = \u03a9(N)`.  Growing distance forces genuine `2`-cells: for a\ncellulated closed surface the `min(systole, cosystole)` theorem gives\n`d = \u0398(\u221aN)` only when both the systole and the cosystole grow.\n\n*The key insight is* that `dX \u2264 1 + (minimum bond size)` collapses the primal\nsector of any bridgeless `1`-complex, so the entire burden of distance falls on\nthe cosystole, which the girth alone cannot carry.  *Why now?*  With\n`cssDistance` and `min(systole, cosystole)` formalised, both sectors are finally\nexpressible in Lean, and the toric-code files already in the catalog supply the\n`2`-cell comparison case.\n\n## Conjecture 4 (Singleton slack of homological codes)\n\nFor every graph code on a bridgeless graph, the quantum Singleton defect\n`N \u2212 k \u2212 2(d\u22121) = N \u2212 k \u2212 2` equals `rank \u2202\u2081 \u2212 2 = #V \u2212 \u03b2\u2080 \u2212 2`; in particular\nthe defect is exactly the number of independent vertex checks minus two, and it\nis `0` only for the `4`-cycle-like degenerate cases.\n\n*The key insight is* that for graph codes the Singleton defect is a purely\ntopological quantity \u2014 the rank of the boundary map \u2014 rather than a code-design\nparameter.  *Why now?*  `hyperComplex_singleton_slack` already proves the\nhypercube case (`N \u2212 k = 2\u207f \u2212 1`), and the general identity follows from\n`graph_numLogical_add` once Conjecture 1 pins `d = 1`.\n\n## Conjecture 5 (four hypercubes, four homologies)\n\nOf the four candidate meanings of \"hypercube complex\" \u2014 the cube graph `Q\u2099`, the\nfilled cubical `n`-ball, its boundary sphere `S\u207f\u207b\u00b9`, and the periodic cubical\ntorus `(S\u00b9)\u207f` \u2014 **only the torus** can produce a one-logical-qubit CSS code, and\nit does so only for `n = 2` with an `M \u00d7 N` grid of size `1`; the ball has\n`k = 0`, the sphere `k = 0` in middle degree, and the graph `k = 2\u207f\u207b\u00b9(n\u22122)+1`.\n\n*The key insight is* that the \"one logical qubit\" folklore is a statement about\n`H\u2081` of a *torus*, and it was silently transported to `H\u2081` of a graph, where the\nfirst Betti number is the circuit rank instead.  *Why now?*  Three of the four\nobjects are now formalised or nearly so (the graph here, the torus in\n`Catalog/Geometry/ToricCode/`), so the comparison needs only the two cubical\nmodels.\n",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_1081",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fb9255eb",
+    "status": "available",
+    "timestamp": "2026-08-11T07:54:42.177364+00:00",
+    "title": "This cycle closed four of the six targets left by cycle 0 \u2014 the CSS dictionary"
   },
   {
     "consumed_by_exp_id": "",
