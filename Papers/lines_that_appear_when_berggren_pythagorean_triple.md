@@ -1,126 +1,109 @@
-# Computational evidence: the star at a general rational boundary point
+# Computational evidence: the radial lines of the Berggren star map
 
-Setting: Euclid seeds `(m,n)` (`0 < n < m`, `gcd(m,n)=1`, `m+n` odd) plotted in the
-Poincaré half-plane by `z(m,n) = (n+i)/m`, so `Re z = n/m`, `Im z = 1/m`.
+All data below was produced by direct enumeration of Euclid seeds
+`{(m,n) : 0 < n < m, gcd(m,n) = 1, m+n odd}` (the nodes of the Berggren tree under the
+Euclid embedding `z(m,n) = (n+i)/m` into the Poincaré half-plane).
 
-For a rational boundary point `p/q` (lowest terms) put the **charge**
+Throughout, for a boundary rational `p/q` in lowest terms we call
 
-```
-k = charge(p,q; m,n) = p*m - q*n ,
-```
+    k(p,q;m,n) = q·n − p·m      the **star charge**,
 
-so that `p/q - Re z = (k/q) * Im z`: the seeds of a fixed charge lie on **one** Euclidean
-ray emanating from `p/q`. This is the mechanism producing the radial lines that are seen
-at `0`, `1`, and also at `0.5 = 1/2`, `0.333… = 1/3`, `0.2 = 1/5`, etc.
+because `Re z − p/q = (k/q)·Im z`, i.e. the node lies on the Euclidean ray out of the ideal
+point `p/q` whose "parameter" is `k/q`, at hyperbolic distance `arsinh(|k|/q)` from the
+geodesic over `p/q`.
 
-## 1. Which charges actually occur (parity quantisation)
+## A. The charge spectrum is a parity class (the quantisation law)
 
-Enumerating all seeds with `m ≤ 400` and collecting the charges `|k| ≤ 8`:
+Enumerating all seeds with `m ≤ 800` and recording which charges `|k| ≤ 8` actually occur:
 
-| `p/q` | `p+q` | realised charges with `|k| ≤ 8` |
+| p/q | predicted spectrum | observed charges with `|k| ≤ 8` |
 |---|---|---|
-| `0/1` | odd  | `-8,-7,-6,-5,-4,-3,-2,-1`  (one-sided) |
-| `1/1` | even | `1,3,5,7`  (one-sided, odd only) |
-| `1/2` | odd  | all of `-8 … 8`, including `0` |
-| `1/3` | even | `-7,-5,-3,-1,1,3,5,7` (odd only, no `0`) |
-| `2/3` | odd  | all of `-8 … 8` |
-| `1/4` | odd  | all of `-8 … 8` |
-| `1/5` | even | odd only |
-| `2/5` | odd  | all |
-| `3/5` | even | odd only |
-| `3/4` | odd  | all |
+| 0/1 | all (k > 0) | 1,2,3,4,5,6,7,8 |
+| 1/1 | odd (k < 0) | −7,−5,−3,−1 |
+| 1/2 | all | −8 … 8 (every integer) |
+| 1/3 | odd | ±1, ±3, ±5, ±7 |
+| 2/3 | all | −8 … 8 |
+| 1/4 | all | −8 … 8 |
+| 3/4 | all | −8 … 8 |
+| 1/5 | odd | ±1, ±3, ±5, ±7 |
+| 2/5 | all | −8 … 8 |
+| 3/5 | odd | ±1, ±3, ±5, ±7 |
+| 1/7, 3/7, 5/7 | odd | ±1, ±3, ±5, ±7 |
+| 2/7, 4/7, 6/7 | all | −8 … 8 |
 
-**Observed law.** If `p+q` is odd every integer charge occurs; if `p+q` is even (i.e. `p`
-and `q` are both odd) exactly the *odd* charges occur. The two classical stars are the
-special cases `p/q = 0/1` (all charges `k = -n`) and `p/q = 1/1` (odd charges `k = m-n`).
-The extreme points `0` and `1` give one-sided fans; every interior rational gives a
-two-sided fan.
+**Observed law.** The realised charges at `p/q` are *all* integers when `p+q` is odd, and
+*exactly the odd* integers when `p+q` is even (i.e. when `p` and `q` are both odd).
+Endpoints are one-sided (`k > 0` at `0/1`, `k < 0` at `1/1`) because `0 < n < m`.
 
-This is proved as `charge_odd_of_odd_odd`, `exists_seed_charge_gt` and
-`charge_zero_iff_seed_eq` in `Catalog/Pythagorean/RationalStarPencil.lean` and
-`Catalog/Pythagorean/RationalStarRealization.lean`.
+This is proved in `Catalog/Cryptography/BerggrenStars/RationalStars.lean`
+(`charge_odd_of_odd_odd` for the inclusion, `exists_seed_of_charge` for the converse).
 
-## 2. Density along one spoke
+## B. The resolution (visibility) ranking
 
-Counting seeds with `m ≤ M = 20000` on the spoke of charge `k` at `p/q`, and dividing by
-`M/q` (the number of admissible `m` in range), with `K = |k|`:
+Adjacent rays of the star at `p/q` differ in `sinh(distance)` by
 
-| `p/q` | `k` | count | count/(M/q) | `φ(K)/K` |
-|---|---|---|---|---|
-| `1/2` | `1` | 4999 | 0.4999 | 1.0 |
-| `1/2` | `2` | 5000 | 0.5000 | 0.5 |
-| `1/2` | `3` | 3333 | 0.3333 | 0.6667 |
-| `1/2` | `5` | 3999 | 0.3999 | 0.8 |
-| `1/2` | `6` | 3333 | 0.3333 | 0.3333 |
-| `1/3` | `1` | 6666 | 0.9999 | 1.0 |
-| `1/3` | `2` | 0    | 0      | 0.5 |
-| `1/3` | `3` | 4444 | 0.6666 | 0.6667 |
-| `1/5` | `5` | 3200 | 0.8000 | 0.8 |
-| `2/5` | `3` | 1334 | 0.3335 | 0.6667 |
-| `1/1` | `3` | 13332| 0.6666 | 0.6667 |
+    δ(p/q) = 1/q   if p+q is odd,        δ(p/q) = 2/q   if p+q is even.
 
-**Observed law.** The density is `φ(K)/K` except when `p+q` is odd *and* `K` is odd, where
-it is `φ(K)/(2K)`. The explanation found (and proved) is the unimodular substitution
-`(m,n) = (k b + s q, k a + s p)` with `p b - q a = 1`, under which
+Ranking the rationals of `[0,1]` by `δ`:
 
-```
-gcd(m,n) = gcd(k,s)      and      m + n = k(a+b) + s(p+q),
-```
+| p/q | 1/1 | 0/1 | 1/3 | 1/2 | 1/5 | 3/5 | 2/3 | 1/7,3/7,5/7 | 1/4,3/4 |
+|---|---|---|---|---|---|---|---|---|---|
+| δ | 2 | 1 | 0.667 | 0.5 | 0.4 | 0.4 | 0.333 | 0.286 | 0.25 |
 
-so the seeds on a spoke are indexed by the integers `s` coprime to `k` and (when `p+q` is
-odd) of one fixed parity. The exact window count is `windowCount_eq_totient`.
+The rationals with `δ ≥ 2/5` are exactly `0, 1/5, 1/3, 1/2, 3/5, 1`; numerically
+`0, 0.2, 0.333, 0.5, 0.6, 1`. The stars reported as visible in the rendered picture were
+at `0`, `0.2`, `0.33`, `0.5`, `1` — the predicted list, and the prediction `0.6` is the one
+further testable consequence. Note that `1/4 = 0.25` is *not* in the list even though its
+denominator is smaller than `5`: even denominators are penalised because a `p+q` odd star
+has half the spacing of a `p+q` even one. This is the sharpest observable signature of
+the law, and it matches the reported picture.
 
-## 3. Minimal spoke separation
+Formalised as `visible_rationals` in `RationalStars.lean`.
 
-For a star at `p/q` the possible distances from the vertical geodesic over `p/q` are
-`arsinh(|k|/q)`. Hence the closest off-axis spoke sits at `arsinh(1/q)`, which decreases
-in `q`: the star at a small denominator is *wide* and individually visible, while a large
-denominator produces a pencil compressed into a sliver of width `arsinh(1/q)` around its
-axis. That is why `0, 1, 1/2, 1/3, 1/5` are the conspicuous star centres in the plot.
-Formalised as `arsinh_inv_q_le_distVLine` and `distVLine_le_of_charge_le`.
+## C. The explicit ray construction
 
-## 4. Counterexample hunt
+Bezout data `q·x − p·y = 1` and `A = 1 + k(x+y) + 2k²j` give the family
 
-* Searched all `p/q` with `q ≤ 12` and all seeds with `m ≤ 400`: no charge violating the
-  parity law was found (consistent with `charge_odd_of_odd_odd`).
-* Searched for a second seed of charge `0` at a fixed `p/q`: none exists — the axis of a
-  star carries at most the single node `(m,n) = (q,p)` (proved:
-  `charge_zero_iff_seed_eq`).
-* All spokes with an admissible charge were found to be infinite in the range searched,
-  matching `exists_seed_charge_gt`.
+    (m, n) = (q·A + y·k,  p·A + x·k),
 
-## 5. Second cycle: resolution and the Farey count
+whose charge is `k` for every `j`. Example `p/q = 2/5`, `k = 3`, `(x,y) = (1,2)`:
 
-The Euclidean gap between two adjacent rays of the star at `p/q`, measured at plot height
-`y = Im z`, is exactly `y/q` (`adjacent_ray_gap`). At `y = 0.5`:
+| A | (m,n) | seed? | charge |
+|---|---|---|---|
+| 4 | (26,11) | yes | 3 |
+| 10 | (56,23) | yes | 3 |
+| 16 | (86,35) | yes | 3 |
 
-| `q` | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
-|---|---|---|---|---|---|---|---|---|
-| gap `y/q` | 0.500 | 0.250 | 0.167 | 0.125 | 0.100 | 0.083 | 0.071 | 0.063 |
+(The intermediate `A = 7, 13` are the values killed by the parity condition; the arithmetic
+progression `A ≡ 1 mod 2k` used in the formal proof selects exactly the good ones.)
 
-So at a plot resolution of one part in ten, only `q ≤ 5` is resolved; those centres are
-`1/1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, 2/5, 3/5, 4/5` — exactly the fans the eye picks out in
-the rendered star map, together with `0`. The count of resolvable centres in `(0,1]` is the
-Farey count `∑_{q ≤ Q} φ(q)`:
+The key identity behind coprimality is that `[[q,y],[p,x]]` has determinant `1`, so
+`gcd(m,n) = gcd(A,k)`; taking `A ≡ 1 (mod k)` forces `gcd(m,n) = 1`.
 
-| `Q` | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| `∑_{q≤Q} φ(q)` | 1 | 2 | 4 | 6 | 10 | 12 | 18 | 22 | 28 | 32 |
+## D. Step lengths along a rational ray
 
-(OEIS A002088, the summatory totient; asymptotically `3Q²/π²`.) The value `10` at `Q = 5` is
-formalised as `card_fareyStars_five`, and the general count as `card_fareyStars`.
+Consecutive lattice points of the ray at `p/q` of charge `k` are `(m,n)` and `(m+tq, n+tp)`;
+their *seed cross product* is exactly `t·k`, so
 
-## 6. Second cycle: transport of the stars
+    cosh(step) = (t²k² + m² + (m+tq)²) / (2m(m+tq)) → 1,
 
-Under the covariance identity `chargeZ p q (B(m,n)) = chargeZ (T(p,q)) (m,n)` the three
-Berggren moves act on the star parameter `(p,q)`. Iterating `T₁(p,q) = (2p-q, p)` on the
-ladder `(k, k+1)`:
+i.e. the hyperbolic steps tend to `0`: each ray is an infinite path of shrinking steps
+gliding into the ideal point `p/q`. Sample (`p/q = 2/5`, `k = 1`; here `p+q` is odd, so
+every *second* lattice point of the line is a seed, `t = 2`, cross product `2`):
 
-| `k` | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-|---|---|---|---|---|---|---|---|
-| `T₁ᵏ(k, k+1)` | `(0,1)` | `(0,1)` | `(0,1)` | `(0,1)` | `(0,1)` | `(0,1)` | `(0,1)` |
+| step | cosh(step) | length |
+|---|---|---|
+| (12,5)→(22,9) | 1.19697 | 0.61778 |
+| (22,9)→(32,13) | 1.07386 | 0.38203 |
+| (32,13)→(42,17) | 1.03869 | 0.27729 |
+| (52,21)→(62,25) | 1.01613 | 0.17936 |
 
-every rung lands on the `0`-star (`ladder_transport_zero_star`). Scanning all words of
-length `≤ 9` in the three generators applied to `(1,1)` and to `(0,1)`, the parity of
-`p + q` never changed — the invariant of `transWord_parity`; in particular no word carried
-`(1,1)` to `(0,1)`, so the two principal fans are genuinely inequivalent.
+Formalised as `cosh_step_along_star_ray` / `step_along_star_ray_tendsto_zero` in
+`RationalStarRays.lean`.
+
+## E. OEIS
+
+The counting function of maximal arms per star line at `0` and `1` is `φ(2q)`
+(A062570), consistent with the catalog's earlier `StarMultiplicity` results; no new
+sequence is claimed here. The charge spectra of Section A are arithmetic progressions,
+not new sequences.
