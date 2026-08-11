@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2125bb42",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For ev",
-      "quality_score": 0.71783,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-08-03T11:54:59",
-      "title": "The accompanying Lean development settles the operator-algebraic core used by"
-    },
-    {
       "cycle_id": "f7f562cc",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\n1. **Poisson isolated-vertex limit in the connectivity window.** For every fixed `c : ℝ`, if `I_n` is the isolated-vertex count in `G(n, (log n + c)/n)`, then for every fixed `k :",
@@ -499,19 +489,19 @@
       "theorem_count": 142,
       "timestamp": "2026-08-10T02:43:52",
       "title": "Cycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles agai"
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
+      "quality_score": 0.71709,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-11T01:12:41",
+      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e86cdc26",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\nThe formal connector isolates a concrete target for the asymptotic random\nregular graph program: construct, with high probability, one divisor `D` with\n\n- `deg(D) ≤ C_k (g-1)`, an",
-      "quality_score": 0.8002199999999999,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-07-31T23:26:34",
-      "title": "Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical Degree"
-    },
     {
       "cycle_id": "a7ba7617",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 80,
       "timestamp": "2026-08-11T01:11:27",
       "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincare half plane"
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
+      "quality_score": 0.71709,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-11T01:12:41",
+      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2c38bc1a",
-      "domain": "Cryptography",
-      "name": "says",
-      "quality": 0.7003711194029851
-    },
-    {
-      "cycle_id": "2c38bc1a",
-      "domain": "Cryptography",
-      "name": "injective_of_universal_witness",
-      "quality": 0.7003711194029851
-    },
-    {
-      "cycle_id": "2c38bc1a",
-      "domain": "Cryptography",
-      "name": "inducedEmbedding_of_isUniversalHost",
-      "quality": 0.7003711194029851
-    },
     {
       "cycle_id": "b2707824",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "wordA_length",
       "quality": 0.740175
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "name": "mobius_im",
+      "quality": 0.71709
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "name": "mobius_mapsTo_upperHalfPlane",
+      "quality": 0.71709
+    },
+    {
+      "cycle_id": "4c1e8096",
+      "domain": "Geometry",
+      "name": "hasDerivAt_mobiusC",
+      "quality": 0.71709
     }
   ],
-  "last_updated": "2026-08-11T01:11:27",
+  "last_updated": "2026-08-11T01:12:41",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "38046e56",
-        "quality": 0.77922,
-        "theorems": 10,
-        "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
-      },
-      {
         "cycle_id": "1d44d635",
         "quality": 0.686,
         "theorems": 162,
@@ -3451,6 +3445,12 @@
         "quality": 0.6697667517006802,
         "theorems": 631,
         "title": "Hilbert 15: Schubert Calculus Rigorization"
+      },
+      {
+        "cycle_id": "4c1e8096",
+        "quality": 0.71709,
+        "theorems": 59,
+        "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
       }
     ],
     "Logic": [
