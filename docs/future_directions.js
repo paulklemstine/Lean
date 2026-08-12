@@ -63,7 +63,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
   },
   {
-    "consumed_by_exp_id": "4116cae8",
+    "consumed_by_exp_id": "ef8a5182",
     "description": "**Summary.** 3SUM mod-p reveals factors, and collision-based factoring methods\nform a hierarchy all hitting the same \u221aN barrier.\n\n**Observation (3SUM mod-p factor reveal).** For N = pq and triples with\na+b+c \u2261 0 (mod p) but \u2262 0 (mod q): gcd(a+b+c, N) = p. Verified: 19 mod-p-only\ntriples vs. 0 mod-both for N = 143.\n\n**The birthday-bound hierarchy:**\n| Collision type | Search space | Cost to collision | Net cost |\n| Sumset (a+b \u2261 c+d) | k\u00b2 pairs | k ~ p^{1/2} | O(\u221aN) |\n| 3SUM (a+b+c \u2261 0) | k\u00b3 triples | k ~ p^{1/3} | O(\u221aN) |\n| Singular moduli | k evaluations | k ~ p/h | O(\u221aN) |\n\nThe exponent improves (1/2 \u2192 1/3) but the exponential dependence on p \u2248 \u221aN\npersists. This is a new structural connection between two canonical problems\n(3SUM and factoring) through the birthday bound.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -766,6 +766,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-12T05:49:32.577201+00:00",
     "title": "BITPROFILE: factor information is superdense in N \u2014 zero-block theorem, 95% pairwise-invisible, top-2-bit sliver"
+  },
+  {
+    "consumed_by_exp_id": "50f57db4",
+    "description": "**Paper 53 (NewMathematics) \u2014 Experiment 388, assessment v164. Round-14 #12.**\n\n**Hypothesis:** f_j(N) = bit j of the smaller k-bit factor p, over the exact k-bit-prime semiprime support, has no low-degree GF(2) parity of N approximating it \u2014 the Walsh/spectral face of superdensity (BITPROFILE, barrier 1/2 probe).\n\n**Experiment (restricted Walsh spectrum W(S) = sum_x f_j(x)(-1)^(S.x) by vectorized FWHT at k=10,12; targeted degree<=3 scans at k=14; m = 276/2850/32640/380628; random-sign null calibrated per size):**\n\n1. **Spectral flatness CONFIRMED:** at k=14 every information-bearing bit below the top ~6 has max degree<=3 correlation <= 0.021 vs all-parity noise 0.0101 and degree<=3 null max 0.0065. No parity of <=3 bits of N approximates any factor bit.\n2. **The only non-flat structure is the symmetric top-bit magnitude/carry family:** corr(p_{k-d}, N_{2k-1}) converges to ~0.285 (carry-out), 0.310, 0.132, 0.065, 0.026 for d=2..6 \u2014 the Walsh face of the BITPROFILE top-2 sliver, N-computable, symmetric in (p,q), a size correlation, non-factor-revealing.\n3. **The round-1 \"j=2 anomaly\" (0.166 at k=10, ~1.7x noise) RESOLVED:** single-bit winner = N_{2k-1} (product-magnitude indicator); corr(p_2, N_{2k-1}) = 0.254/0.166/0.013/0.006 at k=8/10/12/14 \u2014 a small-k fluctuation of the symmetric top-bit family decaying into the noise floor.\n4. **Low-half cubics decay:** corr(f_3,{1,2,3}) = 0.203->0.013, corr(f_4,{1,3,4}) = 0.145->0.009 across k=8..14 \u2014 finite-prime equidistribution effects at the 1/sqrt(#primes) scale (~1e-3 bits), qualifying the zero-block theorem over the prime-restricted support (exact over the full-odd support).\n5. **Controls calibrate:** null (deg<=3) max 0.074/0.0213/0.0065 at k=10/12/14; constants j=0,k-1 trivially 1.0; carry-out j=k-2 reproduces at 0.51 linear/0.79 quadratic.\n\n**Verdict:** CONFIRMED negative with positive content \u2014 the factoring function is as far from a low-degree parity approximator as a random function on its support, except for the symmetric size/carry structure N itself reveals. The k=10 j=2 anomaly and low-half cubics are small-k finite-prime fluctuations decaying with k. Barriers 1/2 (no low-degree GF(2) approximator; all N-computable structure symmetric). Closes the Walsh/GF(2) face of the barrier framework.\n\nFull paper: ResearchOutput/NewMathematics/53_EmpiricalDegree_SpectralFlatness.md",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1155",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T06:49:48.549564+00:00",
+    "title": "EMPIRICAL-DEGREE: the factoring function is spectrally flat \u2014 no low-degree parity of N approximates any factor bit; the j=2 anomaly resolves as a symmetric top-bit fluctuation"
   },
   {
     "consumed_by_exp_id": "",
@@ -1757,16 +1772,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symplectic-Integrable: Formalization of KAM Stability in Hamiltonian Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df0ddc6c",
     "description": "Constructs an explicit non-trivial Hilbert space operator model satisfying the Wightman axioms for self-interacting scalar quantum fields in two dimensions.",
     "domains": [
       "Physics"
     ],
     "id": "dir_50_15_dbfbc9be",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:23.075434+00:00",
     "title": "Quantum-Field-Axioms: Wightman Axioms Consistency for Scalar Fields in 2D"
   },
