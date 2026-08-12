@@ -97,7 +97,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "426cd9fa",
+    "consumed_by_exp_id": "",
     "description": "**Summary.** The Jacobi Gauss sum τ(N) = sum_n (n/N) e^{2πin/N} has |τ(N)| = √N.\nA priori its phase could encode (p mod 4, q mod 4) separately — a genuine\nfactor-revealing candidate. It does not.\n\n**Theorem (phase collapse, proven).**\n  arg τ(N) = 0  when p ≡ q (mod 4),  and  π/2 when p ≢ q (mod 4).\nEquivalently τ(N) = √N or i√N.\n\n**Mechanism.** By CRT and quadratic reciprocity, τ(N) = g_p g_q (q/p)(p/q).\nIn the (3,3) mod 4 case the two Legendre factors contribute i·i = -1, but the\nquadratic-reciprocity correction (q/p)(p/q) = -1 exactly cancels it.\n\n**Significance.** Within N ≡ 1 mod 4, the phase cannot distinguish (1,1) from\n(3,3) factorizations. A clean exact instance of structural orthogonality: the\nphase is exactly determined by N mod 4 and conveys exactly 1 bit.\nConfirmed on all 13 test semiprimes.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -109,7 +109,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T19:35:11.986312+00:00",
     "title": "Jacobi Gauss-Sum Phase Collapse"
   },
@@ -230,7 +230,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "d5dbe10f",
+    "consumed_by_exp_id": "",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/16_FreeWitness_Classification.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/16_FreeWitness_Classification.md)\n\n---\n\n# The CRT-Multiplicative Free-Witness Classification and the Trace Lemma\n\n**Program:** Factoring research lab — unification of the free-witness family\n**Date:** 2026-08-11\n**Status:** Classification theorem (supported by 9+ experiments, validated by a successful falsifiable prediction)\n\n---\n\n## Abstract\n\nNine structurally distinct experiments — CIRC, KROOT, BQF, HEISENBERG-CLASS,\nCUSP-INDEX, ZETA-LP, RS-MIND, CONG-DIV, and SIGK — collapse to ONE mechanism.\nA free-witness is a counting aggregate over a CRT-separable domain whose local\nweights are non-polynomial and CRT-multiplicative. Such a scalar jointly encodes\nboth factors (escaping the symmetry barrier), is non-polynomial in N (escaping\nthe polynomial barrier), and is sealed by Ω(N) aggregation (barrier 4). This\npaper states the classification, the trace-reduction lemma (every recoverable\nwitness reduces to p+q, max(p,q), or a residue/order vector), the\ncharacters-only boundary lemma, and the successful falsifiable prediction that\nvalidated the theorem (sigma_k(N), k>=2).\n\n---\n\n## 1. The unifying mechanism\n\nEvery experiment in the free-witness family has three layers:\n\n1. **CRT decomposition.** The witness counts solutions over an ambient set that\n   is CRT-separable (S_N ~= S_p x S_q) with a CRT-multiplicative weight. The\n   count factors as a product (C_D(N) = C_D(p) C_D(q)).\n\n2. **Non-polynomial local factor.** Each local piece depends on ONE prime through\n   a non-polynomial function: the Kronecker symbol chi_D(p) (CIRC, BQF), the\n   order gcd(k, p-1) (KROOT), the divisor sum sigma(p) = 1+p (CUSP-INDEX,\n   ZETA-LP, SIGK), the class count (HEISENBERG), the code distance\n   (RS-MIND), the order ord_p(a) (BURAU-ORD). This is why the scalar is not a\n   polynomial in N: it is a function of p and q SEPARATELY.\n\n3. **Sealing (barrier 4).** The closed form requires the factors (circular,\n   barrier 6); the only factor-free route is enumerating the CRT-product domain\n   — O(N) or O(N^2). Recovery from the scalar is poly-time.\n\n**Classification theorem (supported, not yet proven).** A counting function over\na CRT-separable domain whose local weights are non-polynomial and\nCRT-multiplicative is a free-witness — factoring-complete, O(1) from the factors,\nΩ(N) otherwise.\n\n---\n\n## 2. The trace lemma\n\nEvery recoverable free-witness reduces to one of:\n- the trace s = p + q (CIRC, BQF, HEISENBERG-CLASS, CUSP-INDEX, ZETA-LP),\n- the larger factor max(p,q) (RS-MIND), or\n- a residue/order vector (KROOT, MODPAR-CERT, BURAU-ORD).\n\nOnce s = p+q is known, p and q are the roots of x^2 - s x + N. Once max(p,q) is\nknown, the other factor is N/max. The information content of every witness is\none factor-secret coordinate.\n\n---\n\n## 3. The characters-only boundary lemma\n\nWIGNER-CUBIC showed the boundary of this class: its claimed CRT factorization is\nFALSE because exponential phase functions e^{2 pi i f(y)/N} do NOT decompose\nthrough CRT — only GROUP CHARACTERS do. The free-witness family works precisely\nbecause its local weights (Kronecker symbols, orders, divisor sums) ARE\ncharacter-like / CRT-multiplicative. Non-character phase functions fall outside\nthe class. This delimits exactly why the six+ settings work and where the\nmechanism cannot extend.\n\n---\n\n## 4. The falsifiable prediction (validated)\n\nThe classification predicts: ANY non-polynomial CRT-multiplicative local count\nyields another free-witness. The divisor-power-sum sigma_k(N) = prod(1 + p_i^k)\nhas local weight (1 + p^k), non-polynomial and CRT-multiplicative. Tested\n(experiment SIGK): sigma_2(N) = (1+p^2)(1+q^2) verified exactly, and\np^2 + q^2 = sigma_2 - 1 - N^2 recovers p,q in every case. This is the FIRST\nfree-witness PREDICTED by the theory rather than found by search — a successful\nfalsifiable test. Other predicted members: Ramanujan sums (already shown\nfactor-secret in FOU), class numbers, the psi-function (already = CUSP-INDEX).\n\n---\n\n## 5. The sealing, precisely\n\nThe CIRC mod-2^k addendum showed truncated counts still leak factor residues\n(p mod 8) but remain sealed. This is empirical; a proof direction: find N1 == N2\nmod 2^k with C(N1) not congruent C(N2) mod 2^k. Since p,q mod 2^k are\nunderdetermined by N mod 2^k, such a pair would prove no poly formula exists\n(any poly formula depends only on N's residues), upgrading the addendum to a\ntheorem and giving barrier 4 its sharpest form.\n\n---\n\n## 6. Honest statement\n\n**Established (computationally verified):** the classification holds across\nnine+ structurally distinct settings; sigma_k(N) (k>=2) confirmed as a predicted\nmember; recovery is poly-time from any witness; sealing is Ω(N) in every case.\n**Not established:** a PROOF that barrier 4's aggregation is necessary (that is\nequivalent to factoring hardness — a famous open problem). The classification\ncharacterizes the mechanism precisely but does not prove it unconditionally.\n\n---\n\n## 7. Conclusion\n\nThe free-witness family is understood as ONE mechanism: non-polynomial\nCRT-multiplicative local counts over CRT-separable domains. Nine settings,\none information channel (the trace s = p+q, or max(p,q), or a residue/order\nvector), all sealed by Ω(N) aggregation. The classification is falsifiable and\nwas validated by a successful prediction (SIGK). Barrier 4 remains the dominant\n— and now precisely characterized — obstruction to classical factoring.\n\n---\n\n*Related:* `13_FreeWitness_Family.md` (the family), `15_Round3_Closures.md`\n(BURAU-ORD separation test), `Factoring_Lab_Notebook.md` Parts 39-55.\n",
     "domain_bridges": [],
     "domains": [
@@ -242,7 +242,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T22:14:34.147213+00:00",
     "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
   },
@@ -9332,6 +9332,46 @@
     "status": "available",
     "timestamp": "2026-08-11T04:51:07.853525+00:00",
     "title": "ArXiv paper: Maximizing the algebraic connectivity of graphs of given order and size: a proof of a conjecture of Kolokolnikov"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Kohayakawa's conjecture and clique coverings of complements of paths and cycles' and formalize its key results. Abstract: For $s\\ge1$, let $G_s$ be the bipartite graph between the $s$-subsets and the $(s-1)$-subsets of $[2s]$, where adjacency means disjointness, and let $w(s)$ be the maximum number of $s$-subsets on an induced path in $G_s$. We prove $w(s)\\ge \\frac{4^s}{2048s^{5/2}}$ for all $s\\geq 6$. This implies $\\sup_{s\\ge1}w(s)^{1/s}=4$, as conjectured by Kohayakawa (1991). His recursive construction then gives induced paths of order $Ω(4^r/r^{5/2})$ in the Kneser graph $KG(2r+1,r)$ and yields \\[ \\max\\{\\cc(\\overline{P_n}),\\ \\cc(\\overline{C_n})\\} \\le \\log_2 n+\\frac52\\log_2\\log_2 n+O(1). \\] Together with the known lower bounds, this settles a conjecture of de Caen, Gregory, and Pullman (1985) and gives \\[ \\cc(\\overline{P_n})=\\log_2 n+Θ(\\log_2\\log_2 n), \\qquad \\cc(\\overline{C_n})=\\log_2 n+Θ(\\log_2\\log_2 n). \\] We also give an independent proof of the latter order estimates. It uses a Hamiltonicity result of Kneser graphs and a key lemma proved by the Lovász local lemma.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_1129",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.11132v1",
+    "status": "available",
+    "timestamp": "2026-08-12T02:52:08.351037+00:00",
+    "title": "ArXiv paper: Kohayakawa's conjecture and clique coverings of complements of paths and cycles"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bounded measurable sets with boundary of measure zero have the same real-parameter lattice-point enumerators for all integer translates, then their indicator functions agree almost everywhere. As a corollary, any convex body is uniquely determined by this data. Our proof is short and Fourier-analytic, where the key device is a periodic point-counting function whose Fourier coefficients recover the Fourier transform of the indicator function on a dense set. This recovers and extends, with a unified argument, the uniqueness results for rational polytopes and symmetric convex bodies established by Royer [arXiv:1712.01973, arXiv:1712.03937], whose proofs relied on intricate case-specific geometric constructions.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_1130",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.11078v1",
+    "status": "available",
+    "timestamp": "2026-08-12T02:52:12.133657+00:00",
+    "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
     "ambition_level": "extension",
