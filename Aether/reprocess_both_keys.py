@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch and reprocess Aristotle projects from BOTH API keys, strictly ignoring pre-July 2026 projects.
-
-Keys:
-  Key 1: arstl_zUGEZ6fUPvTxL0DSJaiCUYWbBlIk2t0t1L3ypR5eIRs
-  Key 2: arstl_1wk9UpHWAPWO2b6It0cSy2kxKlVN7S4ll5xVJ82WGFI
+"""Fetch and reprocess Aristotle projects from configured API keys, strictly ignoring pre-July 2026 projects.
 """
 
 import os
@@ -25,10 +21,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from aristotlelib import Project, set_api_key
 
-API_KEYS = [
-    "arstl_zUGEZ6fUPvTxL0DSJaiCUYWbBlIk2t0t1L3ypR5eIRs",
-    "arstl_1wk9UpHWAPWO2b6It0cSy2kxKlVN7S4ll5xVJ82WGFI",
-]
+API_KEYS = [k for k in [os.getenv("ARISTOTLE_API_KEY_1"), os.getenv("ARISTOTLE_API_KEY_2"), os.getenv("ARISTOTLE_API_KEY")] if k]
 
 BASE_URL = "https://aristotle.harmonic.fun/api/v1"
 JULY_CUTOFF = "2026-07-01"
