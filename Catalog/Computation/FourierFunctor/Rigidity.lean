@@ -1,4 +1,4 @@
-import Catalog.Computation.FourierFunctor.Sharpness
+import Computation.FourierFunctor.Sharpness
 
 /-!
 # Rigidity: the converse of the equality case of the uncertainty principle

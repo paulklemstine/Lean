@@ -6,9 +6,6 @@ import Shared.CatalogbuildSharedIspythtriple.IsPythTriple
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 1
-
-The import of `Shared.CatalogbuildSharedIspythtriple.IsPythTriple` (supplying
-`IsPythTriple`) was added; the statement and proof are unchanged.
 -/
 
 noncomputable section

@@ -1,21 +1,16 @@
 import Mathlib
+import Shared.AbstractAlgebra.Spb
+
+open Real
 
 /-! # CatalogBuild.Shared.Spb_zero
 
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 5
-
-The definition of `spb` (used by every statement but absent from the fragment)
-and the `open Real` line were added; the statements and proofs are unchanged.
 -/
 
 noncomputable section
-
-open Real
-
-/-- The SPB (Stereographic Projection Bridge) operation. -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 /-- [Section: # CatalogBuild.Shared.Spb_zero
 Auto-generated from theorem catalog database.
