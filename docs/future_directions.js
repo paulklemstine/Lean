@@ -93,21 +93,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "64ac4ffd",
-    "description": "**Summary.** Three proven theorems classify why broad classes of structural\nfactoring approaches are impossible. All three are now machine-checked in Lean\n(the polynomial barrier at `Catalog/NumberTheory/PolynomialBarrier.lean`).\n\n**Theorem 1 (polynomial barrier / LLL).** For f \u2208 Z[x] and N = pq:\np | f(N)  \u27fa  p | f(0). Hence gcd(f(N), N) reveals only primes dividing f(0),\nwhich are independent of N. No polynomial invariant of N alone is a universal\nfactoring witness (resultants, discriminants, hyperdeterminants all fall here).\n\n**Theorem 2 (symmetry barrier / MMM).** Any quantity Q(p,q) that distinguishes\np from q (not symmetric) cannot be computed from N alone. N = pq = qp is\nsymmetric; any f(N) is symmetric. Factor information is antisymmetric and\ntherefore uncomputable from N.\n\n**Theorem 3 (holomorphic rigidity barrier / HRB).** Any factoring method\nconstructing a holomorphic F_N from N and recovering factors from its zero set\nmust fail unless the construction already encodes the factors (identity\nprinciple + null-set measure + evaluation circularity).\n\nThese three \u2014 algebraic, group-theoretic, analytic \u2014 are independent and\ncomplementary.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1107",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-11T19:35:11.986808+00:00",
-    "title": "Three Structural Barrier Theorems for Integer Factorization"
-  },
-  {
     "consumed_by_exp_id": "a9efa47b",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
@@ -168,7 +153,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed"
   },
   {
-    "consumed_by_exp_id": "d6a03b20",
+    "consumed_by_exp_id": "d99b7790",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/16_FreeWitness_Classification.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/16_FreeWitness_Classification.md)\n\n---\n\n# The CRT-Multiplicative Free-Witness Classification and the Trace Lemma\n\n**Program:** Factoring research lab \u2014 unification of the free-witness family\n**Date:** 2026-08-11\n**Status:** Classification theorem (supported by 9+ experiments, validated by a successful falsifiable prediction)\n\n---\n\n## Abstract\n\nNine structurally distinct experiments \u2014 CIRC, KROOT, BQF, HEISENBERG-CLASS,\nCUSP-INDEX, ZETA-LP, RS-MIND, CONG-DIV, and SIGK \u2014 collapse to ONE mechanism.\nA free-witness is a counting aggregate over a CRT-separable domain whose local\nweights are non-polynomial and CRT-multiplicative. Such a scalar jointly encodes\nboth factors (escaping the symmetry barrier), is non-polynomial in N (escaping\nthe polynomial barrier), and is sealed by \u03a9(N) aggregation (barrier 4). This\npaper states the classification, the trace-reduction lemma (every recoverable\nwitness reduces to p+q, max(p,q), or a residue/order vector), the\ncharacters-only boundary lemma, and the successful falsifiable prediction that\nvalidated the theorem (sigma_k(N), k>=2).\n\n---\n\n## 1. The unifying mechanism\n\nEvery experiment in the free-witness family has three layers:\n\n1. **CRT decomposition.** The witness counts solutions over an ambient set that\n   is CRT-separable (S_N ~= S_p x S_q) with a CRT-multiplicative weight. The\n   count factors as a product (C_D(N) = C_D(p) C_D(q)).\n\n2. **Non-polynomial local factor.** Each local piece depends on ONE prime through\n   a non-polynomial function: the Kronecker symbol chi_D(p) (CIRC, BQF), the\n   order gcd(k, p-1) (KROOT), the divisor sum sigma(p) = 1+p (CUSP-INDEX,\n   ZETA-LP, SIGK), the class count (HEISENBERG), the code distance\n   (RS-MIND), the order ord_p(a) (BURAU-ORD). This is why the scalar is not a\n   polynomial in N: it is a function of p and q SEPARATELY.\n\n3. **Sealing (barrier 4).** The closed form requires the factors (circular,\n   barrier 6); the only factor-free route is enumerating the CRT-product domain\n   \u2014 O(N) or O(N^2). Recovery from the scalar is poly-time.\n\n**Classification theorem (supported, not yet proven).** A counting function over\na CRT-separable domain whose local weights are non-polynomial and\nCRT-multiplicative is a free-witness \u2014 factoring-complete, O(1) from the factors,\n\u03a9(N) otherwise.\n\n---\n\n## 2. The trace lemma\n\nEvery recoverable free-witness reduces to one of:\n- the trace s = p + q (CIRC, BQF, HEISENBERG-CLASS, CUSP-INDEX, ZETA-LP),\n- the larger factor max(p,q) (RS-MIND), or\n- a residue/order vector (KROOT, MODPAR-CERT, BURAU-ORD).\n\nOnce s = p+q is known, p and q are the roots of x^2 - s x + N. Once max(p,q) is\nknown, the other factor is N/max. The information content of every witness is\none factor-secret coordinate.\n\n---\n\n## 3. The characters-only boundary lemma\n\nWIGNER-CUBIC showed the boundary of this class: its claimed CRT factorization is\nFALSE because exponential phase functions e^{2 pi i f(y)/N} do NOT decompose\nthrough CRT \u2014 only GROUP CHARACTERS do. The free-witness family works precisely\nbecause its local weights (Kronecker symbols, orders, divisor sums) ARE\ncharacter-like / CRT-multiplicative. Non-character phase functions fall outside\nthe class. This delimits exactly why the six+ settings work and where the\nmechanism cannot extend.\n\n---\n\n## 4. The falsifiable prediction (validated)\n\nThe classification predicts: ANY non-polynomial CRT-multiplicative local count\nyields another free-witness. The divisor-power-sum sigma_k(N) = prod(1 + p_i^k)\nhas local weight (1 + p^k), non-polynomial and CRT-multiplicative. Tested\n(experiment SIGK): sigma_2(N) = (1+p^2)(1+q^2) verified exactly, and\np^2 + q^2 = sigma_2 - 1 - N^2 recovers p,q in every case. This is the FIRST\nfree-witness PREDICTED by the theory rather than found by search \u2014 a successful\nfalsifiable test. Other predicted members: Ramanujan sums (already shown\nfactor-secret in FOU), class numbers, the psi-function (already = CUSP-INDEX).\n\n---\n\n## 5. The sealing, precisely\n\nThe CIRC mod-2^k addendum showed truncated counts still leak factor residues\n(p mod 8) but remain sealed. This is empirical; a proof direction: find N1 == N2\nmod 2^k with C(N1) not congruent C(N2) mod 2^k. Since p,q mod 2^k are\nunderdetermined by N mod 2^k, such a pair would prove no poly formula exists\n(any poly formula depends only on N's residues), upgrading the addendum to a\ntheorem and giving barrier 4 its sharpest form.\n\n---\n\n## 6. Honest statement\n\n**Established (computationally verified):** the classification holds across\nnine+ structurally distinct settings; sigma_k(N) (k>=2) confirmed as a predicted\nmember; recovery is poly-time from any witness; sealing is \u03a9(N) in every case.\n**Not established:** a PROOF that barrier 4's aggregation is necessary (that is\nequivalent to factoring hardness \u2014 a famous open problem). The classification\ncharacterizes the mechanism precisely but does not prove it unconditionally.\n\n---\n\n## 7. Conclusion\n\nThe free-witness family is understood as ONE mechanism: non-polynomial\nCRT-multiplicative local counts over CRT-separable domains. Nine settings,\none information channel (the trace s = p+q, or max(p,q), or a residue/order\nvector), all sealed by \u03a9(N) aggregation. The classification is falsifiable and\nwas validated by a successful prediction (SIGK). Barrier 4 remains the dominant\n\u2014 and now precisely characterized \u2014 obstruction to classical factoring.\n\n---\n\n*Related:* `13_FreeWitness_Family.md` (the family), `15_Round3_Closures.md`\n(BURAU-ORD separation test), `Factoring_Lab_Notebook.md` Parts 39-55.\n",
     "domains": [
       "Novelty"
@@ -798,16 +783,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) \u2014 hint taxonomy closed"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb90b21b",
     "description": "## MULT-TABLE-RANK (exp 394, round-15 #3): the mod-N multiplication table has rank \u230a(N+2\u03c4(N)\u22123)/2\u230b \u2014 universal semiprime law rank(pq)=(N+5)/2, a divisor-count certificate only\n\n**Hypothesis tested.** The N\u00d7N table M[i][j] = (i\u00b7j mod N) has rank defect (N\u22125)/2 + \"type classifier\" (brainstorm). Does the rank/null structure leak any asymmetric factor content?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_multtablerank.py`; verified 79/79 modular rank over two large primes N=2..80 + spot to 495, 19/19 exact sympy rational elimination N=3..39, exact==modular on all overlap).\n\n**1. Exact closed form (machine-verified).** For all N:\n> rank = **\u230a(N + 2\u03c4(N) \u2212 3)/2\u230b**,  defect = **\u2308(N \u2212 2\u03c4(N) + 3)/2\u2309**,  \u03c4(N) = divisor count.\n\nThe brainstorm's type classifier: c(N) = defect \u2212 (N\u22125)/2 = **4 \u2212 \u03c4(N)** (primes c=2, prime squares c=1, prime cubes & products c\u22640).\n\n**2. Universal semiprime law.** \u03c4(pq) = 4 \u27f9 **rank(pq) = (N+5)/2, defect = (N\u22125)/2 for every semiprime** (verified 15,21,35,55,77,91,221,341). The table cannot even distinguish two semiprimes except by size \u2014 blind to p vs q, the gap, smoothness, everything.\n\n**3. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** rank/null space are functions of N alone \u27f9 symmetric in (p,q); the information content is the divisor-count class \u03c4(N) at most \u2014 a type/compositeness certificate, never p or q.\n- **Barrier 4 (free-witness aggregation):** rank = O(N\u00b3) exact/matrix elimination, super-polynomial in log N.\n- **Barrier 6 (circular):** closed form needs \u03c4(N) = the divisor structure = the factorization.\n- **Barrier 8 (known method):** the table (ij mod n) is classical \u2014 M. Bueno (Involve) studies its kernel for prime n (prime rank (p+1)/2 known); the \u03c4(N)-composite closed form is machine-verified here.\n\n**Recorded:** notebook Part 140, assessment v170 (394 experiments), paper 59 `59_MultTableRank_DivisorCountCertificate.md` (NewMathematics/).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1158",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T15:22:34.667993+00:00",
     "title": "Exp 394 MULT-TABLE-RANK: mod-N multiplication table rank = floor((N+2\u03c4(N)\u22123)/2), universal semiprime law rank(pq)=(N+5)/2 \u2014 divisor-count certificate, never a factor (barriers 2/4/6/8)"
   },
@@ -852,6 +838,90 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-12T15:22:34.669093+00:00",
     "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees \u2014 the N-node identity is exact, the interlock is factoring-orthogonal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Experiment 400 \u2014 FROBENIUS-TYPE-NULL (cron loop round-16 #3)\n\n**Hypothesis (null).** The mod-N splitting type of a fixed polynomial f \u2014 the factorization pattern of f mod N \u2014 is the lab's first NON-abelian symmetric N-computable channel. It is genuinely richer than the abelian (Dirichlet) battery closed by QRLEAK (the id-vs-3-cycle fork at (\u0394|p)=+1 is pinned by NO abelian character), yet carries zero factor leverage.\n\n**Result: CONFIRMED null (negative for factoring). Barriers 2/5/6/8.**\n\n### 1. The channel is REAL and non-abelian (positive control)\nS\u2083 cubic x\u00b3\u2212x\u22121 (disc \u221223), over 3000 primes:\n- types [1,1,1] : [1,2] : [3] = 0.169 : 0.507 : 0.324 (Chebotarev 1/6 : 1/2 : 1/3)\n- **fork at (\u221223|p)=+1: [1,1,1] = 0.342 vs [3] = 0.658 (Cheb 1/3 : 2/3)** \u2014 identity vs 3-cycle, both EVEN (A\u2083), pinned by no Dirichlet character\n- at (\u221223|p)=\u22121: [1,2] forced 1.000 (transposition = odd)\nS\u2084 quartic x\u2074\u2212x\u22121 (disc \u2212283) confirms: A\u2084 fork [1,1,1,1]/[2,2]/[1,3] = 0.069/0.247/0.684 (Cheb 1/12 : 3/12 : 8/12).\n\n### 2. Yet factor-orthogonal (null)\nThe mod-N type is the UNTAGGED union of the mod-p and mod-q types (S\u2083 six patterns AA\u2026CC). All 16 (bit-length, (\u0394|N))-grouped F-tests of type\u2192gap and type\u2192trace at chance:\n- S\u2083: gap F \u2264 1.59 (p \u2265 0.224), trace F \u2264 1.61 (p \u2265 0.218)\n- S\u2084: gap F \u2264 2.03 (p \u2265 0.064), trace F \u2264 1.89 (p \u2265 0.090)\n\n### 3. Privacy\nH(union) = 2.295 bits of structure, but the p/q labeling is lost on 892/1500 = 59% of semiprimes \u2014 symmetric (barrier 2).\n\n### 4. Computationally sealed\nsympy factor_list(f, modulus=N) fails 200/200; the classical reduction \"factoring a polynomial mod composite n is as hard as factoring n\" holds. The exact type is N-determined but not poly-computable (barriers 4/6). All Chebotarev (1922), never a factoring move (barrier 8).\n\n**Verdict:** The non-abelian richness of N is the richness of N's own prime-splitting structure, not a window onto p and q. Round-16 3/3 done.\n\nPaper: ResearchOutput/NewMathematics/65_FrobeniusTypeNull_NonAbelianChannelSealed.md\nNotebook: Part 146. Assessment v176 / 400 experiments. Script: /tmp/exp_frobeniustype.py.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1163",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T16:19:41.780222+00:00",
+    "title": "Exp 400 FROBENIUS-TYPE-NULL (round-16 #3): the splitting type of N in a non-abelian extension is symmetric, factor-orthogonal, and computationally sealed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**PLUSONE-SMOOTH-NULL** \u2014 factoring research lab round-16 #2 (paper 64, assessment v175, 399 experiments). CONFIRMED null.\n\nThe Williams p+1 / Lucas-sequence weakness \u2014 the sibling of the p\u22121/ECM weakness (closed by SMOOTH-SELFHINT-DENSITY, SEQSMOOTH-NULL) \u2014 is invisible from N in three independent senses, plus a new structural finding.\n\n1. **Positive control (classes genuinely differ):** 40 matched pairs (bit-lengths 18/21, only the smaller factor's p+1 divisibility differs); the p+1 method (M = lcm(1..100), bases 3/5/7) factors PLUSONE (p+1 | M) 24/40 vs GENERAL (p\u00b11, q\u00b11 general) 0/40. P=2 is the degenerate base (D=0).\n2. **Residue-invisible:** I(N mod \u2113; \u2113|p+1) = 0.0005/0.0002/0.0014/0.0017/0.0022 at \u2113=3/5/7/11/13 (at or below null), while the symmetric control I(N mod \u2113; \u2113|p+1 OR \u2113|q+1) = 0.2996/0.0327/0.0158/0.0070/0.0052 is visible \u2014 the **+1 divisibility dichotomy** (mirror of the p\u22121 side's 0.313 at \u2113=3): N cannot tell which factor is \u2261 \u22121 mod \u2113.\n3. **Lucas-sequence-invisible:** 21 windowed V-sequence features (m=256, bases 3/5/7) separate the classes at chance \u2014 max std-diff 0.241 below the null mean 0.381, p = 0.898.\n4. **NEW \u2014 discriminant gating:** per-base p+1 success EQUALS the (D|p) = \u22121 rate exactly (P=3: 11/40=11/40, P=5: 17/40=17/40, P=7: 11/40=11/40; 24/24 successes have (D|p)=\u22121; D\u2083=5 and D\u2087=45=5\u00b73\u00b2 share a square class \u2192 P=3,7 succeed on the same 11 instances), yet the N-computable product (D|N)=(D|p)(D|q) predicts nothing ((D|N)=\u22121 in 11/24 \u2248 1/2 of successes) \u2014 **the character split is uncomputable from N**, so the +1 weakness is strictly more hidden than the p\u22121 one.\n\n**Verdict:** barriers 2/4/8. The weakness is real but exploitable only by running the classical 1982 method (barrier 8), never by inspecting N (barriers 2/4). **The ECM-family (p\u00b11) self-hint program is fully closed.**\n\nScript: /tmp/exp_plusone_smoothnull.py. Paper: NewMathematics/64_PlusOneSmoothNull_DiscriminantGatedWeakness.md. Round-16 #1\u20132 done.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1164",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T16:19:41.780746+00:00",
+    "title": "Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-invisible, Lucas-sequence-invisible, and discriminant-gated"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Experiment 398: CFPERIOD-NULL (cron loop round-16 #1) \u2014 CONFIRMED NULL\n\n**Hypothesis.** TRACE-EXHAUSTION proved the barrier-2 reach of the *polynomial* symmetric family is exactly {(N,s)}. The fundamental theorem of symmetric polynomials bounds only polynomials \u2014 so the canonical non-polynomial symmetric N-computable object, the continued-fraction period of sqrt(N) (fundamental-unit/regulator side of Q(sqrt(N)), the real-quadratic side of the forms program; RANDOM-BQF was the imaginary side), is a genuinely open channel. Claim: zero factoring leverage.\n\n**Result.** Structural content is REAL but symmetric + congruence-level: known periods 9/9; the fundamental unit from the (l-1)-th convergent solves x^2 - N y^2 = +-1; the negative-Pell dichotomy holds (l odd <=> x^2-Ny^2=-1 soluble; (3,3) and (1,3) semiprimes -> l even 40/40 each, (1,1) splits, l odd 26/40 = neg-Pell 26/40) \u2014 but pins only p == q == 1 mod 4, a Dirichlet no-pinning congruence bit, never a factor.\n\n**De-confounding required.** A raw pass showed corr(max partial quotient, s) \u2248 +0.99 in every bucket \u2014 but maxq = 2a0 = 2\u230asqrt(N)\u230b on 330/330 instances, a pure isqrt N-size coordinate (corr(a0, s) = +1.000). After residualizing every period statistic on a0 = isqrt(N): 120 partial-correlation permutation tests within (bit-length, N mod 4) groups, worst p = 0.024 vs Bonferroni 0.0004 -> NULL. No period statistic (l, parity, non-terminal max-q/sum-q, distinct, regulator) depends on s or q-p once the N-size coordinate is removed.\n\n**Leverage zero.** Period cost ~0.4\u00b7sqrt(N) (median l/sqrt(N) = 0.406), super-poly in log N \u2014 not even a poly(log N) witness. The fundamental unit is the most factor-adjacent cheap object: on even periods x^2 \u2261 1 mod N with x a split sqrt of 1 (gcd(x\u00b11,N) finds a factor 206/269) \u2014 but only at full O(l) \u2248 O(sqrt(N)) cost = the classical Pell/CFRAC-SQUFOF route at a worse exponent than SQUFOF's O(N^{1/4}), a known method. Cheap-l window (l \u2264 40) is the measure-zero N = m^2+c family; m = sqrt(N-c) divides no factor (65, 145, 51, 291).\n\n**Verdict.** The non-polynomial symmetric channel is as sealed as the polynomial one \u2014 TRACE-EXHAUSTION's reach extends from polynomials to all N-computable symmetric structure. Barriers 2/5/6/8.\n\nScript: /tmp/exp_cfperiodnull.py | Paper 63 | Assessment v174/398 experiments",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1165",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T16:19:41.781151+00:00",
+    "title": "Experiment 398: CFPERIOD-NULL \u2014 the continued-fraction period of sqrt(N) is a non-polynomial symmetric channel with zero factoring leverage"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Factoring research loop \u2014 round-15 #6, final (experiment 397, assessment v173, paper 62)\n\n**Hypothesis.** Does the p\u22121 smoothness class (ECM-weak smaller factor) leak into the statistics of a short window of the mod-exponential sequence {a^x mod N}?\n\n**Result: CONFIRMED null \u2014 the mod-exp sequence is smoothness-blind.**\n\n1. **Controlled contrast (real):** 36 matched pairs, p,q bit-lengths matched (18/20), only p\u22121 smoothness differs (SMOOTH = smooth-p\u00b7general-q, GENERAL = general-p\u00b7general-q). The Pollard p\u22121 method (B=100) factors SMOOTH **35/36** vs GENERAL **0/36** \u2014 the ECM-weakness is genuine and the classes truly differ.\n2. **Sequence stats (null):** 42 windowed features (m=256 \u226a B) over bases {2,3,5}, on both s_x = a^x mod N and the floor twin (distinct count, self-collision gap, top-bit balance, adjacent-diff, autocorr, spectral flatness, max run) separate NOTHING: observed max std-diff **0.473** at the permutation null (mean 0.495, 95th pct 0.734, **p = 0.502**); 5-fold logistic **AUC = 0.500** (exactly chance).\n3. **Mechanism:** the values s_x carry no residue of ord_p(a) | p\u22121 \u2014 the walk in the subgroup is pseudorandom regardless of group-order smoothness; exploiting the weakness requires computing a^M mod N for M = lcm(1..B) (the p\u22121 method itself), unreachable by any finite window.\n\n**Barriers 2/4/8:** N-computable hence symmetric, and class-independent incompressible (barrier 2/4); the only computation that sees the weakness is the p\u22121 method, a known method (barrier 8).\n\n**Verdict:** the p\u22121/ECM weakness is real but exploitable only by running the p\u22121 method \u2014 never by inspecting the sequence. Closes the sequence-level face of the self-hint program. **Round-15 COMPLETE (6/6).**\n\nScript: /tmp/exp_seqsmoothnull.py. Notebook Part 143. Assessment v173 (397 experiments). Paper 62.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1166",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T16:19:41.781546+00:00",
+    "title": "Experiment 397: SEQSMOOTH-NULL \u2014 mod-exp sequence stats are smoothness-blind (AUC 0.500); p-1 weakness only via running the p-1 method"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Factoring research loop \u2014 round-15 #5 (experiment 396, assessment v172, paper 61)\n\n**Hypothesis.** The round-15 aggregates \u2014 gcd-moments M_k, unit energy E(U), mult-table rank, zero-divisor-graph part sizes \u2014 are each symmetric in (p,q); by the fundamental theorem of symmetric polynomials each is a function of (N, s) alone. Then the JOINT family has reach exactly {(N, s)}.\n\n**Result: CONFIRMED negative for factoring \u2014 the trace is the joint ceiling, the family is redundant.**\n\n1. **Joint closed forms verified 86/86 (+ E(U) 3/3 to N=10403):** every aggregate equals an explicit F(N,s) \u2014 M_k = N^k + N\u00b7P_{k\u22121} \u2212 P_k + N \u2212 s + 1, E\u00b7N = \u03c3\u2082(1+\u03c3\u2081\u00b3\u22123\u03c3\u2081\u03c3\u2082+\u03c3\u2082\u00b3), rank = (N+5)/2, graph parts {p\u22121,q\u22121}.\n2. **M_1 recovers s exactly (19/19, 60/60 at scale):** M_1 = 4N\u22122s+1 is linear \u2192 s = (4N+1\u2212M_1)/2.\n3. **(N,s) \u2192 {p,q} (19/19, 60/60):** the roots of x\u00b2\u2212sx+N are exactly the unordered factors.\n4. **Injective yet REDUNDANT:** joint vector distinguishes every pair, but 114/114 entries are predictable from (N,s) alone \u2014 so (N, M_1) already reaches the ENTIRE barrier-2 ceiling; M_2, M_3, E, rank, graph add zero reach.\n5. **Asymmetric labels unreachable (114/114):** \u03c6, \u03c3\u2081, p\u00b2+q\u00b2, p\u00b3+q\u00b3, \u03c4 all = F(N,s); (N,s) never labels which root is p (both labelings identical to every aggregate).\n6. **Cost-sealed:** exact M_1 = O(N) gcd-sum (linear wall time); s does not factor (given s you still solve a quadratic).\n\n**Barriers 2/4/8:** the reach theorem is the aggregate-level barrier-2 statement (any symmetric function of (p,q) = F(N,s)); the reach is \u03a9(N)-sealed (barrier 4); the symmetric-function theorem is classical (barrier 8).\n\n**Verdict:** the round-15 aggregate family is fully mapped \u2014 trace-carrying, symmetric, cost-sealed \u2014 and adds no factoring leverage. Round-15 #5 done (5/6).\n\nScript: /tmp/exp_traceexhaustion.py. Notebook Part 142. Assessment v172 (396 experiments). Paper 61.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1167",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T16:19:41.781944+00:00",
+    "title": "Experiment 396: TRACE-EXHAUSTION \u2014 barrier-2 reach of the round-15 aggregates is exactly {(N,s)}; (N, M_1) reaches the whole ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Factoring research loop \u2014 round-15 #4 (experiment 395, assessment v171, paper 60)\n\n**Hypothesis (brainstorm).** The zero-divisor graph \u0393(Z/NZ) \u2014 vertices = nonzero x with gcd(x,N) > 1, edge x~y iff xy \u2261 0 mod N \u2014 is exactly K_{p\u22121,q\u22121} for a semiprime. Does its bipartition leak asymmetric factor content?\n\n**Result: CONFIRMED exact structure, negative for factoring.**\n\n1. **\u0393(Z/NZ) = K_{p\u22121,q\u22121} exactly, 10/10 semiprimes.** |V| = p+q\u22122, |E| = (p\u22121)(q\u22121); the bipartition is the q\u22121 multiples of p \u222a the p\u22121 multiples of q; every cross pair is an edge, no within-part pair is; degree distribution {p\u22121: q\u22121 times, q\u22121: p\u22121 times}.\n2. **Degree identity:** graph-degree(x) = gcd(x,N) \u2212 1 on 62/62 zero-divisors (squarefree N). The degree sequence over the zero-divisors = the multiset {p,\u2026,p,q,\u2026,q} = the two factors written twice.\n3. **Classification (proper bipartiteness test):** complete-bipartite exactly for products of two primes (even 2p \u2192 star K_{p\u22121,1}; small exceptions 8\u2192K_{1,2}, 9\u2192K_2); complete graph K_{p\u22121} for prime squares; neither for p\u00b3/p\u2074 or \u22653-prime products. Matches the Anderson\u2013Livingston zero-divisor-graph classification (barrier 8).\n\n**Why it cannot factor \u2014 barriers 2/4/8:**\n- The bipartition IS the factorization (which residues are \u2261 0 mod p vs \u2261 0 mod q).\n- Reconstruction from N = finding the zero-divisors = \u03a9(N) gcd-scan; its first hit is the smallest prime factor (19 gcds for 703, 29 for 899) \u2014 trial division in disguise.\n- Everything is N-computable hence symmetric in (p,q): swapping the factors merely swaps the two parts of K_{p\u22121,q\u22121}.\n\n**Verdict:** the zero-divisor graph is a complete, exact, classical description of the zero-divisors whose asymmetric content coincides with the answer. No route to the graph avoids already knowing the factorization. Reconfirms the trace/free-witness ceiling.\n\nScript: /tmp/exp_zerodivisorgraph.py. Notebook Part 141. Assessment v171 (395 experiments). Paper 60. Round-15 4/6 done.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1168",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T16:19:41.782329+00:00",
+    "title": "Experiment 395: ZERO-DIVISOR-GRAPH \u2014 \u0393(Z/pq) = K_{p\u22121,q\u22121} exactly; bipartition IS the factorization"
   },
   {
     "consumed_by_exp_id": "",
@@ -2843,6 +2913,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T15:47:33.250380+00:00",
     "title": "Deepening: The repaired repeated-summand rule is now completely classified: its unique traj"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 64ac4ffd (Q=0.780), which proved 56 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** Three proven theorems classify why broad classes of structural\nfactoring approaches are impossible. All three are now machine-checked in Lean\n(the polynomial barrier at `Catalog/NumberTheory/PolynomialBarrier.lean`).\n\n**Theorem 1 (polynomial barrier / LLL).** For f \u2208 Z[x] and N = pq:\np ",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_64ac4ffd_64231fa7",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "64ac4ffd",
+    "status": "available",
+    "timestamp": "2026-08-12T16:18:37.975803+00:00",
+    "title": "Deepening: Three Structural Barrier Theorems for Integer Factorization"
   },
   {
     "consumed_by_exp_id": "",
@@ -12700,6 +12784,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-12T00:21:12.667498+00:00",
     "title": "Three research cycles have been run on this thread."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: bold, testable conjectures from the barrier programme\n\nAll results referenced below are fully proved (0 sorries) in\n`Catalog/Pythagorean/FactoringBarriers/`. The conjectures here are the open ends the\nproofs exposed.\n\n---\n\n## Conjecture 1 (Size\u2013yield law for arithmetic invariants)\n\n*For every integer polynomial `f` and every semiprime `N = p q` split by the gcd\nwitness, `min p q \u2264 |f(0)|` \u2014 and this generalizes: for every invariant computed by an\narithmetic circuit of size `s` over `\u2124` with input `N`, any prime revealed by the gcd\nwitness is at most `2^{2^{O(s)}}`, i.e. bounded by a function of the circuit only.*\n\nThe key insight is that `splits_imp_small_prime_factor` bounds the yield of an\ninvariant by the *size of its value at `0`*, and the value at `0` of a circuit is\ncomputable from the circuit alone \u2014 so the entire \"reveal budget\" is an intrinsic\nproperty of the program, never of the input. **Why now?** The polynomial case is\nalready a theorem here (`splits_imp_small_prime_factor`,\n`card_revealedPrimes_le_log`), and the rational/denominator case is proved too\n(`scaled_barrier`); the circuit case needs only an evaluation-at-zero argument plus a\nbound on iterated squaring, both within reach of current Mathlib.\n\n**Falsifiable test.** Exhibit a small arithmetic circuit whose gcd witness splits a\nsemiprime with both primes larger than the value of the circuit at input `0`.\n\n---\n\n## Conjecture 2 (Adaptivity threshold)\n\n*Barrier I survives any adaptivity of bounded granularity: for every fixed modulus `M`\nand every family `F : ZMod M \u2192 \u2124[X]`, some semiprime defeats the whole family \u2014 but it\nfails as soon as the family is indexed by `log N` bits, i.e. there exists a family\n`(f_k)` with `deg f_k, height f_k \u2264 2^k` such that `f_{\u2308log N\u2309}` splits every semiprime\n`N` with a `2^k`-smooth `p \u2212 1`.*\n\nThe key insight is that finiteness of the index set, not its structure, is what makes\nthe barrier work (`no_universal_family_witness` is stated for an arbitrary `Fintype`),\nso the sharp dividing line is between families of bounded and unbounded description\nlength. **Why now?** The bounded half is a theorem (`no_residue_adaptive_witness`), and\nthe unbounded half is exactly the `p \u2212 1` method, whose correctness is also a theorem\nhere (`pollard_splits`); what remains is to prove the smoothness density estimate.\n\n**Falsifiable test.** Find a single polynomial family of *bounded* height that splits\nall semiprimes below a bound where the two failure modes of \u00a74 of\n`ComputationalEvidence.md` both occur.\n\n---\n\n## Conjecture 3 (Antisymmetry is the only obstruction, quantitatively)\n\n*Define the antisymmetric defect of a factor-recovery scheme `D` as the largest `t`\nwith `D(p,q) \u2260 D(q,p)` on `t` distinct prime pairs below `x`. Then any scheme with\npositive defect is not a function of `N` (proved), and conversely every symmetric `D`\nis realized by a function of `N` whose Kolmogorov complexity is within `O(log x)` of\nthat of the factoring oracle.*\n\nThe key insight is the dichotomy `computableFromProduct_iff_symmetric`: symmetry is\n*exactly* the obstruction, so all remaining hardness of factoring must be concentrated\nin the symmetric part \u2014 the barrier is a well-definedness statement, not a complexity\nstatement, and its complexity refinement is the real question. **Why now?** The\ndichotomy and its sharpness (`min_computable_from_product`) are proved, isolating a\nclean, purely complexity-theoretic residue.\n\n**Falsifiable test.** Produce a symmetric `D` (e.g. `min p q`) together with a\ndescription strictly shorter than any factoring routine \u2014 this would refute the\ncomplexity half.\n\n---\n\n## Conjecture 4 (Analytic devices cost their zeros)\n\n*Let `F` be entire with `F(p) = F(q) = 0` for the factors of `N`. Then any\nrepresentation of `F` by `k` Taylor coefficients at a rational base point, truncated\nto `b` bits, satisfies `k \u00b7 b \u2265 log\u2082 N \u2212 O(log log N)`: the device cannot be smaller\nthan the secret.*\n\nThe key insight is `entire_factor_of_two_zeros`: the factor polynomial\n`(z \u2212 p)(z \u2212 q)` divides `F` in the ring of entire functions, so the factorization is\nrecoverable from `F` \u2014 and the integral case already yields the quantitative form\n`device_size_lower_bound` (`p \u2264 |f(0)|`). **Why now?** The rigidity is proved, the\nzero set is proved Lebesgue-null (`zeroSet_volume_zero`, ruling out search), and only\nthe coefficient-truncation estimate is missing.\n\n**Falsifiable test.** Construct an entire `F_N`, described by `o(log N)` bits, whose\nzero set is `{p, q}`.\n\n---\n\n## Conjecture 5 (Independence of the three barriers is strict)\n\n*The three barriers are pairwise incomparable: for each ordered pair there is a method\nclass defeated by one and untouched by the other. One direction is a theorem here\n(`polyWitness_ne_min`: the symmetric quantity `min p q` passes Barrier II yet no\npolynomial witness computes it); the conjecture is that all six directions hold.*\n\nThe key insight is that Barrier I is about *arithmetic size*, Barrier II about *group\ninvariance*, and Barrier III about *analytic rigidity*, so separating examples should\ncome from methods that are large-but-symmetric, small-but-antisymmetric, and\nanalytic-but-non-arithmetic respectively. **Why now?** The three barriers are stated in\none common vocabulary (`Splits`, `ComputableFromProduct`, zero sets of entire\nfunctions) in `Unification.lean`, which makes the separations formalizable statements\nrather than slogans.\n\n**Falsifiable test.** Show that Barrier III implies Barrier I on the class of integral\nanalytic devices \u2014 the bridge `device_size_lower_bound` is suggestive, and if it can be\nupgraded to an implication the independence claim fails.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1162",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "64ac4ffd",
+    "status": "available",
+    "timestamp": "2026-08-12T16:18:30.616700+00:00",
+    "title": "All results referenced below are fully proved (0 sorries) in"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6077433a",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe Lean development consists of three files, all of which compile with no `sorry` and\ndepend only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n* `Geomet",
-      "quality_score": 0.78776,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-05T06:51:05",
-      "title": "ArXiv paper: Magnitude homology of tope graphs"
-    },
-    {
       "cycle_id": "6ffc84c2",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinato",
@@ -499,19 +489,19 @@
       "theorem_count": 42,
       "timestamp": "2026-08-12T15:22:01",
       "title": "Jacobi Gauss-Sum Phase Collapse"
+    },
+    {
+      "cycle_id": "64ac4ffd",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: bold, testable conjectures from the barrier programme\n\nAll results referenced below are fully proved (0 sorries) in\n`Catalog/Pythagorean/FactoringBarriers/`. The conjectures here",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-12T16:18:37",
+      "title": "Three Structural Barrier Theorems for Integer Factorization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dd55976d",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\n1. **Softmax attention naturality under equivariant logits.** For every finite group `G`, every pair of finite-dimensional real `G`-representations `V,W`, and every `G`-equivarian",
-      "quality_score": 0.7913999999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-08-02T09:30:03",
-      "title": "Category-Theoretic Neural Architectures"
-    },
     {
       "cycle_id": "be8c4b71",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 42,
       "timestamp": "2026-08-12T15:22:01",
       "title": "Jacobi Gauss-Sum Phase Collapse"
+    },
+    {
+      "cycle_id": "64ac4ffd",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: bold, testable conjectures from the barrier programme\n\nAll results referenced below are fully proved (0 sorries) in\n`Catalog/Pythagorean/FactoringBarriers/`. The conjectures here",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-12T16:18:37",
+      "title": "Three Structural Barrier Theorems for Integer Factorization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "78f0a7c3",
-      "domain": "NumberTheory",
-      "name": "wdist_ge_log",
-      "quality": 0.740175
-    },
-    {
-      "cycle_id": "78f0a7c3",
-      "domain": "NumberTheory",
-      "name": "wdist_le_log",
-      "quality": 0.740175
-    },
-    {
-      "cycle_id": "78f0a7c3",
-      "domain": "NumberTheory",
-      "name": "wordA_length",
-      "quality": 0.740175
-    },
     {
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "is",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "64ac4ffd",
+      "domain": "Pythagorean",
+      "name": "entire_dslope",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "64ac4ffd",
+      "domain": "Pythagorean",
+      "name": "entire_factor_of_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "64ac4ffd",
+      "domain": "Pythagorean",
+      "name": "entire_factor_of_two_zeros",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-12T15:22:01",
+  "last_updated": "2026-08-12T16:18:37",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "d9d67aec",
-        "quality": 0.686,
-        "theorems": 143,
-        "title": "ArXiv paper: Asymptotic Brill-Noether Existence at the Half-Canonical Degree: En"
-      },
-      {
         "cycle_id": "31b96673",
         "quality": 0.686,
         "theorems": 29,
@@ -3885,6 +3879,12 @@
         "quality": 0.6288458474603094,
         "theorems": 80,
         "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincar"
+      },
+      {
+        "cycle_id": "64ac4ffd",
+        "quality": 0.78,
+        "theorems": 56,
+        "title": "Three Structural Barrier Theorems for Integer Factorization"
       }
     ],
     "Shared": [
