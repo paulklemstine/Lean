@@ -21,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "95399954",
+    "consumed_by_exp_id": "4baf2d0d",
     "description": "**Summary.** The full synthesis of 284 computational experiments into eight\nstructural barriers that explain the uniform failure of all tested classical\nfactoring hypotheses.\n\n**Three proven theorems:** polynomial barrier (LLL), symmetry barrier (MMM),\nholomorphic rigidity barrier (HRB).\n\n**Five computational patterns:** free-witness aggregation, structural\northogonality (core — any computable function of N alone is N-only),\ncomputational circularity (TTT), \"rational escape is illusory\" (WWW),\nknown-method-in-disguise (ZZZ).\n\n**The near-equal-N test.** Group semiprimes by size band (N//40); if an\ninvariant varies across the band but correlates ≈0 with p, q after controlling\nfor N, it is N-only. Applied to 284 invariants across 60+ paradigms: every\ninvariant computable from N alone is N-only. The barriers explain why.\n\n**Conclusion.** No classical algorithm beats GNFS complexity L_N[1/3, 1.923].\nThe only poly(log N) factoring known is Shor's (quantum).\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "6c9279af",
+    "consumed_by_exp_id": "41f25a6f",
     "description": "**Summary.** Singular moduli factoring WORKS but its scaling is provably\nexponential.\n\n**The method (confirmed).** Try gcd(H_D(j_0), N) for discriminants D and\nevaluation points j_0, where H_D is the Hilbert class polynomial. All 8 test\nsemiprimes (up to N = 5183) factored, using 1-42 evaluations.\n\n**Theorem (√N scaling, proven).** For balanced p ≈ q ≈ √N and class number h,\nexpected evaluations = √N/(4h).\nProof: H_D mod p has h roots in F_p; P(random j_0 is a root mod exactly one of\np, q) ≈ h/p + h/q ≈ 4h/√N; expected trials √N/(4h). ∎\nVerified: evals/√N ≈ 0.3-0.8 (constant across two orders of magnitude).\n\n**The circularity bottleneck.** The structured set (roots of H_D mod p) is\ndefined in terms of the unknown factor p. Searching it by brute force costs √N\n(barrier 6). This places singular moduli factoring in the √N family alongside\nPollard rho and Pollard p-1.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -682,6 +682,215 @@
     "status": "in_progress",
     "timestamp": "2026-08-12T04:00:21.975064+00:00",
     "title": "The Moonshot Sweep: Five-Angle arXiv Mining, Judged and Tested"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "7e062206",
+    "description": "**Paper 48 (NewMathematics) — Experiment 383, assessment v159. Frontier ii (quantum channel / classical side-information).**\n\n**Hypothesis (round-14 #5):** Can classical conditioning on poly-computable statistics of N shrink Shor's quantum register?\n\n**Experiment (10 000 semiprimes, N in [2^23, 2^28], base a=2; permutation-null mutual information over a battery of N-computable statistics — N mod m, Jacobi symbols, possible-trace sets, digit predicates; targets log2(r) binned and r mod ℓ for ℓ=2,3,5,7):**\n\n1. **Magnitude channel EMPTY:** I(combined fingerprint; log2 r) excess ≈ 0; best R² of log2 r on N mod m = 0.017. The register-sizing quantity is orthogonal to every poly-computable statistic (barrier 5).\n2. **Divisibility channel real but minuscule:** I(N mod ℓ; [ℓ|r]) = 0.082 (ℓ=3), 0.018 (ℓ=5), 0.012 (ℓ=7), decaying ~1/ℓ². **TOTAL capacity over all primes ≤ 500 = 0.173 bits** vs H(r) ≥ 13.3 bits. H(r|F(N)) ≈ H(r) − 0.2.\n3. **Mechanism — divisibility lift:** ℓ|r ⟹ ℓ|p−1 or ℓ|q−1; N mod ℓ constrains (p,q) mod ℓ. N's residues leak only the small-prime divisibility PROFILE of the order, never its value (barriers 2, 6).\n4. **Chebotarev content:** N≡2 mod 3 lifts P(3|r) to 0.76 vs 0.43 for N≡1 (consistent a=2,3,5), measuring P(3|ord_p(a) | p≡1 mod 3) ≈ 0.75 — the cube-residue density.\n\n**Verdict:** Strong \"I≈0\" form REFUTED (the divisibility channel exists); refined claim CONFIRMED and QUANTIFIED. No factor-revealing content; no register shrink. Combined with QUBIT-TRADE, the quantum channel is doubly sealed — neither truncation nor classical conditioning reduces its ~2·log2(N)-qubit register.\n\nFull paper: ResearchOutput/NewMathematics/48_CondRank_ClassicalConditioning.md",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1140",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.745094+00:00",
+    "title": "COND-RANK: classical conditioning capacity on the order is ~0.2 bits — quantum register cannot be shrunk by conditioning"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "77525b6c",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/47_QubitTrade_RegisterThreshold.md` (factor3)\n**Experiment:** QUBIT-TRADE (#382), assessment v158.\n\n## Finding\nCan Shor's order-finding register be truncated? Measuring only the top t bits of\nthe QFT outcome, is r = ord_N(a) recoverable with more samples? Verified (50\nsemiprimes, r ∈ [2^10, 2^22], honest CF post-processing):\n1. **t_min ≈ 2·log₂(r) exactly** (log₂r=14→27 vs 2·log₂r=28; 16→32 vs 32; 18→35\n   vs 36; 20→39 vs 40) — the CF must resolve k/r, needing error < 1/(2r²), i.e.\n   t > 2·log₂(r). The agent's predicted log r + O(log log r) is refuted.\n2. **Below t_min: classical collapse** — even 10 samples fail (t ≤ 26, 2·log₂r≈33).\n3. **Above t_min: qubit↔sample fungibility** — samples compensate gcd(k,r)>1.\n\n## Why it matters\nSince r ~ N for random bases, t_min ≈ 2·log₂(N) ≈ the full ℓ = 2⌈log₂N⌉ register.\n**Shor's register size is forced — the quantum channel cannot be shrunk by\ntruncation.** Reinforces DEQUANT: the quantum exception is irreducible at full\nregister size.\n\n## Verdict\nResource bound (frontier ii), no barrier bypass. Classical uniform hint-free\nsurface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1141",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.745541+00:00",
+    "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "f7df9e47",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/46_SymmetryBreaking_Cost.md` (factor3)\n**Experiment:** ISOLATION-COST (#381), assessment v157.\n\n## Finding\nThe residues are INFORMATION-sufficient but COMPUTATION-sealed. Verified:\n1. **Oracle isolation = log₂(π(√N)) exactly** (ratio 0.96–1.03 across 15–33 bits,\n   31–7894 candidates): with an oracle revealing [(a_i|p₀)], p₀ is isolated among\n   ALL primes < √N in poly(log N) queries; divisibility then factors N. The\n   residue vector carries ~½log₂N bits of factor information.\n2. **Zero pruning from N alone** (QRLEAK/COMPENSATING-PARTNER): the symmetric\n   battery [(a_i|N)] leaves every candidate surviving.\n3. The gap = barrier 4's aggregation = the symmetry-breaking cost.\n\n## The measurement\n| resource | cost to isolate p₀ |\n|----------|-------------------|\n| residue oracle | log₂(π(√N)) |\n| N alone (symmetric) | ∞ (zero pruning) |\n| free-witness aggregation | Ω(N) (barrier 4) |\n| quantum (Shor) | poly(log N) — asymmetric order-readout |\n\nBarrier 4's aggregation is the price of the asymmetry. Shor's QFT is a different\npayment: an asymmetric readout in superposition. Both are symmetry-breaking\nresources.\n\n## Verdict\nREFUTED as a tool (barrier 2/4/6), but unifies frontiers (i) and (ii): the\nquantum channel is a symmetry-breaking resource whose value is the aggregation it\nbypasses. Classical uniform hint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1142",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.745913+00:00",
+    "title": "The Symmetry-Breaking Cost of Factoring, Measured"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "5603b57a",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/45_DialThreshold_NoAmplification.md` (factor3)\n**Experiment:** DIAL-THRESHOLD (#380), assessment v156.\n\n## Finding\nCan the free-witness residue dials (Kronecker (D_i|p) over fundamental\ndiscriminants) amplify a Coppersmith partial-key hint (p mod m, m = N^{1/4})?\nVerified with the precise condition **M* | m** (dial conductor-lcm divides the\nhint modulus):\n1. **Regime 1 (M* | m): zero pinning.** N=808M (m=168, M*=12,84,168 all divide\n   m): the vector is computable from the hint but CONSTANT on the candidate set —\n   dials add nothing beyond the hint.\n2. **Regime 2 (M* ∤ m): not computable.** N=340M (m=135, 12 ∤ 135): even K=1\n   needs p mod 12, which the hint p mod 135 doesn't determine. Pinning dials need\n   p mod M* > m — unavailable from the hint.\n\n## Why it collapses (barrier 2 + 4 + 6)\nInformation-sufficient dials (K ≈ Θ(log N), M* ≫ N^{1/4}) are computationally\ninaccessible (asymmetric residues of p — barrier 2; sealed behind Ω(N)-aggregated\nC_D(N) — barrier 4; need p mod M* beyond the hint — barrier 6). Computable dials\n(M* | m) are constant on candidates — information-useless.\n\n## Verdict\nREFUTED. The partial-key hint must be genuinely external — self-generated residue\namplification is impossible. Settles the frontier-iii combination question.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1143",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.746301+00:00",
+    "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "65ba7604",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/44_NoPinning_Lemma.md` (factor3)\n**Experiment:** COMPENSATING-PARTNER (#379), assessment v155.\n\n## Finding\nGeneralize QRLEAK's Dirichlet no-pruning to the FULL class of poly(log N)-\ncomputable predicates: N mod m (m ≤ B), Jacobi symbols (a|N), gcd(f(N), N).\nVerified (36/36):\n1. For any target N₀ and candidate prime p′ (coprime to L = lcm(1..B)), a\n   compensating prime q′ ≡ N₀·p′⁻¹ mod L exists (Dirichlet) and the ENTIRE\n   battery agrees on N′=p′q′ — residues AND Jacobi symbols.\n2. **The pinned set = primes dividing L = O(poly(log N))** — 3.4% at B=12,\n   vanishing as B grows (~√N/log N candidates).\n3. gcd(N+k, N) = gcd(k, N) — polynomial gcds are functions of N (barrier 1),\n   adding no pinning power.\n\n## The lemma\n**No poly(log N)-computable congruence battery can pin an individual factor.**\nThis is the unconditional half of the barrier-4 proof program: \"poly-computable\n⇒ no-pinning ⇒ cannot factor\" is verified exhaustively. The open half is the\nconverse: \"factor-revealing ⇒ Ω(N)-sealed.\"\n\n## Why it collapses (barrier 2 + 5)\nPoly-computable predicates are symmetric functions of (p,q); symmetric\npredicates leave every candidate consistent. Only the asymmetric sealed\nfree-witness coordinates pin — and they are barrier 4's territory.\n\n## Verdict\nREFUTED as a factoring tool, but a theorem-shaped frontier-i result: the\nclass-wide no-pinning lemma. Classical uniform hint-free surface remains\nexhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1144",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.746668+00:00",
+    "title": "The Class-Wide No-Pinning Lemma, Verified"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "59be0bdd",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/43_FreeWitness_TraceThreshold.md` (factor3)\n**Experiment:** QUERYWIT (#378), assessment v154.\n\n## Finding\nQuantify barrier 4's boundary: how much of the free witness sigma_2(N) = (1+p²)(1+q²)\nis NEEDED to factor? Verified:\n1. **Full sigma_2 factors N** (s=(p+q)², t=√s, roots of x²−tx+N) — 24/24.\n2. **The partial threshold is Θ(p+q) — the TRACE:** given only sigma_2 mod m, the\n   minimum m for unique factorization is m*/(p+q) = 5.00 EXACTLY across bit\n   lengths 14–26 (window-dependent constant, trace order). Candidates t′=(p+q)+jm\n   generically don't factor (disc = (p−q)²+2jm(p+q)+j²m² non-square), isolating t.\n3. **Information concentration:** the factor-info sits in the low ~¼ of sigma_2's\n   bits (m* ≈ p+q ≈ √N vs sigma_2 ≈ N²).\n4. **But aggregation is independent of need:** computing sigma_2 mod m requires\n   the full O(N) divisor-sum aggregation (barrier 4).\n\n## Why it collapses (barrier 4 + trace lemma)\nThe threshold is exactly the trace coordinate p+q — the one recoverable witness.\nThe trace is simultaneously the only coordinate AND the modulus-threshold of the\nwitness's factor information. Computing any part costs the full aggregation.\n\n## Verdict\nREFUTED as a shortcut, but frontier-(i) positive content: it sharpens what a\nbarrier-4 proof must show (aggregation is irreducible even for partial values).\nClassical uniform hint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1145",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.747049+00:00",
+    "title": "The Partial Free-Witness Threshold is the Trace, Closed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "deee62e0",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/42_Round13_Grid_Closed.md` (factor3)\n**Experiment:** SPECTRES (#377), assessment v153.\n\n## Finding\nThe residue × spectral cell (last untested pairwise combination of the three\nsealed families). Test: does knowing r mod m index the dominant heat-kernel\ncharacters? Verified (N = 143, 221, 899, 3599):\n1. **The ONLY dominant character is k=0** (λ > 0.99) — concentrated at k ≡ 0 mod\n   every small m. No non-trivial residue class to target.\n2. **The readout converges to 1/r** (the k=0 term) — requires r: O(r)-sealed\n   (barrier 4), circular (barrier 6).\n3. Residue guidance adds nothing.\n\n## The grid is now complete\n| cell | experiment | verdict |\n|------|-----------|---------|\n| residue+order | SCALECASCADE | barrier 4/8 |\n| order+spectral | SPECTRUNC | barrier 4 |\n| residue+spectral | **SPECTRES** | barrier 4/6 |\n| order×residue joint | CONDORDER | barrier 5/6/8 |\n\n## Round-13 complete (12/12)\nHALFPLANE, RANDOM-BQF, FETQ, CONDORDER, JACSIGN, KPOWER, MULTIMOD, QRLEAK,\nSPECTRES + combination completions — all barrier-consistent, papers 34–42.\n\n## Verdict\nREFUTED. The combination loophole is exhaustively closed. Frontiers remain:\n(i) barrier-4 proof, (ii) quantum channel, (iii) hint amplification. Next round\nshould target these directly.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1146",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.747419+00:00",
+    "title": "The Combination Grid and Round-13, Closed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "37758728",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/41_ResidueLeakage_DirichletNoPruning.md` (factor3)\n**Experiment:** QRLEAK (#376), assessment v152.\n\n## Finding\nThe QR fingerprint F_K(N) = [(a_i|N)] over the first K primes (each Jacobi symbol\npoly(log N)-computable) — the maximal cheap residue handle. Verified (300\nsemiprimes):\n1. **Full discriminative power:** K=20 uniquely identifies all 300 N — F_K is a\n   collision-free hash of N.\n2. **BUT zero factor reduction:** given F_K(N₀) alone, EVERY candidate prime p′ is\n   consistent — a compensating q′ with F_K(p′q′)=F_K(N₀) exists by Dirichlet (the\n   prescribed (a_i|q′) = F_a·(a_i|p′) form a coprime AP mod 8∏a_i). Verified at\n   K=5 (conductor 9240): explicit q₁ found with exact match.\n3. **No individual (a_i|p) pinning:** all 2^K patterns achievable (K=5: 32/32) —\n   only the symmetric products (a_i|p)(a_i|q) are known.\n\n## The theorem\n**Dirichlet no-pruning:** for any N₀ and any prime p′, ∃ prime q′ with\nF_K(p′q′) = F_K(N₀). The fingerprint cannot reduce the factor candidate set.\n\n## Why it collapses (barrier 2 + 5 + 6)\nThe residue channel's information about (p,q) is exactly the N-determined\nsymmetric-residue structure (barrier 2/5); individual (a_i|p) need p (barrier 6).\nThe sharpest reason residues are a constant-factor tool: the fingerprint\nidentifies N but cannot prune the divisor search.\n\n## Verdict\nREFUTED. Sharpens RESGUIDE/RESCOMB/SCALECASCADE. Classical uniform hint-free\nsurface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1147",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.747786+00:00",
+    "title": "The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "896e46c5",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/40_DerivedModulus_NoGo.md` (factor3)\n**Experiment:** MULTIMOD (#375), assessment v151.\n\n## Finding\nTest whether invariants of derived moduli M = poly(N) (N±1, N²±1, Φ₃(N), 2N±1)\ncarry factor signal about N = pq. Verified:\n1. **gcd(N, M) = 1 for every derived modulus** — they share nothing with N.\n2. **C(M) is a function of N** (corr 0.66–0.95 with N); the apparent corr with\n   p, p+q is the N-confound (p ≈ √N varies with N over a wide batch).\n3. **Factor-specific coordinate is noise:** corr(C(M), |p−q|) inside permutation\n   null everywhere (n=40 residual control: obs ≤ 0.26 vs 95th ≈ 0.29–0.31).\n4. **Degeneracy:** N±1 always even → lpf = 2.\n5. Computing C(M) for N²+1/Φ₃ needs M's fresh factorization (barrier 4).\n\n## Why it collapses (barrier 1 + 5 + 4)\nThe polynomial barrier (LLL) predicts exactly this: N-explicit moduli share only\nfinitely many primes with N, so their invariants are N-only (barrier 1/5). The\nlarge-M invariants need M's fresh factorization (barrier 4). The only way a\nsecond modulus helps is an EXTERNAL hint sharing a prime with N — the\nhint-amplification frontier.\n\n## Verdict\nREFUTED. Multi-modulus corner closed. Round-13 nearly complete (HALFPLANE,\nRANDOM-BQF, FETQ, CONDORDER, JACSIGN, KPOWER, MULTIMOD tested). Classical uniform\nhint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1148",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.748176+00:00",
+    "title": "The Derived-Modulus Corner, Closed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "2b63918d",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/39_PowerResidue_Circularity.md` (factor3)\n**Experiment:** KPOWER (#374), assessment v150.\n\n## Finding\nTest whether cubic (Z[ω]) / quartic (Z[i]) power-residue symbols provide residue\ndials that escape the quadratic channel. Verified:\n1. **Cubic symbols escape the residue dial:** (a|p)₃ = a^{(p−1)/3} mod p varies\n   within p mod 9 — cubic reciprocity depends on 4p = A²+27B² (p's fine\n   arithmetic), echoing JACSIGN's W(p).\n2. **But circular:** the definition uses the exponent p; the reciprocity route\n   needs the A²+27B² rep = factoring (barrier 6). The N-computable symmetric\n   (a/N)₃ is symmetric (barrier 2) and non-dial.\n3. **Leakage saturates like quadratic:** over 68 primes p∈[1000,2000], cubic and\n   quadratic fingerprints both give 68/68 distinct — identical rate. The \"few\n   symbols pin p\" power is illusory: computing the symbols requires p.\n\n## Why it collapses (barrier 6 + 2 + 5)\nComputing (a|p)₃ requires p or the A²+27B² representation (barrier 6); the\nN-computable version is symmetric (barrier 2); leakage same as quadratic\n(barrier 5 / trace-lemma consistency). Confirms NSPLIT's barrier-2 finding from\nthe fingerprint angle.\n\n## Verdict\nREFUTED. The residue channel's information content is: dial (N-determined) +\nfine-arithmetic noise (circular), nothing more. Higher-power reciprocity adds no\npoly(log N) handle. Classical uniform hint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1149",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.748552+00:00",
+    "title": "The Higher-Power Reciprocity Channel, Closed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "da66828d",
+    "description": "**Paper:** `ResearchOutput/NewMathematics/38_JacobiSigned_WeilFloor.md` (factor3)\n**Experiment:** JACSIGN (#373), assessment v149.\n\n## Finding\nEvery character-weighted free-witness before (CIRC, BQF, GSP) collapsed to a\nresidue dial (function of N mod 4/8). JACSIGN weights the circle set by (x/N):\nW(N) = Σ_{(x,y)∈S} (x/N). Verified:\n1. W(N) = W(p)·W(q), W(p) = Σ_x (x/p)(1−x²/p) — a cubic character sum.\n2. **NOT a residue dial:** W(p) varies within p mod 8 (p≡1 mod 8: −2,−10,6,−18,\n   14,22) and W(N) within N mod 8 (N≡5: {0,−52,−900,−484}). The character weight\n   escapes the dial collapse that killed CIRC/BQF/GSP.\n3. But factor-dependent yet UNSTRUCTURED: 40 semiprimes, corr(W, p/q/p+q/|p−q|)\n   all inside permutation null (obs ≤ 0.22, 95th ≈ 0.28–0.31).\n4. **Weil bound exact:** |W(p)| ≤ 2√p (many attainments: p=293 → 34=2·17), so\n   |W(N)| ≤ 4√N — the noise floor in its sharpest character-sum form.\n\n## Why it collapses (barrier 4 + 2 + Weil floor)\nComputing W(N) = O(N) (barrier 4); W(N) = W(p)W(q) is a symmetric product,\nfactors inseparable (barrier 2); the signal is bounded by the Weil bound, O(√N)\nrelative density (noise floor).\n\n## Verdict\nREFUTED as a method, but a NEW taxonomy entry: character-weighted, non-dial, at\nthe Weil floor. Even when a character weight breaks the dial collapse, the\nsignal is bounded by the sharpest character-sum estimate. Classical uniform\nhint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1150",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.748916+00:00",
+    "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
   },
   {
     "ambition_level": "grand_challenge",
@@ -14270,7 +14479,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea6c63aa",
     "description": "# Future directions\n\n## What is in the repository\n\nThree Lean files carry the mathematics of this mission (all of them compile and\ncontain no `sorry`):\n\n* `Catalog/Bridges/GraphTheory/CayleyCharacterSpectra.lean` — the abelian, spectral\n  story: characters as eigenvectors of the adjacency matrix\n  (`adjMatrix_mulVec_char`, `adjMatrix_pow_mulVec_char`), the trace formula\n  (`trace_pow_eq_charEigen_sum`), and the identification of the character power sum\n  with `|G|` times a relation count\n  (`charEigen_pow_sum_eq_card_mul_relationCount`,\n  `closedWalk_count_eq_card_mul_relationCount`);\n* `Catalog/Bridges/GraphTheory/CayleyWalkRelations.lean` — the counting half for *all*\n  finite groups: for any base point, `#{closed k-walks at x} = #{(s₁,…,s_k) ∈ Sᵏ :\n  s₁⋯s_k = 1}` (`card_closedWalk_eq_relationCount`), hence closed-walk counts are\n  base-point independent (`card_closedWalk_eq_card_closedWalk`) and the total is\n  `|G|` times the relation count;\n* `Catalog/Novelty/LearningGraphicalSymmetries.lean` — the *local* translation\n  invariance behind the census observables: explicit equivalences of neighbourhoods\n  and of common neighbourhoods under left translation\n  (`neighborEquivLeft`, `commonNeighborEquivLeft`), the pair-difference principle\n  `commonNeighborEquivDifference` (the common neighbours of `(a,b)` are canonically\n  equivalent to those of `(1, a⁻¹b)`), regularity (`degree_eq_identity`), the\n  cardinality corollary `commonNeighbor_card_eq_difference`, and the fact that these\n  equivalences preserve adjacency, so the *induced graph* on a common neighbourhood —\n  not merely its size — depends only on `a⁻¹b`.\n\nThe first file builds a bridge between three descriptions of the same number, for a\nfinite abelian group `G` with a symmetric connection set `S` (`0 ∉ S`):\n\n1. **Harmonic analysis** — the power sum `∑_{ψ ∈ Ĝ} (∑_{s ∈ S} ψ s)^k` over the\n   Pontryagin dual;\n2. **Spectral graph theory / linear algebra** — `trace(A^k)` for the adjacency matrix\n   of the Cayley graph, i.e. the total number of closed `k`-walks;\n3. **Additive combinatorics** — `|G|` times the number of length-`k` relations\n   `s₁ + ⋯ + s_k = 0` inside `S`.\n\nNatural continuations:\n\n## 1. Nonabelian groups: spectral side\nThe counting statement is already proved for all finite groups in\n`CayleyWalkRelations.lean`. What remains is the *spectral* half: replace characters by\nirreducible representations, so that for `S` symmetric and conjugation-invariant the\nadjacency operator acts on each isotypic component by the scalar `|S| χ(s)/χ(1)`, and\n`trace(A^k) = ∑_χ χ(1) · (∑_{s∈S} χ(s)/χ(1))^k · χ(1)`. Combining that with the\nrelation count already proved would give the full nonabelian analogue of the bridge.\n\n## 2. Cycle statistics in the census\nFor `k = 3, 4` the counts specialize to triangle and square statistics, the observables\nwhose empirical behaviour the source paper conjectures about. Deriving exact formulas\nfor the triangle count (`(1/6)(trace A³)` for simple graphs) and for square clustering\nin terms of the additive structure of `S` would turn some of the paper's empirical\nregularities into theorems, e.g.:\n* `Cay(G,S)` is triangle-free iff `S` contains no solution of `s₁ + s₂ + s₃ = 0`\n  (a sum-free-type condition);\n* bipartiteness of `Cay(G,S)` iff there is no odd-length relation in `S`, which is\n  equivalent to the existence of a character taking value `−1` on all of `S`.\n\n## 3. Square clustering as a function on the group\n`commonNeighbor_card_eq_difference` shows that the opposite-corner count entering the\nsquare-clustering coefficient is a function `G → ℕ`, `g ↦ |N(1) ∩ N(g)|`, rather than a\nfunction of ordered vertex pairs. Two concrete continuations:\n* prove that this function is a *class function up to inversion*, i.e. invariant under\n  `g ↦ g⁻¹` (using `x ↦ x⁻¹` on the connection set) and under automorphisms of `G`\n  preserving `S`; this would explain the orbit structure visible in the census;\n* express `|N(1) ∩ N(g)| = |S ∩ gS|` and derive the square-clustering coefficient as a\n  normalized sum of these intersection numbers, giving a closed formula for abelian `G`\n  via the character sums of `CayleyCharacterSpectra.lean`\n  (`|S ∩ gS| = |G|⁻¹ ∑_ψ |∑_{s∈S} ψ s|² ψ(g)⁻¹`).\n\n## 4. Spectral moments and eigenvalue distribution\n`trace(A^k)` for all `k` determines the spectrum. The identity here therefore says that\nthe empirical spectral distribution of a Cayley graph is the pushforward of the uniform\nmeasure on `Ĝ` by `ψ ↦ ∑_{s ∈ S} ψ s`. Making this precise (as a statement about\nmeasures) and studying its limit for random `S` of fixed size as `|G| → ∞` (a\nKesten–McKay-type limit) is a well-posed next formalization target.\n\n## 5. Expansion and diameter\nThe trivial character gives the top eigenvalue `|S|` (`charEigen_zero`). Bounding the\nsecond eigenvalue `max_{ψ ≠ 0} |∑_{s∈S} ψ s|` yields expansion, hence diameter bounds\nfor the Cayley graph, connecting the census's distance statistics to character sums.\nFormalizing the standard `diam ≤ O(log|G| / log(d/λ))` estimate in this setting is a\nconcrete goal.\n\n## 6. Connectivity and generation\nComplementary to the spectral side: `Cay(G,S)` is connected iff `S` generates `G`, and\nthe number of connected components is the index of `⟨S⟩`. Together with the OEIS\nsequences of the source paper for groups generated by at most `k` elements, this gives\na formal statement of when the census's graphs are connected.\n\n## 7. Beyond Cayley graphs\n`Catalog/Novelty/UphoMultiplicability/Sabidussi.lean` characterizes Cayley graphs among\nvertex-transitive graphs (Sabidussi). The boundary of the present results is exactly\nthis: a vertex-transitive graph still has orbit-invariant local statistics, but it need\nnot possess the canonical difference coordinate `a⁻¹b`, so\n`commonNeighborEquivDifference` has no analogue. Making that failure precise — an\nexplicit vertex-transitive, non-Cayley graph (e.g. the Petersen graph) whose\ncommon-neighbour profile is not a function of a single group element — would sharpen\nthe statement of what the Cayley hypothesis buys.\n\n## Repository status\n\nEvery Lean file in `Catalog/` compiles under Lean 4.28 / Mathlib `v4.28.0` and the\nwhole package builds cleanly (`lake build` from the repository root). Completing that\nbuild required repairing a number of previously truncated or unbuildable files; the\nmathematically substantive repairs were:\n\n* `Catalog/Shared/HilbertSpace/VectorStoneWeierstrass.lean` — the file had been left as\n  a unified diff; the vector-valued Stone–Weierstrass development was reconstructed\n  from it and now compiles;\n* `Catalog/Shared/Hilbert6AxiomatizationofPhysics/SalvagedBest.lean` — the\n  `EffectAlgebra` class and `EffectHom` structure were reconstructed from the surviving\n  proof bodies, and cancellation, involutivity of the orthocomplement, transitivity and\n  antitonicity of the natural order are proved from the axioms;\n* `Catalog/Shared/BabelCodeasanovelmathematicalstructure/SalvagedBest.lean` — the\n  missing `Volume`, `IsBabelCode`, `hammingBall` definitions and the column\n  disagreement bound were supplied, so the Plotkin, Lawvere and sphere-packing bounds\n  compile;\n* `Catalog/Shared/BerggrenTrees/Parent_hyp_lt.lean` — the three inverse Barning–Hall\n  parent maps and their positivity lemmas were reconstructed and proved;\n* `Catalog/Algebra/Stoneweierstrasslattice/StoneWeierstrassLattice.lean` — an\n  `axiom … : True` placeholder was replaced by the uniform-approximation form of the\n  lattice Stone–Weierstrass theorem, proved from\n  `ContinuousMap.sublattice_closure_eq_top`;\n* `Catalog/Bridges/ProofTheoryAndLogic/AlgebraLogicBridge.lean` — the stated form of\n  right distributivity for `Bool` is *false*; it is retained as a comment, refuted by\n  `bool_right_distrib_counterexample`, and replaced by the correct law;\n* `Catalog/Shared/CarmichaelComputational.lean` and its `NumberTheory` twin — the\n  composite case of Carmichael's theorem is only certified for `n ≤ 10000`, so that\n  hypothesis is now stated explicitly instead of being silently assumed.\n\nRemaining frontier inside the catalogue: the unbounded (`n > 10000`) composite case of\nCarmichael's primitive-divisor theorem, and the nonabelian spectral half described in\n§1 above.\n",
     "domain_bridges": [],
     "domains": [
@@ -14283,7 +14492,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3652ac9b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-04T20:07:37.609251+00:00",
     "title": "Three Lean files carry the mathematics of this mission (all of them compile and"
   },
