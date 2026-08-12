@@ -97,26 +97,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "646c7606",
-    "description": "**Summary.** The Jacobi Gauss sum τ(N) = sum_n (n/N) e^{2πin/N} has |τ(N)| = √N.\nA priori its phase could encode (p mod 4, q mod 4) separately — a genuine\nfactor-revealing candidate. It does not.\n\n**Theorem (phase collapse, proven).**\n  arg τ(N) = 0  when p ≡ q (mod 4),  and  π/2 when p ≢ q (mod 4).\nEquivalently τ(N) = √N or i√N.\n\n**Mechanism.** By CRT and quadratic reciprocity, τ(N) = g_p g_q (q/p)(p/q).\nIn the (3,3) mod 4 case the two Legendre factors contribute i·i = -1, but the\nquadratic-reciprocity correction (q/p)(p/q) = -1 exactly cancels it.\n\n**Significance.** Within N ≡ 1 mod 4, the phase cannot distinguish (1,1) from\n(3,3) factorizations. A clean exact instance of structural orthogonality: the\nphase is exactly determined by N mod 4 and conveys exactly 1 bit.\nConfirmed on all 13 test semiprimes.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1105",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-11T19:35:11.986312+00:00",
-    "title": "Jacobi Gauss-Sum Phase Collapse"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08a7d992",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -128,7 +109,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T19:35:11.986561+00:00",
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
@@ -1009,7 +990,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "299127cc",
     "description": "**GENERIC-RECOVERY (round-14 #11, experiment 390, assessment v166, paper 55).**\n\nHypothesis: recovery of p from a t-bit external hint is bounded by the hint's usable information. Verified on exact k-bit-prime sets (k=14-25) and random semiprimes (k=16-20):\n\n1. **Generic hints information-exact**: t-bit random GF(2) linear form of p's bits partitions P_k into classes |P_k|/2^t EXACTLY (k=16: 1515/759/190/48.6/12.8 vs 1515/757.5/189.4/47.3/11.8 at t=1..8); recovery cost = |P_k|/2^t (median steps = candidates). No anomalous class = no super-resolution.\n2. **Value-hints parity-constrained** (new mini-finding): mod-2^t multiplicative c·p and XOR-mask hashes output only 2^(t-1) values (p odd) — class 378.9 vs 189.4 at k=16,t=4. Bit-vector forms are the only full-2^t generic hints.\n3. **Trace hint sub-bit by recovery cost** (new positive): s mod 2^t pins p mod 2^t to C_t = O(1) roots (median saturating 4-8), but recovery tries all C_t: cost C_t·|P_k|/2^(t-1), measured 399 vs 47.3 (k=16,t=6), 354 vs 42.0 (k=18,t=8) — ~4.5-5x worse per bit; log2(C_t) ~ 3 bits lost to the root ambiguity.\n4. **Only amplification = position**: crossing with pi(sqrt N) at t ~ k/2-3 for every family; the unique amplification is Coppersmith's contiguous top-half >= k/2 LLL (a known method, barrier 8). The Coppersmith condition is about POSITION, not the dial (DIAL-THRESHOLD revisited).\n\n**Verdict**: CONFIRMED, sharpened. Hint taxonomy CLOSED: a t-bit external hint reduces the prime search by exactly 2^t, never more, never position-free; N-checkable hints are sealed at the trace-set floor (INTERVAL-HINT); hints must be genuinely external and worth their bits at face value. Barriers 4/8/2.\n\nScript: /tmp/exp_genericrecovery.py. Paper: ResearchOutput/NewMathematics/55_GenericRecovery_HintTaxonomy.md",
     "domain_bridges": [],
     "domains": [
@@ -1021,9 +1002,85 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T13:54:18.959882+00:00",
     "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## MULT-TABLE-RANK (exp 394, round-15 #3): the mod-N multiplication table has rank ⌊(N+2τ(N)−3)/2⌋ — universal semiprime law rank(pq)=(N+5)/2, a divisor-count certificate only\n\n**Hypothesis tested.** The N×N table M[i][j] = (i·j mod N) has rank defect (N−5)/2 + \"type classifier\" (brainstorm). Does the rank/null structure leak any asymmetric factor content?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_multtablerank.py`; verified 79/79 modular rank over two large primes N=2..80 + spot to 495, 19/19 exact sympy rational elimination N=3..39, exact==modular on all overlap).\n\n**1. Exact closed form (machine-verified).** For all N:\n> rank = **⌊(N + 2τ(N) − 3)/2⌋**,  defect = **⌈(N − 2τ(N) + 3)/2⌉**,  τ(N) = divisor count.\n\nThe brainstorm's type classifier: c(N) = defect − (N−5)/2 = **4 − τ(N)** (primes c=2, prime squares c=1, prime cubes & products c≤0).\n\n**2. Universal semiprime law.** τ(pq) = 4 ⟹ **rank(pq) = (N+5)/2, defect = (N−5)/2 for every semiprime** (verified 15,21,35,55,77,91,221,341). The table cannot even distinguish two semiprimes except by size — blind to p vs q, the gap, smoothness, everything.\n\n**3. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** rank/null space are functions of N alone ⟹ symmetric in (p,q); the information content is the divisor-count class τ(N) at most — a type/compositeness certificate, never p or q.\n- **Barrier 4 (free-witness aggregation):** rank = O(N³) exact/matrix elimination, super-polynomial in log N.\n- **Barrier 6 (circular):** closed form needs τ(N) = the divisor structure = the factorization.\n- **Barrier 8 (known method):** the table (ij mod n) is classical — M. Bueno (Involve) studies its kernel for prime n (prime rank (p+1)/2 known); the τ(N)-composite closed form is machine-verified here.\n\n**Recorded:** notebook Part 140, assessment v170 (394 experiments), paper 59 `59_MultTableRank_DivisorCountCertificate.md` (NewMathematics/).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1158",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T15:22:34.667993+00:00",
+    "title": "Exp 394 MULT-TABLE-RANK: mod-N multiplication table rank = floor((N+2τ(N)−3)/2), universal semiprime law rank(pq)=(N+5)/2 — divisor-count certificate, never a factor (barriers 2/4/6/8)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## UNIT-ENERGY (exp 393, round-15 #2): the additive energy of the units is the Ramanujan 4th moment — pointwise-flat on gcd-level sets, a trace-only witness\n\n**Hypothesis tested.** E(U) = #{u₁+u₂ ≡ u₃+u₄ : u_i ∈ (Z/NZ)^×}, the additive energy of the unit group, is the Ramanujan 4th moment with an FFT-verifiable closed form. Does it leak any asymmetric factor content?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_unitenergy.py`; verified 10/10 semiprimes three ways — direct count, Ramanujan moment, closed form — plus 14/14 generic N, and symbolic expansion).\n\n**1. Exact closed semiprime form.** With a = p−1, b = q−1:\n> E(U) = (1/N) Σ_{x=0}^{N−1} |c_N(x)|⁴ = **((p−1)(q−1)/N)·(1+(p−1)³)(1+(q−1)³)**\n\nVia σ₁ = a+b = s−2, σ₂ = ab = N−s+1 = φ(N): E·N = σ₂(1+σ₁³−3σ₁σ₂+σ₂³) = N⁴−4N³s+4N³+6N²s²−15N²s+12N²−3Ns³+12Ns²−18Ns+9N — a symmetric polynomial in (p,q), a function of **(N, s) alone**.\n\n**2. Pointwise flatness (the sharpest statement of the family).** The unit-pair-sum profile r_A(x) = #{(u,v)∈U² : u+v≡x} depends only on gcd(x,N) — flat on all 4 gcd-level sets (e.g. N=899: r = 783/812/810/840 on gcd-levels 1/29/31/899; E-from-levels = direct exactly). Since r̂_A = c_N² is gcd-invariant, **even the full additive distribution of the units is N-symmetric — zero asymmetric factor content, not even pointwise.**\n\n**3. Recovery: cleanest of the family.** E·N − P(s) = 0 is a **cubic** in s (the σ₂⁴ and σ₂σ₁³ quartic terms cancel), and s = p+q is its **unique real root** (15/15 samples — no spurious roots at all, unlike the gcd-moments' {N−1−s, N−1, N+1}).\n\n**4. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** E(U) = F(N, s); the pointwise profile is flat on gcd-level sets. s alone never splits N.\n- **Barrier 4 (free-witness aggregation):** O(N) Ramanujan sweep / FFT.\n- **Barrier 6 (circular):** closed form needs s; gcd-level grouping needs the divisor set = the factorization.\n- **Barrier 8 (known method):** E(U) = (1/N)Σ|c_N|⁴ is the classical Fourier identity; the unit-pair-sum profile is the modular-hyperbola / Cilleruelo–Garaev–Shparlinski subject.\n\n**Reconfirms** TRACEPROFILE/QUERYWIT/GCD-MOMENT: the trace s = p+q is the ceiling of what a symmetric free witness — aggregate or pointwise — can carry, and s does not factor.\n\n**Recorded:** notebook Part 139, assessment v169 (393 experiments), paper 58 `58_UnitEnergy_Ramanujan4thMoment.md` (NewMathematics/).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1159",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T15:22:34.668452+00:00",
+    "title": "Exp 393 UNIT-ENERGY: additive energy of the units = Ramanujan 4th moment, closed form ((p−1)(q−1)/N)(1+(p−1)³)(1+(q−1)³), pointwise-flat on gcd-level sets — trace-only, never a factor (barriers 2/4/6/8)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## GCD-MOMENT (exp 392, round-15 #1): the semiprime gcd-moments M_k = Σ_{x≤N} gcd(x,N)^k are a closed trace-witness family\n\n**Hypothesis tested.** The brainstorm's S2 = N²+3N+1+(N−1)s−s² recovers the trace s = p+q via an O(N) prefix mean. Does any moment k escape the free-witness barriers?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_gcdmoment.py`, verified by full enumeration 48/48 at k=1..4, 12/12 at k=5,6, plus symbolic expansion).\n\n**1. Exact closed forms in (N, s) alone (verified).** Via the Newton power sums P_j = p^j+q^j = s·P_{j−1} − N·P_{j−2}:\n> M_k = Σ_{x≤N} gcd(x,N)^k = Σ_{d|N} d^k φ(N/d) = **N^k + N·P_{k−1} − P_k + N − s + 1**\n\n| k | M_k |\n|---|-----|\n| 1 | 4N − 2s + 1 |\n| 2 | N² + 3N + 1 + (N−1)s − s² (= S2) |\n| 3 | N³ − 2N² + N s² + 3N s + N − s³ − s + 1 |\n| 4 | N⁴ − 3N²s − 2N² + N s³ + 4N s² + N − s⁴ − s + 1 |\n\n**2. Trace recovery is unique at every k.** Roots of P_k(s)−M_k = 0: k=1 {s}; k=2 {s, N−1−s}; k=3 {1−s, s, N−1}; k=4 {s, N+1}+complex. s is ALWAYS the unique root in (0, N/2] — all spurious roots are ≥ N−1−s > N/2 or negative, so the size cut s < N/2 disambiguates trivially. (The \"root ambiguity grows with k\" worry resolves to a non-issue; the cost is computing M_k.)\n\n**3. The genuine hierarchy is cost: N^{2k−1} samples to pin s.** Var(gcd(U,N)^k) ~ N^{2k−1} (the 1/N chance of gcd=N contributes N^k). Measured samples for s±1: k=1 ~4N (= the barrier-4 Ω(N) floor), k=2 ~N³, k=3 ~N⁵, k=4 ~N⁷. **k=1 = M1 = 4N−2s+1, an O(N) gcd-scan, is the optimal moment** — higher k are exponentially worse.\n\n**4. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** M_k = F_k(N, s) for all k — p,q enter only through s and N. s alone never splits N; the trace is the ceiling of what a symmetric free witness can carry.\n- **Barrier 4 (free-witness aggregation):** Ω(N) gcd evaluations; sampling no better (k=1 ~4N).\n- **Barrier 6 (circular):** divisor form needs the factorization; closed form needs s; enumeration is Ω(N).\n- **Barrier 8 (known method):** M1 = Σ_{d|N} d·φ(N/d) is the classical gcd-sum / Jordan-totient identity; the whole family is a known-arithmetic-function specialization.\n\n**Reconfirms** TRACEPROFILE (\"trace least-hidden\") and QUERYWIT (threshold = Θ(p+q)): the trace s = p+q is the least-hidden — and here provably the ceiling — symmetric free witness, and it does not factor.\n\n**Recorded:** notebook Part 138, assessment v168 (392 experiments), paper 57 `57_GCDMoment_TraceWitnessHierarchy.md` (NewMathematics/).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1160",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T15:22:34.668786+00:00",
+    "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family — trace recoverable, never a factor (barriers 2/4/6/8)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**BERGGREN-PRICE-INTERLOCK (direct analysis request, experiment 391, assessment v167, paper 56).**\n\nHypothesis (refining the prior hypotenuse-N probe): the correct factoring-relevant embedding of N is not m^2+n^2 = N but ODD-LEG-N — the node (m,n) = ((p+q)/2, (q-p)/2), the Fermat pair. Verified on all valid (m,n) (BFS to L=11 both trees), 1020/1020 random semiprime pairs, and random 14-23-bit primes:\n\n1. **N-NODE IDENTITY (new, exact, 1020/1020):** every odd semiprime N = pq is a valid node of BOTH the Berggren and Price trees at (m,n) = ((p+q)/2,(q-p)/2), with odd leg m^2-n^2 = (m-n)(m+n) = pq = N EXACTLY (hyp (p^2+q^2)/2, even leg (q^2-p^2)/2; p = m-n, q = m+n). Both trees enumerate all Fermat decompositions exactly once (3^L levels, parents invert with 0 failures). Factoring N == finding the N-node.\n2. **Interlock = inequivalence over a shared vertex set:** Berggren child-map dets {+1,-1,+1} (subtract-2/reflect CF descent) vs Price {+2,-2,+2} (halving/binary-GCD descent) — no conjugacy (|det| invariant). Leg swap a<->b IS an automorphism of Berggren (S·B·S permutes {B1,B2,B3}, 3/3) but NOT of Price (0/3) — asymmetric. B-parent = P-parent on exactly 2/455,736 nodes.\n3. **Depth duality:** dB (Berggren) ratio/CF-driven, erratic — N-node at 20-bit primes: mean 78.5, range [19,1135]; dP (Price) size-driven, tight — ~1.4·log2(p+q), sd ~2.4 (means 17.7/21.4/25.8/30.1 at 14/17/20/23-bit primes); corr(dB,dP) = -0.16 (independent orderings).\n4. **Factoring verdict (decisive negative):** tree-work to find the N-node = 3^dB beat Fermat's scan in 0/209 trials at 20-bit primes (Fermat mean 6,630 steps; min case 3^19 ~ 1.2e9). dB correlates NEGATIVELY with Fermat cost (r = -0.31) — the trees measure the OPPOSITE of Fermat hardness (the ratio (p+q)/(q-p); Fermat cost ~ (q-p)^2/(8·sqrt N)); dP is size-blind (corr ~ 0). The root->N path string IS the factorization; no N-only branch rule; no pruning (odd legs ~constant along staircase branches); leg-only descent not closed. Hypotenuse density m^2+n^2 == 0 mod N in both trees <= 4/N, exactly 0 for N=15,21,35,77,91 (primitive pairs).\n\n**Verdict:** CONFIRMED negative for factoring. The Pythagorean-tree line closes with exact statements: every odd semiprime sits at its Fermat pair in both trees (odd leg = N exactly — the correct embedding), the interlock is two inequivalent Euclidean descents over one vertex set, and traversal to the N-node costs 3^d >> Fermat's d_F (0/209). The trees organize the RATIO (p+q)/(q-p) — Fermat's ease coordinate — not the product pq; the ratio<->product map is the factorization step. Barriers 5/8 (structural orthogonality sharpened; the tree is Fermat in a different order). Scripts: /tmp/exp_berggrenprice.py, _3, _4.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1161",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T15:22:34.669093+00:00",
+    "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees — the N-node identity is exact, the interlock is factoring-orthogonal"
   },
   {
     "ambition_level": "grand_challenge",
@@ -1946,6 +2003,25 @@
     "status": "available",
     "timestamp": "",
     "title": "Riemann Hypothesis: Zero-Free Regions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 646c7606 (Q=0.820), which proved 42 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** The Jacobi Gauss sum τ(N) = sum_n (n/N) e^{2πin/N} has |τ(N)| = √N.\nA priori its phase could encode (p mod 4, q mod 4) separately — a genuine\nfactor-revealing candidate. It does not.\n\n**Theorem (phase collapse, proven).**\n  arg τ(N) = 0  when p ≡ q (mod 4),  and  π/2 when p ≢ q (mod 4).",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_646c7606_db3e55b4",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "646c7606",
+    "status": "available",
+    "timestamp": "2026-08-12T15:22:01.479509+00:00",
+    "title": "Deepening: Jacobi Gauss-Sum Phase Collapse"
   },
   {
     "ambition_level": "extension",
