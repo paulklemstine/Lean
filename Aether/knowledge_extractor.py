@@ -1548,6 +1548,45 @@ Research mode: {concept.research_mode}
             "at max_inflight",
         ])
 
+    def _is_stale_dispatch_error(self, error_message: Optional[str]) -> bool:
+        """Return True if error_message is a *transient dispatch condition*, not a
+        genuine research failure.
+
+        dispatch/dispatch_async leave ``error_message = "Queue full: ..."`` on a
+        job they merely requeued, and poll_all's wall-clock HARD CAP leaves
+        ``"wall-clock cap exceeded (...) — queued for retry (N/M)"`` on a job it
+        requeued. If such a job is later re-dispatched successfully, its stale
+        message must NOT cause the integrate step to fail it — a queue-full /
+        queued-for-retry condition only means "wait for a slot", never "release
+        the direction" or "kill the thread". Only genuine failures (extraction,
+        API, zombie, timeout, retries exhausted) should do that.
+        """
+        if not error_message:
+            return False
+        err = str(error_message).lower()
+        return self._is_queue_full_error(err) or "queued for retry" in err
+
+    def _mark_requeued_dispatch_success(self, job: ResearchJob, project_id: str) -> None:
+        """Record that a previously-queued job was just successfully re-dispatched.
+
+        Re-keys the job from job_id to project_id, sets dispatched status/timing,
+        and clears any stale ``error_message`` left over from the attempt that
+        queued it (e.g. "Queue full" or "wall-clock cap — queued for retry").
+        Without this clear, a job that is queued, re-dispatched, and then
+        completes successfully would still carry a failure-looking message and be
+        discarded by the integrate step instead of integrated. The direction
+        stays in_progress — releasing it is the caller's job on genuine failure.
+        """
+        if job.project_id and job.project_id in self.inflight:
+            del self.inflight[job.project_id]
+        if job.job_id and job.job_id in self.inflight:
+            del self.inflight[job.job_id]
+        job.project_id = project_id
+        job.status = "B_dispatched" if getattr(job, "phase", "") == "B" else "dispatched"
+        job.dispatch_time = time.time()
+        job.error_message = None
+        self.inflight[project_id] = job
+
     async def _dispatch_to_aristotle(self, job: ResearchJob, max_retries: int = 2, max_inflight: int = None) -> str:
         """Dispatch the job to Aristotle with retry on transient failures.
 

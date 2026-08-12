@@ -796,7 +796,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     if p not in existing:
                         job.integrated_paths = (job.integrated_paths or []) + [p]
 
-        if job.error_message:
+        if job.error_message and not extractor._is_stale_dispatch_error(job.error_message):
             print(f"[Tick] Job failed: {job.error_message}")
             extractor._release_direction(job)
             if job.project_id and job.project_id in extractor.inflight:
@@ -806,6 +806,12 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             extractor._save_inflight()
             extractor.failed_count += 1
             continue
+        elif job.error_message:
+            # Transient dispatch condition (e.g. queue full / queued for retry)
+            # recorded before the job was requeued — the job has since completed
+            # successfully, so this is NOT a failure. Integrate normally: the
+            # direction stays consumed and the research thread stays alive.
+            print(f"[Tick] Ignoring stale dispatch message on completed job {job.job_id[:8]}: {job.error_message}")
 
         # ── End-of-Thought Continuation Prod ──
         if not is_phase_b_completion and job.result_lean:
@@ -1382,14 +1388,11 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             queued.status = "preparing"
             queued.preparing_started = time.time()
             project_id = await extractor._dispatch_to_aristotle(queued)
-            if queued.project_id and queued.project_id in extractor.inflight:
-                del extractor.inflight[queued.project_id]
-            if queued.job_id in extractor.inflight:
-                del extractor.inflight[queued.job_id]
-            queued.project_id = project_id
-            queued.status = "B_dispatched" if getattr(queued, "phase", "") == "B" else "dispatched"
-            queued.dispatch_time = time.time()
-            extractor.inflight[project_id] = queued
+            # Re-key to project_id, set dispatched status/timing, and clear any
+            # stale error_message (e.g. "Queue full" / "queued for retry") from
+            # the attempt that queued the job — otherwise it would later discard
+            # a successful integration as a "failure".
+            extractor._mark_requeued_dispatch_success(queued, project_id)
             print(f"[Tick] Dispatched queued job {project_id[:8]}: {queued.concept.title[:60]}")
         except Exception as e:
             if extractor._is_queue_full_error(e):
