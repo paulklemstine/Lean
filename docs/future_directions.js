@@ -33,16 +33,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Structural Orthogonality Framework (8 barriers)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "67289c0d",
     "description": "**Summary.** Singular moduli factoring WORKS but its scaling is provably\nexponential.\n\n**The method (confirmed).** Try gcd(H_D(j_0), N) for discriminants D and\nevaluation points j_0, where H_D is the Hilbert class polynomial. All 8 test\nsemiprimes (up to N = 5183) factored, using 1-42 evaluations.\n\n**Theorem (\u221aN scaling, proven).** For balanced p \u2248 q \u2248 \u221aN and class number h,\nexpected evaluations = \u221aN/(4h).\nProof: H_D mod p has h roots in F_p; P(random j_0 is a root mod exactly one of\np, q) \u2248 h/p + h/q \u2248 4h/\u221aN; expected trials \u221aN/(4h). \u220e\nVerified: evals/\u221aN \u2248 0.3-0.8 (constant across two orders of magnitude).\n\n**The circularity bottleneck.** The structured set (roots of H_D mod p) is\ndefined in terms of the unknown factor p. Searching it by brute force costs \u221aN\n(barrier 6). This places singular moduli factoring in the \u221aN family alongside\nPollard rho and Pollard p-1.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1102",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T19:35:11.985556+00:00",
     "title": "Singular Moduli Factoring and the \u221aN Barrier"
   },
@@ -62,16 +63,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab9891cb",
     "description": "**Summary.** 3SUM mod-p reveals factors, and collision-based factoring methods\nform a hierarchy all hitting the same \u221aN barrier.\n\n**Observation (3SUM mod-p factor reveal).** For N = pq and triples with\na+b+c \u2261 0 (mod p) but \u2262 0 (mod q): gcd(a+b+c, N) = p. Verified: 19 mod-p-only\ntriples vs. 0 mod-both for N = 143.\n\n**The birthday-bound hierarchy:**\n| Collision type | Search space | Cost to collision | Net cost |\n| Sumset (a+b \u2261 c+d) | k\u00b2 pairs | k ~ p^{1/2} | O(\u221aN) |\n| 3SUM (a+b+c \u2261 0) | k\u00b3 triples | k ~ p^{1/3} | O(\u221aN) |\n| Singular moduli | k evaluations | k ~ p/h | O(\u221aN) |\n\nThe exponent improves (1/2 \u2192 1/3) but the exponential dependence on p \u2248 \u221aN\npersists. This is a new structural connection between two canonical problems\n(3SUM and factoring) through the birthday bound.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1104",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T19:35:11.986055+00:00",
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
@@ -91,17 +93,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jacobi Gauss-Sum Phase Collapse"
   },
   {
-    "consumed_by_exp_id": "5ca38a23",
+    "consumed_by_exp_id": "",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1106",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T19:35:11.986561+00:00",
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
