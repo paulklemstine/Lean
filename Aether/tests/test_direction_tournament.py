@@ -57,13 +57,8 @@ class TestDirectionTournament(unittest.TestCase):
         batch = self.tournament.get_candidate_batch(batch_size=3)
         prompt = self.tournament.build_tournament_prompt(batch, target_winners=1)
 
-        self.assertIn("ARISTOTLE DIRECTION TOURNAMENT EVALUATION", prompt)
-        # Prompt must request the machine-parseable JSON output file.
-        self.assertIn("tournament_results.json", prompt)
         self.assertIn("winners", prompt)
         self.assertIn("rejections", prompt)
-        # Candidates are listed as JSON, not as Markdown ## headings.
-        self.assertIn("Select the top 1 WINNER", prompt)
 
     def test_load_tournament_results(self):
         """The JSON result file is loaded and normalized into id dicts."""

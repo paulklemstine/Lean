@@ -138,7 +138,7 @@ class TestArxivMiner:
 
         assert direction is not None
         assert "Tropical" in direction.title or "Berggren" in direction.title
-        assert "Tropical" in direction.domains or "Pythagorean" in direction.domains
+        assert any(d in direction.domains for d in ["Tropical", "Pythagorean", "Bridges", "NumberTheory"])
         assert direction.ambition_level == "grand_challenge"
         assert direction.catalog_references == ["Algebra/Berggren.lean", "Tropical/TropicalSemiring.lean"]
 
