@@ -108,17 +108,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "8abbad4a",
+    "consumed_by_exp_id": "",
     "description": "**Summary.** Three proven theorems classify why broad classes of structural\nfactoring approaches are impossible. All three are now machine-checked in Lean\n(the polynomial barrier at `Catalog/NumberTheory/PolynomialBarrier.lean`).\n\n**Theorem 1 (polynomial barrier / LLL).** For f \u2208 Z[x] and N = pq:\np | f(N)  \u27fa  p | f(0). Hence gcd(f(N), N) reveals only primes dividing f(0),\nwhich are independent of N. No polynomial invariant of N alone is a universal\nfactoring witness (resultants, discriminants, hyperdeterminants all fall here).\n\n**Theorem 2 (symmetry barrier / MMM).** Any quantity Q(p,q) that distinguishes\np from q (not symmetric) cannot be computed from N alone. N = pq = qp is\nsymmetric; any f(N) is symmetric. Factor information is antisymmetric and\ntherefore uncomputable from N.\n\n**Theorem 3 (holomorphic rigidity barrier / HRB).** Any factoring method\nconstructing a holomorphic F_N from N and recovering factors from its zero set\nmust fail unless the construction already encodes the factors (identity\nprinciple + null-set measure + evaluation circularity).\n\nThese three \u2014 algebraic, group-theoretic, analytic \u2014 are independent and\ncomplementary.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1107",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T19:35:11.986808+00:00",
     "title": "Three Structural Barrier Theorems for Integer Factorization"
   },
@@ -228,17 +227,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Round-2 Hypothesis Closures: Six Novel Classical Factoring Hypotheses, Tested and Closed"
   },
   {
-    "consumed_by_exp_id": "2481d5b9",
+    "consumed_by_exp_id": "",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/23_Round8_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/23_Round8_Closures.md)\n\n---\n\n# Round-8 Hypothesis Closures: The Precise Gaps Closed\n\n**Program:** Factoring research lab \u2014 round-8 subagent batch synthesis\n**Date:** 2026-08-11\n**Status:** Negative-results synthesis \u2014 round-8 attacks closed; eight rounds complete (~40 hypotheses)\n\n---\n\n## Abstract\n\nAn eighth brainstorm subagent attacked the framework's remaining precise gaps:\nthe aggregation-cost exponent of structural witnesses, exact arithmetic without\nthe CRT split, correlated-but-structured sample generators, and the alethean.org\nBerggren-tree angle. All four were tested and closed (experiments 329-332). The\nround confirmed: polynomial batching does not change the aggregation exponent;\nNewton basin-hopping cannot reach mixed CRT roots; the Jacobi coupled walk is\nstatistically unhelpful; and the Berggren tree is orthogonal to factoring.\nEight subagent rounds (~40 hypotheses) are now closed.\n\n---\n\n## 1. The batch at a glance\n\n| # | Hypothesis | Attack | Verdict |\n|---|-----------|--------|---------|\n| 1 | POLYFACT | falling-factorial polynomial witness | refuted \u2014 batching does NOT change the sqrt(N) exponent |\n| 2 | MIXROOT | Newton basin-hopping for mixed square roots | refuted \u2014 0% reach mixed roots (the branching IS the CRT split) |\n| 3 | JACWALK | Jacobi-symbol coupled CRT walk | refuted \u2014 0 gcd hits, signs alternate, no exploitable correlation |\n| 4 | BERGGRENCERT | Berggren-tree factor certificates | refuted \u2014 hits at the random density (orthogonal to factors) |\n\n---\n\n## 2. POLYFACT (experiment 329): batching does not change the exponent\n\nP(x) = prod_{a=1}^{sqrt N}(x-a) mod N, built in O(sqrt N) multiplications, has\ngcd(P(0), N) = p (first gcd>1 at min(p,q), verified 113/331/1039). The\npolynomial BATCHES the sqrt(N) atomic probes into one object \u2014 but the\nconstruction cost is EXACTLY the aggregation floor, and sqrt(N) =\n2^{(log N)/2} is still super-polynomial. The polynomial form does not change the\ncost exponent. Barrier 4: structural-witness batching does not compress the\nsearch.\n\n---\n\n## 3. MIXROOT (experiment 330): Newton cannot reach the mixed roots\n\n4 has four square roots mod N: +-2 and two mixed roots u (u == 2 mod p,\nu == -2 mod q); any mixed root factors N. Newton iteration from random starts:\n0% reach a mixed root (verified N = 77, 143, 221). The Mobius change\ny = (x-2)/(x+2) conjugates Newton to y <- y^2, which never converges mod p/q;\nstarts either cycle or hit a factor by random divisibility (1/p + 1/q density).\nThe 4-valued branching IS the CRT split; reaching a mixed cell requires starting\nexactly at the mixed root (knowing p, q). Barrier 4/6.\n\n---\n\n## 4. JACWALK (experiment 331): the coupled walk is unhelpful\n\nx_{i+1} = x_i + (x_i/N) mod N applies a single +-1 to BOTH CRT coordinates\n(genuinely coupled, unlike rho). Verified: 0 gcd hits (below the M/sqrt(N)\nbaseline \u2014 the +-1 walk under-samples the spaced-out multiples), and the sign\nsequence alternates (lag-1 ~ 0). The coupling is real but statistically\nunhelpful \u2014 structured correlation != exploitable correlation. Sealed like rho.\n\n---\n\n## 5. BERGGRENCERT (experiment 332): the Berggren tree is orthogonal\n\nPrimitive Pythagorean triples generated by the three Berggren matrices hit N's\nfactors at approximately the random density (2818/3621/618 hits vs the 3M/sqrt(N)\nbaseline, within ~2x). The tree's SLOPE coordinates are orthogonal to factoring's\nNORM coordinates (density = random), consistent with the lab's Berggren-tree\northogonality memory and alethean.org's pkg 694 impossibility framework. The\nstructured correlation is with Pythagorean structure, not N's divisors.\n\n---\n\n## 6. Meta-lessons\n\n1. **Batching is not compression.** Structural witnesses (polynomials, graphs)\n   batch the sqrt(N) atomic probes but the cost exponent is unchanged.\n2. **Exact arithmetic cannot escape the CRT split.** Newton basin-hopping\n   cannot reach mixed roots without starting at them.\n3. **Correlated generators are sealed, not helped.** The Jacobi walk under-\n   samples; the Berggren tree is orthogonal. Structured correlation does not\n   align with factors.\n4. **Eight rounds, ~40 hypotheses, 332 experiments.** The framework is intact\n   and its precise gaps are closed. No poly(log N) algorithm emerged.\n\n---\n\n*Related:* `21_Program_Synthesis.md`, `22_Round7_Closures.md`,\n`Factoring_Lab_Notebook.md` Parts 76-79.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1116",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T23:11:29.675791+00:00",
     "title": "Round-8 Hypothesis Closures: The Precise Gaps Closed"
   },
