@@ -783,6 +783,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "EMPIRICAL-DEGREE: the factoring function is spectrally flat \u2014 no low-degree parity of N approximates any factor bit; the j=2 anomaly resolves as a symmetric top-bit fluctuation"
   },
   {
+    "consumed_by_exp_id": "7477e654",
+    "description": "**Paper 54 (NewMathematics) \u2014 Experiment 389, assessment v165. Round-14 #10.**\n\n**Hypothesis:** whether the smaller factor p has p-1 B-smooth (the weakness Pollard p-1 / ECM exploit) is detectable from N alone \u2014 a statistical instance-class self-hint (frontier iii).\n\n**Experiment (random k-bit semiprimes, k=14/16/18, m to 200k; L(p-1)/L(q-1)/L(N-1)/L(N+1) via factorint; per-prime + joint MI with shuffled nulls; even-adjusted Dickman baseline; conditional densities):**\n\n1. **Asymmetric residue leak is ZERO:** I(N mod l; l|p-1) = 0.0000\u20130.0005 bits at the shuffled-null level for l=3/5/7/11 at every k \u2014 N cannot tell which factor is \u2261 1 mod l.\n2. **The SYMMETRIC event leaks strongly:** I(N mod l; l|p-1 OR l|q-1) = 0.313/0.036/0.015/0.005 bits (l=3/5/7/11), stable across k. Mechanism exact at l=3: N \u2261 2 mod 3 forces one factor \u2261 1 mod 3 (P(OR)=1.000) while P(p\u22611|N mod 3) = 0.497/0.501 = base 0.499. The **asymmetric/symmetric divisibility dichotomy** \u2014 symmetry visible, asymmetry uncomputable from N (barrier 2 at the divisibility level).\n3. **Full B-smoothness undetectable:** I(S_1000; N mod 1155) = 0.006 bits \u2248 shuffled null 0.005.\n4. **No instance-class self-hint:** N-1/N+1 smoothness (N-computable) does not predict factor smoothness (corr \u2264 0.014, MI \u2264 0.0001).\n5. **Density conditioning-invariant and understood:** P(L(p-1)\u2264B | N mod l = n) = base for every n; base rate matches rho_even(log(2^k/2)/log B) within ~0.04 (powers-of-2 effect). ~60\u201378% of these semiprimes are 1000-weak \u2014 why p-1 works at all \u2014 yet the weak ones cannot be flagged from N.\n\n**Verdict:** REFUTED as a self-hint in every form \u2014 the p-1/ECM-weak instance class is undetectable from N. CONFIRMED a sharp positive: the asymmetric/symmetric divisibility dichotomy quantifies barrier 2 at the divisibility level. Together with QRLEAK/COMPENSATING-PARTNER, DIAL-THRESHOLD, INTERVAL-HINT: the self-hint program is fully closed \u2014 no residue, dial, filter, or statistical smoothness self-hint exists; hints must be genuinely external (frontier iii complete). Barriers 2/5/8.\n\nFull paper: ResearchOutput/NewMathematics/54_SmoothSelfHint_DensityInvisible.md",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1156",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T13:27:27.412071+00:00",
+    "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible \u2014 asymmetric/symmetric divisibility dichotomy, self-hint program closed"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -8961,17 +8976,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** For every symmetrizable Kac\u2013Moody root datum and twisting weight"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b7a22960",
     "description": "# Future Directions: Multiverse Truth and Forcing Branches\n\n## 1. Internal Boolean-Valued Realization\n\nConstruct a Boolean-valued universe whose generic quotients instantiate the abstract frame, with forcing closure, directedness, and opposite Continuum Hypothesis branches derived rather than assumed. This is falsifiable: the construction must supply one satisfaction relation for which every frame law and both branch conditions hold.\n\nThe key insight is that the abstract theory identifies the exact interface a model construction must satisfy, so Boolean-valued semantics can be developed independently and connected through a small number of preservation theorems.\n\nWhy now? The modal consequences have been separated cleanly from model construction, exposing the precise obligations needed for a semantic realization.\n\n## 2. Exact S4.2 Completeness for Finite Control Frames\n\nProve that every modal formula outside S4.2 fails on a finite pre-Boolean forcing frame assembled from independent buttons and switches, while every S4.2 theorem is valid on all directed preorders. This is falsifiable by either a formula valid on all proposed finite frames but not derivable in S4.2, or a purported S4.2 principle failing on one frame.\n\nThe key insight is that CH branching behaves like a switch, whereas persistent forcing assertions behave like buttons; finite products of these controls should realize the canonical countermodels.\n\nWhy now? Directedness has already been isolated as the semantic source of `.2`, and asymmetric catalog examples separate it from the stronger axiom `5`.\n\n## 3. Multiverse-Invariant Fragment Theorem\n\nCharacterize a syntactic fragment of set theory whose sentences are preserved under both forcing extensions and grounds, and prove that its members are multiverse-true whenever they hold in one universe of a sufficiently connected multiverse. This is falsifiable by a sentence in the proposed fragment that changes truth value along an allowed extension or ground relation.\n\nThe key insight is that invariance requires bidirectional control: extension preservation alone yields necessity above a world, not truth throughout all branches and grounds.\n\nWhy now? The distinction between global multiverse truth and local forcing necessity is explicit, making it possible to state the missing connectivity and preservation conditions without conflation.\n\n## 4. Large-Cardinal Calibration of Branching\n\nFor each selected large-cardinal assertion, determine the weakest preservation hypotheses under which forcing can vary CH while retaining that assertion in both branches. The conjecture is that a uniform preparation principle yields CH and non-CH branches preserving every assertion in a fixed finite hierarchy of indestructible large cardinals. It is falsifiable by a preservation obstruction at a specified level of the hierarchy.\n\nThe key insight is that independent branching should be parameterized by invariants that forcing must preserve, rather than represented by unconstrained propositional switches.\n\nWhy now? The abstract frame supports arbitrary background theories, so preservation can be expressed as background soundness while branch constructions are refined separately.\n\n## 5. Ground\u2013Extension Modal Bimodality\n\nDevelop a bimodal semantics with one modality for forcing extensions and another for grounds, and determine the interaction logic generated by upward directedness, downward directedness, and mantle-like common cores. Conjecturally, neither modality alone determines the mixed validities. This is falsifiable by deriving every mixed validity from the two unimodal theories, or by exhibiting two frames with identical unimodal logics but distinct mixed validities.\n\nThe key insight is that \u201ctruth in all universes\u201d ranges across both upward and downward movement, whereas ordinary forcing necessity sees only extensions.\n\nWhy now? The current separation between membership, accessibility, and global truth gives a natural foundation for adding a second relation without changing the satisfaction interface.\n",
     "domains": [
       "Logic",
       "Pythagorean"
     ],
     "id": "fd_0598",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3e9a9a06",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-22T09:46:18.771154+00:00",
     "title": "Construct a Boolean-valued universe whose generic quotients instantiate the abst"
   },
