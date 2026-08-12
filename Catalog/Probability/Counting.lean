@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.Basic
+import Probability.Basic
 
 /-!
 # Counting representations: `1` and `2` are exceptional

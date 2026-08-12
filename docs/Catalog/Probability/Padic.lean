@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.LocalSolvability
+import Probability.LocalSolvability
 
 /-!
 # `p`-adic points on the cubic surface `x³ + y³ + z³ = n`

@@ -7,8 +7,6 @@ Domain: Shared
 Declarations: 8
 -/
 
-open Matrix
-
 noncomputable section
 
 /-- The SPB matrix: M(a) = [[1, a], [-a, 1]]. -/
@@ -17,7 +15,7 @@ def spbMatrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
 
 /-- The determinant of the SPB matrix is 1 + a². -/
 theorem spbMatrix_det (a : ℝ) : (spbMatrix a).det = 1 + a ^ 2 := by
-  simp [spbMatrix, det_fin_two]; ring
+  simp [spbMatrix, Matrix.det_fin_two]; ring
 
 /-- The SPB matrix determinant is always positive. -/
 theorem spbMatrix_det_pos (a : ℝ) : (spbMatrix a).det > 0 := by
@@ -39,7 +37,7 @@ M(a) * M(b) = [[1-ab, a+b], [-(a+b), 1-ab]]. -/
 theorem spbMatrix_mul_entries (a b : ℝ) :
     spbMatrix a * spbMatrix b =
     !![1 - a * b, a + b; -(a + b), 1 - a * b] := by
-  ext i j; simp [spbMatrix, mul_apply, Fin.sum_univ_two]
+  ext i j; simp [spbMatrix, Matrix.mul_apply]
   fin_cases i <;> fin_cases j <;> simp <;> ring
 
 /-- The SPB matrix is always invertible. -/
@@ -53,6 +51,6 @@ theorem spbMatrix_zero : spbMatrix 0 = 1 := by
 /-- det of the product = product of dets. -/
 theorem spbMatrix_det_mul (a b : ℝ) :
     (spbMatrix a * spbMatrix b).det = (1 + a ^ 2) * (1 + b ^ 2) := by
-  rw [det_mul, spbMatrix_det, spbMatrix_det]
+  rw [Matrix.det_mul, spbMatrix_det, spbMatrix_det]
 
 end

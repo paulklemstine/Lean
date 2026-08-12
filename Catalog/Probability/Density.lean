@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.LocalSolvability
+import Probability.LocalSolvability
 
 /-!
 # Density of locally solvable and of representable integers

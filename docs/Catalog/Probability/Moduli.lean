@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.LocalSolvability
+import Probability.LocalSolvability
 
 /-!
 # `9` is the unique obstructing modulus, and five cubes always suffice

@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.FourCubes
+import Probability.FourCubes
 
 /-!
 # Four cubes: closing the `±2, ±16 (mod 54)` gap down to six classes mod `216`

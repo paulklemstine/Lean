@@ -1,3 +1,28 @@
+import Mathlib
+
+/-!
+# The rational window `|n| ≤ 1000` — content preserved, not compiled
+
+This file was written against the certified rational-witness banks
+`ThreeCubes.rationalCubes_chunk_a` … `ThreeCubes.rationalCubes_chunk_d`, which
+lived in the modules `Probability.ThreeCubes.RationalWitnessesA` and
+`...RationalWitnessesB` (1001 explicit witnesses for `0 ≤ n ≤ 1000`).  Those
+source files are **absent from this catalog snapshot**, so the development
+cannot be elaborated: its three theorems each consume the witness banks and
+there is no way to reconstruct 1001 certified rational cube representations
+here.
+
+Rather than delete the work, the original file is preserved verbatim in the
+block comment below; restoring the two witness modules is all that is needed to
+reinstate it.
+-/
+
+/-
+-- NOTE.  This file needs the certified rational-witness banks
+-- `rationalCubes_chunk_a` … `rationalCubes_chunk_d`, which lived in the modules
+-- `RationalWitnessesA` / `RationalWitnessesB`.  Those source files are absent
+-- from this catalog snapshot, so the import below cannot be resolved and the
+-- file does not compile; its statements are preserved verbatim.
 import Probability.ThreeCubes.RationalWitnessesB
 
 /-!
@@ -55,3 +80,4 @@ theorem rationalCubes_open_cases_below_1000 :
   fin_cases hn <;> exact rationalCubes_of_nonneg_le_1000 _ (by norm_num) (by norm_num)
 
 end ThreeCubes
+-/

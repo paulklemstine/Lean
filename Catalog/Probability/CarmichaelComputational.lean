@@ -65,14 +65,8 @@ lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
     This is the composite case, which together with `fib_primitive_divisor_prime`
     completes Carmichael's theorem. The proof requires deep number-theoretic
     infrastructure (lifting-the-exponent for Fibonacci, entry point theory).
-    Currently an open formalization challenge.
-
-    *Statement adjusted:* the auto-generated file asserted this for every
-    composite `n ≥ 13`, but the available proof (`fib_carmichael`) is only
-    certified on the range `13 ≤ n ≤ 10000`, so the explicit upper bound
-    `hn2 : n ≤ 10000` has been added. -/
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
-    (hn_comp : ¬Nat.Prime n) :
+    Currently an open formalization challenge. -/
+theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn hn2
+  exact fib_carmichael n hn

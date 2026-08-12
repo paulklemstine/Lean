@@ -1,5 +1,5 @@
-import Probability.ThreeCubes.Density
-import Probability.ThreeCubes.Rational
+import Probability.Density
+import Probability.Rational
 
 /-!
 # Unconditional lower bounds for sums of three cubes

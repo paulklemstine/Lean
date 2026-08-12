@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.Witnesses
+import Probability.Witnesses
 
 /-!
 # The mod `9` obstruction is *purely integral*: sums of three **rational** cubes

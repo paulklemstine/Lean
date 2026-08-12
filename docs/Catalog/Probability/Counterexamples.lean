@@ -1,4 +1,4 @@
-import Novelty.JacobianCore
+import Probability.JacobianCore
 
 /-!
 # Counterexample candidates that *fail* the Jacobian hypothesis

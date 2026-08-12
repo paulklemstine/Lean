@@ -1,4 +1,4 @@
-import Shared.NeuralCoding.ExpBasics
+import Probability.NeuralCoding.ExpBasics
 
 /-! # CatalogBuild.Shared.LogisticSigmoid
 

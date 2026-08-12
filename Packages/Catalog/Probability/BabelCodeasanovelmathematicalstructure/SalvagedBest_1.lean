@@ -2,8 +2,7 @@ import Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest
 
 /-! # Re-export module
 
-The declarations of this auto-generated catalog file are stated and proved in
-`Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest`, which collects them in dependency order (the
-auto-generated copies listed the theorems before the definitions and lemmas they
-use, so they could not be elaborated on their own).  This module re-exports them.
+The snapshot of this auto-generated catalog file contained only a path pointing at
+`Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest`, where the declarations are
+stated and proved.  This module re-exports that development.
 -/

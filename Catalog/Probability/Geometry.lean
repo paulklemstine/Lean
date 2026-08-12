@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.Basic
+import Probability.Basic
 
 /-!
 # Geometry of the cubic surface `x³ + y³ + z³ = n`

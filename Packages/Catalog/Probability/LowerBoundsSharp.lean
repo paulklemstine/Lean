@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.LowerBounds
+import Probability.LowerBounds
 
 /-!
 # A sharper unconditional lower bound: `repCount N ≫ N^{19/27}`
