@@ -232,56 +232,65 @@ class QualityEvaluator:
         lean_source: str = "",
     ) -> Optional[Dict[str, Any]]:
         """Extract Aristotle's self-evaluation from result_dir, result_fields, or lean_source."""
-        # 1. Try reading SELF_EVALUATION.json from result_dir
-        if result_dir and (Path(result_dir) / "SELF_EVALUATION.json").exists():
-            try:
-                content = (Path(result_dir) / "SELF_EVALUATION.json").read_text(encoding="utf-8")
-                data = json.loads(content)
-                if isinstance(data, dict) and "quality_score" in data:
-                    return {
-                        "quality_score": _safe_float(data.get("quality_score"), 0.5),
-                        "proof_depth": _safe_float(data.get("proof_depth"), 0.5),
-                        "novelty": _safe_float(data.get("novelty"), 0.5),
-                        "grade": str(data.get("grade", "partial")),
-                        "rationale": str(data.get("rationale", "")),
-                        "source": "SELF_EVALUATION.json",
-                    }
-            except Exception as e:
-                print(f"[QualityEvaluator] Error parsing SELF_EVALUATION.json: {e}")
+        # 1. Try reading self-evaluation files from result_dir (case-insensitive)
+        if result_dir and Path(result_dir).exists():
+            for fname in ("SELF_EVALUATION.json", "self_evaluation.json", "self_eval.json", "self_score.json", "quality_score.json", "aristotle_score.json"):
+                eval_path = Path(result_dir) / fname
+                if eval_path.exists():
+                    try:
+                        content = eval_path.read_text(encoding="utf-8")
+                        data = json.loads(content)
+                        if isinstance(data, dict):
+                            qs = data.get("quality_score") or data.get("self_score") or data.get("score") or data.get("overall_score")
+                            if qs is not None:
+                                return {
+                                    "quality_score": _safe_float(qs, 0.5),
+                                    "proof_depth": _safe_float(data.get("proof_depth") or data.get("proof_quality"), 0.5),
+                                    "novelty": _safe_float(data.get("novelty"), 0.5),
+                                    "grade": str(data.get("grade", "partial")),
+                                    "rationale": str(data.get("rationale", "")),
+                                    "source": fname,
+                                }
+                    except Exception as e:
+                        print(f"[QualityEvaluator] Error parsing {fname}: {e}")
 
         # 2. Try result_fields
         if result_fields:
-            for k in ("self_evaluation", "result_self_evaluation", "SELF_EVALUATION.json"):
-                if k in result_fields and result_fields[k]:
+            for k, v in result_fields.items():
+                if v and any(sub in k.lower() for sub in ("self_eval", "self-eval", "self_score", "self-score", "quality_score")):
                     try:
-                        data = json.loads(result_fields[k])
-                        if isinstance(data, dict) and "quality_score" in data:
-                            return {
-                                "quality_score": _safe_float(data.get("quality_score"), 0.5),
-                                "proof_depth": _safe_float(data.get("proof_depth"), 0.5),
-                                "novelty": _safe_float(data.get("novelty"), 0.5),
-                                "grade": str(data.get("grade", "partial")),
-                                "rationale": str(data.get("rationale", "")),
-                                "source": "result_fields",
-                            }
+                        data = json.loads(v)
+                        if isinstance(data, dict):
+                            qs = data.get("quality_score") or data.get("self_score") or data.get("score") or data.get("overall_score")
+                            if qs is not None:
+                                return {
+                                    "quality_score": _safe_float(qs, 0.5),
+                                    "proof_depth": _safe_float(data.get("proof_depth") or data.get("proof_quality"), 0.5),
+                                    "novelty": _safe_float(data.get("novelty"), 0.5),
+                                    "grade": str(data.get("grade", "partial")),
+                                    "rationale": str(data.get("rationale", "")),
+                                    "source": "result_fields",
+                                }
                     except Exception:
                         pass
 
         # 3. Check for embedded json block in lean_source
-        if lean_source and "quality_score" in lean_source:
-            match = re.search(r'\{[^{}]*"quality_score"[^{}]*\}', lean_source)
+        if lean_source and any(k in lean_source for k in ("quality_score", "self_score", "self_evaluation", "SELF_EVALUATION")):
+            match = re.search(r'\{[^{}]*"(?:quality_score|self_score|proof_depth)"[^{}]*\}', lean_source, re.DOTALL)
             if match:
                 try:
                     data = json.loads(match.group(0))
-                    if isinstance(data, dict) and "quality_score" in data:
-                        return {
-                            "quality_score": _safe_float(data.get("quality_score"), 0.5),
-                            "proof_depth": _safe_float(data.get("proof_depth"), 0.5),
-                            "novelty": _safe_float(data.get("novelty"), 0.5),
-                            "grade": str(data.get("grade", "partial")),
-                            "rationale": str(data.get("rationale", "")),
-                            "source": "embedded_lean",
-                        }
+                    if isinstance(data, dict):
+                        qs = data.get("quality_score") or data.get("self_score") or data.get("score")
+                        if qs is not None:
+                            return {
+                                "quality_score": _safe_float(qs, 0.5),
+                                "proof_depth": _safe_float(data.get("proof_depth"), 0.5),
+                                "novelty": _safe_float(data.get("novelty"), 0.5),
+                                "grade": str(data.get("grade", "partial")),
+                                "rationale": str(data.get("rationale", "")),
+                                "source": "embedded_lean",
+                            }
                 except Exception:
                     pass
 

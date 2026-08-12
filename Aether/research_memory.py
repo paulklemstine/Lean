@@ -388,14 +388,18 @@ class FutureDirectionsManager:
         ws_pkg_file = self.workspace / "Packages" / "future_directions.json"
         ws_parent_pkg = self.workspace.parent / "Packages" / "future_directions.json"
         ws_file = self.workspace / "future_directions.json"
-        if ws_pkg_file.exists():
+        ws_pkg_file = self.workspace / "Packages" / "future_directions.json"
+        ws_parent_pkg = self.workspace.parent / "Packages" / "future_directions.json"
+        if ws_file.exists():
+            self._file = ws_file
+        elif ws_pkg_file.exists():
             self._file = ws_pkg_file
         elif ws_parent_pkg.exists():
             self._file = ws_parent_pkg
-        elif ws_file.exists():
-            self._file = ws_file
-        else:
+        elif self.workspace.name == ".aether_workspace" or (self.workspace.parent / "Catalog").exists():
             self._file = pkg_file
+        else:
+            self._file = ws_file
         self._directions: List[FutureDirection] = []
         self._pruned: List[FutureDirection] = []
         self._cycle_syntheses: Dict[str, str] = {}  # exp_id -> synthesis text
