@@ -33,17 +33,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Structural Orthogonality Framework (8 barriers)"
   },
   {
-    "consumed_by_exp_id": "1dea4a76",
+    "consumed_by_exp_id": "",
     "description": "**Summary.** Singular moduli factoring WORKS but its scaling is provably\nexponential.\n\n**The method (confirmed).** Try gcd(H_D(j_0), N) for discriminants D and\nevaluation points j_0, where H_D is the Hilbert class polynomial. All 8 test\nsemiprimes (up to N = 5183) factored, using 1-42 evaluations.\n\n**Theorem (\u221aN scaling, proven).** For balanced p \u2248 q \u2248 \u221aN and class number h,\nexpected evaluations = \u221aN/(4h).\nProof: H_D mod p has h roots in F_p; P(random j_0 is a root mod exactly one of\np, q) \u2248 h/p + h/q \u2248 4h/\u221aN; expected trials \u221aN/(4h). \u220e\nVerified: evals/\u221aN \u2248 0.3-0.8 (constant across two orders of magnitude).\n\n**The circularity bottleneck.** The structured set (roots of H_D mod p) is\ndefined in terms of the unknown factor p. Searching it by brute force costs \u221aN\n(barrier 6). This places singular moduli factoring in the \u221aN family alongside\nPollard rho and Pollard p-1.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1102",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T19:35:11.985556+00:00",
     "title": "Singular Moduli Factoring and the \u221aN Barrier"
   },
@@ -63,17 +62,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
   },
   {
-    "consumed_by_exp_id": "a793ff0e",
+    "consumed_by_exp_id": "",
     "description": "**Summary.** 3SUM mod-p reveals factors, and collision-based factoring methods\nform a hierarchy all hitting the same \u221aN barrier.\n\n**Observation (3SUM mod-p factor reveal).** For N = pq and triples with\na+b+c \u2261 0 (mod p) but \u2262 0 (mod q): gcd(a+b+c, N) = p. Verified: 19 mod-p-only\ntriples vs. 0 mod-both for N = 143.\n\n**The birthday-bound hierarchy:**\n| Collision type | Search space | Cost to collision | Net cost |\n| Sumset (a+b \u2261 c+d) | k\u00b2 pairs | k ~ p^{1/2} | O(\u221aN) |\n| 3SUM (a+b+c \u2261 0) | k\u00b3 triples | k ~ p^{1/3} | O(\u221aN) |\n| Singular moduli | k evaluations | k ~ p/h | O(\u221aN) |\n\nThe exponent improves (1/2 \u2192 1/3) but the exponential dependence on p \u2248 \u221aN\npersists. This is a new structural connection between two canonical problems\n(3SUM and factoring) through the birthday bound.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1104",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T19:35:11.986055+00:00",
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
@@ -798,17 +796,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible \u2014 asymmetric/symmetric divisibility dichotomy, self-hint program closed"
   },
   {
-    "consumed_by_exp_id": "ff2b27c9",
+    "consumed_by_exp_id": "",
     "description": "**GENERIC-RECOVERY (round-14 #11, experiment 390, assessment v166, paper 55).**\n\nHypothesis: recovery of p from a t-bit external hint is bounded by the hint's usable information. Verified on exact k-bit-prime sets (k=14-25) and random semiprimes (k=16-20):\n\n1. **Generic hints information-exact**: t-bit random GF(2) linear form of p's bits partitions P_k into classes |P_k|/2^t EXACTLY (k=16: 1515/759/190/48.6/12.8 vs 1515/757.5/189.4/47.3/11.8 at t=1..8); recovery cost = |P_k|/2^t (median steps = candidates). No anomalous class = no super-resolution.\n2. **Value-hints parity-constrained** (new mini-finding): mod-2^t multiplicative c\u00b7p and XOR-mask hashes output only 2^(t-1) values (p odd) \u2014 class 378.9 vs 189.4 at k=16,t=4. Bit-vector forms are the only full-2^t generic hints.\n3. **Trace hint sub-bit by recovery cost** (new positive): s mod 2^t pins p mod 2^t to C_t = O(1) roots (median saturating 4-8), but recovery tries all C_t: cost C_t\u00b7|P_k|/2^(t-1), measured 399 vs 47.3 (k=16,t=6), 354 vs 42.0 (k=18,t=8) \u2014 ~4.5-5x worse per bit; log2(C_t) ~ 3 bits lost to the root ambiguity.\n4. **Only amplification = position**: crossing with pi(sqrt N) at t ~ k/2-3 for every family; the unique amplification is Coppersmith's contiguous top-half >= k/2 LLL (a known method, barrier 8). The Coppersmith condition is about POSITION, not the dial (DIAL-THRESHOLD revisited).\n\n**Verdict**: CONFIRMED, sharpened. Hint taxonomy CLOSED: a t-bit external hint reduces the prime search by exactly 2^t, never more, never position-free; N-checkable hints are sealed at the trace-set floor (INTERVAL-HINT); hints must be genuinely external and worth their bits at face value. Barriers 4/8/2.\n\nScript: /tmp/exp_genericrecovery.py. Paper: ResearchOutput/NewMathematics/55_GenericRecovery_HintTaxonomy.md",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1157",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T13:54:18.959882+00:00",
     "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) \u2014 hint taxonomy closed"
   },
@@ -4555,18 +4552,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "e9c5938e",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domains": [
       "Analysis",
       "NumberTheory"
     ],
     "id": "seed_027",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
