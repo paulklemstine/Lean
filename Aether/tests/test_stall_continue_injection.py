@@ -67,3 +67,48 @@ async def test_stall_finish_injection(tmp_path):
     completed2 = await extractor.poll_all()
     assert job.status == "completed"
     assert job in completed2
+
+
+@pytest.mark.asyncio
+async def test_stall_post_finish_unresponsive_cancel(tmp_path):
+    """Verify that if Aristotle remains RUNNING 1h after 'finish' was sent, cancel_project is called."""
+    config = {"autoresearch": {"max_inflight": 6}, "workspace": str(tmp_path)}
+    extractor = KnowledgeExtractor(config=config)
+    extractor.workspace = tmp_path
+
+    mock_aristotle = MagicMock()
+    mock_aristotle.poll_project = AsyncMock(return_value={
+        "status": "RUNNING",
+        "has_files": False,
+        "percent_complete": 50.0,
+    })
+    mock_aristotle.cancel_project = AsyncMock(return_value=True)
+    extractor.aristotle = mock_aristotle
+
+    # Job dispatched 5.5 hours ago, finish sent 1.1 hours ago (3960s)
+    now = time.time()
+    job = ResearchJob(
+        job_id="test_unresponsive_job",
+        cycle_n=1,
+        concept=ResearchConcept(
+            title="Test Unresponsive Job",
+            domain="Algebra",
+            concept_description="Unresponsive test",
+            mathematical_framing="Test",
+        ),
+        prompt="Test prompt",
+        project_dir=tmp_path / "test_dir_unresp",
+        project_id="proj_unresp_123",
+        status="dispatched",
+        dispatch_time=now - 19800.0,
+    )
+    job.last_stall_continue_time = now - 3960.0
+    job.stall_finish_sent = True
+    (tmp_path / "test_dir_unresp").mkdir(parents=True, exist_ok=True)
+    extractor.inflight["proj_unresp_123"] = job
+
+    completed = await extractor.poll_all()
+    mock_aristotle.cancel_project.assert_called_once_with("proj_unresp_123")
+    assert job.status == "failed"
+    assert "unresponsive" in (job.error_message or "").lower()
+    assert job in completed

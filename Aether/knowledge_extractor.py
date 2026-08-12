@@ -1791,21 +1791,34 @@ Research mode: {concept.research_mode}
                     if (needs_resume and job.phase == "A"
                             and getattr(job, "resume_count", 0) < MAX_RESUME_BUDGET):
                         try:
-                            _resume_prompt = (
-                                "Continue and complete the truncated/incomplete work. "
-                                "Finish every theorem with a full proof — no `sorry`, "
-                                "no stubbed signatures, no mid-proof cutoffs. Complete "
-                                "all Lean 4 files so they compile end-to-end, then "
-                                "finalize FUTURE_DIRECTIONS.md."
-                            )
+                            latest_task_st = result.get("latest_task_status", "")
+                            if latest_task_st == "OUT_OF_BUDGET":
+                                _resume_prompt = (
+                                    "Resume from where compute was exhausted. Complete all Lean 4 "
+                                    "files so they compile end-to-end with full proofs — no sorries, "
+                                    "then finalize FUTURE_DIRECTIONS.md."
+                                )
+                            elif latest_task_st == "COMPLETE_WITH_ERRORS":
+                                _resume_prompt = (
+                                    "Fix all Lean 4 syntax and compilation errors, complete remaining "
+                                    "sorries and stubbed signatures, then finalize FUTURE_DIRECTIONS.md."
+                                )
+                            else:
+                                _resume_prompt = (
+                                    "Continue and complete the truncated/incomplete work. "
+                                    "Finish every theorem with a full proof — no `sorry`, "
+                                    "no stubbed signatures, no mid-proof cutoffs. Complete "
+                                    "all Lean 4 files so they compile end-to-end, then "
+                                    "finalize FUTURE_DIRECTIONS.md."
+                                )
                             _tid = await self.aristotle.resume_project(pid, _resume_prompt)
                             job.resume_count = getattr(job, "resume_count", 0) + 1
                             job.status = "dispatched"  # re-poll for the new task
                             job.dispatch_time = time.time()  # reset wall-clock caps
-                            print(f"[Poll] {pid[:8]} INCOMPLETE ({result.get('task_status','?')}) "
+                            print(f"[Poll] {pid[:8]} INCOMPLETE ({latest_task_st or result.get('task_status','?')}) "
                                   f"— resuming via ask() "
                                   f"(attempt {job.resume_count}/{MAX_RESUME_BUDGET}), "
-                                  f"new task {_tid[:8]}; deferring integration")
+                                  f"new task {_tid[:8] if _tid else 'ok'}; deferring integration")
                             continue  # do NOT append to completed; re-poll next tick
                         except Exception as _re:
                             print(f"[Poll] {pid[:8]} resume failed: {_re}; "
@@ -1836,6 +1849,12 @@ Research mode: {concept.research_mode}
                     job.status = "idle_pending"
                     completed.append(job)
                 elif status == "RUNNING":
+                    # Check if task is QUEUED (waiting for worker assignment)
+                    if result.get("is_queued", False) or result.get("latest_task_status") == "QUEUED":
+                        print(f"[Poll] {pid[:8]} Task is QUEUED on Aristotle server (waiting for worker assignment)")
+                        # Reset dispatch_time so QUEUED waiting time doesn't consume execution stall budget
+                        job.dispatch_time = now
+
                     # 4-hour stall finish handler:
                     # If a job has been running for >= 4 hours (14400s), call ask("finish") on Aristotle once.
                     # Do NOT mark the job completed immediately upon sending "finish".
@@ -1845,6 +1864,22 @@ Research mode: {concept.research_mode}
                     age_min = age_seconds / 60.0
                     last_cont = getattr(job, "last_stall_continue_time", 0.0)
                     finish_sent = getattr(job, "stall_finish_sent", False)
+
+                    # Post-finish unresponsive timeout: If 1 hour has elapsed since "finish" was injected
+                    # and Aristotle is still RUNNING, issue a remote cancel to free remote compute/slots immediately.
+                    if finish_sent and (now - last_cont) >= 3600.0:
+                        print(f"[Poll] {pid[:8]} UNRESPONSIVE STALL: RUNNING for >1h after 'finish' prompt — canceling remote project")
+                        try:
+                            if hasattr(self, "aristotle") and self.aristotle and hasattr(self.aristotle, "cancel_project"):
+                                await self.aristotle.cancel_project(pid)
+                        except Exception as _cx:
+                            print(f"[Poll] {pid[:8]} Failed to cancel unresponsive project: {_cx}")
+                        job.status = "failed"
+                        job.error_message = "Unresponsive after finish instruction (canceled)"
+                        self.failed_count += 1
+                        self._release_direction(job)
+                        completed.append(job)
+                        continue
 
                     if age_seconds >= 14400.0 and not finish_sent and (now - last_cont) >= 14400.0:
                         print(f"[Poll] {pid[:8]} STALL DETECTED: RUNNING for {age_min:.0f}min (>= 4h) — injecting 'finish' instruction, waiting for Aristotle server to end job")

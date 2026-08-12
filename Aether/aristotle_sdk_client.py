@@ -136,6 +136,18 @@ class AristotleSDKClient:
                     except Exception as e:
                         print(f"[Aristotle] Failed to estimate progress from events for {project_id}: {e}")
 
+                latest_task_status = "UNKNOWN"
+                is_queued = False
+                try:
+                    _tasks_check, _ = await project.get_tasks(limit=10)
+                    if _tasks_check:
+                        latest_t = _tasks_check[0]
+                        latest_task_status = getattr(latest_t.status, "name", str(getattr(latest_t, "status", "UNKNOWN")))
+                        if latest_task_status == "QUEUED":
+                            is_queued = True
+                except Exception:
+                    pass
+
                 return {
                     "project_id": project.project_id,
                     "status": status_str,
@@ -144,6 +156,8 @@ class AristotleSDKClient:
                     "has_files": project.has_files,
                     "has_input": project.has_input,
                     "needs_resume": needs_resume,
+                    "latest_task_status": latest_task_status,
+                    "is_queued": is_queued,
                     "error": None,
                 }
             except ssl.SSLError as e:
