@@ -1,4 +1,25 @@
-import Computation.AbstractAlgebra.QuatNorm_nonneg
+import Mathlib
 
-/-! This catalog entry duplicates `Computation.AbstractAlgebra.QuatNorm_nonneg`, where the repaired proofs live; this module
-re-exports them so both catalog paths resolve. -/
+/-! # CatalogBuild.Shared.QuatNorm_nonneg
+
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 3
+
+The `import` line was moved to the top of the file and the declarations were
+reordered so that `quatNorm` precedes its uses; the statements and proofs are
+unchanged.
+-/
+
+/-- The norm of a quaternion (a, b, c, d) is a² + b² + c² + d². -/
+def quatNorm (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
+
+theorem quatNorm_nonneg (a b c d : ℤ) : 0 ≤ quatNorm a b c d := by
+  unfold quatNorm; positivity
+
+theorem quatNorm_zero_iff (a b c d : ℤ) :
+    quatNorm a b c d = 0 ↔ a = 0 ∧ b = 0 ∧ c = 0 ∧ d = 0 := by
+  unfold quatNorm
+  constructor
+  · intro h; exact ⟨by nlinarith, by nlinarith, by nlinarith, by nlinarith⟩
+  · rintro ⟨rfl, rfl, rfl, rfl⟩; ring
