@@ -1751,7 +1751,12 @@ Research mode: {concept.research_mode}
                         ts_str = rlog._data["checkpoints"][-1]["timestamp"]
                         last_checkpoint_ts = datetime.fromisoformat(ts_str).replace(tzinfo=timezone.utc).timestamp()
                         if (now - last_checkpoint_ts) > no_progress_seconds:
-                            print(f"[Poll] {pid[:8]} ZOMBIE CAP EXCEEDED: No progress for > {no_progress_seconds/3600:.1f}h")
+                            print(f"[Poll] {pid[:8]} ZOMBIE CAP EXCEEDED: No progress for > {no_progress_seconds/3600:.1f}h — canceling remote project")
+                            try:
+                                if hasattr(self, "aristotle") and self.aristotle and hasattr(self.aristotle, "cancel_project"):
+                                    await self.aristotle.cancel_project(pid)
+                            except Exception as _cx:
+                                print(f"[Poll] {pid[:8]} Failed to cancel zombie project: {_cx}")
                             rlog.add_checkpoint(status="FINAL:ZOMBIE", percent=percent)
                             job.status = "failed"
                             job.error_message = f"Zombie no progress ({no_progress_seconds/3600:.1f}h)"
@@ -1810,11 +1815,12 @@ Research mode: {concept.research_mode}
                           f"{(' [INCOMPLETE]' if needs_resume else '')}")
                     job.status = "completed"
                     job.complete_time = time.time()
+                    _rec_status = "COMPLETED_STALL_FINISH" if getattr(job, "stall_finish_sent", False) else status
                     # Final reasoning log entry
                     try:
                         rlog = ReasoningLog(self.workspace, pid, job.job_id)
                         rlog.record_completion(
-                            status=status, percent=percent, has_files=has_files,
+                            status=_rec_status, percent=percent, has_files=has_files,
                         )
                     except Exception:
                         pass
@@ -1831,14 +1837,17 @@ Research mode: {concept.research_mode}
                     completed.append(job)
                 elif status == "RUNNING":
                     # 4-hour stall finish handler:
-                    # If a job has been running for >= 4 hours (14400s), call ask("finish") on Aristotle,
-                    # mark the job as completed, and process research package files like a finished job.
+                    # If a job has been running for >= 4 hours (14400s), call ask("finish") on Aristotle once.
+                    # Do NOT mark the job completed immediately upon sending "finish".
+                    # Keep the job in inflight (status "dispatched"/"running") so it continues to count against max_flight
+                    # (6 jobs limit) until Aristotle server actually ends/finishes the job.
                     age_seconds = (now - job.dispatch_time) if getattr(job, "dispatch_time", None) else 0.0
                     age_min = age_seconds / 60.0
                     last_cont = getattr(job, "last_stall_continue_time", 0.0)
+                    finish_sent = getattr(job, "stall_finish_sent", False)
 
-                    if age_seconds >= 14400.0 and (now - last_cont) >= 14400.0:
-                        print(f"[Poll] {pid[:8]} STALL DETECTED: RUNNING for {age_min:.0f}min (>= 4h) — injecting 'finish' instruction and marking completed")
+                    if age_seconds >= 14400.0 and not finish_sent and (now - last_cont) >= 14400.0:
+                        print(f"[Poll] {pid[:8]} STALL DETECTED: RUNNING for {age_min:.0f}min (>= 4h) — injecting 'finish' instruction, waiting for Aristotle server to end job")
                         try:
                             if hasattr(self, "aristotle") and self.aristotle and hasattr(self.aristotle, "resume_project"):
                                 _tid = await self.aristotle.resume_project(pid, "finish")
@@ -1847,16 +1856,9 @@ Research mode: {concept.research_mode}
                             print(f"[Poll] {pid[:8]} Failed to inject 'finish' instruction: {_ce}")
 
                         job.last_stall_continue_time = now
-                        job.status = "completed"
-                        job.complete_time = time.time()
-                        try:
-                            rlog = ReasoningLog(self.workspace, pid, job.job_id)
-                            rlog.record_completion(
-                                status="COMPLETED_STALL_FINISH", percent=percent, has_files=has_files,
-                            )
-                        except Exception:
-                            pass
-                        completed.append(job)
+                        job.stall_finish_sent = True
+                        # Do NOT set job.status = "completed" and do NOT append to completed list.
+                        # The job remains in inflight counting towards max_flight until Aristotle server ends it.
                         continue
 
                     # Secondary checkpoint-based stall signal. The authoritative

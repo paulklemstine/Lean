@@ -21,14 +21,14 @@ cp .env.example .env        # then fill in your keys
 pip install -r requirements.txt
 
 # Continuous loop: poll → integrate → dispatch → rebuild website → commit → push
-python3 aether_tick.py --loop --ollama-cloud --max-inflight 9 --novelty-slots 2 --interval 900 --serve
+python3 aether_tick.py --loop --ollama-cloud --max-inflight 6 --novelty-slots 2 --interval 900 --serve
 
 # Single one-shot tick (no loop):
 python3 aether_tick.py --ollama-cloud
 ```
 
 Flags:
-- `--max-inflight N` — max concurrent Aristotle jobs (default 9; **do not exceed 9** or Aristotle may hang jobs)
+- `--max-inflight N` — max concurrent Aristotle jobs (default 6; **do not exceed 6** or Aristotle may hang jobs)
 - `--novelty-slots N` — dispatch slots reserved for Novelty directions (default 3)
 - `--interval SECONDS` — sleep between ticks in `--loop` mode (default 21600)
 - `--ollama-cloud` — enable the Ollama Cloud LLM tier

@@ -142,13 +142,13 @@ The following biases were removed:
 ### Local loop (no GitHub Actions minutes)
 
 ```bash
-cd Aether && python3 aether_tick.py --loop --ollama-cloud --max-inflight 9 --novelty-slots 2 --interval 1800 --serve
+cd Aether && python3 aether_tick.py --loop --ollama-cloud --max-inflight 6 --novelty-slots 2 --interval 1800 --serve
 ```
 
 This is the standard startup command. It runs continuously: each tick polls for completed jobs, integrates them, dispatches new ones, rebuilds the website (`update_index.py`), syncs to `docs/`, commits, and pushes to git. The `--serve` flag starts a local docs HTTP server at `http://localhost:8000`.
 
 Other flags:
-- `--max-inflight N` — max concurrent Aristotle jobs (default 9)
+- `--max-inflight N` — max concurrent Aristotle jobs (default 6)
 - `--novelty-slots N` — dispatch slots reserved for Novelty directions (default 3)
 - `--interval SECONDS` — sleep between ticks (default 21600 = 6h)
 - `--serve` — start local docs server alongside Aether

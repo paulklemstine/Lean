@@ -194,6 +194,32 @@ class AristotleSDKClient:
         print(f"[Aristotle] Resumed project {project_id} via ask() -> task {task.agent_task_id}")
         return task.agent_task_id
 
+    async def cancel_project(self, project_id: str) -> bool:
+        """Cancel a running project on Aristotle server via the cancel API.
+
+        Fetches the Project object by ID and cancels its running task.
+        Returns True if successful, False otherwise.
+        """
+        try:
+            project = await Project.from_id(project_id)
+            if hasattr(project, "cancel"):
+                cancel_res = project.cancel()
+                if asyncio.iscoroutine(cancel_res):
+                    await cancel_res
+                print(f"[Aristotle] Successfully canceled project {project_id}")
+                return True
+            elif hasattr(aristotlelib, "cancel"):
+                cancel_res = aristotlelib.cancel(project_id=project_id)
+                if asyncio.iscoroutine(cancel_res):
+                    await cancel_res
+                print(f"[Aristotle] Canceled project {project_id} via aristotlelib")
+                return True
+            print(f"[Aristotle] Cancel API not directly available on Project object for {project_id}")
+            return False
+        except Exception as e:
+            print(f"[Aristotle] Error canceling project {project_id}: {e}")
+            return False
+
     async def download_result(
         self,
         project_id: str,

@@ -1418,7 +1418,7 @@ class CycleMaster:
         print(f"[FREE] Free exploration cycle #{cycle_n} complete.")
         return result.lean_source is not None
 
-    async def run_continuous(self, parallel: bool = False, max_jobs: int = 10) -> None:
+    async def run_continuous(self, parallel: bool = False, max_jobs: int = 6) -> None:
         """Run continuous cycles until shutdown.
 
         parallel=True: dispatch up to max_jobs concurrently to Aristotle.
@@ -1456,7 +1456,7 @@ class CycleMaster:
 
         print("[CYCLE MASTER] Shutdown complete.")
 
-    async def _run_parallel(self, max_jobs: int = 10) -> None:
+    async def _run_parallel(self, max_jobs: int = 6) -> None:
         """Parallel mode: keep up to max_jobs in flight with Aristotle."""
         poll_interval = self.global_settings.get("polling_interval_seconds", 30)
         in_flight: List[InFlightJob] = []
@@ -1544,8 +1544,8 @@ async def main():
     parser.add_argument("--single-cycle", action="store_true", help="Run one cycle and exit")
     parser.add_argument("--domain", help="Force a specific domain")
     parser.add_argument("--dry-run", action="store_true", help="Generate but do not dispatch")
-    parser.add_argument("--parallel", action="store_true", help="Dispatch up to 10 jobs concurrently")
-    parser.add_argument("--max-jobs", type=int, default=10, help="Max concurrent Aristotle jobs (default: 10)")
+    parser.add_argument("--parallel", action="store_true", help="Dispatch up to 6 jobs concurrently")
+    parser.add_argument("--max-jobs", type=int, default=6, help="Max concurrent Aristotle jobs (default: 6)")
     parser.add_argument("--ollama-cloud", action="store_true", help="Enable Ollama Cloud as fallback when Pollinations is depleted")
 
     args = parser.parse_args()

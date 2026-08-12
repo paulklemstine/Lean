@@ -6,7 +6,7 @@ then exits. Designed for hourly cron — each run takes 2-5 minutes.
 
 Usage:
     python3 aether_tick.py
-    python3 aether_tick.py --max-inflight 9
+    python3 aether_tick.py --max-inflight 6
     python3 aether_tick.py --loop --interval 21600   # continuous loop, every 6h
     python3 aether_tick.py --log aether.log           # tee all output to a log file
 """
@@ -2495,7 +2495,7 @@ class Tee:
 
 def main():
     parser = argparse.ArgumentParser(description="Aether Tick: one-shot CI pipeline step")
-    parser.add_argument("--max-inflight", type=int, default=9)
+    parser.add_argument("--max-inflight", type=int, default=6)
     parser.add_argument("--novelty-slots", type=int, default=0,
                         help="Number of dispatch slots reserved for novelty/wild directions (default: 0)")
     parser.add_argument("--config", type=str, default=None)

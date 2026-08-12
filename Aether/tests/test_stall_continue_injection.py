@@ -51,8 +51,19 @@ async def test_stall_finish_injection(tmp_path):
     # Verify resume_project was called with "finish"
     mock_aristotle.resume_project.assert_called_once_with("proj_stall_123", "finish")
 
-    # Verify job attributes updated and job is marked completed
+    # Verify finish was sent but job remains in inflight (not completed) while status is RUNNING
     assert hasattr(job, "last_stall_continue_time")
     assert job.last_stall_continue_time > 0
+    assert getattr(job, "stall_finish_sent", False) is True
+    assert job.status == "dispatched"
+    assert job not in completed
+
+    # Now simulate Aristotle ending the job (IDLE with has_files=True)
+    mock_aristotle.poll_project = AsyncMock(return_value={
+        "status": "IDLE",
+        "has_files": True,
+        "percent_complete": 100.0,
+    })
+    completed2 = await extractor.poll_all()
     assert job.status == "completed"
-    assert job in completed
+    assert job in completed2

@@ -135,18 +135,19 @@ def test_stall_cap_retry_queued_not_recapped(temp_workspace):
 
 
 def test_stall_warn_under_cap(temp_workspace):
-    """A dispatched job at 250min (over 4h stall) is completed via finish instruction, not failed. Jobs under 4h remain dispatched."""
+    """A dispatched job at 250min (over 4h stall) has finish injected and remains dispatched until Aristotle ends."""
     import time
     now = time.time()
     # 100 min job (under 4h stall threshold): stays dispatched
     fresh_job = _job(job_id="fresh1", status="dispatched", dispatch_time=now - 100 * 60)
-    # 250 min job (over 4h stall threshold): finished and completed
+    # 250 min job (over 4h stall threshold): finish sent, stays dispatched while RUNNING
     warn_job = _job(job_id="warn1", status="dispatched", dispatch_time=now - 250 * 60)
     ext = _make_extractor(temp_workspace, [fresh_job, warn_job])
     completed = asyncio.run(ext.poll_all())
     assert fresh_job.status == "dispatched", f"Expected fresh job dispatched, got {fresh_job.status}"
-    assert warn_job.status == "completed", f"Expected warn job completed, got {warn_job.status}"
-    assert warn_job in completed
+    assert getattr(warn_job, "stall_finish_sent", False) is True
+    assert warn_job.status == "dispatched", f"Expected warn job dispatched (waiting for Aristotle finish), got {warn_job.status}"
+    assert warn_job not in completed
 
 
 # ─── Preparing timeout ────────────────────────────────────────────────────

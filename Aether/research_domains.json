@@ -187,7 +187,7 @@
   },
   "global_settings": {
     "cycle_interval_seconds": 300,
-    "max_concurrent_jobs": 10,
+    "max_concurrent_jobs": 6,
     "artifact_retrieval": true,
     "auto_integrate": false,
     "require_human_review": true,

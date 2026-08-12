@@ -948,7 +948,7 @@ class PiAgentOrchestrator:
     # Continuous parallel mode (the main production mode)
     # ------------------------------------------------------------------
 
-    async def run_continuous(self, max_jobs: int = 10) -> None:
+    async def run_continuous(self, max_jobs: int = 6) -> None:
         """Run continuously with parallel dispatching to Aristotle.
 
         Keeps up to max_jobs in flight at all times:
@@ -1285,7 +1285,7 @@ async def main():
     parser.add_argument("--single-cycle", action="store_true", help="Run one cycle and exit")
     parser.add_argument("--domain", help="Force a specific domain")
     parser.add_argument("--dry-run", action="store_true", help="Generate but do not dispatch")
-    parser.add_argument("--max-jobs", type=int, default=10, help="Max concurrent Aristotle jobs (default: 10)")
+    parser.add_argument("--max-jobs", type=int, default=6, help="Max concurrent Aristotle jobs (default: 6)")
     parser.add_argument("--poll-interval", type=int, default=30, help="Seconds between polls (default: 30)")
     parser.add_argument("--reprocess", action="store_true", help="Reprocess unfinished jobs with result.tar.gz from previous runs")
 
